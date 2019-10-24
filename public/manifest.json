@@ -1,10 +1,15 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Elrond Testnet",
+  "name": "An Elrond Block Explorer",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "src": "favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "favicon-32x32",
+      "sizes": "64x64 32x32 24x24",
       "type": "image/x-icon"
     },
     {

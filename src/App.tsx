@@ -1,52 +1,29 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import Home from './components/Home';
-import './assets/sass/theme.scss';
+import Layout from './components/Layout';
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App: React.FC = () => {
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Homea1</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/users">Users</Link>
-            </li>
-          </ul>
-        </nav>
-
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
+      <Layout>
         <Switch>
-          <Route path="/about">
+          <Route path="/wallet">
             <About />
           </Route>
-          <Route path="/users">
+          <Route path="/validators">
             <Users />
           </Route>
           <Route path="/">
             <Home />
           </Route>
         </Switch>
-      </div>
+      </Layout>
     </Router>
   );
-}
-
-
+};
 
 function About() {
   return <h2>About</h2>;
