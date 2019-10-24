@@ -1,7 +1,7 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
-import logo from './logo.svg';
 import Home from './components/Home';
+import './assets/sass/theme.scss';
 
 import {
   BrowserRouter as Router,
