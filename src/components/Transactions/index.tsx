@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { getTransactions } from './helpers/asyncRequests';
+import { getTransactions, getTotalTransactions } from './helpers/asyncRequests';
 import { useParams, Redirect } from 'react-router-dom';
 import { useGlobalState } from '../../context';
 
-import Highlights from './Highlights';
+import Highlights from './../../sharedComponents/Highlights';
 import TransactionRow from './TransactionRow';
 import Pager from './Pager';
 
@@ -30,10 +30,12 @@ const Transactions: React.FC = () => {
   const { elasticUrl } = useGlobalState();
   let { page } = useParams();
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
+  const [totalTransactions, setTotalTransactions] = React.useState<number>(0);
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;
 
   React.useEffect(() => {
     getTransactions({ elasticUrl, size }).then(setTransactions);
+    getTotalTransactions(elasticUrl).then(setTotalTransactions);
   }, [elasticUrl, size]); // run the operation only once since the parameter does not change
 
   const TransactionsPage = (
@@ -50,7 +52,9 @@ const Transactions: React.FC = () => {
             <div className="card">
               <div className="card-body card-list">
                 <Pager />
-                More than 6,895,491 transactions found
+                {totalTransactions > 0 && (
+                  <span>More than {totalTransactions.toLocaleString('en')} transactions found</span>
+                )}
                 <div className="table-responsive">
                   <table className="table mt-4">
                     <thead>
