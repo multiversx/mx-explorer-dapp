@@ -80,7 +80,7 @@ export default function Home() {
               </Popover>
             }
           >
-            <a id="switch" href="#" className="switch d-none d-md-block d-lg-block d-xl-block">
+            <a id="switch" href="#/ceva" className="switch d-none d-md-block d-lg-block d-xl-block">
               <i className="fa fa-network-wired" />
               <FontAwesomeIcon icon={faNetworkWired} />
             </a>

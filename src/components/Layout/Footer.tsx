@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         <small>
           {activeNetworkName}
           &nbsp; • &nbsp;
-          <a target="_blank" href="https://elrond.com/">
+          <a target="_blank" rel="noopener noreferrer" href="https://elrond.com/">
             &copy; Elrond Network
           </a>
         </small>
