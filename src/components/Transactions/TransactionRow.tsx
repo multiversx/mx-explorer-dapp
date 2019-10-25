@@ -1,4 +1,8 @@
 import React from 'react';
+import moment from 'moment';
+import { faFileCode } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 import { TransactionType } from './index';
 import filters from './../../helpers/filters';
 
@@ -9,41 +13,36 @@ type PropsType = {
 const TransactionRow: React.FC<PropsType> = ({ transaction }) => (
   <tr className="animated fadeIn">
     <td>
-      <a href="/#/tx/{{ tx.hash }}">{filters.truncate(transaction.hash, 20)}</a>
+      <Link to={`/transactions/${transaction.hash}`}>{filters.truncate(transaction.hash, 20)}</Link>
     </td>
     <td>
-      <a href="./#/block/{{ tx.blockHash }}">{filters.truncate(transaction.blockHash, 20)}</a>
+      <Link to={`/block/${transaction.blockHash}`}>
+        {filters.truncate(transaction.blockHash, 20)}
+      </Link>
     </td>
     <td>
-      <span title="{{ tx.timestamp * 1000 | date:'medium' }}">{transaction.timestamp}</span>
+      <span title={moment(transaction.timestamp * 1000).format('MMM DD, YYYY HH:mm:ss A')}>
+        {filters.timestampAge(transaction.timestamp * 1000)}
+      </span>
     </td>
     <td>
-      <a href="/#/shard/{{ tx.senderShard }}/page/1" className="d-inline">
-        {transaction.senderShard}
-      </a>
+      <Link to={`/shard/${transaction.senderShard}/page/1`}>{transaction.senderShard}</Link>
       &gt;
-      <a href="/#/shard/{{ tx.receiverShard }}/page/1" className="d-inline">
-        {transaction.receiverShard}
-      </a>
+      <Link to={`/shard/${transaction.receiverShard}/page/1`}>{transaction.receiverShard}</Link>
     </td>
     <td>
-      <i
-        ng-show="(tx.sender | limitTo : 20) == '00000000000000000000'"
-        className="fa fa-file-code w300 mr-1"
-      />
-      <a
-        href="/#/address/{{ tx.sender}}"
-        ng-show="tx.sender != addressId && checkAddress(tx.sender)"
-      >
-        {transaction.sender}
-      </a>
+      {transaction.sender.includes('00000000000000000000') && (
+        <FontAwesomeIcon icon={faFileCode} className="w300 mr-1" />
+      )}
+      <Link to={`/address/${transaction.sender}`}>{transaction.sender}</Link>
     </td>
     <td>
-      <i
-        ng-show="(tx.receiver | limitTo : 20) == '00000000000000000000'"
-        className="fa fa-file-code w300 mr-1"
-      />
-      <a href="/#/address/{{ tx.receiver}}">{filters.truncate(transaction.receiver, 20)}</a>
+      {transaction.receiver.includes('00000000000000000000') && (
+        <FontAwesomeIcon icon={faFileCode} className="w300 mr-1" />
+      )}
+      <Link to={`/address/${transaction.receiver}`}>
+        {filters.truncate(transaction.receiver, 20)}
+      </Link>
     </td>
     <td>{transaction.value}</td>
   </tr>
