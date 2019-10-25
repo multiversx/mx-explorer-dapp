@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { getTransactions } from './helpers/asyncRequests';
+import { useParams } from 'react-router-dom';
 import { useCountState } from './../../context/context';
 
 import Highlights from './Highlights';
@@ -27,13 +28,15 @@ export type TransactionType = {
 
 const Transactions: React.FC = () => {
   const { elasticUrl } = useCountState();
+  let { page } = useParams();
+  const size = !isNaN(page as any) ? parseInt(page as any) : 1;
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   React.useEffect(() => {
-    getTransactions(elasticUrl).then(data => {
+    getTransactions({ elasticUrl, size }).then(data => {
       const transactionsArray = data.hits.hits.map((transaction: any) => transaction._source);
       setTransactions(transactionsArray);
     });
-  }, [elasticUrl]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, size]); // run the operation only once since the parameter does not change
   return (
     <div>
       <Highlights />

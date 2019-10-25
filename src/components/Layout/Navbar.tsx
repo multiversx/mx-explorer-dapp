@@ -26,7 +26,7 @@ export default function Home() {
               className="nav-item"
               ng-class="{active: locationPath == '/wallet/' || locationPath == '/mywallet/' || locationPath == '/unlock-pem/'}"
             >
-              <Link className="nav-link" to="/transactions">
+              <Link className="nav-link" to="/transactions/page/1">
                 transactions
               </Link>
             </li>

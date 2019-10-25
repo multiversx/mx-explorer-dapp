@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import {
   faExchangeAlt,
   faHourglass,
@@ -8,7 +8,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
 import { getTransaction } from './helpers/asyncRequests';
 import { useCountState } from './../../context/context';
 import { TransactionType } from '../Transactions';

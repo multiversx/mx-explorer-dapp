@@ -13,12 +13,13 @@ const App: React.FC = () => {
       <Router>
         <Layout>
           <Switch>
+            <Route path="/transactions/page/:page">
+              <Transactions />
+            </Route>
             <Route path="/transactions/:transactionId">
               <TransactionDetails />
             </Route>
-            <Route exact path="/transactions">
-              <Transactions />
-            </Route>
+
             <Route path="/validators">
               <Users />
             </Route>

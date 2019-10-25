@@ -1,4 +1,9 @@
-export async function getTransactions(elasticUrl: string) {
+type ParamsType = {
+  elasticUrl: string;
+  size: number;
+};
+
+export async function getTransactions({ elasticUrl, size }: ParamsType) {
   const response = await fetch(`${elasticUrl}/transactions/_search`, {
     method: 'POST',
     headers: {
@@ -7,7 +12,7 @@ export async function getTransactions(elasticUrl: string) {
     body: JSON.stringify({
       query: { match_all: {} },
       sort: { timestamp: { order: 'desc' } },
-      from: 0,
+      from: (size - 1) * 50,
       size: 50,
     }),
   });
