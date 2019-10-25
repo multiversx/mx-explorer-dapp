@@ -3,14 +3,37 @@ import { getTransactions } from './helpers/asyncRequests';
 import { useCountState } from './../../context/context';
 
 import Highlights from './Highlights';
+import TransactionRow from './TransactionRow';
 import Pager from './Pager';
+
+export type TransactionType = {
+  blockHash: string;
+  data: string;
+  gasLimit: number;
+  gasPrice: number;
+  hash: string;
+  miniBlockHash: string;
+  nonce: number;
+  receiver: string;
+  receiverShard: number;
+  round: number;
+  sender: string;
+  senderShard: number;
+  signature: string;
+  status: string;
+  timestamp: number;
+  value: string;
+};
 
 const Transactions: React.FC = () => {
   const { elasticUrl } = useCountState();
-
+  const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   React.useEffect(() => {
-    getTransactions(elasticUrl);
-  });
+    getTransactions(elasticUrl).then(data => {
+      const transactionsArray = data.hits.hits.map((transaction: any) => transaction._source);
+      setTransactions(transactionsArray);
+    });
+  }, [elasticUrl]); // run the operation only once since the parameter does not change
   return (
     <div>
       <Highlights />
@@ -40,46 +63,13 @@ const Transactions: React.FC = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="tx in transactions" className="animated fadeIn">
-                        <td>
-                          <a href="/#/tx/{{ tx.hash }}">5eac5afe3c7170ee5...</a>
-                        </td>
-                        <td>
-                          <a href="./#/block/{{ tx.blockHash }}">bb9266655ac0a1485...</a>
-                        </td>
-                        <td>
-                          <span title="{{ tx.timestamp * 1000 | date:'medium' }}">7 secs ago</span>
-                        </td>
-                        <td>
-                          <a href="/#/shard/{{ tx.senderShard }}/page/1" className="d-inline">
-                            2
-                          </a>
-                          &gt;
-                          <a href="/#/shard/{{ tx.receiverShard }}/page/1" className="d-inline">
-                            4
-                          </a>
-                        </td>
-                        <td>
-                          <i
-                            ng-show="(tx.sender | limitTo : 20) == '00000000000000000000'"
-                            className="fa fa-file-code w300 mr-1"
-                          />
-                          <a
-                            href="/#/address/{{ tx.sender}}"
-                            ng-show="tx.sender != addressId && checkAddress(tx.sender)"
-                          >
-                            Shard 2
-                          </a>
-                        </td>
-                        <td>
-                          <i
-                            ng-show="(tx.receiver | limitTo : 20) == '00000000000000000000'"
-                            className="fa fa-file-code w300 mr-1"
-                          />
-                          <a href="/#/address/{{ tx.receiver}}">aa65ccf14ab88b400...</a>
-                        </td>
-                        <td>0.2000</td>
-                      </tr>
+                      {transactions.map(transaction => (
+                        <TransactionRow
+                          transaction={transaction}
+                          key={transaction.hash + transaction.receiver}
+                        />
+                      ))}
+
                       <tr ng-show="!transactions">
                         <td colSpan={7} className="text-center pt-5 pb-4 border-0">
                           <div className="lds-ellipsis">

@@ -8,7 +8,11 @@ type CountProviderProps = { children: React.ReactNode };
 const CountStateContext = React.createContext<State | undefined>(undefined);
 const CountDispatchContext = React.createContext<Dispatch | undefined>(undefined);
 
-function countReducer(state: State, action: Action): State {
+const initialState: State = {
+  elasticUrl: 'https://elastic-aws.elrond.com',
+};
+
+function countReducer(state: State = initialState, action: Action): State {
   switch (action.type) {
     case 'change': {
       return { elasticUrl: state.elasticUrl };
@@ -20,9 +24,7 @@ function countReducer(state: State, action: Action): State {
 }
 
 function CountProvider({ children }: CountProviderProps) {
-  const [state, dispatch] = React.useReducer(countReducer, {
-    elasticUrl: 'https://elastic-aws.elrond.com',
-  });
+  const [state, dispatch] = React.useReducer(countReducer, initialState);
   return (
     <CountStateContext.Provider value={state}>
       <CountDispatchContext.Provider value={dispatch}>{children}</CountDispatchContext.Provider>

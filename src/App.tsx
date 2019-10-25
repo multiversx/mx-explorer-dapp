@@ -4,6 +4,7 @@ import { CountProvider } from './context/context';
 import Home from './components/Home';
 import Layout from './components/Layout';
 import Transactions from './components/Transactions';
+import TransactionDetails from './components/TransactionDetails';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App: React.FC = () => {
@@ -12,7 +13,10 @@ const App: React.FC = () => {
       <Router>
         <Layout>
           <Switch>
-            <Route path="/transactions">
+            <Route path="/transactions/:transactionId">
+              <TransactionDetails />
+            </Route>
+            <Route exact path="/transactions">
               <Transactions />
             </Route>
             <Route path="/validators">

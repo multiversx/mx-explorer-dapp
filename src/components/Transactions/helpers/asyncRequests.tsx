@@ -1,6 +1,9 @@
 export async function getTransactions(elasticUrl: string) {
   const response = await fetch(`${elasticUrl}/transactions/_search`, {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({
       query: { match_all: {} },
       sort: { timestamp: { order: 'desc' } },
@@ -10,7 +13,6 @@ export async function getTransactions(elasticUrl: string) {
   });
 
   let data = await response.json();
-  console.warn(11, data);
 
   return data;
 }
