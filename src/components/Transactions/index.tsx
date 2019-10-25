@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { getTransactions } from './helpers/asyncRequests';
 import { useParams, Redirect } from 'react-router-dom';
-import { useCountState } from './../../context/context';
+import { useGlobalState } from '../../context';
 
 import Highlights from './Highlights';
 import TransactionRow from './TransactionRow';
@@ -27,7 +27,7 @@ export type TransactionType = {
 };
 
 const Transactions: React.FC = () => {
-  const { elasticUrl } = useCountState();
+  const { elasticUrl } = useGlobalState();
   let { page } = useParams();
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;

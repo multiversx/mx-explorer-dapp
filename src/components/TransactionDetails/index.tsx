@@ -9,7 +9,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 import { getTransaction } from './helpers/asyncRequests';
-import { useCountState } from './../../context/context';
+import { useGlobalState } from '../../context';
 import { TransactionType } from '../Transactions';
 import filters from './../../helpers/filters';
 
@@ -20,7 +20,7 @@ type StateType = {
 
 const TransactionDetails: React.FC = () => {
   let { transactionId } = useParams();
-  const { elasticUrl } = useCountState();
+  const { elasticUrl } = useGlobalState();
   const [transaction, useTransaction] = React.useState<TransactionType | undefined>(undefined);
 
   React.useEffect(() => {

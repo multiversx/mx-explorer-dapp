@@ -1,15 +1,30 @@
 import * as React from 'react';
-import { reducer, ActionType, StateType } from './reducer';
 
+type ActionType = { type: 'change' } | { type: 'decrement' };
 type DispatchType = (action: ActionType) => void;
-
-type GlobalProviderProps = { children: React.ReactNode };
+type StateType = { elasticUrl: string };
+type GlobalContextProviderProps = { children: React.ReactNode };
 
 const GlobalStateContext = React.createContext<StateType | undefined>(undefined);
 const GlobalDispatchContext = React.createContext<DispatchType | undefined>(undefined);
 
-function GlobalContextProvider({ children }: GlobalProviderProps) {
-  const [state, dispatch] = React.useReducer(reducer, { count: 2 });
+const initialState: StateType = {
+  elasticUrl: 'https://elastic-aws.elrond.com',
+};
+
+function globalReducer(state: StateType = initialState, action: ActionType): StateType {
+  switch (action.type) {
+    case 'change': {
+      return { elasticUrl: state.elasticUrl };
+    }
+    default: {
+      throw new Error(`Unhandled action type: ${action.type}`);
+    }
+  }
+}
+
+function GlobalProvider({ children }: GlobalContextProviderProps) {
+  const [state, dispatch] = React.useReducer(globalReducer, initialState);
   return (
     <GlobalStateContext.Provider value={state}>
       <GlobalDispatchContext.Provider value={dispatch}>{children}</GlobalDispatchContext.Provider>
@@ -20,7 +35,7 @@ function GlobalContextProvider({ children }: GlobalProviderProps) {
 function useGlobalState() {
   const context = React.useContext(GlobalStateContext);
   if (context === undefined) {
-    throw new Error('useGlobalState must be used within a GlobalProvider');
+    throw new Error('useCountState must be used within a CountProvider');
   }
   return context;
 }
@@ -28,9 +43,9 @@ function useGlobalState() {
 function useGlobalDispatch() {
   const context = React.useContext(GlobalDispatchContext);
   if (context === undefined) {
-    throw new Error('useGlobalDispatch must be used within a GlobalProvider');
+    throw new Error('useCountDispatch must be used within a CountProvider');
   }
   return context;
 }
 
-export { GlobalContextProvider, useGlobalState, useGlobalDispatch };
+export { GlobalProvider, useGlobalState, useGlobalDispatch };

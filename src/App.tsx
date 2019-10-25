@@ -1,6 +1,6 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
-import { CountProvider } from './context/context';
+import { GlobalProvider } from './context';
 import Home from './components/Home';
 import Layout from './components/Layout';
 import Transactions from './components/Transactions';
@@ -9,7 +9,7 @@ import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App: React.FC = () => {
   return (
-    <CountProvider>
+    <GlobalProvider>
       <Router>
         <Layout>
           <Switch>
@@ -29,7 +29,7 @@ const App: React.FC = () => {
           </Switch>
         </Layout>
       </Router>
-    </CountProvider>
+    </GlobalProvider>
   );
 };
 
