@@ -1,29 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { OverlayTrigger, Popover, Navbar } from 'react-bootstrap';
+import { faNetworkWired, faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import elrondLogo from './../../assets/img/elrond.svg';
 
 export default function Home() {
   return (
-    <nav className="navbar navbar-expand-md">
+    <Navbar collapseOnSelect expand="md">
       <div className="container">
-        <a href="/#/" className="navbar-brand">
+        <Link className="navbar-brand" to="/">
           <img src={elrondLogo} alt="Elrond logo" />
-        </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbars"
-          aria-controls="navbars"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon">
-            <i className="fa fa-bars" />
-            <i className="fa fa-times d-none" />
-          </span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbars">
+        </Link>
+        <Navbar.Toggle aria-controls="navbars" style={{ color: 'black', border: 'none' }}>
+          <FontAwesomeIcon icon={faBars} />
+        </Navbar.Toggle>
+        <Navbar.Collapse id="navbars">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item" ng-class="{active: locationPath == '/'}">
               <Link className="nav-link" to="/">
@@ -34,8 +26,8 @@ export default function Home() {
               className="nav-item"
               ng-class="{active: locationPath == '/wallet/' || locationPath == '/mywallet/' || locationPath == '/unlock-pem/'}"
             >
-              <Link className="nav-link" to="/wallet">
-                wallet
+              <Link className="nav-link" to="/transactions">
+                transactions
               </Link>
             </li>
             <li className="nav-item" ng-class="{active: locationPath.indexOf('validator') >= 0}">
@@ -70,47 +62,31 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <ul
-            className="navbar-nav mr-auto mt-5 d-xs-block d-sm-block d-md-none d-lg-none d-xl-none"
-            ng-controller="parentCtrl"
+          <OverlayTrigger
+            trigger="click"
+            key="popover"
+            placement="bottom"
+            rootClose
+            overlay={
+              <Popover id={`popover-positioned-bottom`}>
+                <Popover.Content>
+                  <Link className="nav-link" to="/validators">
+                    Testnet 1000
+                  </Link>
+                  <Link className="nav-link" to="/wallet">
+                    Cryptobubbles
+                  </Link>
+                </Popover.Content>
+              </Popover>
+            }
           >
-            <li
-              className="nav-item"
-              ng-class="{active: activeNetwork == network.id}"
-              ng-repeat="network in networks"
-            >
-              <a className="nav-link" href="/#/switch/{{network.id}}">
-                {'{'}
-                {'{'}network.name{'}'}
-                {'}'}
-              </a>
-            </li>
-          </ul>
-          <a
-            id="switch"
-            href="#"
-            className="switch d-none d-md-block d-lg-block d-xl-block"
-            data-toggle="popover"
-            data-trigger="focus"
-            data-placement="bottom"
-          >
-            <i className="fa fa-network-wired" />
-          </a>
-          <div id="popover-content-switch" ng-show="false" ng-controller="parentCtrl">
-            <span ng-repeat="network in networks">
-              <a
-                href="/#/switch/{{network.id}}"
-                ng-class="{active: activeNetwork == network.id}"
-                className="mt-1"
-              >
-                {'{'}
-                {'{'}network.name{'}'}
-                {'}'}
-              </a>
-            </span>
-          </div>
-        </div>
+            <a id="switch" href="#" className="switch d-none d-md-block d-lg-block d-xl-block">
+              <i className="fa fa-network-wired" />
+              <FontAwesomeIcon icon={faNetworkWired} />
+            </a>
+          </OverlayTrigger>
+        </Navbar.Collapse>
       </div>
-    </nav>
+    </Navbar>
   );
 }

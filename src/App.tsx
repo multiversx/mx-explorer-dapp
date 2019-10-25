@@ -2,6 +2,7 @@ import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import Home from './components/Home';
 import Layout from './components/Layout';
+import Transactions from './components/Transactions';
 
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -10,8 +11,8 @@ const App: React.FC = () => {
     <Router>
       <Layout>
         <Switch>
-          <Route path="/wallet">
-            <About />
+          <Route path="/transactions">
+            <Transactions />
           </Route>
           <Route path="/validators">
             <Users />
@@ -24,10 +25,6 @@ const App: React.FC = () => {
     </Router>
   );
 };
-
-function About() {
-  return <h2>About</h2>;
-}
 
 function Users() {
   return <h2>Users</h2>;
