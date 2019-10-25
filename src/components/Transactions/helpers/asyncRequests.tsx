@@ -18,6 +18,7 @@ export async function getTransactions({ elasticUrl, size }: ParamsType) {
   });
 
   let data = await response.json();
+  const transactionsArray = data.hits.hits.map((transaction: any) => transaction._source);
 
-  return data;
+  return transactionsArray;
 }

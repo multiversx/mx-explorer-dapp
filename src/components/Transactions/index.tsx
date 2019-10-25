@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getTransactions } from './helpers/asyncRequests';
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
 import { useCountState } from './../../context/context';
 
 import Highlights from './Highlights';
@@ -29,15 +29,14 @@ export type TransactionType = {
 const Transactions: React.FC = () => {
   const { elasticUrl } = useCountState();
   let { page } = useParams();
-  const size = !isNaN(page as any) ? parseInt(page as any) : 1;
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
+  const size = !isNaN(page as any) ? parseInt(page as any) : 1;
+
   React.useEffect(() => {
-    getTransactions({ elasticUrl, size }).then(data => {
-      const transactionsArray = data.hits.hits.map((transaction: any) => transaction._source);
-      setTransactions(transactionsArray);
-    });
+    getTransactions({ elasticUrl, size }).then(setTransactions);
   }, [elasticUrl, size]); // run the operation only once since the parameter does not change
-  return (
+
+  const TransactionsPage = (
     <div>
       <Highlights />
       <div className="container pt-3 pb-3">
@@ -72,17 +71,18 @@ const Transactions: React.FC = () => {
                           key={transaction.hash + transaction.receiver}
                         />
                       ))}
-
-                      <tr ng-show="!transactions">
-                        <td colSpan={7} className="text-center pt-5 pb-4 border-0">
-                          <div className="lds-ellipsis">
-                            <div />
-                            <div />
-                            <div />
-                            <div />
-                          </div>
-                        </td>
-                      </tr>
+                      {transactions.length === 0 && (
+                        <tr>
+                          <td colSpan={7} className="text-center pt-5 pb-4 border-0">
+                            <div className="lds-ellipsis">
+                              <div />
+                              <div />
+                              <div />
+                              <div />
+                            </div>
+                          </td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
@@ -93,6 +93,7 @@ const Transactions: React.FC = () => {
       </div>
     </div>
   );
+  return isNaN(page as any) ? <Redirect to="/transactions/page/1" /> : TransactionsPage;
 };
 
 export default Transactions;

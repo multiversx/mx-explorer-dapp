@@ -18,37 +18,18 @@ type StateType = {
   fee: number;
 };
 
-const initialState = {
-  noTrxFoundTitle: '',
-  fee: 0,
-};
-
 const TransactionDetails: React.FC = () => {
   let { transactionId } = useParams();
   const { elasticUrl } = useCountState();
-  const [state, useState] = React.useState<StateType>(initialState);
   const [transaction, useTransaction] = React.useState<TransactionType | undefined>(undefined);
 
   React.useEffect(() => {
-    if (transactionId)
-      getTransaction(elasticUrl, transactionId)
-        .then(data => {
-          if (!data.found) {
-            useState({ ...state, noTrxFoundTitle: 'Unable to locate this transaction hash' });
-          } else {
-            const transaction: TransactionType = data._source;
-            const fee = transaction.gasPrice * transaction.gasLimit;
-            useState({ ...state, fee });
-            useTransaction(transaction);
-          }
-        })
-        .catch(() => {
-          useState({ ...state, noTrxFoundTitle: 'Unable to locate this transaction hash' });
-        });
-  }, [elasticUrl]); // run the operation only once since the parameter does not change
+    if (transactionId) getTransaction(elasticUrl, transactionId).then(useTransaction);
+  }, [elasticUrl, transactionId]); // run the operation only once since the parameter does not change
+
   return (
     <div className="container pt-3 pb-3">
-      <div ng-show="noTrxFoundTitle == ''" className="row">
+      <div className="row">
         <div className="col-12">
           <h4>Transaction Details</h4>
         </div>
@@ -56,15 +37,15 @@ const TransactionDetails: React.FC = () => {
       <div className="row">
         <div className="col-12">
           <div className="card">
-            {state.noTrxFoundTitle && (
-              <div ng-show="noTrxFoundTitle != ''" className="card-body card-details">
+            {JSON.stringify(transaction) === '{}' && (
+              <div className="card-body card-details">
                 <div className="empty">
                   <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
-                  <span className="h4 empty-heading">{state.noTrxFoundTitle}</span>
+                  <span className="h4 empty-heading">Unable to locate this transaction hash</span>
                 </div>
               </div>
             )}
-            {transaction && (
+            {transaction && JSON.stringify(transaction) !== '{}' && (
               <div className="card-body card-details">
                 <div className="row">
                   <div className="col-lg-2 card-label">Transaction Hash</div>
@@ -136,7 +117,7 @@ const TransactionDetails: React.FC = () => {
                 <hr className="hr-space" />
                 <div className="row">
                   <div className="col-lg-2 card-label">Transaction Fee</div>
-                  <div className="col-lg-10">{state.fee}</div>
+                  <div className="col-lg-10">{transaction.gasPrice * transaction.gasLimit}</div>
                 </div>
                 <hr className="hr-space" />
                 <div className="row">
