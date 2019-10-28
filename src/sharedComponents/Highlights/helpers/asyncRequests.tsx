@@ -1,13 +1,8 @@
+import axios from 'axios';
+
 export async function getStats(elasticUrl: string) {
   try {
-    const response = await fetch(`${elasticUrl}/tps/_doc/meta`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    let data = await response.json();
+    const { data } = await axios.get(`${elasticUrl}/tps/_doc/meta`);
 
     if (!data.found) {
       //toastr.warning("Could not load statistics.", "Oops");

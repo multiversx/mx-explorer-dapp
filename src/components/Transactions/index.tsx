@@ -45,7 +45,7 @@ const Transactions: React.FC = () => {
       <div className="container pt-3 pb-3">
         <div className="row">
           <div className="col-12">
-            <h4>Transactions</h4>
+            <h4 data-testid="title">Transactions</h4>
           </div>
         </div>
         <div className="row">

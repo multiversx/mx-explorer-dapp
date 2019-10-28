@@ -1,13 +1,8 @@
+import axios from 'axios';
+
 export async function getTransaction(elasticUrl: string, transactionId: string) {
   try {
-    const response = await fetch(`${elasticUrl}/transactions/_doc/${transactionId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    let data = await response.json();
+    const { data } = await axios.get(`${elasticUrl}/transactions/_doc/${transactionId}`);
 
     return data._source || {};
   } catch {
