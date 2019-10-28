@@ -33,6 +33,7 @@ const Transactions: React.FC = () => {
   const [totalTransactions, setTotalTransactions] = React.useState<number>(0);
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;
 
+  // https://www.polvara.me/posts/fetching-asynchronous-data-with-react-hooks/
   React.useEffect(() => {
     getTransactions({ elasticUrl, size }).then(setTransactions);
     getTotalTransactions(elasticUrl).then(setTotalTransactions);
