@@ -14,7 +14,7 @@ const mockGet = jest.spyOn(axios, 'get');
 const mockPost = jest.spyOn(axios, 'post');
 
 test('Fetch makes an API call and displays the greeting', async () => {
-  mockPost.mockReturnValue(Promise.resolve(response));
+  mockPost.mockReturnValue(Promise.resolve({ data: response }));
 
   const { queryByTestId } = renderWithRouter({
     route: '/transactions/page/1',
