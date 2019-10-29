@@ -7,7 +7,7 @@ import {
   faChartBar,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGlobalState } from '../../context';
+import { useCurrentTestnet } from '../../context';
 import { getStats } from './helpers/asyncRequests';
 
 type StateType = {
@@ -31,7 +31,7 @@ const initialState = {
 };
 
 const Hightlights: React.FC = () => {
-  const { elasticUrl } = useGlobalState();
+  const { elasticUrl } = useCurrentTestnet();
   const [state, setState] = React.useState<StateType>(initialState);
   let ref = React.useRef(null);
 

@@ -11,7 +11,7 @@ import moment from 'moment';
 import { getTransaction } from './helpers/asyncRequests';
 import Highlights from './../../sharedComponents/Highlights';
 
-import { useGlobalState } from '../../context';
+import { useCurrentTestnet } from '../../context';
 import { TransactionType } from '../Transactions';
 import filters from './../../helpers/filters';
 
@@ -22,7 +22,7 @@ type StateType = {
 
 const TransactionDetails: React.FC = () => {
   let { transactionId } = useParams();
-  const { elasticUrl } = useGlobalState();
+  const { elasticUrl } = useCurrentTestnet();
   const [transaction, useTransaction] = React.useState<TransactionType | undefined>(undefined);
 
   React.useEffect(() => {

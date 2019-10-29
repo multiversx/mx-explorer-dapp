@@ -1,21 +1,17 @@
 import * as React from 'react';
+import initialState, { StateType, defaultTestnet, TestnetType } from './state';
 
 type ActionType = { type: 'change' } | { type: 'decrement' };
 type DispatchType = (action: ActionType) => void;
-type StateType = { elasticUrl: string };
 type GlobalContextProviderProps = { children: React.ReactNode };
 
 const GlobalStateContext = React.createContext<StateType | undefined>(undefined);
 const GlobalDispatchContext = React.createContext<DispatchType | undefined>(undefined);
 
-const initialState: StateType = {
-  elasticUrl: 'https://elastic-aws.elrond.com',
-};
-
 function globalReducer(state: StateType = initialState, action: ActionType): StateType {
   switch (action.type) {
     case 'change': {
-      return { elasticUrl: state.elasticUrl };
+      return state;
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -40,6 +36,20 @@ function useGlobalState() {
   return context;
 }
 
+function useCurrentTestnet(): TestnetType {
+  const context = React.useContext(GlobalStateContext);
+  if (context === undefined) {
+    throw new Error('useCountState must be used within a CountProvider');
+  }
+  const currentTestnetArray = context.config.testnets.filter(testnet => testnet.default);
+  const currentTestnet = currentTestnetArray.pop();
+
+  const returnValue =
+    currentTestnet && currentTestnetArray.length ? currentTestnet : defaultTestnet;
+  console.log(11, returnValue);
+  return returnValue;
+}
+
 function useGlobalDispatch() {
   const context = React.useContext(GlobalDispatchContext);
   if (context === undefined) {
@@ -48,4 +58,4 @@ function useGlobalDispatch() {
   return context;
 }
 
-export { GlobalProvider, useGlobalState, useGlobalDispatch };
+export { GlobalProvider, useGlobalState, useGlobalDispatch, useCurrentTestnet };
