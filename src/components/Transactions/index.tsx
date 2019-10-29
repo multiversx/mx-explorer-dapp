@@ -37,9 +37,7 @@ const Transactions: React.FC = () => {
   // https://www.polvara.me/posts/fetching-asynchronous-data-with-react-hooks/
   React.useEffect(() => {
     getTransactions({ elasticUrl, size }).then(data => {
-      console.log('SUCCESS', data.length);
       if (ref.current !== null) {
-        console.log('SETTING');
         setTransactions(data);
       }
     });
