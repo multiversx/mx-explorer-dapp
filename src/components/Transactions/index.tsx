@@ -27,6 +27,7 @@ export type TransactionType = {
 };
 
 const Transactions: React.FC = () => {
+  let ref = React.useRef(null);
   const { elasticUrl } = useGlobalState();
   let { page } = useParams();
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
@@ -35,12 +36,20 @@ const Transactions: React.FC = () => {
 
   // https://www.polvara.me/posts/fetching-asynchronous-data-with-react-hooks/
   React.useEffect(() => {
-    getTransactions({ elasticUrl, size }).then(setTransactions);
-    getTotalTransactions(elasticUrl).then(setTotalTransactions);
+    getTransactions({ elasticUrl, size }).then(data => {
+      console.log('SUCCESS', data.length);
+      if (ref.current !== null) {
+        console.log('SETTING');
+        setTransactions(data);
+      }
+    });
+    getTotalTransactions(elasticUrl).then(data => {
+      if (ref.current !== null) setTotalTransactions(data);
+    });
   }, [elasticUrl, size]); // run the operation only once since the parameter does not change
 
   const TransactionsPage = (
-    <div>
+    <div ref={ref}>
       <Highlights />
       <div className="container pt-3 pb-3">
         <div className="row">
@@ -58,7 +67,7 @@ const Transactions: React.FC = () => {
                   <span>More than {totalTransactions.toLocaleString('en')} transactions found</span>
                 )}
                 <div className="table-responsive">
-                  <table className="table mt-4">
+                  <table className="table mt-4" data-testid="transactionsTable">
                     <thead>
                       <tr>
                         <th scope="col">Txn Hash</th>

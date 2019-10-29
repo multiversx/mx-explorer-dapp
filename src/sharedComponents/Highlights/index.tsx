@@ -33,20 +33,16 @@ const initialState = {
 const Hightlights: React.FC = () => {
   const { elasticUrl } = useGlobalState();
   const [state, setState] = React.useState<StateType>(initialState);
+  let ref = React.useRef(null);
 
   React.useEffect(() => {
-    getStats(elasticUrl).then(setState);
+    getStats(elasticUrl).then(data => {
+      if (ref.current !== null) setState(data);
+    });
   }, [elasticUrl]); // run the operation only once since the parameter does not change
 
-  //   $scope.currentBlockNumber = statistics.blockNumber.toLocaleString('en');
-  //   $scope.nrOfNodes = statistics.nrOfNodes.toLocaleString('en');
-  //   $scope.nrOfShards = statistics.nrOfShards.toLocaleString('en');
-  //   $scope.roundNumber = statistics.roundNumber.toLocaleString('en');
-  //   $scope.liveTPS = statistics.liveTPS.toLocaleString('en');
-  //   $scope.peakTPS = statistics.peakTPS.toLocaleString('en');
-  //   $scope.totalProcessedTxCount = statistics.totalProcessedTxCount.toLocaleString('en');
   return (
-    <div>
+    <div ref={ref}>
       <div className="bg-blue">
         <div className="container pt-4 pb-4">
           <ul className="highlights row">

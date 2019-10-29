@@ -1,6 +1,6 @@
 import axios from 'axios';
 import '@testing-library/jest-dom/extend-expect';
-import { renderWithRouter, waitForElement, fireEvent } from '../../../utils/test-utils';
+import { renderWithRouter, waitForElement, fireEvent, wait } from '../../../utils/test-utils';
 import response from './_search';
 
 test('Transactions page is displaying', () => {
@@ -10,16 +10,18 @@ test('Transactions page is displaying', () => {
   expect(queryByTestId(/title/)!.innerHTML).toBe('Transactions');
 });
 
-const mock = jest.spyOn(axios, 'get');
+const mockGet = jest.spyOn(axios, 'get');
+const mockPost = jest.spyOn(axios, 'post');
 
 test('Fetch makes an API call and displays the greeting', async () => {
-  mock.mockReturnValueOnce(Promise.resolve(response));
+  mockPost.mockReturnValue(Promise.resolve(response));
 
   const { queryByTestId } = renderWithRouter({
     route: '/transactions/page/1',
   });
 
-  expect(axios.get).toHaveBeenCalledTimes(2);
+  expect(mockGet).toHaveBeenCalledTimes(2);
+  expect(mockGet).toHaveBeenLastCalledWith('https://elastic-aws.elrond.com/tps/_doc/meta');
 
   const nextButton = await waitForElement(() => queryByTestId('nextPageButton'));
   expect(nextButton).toBeInTheDocument();
@@ -29,4 +31,8 @@ test('Fetch makes an API call and displays the greeting', async () => {
 
   const pageNumber = await waitForElement(() => queryByTestId('pageNumber'));
   expect(pageNumber!.innerHTML).toBe('2');
+
+  const table = queryByTestId('transactionsTable');
+  const numberOfRows = table!.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+  expect(numberOfRows).toHaveLength(50);
 });
