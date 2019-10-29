@@ -34,5 +34,5 @@ test('Fetch makes an API call and displays the greeting', async () => {
 
   const table = queryByTestId('transactionsTable');
   const numberOfRows = table!.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-  expect(numberOfRows).toHaveLength(50);
+  expect(numberOfRows).toHaveLength(2);
 });
