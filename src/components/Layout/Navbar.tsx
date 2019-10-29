@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { OverlayTrigger, Popover, Navbar } from 'react-bootstrap';
 import { faNetworkWired, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import elrondLogo from './../../assets/img/elrond.svg';
+import { useGlobalState } from '../../context';
 
 export default function Home() {
+  const { config } = useGlobalState();
+  const changeTestnet = (e: SyntheticEvent, id: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    console.warn(11, id);
+  };
+
   const [expanded, setExpanded] = React.useState(false);
   const onToggle = (isExpanded: boolean) => {
     setExpanded(isExpanded);
@@ -74,12 +83,16 @@ export default function Home() {
             overlay={
               <Popover id={`popover-positioned-bottom`}>
                 <Popover.Content>
-                  <Link className="nav-link" to="/validators">
-                    Testnet 1000
-                  </Link>
-                  <Link className="nav-link" to="/wallet">
-                    Cryptobubbles
-                  </Link>
+                  {config.testnets.map(testnet => (
+                    <a
+                      className="nav-link"
+                      key={testnet.id}
+                      href="/#"
+                      onClick={e => changeTestnet(e, testnet.id)}
+                    >
+                      {testnet.name}
+                    </a>
+                  ))}
                 </Popover.Content>
               </Popover>
             }
