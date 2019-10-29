@@ -44,10 +44,7 @@ function useCurrentTestnet(): TestnetType {
   const currentTestnetArray = context.config.testnets.filter(testnet => testnet.default);
   const currentTestnet = currentTestnetArray.pop();
 
-  const returnValue =
-    currentTestnet && currentTestnetArray.length ? currentTestnet : defaultTestnet;
-  console.log(11, returnValue);
-  return returnValue;
+  return currentTestnet && currentTestnetArray.length ? currentTestnet : defaultTestnet;
 }
 
 function useGlobalDispatch() {

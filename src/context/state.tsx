@@ -71,8 +71,9 @@ export const defaultTestnet = {
 
 const configKey: any = 'CONFIG';
 const windowConfig: ConfigType = window[configKey] as any;
-const requireConfig =
-  process.env.NODE_ENV === 'development' ? require('./../../public/config') : {};
+const requireConfig = ['test', 'development'].includes(process.env.NODE_ENV)
+  ? require('./../../public/config')
+  : {};
 const config = { ...requireConfig, windowConfig };
 const configIsDefined = typeof config !== 'undefined' && Boolean(Object.keys(config)[0]);
 
