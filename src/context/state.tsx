@@ -74,7 +74,8 @@ const windowConfig: ConfigType = window[configKey] as any;
 const requireConfig = ['test', 'development'].includes(process.env.NODE_ENV)
   ? require('./../../public/config')
   : {};
-const config = { ...requireConfig, windowConfig };
+const config = { ...requireConfig, ...windowConfig };
+
 const configIsDefined = typeof config !== 'undefined' && Boolean(Object.keys(config)[0]);
 
 const initialState: StateType = {

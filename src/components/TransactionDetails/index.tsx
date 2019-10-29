@@ -22,7 +22,9 @@ type StateType = {
 
 const TransactionDetails: React.FC = () => {
   let { transactionId } = useParams();
-  const { elasticUrl } = useCurrentTestnet();
+  const { elasticUrl, denomination, decimals } = useCurrentTestnet();
+  console.warn(11, elasticUrl, denomination, decimals);
+
   const [transaction, useTransaction] = React.useState<TransactionType | undefined>(undefined);
 
   React.useEffect(() => {
@@ -119,7 +121,15 @@ const TransactionDetails: React.FC = () => {
                   <hr className="hr-space" />
                   <div className="row">
                     <div className="col-lg-2 card-label">Value</div>
-                    <div className="col-lg-10">{transaction.value} ERD</div>
+                    <div className="col-lg-10">
+                      {filters.denominate({
+                        input: transaction.value,
+                        denomination,
+                        decimals,
+                        showAllDecimals: true,
+                      })}{' '}
+                      ERD
+                    </div>
                   </div>
                   <hr className="hr-space" />
                   <div className="row">

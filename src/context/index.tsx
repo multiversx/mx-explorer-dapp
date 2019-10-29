@@ -42,9 +42,12 @@ function useCurrentTestnet(): TestnetType {
     throw new Error('useCountState must be used within a CountProvider');
   }
   const currentTestnetArray = context.config.testnets.filter(testnet => testnet.default);
-  const currentTestnet = currentTestnetArray.pop();
+  // pop() is mutating the array so we need to destructure it
+  const currentTestnet = [...currentTestnetArray].pop();
 
-  return currentTestnet && currentTestnetArray.length ? currentTestnet : defaultTestnet;
+  const testnet = currentTestnet && currentTestnetArray.length ? currentTestnet : defaultTestnet;
+
+  return testnet;
 }
 
 function useGlobalDispatch() {

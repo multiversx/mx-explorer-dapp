@@ -1,4 +1,5 @@
 import moment from 'moment';
+import denominate from './denominate';
 
 const filters = {
   truncate: function truncate(
@@ -49,6 +50,7 @@ const filters = {
     let diffInMs = dateNow.diff(txtTime);
     return dhms(diffInMs);
   },
+  denominate,
 };
 
 export default filters;
