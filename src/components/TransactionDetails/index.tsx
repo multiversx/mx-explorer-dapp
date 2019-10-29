@@ -23,7 +23,6 @@ type StateType = {
 const TransactionDetails: React.FC = () => {
   let { transactionId } = useParams();
   const { elasticUrl, denomination, decimals } = useCurrentTestnet();
-  console.warn(11, elasticUrl, denomination, decimals);
 
   const [transaction, useTransaction] = React.useState<TransactionType | undefined>(undefined);
 
@@ -127,8 +126,8 @@ const TransactionDetails: React.FC = () => {
                         denomination,
                         decimals,
                         showAllDecimals: true,
-                      })}{' '}
-                      ERD
+                      })}
+                      &nbsp;ERD
                     </div>
                   </div>
                   <hr className="hr-space" />
