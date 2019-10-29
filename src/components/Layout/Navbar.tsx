@@ -1,19 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { OverlayTrigger, Popover, Navbar } from 'react-bootstrap';
-import { faNetworkWired, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faNetworkWired, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import elrondLogo from './../../assets/img/elrond.svg';
 
 export default function Home() {
+  const [expanded, setExpanded] = React.useState(false);
+  const onToggle = (isExpanded: boolean) => {
+    setExpanded(isExpanded);
+  };
   return (
-    <Navbar collapseOnSelect expand="md">
+    <Navbar collapseOnSelect expand="md" onToggle={onToggle} expanded={expanded}>
       <div className="container">
         <Link className="navbar-brand" to="/">
           <img src={elrondLogo} alt="Elrond logo" />
         </Link>
         <Navbar.Toggle aria-controls="navbars" style={{ color: 'black', border: 'none' }}>
-          <FontAwesomeIcon icon={faBars} />
+          {expanded ? <FontAwesomeIcon icon={faTimes} /> : <FontAwesomeIcon icon={faBars} />}
         </Navbar.Toggle>
         <Navbar.Collapse id="navbars">
           <ul className="navbar-nav mr-auto">
@@ -80,10 +84,10 @@ export default function Home() {
               </Popover>
             }
           >
-            <a id="switch" href="#/ceva" className="switch d-none d-md-block d-lg-block d-xl-block">
+            <span id="switch" className="switch d-none d-md-block d-lg-block d-xl-block">
               <i className="fa fa-network-wired" />
               <FontAwesomeIcon icon={faNetworkWired} />
-            </a>
+            </span>
           </OverlayTrigger>
         </Navbar.Collapse>
       </div>

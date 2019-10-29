@@ -574,16 +574,17 @@ main .form-search .form-control:focus {
   }
 }
 
-a.switch {
+span.switch {
   color: rgba(1, 1, 1, 0.4);
   display: inline-block;
 
   &:hover {
     color: rgba(1, 1, 1, 0.8);
+    cursor: pointer;
   }
 }
 
-.navbar a.switch {
+.navbar span.switch {
   margin: 3px 0 0 20px;
 }
 
