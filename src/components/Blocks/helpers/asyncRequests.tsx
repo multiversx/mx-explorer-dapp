@@ -5,13 +5,13 @@ type ParamsType = {
   size: number;
 };
 
-export async function getTransactions({ elasticUrl, size }: ParamsType) {
+export async function getBlocks({ elasticUrl, size }: ParamsType) {
   try {
-    const { data } = await axios.post(`${elasticUrl}/transactions/_search`, {
+    const { data } = await axios.post(`${elasticUrl}/blocks/_search`, {
       query: { match_all: {} },
       sort: { timestamp: { order: 'desc' } },
-      from: (size - 1) * 50,
-      size: 50,
+      from: (size - 1) * 25,
+      size: 25,
     });
 
     const resultsArray = data.hits.hits.map((entry: any) => entry._source);

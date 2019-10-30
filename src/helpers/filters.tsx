@@ -17,6 +17,11 @@ const filters = {
       return String(text).substring(0, length - end.length) + end;
     }
   },
+  sizeFormat: function(size: number): string {
+    if (isNaN(size)) return size.toString();
+    let s = size / 1000;
+    return s.toFixed(3) + ' kB';
+  },
   timestampAge: function(timestamp: number) {
     function dhms(ms: number) {
       let days = Math.floor(ms / (24 * 60 * 60 * 1000));

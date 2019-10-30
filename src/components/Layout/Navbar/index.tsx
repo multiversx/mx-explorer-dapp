@@ -37,8 +37,8 @@ export default function SiteNavbar() {
               </TestnetLink>
             </li>
             <li className="nav-item" ng-class="{active: locationPath.indexOf('validator') >= 0}">
-              <Link className="nav-link" to="/validators">
-                validators
+              <Link className="nav-link" to="/blocks/page/1">
+                blocks
               </Link>
             </li>
           </ul>
