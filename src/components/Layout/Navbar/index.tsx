@@ -5,6 +5,7 @@ import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import elrondLogo from './../../../assets/img/elrond.svg';
 import TestnetSwitcher from './TestnetSwitcher';
+import TestnetLink from './../../../sharedComponents/TestnetLink';
 
 export default function SiteNavbar() {
   const [expanded, setExpanded] = React.useState(false);
@@ -31,9 +32,9 @@ export default function SiteNavbar() {
               className="nav-item"
               ng-class="{active: locationPath == '/wallet/' || locationPath == '/mywallet/' || locationPath == '/unlock-pem/'}"
             >
-              <Link className="nav-link" to="/transactions/page/1">
+              <TestnetLink className="nav-link" to="/transactions/page/1">
                 transactions
-              </Link>
+              </TestnetLink>
             </li>
             <li className="nav-item" ng-class="{active: locationPath.indexOf('validator') >= 0}">
               <Link className="nav-link" to="/validators">

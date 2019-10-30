@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { getTransactions, getTotalTransactions } from './helpers/asyncRequests';
 import { useParams, Redirect } from 'react-router-dom';
-import { useCurrentTestnet } from '../../context';
+import { useGlobalState } from '../../context';
 
 import Highlights from './../../sharedComponents/Highlights';
 import TransactionRow from './TransactionRow';
@@ -28,7 +28,9 @@ export type TransactionType = {
 
 const Transactions: React.FC = () => {
   let ref = React.useRef(null);
-  const { elasticUrl } = useCurrentTestnet();
+  const {
+    activeTestnet: { elasticUrl },
+  } = useGlobalState();
   let { page } = useParams();
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [totalTransactions, setTotalTransactions] = React.useState<number>(0);

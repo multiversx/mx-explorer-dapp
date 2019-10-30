@@ -6,6 +6,8 @@ type ParamsType = {
 };
 
 export async function getTransactions({ elasticUrl, size }: ParamsType) {
+  console.warn(elasticUrl);
+
   try {
     const { data } = await axios.post(`${elasticUrl}/transactions/_search`, {
       query: { match_all: {} },

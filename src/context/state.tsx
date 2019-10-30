@@ -38,6 +38,7 @@ interface ConfigType {
 export interface StateType {
   config: ConfigType;
   activeTestnet: TestnetType;
+  activeTestnetId: string;
 }
 
 const buildInitialConfig = (config: any): ConfigType => {
@@ -84,6 +85,7 @@ const config = configIsDefined ? buildInitialConfig(importedConfig) : buildIniti
 const initialState: StateType = {
   config,
   activeTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
+  activeTestnetId: '',
 };
 
 export default initialState;
