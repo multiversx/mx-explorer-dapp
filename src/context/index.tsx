@@ -1,23 +1,12 @@
 import * as React from 'react';
 import initialState, { StateType, defaultTestnet, TestnetType } from './state';
+import { globalReducer, ActionType } from './reducer';
 
-type ActionType = { type: 'change' } | { type: 'decrement' };
 type DispatchType = (action: ActionType) => void;
 type GlobalContextProviderProps = { children: React.ReactNode };
 
 const GlobalStateContext = React.createContext<StateType | undefined>(undefined);
 const GlobalDispatchContext = React.createContext<DispatchType | undefined>(undefined);
-
-function globalReducer(state: StateType = initialState, action: ActionType): StateType {
-  switch (action.type) {
-    case 'change': {
-      return state;
-    }
-    default: {
-      throw new Error(`Unhandled action type: ${action.type}`);
-    }
-  }
-}
 
 function GlobalProvider({ children }: GlobalContextProviderProps) {
   const [state, dispatch] = React.useReducer(globalReducer, initialState);

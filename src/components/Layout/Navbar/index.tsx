@@ -1,20 +1,12 @@
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { OverlayTrigger, Popover, Navbar } from 'react-bootstrap';
-import { faNetworkWired, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Navbar } from 'react-bootstrap';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import elrondLogo from './../../assets/img/elrond.svg';
-import { useGlobalState } from '../../context';
+import elrondLogo from './../../../assets/img/elrond.svg';
+import TestnetSwitcher from './TestnetSwitcher';
 
-export default function Home() {
-  const { config } = useGlobalState();
-  const changeTestnet = (e: SyntheticEvent, id: string) => {
-    e.preventDefault();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-    console.warn(11, id);
-  };
-
+export default function SiteNavbar() {
   const [expanded, setExpanded] = React.useState(false);
   const onToggle = (isExpanded: boolean) => {
     setExpanded(isExpanded);
@@ -75,33 +67,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <OverlayTrigger
-            trigger="click"
-            key="popover"
-            placement="bottom"
-            rootClose
-            overlay={
-              <Popover id={`popover-positioned-bottom`}>
-                <Popover.Content>
-                  {config.testnets.map(testnet => (
-                    <a
-                      className="nav-link"
-                      key={testnet.id}
-                      href="/#"
-                      onClick={e => changeTestnet(e, testnet.id)}
-                    >
-                      {testnet.name}
-                    </a>
-                  ))}
-                </Popover.Content>
-              </Popover>
-            }
-          >
-            <span id="switch" className="switch d-none d-md-block d-lg-block d-xl-block">
-              <i className="fa fa-network-wired" />
-              <FontAwesomeIcon icon={faNetworkWired} />
-            </span>
-          </OverlayTrigger>
+          <TestnetSwitcher />
         </Navbar.Collapse>
       </div>
     </Navbar>

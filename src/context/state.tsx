@@ -37,6 +37,7 @@ interface ConfigType {
 
 export interface StateType {
   config: ConfigType;
+  activeTestnet: TestnetType;
 }
 
 const buildInitialConfig = (config: any): ConfigType => {
@@ -54,8 +55,8 @@ const buildInitialConfig = (config: any): ConfigType => {
 
 export const defaultTestnet = {
   default: false,
-  id: 'testnet-1036',
-  name: 'Testnet-1036',
+  id: 'default-testnet',
+  name: 'Default Testnet',
   nodeUrl: 'https://wallet-api.elrond.com',
   elasticUrl: 'https://elastic-aws.elrond.com',
   decimals: 0,
@@ -71,15 +72,18 @@ export const defaultTestnet = {
 
 const configKey: any = 'CONFIG';
 const windowConfig: ConfigType = window[configKey] as any;
-const requireConfig = ['test', 'development'].includes(process.env.NODE_ENV)
-  ? require('./../../public/config')
-  : {};
-const config = { ...requireConfig, ...windowConfig };
+const requireConfig = process.env.NODE_ENV === 'test' ? require('./../../public/config') : {};
 
-const configIsDefined = typeof config !== 'undefined' && Boolean(Object.keys(config)[0]);
+const importedConfig = { ...requireConfig, ...windowConfig };
+
+const configIsDefined =
+  typeof importedConfig !== 'undefined' && Boolean(Object.keys(importedConfig)[0]);
+
+const config = configIsDefined ? buildInitialConfig(importedConfig) : buildInitialConfig({});
 
 const initialState: StateType = {
-  config: configIsDefined ? buildInitialConfig(config) : buildInitialConfig({}),
+  config,
+  activeTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
 };
 
 export default initialState;
