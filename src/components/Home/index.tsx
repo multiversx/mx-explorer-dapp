@@ -1,5 +1,19 @@
-import React from 'react';
+import * as React from 'react';
+import Highlights from './../../sharedComponents/Highlights';
 
-export default function Home() {
-  return <h2>Home11</h2>;
-}
+import { useGlobalState } from '../../context';
+
+const TransactionDetails: React.FC = () => {
+  const {
+    activeTestnet: { name },
+  } = useGlobalState();
+
+  return (
+    <>
+      <Highlights />
+      <h1>Home: {name}</h1>
+    </>
+  );
+};
+
+export default TransactionDetails;

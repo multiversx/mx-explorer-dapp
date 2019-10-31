@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { getBlocks } from './helpers/asyncRequests';
 import Highlights from './../../sharedComponents/Highlights';
-import filters from './../../helpers/filters';
+import { timeAgo, truncate, sizeFormat } from './../../helpers';
 import { useGlobalState } from '../../context';
 
 type BlockType = {
@@ -99,7 +99,7 @@ const Blocks: React.FC = () => {
                           </td>
                           <td>
                             <span title="{{ block.timestamp * 1000 | date:'medium' }}">
-                              {filters.timestampAge(block.timestamp * 1000)}
+                              {timeAgo(block.timestamp * 1000)}
                             </span>
                           </td>
                           <td>{block.txCount}</td>
@@ -113,11 +113,9 @@ const Blocks: React.FC = () => {
                               </span>
                             </a>
                           </td>
-                          <td>{filters.sizeFormat(block.size)}</td>
+                          <td>{sizeFormat(block.size)}</td>
                           <td>
-                            <a href="./#/block/{{block.hash}}">
-                              {filters.truncate(block.hash, 20)}
-                            </a>
+                            <a href="./#/block/{{block.hash}}">{truncate(block.hash, 20)}</a>
                           </td>
                         </tr>
                       ))}

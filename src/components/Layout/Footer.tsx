@@ -1,5 +1,7 @@
 import React from 'react';
 
+// TODO: sa citesc active testnet si sa ii fac display
+
 const Footer: React.FC = () => {
   const activeNetworkName: string = 'TODO';
   return (

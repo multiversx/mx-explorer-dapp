@@ -25,6 +25,10 @@ const routes = [
     path: '/blocks/:transactionId',
     component: TransactionDetails,
   },
+  {
+    path: '/',
+    component: Home,
+  },
 ];
 
 const Routes: React.FC = () => {
@@ -51,9 +55,6 @@ const Routes: React.FC = () => {
       ))}
       <Route path="/blocks">
         <Users />
-      </Route>
-      <Route path="/">
-        <Home />
       </Route>
     </Switch>
   );

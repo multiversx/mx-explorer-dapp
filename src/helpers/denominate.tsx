@@ -2,7 +2,7 @@ function format(big: string, den: number, dec: number, showAllDecimals: boolean)
   showAllDecimals = typeof showAllDecimals !== 'undefined' ? showAllDecimals : false;
   const denomination = den;
   const decimals = dec;
-  let array = big.split('');
+  let array = big.toString().split('');
   // make sure we have enough characters
   while (array.length < denomination + 1) {
     array.unshift('0');

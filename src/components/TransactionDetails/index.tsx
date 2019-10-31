@@ -8,17 +8,18 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
+
 import { getTransaction } from './helpers/asyncRequests';
 import Highlights from './../../sharedComponents/Highlights';
-
 import { useGlobalState } from '../../context';
 import { TransactionType } from '../Transactions';
-import filters from './../../helpers/filters';
+import { timeAgo, denominate } from './../../helpers';
 
-type StateType = {
-  noTrxFoundTitle: string;
-  fee: number;
-};
+// TODO: check for empty or failed transaction () & remove Json stringify
+// TODO: transaction.sender.includes -> beginsWith
+// TODO: {moment(transaction.timestamp * 1000).format('MMM DD, YYYY HH:mm:ss A')})
+// extract to helper
+// TODO: componenta de denominate, soct functia de denominate din filtre si o duc la componenta
 
 const TransactionDetails: React.FC = () => {
   let { transactionId } = useParams();
@@ -62,11 +63,10 @@ const TransactionDetails: React.FC = () => {
                   <div className="row">
                     <div className="col-lg-2 card-label">Status</div>
                     <div className="col-lg-10">
-                      {transaction.status !== 'Success' && (
-                        <FontAwesomeIcon icon={faHourglass} className="mr-2" />
-                      )}
-                      {transaction.status === 'Success' && (
+                      {transaction.status === 'Success' ? (
                         <FontAwesomeIcon icon={faCheckCircle} className="mr-2" />
+                      ) : (
+                        <FontAwesomeIcon icon={faHourglass} className="mr-2" />
                       )}
                       {transaction.status}
                     </div>
@@ -76,7 +76,7 @@ const TransactionDetails: React.FC = () => {
                     <div className="col-lg-2 card-label">Timestamp</div>
                     <div className="col-lg-10">
                       <i className="fa fa-clock mr-2" />
-                      {filters.timestampAge(transaction.timestamp * 1000)}
+                      {timeAgo(transaction.timestamp * 1000)}
                       &nbsp;(
                       {moment(transaction.timestamp * 1000).format('MMM DD, YYYY HH:mm:ss A')})
                     </div>
@@ -123,7 +123,7 @@ const TransactionDetails: React.FC = () => {
                   <div className="row">
                     <div className="col-lg-2 card-label">Value</div>
                     <div className="col-lg-10">
-                      {filters.denominate({
+                      {denominate({
                         input: transaction.value,
                         denomination,
                         decimals,

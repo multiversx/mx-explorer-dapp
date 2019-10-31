@@ -1,22 +1,19 @@
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faNetworkWired } from '@fortawesome/free-solid-svg-icons';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useGlobalState, useGlobalDispatch } from '../../../context';
 
 export default function TestnetSwitcher() {
   const globalState = useGlobalState();
-  const dispatch = useGlobalDispatch();
-  const history = useHistory();
 
-  const changeTestnet = (e: SyntheticEvent, testnetId: string) => {
-    e.preventDefault();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-    dispatch({ type: 'changeTestnet', testnetId });
-    history.push('/');
-  };
+  const liksArray = globalState.config.testnets.map(testnet => ({
+    name: testnet.name,
+    to: testnet.id === globalState.defaultTestnet.id ? '' : testnet.id,
+    key: testnet.id,
+  }));
+
   return (
     <OverlayTrigger
       trigger="click"
@@ -26,15 +23,10 @@ export default function TestnetSwitcher() {
       overlay={
         <Popover id="popover-positioned-bottom">
           <Popover.Content>
-            {globalState.config.testnets.map(testnet => (
-              <a
-                className="nav-link"
-                key={testnet.id}
-                href="/#"
-                onClick={e => changeTestnet(e, testnet.id)}
-              >
-                {testnet.name}
-              </a>
+            {liksArray.map(link => (
+              <Link className="nav-link" key={link.key} to={`/${link.to}`}>
+                {link.name}
+              </Link>
             ))}
           </Popover.Content>
         </Popover>

@@ -4,7 +4,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TestnetLink from './../TestnetLink';
 
-const Pager = ({ mainPage }: { mainPage: string }) => {
+const Pager = ({ slug }: { slug: string }) => {
   let { page } = useParams();
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;
 
@@ -20,7 +20,7 @@ const Pager = ({ mainPage }: { mainPage: string }) => {
         </button>
       ) : (
         <TestnetLink
-          to={`/${mainPage}/page/${size - 1}`}
+          to={`/${slug}/page/${size - 1}`}
           className="btn btn-outline-secondary btn-sm"
           data-testid="nextPageButton"
         >
@@ -34,7 +34,7 @@ const Pager = ({ mainPage }: { mainPage: string }) => {
       </span>
       <Link
         data-testid="nextPageButton"
-        to={`/${mainPage}/page/${size + 1}`}
+        to={`/${slug}/page/${size + 1}`}
         className="btn btn-outline-secondary btn-sm"
       >
         <FontAwesomeIcon icon={faChevronRight} />

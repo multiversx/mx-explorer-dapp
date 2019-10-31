@@ -44,7 +44,9 @@ const Transactions: React.FC = () => {
       }
     });
     getTotalTransactions(elasticUrl).then(data => {
-      if (ref.current !== null) setTotalTransactions(data);
+      if (ref.current !== null) {
+        setTotalTransactions(data);
+      }
     });
   }, [elasticUrl, size]); // run the operation only once since the parameter does not change
 
@@ -55,14 +57,13 @@ const Transactions: React.FC = () => {
         <div className="row">
           <div className="col-12">
             <h4 data-testid="title">Transactions</h4>
-            {/* <span data-testid="nextPageButton">ASD</span> */}
           </div>
         </div>
         <div className="row">
           <div className="col-12">
             <div className="card">
               <div className="card-body card-list">
-                <Pager mainPage="transactions" />
+                <Pager slug="transactions" />
                 {totalTransactions > 0 && (
                   <span>More than {totalTransactions.toLocaleString('en')} transactions found</span>
                 )}
@@ -81,10 +82,7 @@ const Transactions: React.FC = () => {
                     </thead>
                     <tbody>
                       {transactions.map(transaction => (
-                        <TransactionRow
-                          transaction={transaction}
-                          key={transaction.hash + transaction.receiver}
-                        />
+                        <TransactionRow transaction={transaction} key={transaction.hash} />
                       ))}
                       {transactions.length === 0 && (
                         <tr>
