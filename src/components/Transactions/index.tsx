@@ -5,7 +5,7 @@ import { useGlobalState } from '../../context';
 
 import Highlights from './../../sharedComponents/Highlights';
 import TransactionRow from './TransactionRow';
-import Pager from './Pager';
+import Pager from './../../sharedComponents/Pager';
 
 export type TransactionType = {
   blockHash: string;
@@ -62,7 +62,7 @@ const Transactions: React.FC = () => {
           <div className="col-12">
             <div className="card">
               <div className="card-body card-list">
-                <Pager />
+                <Pager mainPage="transactions" />
                 {totalTransactions > 0 && (
                   <span>More than {totalTransactions.toLocaleString('en')} transactions found</span>
                 )}
