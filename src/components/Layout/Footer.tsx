@@ -1,14 +1,15 @@
 import React from 'react';
-
-// TODO: sa citesc active testnet si sa ii fac display
+import { useGlobalState } from '../../context';
 
 const Footer: React.FC = () => {
-  const activeNetworkName: string = 'TODO';
+  const {
+    activeTestnet: { name },
+  } = useGlobalState();
   return (
     <footer className="footer">
       <div className="container text-center text-muted">
         <small>
-          {activeNetworkName}
+          {name}
           &nbsp; • &nbsp;
           <a target="_blank" rel="noopener noreferrer" href="https://elrond.com/">
             &copy; Elrond Network
