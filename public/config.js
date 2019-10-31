@@ -35,7 +35,7 @@ const CONFIG = {
       name: 'Crypto Bubbles',
       nodeUrl: 'https://cryptobubbles-api.elrond.com',
       elasticUrl: 'https://elastic-aws-game.elrond.com',
-      numInitCharactersForScAddress: 18,
+      numInitCharactersForScAddress: 17,
       wallet: false,
       validators: false,
       decimals: 0,

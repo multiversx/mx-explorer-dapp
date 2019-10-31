@@ -15,9 +15,9 @@ export default function SiteNavbar() {
   return (
     <Navbar collapseOnSelect expand="md" onToggle={onToggle} expanded={expanded}>
       <div className="container">
-        <Link className="navbar-brand" to="/">
+        <TestnetLink className="navbar-brand" to="/">
           <img src={elrondLogo} alt="Elrond logo" />
-        </Link>
+        </TestnetLink>
         <Navbar.Toggle aria-controls="navbars" style={{ color: 'black', border: 'none' }}>
           {expanded ? <FontAwesomeIcon icon={faTimes} /> : <FontAwesomeIcon icon={faBars} />}
         </Navbar.Toggle>

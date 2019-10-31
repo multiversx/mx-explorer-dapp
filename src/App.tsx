@@ -44,6 +44,7 @@ const Routes: React.FC = () => {
               <Route
                 path={`${url}${route.path}`}
                 key={testnet.id + route.path}
+                exact
                 component={route.component}
               />
             ))

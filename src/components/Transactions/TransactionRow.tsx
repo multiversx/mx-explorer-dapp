@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { faFileCode } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ScAddressIcon from './../../sharedComponents/ScAddressIcon';
 import TestnetLink from './../../sharedComponents/TestnetLink';
 import { TransactionType } from './index';
 import { truncate, timeAgo, denominate } from './../../helpers';
@@ -18,6 +17,8 @@ const TransactionRow: React.FC<PropsType> = ({ transaction }) => {
   const {
     activeTestnet: { denomination, decimals },
   } = useGlobalState();
+
+  console.warn(transaction.receiver);
 
   return (
     <tr className="animated fadeIn">
@@ -46,17 +47,13 @@ const TransactionRow: React.FC<PropsType> = ({ transaction }) => {
         </TestnetLink>
       </td>
       <td>
-        {transaction.sender.startsWith('00000000000000000000') && (
-          <FontAwesomeIcon icon={faFileCode} className="w300 mr-1" />
-        )}
+        <ScAddressIcon value={transaction.sender} />
         <TestnetLink to={`/address/${transaction.sender}`}>
           {truncate(transaction.sender, 20)}
         </TestnetLink>
       </td>
       <td>
-        {transaction.receiver.startsWith('00000000000000000000') && (
-          <FontAwesomeIcon icon={faFileCode} className="w300 mr-1" />
-        )}
+        <ScAddressIcon value={transaction.receiver} />
         <TestnetLink to={`/address/${transaction.receiver}`}>
           {truncate(transaction.receiver, 20)}
         </TestnetLink>
