@@ -10,15 +10,10 @@ type PropsType = {
   transaction: TransactionType;
 };
 
-// TODO: change filters truncate to truncate
-// TODO: transaction.sender.includes('00000000000000000000') -> beginsWith
-
 const TransactionRow: React.FC<PropsType> = ({ transaction }) => {
   const {
     activeTestnet: { denomination, decimals },
   } = useGlobalState();
-
-  console.warn(transaction.receiver);
 
   return (
     <tr className="animated fadeIn">

@@ -81,7 +81,12 @@ const configIsDefined =
 const config = configIsDefined ? buildInitialConfig(importedConfig) : buildInitialConfig({});
 
 const initialState: StateType = {
-  config,
+  config: {
+    ...config,
+    testnets: config.testnets.sort((first, second) =>
+      first.default === second.default ? 0 : first ? -1 : 1
+    ),
+  },
   defaultTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
   activeTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
   activeTestnetId: '',
