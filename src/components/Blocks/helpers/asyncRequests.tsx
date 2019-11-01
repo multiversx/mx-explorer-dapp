@@ -14,17 +14,36 @@ export async function getBlocks({ elasticUrl, size }: ParamsType) {
       size: 25,
     });
 
-    const resultsArray = data.hits.hits.map((entry: any) => entry._source);
+    const { hits } = data;
+    const blocks = hits.hits.map((block: any) => block._source);
 
-    return resultsArray;
+    let min = blocks[0].nonce;
+    let max = min;
+    for (let block in blocks) {
+      if (blocks[block].nonce < min) min = blocks[block].nonce;
+
+      if (blocks[block].nonce > max) max = blocks[block].nonce;
+    }
+
+    const startBlockNr = min;
+    const endBlockNr = max;
+    return {
+      blocks,
+      startBlockNr,
+      endBlockNr,
+    };
   } catch (err) {
-    return [];
+    return {
+      blocks: [],
+      startBlockNr: 0,
+      endBlockNr: 0,
+    };
   }
 }
 
-export async function getTotalTransactions(elasticUrl: string) {
+export async function getTotalBlocks(elasticUrl: string) {
   try {
-    const { data } = await axios.post(`${elasticUrl}/transactions/_count`, {
+    const { data } = await axios.post(`${elasticUrl}/blocks/_count`, {
       query: { match_all: {} },
     });
 

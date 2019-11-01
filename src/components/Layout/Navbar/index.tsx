@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import elrondLogo from './../../../assets/img/elrond.svg';
 import TestnetSwitcher from './TestnetSwitcher';
@@ -63,7 +63,7 @@ export default function SiteNavbar() {
               />
               <div className="input-group-append">
                 <button type="submit" className="input-group-text">
-                  <i className="fa fa-search" />
+                  <FontAwesomeIcon icon={faSearch} />
                 </button>
               </div>
             </div>

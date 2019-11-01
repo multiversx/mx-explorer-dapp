@@ -33,7 +33,6 @@ export default function TestnetSwitcher() {
       }
     >
       <span id="switch" className="switch d-none d-md-block d-lg-block d-xl-block">
-        <i className="fa fa-network-wired" />
         <FontAwesomeIcon icon={faNetworkWired} />
       </span>
     </OverlayTrigger>

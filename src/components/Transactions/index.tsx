@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { getTransactions, getTotalTransactions } from './helpers/asyncRequests';
 import { useParams, Redirect } from 'react-router-dom';
 import { useGlobalState } from '../../context';
-
-import Highlights from './../../sharedComponents/Highlights';
+import { getTransactions, getTotalTransactions } from './helpers/asyncRequests';
+import { Highlights, Pager } from './../../sharedComponents';
 import TransactionRow from './TransactionRow';
-import Pager from './../../sharedComponents/Pager';
 
 export type TransactionType = {
   blockHash: string;
@@ -38,16 +36,12 @@ const Transactions: React.FC = () => {
 
   // https://www.polvara.me/posts/fetching-asynchronous-data-with-react-hooks/
   React.useEffect(() => {
-    getTransactions({ elasticUrl, size }).then(data => {
-      if (ref.current !== null) {
-        setTransactions(data);
-      }
-    });
-    getTotalTransactions(elasticUrl).then(data => {
-      if (ref.current !== null) {
-        setTotalTransactions(data);
-      }
-    });
+    getTransactions({ elasticUrl, size }).then(
+      data => ref.current !== null && setTransactions(data)
+    );
+    getTotalTransactions(elasticUrl).then(
+      data => ref.current !== null && setTotalTransactions(data)
+    );
   }, [elasticUrl, size]); // run the operation only once since the parameter does not change
 
   const TransactionsPage = (

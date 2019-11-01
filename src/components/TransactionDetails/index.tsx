@@ -13,23 +13,28 @@ import { useGlobalState } from '../../context';
 import { TransactionType } from '../Transactions';
 import { dateFormatted } from './../../helpers';
 
-// TODO: check for empty or failed transaction () & remove Json stringify
 // TODO: remove Angular logic
 
 const TransactionDetails: React.FC = () => {
   let { transactionId } = useParams();
+  let ref = React.useRef(null);
+
   const {
     activeTestnet: { elasticUrl },
   } = useGlobalState();
 
-  const [transaction, useTransaction] = React.useState<TransactionType | undefined>(undefined);
+  const [transaction, setTransaction] = React.useState<TransactionType | undefined>(undefined);
 
   React.useEffect(() => {
-    if (transactionId) getTransaction(elasticUrl, transactionId).then(useTransaction);
+    if (transactionId) {
+      getTransaction(elasticUrl, transactionId).then(
+        data => ref.current !== null && setTransaction(data)
+      );
+    }
   }, [elasticUrl, transactionId]); // run the operation only once since the parameter does not change
 
   return (
-    <>
+    <div ref={ref}>
       <Highlights />
       <div className="container pt-3 pb-3">
         <div className="row">
@@ -40,7 +45,7 @@ const TransactionDetails: React.FC = () => {
         <div className="row">
           <div className="col-12">
             <div className="card">
-              {JSON.stringify(transaction) === '{}' && (
+              {Object.keys(transaction || {}).length === 0 && (
                 <div className="card-body card-details">
                   <div className="empty">
                     <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
@@ -48,7 +53,7 @@ const TransactionDetails: React.FC = () => {
                   </div>
                 </div>
               )}
-              {transaction && JSON.stringify(transaction) !== '{}' && (
+              {transaction && Object.keys(transaction || {}).length !== 0 && (
                 <div className="card-body card-details">
                   <div className="row">
                     <div className="col-lg-2 card-label">Transaction Hash</div>
@@ -144,7 +149,7 @@ const TransactionDetails: React.FC = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
