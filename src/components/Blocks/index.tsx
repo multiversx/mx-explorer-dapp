@@ -5,7 +5,7 @@ import { Highlights, TimeAgo, Pager, TestnetLink } from './../../sharedComponent
 import { truncate, sizeFormat } from './../../helpers';
 import { useGlobalState } from '../../context';
 
-type BlockType = {
+export type BlockType = {
   hash: string;
   nonce: number;
   prevHash: string;

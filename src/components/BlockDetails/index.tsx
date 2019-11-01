@@ -1,37 +1,60 @@
 import * as React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import {
-  faExchangeAlt,
-  faHourglass,
-  faCheckCircle,
-  faClock,
-} from '@fortawesome/free-solid-svg-icons';
+import { useParams } from 'react-router-dom';
+import { faChevronLeft, faChevronRight, faCube, faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ScAddressIcon, Denominate, TimeAgo, Highlights } from '../../sharedComponents';
+import { TimeAgo, Highlights, TestnetLink } from '../../sharedComponents';
 import { getTransaction } from './helpers/asyncRequests';
 import { useGlobalState } from '../../context';
-import { TransactionType } from '../Transactions';
-import { dateFormatted } from '../../helpers';
+import { BlockType } from '../Blocks';
+import { dateFormatted, sizeFormat, truncate } from '../../helpers';
 
-// TODO: remove Angular logic
+export type StateType = {
+  block: BlockType;
+  proposer: string;
+  consensusItems: string[];
+  nextHash: string;
+};
+
+export const initialState = {
+  block: {
+    hash: '',
+    nonce: 0,
+    prevHash: '',
+    proposer: 0,
+    pubKeyBitmap: '',
+    round: 0,
+    shardId: 0,
+    size: 0,
+    stateRootHash: '',
+    timestamp: 0,
+    txCount: 0,
+    validators: [],
+  },
+  proposer: '',
+  consensusItems: [],
+  nextHash: '',
+};
 
 const BlockDetails: React.FC = () => {
-  let { transactionId } = useParams();
+  let { blockId } = useParams();
   let ref = React.useRef(null);
+  const noBlockFoundTitle = '';
 
   const {
     activeTestnet: { elasticUrl },
   } = useGlobalState();
 
-  const [transaction, setTransaction] = React.useState<TransactionType | undefined>(undefined);
+  const [state, setState] = React.useState<StateType>(initialState);
 
   React.useEffect(() => {
-    if (transactionId) {
-      getTransaction(elasticUrl, transactionId).then(
-        data => ref.current !== null && setTransaction(data)
-      );
+    if (blockId) {
+      getTransaction(elasticUrl, blockId).then(data => ref.current !== null && setState(data));
     }
-  }, [elasticUrl, transactionId]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, blockId]); // run the operation only once since the parameter does not change
+
+  const { block, proposer, consensusItems, nextHash } = state;
+
+  console.warn(nextHash);
 
   return (
     <div ref={ref}>
@@ -45,158 +68,123 @@ const BlockDetails: React.FC = () => {
         <div className="row">
           <div className="col-12">
             <div className="card">
-              <div ng-show="noBlockFoundTitle != ''" className="card-body card-details">
-                <div className="empty">
-                  <i className="fa fa-cube empty-icon" />
-                  <span className="h4 empty-heading">
-                    {'{'}
-                    {'{'}noBlockFoundTitle{'}'}
-                    {'}'}
-                  </span>
-                  <span className="empty-details">
-                    {'{'}
-                    {'{'}noBlockFoundDescription{'}'}
-                    {'}'}
-                  </span>
-                </div>
-              </div>
-              <div ng-show="noBlockFoundTitle == ''" className="card-body card-details">
-                <div className="row">
-                  <div className="col-lg-2 card-label">Block Height</div>
-                  <div className="col-lg-10">
-                    {'{'}
-                    {'{'}number{'}'}
-                    {'}'}
-                    <a
-                      href="./#/block/{{ prevHash }}"
-                      className="btn btn-outline-secondary btn-sm"
-                      title="View previous block"
-                    >
-                      <i className="fa fa-chevron-left" />
-                    </a>
-                    <a
-                      href="./#/block/{{ nextHash }}"
-                      className="btn btn-outline-secondary btn-sm"
-                      ng-class="{disabled: nextHash == '' }"
-                      title="View next block"
-                    >
-                      <i className="fa fa-chevron-right" />
-                    </a>
+              {noBlockFoundTitle !== '' ? (
+                <div className="card-body card-details">
+                  <div className="empty">
+                    <FontAwesomeIcon icon={faCube} className="empty-icon" />
+                    <span className="h4 empty-heading">{noBlockFoundTitle}</span>
+                    <span className="empty-details">{blockId}</span>
                   </div>
                 </div>
-                <hr className="hr-space" />
-                <div className="row">
-                  <div className="col-lg-2 card-label">Timestamp</div>
-                  <div className="col-lg-10">
-                    &nbsp;
-                    <i className="fa fa-clock mr-2" />
-                    {'{'}
-                    {'{'} timestamp ? (timestamp * 1000 | timestampAge) : '' {'}'}
-                    {'}'}
-                    {'{'}
-                    {'{'} transaction.timestamp ? '(' + (transaction.timestamp * 1000 |
-                    date:'medium') + ')' : '' {'}'}
-                    {'}'}
+              ) : (
+                <div className="card-body card-details">
+                  <div className="row">
+                    <div className="col-lg-2 card-label">Block Height</div>
+                    <div className="col-lg-10">
+                      {block.nonce}
+                      &nbsp;
+                      <TestnetLink
+                        to={`/blocks/${block.prevHash}`}
+                        className="btn btn-outline-secondary btn-sm"
+                        title="View previous block"
+                      >
+                        <FontAwesomeIcon icon={faChevronLeft} />
+                      </TestnetLink>
+                      &nbsp;
+                      <TestnetLink
+                        to={`/blocks/${nextHash}`}
+                        className="btn btn-outline-secondary btn-sm"
+                        title="View next block"
+                      >
+                        <FontAwesomeIcon icon={faChevronRight} />
+                      </TestnetLink>
+                    </div>
+                  </div>
+                  <hr className="hr-space" />
+                  <div className="row">
+                    <div className="col-lg-2 card-label">Timestamp</div>
+                    <div className="col-lg-10">
+                      &nbsp;
+                      <FontAwesomeIcon icon={faClock} className="mr-2" />
+                      <TimeAgo value={block.timestamp} />
+                      &nbsp;({dateFormatted(block.timestamp)})
+                    </div>
+                  </div>
+                  <hr className="hr-space" />
+                  <div className="row">
+                    <div className="col-lg-2 card-label">Transactions</div>
+                    <div className="col-lg-10">{block.txCount + ' transactions in this block'}</div>
+                  </div>
+                  <hr className="hr-space" />
+                  <div className="row">
+                    <div className="col-lg-2 card-label">Shard ID</div>
+                    <div className="col-lg-10">
+                      <TestnetLink to={`/shards/${block.shardId}/page/1`}>
+                        {block.shardId}
+                      </TestnetLink>
+                    </div>
+                  </div>
+                  <hr className="hr-space" />
+                  <div className="row">
+                    <div className="col-lg-2 card-label">Size</div>
+                    <div className="col-lg-10">{sizeFormat(block.size)}</div>
+                  </div>
+                  <hr className="hr-space" />
+                  <div className="row">
+                    <div className="col-lg-2 card-label">Proposer</div>
+                    <div className="col-lg-10">
+                      {proposer === '' ? (
+                        <span className="text-muted">N/A</span>
+                      ) : (
+                        <TestnetLink to={`/validator/${proposer}`}>
+                          {truncate(proposer, 100)}
+                        </TestnetLink>
+                      )}
+                    </div>
+                  </div>
+                  <hr className="hr-space" />
+                  <div className="row">
+                    <div className="col-lg-2 card-label">Consensus group</div>
+                    <div className="col-lg-10">
+                      {consensusItems.length === 0 ? (
+                        <span className="text-muted">N/A</span>
+                      ) : (
+                        <>
+                          {consensusItems.map(item => (
+                            <TestnetLink className="hash" key={item} to={`/validator/${item}`}>
+                              {truncate(item, 100)}
+                            </TestnetLink>
+                          ))}
+                        </>
+                      )}
+                    </div>
+                  </div>
+                  <hr className="hr-space" />
+                  <div className="row">
+                    <div className="col-lg-2 card-label">Block Hash</div>
+                    <div className="col-lg-10">{block.hash}</div>
+                  </div>
+                  <hr className="hr-space" />
+                  <div className="row">
+                    <div className="col-lg-2 card-label">State Root Hash</div>
+                    <div className="col-lg-10">{block.stateRootHash}</div>
+                  </div>
+                  <hr className="hr-space" />
+                  <div className="row">
+                    <div className="col-lg-2 card-label">Previous Hash</div>
+                    <div className="col-lg-10">
+                      <TestnetLink className="hash" to={`/block/${block.prevHash}`}>
+                        {block.prevHash}
+                      </TestnetLink>
+                    </div>
+                  </div>
+                  <hr className="hr-space" />
+                  <div className="row">
+                    <div className="col-lg-2 card-label">Public Keys Bitmap</div>
+                    <div className="col-lg-10">{block.pubKeyBitmap}</div>
                   </div>
                 </div>
-                <hr className="hr-space" />
-                <div className="row">
-                  <div className="col-lg-2 card-label">Transactions</div>
-                  <div className="col-lg-10">
-                    {'{'}
-                    {'{'}txCount{'}'}
-                    {'}'}
-                  </div>
-                </div>
-                <hr className="hr-space" />
-                <div className="row">
-                  <div className="col-lg-2 card-label">Shard ID</div>
-                  <div className="col-lg-10">
-                    <a href="/#/shard/{{ shardId }}/page/1">
-                      {'{'}
-                      {'{'} shardId {'}'}
-                      {'}'}
-                    </a>
-                  </div>
-                </div>
-                <hr className="hr-space" />
-                <div className="row">
-                  <div className="col-lg-2 card-label">Size</div>
-                  <div className="col-lg-10">
-                    {'{'}
-                    {'{'}size | sizeFormat{'}'}
-                    {'}'}
-                  </div>
-                </div>
-                <hr className="hr-space" />
-                <div className="row">
-                  <div className="col-lg-2 card-label">Proposer</div>
-                  <div className="col-lg-10">
-                    <span className="text-muted" ng-show="!proposer">
-                      N/A
-                    </span>
-                    <a href="#/validator/{{proposer}}" ng-show="proposer">
-                      {'{'}
-                      {'{'}proposer | truncate : 100{'}'}
-                      {'}'}
-                    </a>
-                  </div>
-                </div>
-                <hr className="hr-space" />
-                <div className="row">
-                  <div className="col-lg-2 card-label">Consensus group</div>
-                  <div className="col-lg-10">
-                    <span className="text-muted" ng-show="consensusItems.length == 0">
-                      N/A
-                    </span>
-                    <span ng-repeat="item in consensusItems">
-                      <a href="#/validator/{{item}}" ng-show="item" className="hash">
-                        {'{'}
-                        {'{'}item | truncate : 100{'}'}
-                        {'}'}
-                      </a>
-                    </span>
-                  </div>
-                </div>
-                <hr className="hr-space" />
-                <div className="row">
-                  <div className="col-lg-2 card-label">Block Hash</div>
-                  <div className="col-lg-10">
-                    {'{'}
-                    {'{'} hash {'}'}
-                    {'}'}
-                  </div>
-                </div>
-                <hr className="hr-space" />
-                <div className="row">
-                  <div className="col-lg-2 card-label">State Root Hash</div>
-                  <div className="col-lg-10">
-                    {'{'}
-                    {'{'} stateRootHash {'}'}
-                    {'}'}
-                  </div>
-                </div>
-                <hr className="hr-space" />
-                <div className="row">
-                  <div className="col-lg-2 card-label">Previous Hash</div>
-                  <div className="col-lg-10">
-                    <a href="./#/block/{{ prevHash }}">
-                      {'{'}
-                      {'{'} prevHash {'}'}
-                      {'}'}
-                    </a>
-                  </div>
-                </div>
-                <hr className="hr-space" />
-                <div className="row">
-                  <div className="col-lg-2 card-label">Public Keys Bitmap</div>
-                  <div className="col-lg-10">
-                    {'{'}
-                    {'{'} pubKeyBitmap {'}'}
-                    {'}'}
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

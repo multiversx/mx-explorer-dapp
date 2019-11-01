@@ -18,7 +18,7 @@ const routes = [
     component: Blocks,
   },
   {
-    path: '/blocks/:transactionId',
+    path: '/blocks/:blockId',
     component: BlockDetails,
   },
   {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { OverlayTrigger, Popover, Accordion, Card, Nav } from 'react-bootstrap';
+import { OverlayTrigger, Popover, Accordion, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faNetworkWired, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
@@ -19,7 +19,6 @@ export default function TestnetSwitcher() {
       <ul className="navbar-nav mr-auto d-xs-block d-sm-block d-md-none d-lg-none d-xl-none">
         <li className="nav-item">
           <Accordion>
-            {/* <CustomToggle eventKey="0">testnets</CustomToggle> */}
             <Accordion.Toggle as={Nav.Link} eventKey="0">
               testnets
               <FontAwesomeIcon icon={faCaretDown} />
@@ -27,8 +26,8 @@ export default function TestnetSwitcher() {
             <Accordion.Collapse eventKey="0">
               <ul className="navbar-nav">
                 {liksArray.map(link => (
-                  <li className="nav-item">
-                    <Link className="nav-link" key={link.key} to={`/${link.to}`}>
+                  <li className="nav-item" key={link.key}>
+                    <Link className="nav-link" to={`/${link.to}`}>
                       {link.name}
                     </Link>
                   </li>
