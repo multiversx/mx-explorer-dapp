@@ -5,5 +5,5 @@ import App from './App';
 
 it('shows validators in navbar', () => {
   const { getByText } = render(<App />);
-  expect(getByText('transactions')).toBeInTheDocument();
+  expect(getByText('validators')).toBeInTheDocument();
 });

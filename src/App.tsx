@@ -1,35 +1,9 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import { GlobalProvider, useGlobalState } from './context';
-import Home from './components/Home';
 import Layout from './components/Layout';
-import Transactions from './components/Transactions';
-import Blocks from './components/Blocks';
-import TransactionDetails from './components/TransactionDetails';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
-
-const routes = [
-  {
-    path: '/transactions/page/:page',
-    component: Transactions,
-  },
-  {
-    path: '/transactions/:transactionId',
-    component: TransactionDetails,
-  },
-  {
-    path: '/blocks/page/:page',
-    component: Blocks,
-  },
-  {
-    path: '/blocks/:transactionId',
-    component: TransactionDetails,
-  },
-  {
-    path: '/',
-    component: Home,
-  },
-];
+import routes from './routes';
 
 const Routes: React.FC = () => {
   const { config } = useGlobalState();

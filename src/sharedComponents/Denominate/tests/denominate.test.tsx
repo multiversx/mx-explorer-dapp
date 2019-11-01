@@ -1,4 +1,4 @@
-import { denominate } from './../';
+import { denominate } from './../denominate';
 
 describe('denomination 4,4', () => {
   const numbers: { [key: string]: string } = {

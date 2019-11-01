@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { getBlocks, getTotalBlocks } from './helpers/asyncRequests';
-import { Highlights, TimeAgo, Pager } from './../../sharedComponents';
+import { Highlights, TimeAgo, Pager, TestnetLink } from './../../sharedComponents';
 import { truncate, sizeFormat } from './../../helpers';
 import { useGlobalState } from '../../context';
 
@@ -62,7 +62,7 @@ const Blocks: React.FC = () => {
             <div className="card">
               <div className="card-body card-list">
                 <Pager slug="blocks" />
-                {state.startBlockNr && `Block #${state.startBlockNr} to #${state.endBlockNr}`}
+                {state.startBlockNr > 0 && `Block #${state.startBlockNr} to #${state.endBlockNr}`}
                 &nbsp;
                 {totalBlocks > 0 && `(Total of ${totalBlocks.toLocaleString('en')} blocks)`}
                 <div className="table-responsive">
@@ -85,7 +85,7 @@ const Blocks: React.FC = () => {
                           key={block.hash}
                         >
                           <td>
-                            <a href="/#/block/{{ block.hash }}">{block.nonce}</a>
+                            <TestnetLink to={`/blocks/${block.hash}`}>{block.nonce}</TestnetLink>
                           </td>
                           <td>
                             <span title="{{ block.timestamp * 1000 | date:'medium' }}">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
 import { faBars, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,6 +12,8 @@ export default function SiteNavbar() {
   const onToggle = (isExpanded: boolean) => {
     setExpanded(isExpanded);
   };
+  const { pathname } = useLocation();
+
   return (
     <Navbar collapseOnSelect expand="md" onToggle={onToggle} expanded={expanded}>
       <div className="container">
@@ -32,42 +34,40 @@ export default function SiteNavbar() {
               className="nav-item"
               ng-class="{active: locationPath == '/wallet/' || locationPath == '/mywallet/' || locationPath == '/unlock-pem/'}"
             >
-              <TestnetLink className="nav-link" to="/transactions/page/1">
-                transactions
+              <TestnetLink className="nav-link" to="/validators/page/1">
+                validators
               </TestnetLink>
             </li>
-            <li className="nav-item" ng-class="{active: locationPath.indexOf('validator') >= 0}">
-              <Link className="nav-link" to="/blocks/page/1">
-                blocks
-              </Link>
-            </li>
           </ul>
-          <div
-            className="form-search"
-            ng-show="locationPath!='/'"
-            ng-controller="processRequestCtrl"
-            ng-submit="processRequest()"
-            role="search"
-          >
+          {pathname !== '/' && (
             <div
-              className="input-group input-group-seamless float-right"
-              style={{ maxWidth: '23rem' }}
+              className="form-search"
+              ng-show="locationPath!='/'"
+              ng-controller="processRequestCtrl"
+              ng-submit="processRequest()"
+              role="search"
             >
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Search by Address / Txn Hash / Block Hash"
-                name="requestType"
-                required
-                ng-model="hashRequest"
-              />
-              <div className="input-group-append">
-                <button type="submit" className="input-group-text">
-                  <FontAwesomeIcon icon={faSearch} />
-                </button>
+              <div
+                className="input-group input-group-seamless float-right"
+                style={{ maxWidth: '23rem' }}
+              >
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search by Address / Txn Hash / Block Hash"
+                  name="requestType"
+                  required
+                  ng-model="hashRequest"
+                />
+                <div className="input-group-append">
+                  <button type="submit" className="input-group-text">
+                    <FontAwesomeIcon icon={faSearch} />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          )}
+
           <TestnetSwitcher />
         </Navbar.Collapse>
       </div>
