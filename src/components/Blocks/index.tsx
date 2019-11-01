@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { getBlocks } from './helpers/asyncRequests';
-import Highlights from './../../sharedComponents/Highlights';
-import { timeAgo, truncate, sizeFormat } from './../../helpers';
+import { Highlights, TimeAgo } from './../../sharedComponents';
+import { truncate, sizeFormat } from './../../helpers';
 import { useGlobalState } from '../../context';
 
 type BlockType = {
@@ -99,7 +99,7 @@ const Blocks: React.FC = () => {
                           </td>
                           <td>
                             <span title="{{ block.timestamp * 1000 | date:'medium' }}">
-                              {timeAgo(block.timestamp * 1000)}
+                              <TimeAgo value={block.timestamp} />
                             </span>
                           </td>
                           <td>{block.txCount}</td>

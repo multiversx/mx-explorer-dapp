@@ -83,9 +83,13 @@ const config = configIsDefined ? buildInitialConfig(importedConfig) : buildIniti
 const initialState: StateType = {
   config: {
     ...config,
-    testnets: config.testnets.sort((first, second) =>
-      first.default === second.default ? 0 : first ? -1 : 1
-    ),
+    testnets: config.testnets
+      .sort((a, b) => {
+        const defaultA = a.default ? 1 : 0;
+        const defaultB = b.default ? 1 : 0;
+        return defaultA - defaultB;
+      })
+      .reverse(),
   },
   defaultTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
   activeTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,

@@ -2,9 +2,6 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useGlobalState, useGlobalDispatch } from '../../context';
 
-// TODO: daca e testnet-ul DEFAULT sa stearga
-// din context si sa fie tot timpul primul in lista asta
-
 export default function TestnetRouter() {
   const globalState = useGlobalState();
   const dispatch = useGlobalDispatch();
@@ -16,7 +13,6 @@ export default function TestnetRouter() {
 
   React.useEffect(() => {
     const allTestnetIds = globalState.config.testnets.map(testnet => testnet.id);
-    console.warn(11, testnetId, testnetId === 'cryptobubbles');
 
     if (allTestnetIds.includes(testnetId) && globalState.activeTestnetId !== testnetId) {
       // if route contains a testnet at the beginning replace the testnet
@@ -28,7 +24,7 @@ export default function TestnetRouter() {
       // if selected testnet is the same as the default, reset the default
       dispatch({ type: 'changeTestnet', testnetId: '' });
     }
-  }, [testnetId]);
+  }, [testnetId, dispatch, globalState]);
 
   return <></>;
 }

@@ -1,6 +1,5 @@
 import truncate from './truncate';
-import denominate from './denominate';
-import timeAgo from './timeAgo';
 import sizeFormat from './sizeFormat';
+import dateFormatted from './dateFormatted';
 
-export { truncate, denominate, timeAgo, sizeFormat };
+export { truncate, sizeFormat, dateFormatted };

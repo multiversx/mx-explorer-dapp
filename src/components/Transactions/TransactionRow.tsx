@@ -1,20 +1,13 @@
 import React from 'react';
-import moment from 'moment';
-import ScAddressIcon from './../../sharedComponents/ScAddressIcon';
-import TestnetLink from './../../sharedComponents/TestnetLink';
+import { ScAddressIcon, TestnetLink, Denominate, TimeAgo } from './../../sharedComponents';
 import { TransactionType } from './index';
-import { truncate, timeAgo, denominate } from './../../helpers';
-import { useGlobalState } from '../../context';
+import { truncate, dateFormatted } from './../../helpers';
 
 type PropsType = {
   transaction: TransactionType;
 };
 
 const TransactionRow: React.FC<PropsType> = ({ transaction }) => {
-  const {
-    activeTestnet: { denomination, decimals },
-  } = useGlobalState();
-
   return (
     <tr className="animated fadeIn">
       <td>
@@ -28,8 +21,8 @@ const TransactionRow: React.FC<PropsType> = ({ transaction }) => {
         </TestnetLink>
       </td>
       <td>
-        <span title={moment(transaction.timestamp * 1000).format('MMM DD, YYYY HH:mm:ss A')}>
-          {timeAgo(transaction.timestamp * 1000)}
+        <span title={dateFormatted(transaction.timestamp)}>
+          <TimeAgo value={transaction.timestamp} />
         </span>
       </td>
       <td>
@@ -54,12 +47,7 @@ const TransactionRow: React.FC<PropsType> = ({ transaction }) => {
         </TestnetLink>
       </td>
       <td>
-        {denominate({
-          input: transaction.value,
-          denomination,
-          decimals,
-          showAllDecimals: true,
-        })}
+        <Denominate value={transaction.value} showAllDecimals />
       </td>
     </tr>
   );

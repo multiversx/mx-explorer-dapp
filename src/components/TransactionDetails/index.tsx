@@ -4,27 +4,22 @@ import {
   faExchangeAlt,
   faHourglass,
   faCheckCircle,
-  faFileCode,
+  faClock,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import moment from 'moment';
-
+import { ScAddressIcon, Denominate, TimeAgo, Highlights } from './../../sharedComponents';
 import { getTransaction } from './helpers/asyncRequests';
-import Highlights from './../../sharedComponents/Highlights';
 import { useGlobalState } from '../../context';
 import { TransactionType } from '../Transactions';
-import { timeAgo, denominate } from './../../helpers';
+import { dateFormatted } from './../../helpers';
 
 // TODO: check for empty or failed transaction () & remove Json stringify
-// TODO: transaction.sender.includes -> beginsWith
-// TODO: {moment(transaction.timestamp * 1000).format('MMM DD, YYYY HH:mm:ss A')})
-// extract to helper
-// TODO: componenta de denominate, soct functia de denominate din filtre si o duc la componenta
+// TODO: remove Angular logic
 
 const TransactionDetails: React.FC = () => {
   let { transactionId } = useParams();
   const {
-    activeTestnet: { elasticUrl, denomination, decimals },
+    activeTestnet: { elasticUrl },
   } = useGlobalState();
 
   const [transaction, useTransaction] = React.useState<TransactionType | undefined>(undefined);
@@ -75,10 +70,9 @@ const TransactionDetails: React.FC = () => {
                   <div className="row">
                     <div className="col-lg-2 card-label">Timestamp</div>
                     <div className="col-lg-10">
-                      <i className="fa fa-clock mr-2" />
-                      {timeAgo(transaction.timestamp * 1000)}
-                      &nbsp;(
-                      {moment(transaction.timestamp * 1000).format('MMM DD, YYYY HH:mm:ss A')})
+                      <FontAwesomeIcon icon={faClock} className="mr-2" />
+                      <TimeAgo value={transaction.timestamp} />
+                      &nbsp;({dateFormatted(transaction.timestamp)})
                     </div>
                   </div>
                   <hr className="hr-space" />
@@ -90,9 +84,7 @@ const TransactionDetails: React.FC = () => {
                   <div className="row">
                     <div className="col-lg-2 card-label">From</div>
                     <div className="col-lg-10">
-                      {transaction.sender.includes('00000000000000000000') && (
-                        <FontAwesomeIcon icon={faFileCode} className="w300 mr-1" />
-                      )}
+                      <ScAddressIcon value={transaction.sender} />
                       <Link to={`/address/${transaction.sender}`}>{transaction.sender}</Link>
                       &nbsp;
                       <Link to={`shard/${transaction.senderShard}/page/1`} className="small-link">
@@ -104,9 +96,7 @@ const TransactionDetails: React.FC = () => {
                   <div className="row">
                     <div className="col-lg-2 card-label">To</div>
                     <div className="col-lg-10">
-                      {transaction.receiver.includes('00000000000000000000') && (
-                        <FontAwesomeIcon icon={faFileCode} className="w300 mr-1" />
-                      )}
+                      <ScAddressIcon value={transaction.receiver} />
                       <Link to={`/address/${transaction.receiver}`}>{transaction.receiver}</Link>
                       &nbsp;
                       {Boolean(transaction.receiverShard) && (
@@ -123,13 +113,7 @@ const TransactionDetails: React.FC = () => {
                   <div className="row">
                     <div className="col-lg-2 card-label">Value</div>
                     <div className="col-lg-10">
-                      {denominate({
-                        input: transaction.value,
-                        denomination,
-                        decimals,
-                        showAllDecimals: true,
-                      })}
-                      &nbsp;ERD
+                      <Denominate value={transaction.value} showAllDecimals />
                     </div>
                   </div>
                   <hr className="hr-space" />

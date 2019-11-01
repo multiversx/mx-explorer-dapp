@@ -3,7 +3,7 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faNetworkWired } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import { useGlobalState, useGlobalDispatch } from '../../../context';
+import { useGlobalState } from '../../../context';
 
 export default function TestnetSwitcher() {
   const globalState = useGlobalState();
