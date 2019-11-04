@@ -2,11 +2,15 @@ import React from 'react';
 import { OverlayTrigger, Popover, Accordion, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faNetworkWired, faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useGlobalState } from '../../../context';
 
 export default function TestnetSwitcher() {
   const globalState = useGlobalState();
+
+  const { pathname } = useLocation();
+  let locationArray = pathname.substr(1).split('/');
+  const testnetId = locationArray[0];
 
   const liksArray = globalState.config.testnets.map(testnet => ({
     name: testnet.name,
@@ -26,7 +30,7 @@ export default function TestnetSwitcher() {
             <Accordion.Collapse eventKey="0">
               <ul className="navbar-nav">
                 {liksArray.map(link => (
-                  <li className="nav-item" key={link.key}>
+                  <li className={`nav-item`} key={link.key}>
                     <Link className="nav-link" to={`/${link.to}`}>
                       {link.name}
                     </Link>
@@ -46,7 +50,11 @@ export default function TestnetSwitcher() {
           <Popover id="popover-positioned-bottom">
             <Popover.Content>
               {liksArray.map(link => (
-                <Link className="nav-link" key={link.key} to={`/${link.to}`}>
+                <Link
+                  className={`nav-link ${testnetId === link.to ? 'active' : ''}`}
+                  key={link.key}
+                  to={`/${link.to}`}
+                >
                   {link.name}
                 </Link>
               ))}
