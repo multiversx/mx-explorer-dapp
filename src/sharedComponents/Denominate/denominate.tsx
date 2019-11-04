@@ -48,7 +48,7 @@ export default function denominate({
     return input;
   }
   if (
-    (typeof input === 'string' && input === '') ||
+    input === '' ||
     input === '0' ||
     input === undefined
   ) {
