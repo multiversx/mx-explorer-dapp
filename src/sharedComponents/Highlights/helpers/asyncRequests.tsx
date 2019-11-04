@@ -1,16 +1,30 @@
 import axios from 'axios';
+import toastr from 'toastr';
 
 export async function getStats(elasticUrl: string) {
+  let data = {};
   try {
     const { data } = await axios.get(`${elasticUrl}/tps/_doc/meta`);
 
     if (!data.found) {
-      //toastr.warning("Could not load statistics.", "Oops");
-      return;
+      console.warn('here');
+
+      toastr.warning('Could not load statistics.', 'Oops');
+      return {
+        data,
+        success: false,
+      };
     }
 
-    return data._source;
+    return {
+      data: data._source,
+      success: true,
+    };
   } catch {
-    return 0;
+    toastr.warning('Could not load statistics.', 'Oops');
+    return {
+      data,
+      success: false,
+    };
   }
 }

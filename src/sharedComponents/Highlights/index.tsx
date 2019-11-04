@@ -38,17 +38,21 @@ const Hightlights: React.FC = () => {
   let ref = React.useRef(null);
 
   React.useEffect(() => {
-    getStats(elasticUrl).then(data => {
-      const newState = {
-        blockNumber: parseInt(data.blockNumber).toLocaleString('en'),
-        nrOfNodes: parseInt(data.nrOfNodes).toLocaleString('en'),
-        nrOfShards: parseInt(data.nrOfShards).toLocaleString('en'),
-        roundNumber: parseInt(data.roundNumber).toLocaleString('en'),
-        liveTPS: parseInt(data.liveTPS).toLocaleString('en'),
-        peakTPS: parseInt(data.peakTPS).toLocaleString('en'),
-        totalProcessedTxCount: parseInt(data.totalProcessedTxCount).toLocaleString('en'),
-      };
-      if (ref.current !== null) setState(newState);
+    getStats(elasticUrl).then(({ data, success }) => {
+      const newState = success
+        ? {
+            blockNumber: parseInt(data.blockNumber).toLocaleString('en'),
+            nrOfNodes: parseInt(data.nrOfNodes).toLocaleString('en'),
+            nrOfShards: parseInt(data.nrOfShards).toLocaleString('en'),
+            roundNumber: parseInt(data.roundNumber).toLocaleString('en'),
+            liveTPS: parseInt(data.liveTPS).toLocaleString('en'),
+            peakTPS: parseInt(data.peakTPS).toLocaleString('en'),
+            totalProcessedTxCount: parseInt(data.totalProcessedTxCount).toLocaleString('en'),
+          }
+        : initialState;
+      if (ref.current !== null) {
+        setState(newState);
+      }
     });
   }, [elasticUrl]); // run the operation only once since the parameter does not change
 
