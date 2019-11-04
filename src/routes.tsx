@@ -1,29 +1,42 @@
+import React from 'react';
 import Home from './components/Home';
 import Transactions from './components/Transactions';
 import Blocks from './components/Blocks';
 import TransactionDetails from './components/TransactionDetails';
 import BlockDetails from './components/BlockDetails';
+import { TestnetReady } from './sharedComponents';
+
+const withTestnetReady = (Component: React.ComponentType) =>
+  class WithTestnetReady extends React.Component {
+    render() {
+      return (
+        <TestnetReady>
+          <Component />
+        </TestnetReady>
+      );
+    }
+  };
 
 const routes = [
   {
     path: '/transactions/page/:page',
-    component: Transactions,
+    component: withTestnetReady(Transactions),
   },
   {
     path: '/transactions/:transactionId',
-    component: TransactionDetails,
+    component: withTestnetReady(TransactionDetails),
   },
   {
     path: '/blocks/page/:page',
-    component: Blocks,
+    component: withTestnetReady(Blocks),
   },
   {
     path: '/blocks/:blockId',
-    component: BlockDetails,
+    component: withTestnetReady(BlockDetails),
   },
   {
     path: '/',
-    component: Home,
+    component: withTestnetReady(Home),
   },
 ];
 
