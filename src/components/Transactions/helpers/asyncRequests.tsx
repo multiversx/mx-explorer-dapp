@@ -5,20 +5,31 @@ type ParamsType = {
   size: number;
 };
 
+//TODO: control asupra timeoutului, si daca e prea lung sa dam noi failed manual
+
 export async function getTransactions({ elasticUrl, size }: ParamsType) {
+  let data = [];
   try {
-    const { data } = await axios.post(`${elasticUrl}/transactions/_search`, {
+    const {
+      data: { hits },
+    } = await axios.post(`${elasticUrl}/transactions1/_search`, {
       query: { match_all: {} },
       sort: { timestamp: { order: 'desc' } },
       from: (size - 1) * 50,
       size: 50,
     });
 
-    const resultsArray = data.hits.hits.map((entry: any) => entry._source);
+    data = hits.hits.map((entry: any) => entry._source);
 
-    return resultsArray;
-  } catch (err) {
-    return [];
+    return {
+      data,
+      success: true,
+    };
+  } catch {
+    return {
+      data,
+      success: false,
+    };
   }
 }
 

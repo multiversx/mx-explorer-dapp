@@ -54,8 +54,6 @@ const BlockDetails: React.FC = () => {
 
   const { block, proposer, consensusItems, nextHash } = state;
 
-  console.warn(nextHash);
-
   return (
     <div ref={ref}>
       <Highlights />

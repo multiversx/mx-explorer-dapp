@@ -22,6 +22,11 @@ const TransactionDetails: React.FC = () => {
                   <TestnetLink to="/blocks/page/1">Blocks</TestnetLink>
                 </h3>
               </li>
+              <li>
+                <h3>
+                  <TestnetLink to="/transactions/page/1">Transactions</TestnetLink>
+                </h3>
+              </li>
             </ul>
           </div>
         </div>
