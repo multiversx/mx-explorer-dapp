@@ -50,3 +50,19 @@ describe('denomination 0,0', () => {
     });
   }
 });
+
+describe('denomination 4,4,true', () => {
+  const numbers: { [key: string]: string } = {
+    '12345678901234567890123': '123,456,789,012,345.67890123',
+  };
+  const denomination = 8;
+  const decimals = 4;
+  for (let i = 0; i < Object.keys(numbers).length; i++) {
+    const input = Object.keys(numbers)[i];
+    const output = numbers[input];
+    it(`denominate ${input} -> ${output}`, () => {
+      const withCommas = denominate({ input, denomination, decimals, showAllDecimals: true });
+      expect(withCommas).toBe(output);
+    });
+  }
+});
