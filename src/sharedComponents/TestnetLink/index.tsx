@@ -6,10 +6,11 @@ interface TestnetLinkType {
   className?: string;
   title?: string;
   to: string;
+  'data-testid'?: string;
   children: React.ReactNode | string;
 }
 
-const TestnetLink = ({ className, to, children, title }: TestnetLinkType) => {
+const TestnetLink = ({ to, children, ...rest }: TestnetLinkType) => {
   const { activeTestnetId } = useGlobalState();
 
   if (!to.startsWith('/')) {
@@ -18,9 +19,8 @@ const TestnetLink = ({ className, to, children, title }: TestnetLinkType) => {
   }
 
   const props = {
-    className,
     to: activeTestnetId ? `/${activeTestnetId}${to}` : to,
-    ...(title ? { title } : {}),
+    ...rest,
   };
 
   return <Link {...props}>{children}</Link>;

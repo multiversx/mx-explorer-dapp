@@ -14,7 +14,7 @@ const Pager = ({ slug }: { slug: string }) => {
         <button
           className="btn btn-outline-secondary btn-sm"
           disabled
-          data-testid="previousPageButton"
+          data-testid="disabledPreviousPageButton"
         >
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
@@ -22,7 +22,7 @@ const Pager = ({ slug }: { slug: string }) => {
         <TestnetLink
           to={`/${slug}/page/${size - 1}`}
           className="btn btn-outline-secondary btn-sm"
-          data-testid="nextPageButton"
+          data-testid="previousPageButton"
         >
           <FontAwesomeIcon icon={faChevronLeft} />
         </TestnetLink>
