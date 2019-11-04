@@ -1,14 +1,12 @@
-function format(big: string, den: number, dec: number, showAllDecimals: boolean) {
+function format(big: string, denomination: number, decimals: number, showAllDecimals: boolean) {
   showAllDecimals = typeof showAllDecimals !== 'undefined' ? showAllDecimals : false;
-  const denomination = den;
-  const decimals = dec;
-  let array = big.toString().split('');
+  let array = big.split('');
   if (denomination !== 0) {
     // make sure we have enough characters
     while (array.length < denomination + 1) {
       array.unshift('0');
     }
-    // add our dots
+    // add our dot
     array.splice(array.length - denomination, 0, '.');
     // make sure there are enough decimals after the dot
     while (array.length - array.indexOf('.') <= decimals) {
@@ -21,8 +19,8 @@ function format(big: string, den: number, dec: number, showAllDecimals: boolean)
   }
   // add comas every 3 characters
   array = array.reverse();
-  const reference = denomination ? array.length - array.indexOf('.') - 1 : array.length;
-  const count = Math.floor(reference / 3); // comas count
+  const reference = denomination ? (array.length - array.indexOf('.') - 1) : array.length;
+  const count = Math.floor(reference / 3);
   for (let i = 1; i <= count; i++) {
     const position = array.indexOf('.') + 3 * i + i;
     if (position !== array.length) {
@@ -46,13 +44,15 @@ export default function denominate({
   decimals,
   showAllDecimals = false,
 }: DenominateType): string {
+  if (input === '...') {
+    return input;
+  }
   if (
     (typeof input === 'string' && input === '') ||
     input === '0' ||
-    input === undefined ||
-    input === '...'
+    input === undefined
   ) {
-    return input === '...' ? '...' : '0';
+    input = '0';
   }
   return format(input, denomination, decimals, showAllDecimals);
 }
