@@ -4,18 +4,20 @@ import { useGlobalState } from '../../context';
 
 const TestnetReady: React.FC = ({ children }) => {
   const globalState = useGlobalState();
-
+  const { activeTestnetId } = useGlobalState();
   const { pathname } = useLocation();
 
   let locationArray = pathname.substr(1).split('/');
   const testnetId = locationArray[0];
   const allTestnetIds = globalState.config.testnets.map(testnet => testnet.id);
 
-  let testnetReady = true;
+  const [testnetReady, setTestnetReady] = React.useState(false);
 
-  if (allTestnetIds.includes(testnetId) && globalState.activeTestnetId !== testnetId) {
-    testnetReady = false;
-  }
+  React.useEffect(() => {
+    if (allTestnetIds.includes(testnetId) && activeTestnetId !== testnetId) {
+      setTestnetReady(false);
+    } else setTestnetReady(true);
+  }, [testnetId, activeTestnetId]);
 
   return testnetReady ? <>{children}</> : null;
 };
