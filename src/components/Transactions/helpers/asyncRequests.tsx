@@ -12,7 +12,7 @@ export async function getTransactions({ elasticUrl, size }: ParamsType) {
   try {
     const {
       data: { hits },
-    } = await axios.post(`${elasticUrl}/transactions1/_search`, {
+    } = await axios.post(`${elasticUrl}/transactions/_search`, {
       query: { match_all: {} },
       sort: { timestamp: { order: 'desc' } },
       from: (size - 1) * 50,
