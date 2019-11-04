@@ -39,15 +39,13 @@ const Transactions: React.FC = () => {
 
   // https://www.polvara.me/posts/fetching-asynchronous-data-with-react-hooks/
   React.useEffect(() => {
-    getTransactions({ elasticUrl, size }).then(({ data, success }) => {
-      if (ref.current !== null) {
+    if (ref.current !== null) {
+      getTransactions({ elasticUrl, size }).then(({ data, success }) => {
         setTransactions(data);
         setTransactionsFetched(success);
-      }
-    });
-    getTotalTransactions(elasticUrl).then(
-      data => ref.current !== null && setTotalTransactions(data)
-    );
+      });
+      getTotalTransactions(elasticUrl).then(data => setTotalTransactions(data));
+    }
   }, [elasticUrl, size]); // run the operation only once since the parameter does not change
 
   const TransactionsPage = (
