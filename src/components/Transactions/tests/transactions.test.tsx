@@ -26,11 +26,18 @@ test('Fetch makes an API call and displays the greeting', async () => {
   mockPost.mockReturnValue(Promise.resolve({ data: response }));
 
   const { queryByTestId } = renderWithRouter({
-    route: '/transactions/page/1',
+    route: '/cryptobubbles/transactions/page/1',
   });
 
   expect(mockGet).toHaveBeenCalledTimes(2);
-  // expect(mockGet).toHaveBeenLastCalledWith('https://elastic-aws.elrond.com/tps/_doc/meta');
+  expect(mockGet).toHaveBeenLastCalledWith('https://elastic-aws-game.elrond.com/tps/_doc/meta');
+
+  const pageNumber = await waitForElement(() => queryByTestId('pageNumber'));
+  expect(pageNumber!.innerHTML).toBe('1');
+
+  const table = queryByTestId('transactionsTable');
+  const numberOfRows = table!.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+  expect(numberOfRows).toHaveLength(2);
 
   const nextButton = await waitForElement(() => queryByTestId('nextPageButton'));
   expect(nextButton).toBeInTheDocument();
@@ -38,10 +45,6 @@ test('Fetch makes an API call and displays the greeting', async () => {
   const leftClick = { button: 0 };
   fireEvent.click(nextButton!, leftClick);
 
-  const pageNumber = await waitForElement(() => queryByTestId('pageNumber'));
-  expect(pageNumber!.innerHTML).toBe('2');
-
-  const table = queryByTestId('transactionsTable');
-  const numberOfRows = table!.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-  expect(numberOfRows).toHaveLength(2);
+  const nextPageNumber = await waitForElement(() => queryByTestId('pageNumber'));
+  expect(nextPageNumber!.innerHTML).toBe('2');
 });
