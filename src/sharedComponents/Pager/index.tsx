@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TestnetLink from './../TestnetLink';
@@ -32,13 +32,13 @@ const Pager = ({ slug }: { slug: string }) => {
         Page&nbsp;
         <span data-testid="pageNumber">{size}</span>
       </span>
-      <Link
+      <TestnetLink
         data-testid="nextPageButton"
         to={`/${slug}/page/${size + 1}`}
         className="btn btn-outline-secondary btn-sm"
       >
         <FontAwesomeIcon icon={faChevronRight} />
-      </Link>
+      </TestnetLink>
     </div>
   );
 };
