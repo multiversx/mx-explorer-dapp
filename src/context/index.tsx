@@ -20,7 +20,7 @@ function GlobalProvider({ children }: GlobalContextProviderProps) {
 function useGlobalState() {
   const context = React.useContext(GlobalStateContext);
   if (context === undefined) {
-    throw new Error('useCountState must be used within a CountProvider');
+    throw new Error('useGlobalState must be used within a GlobalProvider');
   }
   return context;
 }
@@ -28,7 +28,7 @@ function useGlobalState() {
 function useGlobalDispatch() {
   const context = React.useContext(GlobalDispatchContext);
   if (context === undefined) {
-    throw new Error('useCountDispatch must be used within a CountProvider');
+    throw new Error('useGlobalDispatch must be used within a GlobalProvider');
   }
   return context;
 }
