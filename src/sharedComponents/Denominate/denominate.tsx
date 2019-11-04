@@ -1,6 +1,6 @@
 function format(big: string, denomination: number, decimals: number, showAllDecimals: boolean) {
   showAllDecimals = typeof showAllDecimals !== 'undefined' ? showAllDecimals : false;
-  let array = big.split('');
+  let array = big.toString().split('');
   if (denomination !== 0) {
     // make sure we have enough characters
     while (array.length < denomination + 1) {
@@ -19,7 +19,7 @@ function format(big: string, denomination: number, decimals: number, showAllDeci
   }
   // add comas every 3 characters
   array = array.reverse();
-  const reference = denomination ? (array.length - array.indexOf('.') - 1) : array.length;
+  const reference = denomination ? array.length - array.indexOf('.') - 1 : array.length;
   const count = Math.floor(reference / 3);
   for (let i = 1; i <= count; i++) {
     const position = array.indexOf('.') + 3 * i + i;
@@ -47,11 +47,7 @@ export default function denominate({
   if (input === '...') {
     return input;
   }
-  if (
-    input === '' ||
-    input === '0' ||
-    input === undefined
-  ) {
+  if (input === '' || input === '0' || input === undefined) {
     input = '0';
   }
   return format(input, denomination, decimals, showAllDecimals);
