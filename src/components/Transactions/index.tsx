@@ -61,7 +61,7 @@ const Transactions: React.FC = () => {
           <div className="col-12">
             <div className="card">
               {!transactionsFetched ? (
-                <div className="card-body card-details">
+                <div className="card-body card-details" data-testid="errorScreen">
                   <div className="empty">
                     <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
                     <span className="h4 empty-heading">Unable to load transactions</span>

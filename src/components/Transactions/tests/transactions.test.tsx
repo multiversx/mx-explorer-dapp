@@ -2,6 +2,7 @@ import axios from 'axios';
 import '@testing-library/jest-dom/extend-expect';
 import { renderWithRouter, waitForElement, fireEvent, wait } from '../../../utils/test-utils';
 import response from './_search';
+import errorResponse from './_errorResponse';
 
 // TODO */
 /**
@@ -12,25 +13,26 @@ import response from './_search';
  * - sa testez ca am next page
  */
 
+//TODO: timeout axios 0 si testez cu asta (apare screenul de Unable to load in cazul in care se expira timeoutul)
+
 test('Transactions page is displaying', () => {
   const { queryByTestId } = renderWithRouter({
     route: '/transactions/page/1',
   });
-  expect(queryByTestId(/title/)!.innerHTML).toBe('Transactions');
+  expect(queryByTestId('title')!.innerHTML).toBe('Transactions');
 });
 
-const mockGet = jest.spyOn(axios, 'get');
-const mockPost = jest.spyOn(axios, 'post');
-
-test('Fetch makes an API call and displays the greeting', async () => {
+test('Transactions data is displayed correctly', async () => {
+  const mockGet = jest.spyOn(axios, 'get');
+  const mockPost = jest.spyOn(axios, 'post');
   mockPost.mockReturnValue(Promise.resolve({ data: response }));
 
   const { queryByTestId } = renderWithRouter({
-    route: '/cryptobubbles/transactions/page/1',
+    route: '/transactions/page/1',
   });
 
-  expect(mockGet).toHaveBeenCalledTimes(2);
-  expect(mockGet).toHaveBeenLastCalledWith('https://elastic-aws-game.elrond.com/tps/_doc/meta');
+  expect(mockGet).toHaveBeenCalledTimes(1);
+  expect(mockGet).toHaveBeenLastCalledWith('https://elastic-aws.elrond.com/tps/_doc/meta');
 
   const pageNumber = await waitForElement(() => queryByTestId('pageNumber'));
   expect(pageNumber!.innerHTML).toBe('1');
@@ -38,6 +40,15 @@ test('Fetch makes an API call and displays the greeting', async () => {
   const table = queryByTestId('transactionsTable');
   const numberOfRows = table!.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
   expect(numberOfRows).toHaveLength(2);
+});
+
+test('Transactions pager working', async () => {
+  const mockPost = jest.spyOn(axios, 'post');
+  mockPost.mockReturnValue(Promise.resolve({ data: response }));
+
+  const { queryByTestId } = renderWithRouter({
+    route: '/transactions/page/1',
+  });
 
   const nextButton = await waitForElement(() => queryByTestId('nextPageButton'));
   expect(nextButton).toBeInTheDocument();
@@ -47,4 +58,16 @@ test('Fetch makes an API call and displays the greeting', async () => {
 
   const nextPageNumber = await waitForElement(() => queryByTestId('pageNumber'));
   expect(nextPageNumber!.innerHTML).toBe('2');
+});
+
+test('Transactions errorScreen showing', async () => {
+  const mockPost = jest.spyOn(axios, 'post');
+  mockPost.mockReturnValue(Promise.resolve({ data: errorResponse }));
+
+  const { queryByTestId } = renderWithRouter({
+    route: '/transactions/page/1',
+  });
+
+  const errorScreen = await waitForElement(() => queryByTestId('errorScreen'));
+  expect(errorScreen).toBeInTheDocument();
 });
