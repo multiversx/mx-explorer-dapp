@@ -43,18 +43,21 @@ async function getNextBlock({ elasticUrl, currentBlockId, currentShardId }: GetN
   }
 }
 
-export async function getTransaction(elasticUrl: string, blockId: string) {
+export async function getBlock(elasticUrl: string, blockId: string) {
   try {
     const { data } = await axios.get(`${elasticUrl}/blocks/_doc/${blockId}`);
     const block = data._source;
 
     const hits = await searchCall(elasticUrl);
 
-    const {
-      _source: { publicKeys: consensusArray },
-    } = hits.filter((hit: any) => hit['_id'] === block.shardId.toString()).pop();
+    const consensusArray = hits.length
+      ? hits.filter((hit: any) => hit['_id'] === block.shardId.toString()).pop()['_source']
+          .publicKeys
+      : [];
 
-    const consensusItems = block.validators.map((id: any) => consensusArray[id]);
+    const consensusItems = consensusArray.length
+      ? block.validators.map((id: any) => consensusArray[id])
+      : [];
 
     const nextHash = await getNextBlock({
       elasticUrl,
@@ -64,7 +67,7 @@ export async function getTransaction(elasticUrl: string, blockId: string) {
 
     return {
       block,
-      proposer: [...consensusItems].shift(),
+      proposer: consensusItems.length ? [...consensusItems].shift() : '',
       consensusItems,
       nextHash,
     };
