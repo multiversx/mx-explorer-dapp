@@ -40,7 +40,6 @@ export const initialState = {
 const BlockDetails: React.FC = () => {
   let { blockId } = useParams();
   let ref = React.useRef(null);
-  const noBlockFoundTitle = '';
 
   const {
     activeTestnet: { elasticUrl },
@@ -77,113 +76,128 @@ const BlockDetails: React.FC = () => {
                   </div>
                 </div>
               ) : (
-                <div className="card-body card-details">
-                  <div className="row">
-                    <div className="col-lg-2 card-label">Block Height</div>
-                    <div className="col-lg-10">
-                      {block.nonce}
-                      &nbsp;
-                      <TestnetLink
-                        to={`/blocks/${block.prevHash}`}
-                        className="btn btn-outline-secondary btn-sm"
-                        title="View previous block"
-                      >
-                        <FontAwesomeIcon icon={faChevronLeft} />
-                      </TestnetLink>
-                      &nbsp;
-                      <TestnetLink
-                        to={`/blocks/${nextHash}`}
-                        className="btn btn-outline-secondary btn-sm"
-                        title="View next block"
-                      >
-                        <FontAwesomeIcon icon={faChevronRight} />
-                      </TestnetLink>
-                    </div>
-                  </div>
-                  <hr className="hr-space" />
-                  <div className="row">
-                    <div className="col-lg-2 card-label">Timestamp</div>
-                    <div className="col-lg-10">
-                      &nbsp;
-                      <FontAwesomeIcon icon={faClock} className="mr-2" />
-                      <TimeAgo value={block.timestamp} />
-                      &nbsp;({dateFormatted(block.timestamp)})
-                    </div>
-                  </div>
-                  <hr className="hr-space" />
-                  <div className="row">
-                    <div className="col-lg-2 card-label">Transactions</div>
-                    <div className="col-lg-10">{block.txCount + ' transactions in this block'}</div>
-                  </div>
-                  <hr className="hr-space" />
-                  <div className="row">
-                    <div className="col-lg-2 card-label">Shard ID</div>
-                    <div className="col-lg-10">
-                      <TestnetLink to={`/shards/${block.shardId}/page/1`}>
-                        {block.shardId}
-                      </TestnetLink>
-                    </div>
-                  </div>
-                  <hr className="hr-space" />
-                  <div className="row">
-                    <div className="col-lg-2 card-label">Size</div>
-                    <div className="col-lg-10">{sizeFormat(block.size)}</div>
-                  </div>
-                  <hr className="hr-space" />
-                  <div className="row">
-                    <div className="col-lg-2 card-label">Proposer</div>
-                    <div className="col-lg-10">
-                      {proposer === '' ? (
-                        <span className="text-muted">N/A</span>
-                      ) : (
-                        <TestnetLink to={`/validator/${proposer}`}>
-                          {truncate(proposer, 100)}
-                        </TestnetLink>
-                      )}
-                    </div>
-                  </div>
-                  <hr className="hr-space" />
-                  <div className="row">
-                    <div className="col-lg-2 card-label">Consensus group</div>
-                    <div className="col-lg-10">
-                      {consensusItems.length === 0 ? (
-                        <span className="text-muted">N/A</span>
-                      ) : (
-                        <>
-                          {consensusItems.map(item => (
-                            <TestnetLink className="hash" key={item} to={`/validator/${item}`}>
-                              {truncate(item, 100)}
+                <>
+                  {block.hash ? (
+                    <div className="card-body card-details">
+                      <div className="row">
+                        <div className="col-lg-2 card-label">Block Height</div>
+                        <div className="col-lg-10">
+                          {block.nonce}
+                          &nbsp;
+                          <TestnetLink
+                            to={`/blocks/${block.prevHash}`}
+                            className="btn btn-outline-secondary btn-sm"
+                            title="View previous block"
+                          >
+                            <FontAwesomeIcon icon={faChevronLeft} />
+                          </TestnetLink>
+                          &nbsp;
+                          <TestnetLink
+                            to={`/blocks/${nextHash}`}
+                            className="btn btn-outline-secondary btn-sm"
+                            title="View next block"
+                          >
+                            <FontAwesomeIcon icon={faChevronRight} />
+                          </TestnetLink>
+                        </div>
+                      </div>
+                      <hr className="hr-space" />
+                      <div className="row">
+                        <div className="col-lg-2 card-label">Timestamp</div>
+                        <div className="col-lg-10">
+                          &nbsp;
+                          <FontAwesomeIcon icon={faClock} className="mr-2" />
+                          <TimeAgo value={block.timestamp} />
+                          &nbsp;({dateFormatted(block.timestamp)})
+                        </div>
+                      </div>
+                      <hr className="hr-space" />
+                      <div className="row">
+                        <div className="col-lg-2 card-label">Transactions</div>
+                        <div className="col-lg-10">
+                          {block.txCount + ' transactions in this block'}
+                        </div>
+                      </div>
+                      <hr className="hr-space" />
+                      <div className="row">
+                        <div className="col-lg-2 card-label">Shard ID</div>
+                        <div className="col-lg-10">
+                          <TestnetLink to={`/shards/${block.shardId}/page/1`}>
+                            {block.shardId}
+                          </TestnetLink>
+                        </div>
+                      </div>
+                      <hr className="hr-space" />
+                      <div className="row">
+                        <div className="col-lg-2 card-label">Size</div>
+                        <div className="col-lg-10">{sizeFormat(block.size)}</div>
+                      </div>
+                      <hr className="hr-space" />
+                      <div className="row">
+                        <div className="col-lg-2 card-label">Proposer</div>
+                        <div className="col-lg-10">
+                          {proposer === '' ? (
+                            <span className="text-muted">N/A</span>
+                          ) : (
+                            <TestnetLink to={`/validator/${proposer}`}>
+                              {truncate(proposer, 100)}
                             </TestnetLink>
-                          ))}
-                        </>
-                      )}
+                          )}
+                        </div>
+                      </div>
+                      <hr className="hr-space" />
+                      <div className="row">
+                        <div className="col-lg-2 card-label">Consensus group</div>
+                        <div className="col-lg-10">
+                          {consensusItems.length === 0 ? (
+                            <span className="text-muted">N/A</span>
+                          ) : (
+                            <>
+                              {consensusItems.map(item => (
+                                <TestnetLink className="hash" key={item} to={`/validator/${item}`}>
+                                  {truncate(item, 100)}
+                                </TestnetLink>
+                              ))}
+                            </>
+                          )}
+                        </div>
+                      </div>
+                      <hr className="hr-space" />
+                      <div className="row">
+                        <div className="col-lg-2 card-label">Block Hash</div>
+                        <div className="col-lg-10">{block.hash}</div>
+                      </div>
+                      <hr className="hr-space" />
+                      <div className="row">
+                        <div className="col-lg-2 card-label">State Root Hash</div>
+                        <div className="col-lg-10">{block.stateRootHash}</div>
+                      </div>
+                      <hr className="hr-space" />
+                      <div className="row">
+                        <div className="col-lg-2 card-label">Previous Hash</div>
+                        <div className="col-lg-10">
+                          <TestnetLink className="hash" to={`/block/${block.prevHash}`}>
+                            {block.prevHash}
+                          </TestnetLink>
+                        </div>
+                      </div>
+                      <hr className="hr-space" />
+                      <div className="row">
+                        <div className="col-lg-2 card-label">Public Keys Bitmap</div>
+                        <div className="col-lg-10">{block.pubKeyBitmap}</div>
+                      </div>
                     </div>
-                  </div>
-                  <hr className="hr-space" />
-                  <div className="row">
-                    <div className="col-lg-2 card-label">Block Hash</div>
-                    <div className="col-lg-10">{block.hash}</div>
-                  </div>
-                  <hr className="hr-space" />
-                  <div className="row">
-                    <div className="col-lg-2 card-label">State Root Hash</div>
-                    <div className="col-lg-10">{block.stateRootHash}</div>
-                  </div>
-                  <hr className="hr-space" />
-                  <div className="row">
-                    <div className="col-lg-2 card-label">Previous Hash</div>
-                    <div className="col-lg-10">
-                      <TestnetLink className="hash" to={`/block/${block.prevHash}`}>
-                        {block.prevHash}
-                      </TestnetLink>
+                  ) : (
+                    <div className="text-center pt-5 pb-4 border-0">
+                      <div className="lds-ellipsis">
+                        <div />
+                        <div />
+                        <div />
+                        <div />
+                      </div>
                     </div>
-                  </div>
-                  <hr className="hr-space" />
-                  <div className="row">
-                    <div className="col-lg-2 card-label">Public Keys Bitmap</div>
-                    <div className="col-lg-10">{block.pubKeyBitmap}</div>
-                  </div>
-                </div>
+                  )}
+                </>
               )}
             </div>
           </div>
