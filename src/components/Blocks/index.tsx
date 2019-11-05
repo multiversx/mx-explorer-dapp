@@ -44,8 +44,10 @@ const Blocks: React.FC = () => {
   } = useGlobalState();
 
   React.useEffect(() => {
-    getBlocks({ elasticUrl, size }).then(data => ref.current !== null && setState(data));
-    getTotalBlocks(elasticUrl).then(data => ref.current !== null && setTotalBlocks(data));
+    if (ref.current !== null) {
+      getBlocks({ elasticUrl, size }).then(data => setState(data));
+      getTotalBlocks(elasticUrl).then(data => setTotalBlocks(data));
+    }
   }, [elasticUrl, size]); // run the operation only once since the parameter does not change
 
   return (
