@@ -13,6 +13,7 @@ export type StateType = {
   proposer: string;
   consensusItems: string[];
   nextHash: string;
+  blockFetched: boolean;
 };
 
 export const initialState = {
@@ -33,6 +34,7 @@ export const initialState = {
   proposer: '',
   consensusItems: [],
   nextHash: '',
+  blockFetched: true,
 };
 
 const BlockDetails: React.FC = () => {
@@ -52,7 +54,7 @@ const BlockDetails: React.FC = () => {
     }
   }, [elasticUrl, blockId]); // run the operation only once since the parameter does not change
 
-  const { block, proposer, consensusItems, nextHash } = state;
+  const { block, proposer, consensusItems, nextHash, blockFetched } = state;
 
   return (
     <div ref={ref}>
@@ -66,11 +68,11 @@ const BlockDetails: React.FC = () => {
         <div className="row">
           <div className="col-12">
             <div className="card">
-              {noBlockFoundTitle !== '' ? (
+              {!blockFetched ? (
                 <div className="card-body card-details">
                   <div className="empty">
                     <FontAwesomeIcon icon={faCube} className="empty-icon" />
-                    <span className="h4 empty-heading">{noBlockFoundTitle}</span>
+                    <span className="h4 empty-heading">Unable to locate this block hash</span>
                     <span className="empty-details">{blockId}</span>
                   </div>
                 </div>

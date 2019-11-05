@@ -70,8 +70,9 @@ export async function getBlock(elasticUrl: string, blockId: string) {
       proposer: consensusItems.length ? [...consensusItems].shift() : '',
       consensusItems,
       nextHash,
+      blockFetched: true,
     };
   } catch {
-    return initialState;
+    return { ...initialState, blockFetched: false };
   }
 }
