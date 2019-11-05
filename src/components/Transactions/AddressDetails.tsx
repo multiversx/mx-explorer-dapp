@@ -55,7 +55,6 @@ const AddressDetails: React.FC = () => {
                     {state.balance && <Denominate value={state.balance} />}
                   </div>
                 </div>
-
                 {state.code && (
                   <>
                     <hr className="hr-space" />

@@ -71,6 +71,8 @@ export async function getAddressDetails({ nodeUrl, addressId }: DetailsType) {
       data: { balance, code },
     } = await axios.get(`${nodeUrl}/address/${addressId}`);
 
+    console.warn(11, code);
+
     return {
       balance,
       code,
@@ -78,8 +80,8 @@ export async function getAddressDetails({ nodeUrl, addressId }: DetailsType) {
     };
   } catch {
     return {
-      balance: 0,
-      code: 0,
+      balance: '',
+      code: '',
       detailsFetched: false,
     };
   }
