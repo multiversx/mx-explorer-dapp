@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { getBlocks, getTotalBlocks } from './helpers/asyncRequests';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { Highlights, TimeAgo, Pager, TestnetLink } from './../../sharedComponents';
 import { truncate, sizeFormat } from './../../helpers';
 import { useGlobalState } from '../../context';
@@ -24,12 +26,14 @@ type StateType = {
   blocks: BlockType[];
   startBlockNr: number;
   endBlockNr: number;
+  blocksFetched: boolean;
 };
 
 const initialState = {
   blocks: [],
   startBlockNr: 0,
   endBlockNr: 0,
+  blocksFetched: true,
 };
 
 const Blocks: React.FC = () => {
@@ -62,71 +66,80 @@ const Blocks: React.FC = () => {
         <div className="row">
           <div className="col-12">
             <div className="card">
-              <div className="card-body card-list">
-                <Pager slug="blocks" />
-                {state.startBlockNr > 0 && `Block #${state.startBlockNr} to #${state.endBlockNr}`}
-                &nbsp;
-                {totalBlocks > 0 && `(Total of ${totalBlocks.toLocaleString('en')} blocks)`}
-                <div className="table-responsive">
-                  <table className="table mt-4">
-                    <thead>
-                      <tr>
-                        <th>Block</th>
-                        <th>Age</th>
-                        <th>Txns</th>
-                        <th>Shard</th>
-                        <th>Size</th>
-                        <th>Block Hash</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {state.blocks.map((block, i) => (
-                        <tr
-                          ng-repeat="block in blocks"
-                          className="animated fadeIn"
-                          key={block.hash}
-                        >
-                          <td>
-                            <TestnetLink to={`/blocks/${block.hash}`}>{block.nonce}</TestnetLink>
-                          </td>
-                          <td>
-                            <span title="{{ block.timestamp * 1000 | date:'medium' }}">
-                              <TimeAgo value={block.timestamp} />
-                            </span>
-                          </td>
-                          <td>{block.txCount}</td>
-                          <td>
-                            <a href="/#/shard/{{ block.shardId }}/page/1">
-                              <span ng-show="getShardLabel(block.shardId) == 'Metachain'">
-                                Metachain
-                              </span>
-                              <span ng-show="getShardLabel(block.shardId) != 'Metachain'">
-                                Shard {block.shardId}
-                              </span>
-                            </a>
-                          </td>
-                          <td>{sizeFormat(block.size)}</td>
-                          <td>
-                            <a href="./#/block/{{block.hash}}">{truncate(block.hash, 20)}</a>
-                          </td>
-                        </tr>
-                      ))}
-                      {state.blocks.length === 0 && (
-                        <tr>
-                          <td colSpan={6} className="text-center pt-5 pb-4 border-0">
-                            <div className="lds-ellipsis">
-                              <div />
-                              <div />
-                              <div />
-                              <div />
-                            </div>
-                          </td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
+              {!state.blocksFetched ? (
+                <div className="card-body card-details" data-testid="errorScreen">
+                  <div className="empty">
+                    <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
+                    <span className="h4 empty-heading">Unable to load blocks</span>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="card-body card-list">
+                  <Pager slug="blocks" />
+                  {state.startBlockNr > 0 && `Block #${state.startBlockNr} to #${state.endBlockNr}`}
+                  &nbsp;
+                  {totalBlocks > 0 && `(Total of ${totalBlocks.toLocaleString('en')} blocks)`}
+                  <div className="table-responsive">
+                    <table className="table mt-4">
+                      <thead>
+                        <tr>
+                          <th>Block</th>
+                          <th>Age</th>
+                          <th>Txns</th>
+                          <th>Shard</th>
+                          <th>Size</th>
+                          <th>Block Hash</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {state.blocks.map((block, i) => (
+                          <tr
+                            ng-repeat="block in blocks"
+                            className="animated fadeIn"
+                            key={block.hash}
+                          >
+                            <td>
+                              <TestnetLink to={`/blocks/${block.hash}`}>{block.nonce}</TestnetLink>
+                            </td>
+                            <td>
+                              <span title="{{ block.timestamp * 1000 | date:'medium' }}">
+                                <TimeAgo value={block.timestamp} />
+                              </span>
+                            </td>
+                            <td>{block.txCount}</td>
+                            <td>
+                              <a href="/#/shard/{{ block.shardId }}/page/1">
+                                <span ng-show="getShardLabel(block.shardId) == 'Metachain'">
+                                  Metachain
+                                </span>
+                                <span ng-show="getShardLabel(block.shardId) != 'Metachain'">
+                                  Shard {block.shardId}
+                                </span>
+                              </a>
+                            </td>
+                            <td>{sizeFormat(block.size)}</td>
+                            <td>
+                              <a href="./#/block/{{block.hash}}">{truncate(block.hash, 20)}</a>
+                            </td>
+                          </tr>
+                        ))}
+                        {state.blocks.length === 0 && (
+                          <tr>
+                            <td colSpan={6} className="text-center pt-5 pb-4 border-0">
+                              <div className="lds-ellipsis">
+                                <div />
+                                <div />
+                                <div />
+                                <div />
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

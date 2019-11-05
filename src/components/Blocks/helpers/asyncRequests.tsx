@@ -31,12 +31,14 @@ export async function getBlocks({ elasticUrl, size }: ParamsType) {
       blocks,
       startBlockNr,
       endBlockNr,
+      blocksFetched: true,
     };
   } catch (err) {
     return {
       blocks: [],
       startBlockNr: 0,
       endBlockNr: 0,
+      blocksFetched: false,
     };
   }
 }
