@@ -5,5 +5,15 @@ import ScAddressIcon from './ScAddressIcon';
 import TestnetLink from './TestnetLink';
 import TimeAgo from './TimeAgo';
 import TestnetReady from './TestnetReady';
+import MetachainSpan from './MetachainSpan';
 
-export { Denominate, Highlights, Pager, ScAddressIcon, TestnetLink, TimeAgo, TestnetReady };
+export {
+  Denominate,
+  Highlights,
+  Pager,
+  ScAddressIcon,
+  TestnetLink,
+  TimeAgo,
+  TestnetReady,
+  MetachainSpan,
+};
