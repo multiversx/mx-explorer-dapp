@@ -1,5 +1,5 @@
 import * as React from 'react';
-import HeroHighlights from './HeroHighlights';
+import Hero from './Hero';
 import LatestBlocks from './LatestBlocks';
 import LatestTransactions from './LatestTransactions';
 import { useGlobalState } from '../../context';
@@ -11,7 +11,7 @@ const TransactionDetails: React.FC = () => {
 
   return (
     <div>
-      <HeroHighlights />
+      <Hero />
       <div className="container pt-3 pb-3">
         <div className="row">
           <div className="col-lg-5 mt-4 mb-4">

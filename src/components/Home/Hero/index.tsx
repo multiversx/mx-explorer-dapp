@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Highlights from './../../../sharedComponents/Highlights';
+import Chart from './Chart';
 
 const HeroHighlights: React.FC = () => {
   return (
@@ -14,7 +15,7 @@ const HeroHighlights: React.FC = () => {
               LIVE TPS • LAST 3 MIN
             </span>
             <div className="canvas">
-              <canvas id="mycanvas" />
+              <Chart />
             </div>
           </div>
         </div>
