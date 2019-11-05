@@ -1,16 +1,10 @@
 import React from 'react';
-import {
-  faCube,
-  faServer,
-  faClock,
-  faExchangeAlt,
-  faChartBar,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from '../../context';
 import { getStats } from './helpers/asyncRequests';
+import DefaultHighlights from './DefaultHighlights';
+import HeroHighlights from './HeroHighlights';
 
-type StateType = {
+export type StateType = {
   blockNumber: string;
   nrOfNodes: string;
   nrOfShards: string;
@@ -30,7 +24,7 @@ const initialState = {
   totalProcessedTxCount: '...',
 };
 
-const Hightlights: React.FC = () => {
+const Hightlights = ({ hero = false }: { hero?: boolean }) => {
   const {
     activeTestnet: { elasticUrl },
   } = useGlobalState();
@@ -58,56 +52,7 @@ const Hightlights: React.FC = () => {
   }, [elasticUrl]); // run the operation only once since the parameter does not change
 
   return (
-    <div ref={ref}>
-      <div className="bg-blue">
-        <div className="container pt-4 pb-4">
-          <ul className="highlights row">
-            <li className="col-lg-2 col-6 mt-4 mb-4">
-              <span className="highlight-icon">
-                <FontAwesomeIcon icon={faCube} />
-              </span>
-              <span className="highlight-label">CURRENT BLOCK</span>
-              <span className="highlight-value">{state.blockNumber}</span>
-            </li>
-            <li className="col-lg-2 col-6 mt-4 mb-4">
-              <span className="highlight-icon">
-                <FontAwesomeIcon icon={faServer} />
-              </span>
-              <span className="highlight-label">NUMBER OF SHARDS</span>
-              <span className="highlight-value">{state.nrOfShards}</span>
-            </li>
-            <li className="col-lg-2 col-6 mt-4 mb-4">
-              <span className="highlight-icon">
-                <FontAwesomeIcon icon={faClock} />
-              </span>
-              <span className="highlight-label">CURRENT ROUND</span>
-              <span className="highlight-value">{state.roundNumber}</span>
-            </li>
-            <li className="col-lg-2 col-6 mt-4 mb-4">
-              <span className="highlight-icon">
-                <FontAwesomeIcon icon={faExchangeAlt} />
-              </span>
-              <span className="highlight-label">TPS</span>
-              <span className="highlight-value">{state.liveTPS}</span>
-            </li>
-            <li className="col-lg-2 col-6 mt-4 mb-4">
-              <span className="highlight-icon">
-                <FontAwesomeIcon icon={faChartBar} />
-              </span>
-              <span className="highlight-label">PEAK TPS</span>
-              <span className="highlight-value">{state.peakTPS}</span>
-            </li>
-            <li className="col-lg-2 col-6 mt-4 mb-4">
-              <span className="highlight-icon">
-                <FontAwesomeIcon icon={faServer} />
-              </span>
-              <span className="highlight-label">TOTAL TX</span>
-              <span className="highlight-value">{state.totalProcessedTxCount}</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <div ref={ref}>{!hero ? <DefaultHighlights {...state} /> : <HeroHighlights {...state} />}</div>
   );
 };
 

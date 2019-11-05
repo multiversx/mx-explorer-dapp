@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Highlights, TestnetLink } from './../../sharedComponents';
-
+import HeroHighlights from './HeroHighlights';
+import LatestBlocks from './LatestBlocks';
+import LatestTransactions from './LatestTransactions';
 import { useGlobalState } from '../../context';
 
 const TransactionDetails: React.FC = () => {
@@ -9,29 +10,19 @@ const TransactionDetails: React.FC = () => {
   } = useGlobalState();
 
   return (
-    <>
-      <Highlights />
+    <div>
+      <HeroHighlights />
       <div className="container pt-3 pb-3">
         <div className="row">
-          <div className="col-12">
-            <h4 data-testid="title">Pages</h4>
-            <b>Home: {name}</b>
-            <ul>
-              <li>
-                <h3>
-                  <TestnetLink to="/blocks/page/1">Blocks</TestnetLink>
-                </h3>
-              </li>
-              <li>
-                <h3>
-                  <TestnetLink to="/transactions/page/1">Transactions</TestnetLink>
-                </h3>
-              </li>
-            </ul>
+          <div className="col-lg-5 mt-4 mb-4">
+            <LatestBlocks />
+          </div>
+          <div className="col-lg-7 mt-4 mb-4">
+            <LatestTransactions />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
