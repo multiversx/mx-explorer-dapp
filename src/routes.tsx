@@ -35,6 +35,10 @@ const routes = [
     component: withTestnetReady(BlockDetails),
   },
   {
+    path: '/shards/:shard/page/:page',
+    component: withTestnetReady(Blocks),
+  },
+  {
     path: '/',
     component: withTestnetReady(Home),
   },

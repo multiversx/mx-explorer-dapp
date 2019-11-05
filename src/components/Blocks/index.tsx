@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getBlocks, getTotalBlocks } from './helpers/asyncRequests';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
-import { Highlights, TimeAgo, Pager, TestnetLink } from './../../sharedComponents';
+import { Highlights, TimeAgo, Pager, TestnetLink, MetachainSpan } from './../../sharedComponents';
 import { truncate, sizeFormat } from './../../helpers';
 import { useGlobalState } from '../../context';
 
@@ -37,7 +37,9 @@ const initialState = {
 };
 
 const Blocks: React.FC = () => {
-  let { page } = useParams();
+  let { page, shard } = useParams();
+  const shardId = parseInt(shard!) ? parseInt(shard!) : undefined;
+
   let ref = React.useRef(null);
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;
   const [state, setState] = React.useState<StateType>(initialState);
@@ -49,8 +51,8 @@ const Blocks: React.FC = () => {
 
   React.useEffect(() => {
     if (ref.current !== null) {
-      getBlocks({ elasticUrl, size }).then(data => setState(data));
-      getTotalBlocks(elasticUrl).then(data => setTotalBlocks(data));
+      getBlocks({ elasticUrl, size, shardId }).then(data => setState(data));
+      getTotalBlocks({ elasticUrl, shardId }).then(data => setTotalBlocks(data));
     }
   }, [elasticUrl, size]); // run the operation only once since the parameter does not change
 
@@ -60,7 +62,15 @@ const Blocks: React.FC = () => {
       <div className="container pt-3 pb-3">
         <div className="row">
           <div className="col-12">
-            <h4>Blocks</h4>
+            <h4>
+              {shardId && (
+                <>
+                  <MetachainSpan shardId={shardId} />
+                  &nbsp;
+                </>
+              )}
+              Blocks
+            </h4>
           </div>
         </div>
         <div className="row">
@@ -108,14 +118,13 @@ const Blocks: React.FC = () => {
                             </td>
                             <td>{block.txCount}</td>
                             <td>
-                              <a href="/#/shard/{{ block.shardId }}/page/1">
-                                <span ng-show="getShardLabel(block.shardId) == 'Metachain'">
-                                  Metachain
-                                </span>
-                                <span ng-show="getShardLabel(block.shardId) != 'Metachain'">
-                                  Shard {block.shardId}
-                                </span>
-                              </a>
+                              {shardId ? (
+                                <MetachainSpan shardId={block.shardId} />
+                              ) : (
+                                <TestnetLink to={`/shards/${block.shardId}/page/1`}>
+                                  <MetachainSpan shardId={block.shardId} />
+                                </TestnetLink>
+                              )}
                             </td>
                             <td>{sizeFormat(block.size)}</td>
                             <td>

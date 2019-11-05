@@ -2,17 +2,33 @@ import axios from 'axios';
 
 type ParamsType = {
   elasticUrl: string;
-  size: number;
+  size?: number;
+  shardId: number | undefined;
 };
 
-export async function getBlocks({ elasticUrl, size }: ParamsType) {
+const setShardsQuery = (shardId: number | undefined) =>
+  shardId
+    ? {
+        query: {
+          bool: {
+            must: [{ match: { shardId } }],
+          },
+        },
+      }
+    : {
+        query: { match_all: {} },
+      };
+
+export async function getBlocks({ elasticUrl, size = 1, shardId = undefined }: ParamsType) {
   try {
-    const { data } = await axios.post(`${elasticUrl}/blocks/_search`, {
-      query: { match_all: {} },
+    const query = {
       sort: { timestamp: { order: 'desc' } },
       from: (size - 1) * 25,
       size: 25,
-    });
+      ...setShardsQuery(shardId),
+    };
+
+    const { data } = await axios.post(`${elasticUrl}/blocks/_search`, query);
 
     const { hits } = data;
     const blocks = hits.hits.map((block: any) => block._source);
@@ -43,11 +59,9 @@ export async function getBlocks({ elasticUrl, size }: ParamsType) {
   }
 }
 
-export async function getTotalBlocks(elasticUrl: string) {
+export async function getTotalBlocks({ elasticUrl, shardId = undefined }: ParamsType) {
   try {
-    const { data } = await axios.post(`${elasticUrl}/blocks/_count`, {
-      query: { match_all: {} },
-    });
+    const { data } = await axios.post(`${elasticUrl}/blocks/_count`, setShardsQuery(shardId));
 
     return data.count;
   } catch {
