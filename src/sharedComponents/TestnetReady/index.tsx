@@ -17,7 +17,7 @@ const TestnetReady: React.FC = ({ children }) => {
     if (allTestnetIds.includes(testnetId) && activeTestnetId !== testnetId) {
       setTestnetReady(false);
     } else setTestnetReady(true);
-  }, [testnetId, activeTestnetId]);
+  }, [testnetId, activeTestnetId, allTestnetIds]);
 
   return testnetReady ? <>{children}</> : null;
 };
