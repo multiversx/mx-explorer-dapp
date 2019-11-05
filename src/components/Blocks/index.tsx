@@ -54,7 +54,7 @@ const Blocks: React.FC = () => {
       getBlocks({ elasticUrl, size, shardId }).then(data => setState(data));
       getTotalBlocks({ elasticUrl, shardId }).then(data => setTotalBlocks(data));
     }
-  }, [elasticUrl, size]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, size, shardId]); // run the operation only once since the parameter does not change
 
   return (
     <div ref={ref}>

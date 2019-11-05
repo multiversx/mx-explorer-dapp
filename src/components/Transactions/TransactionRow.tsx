@@ -1,13 +1,14 @@
 import React from 'react';
 import { ScAddressIcon, TestnetLink, Denominate, TimeAgo } from './../../sharedComponents';
 import { TransactionType } from './index';
-import { truncate, dateFormatted } from './../../helpers';
+import { truncate, dateFormatted, addressIsHash } from './../../helpers';
 
 type PropsType = {
   transaction: TransactionType;
+  addressId?: string | undefined;
 };
 
-const TransactionRow: React.FC<PropsType> = ({ transaction }) => {
+const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
   return (
     <tr className="animated fadeIn">
       <td>
@@ -36,15 +37,27 @@ const TransactionRow: React.FC<PropsType> = ({ transaction }) => {
       </td>
       <td>
         <ScAddressIcon value={transaction.sender} />
-        <TestnetLink to={`/address/${transaction.sender}`}>
-          {truncate(transaction.sender, 20)}
-        </TestnetLink>
+        {addressId === transaction.sender ? (
+          <span>{truncate(transaction.sender, 20)}</span>
+        ) : (
+          <>
+            {addressIsHash(transaction.sender) && (
+              <TestnetLink to={`/address/${transaction.sender}`}>
+                {truncate(transaction.sender, 20)}
+              </TestnetLink>
+            )}
+          </>
+        )}
       </td>
       <td>
         <ScAddressIcon value={transaction.receiver} />
-        <TestnetLink to={`/address/${transaction.receiver}`}>
-          {truncate(transaction.receiver, 20)}
-        </TestnetLink>
+        {addressId === transaction.receiver ? (
+          <span>{truncate(transaction.receiver, 20)}</span>
+        ) : (
+          <TestnetLink to={`/address/${transaction.receiver}`}>
+            {truncate(transaction.receiver, 20)}
+          </TestnetLink>
+        )}
       </td>
       <td>
         <Denominate value={transaction.value} showAllDecimals />

@@ -23,6 +23,10 @@ const routes = [
     component: withTestnetReady(Transactions),
   },
   {
+    path: '/address/:addressId',
+    component: withTestnetReady(Transactions),
+  },
+  {
     path: '/transactions/:transactionId',
     component: withTestnetReady(TransactionDetails),
   },

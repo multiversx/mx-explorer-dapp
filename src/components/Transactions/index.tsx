@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { useParams, Redirect } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { useGlobalState } from '../../context';
 import { getTransactions, getTotalTransactions } from './helpers/asyncRequests';
 import { Highlights, Pager } from './../../sharedComponents';
 import TransactionRow from './TransactionRow';
+import AddressDetails from './AddressDetails';
 
 export type TransactionType = {
   blockHash: string;
@@ -31,27 +32,28 @@ const Transactions: React.FC = () => {
   const {
     activeTestnet: { elasticUrl },
   } = useGlobalState();
-  let { page } = useParams();
+  let { page, addressId } = useParams();
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
   const [totalTransactions, setTotalTransactions] = React.useState<number>(0);
-  const size = !isNaN(page as any) ? parseInt(page as any) : 1;
+  const size = parseInt(page!) ? parseInt(page!) : 1;
 
   // https://www.polvara.me/posts/fetching-asynchronous-data-with-react-hooks/
   React.useEffect(() => {
     if (ref.current !== null) {
-      getTransactions({ elasticUrl, size }).then(({ data, success }) => {
+      getTransactions({ elasticUrl, size, addressId }).then(({ data, success }) => {
         setTransactions(data);
         setTransactionsFetched(success);
       });
-      getTotalTransactions(elasticUrl).then(data => setTotalTransactions(data));
+      getTotalTransactions({ elasticUrl, addressId }).then(data => setTotalTransactions(data));
     }
-  }, [elasticUrl, size]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, size, addressId]); // run the operation only once since the parameter does not change
 
-  const TransactionsPage = (
+  return (
     <div ref={ref}>
       <Highlights />
       <div className="container pt-3 pb-3">
+        <AddressDetails />
         <div className="row">
           <div className="col-12">
             <h4 data-testid="title">Transactions</h4>
@@ -69,7 +71,8 @@ const Transactions: React.FC = () => {
                 </div>
               ) : (
                 <div className="card-body card-list">
-                  <Pager slug="transactions" />
+                  <Pager slug={addressId ? `address/${addressId}` : 'transactions'} />
+
                   {totalTransactions > 0 && (
                     <span>
                       More than {totalTransactions.toLocaleString('en')} transactions found
@@ -90,7 +93,11 @@ const Transactions: React.FC = () => {
                       </thead>
                       <tbody>
                         {transactions.map(transaction => (
-                          <TransactionRow transaction={transaction} key={transaction.hash} />
+                          <TransactionRow
+                            transaction={transaction}
+                            key={transaction.hash}
+                            addressId={addressId}
+                          />
                         ))}
                         {transactions.length === 0 && (
                           <tr>
@@ -115,7 +122,6 @@ const Transactions: React.FC = () => {
       </div>
     </div>
   );
-  return isNaN(page as any) ? <Redirect to="/transactions/page/1" /> : TransactionsPage;
 };
 
 export default Transactions;
