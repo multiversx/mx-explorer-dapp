@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { faChevronLeft, faChevronRight, faCube, faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TimeAgo, Highlights, TestnetLink } from '../../sharedComponents';
-import { getTransaction } from './helpers/asyncRequests';
+import { getBlock } from './helpers/asyncRequests';
 import { useGlobalState } from '../../context';
 import { BlockType } from '../Blocks';
 import { dateFormatted, sizeFormat, truncate } from '../../helpers';
@@ -48,7 +48,7 @@ const BlockDetails: React.FC = () => {
 
   React.useEffect(() => {
     if (blockId) {
-      getTransaction(elasticUrl, blockId).then(data => ref.current !== null && setState(data));
+      getBlock(elasticUrl, blockId).then(data => ref.current !== null && setState(data));
     }
   }, [elasticUrl, blockId]); // run the operation only once since the parameter does not change
 
