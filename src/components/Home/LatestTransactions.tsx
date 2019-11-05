@@ -5,7 +5,7 @@ import { getTransactions } from './helpers/asyncRequests';
 import { TestnetLink, TimeAgo } from './../../sharedComponents';
 import { TransactionType } from './../Transactions';
 import { useGlobalState } from '../../context';
-import { truncate, dateFormatted, addressIsHash } from './../../helpers';
+import { truncate, dateFormatted } from './../../helpers';
 
 const LatestTransactions: React.FC = () => {
   let ref = React.useRef(null);
@@ -41,7 +41,7 @@ const LatestTransactions: React.FC = () => {
             {transactions.length ? (
               <div className="animated fadeIn">
                 {transactions.map((transaction: TransactionType, i) => (
-                  <>
+                  <div key={transaction.hash}>
                     <div className="row">
                       <div className="col-6">
                         <span className="icon-container-round">
@@ -73,7 +73,7 @@ const LatestTransactions: React.FC = () => {
                       </div>
                     </div>
                     {i !== transactions.length - 1 && <hr className="hr-space" />}
-                  </>
+                  </div>
                 ))}
               </div>
             ) : (

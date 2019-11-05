@@ -4,7 +4,7 @@ import { getBlocks, getTotalBlocks } from './helpers/asyncRequests';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { Highlights, TimeAgo, Pager, TestnetLink, MetachainSpan } from './../../sharedComponents';
-import { truncate, sizeFormat } from './../../helpers';
+import { truncate, sizeFormat, dateFormatted } from './../../helpers';
 import { useGlobalState } from '../../context';
 
 export type BlockType = {
@@ -112,7 +112,7 @@ const Blocks: React.FC = () => {
                               <TestnetLink to={`/blocks/${block.hash}`}>{block.nonce}</TestnetLink>
                             </td>
                             <td>
-                              <span title="{{ block.timestamp * 1000 | date:'medium' }}">
+                              <span title={dateFormatted(block.timestamp)}>
                                 <TimeAgo value={block.timestamp} />
                               </span>
                             </td>
@@ -128,7 +128,9 @@ const Blocks: React.FC = () => {
                             </td>
                             <td>{sizeFormat(block.size)}</td>
                             <td>
-                              <a href="./#/block/{{block.hash}}">{truncate(block.hash, 20)}</a>
+                              <TestnetLink to={`/block/${block.hash}`}>
+                                {truncate(block.hash, 20)}
+                              </TestnetLink>
                             </td>
                           </tr>
                         ))}

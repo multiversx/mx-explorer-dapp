@@ -17,6 +17,7 @@ export async function getBlocks(elasticUrl: string) {
       },
       size: 20,
     });
+
     return {
       data: hits.map((block: any) => block._source),
       blocksFetched: true,
