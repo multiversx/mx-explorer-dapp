@@ -27,6 +27,8 @@ export type TransactionType = {
   value: string;
 };
 
+// TODO: check bad addressID (hash)
+
 const Transactions: React.FC = () => {
   let ref = React.useRef(null);
   const {

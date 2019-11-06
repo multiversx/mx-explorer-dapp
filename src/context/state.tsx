@@ -18,6 +18,7 @@ export interface TestnetType {
   nodeUrl: string;
   numInitCharactersForScAddress: number;
   elasticUrl: string;
+  roundTime: number;
   decimals: number;
   denomination: number;
   gasPrice: number;
@@ -57,6 +58,7 @@ export const defaultTestnet = {
   name: 'NOT CONFIGURED',
   numInitCharactersForScAddress: 0,
   nodeUrl: '',
+  roundTime: 0,
   elasticUrl: '',
   decimals: 0,
   denomination: 0,

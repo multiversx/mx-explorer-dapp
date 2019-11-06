@@ -8,6 +8,9 @@ type PropsType = {
   addressId?: string | undefined;
 };
 
+// TODO: check from to be filled
+// TODO: > spacing in Shard column
+
 const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
   return (
     <tr className="animated fadeIn">
