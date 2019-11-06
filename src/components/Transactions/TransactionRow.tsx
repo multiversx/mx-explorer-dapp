@@ -14,9 +14,6 @@ type PropsType = {
   addressId?: string | undefined;
 };
 
-// TODO: check from to be filled
-// TODO: > spacing in Shard column
-
 const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
   return (
     <tr className="animated fadeIn">
@@ -39,7 +36,7 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
         <TestnetLink to={`/shard/${transaction.senderShard}/page/1`}>
           {transaction.senderShard}
         </TestnetLink>
-        &gt;
+        &nbsp;&gt;&nbsp;
         <TestnetLink to={`/shard/${transaction.receiverShard}/page/1`}>
           {transaction.receiverShard}
         </TestnetLink>
