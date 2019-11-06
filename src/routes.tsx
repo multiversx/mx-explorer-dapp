@@ -17,7 +17,6 @@ const withTestnetReady = (Component: React.ComponentType) =>
     }
   };
 
-// TODO: pe unde sunt adrese cu hash sa nu mai fie cu Id
 // TODO: daca hashul nu e valid (functie validare) return 404 (page not found)
 
 const routes = [
@@ -26,11 +25,11 @@ const routes = [
     component: withTestnetReady(Transactions),
   },
   {
-    path: '/address/:addressId',
+    path: '/address/:hash',
     component: withTestnetReady(Transactions),
   },
   {
-    path: '/transactions/:transactionId',
+    path: '/transactions/:hash',
     component: withTestnetReady(TransactionDetails),
   },
   {
@@ -38,7 +37,7 @@ const routes = [
     component: withTestnetReady(Blocks),
   },
   {
-    path: '/blocks/:blockId',
+    path: '/blocks/:hash',
     component: withTestnetReady(BlockDetails),
   },
   {

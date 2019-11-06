@@ -21,7 +21,7 @@ import { TransactionType } from '../Transactions';
 import { dateFormatted, addressIsHash, truncate } from './../../helpers';
 
 const TransactionDetails: React.FC = () => {
-  let { transactionId } = useParams();
+  let { hash: transactionId } = useParams();
   let ref = React.useRef(null);
 
   const {

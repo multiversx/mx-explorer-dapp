@@ -38,7 +38,7 @@ export const initialState = {
 };
 
 const BlockDetails: React.FC = () => {
-  let { blockId } = useParams();
+  let { hash: blockId } = useParams();
   let ref = React.useRef(null);
 
   const {

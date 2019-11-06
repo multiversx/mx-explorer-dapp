@@ -27,15 +27,13 @@ export type TransactionType = {
   value: string;
 };
 
-// TODO: check bad addressID (hash)
-
 const Transactions: React.FC = () => {
   let ref = React.useRef(null);
   const {
     activeTestnet: { elasticUrl },
     timeout,
   } = useGlobalState();
-  let { page, addressId } = useParams();
+  let { page, hash: addressId } = useParams();
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
   const [totalTransactions, setTotalTransactions] = React.useState<number>(0);

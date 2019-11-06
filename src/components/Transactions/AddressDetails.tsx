@@ -22,7 +22,7 @@ const initialState = {
 
 const AddressDetails: React.FC = () => {
   let ref = React.useRef(null);
-  let { addressId } = useParams();
+  let { hash: addressId } = useParams();
   const [state, setState] = React.useState<StateType>(initialState);
 
   const {
