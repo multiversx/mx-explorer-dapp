@@ -3,29 +3,12 @@ import moment from 'moment';
 import { LineChart, Line, ResponsiveContainer, YAxis, XAxis, CartesianGrid } from 'recharts';
 import { useGlobalState } from '../../../../context';
 import { getLastTransactionsCount } from './helpers/asyncRequests';
+import { addValueToChart } from './helpers/chartHelpers';
 
-const data = [
-  { value: 71, time: 1573029588041 },
-  { value: 58, time: 1573029588047 },
-  { value: 78, time: 1573029588053 },
-  { value: 97, time: 1573029588059 },
-  { value: 72, time: 1573029588065 },
-  { value: 74, time: 1573029588071 },
-  { value: 69, time: 1573029588077 },
-  { value: 68, time: 1573029588083 },
-  { value: 97, time: 1573029588089 },
-  { value: 39, time: 1573029588095 },
-  { value: 95, time: 1573029588101 },
-  { value: 82, time: 1573029588107 },
-  { value: 36, time: 1573029588113 },
-  { value: 67, time: 1573029588119 },
-  { value: 112, time: 1573029588125 },
-  { value: 61, time: 1573029588131 },
-  { value: 57, time: 1573029588137 },
-  { value: 92, time: 1573029588143 },
-  { value: 76, time: 1573029588149 },
-  { value: 146, time: 1573029588155 },
-];
+type DataType = {
+  value: number;
+  time: number;
+};
 
 const Chart = () => {
   let ref = React.useRef(null);
@@ -34,6 +17,7 @@ const Chart = () => {
   } = useGlobalState();
   let initialValuesCount = 0;
   const initialValues: number[] = [];
+  const [data, setData] = React.useState<DataType[]>([]);
 
   React.useEffect(() => {
     if (ref.current !== null) {
@@ -53,8 +37,6 @@ const Chart = () => {
           initialValuesCount++;
           initialValues[i] = Math.floor(count / roundTime);
 
-          console.warn(count);
-
           if (initialValuesCount === 20) {
             for (let i = 21; i > 1; i--) {
               let dataLag = 2 * roundTime * 1000;
@@ -64,8 +46,8 @@ const Chart = () => {
                 time: myTime,
               });
             }
+            setData(initialData);
           }
-          console.warn(11, initialData);
         });
       }
     }
