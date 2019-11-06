@@ -37,7 +37,7 @@ export async function getTransactions({ elasticUrl, addressId = '', size = 1 }: 
 
     return {
       data,
-      success: true,
+      success: data.length > 0,
     };
   } catch {
     return {
@@ -70,8 +70,6 @@ export async function getAddressDetails({ nodeUrl, addressId }: DetailsType) {
     const {
       data: { balance, code },
     } = await axios.get(`${nodeUrl}/address/${addressId}`);
-
-    console.warn(11, code);
 
     return {
       balance,
