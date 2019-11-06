@@ -7,13 +7,18 @@ import {
   faClock,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ScAddressIcon, Denominate, TimeAgo, Highlights } from './../../sharedComponents';
+import {
+  ScAddressIcon,
+  Denominate,
+  TimeAgo,
+  Highlights,
+  TestnetLink,
+  ShardSpan,
+} from './../../sharedComponents';
 import { getTransaction } from './helpers/asyncRequests';
 import { useGlobalState } from '../../context';
 import { TransactionType } from '../Transactions';
-import { dateFormatted } from './../../helpers';
-
-// TODO: la From aceeasi logica ca si la Block Details
+import { dateFormatted, addressIsHash, truncate } from './../../helpers';
 
 const TransactionDetails: React.FC = () => {
   let { transactionId } = useParams();
@@ -92,18 +97,22 @@ const TransactionDetails: React.FC = () => {
                         <div className="col-lg-2 card-label">From</div>
                         <div className="col-lg-10">
                           <ScAddressIcon value={transaction.sender} />
-                          {/* TODO: if transaction.sender nu e adresa labelul sa fie Shard Nr
-                          si nu mai se afiseaza ce e in paranteza
-                          else
-                          e Adresa si (Shard Nr) */}
-                          <Link to={`/address/${transaction.sender}`}>{transaction.sender}</Link>
+                          {addressIsHash(transaction.sender) ? (
+                            <>
+                              <TestnetLink to={`/address/${transaction.sender}`}>
+                                {truncate(transaction.sender, 20)}
+                              </TestnetLink>
+                              <TestnetLink
+                                to={`/shard/${transaction.senderShard}/page/1`}
+                                className="small-link"
+                              >
+                                (<ShardSpan shardId={transaction.sender} />)
+                              </TestnetLink>
+                            </>
+                          ) : (
+                            <ShardSpan shardId={transaction.sender} />
+                          )}
                           &nbsp;
-                          <Link
-                            to={`shard/${transaction.senderShard}/page/1`}
-                            className="small-link"
-                          >
-                            (Shard {transaction.senderShard})
-                          </Link>
                         </div>
                       </div>
                       <hr className="hr-space" />
