@@ -2,13 +2,8 @@ import * as React from 'react';
 import Hero from './Hero';
 import LatestBlocks from './LatestBlocks';
 import LatestTransactions from './LatestTransactions';
-import { useGlobalState } from '../../context';
 
 const TransactionDetails: React.FC = () => {
-  const {
-    activeTestnet: { name },
-  } = useGlobalState();
-
   return (
     <div>
       <Hero />

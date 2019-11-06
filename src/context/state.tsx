@@ -40,6 +40,7 @@ export interface StateType {
   defaultTestnet: TestnetType;
   activeTestnet: TestnetType;
   activeTestnetId: string;
+  timeout: number;
 }
 
 const buildInitialConfig = (config: any): ConfigType => {
@@ -96,6 +97,7 @@ const initialState: StateType = {
   defaultTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
   activeTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
   activeTestnetId: '',
+  timeout: 1 * 1000,
 };
 
 export default initialState;

@@ -3,7 +3,6 @@ import moment from 'moment';
 import { LineChart, Line, ResponsiveContainer, YAxis, XAxis, CartesianGrid } from 'recharts';
 import { useGlobalState } from '../../../../context';
 import { getLastTransactionsCount } from './helpers/asyncRequests';
-import { addValueToChart } from './helpers/chartHelpers';
 
 type DataType = {
   value: number;
@@ -14,6 +13,7 @@ const Chart = () => {
   let ref = React.useRef(null);
   const {
     activeTestnet: { elasticUrl, roundTime: activeRoundTime },
+    timeout,
   } = useGlobalState();
   let initialValuesCount = 0;
   const initialValues: number[] = [];
@@ -33,16 +33,16 @@ const Chart = () => {
         let start = epoch - dataLag - i * roundTime;
         let end = epoch - dataLag - i * roundTime + roundTime;
 
-        getLastTransactionsCount({ elasticUrl, start, end }).then(({ count }) => {
+        getLastTransactionsCount({ elasticUrl, start, end, timeout }).then(({ count }) => {
           initialValuesCount++;
           initialValues[i] = Math.floor(count / roundTime);
 
           if (initialValuesCount === 20) {
-            for (let i = 21; i > 1; i--) {
+            for (let j = 21; j > 1; j--) {
               let dataLag = 2 * roundTime * 1000;
-              let myTime = new Date().getTime() - dataLag - i * roundTime + roundTime;
+              let myTime = new Date().getTime() - dataLag - j * roundTime + roundTime;
               initialData.push({
-                value: initialValues[i],
+                value: initialValues[j],
                 time: myTime,
               });
             }
@@ -51,7 +51,7 @@ const Chart = () => {
         });
       }
     }
-  }, [elasticUrl]);
+  }, [elasticUrl, timeout, activeRoundTime]);
 
   return (
     <ResponsiveContainer ref={ref}>

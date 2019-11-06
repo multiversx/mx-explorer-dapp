@@ -43,15 +43,18 @@ const BlockDetails: React.FC = () => {
 
   const {
     activeTestnet: { elasticUrl },
+    timeout,
   } = useGlobalState();
 
   const [state, setState] = React.useState<StateType>(initialState);
 
   React.useEffect(() => {
     if (blockId) {
-      getBlock(elasticUrl, blockId).then(data => ref.current !== null && setState(data));
+      getBlock({ elasticUrl, blockId, timeout }).then(
+        data => ref.current !== null && setState(data)
+      );
     }
-  }, [elasticUrl, blockId]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, blockId, timeout]); // run the operation only once since the parameter does not change
 
   const { block, proposer, consensusItems, nextHash, blockFetched } = state;
 

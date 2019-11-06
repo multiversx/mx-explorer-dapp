@@ -1,22 +1,31 @@
 import axios from 'axios';
 
-export async function getBlocks(elasticUrl: string) {
+type GetBlocksType = {
+  elasticUrl: string;
+  timeout: number;
+};
+
+export async function getBlocks({ elasticUrl, timeout }: GetBlocksType) {
   try {
     const {
       data: {
         hits: { hits },
       },
-    } = await axios.post(`${elasticUrl}/blocks/_search`, {
-      query: {
-        match_all: {},
-      },
-      sort: {
-        timestamp: {
-          order: 'desc',
+    } = await axios.post(
+      `${elasticUrl}/blocks/_search`,
+      {
+        query: {
+          match_all: {},
         },
+        sort: {
+          timestamp: {
+            order: 'desc',
+          },
+        },
+        size: 20,
       },
-      size: 20,
-    });
+      { timeout }
+    );
 
     return {
       data: hits.map((block: any) => block._source),
@@ -30,23 +39,27 @@ export async function getBlocks(elasticUrl: string) {
   }
 }
 
-export async function getTransactions(elasticUrl: string) {
+export async function getTransactions({ elasticUrl, timeout }: GetBlocksType) {
   try {
     const {
       data: {
         hits: { hits },
       },
-    } = await axios.post(`${elasticUrl}/transactions/_search`, {
-      query: {
-        match_all: {},
-      },
-      sort: {
-        timestamp: {
-          order: 'desc',
+    } = await axios.post(
+      `${elasticUrl}/transactions/_search`,
+      {
+        query: {
+          match_all: {},
         },
+        sort: {
+          timestamp: {
+            order: 'desc',
+          },
+        },
+        size: 20,
       },
-      size: 20,
-    });
+      { timeout }
+    );
     return {
       data: hits.map((transaction: any) => transaction._source),
       transactionsFetched: true,

@@ -1,13 +1,19 @@
 import axios from 'axios';
 import { initialState } from './../index';
 
-async function searchCall(elasticUrl: string) {
+type GetBlocksType = {
+  elasticUrl: string;
+  timeout: number;
+  blockId?: string;
+};
+
+async function searchCall({ elasticUrl, timeout }: GetBlocksType) {
   try {
     const {
       data: {
         hits: { hits },
       },
-    } = await axios.get(`${elasticUrl}/validators/_search`);
+    } = await axios.get(`${elasticUrl}/validators/_search`, { timeout });
     return hits;
   } catch {
     return [];
@@ -18,22 +24,32 @@ type GetNextBlockType = {
   currentBlockId: number;
   currentShardId: number;
   elasticUrl: string;
+  timeout: number;
 };
 
-async function getNextBlock({ elasticUrl, currentBlockId, currentShardId }: GetNextBlockType) {
+async function getNextBlock({
+  elasticUrl,
+  currentBlockId,
+  currentShardId,
+  timeout,
+}: GetNextBlockType) {
   const nextBlockId = currentBlockId + 1;
   try {
     const {
       data: {
         hits: { hits },
       },
-    } = await axios.post(`${elasticUrl}/blocks/_search`, {
-      query: {
-        bool: {
-          must: [{ match: { nonce: nextBlockId } }, { match: { shardId: currentShardId } }],
+    } = await axios.post(
+      `${elasticUrl}/blocks/_search`,
+      {
+        query: {
+          bool: {
+            must: [{ match: { nonce: nextBlockId } }, { match: { shardId: currentShardId } }],
+          },
         },
       },
-    });
+      { timeout }
+    );
     if (hits.length === 1) {
       return hits[0]._source.hash;
     }
@@ -43,12 +59,12 @@ async function getNextBlock({ elasticUrl, currentBlockId, currentShardId }: GetN
   }
 }
 
-export async function getBlock(elasticUrl: string, blockId: string) {
+export async function getBlock({ elasticUrl, timeout, blockId = '' }: GetBlocksType) {
   try {
-    const { data } = await axios.get(`${elasticUrl}/blocks/_doc/${blockId}`);
+    const { data } = await axios.get(`${elasticUrl}/blocks/_doc/${blockId}`, { timeout });
     const block = data._source;
 
-    const hits = await searchCall(elasticUrl);
+    const hits = await searchCall({ elasticUrl, timeout });
 
     const consensusArray = hits.length
       ? hits.filter((hit: any) => hit['_id'] === block.shardId.toString()).pop()['_source']
@@ -63,6 +79,7 @@ export async function getBlock(elasticUrl: string, blockId: string) {
       elasticUrl,
       currentBlockId: block.nonce,
       currentShardId: block.shardId,
+      timeout,
     });
 
     return {

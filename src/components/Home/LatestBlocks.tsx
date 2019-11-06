@@ -11,17 +11,18 @@ const LatestBlocks: React.FC = () => {
   let ref = React.useRef(null);
   const {
     activeTestnet: { elasticUrl },
+    timeout,
   } = useGlobalState();
   const [blocks, setBlocks] = React.useState<BlockType[]>([]);
   const [blocksFetched, setBlocksFetched] = React.useState<boolean>(true);
   React.useEffect(() => {
     if (ref.current !== null) {
-      getBlocks(elasticUrl).then(({ data, blocksFetched }) => {
+      getBlocks({ elasticUrl, timeout }).then(({ data, blocksFetched }) => {
         setBlocks(data);
         setBlocksFetched(blocksFetched);
       });
     }
-  }, [elasticUrl]);
+  }, [elasticUrl, timeout]);
   return (
     <div className="card" ref={ref}>
       {!blocksFetched ? (

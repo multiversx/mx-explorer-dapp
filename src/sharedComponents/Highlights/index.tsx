@@ -27,13 +27,14 @@ const initialState = {
 const Hightlights = ({ hero = false }: { hero?: boolean }) => {
   const {
     activeTestnet: { elasticUrl },
+    timeout,
   } = useGlobalState();
   const [state, setState] = React.useState<StateType>(initialState);
   let ref = React.useRef(null);
 
   React.useEffect(() => {
     if (ref.current !== null) {
-      getStats(elasticUrl).then(({ data, success }) => {
+      getStats({ elasticUrl, timeout }).then(({ data, success }) => {
         const newState = success
           ? {
               blockNumber: parseInt(data.blockNumber).toLocaleString('en'),
@@ -49,7 +50,7 @@ const Hightlights = ({ hero = false }: { hero?: boolean }) => {
         setState(newState);
       });
     }
-  }, [elasticUrl]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, timeout]); // run the operation only once since the parameter does not change
 
   return (
     <div ref={ref}>{!hero ? <DefaultHighlights {...state} /> : <HeroHighlights {...state} />}</div>

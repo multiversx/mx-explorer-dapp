@@ -26,6 +26,7 @@ const TransactionDetails: React.FC = () => {
 
   const {
     activeTestnet: { elasticUrl },
+    timeout,
   } = useGlobalState();
 
   const [transaction, setTransaction] = React.useState<TransactionType | undefined>(undefined);
@@ -33,12 +34,14 @@ const TransactionDetails: React.FC = () => {
 
   React.useEffect(() => {
     if (transactionId && ref.current !== null) {
-      getTransaction(elasticUrl, transactionId).then(({ data, transactionFetched }) => {
-        setTransaction(data);
-        setTransactionFetched(transactionFetched);
-      });
+      getTransaction({ elasticUrl, transactionId, timeout }).then(
+        ({ data, transactionFetched }) => {
+          setTransaction(data);
+          setTransactionFetched(transactionFetched);
+        }
+      );
     }
-  }, [elasticUrl, transactionId]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, transactionId, timeout]); // run the operation only once since the parameter does not change
   return (
     <div ref={ref}>
       <Highlights />

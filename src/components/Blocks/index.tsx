@@ -47,14 +47,15 @@ const Blocks: React.FC = () => {
 
   const {
     activeTestnet: { elasticUrl },
+    timeout,
   } = useGlobalState();
 
   React.useEffect(() => {
     if (ref.current !== null) {
-      getBlocks({ elasticUrl, size, shardId }).then(data => setState(data));
-      getTotalBlocks({ elasticUrl, shardId }).then(data => setTotalBlocks(data));
+      getBlocks({ elasticUrl, size, shardId, timeout }).then(data => setState(data));
+      getTotalBlocks({ elasticUrl, shardId, timeout }).then(data => setTotalBlocks(data));
     }
-  }, [elasticUrl, size, shardId]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, size, shardId, timeout]); // run the operation only once since the parameter does not change
 
   return (
     <div ref={ref}>

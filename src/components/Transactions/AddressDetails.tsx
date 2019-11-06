@@ -27,15 +27,14 @@ const AddressDetails: React.FC = () => {
 
   const {
     activeTestnet: { nodeUrl },
+    timeout,
   } = useGlobalState();
 
   React.useEffect(() => {
     if (addressId && ref.current !== null) {
-      getAddressDetails({ nodeUrl, addressId }).then((data: any) =>
-        setState({ ...state, ...data })
-      );
+      getAddressDetails({ nodeUrl, addressId, timeout }).then((data: any) => setState(data));
     }
-  }, [nodeUrl, addressId]);
+  }, [nodeUrl, addressId, timeout]);
 
   const Address = (
     <div ref={ref}>

@@ -11,17 +11,18 @@ const LatestTransactions: React.FC = () => {
   let ref = React.useRef(null);
   const {
     activeTestnet: { elasticUrl },
+    timeout,
   } = useGlobalState();
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
   React.useEffect(() => {
     if (ref.current !== null) {
-      getTransactions(elasticUrl).then(({ data, transactionsFetched }) => {
+      getTransactions({ elasticUrl, timeout }).then(({ data, transactionsFetched }) => {
         setTransactions(data);
         setTransactionsFetched(transactionsFetched);
       });
     }
-  }, [elasticUrl]);
+  }, [elasticUrl, timeout]);
   return (
     <div className="card" ref={ref}>
       {!transactionsFetched ? (
