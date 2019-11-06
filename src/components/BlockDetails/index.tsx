@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { faChevronLeft, faChevronRight, faCube, faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { TimeAgo, Highlights, TestnetLink, MetachainSpan } from '../../sharedComponents';
+import { TimeAgo, Highlights, TestnetLink, ShardSpan } from '../../sharedComponents';
 import { getBlock } from './helpers/asyncRequests';
 import { useGlobalState } from '../../context';
 import { BlockType } from '../Blocks';
@@ -125,7 +125,7 @@ const BlockDetails: React.FC = () => {
                           <TestnetLink to={`/shards/${block.shardId}/page/1`}>
                             Shard
                             {/* TODO: refactor to Shard -> Shart Nr / Metachain */}
-                            <MetachainSpan shardId={block.shardId} />
+                            <ShardSpan shardId={block.shardId} />
                           </TestnetLink>
                         </div>
                       </div>

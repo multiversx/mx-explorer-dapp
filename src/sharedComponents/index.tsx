@@ -5,7 +5,7 @@ import ScAddressIcon from './ScAddressIcon';
 import TestnetLink from './TestnetLink';
 import TimeAgo from './TimeAgo';
 import TestnetReady from './TestnetReady';
-import MetachainSpan from './MetachainSpan';
+import ShardSpan from './ShardSpan';
 
 export {
   Denominate,
@@ -15,5 +15,5 @@ export {
   TestnetLink,
   TimeAgo,
   TestnetReady,
-  MetachainSpan,
+  ShardSpan,
 };

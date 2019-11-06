@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getBlocks, getTotalBlocks } from './helpers/asyncRequests';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
-import { Highlights, TimeAgo, Pager, TestnetLink, MetachainSpan } from './../../sharedComponents';
+import { Highlights, TimeAgo, Pager, TestnetLink, ShardSpan } from './../../sharedComponents';
 import { truncate, sizeFormat, dateFormatted } from './../../helpers';
 import { useGlobalState } from '../../context';
 
@@ -65,7 +65,7 @@ const Blocks: React.FC = () => {
             <h4>
               {shardId && (
                 <>
-                  <MetachainSpan shardId={shardId} />
+                  <ShardSpan shardId={shardId} />
                   &nbsp;
                 </>
               )}
@@ -119,10 +119,10 @@ const Blocks: React.FC = () => {
                             <td>{block.txCount}</td>
                             <td>
                               {shardId ? (
-                                <MetachainSpan shardId={block.shardId} />
+                                <ShardSpan shardId={block.shardId} />
                               ) : (
                                 <TestnetLink to={`/shards/${block.shardId}/page/1`}>
-                                  <MetachainSpan shardId={block.shardId} />
+                                  <ShardSpan shardId={block.shardId} />
                                 </TestnetLink>
                               )}
                             </td>

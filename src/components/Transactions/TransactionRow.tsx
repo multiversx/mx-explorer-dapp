@@ -1,5 +1,11 @@
 import React from 'react';
-import { ScAddressIcon, TestnetLink, Denominate, TimeAgo } from './../../sharedComponents';
+import {
+  ScAddressIcon,
+  TestnetLink,
+  Denominate,
+  TimeAgo,
+  ShardSpan,
+} from './../../sharedComponents';
 import { TransactionType } from './index';
 import { truncate, dateFormatted, addressIsHash } from './../../helpers';
 
@@ -44,10 +50,12 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
           <span>{truncate(transaction.sender, 20)}</span>
         ) : (
           <>
-            {addressIsHash(transaction.sender) && (
+            {addressIsHash(transaction.sender) ? (
               <TestnetLink to={`/address/${transaction.sender}`}>
                 {truncate(transaction.sender, 20)}
               </TestnetLink>
+            ) : (
+              <ShardSpan shardId={transaction.sender} />
             )}
           </>
         )}
