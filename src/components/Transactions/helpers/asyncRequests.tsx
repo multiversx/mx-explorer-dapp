@@ -82,7 +82,9 @@ type DetailsType = {
 export async function getAddressDetails({ nodeUrl, addressId, timeout }: DetailsType) {
   try {
     const {
-      data: { balance, code },
+      data: {
+        account: { balance, code },
+      },
     } = await axios.get(`${nodeUrl}/address/${addressId}`, { timeout });
 
     return {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Highlights from './../../../sharedComponents/Highlights';
+import { Highlights, Search } from './../../../sharedComponents';
 import Chart from './Chart';
 
 const HeroHighlights: React.FC = () => {
@@ -29,19 +29,7 @@ const HeroHighlights: React.FC = () => {
               role="search"
             >
               <div className="input-group input-group-seamless">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search by Address / Txn Hash / Block Hash"
-                  name="requestType"
-                  required
-                  ng-model="hashRequest"
-                />
-                <div className="input-group-append">
-                  <button type="submit" className="input-group-text">
-                    <i className="fa fa-search" />
-                  </button>
-                </div>
+                <Search />
               </div>
             </form>
           </div>

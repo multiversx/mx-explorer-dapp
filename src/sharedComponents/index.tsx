@@ -6,6 +6,7 @@ import TestnetLink from './TestnetLink';
 import TimeAgo from './TimeAgo';
 import TestnetReady from './TestnetReady';
 import ShardSpan from './ShardSpan';
+import Search from './Search';
 
 export {
   Denominate,
@@ -16,4 +17,5 @@ export {
   TimeAgo,
   TestnetReady,
   ShardSpan,
+  Search,
 };

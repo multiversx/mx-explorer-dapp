@@ -97,7 +97,7 @@ const initialState: StateType = {
   defaultTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
   activeTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
   activeTestnetId: '',
-  timeout: 1 * 1000,
+  timeout: 3 * 1000,
 };
 
 export default initialState;

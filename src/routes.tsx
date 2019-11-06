@@ -4,6 +4,7 @@ import Transactions from './components/Transactions';
 import Blocks from './components/Blocks';
 import TransactionDetails from './components/TransactionDetails';
 import BlockDetails from './components/BlockDetails';
+import EmptySearch from './components/EmptySearch';
 import { TestnetReady } from './sharedComponents';
 
 const withTestnetReady = (Component: React.ComponentType) =>
@@ -43,6 +44,10 @@ const routes = [
   {
     path: '/shards/:shard/page/:page',
     component: withTestnetReady(Blocks),
+  },
+  {
+    path: '/search/:query',
+    component: withTestnetReady(EmptySearch),
   },
   {
     path: '/',

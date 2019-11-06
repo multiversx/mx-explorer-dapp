@@ -50,7 +50,7 @@ const LatestBlocks: React.FC = () => {
                             <FontAwesomeIcon icon={faCube} />
                           </i>
                         </span>
-                        <TestnetLink to={`/block/${block.hash}`}>{block.nonce}</TestnetLink> in
+                        <TestnetLink to={`/blocks/${block.hash}`}>{block.nonce}</TestnetLink> in
                         shard {block.shardId}
                         <br />
                         <span title={dateFormatted(block.timestamp)} className="text-secondary">

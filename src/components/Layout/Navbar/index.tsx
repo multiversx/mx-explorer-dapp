@@ -5,7 +5,7 @@ import { faBars, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import elrondLogo from './../../../assets/img/elrond.svg';
 import TestnetSwitcher from './TestnetSwitcher';
-import TestnetLink from './../../../sharedComponents/TestnetLink';
+import { TestnetLink, Search } from './../../../sharedComponents';
 
 export default function SiteNavbar() {
   const [expanded, setExpanded] = React.useState(false);
@@ -40,30 +40,12 @@ export default function SiteNavbar() {
             </li>
           </ul>
           {pathname !== '/' && (
-            <div
-              className="form-search"
-              ng-show="locationPath!='/'"
-              ng-controller="processRequestCtrl"
-              ng-submit="processRequest()"
-              role="search"
-            >
+            <div className="form-search" role="search">
               <div
                 className="input-group input-group-seamless float-right"
                 style={{ maxWidth: '23rem' }}
               >
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search by Address / Txn Hash / Block Hash"
-                  name="requestType"
-                  required
-                  ng-model="hashRequest"
-                />
-                <div className="input-group-append">
-                  <button type="submit" className="input-group-text">
-                    <FontAwesomeIcon icon={faSearch} />
-                  </button>
-                </div>
+                <Search />
               </div>
             </div>
           )}

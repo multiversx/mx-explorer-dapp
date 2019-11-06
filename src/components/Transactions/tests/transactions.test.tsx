@@ -33,7 +33,7 @@ test('Transactions data is displayed correctly', async () => {
 
   expect(mockGet).toHaveBeenCalledTimes(1);
   expect(mockGet).toHaveBeenLastCalledWith('https://elastic-aws.elrond.com/tps/_doc/meta', {
-    timeout: 1000,
+    timeout: 3000,
   });
 
   const pageNumber = await waitForElement(() => queryByTestId('pageNumber'));
