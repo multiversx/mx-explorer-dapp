@@ -23,7 +23,7 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
         </TestnetLink>
       </td>
       <td>
-        <TestnetLink to={`/block/${transaction.blockHash}`}>
+        <TestnetLink to={`/blocks/${transaction.blockHash}`}>
           {truncate(transaction.blockHash, 20)}
         </TestnetLink>
       </td>
