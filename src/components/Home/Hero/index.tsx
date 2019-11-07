@@ -3,19 +3,22 @@ import { Highlights, Search } from './../../../sharedComponents';
 import Chart from './Chart';
 
 const HeroHighlights: React.FC = () => {
+  const [liveTps, setLiveTps] = React.useState(0);
+  console.warn(11, liveTps);
+
   return (
     <div className="bg-blue">
       <div className="container pt-4 pb-4">
         <div className="row">
           <div className="col-lg-5 mt-4 mb-4">
-            <Highlights hero />
+            <Highlights hero setLiveTps={setLiveTps} />
           </div>
           <div className="col-lg-7 mt-4 mb-4">
             <span className="highlight-label d-block text-center mt-4 mb-3">
               LIVE TPS • LAST 3 MIN
             </span>
             <div className="canvas">
-              <Chart />
+              <Chart liveTps={liveTps} />
             </div>
           </div>
         </div>

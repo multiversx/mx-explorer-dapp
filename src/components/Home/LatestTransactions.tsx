@@ -12,15 +12,15 @@ const LatestTransactions: React.FC = () => {
   const {
     activeTestnet: { elasticUrl },
     timeout,
-    rounds: { timestamp },
+    refresh: { timestamp },
   } = useGlobalState();
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
   React.useEffect(() => {
     if (ref.current !== null) {
       getTransactions({ elasticUrl, timeout }).then(({ data, transactionsFetched }) => {
-        setTransactions(data);
-        setTransactionsFetched(transactionsFetched);
+        ref.current !== null && setTransactions(data);
+        ref.current !== null && setTransactionsFetched(transactionsFetched);
       });
     }
   }, [elasticUrl, timeout, timestamp]);

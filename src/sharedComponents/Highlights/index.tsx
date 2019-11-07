@@ -24,11 +24,17 @@ const initialState = {
   totalProcessedTxCount: '...',
 };
 
-const Hightlights = ({ hero = false }: { hero?: boolean }) => {
+const Hightlights = ({
+  hero = false,
+  setLiveTps = () => {},
+}: {
+  hero?: boolean;
+  setLiveTps?: Function;
+}) => {
   const {
     activeTestnet: { elasticUrl },
     timeout,
-    rounds: { timestamp },
+    refresh: { timestamp },
   } = useGlobalState();
   const [state, setState] = React.useState<StateType>(initialState);
   let ref = React.useRef(null);
@@ -47,6 +53,8 @@ const Hightlights = ({ hero = false }: { hero?: boolean }) => {
               totalProcessedTxCount: parseInt(data.totalProcessedTxCount).toLocaleString('en'),
             }
           : initialState;
+
+        setLiveTps(newState.liveTPS);
 
         setState(newState);
       });

@@ -5,19 +5,21 @@ export default function RoundManager() {
   const globalState = useGlobalState();
   const dispatch = useGlobalDispatch();
 
-  React.useEffect(() => {
+  function setRoundsForCurrentTestnet() {
     const {
-      activeTestnet: { roundTime },
+      activeTestnet: { refreshRate },
       activeTestnetId,
-      rounds: { testnetId, intervalId: oldIntervalId },
+      refresh: { testnetId, intervalId: oldIntervalId },
     } = globalState;
 
     if (testnetId !== activeTestnetId) {
       clearInterval(oldIntervalId);
-      const intervalId = setInterval(() => dispatch({ type: 'triggerNewRound' }), roundTime);
+      const intervalId = setInterval(() => dispatch({ type: 'triggerNewRound' }), refreshRate);
       dispatch({ type: 'setNewRoundIntervalId', intervalId, testnetId });
     }
-  }, [globalState.activeTestnetId]);
+  }
+
+  React.useEffect(setRoundsForCurrentTestnet, [globalState.activeTestnetId]);
 
   return <></>;
 }

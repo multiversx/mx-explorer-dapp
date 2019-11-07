@@ -13,7 +13,7 @@ export default function TestnetRouter() {
 
   const allTestnetIds = globalState.config.testnets.map(testnet => testnet.id);
 
-  React.useEffect(() => {
+  function changeTestnet() {
     const {
       activeTestnetId,
       defaultTestnet: { id: defaultTestnetId },
@@ -30,7 +30,9 @@ export default function TestnetRouter() {
       // if selected testnet is the same as the default, reset the default
       dispatch({ type: 'changeTestnet', testnetId: '' });
     }
-  }, [testnetId, dispatch, allTestnetIds, globalState]);
+  }
+
+  React.useEffect(changeTestnet, [testnetId]);
 
   return <></>;
 }

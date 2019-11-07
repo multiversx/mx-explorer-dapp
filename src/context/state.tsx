@@ -18,7 +18,7 @@ export interface TestnetType {
   nodeUrl: string;
   numInitCharactersForScAddress: number;
   elasticUrl: string;
-  roundTime: number;
+  refreshRate: number;
   decimals: number;
   denomination: number;
   gasPrice: number;
@@ -41,7 +41,7 @@ export interface StateType {
   activeTestnet: TestnetType;
   activeTestnetId: string;
   timeout: number; // axios
-  rounds: {
+  refresh: {
     timestamp: number;
     intervalId: ReturnType<typeof setInterval>;
     testnetId: string;
@@ -64,7 +64,7 @@ export const defaultTestnet = {
   name: 'NOT CONFIGURED',
   numInitCharactersForScAddress: 0,
   nodeUrl: '',
-  roundTime: 0,
+  refreshRate: 0,
   elasticUrl: '',
   decimals: 0,
   denomination: 0,
@@ -76,6 +76,8 @@ export const defaultTestnet = {
   validatorDetails: false,
   faucet: false,
 };
+
+//TODO: de ce se fac multe calluri de _count ?
 
 const configKey: any = 'CONFIG';
 const windowConfig: ConfigType = window[configKey] as any;
@@ -103,9 +105,9 @@ const initialState: StateType = {
   activeTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
   activeTestnetId: '',
   timeout: 3 * 1000,
-  rounds: {
+  refresh: {
     timestamp: Date.now(),
-    intervalId: setInterval(() => {}, 0),
+    intervalId: setInterval(() => {}, 100000000000),
     testnetId: 'default',
   },
 };

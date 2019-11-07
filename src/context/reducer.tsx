@@ -20,8 +20,8 @@ export function globalReducer(state: StateType = initialState, action: ActionTyp
     case 'triggerNewRound': {
       return {
         ...state,
-        rounds: {
-          ...state.rounds,
+        refresh: {
+          ...state.refresh,
           timestamp: Date.now(),
         },
       };
@@ -30,8 +30,8 @@ export function globalReducer(state: StateType = initialState, action: ActionTyp
       const { intervalId, testnetId } = action;
       return {
         ...state,
-        rounds: {
-          ...state.rounds,
+        refresh: {
+          ...state.refresh,
           intervalId,
           testnetId,
         },

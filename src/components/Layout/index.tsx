@@ -4,6 +4,8 @@ import Footer from './Footer';
 import TestnetRouter from './TestnetRouter';
 import RoundManager from './RoundManager';
 
+//TODO: remove form tag from Hero Search
+
 const Layout: React.FC = ({ children }) => (
   <>
     <TestnetRouter />

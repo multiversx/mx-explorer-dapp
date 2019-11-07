@@ -12,15 +12,15 @@ const LatestBlocks: React.FC = () => {
   const {
     activeTestnet: { elasticUrl },
     timeout,
-    rounds: { timestamp },
+    refresh: { timestamp },
   } = useGlobalState();
   const [blocks, setBlocks] = React.useState<BlockType[]>([]);
   const [blocksFetched, setBlocksFetched] = React.useState<boolean>(true);
   React.useEffect(() => {
     if (ref.current !== null) {
       getBlocks({ elasticUrl, timeout }).then(({ data, blocksFetched }) => {
-        setBlocks(data);
-        setBlocksFetched(blocksFetched);
+        ref.current !== null && setBlocks(data);
+        ref.current !== null && setBlocksFetched(blocksFetched);
       });
     }
   }, [elasticUrl, timeout, timestamp]);
