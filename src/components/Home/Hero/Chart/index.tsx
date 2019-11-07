@@ -1,8 +1,6 @@
 import React from 'react';
 import { Chart } from 'chart.js';
-import moment from 'moment';
 import { useGlobalState } from '../../../../context';
-import { getLastTransactionsCount } from './helpers/asyncRequests';
 import { addValueToChart } from './helpers/chartHelpers';
 
 type ChartType = {
