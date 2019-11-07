@@ -28,6 +28,7 @@ const Hightlights = ({ hero = false }: { hero?: boolean }) => {
   const {
     activeTestnet: { elasticUrl },
     timeout,
+    rounds: { timestamp },
   } = useGlobalState();
   const [state, setState] = React.useState<StateType>(initialState);
   let ref = React.useRef(null);
@@ -50,7 +51,7 @@ const Hightlights = ({ hero = false }: { hero?: boolean }) => {
         setState(newState);
       });
     }
-  }, [elasticUrl, timeout]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, timeout, timestamp]); // run the operation only once since the parameter does not change
 
   return (
     <div ref={ref}>{!hero ? <DefaultHighlights {...state} /> : <HeroHighlights {...state} />}</div>

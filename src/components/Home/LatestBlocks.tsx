@@ -12,6 +12,7 @@ const LatestBlocks: React.FC = () => {
   const {
     activeTestnet: { elasticUrl },
     timeout,
+    rounds: { timestamp },
   } = useGlobalState();
   const [blocks, setBlocks] = React.useState<BlockType[]>([]);
   const [blocksFetched, setBlocksFetched] = React.useState<boolean>(true);
@@ -22,7 +23,7 @@ const LatestBlocks: React.FC = () => {
         setBlocksFetched(blocksFetched);
       });
     }
-  }, [elasticUrl, timeout]);
+  }, [elasticUrl, timeout, timestamp]);
   return (
     <div className="card" ref={ref}>
       {!blocksFetched ? (

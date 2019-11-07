@@ -14,6 +14,7 @@ const Chart = () => {
   const {
     activeTestnet: { elasticUrl, roundTime: activeRoundTime },
     timeout,
+    rounds: { timestamp },
   } = useGlobalState();
   let initialValuesCount = 0;
   const initialValues: number[] = [];
@@ -51,7 +52,7 @@ const Chart = () => {
         });
       }
     }
-  }, [elasticUrl, timeout, activeRoundTime]);
+  }, [elasticUrl, timeout, activeRoundTime, timestamp]);
 
   return (
     <ResponsiveContainer ref={ref}>

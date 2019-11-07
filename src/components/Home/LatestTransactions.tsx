@@ -12,6 +12,7 @@ const LatestTransactions: React.FC = () => {
   const {
     activeTestnet: { elasticUrl },
     timeout,
+    rounds: { timestamp },
   } = useGlobalState();
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
@@ -22,7 +23,7 @@ const LatestTransactions: React.FC = () => {
         setTransactionsFetched(transactionsFetched);
       });
     }
-  }, [elasticUrl, timeout]);
+  }, [elasticUrl, timeout, timestamp]);
   return (
     <div className="card" ref={ref}>
       {!transactionsFetched ? (

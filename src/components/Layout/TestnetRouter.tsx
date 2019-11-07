@@ -11,20 +11,26 @@ export default function TestnetRouter() {
 
   const testnetId = locationArray[0];
 
-  React.useEffect(() => {
-    const allTestnetIds = globalState.config.testnets.map(testnet => testnet.id);
+  const allTestnetIds = globalState.config.testnets.map(testnet => testnet.id);
 
-    if (allTestnetIds.includes(testnetId) && globalState.activeTestnetId !== testnetId) {
+  React.useEffect(() => {
+    const {
+      activeTestnetId,
+      defaultTestnet: { id: defaultTestnetId },
+    } = globalState;
+
+    if (allTestnetIds.includes(testnetId) && activeTestnetId !== testnetId) {
       // if route contains a testnet at the beginning replace the testnet
+
       dispatch({ type: 'changeTestnet', testnetId });
     } else if (
-      (allTestnetIds.includes(testnetId) && globalState.defaultTestnet.id === testnetId) ||
-      (testnetId === '' && globalState.activeTestnetId !== '')
+      (allTestnetIds.includes(testnetId) && defaultTestnetId === testnetId) ||
+      (testnetId === '' && activeTestnetId !== '')
     ) {
       // if selected testnet is the same as the default, reset the default
       dispatch({ type: 'changeTestnet', testnetId: '' });
     }
-  }, [testnetId, dispatch, globalState]);
+  }, [testnetId, dispatch, allTestnetIds, globalState]);
 
   return <></>;
 }

@@ -40,7 +40,12 @@ export interface StateType {
   defaultTestnet: TestnetType;
   activeTestnet: TestnetType;
   activeTestnetId: string;
-  timeout: number;
+  timeout: number; // axios
+  rounds: {
+    timestamp: number;
+    intervalId: ReturnType<typeof setInterval>;
+    testnetId: string;
+  };
 }
 
 const buildInitialConfig = (config: any): ConfigType => {
@@ -98,6 +103,11 @@ const initialState: StateType = {
   activeTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
   activeTestnetId: '',
   timeout: 3 * 1000,
+  rounds: {
+    timestamp: Date.now(),
+    intervalId: setInterval(() => {}, 0),
+    testnetId: 'default',
+  },
 };
 
 export default initialState;
