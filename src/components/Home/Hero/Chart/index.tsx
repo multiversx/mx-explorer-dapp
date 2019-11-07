@@ -9,14 +9,21 @@ type ChartType = {
   liveTps: number;
 };
 
+let myChart: any;
+let requestsCount = 1;
+
+// TODO: renunt la cele 20 de date initiale
+// TODO: ma uit de ce se tot pune labelul
+// TODO: incerc sa pun restul de setari
+
 const HeroChart = ({ liveTps }: ChartType) => {
   let ref = React.useRef(null);
-  let myChart: any;
-  let requestsCount = 0;
+  // let myChart = React.useRef();
 
   const {
     activeTestnet: { elasticUrl, refreshRate: activeRoundTime },
     timeout,
+    refresh: { timestamp },
   } = useGlobalState();
   let initialValuesCount = 0;
   const initialValues: number[] = [];
@@ -28,6 +35,7 @@ const HeroChart = ({ liveTps }: ChartType) => {
         type: 'line',
         data: {
           labels: [],
+
           datasets: [
             {
               data: [],
@@ -40,6 +48,14 @@ const HeroChart = ({ liveTps }: ChartType) => {
         },
         options: {
           responsive: true,
+          legend: {
+            display: false,
+          },
+          tooltips: {
+            mode: 'index',
+            intersect: false,
+            displayColors: false,
+          },
           maintainAspectRatio: false,
           scales: {
             xAxes: [
@@ -88,33 +104,28 @@ const HeroChart = ({ liveTps }: ChartType) => {
       let start = epoch - dataLag - i * roundTime;
       let end = epoch - dataLag - i * roundTime + roundTime;
 
-      getLastTransactionsCount({ elasticUrl, start, end, timeout }).then(({ count }) => {
-        initialValuesCount++;
-        initialValues[i] = Math.floor(count / roundTime);
+      // getLastTransactionsCount({ elasticUrl, start, end, timeout }).then(({ count }) => {
+      // initialValuesCount++;
+      // initialValues[i] = Math.floor(count / roundTime);
 
-        if (initialValuesCount === 20) {
-          for (let i = 21; i > 1; i--) {
-            let dataLag = 2 * roundTime * 1000;
-            let myTime = new Date().getTime() - dataLag - i * roundTime + roundTime;
-            requestsCount = addValueToChart(initialValues[i], myTime, requestsCount, myChart);
-          }
+      if (initialValuesCount === 20) {
+        for (let i = 21; i > 1; i--) {
+          let dataLag = 2 * roundTime * 1000;
+          let myTime = new Date().getTime() - dataLag - i * roundTime + roundTime;
+          // requestsCount = addValueToChart(initialValues[i], myTime, requestsCount, myChart);
+          requestsCount = addValueToChart(0, myTime, requestsCount, myChart);
         }
-      });
+      }
+      // });
     }
   }, []);
 
-  // React.useEffect(() => {
-  //   Chart.helpers.each((Chart.instances, function(instance){
-  //     alert(instance.chart.canvas.id)
-  //   })
-
-  //   if (ref.current !== null && myChart !== undefined) {
-  //     console.warn('in chart', liveTps);
-
-  //     const swallowReturnedValue = addValueToChart(liveTps, new Date().getTime(), -1, myChart);
-  //     if (swallowReturnedValue) return;
-  //   }
-  // }, [liveTps]);
+  React.useEffect(() => {
+    if (ref.current !== null && myChart !== undefined) {
+      requestsCount = addValueToChart(liveTps, new Date().getTime(), requestsCount, myChart);
+      // if (swallowReturnedValue) return;
+    }
+  }, [liveTps, timestamp]);
 
   return <canvas ref={ref} />;
 };

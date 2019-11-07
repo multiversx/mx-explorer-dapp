@@ -34,6 +34,9 @@ export function addValueToChart(
     myChart.data.labels.push('');
   }
 
+  // remove empty elements
+  myChart.data.labels = myChart.data.labels.filter(() => true);
+
   let rounded = Math.round(newValue);
   myChart.data.datasets[0].data.push(rounded);
 

@@ -20,7 +20,7 @@ const CONFIG = {
       name: 'Testnet-1036',
       nodeUrl: 'https://wallet-api.elrond.com',
       elasticUrl: 'https://elastic-aws.elrond.com',
-      refreshRate: 3000,
+      refreshRate: 1000,
       numInitCharactersForScAddress: 20,
       decimals: 4,
       denomination: 4,

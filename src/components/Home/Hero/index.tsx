@@ -4,7 +4,6 @@ import Chart from './Chart';
 
 const HeroHighlights: React.FC = () => {
   const [liveTps, setLiveTps] = React.useState(0);
-  console.warn(11, liveTps);
 
   return (
     <div className="bg-blue">

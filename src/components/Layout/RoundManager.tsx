@@ -14,7 +14,11 @@ export default function RoundManager() {
 
     if (testnetId !== activeTestnetId) {
       clearInterval(oldIntervalId);
-      const intervalId = setInterval(() => dispatch({ type: 'triggerNewRound' }), refreshRate);
+      console.warn(refreshRate);
+
+      const intervalId = setInterval(() => {
+        dispatch({ type: 'triggerNewRound' });
+      }, refreshRate);
       dispatch({ type: 'setNewRoundIntervalId', intervalId, testnetId });
     }
   }
