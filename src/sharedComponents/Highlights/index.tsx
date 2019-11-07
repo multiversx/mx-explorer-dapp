@@ -54,9 +54,9 @@ const Hightlights = ({
             }
           : initialState;
 
-        setLiveTps(newState.liveTPS);
+        ref.current !== null && setLiveTps(newState.liveTPS);
 
-        setState(newState);
+        ref.current !== null && setState(newState);
       });
     }
   }, [elasticUrl, timeout, timestamp]); // run the operation only once since the parameter does not change
