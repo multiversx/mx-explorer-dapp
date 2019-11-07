@@ -12,21 +12,13 @@ type ChartType = {
 let myChart: any;
 let requestsCount = 1;
 
-// TODO: renunt la cele 20 de date initiale
-// TODO: ma uit de ce se tot pune labelul
-// TODO: incerc sa pun restul de setari
-
 const HeroChart = ({ liveTps }: ChartType) => {
   let ref = React.useRef(null);
-  // let myChart = React.useRef();
 
   const {
-    activeTestnet: { elasticUrl, refreshRate: activeRoundTime },
-    timeout,
-    refresh: { timestamp },
+    activeTestnet: { refreshRate: activeRoundTime },
   } = useGlobalState();
   let initialValuesCount = 0;
-  const initialValues: number[] = [];
 
   // componentDidMount
   React.useEffect(() => {
@@ -95,28 +87,17 @@ const HeroChart = ({ liveTps }: ChartType) => {
     }
     let prePopulateCount = 20;
     let roundTime = activeRoundTime / 1000;
-    let dataLag = 2 * roundTime;
 
-    let date = new Date();
-    let epoch = Math.floor(date.getTime() / 1000);
-    /* eslint-disable no-undef */
     for (let i = prePopulateCount + 1; i > 1; i--) {
-      let start = epoch - dataLag - i * roundTime;
-      let end = epoch - dataLag - i * roundTime + roundTime;
-
-      // getLastTransactionsCount({ elasticUrl, start, end, timeout }).then(({ count }) => {
-      // initialValuesCount++;
-      // initialValues[i] = Math.floor(count / roundTime);
+      initialValuesCount++;
 
       if (initialValuesCount === 20) {
         for (let i = 21; i > 1; i--) {
           let dataLag = 2 * roundTime * 1000;
           let myTime = new Date().getTime() - dataLag - i * roundTime + roundTime;
-          // requestsCount = addValueToChart(initialValues[i], myTime, requestsCount, myChart);
           requestsCount = addValueToChart(0, myTime, requestsCount, myChart);
         }
       }
-      // });
     }
   }, []);
 
@@ -125,7 +106,7 @@ const HeroChart = ({ liveTps }: ChartType) => {
       requestsCount = addValueToChart(liveTps, new Date().getTime(), requestsCount, myChart);
       // if (swallowReturnedValue) return;
     }
-  }, [liveTps, timestamp]);
+  }, [liveTps]);
 
   return <canvas ref={ref} />;
 };
