@@ -1,5 +1,4 @@
 import axios from 'axios';
-import toastr from 'toastr';
 
 type GetStatsType = {
   elasticUrl: string;
@@ -12,7 +11,6 @@ export async function getStats({ elasticUrl, timeout }: GetStatsType) {
     const { data } = await axios.get(`${elasticUrl}/tps/_doc/meta`, { timeout });
 
     if (!data.found) {
-      toastr.warning('Could not load statistics.', 'Oops');
       return {
         data,
         success: false,
@@ -24,7 +22,6 @@ export async function getStats({ elasticUrl, timeout }: GetStatsType) {
       success: true,
     };
   } catch {
-    toastr.warning('Could not load statistics.', 'Oops');
     return {
       data,
       success: false,
