@@ -23,17 +23,11 @@ const HeroHighlights: React.FC = () => {
         </div>
         <div className="row">
           <div className="col-12 mb-3">
-            <form
-              className="form-search"
-              ng-controller="processRequestCtrl"
-              ng-submit="processRequest()"
-              name="search_form"
-              role="search"
-            >
+            <div className="form-search" role="search">
               <div className="input-group input-group-seamless">
                 <Search />
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
