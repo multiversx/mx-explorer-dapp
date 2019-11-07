@@ -43,11 +43,11 @@ const Transactions: React.FC = () => {
   React.useEffect(() => {
     if (ref.current !== null) {
       getTransactions({ elasticUrl, size, addressId, timeout }).then(({ data, success }) => {
-        setTransactions(data);
-        setTransactionsFetched(success);
+        ref.current !== null && setTransactions(data);
+        ref.current !== null && setTransactionsFetched(success);
       });
-      getTotalTransactions({ elasticUrl, addressId, timeout }).then(data =>
-        setTotalTransactions(data)
+      getTotalTransactions({ elasticUrl, addressId, timeout }).then(
+        data => ref.current !== null && setTotalTransactions(data)
       );
     }
   }, [elasticUrl, size, addressId, timeout]); // run the operation only once since the parameter does not change
