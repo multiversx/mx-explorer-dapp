@@ -25,7 +25,7 @@ export function addValueToChart(
   } else if (requestsCount === 60) {
     myChart.data.labels[39] = '';
     myChart.data.labels[8] = '';
-    myChart.data.labels[29] = myChart.data.labels[29].substring(0, 5);
+    myChart.data.labels[29] = myChart.data.labels[29] && myChart.data.labels[29].substring(0, 5);
   }
 
   if (requestsCount % granularity === 0) {
