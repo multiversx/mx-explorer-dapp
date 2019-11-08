@@ -9,10 +9,10 @@ const TransactionDetails: React.FC = () => {
       <Hero />
       <div className="container pt-3 pb-3">
         <div className="row">
-          <div className="col-lg-5 mt-4 mb-4">
+          <div className="col-lg-6 mt-4 mb-4">
             <LatestBlocks />
           </div>
-          <div className="col-lg-7 mt-4 mb-4">
+          <div className="col-lg-6 mt-4 mb-4">
             <LatestTransactions />
           </div>
         </div>
