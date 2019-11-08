@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { getTransactions } from './helpers/asyncRequests';
-import { TestnetLink, TimeAgo } from './../../sharedComponents';
+import { TestnetLink, TimeAgo, ShardSpan } from './../../sharedComponents';
 import { TransactionType } from './../Transactions';
 import { useGlobalState } from '../../context';
 import { truncate, dateFormatted } from './../../helpers';
@@ -67,7 +67,7 @@ const LatestTransactions: React.FC = () => {
                       <div className="col-6">
                         From&nbsp;
                         <TestnetLink to={`/address/${transaction.sender}`}>
-                          {truncate(transaction.sender, 20)}
+                          <ShardSpan shardId={truncate(transaction.sender, 20)} />
                         </TestnetLink>
                         <br />
                         To&nbsp;
