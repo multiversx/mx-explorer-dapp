@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { faChevronLeft, faChevronRight, faCube, faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { TimeAgo, Highlights, TestnetLink, ShardSpan } from '../../sharedComponents';
 import { getBlock } from './helpers/asyncRequests';
 import { useGlobalState } from '../../context';
@@ -50,11 +50,11 @@ const BlockDetails: React.FC = () => {
     timeout,
   } = useGlobalState();
 
-  if (blockId && !addressIsHash(blockId)) {
-    history.push(testnetRoute({ to: `/../${blockId}`, activeTestnetId }));
-  }
-
   const [state, setState] = React.useState<StateType>(initialState);
+
+  if (blockId && !addressIsHash(blockId)) {
+    history.push(testnetRoute({ to: `/not-found`, activeTestnetId }));
+  }
 
   React.useEffect(() => {
     if (blockId) {

@@ -5,6 +5,7 @@ import Blocks from './components/Blocks';
 import TransactionDetails from './components/TransactionDetails';
 import BlockDetails from './components/BlockDetails';
 import EmptySearch from './components/EmptySearch';
+import Validators from './components/Validators';
 import { withTestnetReady, withPageTitle } from './sharedComponents';
 
 // TODO: daca hashul nu e valid (functie validare) return 404 (page not found)
@@ -25,6 +26,11 @@ const routes: RouteType[] = [
     path: '/transactions',
     title: 'Transactions',
     component: Transactions,
+  },
+  {
+    path: '/validators',
+    title: 'Validators',
+    component: Validators,
   },
   {
     path: '/address/:hash',

@@ -40,7 +40,7 @@ export default function SiteNavbar() {
             <li
               className={`nav-item ${pathname.toString().includes('validators') ? 'active' : ''}`}
             >
-              <TestnetLink className="nav-link" to="/validators/page/1">
+              <TestnetLink className="nav-link" to="/validators">
                 validators
               </TestnetLink>
             </li>
