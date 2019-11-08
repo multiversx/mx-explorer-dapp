@@ -3,6 +3,7 @@ import { hot } from 'react-hot-loader/root';
 import { GlobalProvider, useGlobalState } from './context';
 import Layout from './components/Layout';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import PageNotFoud from './components/PageNotFoud';
 import routes from './routes';
 
 const Routes: React.FC = () => {
@@ -26,11 +27,9 @@ const Routes: React.FC = () => {
         />
       ))}
       {routes.map((route, i) => (
-        <Route path={route.path} key={route.path + i} component={route.component} />
+        <Route path={route.path} key={route.path + i} component={route.component} exact />
       ))}
-      <Route path="/blocks">
-        <Users />
-      </Route>
+      <Route component={PageNotFoud} />
     </Switch>
   );
 };
