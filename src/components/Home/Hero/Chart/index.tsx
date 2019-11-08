@@ -15,6 +15,7 @@ const HeroChart = ({ liveTps }: ChartType) => {
 
   const {
     activeTestnet: { refreshRate: activeRoundTime },
+    refresh: { timestamp },
   } = useGlobalState();
   let initialValuesCount = 0;
 
@@ -104,7 +105,7 @@ const HeroChart = ({ liveTps }: ChartType) => {
       requestsCount = addValueToChart(liveTps, new Date().getTime(), requestsCount, myChart);
       // if (swallowReturnedValue) return;
     }
-  }, [liveTps]);
+  }, [liveTps, timestamp]);
 
   return <canvas ref={ref} />;
 };
