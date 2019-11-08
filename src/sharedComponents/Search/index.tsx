@@ -3,6 +3,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useHistory } from 'react-router-dom';
 import { useGlobalState } from '../../context';
+import { testnetRoute } from '../../helpers';
 import { isAddress, isBlock, isTransaction } from './helpers/asyncRequests';
 
 const Search: React.FC = () => {
@@ -14,7 +15,6 @@ const Search: React.FC = () => {
   let history = useHistory();
   const [hash, setHash] = React.useState<string>('');
 
-  const testnetRoute = (to: string) => (activeTestnetId ? `/${activeTestnetId}${to}` : to);
   const handleKeyDown = function(e: React.KeyboardEvent) {
     if (e.key === 'Enter') {
       onClick();
@@ -22,13 +22,13 @@ const Search: React.FC = () => {
   };
   const onClick = async () => {
     if (await isBlock({ elasticUrl, hash, timeout })) {
-      history.push(testnetRoute(`/blocks/${hash}`));
+      history.push(testnetRoute({ to: `/blocks/${hash}`, activeTestnetId }));
     } else if (await isTransaction({ elasticUrl, hash, timeout })) {
-      history.push(testnetRoute(`/transactions/${hash}`));
+      history.push(testnetRoute({ to: `/transactions/${hash}`, activeTestnetId }));
     } else if (await isAddress({ nodeUrl, hash, timeout })) {
-      history.push(testnetRoute(`/address/${hash}`));
+      history.push(testnetRoute({ to: `/address/${hash}`, activeTestnetId }));
     } else {
-      history.push(testnetRoute(`/search/${hash}`));
+      history.push(testnetRoute({ to: `/search/${hash}`, activeTestnetId }));
     }
   };
 
