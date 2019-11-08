@@ -59,7 +59,7 @@ const LatestBlocks: React.FC = () => {
                         </span>
                       </div>
                       <div className="col-6">
-                        Hash
+                        Hash&nbsp;
                         <TestnetLink to={`/block/${block.hash}`}>
                           {truncate(block.hash, 20)}
                         </TestnetLink>

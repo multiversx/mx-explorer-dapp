@@ -7,8 +7,6 @@ import { TransactionType } from './../Transactions';
 import { useGlobalState } from '../../context';
 import { truncate, dateFormatted } from './../../helpers';
 
-// TODO: check from Shard0 lipit
-
 const LatestTransactions: React.FC = () => {
   let ref = React.useRef(null);
   const {
