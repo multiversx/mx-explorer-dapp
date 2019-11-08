@@ -22,4 +22,15 @@ const TestnetReady: React.FC = ({ children }) => {
   return testnetReady ? <>{children}</> : null;
 };
 
+export const withTestnetReady = (Component: React.ComponentType) =>
+  class WithTestnetReady extends React.Component {
+    render() {
+      return (
+        <TestnetReady>
+          <Component />
+        </TestnetReady>
+      );
+    }
+  };
+
 export default TestnetReady;

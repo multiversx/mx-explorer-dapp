@@ -5,54 +5,66 @@ import Blocks from './components/Blocks';
 import TransactionDetails from './components/TransactionDetails';
 import BlockDetails from './components/BlockDetails';
 import EmptySearch from './components/EmptySearch';
-import { TestnetReady } from './sharedComponents';
-
-const withTestnetReady = (Component: React.ComponentType) =>
-  class WithTestnetReady extends React.Component {
-    render() {
-      return (
-        <TestnetReady>
-          <Component />
-        </TestnetReady>
-      );
-    }
-  };
+import { withTestnetReady, withPageTitle } from './sharedComponents';
 
 // TODO: daca hashul nu e valid (functie validare) return 404 (page not found)
 
-const routes = [
+type RouteType = {
+  path: string;
+  title: string;
+  component: React.ComponentType;
+};
+
+const routes: RouteType[] = [
   {
     path: '/transactions/page/:page',
-    component: withTestnetReady(Transactions),
+    title: 'Transactions',
+    component: Transactions,
   },
   {
     path: '/address/:hash',
-    component: withTestnetReady(Transactions),
+    title: 'Address Details',
+    component: Transactions,
   },
   {
     path: '/transactions/:hash',
-    component: withTestnetReady(TransactionDetails),
+    title: 'Transaction Details',
+    component: TransactionDetails,
   },
   {
     path: '/blocks/page/:page',
-    component: withTestnetReady(Blocks),
+    title: 'Blocks',
+    component: Blocks,
   },
   {
     path: '/blocks/:hash',
-    component: withTestnetReady(BlockDetails),
+    title: 'Block Details',
+    component: BlockDetails,
   },
   {
     path: '/shards/:shard/page/:page',
-    component: withTestnetReady(Blocks),
+    title: 'Shard Details',
+    component: Blocks,
   },
   {
     path: '/search/:query',
-    component: withTestnetReady(EmptySearch),
+    title: 'Search',
+    component: EmptySearch,
   },
   {
     path: '/',
-    component: withTestnetReady(Home),
+    title: 'Blockchain Explorer',
+    component: Home,
   },
 ];
 
-export default routes;
+const wrappedRoutes = () =>
+  routes.map(route => {
+    const title = `${route.title} - Elrond Testnet`;
+    return {
+      path: route.path,
+      component: withPageTitle(title, withTestnetReady(route.component)),
+    };
+  });
+
+export default wrappedRoutes();
