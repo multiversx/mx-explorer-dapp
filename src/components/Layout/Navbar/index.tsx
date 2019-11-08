@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -25,14 +25,20 @@ export default function SiteNavbar() {
         </Navbar.Toggle>
         <Navbar.Collapse id="navbars">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item" ng-class="{active: locationPath == '/'}">
-              <Link className="nav-link" to="/">
-                explorer
-              </Link>
+            <li className={`nav-item ${pathname.toString().includes('blocks') ? 'active' : ''}`}>
+              <TestnetLink className="nav-link" to="/blocks/page/1">
+                blocks
+              </TestnetLink>
             </li>
             <li
-              className="nav-item"
-              ng-class="{active: locationPath == '/wallet/' || locationPath == '/mywallet/' || locationPath == '/unlock-pem/'}"
+              className={`nav-item ${pathname.toString().includes('transactions') ? 'active' : ''}`}
+            >
+              <TestnetLink className="nav-link" to="/transactions/page/1">
+                transactions
+              </TestnetLink>
+            </li>
+            <li
+              className={`nav-item ${pathname.toString().includes('validators') ? 'active' : ''}`}
             >
               <TestnetLink className="nav-link" to="/validators/page/1">
                 validators
