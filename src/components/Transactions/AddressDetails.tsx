@@ -32,7 +32,9 @@ const AddressDetails: React.FC = () => {
 
   React.useEffect(() => {
     if (addressId && ref.current !== null) {
-      getAddressDetails({ nodeUrl, addressId, timeout }).then((data: any) => setState(data));
+      getAddressDetails({ nodeUrl, addressId, timeout }).then((data: any) => {
+        ref.current !== null && setState(data);
+      });
     }
   }, [nodeUrl, addressId, timeout]);
 
