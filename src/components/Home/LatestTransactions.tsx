@@ -39,7 +39,7 @@ const LatestTransactions: React.FC = () => {
         <div className="card-body">
           <div className="d-flex align-items-center flex-row mb-3">
             <h4 className="card-title mb-0 mr-auto">Latest Transactions</h4>
-            <TestnetLink to="/transactions/page/1">View All Transactions</TestnetLink>
+            <TestnetLink to="/transactions">View All Transactions</TestnetLink>
           </div>
           <div className="card-scroll">
             {transactions.length ? (

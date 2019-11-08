@@ -7,6 +7,7 @@ import TestnetLink from './../TestnetLink';
 const Pager = ({ slug }: { slug: string }) => {
   let { page } = useParams();
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;
+  const prevPageNo = size === 2 ? `/${slug}` : `/${slug}/page/${size - 1}`;
 
   return (
     <div className="float-right">
@@ -20,7 +21,7 @@ const Pager = ({ slug }: { slug: string }) => {
         </button>
       ) : (
         <TestnetLink
-          to={`/${slug}/page/${size - 1}`}
+          to={prevPageNo}
           className="btn btn-outline-secondary btn-sm"
           data-testid="previousPageButton"
         >

@@ -37,7 +37,7 @@ const LatestBlocks: React.FC = () => {
         <div className="card-body">
           <div className="d-flex align-items-center flex-row mb-3">
             <h4 className="card-title mb-0 mr-auto">Latest Blocks</h4>
-            <TestnetLink to="/blocks/page/1">View All Blocks</TestnetLink>
+            <TestnetLink to="/blocks">View All Blocks</TestnetLink>
           </div>
           <div className="card-scroll">
             {blocks.length ? (

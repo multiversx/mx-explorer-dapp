@@ -2,11 +2,12 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { faChevronLeft, faChevronRight, faCube, faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useHistory } from 'react-router-dom';
 import { TimeAgo, Highlights, TestnetLink, ShardSpan } from '../../sharedComponents';
 import { getBlock } from './helpers/asyncRequests';
 import { useGlobalState } from '../../context';
 import { BlockType } from '../Blocks';
-import { dateFormatted, sizeFormat, truncate } from '../../helpers';
+import { dateFormatted, sizeFormat, truncate, addressIsHash, testnetRoute } from '../../helpers';
 
 export type StateType = {
   block: BlockType;
@@ -39,12 +40,19 @@ export const initialState = {
 
 const BlockDetails: React.FC = () => {
   let { hash: blockId } = useParams();
+  let history = useHistory();
+
   let ref = React.useRef(null);
 
   const {
     activeTestnet: { elasticUrl },
+    activeTestnetId,
     timeout,
   } = useGlobalState();
+
+  if (blockId && !addressIsHash(blockId)) {
+    history.push(testnetRoute({ to: `/../${blockId}`, activeTestnetId }));
+  }
 
   const [state, setState] = React.useState<StateType>(initialState);
 

@@ -26,14 +26,14 @@ export default function SiteNavbar() {
         <Navbar.Collapse id="navbars">
           <ul className="navbar-nav mr-auto">
             <li className={`nav-item ${pathname.toString().includes('blocks') ? 'active' : ''}`}>
-              <TestnetLink className="nav-link" to="/blocks/page/1">
+              <TestnetLink className="nav-link" to="/blocks">
                 blocks
               </TestnetLink>
             </li>
             <li
               className={`nav-item ${pathname.toString().includes('transactions') ? 'active' : ''}`}
             >
-              <TestnetLink className="nav-link" to="/transactions/page/1">
+              <TestnetLink className="nav-link" to="/transactions">
                 transactions
               </TestnetLink>
             </li>

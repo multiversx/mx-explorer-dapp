@@ -22,6 +22,11 @@ const routes: RouteType[] = [
     component: Transactions,
   },
   {
+    path: '/transactions',
+    title: 'Transactions',
+    component: Transactions,
+  },
+  {
     path: '/address/:hash',
     title: 'Address Details',
     component: Transactions,
@@ -33,6 +38,11 @@ const routes: RouteType[] = [
   },
   {
     path: '/blocks/page/:page',
+    title: 'Blocks',
+    component: Blocks,
+  },
+  {
+    path: '/blocks',
     title: 'Blocks',
     component: Blocks,
   },
@@ -53,14 +63,14 @@ const routes: RouteType[] = [
   },
   {
     path: '/',
-    title: 'Blockchain Explorer',
+    title: '',
     component: Home,
   },
 ];
 
 const wrappedRoutes = () =>
   routes.map(route => {
-    const title = `${route.title} - Elrond Testnet`;
+    const title = route.title ? `${route.title} • Elrond Explorer` : 'Elrond Explorer';
     return {
       path: route.path,
       component: withPageTitle(title, withTestnetReady(route.component)),
