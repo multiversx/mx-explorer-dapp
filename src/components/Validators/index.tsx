@@ -4,6 +4,31 @@ import { useGlobalState } from '../../context';
 import { getValidatorsData } from './helpers/asyncRequests';
 import { populateValidatorsTable } from './helpers/validatorHelpers';
 import ShardsList from './ShardsList';
+import ValidatorsTable from './ValidatorsTable';
+
+export type ValidatorType = {
+  computedShardID: number;
+  hexPublicKey: string;
+  isActive: boolean;
+  isValidator: boolean;
+  maxInactiveTime: string;
+  nodeDisplayName: string;
+  receivedShardID: number;
+  timeStamp: string;
+  totalDownTimeSec: number;
+  totalUpTimeSec: number;
+  versionNumber: string;
+  shardId?: string;
+  shardNumber?: number;
+  star?: boolean;
+};
+
+export type ShardDataType = {
+  [key: string]: {
+    allValidators: number;
+    allActiveValidators: number;
+  };
+};
 
 const initialState = {
   shardData: [
@@ -16,7 +41,21 @@ const initialState = {
   ],
   shardsList: [''],
   validatorsLength: 0,
-  filteredValidators: [{}],
+  filteredValidators: [
+    {
+      computedShardID: 0,
+      hexPublicKey: '',
+      isActive: false,
+      isValidator: false,
+      maxInactiveTime: '',
+      nodeDisplayName: '',
+      receivedShardID: 0,
+      timeStamp: '',
+      totalDownTimeSec: 0,
+      totalUpTimeSec: 0,
+      versionNumber: '',
+    },
+  ],
   filteredValidatorsLength: 0,
   shownValidatorsLength: 0,
   validatorsAndObserversLength: 0,
@@ -50,6 +89,7 @@ const Validators = () => {
           </div>
         </div>
         <ShardsList shardData={state.shardData} />
+        <ValidatorsTable filteredValidators={state.filteredValidators} />
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ const ShardsList = ({ shardData }: { shardData: ShardType[] }) => {
   return (
     <div className="row d-flex flex-row pl-3">
       {shardData.map(shardEntry => (
-        <div className="flex-grow-1 mr-3 mb-3 pb-3">
+        <div className="flex-grow-1 mr-3 mb-3 pb-3" key={shardEntry.shardID}>
           <div className="card">
             <div className="card-body">
               <span className="metric-label">

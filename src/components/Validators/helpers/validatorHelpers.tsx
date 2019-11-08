@@ -1,26 +1,4 @@
-type ValidatorType = {
-  computedShardID: number;
-  hexPublicKey: string;
-  isActive: boolean;
-  isValidator: boolean;
-  maxInactiveTime: string;
-  nodeDisplayName: string;
-  receivedShardID: number;
-  timeStamp: string;
-  totalDownTimeSec: number;
-  totalUpTimeSec: number;
-  versionNumber: string;
-  shardId?: string;
-  shardNumber?: number;
-  star?: boolean;
-};
-
-type ShardDataType = {
-  [key: string]: {
-    allValidators: number;
-    allActiveValidators: number;
-  };
-};
+import { ValidatorType, ShardDataType } from './../index';
 
 export function populateValidatorsTable(data: ValidatorType[]) {
   const validatorsAndObservers = data;
