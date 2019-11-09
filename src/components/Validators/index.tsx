@@ -36,7 +36,7 @@ export const initialState: StateType = {
   ],
   shardsList: [''],
   validatorsLength: 0,
-  filteredValidators: [
+  validators: [
     {
       computedShardID: 0,
       hexPublicKey: '',

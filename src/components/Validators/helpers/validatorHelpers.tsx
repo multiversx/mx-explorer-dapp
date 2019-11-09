@@ -60,7 +60,7 @@ export function populateValidatorsTable(data: ValidatorType[]) {
     shardData: shardDataArray,
     shardsList,
     validatorsLength,
-    filteredValidators,
+    validators,
     filteredValidatorsLength,
     shownValidatorsLength,
     validatorsAndObserversLength,

@@ -1,7 +1,8 @@
 import * as React from 'react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { HeadersType, DirectioinsType, getNewSortData } from './../helpers/validatorHelpers';
+import { HeadersType, getNewSortData } from './../helpers/validatorHelpers';
 import { SortType } from './index';
 
 const headers: HeadersType[] = [
@@ -52,7 +53,7 @@ const ValidatorsTableHeader = ({ includeObservers, sortBy, sort }: ValidatorsTab
   return (
     <thead>
       <tr>
-        {headers.map((header, i) => (
+        {headers.map(header => (
           <th className="sortable" key={header.id}>
             <span onClick={toggleSort(header.id)} ng-click="toggleSort($index)">
               {header.label}
