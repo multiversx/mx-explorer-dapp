@@ -1,6 +1,4 @@
 import * as React from 'react';
-//@ts-ignore
-import kendo from 'kendo-ui-core/js/kendo.data';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCogs } from '@fortawesome/free-solid-svg-icons';
 import { Highlights } from './../../sharedComponents';
@@ -8,8 +6,7 @@ import { useGlobalState } from '../../context';
 import { getValidatorsData } from './helpers/asyncRequests';
 import { populateValidatorsTable } from './helpers/validatorHelpers';
 import ShardsList from './ShardsList';
-import ValidatorsTable, { initialState } from './ValidatorsTable';
-import { statement } from '@babel/template';
+import ValidatorsTable, { StateType } from './ValidatorsTable';
 
 export type ValidatorType = {
   computedShardID: number;
@@ -28,6 +25,37 @@ export type ValidatorType = {
   star?: boolean;
 };
 
+export const initialState: StateType = {
+  shardData: [
+    {
+      shardID: '',
+      status: '',
+      allValidators: 0,
+      allActiveValidators: 0,
+    },
+  ],
+  shardsList: [''],
+  validatorsLength: 0,
+  filteredValidators: [
+    {
+      computedShardID: 0,
+      hexPublicKey: '',
+      isActive: false,
+      isValidator: false,
+      maxInactiveTime: '',
+      nodeDisplayName: '',
+      receivedShardID: 0,
+      timeStamp: '',
+      totalDownTimeSec: 0,
+      totalUpTimeSec: 0,
+      versionNumber: '',
+    },
+  ],
+  filteredValidatorsLength: 0,
+  shownValidatorsLength: 0,
+  validatorsAndObserversLength: 0,
+};
+
 export type ShardDataType = {
   [key: string]: {
     allValidators: number;
@@ -36,14 +64,6 @@ export type ShardDataType = {
 };
 
 const Validators = () => {
-  var dataSource = new kendo.data.DataSource({
-    data: [{ name: 'Jane Doe' }, { name: 'John Doe' }],
-  });
-  dataSource.filter({ field: 'name', operator: 'startswith', value: 'Jane' });
-  var view = dataSource.view();
-  console.log(view.length);
-  console.log(view[0].name);
-
   let ref = React.useRef(null);
   const {
     activeTestnet: { nodeUrl },

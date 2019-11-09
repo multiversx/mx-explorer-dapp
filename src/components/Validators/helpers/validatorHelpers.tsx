@@ -65,8 +65,6 @@ export function populateValidatorsTable(data: ValidatorType[]) {
     shownValidatorsLength,
     validatorsAndObserversLength,
   };
-  //   checkShardFilter();
-  //   filterGrid();
 }
 
 function computeShardStatus(allActiveValidators: number, allValidators: number) {
@@ -97,5 +95,38 @@ function getShardId(validator: ValidatorType) {
     shardId: shardId === (4294967295).toString() ? 'Metachain' : shardId, // eslint-disable-line
     shardNumber: parseInt(shardId), // this is excluding the Metachain string, used for searching
     star: star,
+  };
+}
+
+export type DirectioinsType = 'none' | 'desc' | 'asc';
+
+export type HeadersType = {
+  id: string;
+  label: string;
+  dir: DirectioinsType;
+};
+
+type ToggleSortType = {
+  oldDir: DirectioinsType;
+  oldSortColumn: string;
+  currentSortColumn: string;
+};
+
+export function getNewSortData({ oldDir, oldSortColumn, currentSortColumn }: ToggleSortType) {
+  const directions: DirectioinsType[] = ['asc', 'desc', 'none'];
+
+  let dirIndex = directions.indexOf(oldDir); // check the position of 'none' in the directions array
+  dirIndex = dirIndex === directions.length - 1 ? 0 : dirIndex + 1; // go to next position
+  const newDir = directions[dirIndex]; // assign next position to current column
+
+  const sameColumnClicked = oldSortColumn === currentSortColumn;
+  const noDirection = newDir === 'none';
+
+  // reset the sort ar 3rd click or set current column
+  const newSortColumn = sameColumnClicked && noDirection ? '' : currentSortColumn;
+
+  return {
+    field: newSortColumn,
+    dir: newDir,
   };
 }
