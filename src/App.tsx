@@ -5,32 +5,40 @@ import Layout from './components/Layout';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import PageNotFoud from './components/PageNotFoud';
 import routes from './routes';
+import { spawn } from 'child_process';
+
+// const routes = React.lazy(() => import('./routes'));
+
+// const routes =
+//   process.env.NODE_ENV === 'production' ? require('./routes-prod') : require('./routes');
 
 const Routes: React.FC = () => {
   const { config } = useGlobalState();
   return (
-    <Switch>
-      {config.testnets.map((testnet, i) => (
-        <Route
-          path={`/${testnet.id}`}
-          key={testnet.id + i}
-          render={({ match: { url } }) =>
-            routes.map(route => (
-              <Route
-                path={`${url}${route.path}`}
-                key={testnet.id + route.path}
-                exact
-                component={route.component}
-              />
-            ))
-          }
-        />
-      ))}
-      {routes.map((route, i) => (
-        <Route path={route.path} key={route.path + i} component={route.component} exact />
-      ))}
-      <Route component={PageNotFoud} />
-    </Switch>
+    <React.Suspense fallback={<span>Loading...</span>}>
+      <Switch>
+        {config.testnets.map((testnet, i) => (
+          <Route
+            path={`/${testnet.id}`}
+            key={testnet.id + i}
+            render={({ match: { url } }) =>
+              routes.map(route => (
+                <Route
+                  path={`${url}${route.path}`}
+                  key={testnet.id + route.path}
+                  exact
+                  component={route.component}
+                />
+              ))
+            }
+          />
+        ))}
+        {routes.map((route, i) => (
+          <Route path={route.path} key={route.path + i} component={route.component} exact />
+        ))}
+        <Route component={PageNotFoud} />
+      </Switch>
+    </React.Suspense>
   );
 };
 

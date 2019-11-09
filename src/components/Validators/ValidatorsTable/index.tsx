@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp, faArrowDown, faEye } from '@fortawesome/free-solid-svg-icons';
-import { ValidatorType, ShardDataType } from './index';
-import { truncate } from './../../helpers';
+import { ValidatorType } from './../index';
+import { truncate } from './../../../helpers';
 
 const directions = ['asc', 'desc', 'none'];
 
@@ -10,38 +10,81 @@ const headers = [
   {
     id: 'hexPublicKey',
     label: 'Public Key',
-    dir: 'none',
   },
   {
     id: 'nodeDisplayName',
     label: 'Node Name',
-    dir: 'none',
   },
   {
     id: 'shardID',
     label: 'Shard',
-    dir: 'none',
   },
   {
     id: 'versionNumber',
     label: 'Version',
-    dir: 'none',
   },
   {
     id: 'totalUpTimeSec',
     label: 'Uptime',
-    dir: 'none',
   },
   {
     id: 'isActive',
     label: 'Status',
-    dir: 'none',
   },
 ];
 
-const ValidatorsTable = ({ filteredValidators }: { filteredValidators: ValidatorType[] }) => {
+type ComputedShard = {
+  shardID: string;
+  status: string;
+  allValidators: number;
+  allActiveValidators: number;
+};
+
+export type StateType = {
+  shardData: ComputedShard[];
+  shardsList: string[];
+  validatorsLength: number;
+  filteredValidators: ValidatorType[];
+  filteredValidatorsLength: number;
+  shownValidatorsLength: number;
+  validatorsAndObserversLength: number;
+};
+
+export const initialState: StateType = {
+  shardData: [
+    {
+      shardID: '',
+      status: '',
+      allValidators: 0,
+      allActiveValidators: 0,
+    },
+  ],
+  shardsList: [''],
+  validatorsLength: 0,
+  filteredValidators: [
+    {
+      computedShardID: 0,
+      hexPublicKey: '',
+      isActive: false,
+      isValidator: false,
+      maxInactiveTime: '',
+      nodeDisplayName: '',
+      receivedShardID: 0,
+      timeStamp: '',
+      totalDownTimeSec: 0,
+      totalUpTimeSec: 0,
+      versionNumber: '',
+    },
+  ],
+  filteredValidatorsLength: 0,
+  shownValidatorsLength: 0,
+  validatorsAndObserversLength: 0,
+};
+
+const ValidatorsTable = (props: StateType) => {
   const includeObservers = false;
   const validatorInfosEnabled = false;
+  const { filteredValidatorsLength, filteredValidators, shownValidatorsLength } = props;
   return (
     <div className="row pb-3">
       <div className="col-12">
@@ -103,25 +146,26 @@ const ValidatorsTable = ({ filteredValidators }: { filteredValidators: Validator
               </label>
             </div>
             <div className="mt-2 d-none d-md-block">
-              {'{'}
-              {'{'} shownValidatorsLength ? 'Showing ' +
-              filteredValidatorsLength.toLocaleString('en') + ' of ' +
-              shownValidatorsLength.toLocaleString('en') : '' {'}'}
-              {'}'}
+              {shownValidatorsLength
+                ? 'Showing ' +
+                  filteredValidatorsLength.toLocaleString('en') +
+                  ' of ' +
+                  shownValidatorsLength.toLocaleString('en')
+                : ''}
             </div>
             <div className="table-responsive" style={{ minHeight: '290px' }}>
               <table className="table mt-4">
                 <thead>
                   <tr>
                     {headers.map((header, i) => (
-                      <th className="sortable">
+                      <th className="sortable" key={header.id}>
                         <span ng-click="toggleSort($index)">{header.label}</span>
-                        {header.dir === 'asc' && (
+                        {/* {header.dir === 'asc' && (
                           <FontAwesomeIcon icon={faArrowUp} className="empty-icon" />
                         )}
                         {header.dir === 'desc' && (
                           <FontAwesomeIcon icon={faArrowDown} className="empty-icon" />
-                        )}
+                        )} */}
                         {header.id == 'hexPublicKey' && includeObservers && (
                           <span className="dropdown">
                             {/* <span data-toggle="dropdown">
@@ -228,7 +272,7 @@ const ValidatorsTable = ({ filteredValidators }: { filteredValidators: Validator
                 </thead>
                 <tbody>
                   {filteredValidators.map(validator => (
-                    <tr className="animated fadeIn">
+                    <tr className="animated fadeIn" key={validator.hexPublicKey}>
                       <td>
                         {!validator.isValidator && (
                           <FontAwesomeIcon icon={faEye} className="w300" />

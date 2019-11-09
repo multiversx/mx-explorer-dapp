@@ -1,11 +1,10 @@
-import React from 'react';
 import Home from './components/Home';
-import Transactions from './components/Transactions';
-import Blocks from './components/Blocks';
 import TransactionDetails from './components/TransactionDetails';
+import Transactions from './components/Transactions';
 import BlockDetails from './components/BlockDetails';
-import EmptySearch from './components/EmptySearch';
 import Validators from './components/Validators';
+import Blocks from './components/Blocks';
+import EmptySearch from './components/EmptySearch';
 import { withTestnetReady, withPageTitle } from './sharedComponents';
 
 // TODO: daca hashul nu e valid (functie validare) return 404 (page not found)
@@ -13,8 +12,11 @@ import { withTestnetReady, withPageTitle } from './sharedComponents';
 type RouteType = {
   path: string;
   title: string;
-  component: React.ComponentType;
+  component: any;
 };
+
+// INFO: to split the app in chunks use:
+// component: React.lazy(() => import('./components/Validators')),
 
 const routes: RouteType[] = [
   {
@@ -30,7 +32,7 @@ const routes: RouteType[] = [
   {
     path: '/validators',
     title: 'Validators',
-    component: Validators,
+    component: Validators, //React.lazy(() => import('./components/Validators')),
   },
   {
     path: '/address/:hash',
