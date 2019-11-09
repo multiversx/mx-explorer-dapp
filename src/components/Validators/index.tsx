@@ -1,10 +1,13 @@
 import * as React from 'react';
+import kendo from 'kendo-ui-core';
 import { Highlights } from './../../sharedComponents';
 import { useGlobalState } from '../../context';
 import { getValidatorsData } from './helpers/asyncRequests';
 import { populateValidatorsTable } from './helpers/validatorHelpers';
 import ShardsList from './ShardsList';
 import ValidatorsTable from './ValidatorsTable';
+
+console.log(kendo.data);
 
 export type ValidatorType = {
   computedShardID: number;
