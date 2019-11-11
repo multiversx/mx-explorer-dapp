@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { GlobalProvider, useGlobalState } from './context';
+import { TestnetType } from './context/state';
 import Layout from './components/Layout';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import PageNotFoud from './components/PageNotFoud';
 import routes from './routes';
 
-const Routes: React.FC = () => {
-  const { config } = useGlobalState();
+const Routes = memo(({ testnets }: { testnets: TestnetType[] }) => {
   return (
     <React.Suspense fallback={<span>Loading...</span>}>
       <Switch>
-        {config.testnets.map((testnet, i) => (
+        {testnets.map((testnet, i) => (
           <Route
             path={`/${testnet.id}`}
             key={testnet.id + i}
@@ -34,13 +34,20 @@ const Routes: React.FC = () => {
       </Switch>
     </React.Suspense>
   );
+});
+
+const RoutesProvider = () => {
+  const {
+    config: { testnets },
+  } = useGlobalState();
+  return <Routes testnets={testnets} />;
 };
 
 export const App: React.FC = () => {
   return (
     <GlobalProvider>
       <Layout>
-        <Routes />
+        <RoutesProvider />
       </Layout>
     </GlobalProvider>
   );

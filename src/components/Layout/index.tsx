@@ -6,7 +6,7 @@ import RoundManager from './RoundManager';
 
 //TODO: remove form tag from Hero Search
 
-const Layout: React.FC = ({ children }) => (
+const Layout = ({ children }: { children: React.ReactNode }) => (
   <>
     <TestnetRouter />
     <RoundManager />
