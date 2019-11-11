@@ -39,7 +39,7 @@ const Hightlights = ({
   const [state, setState] = React.useState<StateType>(initialState);
   let ref = React.useRef(null);
 
-  React.useEffect(() => {
+  const getHighlights = () => {
     if (ref.current !== null) {
       getStats({ elasticUrl, timeout }).then(({ data, success }) => {
         const newState = success
@@ -59,7 +59,9 @@ const Hightlights = ({
         ref.current !== null && setState(newState);
       });
     }
-  }, [elasticUrl, timeout, timestamp, setLiveTps]); // run the operation only once since the parameter does not change
+  };
+
+  React.useEffect(getHighlights, [elasticUrl, timeout, timestamp]); // run the operation only once since the parameter does not change
 
   return (
     <div ref={ref}>{!hero ? <DefaultHighlights {...state} /> : <HeroHighlights {...state} />}</div>
