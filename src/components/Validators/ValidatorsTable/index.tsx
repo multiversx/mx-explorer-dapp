@@ -33,9 +33,11 @@ const ValidatorsTable = (props: StateType & { validatorDetails: boolean }) => {
   const [sort, setSort] = React.useState<SortType>({ field: '', dir: 'none' });
   const [searchValue, setSearchValue] = React.useState<string>('');
   const [shardValue, setShardValue] = React.useState<string>('');
+  const [statusValue, setStatusValue] = React.useState<string>('');
+  const [validatorObserverValue, setValidatorObserverValue] = React.useState<string>('');
   const { validators, validatorsAndObservers, validatorDetails, shardData } = props;
 
-  var mainFilter: { logic: string; filters: Object[] } = { logic: 'or', filters: [] };
+  var mainFilter: { logic: string; filters: Object[] } = { logic: 'and', filters: [] };
 
   const searchValueFilter = {
     logic: 'or',
@@ -53,6 +55,16 @@ const ValidatorsTable = (props: StateType & { validatorDetails: boolean }) => {
 
   if (shardValue !== '')
     mainFilter.filters.push({ field: 'shardId', operator: 'eq', value: shardValue });
+
+  if (statusValue !== '')
+    mainFilter.filters.push({ field: 'isActive', operator: 'eq', value: statusValue === 'online' });
+
+  if (validatorObserverValue !== '')
+    mainFilter.filters.push({
+      field: 'isValidator',
+      operator: 'eq',
+      value: validatorObserverValue === 'validator',
+    });
 
   const data = includeObservers ? validatorsAndObservers : validators;
 
@@ -75,6 +87,9 @@ const ValidatorsTable = (props: StateType & { validatorDetails: boolean }) => {
               setSearchValue={setSearchValue}
               includeObservers={includeObservers}
               setIncludeObsevers={setIncludeObsevers}
+              setShardValue={setShardValue}
+              setStatusValue={setStatusValue}
+              setValidatorObserverValue={setValidatorObserverValue}
             />
             <div className="table-responsive" style={{ minHeight: '290px' }}>
               <table className="table mt-4">
@@ -85,6 +100,10 @@ const ValidatorsTable = (props: StateType & { validatorDetails: boolean }) => {
                   shardData={shardData}
                   shardValue={shardValue}
                   setShardValue={setShardValue}
+                  statusValue={statusValue}
+                  setStatusValue={setStatusValue}
+                  validatorObserverValue={validatorObserverValue}
+                  setValidatorObserverValue={setValidatorObserverValue}
                 />
                 <tbody>
                   {newValidators.map(validator => (

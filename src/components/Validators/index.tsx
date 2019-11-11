@@ -114,7 +114,7 @@ const Validators = () => {
         </div>
       </div>
     ),
-    [state]
+    [state, validatorDetails]
   );
 };
 

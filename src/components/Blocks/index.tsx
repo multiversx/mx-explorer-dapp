@@ -64,7 +64,7 @@ const Blocks: React.FC = () => {
         <div className="row">
           <div className="col-12">
             <h4>
-              {shardId != undefined && shardId >= 0 && (
+              {shardId !== undefined && shardId >= 0 && (
                 <>
                   <ShardSpan shardId={shardId} />
                   &nbsp;

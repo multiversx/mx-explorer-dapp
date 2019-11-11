@@ -46,6 +46,10 @@ type ValidatorsTableHeaderType = {
   shardData: ComputedShard[];
   shardValue: string;
   setShardValue: React.Dispatch<React.SetStateAction<string>>;
+  statusValue: string;
+  setStatusValue: React.Dispatch<React.SetStateAction<string>>;
+  validatorObserverValue: string;
+  setValidatorObserverValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const ValidatorsTableHeader = ({
@@ -55,6 +59,10 @@ const ValidatorsTableHeader = ({
   shardData,
   shardValue,
   setShardValue,
+  statusValue,
+  setStatusValue,
+  validatorObserverValue,
+  setValidatorObserverValue,
 }: ValidatorsTableHeaderType) => {
   const toggleSort = (currentSortColumn: string) => () => {
     const { field: oldSortColumn, dir: oldDir } = sort;
@@ -66,7 +74,24 @@ const ValidatorsTableHeader = ({
     e.preventDefault();
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
+    document.body.click();
     setShardValue(shardID);
+  };
+
+  const changeStatus = (e: SyntheticEvent, status: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    document.body.click();
+    setStatusValue(status);
+  };
+
+  const changeValidatorObserver = (e: SyntheticEvent, validatorObs: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    document.body.click();
+    setValidatorObserverValue(validatorObs);
   };
 
   return (
@@ -82,43 +107,54 @@ const ValidatorsTableHeader = ({
               <FontAwesomeIcon icon={faArrowDown} className="empty-icon" />
             )}
             {header.id === 'hexPublicKey' && includeObservers && (
-              <span className="dropdown">
-                {/* <span data-toggle="dropdown">
-                <i
-                  className="fa fa-filter"
-                  ng-class="{'text-primary': (validatorObserverValue !== '')}"
-                />
-              </span> */}
-                {/* <div className="dropdown-menu">
-                <div>
-                  <span
-                    ng-click="filterByValidatorObserver('validator')"
-                    className="dropdown-item"
-                    ng-class="{'font-weight-bold': (validatorObserverValue == 'validator')}"
-                  >
-                    Validator
-                  </span>
-                </div>
-                <div>
-                  <span
-                    ng-click="filterByValidatorObserver('observer')"
-                    className="dropdown-item"
-                    ng-class="{'font-weight-bold': (validatorObserverValue == 'observer')}"
-                  >
-                    Observer
-                  </span>
-                </div>
-                <div>
-                  <span
-                    ng-click="filterByValidatorObserver('')"
-                    className="dropdown-item"
-                    ng-class="{'font-weight-bold': (validatorObserverValue == '')}"
-                  >
-                    Show all
-                  </span>
-                </div>
-              </div> */}
-              </span>
+              <OverlayTrigger
+                trigger="click"
+                key="popover"
+                placement="bottom"
+                rootClose
+                overlay={
+                  <Popover id="popover-positioned-bottom">
+                    <Popover.Content>
+                      <a
+                        className={`nav-link ${
+                          validatorObserverValue === 'validator' ? 'active' : ''
+                        }`}
+                        href="#/validators"
+                        onClick={e => changeValidatorObserver(e, 'online')}
+                      >
+                        Validator
+                      </a>
+                      <a
+                        className={`nav-link ${
+                          validatorObserverValue === 'observer' ? 'active' : ''
+                        }`}
+                        href="#/validators"
+                        onClick={e => changeValidatorObserver(e, 'offline')}
+                      >
+                        Observer
+                      </a>
+                      <a
+                        className={`nav-link ${validatorObserverValue === '' ? 'active' : ''}`}
+                        key={-1}
+                        href="#/validators"
+                        onClick={e => changeValidatorObserver(e, '')}
+                      >
+                        Show all
+                      </a>
+                    </Popover.Content>
+                  </Popover>
+                }
+              >
+                <span
+                  id="switch"
+                  className="switch d-none d-md-inline-block d-lg-inline-block d-xl-inline-blockinline-"
+                >
+                  <FontAwesomeIcon
+                    icon={faFilter}
+                    className={validatorObserverValue !== '' ? 'text-primary' : ''}
+                  />
+                </span>
+              </OverlayTrigger>
             )}
             {header.id === 'shardID' && (
               <OverlayTrigger
@@ -155,76 +191,61 @@ const ValidatorsTableHeader = ({
               >
                 <span
                   id="switch"
-                  className="switch d-none d-md-inline-block d-lg-inline-block d-xl-inline-blockinline-"
+                  className="switch d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
                 >
                   <FontAwesomeIcon
                     icon={faFilter}
-                    className="switch d-none d-md-inline-block d-lg-inline-block d-xl-inline-blockinline-"
+                    className={shardValue !== '' ? 'text-primary' : ''}
                   />
                 </span>
               </OverlayTrigger>
             )}
-            <span ng-show="headers[$index].id == 'shardID'" className="dropdown">
-              {/* <span data-toggle="dropdown">
-              <i
-                className="fa fa-filter"
-                ng-class="{'text-primary': (shardValue !== '')}"
-              />
-            </span> */}
-              {/* <div className="dropdown-menu">
-              <div ng-repeat="shard in shardsList | orderBy:shard">
+            {header.id === 'isActive' && (
+              <OverlayTrigger
+                trigger="click"
+                key="popover"
+                placement="bottom"
+                rootClose
+                overlay={
+                  <Popover id="popover-positioned-bottom">
+                    <Popover.Content>
+                      <a
+                        className={`nav-link ${statusValue === 'online' ? 'active' : ''}`}
+                        href="#/validators"
+                        onClick={e => changeStatus(e, 'online')}
+                      >
+                        Online
+                      </a>
+                      <a
+                        className={`nav-link ${statusValue === 'offline' ? 'active' : ''}`}
+                        href="#/validators"
+                        onClick={e => changeStatus(e, 'offline')}
+                      >
+                        Offiline
+                      </a>
+                      <a
+                        className={`nav-link ${statusValue === '' ? 'active' : ''}`}
+                        key={-1}
+                        href="#/validators"
+                        onClick={e => changeStatus(e, '')}
+                      >
+                        Show all
+                      </a>
+                    </Popover.Content>
+                  </Popover>
+                }
+              >
                 <span
-                  ng-click="filterByShard(shard)"
-                  className="dropdown-item"
-                  ng-class="{'font-weight-bold': (shard == shardValue)}"
+                  id="switch"
+                  className="switch d-none d-md-inline-block d-lg-inline-block d-xl-inline-blockinline-"
                 >
-                  {'{'}
-                  {'{'}shard == 'Metachain' ? shard : 'Shard ' + shard{'}'}
-                  {'}'}
+                  <FontAwesomeIcon
+                    icon={faFilter}
+                    className={statusValue !== '' ? 'text-primary' : ''}
+                  />
                 </span>
-              </div>
-              <div>
-                <span
-                  ng-click="filterByShard('')"
-                  className="dropdown-item"
-                  ng-class="{'font-weight-bold': (shardValue == '')}"
-                >
-                  Show all
-                </span>
-              </div>
-            </div> */}
-            </span>
-            <span ng-show="headers[$index].id == 'isActive'" className="dropdown">
-              {/* <span data-toggle="dropdown">
-              <i
-                className="fa fa-filter"
-                ng-class="{'text-primary': (statusValue !== '')}"
-              />
-            </span> */}
-              {/* <div className="dropdown-menu">
-              <span
-                ng-click="filterByStatus(true)"
-                className="dropdown-item"
-                ng-class="{'font-weight-bold': (statusValue === true)}"
-              >
-                Online
-              </span>
-              <span
-                ng-click="filterByStatus(false)"
-                className="dropdown-item"
-                ng-class="{'font-weight-bold': (statusValue === false)}"
-              >
-                Offline
-              </span>
-              <span
-                ng-click="filterByStatus('')"
-                className="dropdown-item"
-                ng-class="{'font-weight-bold': (statusValue === '')}"
-              >
-                Show all
-              </span>
-            </div> */}
-            </span>
+              </OverlayTrigger>
+            )}
           </th>
         ))}
       </tr>

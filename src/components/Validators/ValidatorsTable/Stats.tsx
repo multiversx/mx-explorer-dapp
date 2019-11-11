@@ -6,6 +6,9 @@ type ValidatorsStatsType = {
   includeObservers: boolean;
   setIncludeObsevers: React.Dispatch<React.SetStateAction<boolean>>;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  setShardValue: React.Dispatch<React.SetStateAction<string>>;
+  setStatusValue: React.Dispatch<React.SetStateAction<string>>;
+  setValidatorObserverValue: React.Dispatch<React.SetStateAction<string>>;
   shownValidatorsLength: number;
   filteredValidatorsLength: number;
 };
@@ -16,9 +19,15 @@ const ValidatorsStats = ({
   setSearchValue,
   shownValidatorsLength,
   filteredValidatorsLength,
+  setShardValue,
+  setStatusValue,
+  setValidatorObserverValue,
 }: ValidatorsStatsType) => {
   const changeIncludeObsevers: React.ChangeEventHandler<HTMLInputElement> = () => {
     setIncludeObsevers(!includeObservers);
+    setShardValue('');
+    setStatusValue('');
+    setValidatorObserverValue('');
   };
 
   const [inputValue, setInputValue] = React.useState('');
