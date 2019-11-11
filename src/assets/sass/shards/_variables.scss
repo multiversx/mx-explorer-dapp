@@ -259,6 +259,7 @@ $mark-bg: #fff09e !default;
 // Customizes the `.table` component with basic values, each used across all table variations.
 
 $table-bg:                      transparent !default;
+$table-color:                   $body-color !default;
 $table-active-bg:               rgba($black, .075) !default;
 
 $table-cell-padding:            .75rem !default;

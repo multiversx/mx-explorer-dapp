@@ -4,7 +4,7 @@
 
 .table {
   background-color: $table-bg;
-
+  color: $table-color;
   th,
   td {
     padding: $table-cell-padding;
@@ -14,7 +14,6 @@
     background-color: $body-bg;
   }
 }
-
 
 //
 // Condensed table w/ half padding
@@ -27,7 +26,6 @@
   }
 }
 
-
 // Table backgrounds
 //
 // Exact selectors below required to override `.table-striped` and prevent
@@ -38,7 +36,6 @@
 }
 
 @include table-row-variant(active, $table-active-bg);
-
 
 // Dark styles
 //
