@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { HeadersType, getNewSortData } from './../helpers/validatorHelpers';
 import { SortType } from './index';
 
@@ -56,7 +56,7 @@ const ValidatorsTableHeader = ({ includeObservers, sortBy, sort }: ValidatorsTab
         {headers.map(header => (
           <th className="sortable" key={header.id}>
             <span onClick={toggleSort(header.id)} ng-click="toggleSort($index)">
-              {header.label}
+              {header.label}&nbsp;
             </span>
             {sort.dir === 'asc' && sort.field === header.id && (
               <FontAwesomeIcon icon={faArrowUp} className="empty-icon" />
@@ -64,7 +64,7 @@ const ValidatorsTableHeader = ({ includeObservers, sortBy, sort }: ValidatorsTab
             {sort.dir === 'desc' && sort.field === header.id && (
               <FontAwesomeIcon icon={faArrowDown} className="empty-icon" />
             )}
-            {header.id == 'hexPublicKey' && includeObservers && (
+            {header.id === 'hexPublicKey' && includeObservers && (
               <span className="dropdown">
                 {/* <span data-toggle="dropdown">
                 <i

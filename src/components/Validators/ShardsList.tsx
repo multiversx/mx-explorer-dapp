@@ -15,7 +15,7 @@ const ShardsList = ({ shardData }: { shardData: ShardType[] }) => {
           <div className="card">
             <div className="card-body">
               <span className="metric-label">
-                {shardEntry.shardID == 'Metachain'
+                {shardEntry.shardID === 'Metachain'
                   ? shardEntry.shardID
                   : 'Shard ' + shardEntry.shardID}
               </span>
@@ -23,12 +23,13 @@ const ShardsList = ({ shardData }: { shardData: ShardType[] }) => {
                 <span
                   className={`
                     badge badge-pill badge-status
-                    ${shardEntry.status == 'success' && 'badge-success'}
-                    ${shardEntry.status == 'warning' && 'badge-warning'}
-                    ${shardEntry.status == 'danger' && 'badge-danger'}`}
+                    ${shardEntry.status === 'success' && 'badge-success'}
+                    ${shardEntry.status === 'warning' && 'badge-warning'}
+                    ${shardEntry.status === 'danger' && 'badge-danger'}`}
                 >
                   &nbsp;
                 </span>
+                &nbsp;
                 <span>
                   {shardEntry.allActiveValidators}/{shardEntry.allValidators}
                 </span>

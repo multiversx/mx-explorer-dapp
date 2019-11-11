@@ -28,14 +28,12 @@ export type SortType = {
   field: string;
   dir: DirectioinsType;
 };
+export type ValidatorValueType = string;
 
 const ValidatorsTable = (props: StateType) => {
-  //   dataSource.filter({ field: 'name', operator: 'startswith', value: 'Jane' });
-  //   var view = dataSource.view();
-  //   console.log(view.length);
-  //   console.log(view[0].name);
   const [includeObservers, setIncludeObsevers] = React.useState(false);
   const [sort, setSort] = React.useState<SortType>({ field: '', dir: 'none' });
+  const [validatorValue, setValidatorValue] = React.useState<string | undefined>(undefined);
   const validatorInfosEnabled = false;
   const { filteredValidatorsLength, validators, shownValidatorsLength } = props;
   const dataSource = new kendo.data.DataSource({
@@ -51,6 +49,8 @@ const ValidatorsTable = (props: StateType) => {
         <div className="card">
           <div className="card-body card-list">
             <ValidatorStats
+              validatorValue={validatorValue}
+              setValidatorValue={setValidatorValue}
               filteredValidatorsLength={filteredValidatorsLength}
               shownValidatorsLength={shownValidatorsLength}
               includeObservers={includeObservers}

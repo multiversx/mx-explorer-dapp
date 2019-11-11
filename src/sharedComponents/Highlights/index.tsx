@@ -59,7 +59,7 @@ const Hightlights = ({
         ref.current !== null && setState(newState);
       });
     }
-  }, [elasticUrl, timeout, timestamp]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, timeout, timestamp, setLiveTps]); // run the operation only once since the parameter does not change
 
   return (
     <div ref={ref}>{!hero ? <DefaultHighlights {...state} /> : <HeroHighlights {...state} />}</div>

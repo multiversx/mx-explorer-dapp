@@ -1,7 +1,6 @@
 import { ValidatorType, ShardDataType } from './../index';
 
 export function populateValidatorsTable(data: ValidatorType[]) {
-  const validatorsAndObservers = data;
   const validatorsAndObserversLength = data.length;
 
   const shardData: ShardDataType = {};
@@ -16,29 +15,26 @@ export function populateValidatorsTable(data: ValidatorType[]) {
       validators.push(validator);
     }
 
-    allShardIDs.push(validatorsAndObservers[i].computedShardID.toString()); //TODO: check shardID
+    allShardIDs.push(shardId.toString()); //TODO: check shardID
 
     if (validator.shardId && validator.shardId in shardData) {
       if (validator.isValidator) {
-        const shardID = validator.shardId;
-        shardData[shardID].allValidators = shardData[shardID].allValidators + 1;
-        shardData[shardID].allActiveValidators = validator.isActive
-          ? shardData[shardID].allActiveValidators + 1
-          : shardData[shardID].allActiveValidators;
+        shardData[shardId].allValidators = shardData[shardId].allValidators + 1;
+        shardData[shardId].allActiveValidators = validator.isActive
+          ? shardData[shardId].allActiveValidators + 1
+          : shardData[shardId].allActiveValidators;
       }
     } else if (validator.shardId) {
-      const shardID = validator.shardId;
-      shardData[shardID] = {
+      shardData[shardId] = {
         allValidators: 0,
         allActiveValidators: 0,
       };
-      shardData[shardID].allValidators = validator.isValidator ? 1 : 0;
-      shardData[shardID].allActiveValidators = validator.isValidator && validator.isActive ? 1 : 0;
+      shardData[shardId].allValidators = validator.isValidator ? 1 : 0;
+      shardData[shardId].allActiveValidators = validator.isValidator && validator.isActive ? 1 : 0;
     }
   });
 
   const validatorsLength = validators.length;
-  const filteredValidators = validators;
   const filteredValidatorsLength = validators.length;
   const shownValidatorsLength = validators.length;
 
@@ -55,7 +51,7 @@ export function populateValidatorsTable(data: ValidatorType[]) {
     )
   ); // [{shardID, allValidators, allTrueValidators}]
   //this gets all distinct shards
-  const shardsList = [...Array.from(new Set(allShardIDs))]; // eslint-disable-line
+  const shardsList = [...Array.from(new Set(allShardIDs))];
   return {
     shardData: shardDataArray,
     shardsList,

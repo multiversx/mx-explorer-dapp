@@ -1,10 +1,14 @@
 import * as React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 type ValidatorsStatsType = {
   shownValidatorsLength: number;
   filteredValidatorsLength: number;
+  validatorValue: string | undefined;
   includeObservers: boolean;
   setIncludeObsevers: React.Dispatch<React.SetStateAction<boolean>>;
+  setValidatorValue: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
 const ValidatorsStats = ({
@@ -12,9 +16,14 @@ const ValidatorsStats = ({
   filteredValidatorsLength,
   includeObservers,
   setIncludeObsevers,
+  validatorValue,
+  setValidatorValue,
 }: ValidatorsStatsType) => {
   const changeIncludeObsevers: React.ChangeEventHandler<HTMLInputElement> = e => {
     setIncludeObsevers(!includeObservers);
+  };
+  const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = e => {
+    setValidatorValue(e.target.value);
   };
   return (
     <>
@@ -24,29 +33,31 @@ const ValidatorsStats = ({
             <input
               type="text"
               className="form-control"
-              ng-model="validatorValue"
-              ng-change="filterValidators()"
+              value={validatorValue}
+              onChange={changeValidatorValue}
               placeholder="Search"
               name="validatorSearch"
               style={{ borderRadius: '2rem' }}
-              required
             />
             <div className="input-group-append">
-              <button
-                type="submit"
-                className="input-group-text"
-                ng-show="!(validatorValue.length > 0)"
-              >
-                <i className="fa fa-search" />
-              </button>
-              <button
-                type="reset"
-                className="input-group-text"
-                ng-show="validatorValue.length > 0"
-                ng-click="clearValidatorValue()"
-              >
-                <i className="fa fa-times" />
-              </button>
+              {validatorValue !== undefined ? (
+                <button
+                  type="submit"
+                  className="input-group-text"
+                  ng-show="!(validatorValue.length > 0)"
+                >
+                  <FontAwesomeIcon icon={faSearch} />
+                </button>
+              ) : (
+                <button
+                  type="reset"
+                  className="input-group-text"
+                  ng-show="validatorValue.length > 0"
+                  ng-click="clearValidatorValue()"
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </button>
+              )}
             </div>
           </div>
         </div>

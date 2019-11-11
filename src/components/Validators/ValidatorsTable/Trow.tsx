@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { ValidatorType } from './../index';
@@ -34,7 +33,7 @@ const EmptySearch = ({
         )}
       </td>
       <td>
-        {validator.shardId != 'Metachain' ? (
+        {validator.shardId !== 'Metachain' ? (
           <a href="/#/shard/{{ validator.shardID }}/page/1">
             Shard {validator.shardId}
             <span ng-show="validator.star === true">*</span>
@@ -48,7 +47,7 @@ const EmptySearch = ({
       </td>
       <td>{truncate(validator.versionNumber, 20)}</td>
       <td className="text-right">
-        {(validator.totalUpTimeSec != 0 || validator.totalDownTimeSec != 0) && (
+        {(validator.totalUpTimeSec !== 0 || validator.totalDownTimeSec !== 0) && (
           <span>
             {Math.floor(
               (validator.totalUpTimeSec * 100) /
@@ -57,22 +56,24 @@ const EmptySearch = ({
             %
           </span>
         )}
-        {validator.totalUpTimeSec == 0 &&
-          validator.totalDownTimeSec == 0 &&
+        {validator.totalUpTimeSec === 0 &&
+          validator.totalDownTimeSec === 0 &&
           validator.isActive === true && <span>100%</span>}
-        {validator.totalUpTimeSec == 0 &&
-          validator.totalDownTimeSec == 0 &&
+        {validator.totalUpTimeSec === 0 &&
+          validator.totalDownTimeSec === 0 &&
           validator.isActive === false && <span ng-show="">0%</span>}
       </td>
       <td>
         {validator.isActive === true ? (
           <div>
             <span className="badge badge-pill badge-success badge-status">&nbsp;</span>
+            &nbsp;
             <span>Online</span>
           </div>
         ) : (
           <div>
             <span className="badge badge-pill badge-danger badge-status">&nbsp;</span>
+            &nbsp;
             <span className={validator.isValidator === false ? 'text-muted' : ''}>Offline</span>
           </div>
         )}

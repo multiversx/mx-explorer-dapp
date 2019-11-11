@@ -19,8 +19,7 @@ const HeroChart = ({ liveTps }: ChartType) => {
   } = useGlobalState();
   let initialValuesCount = 0;
 
-  // componentDidMount
-  React.useEffect(() => {
+  const initTable = () => {
     if (ref.current !== null) {
       myChart = new Chart(ref.current!, {
         type: 'line',
@@ -98,7 +97,10 @@ const HeroChart = ({ liveTps }: ChartType) => {
         }
       }
     }
-  }, []);
+  };
+
+  // componentDidMount
+  React.useEffect(initTable, []);
 
   React.useEffect(() => {
     if (ref.current !== null && myChart !== undefined) {

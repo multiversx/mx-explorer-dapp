@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { faChevronLeft, faChevronRight, faCube, faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { TimeAgo, Highlights, TestnetLink, ShardSpan } from '../../sharedComponents';
 import { getBlock } from './helpers/asyncRequests';
 import { useGlobalState } from '../../context';

@@ -5,12 +5,6 @@ import Layout from './components/Layout';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import PageNotFoud from './components/PageNotFoud';
 import routes from './routes';
-import { spawn } from 'child_process';
-
-// const routes = React.lazy(() => import('./routes'));
-
-// const routes =
-//   process.env.NODE_ENV === 'production' ? require('./routes-prod') : require('./routes');
 
 const Routes: React.FC = () => {
   const { config } = useGlobalState();
@@ -57,9 +51,5 @@ const RoutedApp = () => (
     <App />
   </Router>
 );
-
-function Users() {
-  return <>ASD</>;
-}
 
 export default hot(RoutedApp);
