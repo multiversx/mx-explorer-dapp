@@ -106,7 +106,7 @@ const TransactionDetails: React.FC = () => {
                                 {truncate(transaction.sender, 20)}
                               </TestnetLink>
                               <TestnetLink
-                                to={`/shard/${transaction.senderShard}/page/1`}
+                                to={`/shards/${transaction.senderShard}`}
                                 className="small-link"
                               >
                                 (<ShardSpan shardId={transaction.sender} />)
@@ -128,10 +128,7 @@ const TransactionDetails: React.FC = () => {
                           </Link>
                           &nbsp;
                           {Boolean(transaction.receiverShard) && (
-                            <Link
-                              to={`shard/${transaction.receiverShard}/page/1`}
-                              className="small-link"
-                            >
+                            <Link to={`shard/${transaction.receiverShard}`} className="small-link">
                               (Shard {transaction.receiverShard})
                             </Link>
                           )}

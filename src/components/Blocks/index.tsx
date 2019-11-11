@@ -122,14 +122,14 @@ const Blocks: React.FC = () => {
                               {shardId ? (
                                 <ShardSpan shardId={block.shardId} />
                               ) : (
-                                <TestnetLink to={`/shards/${block.shardId}/page/1`}>
+                                <TestnetLink to={`/shards/${block.shardId}`}>
                                   <ShardSpan shardId={block.shardId} />
                                 </TestnetLink>
                               )}
                             </td>
                             <td>{sizeFormat(block.size)}</td>
                             <td>
-                              <TestnetLink to={`/block/${block.hash}`}>
+                              <TestnetLink to={`/blocks/${block.hash}`}>
                                 {truncate(block.hash, 20)}
                               </TestnetLink>
                             </td>

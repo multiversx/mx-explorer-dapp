@@ -133,7 +133,7 @@ const BlockDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">Shard</div>
                         <div className="col-lg-10">
-                          <TestnetLink to={`/shards/${block.shardId}/page/1`}>
+                          <TestnetLink to={`/shards/${block.shardId}`}>
                             <ShardSpan shardId={block.shardId} />
                           </TestnetLink>
                         </div>
