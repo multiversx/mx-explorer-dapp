@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { ValidatorType } from './../ValidatorsPage';
+import { ValidatorType } from './../index';
 import { truncate } from './../../../helpers';
 
 const EmptySearch = ({

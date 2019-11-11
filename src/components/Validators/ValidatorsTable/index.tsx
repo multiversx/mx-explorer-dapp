@@ -4,7 +4,7 @@ import kendo from 'kendo-ui-core/js/kendo.data';
 import ValidatorStats from './Stats';
 import ValidatorTableHead from './Thead';
 import ValidatorTableRow from './Trow';
-import { ValidatorType } from './../ValidatorsPage';
+import { ValidatorType } from './../index';
 import { DirectioinsType } from './../helpers/validatorHelpers';
 
 type ComputedShard = {
@@ -33,11 +33,13 @@ export type ValidatorValueType = string;
 const ValidatorsTable = (props: StateType) => {
   const [includeObservers, setIncludeObsevers] = React.useState(false);
   const [sort, setSort] = React.useState<SortType>({ field: '', dir: 'none' });
-  const [validatorValue, setValidatorValue] = React.useState<string | undefined>(undefined);
+  const [validatorValue, setValidatorValue] = React.useState<string>('');
   const validatorInfosEnabled = false;
   const { filteredValidatorsLength, validators, shownValidatorsLength } = props;
+
   const dataSource = new kendo.data.DataSource({
     data: validators,
+    filter: { field: 'name', operator: 'startswith', value: 'Jane' },
   });
   dataSource.sort([sort]);
 
@@ -49,7 +51,6 @@ const ValidatorsTable = (props: StateType) => {
         <div className="card">
           <div className="card-body card-list">
             <ValidatorStats
-              validatorValue={validatorValue}
               setValidatorValue={setValidatorValue}
               filteredValidatorsLength={filteredValidatorsLength}
               shownValidatorsLength={shownValidatorsLength}

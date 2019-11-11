@@ -5,10 +5,9 @@ import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 type ValidatorsStatsType = {
   shownValidatorsLength: number;
   filteredValidatorsLength: number;
-  validatorValue: string | undefined;
   includeObservers: boolean;
   setIncludeObsevers: React.Dispatch<React.SetStateAction<boolean>>;
-  setValidatorValue: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setValidatorValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const ValidatorsStats = ({
@@ -16,14 +15,16 @@ const ValidatorsStats = ({
   filteredValidatorsLength,
   includeObservers,
   setIncludeObsevers,
-  validatorValue,
   setValidatorValue,
 }: ValidatorsStatsType) => {
-  const changeIncludeObsevers: React.ChangeEventHandler<HTMLInputElement> = e => {
+  const changeIncludeObsevers: React.ChangeEventHandler<HTMLInputElement> = () => {
     setIncludeObsevers(!includeObservers);
   };
+  const [searchValue, setSearchValue] = React.useState('');
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = e => {
-    setValidatorValue(e.target.value);
+    setSearchValue(e.target.value);
+    if (e.target.value.length >= 3) setValidatorValue(e.target.value);
+    if (e.target.value.length === 0) setValidatorValue('');
   };
   return (
     <>
@@ -33,14 +34,14 @@ const ValidatorsStats = ({
             <input
               type="text"
               className="form-control"
-              value={validatorValue}
+              value={searchValue}
               onChange={changeValidatorValue}
               placeholder="Search"
               name="validatorSearch"
               style={{ borderRadius: '2rem' }}
             />
             <div className="input-group-append">
-              {validatorValue !== undefined ? (
+              {searchValue !== '' ? (
                 <button
                   type="submit"
                   className="input-group-text"
