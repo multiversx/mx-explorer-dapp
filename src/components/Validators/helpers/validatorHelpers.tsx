@@ -1,19 +1,19 @@
 import { ValidatorType, ShardDataType } from './../index';
 
-export function populateValidatorsTable(data: ValidatorType[]) {
-  const validatorsAndObserversLength = data.length;
-
+export function populateValidatorsTable(data: ValidatorType[], metaChainShardId: number) {
   const shardData: ShardDataType = {};
   const allShardIDs: string[] = [];
   const validators: ValidatorType[] = [];
+  const validatorsAndObservers: ValidatorType[] = [];
 
   data.forEach((validator: ValidatorType, i) => {
-    const { shardId, shardNumber, star } = getShardId(validator);
+    const { shardId, shardNumber, star } = getShardId(validator, metaChainShardId);
     validator = { ...validator, shardId, shardNumber, star };
 
     if (validator.isValidator) {
       validators.push(validator);
     }
+    validatorsAndObservers.push(validator);
 
     allShardIDs.push(shardId.toString()); //TODO: check shardID
 
@@ -34,10 +34,6 @@ export function populateValidatorsTable(data: ValidatorType[]) {
     }
   });
 
-  const validatorsLength = validators.length;
-  const filteredValidatorsLength = validators.length;
-  const shownValidatorsLength = validators.length;
-
   const shardDataArray = Object.keys(shardData).map((shardID: any) =>
     Object.assign(
       {
@@ -55,11 +51,8 @@ export function populateValidatorsTable(data: ValidatorType[]) {
   return {
     shardData: shardDataArray,
     shardsList,
-    validatorsLength,
     validators,
-    filteredValidatorsLength,
-    shownValidatorsLength,
-    validatorsAndObserversLength,
+    validatorsAndObservers,
   };
 }
 
@@ -76,7 +69,7 @@ function computeShardStatus(allActiveValidators: number, allValidators: number) 
   }
 }
 
-function getShardId(validator: ValidatorType) {
+function getShardId(validator: ValidatorType, metaChainShardId: number) {
   let shardId: string;
   let star = false;
   if (validator.isValidator === true) {
@@ -88,7 +81,7 @@ function getShardId(validator: ValidatorType) {
     shardId = validator.receivedShardID.toString();
   }
   return {
-    shardId: shardId === (4294967295).toString() ? 'Metachain' : shardId, // eslint-disable-line
+    shardId: shardId === metaChainShardId.toString() ? 'Metachain' : shardId, // eslint-disable-line
     shardNumber: parseInt(shardId), // this is excluding the Metachain string, used for searching
     star: star,
   };

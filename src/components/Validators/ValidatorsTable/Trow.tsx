@@ -1,24 +1,30 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { TestnetLink, ShardSpan } from './../../../sharedComponents';
 import { ValidatorType } from './../index';
 import { truncate } from './../../../helpers';
 
 const EmptySearch = ({
   validator,
-  validatorInfosEnabled,
+  validatorDetails,
 }: {
   validator: ValidatorType;
-  validatorInfosEnabled: boolean;
+  validatorDetails: boolean;
 }) => {
   return (
     <tr className="animated fadeIn">
       <td>
-        {!validator.isValidator && <FontAwesomeIcon icon={faEye} className="w300" />}
-        {validatorInfosEnabled ? (
-          <a href="#/validator/{{validator.hexPublicKey}}" ng-show="validatorInfosEnabled">
+        {!validator.isValidator && (
+          <>
+            <FontAwesomeIcon icon={faEye} className="w300" />
+            &nbsp;
+          </>
+        )}
+        {validatorDetails ? (
+          <TestnetLink to={`/validators/${validator.hexPublicKey}`}>
             {truncate(validator.hexPublicKey, 20)}
-          </a>
+          </TestnetLink>
         ) : (
           <span ng-show="validatorInfosEnabled == false">
             {truncate(validator.hexPublicKey, 20)}
@@ -33,17 +39,10 @@ const EmptySearch = ({
         )}
       </td>
       <td>
-        {validator.shardId !== 'Metachain' ? (
-          <a href="/#/shard/{{ validator.shardID }}/page/1">
-            Shard {validator.shardId}
-            <span ng-show="validator.star === true">*</span>
-          </a>
-        ) : (
-          <a href="/#/shard/{{ validator.shardNumber }}/page/1">
-            Metachain
-            {validator.star && <span>*</span>}
-          </a>
-        )}
+        <TestnetLink to={`/shard/${validator.shardNumber}`}>
+          <ShardSpan shardId={validator.shardNumber} />
+          {validator.star && <span>*</span>}
+        </TestnetLink>
       </td>
       <td>{truncate(validator.versionNumber, 20)}</td>
       <td className="text-right">

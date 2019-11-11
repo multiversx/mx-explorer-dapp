@@ -20,9 +20,9 @@ export type ValidatorType = {
   totalDownTimeSec: number;
   totalUpTimeSec: number;
   versionNumber: string;
-  shardId?: string;
-  shardNumber?: number;
-  star?: boolean;
+  shardId: string;
+  shardNumber: number;
+  star: boolean;
 };
 
 export const initialState: StateType = {
@@ -35,25 +35,8 @@ export const initialState: StateType = {
     },
   ],
   shardsList: [''],
-  validatorsLength: 0,
-  validators: [
-    {
-      computedShardID: 0,
-      hexPublicKey: '',
-      isActive: false,
-      isValidator: false,
-      maxInactiveTime: '',
-      nodeDisplayName: '',
-      receivedShardID: 0,
-      timeStamp: '',
-      totalDownTimeSec: 0,
-      totalUpTimeSec: 0,
-      versionNumber: '',
-    },
-  ],
-  filteredValidatorsLength: 0,
-  shownValidatorsLength: 0,
-  validatorsAndObserversLength: 0,
+  validators: [],
+  validatorsAndObservers: [],
 };
 
 export type ShardDataType = {
@@ -63,28 +46,26 @@ export type ShardDataType = {
   };
 };
 
-type ValidatorsPageType = {
-  nodeUrl: string;
-  timeout: number;
-};
-
 const Validators = () => {
   let ref = React.useRef(null);
   const {
-    activeTestnet: { nodeUrl },
+    activeTestnet: { nodeUrl, validatorDetails },
     timeout,
+    config: { metaChainShardId },
   } = useGlobalState();
 
   const [state, setState] = React.useState({ success: true, data: initialState });
 
-  React.useEffect(() => {
+  const getData = () => {
     if (ref.current !== null) {
       getValidatorsData({ nodeUrl, timeout }).then(({ data, success }) => {
-        const newState = populateValidatorsTable(data);
+        const newState = populateValidatorsTable(data, metaChainShardId);
         ref.current !== null && setState({ success, data: newState });
       });
     }
-  }, [nodeUrl, timeout]);
+  };
+
+  React.useEffect(getData, [nodeUrl, timeout]);
 
   return useMemo(
     () => (
@@ -98,10 +79,10 @@ const Validators = () => {
           </div>
           {state.success ? (
             <>
-              {state.data.validatorsLength > 0 ? (
+              {state.data.validatorsAndObservers.length > 0 ? (
                 <>
                   <ShardsList shardData={state.data.shardData} />
-                  <ValidatorsTable {...state.data} />
+                  <ValidatorsTable {...state.data} validatorDetails={validatorDetails || false} />
                 </>
               ) : (
                 <div className="card">
