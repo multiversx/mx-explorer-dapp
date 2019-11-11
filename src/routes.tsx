@@ -65,6 +65,11 @@ const routes: RouteType[] = [
     component: Blocks,
   },
   {
+    path: '/shards/:shard',
+    title: 'Shard Details',
+    component: Blocks,
+  },
+  {
     path: '/search/:query',
     title: 'Search',
     component: EmptySearch,
