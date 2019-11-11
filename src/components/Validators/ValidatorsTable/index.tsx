@@ -4,7 +4,7 @@ import kendo from 'kendo-ui-core/js/kendo.data';
 import ValidatorStats from './Stats';
 import ValidatorTableHead from './Thead';
 import ValidatorTableRow from './Trow';
-import { ValidatorType } from './../index';
+import { ValidatorType } from './../ValidatorsPage';
 import { DirectioinsType } from './../helpers/validatorHelpers';
 
 type ComputedShard = {

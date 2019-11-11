@@ -1,4 +1,4 @@
-import { ValidatorType, ShardDataType } from './../index';
+import { ValidatorType, ShardDataType } from './../ValidatorsPage';
 
 export function populateValidatorsTable(data: ValidatorType[]) {
   const validatorsAndObserversLength = data.length;
