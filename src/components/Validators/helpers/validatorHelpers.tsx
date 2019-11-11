@@ -28,6 +28,7 @@ export function populateValidatorsTable(data: ValidatorType[], metaChainShardId:
       shardData[shardId] = {
         allValidators: 0,
         allActiveValidators: 0,
+        shardNumber: validator.shardNumber,
       };
       shardData[shardId].allValidators = validator.isValidator ? 1 : 0;
       shardData[shardId].allActiveValidators = validator.isValidator && validator.isActive ? 1 : 0;
@@ -48,6 +49,8 @@ export function populateValidatorsTable(data: ValidatorType[], metaChainShardId:
   ); // [{shardID, allValidators, allTrueValidators}]
   //this gets all distinct shards
   const shardsList = [...Array.from(new Set(allShardIDs))];
+  console.warn(shardDataArray);
+
   return {
     shardData: shardDataArray,
     shardsList,

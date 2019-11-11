@@ -7,11 +7,12 @@ import ValidatorTableRow from './Trow';
 import { ValidatorType } from './../index';
 import { DirectioinsType } from './../helpers/validatorHelpers';
 
-type ComputedShard = {
+export type ComputedShard = {
   shardID: string;
   status: string;
   allValidators: number;
   allActiveValidators: number;
+  shardNumber: number;
 };
 
 export type StateType = {
@@ -30,27 +31,36 @@ export type ValidatorValueType = string;
 const ValidatorsTable = (props: StateType & { validatorDetails: boolean }) => {
   const [includeObservers, setIncludeObsevers] = React.useState(false);
   const [sort, setSort] = React.useState<SortType>({ field: '', dir: 'none' });
-  const [validatorValue, setValidatorValue] = React.useState<string>('');
-  const { validators, validatorsAndObservers, validatorDetails } = props;
+  const [searchValue, setSearchValue] = React.useState<string>('');
+  const [shardValue, setShardValue] = React.useState<string>('');
+  const { validators, validatorsAndObservers, validatorDetails, shardData } = props;
 
-  const filter =
-    validatorValue !== ''
-      ? {
-          logic: 'or',
-          filters: [
-            { field: 'hexPublicKey', operator: 'contains', value: validatorValue },
-            { field: 'nodeDisplayName', operator: 'contains', value: validatorValue },
-            { field: 'versionNumber', operator: 'contains', value: validatorValue },
-          ],
-        }
-      : [];
+  var mainFilter: { logic: string; filters: Object[] } = { logic: 'or', filters: [] };
+
+  const searchValueFilter = {
+    logic: 'or',
+    filters:
+      searchValue !== ''
+        ? [
+            { field: 'hexPublicKey', operator: 'contains', value: searchValue },
+            { field: 'nodeDisplayName', operator: 'contains', value: searchValue },
+            { field: 'versionNumber', operator: 'contains', value: searchValue },
+          ]
+        : [],
+  };
+
+  if (searchValueFilter.filters.length) mainFilter.filters.push(searchValueFilter);
+
+  if (shardValue !== '')
+    mainFilter.filters.push({ field: 'shardId', operator: 'eq', value: shardValue });
 
   const data = includeObservers ? validatorsAndObservers : validators;
 
   const dataSource = new kendo.data.DataSource({ data });
 
+  dataSource.filter(mainFilter);
+
   dataSource.sort([sort]);
-  dataSource.filter(filter);
 
   const newValidators: ValidatorType[] = dataSource.view();
 
@@ -62,7 +72,7 @@ const ValidatorsTable = (props: StateType & { validatorDetails: boolean }) => {
             <ValidatorStats
               shownValidatorsLength={data.length}
               filteredValidatorsLength={newValidators.length}
-              setValidatorValue={setValidatorValue}
+              setSearchValue={setSearchValue}
               includeObservers={includeObservers}
               setIncludeObsevers={setIncludeObsevers}
             />
@@ -72,6 +82,9 @@ const ValidatorsTable = (props: StateType & { validatorDetails: boolean }) => {
                   includeObservers={includeObservers}
                   sortBy={setSort}
                   sort={sort}
+                  shardData={shardData}
+                  shardValue={shardValue}
+                  setShardValue={setShardValue}
                 />
                 <tbody>
                   {newValidators.map(validator => (

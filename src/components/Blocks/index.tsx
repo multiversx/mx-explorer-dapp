@@ -38,7 +38,7 @@ const initialState = {
 
 const Blocks: React.FC = () => {
   let { page, shard } = useParams();
-  const shardId = parseInt(shard!) ? parseInt(shard!) : undefined;
+  const shardId = parseInt(shard!) >= 0 ? parseInt(shard!) : undefined;
 
   let ref = React.useRef(null);
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;
@@ -64,7 +64,7 @@ const Blocks: React.FC = () => {
         <div className="row">
           <div className="col-12">
             <h4>
-              {shardId && (
+              {shardId != undefined && shardId >= 0 && (
                 <>
                   <ShardSpan shardId={shardId} />
                   &nbsp;

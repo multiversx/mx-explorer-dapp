@@ -1,9 +1,10 @@
-import * as React from 'react';
-
+import React, { SyntheticEvent } from 'react';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp, faArrowDown, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { HeadersType, getNewSortData } from './../helpers/validatorHelpers';
-import { SortType } from './index';
+import { ShardSpan } from './../../../sharedComponents';
+import { SortType, ComputedShard } from './index';
 
 const headers: HeadersType[] = [
   {
@@ -42,22 +43,38 @@ type ValidatorsTableHeaderType = {
   includeObservers: boolean;
   sortBy: Function;
   sort: SortType;
+  shardData: ComputedShard[];
+  shardValue: string;
+  setShardValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const ValidatorsTableHeader = ({ includeObservers, sortBy, sort }: ValidatorsTableHeaderType) => {
+const ValidatorsTableHeader = ({
+  includeObservers,
+  sortBy,
+  sort,
+  shardData,
+  shardValue,
+  setShardValue,
+}: ValidatorsTableHeaderType) => {
   const toggleSort = (currentSortColumn: string) => () => {
     const { field: oldSortColumn, dir: oldDir } = sort;
     const { field, dir } = getNewSortData({ oldDir, oldSortColumn, currentSortColumn });
     sortBy({ field, dir });
   };
+
+  const changeShard = (e: SyntheticEvent, shardID: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    setShardValue(shardID);
+  };
+
   return (
     <thead>
       <tr>
         {headers.map(header => (
           <th className="sortable" key={header.id}>
-            <span onClick={toggleSort(header.id)} ng-click="toggleSort($index)">
-              {header.label}&nbsp;
-            </span>
+            <span onClick={toggleSort(header.id)}>{header.label}&nbsp;</span>
             {sort.dir === 'asc' && sort.field === header.id && (
               <FontAwesomeIcon icon={faArrowUp} className="empty-icon" />
             )}
@@ -102,6 +119,50 @@ const ValidatorsTableHeader = ({ includeObservers, sortBy, sort }: ValidatorsTab
                 </div>
               </div> */}
               </span>
+            )}
+            {header.id === 'shardID' && (
+              <OverlayTrigger
+                trigger="click"
+                key="popover"
+                placement="bottom"
+                rootClose
+                overlay={
+                  <Popover id="popover-positioned-bottom">
+                    <Popover.Content>
+                      {shardData.map(({ shardNumber, shardID }) => {
+                        return (
+                          <a
+                            className={`nav-link ${shardValue === shardID ? 'active' : ''}`}
+                            key={shardNumber}
+                            href="#/validators"
+                            onClick={e => changeShard(e, shardID)}
+                          >
+                            <ShardSpan shardId={shardNumber} />
+                          </a>
+                        );
+                      })}
+                      <a
+                        className={`nav-link ${shardValue === '' ? 'active' : ''}`}
+                        key={-1}
+                        href="#/validators"
+                        onClick={e => changeShard(e, '')}
+                      >
+                        Show all
+                      </a>
+                    </Popover.Content>
+                  </Popover>
+                }
+              >
+                <span
+                  id="switch"
+                  className="switch d-none d-md-inline-block d-lg-inline-block d-xl-inline-blockinline-"
+                >
+                  <FontAwesomeIcon
+                    icon={faFilter}
+                    className="switch d-none d-md-inline-block d-lg-inline-block d-xl-inline-blockinline-"
+                  />
+                </span>
+              </OverlayTrigger>
             )}
             <span ng-show="headers[$index].id == 'shardID'" className="dropdown">
               {/* <span data-toggle="dropdown">

@@ -32,6 +32,7 @@ export const initialState: StateType = {
       status: '',
       allValidators: 0,
       allActiveValidators: 0,
+      shardNumber: -1,
     },
   ],
   shardsList: [''],
@@ -43,6 +44,7 @@ export type ShardDataType = {
   [key: string]: {
     allValidators: number;
     allActiveValidators: number;
+    shardNumber: number;
   };
 };
 

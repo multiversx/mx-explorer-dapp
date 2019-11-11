@@ -5,7 +5,7 @@ import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 type ValidatorsStatsType = {
   includeObservers: boolean;
   setIncludeObsevers: React.Dispatch<React.SetStateAction<boolean>>;
-  setValidatorValue: React.Dispatch<React.SetStateAction<string>>;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
   shownValidatorsLength: number;
   filteredValidatorsLength: number;
 };
@@ -13,7 +13,7 @@ type ValidatorsStatsType = {
 const ValidatorsStats = ({
   includeObservers,
   setIncludeObsevers,
-  setValidatorValue,
+  setSearchValue,
   shownValidatorsLength,
   filteredValidatorsLength,
 }: ValidatorsStatsType) => {
@@ -21,17 +21,17 @@ const ValidatorsStats = ({
     setIncludeObsevers(!includeObservers);
   };
 
-  const [searchValue, setSearchValue] = React.useState('');
+  const [inputValue, setInputValue] = React.useState('');
 
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = e => {
-    setSearchValue(e.target.value);
-    if (e.target.value.length >= 3) setValidatorValue(e.target.value.toString().toLowerCase());
-    if (e.target.value.length === 0) setValidatorValue('');
+    setInputValue(e.target.value);
+    if (e.target.value.length >= 3) setSearchValue(e.target.value.toString().toLowerCase());
+    if (e.target.value.length === 0) setSearchValue('');
   };
 
   const resetValidatorValue = () => {
     setSearchValue('');
-    setValidatorValue('');
+    setInputValue('');
   };
 
   return (
@@ -42,14 +42,14 @@ const ValidatorsStats = ({
             <input
               type="text"
               className="form-control"
-              value={searchValue}
+              value={inputValue}
               onChange={changeValidatorValue}
               placeholder="Search"
               name="validatorSearch"
               style={{ borderRadius: '2rem' }}
             />
             <div className="input-group-append">
-              {searchValue === '' ? (
+              {inputValue === '' ? (
                 <button
                   type="submit"
                   className="input-group-text"

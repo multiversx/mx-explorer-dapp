@@ -39,7 +39,7 @@ const EmptySearch = ({
         )}
       </td>
       <td>
-        <TestnetLink to={`/shard/${validator.shardNumber}`}>
+        <TestnetLink to={`/shards/${validator.shardNumber}`}>
           <ShardSpan shardId={validator.shardNumber} />
           {validator.star && <span>*</span>}
         </TestnetLink>
