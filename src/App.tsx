@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { GlobalProvider, useGlobalState } from './context';
-import { TestnetType } from './context/state';
 import Layout from './components/Layout';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import PageNotFoud from './components/PageNotFoud';

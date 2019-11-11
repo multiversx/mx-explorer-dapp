@@ -23,7 +23,7 @@ const ValidatorsStats = ({
   const [searchValue, setSearchValue] = React.useState('');
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = e => {
     setSearchValue(e.target.value);
-    if (e.target.value.length >= 3) setValidatorValue(e.target.value);
+    if (e.target.value.length >= 3) setValidatorValue(e.target.value.toString().toLowerCase());
     if (e.target.value.length === 0) setValidatorValue('');
   };
   return (
