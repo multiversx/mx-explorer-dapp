@@ -16,14 +16,24 @@ const LatestTransactions: React.FC = () => {
   } = useGlobalState();
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
-  React.useEffect(() => {
+
+  const fetchTransactions = () => {
     if (ref.current !== null) {
       getTransactions({ elasticUrl, timeout }).then(({ data, transactionsFetched }) => {
-        ref.current !== null && setTransactions(data);
-        ref.current !== null && setTransactionsFetched(transactionsFetched);
+        if (ref.current !== null) {
+          if (transactionsFetched) {
+            setTransactions(data);
+            setTransactionsFetched(true);
+          } else if (transactions.length === 0) {
+            setTransactionsFetched(false);
+          }
+        }
       });
     }
-  }, [elasticUrl, timeout, timestamp]);
+  };
+
+  React.useEffect(fetchTransactions, [elasticUrl, timeout, timestamp]);
+
   return (
     <div className="card" ref={ref}>
       {!transactionsFetched ? (

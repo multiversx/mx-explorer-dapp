@@ -53,10 +53,12 @@ const Hightlights = ({
               totalProcessedTxCount: parseInt(data.totalProcessedTxCount).toLocaleString('en'),
             }
           : initialState;
-
-        ref.current !== null && setLiveTps(newState.liveTPS);
-
-        ref.current !== null && setState(newState);
+        if (ref.current !== null) {
+          if (success) {
+            setLiveTps(newState.liveTPS);
+            setState(newState);
+          }
+        }
       });
     }
   };

@@ -53,16 +53,24 @@ const Blocks: React.FC = () => {
 
   const refreshFirstPage = size === 1 ? timestamp : 0;
 
-  React.useEffect(() => {
+  const fetchBlocks = () => {
     if (ref.current !== null) {
-      getBlocks({ elasticUrl, size, shardId, timeout }).then(
-        data => ref.current !== null && setState(data)
-      );
+      getBlocks({ elasticUrl, size, shardId, timeout }).then(data => {
+        if (ref.current !== null) {
+          if (data.blocksFetched) {
+            setState(data);
+          } else if (state.blocks.length === 0) {
+            setState({ ...initialState, blocksFetched: false });
+          }
+        }
+      });
       getTotalBlocks({ elasticUrl, shardId, timeout }).then(
         data => ref.current !== null && setTotalBlocks(data)
       );
     }
-  }, [elasticUrl, size, shardId, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
+  };
+
+  React.useEffect(fetchBlocks, [elasticUrl, size, shardId, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
 
   return (
     <div ref={ref}>

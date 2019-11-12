@@ -42,18 +42,25 @@ const Transactions: React.FC = () => {
 
   const refreshFirstPage = size === 1 ? timestamp : 0;
 
-  // https://www.polvara.me/posts/fetching-asynchronous-data-with-react-hooks/
-  React.useEffect(() => {
+  const fetchTransactions = () => {
     if (ref.current !== null) {
       getTransactions({ elasticUrl, size, addressId, timeout }).then(({ data, success }) => {
-        ref.current !== null && setTransactions(data);
-        ref.current !== null && setTransactionsFetched(success);
+        if (ref.current !== null) {
+          if (success) {
+            setTransactions(data);
+            setTransactionsFetched(true);
+          } else if (transactions.length === 0) {
+            setTransactionsFetched(false);
+          }
+        }
       });
       getTotalTransactions({ elasticUrl, addressId, timeout }).then(
         data => ref.current !== null && setTotalTransactions(data)
       );
     }
-  }, [elasticUrl, size, addressId, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
+  };
+
+  React.useEffect(fetchTransactions, [elasticUrl, size, addressId, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
 
   return (
     <div ref={ref}>
