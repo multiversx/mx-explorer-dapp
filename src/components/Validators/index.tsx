@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCogs } from '@fortawesome/free-solid-svg-icons';
-import { Highlights } from './../../sharedComponents';
 import { getValidatorsData } from './helpers/asyncRequests';
 import { populateValidatorsTable } from './helpers/validatorHelpers';
 import { useGlobalState } from '../../context';

@@ -2,6 +2,7 @@ import Home from './components/Home';
 import TransactionDetails from './components/TransactionDetails';
 import Transactions from './components/Transactions';
 import BlockDetails from './components/BlockDetails';
+import ValidatorDetails from './components/ValidatorDetails';
 import Validators from './components/Validators';
 import Blocks from './components/Blocks';
 import EmptySearch from './components/EmptySearch';
@@ -33,6 +34,11 @@ const routes: RouteType[] = [
     path: '/validators',
     title: 'Validators',
     component: Validators, //React.lazy(() => import('./components/Validators')),
+  },
+  {
+    path: '/validators/:hash',
+    title: 'Validator Details',
+    component: ValidatorDetails,
   },
   {
     path: '/address/:hash',

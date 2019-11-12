@@ -1,4 +1,5 @@
 import { ValidatorType, ShardDataType } from './../index';
+import { getShardId } from './../../../helpers';
 
 export function populateValidatorsTable(data: ValidatorType[], metaChainShardId: number) {
   const shardData: ShardDataType = {};
@@ -69,24 +70,6 @@ function computeShardStatus(allActiveValidators: number, allValidators: number) 
     default:
       return 'danger';
   }
-}
-
-function getShardId(validator: ValidatorType, metaChainShardId: number) {
-  let shardId: string;
-  let star = false;
-  if (validator.isValidator === true) {
-    shardId = validator.computedShardID.toString();
-    if (validator.isActive === true && validator.computedShardID !== validator.receivedShardID) {
-      star = true;
-    }
-  } else {
-    shardId = validator.receivedShardID.toString();
-  }
-  return {
-    shardId: shardId === metaChainShardId.toString() ? 'Metachain' : shardId, // eslint-disable-line
-    shardNumber: parseInt(shardId), // this is excluding the Metachain string, used for searching
-    star: star,
-  };
 }
 
 export type DirectioinsType = 'none' | 'desc' | 'asc';

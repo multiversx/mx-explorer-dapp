@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-type ParamsType = {
+export type GetBlocksParamsType = {
   elasticUrl: string;
   size?: number;
   shardId: number | undefined;
@@ -25,7 +25,7 @@ export async function getBlocks({
   size = 1,
   shardId = undefined,
   timeout,
-}: ParamsType) {
+}: GetBlocksParamsType) {
   try {
     const query = {
       sort: { timestamp: { order: 'desc' } },
@@ -65,7 +65,11 @@ export async function getBlocks({
   }
 }
 
-export async function getTotalBlocks({ elasticUrl, shardId = undefined, timeout }: ParamsType) {
+export async function getTotalBlocks({
+  elasticUrl,
+  shardId = undefined,
+  timeout,
+}: GetBlocksParamsType) {
   try {
     const { data } = await axios.post(`${elasticUrl}/blocks/_count`, setShardsQuery(shardId), {
       timeout,

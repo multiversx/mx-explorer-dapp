@@ -8,6 +8,7 @@ import TestnetReady, { withTestnetReady } from './TestnetReady';
 import withPageTitle from './PageTitle';
 import ShardSpan from './ShardSpan';
 import Search from './Search';
+import BlocksTable from './BlocksTable';
 
 export {
   Denominate,
@@ -21,4 +22,5 @@ export {
   withPageTitle,
   ShardSpan,
   Search,
+  BlocksTable,
 };
