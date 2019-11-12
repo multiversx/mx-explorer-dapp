@@ -31,6 +31,7 @@ const Transactions: React.FC = () => {
   let ref = React.useRef(null);
   const {
     activeTestnet: { elasticUrl },
+    refresh: { timestamp },
     timeout,
   } = useGlobalState();
   let { page, hash: addressId } = useParams();
@@ -38,6 +39,8 @@ const Transactions: React.FC = () => {
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
   const [totalTransactions, setTotalTransactions] = React.useState<number>(0);
   const size = parseInt(page!) ? parseInt(page!) : 1;
+
+  const refreshFirstPage = size === 1 ? [timestamp] : [];
 
   // https://www.polvara.me/posts/fetching-asynchronous-data-with-react-hooks/
   React.useEffect(() => {
@@ -50,7 +53,7 @@ const Transactions: React.FC = () => {
         data => ref.current !== null && setTotalTransactions(data)
       );
     }
-  }, [elasticUrl, size, addressId, timeout]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, size, addressId, timeout, ...refreshFirstPage]); // run the operation only once since the parameter does not change
 
   return (
     <div ref={ref}>
