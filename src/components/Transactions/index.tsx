@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { faExchangeAlt, faCube } from '@fortawesome/free-solid-svg-icons';
 import { useGlobalState } from '../../context';
 import { getTransactions, getTotalTransactions } from './helpers/asyncRequests';
 import { Highlights, Pager } from './../../sharedComponents';
@@ -64,74 +64,105 @@ const Transactions: React.FC = () => {
 
   React.useEffect(fetchTransactions, [elasticUrl, size, addressId, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
 
+  console.warn(addressRef.current);
+
   return (
     <div ref={ref}>
       <Highlights />
       <div className="container pt-3 pb-3">
-        <AddressDetails reference={addressRef} />
-        <div className="row">
-          <div className="col-12">
-            <h4 data-testid="title">Transactions</h4>
-          </div>
+        <div className={transactionsFetched ? '' : 'd-none'}>
+          <AddressDetails reference={addressRef} />
         </div>
+
         <div className="row">
           <div className="col-12">
-            <div className="card">
-              {!transactionsFetched ? (
-                <div className="card-body card-details" data-testid="errorScreen">
-                  <div className="empty">
-                    <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
-                    <span className="h4 empty-heading">Unable to load transactions</span>
+            {!transactionsFetched ? (
+              <>
+                {addressRef.current ? (
+                  <>
+                    <div className="row">
+                      <div className="col-12">
+                        <h4 data-testid="title">Address</h4>
+                      </div>
+                    </div>
+                    <div className="card">
+                      <div className="card-body card-details" data-testid="errorScreen">
+                        <div className="empty">
+                          <FontAwesomeIcon icon={faCube} className="empty-icon" />
+                          <span className="h4 empty-heading">
+                            Unable to locate this address hash
+                          </span>
+                          <span className="empty-details">{addressId}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="card">
+                    <div className="card-body card-details" data-testid="errorScreen">
+                      <div className="empty">
+                        <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
+                        <span className="h4 empty-heading">Unable to load transactions</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                <div className="row">
+                  <div className="col-12">
+                    <h4 data-testid="title">Transactions</h4>
                   </div>
                 </div>
-              ) : (
-                <div className="card-body card-list">
-                  <Pager slug={addressId ? `address/${addressId}` : 'transactions'} />
-
-                  {totalTransactions > 0 && (
-                    <span>
-                      More than {totalTransactions.toLocaleString('en')} transactions found
-                    </span>
-                  )}
-                  <div className="table-responsive">
-                    <table className="table mt-4" data-testid="transactionsTable">
-                      <thead>
-                        <tr>
-                          <th scope="col">Txn Hash</th>
-                          <th scope="col">Block</th>
-                          <th scope="col">Age</th>
-                          <th scope="col">Shard</th>
-                          <th scope="col">From</th>
-                          <th scope="col">To</th>
-                          <th scope="col">Value</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {transactions.map(transaction => (
-                          <TransactionRow
-                            transaction={transaction}
-                            key={transaction.hash}
-                            addressId={addressId}
-                          />
-                        ))}
-                        {transactions.length === 0 && (
+                <div className="card">
+                  <div className="card-body card-list">
+                    <Pager slug={addressId ? `address/${addressId}` : 'transactions'} />
+                    {totalTransactions > 0 && (
+                      <span>
+                        More than {totalTransactions.toLocaleString('en')} transactions found
+                      </span>
+                    )}
+                    <div className="table-responsive">
+                      <table className="table mt-4" data-testid="transactionsTable">
+                        <thead>
                           <tr>
-                            <td colSpan={7} className="text-center pt-5 pb-4 border-0">
-                              <div className="lds-ellipsis">
-                                <div />
-                                <div />
-                                <div />
-                                <div />
-                              </div>
-                            </td>
+                            <th scope="col">Txn Hash</th>
+                            <th scope="col">Block</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Shard</th>
+                            <th scope="col">From</th>
+                            <th scope="col">To</th>
+                            <th scope="col">Value</th>
                           </tr>
-                        )}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {transactions.map(transaction => (
+                            <TransactionRow
+                              transaction={transaction}
+                              key={transaction.hash}
+                              addressId={addressId}
+                            />
+                          ))}
+                          {transactions.length === 0 && (
+                            <tr>
+                              <td colSpan={7} className="text-center pt-5 pb-4 border-0">
+                                <div className="lds-ellipsis">
+                                  <div />
+                                  <div />
+                                  <div />
+                                  <div />
+                                </div>
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
-              )}
-            </div>
+              </>
+            )}
           </div>
         </div>
       </div>
