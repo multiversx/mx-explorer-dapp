@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExchangeAlt, faCube } from '@fortawesome/free-solid-svg-icons';
 import { useGlobalState } from '../../context';
 import { getTransactions, getTotalTransactions } from './helpers/asyncRequests';
 import { Highlights, Pager } from './../../sharedComponents';
 import TransactionRow from './TransactionRow';
 import AddressDetails from './AddressDetails';
+import FailedAddress from './FailedAddress';
+import FailedTransaction from './FailedTransaction';
 
 export type TransactionType = {
   blockHash: string;
@@ -64,8 +64,6 @@ const Transactions: React.FC = () => {
 
   React.useEffect(fetchTransactions, [elasticUrl, size, addressId, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
 
-  console.warn(addressRef.current);
-
   return (
     <div ref={ref}>
       <Highlights />
@@ -79,33 +77,9 @@ const Transactions: React.FC = () => {
             {!transactionsFetched ? (
               <>
                 {addressRef.current ? (
-                  <>
-                    <div className="row">
-                      <div className="col-12">
-                        <h4 data-testid="title">Address</h4>
-                      </div>
-                    </div>
-                    <div className="card">
-                      <div className="card-body card-details" data-testid="errorScreen">
-                        <div className="empty">
-                          <FontAwesomeIcon icon={faCube} className="empty-icon" />
-                          <span className="h4 empty-heading">
-                            Unable to locate this address hash
-                          </span>
-                          <span className="empty-details">{addressId}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </>
+                  <FailedAddress addressId={addressId} />
                 ) : (
-                  <div className="card">
-                    <div className="card-body card-details" data-testid="errorScreen">
-                      <div className="empty">
-                        <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
-                        <span className="h4 empty-heading">Unable to load transactions</span>
-                      </div>
-                    </div>
-                  </div>
+                  <FailedTransaction />
                 )}
               </>
             ) : (

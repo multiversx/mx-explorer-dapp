@@ -19,8 +19,6 @@ const Routes = () => {
         <Switch>
           {testnets.map((testnet: TestnetType, i: number) => {
             const validatorsDisabled = testnet.validators === false;
-            console.warn(validatorsDisabled);
-
             return (
               <Route
                 path={`/${testnet.id}`}

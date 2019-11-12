@@ -16,7 +16,7 @@ type StateType = {
 const initialState = {
   address: '',
   code: '',
-  balance: '',
+  balance: '...',
   detailsFetched: true,
 };
 
@@ -30,13 +30,15 @@ const AddressDetails = ({ reference }: { reference: React.MutableRefObject<null>
     timeout,
   } = useGlobalState();
 
-  React.useEffect(() => {
+  const getDetails = () => {
     if (addressId && ref.current !== null) {
       getAddressDetails({ nodeUrl, addressId, timeout }).then((data: any) => {
         ref.current !== null && setState(data);
       });
     }
-  }, [nodeUrl, addressId, timeout]);
+  };
+
+  React.useEffect(getDetails, [nodeUrl, addressId, timeout]);
 
   const Address = useMemo(
     () => (
@@ -68,7 +70,11 @@ const AddressDetails = ({ reference }: { reference: React.MutableRefObject<null>
                     <div className="row">
                       <div className="col-lg-1 card-label">Balance</div>
                       <div className="col-lg-11">
-                        {state.balance && <Denominate value={state.balance} />}
+                        {state.balance !== '...' ? (
+                          <Denominate value={state.balance} />
+                        ) : (
+                          state.balance
+                        )}
                       </div>
                     </div>
                     {state.code && (
@@ -96,7 +102,7 @@ const AddressDetails = ({ reference }: { reference: React.MutableRefObject<null>
         <div className="mb-4" />
       </div>
     ),
-    [state]
+    [state, ref, addressId]
   );
   return addressId ? Address : null;
 };
