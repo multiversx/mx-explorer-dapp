@@ -38,6 +38,7 @@ const Routes = () => {
                         />
                       );
                     }),
+                    <Route path={`${url}`} component={PageNotFoud} />,
                   ];
                 }}
               />
