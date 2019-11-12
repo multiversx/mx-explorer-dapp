@@ -70,11 +70,11 @@ export async function getValidator({
         data: {
           hits: { hits },
         },
-      } = await axios.get(`${elasticUrl}/validators/_search`, { timeout: Math.max(timeout, 6000) });
+      } = await axios.get(`${elasticUrl}/validators/_search`, { timeout });
 
       const {
         _source: { publicKeys: consensusArray },
-      } = hits.filter((hit: any) => hit['_id'] == shardNumber).pop();
+      } = hits.filter((hit: any) => hit['_id'].toString() === shardNumber.toString()).pop();
 
       const signersIndex = consensusArray.indexOf(hexPublicKey);
 

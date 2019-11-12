@@ -1,5 +1,4 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import { useGlobalState } from '../../context';
 import { getStats } from './helpers/asyncRequests';
 import DefaultHighlights from './DefaultHighlights';

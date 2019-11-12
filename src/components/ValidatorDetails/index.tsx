@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { OverlayTrigger } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCogs } from '@fortawesome/free-solid-svg-icons';
@@ -63,7 +64,7 @@ const ValidatorDetails = () => {
     if (ref.current !== null) {
       getValidator({
         elasticUrl,
-        timeout,
+        timeout: Math.max(timeout, 6000),
         hexPublicKey: hexPublicKey || '',
         metaChainShardId,
         nodeUrl,
@@ -72,7 +73,7 @@ const ValidatorDetails = () => {
         ref.current !== null && setSuccess(data.success);
       });
     }
-  }, [elasticUrl, timeout]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, timeout, hexPublicKey, nodeUrl, metaChainShardId]); // run the operation only once since the parameter does not change
 
   const {
     publicKeyBlockSign,
@@ -90,7 +91,7 @@ const ValidatorDetails = () => {
     rounds,
   } = state;
 
-  console.warn(state);
+  console.warn(rounds);
 
   return (
     <div ref={ref}>
@@ -256,13 +257,19 @@ const ValidatorDetails = () => {
                             </div>
                           ) : (
                             <div className="squares">
-                              {rounds.map((round: any) => (
-                                <div
-                                  className={round.value ? 'full square-block' : 'square-block'}
-                                  ng-oninit="{{initRoundTooltip(round.key)}}"
-                                  ng-attr-id="{{ 'square-' + round.key }}"
-                                ></div>
-                              ))}
+                              {rounds.length &&
+                                rounds.map((round: any) => (
+                                  <OverlayTrigger
+                                    key={round.key}
+                                    placement="top"
+                                    delay={{ show: 250, hide: 400 }}
+                                    overlay={renderTooltip({ round })}
+                                  >
+                                    <div
+                                      className={round.value ? 'full square-block' : 'square-block'}
+                                    ></div>
+                                  </OverlayTrigger>
+                                ))}
                             </div>
                           )}
                         </div>
@@ -318,6 +325,24 @@ const ValidatorDetails = () => {
           </div>
         )}
       </div>
+    </div>
+  );
+};
+
+const renderTooltip = (props: any) => {
+  const { outOfBoundaries, ...style } = props;
+  return (
+    <div
+      {...props}
+      style={{
+        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+        padding: '2px 10px',
+        color: 'white',
+        borderRadius: 3,
+        ...style,
+      }}
+    >
+      {props.round.key.indexOf('_') > 0 ? props.round.key.split('_').pop() : props.round.key}
     </div>
   );
 };
