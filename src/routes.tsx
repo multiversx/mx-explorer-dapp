@@ -40,6 +40,11 @@ const routes: RouteType[] = [
     component: Transactions,
   },
   {
+    path: '/address/:hash/page/:page',
+    title: 'Address Details',
+    component: Transactions,
+  },
+  {
     path: '/transactions/:hash',
     title: 'Transaction Details',
     component: TransactionDetails,

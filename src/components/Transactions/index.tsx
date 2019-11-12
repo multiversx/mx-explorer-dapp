@@ -29,6 +29,8 @@ export type TransactionType = {
 
 const Transactions: React.FC = () => {
   let ref = React.useRef(null);
+  let addressRef = React.useRef(null);
+
   const {
     activeTestnet: { elasticUrl },
     refresh: { timestamp },
@@ -66,7 +68,7 @@ const Transactions: React.FC = () => {
     <div ref={ref}>
       <Highlights />
       <div className="container pt-3 pb-3">
-        <AddressDetails />
+        <AddressDetails reference={addressRef} />
         <div className="row">
           <div className="col-12">
             <h4 data-testid="title">Transactions</h4>

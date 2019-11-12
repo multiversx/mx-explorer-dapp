@@ -3,12 +3,18 @@ import { useLocation } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useGlobalState } from '../../../context';
 import elrondLogo from './../../../assets/img/elrond.svg';
 import TestnetSwitcher from './TestnetSwitcher';
+
 import { TestnetLink, Search } from './../../../sharedComponents';
 
 export default function SiteNavbar() {
   const [expanded, setExpanded] = React.useState(false);
+  const {
+    activeTestnet: { validators },
+  } = useGlobalState();
+
   const onToggle = (isExpanded: boolean) => {
     setExpanded(isExpanded);
   };
@@ -37,13 +43,15 @@ export default function SiteNavbar() {
                 transactions
               </TestnetLink>
             </li>
-            <li
-              className={`nav-item ${pathname.toString().includes('validators') ? 'active' : ''}`}
-            >
-              <TestnetLink className="nav-link" to="/validators">
-                validators
-              </TestnetLink>
-            </li>
+            {validators !== false && (
+              <li
+                className={`nav-item ${pathname.toString().includes('validators') ? 'active' : ''}`}
+              >
+                <TestnetLink className="nav-link" to="/validators">
+                  validators
+                </TestnetLink>
+              </li>
+            )}
           </ul>
           {pathname !== '/' && (
             <div className="form-search" role="search">

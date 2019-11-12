@@ -20,6 +20,7 @@ export interface TestnetType {
   elasticUrl: string;
   refreshRate: number;
   decimals: number;
+  validators?: boolean;
   denomination: number;
   gasPrice: number;
   gasLimit: number;

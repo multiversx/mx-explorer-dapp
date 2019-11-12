@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { faCube } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,8 +20,8 @@ const initialState = {
   detailsFetched: true,
 };
 
-const AddressDetails: React.FC = () => {
-  let ref = React.useRef(null);
+const AddressDetails = ({ reference }: { reference: React.MutableRefObject<null> }) => {
+  const ref = reference;
   let { hash: addressId } = useParams();
   const [state, setState] = React.useState<StateType>(initialState);
 
@@ -38,62 +38,65 @@ const AddressDetails: React.FC = () => {
     }
   }, [nodeUrl, addressId, timeout]);
 
-  const Address = (
-    <div ref={ref}>
-      <div>
-        <div className="row">
-          <div className="col-12">
-            <h4>Address Details</h4>
+  const Address = useMemo(
+    () => (
+      <div ref={ref}>
+        <div>
+          <div className="row">
+            <div className="col-12">
+              <h4>Address Details</h4>
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-12">
-            <div className="card">
-              {!state.detailsFetched ? (
-                <div className="card-body card-details">
-                  <div className="empty">
-                    <FontAwesomeIcon icon={faCube} className="empty-icon" />
-                    <span className="h4 empty-heading">Unable to locate this address hash</span>
-                    <span className="empty-details">{addressId}</span>
-                  </div>
-                </div>
-              ) : (
-                <div className="card-body">
-                  <div className="row">
-                    <div className="col-lg-1 card-label">Address</div>
-                    <div className="col-lg-11">{addressId}</div>
-                  </div>
-                  <hr className="hr-space" />
-                  <div className="row">
-                    <div className="col-lg-1 card-label">Balance</div>
-                    <div className="col-lg-11">
-                      {state.balance && <Denominate value={state.balance} />}
+          <div className="row">
+            <div className="col-12">
+              <div className="card">
+                {!state.detailsFetched ? (
+                  <div className="card-body card-details">
+                    <div className="empty">
+                      <FontAwesomeIcon icon={faCube} className="empty-icon" />
+                      <span className="h4 empty-heading">Unable to locate this address hash</span>
+                      <span className="empty-details">{addressId}</span>
                     </div>
                   </div>
-                  {state.code && (
-                    <>
-                      <hr className="hr-space" />
-                      <div className="row">
-                        <div className="col-lg-1 card-label">Code</div>
-                        <div className="col-lg-11">
-                          <textarea
-                            readOnly
-                            className="form-control col-lg-12 cursor-text"
-                            rows={2}
-                            defaultValue={state.code}
-                          />
-                        </div>
+                ) : (
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col-lg-1 card-label">Address</div>
+                      <div className="col-lg-11">{addressId}</div>
+                    </div>
+                    <hr className="hr-space" />
+                    <div className="row">
+                      <div className="col-lg-1 card-label">Balance</div>
+                      <div className="col-lg-11">
+                        {state.balance && <Denominate value={state.balance} />}
                       </div>
-                    </>
-                  )}
-                </div>
-              )}
+                    </div>
+                    {state.code && (
+                      <>
+                        <hr className="hr-space" />
+                        <div className="row">
+                          <div className="col-lg-1 card-label">Code</div>
+                          <div className="col-lg-11">
+                            <textarea
+                              readOnly
+                              className="form-control col-lg-12 cursor-text"
+                              rows={2}
+                              defaultValue={state.code}
+                            />
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
+        <div className="mb-4" />
       </div>
-      <div className="mb-4" />
-    </div>
+    ),
+    [state]
   );
   return addressId ? Address : null;
 };
