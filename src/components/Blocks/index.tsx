@@ -51,7 +51,7 @@ const Blocks: React.FC = () => {
     timeout,
   } = useGlobalState();
 
-  const refreshFirstPage = size === 1 ? [timestamp] : [];
+  const refreshFirstPage = size === 1 ? timestamp : 0;
 
   React.useEffect(() => {
     if (ref.current !== null) {
@@ -62,7 +62,7 @@ const Blocks: React.FC = () => {
         data => ref.current !== null && setTotalBlocks(data)
       );
     }
-  }, [elasticUrl, size, shardId, timeout, ...refreshFirstPage]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, size, shardId, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
 
   return (
     <div ref={ref}>
