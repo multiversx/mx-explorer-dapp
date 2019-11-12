@@ -59,7 +59,12 @@ export async function getValidator({
       publicKeyBlockSign,
     } = currentValidator;
 
-    const { totalDownTimePercentege, totalUpTimePercentege } = getUptimeDowntime(currentValidator);
+    const {
+      totalDownTimePercentege,
+      totalUpTimePercentege,
+      totalUpTimeLabel,
+      totalDownTimeLabel,
+    } = getUptimeDowntime(currentValidator);
     // $('#upTimePercentegeBar').tooltip({ title: upTimeDownTime.totalUpTimeLabel }); // eslint-disable-line
     // $('#downTimePercentegeBar').tooltip({ title: upTimeDownTime.totalDownTimeLabel }); // eslint-disable-line
 
@@ -161,6 +166,8 @@ export async function getValidator({
             publicKeyBlockSign,
             totalDownTimePercentege,
             totalUpTimePercentege,
+            totalUpTimeLabel,
+            totalDownTimeLabel,
             instanceType,
             blocks,
             startBlockNr,

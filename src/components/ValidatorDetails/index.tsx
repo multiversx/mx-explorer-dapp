@@ -19,6 +19,8 @@ export type StateType = {
   publicKeyBlockSign: string;
   totalDownTimePercentege: number;
   totalUpTimePercentege: number;
+  totalUpTimeLabel: string;
+  totalDownTimeLabel: string;
   instanceType: number;
   blocks: [];
   startBlockNr: number;
@@ -38,6 +40,8 @@ export const initialState: StateType = {
   publicKeyBlockSign: '0',
   totalDownTimePercentege: 0,
   totalUpTimePercentege: 0,
+  totalUpTimeLabel: '',
+  totalDownTimeLabel: '',
   instanceType: 0,
   blocks: [],
   startBlockNr: 0,
@@ -87,6 +91,8 @@ const ValidatorDetails = () => {
     blocks,
     totalUpTimePercentege,
     totalDownTimePercentege,
+    totalUpTimeLabel,
+    totalDownTimeLabel,
     // code,
     rounds,
   } = state;
@@ -194,16 +200,28 @@ const ValidatorDetails = () => {
                           <div className="col-lg-10">
                             {totalUpTimePercentege + totalDownTimePercentege > 0 ? (
                               <div className="progress">
-                                <div
-                                  className="progress-bar bg-success"
-                                  style={{ width: totalUpTimePercentege + '%' }}
-                                  id="upTimePercentegeBar"
-                                ></div>
-                                <div
-                                  className="progress-bar bg-danger"
-                                  style={{ width: totalDownTimePercentege + '%' }}
-                                  id="downTimePercentegeBar"
-                                ></div>
+                                <OverlayTrigger
+                                  placement="top"
+                                  delay={{ show: 250, hide: 400 }}
+                                  overlay={renderProgressTooltip({ label: totalUpTimeLabel })}
+                                >
+                                  <div
+                                    className="progress-bar bg-success"
+                                    style={{ width: totalUpTimePercentege + '%' }}
+                                    id="upTimePercentegeBar"
+                                  ></div>
+                                </OverlayTrigger>
+                                <OverlayTrigger
+                                  placement="top"
+                                  delay={{ show: 250, hide: 400 }}
+                                  overlay={renderProgressTooltip({ label: totalDownTimeLabel })}
+                                >
+                                  <div
+                                    className="progress-bar bg-danger"
+                                    style={{ width: totalDownTimePercentege + '%' }}
+                                    id="downTimePercentegeBar"
+                                  ></div>
+                                </OverlayTrigger>
                               </div>
                             ) : (
                               <div className="progress">
@@ -263,7 +281,7 @@ const ValidatorDetails = () => {
                                     key={round.key}
                                     placement="top"
                                     delay={{ show: 250, hide: 400 }}
-                                    overlay={renderTooltip({ round })}
+                                    overlay={renderRoundTooltip({ round })}
                                   >
                                     <div
                                       className={round.value ? 'full square-block' : 'square-block'}
@@ -329,7 +347,7 @@ const ValidatorDetails = () => {
   );
 };
 
-const renderTooltip = (props: any) => {
+const renderRoundTooltip = (props: any) => {
   const { outOfBoundaries, ...style } = props;
   return (
     <div
@@ -343,6 +361,24 @@ const renderTooltip = (props: any) => {
       }}
     >
       {props.round.key.indexOf('_') > 0 ? props.round.key.split('_').pop() : props.round.key}
+    </div>
+  );
+};
+
+const renderProgressTooltip = (props: any) => {
+  const { outOfBoundaries, ...style } = props;
+  return (
+    <div
+      {...props}
+      style={{
+        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+        padding: '2px 10px',
+        color: 'white',
+        borderRadius: 3,
+        ...style,
+      }}
+    >
+      {props.label}
     </div>
   );
 };
