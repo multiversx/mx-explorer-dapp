@@ -104,10 +104,12 @@ const Validators = () => {
               )}
             </>
           ) : (
-            <div className="card-body card-details" data-testid="errorScreen">
-              <div className="empty">
-                <FontAwesomeIcon icon={faCogs} className="empty-icon" />
-                <span className="h4 empty-heading">Unable to load validators</span>
+            <div className="card">
+              <div className="card-body card-details" data-testid="errorScreen">
+                <div className="empty">
+                  <FontAwesomeIcon icon={faCogs} className="empty-icon" />
+                  <span className="h4 empty-heading">Unable to load validators</span>
+                </div>
               </div>
             </div>
           )}
