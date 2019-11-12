@@ -36,7 +36,7 @@ const Routes = () => {
                         />
                       );
                     }),
-                    <Route path={`${url}`} component={PageNotFoud} />,
+                    <Route key="404" path={`${url}`} component={PageNotFoud} />,
                   ];
                 }}
               />

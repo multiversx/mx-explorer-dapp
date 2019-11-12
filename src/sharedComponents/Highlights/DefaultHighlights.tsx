@@ -7,6 +7,8 @@ import {
   faChartBar,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useLocation } from 'react-router-dom';
+import { useGlobalState } from '../../context';
 import { StateType as DefaultHighlightsProps } from './index';
 
 const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
@@ -17,6 +19,20 @@ const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
   peakTPS,
   totalProcessedTxCount,
 }) => {
+  const { activeTestnetId } = useGlobalState();
+  const { pathname } = useLocation();
+
+  let locationArray = pathname.substr(1).split('/');
+
+  const testnetId = locationArray[0];
+
+  // #/cryptobubbles/ -> ['cryptobubbles', '']
+  locationArray = testnetId !== '' ? locationArray.filter(Boolean) : locationArray;
+
+  if (activeTestnetId === testnetId && locationArray.length === 1) {
+    return null;
+  }
+
   return (
     <div className="bg-blue">
       <div className="container pt-4 pb-4">

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGlobalState } from '../../context';
 import { getTransactions, getTotalTransactions } from './helpers/asyncRequests';
-import { Highlights, Pager } from './../../sharedComponents';
+import { Pager } from './../../sharedComponents';
 import TransactionRow from './TransactionRow';
 import AddressDetails from './AddressDetails';
 import FailedAddress from './FailedAddress';
@@ -66,7 +66,6 @@ const Transactions: React.FC = () => {
 
   return (
     <div ref={ref}>
-      <Highlights />
       <div className="container pt-3 pb-3">
         <div className={transactionsFetched ? '' : 'd-none'}>
           <AddressDetails reference={addressRef} />

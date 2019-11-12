@@ -72,7 +72,6 @@ const Validators = () => {
   return useMemo(
     () => (
       <div ref={ref}>
-        <Highlights />
         <div className="container pt-3 pb-3">
           <div className="row">
             <div className="col-12">

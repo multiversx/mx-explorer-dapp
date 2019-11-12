@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { useGlobalState } from '../../context';
 import { getStats } from './helpers/asyncRequests';
 import DefaultHighlights from './DefaultHighlights';
@@ -36,6 +37,7 @@ const Hightlights = ({
     timeout,
     refresh: { timestamp },
   } = useGlobalState();
+
   const [state, setState] = React.useState<StateType>(initialState);
   let ref = React.useRef(null);
 

@@ -11,7 +11,6 @@ import {
   ScAddressIcon,
   Denominate,
   TimeAgo,
-  Highlights,
   TestnetLink,
   ShardSpan,
 } from './../../sharedComponents';
@@ -44,7 +43,6 @@ const TransactionDetails: React.FC = () => {
   }, [elasticUrl, transactionId, timeout]); // run the operation only once since the parameter does not change
   return (
     <div ref={ref}>
-      <Highlights />
       <div className="container pt-3 pb-3">
         <div className="row">
           <div className="col-12">

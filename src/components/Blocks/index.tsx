@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getBlocks, getTotalBlocks } from './helpers/asyncRequests';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
-import { Highlights, TimeAgo, Pager, TestnetLink, ShardSpan } from './../../sharedComponents';
+import { TimeAgo, Pager, TestnetLink, ShardSpan } from './../../sharedComponents';
 import { truncate, sizeFormat, dateFormatted } from './../../helpers';
 import { useGlobalState } from '../../context';
 
@@ -74,7 +74,6 @@ const Blocks: React.FC = () => {
 
   return (
     <div ref={ref}>
-      <Highlights />
       <div className="container pt-3 pb-3">
         <div className="row">
           <div className="col-12">
