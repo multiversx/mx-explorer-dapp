@@ -99,18 +99,22 @@ const Blocks: React.FC = () => {
               ) : (
                 <div className="card-body card-list">
                   <BlocksTable blocks={state.blocks} shardId={shardId} />
-                  <Pager
-                    slug={shardId ? `blocks/shards/${shardId}` : 'blocks'}
-                    start={(size - 1) * 25}
-                    end={(size - 1) * 25 + 25}
-                    total={totalBlocks}
-                  />
-                  <span className="d-none">
-                    {state.startBlockNr > 0 &&
-                      `Block #${state.startBlockNr} to #${state.endBlockNr}`}
-                    &nbsp;
-                    {totalBlocks > 0 && `(Total of ${totalBlocks.toLocaleString('en')} blocks)`}
-                  </span>
+                  {state.blocks.length && (
+                    <>
+                      <Pager
+                        slug={shardId ? `blocks/shards/${shardId}` : 'blocks'}
+                        start={(size - 1) * 25}
+                        end={(size - 1) * 25 + 25}
+                        total={totalBlocks}
+                      />
+                      <span className="d-none">
+                        {state.startBlockNr > 0 &&
+                          `Block #${state.startBlockNr} to #${state.endBlockNr}`}
+                        &nbsp;
+                        {totalBlocks > 0 && `(Total of ${totalBlocks.toLocaleString('en')} blocks)`}
+                      </span>
+                    </>
+                  )}
                 </div>
               )}
             </div>
