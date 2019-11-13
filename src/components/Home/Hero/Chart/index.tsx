@@ -97,6 +97,10 @@ const HeroChart = ({ liveTps }: ChartType) => {
         }
       }
     }
+
+    return function cleanup() {
+      myChart.destroy();
+    };
   };
 
   // componentDidMount

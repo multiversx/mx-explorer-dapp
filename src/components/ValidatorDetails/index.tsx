@@ -97,8 +97,6 @@ const ValidatorDetails = () => {
     rounds,
   } = state;
 
-  console.warn(rounds);
-
   return (
     <div ref={ref}>
       <div className="container pt-4 pb-3">
