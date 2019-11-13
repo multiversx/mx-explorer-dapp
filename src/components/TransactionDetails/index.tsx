@@ -35,8 +35,12 @@ const TransactionDetails: React.FC = () => {
     if (transactionId && ref.current !== null) {
       getTransaction({ elasticUrl, transactionId, timeout }).then(
         ({ data, transactionFetched }) => {
-          setTransaction(data);
-          setTransactionFetched(transactionFetched);
+          if (transactionFetched) {
+            setTransaction(data);
+            setTransactionFetched(true);
+          } else {
+            setTransactionFetched(false);
+          }
         }
       );
     }
