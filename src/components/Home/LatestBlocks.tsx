@@ -61,7 +61,7 @@ const LatestBlocks: React.FC = () => {
                           </i>
                         </span>
                         <TestnetLink to={`/blocks/${block.hash}`}>{block.nonce}</TestnetLink> in
-                        shard {block.shardId}
+                        Shard {block.shardId}
                         <br />
                         <span title={dateFormatted(block.timestamp)} className="text-secondary">
                           <TimeAgo value={block.timestamp} />
@@ -69,7 +69,7 @@ const LatestBlocks: React.FC = () => {
                       </div>
                       <div className="col-6">
                         Hash&nbsp;
-                        <TestnetLink to={`/block/${block.hash}`}>
+                        <TestnetLink to={`/blocks/${block.hash}`}>
                           {truncate(block.hash, 20)}
                         </TestnetLink>
                         <br />

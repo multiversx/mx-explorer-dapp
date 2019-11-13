@@ -77,13 +77,12 @@ const Blocks: React.FC = () => {
         <div className="row">
           <div className="col-12">
             <h4>
+              Blocks&nbsp;
               {shardId !== undefined && shardId >= 0 && (
                 <>
                   <ShardSpan shardId={shardId} />
-                  &nbsp;
                 </>
               )}
-              Blocks
             </h4>
           </div>
         </div>

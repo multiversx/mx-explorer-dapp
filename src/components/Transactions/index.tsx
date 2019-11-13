@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { useGlobalState } from '../../context';
 import { getTransactions, getTotalTransactions } from './helpers/asyncRequests';
-import { Pager } from './../../sharedComponents';
+import { Pager, ShardSpan } from './../../sharedComponents';
 import TransactionRow from './TransactionRow';
 import AddressDetails from './AddressDetails';
 import FailedAddress from './FailedAddress';
@@ -27,6 +27,15 @@ export type TransactionType = {
   value: string;
 };
 
+function getDirection(type: string | undefined) {
+  const shardMap: any = {
+    'shard-from': 'senderShard',
+    'shard-to': 'receiverShard',
+    default: undefined,
+  };
+  return shardMap[String(type)] || shardMap['default'];
+}
+
 const Transactions: React.FC = () => {
   let ref = React.useRef(null);
   let addressRef = React.useRef(null);
@@ -36,33 +45,47 @@ const Transactions: React.FC = () => {
     refresh: { timestamp },
     timeout,
   } = useGlobalState();
-  let { page, hash: addressId } = useParams();
+  let { page, hash: addressId, shard } = useParams();
+  const { pathname } = useLocation();
+
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
   const [totalTransactions, setTotalTransactions] = React.useState<number>(0);
   const size = parseInt(page!) ? parseInt(page!) : 1;
+  const shardId = parseInt(shard!) >= 0 ? parseInt(shard!) : undefined;
+
+  const locationArray = pathname.substr(1).split('/');
+  const indexOfTransactions = locationArray.indexOf('transactions');
+  const shardDirection = locationArray[indexOfTransactions + 1];
+
+  const shardType = getDirection(shardDirection);
 
   const refreshFirstPage = size === 1 ? timestamp : 0;
 
   const fetchTransactions = () => {
     if (ref.current !== null) {
-      getTransactions({ elasticUrl, size, addressId, timeout }).then(({ data, success }) => {
-        if (ref.current !== null) {
-          if (success) {
-            setTransactions(data);
-            setTransactionsFetched(true);
-          } else if (transactions.length === 0) {
-            setTransactionsFetched(false);
+      getTransactions({ elasticUrl, size, addressId, shardId, shardType, timeout }).then(
+        ({ data, success }) => {
+          if (ref.current !== null) {
+            if (success) {
+              setTransactions(data);
+              setTransactionsFetched(true);
+            } else if (transactions.length === 0) {
+              setTransactionsFetched(false);
+            }
           }
         }
-      });
-      getTotalTransactions({ elasticUrl, addressId, timeout }).then(
+      );
+      getTotalTransactions({ elasticUrl, addressId, shardId, timeout, shardType }).then(
         data => ref.current !== null && setTotalTransactions(data)
       );
     }
   };
 
   React.useEffect(fetchTransactions, [elasticUrl, size, addressId, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
+
+  let slug = addressId ? `address/${addressId}` : 'transactions';
+  slug = shardType ? `transactions/${shardDirection}/${shardId}` : slug;
 
   return (
     <div ref={ref}>
@@ -85,12 +108,21 @@ const Transactions: React.FC = () => {
               <>
                 <div className="row">
                   <div className="col-12">
-                    <h4 data-testid="title">Transactions</h4>
+                    <h4>
+                      Transactions
+                      {shardId !== undefined && shardId >= 0 && (
+                        <>
+                          {shardDirection === 'shard-from' && <span>&nbsp;from&nbsp;</span>}
+                          {shardDirection === 'shard-to' && <span>&nbsp;to&nbsp;</span>}
+                          <ShardSpan shardId={shardId} />
+                        </>
+                      )}
+                    </h4>
                   </div>
                 </div>
                 <div className="card">
                   <div className="card-body card-list">
-                    <Pager slug={addressId ? `address/${addressId}` : 'transactions'} />
+                    <Pager slug={slug} />
                     {totalTransactions > 0 && (
                       <span>
                         More than {totalTransactions.toLocaleString('en')} transactions found

@@ -4,10 +4,10 @@ type ParamsType = {
   elasticUrl: string;
   size?: number;
   addressId?: string;
+  shardType: 'senderShard' | 'receiverShard' | undefined;
+  shardId: number | undefined;
   timeout: number;
 };
-
-//TODO: control asupra timeoutului, si daca e prea lung sa dam noi failed manual
 
 const setAddressQuery = (addressId: string | undefined) =>
   addressId
@@ -18,14 +18,39 @@ const setAddressQuery = (addressId: string | undefined) =>
           },
         },
       }
-    : {
-        query: { match_all: {} },
-      };
+    : {};
+
+const shardQuery = (
+  shardId: number | undefined,
+  size = 1,
+  shardType: 'senderShard' | 'receiverShard' | undefined
+) =>
+  shardId && shardType
+    ? {
+        query: { bool: { must: [{ match: { [shardType]: shardId } }] } },
+        sort: { timestamp: { order: 'desc' } },
+        from: (size - 1) * 25,
+        size: 25,
+      }
+    : {};
+
+const shardQueryCount = (
+  shardId: number | undefined,
+  size = 1,
+  shardType: 'senderShard' | 'receiverShard' | undefined
+) =>
+  shardId && shardType
+    ? {
+        query: { bool: { must: [{ match: { [shardType]: shardId } }] } },
+      }
+    : {};
 
 export async function getTransactions({
   elasticUrl,
   addressId = '',
   size = 1,
+  shardId = undefined,
+  shardType = undefined,
   timeout,
 }: ParamsType) {
   let data = [];
@@ -38,7 +63,11 @@ export async function getTransactions({
         sort: { timestamp: { order: 'desc' } },
         from: (size - 1) * 50,
         size: 50,
-        ...setAddressQuery(addressId),
+        ...{
+          query: { match_all: {} },
+          ...setAddressQuery(addressId),
+          ...shardQuery(shardId, size, shardType),
+        },
       },
       { timeout }
     );
@@ -57,11 +86,24 @@ export async function getTransactions({
   }
 }
 
-export async function getTotalTransactions({ elasticUrl, addressId = '', timeout }: ParamsType) {
+export async function getTotalTransactions({
+  elasticUrl,
+  addressId = '',
+  size = 1,
+  shardId = undefined,
+  shardType = undefined,
+  timeout,
+}: ParamsType) {
   try {
     const { data } = await axios.post(
       `${elasticUrl}/transactions/_count`,
-      setAddressQuery(addressId),
+      {
+        ...{
+          query: { match_all: {} },
+          ...setAddressQuery(addressId),
+          ...shardQueryCount(shardId, size, shardType),
+        },
+      },
       {
         timeout,
       }
