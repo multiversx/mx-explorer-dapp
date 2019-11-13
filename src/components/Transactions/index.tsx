@@ -132,7 +132,9 @@ const Transactions: React.FC = () => {
                             <th scope="col">Shard</th>
                             <th scope="col">From</th>
                             <th scope="col">To</th>
-                            <th scope="col">Value</th>
+                            <th scope="col" className="text-right">
+                              Value
+                            </th>
                           </tr>
                         </thead>
                         <tbody>

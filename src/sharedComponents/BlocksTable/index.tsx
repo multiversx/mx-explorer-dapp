@@ -28,7 +28,7 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
                   <TimeAgo value={block.timestamp} />
                 </span>
               </td>
-              <td className="text-right">{block.txCount}</td>
+              <td>{block.txCount}</td>
               <td>
                 {shardId ? (
                   <ShardSpan shardId={block.shardId} />
@@ -38,7 +38,7 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
                   </TestnetLink>
                 )}
               </td>
-              <td className="text-right">{sizeFormat(block.size)}</td>
+              <td>{sizeFormat(block.size)}</td>
               <td>
                 <TestnetLink to={`/blocks/${block.hash}`}>{truncate(block.hash, 20)}</TestnetLink>
               </td>
