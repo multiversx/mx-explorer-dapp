@@ -134,11 +134,11 @@ export async function getAddressDetails({ nodeUrl, addressId, timeout }: Details
       code,
       detailsFetched: true,
     };
-  } catch {
+  } catch (err) {
     return {
       balance: '',
       code: '',
-      detailsFetched: false,
+      detailsFetched: true,
     };
   }
 }

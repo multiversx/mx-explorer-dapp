@@ -120,14 +120,8 @@ const Transactions: React.FC = () => {
                     </h4>
                   </div>
                 </div>
-                <div className="card">
+                <div className="card" style={{ height: 'auto' }}>
                   <div className="card-body card-list">
-                    <Pager slug={slug} />
-                    {totalTransactions > 0 && (
-                      <span>
-                        More than {totalTransactions.toLocaleString('en')} transactions found
-                      </span>
-                    )}
                     <div className="table-responsive">
                       <table className="table mt-4" data-testid="transactionsTable">
                         <thead>
@@ -164,6 +158,19 @@ const Transactions: React.FC = () => {
                         </tbody>
                       </table>
                     </div>
+                    <Pager
+                      slug={slug}
+                      total={totalTransactions}
+                      start={(size - 1) * 50}
+                      end={(size - 1) * 50 + 50}
+                    />
+                    <span className="d-none">
+                      {totalTransactions > 0 && (
+                        <span>
+                          More than {totalTransactions.toLocaleString('en')} transactions found
+                        </span>
+                      )}
+                    </span>
                   </div>
                 </div>
               </>
