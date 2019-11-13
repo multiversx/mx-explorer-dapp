@@ -5,7 +5,7 @@ import { getTransactions } from './helpers/asyncRequests';
 import { TestnetLink, TimeAgo, ShardSpan } from './../../sharedComponents';
 import { TransactionType } from './../Transactions';
 import { useGlobalState } from '../../context';
-import { truncate, dateFormatted } from './../../helpers';
+import { truncate, dateFormatted, addressIsHash } from './../../helpers';
 
 const LatestTransactions: React.FC = () => {
   let ref = React.useRef(null);
@@ -74,9 +74,13 @@ const LatestTransactions: React.FC = () => {
                       </div>
                       <div className="col-6">
                         From&nbsp;
-                        <TestnetLink to={`/address/${transaction.sender}`}>
-                          <ShardSpan shardId={truncate(transaction.sender, 20)} />
-                        </TestnetLink>
+                        {addressIsHash(transaction.sender) ? (
+                          <TestnetLink to={`/address/${transaction.sender}`}>
+                            {truncate(transaction.sender, 20)}
+                          </TestnetLink>
+                        ) : (
+                          <ShardSpan shardId={transaction.sender} />
+                        )}
                         <br />
                         To&nbsp;
                         <TestnetLink to={`/address/${transaction.receiver}`}>

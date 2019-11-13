@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt, faCube } from '@fortawesome/free-solid-svg-icons';
 import { getBlocks } from './helpers/asyncRequests';
-import { TestnetLink, TimeAgo } from './../../sharedComponents';
+import { TestnetLink, TimeAgo, ShardSpan } from './../../sharedComponents';
 import { BlockType } from './../Blocks';
 import { useGlobalState } from '../../context';
 import { truncate, dateFormatted } from './../../helpers';
@@ -60,8 +60,9 @@ const LatestBlocks: React.FC = () => {
                             <FontAwesomeIcon icon={faCube} />
                           </i>
                         </span>
-                        <TestnetLink to={`/blocks/${block.hash}`}>{block.nonce}</TestnetLink> in
-                        Shard {block.shardId}
+                        <TestnetLink to={`/blocks/${block.hash}`}>{block.nonce}</TestnetLink>
+                        &nbsp;in&nbsp;
+                        <ShardSpan shardId={block.shardId} />
                         <br />
                         <span title={dateFormatted(block.timestamp)} className="text-secondary">
                           <TimeAgo value={block.timestamp} />
