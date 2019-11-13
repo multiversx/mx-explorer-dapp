@@ -67,7 +67,7 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
           </TestnetLink>
         )}
       </td>
-      <td>
+      <td className="text-right">
         <Denominate value={transaction.value} showAllDecimals />
       </td>
     </tr>
