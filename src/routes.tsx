@@ -6,6 +6,7 @@ import ValidatorDetails from './components/ValidatorDetails';
 import Validators from './components/Validators';
 import Blocks from './components/Blocks';
 import EmptySearch from './components/EmptySearch';
+import PageNotFoud from './components/PageNotFoud';
 import { withTestnetReady, withPageTitle } from './sharedComponents';
 
 // TODO: daca hashul nu e valid (functie validare) return 404 (page not found)
@@ -109,6 +110,11 @@ const routes: RouteType[] = [
     path: '/',
     title: '',
     component: Home,
+  },
+  {
+    path: '/:any',
+    title: 'Page not found',
+    component: PageNotFoud,
   },
 ];
 
