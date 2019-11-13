@@ -21,6 +21,8 @@ const HeroChart = ({ liveTps }: ChartType) => {
 
   const initTable = () => {
     if (ref.current !== null) {
+      myChart = undefined;
+
       myChart = new Chart(ref.current!, {
         type: 'line',
         data: {
@@ -99,6 +101,8 @@ const HeroChart = ({ liveTps }: ChartType) => {
     }
 
     return function cleanup() {
+      ref.current = null;
+      requestsCount = 1;
       myChart.destroy();
     };
   };
