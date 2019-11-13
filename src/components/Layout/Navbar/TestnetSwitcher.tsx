@@ -1,7 +1,7 @@
 import React from 'react';
 import { OverlayTrigger, Popover, Accordion, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faNetworkWired, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { faNetworkWired, faCaretDown, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation } from 'react-router-dom';
 import { useGlobalState } from '../../../context';
 
@@ -63,7 +63,8 @@ export default function TestnetSwitcher() {
         }
       >
         <span id="switch" className="switch d-none d-md-block d-lg-block d-xl-block">
-          <FontAwesomeIcon icon={faNetworkWired} />
+          {globalState.activeTestnet.name}&nbsp;
+          <FontAwesomeIcon icon={faAngleDown} />
         </span>
       </OverlayTrigger>
     </>
