@@ -19,6 +19,8 @@
     "@types/react-bootstrap": "^0.32.20",
     "@types/react-dom": "16.9.2",
     "@types/react-router-dom": "^5.1.0",
+    "@types/yup": "^0.26.24",
+    "@welldone-software/why-did-you-render": "^3.3.9",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.9.2",
@@ -33,7 +35,9 @@
     "react-hot-loader": "^4.12.15",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
-    "typescript": "3.6.4"
+    "typescript": "3.6.4",
+    "uninstall": "0.0.0",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "start": "react-app-rewired start",

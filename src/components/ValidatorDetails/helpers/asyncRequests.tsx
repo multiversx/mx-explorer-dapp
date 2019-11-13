@@ -33,6 +33,121 @@ function getBlocks(response: any) {
   };
 }
 
+type GetRoundsType = {
+  elasticUrl: string;
+  shardNumber: number;
+  signersIndex: number;
+  timeout: number;
+};
+
+export async function getRounds({ elasticUrl, shardNumber, signersIndex, timeout }: GetRoundsType) {
+  try {
+    const resp = await axios.post(
+      `${elasticUrl}/rounds/_search`,
+      {
+        query: {
+          bool: {
+            must: [
+              {
+                match: {
+                  shardId: shardNumber,
+                },
+              },
+              {
+                match: {
+                  signersIndexes: signersIndex,
+                },
+              },
+            ],
+          },
+        },
+        sort: {
+          timestamp: {
+            order: 'desc',
+          },
+        },
+        from: 0,
+        size: 100,
+      },
+      {
+        timeout,
+      }
+    );
+
+    const rounds = resp.data.hits.hits.map((round: any) => ({
+      key: round['_id'],
+      value: round['_source'].blockWasProposed,
+    }));
+    return {
+      rounds,
+      roundsFetched: true,
+    };
+  } catch {
+    console.error('Failed rounds');
+    return {
+      rounds: [],
+      roundsFetched: false,
+    };
+  }
+}
+
+export async function searchBlocks({
+  elasticUrl,
+  shardNumber,
+  signersIndex,
+  timeout,
+}: GetRoundsType) {
+  try {
+    const response = await axios.post(
+      `${elasticUrl}/blocks/_search`,
+      {
+        query: {
+          bool: {
+            must: [
+              {
+                match: {
+                  proposer: signersIndex,
+                },
+              },
+              {
+                match: {
+                  shardId: shardNumber,
+                },
+              },
+            ],
+          },
+        },
+        sort: {
+          timestamp: {
+            order: 'desc',
+          },
+        },
+        from: 0,
+        size: 25,
+      },
+      {
+        timeout,
+      }
+    );
+
+    const { blocks, startBlockNr, endBlockNr } = getBlocks(response);
+    return {
+      blocks,
+      startBlockNr,
+      endBlockNr,
+      blocksFetched: true,
+    };
+  } catch {
+    console.error('Failed rounds');
+    return {
+      blocks: [],
+      startBlockNr: 0,
+      endBlockNr: 0,
+      blocksFetched: false,
+    };
+  }
+}
+
 export async function getValidator({
   nodeUrl,
   elasticUrl,
@@ -83,105 +198,23 @@ export async function getValidator({
 
       const signersIndex = consensusArray.indexOf(hexPublicKey);
 
-      try {
-        const response = await axios.post(
-          `${elasticUrl}/blocks/_search`,
-          {
-            query: {
-              bool: {
-                must: [
-                  {
-                    match: {
-                      proposer: signersIndex,
-                    },
-                  },
-                  {
-                    match: {
-                      shardId: shardNumber,
-                    },
-                  },
-                ],
-              },
-            },
-            sort: {
-              timestamp: {
-                order: 'desc',
-              },
-            },
-            from: 0,
-            size: 25,
-          },
-          {
-            timeout,
-          }
-        );
-
-        const { blocks, startBlockNr, endBlockNr } = getBlocks(response);
-
-        try {
-          const resp = await axios.post(
-            `${elasticUrl}/rounds/_search`,
-            {
-              query: {
-                bool: {
-                  must: [
-                    {
-                      match: {
-                        shardId: shardNumber,
-                      },
-                    },
-                    {
-                      match: {
-                        signersIndexes: signersIndex,
-                      },
-                    },
-                  ],
-                },
-              },
-              sort: {
-                timestamp: {
-                  order: 'desc',
-                },
-              },
-              from: 0,
-              size: 100,
-            },
-            {
-              timeout,
-            }
-          );
-
-          const rounds = resp.data.hits.hits.map((round: any) => ({
-            key: round['_id'],
-            value: round['_source'].blockWasProposed,
-          }));
-
-          return {
-            shardId,
-            shardNumber,
-            versionNumber,
-            isActive,
-            nodeDisplayName,
-            isValidator,
-            publicKeyBlockSign,
-            totalDownTimePercentege,
-            totalUpTimePercentege,
-            totalUpTimeLabel,
-            totalDownTimeLabel,
-            instanceType,
-            blocks,
-            startBlockNr,
-            endBlockNr,
-            rounds,
-            publicKey: hexPublicKey,
-            success: true,
-          };
-        } catch {
-          console.error('Failed rounds');
-        }
-      } catch {
-        console.error('Failed validators');
-      }
+      return {
+        shardId,
+        shardNumber,
+        versionNumber,
+        isActive,
+        nodeDisplayName,
+        isValidator,
+        publicKeyBlockSign,
+        totalDownTimePercentege,
+        totalUpTimePercentege,
+        totalUpTimeLabel,
+        totalDownTimeLabel,
+        instanceType,
+        signersIndex,
+        publicKey: hexPublicKey,
+        success: true,
+      };
     }
   } catch {
     console.error('Failed heartbeatstatus');

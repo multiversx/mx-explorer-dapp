@@ -33,11 +33,11 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
         </span>
       </td>
       <td>
-        <TestnetLink to={`/shards/${transaction.senderShard}`}>
+        <TestnetLink to={`/transactions/shards/${transaction.senderShard}`}>
           {transaction.senderShard}
         </TestnetLink>
         &nbsp;&gt;&nbsp;
-        <TestnetLink to={`/shards/${transaction.receiverShard}`}>
+        <TestnetLink to={`/transactions/shards/${transaction.receiverShard}`}>
           {transaction.receiverShard}
         </TestnetLink>
       </td>

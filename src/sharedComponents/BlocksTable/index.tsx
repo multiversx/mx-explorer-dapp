@@ -33,7 +33,7 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
                 {shardId ? (
                   <ShardSpan shardId={block.shardId} />
                 ) : (
-                  <TestnetLink to={`/shards/${block.shardId}`}>
+                  <TestnetLink to={`/blocks/shards/${block.shardId}`}>
                     <ShardSpan shardId={block.shardId} />
                   </TestnetLink>
                 )}

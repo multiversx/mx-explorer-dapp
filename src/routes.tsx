@@ -71,12 +71,22 @@ const routes: RouteType[] = [
     component: BlockDetails,
   },
   {
-    path: '/shards/:shard/page/:page',
+    path: '/blocks/shards/:shard/page/:page',
     title: 'Shard Details',
     component: Blocks,
   },
   {
-    path: '/shards/:shard',
+    path: '/blocks/shards/:shard',
+    title: 'Shard Details',
+    component: Blocks,
+  },
+  {
+    path: '/transactions/shards/:shard/page/:page',
+    title: 'Shard Details',
+    component: Blocks,
+  },
+  {
+    path: '/transactions/shards/:shard',
     title: 'Shard Details',
     component: Blocks,
   },

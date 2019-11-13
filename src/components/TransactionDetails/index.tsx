@@ -104,7 +104,7 @@ const TransactionDetails: React.FC = () => {
                                 {truncate(transaction.sender, 20)}
                               </TestnetLink>
                               <TestnetLink
-                                to={`/shards/${transaction.senderShard}`}
+                                to={`/transactions/shards/${transaction.senderShard}`}
                                 className="small-link"
                               >
                                 (<ShardSpan shardId={transaction.sender} />)
