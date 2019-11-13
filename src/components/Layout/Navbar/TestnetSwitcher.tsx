@@ -1,7 +1,7 @@
 import React from 'react';
 import { OverlayTrigger, Popover, Accordion, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faNetworkWired, faCaretDown, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation } from 'react-router-dom';
 import { useGlobalState } from '../../../context';
 
