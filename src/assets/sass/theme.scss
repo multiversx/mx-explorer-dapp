@@ -647,3 +647,11 @@ th svg {
   display: inline-block;
   color: rgba(1, 1, 1, 0.4);
 }
+
+svg[data-prefix='fas'] {
+  color: #999999;
+}
+
+.highlights svg {
+  color: rgba(255, 255, 255, 0.6);
+}
