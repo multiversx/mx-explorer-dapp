@@ -99,7 +99,7 @@ const Blocks: React.FC = () => {
                 </div>
               ) : (
                 <div className="card-body card-list">
-                  <Pager slug={shardId ? `shards/${shardId}` : 'blocks'} />
+                  <Pager slug={shardId ? `blocks/shards/${shardId}` : 'blocks'} />
                   {state.startBlockNr > 0 && `Block #${state.startBlockNr} to #${state.endBlockNr}`}
                   &nbsp;
                   {totalBlocks > 0 && `(Total of ${totalBlocks.toLocaleString('en')} blocks)`}
