@@ -20,32 +20,36 @@ const Pager = ({
   const prevPageNo = size === 2 ? `/${slug}` : `/${slug}/page/${size - 1}`;
 
   return (
-    <div className="float-right">
-      <span>
-        {start.toLocaleString('en')}-{end.toLocaleString('en')} of {total.toLocaleString('en')}
-      </span>
-
-      {size === 1 ? (
-        <button className="btn btn-sm" disabled data-testid="disabledPreviousPageButton">
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </button>
-      ) : (
-        <TestnetLink to={prevPageNo} className="btn btn-sm" data-testid="previousPageButton">
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </TestnetLink>
-      )}
-
-      <span className="ml-1 mr-1">
-        {/* Page&nbsp;
-        <span data-testid="pageNumber">{size}</span> */}
-      </span>
-      <TestnetLink
-        data-testid="nextPageButton"
-        to={`/${slug}/page/${size + 1}`}
-        className="btn btn-sm"
-      >
-        <FontAwesomeIcon icon={faChevronRight} />
-      </TestnetLink>
+    <div className="float-right mt-3">
+      <ul className="list-inline">
+        <li className="list-inline-item">
+          <span>
+            {start.toLocaleString('en')}-{end.toLocaleString('en')} of {total.toLocaleString('en')}
+          </span>
+        </li>
+        <li className="list-inline-item ml-2 mr-2">
+          {size === 1 ? (
+            <div className="pager">
+              <span data-testid="disabledPreviousPageButton">
+                <FontAwesomeIcon icon={faChevronLeft} /> Prev
+              </span>
+            </div>
+          ) : (
+            <div className="pager">
+              <TestnetLink to={prevPageNo} data-testid="previousPageButton">
+                <FontAwesomeIcon icon={faChevronLeft} /> Prev
+              </TestnetLink>
+            </div>
+          )}
+        </li>
+        <li className="ml-2 list-inline-item">
+          <div className="pager">
+            <TestnetLink data-testid="nextPageButton" to={`/${slug}/page/${size + 1}`}>
+              Next <FontAwesomeIcon icon={faChevronRight} />
+            </TestnetLink>
+          </div>
+        </li>
+      </ul>
     </div>
   );
 };

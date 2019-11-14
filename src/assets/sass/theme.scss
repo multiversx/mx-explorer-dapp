@@ -655,3 +655,27 @@ svg[data-prefix='fas'] {
 .highlights svg {
   color: rgba(255, 255, 255, 0.6);
 }
+
+.pager {
+  a {
+    svg {
+      color: #9ba4ae;
+    }
+    color: #9ba4ae;
+    &:hover {
+      svg {
+        color: #000000;
+      }
+      color: #000000;
+    }
+  }
+  span {
+    svg {
+      color: #dee2e6;
+    }
+    color: #dee2e6;
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+}
