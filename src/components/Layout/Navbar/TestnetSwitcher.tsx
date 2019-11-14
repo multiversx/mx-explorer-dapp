@@ -69,7 +69,7 @@ export default function TestnetSwitcher() {
       >
         <span
           id="switch"
-          style={{ whiteSpace: 'nowrap' }}
+          style={{ whiteSpace: 'nowrap', paddingBottom: '4px' }}
           className="switch d-none d-md-block d-lg-block d-xl-block"
         >
           {globalState.activeTestnet.name}&nbsp;
