@@ -36,48 +36,72 @@ const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
   return (
     <div className="bg-blue">
       <div className="container pt-4 pb-4">
-        <ul className="highlights row">
-          <li className="col-lg-2 col-6 mt-4 mb-4">
-            <span className="highlight-icon">
-              <FontAwesomeIcon icon={faCube} />
-            </span>
-            <span className="highlight-label">CURRENT BLOCK</span>
-            <span className="highlight-value">{blockNumber}</span>
+        <ul className="highlights row d-flex justify-content-between">
+          <li className="mt-4 mb-4">
+            <div className="media">
+              <span className="highlight-icon">
+                <FontAwesomeIcon icon={faCube} />
+              </span>
+              <div className="media-body">
+                <span className="highlight-label">CURRENT BLOCK</span>
+                <span className="highlight-value">{blockNumber}</span>
+              </div>
+            </div>
           </li>
-          <li className="col-lg-2 col-6 mt-4 mb-4">
-            <span className="highlight-icon">
-              <FontAwesomeIcon icon={faServer} />
-            </span>
-            <span className="highlight-label">NUMBER OF SHARDS</span>
-            <span className="highlight-value">{nrOfShards}</span>
+          <li className="mt-4 mb-4">
+            <div className="media">
+              <span className="highlight-icon">
+                <FontAwesomeIcon icon={faServer} />
+              </span>
+              <div className="media-body">
+                <span className="highlight-label">NUMBER OF SHARDS</span>
+                <span className="highlight-value">{nrOfShards}</span>
+              </div>
+            </div>
           </li>
-          <li className="col-lg-2 col-6 mt-4 mb-4">
-            <span className="highlight-icon">
-              <FontAwesomeIcon icon={faClock} />
-            </span>
-            <span className="highlight-label">CURRENT ROUND</span>
-            <span className="highlight-value">{roundNumber}</span>
+          <li className="mt-4 mb-4">
+            <div className="media">
+              <span className="highlight-icon">
+                <FontAwesomeIcon icon={faClock} />
+              </span>
+              <div className="media-body">
+                <span className="highlight-label">CURRENT ROUND</span>
+                <span className="highlight-value">{roundNumber}</span>
+              </div>
+            </div>
           </li>
-          <li className="col-lg-2 col-6 mt-4 mb-4">
-            <span className="highlight-icon">
-              <FontAwesomeIcon icon={faExchangeAlt} />
-            </span>
-            <span className="highlight-label">TPS</span>
-            <span className="highlight-value">{liveTPS}</span>
+          <li className="mt-4 mb-4">
+            <div className="media">
+              <span className="highlight-icon">
+                <FontAwesomeIcon icon={faExchangeAlt} />
+              </span>
+              <div className="media-body">
+                <span className="highlight-label">TPS</span>
+                <span className="highlight-value">{liveTPS}</span>
+              </div>
+            </div>
           </li>
-          <li className="col-lg-2 col-6 mt-4 mb-4">
-            <span className="highlight-icon">
-              <FontAwesomeIcon icon={faChartBar} />
-            </span>
-            <span className="highlight-label">PEAK TPS</span>
-            <span className="highlight-value">{peakTPS}</span>
+          <li className="mt-4 mb-4">
+            <div className="media">
+              <span className="highlight-icon">
+                <FontAwesomeIcon icon={faChartBar} />
+              </span>
+              <div className="media-body">
+                <span className="highlight-label">PEAK TPS</span>
+                <span className="highlight-value">{peakTPS}</span>
+              </div>
+            </div>
           </li>
-          <li className="col-lg-2 col-6 mt-4 mb-4">
-            <span className="highlight-icon">
-              <FontAwesomeIcon icon={faServer} />
-            </span>
-            <span className="highlight-label">TOTAL TX</span>
-            <span className="highlight-value">{totalProcessedTxCount}</span>
+          <li className="mt-4 mb-4">
+            <div className="media">
+              <span className="highlight-icon">
+                <FontAwesomeIcon icon={faServer} />
+              </span>
+              <div className="media-body">
+                <span className="highlight-label">TOTAL TX</span>
+                <span className="highlight-value">{totalProcessedTxCount}</span>
+              </div>
+            </div>
           </li>
         </ul>
       </div>

@@ -7,15 +7,6 @@ import { HashRouter as Router, Switch, Route, withRouter } from 'react-router-do
 import PageNotFoud from './components/PageNotFoud';
 import routes from './routes';
 
-const RouterDebugger = (props: any) => {
-  React.useEffect(() => {
-    console.warn(props);
-  });
-  return null;
-};
-
-const Debugger = withRouter(RouterDebugger);
-
 const Routes = () => {
   const {
     config: { testnets },
@@ -56,7 +47,6 @@ const Routes = () => {
           })}
           <Route component={PageNotFoud} />
         </Switch>
-        <Debugger />
       </React.Suspense>
     ),
     [testnets, activeTestnet]
