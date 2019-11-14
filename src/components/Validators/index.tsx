@@ -89,7 +89,7 @@ const Validators = () => {
                   <div className="card-body card-details">
                     <div className="row h-100 justify-content-center align-items-center">
                       <div className="col-12 text-center">
-                        <div className="lds-ellipsis mx-auto">
+                        <div className="lds-ellipsis mx-auto mt-5 mb-5">
                           <div />
                           <div />
                           <div />

@@ -152,7 +152,7 @@ const Transactions: React.FC = () => {
                           {transactions.length === 0 && (
                             <tr>
                               <td colSpan={7} className="text-center pt-5 pb-4 border-0">
-                                <div className="lds-ellipsis">
+                                <div className="lds-ellipsis mt-5 mb-5">
                                   <div />
                                   <div />
                                   <div />
