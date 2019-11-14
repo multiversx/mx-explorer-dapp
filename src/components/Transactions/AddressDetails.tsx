@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { faCube, faCode } from '@fortawesome/free-solid-svg-icons';
+import { faCode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from '../../context';
 import { getAddressDetails } from './helpers/asyncRequests';
-import { Denominate } from './../../sharedComponents';
+import { Denominate } from 'sharedComponents';
 
 type StateType = {
   address: string;
