@@ -68,7 +68,7 @@ export default function SiteNavbar() {
             <div className="form-search" role="search">
               <div
                 className="input-group input-group-seamless float-right"
-                style={{ maxWidth: '27rem' }}
+                style={{ maxWidth: '22.5rem' }}
               >
                 <Search />
               </div>
