@@ -28,6 +28,9 @@ export default function SiteNavbar() {
           <div className="d-none d-md-block d-lg-block d-xl-block" style={{ marginTop: '-2px' }}>
             <img src={elrondLogo} alt="Elrond logo" />
           </div>
+          <div className="d-xs-block d-sm-block d-md-none d-lg-none d-xl-none">
+            <img src={elrondLogo} alt="Elrond logo" />
+          </div>
         </TestnetLink>
         <Navbar.Toggle aria-controls="navbars" style={{ color: 'black', border: 'none' }}>
           {expanded ? <FontAwesomeIcon icon={faTimes} /> : <FontAwesomeIcon icon={faBars} />}
