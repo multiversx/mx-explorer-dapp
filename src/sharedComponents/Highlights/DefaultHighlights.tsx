@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {
   faCube,
-  faServer,
   faClock,
   faExchangeAlt,
   faChartBar,
+  faNetworkWired,
+  faStopwatch,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom';
@@ -51,7 +52,7 @@ const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
           <li className="mt-4 mb-4">
             <div className="media">
               <span className="highlight-icon">
-                <FontAwesomeIcon icon={faServer} />
+                <FontAwesomeIcon icon={faNetworkWired} />
               </span>
               <div className="media-body">
                 <span className="highlight-label">SHARDS</span>
@@ -73,7 +74,7 @@ const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
           <li className="mt-4 mb-4">
             <div className="media">
               <span className="highlight-icon">
-                <FontAwesomeIcon icon={faExchangeAlt} />
+                <FontAwesomeIcon icon={faChartBar} />
               </span>
               <div className="media-body">
                 <span className="highlight-label">TPS</span>
@@ -84,7 +85,7 @@ const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
           <li className="mt-4 mb-4">
             <div className="media">
               <span className="highlight-icon">
-                <FontAwesomeIcon icon={faChartBar} />
+                <FontAwesomeIcon icon={faStopwatch} />
               </span>
               <div className="media-body">
                 <span className="highlight-label">PEAK TPS</span>
@@ -95,7 +96,7 @@ const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
           <li className="mt-4 mb-4">
             <div className="media">
               <span className="highlight-icon">
-                <FontAwesomeIcon icon={faServer} />
+                <FontAwesomeIcon icon={faExchangeAlt} />
               </span>
               <div className="media-body">
                 <span className="highlight-label">TRANSACTIONS</span>

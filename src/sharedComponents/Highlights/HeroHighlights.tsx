@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {
   faCube,
-  faServer,
   faClock,
   faExchangeAlt,
   faChartBar,
+  faNetworkWired,
+  faStopwatch,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { StateType as HeroHighlightsProps } from './index';
@@ -28,7 +29,7 @@ const HeroHighlights: React.SFC<HeroHighlightsProps> = ({
       </li>
       <li className="col-6 mt-4 mb-4">
         <span className="highlight-icon">
-          <FontAwesomeIcon icon={faServer} />
+          <FontAwesomeIcon icon={faNetworkWired} />
         </span>
         <span className="highlight-label">SHARDS</span>
         <span className="highlight-value">{nrOfShards}</span>
@@ -42,21 +43,21 @@ const HeroHighlights: React.SFC<HeroHighlightsProps> = ({
       </li>
       <li className="col-6 mt-4 mb-4">
         <span className="highlight-icon">
-          <FontAwesomeIcon icon={faExchangeAlt} />
+          <FontAwesomeIcon icon={faChartBar} />
         </span>
         <span className="highlight-label">LIVE TPS</span>
         <span className="highlight-value">{liveTPS}</span>
       </li>
       <li className="col-6 mt-4 mb-4">
         <span className="highlight-icon">
-          <FontAwesomeIcon icon={faChartBar} />
+          <FontAwesomeIcon icon={faStopwatch} />
         </span>
         <span className="highlight-label">PEAK TPS</span>
         <span className="highlight-value">{peakTPS}</span>
       </li>
       <li className="col-6 mt-4 mb-4">
         <span className="highlight-icon">
-          <FontAwesomeIcon icon={faServer} />
+          <FontAwesomeIcon icon={faExchangeAlt} />
         </span>
         <span className="highlight-label">TRANSACTIONS</span>
         <span className="highlight-value">{totalProcessedTxCount}</span>
