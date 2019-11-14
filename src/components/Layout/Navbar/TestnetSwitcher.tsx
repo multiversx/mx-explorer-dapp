@@ -62,7 +62,11 @@ export default function TestnetSwitcher() {
           </Popover>
         }
       >
-        <span id="switch" className="switch d-none d-md-block d-lg-block d-xl-block">
+        <span
+          id="switch"
+          style={{ whiteSpace: 'nowrap' }}
+          className="switch d-none d-md-block d-lg-block d-xl-block"
+        >
           {globalState.activeTestnet.name}&nbsp;
           <FontAwesomeIcon icon={faAngleDown} />
         </span>
