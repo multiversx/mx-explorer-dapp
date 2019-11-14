@@ -23,21 +23,21 @@ const HeroHighlights: React.SFC<HeroHighlightsProps> = ({
         <span className="highlight-icon">
           <FontAwesomeIcon icon={faCube} />
         </span>
-        <span className="highlight-label">CURRENT BLOCK</span>
+        <span className="highlight-label">BLOCK</span>
         <span className="highlight-value">{blockNumber}</span>
       </li>
       <li className="col-6 mt-4 mb-4">
         <span className="highlight-icon">
           <FontAwesomeIcon icon={faServer} />
         </span>
-        <span className="highlight-label">NUMBER OF SHARDS</span>
+        <span className="highlight-label">SHARDS</span>
         <span className="highlight-value">{nrOfShards}</span>
       </li>
       <li className="col-6 mt-4 mb-4">
         <span className="highlight-icon">
           <FontAwesomeIcon icon={faClock} />
         </span>
-        <span className="highlight-label">CURRENT ROUND</span>
+        <span className="highlight-label">ROUND</span>
         <span className="highlight-value">{roundNumber}</span>
       </li>
       <li className="col-6 mt-4 mb-4">
