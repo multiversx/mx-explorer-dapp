@@ -43,7 +43,7 @@ const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
                 <FontAwesomeIcon icon={faCube} />
               </span>
               <div className="media-body">
-                <span className="highlight-label">BLOCK</span>
+                <span className="highlight-label">BLOCKS</span>
                 <span className="highlight-value">{blockNumber}</span>
               </div>
             </div>
@@ -65,7 +65,7 @@ const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
                 <FontAwesomeIcon icon={faClock} />
               </span>
               <div className="media-body">
-                <span className="highlight-label">ROUND</span>
+                <span className="highlight-label">ROUNDS</span>
                 <span className="highlight-value">{roundNumber}</span>
               </div>
             </div>
@@ -98,7 +98,7 @@ const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
                 <FontAwesomeIcon icon={faServer} />
               </span>
               <div className="media-body">
-                <span className="highlight-label">TOTAL TX</span>
+                <span className="highlight-label">TRANSACTIONS</span>
                 <span className="highlight-value">{totalProcessedTxCount}</span>
               </div>
             </div>

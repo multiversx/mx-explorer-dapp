@@ -23,7 +23,7 @@ const HeroHighlights: React.SFC<HeroHighlightsProps> = ({
         <span className="highlight-icon">
           <FontAwesomeIcon icon={faCube} />
         </span>
-        <span className="highlight-label">BLOCK</span>
+        <span className="highlight-label">BLOCKS</span>
         <span className="highlight-value">{blockNumber}</span>
       </li>
       <li className="col-6 mt-4 mb-4">
@@ -37,7 +37,7 @@ const HeroHighlights: React.SFC<HeroHighlightsProps> = ({
         <span className="highlight-icon">
           <FontAwesomeIcon icon={faClock} />
         </span>
-        <span className="highlight-label">ROUND</span>
+        <span className="highlight-label">ROUNDS</span>
         <span className="highlight-value">{roundNumber}</span>
       </li>
       <li className="col-6 mt-4 mb-4">
@@ -58,7 +58,7 @@ const HeroHighlights: React.SFC<HeroHighlightsProps> = ({
         <span className="highlight-icon">
           <FontAwesomeIcon icon={faServer} />
         </span>
-        <span className="highlight-label">TOTAL TX</span>
+        <span className="highlight-label">TRANSACTIONS</span>
         <span className="highlight-value">{totalProcessedTxCount}</span>
       </li>
     </ul>
