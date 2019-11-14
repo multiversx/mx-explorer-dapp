@@ -1,12 +1,14 @@
 import React from 'react';
 import { OverlayTrigger, Popover, Accordion, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation } from 'react-router-dom';
 import { useGlobalState } from '../../../context';
 
-export default function TestnetSwitcher() {
+export default function TestnetSwitcher({ onToggle }: { onToggle: Function }) {
   const globalState = useGlobalState();
+
+  const ref = React.useRef(null);
 
   const { pathname } = useLocation();
   let locationArray = pathname.substr(1).split('/');
@@ -22,20 +24,32 @@ export default function TestnetSwitcher() {
     document.body.click();
   };
 
+  const onAccordionClick = () => {
+    ref.current !== null && (ref.current as any).click();
+    onToggle(false);
+  };
+
   return (
     <>
       <ul className="navbar-nav mr-auto d-xs-block d-sm-block d-md-none d-lg-none d-xl-none">
         <li className="nav-item">
           <Accordion>
             <Accordion.Toggle as={Nav.Link} eventKey="0">
-              testnets
-              <FontAwesomeIcon icon={faCaretDown} />
+              <span ref={ref} style={{ paddingBottom: '1rem' }}>
+                {globalState.activeTestnet.name}&nbsp;
+                <FontAwesomeIcon icon={faAngleDown} />
+              </span>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
               <ul className="navbar-nav">
                 {liksArray.map(link => (
-                  <li className={`nav-item`} key={link.key}>
-                    <Link className="nav-link" to={`/${link.to}`}>
+                  <li key={link.key} onClick={onAccordionClick}>
+                    <Link
+                      className={`nav-link ${
+                        globalState.activeTestnetId === link.to ? 'active' : ''
+                      }`}
+                      to={`/${link.to}`}
+                    >
                       {link.name}
                     </Link>
                   </li>

@@ -198,6 +198,9 @@ strong {
 .form-search {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 2.75rem;
+  }
   max-width: 35rem;
   width: 100%;
 }

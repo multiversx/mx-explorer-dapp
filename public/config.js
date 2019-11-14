@@ -16,8 +16,8 @@ const CONFIG = {
   testnets: [
     {
       default: true,
-      id: 'testnet-1036',
-      name: 'Testnet-1036',
+      id: 'battle-of-nodes',
+      name: 'Battle of Nodes',
       nodeUrl: 'https://wallet-api.elrond.com',
       elasticUrl: 'https://elastic-aws.elrond.com',
       refreshRate: 6000,

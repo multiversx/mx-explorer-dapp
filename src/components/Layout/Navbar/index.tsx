@@ -37,12 +37,16 @@ export default function SiteNavbar() {
         </Navbar.Toggle>
         <Navbar.Collapse id="navbars">
           <ul className="navbar-nav mr-auto">
-            <li className={`nav-item ${pathname.toString().includes('blocks') ? 'active' : ''}`}>
+            <li
+              className={`nav-item ${pathname.toString().includes('blocks') ? 'active' : ''}`}
+              onClick={() => onToggle(false)}
+            >
               <TestnetLink className="nav-link" to="/blocks">
                 blocks
               </TestnetLink>
             </li>
             <li
+              onClick={() => onToggle(false)}
               className={`nav-item ${pathname.toString().includes('transactions') ? 'active' : ''}`}
             >
               <TestnetLink className="nav-link" to="/transactions">
@@ -51,6 +55,7 @@ export default function SiteNavbar() {
             </li>
             {validators !== false && (
               <li
+                onClick={() => onToggle(false)}
                 className={`nav-item ${pathname.toString().includes('validators') ? 'active' : ''}`}
               >
                 <TestnetLink className="nav-link" to="/validators">
@@ -70,7 +75,7 @@ export default function SiteNavbar() {
             </div>
           )}
 
-          <TestnetSwitcher />
+          <TestnetSwitcher onToggle={onToggle} />
         </Navbar.Collapse>
       </div>
     </Navbar>
