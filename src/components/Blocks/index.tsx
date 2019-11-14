@@ -42,7 +42,7 @@ const Blocks: React.FC = () => {
   let ref = React.useRef(null);
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;
   const [state, setState] = React.useState<StateType>(initialState);
-  const [totalBlocks, setTotalBlocks] = React.useState<number>(0);
+  const [totalBlocks, setTotalBlocks] = React.useState<number | string>('...');
 
   const {
     activeTestnet: { elasticUrl },
@@ -63,9 +63,11 @@ const Blocks: React.FC = () => {
           }
         }
       });
-      getTotalBlocks({ elasticUrl, shardId, timeout }).then(
-        data => ref.current !== null && setTotalBlocks(data)
-      );
+      getTotalBlocks({ elasticUrl, shardId, timeout }).then(({ count, success }) => {
+        if (ref.current !== null && success) {
+          setTotalBlocks(count);
+        }
+      });
     }
   };
 

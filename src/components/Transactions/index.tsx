@@ -50,7 +50,7 @@ const Transactions: React.FC = () => {
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
-  const [totalTransactions, setTotalTransactions] = React.useState<number>(0);
+  const [totalTransactions, setTotalTransactions] = React.useState<number | string>('...');
   const size = parseInt(page!) ? parseInt(page!) : 1;
   const shardId = parseInt(shard!) >= 0 ? parseInt(shard!) : undefined;
 
@@ -77,7 +77,11 @@ const Transactions: React.FC = () => {
         }
       );
       getTotalTransactions({ elasticUrl, addressId, shardId, timeout, shardType }).then(
-        data => ref.current !== null && setTotalTransactions(data)
+        ({ count, success }) => {
+          if (ref.current !== null && success) {
+            setTotalTransactions(count);
+          }
+        }
       );
     }
   };

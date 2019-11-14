@@ -95,7 +95,9 @@ export async function getTotalTransactions({
   timeout,
 }: ParamsType) {
   try {
-    const { data } = await axios.post(
+    const {
+      data: { count },
+    } = await axios.post(
       `${elasticUrl}/transactions/_count`,
       {
         ...{
@@ -109,9 +111,15 @@ export async function getTotalTransactions({
       }
     );
 
-    return data.count;
+    return {
+      count,
+      success: true,
+    };
   } catch {
-    return 0;
+    return {
+      count: 0,
+      success: false,
+    };
   }
 }
 

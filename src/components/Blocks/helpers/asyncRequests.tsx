@@ -71,12 +71,20 @@ export async function getTotalBlocks({
   timeout,
 }: GetBlocksParamsType) {
   try {
-    const { data } = await axios.post(`${elasticUrl}/blocks/_count`, setShardsQuery(shardId), {
+    const {
+      data: { count },
+    } = await axios.post(`${elasticUrl}/blocks/_count`, setShardsQuery(shardId), {
       timeout,
     });
 
-    return data.count;
+    return {
+      count,
+      success: true,
+    };
   } catch {
-    return 0;
+    return {
+      count: 0,
+      success: false,
+    };
   }
 }

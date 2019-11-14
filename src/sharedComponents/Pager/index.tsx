@@ -12,7 +12,7 @@ const Pager = ({
   show,
 }: {
   slug: string;
-  total: number;
+  total: number | string;
   start: number;
   end: number;
   show: boolean;
