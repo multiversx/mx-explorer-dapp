@@ -13,6 +13,7 @@ export default function SiteNavbar() {
   const [expanded, setExpanded] = React.useState(false);
   const {
     activeTestnet: { validators },
+    activeTestnetId,
   } = useGlobalState();
 
   const onToggle = (isExpanded: boolean) => {
@@ -53,7 +54,7 @@ export default function SiteNavbar() {
               </li>
             )}
           </ul>
-          {pathname !== '/' && (
+          {!['/', `/${activeTestnetId}`, `/${activeTestnetId}/`].includes(pathname) && (
             <div className="form-search" role="search">
               <div
                 className="input-group input-group-seamless float-right"
