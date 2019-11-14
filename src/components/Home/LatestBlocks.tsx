@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExchangeAlt, faCube } from '@fortawesome/free-solid-svg-icons';
+import { faCube } from '@fortawesome/free-solid-svg-icons';
 import { getBlocks } from './helpers/asyncRequests';
 import { TestnetLink, TimeAgo, ShardSpan } from './../../sharedComponents';
 import { BlockType } from './../Blocks';
@@ -38,7 +38,7 @@ const LatestBlocks: React.FC = () => {
       {!blocksFetched ? (
         <div className="card-body card-details" data-testid="errorScreen">
           <div className="empty">
-            <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
+            <FontAwesomeIcon icon={faCube} className="empty-icon" />
             <span className="h4 empty-heading">Unable to load blocks</span>
           </div>
         </div>

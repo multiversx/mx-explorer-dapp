@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { getBlocks, getTotalBlocks } from './helpers/asyncRequests';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCube } from '@fortawesome/free-solid-svg-icons';
 import { Pager, ShardSpan, BlocksTable, Loader } from './../../sharedComponents';
 import { useGlobalState } from '../../context';
 
@@ -94,7 +94,7 @@ const Blocks: React.FC = () => {
               <div className="card">
                 <div className="card-body card-details" data-testid="errorScreen">
                   <div className="empty">
-                    <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
+                    <FontAwesomeIcon icon={faCube} className="empty-icon" />
                     <span className="h4 empty-heading">Unable to load blocks</span>
                   </div>
                 </div>
