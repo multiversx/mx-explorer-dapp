@@ -11,7 +11,9 @@ if (process.env.NODE_ENV === 'development') {
   whyDidYouRender(React);
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+if (process.env.REACT_APP_WALLET) {
+  ReactDOM.render(<div>Wallet</div>, document.getElementById('root'));
+} else ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
