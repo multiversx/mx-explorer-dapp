@@ -13,6 +13,7 @@ import {
   TimeAgo,
   TestnetLink,
   ShardSpan,
+  Loader,
 } from './../../sharedComponents';
 import { getTransaction } from './helpers/asyncRequests';
 import { useGlobalState } from '../../context';
@@ -55,17 +56,19 @@ const TransactionDetails: React.FC = () => {
         </div>
         <div className="row">
           <div className="col-12">
-            <div className="card">
-              {!transactionFetched ? (
+            {!transactionFetched ? (
+              <div className="card">
                 <div className="card-body card-details">
                   <div className="empty">
                     <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
                     <span className="h4 empty-heading">Unable to locate this transaction hash</span>
                   </div>
                 </div>
-              ) : (
-                <>
-                  {transaction ? (
+              </div>
+            ) : (
+              <>
+                {transaction ? (
+                  <div className="card">
                     <div className="card-body card-details">
                       <div className="row">
                         <div className="col-lg-2 card-label">Transaction Hash</div>
@@ -171,19 +174,12 @@ const TransactionDetails: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                  ) : (
-                    <div className="text-center pt-5 pb-4 border-0">
-                      <div className="lds-ellipsis mt-5 mb-5">
-                        <div />
-                        <div />
-                        <div />
-                        <div />
-                      </div>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
+                  </div>
+                ) : (
+                  <Loader />
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>

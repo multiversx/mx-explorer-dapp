@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { faChevronLeft, faChevronRight, faCube, faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useHistory } from 'react-router-dom';
-import { TimeAgo, TestnetLink, ShardSpan } from '../../sharedComponents';
+import { TimeAgo, TestnetLink, ShardSpan, Loader } from '../../sharedComponents';
 import { getBlock } from './helpers/asyncRequests';
 import { useGlobalState } from '../../context';
 import { BlockType } from '../Blocks';
@@ -76,8 +76,8 @@ const BlockDetails: React.FC = () => {
         </div>
         <div className="row">
           <div className="col-12">
-            <div className="card">
-              {!blockFetched ? (
+            {!blockFetched ? (
+              <div className="card">
                 <div className="card-body card-details">
                   <div className="empty">
                     <FontAwesomeIcon icon={faCube} className="empty-icon" />
@@ -85,9 +85,11 @@ const BlockDetails: React.FC = () => {
                     <span className="empty-details">{blockId}</span>
                   </div>
                 </div>
-              ) : (
-                <>
-                  {block.hash ? (
+              </div>
+            ) : (
+              <>
+                {block.hash ? (
+                  <div className="card">
                     <div className="card-body card-details">
                       <div className="row">
                         <div className="col-lg-2 card-label">Block Height</div>
@@ -197,19 +199,12 @@ const BlockDetails: React.FC = () => {
                         <div className="col-lg-10">{block.pubKeyBitmap}</div>
                       </div>
                     </div>
-                  ) : (
-                    <div className="text-center pt-5 pb-4 border-0">
-                      <div className="lds-ellipsis mt-5 mb-5">
-                        <div />
-                        <div />
-                        <div />
-                        <div />
-                      </div>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
+                  </div>
+                ) : (
+                  <Loader />
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>

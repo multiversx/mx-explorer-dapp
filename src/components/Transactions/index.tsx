@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { useGlobalState } from '../../context';
 import { getTransactions, getTotalTransactions } from './helpers/asyncRequests';
-import { Pager, ShardSpan } from './../../sharedComponents';
+import { Pager, ShardSpan, Loader } from './../../sharedComponents';
 import TransactionRow from './TransactionRow';
 import AddressDetails from './AddressDetails';
 import FailedAddress from './FailedAddress';
@@ -97,7 +97,6 @@ const Transactions: React.FC = () => {
         <div className={transactionsFetched ? '' : 'd-none'}>
           <AddressDetails reference={addressRef} />
         </div>
-
         <div className="row">
           <div className="col-12">
             {!transactionsFetched ? (
@@ -124,56 +123,48 @@ const Transactions: React.FC = () => {
                     </h4>
                   </div>
                 </div>
-                <div className="card" style={{ height: 'auto' }}>
-                  <div className="card-body card-list">
-                    <div className="table-responsive">
-                      <table className="table mt-4" data-testid="transactionsTable">
-                        <thead>
-                          <tr>
-                            <th scope="col">Txn Hash</th>
-                            <th scope="col">Block</th>
-                            <th scope="col">Age</th>
-                            <th scope="col">Shard</th>
-                            <th scope="col">From</th>
-                            <th scope="col">To</th>
-                            <th scope="col" className="text-right">
-                              Value
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {transactions.map(transaction => (
-                            <TransactionRow
-                              transaction={transaction}
-                              key={transaction.hash}
-                              addressId={addressId}
-                            />
-                          ))}
-                          {transactions.length === 0 && (
+                {transactions.length > 0 ? (
+                  <div className="card" style={{ height: 'auto' }}>
+                    <div className="card-body card-list">
+                      <div className="table-responsive">
+                        <table className="table mt-4" data-testid="transactionsTable">
+                          <thead>
                             <tr>
-                              <td colSpan={7} className="text-center pt-5 pb-4 border-0">
-                                <div className="lds-ellipsis mt-5 mb-5">
-                                  <div />
-                                  <div />
-                                  <div />
-                                  <div />
-                                </div>
-                              </td>
+                              <th scope="col">Txn Hash</th>
+                              <th scope="col">Block</th>
+                              <th scope="col">Age</th>
+                              <th scope="col">Shard</th>
+                              <th scope="col">From</th>
+                              <th scope="col">To</th>
+                              <th scope="col" className="text-right">
+                                Value
+                              </th>
                             </tr>
-                          )}
-                        </tbody>
-                      </table>
-                    </div>
+                          </thead>
+                          <tbody>
+                            {transactions.map(transaction => (
+                              <TransactionRow
+                                transaction={transaction}
+                                key={transaction.hash}
+                                addressId={addressId}
+                              />
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
 
-                    <Pager
-                      slug={slug}
-                      total={totalTransactions}
-                      start={(size - 1) * 50}
-                      end={(size - 1) * 50 + 50}
-                      show={transactions.length > 0}
-                    />
+                      <Pager
+                        slug={slug}
+                        total={totalTransactions}
+                        start={(size - 1) * 50}
+                        end={(size - 1) * 50 + 50}
+                        show={transactions.length > 0}
+                      />
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <Loader />
+                )}
               </>
             )}
           </div>

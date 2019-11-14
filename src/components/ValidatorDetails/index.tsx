@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCogs } from '@fortawesome/free-solid-svg-icons';
-import { BlocksTable } from '../../sharedComponents';
+import { BlocksTable, Loader } from '../../sharedComponents';
 import { useGlobalState } from '../../context';
 import { getValidator, getRounds, searchBlocks } from './helpers/asyncRequests';
 import NetworkMetrics, { NetworkMetricsType } from './NetworkMetrics';
@@ -129,20 +129,7 @@ const ValidatorDetails = () => {
                 )}
               </>
             ) : (
-              <div className="card">
-                <div className="card-body card-details">
-                  <div className="row h-100 justify-content-center align-items-center">
-                    <div className="col-12 text-center">
-                      <div className="lds-ellipsis mx-auto mt-5 mb-5">
-                        <div />
-                        <div />
-                        <div />
-                        <div />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Loader />
             )}
           </>
         ) : (

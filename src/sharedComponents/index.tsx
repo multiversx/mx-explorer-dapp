@@ -9,6 +9,7 @@ import withPageTitle from './PageTitle';
 import ShardSpan from './ShardSpan';
 import Search from './Search';
 import BlocksTable from './BlocksTable';
+import Loader from './Loader';
 
 export {
   Denominate,
@@ -23,4 +24,5 @@ export {
   ShardSpan,
   Search,
   BlocksTable,
+  Loader,
 };

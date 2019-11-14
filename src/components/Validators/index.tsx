@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCogs } from '@fortawesome/free-solid-svg-icons';
 import { getValidatorsData } from './helpers/asyncRequests';
 import { populateValidatorsTable } from './helpers/validatorHelpers';
+import { Loader } from './../../sharedComponents';
 import { useGlobalState } from '../../context';
 import ShardsList from './ShardsList';
 import ValidatorsTable, { StateType } from './ValidatorsTable';
@@ -85,20 +86,7 @@ const Validators = () => {
                   <ValidatorsTable {...state.data} validatorDetails={validatorDetails || false} />
                 </>
               ) : (
-                <div className="card">
-                  <div className="card-body card-details">
-                    <div className="row h-100 justify-content-center align-items-center">
-                      <div className="col-12 text-center">
-                        <div className="lds-ellipsis mx-auto mt-5 mb-5">
-                          <div />
-                          <div />
-                          <div />
-                          <div />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <Loader />
               )}
             </>
           ) : (

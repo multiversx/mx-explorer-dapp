@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getBlocks, getTotalBlocks } from './helpers/asyncRequests';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
-import { Pager, ShardSpan, BlocksTable } from './../../sharedComponents';
+import { Pager, ShardSpan, BlocksTable, Loader } from './../../sharedComponents';
 import { useGlobalState } from '../../context';
 
 export type BlockType = {
@@ -90,27 +90,35 @@ const Blocks: React.FC = () => {
         </div>
         <div className="row">
           <div className="col-12">
-            <div className="card">
-              {!state.blocksFetched ? (
+            {!state.blocksFetched ? (
+              <div className="card">
                 <div className="card-body card-details" data-testid="errorScreen">
                   <div className="empty">
                     <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
                     <span className="h4 empty-heading">Unable to load blocks</span>
                   </div>
                 </div>
-              ) : (
-                <div className="card-body card-list">
-                  <BlocksTable blocks={state.blocks} shardId={shardId} />
-                  <Pager
-                    slug={shardId ? `blocks/shards/${shardId}` : 'blocks'}
-                    start={(size - 1) * 25}
-                    end={(size - 1) * 25 + 25}
-                    total={totalBlocks}
-                    show={state.blocks.length > 0}
-                  />
-                </div>
-              )}
-            </div>
+              </div>
+            ) : (
+              <>
+                {state.blocks.length > 0 ? (
+                  <div className="card">
+                    <div className="card-body card-list">
+                      <BlocksTable blocks={state.blocks} shardId={shardId} />
+                      <Pager
+                        slug={shardId ? `blocks/shards/${shardId}` : 'blocks'}
+                        start={(size - 1) * 25}
+                        end={(size - 1) * 25 + 25}
+                        total={totalBlocks}
+                        show={state.blocks.length > 0}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <Loader />
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>
