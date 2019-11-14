@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { faCube } from '@fortawesome/free-solid-svg-icons';
+import { faCube, faCode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from '../../context';
 import { getAddressDetails } from './helpers/asyncRequests';
@@ -55,7 +55,7 @@ const AddressDetails = ({ reference }: { reference: React.MutableRefObject<null>
                 {!state.detailsFetched ? (
                   <div className="card-body card-details">
                     <div className="empty">
-                      <FontAwesomeIcon icon={faCube} className="empty-icon" />
+                      <FontAwesomeIcon icon={faCode} className="empty-icon" />
                       <span className="h4 empty-heading">Unable to locate this address hash</span>
                       <span className="empty-details">{addressId}</span>
                     </div>
