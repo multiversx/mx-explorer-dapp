@@ -1,5 +1,5 @@
 import React from 'react';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { faCode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from '../../context';
 
@@ -16,7 +16,7 @@ const ScAddressIcon = ({ value }: ScAddressIconType) => {
     numInitCharactersForScAddress > 0 &&
     value.startsWith('0'.repeat(numInitCharactersForScAddress));
 
-  return showIcon ? <FontAwesomeIcon icon={faCog} className="w300 mr-1" /> : null;
+  return showIcon ? <FontAwesomeIcon icon={faCode} className="w300 mr-1" /> : null;
 };
 
 export default ScAddressIcon;

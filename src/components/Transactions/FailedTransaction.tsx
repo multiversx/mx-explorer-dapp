@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default function FailedTransaction() {
   return (
@@ -9,7 +9,7 @@ export default function FailedTransaction() {
       <div className="card">
         <div className="card-body card-details" data-testid="errorScreen">
           <div className="empty">
-            <FontAwesomeIcon icon={faWallet} className="empty-icon" />
+            <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
             <span className="h4 empty-heading">Unable to load transactions</span>
           </div>
         </div>

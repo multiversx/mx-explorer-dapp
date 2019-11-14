@@ -83,7 +83,7 @@ const ValidatorsStats = ({
             checked={includeObservers}
             onChange={changeIncludeObsevers}
           />
-          Include observers
+          &nbsp; Include observers
         </label>
       </div>
       <div className="mt-2 d-none d-md-block">

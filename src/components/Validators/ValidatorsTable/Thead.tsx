@@ -98,7 +98,10 @@ const ValidatorsTableHeader = ({
     <thead>
       <tr>
         {headers.map(header => (
-          <th className="sortable" key={header.id}>
+          <th
+            className={`sortable ${header.id === 'totalUpTimeSec' ? 'text-right' : ''}`}
+            key={header.id}
+          >
             <span onClick={toggleSort(header.id)}>{header.label}&nbsp;</span>
             {sort.dir === 'asc' && sort.field === header.id && (
               <FontAwesomeIcon icon={faArrowUp} className="empty-icon" />
