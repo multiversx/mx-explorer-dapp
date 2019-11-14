@@ -94,23 +94,31 @@ const BlockDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">Block Height</div>
                         <div className="col-lg-10">
-                          {block.nonce}
-                          &nbsp;
-                          <TestnetLink
-                            to={`/blocks/${block.prevHash}`}
-                            className="btn btn-outline-secondary btn-sm"
-                            title="View previous block"
-                          >
-                            <FontAwesomeIcon icon={faChevronLeft} />
-                          </TestnetLink>
-                          &nbsp;
-                          <TestnetLink
-                            to={`/blocks/${nextHash}`}
-                            className="btn btn-outline-secondary btn-sm"
-                            title="View next block"
-                          >
-                            <FontAwesomeIcon icon={faChevronRight} />
-                          </TestnetLink>
+                          <div className="d-flex justify-content-between">
+                            <div>{block.nonce}</div>
+                            <ul className="list-inline">
+                              <li className="list-inline-item ml-2 mr-2">
+                                <div className="pager">
+                                  <TestnetLink
+                                    to={`/blocks/${block.prevHash}`}
+                                    data-testid="previousPageButton"
+                                  >
+                                    <FontAwesomeIcon icon={faChevronLeft} /> Prev
+                                  </TestnetLink>
+                                </div>
+                              </li>
+                              <li className="ml-2 list-inline-item">
+                                <div className="pager">
+                                  <TestnetLink
+                                    data-testid="nextPageButton"
+                                    to={`/blocks/${nextHash}`}
+                                  >
+                                    Next <FontAwesomeIcon icon={faChevronRight} />
+                                  </TestnetLink>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
                         </div>
                       </div>
                       <hr className="hr-space" />
@@ -151,7 +159,7 @@ const BlockDetails: React.FC = () => {
                           {proposer === '' ? (
                             <span className="text-muted">N/A</span>
                           ) : (
-                            <TestnetLink to={`/validator/${proposer}`}>
+                            <TestnetLink to={`/validators/${proposer}`}>
                               {truncate(proposer, 100)}
                             </TestnetLink>
                           )}
@@ -188,7 +196,7 @@ const BlockDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">Previous Hash</div>
                         <div className="col-lg-10">
-                          <TestnetLink className="hash" to={`/block/${block.prevHash}`}>
+                          <TestnetLink className="hash" to={`/blocks/${block.prevHash}`}>
                             {block.prevHash}
                           </TestnetLink>
                         </div>

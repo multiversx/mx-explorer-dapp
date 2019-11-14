@@ -50,7 +50,8 @@ async function getNextBlock({
       },
       { timeout }
     );
-    if (hits.length === 1) {
+
+    if (hits[0]) {
       return hits[0]._source.hash;
     }
     return '';
