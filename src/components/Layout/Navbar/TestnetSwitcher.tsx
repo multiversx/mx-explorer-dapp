@@ -18,6 +18,10 @@ export default function TestnetSwitcher() {
     key: testnet.id,
   }));
 
+  const hidePopover = () => {
+    document.body.click();
+  };
+
   return (
     <>
       <ul className="navbar-nav mr-auto d-xs-block d-sm-block d-md-none d-lg-none d-xl-none">
@@ -53,6 +57,7 @@ export default function TestnetSwitcher() {
                 <Link
                   className={`nav-link ${testnetId === link.to ? 'active' : ''}`}
                   key={link.key}
+                  onClick={hidePopover}
                   to={`/${link.to}`}
                 >
                   {link.name}
