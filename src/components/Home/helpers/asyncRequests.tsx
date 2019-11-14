@@ -27,9 +27,11 @@ export async function getBlocks({ elasticUrl, timeout }: GetBlocksType) {
       { timeout }
     );
 
+    const data = hits.map((block: any) => block._source);
+
     return {
-      data: hits.map((block: any) => block._source),
-      blocksFetched: true,
+      data,
+      blocksFetched: data.length > 0,
     };
   } catch {
     return {
@@ -60,9 +62,10 @@ export async function getTransactions({ elasticUrl, timeout }: GetBlocksType) {
       },
       { timeout }
     );
+    const data = hits.map((transaction: any) => transaction._source);
     return {
-      data: hits.map((transaction: any) => transaction._source),
-      transactionsFetched: true,
+      data,
+      transactionsFetched: data.length > 0,
     };
   } catch {
     return {
