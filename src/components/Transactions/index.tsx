@@ -160,23 +160,14 @@ const Transactions: React.FC = () => {
                         </tbody>
                       </table>
                     </div>
-                    {transactions.length && (
-                      <>
-                        <Pager
-                          slug={slug}
-                          total={totalTransactions}
-                          start={(size - 1) * 50}
-                          end={(size - 1) * 50 + 50}
-                        />
-                        <span className="d-none">
-                          {totalTransactions > 0 && (
-                            <span>
-                              More than {totalTransactions.toLocaleString('en')} transactions found
-                            </span>
-                          )}
-                        </span>
-                      </>
-                    )}
+
+                    <Pager
+                      slug={slug}
+                      total={totalTransactions}
+                      start={(size - 1) * 50}
+                      end={(size - 1) * 50 + 50}
+                      show={transactions.length > 0}
+                    />
                   </div>
                 </div>
               </>

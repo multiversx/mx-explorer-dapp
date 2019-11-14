@@ -9,17 +9,19 @@ const Pager = ({
   total,
   start,
   end,
+  show,
 }: {
   slug: string;
   total: number;
   start: number;
   end: number;
+  show: boolean;
 }) => {
   let { page } = useParams();
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;
   const prevPageNo = size === 2 ? `/${slug}` : `/${slug}/page/${size - 1}`;
 
-  return (
+  const PagerComponent = (
     <div className="float-right mt-3">
       <ul className="list-inline">
         <li className="list-inline-item">
@@ -52,6 +54,8 @@ const Pager = ({
       </ul>
     </div>
   );
+
+  return show ? PagerComponent : null;
 };
 
 export default Pager;
