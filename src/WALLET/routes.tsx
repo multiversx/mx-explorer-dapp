@@ -1,4 +1,6 @@
 import React from 'react';
+import Home from './Home';
+import Login from './Login';
 import { withTestnetReady, withPageTitle } from 'sharedComponents';
 
 type RouteType = {
@@ -7,16 +9,16 @@ type RouteType = {
   component: any;
 };
 
-const Home = () => <h1>HOME</h1>;
-
-// INFO: to split the app in chunks use:
-// component: React.lazy(() => import('./components/Validators')),
-
 const routes: RouteType[] = [
   {
     path: '/',
     title: '',
     component: Home,
+  },
+  {
+    path: '/login',
+    title: '',
+    component: Login,
   },
 ];
 
