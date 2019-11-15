@@ -80,7 +80,7 @@ export async function getRounds({ elasticUrl, shardNumber, signersIndex, timeout
     }));
     return {
       rounds,
-      roundsFetched: true,
+      roundsFetched: rounds.length > 0,
     };
   } catch {
     console.error('Failed rounds');

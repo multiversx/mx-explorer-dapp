@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCogs } from '@fortawesome/free-solid-svg-icons';
+import { faCogs, faCube } from '@fortawesome/free-solid-svg-icons';
 import { BlocksTable, Loader } from '../../sharedComponents';
 import { useGlobalState } from '../../context';
 import { getValidator, getRounds, searchBlocks } from './helpers/asyncRequests';
@@ -56,7 +56,7 @@ const ValidatorDetails = () => {
     endBlockNr: 0,
     blocksFetched: true,
   });
-  const [rounds, setRounds] = React.useState([]);
+  const [rounds, setRounds] = React.useState({ rounds: [], roundsFetched: true });
   const [success, setSuccess] = React.useState(true);
 
   React.useEffect(() => {
@@ -72,7 +72,9 @@ const ValidatorDetails = () => {
           setState(data);
           setSuccess(success);
           const props = { elasticUrl, timeout, shardNumber, signersIndex };
-          getRounds(props).then(({ rounds }) => setRounds(rounds));
+          getRounds(props).then(({ rounds, roundsFetched }) =>
+            setRounds({ rounds, roundsFetched })
+          );
           searchBlocks(props).then((blockdata: any) => setFetchedBlocks(blockdata));
         }
       });
@@ -84,6 +86,8 @@ const ValidatorDetails = () => {
     isValidator,
     // code,
   } = state;
+
+  console.warn(fetchedBlocks.blocks, fetchedBlocks.blocksFetched);
 
   return (
     <div ref={ref}>
@@ -106,7 +110,7 @@ const ValidatorDetails = () => {
                   <div className={isValidator ? 'col-md-7' : 'col-12'}>
                     <NetworkMetrics {...state} />
                   </div>
-                  {isValidator && <Rounds rounds={rounds} />}
+                  {isValidator && <Rounds {...rounds} />}
                 </div>
                 {isValidator && (
                   <>
@@ -115,16 +119,31 @@ const ValidatorDetails = () => {
                         <h4>Proposed Blocks</h4>
                       </div>
                     </div>
-                    <div className="row" ng-show="isValidator">
-                      <div className="col-12">
-                        <div className="card">
-                          <div className="card-body">
-                            Last 25 proposed blocks
-                            <BlocksTable blocks={fetchedBlocks.blocks} shardId={undefined} />
+                    {fetchedBlocks.blocksFetched ? (
+                      <div className="row">
+                        <div className="col-12">
+                          <div className="card">
+                            <div className="card-body">
+                              Last 25 proposed blocks
+                              <BlocksTable blocks={fetchedBlocks.blocks} shardId={undefined} />
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    ) : (
+                      <div className="row">
+                        <div className="col-12">
+                          <div className="card">
+                            <div className="card-body card-details" data-testid="errorScreen">
+                              <div className="empty">
+                                <FontAwesomeIcon icon={faCube} className="empty-icon" />
+                                <span className="h4 empty-heading">Unable to load blocks</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </>
                 )}
               </>

@@ -44,7 +44,13 @@ const EmptySearch = ({
           {validator.star && <span>*</span>}
         </TestnetLink>
       </td>
-      <td>{truncate(validator.versionNumber, 20)}</td>
+      <td>
+        {validator.versionNumber ? (
+          truncate(validator.versionNumber, 20)
+        ) : (
+          <span className="text-muted">N/A</span>
+        )}
+      </td>
       <td className="text-right">
         {(validator.totalUpTimeSec !== 0 || validator.totalDownTimeSec !== 0) && (
           <span>

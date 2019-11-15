@@ -42,9 +42,15 @@ const NodeInformation = ({
             <div className="row">
               <div className="col-lg-2 card-label">Shard</div>
               <div className="col-lg-10">
-                <TestnetLink to={`/blocks/shards/${shardNumber}`}>
-                  <ShardSpan shardId={shardNumber} />
-                </TestnetLink>
+                {shardNumber !== undefined ? (
+                  <TestnetLink to={`/blocks/shards/${shardNumber}`}>
+                    <ShardSpan shardId={shardNumber} />
+                  </TestnetLink>
+                ) : (
+                  <span className="text-muted" ng-show="!nodeDisplayName">
+                    N/A
+                  </span>
+                )}
               </div>
             </div>
             <hr className="hr-space" />
@@ -68,7 +74,15 @@ const NodeInformation = ({
             <hr className="hr-space" />
             <div className="row">
               <div className="col-lg-2 card-label">Version</div>
-              <div className="col-lg-10">{versionNumber}</div>
+              <div className="col-lg-10">
+                {versionNumber ? (
+                  versionNumber
+                ) : (
+                  <span className="text-muted" ng-show="!nodeDisplayName">
+                    N/A
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>
