@@ -1,24 +1,17 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGlobalState } from '../context';
 import elrondLogo from 'assets/img/elrond.svg';
 import TestnetSwitcher from '../components/Layout/Navbar/TestnetSwitcher';
-import { TestnetLink, Search } from '../sharedComponents';
+import { TestnetLink } from '../sharedComponents';
 
 export default function SiteNavbar() {
   const [expanded, setExpanded] = React.useState(false);
-  const {
-    activeTestnet: { validators },
-    activeTestnetId,
-  } = useGlobalState();
 
   const onToggle = (isExpanded: boolean) => {
     setExpanded(isExpanded);
   };
-  const { pathname } = useLocation();
 
   return (
     <Navbar collapseOnSelect expand="md" onToggle={onToggle} expanded={expanded}>

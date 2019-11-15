@@ -15,11 +15,11 @@ const initialValues = { password: '' };
 const PasswordFormik = () => (
   <Formik
     initialValues={initialValues}
-    onSubmit={({ password }, { setSubmitting, resetForm, setValues }) => {
+    onSubmit={({ password }, { setSubmitting, resetForm, setValues, setErrors }) => {
       createNewWallet(password);
       setSubmitting(false);
       resetForm();
-      setValues(initialValues);
+      setValues({ password });
     }}
     validationSchema={object().shape({
       password: string()
@@ -48,6 +48,11 @@ const PasswordFormik = () => (
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
+              onKeyDown={(e: React.KeyboardEvent) => {
+                if (e.key === 'Enter') {
+                  handleSubmit();
+                }
+              }}
               className={
                 errors.password && touched.password ? 'form-control is-invalid' : 'form-control'
               }
@@ -75,10 +80,6 @@ const PasswordFormik = () => (
 );
 
 const CreateWallet = () => {
-  const [newPass, setNewPass] = React.useState('');
-
-  const newPassChange = () => {};
-
   return (
     <div className="card">
       <div className="card-body">
