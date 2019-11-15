@@ -123,7 +123,7 @@ const ValidatorsTableHeader = ({
                           validatorObserverValue === 'validator' ? 'active' : ''
                         }`}
                         href="#/validators"
-                        onClick={e => changeValidatorObserver(e, 'online')}
+                        onClick={e => changeValidatorObserver(e, 'validator')}
                       >
                         Validator
                       </a>
@@ -132,7 +132,7 @@ const ValidatorsTableHeader = ({
                           validatorObserverValue === 'observer' ? 'active' : ''
                         }`}
                         href="#/validators"
-                        onClick={e => changeValidatorObserver(e, 'offline')}
+                        onClick={e => changeValidatorObserver(e, 'observer')}
                       >
                         Observer
                       </a>
