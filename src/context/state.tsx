@@ -73,7 +73,7 @@ export const defaultTestnet = {
   gasLimit: 0,
   economics: false,
   data: false,
-  wallet: false,
+  wallet: true,
   validatorDetails: false,
   faucet: false,
 };

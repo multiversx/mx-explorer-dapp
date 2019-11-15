@@ -60,10 +60,12 @@ const Validators = () => {
 
   const getData = () => {
     if (ref.current !== null) {
-      getValidatorsData({ nodeUrl, timeout: Math.max(timeout, 6000) }).then(({ data, success }) => {
-        const newState = populateValidatorsTable(data, metaChainShardId);
-        ref.current !== null && setState({ success, data: newState });
-      });
+      getValidatorsData({ nodeUrl, timeout: Math.max(timeout, 10000) }).then(
+        ({ data, success }) => {
+          const newState = populateValidatorsTable(data, metaChainShardId);
+          ref.current !== null && setState({ success, data: newState });
+        }
+      );
     }
   };
 

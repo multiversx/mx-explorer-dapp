@@ -63,7 +63,7 @@ const ValidatorDetails = () => {
     if (ref.current !== null) {
       getValidator({
         elasticUrl,
-        timeout: Math.max(timeout, 6000),
+        timeout: Math.max(timeout, 10000),
         hexPublicKey: hexPublicKey || '',
         metaChainShardId,
         nodeUrl,
@@ -71,7 +71,12 @@ const ValidatorDetails = () => {
         if (ref.current !== null) {
           setState(data);
           setSuccess(success);
-          const props = { elasticUrl, timeout, shardNumber, signersIndex };
+          const props = {
+            elasticUrl,
+            timeout: Math.max(timeout, 10000),
+            shardNumber,
+            signersIndex,
+          };
           getRounds(props).then(({ rounds, roundsFetched }) =>
             setRounds({ rounds, roundsFetched })
           );
