@@ -7,7 +7,11 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PageNotFoud from './components/PageNotFoud';
 import routes from './routes';
 
-const Routes = () => {
+export const Routes = ({
+  routes,
+}: {
+  routes: { path: string; component: React.ComponentClass }[];
+}) => {
   const {
     config: { testnets },
     activeTestnet,
@@ -49,7 +53,7 @@ const Routes = () => {
         </Switch>
       </React.Suspense>
     ),
-    [testnets, activeTestnet]
+    [testnets, activeTestnet, routes]
   );
 };
 
@@ -57,7 +61,7 @@ export const App: React.FC = () => {
   return (
     <GlobalProvider>
       <Layout>
-        <Routes />
+        <Routes routes={routes} />
       </Layout>
     </GlobalProvider>
   );

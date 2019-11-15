@@ -7,11 +7,11 @@ import { Highlights } from './../../sharedComponents';
 
 //TODO: remove form tag from Hero Search
 
-const Layout = ({ children }: { children: React.ReactNode }) => (
+const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: React.ReactNode }) => (
   <>
     <TestnetRouter />
     <RoundManager />
-    <Navbar />
+    {navbar ? navbar : <Navbar />}
     <main role="main">
       <Highlights />
       {children}

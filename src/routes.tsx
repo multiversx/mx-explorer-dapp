@@ -1,3 +1,4 @@
+import React from 'react';
 import Home from './components/Home';
 import TransactionDetails from './components/TransactionDetails';
 import Transactions from './components/Transactions';
@@ -117,7 +118,10 @@ const wrappedRoutes = () =>
     const title = route.title ? `${route.title} • Elrond Explorer` : 'Elrond Explorer';
     return {
       path: route.path,
-      component: withPageTitle(title, withTestnetReady(route.component)),
+      component: (withPageTitle(
+        title,
+        withTestnetReady(route.component)
+      ) as any) as React.ComponentClass<{}, any>,
     };
   });
 

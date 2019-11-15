@@ -3,10 +3,10 @@ import { useLocation } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGlobalState } from 'context';
+import { useGlobalState } from '../context';
 import elrondLogo from 'assets/img/elrond.svg';
-import TestnetSwitcher from './TestnetSwitcher';
-import { TestnetLink, Search } from 'sharedComponents';
+import TestnetSwitcher from '../components/Layout/Navbar/TestnetSwitcher';
+import { TestnetLink, Search } from '../sharedComponents';
 
 export default function SiteNavbar() {
   const [expanded, setExpanded] = React.useState(false);
@@ -36,44 +36,10 @@ export default function SiteNavbar() {
         </Navbar.Toggle>
         <Navbar.Collapse id="navbars">
           <ul className="navbar-nav mr-auto">
-            <li
-              className={`nav-item ${pathname.toString().includes('blocks') ? 'active' : ''}`}
-              onClick={() => onToggle(false)}
-            >
-              <TestnetLink className="nav-link" to="/blocks">
-                blocks
-              </TestnetLink>
+            <li className={`nav-item active`} onClick={() => onToggle(false)}>
+              wallet
             </li>
-            <li
-              onClick={() => onToggle(false)}
-              className={`nav-item ${pathname.toString().includes('transactions') ? 'active' : ''}`}
-            >
-              <TestnetLink className="nav-link" to="/transactions">
-                transactions
-              </TestnetLink>
-            </li>
-            {validators !== false && (
-              <li
-                onClick={() => onToggle(false)}
-                className={`nav-item ${pathname.toString().includes('validators') ? 'active' : ''}`}
-              >
-                <TestnetLink className="nav-link" to="/validators">
-                  validators
-                </TestnetLink>
-              </li>
-            )}
           </ul>
-          {!['/', `/${activeTestnetId}`, `/${activeTestnetId}/`].includes(pathname) && (
-            <div className="form-search" role="search">
-              <div
-                className="input-group input-group-seamless float-right"
-                style={{ maxWidth: '22.5rem' }}
-              >
-                <Search />
-              </div>
-            </div>
-          )}
-
           <TestnetSwitcher onToggle={onToggle} />
         </Navbar.Collapse>
       </div>

@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './assets/sass/theme.scss';
 
 import App from './App';
+import Wallet from 'WALLET';
 import * as serviceWorker from './serviceWorker';
 
 if (process.env.NODE_ENV === 'development') {
@@ -12,7 +13,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 if (process.env.REACT_APP_WALLET) {
-  ReactDOM.render(<div>Wallet</div>, document.getElementById('root'));
+  ReactDOM.render(<Wallet />, document.getElementById('root'));
 } else ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
