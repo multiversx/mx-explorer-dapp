@@ -44,18 +44,6 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
               </td>
             </tr>
           ))}
-          {blocks.length === 0 && (
-            <tr>
-              <td colSpan={6} className="text-center pt-5 pb-4 border-0">
-                <div className="lds-ellipsis mt-5 mb-5">
-                  <div />
-                  <div />
-                  <div />
-                  <div />
-                </div>
-              </td>
-            </tr>
-          )}
         </tbody>
       </table>
     </div>

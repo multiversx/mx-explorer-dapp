@@ -120,16 +120,22 @@ const ValidatorDetails = () => {
                       </div>
                     </div>
                     {fetchedBlocks.blocksFetched ? (
-                      <div className="row">
-                        <div className="col-12">
-                          <div className="card">
-                            <div className="card-body">
-                              Last 25 proposed blocks
-                              <BlocksTable blocks={fetchedBlocks.blocks} shardId={undefined} />
+                      <>
+                        {fetchedBlocks.blocks.length > 0 ? (
+                          <div className="row">
+                            <div className="col-12">
+                              <div className="card">
+                                <div className="card-body">
+                                  Last 25 proposed blocks
+                                  <BlocksTable blocks={fetchedBlocks.blocks} shardId={undefined} />
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
+                        ) : (
+                          <Loader />
+                        )}
+                      </>
                     ) : (
                       <div className="row">
                         <div className="col-12">

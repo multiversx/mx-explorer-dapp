@@ -4,7 +4,7 @@ import { faCode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from '../../context';
 import { getAddressDetails } from './helpers/asyncRequests';
-import { Denominate, ScAddressIcon } from 'sharedComponents';
+import { Denominate } from 'sharedComponents';
 
 type StateType = {
   address: string;
