@@ -9,8 +9,6 @@ type RoundType = {
 };
 
 const Rounds = ({ rounds, roundsFetched }: { rounds: RoundType[]; roundsFetched: boolean }) => {
-  console.warn(11, roundsFetched);
-
   return (
     <div className="col-md-5">
       <div className="mt-4">

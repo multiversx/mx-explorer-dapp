@@ -92,8 +92,6 @@ const ValidatorDetails = () => {
     // code,
   } = state;
 
-  console.warn(fetchedBlocks.blocks, fetchedBlocks.blocksFetched);
-
   return (
     <div ref={ref}>
       <div className="container pt-4 pb-3">
