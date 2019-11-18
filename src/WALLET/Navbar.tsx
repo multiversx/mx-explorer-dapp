@@ -5,11 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import elrondLogo from 'assets/img/elrond.svg';
 import TestnetSwitcher from '../components/Layout/Navbar/TestnetSwitcher';
 import { TestnetLink } from '../sharedComponents';
+import { useWalletDispatch } from './context';
 
 export default function SiteNavbar() {
   const [expanded, setExpanded] = React.useState(false);
+  const dispatch = useWalletDispatch();
 
   const onToggle = (isExpanded: boolean) => {
+    dispatch({ type: 'logout' });
     setExpanded(isExpanded);
   };
 

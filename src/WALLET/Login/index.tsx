@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWallet, faBan } from '@fortawesome/free-solid-svg-icons';
+import { withRouter } from 'react-router-dom';
 import { useGlobalState } from './../../context';
 import CreateWallet from './Create';
 import AccessWallet from './Access';
 
-const Login = () => {
+const Login = withRouter(props => {
   const {
     activeTestnet: { wallet, name: testnetName },
   } = useGlobalState();
@@ -42,61 +43,6 @@ const Login = () => {
             </div>
             <div className="col-xl-5 col-lg-6 mt-4 mb-4">
               <AccessWallet />
-              {/* <div className="card">
-                <div className="card-body">
-                  <h4 className="card-title">Access My Wallet</h4>
-                  <p className="lead">Check balance, view public address or send ERD tokens.</p>
-                  <form ng-controller="mainWalletCtrl" ng-submit="accessNewWallet()">
-                    <div className="form-group">
-                      <label htmlFor="walletFile">Private Key</label>
-                      <fieldset>
-                        <div className="custom-file w-100">
-                          <input
-                            type="file"
-                            className="custom-file-input"
-                            // onchange="angular.element(this).scope().loadWalletFile(this.files)"
-                            id="walletFile"
-                            accept="application/json,.json"
-                            ng-disabled="walletDisabled"
-                          />
-                          <label
-                            className="custom-file-label"
-                            htmlFor="walletFile"
-                            id="walletFileLabel"
-                          >
-                            Choose file...
-                          </label>
-                        </div>
-                      </fieldset>
-                      <div className="invalid-feedback d-block">
-                        {'{'}
-                        {'{'}privateKeyError{'}'}
-                        {'}'}
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="accessPassInput">Password</label>
-                      <input
-                        type="password"
-                        className="form-control"
-                        id="accessPassInput"
-                        autoComplete="off"
-                        ng-change="accessPassChange(accessPassVal)"
-                        ng-model="accessPassVal"
-                        ng-disabled="walletDisabled"
-                      />
-                      <div className="invalid-feedback">
-                        {'{'}
-                        {'{'}accessPassError{'}'}
-                        {'}'}
-                      </div>
-                    </div>
-                    <button type="submit" className="btn btn-primary" id="accessWalletBtn">
-                      Unlock Wallet
-                    </button>
-                  </form>
-                </div>
-              </div> */}
             </div>
             <div className="row">
               <div className="col-12 text-center">
@@ -109,6 +55,6 @@ const Login = () => {
     ),
     [wallet, testnetName]
   );
-};
+});
 
 export default Login;

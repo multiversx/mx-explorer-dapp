@@ -1,11 +1,26 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useMemo } from 'react';
+import { withRouter } from 'react-router-dom';
+import { useGlobalState } from './../../context';
 import { useWalletState } from './../context';
+import Home from './Home';
 
-const WalletHome = () => {
-  const { userId } = useWalletState();
-  if (userId === '') return <Redirect to="/login" />;
-  return <h1>Wallet home</h1>;
-};
+const WalletIndex = withRouter(props => {
+  const {
+    activeTestnetId,
+    timeout,
+    activeTestnet: { nodeUrl },
+  } = useGlobalState();
+  const { loggedIn, publicKey } = useWalletState();
 
-export default WalletHome;
+  if (!loggedIn) {
+    activeTestnetId
+      ? props.history.push(`/${activeTestnetId}/login`)
+      : props.history.push(`/login`);
+  }
+
+  const homeProps = { publicKey, nodeUrl, timeout };
+
+  return useMemo(() => <Home {...homeProps} />, []);
+});
+
+export default WalletIndex;

@@ -1,9 +1,13 @@
 export interface StateType {
-  userId: string;
+  privateKey: string;
+  publicKey: string;
+  loggedIn: boolean;
 }
 
 const initialState: StateType = {
-  userId: '',
+  privateKey: '',
+  publicKey: '',
+  loggedIn: false,
 };
 
 export default initialState;
