@@ -174,7 +174,7 @@ const BlockDetails: React.FC = () => {
                           ) : (
                             <>
                               {consensusItems.map(item => (
-                                <TestnetLink className="hash" key={item} to={`/validator/${item}`}>
+                                <TestnetLink className="hash" key={item} to={`/validators/${item}`}>
                                   {truncate(item, 100)}
                                 </TestnetLink>
                               ))}
