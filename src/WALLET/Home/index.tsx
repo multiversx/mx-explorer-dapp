@@ -1,14 +1,15 @@
 import React, { useMemo } from 'react';
 import { withRouter } from 'react-router-dom';
-import { useGlobalState } from './../../context';
 import { useWalletState } from './../context';
+import { useGlobalState } from './../../context';
+
 import Home from './Home';
 
 const WalletIndex = withRouter(props => {
   const {
     activeTestnetId,
     timeout,
-    activeTestnet: { nodeUrl },
+    activeTestnet: { nodeUrl, faucet },
   } = useGlobalState();
   const { loggedIn, publicKey } = useWalletState();
 
@@ -18,7 +19,7 @@ const WalletIndex = withRouter(props => {
       : props.history.push(`/login`);
   }
 
-  const homeProps = { publicKey, nodeUrl, timeout };
+  const homeProps = { publicKey, nodeUrl, timeout, faucet };
 
   return useMemo(() => <Home {...homeProps} />, []);
 });

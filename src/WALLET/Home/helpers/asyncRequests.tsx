@@ -20,10 +20,27 @@ export async function getWalletDetails({ nodeUrl, publicKey, timeout }: DetailsT
       detailsFetched: true,
     };
   } catch (err) {
+    console.error(err);
     return {
       balance: '',
       nonce: '',
       detailsFetched: true,
     };
+  }
+}
+export async function getTokens({ nodeUrl, publicKey, timeout }: DetailsType) {
+  try {
+    const data = await axios.post(
+      `${nodeUrl}/transaction/send-user-funds`,
+      {
+        receiver: publicKey,
+      },
+      { timeout }
+    );
+
+    return Boolean(data);
+  } catch (err) {
+    console.error(err);
+    return false;
   }
 }

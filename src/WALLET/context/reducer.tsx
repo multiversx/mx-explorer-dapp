@@ -2,7 +2,9 @@ import initialState, { StateType } from './state';
 
 export type ActionType =
   | { type: 'login'; privateKey: string; publicKey: string }
-  | { type: 'logout' };
+  | { type: 'logout' }
+  | { type: 'setBalance'; balance: string }
+  | { type: 'setNonce'; nonce: string };
 
 export function globalReducer(state: StateType = initialState, action: ActionType): StateType {
   switch (action.type) {
@@ -12,6 +14,14 @@ export function globalReducer(state: StateType = initialState, action: ActionTyp
     }
     case 'logout': {
       return initialState;
+    }
+    case 'setBalance': {
+      const { balance } = action;
+      return { ...state, balance };
+    }
+    case 'setNonce': {
+      const { nonce } = action;
+      return { ...state, nonce };
     }
     default: {
       throw new Error(`Unhandled action type: ${action!.type}`);

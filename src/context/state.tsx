@@ -26,8 +26,8 @@ export interface TestnetType {
   gasLimit: number;
   economics?: boolean;
   data?: boolean;
-  wallet?: boolean;
   validatorDetails?: boolean;
+  wallet?: boolean;
   faucet: boolean;
 }
 
@@ -77,8 +77,6 @@ export const defaultTestnet = {
   validatorDetails: false,
   faucet: false,
 };
-
-//TODO: de ce se fac multe calluri de _count ?
 
 const configKey: any = 'CONFIG';
 const windowConfig: ConfigType = window[configKey] as any;

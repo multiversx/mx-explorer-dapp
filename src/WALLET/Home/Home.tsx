@@ -1,34 +1,45 @@
 import React from 'react';
 import { getWalletDetails } from './helpers/asyncRequests';
 import WalletHeader from './WalletHeader';
-import { WalletProvider } from 'WALLET/context';
+import { useWalletDispatch } from './../context';
 
-interface WalletHomeType {
+export interface WalletHomeType {
   publicKey: string;
   nodeUrl: string;
   timeout: number;
+  faucet: boolean;
 }
 
-const WalletHome = ({ publicKey, nodeUrl, timeout }: WalletHomeType) => {
+const WalletHome = (props: WalletHomeType) => {
   let ref = React.useRef(null);
-  const [balance, setBalance] = React.useState<string>('...');
+  const { publicKey, nodeUrl, timeout } = props;
+  const dispatch = useWalletDispatch();
+
+  const logout = () => {
+    dispatch({ type: 'logout' });
+  };
+
+  const populateDetails = () => {
+    getWalletDetails({
+      publicKey,
+      nodeUrl,
+      timeout,
+    }).then(({ balance, nonce, detailsFetched }) => {
+      if (detailsFetched && ref.current !== null) {
+        dispatch({ type: 'setBalance', balance });
+        dispatch({ type: 'setNonce', nonce });
+      }
+    });
+  };
+
   React.useEffect(() => {
-    if (ref.current !== null) {
-      getWalletDetails({
-        publicKey,
-        nodeUrl,
-        timeout,
-      }).then(({ balance, nonce, detailsFetched }) => {
-        if (detailsFetched && ref.current !== null) {
-          setBalance(balance);
-        }
-      });
-    }
+    if (ref.current !== null) populateDetails();
   }, []);
+
   return (
     <div ref={ref}>
       <div className="bg-blue">
-        <WalletHeader publicKey={publicKey} balance={balance} />
+        <WalletHeader {...props} populateDetails={populateDetails} logout={logout} />
       </div>
       <div className="container pt-3 pb-3">
         <div className="row">
@@ -272,62 +283,6 @@ const WalletHome = ({ publicKey, nodeUrl, timeout }: WalletHomeType) => {
           </div>
         </div>
       </div>
-      <div
-        className="modal fade"
-        id="requestModal"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="requestTokens"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="requestTokens">
-                ERD Faucet
-              </h5>
-              <button type="button" className="close" data-dismiss="modal">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <div id="requestBox">
-                <div className="empty mt-4 mb-3">
-                  <i className="fa fa-coins empty-icon" />
-                  <span className="h4 empty-heading">Request Tokens</span>
-                  <div className="empty-details">
-                    <p>Here you can request testnet ERD tokens.</p>
-                    <div id="recaptcha" />
-                    <button
-                      id="requestButton"
-                      type="submit"
-                      className="btn btn-primary mt-4"
-                      disabled
-                      ng-click="requestTokens()"
-                    >
-                      Request Tokens
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div id="requestSuccess" className="d-none">
-                <div className="empty mt-4 mb-3">
-                  <i className="fa fa-check empty-icon text-success" aria-hidden="true" />
-                  <span className="h5 empty-heading text-success">Request Succeed</span>
-                  <div className="empty-details empty-small">
-                    <p className="mt-3 mb-3">
-                      Please allow a few seconds for the transaction to be processed.
-                    </p>
-                  </div>
-                  <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">
-                    Close
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="erds" ng-show="myBalance == 0" style={{ display: 'none' }} />
     </div>
   );
 };

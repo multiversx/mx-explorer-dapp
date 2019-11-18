@@ -6,11 +6,11 @@ const CONFIG = {
         denomination: number by which transaction are divided
         numInitCharactersForScAddress: number of zeros to hide
       Possbile flags:
-        wallet: (default) true
         validators: (default) true
         validatorDetails: (default) false
         economics: (default) false
         data: (default) false
+        wallet: (default) true
         faucet: (default) false (faucet)
     */
   testnets: [
@@ -29,7 +29,7 @@ const CONFIG = {
       economics: true,
       data: true,
       validatorDetails: true,
-      faucet: false,
+      faucet: true,
     },
     {
       id: 'cryptobubbles',
