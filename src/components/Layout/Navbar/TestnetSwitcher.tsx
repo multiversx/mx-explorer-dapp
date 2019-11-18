@@ -17,6 +17,7 @@ export default function TestnetSwitcher({ onToggle }: { onToggle: Function }) {
   }));
 
   const hidePopover = () => {
+    onToggle(false);
     document.body.click();
   };
 
