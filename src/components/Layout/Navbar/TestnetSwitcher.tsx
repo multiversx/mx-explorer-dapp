@@ -2,17 +2,13 @@ import React from 'react';
 import { OverlayTrigger, Popover, Accordion, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useGlobalState } from '../../../context';
 
 export default function TestnetSwitcher({ onToggle }: { onToggle: Function }) {
   const globalState = useGlobalState();
 
   const ref = React.useRef(null);
-
-  const { pathname } = useLocation();
-  let locationArray = pathname.substr(1).split('/');
-  const testnetId = locationArray[0];
 
   const liksArray = globalState.config.testnets.map(testnet => ({
     name: testnet.name,
@@ -67,16 +63,20 @@ export default function TestnetSwitcher({ onToggle }: { onToggle: Function }) {
         overlay={
           <Popover id="popover-positioned-bottom">
             <Popover.Content>
-              {liksArray.map(link => (
-                <Link
-                  className={`nav-link ${testnetId === link.to ? 'active' : ''}`}
-                  key={link.key}
-                  onClick={hidePopover}
-                  to={`/${link.to}`}
-                >
-                  {link.name}
-                </Link>
-              ))}
+              {liksArray.map(link => {
+                return (
+                  <Link
+                    className={`nav-link ${
+                      globalState.activeTestnetId === link.to ? 'active' : ''
+                    }`}
+                    key={link.key}
+                    onClick={hidePopover}
+                    to={`/${link.to}`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
             </Popover.Content>
           </Popover>
         }
