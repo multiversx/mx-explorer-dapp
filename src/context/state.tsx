@@ -9,6 +9,7 @@ export interface TestnetType {
         validators: (default) true
         validatorDetails: (default) false
         economics: (default) false
+        gasLimitEditable: (default) false
         data: (default) false
         faucet: (default) false (faucet)
   */
@@ -24,6 +25,7 @@ export interface TestnetType {
   denomination: number;
   gasPrice: number;
   gasLimit: number;
+  gasLimitEditable?: boolean;
   economics?: boolean;
   data?: boolean;
   validatorDetails?: boolean;
@@ -71,6 +73,7 @@ export const defaultTestnet = {
   denomination: 0,
   gasPrice: 0,
   gasLimit: 0,
+  gasLimitEditable: false,
   economics: false,
   data: false,
   wallet: true,

@@ -48,10 +48,11 @@ export const entireBalance = ({
   const fee = web3.utils.toBN(gasPrice * gasLimit);
   const balance = web3.utils.toBN(myBalance);
   const entireBalance = balance.sub(fee);
+  // entireBalance >= 0
   if (entireBalance.isZero || !entireBalance.isNeg) {
-    // entireBalance >= 0
     const input = balance.sub(fee).toString(10);
     const denominated = denominate({ input, denomination, decimals, showAllDecimals: true });
     return denominated.replace(/,/g, '');
   }
+  return undefined;
 };

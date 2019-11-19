@@ -1,17 +1,29 @@
 import * as React from 'react';
 import { Formik, ErrorMessage } from 'formik';
+import { Accordion, ListGroup, Card } from 'react-bootstrap';
+import { Denominate } from './../../../sharedComponents';
 import { validationSchema, entireBalance } from './validatorFunctions';
 import { useWalletState } from './../../context';
 import { useGlobalState } from './../../../context';
-
-const initialValues = { dstAddress: '', amount: '', gasPrice: 10, gasLimit: 100, data: '' };
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 
 const SendFormik = () => {
   let ref = React.useRef(null);
   const {
-    activeTestnet: { economics, denomination, data, decimals },
+    activeTestnet: {
+      economics,
+      denomination,
+      data,
+      decimals,
+      gasLimitEditable,
+      gasLimit,
+      gasPrice,
+    },
   } = useGlobalState();
   const { balance } = useWalletState();
+
+  const initialValues = { dstAddress: '', amount: '', gasPrice, gasLimit, data: '' };
 
   return (
     <Formik
@@ -39,16 +51,19 @@ const SendFormik = () => {
           setFieldValue,
           handleSubmit,
         } = props;
+
         const copyDstAddress = (e: React.SyntheticEvent) => {
           e.preventDefault();
           navigator.clipboard.writeText(values.dstAddress);
         };
+
         const getEntireBalance = (e: React.SyntheticEvent) => {
           e.preventDefault();
           const { gasLimit, gasPrice } = values;
           const newBalance = entireBalance({ balance, gasPrice, gasLimit, denomination, decimals });
-          setFieldValue('amount', newBalance);
+          if (newBalance !== undefined) setFieldValue('amount', newBalance);
         };
+
         return (
           <form onSubmit={handleSubmit} ref={ref}>
             <div className="form-group">
@@ -95,52 +110,75 @@ const SendFormik = () => {
               />
               <ErrorMessage component="div" name="amount" className="invalid-feedback" />
             </div>
-            {economics && (
-              <>
-                <div className="form-group">
-                  <label htmlFor="gasPrice">
-                    Gas Price (10 <sup>-{denomination}</sup> ERD)
+            <Accordion className={economics ? '' : 'd-none'}>
+              <div>
+                <div>Transaction fee:</div>
+
+                <Accordion.Toggle as={Card.Text} eventKey="0" style={{ marginBottom: '1rem' }}>
+                  <label>
+                    <Denominate value={(gasPrice * gasLimit).toString()} />
+                    &nbsp;
+                    <FontAwesomeIcon icon={faAngleDown} />
                   </label>
-                  <input
-                    type="text"
-                    className={
-                      errors.gasPrice && touched.gasPrice
-                        ? 'form-control is-invalid'
-                        : 'form-control'
-                    }
-                    id="gasPrice"
-                    name="gasPrice"
-                    placeholder="Amount"
-                    required
-                    value={values.gasPrice}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    autoComplete="off"
-                  />
-                  <ErrorMessage component="div" name="gasPrice" className="invalid-feedback" />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="gasLimit">Gas Limit</label>
-                  <input
-                    type="text"
-                    className={
-                      errors.gasLimit && touched.gasLimit
-                        ? 'form-control is-invalid'
-                        : 'form-control'
-                    }
-                    id="gasLimit"
-                    name="gasLimit"
-                    placeholder="Amount"
-                    required
-                    value={values.gasLimit}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    autoComplete="off"
-                  />
-                  <ErrorMessage component="div" name="gasLimit" className="invalid-feedback" />
-                </div>
-              </>
-            )}
+                </Accordion.Toggle>
+              </div>
+
+              <Accordion.Collapse eventKey="0">
+                <fieldset
+                  className="border p-2"
+                  style={{
+                    marginBottom: '1rem',
+                    marginLeft: '-0.5rem',
+                    width: '103%',
+                  }}
+                >
+                  <div className="form-group">
+                    <label htmlFor="gasPrice">
+                      Gas Price (10 <sup>-{denomination}</sup> ERD)
+                    </label>
+                    <input
+                      type="text"
+                      className={
+                        errors.gasPrice && touched.gasPrice
+                          ? 'form-control is-invalid'
+                          : 'form-control'
+                      }
+                      id="gasPrice"
+                      name="gasPrice"
+                      placeholder="Amount"
+                      required
+                      value={values.gasPrice}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      autoComplete="off"
+                    />
+                    <ErrorMessage component="div" name="gasPrice" className="invalid-feedback" />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="gasLimit">Gas Limit</label>
+                    <input
+                      type="text"
+                      className={
+                        errors.gasLimit && touched.gasLimit
+                          ? 'form-control is-invalid'
+                          : 'form-control'
+                      }
+                      id="gasLimit"
+                      name="gasLimit"
+                      placeholder="Amount"
+                      required
+                      disabled={!gasLimitEditable}
+                      value={values.gasLimit}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      autoComplete="off"
+                    />
+                    <ErrorMessage component="div" name="gasLimit" className="invalid-feedback" />
+                  </div>
+                </fieldset>
+              </Accordion.Collapse>
+            </Accordion>
+
             {data && (
               <div className="form-group">
                 <label htmlFor="amount">Data</label>
