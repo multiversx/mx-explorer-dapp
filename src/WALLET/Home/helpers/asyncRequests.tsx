@@ -79,8 +79,6 @@ export async function getLatestTransactions({
       { timeout }
     );
 
-    console.warn(11, hits);
-
     return {
       transactions: hits.map((transaction: any) => transaction._source),
       success: true,
