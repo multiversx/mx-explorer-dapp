@@ -44,3 +44,51 @@ export async function getTokens({ nodeUrl, publicKey, timeout }: DetailsType) {
     return false;
   }
 }
+
+type GetLatestTransactionsType = {
+  elasticUrl: string;
+  publicKey: string;
+  timeout: number;
+};
+
+export async function getLatestTransactions({
+  elasticUrl,
+  publicKey,
+  timeout,
+}: GetLatestTransactionsType) {
+  try {
+    const {
+      data: {
+        hits: { hits },
+      },
+    } = await axios.post(
+      `${elasticUrl}/transactions/_search`,
+      {
+        query: {
+          bool: {
+            should: [{ match: { sender: publicKey } }, { match: { receiver: publicKey } }],
+          },
+        },
+        sort: {
+          timestamp: {
+            order: 'desc',
+          },
+        },
+        size: 15,
+      },
+      { timeout }
+    );
+
+    console.warn(11, hits);
+
+    return {
+      transactions: hits.map((transaction: any) => transaction._source),
+      success: true,
+    };
+  } catch (err) {
+    return {
+      transactions: [],
+      success: false,
+    };
+  }
+}

@@ -9,7 +9,7 @@ const WalletIndex = withRouter(props => {
   const {
     activeTestnetId,
     timeout,
-    activeTestnet: { nodeUrl, faucet },
+    activeTestnet: { nodeUrl, faucet, economics },
   } = useGlobalState();
   const { loggedIn, publicKey } = useWalletState();
 
@@ -19,7 +19,7 @@ const WalletIndex = withRouter(props => {
       : props.history.push(`/login`);
   }
 
-  const homeProps = { publicKey, nodeUrl, timeout, faucet };
+  const homeProps = { publicKey, nodeUrl, timeout, faucet, economics };
 
   return useMemo(() => <Home {...homeProps} />, []);
 });
