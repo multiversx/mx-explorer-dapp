@@ -13,6 +13,7 @@ const LatestTransactions = () => {
   const {
     timeout,
     activeTestnet: { elasticUrl },
+    refresh: { timestamp },
   } = useGlobalState();
   const { publicKey } = useWalletState();
 
@@ -20,19 +21,23 @@ const LatestTransactions = () => {
   const [fetching, setFetching] = React.useState(true);
   const [success, setSuccess] = React.useState(true);
 
-  React.useEffect(() => {
+  const refreshTransactions = () => {
     if (ref.current !== null)
       getLatestTransactions({ elasticUrl, publicKey, timeout }).then(
         ({ transactions, success }) => {
-          if (success && ref.current !== null) {
-            setTransactions(transactions);
-          } else if (!success && ref.current !== null) {
-            setSuccess(false);
+          if (ref.current !== null) {
+            if (success) {
+              setTransactions(transactions);
+            } else {
+              setSuccess(false);
+            }
+            setFetching(false);
           }
-          setFetching(false);
         }
       );
-  });
+  };
+
+  React.useEffect(refreshTransactions, [timestamp]);
 
   const NoTransactionsFound = () => (
     <div style={{ height: 'calc(100% - 50px)' }} className="d-flex justify-content-center">
@@ -50,7 +55,7 @@ const LatestTransactions = () => {
     <div className="card-scroll" style={{ height: 'calc(100% - 50px)' }}>
       <div className="animated fadeIn">
         {transactions.map((tx: TransactionType, i) => (
-          <>
+          <div key={tx.hash}>
             <div className="row">
               <div className="col-6">
                 <span className="icon-container-round">
@@ -81,7 +86,7 @@ const LatestTransactions = () => {
                 <hr className="hr-space" />
               </div>
             )}
-          </>
+          </div>
         ))}
       </div>
     </div>

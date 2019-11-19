@@ -273,9 +273,12 @@ main .form-search .form-control:focus {
   color: rgba(255, 255, 255, 0.4);
   font-size: 1.1rem;
   margin-left: 0.6rem;
+  svg {
+    color: rgba(255, 255, 255, 0.4) !important;
+  }
   &:hover {
     svg {
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.8) !important;
     }
   }
 }

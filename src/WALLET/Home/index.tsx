@@ -6,12 +6,8 @@ import { useGlobalState } from './../../context';
 import Home from './Home';
 
 const WalletIndex = withRouter(props => {
-  const {
-    activeTestnetId,
-    timeout,
-    activeTestnet: { nodeUrl, faucet, economics },
-  } = useGlobalState();
-  const { loggedIn, publicKey } = useWalletState();
+  const { activeTestnetId } = useGlobalState();
+  const { loggedIn } = useWalletState();
 
   if (!loggedIn) {
     activeTestnetId
@@ -19,9 +15,7 @@ const WalletIndex = withRouter(props => {
       : props.history.push(`/login`);
   }
 
-  const homeProps = { publicKey, nodeUrl, timeout, faucet, economics };
-
-  return useMemo(() => <Home {...homeProps} />, []);
+  return useMemo(() => <Home />, []);
 });
 
 export default WalletIndex;

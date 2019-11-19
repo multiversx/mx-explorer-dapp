@@ -8,22 +8,21 @@ const AccessWallet = withRouter(props => {
   const { activeTestnetId } = useGlobalState();
   const { loggedIn } = useWalletState();
 
-  return useMemo(
-    () => (
-      <div className="card">
-        <div className="card-body">
-          <h4 className="card-title">Access My Wallet</h4>
-          <p className="lead">Check balance, view public address or send ERD tokens.</p>
-          <AccessFormik
-            loggedIn={loggedIn}
-            history={props.history}
-            activeTestnetId={activeTestnetId}
-          />
-        </div>
+  const AccessPage = ({ activeTestnetId }: { activeTestnetId: string }) => (
+    <div className="card">
+      <div className="card-body">
+        <h4 className="card-title">Access My Wallet</h4>
+        <p className="lead">Check balance, view public address or send ERD tokens.</p>
+        <AccessFormik
+          loggedIn={loggedIn}
+          history={props.history}
+          activeTestnetId={activeTestnetId}
+        />
       </div>
-    ),
-    [activeTestnetId]
+    </div>
   );
+
+  return useMemo(() => <AccessPage activeTestnetId={activeTestnetId} />, [activeTestnetId]);
 });
 
 export default AccessWallet;

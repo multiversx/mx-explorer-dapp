@@ -6,16 +6,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReactComponent as ErdsSvg } from 'assets/img/erds.svg';
 import { useWalletState } from './../context';
 import { getTokens } from './helpers/asyncRequests';
-import { WalletHomeType } from './Home';
+import { useGlobalState } from './../../context';
 
 interface WalletHeaderType {
   populateDetails: Function;
 }
 
-const RequestTokens = (props: WalletHeaderType & WalletHomeType) => {
-  const { publicKey, faucet, timeout, nodeUrl, populateDetails } = props;
-  const { balance } = useWalletState();
+const RequestTokens = (props: WalletHeaderType) => {
+  const {
+    timeout,
+    activeTestnet: { nodeUrl, faucet },
+  } = useGlobalState();
+  const { publicKey, balance } = useWalletState();
+
   let ref = React.useRef(null);
+
   const [showModal, setShowModal] = React.useState(false);
   const [currentBalance, setCurrentBalance] = React.useState(balance);
   const [erdsClass, setErdsClass] = React.useState<'d-none' | 'show' | 'hide'>('d-none');
@@ -39,7 +44,7 @@ const RequestTokens = (props: WalletHeaderType & WalletHomeType) => {
   const onRequestClick = () => {
     let intervalId: any = null;
     function getNewBalance() {
-      populateDetails(props);
+      props.populateDetails(props);
       if (balance !== currentBalance) {
         clearInterval(intervalId);
       }

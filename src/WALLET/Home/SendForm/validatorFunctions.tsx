@@ -1,4 +1,6 @@
-import { string, object, mixed, number } from 'yup';
+import { string, object, number } from 'yup';
+import Web3 from 'web3';
+import denominate from './../../../sharedComponents/Denominate/denominate';
 import { addressIsHash } from './../../../helpers';
 
 export function isValidNumber(number: number) {
@@ -26,3 +28,30 @@ export const validationSchema = object().shape({
     .required('Required')
     .test('isValidNumber', 'Invalid number', value => value && isValidNumber(value)),
 });
+
+interface EntireBalanceType {
+  balance: string;
+  gasPrice: number;
+  gasLimit: number;
+  denomination: number;
+  decimals: number;
+}
+
+export const entireBalance = ({
+  balance: myBalance,
+  gasLimit,
+  gasPrice,
+  denomination,
+  decimals,
+}: EntireBalanceType) => {
+  const web3 = new Web3();
+  const fee = web3.utils.toBN(gasPrice * gasLimit);
+  const balance = web3.utils.toBN(myBalance);
+  const entireBalance = balance.sub(fee);
+  if (entireBalance.isZero || !entireBalance.isNeg) {
+    // entireBalance >= 0
+    const input = balance.sub(fee).toString(10);
+    const denominated = denominate({ input, denomination, decimals, showAllDecimals: true });
+    return denominated.replace(/,/g, '');
+  }
+};

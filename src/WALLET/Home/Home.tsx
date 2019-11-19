@@ -3,46 +3,41 @@ import { getWalletDetails } from './helpers/asyncRequests';
 import WalletHeader from './WalletHeader';
 import SendForm from './SendForm';
 import LatestTransactions from './LatestTransactions';
-import { useWalletDispatch } from './../context';
+import { useWalletDispatch, useWalletState } from './../context';
+import { useGlobalState } from './../../context';
 
-export interface WalletHomeType {
-  publicKey: string;
-  nodeUrl: string;
-  timeout: number;
-  faucet: boolean;
-  economics: boolean | undefined;
-}
-
-const WalletHome = (props: WalletHomeType) => {
+const WalletHome = () => {
   let ref = React.useRef(null);
-  const { publicKey, nodeUrl, timeout } = props;
   const dispatch = useWalletDispatch();
 
-  const logout = () => {
-    dispatch({ type: 'logout' });
-  };
+  const {
+    timeout,
+    activeTestnet: { nodeUrl, economics },
+    refresh: { timestamp },
+  } = useGlobalState();
+  const { publicKey } = useWalletState();
 
   const populateDetails = () => {
-    getWalletDetails({
-      publicKey,
-      nodeUrl,
-      timeout,
-    }).then(({ balance, nonce, detailsFetched }) => {
-      if (detailsFetched && ref.current !== null) {
-        dispatch({ type: 'setBalance', balance });
-        dispatch({ type: 'setNonce', nonce });
-      }
-    });
+    if (ref.current !== null) {
+      getWalletDetails({
+        publicKey,
+        nodeUrl,
+        timeout,
+      }).then(({ balance, nonce, detailsFetched }) => {
+        if (detailsFetched && ref.current !== null) {
+          dispatch({ type: 'setBalance', balance });
+          dispatch({ type: 'setNonce', nonce });
+        }
+      });
+    }
   };
 
-  React.useEffect(() => {
-    if (ref.current !== null) populateDetails();
-  }, []);
+  React.useEffect(populateDetails, [timestamp]);
 
   return (
     <div ref={ref}>
       <div className="bg-blue">
-        <WalletHeader {...props} populateDetails={populateDetails} logout={logout} />
+        <WalletHeader populateDetails={populateDetails} />
       </div>
       <div className="container pt-3 pb-3">
         <div className="row">
@@ -51,7 +46,7 @@ const WalletHome = (props: WalletHomeType) => {
               <div className="card-body">
                 <div id="sendTransaction">
                   <h4 className="card-title">Send Transaction</h4>
-                  <SendForm economicsEnabled={Boolean(props.economics)} />
+                  <SendForm />
                 </div>
                 <div
                   id="successTransaction"
@@ -66,7 +61,7 @@ const WalletHome = (props: WalletHomeType) => {
                       {'{'}
                       {'{'} lastTxHash {'}'}
                       {'}'}
-                      <a href="#" ng-click="copyTrx()">
+                      <a href="/#" ng-click="copyTrx()">
                         <i className="fa fa-copy" />
                       </a>
                     </span>

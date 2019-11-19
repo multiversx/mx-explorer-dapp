@@ -2,17 +2,25 @@ import React from 'react';
 import { faCopy, faCoins, faWallet, faSignOutAlt, faSync } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Denominate } from 'sharedComponents';
-import { useWalletState } from './../context';
-import { WalletHomeType } from './Home';
+import { useWalletState, useWalletDispatch } from './../context';
+import { useGlobalState } from './../../context';
 import RequestTokens from './RequestTokens';
 
 interface WalletHeaderType {
   populateDetails: Function;
-  logout: Function;
 }
 
-const WalletHeader = (props: WalletHeaderType & WalletHomeType) => {
-  const { publicKey, logout, populateDetails, faucet } = props;
+const WalletHeader = (props: WalletHeaderType) => {
+  const dispatch = useWalletDispatch();
+
+  const {
+    activeTestnet: { faucet },
+  } = useGlobalState();
+  const { publicKey } = useWalletState();
+
+  const logout = () => {
+    dispatch({ type: 'logout' });
+  };
   const { balance } = useWalletState();
   let publicKeyRef = React.useRef(null);
 
@@ -23,7 +31,7 @@ const WalletHeader = (props: WalletHeaderType & WalletHomeType) => {
 
   const refreshBalance = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    populateDetails();
+    props.populateDetails();
   };
 
   return (
@@ -40,7 +48,7 @@ const WalletHeader = (props: WalletHeaderType & WalletHomeType) => {
                 {publicKey}
               </span>
               <a
-                href="#"
+                href="/#"
                 className="highlight-link"
                 title="Copy to clipboard"
                 onClick={copyAddress}
@@ -60,13 +68,13 @@ const WalletHeader = (props: WalletHeaderType & WalletHomeType) => {
               <span className="highlight-value">
                 <Denominate value={balance} showAllDecimals />
               </span>
-              <a href="#" className="highlight-link" onClick={refreshBalance}>
+              <a href="/#" className="highlight-link" onClick={refreshBalance}>
                 <FontAwesomeIcon icon={faSync} />
               </a>
               {faucet && balance === '0' && <RequestTokens {...props} />}
             </div>
             <div className="log_out">
-              <a href="#" className="highlight-link" onClick={e => logout()}>
+              <a href="/#" className="highlight-link" onClick={e => logout()}>
                 LOG OUT <FontAwesomeIcon icon={faSignOutAlt} />
               </a>
             </div>
