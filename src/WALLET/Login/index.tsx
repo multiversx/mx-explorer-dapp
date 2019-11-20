@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWallet, faBan } from '@fortawesome/free-solid-svg-icons';
 import { withRouter } from 'react-router-dom';
+import { TestnetLink } from './../../sharedComponents';
 import { useGlobalState } from './../../context';
 import CreateWallet from './Create';
 import AccessWallet from './Access';
@@ -37,19 +38,21 @@ const Login = withRouter(props => {
             </div>
           </div>
         ) : (
-          <div className="row row-eq-height">
-            <div className="col-xl-5 offset-xl-1 col-lg-6 mt-4 mb-4">
-              <CreateWallet />
-            </div>
-            <div className="col-xl-5 col-lg-6 mt-4 mb-4">
-              <AccessWallet />
+          <>
+            <div className="row row-eq-height">
+              <div className="col-xl-5 offset-xl-1 col-lg-6 mt-4 mb-4">
+                <CreateWallet />
+              </div>
+              <div className="col-xl-5 col-lg-6 mt-4 mb-4">
+                <AccessWallet />
+              </div>
             </div>
             <div className="row">
               <div className="col-12 text-center">
-                <a href="#/unlock-pem">Access using PEM</a>
+                <TestnetLink to="/unlock-pem">Access using PEM</TestnetLink>
               </div>
             </div>
-          </div>
+          </>
         )}
       </div>
     ),

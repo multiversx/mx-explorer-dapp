@@ -1,6 +1,7 @@
 import React from 'react';
 import Home from './Home';
 import Login from './Login';
+import UnlockPem from './UnlockPem';
 import { withTestnetReady, withPageTitle } from 'sharedComponents';
 
 type RouteType = {
@@ -20,11 +21,16 @@ const routes: RouteType[] = [
     title: '',
     component: Login,
   },
+  {
+    path: '/unlock-pem',
+    title: 'Unlock Pem',
+    component: UnlockPem,
+  },
 ];
 
 const wrappedRoutes = () =>
   routes.map(route => {
-    const title = route.title ? `${route.title} • Elrond Explorer` : 'Elrond Explorer';
+    const title = route.title ? `${route.title} • Elrond Wallet` : 'Elrond Wallet';
     return {
       path: route.path,
       component: (withPageTitle(

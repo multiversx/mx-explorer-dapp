@@ -223,7 +223,7 @@ const SendFormik = () => {
               <ErrorMessage component="div" name="data" className="invalid-feedback" />
             </div>
             {/* <input type="hidden" value={values.testnetGasLimit} /> */}
-            <button type="submit" className="btn btn-primary" disabled id="sendTrxBtn">
+            <button type="submit" className="btn btn-primary" id="sendTrxBtn">
               {isSubmitting ? 'Sending...' : 'Send'}
             </button>
           </form>

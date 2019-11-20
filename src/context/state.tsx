@@ -92,17 +92,50 @@ const configIsDefined =
 
 const config = configIsDefined ? buildInitialConfig(importedConfig) : buildInitialConfig({});
 
+const isDevOrTest = ['development', 'test'].includes(process.env.NODE_ENV);
+
+const extendedConfig = {
+  ...config,
+  testnets: [
+    ...config.testnets,
+    ...(isDevOrTest
+      ? [
+          {
+            default: true,
+            id: 'ireland',
+            name: 'Ireland',
+            nodeUrl: 'http://108.129.20.194',
+            elasticUrl: 'http://18.200.142.29',
+            refreshRate: 6000,
+            numInitCharactersForScAddress: 20,
+            decimals: 4,
+            denomination: 4,
+            gasPrice: 10,
+            gasLimit: 1000,
+            gasLimitEditable: true,
+            economics: true,
+            data: true,
+            validatorDetails: true,
+            faucet: true,
+          },
+        ]
+      : []),
+  ],
+};
+
+const stateConfig = {
+  ...extendedConfig,
+  testnets: extendedConfig.testnets
+    .sort((a, b) => {
+      const defaultA = a.default ? 1 : 0;
+      const defaultB = b.default ? 1 : 0;
+      return defaultA - defaultB;
+    })
+    .reverse(),
+};
+
 const initialState: StateType = {
-  config: {
-    ...config,
-    testnets: config.testnets
-      .sort((a, b) => {
-        const defaultA = a.default ? 1 : 0;
-        const defaultB = b.default ? 1 : 0;
-        return defaultA - defaultB;
-      })
-      .reverse(),
-  },
+  config: stateConfig,
   defaultTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
   activeTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
   activeTestnetId: '',
