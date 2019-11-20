@@ -1,17 +1,29 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import { GlobalProvider } from 'context';
-import { WalletProvider } from './context';
+import { WalletProvider, useWalletDispatch } from './context';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Layout from 'components/Layout';
 import { Routes } from '../App';
 import routes from './routes';
 import Navbar from './Navbar';
 
+const SessionStarter = () => {
+  const dispatch = useWalletDispatch();
+  React.useEffect(() => {
+    dispatch({ type: 'initSession' });
+    return () => {
+      dispatch({ type: 'logout' });
+    };
+  }, []);
+  return null;
+};
+
 export const App: React.FC = () => {
   return (
     <GlobalProvider>
       <WalletProvider>
+        <SessionStarter />
         <Layout navbar={<Navbar />}>
           <Routes routes={routes} />
         </Layout>

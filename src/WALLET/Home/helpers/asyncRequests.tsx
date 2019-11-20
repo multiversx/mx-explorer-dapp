@@ -90,3 +90,37 @@ export async function getLatestTransactions({
     };
   }
 }
+
+interface SendTransactionType {
+  nodeUrl: string;
+  transaction: object;
+  timeout: number;
+  nonce: number;
+}
+
+export async function sendTransaction({ nodeUrl, transaction, timeout }: SendTransactionType) {
+  try {
+    const {
+      data: { txHash },
+      status,
+    } = await axios.post(`${nodeUrl}/transactions/send`, transaction, {
+      timeout,
+    });
+
+    if (status === 200) {
+      return {
+        lastTxHash: txHash,
+        success: true,
+      };
+    }
+    return {
+      lastTxHash: '',
+      success: false,
+    };
+  } catch (err) {
+    return {
+      lastTxHash: '',
+      success: false,
+    };
+  }
+}

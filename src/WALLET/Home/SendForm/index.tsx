@@ -1,12 +1,18 @@
 import * as React from 'react';
 import { Formik, ErrorMessage } from 'formik';
-import { Accordion, ListGroup, Card } from 'react-bootstrap';
+import { Accordion, Card } from 'react-bootstrap';
 import { Denominate } from './../../../sharedComponents';
-import { validationSchema, entireBalance } from './validatorFunctions';
-import { useWalletState } from './../../context';
+import { validationSchema, entireBalance, prepareTransaction } from './validatorFunctions';
+import { useWalletState, useWalletDispatch } from './../../context';
 import { useGlobalState } from './../../../context';
+import { sendTransaction } from './../helpers/asyncRequests';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+
+//TODO: functia de submit
+// validarea pe Send button
+// De testat request tokens cand porneste testnetul
+// De implementat PEM
 
 const SendFormik = () => {
   let ref = React.useRef(null);
@@ -15,28 +21,61 @@ const SendFormik = () => {
       economics,
       denomination,
       data,
+      nodeUrl,
       decimals,
       gasLimitEditable,
-      gasLimit,
-      gasPrice,
+      gasLimit: testnetGasLimit,
+      gasPrice: testnetGasPrice,
     },
+    timeout,
   } = useGlobalState();
-  const { balance } = useWalletState();
+  const { balance, privateKey, nonce, publicKey } = useWalletState();
+  const dispatch = useWalletDispatch();
 
-  const initialValues = { dstAddress: '', amount: '', gasPrice, gasLimit, data: '' };
+  const initialValues = {
+    dstAddress: '',
+    amount: '',
+    gasLimit: testnetGasLimit,
+    data: '',
+    // values uses for formatting, not present in inputs
+    testnetGasLimit,
+    denomination,
+    balance,
+    economics,
+    testnetGasPrice,
+  };
 
+  // todo : send setfieldvalue outside
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={(values, { setSubmitting, resetForm, setValues, setErrors }) => {
-        const { dstAddress, amount, gasPrice, gasLimit, data } = values;
         if (ref.current !== null) {
-          // dispatch({ type: 'login', privateKey, publicKey });
+          const { amount, dstAddress, data, gasLimit } = values;
+          const transaction = prepareTransaction({
+            amount,
+            gasLimit,
+            gasPrice: testnetGasPrice,
+            publicKey,
+            privateKey,
+            denomination,
+            data,
+            dstAddress,
+            nonce,
+          });
+
+          sendTransaction({ nodeUrl, transaction, timeout, nonce }).then(({ success }) => {
+            if (success) {
+              dispatch({ type: 'setNonce', nonce: nonce + 1 });
+            }
+          });
+
           setSubmitting(false);
           resetForm();
           setValues(values);
         }
       }}
+      enableReinitialize
       validationSchema={validationSchema}
     >
       {props => {
@@ -59,8 +98,14 @@ const SendFormik = () => {
 
         const getEntireBalance = (e: React.SyntheticEvent) => {
           e.preventDefault();
-          const { gasLimit, gasPrice } = values;
-          const newBalance = entireBalance({ balance, gasPrice, gasLimit, denomination, decimals });
+          const { gasLimit } = values;
+          const newBalance = entireBalance({
+            balance,
+            gasPrice: testnetGasPrice,
+            gasLimit,
+            denomination,
+            decimals,
+          });
           if (newBalance !== undefined) setFieldValue('amount', newBalance);
         };
 
@@ -112,11 +157,10 @@ const SendFormik = () => {
             </div>
             <Accordion className={economics ? '' : 'd-none'}>
               <div>
-                <div>Transaction fee:</div>
-
+                <div>Transaction fee</div>
                 <Accordion.Toggle as={Card.Text} eventKey="0" style={{ marginBottom: '1rem' }}>
                   <label>
-                    <Denominate value={(gasPrice * gasLimit).toString()} />
+                    <Denominate value={(testnetGasPrice * values.gasLimit).toString()} />
                     &nbsp;
                     <FontAwesomeIcon icon={faAngleDown} />
                   </label>
@@ -124,35 +168,13 @@ const SendFormik = () => {
               </div>
 
               <Accordion.Collapse eventKey="0">
-                <fieldset
-                  className="border p-2"
-                  style={{
-                    marginBottom: '1rem',
-                    marginLeft: '-0.5rem',
-                    width: '103%',
-                  }}
-                >
-                  <div className="form-group">
-                    <label htmlFor="gasPrice">
-                      Gas Price (10 <sup>-{denomination}</sup> ERD)
+                <div style={{ marginBottom: '1rem' }}>
+                  <hr />
+                  <div>
+                    <div>Gas limit</div>
+                    <label>
+                      <Denominate value={testnetGasPrice.toString()} />
                     </label>
-                    <input
-                      type="text"
-                      className={
-                        errors.gasPrice && touched.gasPrice
-                          ? 'form-control is-invalid'
-                          : 'form-control'
-                      }
-                      id="gasPrice"
-                      name="gasPrice"
-                      placeholder="Amount"
-                      required
-                      value={values.gasPrice}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      autoComplete="off"
-                    />
-                    <ErrorMessage component="div" name="gasPrice" className="invalid-feedback" />
                   </div>
                   <div className="form-group">
                     <label htmlFor="gasLimit">Gas Limit</label>
@@ -175,28 +197,32 @@ const SendFormik = () => {
                     />
                     <ErrorMessage component="div" name="gasLimit" className="invalid-feedback" />
                   </div>
-                </fieldset>
+                  <hr className="mt-4" />
+                </div>
               </Accordion.Collapse>
             </Accordion>
 
-            {data && (
-              <div className="form-group">
-                <label htmlFor="amount">Data</label>
-                <textarea
-                  className={
-                    errors.data && touched.data ? 'form-control is-invalid' : 'form-control'
-                  }
-                  id="data"
-                  name="data"
-                  placeholder="Data"
-                  value={values.data}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                <ErrorMessage component="div" name="data" className="invalid-feedback" />
-              </div>
-            )}
-
+            <div className={data ? 'form-group' : 'd-none'}>
+              <label htmlFor="amount">Data</label>
+              <textarea
+                className={errors.data && touched.data ? 'form-control is-invalid' : 'form-control'}
+                id="data"
+                name="data"
+                placeholder="Data"
+                value={values.data}
+                onChange={e => {
+                  setFieldValue('data', e.target.value);
+                  setFieldValue(
+                    'gasLimit',
+                    testnetGasLimit + (e.target.value ? e.target.value.length : 0),
+                    false
+                  );
+                }}
+                onBlur={handleBlur}
+              />
+              <ErrorMessage component="div" name="data" className="invalid-feedback" />
+            </div>
+            {/* <input type="hidden" value={values.testnetGasLimit} /> */}
             <button type="submit" className="btn btn-primary" disabled id="sendTrxBtn">
               {isSubmitting ? 'Sending...' : 'Send'}
             </button>

@@ -3,7 +3,7 @@ export interface StateType {
   publicKey: string;
   loggedIn: boolean;
   balance: string;
-  nonce: string;
+  nonce: number;
 }
 
 const initialState: StateType = {
@@ -11,7 +11,7 @@ const initialState: StateType = {
   publicKey: '',
   loggedIn: false,
   balance: '...',
-  nonce: '',
+  nonce: -1,
 };
 
 export default initialState;
