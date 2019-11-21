@@ -23,8 +23,8 @@ export async function getWalletDetails({ nodeUrl, publicKey, timeout }: DetailsT
     console.error(err);
     return {
       balance: '',
-      nonce: '',
-      detailsFetched: true,
+      nonce: 0,
+      detailsFetched: false,
     };
   }
 }
@@ -103,7 +103,7 @@ export async function sendTransaction({ nodeUrl, transaction, timeout }: SendTra
     const {
       data: { txHash },
       status,
-    } = await axios.post(`${nodeUrl}/transactions/send`, transaction, {
+    } = await axios.post(`${nodeUrl}/transaction/send`, transaction, {
       timeout,
     });
 
@@ -118,6 +118,7 @@ export async function sendTransaction({ nodeUrl, transaction, timeout }: SendTra
       success: false,
     };
   } catch (err) {
+    console.error(err);
     return {
       lastTxHash: '',
       success: false,

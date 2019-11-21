@@ -93,10 +93,6 @@ export const validationSchema = object().shape({
       }
     )
     .test('isValidNumber', 'Invalid number', value => value && isValidNumber(value)),
-  gasPrice: number() // -> dispare
-    .typeError('Invalid number')
-    .required('Required')
-    .test('isValidNumber', 'Invalid number', value => value && isValidNumber(value)),
   gasLimit: number()
     .typeError('Invalid number')
     .required('Required')

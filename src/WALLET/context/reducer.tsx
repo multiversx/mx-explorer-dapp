@@ -6,7 +6,8 @@ export type ActionType =
   | { type: 'login'; privateKey: string; publicKey: string }
   | { type: 'logout' }
   | { type: 'setBalance'; balance: string }
-  | { type: 'setNonce'; nonce: number };
+  | { type: 'setNonce'; nonce: number }
+  | { type: 'setLastTxHash'; lastTxHash: string };
 
 export function globalReducer(state: StateType = initialState, action: ActionType): StateType {
   switch (action.type) {
@@ -36,6 +37,12 @@ export function globalReducer(state: StateType = initialState, action: ActionTyp
     case 'setNonce': {
       const { nonce } = action;
       const newState = { ...state, nonce };
+      localStorageDB.save('state', newState);
+      return newState;
+    }
+    case 'setLastTxHash': {
+      const { lastTxHash } = action;
+      const newState = { ...state, lastTxHash };
       localStorageDB.save('state', newState);
       return newState;
     }

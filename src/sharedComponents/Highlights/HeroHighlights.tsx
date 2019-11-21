@@ -4,7 +4,7 @@ import {
   faClock,
   faExchangeAlt,
   faChartBar,
-  faNetworkWired,
+  faLayerGroup,
   faStopwatch,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,7 +29,7 @@ const HeroHighlights: React.SFC<HeroHighlightsProps> = ({
       </li>
       <li className="col-6 mt-4 mb-4">
         <span className="highlight-icon">
-          <FontAwesomeIcon icon={faNetworkWired} />
+          <FontAwesomeIcon icon={faLayerGroup} />
         </span>
         <span className="highlight-label">SHARDS</span>
         <span className="highlight-value">{nrOfShards}</span>

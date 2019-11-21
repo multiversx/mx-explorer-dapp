@@ -93,10 +93,17 @@ const LatestTransactions = () => {
   );
 
   const ErrorLoadingTransactions = () => (
-    <div className="card-body card-details" data-testid="errorScreen">
-      <div className="empty">
-        <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
-        <span className="h4 empty-heading">Unable to load transactions</span>
+    <div className="card">
+      <div className="card-body card-details" data-testid="errorScreen" style={{ height: '512px' }}>
+        <div className="d-flex align-items-center flex-row mb-3">
+          <h4 className="card-title mb-0 mr-auto">Latest Transactions</h4>
+        </div>
+        <div className="row pb-5 h-100 justify-content-center align-items-center">
+          <div className="empty">
+            <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
+            <span className="h4 empty-heading">Unable to load transactions</span>
+          </div>
+        </div>
       </div>
     </div>
   );

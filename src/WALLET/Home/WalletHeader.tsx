@@ -1,7 +1,7 @@
 import React from 'react';
 import { faCopy, faCoins, faWallet, faSignOutAlt, faSync } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Denominate } from 'sharedComponents';
+import { Denominate, TestnetLink } from 'sharedComponents';
 import { useWalletState, useWalletDispatch } from './../context';
 import { useGlobalState } from './../../context';
 import RequestTokens from './RequestTokens';
@@ -56,30 +56,34 @@ const WalletHeader = (props: WalletHeaderType) => {
                 <FontAwesomeIcon icon={faCopy} />
               </a>
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-12 mt-2 mb-4">
-            <div className="highlights">
-              <span className="highlight-icon">
-                <FontAwesomeIcon icon={faCoins} />
-              </span>
-              <span className="highlight-label">BALANCE</span>
-              <span className="highlight-value">
-                <Denominate value={balance} showAllDecimals />
-              </span>
-              <a href="/#" className="highlight-link" onClick={refreshBalance}>
-                <FontAwesomeIcon icon={faSync} />
-              </a>
-              {faucet && balance === '0' && <RequestTokens {...props} />}
-            </div>
             <div className="log_out">
-              <a href="/#" className="highlight-link" onClick={e => logout()}>
-                LOG OUT <FontAwesomeIcon icon={faSignOutAlt} />
-              </a>
+              <TestnetLink to="/" className="highlight-link">
+                <span onClick={logout}>
+                  LOG OUT <FontAwesomeIcon icon={faSignOutAlt} />
+                </span>
+              </TestnetLink>
             </div>
           </div>
         </div>
+        {balance !== '' && (
+          <div className="row">
+            <div className="col-12 mt-2 mb-4">
+              <div className="highlights">
+                <span className="highlight-icon">
+                  <FontAwesomeIcon icon={faCoins} />
+                </span>
+                <span className="highlight-label">BALANCE</span>
+                <span className="highlight-value">
+                  <Denominate value={balance} showAllDecimals />
+                </span>
+                <a href="/#" className="highlight-link" onClick={refreshBalance}>
+                  <FontAwesomeIcon icon={faSync} />
+                </a>
+                {faucet && balance === '0' && <RequestTokens {...props} />}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
