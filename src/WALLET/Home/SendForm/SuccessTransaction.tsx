@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy } from '@fortawesome/free-solid-svg-icons';
+import { faCopy, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { useWalletState, useWalletDispatch } from './../../context';
 import { useGlobalState } from './../../../context';
 
@@ -25,7 +25,7 @@ const SuccessTransaction = withRouter(props => {
   return (
     <div id="successTransaction" className="row h-100 justify-content-center align-items-center">
       <div className="col-12 empty">
-        <i className="fa fa-check empty-icon text-success" />
+        <FontAwesomeIcon icon={faCheck} className="empty-icon text-success" />
         <span className="h5 empty-heading text-success">Succeed</span>
         <span className="empty-details empty-small">
           Txn Hash

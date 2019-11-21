@@ -10,7 +10,7 @@ const SendFormik = () => {
     <div className="card">
       <div className="card-body">
         {lastTxHash === '' ? (
-          <div id="sendTransaction">
+          <div id="sendTransaction" className="h-100">
             <h4 className="card-title">Send Transaction</h4>
             <SendForm />
           </div>
