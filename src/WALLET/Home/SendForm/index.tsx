@@ -39,13 +39,15 @@ const SendFormik = ({ populateDetails }: SendFormikType) => {
   };
 
   const SendComponent = () => {
-    return (
+    return balance === '...' ? (
+      <Loader />
+    ) : (
       <div className="card">
         <div className="card-body">
           {lastTxHash === '' ? (
             <div id="sendTransaction" className="h-100">
               <h4 className="card-title">Send Transaction</h4>
-              {balance === '...' ? <Loader /> : <SendForm {...props} />}
+              <SendForm {...props} />
             </div>
           ) : (
             <SuccessTransaction />

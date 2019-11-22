@@ -60,7 +60,6 @@ const SendFormik = ({
   };
 
   const [failedTransaction, setFailedTransaction] = React.useState(false);
-  const [oldBalance, setOldBalance] = React.useState('');
 
   return (
     <Formik
@@ -81,7 +80,6 @@ const SendFormik = ({
             dstAddress,
             nonce,
           });
-          setOldBalance(balance);
           sendTransaction({ nodeUrl, transaction, timeout, nonce }).then(
             ({ success, lastTxHash }) => {
               let intervalId: any = null;

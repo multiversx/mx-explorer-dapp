@@ -30,7 +30,7 @@ const CONFIG = {
       economics: true,
       data: true,
       validatorDetails: true,
-      faucet: true,
+      faucet: false,
     },
     {
       id: 'cryptobubbles',

@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as React from 'react';
 
 const FailedTransaction = ({ setFailedTransaction }: { setFailedTransaction: Function }) => {
   const resetForm = () => {
@@ -15,7 +15,7 @@ const FailedTransaction = ({ setFailedTransaction }: { setFailedTransaction: Fun
         <FontAwesomeIcon icon={faTimes} className="empty-icon text-danger" />
         <span className="h5 empty-heading text-danger">Failed</span>
         <span className="empty-details empty-small">
-          The transaction has failed. Please try again
+          The transaction has failed. Please try again.
           <br />
         </span>
         <button type="button" className="btn btn-outline-secondary" onClick={resetForm}>

@@ -34,17 +34,19 @@ const WalletHome = () => {
     activeTestnet: { nodeUrl },
   } = useGlobalState();
   const { publicKey, balance } = useWalletState();
+  const [detailsFetched, setDetaislFetched] = React.useState(false);
 
   const populateDetails = () => {
     getWalletDetails({
       publicKey,
       nodeUrl,
       timeout,
-    }).then(({ balance, nonce }) => {
-      // if (ref.current !== null) {
-      dispatch({ type: 'setBalance', balance });
-      dispatch({ type: 'setNonce', nonce });
-      // }
+    }).then(({ balance, nonce, detailsFetched }) => {
+      if (ref.current !== null) {
+        setDetaislFetched(detailsFetched);
+        dispatch({ type: 'setBalance', balance });
+        dispatch({ type: 'setNonce', nonce });
+      }
     });
   };
 
@@ -55,7 +57,9 @@ const WalletHome = () => {
       <div className="bg-blue">
         <WalletHeader populateDetails={populateDetails} />
       </div>
-      {balance !== '' ? (
+      {!detailsFetched && balance === '' ? (
+        <WaleltUnavailable />
+      ) : (
         <div className="container pt-3 pb-3">
           <div className="row">
             <div className="col-lg-6 mt-4 mb-4">
@@ -66,8 +70,6 @@ const WalletHome = () => {
             </div>
           </div>
         </div>
-      ) : (
-        <WaleltUnavailable />
       )}
     </div>
   );

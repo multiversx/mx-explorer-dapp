@@ -14,8 +14,6 @@ export async function getWalletDetails({ nodeUrl, publicKey, timeout }: DetailsT
       },
     } = await axios.get(`${nodeUrl}/address/${publicKey}`, { timeout });
 
-    console.error('ADDRESS FETCH');
-
     return {
       balance,
       nonce,
