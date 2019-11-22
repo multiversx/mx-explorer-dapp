@@ -89,6 +89,7 @@ const AccessFormik = ({ history, activeTestnetId, loggedIn }: AccessFormikType) 
                     type="file"
                     id="walletFile"
                     name="walletFile"
+                    data-testid="walletFileInput"
                     accept="application/json,.json"
                     className="custom-file-input"
                     onChange={event => {

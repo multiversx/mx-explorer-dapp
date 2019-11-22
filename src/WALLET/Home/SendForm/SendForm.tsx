@@ -4,7 +4,6 @@ import { ErrorMessage, Formik } from 'formik';
 import * as React from 'react';
 import { Accordion, Card } from 'react-bootstrap';
 import { Denominate } from './../../../sharedComponents';
-import { useWalletDispatch, useWalletState } from './../../context';
 import { getWalletDetails, sendTransaction } from './../helpers/asyncRequests';
 import FailedTransaction from './FailedTransaction';
 import { entireBalance, prepareTransaction, validationSchema } from './validatorFunctions';
@@ -16,7 +15,9 @@ export interface SendFormikType {
 interface SendFormDataType {
   testnetGasLimit: number;
   economics?: boolean;
+  dispatch: (props: any) => void;
   testnetGasPrice: number;
+  balance: string;
   publicKey: string;
   privateKey: string;
   denomination: number;
@@ -33,8 +34,10 @@ const SendFormik = ({
   denomination,
   economics,
   testnetGasPrice,
+  balance,
   publicKey,
   privateKey,
+  dispatch,
   nodeUrl,
   nonce,
   timeout,
@@ -43,8 +46,7 @@ const SendFormik = ({
   decimals,
 }: SendFormDataType) => {
   const ref = React.useRef(null);
-  const { balance } = useWalletState();
-  const dispatch = useWalletDispatch();
+  // const { balance } = useWalletState();
 
   const initialValues = {
     dstAddress: '',
@@ -199,7 +201,9 @@ const SendFormik = ({
                   <div>Transaction fee</div>
                   <Accordion.Toggle as={Card.Text} eventKey="0" style={{ marginBottom: '1rem' }}>
                     <label>
-                      <Denominate value={(testnetGasPrice * values.gasLimit).toString()} />
+                      <span data-testid="transactionFeeValue">
+                        <Denominate value={(testnetGasPrice * values.gasLimit).toString()} />
+                      </span>
                       &nbsp;
                       <FontAwesomeIcon icon={faAngleDown} />
                     </label>
@@ -241,7 +245,7 @@ const SendFormik = ({
                 </Accordion.Collapse>
               </Accordion>
               <div className={data ? 'form-group' : 'd-none'}>
-                <label htmlFor="amount">Data</label>
+                <label htmlFor="data">Data</label>
                 <textarea
                   className={
                     errors.data && touched.data ? 'form-control is-invalid' : 'form-control'

@@ -1,8 +1,8 @@
-import axios from 'axios';
 import '@testing-library/jest-dom/extend-expect';
-import { renderWithRouter, waitForElement, fireEvent, wait } from '../../../utils/test-utils';
-import response from './_search';
+import axios from 'axios';
+import { fireEvent, renderWithRouter, waitForElement } from '../../../utils/test-utils';
 import errorResponse from './_errorResponse';
+import response from './_search';
 
 // TODO */
 /**
@@ -13,7 +13,7 @@ import errorResponse from './_errorResponse';
  * - sa testez ca am next page
  */
 
-//TODO: timeout axios 0 si testez cu asta (apare screenul de Unable to load in cazul in care se expira timeoutul)
+// TODO: timeout axios 0 si testez cu asta (apare screenul de Unable to load in cazul in care se expira timeoutul)
 
 test('Transactions page is displaying', () => {
   const { queryByTestId } = renderWithRouter({

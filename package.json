@@ -53,6 +53,7 @@
     "build": "react-scripts build",
     "build-wallet": "REACT_APP_WALLET=true react-scripts build && rm -rf wallet-build && mv build wallet-build",
     "test": "react-scripts test",
+    "test-wallet": "REACT_APP_WALLET=true react-scripts test",
     "eject": "react-scripts eject",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"
   },

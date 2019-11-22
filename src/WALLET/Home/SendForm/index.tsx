@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useGlobalState } from './../../../context';
 import { Loader } from './../../../sharedComponents';
-import { useWalletState } from './../../context';
+import { useWalletDispatch, useWalletState } from './../../context';
 import SendForm, { SendFormikType } from './SendForm';
 import SuccessTransaction from './SuccessTransaction';
 
@@ -20,11 +20,13 @@ const SendFormik = ({ populateDetails }: SendFormikType) => {
     timeout,
   } = useGlobalState();
   const { balance, privateKey, nonce, publicKey, lastTxHash } = useWalletState();
+  const dispatch = useWalletDispatch();
 
   const props = {
     testnetGasLimit,
     denomination,
     balance,
+    dispatch,
     economics,
     testnetGasPrice,
     publicKey,

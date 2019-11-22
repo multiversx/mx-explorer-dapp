@@ -35,6 +35,7 @@ const SuccessTransaction = withRouter(props => {
             href={`https://explorer.elrond.com/#/address/${lastTxHash}`}
             onClick={copyLastTxHash}
             target="_blank"
+            rel="noopener noreferrer"
             title="Copy to clipboard"
           >
             <FontAwesomeIcon icon={faSearch} />

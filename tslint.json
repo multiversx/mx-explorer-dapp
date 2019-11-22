@@ -11,7 +11,10 @@
     "variable-name": false,
     "radix": false,
     "ordered-imports": false,
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "no-var-requires": false,
+    "jsx-boolean-value": false,
+    "prefer-for-of": false
   },
   "jsRules": {
     "no-console": [false, "log", "error"]
