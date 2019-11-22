@@ -1,7 +1,7 @@
-import React from 'react';
-import { OverlayTrigger, Popover, Accordion, Nav } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import { Accordion, Nav, OverlayTrigger, Popover } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useGlobalState } from '../../../context';
 
@@ -22,7 +22,9 @@ export default function TestnetSwitcher({ onToggle }: { onToggle: Function }) {
   };
 
   const onAccordionClick = () => {
-    ref.current !== null && (ref.current as any).click();
+    if (ref.current !== null) {
+      (ref.current as any).click();
+    }
     onToggle(false);
   };
 

@@ -35,7 +35,7 @@ export interface TestnetType {
 
 interface ConfigType {
   metaChainShardId: number;
-  testnets: Array<TestnetType>;
+  testnets: TestnetType[];
 }
 
 export interface StateType {
@@ -92,13 +92,11 @@ const configIsDefined =
 
 const config = configIsDefined ? buildInitialConfig(importedConfig) : buildInitialConfig({});
 
-const isDevOrTest = ['development', 'test'].includes(process.env.NODE_ENV);
-
 const extendedConfig = {
   ...config,
   testnets: [
     ...config.testnets,
-    ...(isDevOrTest
+    ...(process.env.REACT_APP_WALLET
       ? [
           {
             default: true,
@@ -142,7 +140,7 @@ const initialState: StateType = {
   timeout: 3 * 1000,
   refresh: {
     timestamp: Date.now(),
-    intervalId: setInterval(() => {}, 100000000000),
+    intervalId: setInterval(() => null, 100000000000),
     testnetId: 'default',
   },
 };
