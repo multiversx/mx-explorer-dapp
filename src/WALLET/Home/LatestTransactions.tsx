@@ -1,15 +1,15 @@
-import React from 'react';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TransactionType } from 'components/Transactions';
-import { TimeAgo, Loader } from 'sharedComponents';
-import { truncate, dateFormatted } from 'helpers';
+import { dateFormatted, truncate } from 'helpers';
+import React from 'react';
+import { Loader, TimeAgo } from 'sharedComponents';
+import { useGlobalState } from './../../context';
 import { useWalletState } from './../context';
 import { getLatestTransactions } from './helpers/asyncRequests';
-import { useGlobalState } from './../../context';
 
 const LatestTransactions = () => {
-  let ref = React.useRef(null);
+  const ref = React.useRef(null);
   const {
     timeout,
     activeTestnet: { elasticUrl },
@@ -22,7 +22,7 @@ const LatestTransactions = () => {
   const [success, setSuccess] = React.useState(true);
 
   const refreshTransactions = () => {
-    if (ref.current !== null)
+    if (ref.current !== null) {
       getLatestTransactions({ elasticUrl, publicKey, timeout }).then(
         ({ transactions, success }) => {
           if (ref.current !== null) {
@@ -35,6 +35,7 @@ const LatestTransactions = () => {
           }
         }
       );
+    }
   };
 
   React.useEffect(refreshTransactions, [timestamp]);

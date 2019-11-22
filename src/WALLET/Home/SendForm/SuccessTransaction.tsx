@@ -1,9 +1,9 @@
+import { faCheck, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy, faCheck } from '@fortawesome/free-solid-svg-icons';
-import { useWalletState, useWalletDispatch } from './../../context';
 import { useGlobalState } from './../../../context';
+import { useWalletDispatch, useWalletState } from './../../context';
 
 const SuccessTransaction = withRouter(props => {
   const { lastTxHash } = useWalletState();
@@ -31,8 +31,13 @@ const SuccessTransaction = withRouter(props => {
           Txn Hash
           <br />
           {lastTxHash}&nbsp;
-          <a href="/#" onClick={copyLastTxHash} title="Copy to clipboard">
-            <FontAwesomeIcon icon={faCopy} />
+          <a
+            href={`https://explorer.elrond.com/#/address/${lastTxHash}`}
+            onClick={copyLastTxHash}
+            target="_blank"
+            title="Copy to clipboard"
+          >
+            <FontAwesomeIcon icon={faSearch} />
           </a>
         </span>
         <button type="button" className="btn btn-outline-secondary" onClick={resetForm}>

@@ -3,7 +3,7 @@
   "rulesDirectory": ["tslint-plugin-prettier"],
   "rules": {
     "interface-name": false,
-    "no-console": true,
+    "no-console": [true, "log", "warn"],
     "prettier": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,

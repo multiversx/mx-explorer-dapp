@@ -2,7 +2,11 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 
-const FailedTransaction = ({ setFailedTransaction }: { setFailedTransaction: Function }) => {
+const FailedTransaction = ({
+  setFailedTransaction,
+}: {
+  setFailedTransaction: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const resetForm = () => {
     setFailedTransaction(false);
   };
