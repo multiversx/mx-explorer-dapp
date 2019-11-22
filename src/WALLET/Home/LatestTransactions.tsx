@@ -123,7 +123,7 @@ const LatestTransactions = () => {
       {fetching && <Loader />}
       {!fetching && success && (
         <div className="card">
-          <div className="card-body" style={{ height: '512px' }}>
+          <div className="card-body" style={{ height: '422px' }}>
             <TransactionsListTitle />
             {transactions.length === 0 && <NoTransactionsFound />}
             {transactions.length > 0 && <TransactionList />}

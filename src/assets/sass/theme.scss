@@ -218,6 +218,10 @@ main .form-search .form-control:focus {
   border-color: transparent;
 }
 
+.form-control.is-invalid {
+  background-image: none;
+}
+
 /* Hero Blue
 -------------------------------------------------- */
 // .bg-blue {

@@ -9,7 +9,7 @@ import { useWalletState } from './../context';
 import { getTokens } from './helpers/asyncRequests';
 
 interface WalletHeaderType {
-  populateDetails: Function;
+  populateDetails: () => void;
 }
 
 const RequestTokens = (props: WalletHeaderType) => {
@@ -46,7 +46,7 @@ const RequestTokens = (props: WalletHeaderType) => {
   const onRequestClick = () => {
     let intervalId: any = null;
     function getNewBalance() {
-      props.populateDetails(props);
+      props.populateDetails();
       if (balance !== currentBalance) {
         clearInterval(intervalId);
       }

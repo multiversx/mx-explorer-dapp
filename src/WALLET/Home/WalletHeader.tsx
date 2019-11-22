@@ -7,7 +7,7 @@ import { useWalletDispatch, useWalletState } from './../context';
 import RequestTokens from './RequestTokens';
 
 interface WalletHeaderType {
-  populateDetails: Function;
+  populateDetails: () => void;
 }
 
 const WalletHeader = (props: WalletHeaderType) => {

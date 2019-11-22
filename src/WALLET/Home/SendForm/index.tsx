@@ -42,7 +42,7 @@ const SendFormik = ({ populateDetails }: SendFormikType) => {
     return balance === '...' ? (
       <Loader />
     ) : (
-      <div className="card">
+      <div className="card" style={{ height: 'auto' }}>
         <div className="card-body">
           {lastTxHash === '' ? (
             <div id="sendTransaction" className="h-100">

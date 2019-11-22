@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { string, object } from 'yup';
-import { Formik, ErrorMessage } from 'formik';
 import FileSaver from 'file-saver';
+import { ErrorMessage, Formik } from 'formik';
+import * as React from 'react';
+import { object, string } from 'yup';
 import cryptoCore from '../../lib/cryptoCore';
 
 const createNewWallet = async function createNewWallet(password: string) {
@@ -58,12 +58,12 @@ const PasswordFormik = () => (
               }
             />
             <ErrorMessage component="div" name="password" className="invalid-feedback" />
-          </div>
-          <div className="form-group">
             <small className="form-text text-muted" id="remember">
               <span className="text-danger">Remember:</span> You'll need this password &amp;
               keystore file to unlock your wallet
             </small>
+          </div>
+          <div className="form-group">
             <button
               type="submit"
               disabled={isSubmitting}
