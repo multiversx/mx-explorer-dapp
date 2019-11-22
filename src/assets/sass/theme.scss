@@ -148,10 +148,10 @@ strong {
 .navbar .navbar-brand {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  margin-right: 1.2rem;
+  margin-right: 0rem;
 }
 .navbar .navbar-brand img {
-  height: 1.8rem;
+  height: 2.3rem;
 }
 
 .navbar .navbar-toggler-icon {
@@ -165,7 +165,7 @@ strong {
   border-top: 0;
   padding-top: 0.3rem;
   padding-bottom: 0.3rem;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 200;
   line-height: 1.2;
   margin: 0;
@@ -187,8 +187,15 @@ strong {
   color: #212529;
 }
 
+.appSwitcher {
+  .nav-link {
+    padding: 0.4rem 0.8rem;
+    font-size: 1.2rem;
+  }
+}
+
 .navbar .nav-item.active {
-  border-color: transparent;
+  border-color: $blue;
 }
 
 .navbar .nav-item.active a {
@@ -619,6 +626,19 @@ span.switch {
 
     &:last-child {
       margin-bottom: 0;
+    }
+  }
+  &.bs-popover-bottom.appSwitcher {
+    $custom-arrow-height: 8px;
+    $custom-arrow-width: 16px;
+    $custom-border-width: $border-width !default;
+    .arrow {
+      top: calc((#{$custom-arrow-height} + #{$custom-border-width}) * -1);
+    }
+
+    .arrow::before,
+    .arrow::after {
+      border-width: 0 ($custom-arrow-width / 2) $custom-arrow-height ($custom-arrow-width / 2);
     }
   }
 }

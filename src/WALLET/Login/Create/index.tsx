@@ -15,7 +15,7 @@ const initialValues = { password: '' };
 const PasswordFormik = () => (
   <Formik
     initialValues={initialValues}
-    onSubmit={({ password }, { setSubmitting, resetForm, setValues, setErrors }) => {
+    onSubmit={({ password }, { setSubmitting, resetForm, setValues }) => {
       createNewWallet(password);
       setSubmitting(false);
       resetForm();
@@ -83,7 +83,9 @@ const CreateWallet = () => {
   return (
     <div className="card">
       <div className="card-body">
-        <h4 className="card-title">Create New Wallet</h4>
+        <h4 className="card-title" data-testid="createNewWalletTitle">
+          Create New Wallet
+        </h4>
         <p className="lead">Start by creating a wallet if you don't already have one.</p>
         <PasswordFormik />
       </div>
