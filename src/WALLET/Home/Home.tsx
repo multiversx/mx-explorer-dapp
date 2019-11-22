@@ -1,12 +1,12 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
-import { getWalletDetails } from './helpers/asyncRequests';
-import WalletHeader from './WalletHeader';
-import SendForm from './SendForm';
-import LatestTransactions from './LatestTransactions';
-import { useWalletDispatch, useWalletState } from './../context';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 import { useGlobalState } from './../../context';
+import { useWalletDispatch, useWalletState } from './../context';
+import { getWalletDetails } from './helpers/asyncRequests';
+import LatestTransactions from './LatestTransactions';
+import SendForm from './SendForm';
+import WalletHeader from './WalletHeader';
 
 const WaleltUnavailable = () => (
   <div className="container pt-3 pb-3">
@@ -26,32 +26,29 @@ const WaleltUnavailable = () => (
 );
 
 const WalletHome = () => {
-  let ref = React.useRef(null);
+  const ref = React.useRef(null);
   const dispatch = useWalletDispatch();
 
   const {
     timeout,
     activeTestnet: { nodeUrl },
-    refresh: { timestamp },
   } = useGlobalState();
   const { publicKey, balance } = useWalletState();
 
   const populateDetails = () => {
-    if (ref.current !== null) {
-      getWalletDetails({
-        publicKey,
-        nodeUrl,
-        timeout,
-      }).then(({ balance, nonce }) => {
-        if (ref.current !== null) {
-          dispatch({ type: 'setBalance', balance });
-          dispatch({ type: 'setNonce', nonce });
-        }
-      });
-    }
+    getWalletDetails({
+      publicKey,
+      nodeUrl,
+      timeout,
+    }).then(({ balance, nonce }) => {
+      // if (ref.current !== null) {
+      dispatch({ type: 'setBalance', balance });
+      dispatch({ type: 'setNonce', nonce });
+      // }
+    });
   };
 
-  React.useEffect(populateDetails, [timestamp]);
+  React.useEffect(populateDetails, []);
 
   return (
     <div ref={ref}>
@@ -62,7 +59,7 @@ const WalletHome = () => {
         <div className="container pt-3 pb-3">
           <div className="row">
             <div className="col-lg-6 mt-4 mb-4">
-              <SendForm />
+              <SendForm populateDetails={populateDetails} />
             </div>
             <div className="col-lg-6 mt-4 mb-4">
               <LatestTransactions />

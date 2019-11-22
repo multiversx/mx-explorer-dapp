@@ -10,12 +10,15 @@ import Navbar from './Navbar';
 
 const SessionStarter = () => {
   const dispatch = useWalletDispatch();
-  React.useEffect(() => {
+
+  const init = () => {
     dispatch({ type: 'initSession' });
     return () => {
       dispatch({ type: 'logout' });
     };
-  }, []);
+  };
+
+  React.useEffect(init, []);
   return null;
 };
 

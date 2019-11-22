@@ -1,13 +1,13 @@
-import * as React from 'react';
+import { ErrorMessage, Formik } from 'formik';
 import { History } from 'history';
-import { string, object, mixed } from 'yup';
-import { Formik, ErrorMessage } from 'formik';
+import * as React from 'react';
+import { mixed, object, string } from 'yup';
 import cryptoCore from '../../lib/cryptoCore';
 import { useWalletDispatch } from './../../context';
 
 const accessWallet = function accessWallet(kdContent: object, accessPassVal: string) {
   try {
-    let account = cryptoCore.loadAccountFromKeyFile(kdContent, accessPassVal);
+    const account = cryptoCore.loadAccountFromKeyFile(kdContent, accessPassVal);
     return {
       error: '',
       success: true,
@@ -36,7 +36,7 @@ const AccessFormik = ({ history, activeTestnetId, loggedIn }: AccessFormikType) 
   if (loggedIn) {
     history.push(`/${activeTestnetId}`);
   }
-  let ref = React.useRef(null);
+  const ref = React.useRef(null);
   const dispatch = useWalletDispatch();
   const [fileName, setFileName] = React.useState('Choose file...');
 
@@ -93,7 +93,7 @@ const AccessFormik = ({ history, activeTestnetId, loggedIn }: AccessFormikType) 
                     className="custom-file-input"
                     onChange={event => {
                       const fileReader = new FileReader();
-                      fileReader.onload = function(e) {
+                      fileReader.onload = function onLoad(e) {
                         try {
                           const walletContent = JSON.parse(fileReader.result!.toString());
                           setFieldValue('walletFile', walletContent);

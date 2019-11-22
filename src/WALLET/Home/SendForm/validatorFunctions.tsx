@@ -1,9 +1,9 @@
-import { string, object, number, ObjectSchema, boolean } from 'yup';
-import Web3 from 'web3';
 import BigNumber from 'bignumber.js';
-import denominate from './../../../sharedComponents/Denominate/denominate';
-import { addressIsHash } from './../../../helpers';
+import Web3 from 'web3';
+import { boolean, number, object, ObjectSchema, string } from 'yup';
 import cryptoCore from '../../lib/cryptoCore';
+import { addressIsHash } from './../../../helpers';
+import denominate from './../../../sharedComponents/Denominate/denominate';
 
 export function isValidNumber(number: number) {
   return !(
@@ -25,14 +25,14 @@ function nominate(input: string, denomination: number) {
   // const web3 = new Web3();
   // const bnInput = new BigNumber(input);
   // let web3String = web3.utils.toBN(bnInput as any).toString(10);
-  let parts = input.toString().split('.');
+  const parts = input.toString().split('.');
 
-  let count = parts[1] ? denomination - parts[1].length : denomination;
+  const count = parts[1] ? denomination - parts[1].length : denomination;
 
   let transformed = parts.join('') + '0'.repeat(count);
 
   // remove beginning zeros
-  while (transformed.substring(0, 1) == '0' && transformed.length > 1) {
+  while (transformed.substring(0, 1) === '0' && transformed.length > 1) {
     transformed = transformed.substring(1);
   }
 
@@ -149,6 +149,7 @@ export const denominateGasPrice = ({ gasPrice, denomination, decimals }: EntireB
   denominate({ input: gasPrice.toString(), denomination, decimals, showAllDecimals: true });
 
 interface PrepareTransactionType {
+  balance: string;
   amount: string;
   dstAddress: string;
   privateKey: string;
@@ -160,6 +161,7 @@ interface PrepareTransactionType {
   nonce: number;
 }
 export const prepareTransaction = ({
+  balance,
   amount,
   denomination,
   privateKey,
@@ -174,15 +176,23 @@ export const prepareTransaction = ({
   const bNamount = new BigNumber(nominate(amount, denomination));
   const largeAmount = web3.utils.toBN(bNamount as any).toString(10);
   const account = cryptoCore.loadAccountFromPrivateKey(privateKey);
-  const tx = cryptoCore.createTransaction({
-    nonce,
+  const transaction = cryptoCore.createTransaction({
     from: publicKey,
+    nonce,
     to: dstAddress,
     value: largeAmount,
     gasPrice,
     gasLimit,
     data,
   });
-  tx.signature = account.sign(tx.prepareForSigning());
-  return tx;
+  transaction.signature = account.sign(transaction.prepareForSigning());
+
+  const bNbalance = new BigNumber(balance);
+  const newBnBalance = bNbalance
+    .minus(new BigNumber(nominate(amount, denomination)))
+    .minus(gasPrice * gasLimit);
+
+  const newBalance = web3.utils.toBN(newBnBalance as any).toString(10);
+
+  return { transaction, newBalance };
 };

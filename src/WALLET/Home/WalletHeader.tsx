@@ -1,9 +1,9 @@
-import React from 'react';
-import { faCopy, faCoins, faWallet, faSignOutAlt, faSync } from '@fortawesome/free-solid-svg-icons';
+import { faCoins, faCopy, faSignOutAlt, faSync, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 import { Denominate, TestnetLink } from 'sharedComponents';
-import { useWalletState, useWalletDispatch } from './../context';
 import { useGlobalState } from './../../context';
+import { useWalletDispatch, useWalletState } from './../context';
 import RequestTokens from './RequestTokens';
 
 interface WalletHeaderType {
@@ -22,7 +22,7 @@ const WalletHeader = (props: WalletHeaderType) => {
     dispatch({ type: 'logout' });
   };
   const { balance } = useWalletState();
-  let publicKeyRef = React.useRef(null);
+  const publicKeyRef = React.useRef(null);
 
   const copyAddress = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -74,7 +74,7 @@ const WalletHeader = (props: WalletHeaderType) => {
                 </span>
                 <span className="highlight-label">BALANCE</span>
                 <span className="highlight-value">
-                  <Denominate value={balance} showAllDecimals />
+                  <Denominate value={balance} showAllDecimals={true} />
                 </span>
                 <a href="/#" className="highlight-link" onClick={refreshBalance}>
                   <FontAwesomeIcon icon={faSync} />

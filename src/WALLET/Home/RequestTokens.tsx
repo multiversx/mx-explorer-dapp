@@ -1,12 +1,12 @@
-import React from 'react';
-import { Modal } from 'react-bootstrap';
-import ReCAPTCHA from 'react-google-recaptcha';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReactComponent as ErdsSvg } from 'assets/img/erds.svg';
+import React from 'react';
+import { Modal } from 'react-bootstrap';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { useGlobalState } from './../../context';
 import { useWalletState } from './../context';
 import { getTokens } from './helpers/asyncRequests';
-import { useGlobalState } from './../../context';
 
 interface WalletHeaderType {
   populateDetails: Function;
@@ -19,7 +19,7 @@ const RequestTokens = (props: WalletHeaderType) => {
   } = useGlobalState();
   const { publicKey, balance } = useWalletState();
 
-  let ref = React.useRef(null);
+  const ref = React.useRef(null);
 
   const [showModal, setShowModal] = React.useState(false);
   const [currentBalance, setCurrentBalance] = React.useState(balance);
@@ -34,7 +34,9 @@ const RequestTokens = (props: WalletHeaderType) => {
   const onRecaptchaChange = (value: any) => {
     if (value) {
       setRequestDisabled(false);
-    } else setRequestDisabled(true);
+    } else {
+      setRequestDisabled(true);
+    }
   };
 
   React.useEffect(() => {

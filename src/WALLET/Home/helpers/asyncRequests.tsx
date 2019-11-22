@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-type DetailsType = {
+interface DetailsType {
   nodeUrl: string;
   publicKey: string;
   timeout: number;
-};
+}
 
 export async function getWalletDetails({ nodeUrl, publicKey, timeout }: DetailsType) {
   try {
@@ -13,6 +13,8 @@ export async function getWalletDetails({ nodeUrl, publicKey, timeout }: DetailsT
         account: { balance, nonce },
       },
     } = await axios.get(`${nodeUrl}/address/${publicKey}`, { timeout });
+
+    console.error('ADDRESS FETCH');
 
     return {
       balance,
@@ -45,11 +47,11 @@ export async function getTokens({ nodeUrl, publicKey, timeout }: DetailsType) {
   }
 }
 
-type GetLatestTransactionsType = {
+interface GetLatestTransactionsType {
   elasticUrl: string;
   publicKey: string;
   timeout: number;
-};
+}
 
 export async function getLatestTransactions({
   elasticUrl,
