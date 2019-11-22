@@ -1,8 +1,8 @@
-import React from 'react';
-import { Navbar } from 'react-bootstrap';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import elrondLogo from 'assets/img/elrond.svg';
+import React from 'react';
+import Navbar from '../components/Layout/Navbar/index';
 import TestnetSwitcher from '../components/Layout/Navbar/TestnetSwitcher';
 import { TestnetLink } from '../sharedComponents';
 import { useWalletDispatch } from './context';

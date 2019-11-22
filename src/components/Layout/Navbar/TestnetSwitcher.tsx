@@ -5,7 +5,7 @@ import { Accordion, Nav, OverlayTrigger, Popover } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useGlobalState } from '../../../context';
 
-export default function TestnetSwitcher({ onToggle }: { onToggle: Function }) {
+export default function TestnetSwitcher({ onToggle }: { onToggle: (prop: boolean) => void }) {
   const globalState = useGlobalState();
 
   const ref = React.useRef(null);
