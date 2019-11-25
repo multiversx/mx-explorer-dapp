@@ -1,14 +1,14 @@
 import React from 'react';
+import { withPageTitle, withTestnetReady } from 'sharedComponents';
 import Home from './Home';
 import Login from './Login';
 import UnlockPem from './UnlockPem';
-import { withTestnetReady, withPageTitle } from 'sharedComponents';
 
-type RouteType = {
+interface RouteType {
   path: string;
   title: string;
   component: any;
-};
+}
 
 const routes: RouteType[] = [
   {
@@ -18,7 +18,7 @@ const routes: RouteType[] = [
   },
   {
     path: '/login',
-    title: '',
+    title: 'Login',
     component: Login,
   },
   {
