@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import Web3 from 'web3';
-import { boolean, number, object, ObjectSchema, string } from 'yup';
+import { boolean, mixed, number, object, ObjectSchema, string } from 'yup';
 import cryptoCore from '../../lib/cryptoCore';
 import { addressIsHash } from './../../../helpers';
 import denominate from './../../../sharedComponents/Denominate/denominate';
@@ -58,10 +58,10 @@ export const validationSchema = object().shape({
   dstAddress: string()
     .required('Required')
     .test('addressIsHash', 'Invalid address', value => value && addressIsHash(value)),
-  amount: number()
+  amount: mixed()
     .typeError('Invalid number')
     .required('Required')
-    .moreThan(0)
+    // .test('notZero', 'Must be ', value => value && isValidNumber(value))
     .when('denomination', (denomination: number, schema: ObjectSchema) => {
       return schema.test(
         'denomination',
@@ -99,11 +99,13 @@ export const validationSchema = object().shape({
     .when(
       ['data', 'testnetGasLimit'],
       (data: string, testnetGasLimit: number, schema: ObjectSchema) => {
-        const dataPlusGas = data ? data.length : 0 + testnetGasLimit;
+        const dataPlusGas = data ? data.length + testnetGasLimit : 0 + testnetGasLimit;
         return schema.test(
           'minValue',
           `Gas limit must be greater or equal to ${dataPlusGas}`,
-          (value: any) => value && value >= dataPlusGas
+          (value: any) => {
+            return value && value >= dataPlusGas;
+          }
         );
       }
     )
@@ -133,12 +135,13 @@ export const entireBalance = ({
 }: EntireBalanceType) => {
   const myBalance = balance;
   const web3 = new Web3();
-  const fee = web3.utils.toBN(gasPrice * gasLimit);
-  const bNbalance = web3.utils.toBN(myBalance);
-  const entireBalance = bNbalance.sub(fee);
+  const bnBalance = new BigNumber(myBalance);
+  const bnGasPrice = new BigNumber(gasPrice);
+  const bnGasLimit = new BigNumber(gasLimit);
+  const entireBalance = bnBalance.minus(bnGasPrice.times(bnGasLimit));
   // entireBalance >= 0
-  if (entireBalance.isZero || !entireBalance.isNeg) {
-    const input = bNbalance.sub(fee).toString(10);
+  if (entireBalance.comparedTo(0) === 1 || entireBalance.comparedTo(0) === 0) {
+    const input = web3.utils.toBN(entireBalance as any).toString(10);
     const denominated = denominate({ input, denomination, decimals, showAllDecimals: true });
     return denominated.replace(/,/g, '');
   }
