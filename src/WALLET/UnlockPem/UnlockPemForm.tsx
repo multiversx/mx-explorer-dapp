@@ -1,10 +1,10 @@
+import { ErrorMessage, Formik } from 'formik';
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
-import { string, object } from 'yup';
-import { Formik, ErrorMessage } from 'formik';
+import { object, string } from 'yup';
 import cryptoCore from '../lib/cryptoCore';
-import { useWalletDispatch } from './../context';
 import { useGlobalState } from './../../context';
+import { useWalletDispatch } from './../context';
 
 function convertNewWallet(kdContent: string) {
   let account;
@@ -35,7 +35,7 @@ function hexStringToByte(str: string) {
   if (!str) {
     return new Uint8Array();
   }
-  let a = [];
+  const a = [];
   for (let i = 0, len = str.length; i < len; i += 2) {
     a.push(parseInt(str.substr(i, 2), 16));
   }
@@ -45,7 +45,7 @@ function hexStringToByte(str: string) {
 const UnlockPemForm = withRouter(props => {
   const initialValues = { walletFile: '' };
   const dispatch = useWalletDispatch();
-  let ref = React.useRef(null);
+  const ref = React.useRef(null);
   const [fileName, setFileName] = React.useState('Choose file...');
 
   const { activeTestnetId } = useGlobalState();
@@ -67,7 +67,9 @@ const UnlockPemForm = withRouter(props => {
         } else {
           setErrors({ walletFile: 'Please check your uploaded file or your password' });
         }
-        setSubmitting(false);
+        if (ref.current !== null) {
+          setSubmitting(false);
+        }
       }}
       validationSchema={object().shape({
         walletFile: string().required(),
@@ -89,11 +91,12 @@ const UnlockPemForm = withRouter(props => {
                     className="custom-file-input"
                     onChange={event => {
                       const fileReader = new FileReader();
-                      fileReader.onload = function(e) {
+                      fileReader.onload = function onload(e) {
                         try {
-                          let regex = /-----/gi,
-                            result,
-                            indices = [];
+                          const regex = /-----/gi;
+                          let result;
+                          const indices = [];
+                          // tslint:disable-next-line
                           while ((result = regex.exec(fileReader.result!.toString()))) {
                             indices.push(result.index);
                           }
@@ -115,7 +118,12 @@ const UnlockPemForm = withRouter(props => {
                       }
                     }}
                   />
-                  <label className="custom-file-label" htmlFor="walletFile" id="walletFileLabel">
+                  <label
+                    className="custom-file-label"
+                    data-testid="uploadLabel"
+                    htmlFor="walletFile"
+                    id="walletFileLabel"
+                  >
                     {fileName}
                   </label>
                 </div>
