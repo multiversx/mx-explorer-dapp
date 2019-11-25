@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import { render } from '@testing-library/react';
+import { render, wait } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router-dom';
@@ -13,6 +13,7 @@ const renderWithRouter = ({
 }) => {
   history = createMemoryHistory({ initialEntries: [route] });
   return {
+    wait,
     ...render(
       <Router history={history}>
         <App />

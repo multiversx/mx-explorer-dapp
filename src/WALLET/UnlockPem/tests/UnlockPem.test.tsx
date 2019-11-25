@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom/extend-expect';
-import { fireEvent, renderWithRouter } from '../../../utils/wallet-test-utils';
+import { fireEvent, renderWithRouter } from '../../utils/wallet-test-utils';
 
-test('Wallet Pem page is working', () => {
-  const { getByLabelText, getByText } = renderWithRouter({
+test('Wallet Pem page is working2', async () => {
+  const { getByLabelText, findByTestId } = renderWithRouter({
     route: '/unlock-pem',
   });
 
@@ -27,5 +27,7 @@ YjhlYmMzOTA2OWRhNjIwZQ==
 
   fireEvent.change(inputEl);
 
-  expect(getByText('example.pem').innerHTML).toEqual('example.pem');
+  const uploadLabel = await findByTestId('uploadLabel');
+
+  expect(uploadLabel.innerHTML).toEqual('example.pem');
 });

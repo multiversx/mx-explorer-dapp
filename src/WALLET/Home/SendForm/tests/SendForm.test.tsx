@@ -1,61 +1,8 @@
-import { fireEvent, render } from '@testing-library/react';
-import { Field } from 'formik';
+import { fireEvent, render, wait } from '@testing-library/react';
 import React from 'react';
 import SendForm from '../SendForm';
 import { GlobalProvider } from './../../../../context';
-
-const InputField = props => {
-  return (
-    <Field
-      name={props.fieldName}
-      render={({ field, form }) => (
-        <div>
-          <label htmlFor={props.fieldName}>{props.labelName}</label>
-          <input {...field} id={props.fieldName} type="text" />
-          {form.errors[props.fieldName] && form.touched[props.fieldName] ? (
-            <div data-testid={`errors-${props.fieldName}`}>{form.errors[props.fieldName]}</div>
-          ) : null}
-        </div>
-      )}
-    />
-  );
-};
-
-// test('sample form test', async () => {
-//   const fieldName = 'firstName';
-//   const labelName = 'First Name';
-//   const initialValues = {
-//     firstName: '',
-//   };
-//   const { getByLabelText, findByTestId } = render(
-//     <Formik
-//       initialValues={initialValues}
-//       onSubmit={() => null}
-//       validate={values => {
-//         const errors = {
-//           firstName: '',
-//         };
-
-//         if (!values.firstName) {
-//           errors.firstName = 'Required.';
-//         }
-
-//         return errors;
-//       }}
-//     >
-//       <InputField fieldName={fieldName} labelName={labelName} />
-//     </Formik>
-//   );
-
-//   const input = getByLabelText(labelName);
-
-//   // Call blur without inputting anything which should trigger a validation error
-//   fireEvent.blur(input);
-
-//   const validationErrors = await findByTestId(`transactionFeeValue`);
-
-//   expect(validationErrors.innerHTML).toBe('Required.');
-// });
+// file.only
 
 const formProps = {
   testnetGasLimit: 1000,
@@ -70,7 +17,7 @@ const formProps = {
   data: true,
   gasLimitEditable: true,
   decimals: 4,
-  balance: '1000',
+  balance: '9999570270',
   dispatch: () => null,
 };
 
@@ -78,22 +25,188 @@ const formProps = {
 // https://github.com/testing-library/react-testing-library/issues/93#issuecomment-405111391
 // https://codesandbox.io/s/rl0wj028pp
 
-test('data changes transaction fee', async () => {
-  const data = { target: { value: 'four' } };
-  const dataLength = data.target.value.length;
-
-  const { getByLabelText, findByTestId } = render(
+const beforeAll = () =>
+  render(
     <GlobalProvider>
       <SendForm {...formProps} />
     </GlobalProvider>
   );
 
-  const input = getByLabelText('Data');
-  fireEvent.change(input, data);
-  // Call blur without inputting anything which should trigger a validation error
-  //   fireEvent.blur(input);
+describe('Destination address', () => {
+  it(`should not be empty`, async () => {
+    const { findByTestId, queryByText } = beforeAll();
+    const data = { target: { value: '' } };
+    const input: any = await findByTestId(`dstAddress`);
+    fireEvent.change(input, data);
+    fireEvent.blur(input);
+    await wait(() => {
+      expect(input.value).toBe('');
+      const req = queryByText('Required');
+      expect(req!.innerHTML).toBe('Required');
+    });
+  });
+  it(`should validate address`, async () => {
+    const { findByTestId, queryByText } = beforeAll();
+    const input: any = await findByTestId(`dstAddress`);
+    const value = '123';
+    const data = { target: { value } };
+    fireEvent.change(input, data);
+    fireEvent.blur(input);
+    await wait(() => {
+      const req = queryByText('Invalid address');
+      expect(req!.innerHTML).toBe('Invalid address');
+    });
+  });
+});
 
-  const validationErrors = await findByTestId(`transactionFeeValue`);
+describe('Amount', () => {
+  it(`should not be empty`, async () => {
+    const { queryByText, getByLabelText } = beforeAll();
+    const data = { target: { value: '' } };
+    const input: any = getByLabelText(`Amount (ERD)`);
+    fireEvent.change(input, data);
+    fireEvent.blur(input);
+    await wait(() => {
+      expect(input.value).toBe('');
+      const req = queryByText('Required');
+      expect(req!.innerHTML).toBe('Required');
+    });
+  });
+  it(`should be numeric`, async () => {
+    const { getByLabelText, queryByText } = beforeAll();
+    const input: any = getByLabelText(`Amount (ERD)`);
+    const value = 'asd';
+    const data = { target: { value } };
+    fireEvent.change(input, data);
+    fireEvent.blur(input);
+    await wait(() => {
+      const req = queryByText('Invalid number');
+      expect(req!.innerHTML).toBe('Invalid number');
+    });
+  });
+  it(`should not allow comma ',' `, async () => {
+    const { getByLabelText, queryByText } = beforeAll();
+    const input: any = getByLabelText(`Amount (ERD)`);
+    const value = '1,2';
+    const data = { target: { value } };
+    fireEvent.change(input, data);
+    fireEvent.blur(input);
+    await wait(() => {
+      const req = queryByText('Invalid number');
+      expect(req!.innerHTML).toBe('Invalid number');
+    });
+  });
+  it(`should allow only max number of decimals configured by testnet`, async () => {
+    const { getByLabelText, queryByText } = beforeAll();
+    const input: any = getByLabelText(`Amount (ERD)`);
+    const value = '1.123456';
+    const data = { target: { value } };
+    fireEvent.change(input, data);
+    fireEvent.blur(input);
+    await wait(() => {
+      expect(input.value).toBe(value);
+      const req = queryByText(/^Maximum/);
+      expect(req!.innerHTML).toBe(`Maximum ${formProps.decimals} decimals allowed`);
+    });
+  });
+  it(`should be =< than balance - transaction fee`, async () => {
+    const { getByLabelText, queryByText } = beforeAll();
+    const input: any = getByLabelText(`Amount (ERD)`);
+    // const transactionFee =
+    //   formProps.testnetGasPrice * formProps.testnetGasLimit * Math.pow(10, -formProps.denomination);
+    // const value = parseInt(formProps.balance) - transactionFee - 1;
+    const value =
+      formProps.balance.substr(0, formProps.balance.length - formProps.denomination) +
+      '.' +
+      formProps.balance.substr(formProps.balance.length - formProps.denomination);
 
-  expect(validationErrors.innerHTML).toBe(`1.00${dataLength}0&nbsp;ERD`);
+    const data = { target: { value } }; // 999957.0270
+    fireEvent.change(input, data);
+    fireEvent.blur(input);
+    await wait(() => {
+      const req = queryByText('Insufficient funds');
+      expect(req!.innerHTML).toBe(`Insufficient funds`);
+    });
+  });
+});
+
+describe('Gas limit', () => {
+  it(`should not be empty`, async () => {
+    const { getByLabelText } = beforeAll();
+    const input: any = getByLabelText(`Gas Limit`);
+    await wait(() => {
+      expect(input.value).toBe(formProps.testnetGasLimit.toString());
+    });
+  });
+  it(`should be integer`, async () => {
+    const { getByLabelText, queryByText } = beforeAll();
+    const input: any = getByLabelText(`Gas Limit`);
+    const value = 'string';
+    const data = { target: { value } };
+    fireEvent.change(input, data);
+    fireEvent.blur(input);
+    await wait(() => {
+      const req = queryByText('Invalid number');
+      expect(req!.innerHTML).toBe('Invalid number');
+    });
+  });
+  it(`should >= than the one set by testnet config`, async () => {
+    const { getByLabelText, queryByText } = beforeAll();
+    const input: any = getByLabelText(`Gas Limit`);
+    const value = formProps.testnetGasLimit - 1;
+    const data = { target: { value } };
+    fireEvent.change(input, data);
+    fireEvent.blur(input);
+    await wait(() => {
+      const req = queryByText(/^Gas limit must be greater/);
+      expect(req!.innerHTML).toBe(
+        `Gas limit must be greater or equal to ${formProps.testnetGasLimit}`
+      );
+    });
+  });
+  it(`should >= than the testnetGasLimit + data.length if data is set`, async () => {
+    const { getByLabelText, queryByText } = beforeAll();
+
+    const dataInput: any = getByLabelText(`Data`);
+    const dataValue = 'four';
+    fireEvent.change(dataInput, { target: { value: dataValue } });
+    fireEvent.blur(dataInput);
+
+    const input: any = getByLabelText(`Gas Limit`);
+    const value = formProps.testnetGasLimit;
+    const data = { target: { value } };
+    fireEvent.change(input, data);
+    fireEvent.blur(input);
+
+    await wait(() => {
+      const req = queryByText(/^Gas limit must be greater/);
+      expect(req!.innerHTML).toBe(
+        `Gas limit must be greater or equal to ${formProps.testnetGasLimit + dataValue.length}`
+      );
+    });
+  });
+});
+
+describe('Data field tests', () => {
+  test('data changes transaction fee', async () => {
+    const data = { target: { value: 'four' } };
+    const dataLength = data.target.value.length;
+    const { getByLabelText, findByTestId } = beforeAll();
+
+    const input = getByLabelText('Data');
+    fireEvent.change(input, data);
+    const validationErrors = await findByTestId(`transactionFeeValue`);
+    expect(validationErrors.innerHTML).toBe(`1.00${dataLength}0&nbsp;ERD`);
+  });
+});
+
+describe('Entire balance button', () => {
+  test('Pressing entire balance fills amount with balance - fee', async () => {
+    const { getByLabelText, getByText } = beforeAll();
+
+    const entireBalaceButton = getByText(`Entire balance`);
+    fireEvent.click(entireBalaceButton);
+    const input: any = getByLabelText(`Amount (ERD)`);
+    expect(input.value).toBe('999956.0270');
+  });
 });
