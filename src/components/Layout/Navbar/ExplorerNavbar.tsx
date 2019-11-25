@@ -7,8 +7,15 @@ import { useGlobalState } from '../../../context';
 import { Search, TestnetLink } from '../../../sharedComponents';
 import TestnetSwitcher from './TestnetSwitcher';
 
-export default function ExplorerNavbar() {
-  const [expanded, setExpanded] = React.useState(false);
+interface ExplorerNavbarType {
+  expanded?: boolean;
+  setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function ExplorerNavbar({
+  expanded = false,
+  setExpanded = () => null,
+}: ExplorerNavbarType) {
   const {
     activeTestnet: { validators },
     activeTestnetId,

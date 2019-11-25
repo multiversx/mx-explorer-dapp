@@ -5,7 +5,7 @@ import { TestnetLink } from 'sharedComponents';
 import AppSwitcher from './AppSwitcher';
 import ExplorerNavbar from './ExplorerNavbar';
 
-export function NavbarWrapper({ children }: { children: React.ReactNode }) {
+export function NavbarWrapper({ children }: { children: any }) {
   const [expanded, setExpanded] = React.useState(false);
 
   const onToggle = (isExpanded: boolean) => {
@@ -23,7 +23,8 @@ export function NavbarWrapper({ children }: { children: React.ReactNode }) {
             <img src={elrondLogo} alt="Elrond logo" />
           </div>
         </TestnetLink>
-        {children}
+        <AppSwitcher />
+        {React.cloneElement(children, { expanded, setExpanded })}
       </div>
     </Navbar>
   );
@@ -32,7 +33,6 @@ export function NavbarWrapper({ children }: { children: React.ReactNode }) {
 export default function SiteNavbar() {
   return (
     <NavbarWrapper>
-      <AppSwitcher activeAppId="explorer" />
       <ExplorerNavbar />
     </NavbarWrapper>
   );

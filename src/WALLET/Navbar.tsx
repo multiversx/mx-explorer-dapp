@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Navbar } from 'react-bootstrap';
 import { NavbarWrapper } from '../components/Layout/Navbar';
-import AppSwitcher from '../components/Layout/Navbar/AppSwitcher';
 import TestnetSwitcher from '../components/Layout/Navbar/TestnetSwitcher';
 import { useWalletDispatch } from './context';
 
@@ -18,18 +17,19 @@ export default function SiteNavbar() {
 
   return (
     <NavbarWrapper>
-      <AppSwitcher activeAppId="wallet" />
-      <Navbar.Toggle aria-controls="navbars" style={{ color: 'black', border: 'none' }}>
-        {expanded ? <FontAwesomeIcon icon={faTimes} /> : <FontAwesomeIcon icon={faBars} />}
-      </Navbar.Toggle>
-      <Navbar.Collapse id="navbars">
-        <ul className="navbar-nav mr-auto">
-          <li className={`nav-item active`} onClick={() => onToggle(false)}>
-            wallet
-          </li>
-        </ul>
-        <TestnetSwitcher onToggle={onToggle} />
-      </Navbar.Collapse>
+      <>
+        <Navbar.Toggle aria-controls="navbars" style={{ color: 'black', border: 'none' }}>
+          {expanded ? <FontAwesomeIcon icon={faTimes} /> : <FontAwesomeIcon icon={faBars} />}
+        </Navbar.Toggle>
+        <Navbar.Collapse id="navbars">
+          <ul className="navbar-nav mr-auto">
+            <li className={`nav-item active`} onClick={() => onToggle(false)}>
+              <span className="nav-link">wallet</span>
+            </li>
+          </ul>
+          <TestnetSwitcher onToggle={onToggle} />
+        </Navbar.Collapse>
+      </>
     </NavbarWrapper>
   );
 }
