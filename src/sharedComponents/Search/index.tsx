@@ -1,6 +1,6 @@
-import React from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useGlobalState } from '../../context';
 import { testnetRoute } from '../../helpers';
@@ -12,10 +12,10 @@ const Search: React.FC = () => {
     activeTestnetId,
     timeout,
   } = useGlobalState();
-  let history = useHistory();
+  const history = useHistory();
   const [hash, setHash] = React.useState<string>('');
 
-  const handleKeyDown = function(e: React.KeyboardEvent) {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       onClick();
     }
@@ -39,7 +39,7 @@ const Search: React.FC = () => {
       <input
         type="text"
         className="form-control"
-        placeholder="Search by Address / Txn Hash / Block Hash"
+        placeholder="Address / Txn Hash / Block Hash"
         name="requestType"
         required
         value={hash}
