@@ -146,12 +146,13 @@ strong {
     0 3px 4px rgba(40, 47, 60, 0.05);
 }
 .navbar .navbar-brand {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  $npt: 1.21451rem;
+  padding-top: $npt;
+  padding-bottom: $npt;
   margin-right: 0rem;
 }
 .navbar .navbar-brand img {
-  height: 2.3rem;
+  height: 2.286rem;
 }
 
 .navbar .navbar-toggler-icon {
@@ -162,25 +163,36 @@ strong {
 }
 
 .navbar .nav-item {
-  border-top: 0;
-  padding-top: 0.3rem;
-  padding-bottom: 0.3rem;
-  font-size: 1.4rem;
-  font-weight: 200;
-  line-height: 1.2;
-  margin: 0;
+  padding-top: 0.6rem;
+  margin-bottom: 0.28rem;
+  font-size: 1.03rem;
+  margin-top: 0;
+
+  &.appSwitcherButton {
+    border-top: 0;
+    padding-top: 0.68rem;
+    padding-bottom: 0.7rem;
+    padding-right: 1.7rem;
+    font-size: 1.32rem;
+    font-weight: 200;
+    line-height: 1.2;
+    margin: 0;
+  }
 
   @include media-breakpoint-up(md) {
     border-top: 0.3rem solid transparent;
     padding-bottom: 0.6rem;
-    margin-left: 0.9rem;
-    margin-right: 0.9rem;
+    $mlr: 0.57rem;
+    margin-left: $mlr;
+    margin-right: $mlr;
   }
 }
 .navbar .nav-item a.nav-link {
   color: #9ba4ae;
-  padding-left: 0.3rem;
-  padding-right: 0.3rem;
+  $prl: 0.01rem;
+  padding-left: $prl;
+  padding-right: $prl;
+  @include transition(0);
 }
 
 .navbar .nav-item a.nav-link:hover {
@@ -189,7 +201,7 @@ strong {
 
 .appSwitcher {
   .nav-link {
-    padding: 0.4rem 0.8rem;
+    padding: 0.1rem 0.45rem;
     font-size: 1.2rem;
   }
 }

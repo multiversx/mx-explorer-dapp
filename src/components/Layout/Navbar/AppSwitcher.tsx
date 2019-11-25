@@ -34,7 +34,7 @@ const apps: AppsType[] = [
   },
 ];
 
-export default function AppSwitcher({ activeAppId }: { activeAppId: AppIdType }) {
+export default function AppSwitcher() {
   const hidePopover = () => {
     document.body.click();
   };
@@ -42,6 +42,11 @@ export default function AppSwitcher({ activeAppId }: { activeAppId: AppIdType })
   const onClick = (e: React.MouseEvent) => {
     e.preventDefault();
   };
+
+  const appId = apps.filter(app => app.id === window.location.hostname.split('.')[0]).pop();
+  const devApp = process.env.REACT_APP_WALLET ? 'wallet' : 'explorer';
+
+  const activeAppId = appId ? appId : devApp;
 
   return (
     <>
@@ -51,7 +56,11 @@ export default function AppSwitcher({ activeAppId }: { activeAppId: AppIdType })
         placement="bottom"
         rootClose
         overlay={
-          <Popover id="popover-positioned-bottom" className="appSwitcher">
+          <Popover
+            id="popover-positioned-bottom"
+            className="appSwitcher"
+            style={{ marginTop: '-8px' }}
+          >
             <Popover.Content>
               {apps.map(app => {
                 return (
@@ -70,7 +79,7 @@ export default function AppSwitcher({ activeAppId }: { activeAppId: AppIdType })
         }
       >
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item ml-2">
+          <li className="nav-item ml-2 appSwitcherButton">
             <a className="nav-link active" href="/#" onClick={onClick}>
               {(apps.filter(app => app.id === activeAppId).pop() as any).name}{' '}
               <small>
