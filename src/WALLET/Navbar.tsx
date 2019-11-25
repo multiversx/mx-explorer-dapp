@@ -22,11 +22,7 @@ export default function SiteNavbar() {
           {expanded ? <FontAwesomeIcon icon={faTimes} /> : <FontAwesomeIcon icon={faBars} />}
         </Navbar.Toggle>
         <Navbar.Collapse id="navbars">
-          <ul className="navbar-nav mr-auto">
-            <li className={`nav-item active`} onClick={() => onToggle(false)}>
-              <span className="nav-link">wallet</span>
-            </li>
-          </ul>
+          <div className="navbar-nav mr-auto" />
           <TestnetSwitcher onToggle={onToggle} />
         </Navbar.Collapse>
       </>
