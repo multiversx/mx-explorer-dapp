@@ -166,6 +166,7 @@ const SendFormik = ({
                   }
                   id="dstAddress"
                   name="dstAddress"
+                  data-testid="dstAddress"
                   placeholder="Address"
                   required={true}
                   value={values.dstAddress}
@@ -173,7 +174,12 @@ const SendFormik = ({
                   onBlur={handleBlur}
                   autoComplete="off"
                 />
-                <ErrorMessage component="div" name="dstAddress" className="invalid-feedback" />
+                <ErrorMessage
+                  component="div"
+                  name="dstAddress"
+                  data-testid="dstAddressError"
+                  className="invalid-feedback"
+                />
               </div>
               <div className="form-group">
                 <a href="/#" className="float-right" onClick={getEntireBalance}>
