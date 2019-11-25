@@ -75,7 +75,7 @@ export default function ExplorerNavbar({
           <div className="form-search" role="search">
             <div
               className="input-group input-group-seamless float-right"
-              style={{ maxWidth: '22.5rem' }}
+              style={{ maxWidth: '18rem' }}
             >
               <Search />
             </div>
