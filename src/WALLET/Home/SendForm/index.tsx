@@ -48,7 +48,9 @@ const SendFormik = ({ populateDetails }: SendFormikType) => {
         <div className="card-body">
           {lastTxHash === '' ? (
             <div id="sendTransaction" className="h-100">
-              <h4 className="card-title">Send Transaction</h4>
+              <h4 className="card-title" data-testid="sendFormTitle">
+                Send Transaction
+              </h4>
               <SendForm {...props} />
             </div>
           ) : (
