@@ -37,17 +37,19 @@ const WalletHome = () => {
   const [detailsFetched, setDetaislFetched] = React.useState(false);
 
   const populateDetails = () => {
-    getWalletDetails({
-      publicKey,
-      nodeUrl,
-      timeout,
-    }).then(({ balance, nonce, detailsFetched }) => {
-      if (ref.current !== null) {
-        setDetaislFetched(detailsFetched);
-        dispatch({ type: 'setBalance', balance });
-        dispatch({ type: 'setNonce', nonce });
-      }
-    });
+    if (publicKey) {
+      getWalletDetails({
+        publicKey,
+        nodeUrl,
+        timeout,
+      }).then(({ balance, nonce, detailsFetched }) => {
+        if (ref.current !== null) {
+          setDetaislFetched(detailsFetched);
+          dispatch({ type: 'setBalance', balance });
+          dispatch({ type: 'setNonce', nonce });
+        }
+      });
+    }
   };
 
   React.useEffect(populateDetails, []);
