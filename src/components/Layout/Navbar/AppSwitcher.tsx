@@ -46,7 +46,7 @@ export default function AppSwitcher() {
   const appId = apps.filter(app => app.id === window.location.hostname.split('.')[0]).pop();
   const devApp = process.env.REACT_APP_WALLET ? 'wallet' : 'explorer';
 
-  const activeAppId = appId ? appId : devApp;
+  const activeAppId = appId ? appId.id : devApp;
 
   return (
     <>
