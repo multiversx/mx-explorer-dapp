@@ -61,7 +61,7 @@ const SendFormik = ({ populateDetails }: SendFormikType) => {
     );
   };
 
-  return useMemo(SendComponent, [privateKey, nonce, publicKey, lastTxHash]);
+  return useMemo(SendComponent, [privateKey, nonce, publicKey, lastTxHash, balance]);
 };
 
 export default SendFormik;
