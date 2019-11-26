@@ -1,9 +1,13 @@
 import elrondLogo from 'assets/img/elrond-symbol.svg';
+import Popper from 'popper.js';
 import React from 'react';
 import { Navbar } from 'react-bootstrap';
 import { TestnetLink } from 'sharedComponents';
 import AppSwitcher from './AppSwitcher';
 import ExplorerNavbar from './ExplorerNavbar';
+
+// fix dropdown blurry text
+(Popper.Defaults as any).modifiers.computeStyle.gpuAcceleration = false;
 
 export function NavbarWrapper({ children }: { children: any }) {
   const [expanded, setExpanded] = React.useState(false);
