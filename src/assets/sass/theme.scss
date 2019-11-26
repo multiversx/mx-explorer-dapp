@@ -164,10 +164,9 @@ strong {
 
 .navbar .nav-item {
   padding-top: 0.6rem;
-  margin-bottom: 0.28rem;
   font-size: 1.03rem;
-  margin-top: 0;
-
+  line-height: 2.43;
+  border-top: 0.15rem solid transparent !important;
   &.appSwitcherButton {
     border-top: 0;
     padding-top: 0.68rem;
@@ -177,10 +176,24 @@ strong {
     font-weight: 200;
     line-height: 1.2;
     margin: 0;
+    white-space: nowrap;
+    a.activeApp {
+      color: #212529;
+      &:hover {
+        color: $black;
+        svg {
+          color: $black;
+        }
+      }
+    }
+
+    svg {
+      color: #dddddd;
+    }
   }
 
   @include media-breakpoint-up(md) {
-    border-top: 0.3rem solid transparent;
+    border-top: 0.2rem solid transparent;
     padding-bottom: 0.6rem;
     $mlr: 0.57rem;
     margin-left: $mlr;
@@ -192,7 +205,7 @@ strong {
   $prl: 0.01rem;
   padding-left: $prl;
   padding-right: $prl;
-  @include transition(0);
+  transition-property: none;
 }
 
 .navbar .nav-item a.nav-link:hover {
@@ -207,7 +220,7 @@ strong {
 }
 
 .navbar .nav-item.active {
-  border-color: $blue;
+  border-color: $blue !important;
 }
 
 .navbar .nav-item.active a {
@@ -223,8 +236,16 @@ strong {
   max-width: 35rem;
   width: 100%;
 }
-.form-search .input-group.input-group-seamless > .form-control {
-  border-radius: 2rem;
+.form-search .input-group.input-group-seamless {
+  > .form-control {
+    line-height: 1.299rem;
+    border-radius: 2rem;
+  }
+
+  > .input-group-append {
+    right: 0;
+    margin-top: -0.17rem;
+  }
 }
 
 main .form-search {
@@ -611,10 +632,18 @@ main .form-search .form-control:focus {
 span.switch {
   color: rgba(1, 1, 1, 0.4);
   display: inline-block;
+  font-size: 0.859rem;
+  svg {
+    color: #dddddd;
+  }
 
   &:hover {
     color: rgba(1, 1, 1, 0.8);
     cursor: pointer;
+    svg {
+      color: rgba(1, 1, 1, 0.8);
+      cursor: pointer;
+    }
   }
 }
 
