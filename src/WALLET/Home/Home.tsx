@@ -1,7 +1,7 @@
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { useGlobalState } from './../../context';
+import { useGlobalDispatch, useGlobalState } from './../../context';
 import { useWalletDispatch, useWalletState } from './../context';
 import { getWalletDetails } from './helpers/asyncRequests';
 import LatestTransactions from './LatestTransactions';
@@ -28,10 +28,12 @@ const WaleltUnavailable = () => (
 const WalletHome = () => {
   const ref = React.useRef(null);
   const dispatch = useWalletDispatch();
+  const globalDispatch = useGlobalDispatch();
 
   const {
     timeout,
-    activeTestnet: { nodeUrl },
+    activeTestnet: { nodeUrl, refreshRate, id },
+    refresh: { intervalId: oldIntervalId },
   } = useGlobalState();
   const { publicKey, balance } = useWalletState();
   const [detailsFetched, setDetaislFetched] = React.useState(false);
@@ -51,6 +53,17 @@ const WalletHome = () => {
       });
     }
   };
+
+  function stopFetchingMetaData() {
+    clearInterval(oldIntervalId);
+    return () => {
+      const intervalId = setInterval(() => {
+        globalDispatch({ type: 'triggerNewRound' });
+      }, refreshRate);
+      globalDispatch({ type: 'setNewRoundIntervalId', intervalId, testnetId: id });
+    };
+  }
+  React.useEffect(stopFetchingMetaData, []);
 
   React.useEffect(populateDetails, []);
 
