@@ -22,15 +22,15 @@ const apps: AppsType[] = [
     name: 'Explorer',
     to: 'https://explorer.elrond.com/',
   },
-  {
-    id: 'studio',
-    name: 'Studio',
-    to: 'https://studio.elrond.com/',
-  },
+  // {
+  //   id: 'studio',
+  //   name: 'Studio',
+  //   to: 'https://studio.elrond.com/',
+  // },
   {
     id: 'docs',
     name: 'Docs',
-    to: 'https://documents.elrond.com/',
+    to: 'https://docs.elrond.com/',
   },
 ];
 
@@ -80,7 +80,7 @@ export default function AppSwitcher() {
       >
         <ul className="navbar-nav mr-auto">
           <li className="nav-item ml-2 appSwitcherButton">
-            <a className="nav-link active" href="/#" onClick={onClick}>
+            <a className="nav-link active activeApp" href="/#" onClick={onClick}>
               {(apps.filter(app => app.id === activeAppId).pop() as any).name}{' '}
               <small>
                 <FontAwesomeIcon icon={faAngleDown} />
