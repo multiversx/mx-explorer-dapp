@@ -1,7 +1,7 @@
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { Navbar } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import { NavbarWrapper } from '../components/Layout/Navbar';
 import TestnetSwitcher from '../components/Layout/Navbar/TestnetSwitcher';
 import { useWalletDispatch } from './context';
@@ -22,8 +22,9 @@ export default function SiteNavbar() {
           {expanded ? <FontAwesomeIcon icon={faTimes} /> : <FontAwesomeIcon icon={faBars} />}
         </Navbar.Toggle>
         <Navbar.Collapse id="navbars">
-          <div className="navbar-nav mr-auto" />
-          <TestnetSwitcher onToggle={onToggle} />
+          <Nav className="ml-auto">
+            <TestnetSwitcher onToggle={onToggle} />
+          </Nav>
         </Navbar.Collapse>
       </>
     </NavbarWrapper>

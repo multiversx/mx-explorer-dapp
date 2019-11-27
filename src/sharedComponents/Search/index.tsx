@@ -38,7 +38,7 @@ const Search: React.FC = () => {
     <>
       <input
         type="text"
-        className="form-control"
+        className="form-control mr-sm-2"
         placeholder="Address / Txn Hash / Block Hash"
         name="requestType"
         required

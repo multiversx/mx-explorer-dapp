@@ -140,91 +140,104 @@ strong {
 -------------------------------------------------- */
 .navbar {
   background: #ffffff;
-  padding-top: 0;
-  padding-bottom: 0;
+  // padding-top: 0;
+  // padding-bottom: 0;
   box-shadow: 0 0 25px rgba(40, 47, 60, 0.05), 0 20px 25px rgba(40, 47, 60, 0.05),
     0 3px 4px rgba(40, 47, 60, 0.05);
+  .navContainer {
+    position: relative;
+  }
 }
+
+.navbarToggle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+
 .navbar .navbar-brand {
-  $npt: 1.21451rem;
-  padding-top: $npt;
-  padding-bottom: $npt;
-  margin-right: 0rem;
+  // $npt: 1.21451rem;
+  // padding-top: $npt;
+  // padding-bottom: $npt;
+  // margin-right: 0rem;
 }
 .navbar .navbar-brand img {
   height: 2.286rem;
 }
 
 .navbar .navbar-toggler-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  line-height: 1.5rem;
-  text-align: center;
+  // width: 1.5rem;
+  // height: 1.5rem;
+  // line-height: 1.5rem;
+  // text-align: center;
 }
 
-.navbar .nav-item {
-  padding-top: 0.6rem;
-  font-size: 1.03rem;
-  line-height: 2.43;
-  border-top: 0.15rem solid transparent !important;
-  &.appSwitcherButton {
-    border-top: 0;
-    padding-top: 0.68rem;
-    padding-bottom: 0.7rem;
-    padding-right: 1.7rem;
-    font-size: 1.32rem;
-    font-weight: 200;
-    line-height: 1.2;
-    margin: 0;
-    white-space: nowrap;
-    a.activeApp {
-      color: #212529;
-      &:hover {
+.appSwitcherButton {
+  font-size: 1.4rem;
+  white-space: nowrap;
+  .activeApp {
+    color: #212529;
+
+    &:hover {
+      color: $black;
+      svg {
         color: $black;
-        svg {
-          color: $black;
-        }
       }
     }
-
-    svg {
-      color: #dddddd;
-    }
   }
 
-  @include media-breakpoint-up(md) {
-    border-top: 0.2rem solid transparent;
-    padding-bottom: 0.6rem;
-    $mlr: 0.57rem;
-    margin-left: $mlr;
-    margin-right: $mlr;
+  img {
+    padding-right: 0.2rem;
+    margin-top: -0.2rem;
+  }
+
+  svg {
+    color: #dddddd;
   }
 }
-.navbar .nav-item a.nav-link {
-  color: #9ba4ae;
-  $prl: 0.01rem;
-  padding-left: $prl;
-  padding-right: $prl;
-  transition-property: none;
+
+.brandDropdown {
+  a.nav-link {
+    padding-left: 0;
+    padding-right: 1.8rem;
+  }
 }
 
-.navbar .nav-item a.nav-link:hover {
-  color: #212529;
+.navbar {
+  a.nav-link {
+    color: #b8b8b8 !important;
+    transition: none;
+
+    // line-height: 3.6rem;
+    // padding-top: 0.3rem;
+    // @include media-breakpoint-up(md) {
+    //   border-top: 0.2rem solid transparent;
+    //   $mlr: 0.2rem;
+    //   margin-left: $mlr;
+    //   margin-right: $mlr;
+    // }
+  }
+  .dropdown-toggle:after {
+    content: none;
+  }
+}
+
+.navbar a.nav-link:hover {
+  color: #212529 !important;
 }
 
 .appSwitcher {
+  margin-top: 0.8rem;
   .nav-link {
     padding: 0.1rem 0.45rem;
     font-size: 1.2rem;
   }
 }
 
-.navbar .nav-item.active {
+.navbar .nav-link.active {
   border-color: $blue !important;
-}
-
-.navbar .nav-item.active a {
-  color: #212529;
+  color: #212529 !important;
 }
 
 .form-search {
@@ -236,15 +249,24 @@ strong {
   max-width: 35rem;
   width: 100%;
 }
+.form-inline .input-group.input-group-seamless,
 .form-search .input-group.input-group-seamless {
   > .form-control {
     line-height: 1.299rem;
     border-radius: 2rem;
+    // border-color: #dddddd;
   }
 
   > .input-group-append {
     right: 0;
     margin-top: -0.17rem;
+    svg {
+      margin-right: 0.4rem;
+    }
+    .input-group-text {
+      margin-right: 0.5rem;
+      padding-right: 0.4rem;
+    }
   }
 }
 
@@ -630,9 +652,9 @@ main .form-search .form-control:focus {
 }
 
 span.switch {
-  color: rgba(1, 1, 1, 0.4);
+  color: #505050;
   display: inline-block;
-  font-size: 0.859rem;
+  // font-size: 0.859rem;
   svg {
     color: #dddddd;
   }
@@ -645,10 +667,6 @@ span.switch {
       cursor: pointer;
     }
   }
-}
-
-.navbar span.switch {
-  margin: 3px 0 0 20px;
 }
 
 .popover {

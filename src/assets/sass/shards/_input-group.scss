@@ -17,17 +17,25 @@
 
   > .form-control,
   > .custom-select {
-    &:not(:last-child) { @include border-right-radius(0); }
-    &:not(:first-child) { @include border-left-radius(0); }
+    &:not(:last-child) {
+      @include border-right-radius(0);
+    }
+    &:not(:first-child) {
+      @include border-left-radius(0);
+    }
   }
 
   // Custom file inputs have more complex markup, thus requiring different
   // border-radius overrides.
   > .custom-file {
     &:not(:last-child) .custom-file-label,
-    &:not(:last-child) .custom-file-label::after { @include border-right-radius(0); }
+    &:not(:last-child) .custom-file-label::after {
+      @include border-right-radius(0);
+    }
     &:not(:first-child) .custom-file-label,
-    &:not(:first-child) .custom-file-label::after { @include border-left-radius(0); }
+    &:not(:first-child) .custom-file-label::after {
+      @include border-left-radius(0);
+    }
   }
 
   // Seamless input groups
@@ -53,7 +61,7 @@
     > .input-group-append {
       right: 0;
     }
-    
+
     > .input-group-middle {
       right: 0;
       left: 0;
@@ -76,7 +84,6 @@
   }
 }
 
-
 // Prepend and append
 
 .input-group-prepend,
@@ -89,9 +96,12 @@
   }
 }
 
-.input-group-prepend { margin-right: -$input-border-width; }
-.input-group-append { margin-left: -$input-border-width; }
-
+.input-group-prepend {
+  margin-right: -$input-border-width;
+}
+.input-group-append {
+  margin-left: -$input-border-width;
+}
 
 // Textual addons
 
@@ -104,7 +114,6 @@
   border: $input-border-width solid $input-group-addon-border-color;
   @include border-radius($input-border-radius);
 }
-
 
 // Sizing
 
@@ -126,13 +135,11 @@
   @extend .form-control-sm;
 }
 
-
 // Prepend and append rounded corners
 //
 // These rulesets must come after the sizing ones to properly override sm and lg
 // border-radius values when extending. They're more specific than we'd like
 // with the `.input-group >` part, but without it, we cannot override the sizing.
-
 
 .input-group > .input-group-prepend > .btn,
 .input-group > .input-group-prepend > .input-group-text,
@@ -159,6 +166,6 @@
   @include border-radius(0);
 }
 
-.input-group-middle{
+.input-group-middle {
   display: flex;
 }

@@ -1,7 +1,8 @@
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import elrondLogo from 'assets/img/elrond-symbol.svg';
 import React from 'react';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { NavDropdown } from 'react-bootstrap';
 
 type AppIdType = 'wallet' | 'explorer' | 'studio' | 'docs';
 
@@ -49,46 +50,33 @@ export default function AppSwitcher() {
   const activeAppId = appId ? appId.id : devApp;
 
   return (
-    <>
-      <OverlayTrigger
-        trigger="click"
-        key="popover"
-        placement="bottom"
-        rootClose
-        overlay={
-          <Popover
-            id="popover-positioned-bottom"
-            className="appSwitcher"
-            style={{ marginTop: '-8px' }}
+    <NavDropdown
+      title={
+        <span className="appSwitcherButton" onClick={onClick}>
+          <img src={elrondLogo} alt="Elrond logo" className="mr-2" height="30" />
+          <span className="activeApp">
+            {(apps.filter(app => app.id === activeAppId).pop() as any).name}{' '}
+            <small>
+              <FontAwesomeIcon icon={faAngleDown} />
+            </small>
+          </span>
+        </span>
+      }
+      id="basic-nav-dropdown"
+      className="brandDropdown"
+    >
+      {apps.map(app => {
+        return (
+          <NavDropdown.Item
+            key={app.id}
+            onClick={hidePopover}
+            href={app.to}
+            className={`${activeAppId === app.id ? 'active' : ''}`}
           >
-            <Popover.Content>
-              {apps.map(app => {
-                return (
-                  <a
-                    className={`nav-link ${activeAppId === app.id ? 'active' : ''}`}
-                    key={app.id}
-                    onClick={hidePopover}
-                    href={app.to}
-                  >
-                    {app.name}
-                  </a>
-                );
-              })}
-            </Popover.Content>
-          </Popover>
-        }
-      >
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item ml-2 appSwitcherButton">
-            <a className="nav-link active activeApp" href="/#" onClick={onClick}>
-              {(apps.filter(app => app.id === activeAppId).pop() as any).name}{' '}
-              <small>
-                <FontAwesomeIcon icon={faAngleDown} />
-              </small>
-            </a>
-          </li>
-        </ul>
-      </OverlayTrigger>
-    </>
+            {app.name}
+          </NavDropdown.Item>
+        );
+      })}
+    </NavDropdown>
   );
 }

@@ -1,12 +1,11 @@
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { Navbar } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { useGlobalState } from '../../../context';
 import { Search, TestnetLink } from '../../../sharedComponents';
 import TestnetSwitcher from './TestnetSwitcher';
-
 interface ExplorerNavbarType {
   expanded?: boolean;
   setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,6 +23,7 @@ export default function ExplorerNavbar({
   const onToggle = (isExpanded: boolean) => {
     setExpanded(isExpanded);
   };
+
   const { pathname } = useLocation();
   return (
     <>
@@ -31,58 +31,54 @@ export default function ExplorerNavbar({
         {expanded ? <FontAwesomeIcon icon={faTimes} /> : <FontAwesomeIcon icon={faBars} />}
       </Navbar.Toggle>
       <Navbar.Collapse id="navbars">
-        <ul className="navbar-nav mr-auto">
-          <li
-            className={`nav-item ${
+        <Nav className="mr-auto">
+          <TestnetLink
+            className={`nav-link ${
               pathname.toString() === '/' || pathname.toString() === `/${activeTestnetId}`
                 ? 'active'
                 : ''
             }`}
+            to="/"
             onClick={() => onToggle(false)}
           >
-            <TestnetLink className="nav-link" to="/">
-              Dashboard
-            </TestnetLink>
-          </li>
-          <li
-            className={`nav-item ${pathname.toString().includes('blocks') ? 'active' : ''}`}
+            Dashboard
+          </TestnetLink>
+          <TestnetLink
+            className={`nav-link ${pathname.toString().includes('blocks') ? 'active' : ''}`}
+            to="/blocks"
             onClick={() => onToggle(false)}
           >
-            <TestnetLink className="nav-link" to="/blocks">
-              Blocks
-            </TestnetLink>
-          </li>
-          <li
-            onClick={() => onToggle(false)}
-            className={`nav-item ${pathname.toString().includes('transactions') ? 'active' : ''}`}
-          >
-            <TestnetLink className="nav-link" to="/transactions">
-              Transactions
-            </TestnetLink>
-          </li>
-          {validators !== false && (
-            <li
-              onClick={() => onToggle(false)}
-              className={`nav-item ${pathname.toString().includes('validators') ? 'active' : ''}`}
-            >
-              <TestnetLink className="nav-link" to="/validators">
-                Validators
-              </TestnetLink>
-            </li>
-          )}
-        </ul>
-        {!['/', `/${activeTestnetId}`, `/${activeTestnetId}/`].includes(pathname) && (
-          <div className="form-search" role="search">
-            <div
-              className="input-group input-group-seamless float-right"
-              style={{ maxWidth: '18rem' }}
-            >
-              <Search />
-            </div>
-          </div>
-        )}
+            Blocks
+          </TestnetLink>
 
-        <TestnetSwitcher onToggle={onToggle} />
+          <TestnetLink
+            className={`nav-link ${pathname.toString().includes('transactions') ? 'active' : ''}`}
+            to="/transactions"
+            onClick={() => onToggle(false)}
+          >
+            Transactions
+          </TestnetLink>
+
+          {validators !== false && (
+            <TestnetLink
+              className={`nav-link ${pathname.toString().includes('validators') ? 'active' : ''}`}
+              to="/validators"
+              onClick={() => onToggle(false)}
+            >
+              Validators
+            </TestnetLink>
+          )}
+        </Nav>
+        <Nav className="ml-auto">
+          {!['/', `/${activeTestnetId}`, `/${activeTestnetId}/`].includes(pathname) && (
+            <div className="form-inline py-sm-2" role="search">
+              <div className="input-group input-group-seamless" style={{ maxWidth: '18rem' }}>
+                <Search />
+              </div>
+            </div>
+          )}
+          <TestnetSwitcher onToggle={onToggle} />
+        </Nav>
       </Navbar.Collapse>
     </>
   );

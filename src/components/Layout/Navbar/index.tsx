@@ -1,8 +1,6 @@
-import elrondLogo from 'assets/img/elrond-symbol.svg';
 import Popper from 'popper.js';
 import React from 'react';
 import { Navbar } from 'react-bootstrap';
-import { TestnetLink } from 'sharedComponents';
 import AppSwitcher from './AppSwitcher';
 import ExplorerNavbar from './ExplorerNavbar';
 
@@ -17,16 +15,14 @@ export function NavbarWrapper({ children }: { children: any }) {
   };
 
   return (
-    <Navbar collapseOnSelect expand="md" onToggle={onToggle} expanded={expanded}>
-      <div className="container">
-        <TestnetLink className="navbar-brand" to="/">
-          <div className="d-none d-md-block d-lg-block d-xl-block" style={{ marginTop: '-2px' }}>
-            <img src={elrondLogo} alt="Elrond logo" />
-          </div>
-          <div className="d-xs-block d-sm-block d-md-none d-lg-none d-xl-none">
-            <img src={elrondLogo} alt="Elrond logo" />
-          </div>
-        </TestnetLink>
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      className="bg-white"
+      onToggle={onToggle}
+      expanded={expanded}
+    >
+      <div className="container navContainer">
         <AppSwitcher />
         {React.cloneElement(children, { expanded, setExpanded })}
       </div>

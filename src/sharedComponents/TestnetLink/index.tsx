@@ -5,6 +5,7 @@ import { useGlobalState } from '../../context';
 interface TestnetLinkType {
   className?: string;
   title?: string;
+  onClick?: () => void;
   to: string;
   'data-testid'?: string;
   children: React.ReactNode | string;
