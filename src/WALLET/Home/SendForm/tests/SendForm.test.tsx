@@ -185,6 +185,27 @@ describe('Gas limit', () => {
       );
     });
   });
+  it(`should not show error when writing in data`, async () => {
+    const { getByLabelText, queryByText } = beforeAll();
+
+    const dataInput: any = getByLabelText(`Data`);
+    const dataValue = 'four';
+    fireEvent.change(dataInput, { target: { value: dataValue } });
+    fireEvent.blur(dataInput);
+
+    const input: any = getByLabelText(`Gas Limit`);
+    const value = formProps.testnetGasLimit;
+    const data = { target: { value } };
+    fireEvent.change(input, data);
+    fireEvent.blur(input);
+
+    await wait(() => {
+      const req = queryByText(/^Gas limit must be greater/);
+      expect(req!.innerHTML).toBe(
+        `Gas limit must be greater or equal to ${formProps.testnetGasLimit + dataValue.length}`
+      );
+    });
+  });
 });
 
 describe('Data field tests', () => {
