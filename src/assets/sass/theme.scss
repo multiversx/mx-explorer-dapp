@@ -171,21 +171,8 @@ strong {
   outline: none;
 }
 
-.navbar .navbar-brand {
-  // $npt: 1.21451rem;
-  // padding-top: $npt;
-  // padding-bottom: $npt;
-  // margin-right: 0rem;
-}
 .navbar .navbar-brand img {
   height: 2.286rem;
-}
-
-.navbar .navbar-toggler-icon {
-  // width: 1.5rem;
-  // height: 1.5rem;
-  // line-height: 1.5rem;
-  // text-align: center;
 }
 
 .appSwitcherButton {
@@ -593,17 +580,6 @@ main .form-search .form-control:focus {
 .card-body table {
   max-width: 100%;
   white-space: nowrap;
-}
-// .card-body table a {
-//     max-width: 10rem;
-//     overflow: hidden;
-//     text-overflow: ellipsis;
-//     display: inline-block;
-// }
-
-// used on the list pages
-.card-list {
-  // background: red;
 }
 
 // used on the details pages
