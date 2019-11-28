@@ -100,6 +100,7 @@ export const validationSchema = object().shape({
       ['data', 'testnetGasLimit'],
       (data: string, testnetGasLimit: number, schema: ObjectSchema) => {
         const dataPlusGas = data ? data.length + testnetGasLimit : 0 + testnetGasLimit;
+
         return schema.test(
           'minValue',
           `Gas limit must be greater or equal to ${dataPlusGas}`,

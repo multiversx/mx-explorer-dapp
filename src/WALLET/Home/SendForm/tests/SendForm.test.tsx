@@ -186,24 +186,28 @@ describe('Gas limit', () => {
     });
   });
   it(`should not show error when writing in data`, async () => {
-    const { getByLabelText, queryByText } = beforeAll();
+    const { getByLabelText, queryByText, getByText, findByTestId } = beforeAll();
 
-    const dataInput: any = getByLabelText(`Data`);
-    const dataValue = 'four';
-    fireEvent.change(dataInput, { target: { value: dataValue } });
-    fireEvent.blur(dataInput);
+    const address: any = getByLabelText(`To`);
+    fireEvent.change(address, { target: { value: formProps.publicKey } });
+    fireEvent.blur(address);
 
-    const input: any = getByLabelText(`Gas Limit`);
-    const value = formProps.testnetGasLimit;
-    const data = { target: { value } };
-    fireEvent.change(input, data);
-    fireEvent.blur(input);
+    const entireBalaceButton = getByText(`Entire balance`);
+    fireEvent.click(entireBalaceButton);
+
+    const transactionFeeValue = await findByTestId(`transactionFeeValue`);
+    fireEvent.click(transactionFeeValue);
+
+    const gasLimit: any = getByLabelText(`Gas Limit`);
+    fireEvent.blur(gasLimit);
+
+    const data = getByLabelText(`Data`);
+    fireEvent.change(data, { target: { value: '123' } });
+    fireEvent.keyUp(data);
 
     await wait(() => {
       const req = queryByText(/^Gas limit must be greater/);
-      expect(req!.innerHTML).toBe(
-        `Gas limit must be greater or equal to ${formProps.testnetGasLimit + dataValue.length}`
-      );
+      expect(req).toBe(null);
     });
   });
 });

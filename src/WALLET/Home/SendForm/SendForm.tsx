@@ -262,12 +262,12 @@ const SendFormik = ({
                   placeholder="Data"
                   value={values.data}
                   onChange={e => {
-                    setFieldValue('data', e.target.value);
                     setFieldValue(
                       'gasLimit',
                       testnetGasLimit + (e.target.value ? e.target.value.length : 0),
-                      false
+                      true
                     );
+                    setFieldValue('data', e.target.value, false);
                   }}
                   onBlur={handleBlur}
                 />
