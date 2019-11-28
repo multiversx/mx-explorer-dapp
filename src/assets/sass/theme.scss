@@ -146,6 +146,15 @@ strong {
     0 3px 4px rgba(40, 47, 60, 0.05);
   .navContainer {
     position: relative;
+    .dropdown-menu .dropdown-item {
+      color: #7f7f7f;
+      &.active,
+      &:hover {
+        background-color: $white;
+        color: $black;
+        transition: none;
+      }
+    }
   }
 }
 
@@ -154,6 +163,12 @@ strong {
   right: 0;
   top: 0;
   z-index: 1;
+  border: none;
+  outline: none;
+}
+
+.navbar-toggler {
+  outline: none;
 }
 
 .navbar .navbar-brand {
@@ -201,6 +216,9 @@ strong {
   a.nav-link {
     padding-left: 0;
     padding-right: 1.8rem;
+  }
+  .dropdown-menu .dropdown-item {
+    font-size: 1.2rem;
   }
 }
 
