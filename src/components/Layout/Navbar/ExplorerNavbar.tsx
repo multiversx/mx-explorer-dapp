@@ -78,7 +78,9 @@ export default function ExplorerNavbar({
             </div>
           )}
         </Nav>
-        <TestnetSwitcher onToggle={onToggle} />
+        <Nav>
+          <TestnetSwitcher onToggle={onToggle} />
+        </Nav>
       </Navbar.Collapse>
     </>
   );
