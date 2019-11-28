@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import { useGlobalState } from './../../../context';
+import { copyToClipboard } from './../../../helpers';
 import { useWalletDispatch, useWalletState } from './../../context';
 
 const SuccessTransaction = withRouter(props => {
@@ -20,7 +21,7 @@ const SuccessTransaction = withRouter(props => {
   };
   const copyLastTxHash = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    navigator.clipboard.writeText(lastTxHash);
+    copyToClipboard(lastTxHash);
   };
   return (
     <div id="successTransaction" className="row h-100 justify-content-center align-items-center">

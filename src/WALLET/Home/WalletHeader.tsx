@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Denominate, TestnetLink } from 'sharedComponents';
 import { useGlobalState } from './../../context';
+import { copyToClipboard } from './../../helpers';
 import { useWalletDispatch, useWalletState } from './../context';
 import RequestTokens from './RequestTokens';
 
@@ -26,7 +27,7 @@ const WalletHeader = (props: WalletHeaderType) => {
 
   const copyAddress = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    navigator.clipboard.writeText(publicKey);
+    copyToClipboard(publicKey);
   };
 
   const refreshBalance = (e: React.SyntheticEvent) => {

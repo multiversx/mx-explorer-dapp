@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorMessage, Formik } from 'formik';
 import * as React from 'react';
 import { Accordion, Card } from 'react-bootstrap';
+import { copyToClipboard } from './../../../helpers';
 import { Denominate } from './../../../sharedComponents';
 import { getWalletDetails, sendTransaction } from './../helpers/asyncRequests';
 import FailedTransaction from './FailedTransaction';
@@ -131,7 +132,7 @@ const SendFormik = ({
 
         const copyDstAddress = (e: React.SyntheticEvent) => {
           e.preventDefault();
-          navigator.clipboard.writeText(values.dstAddress);
+          copyToClipboard(values.dstAddress);
         };
 
         const getEntireBalance = (e: React.SyntheticEvent) => {
