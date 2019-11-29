@@ -151,7 +151,7 @@ const TransactionDetails: React.FC = () => {
                       </div>
                       <hr className="hr-space" />
                       <div className="row">
-                        <div className="col-lg-2 card-label">Transaction Fee</div>
+                        <div className="col-lg-2 card-label">Fee</div>
                         <div className="col-lg-10">
                           {transaction.gasPrice * transaction.gasLimit}
                         </div>
