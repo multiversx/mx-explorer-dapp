@@ -71,7 +71,7 @@ export default function AppSwitcher() {
             key={app.id}
             onClick={hidePopover}
             href={app.to}
-            target="_blank"
+            target={`${activeAppId === app.id ? '' : '_blank'}`}
             rel="noopener noreferrer"
             className={`${activeAppId === app.id ? 'active' : ''}`}
           >
