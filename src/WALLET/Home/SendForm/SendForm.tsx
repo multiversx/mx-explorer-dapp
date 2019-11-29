@@ -205,7 +205,7 @@ const SendFormik = ({
               </div>
               <Accordion className={economics ? '' : 'd-none'}>
                 <div>
-                  <div>Transaction fee</div>
+                  <div>Fee limit</div>
                   <Accordion.Toggle as={Card.Text} eventKey="0" style={{ marginBottom: '1rem' }}>
                     <label>
                       <span data-testid="transactionFeeValue">
