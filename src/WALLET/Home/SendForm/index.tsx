@@ -2,10 +2,11 @@ import React, { useMemo } from 'react';
 import { useGlobalState } from './../../../context';
 import { Loader } from './../../../sharedComponents';
 import { useWalletDispatch, useWalletState } from './../../context';
-import SendForm, { SendFormikType } from './SendForm';
+import { PopulateDetailsType } from './../WalletHeader';
+import SendForm from './SendForm';
 import SuccessTransaction from './SuccessTransaction';
 
-const SendFormik = ({ populateDetails }: SendFormikType) => {
+const SendFormik = ({ populateDetails }: PopulateDetailsType) => {
   const {
     activeTestnet: {
       economics,
@@ -47,7 +48,7 @@ const SendFormik = ({ populateDetails }: SendFormikType) => {
     ) : (
       <div className="card" style={{ height: 'auto' }}>
         {lastTxHash === '' ? (
-          <div className="card-body" style={{ height: '422px' }}>
+          <div className="card-body">
             <div id="sendTransaction" className="h-100">
               <h4 className="card-title" data-testid="sendFormTitle">
                 Send Transaction

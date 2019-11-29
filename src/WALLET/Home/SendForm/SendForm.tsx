@@ -5,13 +5,10 @@ import * as React from 'react';
 import { Accordion, Card } from 'react-bootstrap';
 import { copyToClipboard } from './../../../helpers';
 import { Denominate } from './../../../sharedComponents';
-import { getWalletDetails, sendTransaction } from './../helpers/asyncRequests';
+import { sendTransaction } from './../helpers/asyncRequests';
+import { PopulateDetailsType } from './../WalletHeader';
 import FailedTransaction from './FailedTransaction';
 import { entireBalance, prepareTransaction, validationSchema } from './validatorFunctions';
-
-export interface SendFormikType {
-  populateDetails: () => void;
-}
 
 interface SendFormDataType {
   testnetGasLimit: number;
@@ -37,7 +34,6 @@ const SendFormik = ({
   economics,
   testnetGasPrice,
   balance,
-  serverBalance,
   publicKey,
   privateKey,
   dispatch,
@@ -45,9 +41,10 @@ const SendFormik = ({
   nonce,
   timeout,
   gasLimitEditable,
+  populateDetails,
   data,
   decimals,
-}: SendFormDataType) => {
+}: SendFormDataType & PopulateDetailsType) => {
   const ref = React.useRef(null);
   // const { balance } = useWalletState();
 
@@ -88,26 +85,15 @@ const SendFormik = ({
           sendTransaction({ nodeUrl, transaction, timeout, nonce }).then(
             ({ success, lastTxHash }) => {
               let intervalId: any = null;
-              const getNewBalance = (oldBalance: string) => () => {
-                getWalletDetails({
-                  publicKey,
-                  nodeUrl,
-                  timeout,
-                }).then(({ balance: fetchedBalance, nonce }) => {
-                  if (fetchedBalance !== oldBalance) {
-                    dispatch({ type: 'setBalance', balance: fetchedBalance });
-                    dispatch({ type: 'setServerBalance', serverBalance: fetchedBalance });
-                    dispatch({ type: 'setNonce', nonce });
-                    clearInterval(intervalId);
-                  }
-                });
+              const getNewBalance = () => {
+                populateDetails(intervalId)();
               };
 
               if (success) {
                 dispatch({ type: 'setNonce', nonce: nonce + 1 });
                 dispatch({ type: 'setLastTxHash', lastTxHash });
                 dispatch({ type: 'setBalance', balance: newBalance });
-                intervalId = setInterval(getNewBalance(balance), 2000);
+                intervalId = setInterval(getNewBalance, 2000);
               } else {
                 setFailedTransaction(true);
               }

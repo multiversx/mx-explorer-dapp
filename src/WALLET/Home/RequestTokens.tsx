@@ -7,23 +7,19 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { useGlobalState } from './../../context';
 import { useWalletState } from './../context';
 import { getTokens } from './helpers/asyncRequests';
+import { PopulateDetailsType } from './WalletHeader';
 
-interface WalletHeaderType {
-  populateDetails: () => void;
-}
-
-const RequestTokens = (props: WalletHeaderType) => {
+const RequestTokens = (props: PopulateDetailsType) => {
   const {
     timeout,
     activeTestnet: { nodeUrl },
   } = useGlobalState();
-  const { publicKey, balance } = useWalletState();
+  const { publicKey } = useWalletState();
 
   const ref = React.useRef(null);
   const buttonRef = React.useRef(null);
 
   const [showModal, setShowModal] = React.useState(false);
-  const [currentBalance, setCurrentBalance] = React.useState(balance);
   const [erdsClass, setErdsClass] = React.useState<'d-none' | 'show' | 'hide'>('d-none');
   const [fundsRecieved, setFundsRecieved] = React.useState(false);
   const [requestFailed, setRequestFailed] = React.useState(false);
@@ -41,17 +37,10 @@ const RequestTokens = (props: WalletHeaderType) => {
     }
   };
 
-  React.useEffect(() => {
-    setCurrentBalance(balance);
-  }, [balance]);
-
   const onRequestClick = () => {
     let intervalId: any = null;
     function getNewBalance() {
-      props.populateDetails();
-      if (balance !== currentBalance) {
-        clearInterval(intervalId);
-      }
+      props.populateDetails(intervalId)();
     }
 
     getTokens({ nodeUrl, timeout, publicKey }).then(success => {

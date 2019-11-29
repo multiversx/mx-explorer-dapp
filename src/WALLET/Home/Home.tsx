@@ -38,7 +38,7 @@ const WalletHome = () => {
   const { publicKey, balance, serverBalance } = useWalletState();
   const [detailsFetched, setDetaislFetched] = React.useState(false);
 
-  const populateDetails = () => {
+  const populateDetails = (intervalId: number) => () => {
     if (publicKey) {
       getWalletDetails({
         publicKey,
@@ -47,6 +47,7 @@ const WalletHome = () => {
       }).then(({ balance: fetchedBalance, nonce, detailsFetched }) => {
         if (ref.current !== null) {
           if (fetchedBalance !== serverBalance) {
+            clearInterval(intervalId);
             setDetaislFetched(detailsFetched);
             dispatch({ type: 'setBalance', balance: fetchedBalance });
             dispatch({ type: 'setServerBalance', serverBalance: fetchedBalance });
@@ -68,7 +69,7 @@ const WalletHome = () => {
   }
   React.useEffect(stopFetchingMetaData, []);
 
-  React.useEffect(populateDetails, []);
+  React.useEffect(populateDetails(0), []);
 
   return (
     <div ref={ref}>

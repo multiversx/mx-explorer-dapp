@@ -8,11 +8,11 @@ import { useWalletDispatch, useWalletState } from './../context';
 import RequestTokens from './RequestTokens';
 import { showFaucet } from './SendForm/validatorFunctions';
 
-interface WalletHeaderType {
-  populateDetails: () => void;
+export interface PopulateDetailsType {
+  populateDetails: (intervalId: number) => () => void;
 }
 
-const WalletHeader = (props: WalletHeaderType) => {
+const WalletHeader = (props: PopulateDetailsType) => {
   const dispatch = useWalletDispatch();
 
   const {
@@ -32,7 +32,7 @@ const WalletHeader = (props: WalletHeaderType) => {
 
   const refreshBalance = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    props.populateDetails();
+    props.populateDetails(0)();
   };
 
   return (
