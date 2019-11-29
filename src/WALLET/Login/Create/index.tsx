@@ -1,5 +1,5 @@
 import FileSaver from 'file-saver';
-import { ErrorMessage, Formik } from 'formik';
+import { Formik } from 'formik';
 import * as React from 'react';
 import { object, string } from 'yup';
 import cryptoCore from '../../lib/cryptoCore';
@@ -57,11 +57,14 @@ const PasswordFormik = () => (
                 errors.password && touched.password ? 'form-control is-invalid' : 'form-control'
               }
             />
-            <ErrorMessage component="div" name="password" className="invalid-feedback" />
-            <small className="form-text text-muted" id="remember">
-              <span className="text-danger">Remember:</span> You'll need this password &amp;
-              keystore file to unlock your wallet
-            </small>
+            {errors.password && touched.password ? (
+              <div className="invalid-feedback">{errors.password}</div>
+            ) : (
+              <small className="form-text text-muted" id="remember">
+                <span className="text-danger">Remember:</span> You'll need this password &amp;
+                keystore file to unlock your wallet
+              </small>
+            )}
           </div>
           <div className="form-group">
             <button
