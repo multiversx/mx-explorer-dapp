@@ -604,7 +604,7 @@ main .form-search .form-control:focus {
 /* Rain
 -------------------------------------------------- */
 #erds {
-  position: absolute;
+  position: fixed;
   min-width: 100vw;
   min-height: 100vh;
   height: 100%;
@@ -619,7 +619,7 @@ main .form-search .form-control:focus {
   -o-transition: opacity 0.2s ease-in-out;
   opacity: 1;
 
-  z-index: 1100;
+  z-index: 100;
 }
 
 #erds.hide {

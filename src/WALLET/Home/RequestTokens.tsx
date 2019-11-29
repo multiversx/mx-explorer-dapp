@@ -15,7 +15,7 @@ interface WalletHeaderType {
 const RequestTokens = (props: WalletHeaderType) => {
   const {
     timeout,
-    activeTestnet: { nodeUrl, faucet },
+    activeTestnet: { nodeUrl },
   } = useGlobalState();
   const { publicKey, balance } = useWalletState();
 
@@ -104,70 +104,66 @@ const RequestTokens = (props: WalletHeaderType) => {
 
   return (
     <>
-      {faucet && balance === '0' && (
-        <>
-          <button
-            type="button"
-            className="btn btn-outline-light btn-request"
-            onClick={handleShow}
-            id="requestInvoke"
-          >
-            Request Tokens
+      <button
+        type="button"
+        className="btn btn-outline-light btn-request"
+        onClick={handleShow}
+        id="requestInvoke"
+      >
+        Request Tokens
+      </button>
+      <div id="erds" className={erdsClass}>
+        <ErdsSvg />
+      </div>
+      <Modal show={showModal} onHide={handleClose}>
+        <div className="modal-header">
+          <h5 className="modal-title" id="requestTokens">
+            ERD Faucet
+          </h5>
+          <button type="button" className="close" onClick={handleClose}>
+            <span aria-hidden="true">&times;</span>
           </button>
-          <Modal show={showModal} onHide={handleClose}>
-            <div className="modal-header">
-              <h5 className="modal-title" id="requestTokens">
-                ERD Faucet
-              </h5>
-              <button type="button" className="close" onClick={handleClose}>
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <Modal.Body>
-              {!requestFailed ? (
-                <>
-                  {!fundsRecieved ? (
-                    <div id="requestBox">
-                      <div className="empty mt-4 mb-3">
-                        <i className="fa fa-coins empty-icon" />
-                        <span className="h4 empty-heading">Request Tokens</span>
-                        <div className="empty-details">
-                          <p>Here you can request testnet ERD tokens.</p>
-                          <div className="d-flex justify-content-center">
-                            <ReCAPTCHA
-                              ref={ref}
-                              sitekey="***REMOVED***"
-                              onChange={onRecaptchaChange}
-                              theme="light"
-                            />
-                          </div>
-
-                          <button
-                            id="requestButton"
-                            type="submit"
-                            className="btn btn-primary mt-4"
-                            disabled={requestDisabled}
-                            onClick={onRequestClick}
-                          >
-                            Request Tokens
-                          </button>
-                        </div>
+        </div>
+        <Modal.Body>
+          {!requestFailed ? (
+            <>
+              {!fundsRecieved ? (
+                <div id="requestBox">
+                  <div className="empty mt-4 mb-3">
+                    <i className="fa fa-coins empty-icon" />
+                    <span className="h4 empty-heading">Request Tokens</span>
+                    <div className="empty-details">
+                      <p>Here you can request testnet ERD tokens.</p>
+                      <div className="d-flex justify-content-center">
+                        <ReCAPTCHA
+                          ref={ref}
+                          sitekey="***REMOVED***"
+                          onChange={onRecaptchaChange}
+                          theme="light"
+                        />
                       </div>
+
+                      <button
+                        id="requestButton"
+                        type="submit"
+                        className="btn btn-primary mt-4"
+                        disabled={requestDisabled}
+                        onClick={onRequestClick}
+                      >
+                        Request Tokens
+                      </button>
                     </div>
-                  ) : (
-                    <RequestSuccess />
-                  )}
-                </>
+                  </div>
+                </div>
               ) : (
-                <RequestFailed />
+                <RequestSuccess />
               )}
-            </Modal.Body>
-          </Modal>
-          <div id="erds" className={erdsClass}>
-            <ErdsSvg />
-          </div>
-        </>
-      )}
+            </>
+          ) : (
+            <RequestFailed />
+          )}
+        </Modal.Body>
+      </Modal>
     </>
   );
 };
