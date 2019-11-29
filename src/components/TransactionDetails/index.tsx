@@ -9,7 +9,7 @@ import * as React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useGlobalState } from '../../context';
 import { TransactionType } from '../Transactions';
-import { addressIsHash, dateFormatted, truncate } from './../../helpers';
+import { addressIsHash, dateFormatted } from './../../helpers';
 import {
   Denominate,
   Loader,
@@ -71,7 +71,7 @@ const TransactionDetails: React.FC = () => {
                   <div className="card">
                     <div className="card-body card-details">
                       <div className="row">
-                        <div className="col-lg-2 card-label">Transaction Hash</div>
+                        <div className="col-lg-2 card-label">Hash</div>
                         <div className="col-lg-10">{transaction.hash}</div>
                       </div>
                       <hr className="hr-space" />
@@ -108,13 +108,14 @@ const TransactionDetails: React.FC = () => {
                           {addressIsHash(transaction.sender) ? (
                             <>
                               <TestnetLink to={`/address/${transaction.sender}`}>
-                                {truncate(transaction.sender, 20)}
+                                {transaction.sender}
                               </TestnetLink>
                               <TestnetLink
                                 to={`/transactions/shard-from/${transaction.senderShard}`}
                                 className="small-link"
                               >
-                                (<ShardSpan shardId={transaction.sender} />)
+                                &nbsp;(
+                                <ShardSpan shardId={transaction.senderShard} />)
                               </TestnetLink>
                             </>
                           ) : (
@@ -153,7 +154,10 @@ const TransactionDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">Fee</div>
                         <div className="col-lg-10">
-                          {transaction.gasPrice * transaction.gasLimit}
+                          <Denominate
+                            value={(transaction.gasPrice * transaction.gasLimit).toString()}
+                            showAllDecimals
+                          />
                         </div>
                       </div>
                       <hr className="hr-space" />
