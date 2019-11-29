@@ -122,6 +122,7 @@ const AccessFormik = ({ history, activeTestnetId, loggedIn }: AccessFormikType) 
               <input
                 type="password"
                 id="accessPass"
+                data-testid="accessPass"
                 value={values.accessPass}
                 onChange={handleChange}
                 onBlur={handleBlur}
