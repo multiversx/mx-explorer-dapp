@@ -122,14 +122,23 @@ const LatestTransactions = () => {
     </div>
   );
 
-  const TransactionsListTitle = () => (
-    <div className="d-flex align-items-center flex-row mb-3">
-      <h4 className="card-title mb-0 mr-auto">Latest Transactions</h4>
-      {transactions.length > 0 && (
-        <a href={`https://explorer.elrond.com/#/address/${publicKey}`}>View Address Transactions</a>
-      )}
-    </div>
-  );
+  const TransactionsListTitle = () => {
+    const { activeTestnetId } = useGlobalState();
+    return (
+      <div className="d-flex align-items-center flex-row mb-3">
+        <h4 className="card-title mb-0 mr-auto">Latest Transactions</h4>
+        {transactions.length > 0 && (
+          <a
+            href={`https://explorer.elrond.com/${
+              activeTestnetId ? activeTestnetId + '/' : ''
+            }address/${publicKey}`}
+          >
+            View Address Transactions
+          </a>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div ref={ref}>
