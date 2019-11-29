@@ -14,6 +14,7 @@ const LatestTransactions = () => {
     timeout,
     activeTestnet: { elasticUrl },
     refresh: { timestamp },
+    activeTestnetId,
   } = useGlobalState();
   const { publicKey } = useWalletState();
 
@@ -62,7 +63,11 @@ const LatestTransactions = () => {
                 <span className="icon-container-round">
                   <i className="fa fa-exchange-alt" />
                 </span>
-                <a href={`https://explorer.elrond.com/#/transactions/${tx.hash}`}>
+                <a
+                  href={`https://explorer.elrond.com/${
+                    activeTestnetId ? activeTestnetId + '/' : ''
+                  }transactions/${tx.hash}`}
+                >
                   {truncate(tx.hash, 20)}
                 </a>
                 <br />
@@ -72,12 +77,20 @@ const LatestTransactions = () => {
               </div>
               <div className="col-6">
                 From&nbsp;
-                <a href={`https://explorer.elrond.com/#/address/${tx.sender}`}>
+                <a
+                  href={`https://explorer.elrond.com/${
+                    activeTestnetId ? activeTestnetId + '/' : ''
+                  }address/${tx.sender}`}
+                >
                   {truncate(tx.sender, 20)}
                 </a>
                 <br />
                 To&nbsp;
-                <a href={`https://explorer.elrond.com/#/address/${tx.receiver}`}>
+                <a
+                  href={`https://explorer.elrond.com/${
+                    activeTestnetId ? activeTestnetId + '/' : ''
+                  }address/${tx.receiver}`}
+                >
                   {truncate(tx.receiver, 20)}
                 </a>
               </div>
