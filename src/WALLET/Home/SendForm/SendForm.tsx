@@ -268,7 +268,7 @@ const SendFormik = ({
                     setFieldValue(
                       'gasLimit',
                       testnetGasLimit + (e.target.value ? e.target.value.length : 0),
-                      true
+                      false
                     );
                     setFieldValue('data', e.target.value, false);
                   }}
