@@ -1,28 +1,28 @@
-import * as React from 'react';
-import { useParams, Link } from 'react-router-dom';
 import {
-  faExchangeAlt,
-  faHourglass,
   faCheckCircle,
   faClock,
+  faExchangeAlt,
+  faHourglass,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  ScAddressIcon,
-  Denominate,
-  TimeAgo,
-  TestnetLink,
-  ShardSpan,
-  Loader,
-} from './../../sharedComponents';
-import { getTransaction } from './helpers/asyncRequests';
+import * as React from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { useGlobalState } from '../../context';
 import { TransactionType } from '../Transactions';
-import { dateFormatted, addressIsHash, truncate } from './../../helpers';
+import { addressIsHash, dateFormatted, truncate } from './../../helpers';
+import {
+  Denominate,
+  Loader,
+  ScAddressIcon,
+  ShardSpan,
+  TestnetLink,
+  TimeAgo,
+} from './../../sharedComponents';
+import { getTransaction } from './helpers/asyncRequests';
 
 const TransactionDetails: React.FC = () => {
-  let { hash: transactionId } = useParams();
-  let ref = React.useRef(null);
+  const { hash: transactionId } = useParams();
+  const ref = React.useRef(null);
 
   const {
     activeTestnet: { elasticUrl },
