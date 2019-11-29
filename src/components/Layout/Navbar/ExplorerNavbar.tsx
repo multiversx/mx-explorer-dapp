@@ -25,6 +25,7 @@ export default function ExplorerNavbar({
   };
 
   const { pathname } = useLocation();
+
   return (
     <>
       <Navbar.Toggle aria-controls="navbars" style={{ color: 'black', border: 'none' }}>
@@ -34,7 +35,9 @@ export default function ExplorerNavbar({
         <Nav className="mr-auto">
           <TestnetLink
             className={`nav-link ${
-              pathname.toString() === '/' || pathname.toString() === `/${activeTestnetId}`
+              pathname.toString() === '/' ||
+              pathname.toString() === `/${activeTestnetId}` ||
+              pathname.toString() === `/${activeTestnetId}/`
                 ? 'active'
                 : ''
             }`}
