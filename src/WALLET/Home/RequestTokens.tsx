@@ -20,6 +20,7 @@ const RequestTokens = (props: WalletHeaderType) => {
   const { publicKey, balance } = useWalletState();
 
   const ref = React.useRef(null);
+  const buttonRef = React.useRef(null);
 
   const [showModal, setShowModal] = React.useState(false);
   const [currentBalance, setCurrentBalance] = React.useState(balance);
@@ -56,16 +57,22 @@ const RequestTokens = (props: WalletHeaderType) => {
     getTokens({ nodeUrl, timeout, publicKey }).then(success => {
       if (success) {
         intervalId = setInterval(getNewBalance, 2000);
-        setErdsClass('show');
-        setFundsRecieved(true);
-        setRequestSent(true);
-        setTimeout(() => {
-          setErdsClass('hide');
+        if (buttonRef.current !== null) {
+          setErdsClass('show');
+          setFundsRecieved(true);
+          setRequestSent(true);
           setTimeout(() => {
-            setErdsClass('d-none');
-            setShowModal(false);
-          }, 300);
-        }, 2000);
+            if (buttonRef.current !== null) {
+              setErdsClass('hide');
+            }
+            setTimeout(() => {
+              if (buttonRef.current !== null) {
+                setErdsClass('d-none');
+                setShowModal(false);
+              }
+            }, 300);
+          }, 2000);
+        }
       } else {
         setRequestFailed(true);
       }
@@ -105,7 +112,7 @@ const RequestTokens = (props: WalletHeaderType) => {
   );
 
   return (
-    <>
+    <div ref={buttonRef}>
       {!requestSent && (
         <button
           type="button"
@@ -169,7 +176,7 @@ const RequestTokens = (props: WalletHeaderType) => {
           )}
         </Modal.Body>
       </Modal>
-    </>
+    </div>
   );
 };
 
