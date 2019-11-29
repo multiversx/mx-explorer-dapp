@@ -35,6 +35,8 @@ const login = () => {
   const passwordInput = getByTestId('accessPass');
   fireEvent.change(passwordInput, '123456789');
 
+  console.log('in test');
+
   const button = getByText('Unlock Wallet');
   fireEvent.click(button);
 
@@ -42,7 +44,35 @@ const login = () => {
 };
 
 test('Balance updates only on new server response', async () => {
-  const { getByText, wait } = login();
+  //   const { getByText, wait } = login();
+  const {
+    getByLabelText,
+    findByTestId,
+    getByTestId,
+    getByText,
+    container,
+    wait,
+  } = renderWithRouter({
+    route: '/login',
+  });
+
+  const inputEl = getByLabelText('Private Key');
+
+  Object.defineProperty(inputEl, 'files', {
+    value: [file],
+  });
+
+  fireEvent.change(inputEl);
+
+  const passwordInput = getByTestId('accessPass');
+  fireEvent.change(passwordInput, '123456789');
+
+  console.log('in test');
+
+  const button = getByText('Unlock Wallet');
+  fireEvent.click(button);
+
+  //   expect(button.innerHTML).toEqual('asd');
   await wait(() => {
     const address = getByText('ADDRESS');
     expect(address.innerHTML).toBe(`ASD`);
