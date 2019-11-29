@@ -88,15 +88,15 @@ const SendFormik = ({
           sendTransaction({ nodeUrl, transaction, timeout, nonce }).then(
             ({ success, lastTxHash }) => {
               let intervalId: any = null;
-              const getNewBalance = () => {
+              const getNewBalance = (oldBalance: string) => () => {
                 getWalletDetails({
                   publicKey,
                   nodeUrl,
                   timeout,
-                }).then(({ balance, nonce }) => {
-                  if (balance !== serverBalance) {
-                    dispatch({ type: 'setBalance', balance });
-                    dispatch({ type: 'setServerBalance', serverBalance: balance });
+                }).then(({ balance: fetchedBalance, nonce }) => {
+                  if (fetchedBalance !== oldBalance) {
+                    dispatch({ type: 'setBalance', balance: fetchedBalance });
+                    dispatch({ type: 'setServerBalance', serverBalance: fetchedBalance });
                     dispatch({ type: 'setNonce', nonce });
                     clearInterval(intervalId);
                   }
@@ -107,7 +107,7 @@ const SendFormik = ({
                 dispatch({ type: 'setNonce', nonce: nonce + 1 });
                 dispatch({ type: 'setLastTxHash', lastTxHash });
                 dispatch({ type: 'setBalance', balance: newBalance });
-                intervalId = setInterval(getNewBalance, 2000);
+                intervalId = setInterval(getNewBalance(balance), 2000);
               } else {
                 setFailedTransaction(true);
               }

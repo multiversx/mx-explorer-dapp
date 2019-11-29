@@ -46,11 +46,12 @@ const WalletHome = () => {
         timeout,
       }).then(({ balance: fetchedBalance, nonce, detailsFetched }) => {
         if (ref.current !== null) {
-          const newBalance = fetchedBalance !== serverBalance ? fetchedBalance : balance;
-          setDetaislFetched(detailsFetched);
-          dispatch({ type: 'setBalance', balance: newBalance });
-          dispatch({ type: 'setServerBalance', serverBalance: fetchedBalance });
-          dispatch({ type: 'setNonce', nonce });
+          if (fetchedBalance !== serverBalance) {
+            setDetaislFetched(detailsFetched);
+            dispatch({ type: 'setBalance', balance: fetchedBalance });
+            dispatch({ type: 'setServerBalance', serverBalance: fetchedBalance });
+            dispatch({ type: 'setNonce', nonce });
+          }
         }
       });
     }
