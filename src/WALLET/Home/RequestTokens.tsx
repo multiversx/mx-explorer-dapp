@@ -27,6 +27,7 @@ const RequestTokens = (props: WalletHeaderType) => {
   const [fundsRecieved, setFundsRecieved] = React.useState(false);
   const [requestFailed, setRequestFailed] = React.useState(false);
   const [requestDisabled, setRequestDisabled] = React.useState(true);
+  const [requestSent, setRequestSent] = React.useState(false);
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
@@ -57,6 +58,7 @@ const RequestTokens = (props: WalletHeaderType) => {
         intervalId = setInterval(getNewBalance, 2000);
         setErdsClass('show');
         setFundsRecieved(true);
+        setRequestSent(true);
         setTimeout(() => {
           setErdsClass('hide');
           setTimeout(() => {
@@ -104,14 +106,17 @@ const RequestTokens = (props: WalletHeaderType) => {
 
   return (
     <>
-      <button
-        type="button"
-        className="btn btn-outline-light btn-request"
-        onClick={handleShow}
-        id="requestInvoke"
-      >
-        Request Tokens
-      </button>
+      {!requestSent && (
+        <button
+          type="button"
+          className="btn btn-outline-light btn-request"
+          onClick={handleShow}
+          id="requestInvoke"
+        >
+          Request Tokens
+        </button>
+      )}
+
       <div id="erds" className={erdsClass}>
         <ErdsSvg />
       </div>
