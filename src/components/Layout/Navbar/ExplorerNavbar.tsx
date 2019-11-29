@@ -81,7 +81,7 @@ export default function ExplorerNavbar({
             </div>
           )}
         </Nav>
-        <Nav>
+        <Nav className="testnetSwithcerNav">
           <TestnetSwitcher onToggle={onToggle} />
         </Nav>
       </Navbar.Collapse>

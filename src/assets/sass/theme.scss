@@ -259,7 +259,7 @@ strong {
   > .form-control {
     line-height: 1.299rem;
     border-radius: 2rem;
-    // border-color: #dddddd;
+    padding-right: 2.1rem;
   }
 
   > .input-group-append {
@@ -271,6 +271,7 @@ strong {
     .input-group-text {
       margin-right: 0.5rem;
       padding-right: 0.4rem;
+      padding-left: 0.6rem;
     }
   }
 }
@@ -642,6 +643,12 @@ main .form-search .form-control:focus {
 @keyframes fall {
   100% {
     transform: translateY(0);
+  }
+}
+
+.testnetSwithcerNav {
+  .dropdown-menu.show {
+    margin-top: -0.5rem;
   }
 }
 
