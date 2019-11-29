@@ -1,11 +1,12 @@
-import initialState, { StateType } from './state';
 import localStorageDB from './../lib/localstorageDB';
+import initialState, { StateType } from './state';
 
 export type ActionType =
   | { type: 'initSession' }
   | { type: 'login'; privateKey: string; publicKey: string }
   | { type: 'logout' }
   | { type: 'setBalance'; balance: string }
+  | { type: 'setServerBalance'; serverBalance: string }
   | { type: 'setNonce'; nonce: number }
   | { type: 'setLastTxHash'; lastTxHash: string };
 
@@ -31,6 +32,12 @@ export function globalReducer(state: StateType = initialState, action: ActionTyp
     case 'setBalance': {
       const { balance } = action;
       const newState = { ...state, balance };
+      localStorageDB.save('state', newState);
+      return newState;
+    }
+    case 'setServerBalance': {
+      const { serverBalance } = action;
+      const newState = { ...state, serverBalance };
       localStorageDB.save('state', newState);
       return newState;
     }

@@ -19,6 +19,7 @@ interface SendFormDataType {
   dispatch: (props: any) => void;
   testnetGasPrice: number;
   balance: string;
+  serverBalance: string;
   publicKey: string;
   privateKey: string;
   denomination: number;
@@ -36,6 +37,7 @@ const SendFormik = ({
   economics,
   testnetGasPrice,
   balance,
+  serverBalance,
   publicKey,
   privateKey,
   dispatch,
@@ -86,14 +88,15 @@ const SendFormik = ({
           sendTransaction({ nodeUrl, transaction, timeout, nonce }).then(
             ({ success, lastTxHash }) => {
               let intervalId: any = null;
-              const getNewBalance = (oldBalance: string) => () => {
+              const getNewBalance = () => {
                 getWalletDetails({
                   publicKey,
                   nodeUrl,
                   timeout,
                 }).then(({ balance, nonce }) => {
-                  if (balance !== oldBalance) {
+                  if (balance !== serverBalance) {
                     dispatch({ type: 'setBalance', balance });
+                    dispatch({ type: 'setServerBalance', serverBalance: balance });
                     dispatch({ type: 'setNonce', nonce });
                     clearInterval(intervalId);
                   }
@@ -104,7 +107,7 @@ const SendFormik = ({
                 dispatch({ type: 'setNonce', nonce: nonce + 1 });
                 dispatch({ type: 'setLastTxHash', lastTxHash });
                 dispatch({ type: 'setBalance', balance: newBalance });
-                intervalId = setInterval(getNewBalance(balance), 2000);
+                intervalId = setInterval(getNewBalance, 2000);
               } else {
                 setFailedTransaction(true);
               }

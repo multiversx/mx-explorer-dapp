@@ -35,7 +35,7 @@ const WalletHome = () => {
     activeTestnet: { nodeUrl, refreshRate, id },
     refresh: { intervalId: oldIntervalId },
   } = useGlobalState();
-  const { publicKey, balance } = useWalletState();
+  const { publicKey, balance, serverBalance } = useWalletState();
   const [detailsFetched, setDetaislFetched] = React.useState(false);
 
   const populateDetails = () => {
@@ -44,10 +44,12 @@ const WalletHome = () => {
         publicKey,
         nodeUrl,
         timeout,
-      }).then(({ balance, nonce, detailsFetched }) => {
+      }).then(({ balance: fetchedBalance, nonce, detailsFetched }) => {
         if (ref.current !== null) {
+          const newBalance = fetchedBalance !== serverBalance ? fetchedBalance : balance;
           setDetaislFetched(detailsFetched);
-          dispatch({ type: 'setBalance', balance });
+          dispatch({ type: 'setBalance', balance: newBalance });
+          dispatch({ type: 'setServerBalance', serverBalance: fetchedBalance });
           dispatch({ type: 'setNonce', nonce });
         }
       });

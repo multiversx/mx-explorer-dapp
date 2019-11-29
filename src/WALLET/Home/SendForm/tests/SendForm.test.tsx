@@ -18,6 +18,7 @@ const formProps = {
   gasLimitEditable: true,
   decimals: 4,
   balance: '9999570270',
+  serverBalance: '9999570270',
   dispatch: () => null,
 };
 

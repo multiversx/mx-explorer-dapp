@@ -3,6 +3,7 @@ export interface StateType {
   publicKey: string;
   loggedIn: boolean;
   balance: string;
+  serverBalance: string;
   lastTxHash: string;
   nonce: number;
 }
@@ -13,6 +14,7 @@ const initialState: StateType = {
   lastTxHash: '',
   loggedIn: false,
   balance: '...',
+  serverBalance: '...',
   nonce: 0,
 };
 

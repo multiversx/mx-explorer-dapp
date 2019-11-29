@@ -19,13 +19,14 @@ const SendFormik = ({ populateDetails }: SendFormikType) => {
     },
     timeout,
   } = useGlobalState();
-  const { balance, privateKey, nonce, publicKey, lastTxHash } = useWalletState();
+  const { balance, privateKey, nonce, publicKey, lastTxHash, serverBalance } = useWalletState();
   const dispatch = useWalletDispatch();
 
   const props = {
     testnetGasLimit,
     denomination,
     balance,
+    serverBalance,
     dispatch,
     economics,
     testnetGasPrice,
