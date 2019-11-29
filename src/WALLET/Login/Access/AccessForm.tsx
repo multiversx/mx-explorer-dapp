@@ -103,7 +103,7 @@ const AccessFormik = ({ history, activeTestnetId, loggedIn }: AccessFormikType) 
                           return;
                         }
                       };
-                      if (event !== null) {
+                      if (event !== null && (event as any).currentTarget.files[0]) {
                         const { name } = (event as any).currentTarget.files[0];
                         setFileName(name);
                         fileReader.readAsText((event as any).currentTarget.files[0]);
@@ -135,7 +135,12 @@ const AccessFormik = ({ history, activeTestnetId, loggedIn }: AccessFormikType) 
               />
               <ErrorMessage component="div" name="accessPass" className="invalid-feedback" />
             </div>
-            <button type="submit" className="btn btn-primary" id="accessWalletBtn">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              id="accessWalletBtn"
+              data-testid="accessWalletBtn"
+            >
               {isSubmitting ? 'Unlocking...' : 'Unlock Wallet'}
             </button>
           </form>
