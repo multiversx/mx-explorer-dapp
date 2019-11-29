@@ -46,18 +46,20 @@ const SendFormik = ({ populateDetails }: SendFormikType) => {
       <Loader />
     ) : (
       <div className="card" style={{ height: 'auto' }}>
-        <div className="card-body">
-          {lastTxHash === '' ? (
+        {lastTxHash === '' ? (
+          <div className="card-body" style={{ height: '422px' }}>
             <div id="sendTransaction" className="h-100">
               <h4 className="card-title" data-testid="sendFormTitle">
                 Send Transaction
               </h4>
               <SendForm {...props} />
             </div>
-          ) : (
+          </div>
+        ) : (
+          <div className="card-body" style={{ height: '422px' }}>
             <SuccessTransaction />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     );
   };
