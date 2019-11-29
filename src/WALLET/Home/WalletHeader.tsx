@@ -6,6 +6,7 @@ import { useGlobalState } from './../../context';
 import { copyToClipboard } from './../../helpers';
 import { useWalletDispatch, useWalletState } from './../context';
 import RequestTokens from './RequestTokens';
+import { showFaucet } from './SendForm/validatorFunctions';
 
 interface WalletHeaderType {
   populateDetails: () => void;
@@ -15,14 +16,13 @@ const WalletHeader = (props: WalletHeaderType) => {
   const dispatch = useWalletDispatch();
 
   const {
-    activeTestnet: { faucet },
+    activeTestnet: { faucet, gasLimit, gasPrice },
   } = useGlobalState();
-  const { publicKey } = useWalletState();
+  const { publicKey, balance } = useWalletState();
 
   const logout = () => {
     dispatch({ type: 'logout' });
   };
-  const { balance } = useWalletState();
   const publicKeyRef = React.useRef(null);
 
   const copyAddress = (e: React.SyntheticEvent) => {
@@ -80,7 +80,9 @@ const WalletHeader = (props: WalletHeaderType) => {
                 <a href="/#" className="highlight-link" onClick={refreshBalance}>
                   <FontAwesomeIcon icon={faSync} />
                 </a>
-                {faucet && balance === '0' && <RequestTokens {...props} />}
+                {faucet && showFaucet({ balance, gasLimit, gasPrice }) && (
+                  <RequestTokens {...props} />
+                )}
               </div>
             </div>
           </div>

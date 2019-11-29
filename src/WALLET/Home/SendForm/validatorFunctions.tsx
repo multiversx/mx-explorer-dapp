@@ -200,3 +200,16 @@ export const prepareTransaction = ({
 
   return { transaction, newBalance };
 };
+
+interface ShowFaucetType {
+  balance: string;
+  gasLimit: number;
+  gasPrice: number;
+}
+
+export const showFaucet = ({ balance, gasLimit, gasPrice }: ShowFaucetType) => {
+  const bNbalance = new BigNumber(balance);
+  const bNgasLimit = new BigNumber(gasLimit);
+  const bNgasPrice = new BigNumber(gasPrice);
+  return bNbalance.comparedTo(bNgasLimit.times(bNgasPrice)) === -1;
+};
