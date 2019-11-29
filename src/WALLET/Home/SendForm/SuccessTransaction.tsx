@@ -33,7 +33,9 @@ const SuccessTransaction = withRouter(props => {
           <br />
           {lastTxHash}&nbsp;
           <a
-            href={`https://explorer.elrond.com/#/address/${lastTxHash}`}
+            href={`https://explorer.elrond.com/${
+              activeTestnetId ? activeTestnetId + '/' : ''
+            }transactions/${lastTxHash}`}
             onClick={copyLastTxHash}
             target="_blank"
             rel="noopener noreferrer"
