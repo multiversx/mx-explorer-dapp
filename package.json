@@ -51,7 +51,7 @@
     "start": "react-app-rewired start",
     "start-wallet": "REACT_APP_WALLET=true react-app-rewired start",
     "build": "react-scripts build",
-    "build-wallet": "REACT_APP_WALLET=true react-scripts build && rm -rf wallet-build && mv build wallet-build",
+    "build-wallet": "rm -rf explorer-build && mv build explorer-build && REACT_APP_WALLET=true react-scripts build && rm -rf wallet-build && mv build wallet-build && mv explorer-build build",
     "test": "react-scripts test",
     "test-wallet": "REACT_APP_WALLET=true react-scripts test",
     "eject": "react-scripts eject",
