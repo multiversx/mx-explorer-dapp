@@ -104,7 +104,7 @@ const SendFormik = ({
                 dispatch({ type: 'setNonce', nonce: nonce + 1 });
                 dispatch({ type: 'setLastTxHash', lastTxHash });
                 dispatch({ type: 'setBalance', balance: newBalance });
-                intervalId = setInterval(getNewBalance(values.balance), 2000);
+                intervalId = setInterval(getNewBalance(balance), 2000);
               } else {
                 setFailedTransaction(true);
               }
