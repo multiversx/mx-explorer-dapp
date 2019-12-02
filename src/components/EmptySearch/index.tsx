@@ -1,10 +1,10 @@
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const EmptySearch = () => {
-  let { query } = useParams();
+  const { query } = useParams();
 
   return (
     <>
@@ -16,7 +16,7 @@ const EmptySearch = () => {
                 <div className="empty">
                   <FontAwesomeIcon icon={faSearch} className="empty-icon" />
                   <span className="h4 empty-heading">
-                    Your hash does not match anything we've got
+                    Your search does not match anything we've got
                   </span>
                   <span className="empty-details">{query}</span>
                 </div>
