@@ -1,21 +1,21 @@
 import React from 'react';
+import BlockDetails from './components/BlockDetails';
+import Blocks from './components/Blocks';
+import EmptySearch from './components/EmptySearch';
 import Home from './components/Home';
 import TransactionDetails from './components/TransactionDetails';
 import Transactions from './components/Transactions';
-import BlockDetails from './components/BlockDetails';
 import ValidatorDetails from './components/ValidatorDetails';
 import Validators from './components/Validators';
-import Blocks from './components/Blocks';
-import EmptySearch from './components/EmptySearch';
-import { withTestnetReady, withPageTitle } from './sharedComponents';
+import { withPageTitle, withTestnetReady } from './sharedComponents';
 
 // TODO: daca hashul nu e valid (functie validare) return 404 (page not found)
 
-type RouteType = {
+interface RouteType {
   path: string;
   title: string;
   component: any;
-};
+}
 
 // INFO: to split the app in chunks use:
 // component: React.lazy(() => import('./components/Validators')),
@@ -34,7 +34,7 @@ const routes: RouteType[] = [
   {
     path: '/validators',
     title: 'Validators',
-    component: Validators, //React.lazy(() => import('./components/Validators')),
+    component: Validators, // React.lazy(() => import('./components/Validators')),
   },
   {
     path: '/validators/:hash',
@@ -103,6 +103,11 @@ const routes: RouteType[] = [
   },
   {
     path: '/search/:query',
+    title: 'Search',
+    component: EmptySearch,
+  },
+  {
+    path: '/search/',
     title: 'Search',
     component: EmptySearch,
   },
