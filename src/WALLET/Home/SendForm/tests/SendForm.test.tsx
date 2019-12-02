@@ -20,6 +20,7 @@ const formProps = {
   balance: '9999570270',
   serverBalance: '9999570270',
   dispatch: () => null,
+  populateDetails: (intervalId: number) => () => null,
 };
 
 // file upload
