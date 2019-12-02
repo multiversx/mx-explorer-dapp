@@ -1,10 +1,10 @@
 import React from 'react';
 import { useGlobalState } from '../../context';
-import { getStats } from './helpers/asyncRequests';
 import DefaultHighlights from './DefaultHighlights';
+import { getStats } from './helpers/asyncRequests';
 import HeroHighlights from './HeroHighlights';
 
-export type StateType = {
+export interface StateType {
   blockNumber: string;
   nrOfNodes: string;
   nrOfShards: string;
@@ -12,7 +12,7 @@ export type StateType = {
   liveTPS: string;
   peakTPS: string;
   totalProcessedTxCount: string;
-};
+}
 
 const initialState = {
   blockNumber: '...',
@@ -26,19 +26,27 @@ const initialState = {
 
 const Hightlights = ({
   hero = false,
-  setLiveTps = () => {},
+  setLiveTps = () => {
+    return;
+  },
 }: {
   hero?: boolean;
-  setLiveTps?: Function;
+  setLiveTps?: React.Dispatch<React.SetStateAction<any>>;
 }) => {
   const {
     activeTestnet: { elasticUrl },
+    activeTestnetId,
     timeout,
     refresh: { timestamp },
   } = useGlobalState();
 
   const [state, setState] = React.useState<StateType>(initialState);
-  let ref = React.useRef(null);
+  const [oldTestnetId, setOldTestnetId] = React.useState<string>('');
+  const ref = React.useRef(null);
+
+  React.useEffect(() => {
+    setOldTestnetId(activeTestnetId);
+  }, [activeTestnetId]);
 
   const getHighlights = () => {
     if (ref.current !== null) {
@@ -55,7 +63,8 @@ const Hightlights = ({
             }
           : initialState;
         if (ref.current !== null) {
-          if (success) {
+          const sameTestnet = oldTestnetId === activeTestnetId;
+          if (success || (!success && !sameTestnet)) {
             setLiveTps(newState.liveTPS);
             setState(newState);
           }
