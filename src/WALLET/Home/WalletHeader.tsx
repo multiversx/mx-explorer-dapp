@@ -44,7 +44,9 @@ const WalletHeader = (props: PopulateDetailsType) => {
               <span className="highlight-icon">
                 <FontAwesomeIcon icon={faWallet} />
               </span>
-              <span className="highlight-label">ADDRESS</span>
+              <span className="highlight-label" data-testid="addressLabel">
+                ADDRESS
+              </span>
               <span className="highlight-value highlight-address" ref={publicKeyRef}>
                 {publicKey}
               </span>
@@ -74,7 +76,7 @@ const WalletHeader = (props: PopulateDetailsType) => {
                   <FontAwesomeIcon icon={faCoins} />
                 </span>
                 <span className="highlight-label">BALANCE</span>
-                <span className="highlight-value">
+                <span className="highlight-value" data-testid="balance">
                   <Denominate value={balance} showAllDecimals={true} />
                 </span>
                 <a href="/#" className="highlight-link" onClick={refreshBalance}>

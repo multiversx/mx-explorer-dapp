@@ -1,4 +1,4 @@
-import { ErrorMessage, Formik } from 'formik';
+import { ErrorMessage, Field, Formik } from 'formik';
 import { History } from 'history';
 import * as React from 'react';
 import { mixed, object, string } from 'yup';
@@ -32,6 +32,11 @@ interface AccessFormikType {
   loggedIn: boolean;
 }
 
+const UploadFile = (props: any) => {
+  const { value, ...rest } = props;
+  return <input type="file" {...rest} />;
+};
+
 const AccessFormik = ({ history, activeTestnetId, loggedIn }: AccessFormikType) => {
   if (loggedIn) {
     history.push(`/${activeTestnetId}`);
@@ -39,7 +44,6 @@ const AccessFormik = ({ history, activeTestnetId, loggedIn }: AccessFormikType) 
   const ref = React.useRef(null);
   const dispatch = useWalletDispatch();
   const [fileName, setFileName] = React.useState('Choose file...');
-
   return (
     <Formik
       initialValues={initialValues}
@@ -67,32 +71,34 @@ const AccessFormik = ({ history, activeTestnetId, loggedIn }: AccessFormikType) 
         walletFile: mixed().required(),
       })}
     >
-      {props => {
-        const {
-          values,
-          touched,
-          errors,
-          setErrors,
-          isSubmitting,
-          handleChange,
-          handleBlur,
-          setFieldValue,
-          handleSubmit,
-        } = props;
+      {({
+        values,
+        submitForm,
+        setFieldValue,
+        handleChange,
+        handleBlur,
+        isSubmitting,
+        handleSubmit,
+        setErrors,
+        errors,
+        touched,
+      }) => {
         return (
           <form onSubmit={handleSubmit} ref={ref}>
             <div className="form-group">
               <label htmlFor="walletFile">Private Key</label>
               <fieldset>
                 <div className="custom-file w-100">
-                  <input
+                  <Field
+                    component={UploadFile}
                     type="file"
                     id="walletFile"
                     name="walletFile"
-                    data-testid="walletFileInput"
+                    data-testid="walletFile"
                     accept="application/json,.json"
                     className="custom-file-input"
-                    onChange={event => {
+                    value={values.walletFile}
+                    onChange={(event: any) => {
                       const fileReader = new FileReader();
                       fileReader.onload = function onLoad(e) {
                         try {
@@ -110,7 +116,12 @@ const AccessFormik = ({ history, activeTestnetId, loggedIn }: AccessFormikType) 
                       }
                     }}
                   />
-                  <label className="custom-file-label" htmlFor="walletFile" id="walletFileLabel">
+                  <label
+                    className="custom-file-label"
+                    htmlFor="walletFile"
+                    id="walletFileLabel"
+                    data-testid="walletFileLabel"
+                  >
                     {fileName}
                   </label>
                 </div>
@@ -135,12 +146,8 @@ const AccessFormik = ({ history, activeTestnetId, loggedIn }: AccessFormikType) 
               />
               <ErrorMessage component="div" name="accessPass" className="invalid-feedback" />
             </div>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              id="accessWalletBtn"
-              data-testid="accessWalletBtn"
-            >
+
+            <button onClick={submitForm} data-testid="submitButton" className="btn btn-primary">
               {isSubmitting ? 'Unlocking...' : 'Unlock Wallet'}
             </button>
           </form>

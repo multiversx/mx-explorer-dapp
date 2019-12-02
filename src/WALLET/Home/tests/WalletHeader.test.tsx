@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom/extend-expect';
+import axios from 'axios';
 import { fireEvent, renderWithRouter } from './../../utils/wallet-test-utils';
 
-const fileName = 'e4445b9dad40f1e16e7158bff8f866ffcee82c08dbb761d94b3cf59aeba3478a.json';
-const file = new File(
+const fileName = '054fefc001aad80a9454c2d9a176ca7c403b087e79e552dccfd2aca27d12d2b5.json';
+const irelandFile = new File(
   [
-    `{"version":4,"id":"e2ecdc24-6b54-4b61-bac9-afb7998b9ac4","address":"e4445b9dad40f1e16e7158bff8f866ffcee82c08dbb761d94b3cf59aeba3478a","bech32":"erd1u3z9h8ddgrc7zmn3tzll37rxll8wstqgmwmkrk2t8n6e46arg79q5v5wt6","crypto":{"ciphertext":"8c511cddc123c64d1ba65ff9a39a229f2e94cbf54066e494edec227fb8ea247b8a8fabdd816891972787331d963561d1e28f6af2eaef50c187834b56eb3fe149","cipherparams":{"iv":"e23cc9c6906af9862dc4cc3bae73e1e4"},"cipher":"aes-128-ctr","kdf":"scrypt","kdfparams":{"dklen":32,"salt":"8203c987b689e44cc5251d27fcb31adb6edcc3f4874299a86cc585aba64d4e27","n":4096,"r":8,"p":1},"mac":"0560aeec8ae8b476a651e72c2f223ded4fb0623175ff0bbbbee946347db1689f","machash":"sha3256"}}`,
+    `{"version":4,"id":"5219a63e-1152-40fe-ad86-9353bc11257e","address":"054fefc001aad80a9454c2d9a176ca7c403b087e79e552dccfd2aca27d12d2b5","bech32":"erd1q487lsqp4tvq49z5ctv6zak203qrkzr708j49hx062k2ylgj626s533j7k","crypto":{"ciphertext":"d26f2de3f8956cec9dc56801da25d49263993bb5f590344f2c0fcdc4e95f0c5f3a06c92a79060ac643cf2081123b7e07462c0539166ac71087151af3c7fe93f2","cipherparams":{"iv":"c453e6e12c42d011a85409fcd249a74f"},"cipher":"aes-128-ctr","kdf":"scrypt","kdfparams":{"dklen":32,"salt":"8cec8c996dbb1021e2411edaa08b77767e4a3f9d103c5621d3db50996d425610","n":4096,"r":8,"p":1},"mac":"7f7038d2e98b6d204191d5b9733f93bb5e82713e73c5b10e89ad515d3289d068","machash":"sha3256"}}`,
   ],
   fileName,
   {
@@ -12,69 +13,69 @@ const file = new File(
   }
 );
 
-const login = () => {
-  const {
-    getByLabelText,
-    findByTestId,
-    getByTestId,
-    getByText,
-    container,
-    wait,
-  } = renderWithRouter({
-    route: '/local/login',
-  });
-
-  const inputEl = getByLabelText('Private Key');
-
-  Object.defineProperty(inputEl, 'files', {
-    value: [file],
-  });
-
-  fireEvent.change(inputEl);
-
-  const passwordInput = getByTestId('accessPass');
-  fireEvent.change(passwordInput, '123456789');
-
-  console.log('in test');
-
-  const button = getByText('Unlock Wallet');
-  fireEvent.click(button);
-
-  return { getByLabelText, findByTestId, getByText, container, wait };
-};
-
 test('Balance updates only on new server response', async () => {
-  //   const { getByText, wait } = login();
-  const {
-    getByLabelText,
-    findByTestId,
-    getByTestId,
-    getByText,
-    container,
-    wait,
-  } = renderWithRouter({
-    route: '/login',
+  const { findByTestId, getByTestId, wait } = renderWithRouter({
+    route: '/ireland/login',
   });
 
-  const inputEl = getByLabelText('Private Key');
+  const accessPass: any = getByTestId('accessPass');
+  fireEvent.change(accessPass, { target: { value: '123456789' } });
+  fireEvent.blur(accessPass);
 
-  Object.defineProperty(inputEl, 'files', {
-    value: [file],
-  });
+  const walletFile: any = getByTestId('walletFile');
 
-  fireEvent.change(inputEl);
+  fireEvent.change(walletFile, { target: { files: [irelandFile] } });
+  fireEvent.blur(walletFile);
 
-  const passwordInput = getByTestId('accessPass');
-  fireEvent.change(passwordInput, '123456789');
+  const uploadLabel = await findByTestId('walletFileLabel');
+  expect(uploadLabel.innerHTML).toBe(fileName);
 
-  console.log('in test');
+  expect(accessPass.value).toBe('123456789');
 
-  const button = getByText('Unlock Wallet');
-  fireEvent.click(button);
+  const button: any = getByTestId('submitButton');
 
-  //   expect(button.innerHTML).toEqual('asd');
-  await wait(() => {
-    const address = getByText('ADDRESS');
-    expect(address.innerHTML).toBe(`ASD`);
-  });
+  const mockGet = jest.spyOn(axios, 'get');
+  mockGet.mockReturnValueOnce(
+    Promise.resolve({
+      data: {
+        account: {
+          address: '054fefc001aad80a9454c2d9a176ca7c403b087e79e552dccfd2aca27d12d2b5',
+          nonce: 0,
+          balance: '2000',
+          code: '',
+          codeHash: null,
+          rootHash: null,
+        },
+      },
+    })
+  );
+
+  const mockPost = jest.spyOn(axios, 'post');
+  mockPost.mockReturnValueOnce(
+    Promise.resolve({
+      data: {
+        took: 0,
+        timed_out: false,
+        _shards: { total: 1, successful: 1, skipped: 0, failed: 0 },
+        hits: { total: { value: 0, relation: 'eq' }, max_score: null, hits: [] },
+      },
+    })
+  );
+
+  await wait(
+    async () => {
+      fireEvent.click(button);
+    },
+    { timeout: 50 }
+  );
+
+  expect(button.disabled).toBe(false);
+
+  expect(document.title).toEqual('Elrond Wallet');
+
+  const addressLabel: any = await findByTestId(`addressLabel`);
+  expect(addressLabel!.innerHTML).toBe(`ADDRESS`);
+
+  const balance: any = await findByTestId(`balance`);
+  expect(balance.innerHTML).toBe(`0.2000&nbsp;ERD`);
 });
