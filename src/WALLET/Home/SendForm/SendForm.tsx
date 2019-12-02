@@ -1,8 +1,7 @@
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorMessage, Formik } from 'formik';
 import * as React from 'react';
-import { Accordion, Card } from 'react-bootstrap';
 import { copyToClipboard } from './../../../helpers';
 import { Denominate } from './../../../sharedComponents';
 import { sendTransaction } from './../helpers/asyncRequests';
@@ -62,6 +61,7 @@ const SendFormik = ({
   };
 
   const [failedTransaction, setFailedTransaction] = React.useState(false);
+  const [gasDetailsVisible, setGasDetailsVisible] = React.useState(false);
 
   return (
     <Formik
@@ -192,31 +192,31 @@ const SendFormik = ({
                 />
                 <ErrorMessage component="div" name="amount" className="invalid-feedback" />
               </div>
-              <Accordion className={economics ? '' : 'd-none'}>
-                <div>
-                  <div>Fee limit</div>
-                  <Accordion.Toggle as={Card.Text} eventKey="0" style={{ marginBottom: '1rem' }}>
-                    <label>
-                      <span data-testid="transactionFeeValue">
-                        <Denominate value={(testnetGasPrice * values.gasLimit).toString()} />
-                      </span>
-                      &nbsp;
-                      <FontAwesomeIcon icon={faAngleDown} />
+              <div>
+                <div>Fee limit</div>
+                <label onClick={() => setGasDetailsVisible(!gasDetailsVisible)}>
+                  <span data-testid="transactionFeeValue">
+                    <Denominate value={(testnetGasPrice * values.gasLimit).toString()} />
+                  </span>
+                  &nbsp;
+                  {gasDetailsVisible ? (
+                    <FontAwesomeIcon icon={faAngleUp} />
+                  ) : (
+                    <FontAwesomeIcon icon={faAngleDown} />
+                  )}
+                </label>
+              </div>
+              <div className={gasDetailsVisible ? '' : 'd-none'}>
+                <div className="card card-body bg-light mb-2">
+                  <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Gas Price</label>
+                    <label className="col-sm-9 col-form-label">
+                      <Denominate value={testnetGasPrice.toString()} />
                     </label>
-                  </Accordion.Toggle>
-                </div>
-
-                <Accordion.Collapse eventKey="0">
-                  <div style={{ marginBottom: '1rem' }}>
-                    <hr />
-                    <div>
-                      <div>Gas price</div>
-                      <label>
-                        <Denominate value={testnetGasPrice.toString()} />
-                      </label>
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="gasLimit">Gas Limit</label>
+                  </div>
+                  <div className="form-group row" style={{ marginBottom: '0.5rem' }}>
+                    <label className="col-sm-3 col-form-label">Gas Limit</label>
+                    <div className="col-sm-9">
                       <input
                         type="text"
                         className={
@@ -236,10 +236,11 @@ const SendFormik = ({
                       />
                       <ErrorMessage component="div" name="gasLimit" className="invalid-feedback" />
                     </div>
-                    <hr className="mt-4" />
+                    <div className="col-sm-12" />
                   </div>
-                </Accordion.Collapse>
-              </Accordion>
+                </div>
+              </div>
+
               <div className={data ? 'form-group' : 'd-none'}>
                 <label htmlFor="data">Data</label>
                 <textarea
