@@ -23,7 +23,8 @@ const RequestTokens = (props: PopulateDetailsType) => {
   const [erdsClass, setErdsClass] = React.useState<'d-none' | 'show' | 'hide'>('d-none');
   const [fundsRecieved, setFundsRecieved] = React.useState(false);
   const [requestFailed, setRequestFailed] = React.useState(false);
-  const [requestDisabled, setRequestDisabled] = React.useState(true);
+  const isDisabled = process.env.NODE_ENV !== 'test';
+  const [requestDisabled, setRequestDisabled] = React.useState(isDisabled);
   const [requestSent, setRequestSent] = React.useState(false);
 
   const handleClose = () => setShowModal(false);
@@ -93,7 +94,13 @@ const RequestTokens = (props: PopulateDetailsType) => {
         <div className="empty-details empty-small">
           <p className="mt-3 mb-3">The request has failed. Please try again later.</p>
         </div>
-        <button type="button" className="btn btn-outline-secondary" onClick={handleClose}>
+
+        <button
+          type="button"
+          data-testid="closeModalButton"
+          className="btn btn-outline-secondary"
+          onClick={handleClose}
+        >
           Close
         </button>
       </div>
@@ -107,7 +114,8 @@ const RequestTokens = (props: PopulateDetailsType) => {
           type="button"
           className="btn btn-outline-light btn-request"
           onClick={handleShow}
-          id="requestInvoke"
+          data-testid="requestInvokeButton"
+          id="requestInvokeButton"
         >
           Request Tokens
         </button>
@@ -129,7 +137,7 @@ const RequestTokens = (props: PopulateDetailsType) => {
           {!requestFailed ? (
             <>
               {!fundsRecieved ? (
-                <div id="requestBox">
+                <div id="requestBox" data-testid="requestBox">
                   <div className="empty mt-4 mb-3">
                     <i className="fa fa-coins empty-icon" />
                     <span className="h4 empty-heading">Request Tokens</span>
@@ -145,7 +153,8 @@ const RequestTokens = (props: PopulateDetailsType) => {
                       </div>
 
                       <button
-                        id="requestButton"
+                        id="requestTokensButton"
+                        data-testid="requestTokensButton"
                         type="submit"
                         className="btn btn-primary mt-4"
                         disabled={requestDisabled}

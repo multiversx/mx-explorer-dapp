@@ -2,7 +2,6 @@ import { fireEvent, render, wait } from '@testing-library/react';
 import React from 'react';
 import SendForm from '../SendForm';
 import { GlobalProvider } from './../../../../context';
-// file.only
 
 const formProps = {
   testnetGasLimit: 1000,
