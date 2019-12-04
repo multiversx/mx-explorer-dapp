@@ -88,10 +88,9 @@ const login = async () => {
 
 test('Faucet test', async () => {
   const { findByTestId, getByTestId, queryByText, wait } = await login();
+
   const requestInvokeButton = getByTestId('requestInvokeButton');
   fireEvent.click(requestInvokeButton);
-  const req = queryByText(/^ERD Faucet/);
-  expect(req!.innerHTML).toBe(`ERD Faucet`);
 
   const requestTokensButton: any = getByTestId('requestTokensButton');
   expect(requestTokensButton.disabled).toBe(false);
@@ -112,14 +111,14 @@ test('Faucet test', async () => {
 
   fireEvent.click(requestTokensButton);
 
+  const balance: any = await findByTestId(`balance`);
+
   await wait(async () => {
-    const balance: any = await findByTestId(`balance`);
     expect(balance.innerHTML).toBe(`0.0000&nbsp;ERD`);
   });
 
   await wait(
     async () => {
-      const balance: any = await findByTestId(`balance`);
       expect(balance.innerHTML).toBe(`2,000,000.0000&nbsp;ERD`);
     },
     { timeout: 4500 }
