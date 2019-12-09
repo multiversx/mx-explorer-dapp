@@ -1,7 +1,7 @@
 import React from 'react';
-import { TestnetLink, TimeAgo, ShardSpan } from './../index';
-import { dateFormatted, sizeFormat, truncate } from './../../helpers';
 import { BlockType } from './../../components/Blocks';
+import { dateFormatted, sizeFormat, truncate } from './../../helpers';
+import { ShardSpan, TestnetLink, TimeAgo } from './../index';
 
 const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number | undefined }) => {
   return (
@@ -30,7 +30,7 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
               </td>
               <td>{block.txCount}</td>
               <td>
-                {shardId ? (
+                {shardId !== undefined ? (
                   <ShardSpan shardId={block.shardId} />
                 ) : (
                   <TestnetLink to={`/blocks/shards/${block.shardId}`}>

@@ -1,14 +1,14 @@
 import axios from 'axios';
 
-export type GetBlocksParamsType = {
+export interface GetBlocksParamsType {
   elasticUrl: string;
   size?: number;
   shardId: number | undefined;
   timeout: number;
-};
+}
 
 const setShardsQuery = (shardId: number | undefined) =>
-  shardId
+  shardId !== undefined
     ? {
         query: {
           bool: {
@@ -20,12 +20,7 @@ const setShardsQuery = (shardId: number | undefined) =>
         query: { match_all: {} },
       };
 
-export async function getBlocks({
-  elasticUrl,
-  size = 1,
-  shardId = undefined,
-  timeout,
-}: GetBlocksParamsType) {
+export async function getBlocks({ elasticUrl, size = 1, shardId, timeout }: GetBlocksParamsType) {
   try {
     const query = {
       sort: { timestamp: { order: 'desc' } },
@@ -41,10 +36,14 @@ export async function getBlocks({
 
     let min = blocks[0].nonce;
     let max = min;
-    for (let block in blocks) {
-      if (blocks[block].nonce < min) min = blocks[block].nonce;
+    for (const block in blocks) {
+      if (blocks[block].nonce < min) {
+        min = blocks[block].nonce;
+      }
 
-      if (blocks[block].nonce > max) max = blocks[block].nonce;
+      if (blocks[block].nonce > max) {
+        max = blocks[block].nonce;
+      }
     }
 
     const startBlockNr = min;
@@ -65,11 +64,7 @@ export async function getBlocks({
   }
 }
 
-export async function getTotalBlocks({
-  elasticUrl,
-  shardId = undefined,
-  timeout,
-}: GetBlocksParamsType) {
+export async function getTotalBlocks({ elasticUrl, shardId, timeout }: GetBlocksParamsType) {
   try {
     const {
       data: { count },
