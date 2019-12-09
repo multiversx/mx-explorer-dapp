@@ -3,12 +3,12 @@ import elrondCoreJS from '@elrondnetwork/elrond-core-js';
 
 export default (function cryptoCore() {
   return {
-    newAccount: newAccount,
-    loadAccountFromKeyFile: loadAccountFromKeyFile,
-    generateKeyFileFromPrivateKey: generateKeyFileFromPrivateKey,
-    loadAccountFromPrivateKey: loadAccountFromPrivateKey,
-    createTransaction: createTransaction,
-    loadAccountFromPEMSecret: loadAccountFromPEMSecret,
+    newAccount,
+    loadAccountFromKeyFile,
+    generateKeyFileFromPrivateKey,
+    loadAccountFromPrivateKey,
+    createTransaction,
+    loadAccountFromPEMSecret,
   };
 
   function newAccount(password: string) {
@@ -46,7 +46,7 @@ export default (function cryptoCore() {
     return account;
   }
 
-  type TransactionType = {
+  interface TransactionType {
     nonce: number;
     from: string;
     to: string;
@@ -54,7 +54,7 @@ export default (function cryptoCore() {
     gasPrice: number;
     gasLimit: number;
     data: string;
-  };
+  }
 
   function createTransaction({
     nonce = 0,
@@ -65,6 +65,15 @@ export default (function cryptoCore() {
     gasLimit = 0,
     data = '',
   }: TransactionType) {
-    return new elrondCoreJS.transaction(nonce, from, to, value, gasPrice, gasLimit, data);
+    const transaction = new elrondCoreJS.transaction(
+      nonce,
+      from,
+      to,
+      value,
+      gasPrice,
+      gasLimit,
+      data
+    );
+    return transaction;
   }
 })();
