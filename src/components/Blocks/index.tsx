@@ -1,12 +1,12 @@
+import { faCube } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { getBlocks, getTotalBlocks } from './helpers/asyncRequests';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCube } from '@fortawesome/free-solid-svg-icons';
-import { Pager, ShardSpan, BlocksTable, Loader } from './../../sharedComponents';
 import { useGlobalState } from '../../context';
+import { BlocksTable, Loader, Pager, ShardSpan } from './../../sharedComponents';
+import { getBlocks, getTotalBlocks } from './helpers/asyncRequests';
 
-export type BlockType = {
+export interface BlockType {
   hash: string;
   nonce: number;
   prevHash: string;
@@ -18,15 +18,15 @@ export type BlockType = {
   stateRootHash: string;
   timestamp: number;
   txCount: number;
-  validators: Array<number>;
-};
+  validators: number[];
+}
 
-type StateType = {
+interface StateType {
   blocks: BlockType[];
   startBlockNr: number;
   endBlockNr: number;
   blocksFetched: boolean;
-};
+}
 
 const initialState = {
   blocks: [],
@@ -36,10 +36,10 @@ const initialState = {
 };
 
 const Blocks: React.FC = () => {
-  let { page, shard } = useParams();
+  const { page, shard } = useParams();
   const shardId = parseInt(shard!) >= 0 ? parseInt(shard!) : undefined;
 
-  let ref = React.useRef(null);
+  const ref = React.useRef(null);
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;
   const [state, setState] = React.useState<StateType>(initialState);
   const [totalBlocks, setTotalBlocks] = React.useState<number | string>('...');
