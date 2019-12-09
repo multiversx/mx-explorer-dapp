@@ -1,10 +1,10 @@
+import { faCogs, faCube } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCogs, faCube } from '@fortawesome/free-solid-svg-icons';
-import { BlocksTable, Loader } from '../../sharedComponents';
 import { useGlobalState } from '../../context';
-import { getValidator, getRounds, searchBlocks } from './helpers/asyncRequests';
+import { BlocksTable, Loader } from '../../sharedComponents';
+import { getRounds, getValidator, searchBlocks } from './helpers/asyncRequests';
 import NetworkMetrics, { NetworkMetricsType } from './NetworkMetrics';
 import NodeInformation, { NodeInformationType } from './NodeInformation';
 import Rounds from './Rounds';
@@ -39,9 +39,9 @@ export const initialState: StateType = {
 };
 
 const ValidatorDetails = () => {
-  let { hash: hexPublicKey } = useParams();
+  const { hash: hexPublicKey } = useParams();
 
-  let ref = React.useRef(null);
+  const ref = React.useRef(null);
 
   const {
     activeTestnet: { elasticUrl, nodeUrl },
