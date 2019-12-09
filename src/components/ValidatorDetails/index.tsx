@@ -69,7 +69,8 @@ const ValidatorDetails = () => {
         nodeUrl,
       }).then(({ signersIndex, shardNumber, success, ...data }: any) => {
         if (ref.current !== null) {
-          setState(data);
+          setState({ ...data, shardNumber });
+
           setSuccess(success);
           const props = {
             elasticUrl,

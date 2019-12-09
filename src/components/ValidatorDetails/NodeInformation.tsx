@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { TestnetLink, ShardSpan } from '../../sharedComponents';
 import { truncate } from '../../helpers';
+import { ShardSpan, TestnetLink } from '../../sharedComponents';
 
-export type NodeInformationType = {
+export interface NodeInformationType {
   publicKey: string;
   instanceType: number;
   shardNumber: number;
   versionNumber: string;
   nodeDisplayName: string;
   publicKeyBlockSign: string;
-};
+}
 
 const NodeInformation = ({
   publicKey,
@@ -47,9 +47,7 @@ const NodeInformation = ({
                     <ShardSpan shardId={shardNumber} />
                   </TestnetLink>
                 ) : (
-                  <span className="text-muted" ng-show="!nodeDisplayName">
-                    N/A
-                  </span>
+                  <span className="text-muted">N/A</span>
                 )}
               </div>
             </div>
