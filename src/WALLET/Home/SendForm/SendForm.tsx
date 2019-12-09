@@ -82,6 +82,7 @@ const SendFormik = ({
             dstAddress,
             nonce,
           });
+
           sendTransaction({ nodeUrl, transaction, timeout, nonce }).then(
             ({ success, lastTxHash }) => {
               let intervalId: any = null;
@@ -137,6 +138,10 @@ const SendFormik = ({
           if (newBalance !== undefined) {
             setFieldValue('amount', newBalance);
           }
+        };
+
+        const changeGasLimit = (e: React.ChangeEvent<HTMLInputElement>) => {
+          setFieldValue('gasLimit', parseInt(e.target.value ? e.target.value : '0'), true);
         };
 
         return (
@@ -209,13 +214,15 @@ const SendFormik = ({
               <div className={gasDetailsVisible ? '' : 'd-none'}>
                 <div className="card card-body bg-light mb-2">
                   <div className="form-group row">
-                    <label className="col-sm-3 col-form-label">Gas Price</label>
-                    <label className="col-sm-9 col-form-label">
+                    <label className="col-sm-3 col-form-label text-right">Gas Price</label>
+                    <p className="col-sm-9 col-form-label">
                       <Denominate value={testnetGasPrice.toString()} />
-                    </label>
+                    </p>
                   </div>
                   <div className="form-group row" style={{ marginBottom: '0.5rem' }}>
-                    <label className="col-sm-3 col-form-label">Gas Limit</label>
+                    <label className="col-sm-3 col-form-label text-right" htmlFor="gasLimit">
+                      Gas Limit
+                    </label>
                     <div className="col-sm-9">
                       <input
                         type="text"
@@ -230,7 +237,7 @@ const SendFormik = ({
                         required={true}
                         disabled={!gasLimitEditable}
                         value={values.gasLimit}
-                        onChange={handleChange}
+                        onChange={changeGasLimit}
                         onBlur={handleBlur}
                         autoComplete="off"
                       />
