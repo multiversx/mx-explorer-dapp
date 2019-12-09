@@ -25,7 +25,7 @@ const CONFIG = {
       decimals: 4,
       denomination: 4,
       gasPrice: 10,
-      gasLimit: 1000,
+      gasLimit: 100000,
       gasLimitEditable: true,
       economics: true,
       data: true,
