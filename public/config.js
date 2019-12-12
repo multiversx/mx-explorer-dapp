@@ -22,7 +22,7 @@ const CONFIG = {
       elasticUrl: 'https://elastic-aws.elrond.com',
       refreshRate: 6000,
       numInitCharactersForScAddress: 20,
-      decimals: 8,
+      decimals: 4,
       denomination: 18,
       gasPrice: 100000000000000,
       gasLimit: 1000000,
