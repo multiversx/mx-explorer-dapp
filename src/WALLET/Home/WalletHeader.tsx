@@ -77,7 +77,7 @@ const WalletHeader = (props: PopulateDetailsType) => {
                 </span>
                 <span className="highlight-label">BALANCE</span>
                 <span className="highlight-value" data-testid="balance">
-                  <Denominate value={balance} showAllDecimals={true} />
+                  <Denominate value={balance} showAllDecimals />
                 </span>
                 <a href="/#" className="highlight-link" onClick={refreshBalance}>
                   <FontAwesomeIcon icon={faSync} />

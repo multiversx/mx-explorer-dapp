@@ -1,4 +1,5 @@
 import denominate from './../denominate';
+// file.only
 
 describe('denomination 4,4', () => {
   const numbers: { [key: string]: string } = {
@@ -62,6 +63,22 @@ describe('denomination 4,4,true', () => {
     const output = numbers[input];
     it(`denominate ${input} -> ${output}`, () => {
       const withCommas = denominate({ input, denomination, decimals, showAllDecimals: true });
+      expect(withCommas).toBe(output);
+    });
+  }
+});
+
+describe('denomination 4,4,true', () => {
+  const numbers: { [key: string]: string } = {
+    '20000000000000000000': '20.00000000',
+  };
+  const denomination = 18;
+  const decimals = 8;
+  for (let i = 0; i < Object.keys(numbers).length; i++) {
+    const input = Object.keys(numbers)[i];
+    const output = numbers[input];
+    it(`denominate ${input} -> ${output}`, () => {
+      const withCommas = denominate({ input, denomination, decimals, showAllDecimals: false });
       expect(withCommas).toBe(output);
     });
   }

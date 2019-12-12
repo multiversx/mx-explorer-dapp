@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
 import { fireEvent, renderWithRouter } from './../../utils/wallet-test-utils';
-// file.only
 
 const address = '054fefc001aad80a9454c2d9a176ca7c403b087e79e552dccfd2aca27d12d2b5';
 const fileName = address + '.json';

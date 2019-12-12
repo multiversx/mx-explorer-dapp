@@ -147,7 +147,7 @@ const TransactionDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">Value</div>
                         <div className="col-lg-10">
-                          <Denominate value={transaction.value} showAllDecimals />
+                          <Denominate value={transaction.value} />
                         </div>
                       </div>
                       <hr className="hr-space" />
@@ -156,7 +156,6 @@ const TransactionDetails: React.FC = () => {
                         <div className="col-lg-10">
                           <Denominate
                             value={(transaction.gasPrice * transaction.gasLimit).toString()}
-                            showAllDecimals
                           />
                         </div>
                       </div>
