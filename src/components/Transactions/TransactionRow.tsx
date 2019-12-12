@@ -1,18 +1,18 @@
 import React from 'react';
+import { addressIsHash, dateFormatted, truncate } from './../../helpers';
 import {
-  ScAddressIcon,
-  TestnetLink,
   Denominate,
-  TimeAgo,
+  ScAddressIcon,
   ShardSpan,
+  TestnetLink,
+  TimeAgo,
 } from './../../sharedComponents';
 import { TransactionType } from './index';
-import { truncate, dateFormatted, addressIsHash } from './../../helpers';
 
-type PropsType = {
+interface PropsType {
   transaction: TransactionType;
   addressId?: string | undefined;
-};
+}
 
 const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
   return (

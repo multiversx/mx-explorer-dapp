@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useGlobalState } from '../../context';
-import { getTransactions, getTotalTransactions } from './helpers/asyncRequests';
-import { Pager, ShardSpan, Loader } from './../../sharedComponents';
-import TransactionRow from './TransactionRow';
+import { Loader, Pager, ShardSpan } from './../../sharedComponents';
 import AddressDetails from './AddressDetails';
 import FailedAddress from './FailedAddress';
 import FailedTransaction from './FailedTransaction';
+import { getTotalTransactions, getTransactions } from './helpers/asyncRequests';
+import TransactionRow from './TransactionRow';
 
-export type TransactionType = {
+export interface TransactionType {
   blockHash: string;
   data: string;
   gasLimit: number;
@@ -25,7 +25,7 @@ export type TransactionType = {
   status: string;
   timestamp: number;
   value: string;
-};
+}
 
 function getDirection(type: string | undefined) {
   const shardMap: any = {
@@ -33,19 +33,19 @@ function getDirection(type: string | undefined) {
     'shard-to': 'receiverShard',
     default: undefined,
   };
-  return shardMap[String(type)] || shardMap['default'];
+  return shardMap[String(type)] || shardMap.default;
 }
 
 const Transactions: React.FC = () => {
-  let ref = React.useRef(null);
-  let addressRef = React.useRef(null);
+  const ref = React.useRef(null);
+  const addressRef = React.useRef(null);
 
   const {
     activeTestnet: { elasticUrl },
     refresh: { timestamp },
     timeout,
   } = useGlobalState();
-  let { page, hash: addressId, shard } = useParams();
+  const { page, hash: addressId, shard } = useParams();
   const { pathname } = useLocation();
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
