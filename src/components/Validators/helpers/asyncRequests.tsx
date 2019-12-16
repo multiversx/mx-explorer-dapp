@@ -86,6 +86,7 @@ export async function getValidatorStatistics({ nodeUrl, timeout }: ParamsType) {
     //   },
     // };
     return {
+      // statistics: statistics.statistics,
       statistics: {},
       success: false,
     };
