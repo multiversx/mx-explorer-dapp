@@ -6,40 +6,6 @@ import { ShardSpan } from './../../../sharedComponents';
 import { getNewSortData, HeadersType } from './../helpers/validatorHelpers';
 import { ComputedShard, SortType } from './index';
 
-const headers: HeadersType[] = [
-  {
-    id: 'hexPublicKey',
-    label: 'Public Key',
-    dir: 'none',
-  },
-  {
-    id: 'nodeDisplayName',
-    label: 'Node Name',
-    dir: 'none',
-  },
-  {
-    id: 'shardID',
-    label: 'Shard',
-    dir: 'none',
-  },
-  {
-    id: 'versionNumber',
-    label: 'Version',
-    dir: 'none',
-  },
-
-  {
-    id: 'totalUpTimeSec',
-    label: 'Uptime',
-    dir: 'none',
-  },
-  {
-    id: 'isActive',
-    label: 'Status',
-    dir: 'none',
-  },
-];
-
 interface ValidatorsTableHeaderType {
   includeObservers: boolean;
   sortBy: ({ field, dir }: { field: string; dir: 'none' | 'asc' | 'desc' }) => void;
@@ -67,6 +33,39 @@ const ValidatorsTableHeader = ({
   setValidatorObserverValue,
   validatorStatistics,
 }: ValidatorsTableHeaderType) => {
+  const headers: HeadersType[] = [
+    {
+      id: 'hexPublicKey',
+      label: 'Public Key',
+      dir: 'none',
+    },
+    {
+      id: 'nodeDisplayName',
+      label: 'Node Name',
+      dir: 'none',
+    },
+    {
+      id: 'shardID',
+      label: 'Shard',
+      dir: 'none',
+    },
+    {
+      id: 'versionNumber',
+      label: 'Version',
+      dir: 'none',
+    },
+
+    {
+      id: 'totalUpTimeSec',
+      label: 'Uptime',
+      dir: 'none',
+    },
+    {
+      id: 'isActive',
+      label: 'Status',
+      dir: 'none',
+    },
+  ];
   const toggleSort = (currentSortColumn: string) => () => {
     const { field: oldSortColumn, dir: oldDir } = sort;
     const { field, dir } = getNewSortData({ oldDir, oldSortColumn, currentSortColumn });
