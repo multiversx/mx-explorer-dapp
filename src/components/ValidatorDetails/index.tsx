@@ -112,7 +112,7 @@ const ValidatorDetails = () => {
         }
       });
     }
-  }, [elasticUrl, timeout, hexPublicKey, nodeUrl, metaChainShardId]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, timeout, hexPublicKey, nodeUrl, metaChainShardId, validatorStatistics]); // run the operation only once since the parameter does not change
 
   const { publicKey, isValidator } = state;
 
