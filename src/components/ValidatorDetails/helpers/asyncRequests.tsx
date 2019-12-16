@@ -18,7 +18,9 @@ function getBlocks(response: any) {
 
   let min = blocks[0].nonce;
   let max = min;
+
   for (const block in blocks) {
+    // tslint:disable-line
     if (blocks[block].nonce < min) {
       min = blocks[block].nonce;
     }
