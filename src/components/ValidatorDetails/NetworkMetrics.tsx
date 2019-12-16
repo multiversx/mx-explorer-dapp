@@ -38,8 +38,11 @@ const NetworkMetrics = ({
 
   const cardBodyClassValidatorStatistics = validatorStatistics
     ? 'card-body mt-2 mb-2'
-    : 'card-body mt-2 mb-3';
+    : 'card-body mt-4 mb-4';
   const cardBodyClass = isValidator ? cardBodyClassValidatorStatistics : 'card-body';
+
+  const labelClass = validatorStatistics ? 'col-lg-3 card-label' : 'col-lg-2 card-label';
+  const dataClass = validatorStatistics ? 'col-lg-9' : 'col-lg-10';
   return (
     <>
       <div className="mt-4">
@@ -48,8 +51,8 @@ const NetworkMetrics = ({
       <div className="card" style={{ height: 'auto' }}>
         <div className={cardBodyClass}>
           <div className="row">
-            <div className="col-lg-3 card-label">Status</div>
-            <div className="col-lg-9">
+            <div className={labelClass}>Status</div>
+            <div className={dataClass}>
               {isActive ? (
                 <div ng-if="isActive === true">
                   <span className="badge badge-pill badge-success badge-status">&nbsp;</span>
@@ -65,8 +68,8 @@ const NetworkMetrics = ({
           </div>
           <hr className="hr-space" />
           <div className="row">
-            <div className="col-lg-3 card-label">Uptime</div>
-            <div className="col-lg-9">
+            <div className={labelClass}>Uptime</div>
+            <div className={dataClass}>
               {totalUpTimePercentege + totalDownTimePercentege > 0 ? (
                 <div className="progress">
                   <OverlayTrigger
