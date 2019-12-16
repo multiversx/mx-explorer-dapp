@@ -1,14 +1,14 @@
-import React, { useMemo } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCogs } from '@fortawesome/free-solid-svg-icons';
-import { getValidatorsData } from './helpers/asyncRequests';
-import { populateValidatorsTable } from './helpers/validatorHelpers';
-import { Loader } from './../../sharedComponents';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useMemo } from 'react';
 import { useGlobalState } from '../../context';
+import { Loader } from './../../sharedComponents';
+import { getValidatorsData, getValidatorStatistics } from './helpers/asyncRequests';
+import { populateValidatorsTable } from './helpers/validatorHelpers';
 import ShardsList from './ShardsList';
 import ValidatorsTable, { StateType } from './ValidatorsTable';
 
-export type ValidatorType = {
+export interface ValidatorType {
   computedShardID: number;
   hexPublicKey: string;
   isActive: boolean;
@@ -23,7 +23,9 @@ export type ValidatorType = {
   shardId: string;
   shardNumber: number;
   star: boolean;
-};
+  leader: number;
+  validator: number;
+}
 
 export const initialState: StateType = {
   shardData: [
@@ -40,18 +42,18 @@ export const initialState: StateType = {
   validatorsAndObservers: [],
 };
 
-export type ShardDataType = {
+export interface ShardDataType {
   [key: string]: {
     allValidators: number;
     allActiveValidators: number;
     shardNumber: number;
   };
-};
+}
 
 const Validators = () => {
-  let ref = React.useRef(null);
+  const ref = React.useRef(null);
   const {
-    activeTestnet: { nodeUrl, validatorDetails },
+    activeTestnet: { nodeUrl, validatorDetails, validatorStatistics },
     timeout,
     config: { metaChainShardId },
   } = useGlobalState();
@@ -62,8 +64,20 @@ const Validators = () => {
     if (ref.current !== null) {
       getValidatorsData({ nodeUrl, timeout: Math.max(timeout, 10000) }).then(
         ({ data, success }) => {
-          const newState = populateValidatorsTable(data, metaChainShardId);
-          ref.current !== null && setState({ success, data: newState });
+          const newState = populateValidatorsTable({ data, metaChainShardId });
+          if (ref.current !== null) {
+            setState({ success, data: newState });
+          }
+          if (validatorStatistics) {
+            getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }).then(
+              ({ statistics }: any) => {
+                const newState = populateValidatorsTable({ data, metaChainShardId, statistics });
+                if (ref.current !== null) {
+                  setState({ success, data: newState });
+                }
+              }
+            );
+          }
         }
       );
     }
@@ -85,7 +99,11 @@ const Validators = () => {
               {state.data.validatorsAndObservers.length > 0 ? (
                 <>
                   <ShardsList shardData={state.data.shardData} />
-                  <ValidatorsTable {...state.data} validatorDetails={validatorDetails || false} />
+                  <ValidatorsTable
+                    {...state.data}
+                    validatorStatistics={validatorStatistics}
+                    validatorDetails={validatorDetails || false}
+                  />
                 </>
               ) : (
                 <Loader />
@@ -104,7 +122,7 @@ const Validators = () => {
         </div>
       </div>
     ),
-    [state, validatorDetails]
+    [state, validatorDetails, validatorStatistics]
   );
 };
 

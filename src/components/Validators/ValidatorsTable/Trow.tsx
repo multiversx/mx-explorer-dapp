@@ -1,17 +1,39 @@
-import * as React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { TestnetLink, ShardSpan } from './../../../sharedComponents';
-import { ValidatorType } from './../index';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as React from 'react';
 import { truncate } from './../../../helpers';
+import { ShardSpan, TestnetLink } from './../../../sharedComponents';
+import { ValidatorType } from './../index';
 
 const EmptySearch = ({
   validator,
   validatorDetails,
+  validatorStatistics,
 }: {
   validator: ValidatorType;
   validatorDetails: boolean;
+  validatorStatistics: boolean;
 }) => {
+  const validatorStatisticsCells = validatorStatistics ? (
+    <>
+      <td className="text-right">
+        {validator.leader !== 0 ? (
+          <span>{validator.leader}%</span>
+        ) : (
+          <span className="text-muted">N/A</span>
+        )}
+      </td>
+      <td className="text-right">
+        {validator.validator !== 0 ? (
+          <span>{validator.validator}%</span>
+        ) : (
+          <span className="text-muted">N/A</span>
+        )}
+      </td>
+    </>
+  ) : (
+    <></>
+  );
   return (
     <tr className="animated fadeIn">
       <td>
@@ -51,6 +73,7 @@ const EmptySearch = ({
           <span className="text-muted">N/A</span>
         )}
       </td>
+      {validatorStatisticsCells}
       <td className="text-right">
         {(validator.totalUpTimeSec !== 0 || validator.totalDownTimeSec !== 0) && (
           <span>
@@ -68,6 +91,7 @@ const EmptySearch = ({
           validator.totalDownTimeSec === 0 &&
           validator.isActive === false && <span ng-show="">0%</span>}
       </td>
+
       <td>
         {validator.isActive === true ? (
           <div>

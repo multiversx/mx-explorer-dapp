@@ -1,10 +1,10 @@
+import { faArrowDown, faArrowUp, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { SyntheticEvent } from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faArrowDown, faFilter } from '@fortawesome/free-solid-svg-icons';
-import { HeadersType, getNewSortData } from './../helpers/validatorHelpers';
 import { ShardSpan } from './../../../sharedComponents';
-import { SortType, ComputedShard } from './index';
+import { getNewSortData, HeadersType } from './../helpers/validatorHelpers';
+import { ComputedShard, SortType } from './index';
 
 const headers: HeadersType[] = [
   {
@@ -27,6 +27,7 @@ const headers: HeadersType[] = [
     label: 'Version',
     dir: 'none',
   },
+
   {
     id: 'totalUpTimeSec',
     label: 'Uptime',
@@ -39,9 +40,9 @@ const headers: HeadersType[] = [
   },
 ];
 
-type ValidatorsTableHeaderType = {
+interface ValidatorsTableHeaderType {
   includeObservers: boolean;
-  sortBy: Function;
+  sortBy: ({ field, dir }: { field: string; dir: 'none' | 'asc' | 'desc' }) => void;
   sort: SortType;
   shardData: ComputedShard[];
   shardValue: string;
@@ -50,7 +51,8 @@ type ValidatorsTableHeaderType = {
   setStatusValue: React.Dispatch<React.SetStateAction<string>>;
   validatorObserverValue: string;
   setValidatorObserverValue: React.Dispatch<React.SetStateAction<string>>;
-};
+  validatorStatistics: boolean;
+}
 
 const ValidatorsTableHeader = ({
   includeObservers,
@@ -63,6 +65,7 @@ const ValidatorsTableHeader = ({
   setStatusValue,
   validatorObserverValue,
   setValidatorObserverValue,
+  validatorStatistics,
 }: ValidatorsTableHeaderType) => {
   const toggleSort = (currentSortColumn: string) => () => {
     const { field: oldSortColumn, dir: oldDir } = sort;
@@ -94,12 +97,27 @@ const ValidatorsTableHeader = ({
     setValidatorObserverValue(validatorObs);
   };
 
+  if (validatorStatistics && !headers.some(header => ['leader', 'validator'].includes(header.id))) {
+    headers.splice(4, 0, {
+      id: 'leader',
+      label: 'Leader Success',
+      dir: 'none',
+    });
+    headers.splice(5, 0, {
+      id: 'validator',
+      label: 'Validator Success',
+      dir: 'none',
+    });
+  }
+
   return (
     <thead>
       <tr>
         {headers.map(header => (
           <th
-            className={`sortable ${header.id === 'totalUpTimeSec' ? 'text-right' : ''}`}
+            className={`sortable ${
+              ['totalUpTimeSec', 'leader', 'validator'].includes(header.id) ? 'text-right' : ''
+            }`}
             key={header.id}
           >
             <span onClick={toggleSort(header.id)}>{header.label}&nbsp;</span>

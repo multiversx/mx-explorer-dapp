@@ -12,6 +12,7 @@ const CONFIG = {
         data: (default) false
         wallet: (default) true
         faucet: (default) false (faucet)
+        validatorStatistics: (default) false
     */
   testnets: [
     {
@@ -31,6 +32,7 @@ const CONFIG = {
       data: true,
       validatorDetails: true,
       faucet: false,
+      validatorStatistics: true,
     },
     {
       id: 'cryptobubbles',

@@ -31,6 +31,7 @@ export interface TestnetType {
   validatorDetails?: boolean;
   wallet?: boolean;
   faucet: boolean;
+  validatorStatistics: boolean;
 }
 
 interface ConfigType {
@@ -79,6 +80,7 @@ export const defaultTestnet = {
   wallet: true,
   validatorDetails: false,
   faucet: false,
+  validatorStatistics: false,
 };
 
 const configKey: any = 'CONFIG';
@@ -115,6 +117,7 @@ const extendedConfig = {
             data: true,
             validatorDetails: true,
             faucet: true,
+            validatorStatistics: false,
           },
         ]
       : []),

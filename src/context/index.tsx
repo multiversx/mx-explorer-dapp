@@ -1,9 +1,11 @@
 import * as React from 'react';
+import { ActionType, globalReducer } from './reducer';
 import initialState, { StateType } from './state';
-import { globalReducer, ActionType } from './reducer';
 
 type DispatchType = (action: ActionType) => void;
-type GlobalContextProviderProps = { children: React.ReactNode };
+interface GlobalContextProviderProps {
+  children: React.ReactNode;
+}
 
 const GlobalStateContext = React.createContext<StateType | undefined>(undefined);
 const GlobalDispatchContext = React.createContext<DispatchType | undefined>(undefined);

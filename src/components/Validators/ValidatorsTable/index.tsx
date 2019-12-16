@@ -1,34 +1,36 @@
-import * as React from 'react';
 // @ts-ignore
 import kendo from 'kendo-ui-core/js/kendo.data';
+import * as React from 'react';
+import { DirectioinsType } from './../helpers/validatorHelpers';
+import { ValidatorType } from './../index';
 import ValidatorStats from './Stats';
 import ValidatorTableHead from './Thead';
 import ValidatorTableRow from './Trow';
-import { ValidatorType } from './../index';
-import { DirectioinsType } from './../helpers/validatorHelpers';
 
-export type ComputedShard = {
+export interface ComputedShard {
   shardID: string;
   status: string;
   allValidators: number;
   allActiveValidators: number;
   shardNumber: number;
-};
+}
 
-export type StateType = {
+export interface StateType {
   shardData: ComputedShard[];
   shardsList: string[];
   validators: ValidatorType[];
   validatorsAndObservers: ValidatorType[];
-};
+}
 
-export type SortType = {
+export interface SortType {
   field: string;
   dir: DirectioinsType;
-};
+}
 export type ValidatorValueType = string;
 
-const ValidatorsTable = (props: StateType & { validatorDetails: boolean }) => {
+const ValidatorsTable = (
+  props: StateType & { validatorDetails: boolean; validatorStatistics: boolean }
+) => {
   const [includeObservers, setIncludeObsevers] = React.useState(false);
   const [sort, setSort] = React.useState<SortType>({ field: '', dir: 'none' });
   const [searchValue, setSearchValue] = React.useState<string>('');
@@ -37,7 +39,7 @@ const ValidatorsTable = (props: StateType & { validatorDetails: boolean }) => {
   const [validatorObserverValue, setValidatorObserverValue] = React.useState<string>('');
   const { validators, validatorsAndObservers, validatorDetails, shardData } = props;
 
-  var mainFilter: { logic: string; filters: Object[] } = { logic: 'and', filters: [] };
+  const mainFilter: { logic: string; filters: Array<{}> } = { logic: 'and', filters: [] };
 
   const searchValueFilter = {
     logic: 'or',
@@ -51,20 +53,25 @@ const ValidatorsTable = (props: StateType & { validatorDetails: boolean }) => {
         : [],
   };
 
-  if (searchValueFilter.filters.length) mainFilter.filters.push(searchValueFilter);
+  if (searchValueFilter.filters.length) {
+    mainFilter.filters.push(searchValueFilter);
+  }
 
-  if (shardValue !== '')
+  if (shardValue !== '') {
     mainFilter.filters.push({ field: 'shardId', operator: 'eq', value: shardValue });
+  }
 
-  if (statusValue !== '')
+  if (statusValue !== '') {
     mainFilter.filters.push({ field: 'isActive', operator: 'eq', value: statusValue === 'online' });
+  }
 
-  if (validatorObserverValue !== '')
+  if (validatorObserverValue !== '') {
     mainFilter.filters.push({
       field: 'isValidator',
       operator: 'eq',
       value: validatorObserverValue === 'validator',
     });
+  }
 
   const data = includeObservers ? validatorsAndObservers : validators;
 
@@ -104,6 +111,7 @@ const ValidatorsTable = (props: StateType & { validatorDetails: boolean }) => {
                   setStatusValue={setStatusValue}
                   validatorObserverValue={validatorObserverValue}
                   setValidatorObserverValue={setValidatorObserverValue}
+                  validatorStatistics={props.validatorStatistics}
                 />
                 <tbody>
                   {newValidators.map(validator => (
@@ -111,6 +119,7 @@ const ValidatorsTable = (props: StateType & { validatorDetails: boolean }) => {
                       key={validator.hexPublicKey}
                       validator={validator}
                       validatorDetails={validatorDetails}
+                      validatorStatistics={props.validatorStatistics}
                     />
                   ))}
                 </tbody>

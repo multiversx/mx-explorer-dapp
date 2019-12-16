@@ -1,7 +1,24 @@
-import { ValidatorType, ShardDataType } from './../index';
 import { getShardId } from './../../../helpers';
+import { ShardDataType, ValidatorType } from './../index';
 
-export function populateValidatorsTable(data: ValidatorType[], metaChainShardId: number) {
+export interface StatisticsType {
+  [hash: string]: {
+    nrLeaderSuccess: number;
+    nrLeaderFailure: number;
+    nrValidatorSuccess: number;
+    nrValidatorFailure: number;
+  };
+}
+
+export function populateValidatorsTable({
+  data,
+  metaChainShardId,
+  statistics = {},
+}: {
+  data: ValidatorType[];
+  metaChainShardId: number;
+  statistics?: StatisticsType;
+}) {
   const shardData: ShardDataType = {};
   const allShardIDs: string[] = [];
   const validators: ValidatorType[] = [];
@@ -9,14 +26,46 @@ export function populateValidatorsTable(data: ValidatorType[], metaChainShardId:
 
   data.forEach((validator: ValidatorType, i) => {
     const { shardId, shardNumber, star } = getShardId(validator, metaChainShardId);
-    validator = { ...validator, shardId, shardNumber, star };
+
+    const statisticsHasValidatorHash =
+      typeof statistics === 'object' &&
+      Object.keys(statistics).length &&
+      validator.hexPublicKey in statistics;
+
+    const {
+      nrLeaderSuccess,
+      nrLeaderFailure,
+      nrValidatorSuccess,
+      nrValidatorFailure,
+    } = statisticsHasValidatorHash
+      ? statistics[validator.hexPublicKey]
+      : {
+          nrLeaderSuccess: 0,
+          nrLeaderFailure: 0,
+          nrValidatorSuccess: 0,
+          nrValidatorFailure: 0,
+        };
+    validator = {
+      ...validator,
+      shardId,
+      shardNumber,
+      star,
+      leader:
+        nrLeaderSuccess !== 0 || nrLeaderFailure !== 0
+          ? Math.floor((nrLeaderSuccess * 100) / (nrLeaderSuccess + nrLeaderFailure))
+          : 0,
+      validator:
+        nrValidatorSuccess !== 0 || nrValidatorFailure !== 0
+          ? Math.floor((nrValidatorSuccess * 100) / (nrValidatorSuccess + nrValidatorFailure))
+          : 0,
+    };
 
     if (validator.isValidator) {
       validators.push(validator);
     }
     validatorsAndObservers.push(validator);
 
-    allShardIDs.push(shardId.toString()); //TODO: check shardID
+    allShardIDs.push(shardId.toString()); // TODO: check shardID
 
     if (validator.shardId && validator.shardId in shardData) {
       if (validator.isValidator) {
@@ -48,7 +97,7 @@ export function populateValidatorsTable(data: ValidatorType[], metaChainShardId:
       shardData[shardID]
     )
   ); // [{shardID, allValidators, allTrueValidators}]
-  //this gets all distinct shards
+  // this gets all distinct shards
   const shardsList = [...Array.from(new Set(allShardIDs))];
 
   return {
@@ -74,17 +123,17 @@ function computeShardStatus(allActiveValidators: number, allValidators: number) 
 
 export type DirectioinsType = 'none' | 'desc' | 'asc';
 
-export type HeadersType = {
+export interface HeadersType {
   id: string;
   label: string;
   dir: DirectioinsType;
-};
+}
 
-type ToggleSortType = {
+interface ToggleSortType {
   oldDir: DirectioinsType;
   oldSortColumn: string;
   currentSortColumn: string;
-};
+}
 
 export function getNewSortData({ oldDir, oldSortColumn, currentSortColumn }: ToggleSortType) {
   const directions: DirectioinsType[] = ['asc', 'desc', 'none'];
