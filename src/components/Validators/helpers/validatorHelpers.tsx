@@ -1,13 +1,15 @@
 import { getShardId } from './../../../helpers';
 import { ShardDataType, ValidatorType } from './../index';
 
+export interface ValidatorStatisticsData {
+  nrLeaderSuccess: number;
+  nrLeaderFailure: number;
+  nrValidatorSuccess: number;
+  nrValidatorFailure: number;
+}
+
 export interface StatisticsType {
-  [hash: string]: {
-    nrLeaderSuccess: number;
-    nrLeaderFailure: number;
-    nrValidatorSuccess: number;
-    nrValidatorFailure: number;
-  };
+  [hash: string]: ValidatorStatisticsData;
 }
 
 export function populateValidatorsTable({

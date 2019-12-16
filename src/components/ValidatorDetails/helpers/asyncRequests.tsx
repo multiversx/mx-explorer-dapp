@@ -1,16 +1,16 @@
 import axios from 'axios';
-import { ValidatorType } from './../../Validators';
 import { getShardId, getUptimeDowntime } from './../../../helpers';
 import { BlockType } from './../../Blocks';
+import { ValidatorType } from './../../Validators';
 import { initialState } from './../index';
 
-type GetValidatorType = {
+interface GetValidatorType {
   nodeUrl: string;
   elasticUrl: string;
   hexPublicKey: string;
   timeout: number;
   metaChainShardId: number;
-};
+}
 
 function getBlocks(response: any) {
   const { hits } = response.data;
@@ -18,10 +18,14 @@ function getBlocks(response: any) {
 
   let min = blocks[0].nonce;
   let max = min;
-  for (let block in blocks) {
-    if (blocks[block].nonce < min) min = blocks[block].nonce;
+  for (const block in blocks) {
+    if (blocks[block].nonce < min) {
+      min = blocks[block].nonce;
+    }
 
-    if (blocks[block].nonce > max) max = blocks[block].nonce;
+    if (blocks[block].nonce > max) {
+      max = blocks[block].nonce;
+    }
   }
 
   const startBlockNr = min;
@@ -33,12 +37,12 @@ function getBlocks(response: any) {
   };
 }
 
-type GetRoundsType = {
+interface GetRoundsType {
   elasticUrl: string;
   shardNumber: number;
   signersIndex: number;
   timeout: number;
-};
+}
 
 export async function getRounds({ elasticUrl, shardNumber, signersIndex, timeout }: GetRoundsType) {
   try {
@@ -75,8 +79,8 @@ export async function getRounds({ elasticUrl, shardNumber, signersIndex, timeout
     );
 
     const rounds = resp.data.hits.hits.map((round: any) => ({
-      key: round['_id'],
-      value: round['_source'].blockWasProposed,
+      key: round._id,
+      value: round._source.blockWasProposed,
     }));
     return {
       rounds,
@@ -180,8 +184,6 @@ export async function getValidator({
       totalUpTimeLabel,
       totalDownTimeLabel,
     } = getUptimeDowntime(currentValidator);
-    // $('#upTimePercentegeBar').tooltip({ title: upTimeDownTime.totalUpTimeLabel }); // eslint-disable-line
-    // $('#downTimePercentegeBar').tooltip({ title: upTimeDownTime.totalDownTimeLabel }); // eslint-disable-line
 
     const instanceType = currentValidator.isValidator ? 'Validator' : 'Observer';
 
@@ -194,7 +196,7 @@ export async function getValidator({
 
       const {
         _source: { publicKeys: consensusArray },
-      } = hits.filter((hit: any) => hit['_id'].toString() === shardNumber.toString()).pop();
+      } = hits.filter((hit: any) => hit._id.toString() === shardNumber.toString()).pop();
 
       const signersIndex = consensusArray.indexOf(hexPublicKey);
 

@@ -65,7 +65,7 @@ const CONFIG = {
       data: true,
       validatorDetails: true,
       faucet: true,
-      validatorStatistics: false,
+      validatorStatistics: true,
     },
     // {
     //   default: false,

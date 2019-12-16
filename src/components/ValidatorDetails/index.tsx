@@ -4,12 +4,15 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGlobalState } from '../../context';
 import { BlocksTable, Loader } from '../../sharedComponents';
+import { getValidatorStatistics } from './../Validators/helpers/asyncRequests';
+import { ValidatorStatisticsData } from './../Validators/helpers/validatorHelpers';
 import { getRounds, getValidator, searchBlocks } from './helpers/asyncRequests';
 import NetworkMetrics, { NetworkMetricsType } from './NetworkMetrics';
 import NodeInformation, { NodeInformationType } from './NodeInformation';
 import Rounds from './Rounds';
 
 export type StateType = NetworkMetricsType &
+  ValidatorStatisticsData &
   NodeInformationType & {
     shardId: string;
     startBlockNr: number;
@@ -36,6 +39,10 @@ export const initialState: StateType = {
   endBlockNr: 0,
   signersIndex: -1,
   success: true,
+  nrLeaderSuccess: 0,
+  nrLeaderFailure: 0,
+  nrValidatorSuccess: 0,
+  nrValidatorFailure: 0,
 };
 
 const ValidatorDetails = () => {
@@ -44,7 +51,7 @@ const ValidatorDetails = () => {
   const ref = React.useRef(null);
 
   const {
-    activeTestnet: { elasticUrl, nodeUrl },
+    activeTestnet: { elasticUrl, nodeUrl, validatorStatistics },
     config: { metaChainShardId },
     timeout,
   } = useGlobalState();
@@ -70,7 +77,6 @@ const ValidatorDetails = () => {
       }).then(({ signersIndex, shardNumber, success, ...data }: any) => {
         if (ref.current !== null) {
           setState({ ...data, shardNumber });
-
           setSuccess(success);
           const props = {
             elasticUrl,
@@ -81,17 +87,38 @@ const ValidatorDetails = () => {
           getRounds(props).then(({ rounds, roundsFetched }) =>
             setRounds({ rounds, roundsFetched })
           );
+          if (validatorStatistics) {
+            getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }).then(
+              ({ statistics }: any) => {
+                if (data.publicKey in statistics) {
+                  const {
+                    nrLeaderSuccess,
+                    nrLeaderFailure,
+                    nrValidatorSuccess,
+                    nrValidatorFailure,
+                  } = statistics[data.publicKey];
+                  setState(currentState => ({
+                    ...currentState,
+                    nrLeaderSuccess,
+                    nrLeaderFailure,
+                    nrValidatorSuccess,
+                    nrValidatorFailure,
+                  }));
+                }
+              }
+            );
+          }
           searchBlocks(props).then((blockdata: any) => setFetchedBlocks(blockdata));
         }
       });
     }
   }, [elasticUrl, timeout, hexPublicKey, nodeUrl, metaChainShardId]); // run the operation only once since the parameter does not change
 
-  const {
-    publicKey,
-    isValidator,
-    // code,
-  } = state;
+  const { publicKey, isValidator } = state;
+
+  const networkMetricsStatisticsClass = validatorStatistics ? 'col-md-9' : 'col-md-7';
+  const networkMetricsClass = isValidator ? networkMetricsStatisticsClass : 'col-12';
+  const roundsClass = validatorStatistics ? 'col-md-3' : 'col-md-5';
 
   return (
     <div ref={ref}>
@@ -111,10 +138,14 @@ const ValidatorDetails = () => {
                   </div>
                 </div>
                 <div className="row">
-                  <div className={isValidator ? 'col-md-7' : 'col-12'}>
+                  <div className={networkMetricsClass}>
                     <NetworkMetrics {...state} />
                   </div>
-                  {isValidator && <Rounds {...rounds} />}
+                  {isValidator && (
+                    <div className={roundsClass}>
+                      <Rounds {...rounds} />
+                    </div>
+                  )}
                 </div>
                 {isValidator && (
                   <>

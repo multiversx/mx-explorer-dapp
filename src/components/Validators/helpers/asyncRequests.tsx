@@ -42,10 +42,10 @@ export async function getValidatorStatistics({ nodeUrl, timeout }: ParamsType) {
     // const statistics = {
     //   statistics: {
     //     '00a2affc6e125bc7d9ee503880eb93f9395f4775f98f0cb3684f8a326f3aa04216fdf11af4e6a10568f12977abf75641a8f51b4a3eba320e240ea366c8d43aec3bb54fbb901863ed2d8fd0441f5703d2d7d0b14b017552bc2c9731293021038188dc0a2869d6350757a649af8d91ff05935d1f35d99b42bcb45540895e4108f2': {
-    //       nrLeaderSuccess: 7,
+    //       nrLeaderSuccess: 3,
     //       nrLeaderFailure: 7,
-    //       nrValidatorSuccess: 10,
-    //       nrValidatorFailure: 0,
+    //       nrValidatorSuccess: 7,
+    //       nrValidatorFailure: 3,
     //     },
     //     '00f42355c71c0e642ed3eeaa6f2cdc228ef34d5e6bfc2cd09836a76ff04e95bf5277ed2d677c7ead81fd2dc0c64646e4965a318a208b9d6f71558b43359f26a06648752b047b51159b7280b217f1804741068a4ab7d0ec860ce8c8f24044538b8247fae5f642a2b1c54865cf034d9918bbe50d10f8e5eff55dc69ae157153902': {
     //       nrLeaderSuccess: 3,

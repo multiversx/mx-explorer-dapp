@@ -1,16 +1,16 @@
+import { faCogs } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCogs } from '@fortawesome/free-solid-svg-icons';
 
-type RoundType = {
+interface RoundType {
   key: string;
   value: string;
-};
+}
 
 const Rounds = ({ rounds, roundsFetched }: { rounds: RoundType[]; roundsFetched: boolean }) => {
   return (
-    <div className="col-md-5">
+    <div>
       <div className="mt-4">
         <h4>Last Rounds</h4>
       </div>
@@ -31,7 +31,7 @@ const Rounds = ({ rounds, roundsFetched }: { rounds: RoundType[]; roundsFetched:
                 </div>
               </div>
             ) : (
-              <div className="squares">
+              <div className="squares ml-1">
                 {rounds.length &&
                   rounds.map((round: any) => (
                     <OverlayTrigger
@@ -44,7 +44,7 @@ const Rounds = ({ rounds, roundsFetched }: { rounds: RoundType[]; roundsFetched:
                         </Tooltip>
                       )}
                     >
-                      <div className={round.value ? 'full square-block' : 'square-block'}></div>
+                      <div className={round.value ? 'full square-block' : 'square-block'} />
                     </OverlayTrigger>
                   ))}
               </div>
