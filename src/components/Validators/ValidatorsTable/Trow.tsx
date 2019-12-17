@@ -23,13 +23,13 @@ const EmptySearch = ({
           <span className="text-muted">N/A</span>
         )}
       </td>
-      <td className="text-right">
+      {/* <td className="text-right">
         {validator.validator !== 0 ? (
           <span>{validator.validator}%</span>
         ) : (
           <span className="text-muted">N/A</span>
         )}
-      </td>
+      </td> */}
     </>
   ) : (
     <></>

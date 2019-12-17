@@ -37,7 +37,7 @@ const NetworkMetrics = ({
       : 0;
 
   const cardBodyClassValidatorStatistics = validatorStatistics
-    ? 'card-body mt-2 mb-2'
+    ? 'card-body mt-1 mb-1' // 'card-body mt-2 mb-2'
     : 'card-body mt-4 mb-4';
   const cardBodyClass = isValidator ? cardBodyClassValidatorStatistics : 'card-body';
 
@@ -92,7 +92,7 @@ const NetworkMetrics = ({
                   />
                 </div>
               </div>
-              <hr className="hr-space" />
+              {/* <hr className="hr-space" />
               <div className="row">
                 <div className="col-lg-3 card-label">Validator Success</div>
                 <div className="col-lg-9">
@@ -104,7 +104,7 @@ const NetworkMetrics = ({
                     totalDownTimePercentege={100 - validatorPercentage}
                   />
                 </div>
-              </div>
+              </div> */}
             </>
           )}
         </div>

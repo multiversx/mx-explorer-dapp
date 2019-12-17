@@ -102,11 +102,11 @@ const ValidatorsTableHeader = ({
       label: 'Leader Success',
       dir: 'none',
     });
-    headers.splice(5, 0, {
-      id: 'validator',
-      label: 'Validator Success',
-      dir: 'none',
-    });
+    // headers.splice(5, 0, {
+    //   id: 'validator',
+    //   label: 'Validator Success',
+    //   dir: 'none',
+    // });
   }
 
   return (

@@ -116,9 +116,9 @@ const ValidatorDetails = () => {
 
   const { publicKey, isValidator } = state;
 
-  const networkMetricsStatisticsClass = validatorStatistics ? 'col-md-9' : 'col-md-7';
+  const networkMetricsStatisticsClass = validatorStatistics ? 'col-md-8' : 'col-md-7'; // 'col-md-9' : 'col-md-7';
   const networkMetricsClass = isValidator ? networkMetricsStatisticsClass : 'col-12';
-  const roundsClass = validatorStatistics ? 'col-md-3' : 'col-md-5';
+  const roundsClass = validatorStatistics ? 'col-md-4' : 'col-md-5'; // 'col-md-3' : 'col-md-5';
 
   return (
     <div ref={ref}>
