@@ -156,8 +156,13 @@ const Transactions: React.FC = () => {
                       <Pager
                         slug={slug}
                         total={totalTransactions}
-                        start={(size - 1) * 50}
-                        end={(size - 1) * 50 + 50}
+                        start={(size - 1) * 50 + (size === 1 ? 1 : 0)}
+                        end={
+                          (size - 1) * 50 +
+                          (parseInt(totalTransactions.toString()) < 50
+                            ? parseInt(totalTransactions.toString())
+                            : 50)
+                        }
                         show={transactions.length > 0}
                       />
                     </div>

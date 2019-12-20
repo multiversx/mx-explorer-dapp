@@ -1,7 +1,7 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import TestnetLink from './../TestnetLink';
 
 const Pager = ({
@@ -17,16 +17,18 @@ const Pager = ({
   end: number;
   show: boolean;
 }) => {
-  let { page } = useParams();
+  const { page } = useParams();
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;
   const prevPageNo = size === 2 ? `/${slug}` : `/${slug}/page/${size - 1}`;
+
+  const startEnd = end === 1 ? 1 : `${start.toLocaleString('en')}-${end.toLocaleString('en')}`;
 
   const PagerComponent = (
     <div className="float-right mt-3">
       <ul className="list-inline">
         <li className="list-inline-item">
           <span>
-            {start.toLocaleString('en')}-{end.toLocaleString('en')} of {total.toLocaleString('en')}
+            {startEnd} of {total.toLocaleString('en')}
           </span>
         </li>
         <li className="list-inline-item ml-2 mr-2">
@@ -45,11 +47,19 @@ const Pager = ({
           )}
         </li>
         <li className="ml-2 list-inline-item">
-          <div className="pager">
-            <TestnetLink data-testid="nextPageButton" to={`/${slug}/page/${size + 1}`}>
-              Next <FontAwesomeIcon icon={faChevronRight} />
-            </TestnetLink>
-          </div>
+          {end < total ? (
+            <div className="pager">
+              <TestnetLink data-testid="nextPageButton" to={`/${slug}/page/${size + 1}`}>
+                Next <FontAwesomeIcon icon={faChevronRight} />
+              </TestnetLink>
+            </div>
+          ) : (
+            <div className="pager">
+              <span data-testid="disabledNextPageButton">
+                Next <FontAwesomeIcon icon={faChevronRight} />
+              </span>
+            </div>
+          )}
         </li>
       </ul>
     </div>
