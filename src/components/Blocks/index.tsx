@@ -107,9 +107,14 @@ const Blocks: React.FC = () => {
                       <BlocksTable blocks={state.blocks} shardId={shardId} />
                       <Pager
                         slug={shardId ? `blocks/shards/${shardId}` : 'blocks'}
-                        start={(size - 1) * 25}
-                        end={(size - 1) * 25 + 25}
                         total={totalBlocks}
+                        start={(size - 1) * 25 + (size === 1 ? 1 : 0)}
+                        end={
+                          (size - 1) * 25 +
+                          (parseInt(totalBlocks.toString()) < 25
+                            ? parseInt(totalBlocks.toString())
+                            : 25)
+                        }
                         show={state.blocks.length > 0}
                       />
                     </div>
