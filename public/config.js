@@ -1,5 +1,22 @@
 const CONFIG = {
   metaChainShardId: 4294967295,
+  elrondApps: [
+    {
+      id: 'wallet',
+      name: 'Wallet',
+      to: 'https://wallet.elrond.com/',
+    },
+    {
+      id: 'explorer',
+      name: 'Explorer',
+      to: 'https://explorer.elrond.com/',
+    },
+    {
+      id: 'docs',
+      name: 'Docs',
+      to: 'https://docs.elrond.com/',
+    },
+  ],
   /*
       Legend:
         decimals: number of displayed ERD decimals in explorer

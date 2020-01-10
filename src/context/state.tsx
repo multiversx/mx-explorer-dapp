@@ -35,8 +35,17 @@ export interface TestnetType {
   validatorStatistics: boolean;
 }
 
+type AppIdType = 'wallet' | 'explorer' | 'studio' | 'docs';
+
+interface AppsType {
+  id: AppIdType;
+  name: string;
+  to: string;
+}
+
 interface ConfigType {
   metaChainShardId: number;
+  elrondApps: AppsType[];
   testnets: TestnetType[];
 }
 
@@ -56,6 +65,15 @@ export interface StateType {
 const buildInitialConfig = (config: any): ConfigType => {
   return {
     metaChainShardId: config.metaChainShardId || 4294967295,
+    elrondApps: config.elrondApps.length
+      ? config.elrondApps
+      : [
+          {
+            id: 'studio',
+            name: 'Empty',
+            to: 'https://elrond.com/',
+          },
+        ],
     testnets:
       config.testnets && config.testnets.length
         ? config.testnets.map((testnet: any) => ({ ...defaultTestnet, ...testnet }))

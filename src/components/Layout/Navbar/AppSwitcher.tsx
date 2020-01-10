@@ -1,41 +1,15 @@
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import elrondLogo from 'assets/img/elrond-symbol.svg';
+import { useGlobalState } from 'context';
 import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
 
-type AppIdType = 'wallet' | 'explorer' | 'studio' | 'docs';
-
-interface AppsType {
-  id: AppIdType;
-  name: string;
-  to: string;
-}
-
-const apps: AppsType[] = [
-  {
-    id: 'wallet',
-    name: 'Wallet',
-    to: 'https://wallet.elrond.com/',
-  },
-  {
-    id: 'explorer',
-    name: 'Explorer',
-    to: 'https://explorer.elrond.com/',
-  },
-  // {
-  //   id: 'studio',
-  //   name: 'Studio',
-  //   to: 'https://studio.elrond.com/',
-  // },
-  {
-    id: 'docs',
-    name: 'Docs',
-    to: 'https://docs.elrond.com/',
-  },
-];
-
 export default function AppSwitcher() {
+  const {
+    config: { elrondApps: apps },
+  } = useGlobalState();
+
   const hidePopover = () => {
     document.body.click();
   };
