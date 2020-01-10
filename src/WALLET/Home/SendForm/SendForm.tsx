@@ -1,9 +1,9 @@
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorMessage, Formik } from 'formik';
+import { copyToClipboard } from 'helpers';
 import * as React from 'react';
-import { copyToClipboard } from './../../../helpers';
-import { Denominate } from './../../../sharedComponents';
+import { Denominate } from 'sharedComponents';
 import { sendTransaction } from './../helpers/asyncRequests';
 import { PopulateDetailsType } from './../WalletHeader';
 import FailedTransaction from './FailedTransaction';
@@ -14,6 +14,7 @@ interface SendFormDataType {
   economics?: boolean;
   dispatch: (props: any) => void;
   testnetGasPrice: number;
+  gasPerDataByte: number;
   balance: string;
   serverBalance: string;
   publicKey: string;
@@ -32,6 +33,7 @@ const SendFormik = ({
   denomination,
   economics,
   testnetGasPrice,
+  gasPerDataByte,
   balance,
   publicKey,
   privateKey,
@@ -261,7 +263,8 @@ const SendFormik = ({
                   onChange={e => {
                     setFieldValue(
                       'gasLimit',
-                      testnetGasLimit + (e.target.value ? (e.target.value.length * 1500) : 0),
+                      testnetGasLimit +
+                        (e.target.value ? e.target.value.length * gasPerDataByte : 0),
                       false
                     );
                     setFieldValue('data', e.target.value, false);

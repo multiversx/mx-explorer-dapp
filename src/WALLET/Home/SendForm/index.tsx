@@ -1,7 +1,7 @@
+import { useGlobalState } from 'context';
 import React, { useMemo } from 'react';
-import { useGlobalState } from './../../../context';
-import { Loader } from './../../../sharedComponents';
-import { useWalletDispatch, useWalletState } from './../../context';
+import { Loader } from 'sharedComponents';
+import { useWalletDispatch, useWalletState } from 'WALLET/context';
 import { PopulateDetailsType } from './../WalletHeader';
 import SendForm from './SendForm';
 import SuccessTransaction from './SuccessTransaction';
@@ -17,6 +17,7 @@ const SendFormik = ({ populateDetails }: PopulateDetailsType) => {
       gasLimitEditable,
       gasLimit: testnetGasLimit,
       gasPrice: testnetGasPrice,
+      gasPerDataByte,
     },
     timeout,
   } = useGlobalState();
@@ -31,6 +32,7 @@ const SendFormik = ({ populateDetails }: PopulateDetailsType) => {
     dispatch,
     economics,
     testnetGasPrice,
+    gasPerDataByte,
     publicKey,
     privateKey,
     nodeUrl,

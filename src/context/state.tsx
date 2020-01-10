@@ -25,6 +25,7 @@ export interface TestnetType {
   denomination: number;
   gasPrice: number;
   gasLimit: number;
+  gasPerDataByte: number;
   gasLimitEditable?: boolean;
   economics?: boolean;
   data?: boolean;
@@ -74,6 +75,7 @@ export const defaultTestnet = {
   denomination: 0,
   gasPrice: 0,
   gasLimit: 0,
+  gasPerDataByte: 0,
   gasLimitEditable: false,
   economics: false,
   data: false,
@@ -112,6 +114,7 @@ const extendedConfig = {
             denomination: 4,
             gasPrice: 10,
             gasLimit: 1000,
+            gasPerDataByte: 1500,
             gasLimitEditable: true,
             economics: true,
             data: true,

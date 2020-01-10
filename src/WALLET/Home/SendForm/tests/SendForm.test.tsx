@@ -7,6 +7,7 @@ const formProps = {
   testnetGasLimit: 1000,
   economics: true,
   testnetGasPrice: 10,
+  gasPerDataByte: 1500,
   publicKey: '39e82d234b7c73c34f76091818f2c9f68d93914d12f3e0c507c59a9d3e38ad29',
   privateKey: '39e82d234b7c73c34f76091818f2c9f68d93914d12f3e0c507c59a9d3e38ad29',
   denomination: 4,
