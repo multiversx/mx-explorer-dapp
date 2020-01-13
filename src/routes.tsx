@@ -9,8 +9,6 @@ import ValidatorDetails from './components/ValidatorDetails';
 import Validators from './components/Validators';
 import { withPageTitle, withTestnetReady } from './sharedComponents';
 
-// TODO: daca hashul nu e valid (functie validare) return 404 (page not found)
-
 interface RouteType {
   path: string;
   title: string;
