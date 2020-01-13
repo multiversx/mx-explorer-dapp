@@ -8,7 +8,14 @@ import { useWalletDispatch, useWalletState } from './../../context';
 const SuccessTransaction = withRouter(props => {
   const { lastTxHash } = useWalletState();
   const dispatch = useWalletDispatch();
-  const { activeTestnetId } = useGlobalState();
+
+  const {
+    activeTestnetId,
+    config: { elrondApps },
+  } = useGlobalState();
+  const explorer = elrondApps.find(app => app.id === 'explorer');
+  let explorerAddr = explorer ? explorer.to : 'https://explorer.elrond.com/';
+  explorerAddr = explorerAddr.endsWith('/') ? explorerAddr : `${explorerAddr}/`;
 
   const resetForm = () => {
     dispatch({ type: 'setLastTxHash', lastTxHash: '' });
@@ -28,7 +35,7 @@ const SuccessTransaction = withRouter(props => {
           <br />
           {lastTxHash}&nbsp;
           <a
-            href={`https://explorer.elrond.com/${
+            href={`${explorerAddr}${
               activeTestnetId ? activeTestnetId + '/' : ''
             }transactions/${lastTxHash}`}
             target="_blank"

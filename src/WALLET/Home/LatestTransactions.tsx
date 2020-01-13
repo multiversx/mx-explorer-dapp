@@ -53,58 +53,66 @@ const LatestTransactions = () => {
     </div>
   );
 
-  const TransactionList = () => (
-    <div className="card-scroll" style={{ height: 'calc(100% - 50px)' }}>
-      <div className="animated fadeIn">
-        {transactions.map((tx: TransactionType, i) => (
-          <div key={tx.hash}>
-            <div className="row">
-              <div className="col-6">
-                <span className="icon-container-round">
-                  <i className="fa fa-exchange-alt" />
-                </span>
-                <a
-                  href={`https://explorer.elrond.com/${
-                    activeTestnetId ? activeTestnetId + '/' : ''
-                  }transactions/${tx.hash}`}
-                >
-                  {truncate(tx.hash, 20)}
-                </a>
-                <br />
-                <span className="text-secondary" title={dateFormatted(tx.timestamp)}>
-                  <TimeAgo value={tx.timestamp} />
-                </span>
+  const TransactionList = () => {
+    const {
+      config: { elrondApps },
+    } = useGlobalState();
+    const explorer = elrondApps.find(app => app.id === 'explorer');
+    let explorerAddr = explorer ? explorer.to : 'https://explorer.elrond.com/';
+    explorerAddr = explorerAddr.endsWith('/') ? explorerAddr : `${explorerAddr}/`;
+    return (
+      <div className="card-scroll" style={{ height: 'calc(100% - 50px)' }}>
+        <div className="animated fadeIn">
+          {transactions.map((tx: TransactionType, i) => (
+            <div key={tx.hash}>
+              <div className="row">
+                <div className="col-6">
+                  <span className="icon-container-round">
+                    <i className="fa fa-exchange-alt" />
+                  </span>
+                  <a
+                    href={`${explorerAddr}${
+                      activeTestnetId ? activeTestnetId + '/' : ''
+                    }transactions/${tx.hash}`}
+                  >
+                    {truncate(tx.hash, 20)}
+                  </a>
+                  <br />
+                  <span className="text-secondary" title={dateFormatted(tx.timestamp)}>
+                    <TimeAgo value={tx.timestamp} />
+                  </span>
+                </div>
+                <div className="col-6">
+                  From&nbsp;
+                  <a
+                    href={`${explorerAddr}${activeTestnetId ? activeTestnetId + '/' : ''}address/${
+                      tx.sender
+                    }`}
+                  >
+                    {truncate(tx.sender, 20)}
+                  </a>
+                  <br />
+                  To&nbsp;
+                  <a
+                    href={`${explorerAddr}${activeTestnetId ? activeTestnetId + '/' : ''}address/${
+                      tx.receiver
+                    }`}
+                  >
+                    {truncate(tx.receiver, 20)}
+                  </a>
+                </div>
               </div>
-              <div className="col-6">
-                From&nbsp;
-                <a
-                  href={`https://explorer.elrond.com/${
-                    activeTestnetId ? activeTestnetId + '/' : ''
-                  }address/${tx.sender}`}
-                >
-                  {truncate(tx.sender, 20)}
-                </a>
-                <br />
-                To&nbsp;
-                <a
-                  href={`https://explorer.elrond.com/${
-                    activeTestnetId ? activeTestnetId + '/' : ''
-                  }address/${tx.receiver}`}
-                >
-                  {truncate(tx.receiver, 20)}
-                </a>
-              </div>
+              {i !== transactions.length - 1 && (
+                <div>
+                  <hr className="hr-space" />
+                </div>
+              )}
             </div>
-            {i !== transactions.length - 1 && (
-              <div>
-                <hr className="hr-space" />
-              </div>
-            )}
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const ErrorLoadingTransactions = () => (
     <div className="card">
@@ -123,13 +131,20 @@ const LatestTransactions = () => {
   );
 
   const TransactionsListTitle = () => {
-    const { activeTestnetId } = useGlobalState();
+    const {
+      activeTestnetId,
+      config: { elrondApps },
+    } = useGlobalState();
+    const explorer = elrondApps.find(app => app.id === 'explorer');
+    let explorerAddr = explorer ? explorer.to : 'https://explorer.elrond.com/';
+    explorerAddr = explorerAddr.endsWith('/') ? explorerAddr : `${explorerAddr}/`;
+
     return (
       <div className="d-flex align-items-center flex-row mb-3">
         <h4 className="card-title mb-0 mr-auto">Latest Transactions</h4>
         {transactions.length > 0 && (
           <a
-            href={`https://explorer.elrond.com/${
+            href={`${explorerAddr}${
               activeTestnetId ? activeTestnetId + '/' : ''
             }address/${publicKey}`}
           >
