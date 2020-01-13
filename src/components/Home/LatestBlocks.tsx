@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCube } from '@fortawesome/free-solid-svg-icons';
-import { getBlocks } from './helpers/asyncRequests';
-import { TestnetLink, TimeAgo, ShardSpan } from './../../sharedComponents';
-import { BlockType } from './../Blocks';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as React from 'react';
 import { useGlobalState } from '../../context';
-import { truncate, dateFormatted } from './../../helpers';
+import { dateFormatted, truncate } from './../../helpers';
+import { ShardSpan, TestnetLink, TimeAgo } from './../../sharedComponents';
+import { BlockType } from './../Blocks';
+import { getBlocks } from './helpers/asyncRequests';
 
 const LatestBlocks: React.FC = () => {
-  let ref = React.useRef(null);
+  const ref = React.useRef(null);
   const {
     activeTestnet: { elasticUrl },
     timeout,

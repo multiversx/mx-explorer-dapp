@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
-import { getTransactions } from './helpers/asyncRequests';
-import { TestnetLink, TimeAgo, ShardSpan } from './../../sharedComponents';
-import { TransactionType } from './../Transactions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as React from 'react';
 import { useGlobalState } from '../../context';
-import { truncate, dateFormatted, addressIsHash } from './../../helpers';
+import { addressIsHash, dateFormatted, truncate } from './../../helpers';
+import { ShardSpan, TestnetLink, TimeAgo } from './../../sharedComponents';
+import { TransactionType } from './../Transactions';
+import { getTransactions } from './helpers/asyncRequests';
 
 const LatestTransactions: React.FC = () => {
-  let ref = React.useRef(null);
+  const ref = React.useRef(null);
   const {
     activeTestnet: { elasticUrl },
     timeout,
