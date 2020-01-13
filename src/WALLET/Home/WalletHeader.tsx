@@ -2,7 +2,7 @@ import { faCoins, faCopy, faSignOutAlt, faSync, faWallet } from '@fortawesome/fr
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Denominate, TestnetLink } from 'sharedComponents';
-import { useGlobalState } from './../../context';
+import { useGlobalDispatch, useGlobalState } from './../../context';
 import { copyToClipboard } from './../../helpers';
 import { useWalletDispatch, useWalletState } from './../context';
 import RequestTokens from './RequestTokens';
@@ -14,6 +14,7 @@ export interface PopulateDetailsType {
 
 const WalletHeader = (props: PopulateDetailsType) => {
   const dispatch = useWalletDispatch();
+  const globalDispatch = useGlobalDispatch();
 
   const {
     activeTestnet: { faucet, gasLimit, gasPrice },
@@ -33,6 +34,7 @@ const WalletHeader = (props: PopulateDetailsType) => {
   const refreshBalance = (e: React.SyntheticEvent) => {
     e.preventDefault();
     props.populateDetails(0)();
+    globalDispatch({ type: 'triggerNewRound' });
   };
 
   return (
