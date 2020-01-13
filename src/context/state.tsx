@@ -142,6 +142,30 @@ const extendedConfig = {
           },
         ]
       : []),
+    ...(process.env.NODE_ENV === 'development'
+      ? [
+          {
+            default: false,
+            id: 'testnet-do-toronto',
+            name: 'DigitalOcean TOR Testnet',
+            nodeUrl: '***REMOVED***',
+            elasticUrl: '***REMOVED***',
+            refreshRate: 6000,
+            numInitCharactersForScAddress: 20,
+            decimals: 4,
+            denomination: 18,
+            gasPrice: 100000000000000,
+            gasLimit: 1000000,
+            gasPerDataByte: 1500,
+            gasLimitEditable: true,
+            economics: true,
+            data: true,
+            validatorDetails: true,
+            faucet: false,
+            validatorStatistics: false,
+          },
+        ]
+      : []),
   ],
 };
 
