@@ -71,7 +71,7 @@ const WalletHome = () => {
 
   React.useEffect(populateDetails(0), []);
 
-  return (
+  const Home = () => (
     <div ref={ref}>
       <div className="bg-blue">
         <WalletHeader populateDetails={populateDetails} />
@@ -92,6 +92,7 @@ const WalletHome = () => {
       )}
     </div>
   );
+  return React.useMemo(Home, []);
 };
 
 export default WalletHome;
