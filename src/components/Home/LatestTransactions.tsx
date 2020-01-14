@@ -51,7 +51,7 @@ const LatestTransactions: React.FC = () => {
           </div>
           <div className="card-scroll">
             {transactions.length ? (
-              <div className="animated fadeIn">
+              <div className="animated fadeIn" data-testid="transactionsList">
                 {transactions.map((transaction: TransactionType, i) => (
                   <div key={transaction.hash}>
                     <div className="row">

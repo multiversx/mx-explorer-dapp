@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-type GetBlocksType = {
+interface GetBlocksType {
   elasticUrl: string;
   timeout: number;
-};
+}
 
 export async function getBlocks({ elasticUrl, timeout }: GetBlocksType) {
   try {
@@ -63,6 +63,7 @@ export async function getTransactions({ elasticUrl, timeout }: GetBlocksType) {
       { timeout }
     );
     const data = hits.map((transaction: any) => transaction._source);
+
     return {
       data,
       transactionsFetched: data.length > 0,

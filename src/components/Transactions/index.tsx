@@ -112,7 +112,7 @@ const Transactions: React.FC = () => {
                 <div className="row">
                   <div className="col-12">
                     <h4>
-                      Transactions
+                      <span data-testid="title">Transactions</span>
                       {shardId !== undefined && shardId >= 0 && (
                         <>
                           {shardDirection === 'shard-from' && <span>&nbsp;from&nbsp;</span>}

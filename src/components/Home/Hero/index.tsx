@@ -5,6 +5,8 @@ import Chart from './Chart';
 const HeroHighlights: React.FC = () => {
   const [liveTps, setLiveTps] = React.useState(0);
 
+  const ChartJS = process.env.NODE_ENV !== 'test' ? <Chart liveTps={liveTps} /> : null;
+
   return (
     <div className="bg-blue">
       <div className="container pt-4 pb-4">
@@ -16,9 +18,7 @@ const HeroHighlights: React.FC = () => {
             <span className="highlight-label d-block text-center mt-4 mb-3">
               LIVE TPS • LAST 3 MIN
             </span>
-            <div className="canvas">
-              <Chart liveTps={liveTps} />
-            </div>
+            <div className="canvas">{ChartJS}</div>
           </div>
         </div>
         <div className="row">

@@ -50,7 +50,7 @@ const LatestBlocks: React.FC = () => {
           </div>
           <div className="card-scroll">
             {blocks.length ? (
-              <div className="animated fadeIn">
+              <div className="animated fadeIn" data-testid="blocksList">
                 {blocks.map((block: BlockType, i) => (
                   <div key={block.hash}>
                     <div className="row">

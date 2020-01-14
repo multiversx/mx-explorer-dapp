@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-type GetStatsType = {
+interface GetStatsType {
   elasticUrl: string;
   timeout: number;
-};
+}
 
 export async function getStats({ elasticUrl, timeout }: GetStatsType) {
-  let data = {};
+  const data = {};
   try {
     const { data } = await axios.get(`${elasticUrl}/tps/_doc/meta`, { timeout });
 
