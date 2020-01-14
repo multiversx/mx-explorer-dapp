@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-type ParamsType = {
+interface ParamsType {
   elasticUrl: string;
   size?: number;
   addressId?: string;
   shardType: 'senderShard' | 'receiverShard' | undefined;
   shardId: number | undefined;
   timeout: number;
-};
+}
 
 const setAddressQuery = (addressId: string | undefined) =>
   addressId
@@ -49,8 +49,8 @@ export async function getTransactions({
   elasticUrl,
   addressId = '',
   size = 1,
-  shardId = undefined,
-  shardType = undefined,
+  shardId,
+  shardType,
   timeout,
 }: ParamsType) {
   let data = [];
@@ -90,8 +90,8 @@ export async function getTotalTransactions({
   elasticUrl,
   addressId = '',
   size = 1,
-  shardId = undefined,
-  shardType = undefined,
+  shardId,
+  shardType,
   timeout,
 }: ParamsType) {
   try {
@@ -123,11 +123,11 @@ export async function getTotalTransactions({
   }
 }
 
-type DetailsType = {
+interface DetailsType {
   nodeUrl: string;
   addressId: string;
   timeout: number;
-};
+}
 
 export async function getAddressDetails({ nodeUrl, addressId, timeout }: DetailsType) {
   try {
