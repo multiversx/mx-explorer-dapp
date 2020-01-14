@@ -28,7 +28,7 @@ const Pager = ({
       <ul className="list-inline">
         <li className="list-inline-item">
           <span>
-            {startEnd} of {total.toLocaleString('en')}
+            <span data-testid="pageInterval">{startEnd}</span> of {total.toLocaleString('en')}
           </span>
         </li>
         <li className="list-inline-item ml-2 mr-2">

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { fireEvent, renderWithRouter, waitForElement } from '../../../utils/test-utils';
 import errorResponse from './_errorResponse';
 import response from './_search';
+import searchPage2 from './_searchPage2';
 
 // TODO */
 /**
@@ -25,7 +26,12 @@ test('Transactions page is displaying', () => {
 test('Transactions data is displayed correctly', async () => {
   const mockGet = jest.spyOn(axios, 'get');
   const mockPost = jest.spyOn(axios, 'post');
-  mockPost.mockReturnValue(Promise.resolve({ data: response }));
+  mockPost.mockReturnValueOnce(Promise.resolve({ data: response }));
+  mockPost.mockReturnValue(
+    Promise.resolve({
+      data: { count: 6538186, _shards: { total: 1, successful: 1, skipped: 0, failed: 0 } },
+    })
+  );
 
   const { queryByTestId } = renderWithRouter({
     route: '/transactions/page/1',
@@ -36,8 +42,8 @@ test('Transactions data is displayed correctly', async () => {
     timeout: 3000,
   });
 
-  const pageNumber = await waitForElement(() => queryByTestId('pageNumber'));
-  expect(pageNumber!.innerHTML).toBe('1');
+  const pageInterval = await waitForElement(() => queryByTestId('pageInterval'));
+  expect(pageInterval!.innerHTML).toBe('1-50');
 
   const table = queryByTestId('transactionsTable');
   const numberOfRows = table!.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
@@ -46,7 +52,18 @@ test('Transactions data is displayed correctly', async () => {
 
 test('Transactions pager working', async () => {
   const mockPost = jest.spyOn(axios, 'post');
-  mockPost.mockReturnValue(Promise.resolve({ data: response }));
+  mockPost.mockReturnValueOnce(Promise.resolve({ data: response }));
+  mockPost.mockReturnValueOnce(
+    Promise.resolve({
+      data: { count: 6538186, _shards: { total: 1, successful: 1, skipped: 0, failed: 0 } },
+    })
+  );
+  mockPost.mockReturnValueOnce(Promise.resolve({ data: searchPage2 }));
+  mockPost.mockReturnValueOnce(
+    Promise.resolve({
+      data: { count: 6538186, _shards: { total: 1, successful: 1, skipped: 0, failed: 0 } },
+    })
+  );
 
   const { queryByTestId } = renderWithRouter({
     route: '/transactions/page/1',
@@ -58,8 +75,8 @@ test('Transactions pager working', async () => {
   const leftClick = { button: 0 };
   fireEvent.click(nextButton!, leftClick);
 
-  const nextPageNumber = await waitForElement(() => queryByTestId('pageNumber'));
-  expect(nextPageNumber!.innerHTML).toBe('2');
+  const pageInterval = await waitForElement(() => queryByTestId('pageInterval'));
+  expect(pageInterval!.innerHTML).toBe('50-100');
 });
 
 test('Transactions errorScreen showing', async () => {
