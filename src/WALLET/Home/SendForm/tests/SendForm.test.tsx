@@ -27,12 +27,14 @@ const formProps = {
 // https://github.com/testing-library/react-testing-library/issues/93#issuecomment-405111391
 // https://codesandbox.io/s/rl0wj028pp
 
-const beforeAll = () =>
-  render(
+const beforeAll = (props?: any) => {
+  const sendFormProps = { ...formProps, ...props };
+  return render(
     <GlobalProvider>
-      <SendForm {...formProps} />
+      <SendForm {...sendFormProps} />
     </GlobalProvider>
   );
+};
 
 describe('Destination address', () => {
   it(`should not be empty`, async () => {
@@ -217,13 +219,17 @@ describe('Gas limit', () => {
 describe('Data field tests', () => {
   test('data changes transaction fee', async () => {
     const data = { target: { value: 'four' } };
-    const dataLength = data.target.value.length;
-    const { getByLabelText, findByTestId } = beforeAll();
+    const props = {
+      testnetGasLimit: 1000000, // 1000,
+      testnetGasPrice: 100000000000000, // 10,
+      denomination: 18, // 4
+    };
+    const { getByLabelText, findByTestId } = beforeAll(props);
 
     const input = getByLabelText('Data');
     fireEvent.change(input, data);
-    const validationErrors = await findByTestId(`transactionFeeValue`);
-    expect(validationErrors.innerHTML).toBe(`1.00${dataLength}0&nbsp;ERD`);
+    const transactionFeeValue = await findByTestId(`transactionFeeValue`);
+    expect(transactionFeeValue.innerHTML).toBe(`100.6000&nbsp;ERD`);
   });
 });
 
