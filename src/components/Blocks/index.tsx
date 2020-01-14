@@ -73,13 +73,13 @@ const Blocks: React.FC = () => {
 
   React.useEffect(fetchBlocks, [elasticUrl, size, shardId, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
 
-  return (
+  const Component = () => (
     <div ref={ref}>
       <div className="container pt-3 pb-3">
         <div className="row">
           <div className="col-12">
             <h4>
-              Blocks&nbsp;
+              <span data-testid="title">Blocks</span>&nbsp;
               {shardId !== undefined && shardId >= 0 && (
                 <>
                   <ShardSpan shardId={shardId} />
@@ -95,7 +95,9 @@ const Blocks: React.FC = () => {
                 <div className="card-body card-details" data-testid="errorScreen">
                   <div className="empty">
                     <FontAwesomeIcon icon={faCube} className="empty-icon" />
-                    <span className="h4 empty-heading">Unable to load blocks</span>
+                    <span className="h4 empty-heading" data-testid="failedBlocks">
+                      Unable to load blocks
+                    </span>
                   </div>
                 </div>
               </div>
@@ -129,6 +131,8 @@ const Blocks: React.FC = () => {
       </div>
     </div>
   );
+
+  return React.useMemo(Component, [timestamp, state.blocksFetched]);
 };
 
 export default Blocks;
