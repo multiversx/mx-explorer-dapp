@@ -89,7 +89,9 @@ export async function getRounds({ elasticUrl, shardNumber, signersIndex, timeout
       roundsFetched: rounds.length > 0,
     };
   } catch {
-    console.error('Failed rounds');
+    if (process.env.NODE_ENV !== 'test') {
+      console.error('Failed rounds');
+    }
     return {
       rounds: [],
       roundsFetched: false,
@@ -144,7 +146,9 @@ export async function searchBlocks({
       blocksFetched: true,
     };
   } catch {
-    console.error('Failed rounds');
+    if (process.env.NODE_ENV !== 'test') {
+      console.error('Failed blocks');
+    }
     return {
       blocks: [],
       startBlockNr: 0,
@@ -221,7 +225,9 @@ export async function getValidator({
       };
     }
   } catch {
-    console.error('Failed heartbeatstatus');
+    if (process.env.NODE_ENV !== 'test') {
+      console.error('Failed heartbeatstatus');
+    }
     return {
       data: initialState,
       success: false,

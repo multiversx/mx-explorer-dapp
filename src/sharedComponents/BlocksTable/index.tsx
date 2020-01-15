@@ -17,9 +17,9 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
             <th>Block Hash</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody data-testid="blocksTable">
           {blocks.map((block, i) => (
-            <tr ng-repeat="block in blocks" className="animated fadeIn" key={block.hash}>
+            <tr className="animated fadeIn" key={block.hash}>
               <td>
                 <TestnetLink to={`/blocks/${block.hash}`}>{block.nonce}</TestnetLink>
               </td>

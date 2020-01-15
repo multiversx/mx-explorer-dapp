@@ -18,7 +18,11 @@ const Rounds = ({ rounds, roundsFetched }: { rounds: RoundType[]; roundsFetched:
         <div className="card" style={{ height: 'auto' }}>
           <div className="card-body">
             {rounds.length === 0 ? (
-              <div style={{ minHeight: '95px' }} className="d-flex justify-content-center">
+              <div
+                style={{ minHeight: '95px' }}
+                className="d-flex justify-content-center"
+                data-testid="roundsLoading"
+              >
                 <div className="lds-ellipsis align-self-center">
                   <div />
                   <div />
@@ -27,7 +31,7 @@ const Rounds = ({ rounds, roundsFetched }: { rounds: RoundType[]; roundsFetched:
                 </div>
               </div>
             ) : (
-              <div className="squares ml-1">
+              <div className="squares ml-1" data-testid="rounds">
                 {rounds.length &&
                   rounds.map((round: any) => (
                     <OverlayTrigger
@@ -49,7 +53,7 @@ const Rounds = ({ rounds, roundsFetched }: { rounds: RoundType[]; roundsFetched:
         </div>
       ) : (
         <div className="card" style={{ height: 'auto' }}>
-          <div className="card-body card-details" data-testid="errorScreen">
+          <div className="card-body card-details" data-testid="roundsErrorScreen">
             <div className="empty">
               <FontAwesomeIcon icon={faCogs} className="empty-icon" />
               <span className="h4 empty-heading">Unable to load rounds</span>

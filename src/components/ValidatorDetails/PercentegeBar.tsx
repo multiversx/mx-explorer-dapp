@@ -25,6 +25,7 @@ const PercentegeBar = ({
         >
           <div
             className="progress-bar bg-success"
+            data-testid="progresUpTimeBar"
             id={totalUpTimeLabel + totalUpTimePercentege.toString()}
             style={{ width: totalUpTimePercentege + '%' }}
           />
@@ -40,6 +41,7 @@ const PercentegeBar = ({
         >
           <div
             className="progress-bar bg-danger"
+            data-testid="progresDownTimeBar"
             id={totalDownTimeLabel + totalDownTimePercentege.toString()}
             style={{ width: totalDownTimePercentege + '%' }}
           />

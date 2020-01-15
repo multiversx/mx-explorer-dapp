@@ -122,10 +122,10 @@ const ValidatorDetails = () => {
 
   return (
     <div ref={ref}>
-      <div className="container pt-4 pb-3">
-        <div className="row mb-2">
+      <div className="container pt-3 pb-3">
+        <div className="row">
           <div className="col-12">
-            <h4>Node Information</h4>
+            <h4 data-testid="title">Node Information</h4>
           </div>
         </div>
         {success ? (
@@ -197,7 +197,7 @@ const ValidatorDetails = () => {
             <div className="card-body card-details" data-testid="errorScreen">
               <div className="empty">
                 <FontAwesomeIcon icon={faCogs} className="empty-icon" />
-                <span className="h4 empty-heading">Unable to load validators</span>
+                <span className="h4 empty-heading">Unable to locate this node</span>
               </div>
             </div>
           </div>
