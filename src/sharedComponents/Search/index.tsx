@@ -6,6 +6,8 @@ import { useGlobalState } from '../../context';
 import { testnetRoute } from '../../helpers';
 import { isAddress, isBlock, isTransaction } from './helpers/asyncRequests';
 
+const isValidator = (hash: string) => hash.length === 256 && /^[a-zA-Z0-9]+$/g.test(hash);
+
 const Search: React.FC = () => {
   const {
     activeTestnet: { elasticUrl, nodeUrl },
@@ -21,7 +23,9 @@ const Search: React.FC = () => {
     }
   };
   const onClick = async () => {
-    if (await isBlock({ elasticUrl, hash, timeout })) {
+    if (isValidator(hash)) {
+      history.push(testnetRoute({ to: `/validators/${hash}`, activeTestnetId }));
+    } else if (await isBlock({ elasticUrl, hash, timeout })) {
       history.push(testnetRoute({ to: `/blocks/${hash}`, activeTestnetId }));
     } else if (await isTransaction({ elasticUrl, hash, timeout })) {
       history.push(testnetRoute({ to: `/transactions/${hash}`, activeTestnetId }));
