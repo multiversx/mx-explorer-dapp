@@ -7,7 +7,7 @@ const TestnetReady: React.FC = ({ children }) => {
   const { activeTestnetId } = useGlobalState();
   const { pathname } = useLocation();
 
-  let locationArray = pathname.substr(1).split('/');
+  const locationArray = pathname.substr(1).split('/');
   const testnetId = locationArray[0];
   const allTestnetIds = globalState.config.testnets.map(testnet => testnet.id);
 
@@ -16,7 +16,9 @@ const TestnetReady: React.FC = ({ children }) => {
   React.useEffect(() => {
     if (allTestnetIds.includes(testnetId) && activeTestnetId !== testnetId) {
       setTestnetReady(false);
-    } else setTestnetReady(true);
+    } else {
+      setTestnetReady(true);
+    }
   }, [testnetId, activeTestnetId, allTestnetIds]);
 
   return testnetReady ? <>{children}</> : null;
@@ -24,7 +26,7 @@ const TestnetReady: React.FC = ({ children }) => {
 
 export const withTestnetReady = (Component: React.ComponentType) =>
   class WithTestnetReady extends React.Component {
-    render() {
+    public render() {
       return (
         <TestnetReady>
           <Component />
