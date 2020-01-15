@@ -41,13 +41,19 @@ const Search: React.FC = () => {
         className="form-control mr-sm-2"
         placeholder="Address / Txn Hash / Block Hash"
         name="requestType"
+        data-testid="search"
         required
         value={hash}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
       <div className="input-group-append">
-        <button type="submit" className="input-group-text" onClick={onClick}>
+        <button
+          type="submit"
+          className="input-group-text"
+          onClick={onClick}
+          data-testid="searchButton"
+        >
           <FontAwesomeIcon icon={faSearch} />
         </button>
       </div>
