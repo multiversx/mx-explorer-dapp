@@ -7,6 +7,7 @@ describe('Blocks', () => {
       route: '/blocks',
     });
     expect(render.queryByTestId('title')!.innerHTML).toBe('Blocks');
+    expect(document.title).toEqual('Blocks • Elrond Explorer');
   });
   test('Blocks page loading state', async () => {
     const render = renderWithRouter({
