@@ -1,21 +1,20 @@
-import * as React from 'react';
-import { useParams } from 'react-router-dom';
-import { faChevronLeft, faChevronRight, faCube, faClock } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faClock, faCube } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useHistory } from 'react-router-dom';
-import { TimeAgo, TestnetLink, ShardSpan, Loader } from '../../sharedComponents';
-import { getBlock } from './helpers/asyncRequests';
+import * as React from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import { useGlobalState } from '../../context';
+import { addressIsHash, dateFormatted, sizeFormat, testnetRoute, truncate } from '../../helpers';
+import { Loader, ShardSpan, TestnetLink, TimeAgo } from '../../sharedComponents';
 import { BlockType } from '../Blocks';
-import { dateFormatted, sizeFormat, truncate, addressIsHash, testnetRoute } from '../../helpers';
+import { getBlock } from './helpers/asyncRequests';
 
-export type StateType = {
+export interface StateType {
   block: BlockType;
   proposer: string;
   consensusItems: string[];
   nextHash: string;
   blockFetched: boolean;
-};
+}
 
 export const initialState = {
   block: {
@@ -39,10 +38,10 @@ export const initialState = {
 };
 
 const BlockDetails: React.FC = () => {
-  let { hash: blockId } = useParams();
-  let history = useHistory();
+  const { hash: blockId } = useParams();
+  const history = useHistory();
 
-  let ref = React.useRef(null);
+  const ref = React.useRef(null);
 
   const {
     activeTestnet: { elasticUrl },
@@ -71,7 +70,7 @@ const BlockDetails: React.FC = () => {
       <div className="container pt-3 pb-3">
         <div className="row">
           <div className="col-12">
-            <h4>Block Details</h4>
+            <h4 data-testid="title">Block Details</h4>
           </div>
         </div>
         <div className="row">
@@ -96,7 +95,7 @@ const BlockDetails: React.FC = () => {
                         <div className="col-lg-10">
                           <div className="d-flex justify-content-between">
                             <div>{block.nonce}</div>
-                            <ul className="list-inline">
+                            <ul className="list-inline mb-0">
                               <li className="list-inline-item ml-2 mr-2">
                                 <div className="pager">
                                   <TestnetLink
