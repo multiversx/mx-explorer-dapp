@@ -51,13 +51,13 @@ const TransactionDetails: React.FC = () => {
       <div className="container pt-3 pb-3">
         <div className="row">
           <div className="col-12">
-            <h4>Transaction Details</h4>
+            <h4 data-testid="title">Transaction Details</h4>
           </div>
         </div>
         <div className="row">
           <div className="col-12">
             {!transactionFetched ? (
-              <div className="card">
+              <div className="card" data-testid="errorScreen">
                 <div className="card-body card-details">
                   <div className="empty">
                     <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
