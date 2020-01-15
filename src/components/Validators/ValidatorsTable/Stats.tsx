@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as React from 'react';
 
-type ValidatorsStatsType = {
+interface ValidatorsStatsType {
   includeObservers: boolean;
   setIncludeObsevers: React.Dispatch<React.SetStateAction<boolean>>;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
@@ -11,7 +11,7 @@ type ValidatorsStatsType = {
   setValidatorObserverValue: React.Dispatch<React.SetStateAction<string>>;
   shownValidatorsLength: number;
   filteredValidatorsLength: number;
-};
+}
 
 const ValidatorsStats = ({
   includeObservers,
@@ -34,8 +34,12 @@ const ValidatorsStats = ({
 
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = e => {
     setInputValue(e.target.value);
-    if (e.target.value.length >= 3) setSearchValue(e.target.value.toString().toLowerCase());
-    if (e.target.value.length === 0) setSearchValue('');
+    if (e.target.value.length >= 3) {
+      setSearchValue(e.target.value.toString().toLowerCase());
+    }
+    if (e.target.value.length === 0) {
+      setSearchValue('');
+    }
   };
 
   const resetValidatorValue = () => {
@@ -59,11 +63,7 @@ const ValidatorsStats = ({
             />
             <div className="input-group-append">
               {inputValue === '' ? (
-                <button
-                  type="submit"
-                  className="input-group-text"
-                  ng-show="!(validatorValue.length > 0)"
-                >
+                <button type="submit" className="input-group-text">
                   <FontAwesomeIcon icon={faSearch} />
                 </button>
               ) : (
