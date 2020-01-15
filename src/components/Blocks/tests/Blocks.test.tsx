@@ -24,7 +24,7 @@ describe('Blocks', () => {
       route: '/blocks',
     });
 
-    const failedBlocks = await render.findByText('Unable to load blocks');
-    expect(failedBlocks.innerHTML).toBeDefined();
+    const failedState = await render.findByText('Unable to load blocks');
+    expect(failedState.innerHTML).toBeDefined();
   });
 });
