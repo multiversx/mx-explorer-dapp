@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { renderWithRouter, wait } from './../../../utils/test-utils';
+import { renderWithRouter } from './../../../utils/test-utils';
 
 describe('Blocks', () => {
   test('Blocks page is displaying', () => {
@@ -8,7 +8,15 @@ describe('Blocks', () => {
     });
     expect(render.queryByTestId('title')!.innerHTML).toBe('Blocks');
   });
-  test('Blocks page failed message', async () => {
+  test('Blocks page loading state', async () => {
+    const render = renderWithRouter({
+      route: '/blocks',
+    });
+
+    const failedBlocks = await render.findByTestId('loader');
+    expect(failedBlocks.innerHTML).toBeDefined();
+  });
+  test('Blocks page failed state', async () => {
     const mockPost = jest.spyOn(axios, 'post');
     mockPost.mockRejectedValueOnce(new Error('the error'));
 
@@ -16,9 +24,7 @@ describe('Blocks', () => {
       route: '/blocks',
     });
 
-    await wait(async () => {
-      const failedBlocks = await render.findByTestId('failedBlocks');
-      expect(failedBlocks.innerHTML).toBeDefined();
-    });
+    const failedBlocks = await render.findByText('Unable to load blocks');
+    expect(failedBlocks.innerHTML).toBeDefined();
   });
 });

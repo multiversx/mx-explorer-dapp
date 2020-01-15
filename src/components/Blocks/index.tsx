@@ -95,9 +95,7 @@ const Blocks: React.FC = () => {
                 <div className="card-body card-details" data-testid="errorScreen">
                   <div className="empty">
                     <FontAwesomeIcon icon={faCube} className="empty-icon" />
-                    <span className="h4 empty-heading" data-testid="failedBlocks">
-                      Unable to load blocks
-                    </span>
+                    <span className="h4 empty-heading">Unable to load blocks</span>
                   </div>
                 </div>
               </div>
