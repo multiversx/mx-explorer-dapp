@@ -82,7 +82,10 @@ const LatestBlocks: React.FC = () => {
                 ))}
               </div>
             ) : (
-              <div className="row h-100 justify-content-center align-items-center">
+              <div
+                className="row h-100 justify-content-center align-items-center"
+                data-testid="blocksLoader"
+              >
                 <div className="col-12 text-center">
                   <div className="lds-ellipsis mx-auto">
                     <div />

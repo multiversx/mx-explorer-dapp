@@ -14,4 +14,21 @@ describe('Latest Blocks', () => {
       expect(render.queryByTestId('blocksList')!.childElementCount).toBe(20);
     });
   });
+  test('Latest Blocks component loading state', async () => {
+    const render = renderWithRouter({
+      route: '/',
+    });
+    expect(render.queryByTestId('blocksLoader')).toBeDefined();
+  });
+  test('Latest Blocks component failing state', async () => {
+    const mockPost = jest.spyOn(axios, 'post');
+    mockPost.mockRejectedValueOnce(new Error('the error'));
+
+    const render = renderWithRouter({
+      route: '/',
+    });
+    await wait(async () => {
+      expect(render.queryByText('Unable to load blocks')).toBeDefined();
+    });
+  });
 });
