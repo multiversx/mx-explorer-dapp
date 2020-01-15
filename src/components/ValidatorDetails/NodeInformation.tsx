@@ -30,7 +30,7 @@ const NodeInformation = ({
             </div>
             <hr className="hr-space" />
             {publicKeyBlockSign !== undefined && (
-              <div ng-show="">
+              <div>
                 <div className="row">
                   <div className="col-lg-2 card-label">Public key BlockSign</div>
                   <div className="col-lg-10">missing</div>
@@ -55,13 +55,7 @@ const NodeInformation = ({
             <div className="row">
               <div className="col-lg-2 card-label">Name</div>
               <div className="col-lg-10">
-                {nodeDisplayName ? (
-                  nodeDisplayName
-                ) : (
-                  <span className="text-muted" ng-show="!nodeDisplayName">
-                    N/A
-                  </span>
-                )}
+                {nodeDisplayName ? nodeDisplayName : <span className="text-muted">N/A</span>}
               </div>
             </div>
             <hr className="hr-space" />
@@ -73,13 +67,7 @@ const NodeInformation = ({
             <div className="row">
               <div className="col-lg-2 card-label">Version</div>
               <div className="col-lg-10">
-                {versionNumber ? (
-                  versionNumber
-                ) : (
-                  <span className="text-muted" ng-show="!nodeDisplayName">
-                    N/A
-                  </span>
-                )}
+                {versionNumber ? versionNumber : <span className="text-muted">N/A</span>}
               </div>
             </div>
           </div>

@@ -48,9 +48,7 @@ const EmptySearch = ({
             {truncate(validator.hexPublicKey, 20)}
           </TestnetLink>
         ) : (
-          <span ng-show="validatorInfosEnabled == false">
-            {truncate(validator.hexPublicKey, 20)}
-          </span>
+          <span>{truncate(validator.hexPublicKey, 20)}</span>
         )}
       </td>
       <td>
@@ -89,7 +87,7 @@ const EmptySearch = ({
           validator.isActive === true && <span>100%</span>}
         {validator.totalUpTimeSec === 0 &&
           validator.totalDownTimeSec === 0 &&
-          validator.isActive === false && <span ng-show="">0%</span>}
+          validator.isActive === false && <span>0%</span>}
       </td>
 
       <td>

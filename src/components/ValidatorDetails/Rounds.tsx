@@ -18,11 +18,7 @@ const Rounds = ({ rounds, roundsFetched }: { rounds: RoundType[]; roundsFetched:
         <div className="card" style={{ height: 'auto' }}>
           <div className="card-body">
             {rounds.length === 0 ? (
-              <div
-                style={{ minHeight: '95px' }}
-                className="d-flex justify-content-center"
-                ng-show="rounds.length == 0"
-              >
+              <div style={{ minHeight: '95px' }} className="d-flex justify-content-center">
                 <div className="lds-ellipsis align-self-center">
                   <div />
                   <div />
