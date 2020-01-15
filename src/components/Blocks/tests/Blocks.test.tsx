@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { renderWithRouter } from './../../../utils/test-utils';
+import { renderWithRouter } from 'utils/test-utils';
 
 describe('Blocks', () => {
   test('Blocks page is displaying', () => {
@@ -13,8 +13,8 @@ describe('Blocks', () => {
       route: '/blocks',
     });
 
-    const failedBlocks = await render.findByTestId('loader');
-    expect(failedBlocks.innerHTML).toBeDefined();
+    const loader = await render.findByTestId('loader');
+    expect(loader.innerHTML).toBeDefined();
   });
   test('Blocks page failed state', async () => {
     const mockPost = jest.spyOn(axios, 'post');
