@@ -6,7 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useGlobalState } from '../../context';
 import { TransactionType } from '../Transactions';
 import { addressIsHash, dateFormatted } from './../../helpers';
@@ -129,17 +129,17 @@ const TransactionDetails: React.FC = () => {
                         <div className="col-lg-2 card-label">To</div>
                         <div className="col-lg-10">
                           <ScAddressIcon value={transaction.receiver} />
-                          <Link to={`/address/${transaction.receiver}`}>
+                          <TestnetLink to={`/address/${transaction.receiver}`}>
                             {transaction.receiver}
-                          </Link>
+                          </TestnetLink>
                           &nbsp;
                           {Boolean(transaction.receiverShard) && (
-                            <Link
-                              to={`shard-to/${transaction.receiverShard}`}
+                            <TestnetLink
+                              to={`/transactions/shard-to/${transaction.receiverShard}`}
                               className="small-link"
                             >
                               (Shard {transaction.receiverShard})
-                            </Link>
+                            </TestnetLink>
                           )}
                         </div>
                       </div>
