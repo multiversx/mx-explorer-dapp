@@ -33,6 +33,11 @@ describe('Search', () => {
         data: blocksResponse,
       })
     );
+    mockGet.mockReturnValueOnce(
+      Promise.resolve({
+        data: blocksResponse,
+      })
+    );
 
     const render = renderWithRouter({
       route: '/search',
@@ -53,12 +58,18 @@ describe('Search', () => {
   });
   test('Seach finds transaction', async () => {
     const mockGet = jest.spyOn(axios, 'get');
-    mockGet.mockRejectedValueOnce(new Error('blocks error'));
-    mockGet.mockReturnValueOnce(
-      Promise.resolve({
-        data: transactionsResponse,
-      })
-    );
+    mockGet
+      .mockReturnValueOnce(Promise.resolve(new Error('blocks error')))
+      .mockReturnValueOnce(
+        Promise.resolve({
+          data: { data: { found: true } },
+        })
+      )
+      .mockReturnValueOnce(
+        Promise.resolve({
+          data: transactionsResponse,
+        })
+      );
 
     const render = renderWithRouter({
       route: '/search',
