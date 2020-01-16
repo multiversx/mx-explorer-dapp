@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-type ElasticParamsType = {
+interface ElasticParamsType {
   elasticUrl?: string;
   hash: string;
   timeout: number;
-};
+}
 
 export async function isBlock({ elasticUrl, hash, timeout }: ElasticParamsType) {
   try {
@@ -15,11 +15,11 @@ export async function isBlock({ elasticUrl, hash, timeout }: ElasticParamsType) 
   }
 }
 
-type NodeParamsType = {
+interface NodeParamsType {
   nodeUrl: string;
   hash: string;
   timeout: number;
-};
+}
 
 export async function isAddress({ nodeUrl, hash, timeout }: NodeParamsType) {
   try {

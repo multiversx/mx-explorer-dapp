@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { renderWithRouter, wait } from './../../../utils/test-utils';
+import blocks from './blocks';
 import heartbeatstatus from './heartbeatstatus';
 import meta from './meta';
 import rounds from './rounds';
@@ -12,6 +13,7 @@ describe('Node Information', () => {
     mockGet.mockReturnValueOnce(Promise.resolve({ data: heartbeatstatus }));
     mockGet.mockReturnValueOnce(Promise.resolve({ data: validators }));
     mockGet.mockReturnValueOnce(Promise.resolve({ data: rounds }));
+    mockGet.mockReturnValueOnce(Promise.resolve({ data: blocks }));
 
     const render = renderWithRouter({
       route: `/validators/${heartbeatstatus.message[0].hexPublicKey}`,
@@ -33,9 +35,7 @@ describe('Node Information', () => {
       expect(render.getByTestId('rounds').childElementCount).toBe(100);
     });
 
-    await wait(async () => {
-      expect(render.getByTestId('blocksTable').childElementCount).toBe(25);
-    });
+    expect(render.getByTestId('blocksTable').childElementCount).toBe(3);
   });
 
   test('Node Information loading state', async () => {

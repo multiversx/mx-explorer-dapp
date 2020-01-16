@@ -1,15 +1,15 @@
+import BlocksTable from './BlocksTable';
 import Denominate from './Denominate';
 import Highlights from './Highlights';
-import Pager from './Pager';
-import ScAddressIcon from './ScAddressIcon';
-import TestnetLink from './TestnetLink';
-import TimeAgo from './TimeAgo';
-import TestnetReady, { withTestnetReady } from './TestnetReady';
-import withPageTitle from './PageTitle';
-import ShardSpan from './ShardSpan';
-import Search from './Search';
-import BlocksTable from './BlocksTable';
 import Loader from './Loader';
+import Pager from './Pager';
+import withPageTitle from './PageTitle';
+import ScAddressIcon from './ScAddressIcon';
+import Search from './Search';
+import ShardSpan from './ShardSpan';
+import TestnetLink from './TestnetLink';
+import TestnetReady, { withTestnetReady } from './TestnetReady';
+import TimeAgo from './TimeAgo';
 
 export {
   Denominate,
