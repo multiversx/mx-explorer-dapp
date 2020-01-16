@@ -2,7 +2,7 @@ import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useGlobalState } from '../../context';
-import { addressIsHash, dateFormatted, truncate } from './../../helpers';
+import { addressIsHash, dateFormatted, trimHash, truncate } from './../../helpers';
 import { ShardSpan, TestnetLink, TimeAgo } from './../../sharedComponents';
 import { TransactionType } from './../Transactions';
 import { getTransactions } from './helpers/asyncRequests';
@@ -76,7 +76,7 @@ const LatestTransactions: React.FC = () => {
                         From&nbsp;
                         {addressIsHash(transaction.sender) ? (
                           <TestnetLink to={`/address/${transaction.sender}`}>
-                            {truncate(transaction.sender, 20)}
+                            {trimHash(transaction.sender)}
                           </TestnetLink>
                         ) : (
                           <ShardSpan shardId={transaction.sender} />
@@ -84,7 +84,7 @@ const LatestTransactions: React.FC = () => {
                         <br />
                         To&nbsp;
                         <TestnetLink to={`/address/${transaction.receiver}`}>
-                          {truncate(transaction.receiver, 20)}
+                          {trimHash(transaction.receiver)}
                         </TestnetLink>
                       </div>
                     </div>

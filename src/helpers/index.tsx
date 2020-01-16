@@ -3,6 +3,7 @@ import copyToClipboard from './copyToClipboard';
 import dateFormatted from './dateFormatted';
 import sizeFormat from './sizeFormat';
 import testnetRoute from './testnetRoute';
+import trimHash from './trimHash';
 import truncate from './truncate';
 import { getShardId, getUptimeDowntime } from './validatorFunctions';
 
@@ -15,4 +16,5 @@ export {
   copyToClipboard,
   getShardId,
   getUptimeDowntime,
+  trimHash,
 };

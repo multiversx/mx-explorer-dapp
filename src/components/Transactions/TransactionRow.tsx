@@ -1,5 +1,5 @@
 import React from 'react';
-import { addressIsHash, dateFormatted, truncate } from './../../helpers';
+import { addressIsHash, dateFormatted, trimHash, truncate } from './../../helpers';
 import {
   Denominate,
   ScAddressIcon,
@@ -44,12 +44,12 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
       <td>
         <ScAddressIcon value={transaction.sender} />
         {addressId === transaction.sender ? (
-          <span>{truncate(transaction.sender, 20)}</span>
+          <span>{trimHash(transaction.sender)}</span>
         ) : (
           <>
             {addressIsHash(transaction.sender) ? (
               <TestnetLink to={`/address/${transaction.sender}`}>
-                {truncate(transaction.sender, 20)}
+                {trimHash(transaction.sender)}
               </TestnetLink>
             ) : (
               <ShardSpan shardId={transaction.sender} />
@@ -60,10 +60,10 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
       <td>
         <ScAddressIcon value={transaction.receiver} />
         {addressId === transaction.receiver ? (
-          <span>{truncate(transaction.receiver, 20)}</span>
+          <span>{trimHash(transaction.receiver)}</span>
         ) : (
           <TestnetLink to={`/address/${transaction.receiver}`}>
-            {truncate(transaction.receiver, 20)}
+            {trimHash(transaction.receiver)}
           </TestnetLink>
         )}
       </td>
