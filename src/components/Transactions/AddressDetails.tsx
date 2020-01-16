@@ -1,20 +1,20 @@
-import React, { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
 import { faCode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import { Denominate } from 'sharedComponents';
 import { useGlobalState } from '../../context';
 import { getAddressDetails } from './helpers/asyncRequests';
-import { Denominate } from 'sharedComponents';
 
-type StateType = {
-  address: string;
+interface StateType {
+  addressId: string;
   code: string;
   balance: string;
   detailsFetched: boolean;
-};
+}
 
 const initialState = {
-  address: '',
+  addressId: '',
   code: '',
   balance: '...',
   detailsFetched: true,
@@ -22,7 +22,7 @@ const initialState = {
 
 const AddressDetails = ({ reference }: { reference: React.MutableRefObject<null> }) => {
   const ref = reference;
-  let { hash: addressId } = useParams();
+  const { hash: addressId } = useParams();
   const [state, setState] = React.useState<StateType>(initialState);
 
   const {
@@ -33,7 +33,9 @@ const AddressDetails = ({ reference }: { reference: React.MutableRefObject<null>
   const getDetails = () => {
     if (addressId && ref.current !== null) {
       getAddressDetails({ nodeUrl, addressId, timeout }).then((data: any) => {
-        ref.current !== null && setState(data);
+        if (ref.current !== null) {
+          setState(data);
+        }
       });
     }
   };
@@ -44,11 +46,6 @@ const AddressDetails = ({ reference }: { reference: React.MutableRefObject<null>
     () => (
       <div ref={ref}>
         <div>
-          <div className="row">
-            <div className="col-12">
-              <h4>Address Details</h4>
-            </div>
-          </div>
           <div className="row">
             <div className="col-12">
               <div className="card">

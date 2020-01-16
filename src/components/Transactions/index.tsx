@@ -91,38 +91,42 @@ const Transactions: React.FC = () => {
   let slug = addressId ? `address/${addressId}` : 'transactions';
   slug = shardType ? `transactions/${shardDirection}/${shardId}` : slug;
 
+  const title = indexOfTransactions >= 0 ? 'Transactions' : 'Address Details';
+
   return (
     <div ref={ref}>
       <div className="container pt-3 pb-3">
-        <div className={transactionsFetched ? '' : 'd-none'}>
-          <AddressDetails reference={addressRef} />
-        </div>
         <div className="row">
           <div className="col-12">
-            {!transactionsFetched ? (
-              <>
-                {addressRef.current ? (
-                  <FailedAddress addressId={addressId} />
-                ) : (
-                  <FailedTransaction />
-                )}
-              </>
-            ) : (
-              <>
-                <div className="row">
-                  <div className="col-12">
-                    <h4>
-                      <span data-testid="title">Transactions</span>
-                      {shardId !== undefined && shardId >= 0 && (
-                        <>
-                          {shardDirection === 'shard-from' && <span>&nbsp;from&nbsp;</span>}
-                          {shardDirection === 'shard-to' && <span>&nbsp;to&nbsp;</span>}
-                          <ShardSpan shardId={shardId} />
-                        </>
-                      )}
-                    </h4>
+            <h4>
+              <span data-testid="title">{title}</span>
+              {shardId !== undefined && shardId >= 0 && (
+                <>
+                  {shardDirection === 'shard-from' && <span>&nbsp;from&nbsp;</span>}
+                  {shardDirection === 'shard-to' && <span>&nbsp;to&nbsp;</span>}
+                  <ShardSpan shardId={shardId} />
+                </>
+              )}
+            </h4>
+          </div>
+        </div>
+        {transactionsFetched && transactions.length === 0 && <Loader />}
+        {transactionsFetched && transactions.length > 0 && (
+          <>
+            <div className={transactionsFetched ? '' : 'd-none'}>
+              <AddressDetails reference={addressRef} />
+            </div>
+            <div className="row">
+              <div className="col-12">
+                {title !== 'Transactions' && (
+                  <div className="row">
+                    <div className="col-12">
+                      <h4>
+                        <span>Transactions</span>
+                      </h4>
+                    </div>
                   </div>
-                </div>
+                )}
                 {transactions.length > 0 ? (
                   <div className="card" style={{ height: 'auto' }}>
                     <div className="card-body card-list">
@@ -170,10 +174,16 @@ const Transactions: React.FC = () => {
                 ) : (
                   <Loader />
                 )}
-              </>
-            )}
-          </div>
-        </div>
+              </div>
+            </div>
+          </>
+        )}
+        {!transactionsFetched && (
+          <>
+            {pathname.includes('address') && <FailedAddress addressId={addressId} />}
+            {pathname.includes('transactions') && <FailedTransaction />}
+          </>
+        )}
       </div>
     </div>
   );

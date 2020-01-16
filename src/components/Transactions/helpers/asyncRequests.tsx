@@ -138,12 +138,14 @@ export async function getAddressDetails({ nodeUrl, addressId, timeout }: Details
     } = await axios.get(`${nodeUrl}/address/${addressId}`, { timeout });
 
     return {
+      addressId,
       balance,
       code,
       detailsFetched: true,
     };
   } catch (err) {
     return {
+      addressId: '',
       balance: '',
       code: '',
       detailsFetched: true,
