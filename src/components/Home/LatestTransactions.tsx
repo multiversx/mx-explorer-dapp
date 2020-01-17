@@ -34,7 +34,7 @@ const LatestTransactions: React.FC = () => {
 
   React.useEffect(fetchTransactions, [elasticUrl, timeout, timestamp]);
 
-  return (
+  const Component = () => (
     <div className="card" ref={ref}>
       {!transactionsFetched ? (
         <div className="card-body card-details" data-testid="errorScreen">
@@ -112,5 +112,6 @@ const LatestTransactions: React.FC = () => {
       )}
     </div>
   );
+  return React.useMemo(Component, [transactions]);
 };
 export default LatestTransactions;

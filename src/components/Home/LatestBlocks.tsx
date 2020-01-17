@@ -33,7 +33,8 @@ const LatestBlocks: React.FC = () => {
   };
 
   React.useEffect(fetchBlocks, [elasticUrl, timeout, timestamp]);
-  return (
+
+  const Component = () => (
     <div className="card" ref={ref}>
       {!blocksFetched ? (
         <div className="card-body card-details" data-testid="errorScreen">
@@ -60,7 +61,9 @@ const LatestBlocks: React.FC = () => {
                             <FontAwesomeIcon icon={faCube} />
                           </i>
                         </span>
-                        <TestnetLink to={`/blocks/${block.hash}`}>{block.nonce}</TestnetLink>
+                        <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
+                          {block.nonce}
+                        </TestnetLink>
                         &nbsp;in&nbsp;
                         <ShardSpan shardId={block.shardId} />
                         <br />
@@ -101,5 +104,6 @@ const LatestBlocks: React.FC = () => {
       )}
     </div>
   );
+  return React.useMemo(Component, [blocks]);
 };
 export default LatestBlocks;
