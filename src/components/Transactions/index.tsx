@@ -93,100 +93,103 @@ const Transactions: React.FC = () => {
 
   const title = indexOfTransactions >= 0 ? 'Transactions' : 'Address Details';
 
-  return (
-    <div ref={ref}>
-      <div className="container pt-3 pb-3">
-        <div className="row">
-          <div className="col-12">
-            <h4>
-              <span data-testid="title">{title}</span>
-              {shardId !== undefined && shardId >= 0 && (
-                <>
-                  {shardDirection === 'shard-from' && <span>&nbsp;from&nbsp;</span>}
-                  {shardDirection === 'shard-to' && <span>&nbsp;to&nbsp;</span>}
-                  <ShardSpan shardId={shardId} />
-                </>
-              )}
-            </h4>
+  const Component = () => {
+    return (
+      <div ref={ref}>
+        <div className="container pt-3 pb-3">
+          <div className="row">
+            <div className="col-12">
+              <h4>
+                <span data-testid="title">{title}</span>
+                {shardId !== undefined && shardId >= 0 && (
+                  <>
+                    {shardDirection === 'shard-from' && <span>&nbsp;from&nbsp;</span>}
+                    {shardDirection === 'shard-to' && <span>&nbsp;to&nbsp;</span>}
+                    <ShardSpan shardId={shardId} />
+                  </>
+                )}
+              </h4>
+            </div>
           </div>
-        </div>
-        {transactionsFetched && transactions.length === 0 && <Loader />}
-        {transactionsFetched && transactions.length > 0 && (
-          <>
-            <div className={transactionsFetched ? '' : 'd-none'}>
-              <AddressDetails reference={addressRef} />
-            </div>
-            <div className="row">
-              <div className="col-12">
-                {title !== 'Transactions' && (
-                  <div className="row">
-                    <div className="col-12">
-                      <h4>
-                        <span>Transactions</span>
-                      </h4>
-                    </div>
-                  </div>
-                )}
-                {transactions.length > 0 ? (
-                  <div className="card" style={{ height: 'auto' }}>
-                    <div className="card-body card-list">
-                      <div className="table-responsive">
-                        <table className="table mt-4" data-testid="transactionsTable">
-                          <thead>
-                            <tr>
-                              <th scope="col">Txn Hash</th>
-                              <th scope="col">Block</th>
-                              <th scope="col">Age</th>
-                              <th scope="col">Shard</th>
-                              <th scope="col">From</th>
-                              <th scope="col">To</th>
-                              <th scope="col" className="text-right">
-                                Value
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {transactions.map(transaction => (
-                              <TransactionRow
-                                transaction={transaction}
-                                key={transaction.hash}
-                                addressId={addressId}
-                              />
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-
-                      <Pager
-                        slug={slug}
-                        total={totalTransactions}
-                        start={(size - 1) * 50 + (size === 1 ? 1 : 0)}
-                        end={
-                          (size - 1) * 50 +
-                          (parseInt(totalTransactions.toString()) < 50
-                            ? parseInt(totalTransactions.toString())
-                            : 50)
-                        }
-                        show={transactions.length > 0}
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  <Loader />
-                )}
+          {transactionsFetched && transactions.length === 0 && <Loader />}
+          {transactionsFetched && transactions.length > 0 && (
+            <>
+              <div className={transactionsFetched ? '' : 'd-none'}>
+                <AddressDetails reference={addressRef} />
               </div>
-            </div>
-          </>
-        )}
-        {!transactionsFetched && (
-          <>
-            {pathname.includes('address') && <FailedAddress addressId={addressId} />}
-            {pathname.includes('transactions') && <FailedTransaction />}
-          </>
-        )}
+              <div className="row">
+                <div className="col-12">
+                  {title !== 'Transactions' && (
+                    <div className="row">
+                      <div className="col-12">
+                        <h4>
+                          <span>Transactions</span>
+                        </h4>
+                      </div>
+                    </div>
+                  )}
+                  {transactions.length > 0 ? (
+                    <div className="card" style={{ height: 'auto' }}>
+                      <div className="card-body card-list">
+                        <div className="table-responsive">
+                          <table className="table mt-4" data-testid="transactionsTable">
+                            <thead>
+                              <tr>
+                                <th scope="col">Txn Hash</th>
+                                <th scope="col">Block</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">Shard</th>
+                                <th scope="col">From</th>
+                                <th scope="col">To</th>
+                                <th scope="col" className="text-right">
+                                  Value
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {transactions.map(transaction => (
+                                <TransactionRow
+                                  transaction={transaction}
+                                  key={transaction.hash}
+                                  addressId={addressId}
+                                />
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <Pager
+                          slug={slug}
+                          total={totalTransactions}
+                          start={(size - 1) * 50 + (size === 1 ? 1 : 0)}
+                          end={
+                            (size - 1) * 50 +
+                            (parseInt(totalTransactions.toString()) < 50
+                              ? parseInt(totalTransactions.toString())
+                              : 50)
+                          }
+                          show={transactions.length > 0}
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <Loader />
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+          {!transactionsFetched && (
+            <>
+              {pathname.includes('address') && <FailedAddress addressId={addressId} />}
+              {pathname.includes('transactions') && <FailedTransaction />}
+            </>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
+  return React.useMemo(Component, [transactions, transactionsFetched]);
 };
 
 export default Transactions;
