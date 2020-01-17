@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { renderWithRouter, wait } from 'utils/test-utils';
+import { fireEvent, renderWithRouter, wait } from 'utils/test-utils';
 import data from './blocks';
 
 describe('Latest Blocks', () => {
@@ -29,6 +29,56 @@ describe('Latest Blocks', () => {
     });
     await wait(async () => {
       expect(render.queryByText('Unable to load blocks')).toBeDefined();
+    });
+  });
+});
+
+describe('Latest Blocks Links', () => {
+  test('View All Blocks', async () => {
+    const mockPost = jest.spyOn(axios, 'post');
+    mockPost.mockReturnValueOnce(Promise.resolve({ data }));
+    const render = renderWithRouter({
+      route: '/',
+    });
+
+    const allBlocksLink = await render.findByText('View All Blocks');
+    expect(allBlocksLink).toBeInTheDocument();
+
+    fireEvent.click(allBlocksLink);
+    await wait(async () => {
+      expect(document.title).toEqual('Blocks • Elrond Explorer');
+    });
+  });
+  test('Block Link', async () => {
+    const mockPost = jest.spyOn(axios, 'post');
+    mockPost.mockReturnValueOnce(Promise.resolve({ data }));
+    const render = renderWithRouter({
+      route: '/',
+    });
+
+    const blockLink = await render.findByTestId('blockLink0');
+    expect(blockLink).toBeInTheDocument();
+
+    expect(blockLink.innerHTML).toBe(data.hits.hits[0]._source.nonce.toString());
+    fireEvent.click(blockLink);
+    await wait(async () => {
+      expect(document.title).toEqual('Block Details • Elrond Explorer');
+    });
+  });
+  test('Block Hash Link', async () => {
+    const mockPost = jest.spyOn(axios, 'post');
+    mockPost.mockReturnValueOnce(Promise.resolve({ data }));
+    const render = renderWithRouter({
+      route: '/',
+    });
+
+    const blockHashLink = await render.findByTestId('blockHashLink0');
+    expect(blockHashLink).toBeInTheDocument();
+
+    expect(blockHashLink.innerHTML).toBe('a34f4608be3c9e6ff...');
+    fireEvent.click(blockHashLink);
+    await wait(async () => {
+      expect(document.title).toEqual('Block Details • Elrond Explorer');
     });
   });
 });
