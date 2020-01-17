@@ -18,12 +18,12 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
   return (
     <tr className="animated fadeIn">
       <td>
-        <TestnetLink to={`/transactions/${transaction.hash}`}>
+        <TestnetLink to={`/transactions/${transaction.hash}`} data-testid="transactionLink">
           {truncate(transaction.hash, 20)}
         </TestnetLink>
       </td>
       <td>
-        <TestnetLink to={`/blocks/${transaction.blockHash}`}>
+        <TestnetLink to={`/blocks/${transaction.blockHash}`} data-testid="blockLink">
           {truncate(transaction.blockHash, 20)}
         </TestnetLink>
       </td>
@@ -33,11 +33,17 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
         </span>
       </td>
       <td>
-        <TestnetLink to={`/transactions/shard-from/${transaction.senderShard}`}>
+        <TestnetLink
+          to={`/transactions/shard-from/${transaction.senderShard}`}
+          data-testid="shardFromLink"
+        >
           {transaction.senderShard}
         </TestnetLink>
         &nbsp;&gt;&nbsp;
-        <TestnetLink to={`/transactions/shard-to/${transaction.receiverShard}`}>
+        <TestnetLink
+          to={`/transactions/shard-to/${transaction.receiverShard}`}
+          data-testid="shardToLink"
+        >
           {transaction.receiverShard}
         </TestnetLink>
       </td>
@@ -48,7 +54,7 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
         ) : (
           <>
             {addressIsHash(transaction.sender) ? (
-              <TestnetLink to={`/address/${transaction.sender}`}>
+              <TestnetLink to={`/address/${transaction.sender}`} data-testid="senderLink">
                 {trimHash(transaction.sender)}
               </TestnetLink>
             ) : (
@@ -62,7 +68,7 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
         {addressId === transaction.receiver ? (
           <span>{trimHash(transaction.receiver)}</span>
         ) : (
-          <TestnetLink to={`/address/${transaction.receiver}`}>
+          <TestnetLink to={`/address/${transaction.receiver}`} data-testid="receiverLink">
             {trimHash(transaction.receiver)}
           </TestnetLink>
         )}
