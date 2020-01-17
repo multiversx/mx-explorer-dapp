@@ -73,64 +73,66 @@ const Blocks: React.FC = () => {
 
   React.useEffect(fetchBlocks, [elasticUrl, size, shardId, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
 
-  const Component = () => (
-    <div ref={ref}>
-      <div className="container pt-3 pb-3">
-        <div className="row">
-          <div className="col-12">
-            <h4>
-              <span data-testid="title">Blocks</span>&nbsp;
-              {shardId !== undefined && shardId >= 0 && (
-                <>
-                  <ShardSpan shardId={shardId} />
-                </>
-              )}
-            </h4>
+  const Component = () => {
+    return (
+      <div ref={ref}>
+        <div className="container pt-3 pb-3">
+          <div className="row">
+            <div className="col-12">
+              <h4>
+                <span data-testid="title">Blocks</span>&nbsp;
+                {shardId !== undefined && shardId >= 0 && (
+                  <>
+                    <ShardSpan shardId={shardId} />
+                  </>
+                )}
+              </h4>
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-12">
-            {!state.blocksFetched ? (
-              <div className="card" data-testid="errorScreen">
-                <div className="card-body card-details">
-                  <div className="empty">
-                    <FontAwesomeIcon icon={faCube} className="empty-icon" />
-                    <span className="h4 empty-heading">Unable to load blocks</span>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <>
-                {state.blocks.length > 0 ? (
-                  <div className="card">
-                    <div className="card-body card-list">
-                      <BlocksTable blocks={state.blocks} shardId={shardId} />
-                      <Pager
-                        slug={shardId ? `blocks/shards/${shardId}` : 'blocks'}
-                        total={totalBlocks}
-                        start={(size - 1) * 25 + (size === 1 ? 1 : 0)}
-                        end={
-                          (size - 1) * 25 +
-                          (parseInt(totalBlocks.toString()) < 25
-                            ? parseInt(totalBlocks.toString())
-                            : 25)
-                        }
-                        show={state.blocks.length > 0}
-                      />
+          <div className="row">
+            <div className="col-12">
+              {!state.blocksFetched ? (
+                <div className="card" data-testid="errorScreen">
+                  <div className="card-body card-details">
+                    <div className="empty">
+                      <FontAwesomeIcon icon={faCube} className="empty-icon" />
+                      <span className="h4 empty-heading">Unable to load blocks</span>
                     </div>
                   </div>
-                ) : (
-                  <Loader />
-                )}
-              </>
-            )}
+                </div>
+              ) : (
+                <>
+                  {state.blocks.length > 0 ? (
+                    <div className="card">
+                      <div className="card-body card-list">
+                        <BlocksTable blocks={state.blocks} shardId={shardId} />
+                        <Pager
+                          slug={shardId ? `blocks/shards/${shardId}` : 'blocks'}
+                          total={totalBlocks}
+                          start={(size - 1) * 25 + (size === 1 ? 1 : 0)}
+                          end={
+                            (size - 1) * 25 +
+                            (parseInt(totalBlocks.toString()) < 25
+                              ? parseInt(totalBlocks.toString())
+                              : 25)
+                          }
+                          show={state.blocks.length > 0}
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <Loader />
+                  )}
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
-  return React.useMemo(Component, [timestamp, state.blocksFetched]);
+  return React.useMemo(Component, [timestamp, state.blocksFetched, state.blocks.length]);
 };
 
 export default Blocks;
