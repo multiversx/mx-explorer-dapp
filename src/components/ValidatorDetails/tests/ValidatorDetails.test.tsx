@@ -35,7 +35,7 @@ describe('Node Information', () => {
       expect(render.getByTestId('rounds').childElementCount).toBe(100);
     });
 
-    expect(render.getByTestId('blocksTable').childElementCount).toBe(3);
+    expect(render.getByTestId('blocksTable').childElementCount).toBe(25);
   });
 
   test('Node Information loading state', async () => {
