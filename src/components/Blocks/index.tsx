@@ -1,7 +1,7 @@
 import { faCube } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import { useGlobalState } from '../../context';
 import { BlocksTable, Loader, Pager, ShardSpan } from './../../sharedComponents';
 import { getBlocks, getTotalBlocks } from './helpers/asyncRequests';
@@ -35,6 +35,14 @@ const initialState = {
   blocksFetched: true,
 };
 
+function isValidInt(number: number) {
+  return !(
+    isNaN(number) ||
+    isNaN(parseInt(number.toString())) ||
+    !/^\+?(0|[1-9]\d*)$/.test(number.toString())
+  );
+}
+
 const Blocks: React.FC = () => {
   const { page, shard } = useParams();
   const shardId = parseInt(shard!) >= 0 ? parseInt(shard!) : undefined;
@@ -48,6 +56,7 @@ const Blocks: React.FC = () => {
     activeTestnet: { elasticUrl },
     refresh: { timestamp },
     timeout,
+    activeTestnetId,
   } = useGlobalState();
 
   const refreshFirstPage = size === 1 ? timestamp : 0;
@@ -132,7 +141,17 @@ const Blocks: React.FC = () => {
     );
   };
 
-  return React.useMemo(Component, [timestamp, state.blocksFetched, state.blocks.length]);
+  const memoBlocks = React.useMemo(Component, [
+    timestamp,
+    state.blocksFetched,
+    state.blocks.length,
+  ]);
+
+  if (shard && !isValidInt(parseInt(shard!))) {
+    return <Redirect to={activeTestnetId ? `/${activeTestnetId}/not-found` : '/not-found'} />;
+  }
+
+  return memoBlocks;
 };
 
 export default Blocks;
