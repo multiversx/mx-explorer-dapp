@@ -68,3 +68,23 @@ describe('Block Details', () => {
     expect(failedState.innerHTML).toBeDefined();
   });
 });
+
+describe('Block Details Links', () => {
+  test('Block Details page is displaying', async () => {
+    const mockPost = jest.spyOn(axios, 'post');
+    const mockGet = jest.spyOn(axios, 'get');
+    mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
+    mockGet.mockReturnValueOnce(Promise.resolve({ data: doc }));
+    mockGet.mockReturnValueOnce(Promise.resolve({ data: validators }));
+    mockPost.mockReturnValueOnce(Promise.resolve({ data: blocks }));
+
+    const render = renderWithRouter({
+      route: `/blocks/${doc._source.hash}`,
+    });
+    expect(document.title).toEqual('Block Details • Elrond Explorer');
+    await wait(async () => {
+      expect(render.queryByTestId('title')!.innerHTML).toBe('Block Details');
+    });
+    expect(render.getByText(doc._source.nonce.toString())).toBeInTheDocument();
+  });
+});
