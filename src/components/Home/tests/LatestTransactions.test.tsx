@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { renderWithRouter, wait } from 'utils/test-utils';
+import { fireEvent, renderWithRouter, wait } from 'utils/test-utils';
 import blocks from './blocks';
 import data from './transactions';
 
@@ -31,6 +31,53 @@ describe('Latest Transactions', () => {
     });
     await wait(async () => {
       expect(render.queryByText('Unable to load transactions')).toBeDefined();
+    });
+  });
+});
+
+describe('Latest Transactions Links', () => {
+  test('Wiew all Transactions', async () => {
+    const mockPost = jest.spyOn(axios, 'post');
+    mockPost.mockReturnValueOnce(Promise.resolve({ data: blocks }));
+    mockPost.mockReturnValueOnce(Promise.resolve({ data }));
+    const render = renderWithRouter({
+      route: '/',
+    });
+
+    const link = render.getByText('View All Transactions');
+    fireEvent.click(link);
+    await wait(async () => {
+      expect(document.title).toEqual('Transactions • Elrond Explorer');
+    });
+  });
+  test('TxHash link', async () => {
+    const mockPost = jest.spyOn(axios, 'post');
+    mockPost.mockReturnValueOnce(Promise.resolve({ data: blocks }));
+    mockPost.mockReturnValueOnce(Promise.resolve({ data }));
+    const render = renderWithRouter({
+      route: '/',
+    });
+
+    const link = await render.findByTestId('transactionLink0');
+
+    fireEvent.click(link);
+    await wait(async () => {
+      expect(document.title).toEqual('Transaction Details • Elrond Explorer');
+    });
+  });
+  test('Tx To link', async () => {
+    const mockPost = jest.spyOn(axios, 'post');
+    mockPost.mockReturnValueOnce(Promise.resolve({ data: blocks }));
+    mockPost.mockReturnValueOnce(Promise.resolve({ data }));
+    const render = renderWithRouter({
+      route: '/',
+    });
+
+    const link = await render.findByTestId('transactionLinkTo0');
+
+    fireEvent.click(link);
+    await wait(async () => {
+      expect(document.title).toEqual('Address Details • Elrond Explorer');
     });
   });
 });

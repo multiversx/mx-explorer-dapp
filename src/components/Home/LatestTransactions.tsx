@@ -61,7 +61,10 @@ const LatestTransactions: React.FC = () => {
                             <FontAwesomeIcon icon={faExchangeAlt} />
                           </i>
                         </span>
-                        <TestnetLink to={`/transactions/${transaction.hash}`}>
+                        <TestnetLink
+                          to={`/transactions/${transaction.hash}`}
+                          data-testid={`transactionLink${i}`}
+                        >
                           {truncate(transaction.hash, 20)}
                         </TestnetLink>
                         <br />
@@ -83,7 +86,10 @@ const LatestTransactions: React.FC = () => {
                         )}
                         <br />
                         To&nbsp;
-                        <TestnetLink to={`/address/${transaction.receiver}`}>
+                        <TestnetLink
+                          to={`/address/${transaction.receiver}`}
+                          data-testid={`transactionLinkTo${i}`}
+                        >
                           {trimHash(transaction.receiver)}
                         </TestnetLink>
                       </div>
