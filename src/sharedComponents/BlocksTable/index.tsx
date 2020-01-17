@@ -1,5 +1,5 @@
+import { BlockType } from 'components/Blocks';
 import React from 'react';
-import { BlockType } from './../../components/Blocks';
 import { dateFormatted, sizeFormat, truncate } from './../../helpers';
 import { ShardSpan, TestnetLink, TimeAgo } from './../index';
 
@@ -21,7 +21,9 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
           {blocks.map((block, i) => (
             <tr className="animated fadeIn" key={block.hash}>
               <td>
-                <TestnetLink to={`/blocks/${block.hash}`}>{block.nonce}</TestnetLink>
+                <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
+                  {block.nonce}
+                </TestnetLink>
               </td>
               <td>
                 <span title={dateFormatted(block.timestamp)}>
@@ -33,14 +35,19 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
                 {shardId !== undefined ? (
                   <ShardSpan shardId={block.shardId} />
                 ) : (
-                  <TestnetLink to={`/blocks/shards/${block.shardId}`}>
+                  <TestnetLink
+                    to={`/blocks/shards/${block.shardId}`}
+                    data-testid={`blockShardLink${i}`}
+                  >
                     <ShardSpan shardId={block.shardId} />
                   </TestnetLink>
                 )}
               </td>
               <td>{sizeFormat(block.size)}</td>
               <td>
-                <TestnetLink to={`/blocks/${block.hash}`}>{truncate(block.hash, 20)}</TestnetLink>
+                <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockHashLink${i}`}>
+                  {truncate(block.hash, 20)}
+                </TestnetLink>
               </td>
             </tr>
           ))}
