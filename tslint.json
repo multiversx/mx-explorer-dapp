@@ -14,7 +14,9 @@
     "jsx-no-lambda": false,
     "no-var-requires": false,
     "jsx-boolean-value": false,
-    "prefer-for-of": false
+    "prefer-for-of": false,
+    "max-file-line-count": [true, 300],
+    "prefer-template": [true, "allow-single-concat"]
   },
   "jsRules": {
     "no-console": [false, "log", "error"]
