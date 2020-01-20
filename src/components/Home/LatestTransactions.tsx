@@ -118,6 +118,6 @@ const LatestTransactions: React.FC = () => {
       )}
     </div>
   );
-  return React.useMemo(Component, [transactions]);
+  return React.useMemo(Component, [transactions, transactionsFetched]);
 };
 export default LatestTransactions;

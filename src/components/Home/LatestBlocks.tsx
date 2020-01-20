@@ -104,6 +104,6 @@ const LatestBlocks: React.FC = () => {
       )}
     </div>
   );
-  return React.useMemo(Component, [blocks]);
+  return React.useMemo(Component, [blocks, blocksFetched]);
 };
 export default LatestBlocks;
