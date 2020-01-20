@@ -33,9 +33,16 @@ describe('Block Details', () => {
   test('Block Details page is displaying', async () => {
     const mockPost = jest.spyOn(axios, 'post');
     const mockGet = jest.spyOn(axios, 'get');
-    mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
-    mockGet.mockReturnValueOnce(Promise.resolve({ data: doc }));
-    mockGet.mockReturnValueOnce(Promise.resolve({ data: validators }));
+    mockGet.mockImplementation((url: string): any => {
+      switch (true) {
+        case url.includes('/tps/_doc/meta'):
+          return Promise.resolve({ data: meta });
+        case url.includes(`/blocks/_doc/${doc._source.hash}`):
+          return Promise.resolve({ data: doc });
+        case url.includes('/validators/_search'):
+          return Promise.resolve({ data: validators });
+      }
+    });
     mockPost.mockReturnValueOnce(Promise.resolve({ data: blocks }));
 
     const render = renderWithRouter({
