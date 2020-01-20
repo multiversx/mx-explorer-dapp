@@ -17,6 +17,7 @@ export interface TestnetType {
   id: string;
   name: string;
   nodeUrl: string;
+  validatorsApiUrl?: string;
   numInitCharactersForScAddress: number;
   elasticUrl: string;
   refreshRate: number;

@@ -168,7 +168,7 @@ export async function getValidator({
   try {
     const {
       data: { message },
-    } = await axios.get(`${nodeUrl}/node/heartbeatstatus`, { timeout });
+    } = await axios.get(`${nodeUrl}/node/heartbeatstatus?key=${hexPublicKey}`, { timeout });
 
     const currentValidator = message
       .filter((validator: ValidatorType) => validator.hexPublicKey === hexPublicKey)

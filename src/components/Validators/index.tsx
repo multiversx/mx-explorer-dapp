@@ -53,7 +53,7 @@ export interface ShardDataType {
 const Validators = () => {
   const ref = React.useRef(null);
   const {
-    activeTestnet: { nodeUrl, validatorDetails, validatorStatistics },
+    activeTestnet: { nodeUrl, validatorDetails, validatorStatistics, validatorsApiUrl },
     timeout,
     config: { metaChainShardId },
   } = useGlobalState();
@@ -62,24 +62,25 @@ const Validators = () => {
 
   const getData = () => {
     if (ref.current !== null) {
-      getValidatorsData({ nodeUrl, timeout: Math.max(timeout, 10000) }).then(
-        ({ data, success }) => {
-          const newState = populateValidatorsTable({ data, metaChainShardId });
-          if (ref.current !== null) {
-            setState({ success, data: newState });
-          }
-          if (validatorStatistics) {
-            getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }).then(
-              ({ statistics }: any) => {
-                const newState = populateValidatorsTable({ data, metaChainShardId, statistics });
-                if (ref.current !== null) {
-                  setState({ success, data: newState });
-                }
-              }
-            );
-          }
+      getValidatorsData({
+        nodeUrl: validatorsApiUrl || nodeUrl,
+        timeout: Math.max(timeout, 10000),
+      }).then(({ data, success }) => {
+        const newState = populateValidatorsTable({ data, metaChainShardId });
+        if (ref.current !== null) {
+          setState({ success, data: newState });
         }
-      );
+        if (validatorStatistics) {
+          getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }).then(
+            ({ statistics }: any) => {
+              const newState = populateValidatorsTable({ data, metaChainShardId, statistics });
+              if (ref.current !== null) {
+                setState({ success, data: newState });
+              }
+            }
+          );
+        }
+      });
     }
   };
 
