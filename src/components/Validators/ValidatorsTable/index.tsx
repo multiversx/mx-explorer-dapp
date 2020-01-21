@@ -84,7 +84,7 @@ const ValidatorsTable = (
 
   const data = includeObservers ? validatorsAndObservers : validators;
 
-  const pageSize = 50;
+  const pageSize = 25;
 
   const dataSource = new kendo.data.DataSource({ data, pageSize });
 
