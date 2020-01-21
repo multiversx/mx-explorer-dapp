@@ -753,12 +753,14 @@ svg[data-prefix='fas'] {
 }
 
 .pager {
-  a {
+  a,
+  p {
     svg {
       color: #9ba4ae;
     }
     color: #9ba4ae;
     &:hover {
+      cursor: pointer;
       svg {
         color: #000000;
       }
