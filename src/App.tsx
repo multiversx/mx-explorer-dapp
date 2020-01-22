@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Layout from './components/Layout';
 import PageNotFoud from './components/PageNotFoud';
 import { GlobalProvider, useGlobalState } from './context';
-import { TestnetType } from './context/state';
+import { ConfigType, TestnetType } from './context/state';
 import routes from './routes';
 
 export const Routes = ({
@@ -66,9 +66,9 @@ export const Routes = ({
   );
 };
 
-export const App: React.FC = () => {
+export const App = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
   return (
-    <GlobalProvider>
+    <GlobalProvider optionalConfig={optionalConfig}>
       <Layout>
         <Routes routes={routes} />
       </Layout>

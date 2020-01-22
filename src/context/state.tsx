@@ -44,7 +44,7 @@ interface AppsType {
   to: string;
 }
 
-interface ConfigType {
+export interface ConfigType {
   metaChainShardId: number;
   elrondApps: AppsType[];
   testnets: TestnetType[];
@@ -243,17 +243,23 @@ const stateConfig = {
     .reverse(),
 };
 
-const initialState: StateType = {
-  config: stateConfig,
-  defaultTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
-  activeTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
-  activeTestnetId: '',
-  timeout: 3 * 1000,
-  refresh: {
-    timestamp: Date.now(),
-    intervalId: setInterval(() => null, 100000000000),
-    testnetId: 'default',
-  },
+const initialState = (optionalConfig?: ConfigType): StateType => {
+  const initialConfig = optionalConfig !== undefined ? optionalConfig : config;
+  const configObject = optionalConfig !== undefined ? optionalConfig : stateConfig;
+  return {
+    config: configObject,
+    defaultTestnet:
+      initialConfig.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
+    activeTestnet:
+      initialConfig.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
+    activeTestnetId: '',
+    timeout: 3 * 1000,
+    refresh: {
+      timestamp: Date.now(),
+      intervalId: setInterval(() => null, 100000000000),
+      testnetId: 'default',
+    },
+  };
 };
 
 export default initialState;

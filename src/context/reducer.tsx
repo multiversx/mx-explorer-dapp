@@ -9,7 +9,7 @@ export type ActionType =
       testnetId: string;
     };
 
-export function globalReducer(state: StateType = initialState, action: ActionType): StateType {
+export function globalReducer(state: StateType = initialState(), action: ActionType): StateType {
   switch (action.type) {
     case 'changeTestnet': {
       const newTestnet = state.config.testnets.filter(testnet => testnet.id === action.testnetId);
