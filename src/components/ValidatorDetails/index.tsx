@@ -84,9 +84,9 @@ const ValidatorDetails = () => {
             shardNumber,
             signersIndex,
           };
-          getRounds(props).then(({ rounds, roundsFetched }) =>
-            setRounds({ rounds, roundsFetched })
-          );
+          getRounds(props).then(({ rounds, roundsFetched }) => {
+            setRounds({ rounds, roundsFetched });
+          });
           if (validatorStatistics) {
             getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }).then(
               ({ statistics }: any) => {

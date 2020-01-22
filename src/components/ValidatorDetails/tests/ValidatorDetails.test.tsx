@@ -9,11 +9,26 @@ import validators from './validators';
 describe('Node Information', () => {
   test('Node Information page displaying', async () => {
     const mockGet = jest.spyOn(axios, 'get');
-    mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
-    mockGet.mockReturnValueOnce(Promise.resolve({ data: heartbeatstatus }));
-    mockGet.mockReturnValueOnce(Promise.resolve({ data: validators }));
-    mockGet.mockReturnValueOnce(Promise.resolve({ data: rounds }));
-    mockGet.mockReturnValueOnce(Promise.resolve({ data: blocks }));
+    mockGet.mockImplementation((url: string): any => {
+      switch (true) {
+        case url.includes('/tps/_doc/meta'):
+          return Promise.resolve({ data: meta });
+        case url.includes(`/node/heartbeatstatus`):
+          return Promise.resolve({ data: heartbeatstatus });
+        case url.includes('/validators/_search'):
+          return Promise.resolve({ data: validators });
+      }
+    });
+
+    const mockPost = jest.spyOn(axios, 'post');
+    mockPost.mockImplementation((url: string): any => {
+      switch (true) {
+        case url.includes('/rounds/_search'):
+          return Promise.resolve({ data: rounds });
+        case url.includes('/blocks/_search'):
+          return Promise.resolve({ data: blocks });
+      }
+    });
 
     const render = renderWithRouter({
       route: `/validators/${heartbeatstatus.message[0].hexPublicKey}`,
@@ -35,7 +50,9 @@ describe('Node Information', () => {
       expect(render.getByTestId('rounds').childElementCount).toBe(100);
     });
 
-    expect(render.getByTestId('blocksTable').childElementCount).toBe(25);
+    await wait(async () => {
+      expect(render.getByTestId('blocksTable').childElementCount).toBe(25);
+    });
   });
 
   test('Node Information loading state', async () => {
