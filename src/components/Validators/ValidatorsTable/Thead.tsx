@@ -140,6 +140,7 @@ const ValidatorsTableHeader = ({
                           validatorObserverValue === 'validator' ? 'active' : ''
                         }`}
                         href="#/validators"
+                        data-testid="filterByValidators"
                         onClick={e => changeValidatorObserver(e, 'validator')}
                       >
                         Validator
@@ -149,6 +150,7 @@ const ValidatorsTableHeader = ({
                           validatorObserverValue === 'observer' ? 'active' : ''
                         }`}
                         href="#/validators"
+                        data-testid="filterByObservers"
                         onClick={e => changeValidatorObserver(e, 'observer')}
                       >
                         Observer
@@ -157,6 +159,7 @@ const ValidatorsTableHeader = ({
                         className={`nav-link ${validatorObserverValue === '' ? 'active' : ''}`}
                         key={-1}
                         href="#/validators"
+                        data-testid="clearFilterValidatorObserver"
                         onClick={e => changeValidatorObserver(e, '')}
                       >
                         Show all
@@ -167,7 +170,8 @@ const ValidatorsTableHeader = ({
               >
                 <span
                   id="switch"
-                  className="switch d-none d-md-inline-block d-lg-inline-block d-xl-inline-blockinline-"
+                  className="switch d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
+                  data-testid="filterValidatorObserver"
                 >
                   <FontAwesomeIcon
                     icon={faFilter}
@@ -212,6 +216,7 @@ const ValidatorsTableHeader = ({
                 <span
                   id="switch"
                   className="switch d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
+                  data-testid="shardFilterButton"
                 >
                   <FontAwesomeIcon
                     icon={faFilter}

@@ -59,6 +59,7 @@ const ValidatorsStats = ({
               onChange={changeValidatorValue}
               placeholder="Search"
               name="validatorSearch"
+              data-testid="validatorSearch"
               style={{ borderRadius: '2rem' }}
             />
             <div className="input-group-append">
@@ -67,7 +68,12 @@ const ValidatorsStats = ({
                   <FontAwesomeIcon icon={faSearch} />
                 </button>
               ) : (
-                <button type="reset" className="input-group-text" onClick={resetValidatorValue}>
+                <button
+                  type="reset"
+                  className="input-group-text"
+                  onClick={resetValidatorValue}
+                  data-testid="resetSearch"
+                >
                   <FontAwesomeIcon icon={faTimes} />
                 </button>
               )}
