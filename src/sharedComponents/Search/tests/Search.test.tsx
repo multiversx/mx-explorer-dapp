@@ -90,13 +90,17 @@ describe('Search', () => {
   });
   test('Seach finds address', async () => {
     const mockGet = jest.spyOn(axios, 'get');
-    mockGet.mockRejectedValueOnce(new Error('blocks error'));
-    mockGet.mockRejectedValueOnce(new Error('transactions error'));
-    mockGet.mockReturnValueOnce(
-      Promise.resolve({
-        data: addressResponse,
-      })
-    );
+
+    mockGet.mockImplementation((url: string): any => {
+      switch (true) {
+        case url.includes('/blocks/'):
+          return Promise.reject(new Error('blocks error'));
+        case url.includes(`/transactions/`):
+          return Promise.resolve(new Error('transactions error'));
+        case url.includes('/address/'):
+          return Promise.resolve({ data: addressResponse });
+      }
+    });
 
     const render = renderWithRouter({
       route: '/search',
@@ -104,7 +108,7 @@ describe('Search', () => {
 
     const search = render.getByTestId('search');
     const data = {
-      target: { value: '28096662d4639f2da12984c62f5a0ef92e8eb7cbb81d9a7dc6a8b250f001834c' },
+      target: { value: addressResponse.account.address },
     };
     fireEvent.change(search, data);
 
