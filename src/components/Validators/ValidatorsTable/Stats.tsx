@@ -80,10 +80,12 @@ const ValidatorsStats = ({
           <input
             type="checkbox"
             name="checkbox"
+            className="form-check-input"
             checked={includeObservers}
             onChange={changeIncludeObsevers}
+            data-testid="includeObservers"
           />
-          &nbsp; Include observers
+          Include observers
         </label>
       </div>
       <div className="mt-2 d-none d-md-block">
