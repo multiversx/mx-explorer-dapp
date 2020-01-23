@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
 import { fireEvent, renderWithRouter, wait, waitForElement } from 'utils/test-utils';
-import errorResponse from './_errorResponse';
 import search from './_search';
 import searchPage2 from './_searchPage2';
 
@@ -68,14 +67,16 @@ describe('Transactions Page', () => {
 
   test('Transactions errorScreen showing', async () => {
     const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockReturnValue(Promise.resolve({ data: errorResponse }));
+    mockPost.mockRejectedValueOnce(new Error('transaction error'));
 
-    const { queryByTestId } = renderWithRouter({
+    const render = renderWithRouter({
       route: '/transactions/page/1',
     });
 
-    const errorScreen = await waitForElement(() => queryByTestId('errorScreen'));
+    // await wait(async () => {
+    const errorScreen = await render.findByTestId('errorScreen');
     expect(errorScreen).toBeInTheDocument();
+    // });
   });
 });
 
