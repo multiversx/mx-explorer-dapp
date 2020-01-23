@@ -9,6 +9,7 @@ describe('Rounds', () => {
     const mockGet = jest.spyOn(axios, 'get');
     mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
     mockGet.mockReturnValueOnce(Promise.resolve({ data: heartbeatstatus }));
+    mockGet.mockReturnValueOnce(Promise.resolve({ data: validators }));
 
     const render = renderWithRouter({
       route: `/validators/${heartbeatstatus.message[0].hexPublicKey}`,
