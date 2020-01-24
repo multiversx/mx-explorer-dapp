@@ -96,10 +96,9 @@ const ValidatorsStats = ({
       </div>
       <div className="mt-2 d-none d-md-block">
         {shownValidatorsLength
-          ? 'Showing ' +
-            filteredValidatorsLength.toLocaleString('en') +
-            ' of ' +
-            shownValidatorsLength.toLocaleString('en')
+          ? `Showing ${filteredValidatorsLength.toLocaleString(
+              'en'
+            )} of ${shownValidatorsLength.toLocaleString('en')}`
           : ''}
       </div>
     </>
