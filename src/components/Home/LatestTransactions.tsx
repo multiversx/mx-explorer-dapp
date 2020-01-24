@@ -19,20 +19,22 @@ const LatestTransactions: React.FC = () => {
 
   const fetchTransactions = () => {
     if (ref.current !== null) {
-      getTransactions({ elasticUrl, timeout }).then(({ data, transactionsFetched }) => {
-        if (ref.current !== null) {
-          if (transactionsFetched) {
-            setTransactions(data);
-            setTransactionsFetched(true);
-          } else if (transactions.length === 0) {
-            setTransactionsFetched(false);
+      getTransactions({ elasticUrl, timeout: timeout * 2 }).then(
+        ({ data, transactionsFetched }) => {
+          if (ref.current !== null) {
+            if (transactionsFetched) {
+              setTransactions(data);
+              setTransactionsFetched(true);
+            } else if (transactions.length === 0) {
+              setTransactionsFetched(false);
+            }
           }
         }
-      });
+      );
     }
   };
 
-  React.useEffect(fetchTransactions, [elasticUrl, timeout, timestamp]);
+  React.useEffect(fetchTransactions, [elasticUrl, timestamp]);
 
   const Component = () => (
     <div className="card" ref={ref}>
