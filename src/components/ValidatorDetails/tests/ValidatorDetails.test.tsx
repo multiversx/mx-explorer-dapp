@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { renderWithRouter, wait } from './../../../utils/test-utils';
+import { fireEvent, renderWithRouter, wait } from './../../../utils/test-utils';
 import blocks from './blocks';
 import heartbeatstatus from './heartbeatstatus';
 import meta from './meta';
@@ -73,6 +73,46 @@ describe('Node Information', () => {
     });
     await wait(async () => {
       expect(render.getByTestId('errorScreen')).toBeDefined();
+    });
+  });
+});
+
+describe('Validator Details links', () => {
+  test('Validator Details Shard link', async () => {
+    const mockGet = jest.spyOn(axios, 'get');
+    mockGet.mockImplementation((url: string): any => {
+      switch (true) {
+        case url.includes('/tps/_doc/meta'):
+          return Promise.resolve({ data: meta });
+        case url.includes(`/node/heartbeatstatus`):
+          return Promise.resolve({ data: heartbeatstatus });
+        case url.includes('/validators/_search'):
+          return Promise.resolve({ data: validators });
+      }
+    });
+
+    const mockPost = jest.spyOn(axios, 'post');
+    mockPost.mockImplementation((url: string): any => {
+      switch (true) {
+        case url.includes('/rounds/_search'):
+          return Promise.resolve({ data: rounds });
+        case url.includes('/blocks/_search'):
+          return Promise.resolve({ data: blocks });
+      }
+    });
+
+    const render = renderWithRouter({
+      route: `/validators/${heartbeatstatus.message[0].hexPublicKey}`,
+    });
+
+    const shardLink = await render.findByTestId('shardLink');
+
+    expect(shardLink.textContent).toBe('Metachain');
+
+    fireEvent.click(shardLink);
+
+    await wait(async () => {
+      expect(document.title).toEqual('Shard Details • Elrond Explorer');
     });
   });
 });

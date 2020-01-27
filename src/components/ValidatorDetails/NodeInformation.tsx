@@ -43,7 +43,7 @@ const NodeInformation = ({
               <div className="col-lg-2 card-label">Shard</div>
               <div className="col-lg-10">
                 {shardNumber !== undefined ? (
-                  <TestnetLink to={`/blocks/shards/${shardNumber}`}>
+                  <TestnetLink to={`/blocks/shards/${shardNumber}`} data-testid="shardLink">
                     <ShardSpan shardId={shardNumber} />
                   </TestnetLink>
                 ) : (
