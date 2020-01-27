@@ -127,9 +127,10 @@ const ValidatorsTable = (
                   validatorStatistics={props.validatorStatistics}
                 />
                 <tbody>
-                  {newValidators.map(validator => (
+                  {newValidators.map((validator, i) => (
                     <ValidatorTableRow
                       key={validator.hexPublicKey}
+                      rowIndex={i}
                       validator={validator}
                       validatorDetails={validatorDetails}
                       validatorStatistics={props.validatorStatistics}

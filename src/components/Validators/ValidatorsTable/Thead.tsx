@@ -238,6 +238,7 @@ const ValidatorsTableHeader = ({
                         className={`nav-link ${statusValue === 'online' ? 'active' : ''}`}
                         href="#/validators"
                         onClick={e => changeStatus(e, 'online')}
+                        data-testid="filterByStatusOnline"
                       >
                         Online
                       </a>
@@ -245,6 +246,7 @@ const ValidatorsTableHeader = ({
                         className={`nav-link ${statusValue === 'offline' ? 'active' : ''}`}
                         href="#/validators"
                         onClick={e => changeStatus(e, 'offline')}
+                        data-testid="filterByStatusOffline"
                       >
                         Offiline
                       </a>
@@ -262,7 +264,8 @@ const ValidatorsTableHeader = ({
               >
                 <span
                   id="switch"
-                  className="switch d-none d-md-inline-block d-lg-inline-block d-xl-inline-blockinline-"
+                  className="switch d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
+                  data-testid="filterByStatus"
                 >
                   <FontAwesomeIcon
                     icon={faFilter}

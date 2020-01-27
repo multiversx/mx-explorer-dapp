@@ -5,12 +5,14 @@ import { truncate } from './../../../helpers';
 import { ShardSpan, TestnetLink } from './../../../sharedComponents';
 import { ValidatorType } from './../index';
 
-const EmptySearch = ({
+const ValidatorRow = ({
   validator,
   validatorDetails,
   validatorStatistics,
+  rowIndex,
 }: {
   validator: ValidatorType;
+  rowIndex: number;
   validatorDetails: boolean;
   validatorStatistics: boolean;
 }) => {
@@ -44,7 +46,10 @@ const EmptySearch = ({
           </>
         )}
         {validatorDetails ? (
-          <TestnetLink to={`/validators/${validator.hexPublicKey}`}>
+          <TestnetLink
+            to={`/validators/${validator.hexPublicKey}`}
+            data-testid={`publicKeyLink${rowIndex}`}
+          >
             {truncate(validator.hexPublicKey, 20)}
           </TestnetLink>
         ) : (
@@ -59,7 +64,10 @@ const EmptySearch = ({
         )}
       </td>
       <td>
-        <TestnetLink to={`/blocks/shards/${validator.shardNumber}`}>
+        <TestnetLink
+          to={`/blocks/shards/${validator.shardNumber}`}
+          data-testid={`shardLink${rowIndex}`}
+        >
           <ShardSpan shardId={validator.shardNumber} />
           {validator.star && <span>*</span>}
         </TestnetLink>
@@ -109,4 +117,4 @@ const EmptySearch = ({
   );
 };
 
-export default EmptySearch;
+export default ValidatorRow;

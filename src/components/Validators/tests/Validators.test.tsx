@@ -135,4 +135,37 @@ describe('Validators filters', () => {
 
     expect(totalPages.textContent).toBe('412');
   });
+  test('Filter by status working', async () => {
+    const render = goToValidatorsPage();
+
+    const filterByStatus = await render.findByTestId('filterByStatus');
+    fireEvent.click(filterByStatus);
+
+    const offline = await render.findByTestId('filterByStatusOffline');
+    fireEvent.click(offline);
+
+    const totalPages = await render.findByTestId('totalPages');
+    expect(totalPages.textContent).toBe('26');
+  });
+});
+
+describe('Validators links', () => {
+  test('Validators public key link', async () => {
+    const render = goToValidatorsPage();
+    const publicKeyLink = await render.findByTestId('publicKeyLink0');
+    expect(publicKeyLink.textContent).toBe('0098f4b04bbf9b4ac...');
+    fireEvent.click(publicKeyLink);
+    await wait(async () => {
+      expect(document.title).toEqual('Validator Details • Elrond Explorer');
+    });
+  });
+  test('Validators shard link', async () => {
+    const render = goToValidatorsPage();
+    const publicKeyLink = await render.findByTestId('shardLink0');
+    expect(publicKeyLink.textContent).toBe('Shard 3');
+    fireEvent.click(publicKeyLink);
+    await wait(async () => {
+      expect(document.title).toEqual('Shard Details • Elrond Explorer');
+    });
+  });
 });
