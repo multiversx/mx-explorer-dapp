@@ -1,6 +1,6 @@
+import { useGlobalState } from 'context';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { useGlobalState } from '../../context';
 
 const TestnetReady: React.FC = ({ children }) => {
   const globalState = useGlobalState();

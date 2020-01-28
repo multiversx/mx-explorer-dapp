@@ -1,13 +1,13 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { useGlobalState, useGlobalDispatch } from '../../context';
+import { useGlobalDispatch, useGlobalState } from '../../context';
 
 export default function TestnetRouter() {
   const globalState = useGlobalState();
   const dispatch = useGlobalDispatch();
   const { pathname } = useLocation();
 
-  let locationArray = pathname.substr(1).split('/');
+  const locationArray = pathname.substr(1).split('/');
 
   const testnetId = locationArray[0];
 
