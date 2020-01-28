@@ -1,9 +1,9 @@
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useGlobalState } from 'context';
 import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useGlobalState } from '../../../context';
 
 export default function TestnetSwitcher({ onToggle }: { onToggle: (prop: boolean) => void }) {
   const globalState = useGlobalState();
@@ -23,11 +23,7 @@ export default function TestnetSwitcher({ onToggle }: { onToggle: (prop: boolean
     <>
       <NavDropdown
         title={
-          <span
-            id="switch"
-            // style={{ whiteSpace: 'nowrap' }}
-            className="switch"
-          >
+          <span id="switch" data-testid="testnetSwitch" className="switch">
             {globalState.activeTestnet.name}&nbsp;
             <FontAwesomeIcon icon={faAngleDown} />
           </span>
