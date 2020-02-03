@@ -1,11 +1,15 @@
+import * as Sentry from '@sentry/browser';
 import React, { useMemo } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import ErrorBoundary from './components/ErrorBoundary';
 import Layout from './components/Layout';
 import PageNotFoud from './components/PageNotFoud';
 import { GlobalProvider, useGlobalState } from './context';
 import { ConfigType, TestnetType } from './context/state';
 import routes from './routes';
+
+Sentry.init({ dsn: 'https://8ed464acd35d44a6a582ff624dd3c38d@sentry.io/485879' });
 
 export const Routes = ({
   routes,
@@ -76,10 +80,27 @@ export const App = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
   );
 };
 
-const RoutedApp = () => (
-  <Router>
-    <App />
-  </Router>
-);
+const RoutedApp = () => {
+  const Wrapper = ({ children }: any) => <>{children}</>;
+  const ProdWrapper = process.env.NODE_ENV === 'production' ? ErrorBoundary : Wrapper;
+
+  const throwError = () => {
+    throw new Error('An error has occured in Buggy component!');
+  };
+
+  return (
+    <ProdWrapper>
+      <div>
+        <button className="btn btn-lg btn-primary" onClick={throwError}>
+          ERROR!
+        </button>
+
+        <Router>
+          <App />
+        </Router>
+      </div>
+    </ProdWrapper>
+  );
+};
 
 export default hot(RoutedApp);

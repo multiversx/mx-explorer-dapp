@@ -9,6 +9,7 @@
     "@fortawesome/free-solid-svg-icons": "5.11.2",
     "@fortawesome/react-fontawesome": "0.1.7",
     "@hot-loader/react-dom": "16.10.2",
+    "@sentry/browser": "^5.11.2",
     "@types/axios": "0.14.0",
     "@types/chart.js": "2.8.10",
     "@types/file-saver": "2.0.1",
