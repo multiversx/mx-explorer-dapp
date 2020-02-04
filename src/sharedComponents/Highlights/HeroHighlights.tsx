@@ -18,18 +18,6 @@ const HeroHighlights: React.SFC<HeroHighlightsProps> = ({
   peakTPS,
   totalProcessedTxCount,
 }) => {
-  const [errorCount, setErrorCount] = React.useState(0);
-  const onclick = () => {
-    setErrorCount(c => c + 1);
-  };
-
-  React.useEffect(() => {
-    if (errorCount === 5) {
-      setErrorCount(0);
-      throw new Error('An error has occured in Shards label!');
-    }
-  }, [errorCount]);
-
   return (
     <ul className="highlights row">
       <li className="col-6 mt-4 mb-4">
@@ -45,9 +33,7 @@ const HeroHighlights: React.SFC<HeroHighlightsProps> = ({
         <span className="highlight-icon">
           <FontAwesomeIcon icon={faLayerGroup} />
         </span>
-        <span className="highlight-label" onClick={onclick}>
-          SHARDS
-        </span>
+        <span className="highlight-label">SHARDS</span>
         <span className="highlight-value" data-testid="nrOfShards">
           {nrOfShards}
         </span>

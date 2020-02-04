@@ -18,12 +18,7 @@ class ExampleBoundary extends Component {
   public render() {
     if (this.state.hasError) {
       // render fallback UI
-      return (
-        // <button onClick={() => Sentry.showReportDialog({ eventId: this.state.eventId })}>
-        //   Report feedback
-        // </button>
-        <>{this.props.children}</>
-      );
+      return <>{this.props.children}</>;
     }
 
     // when there's not an error, render children untouched
