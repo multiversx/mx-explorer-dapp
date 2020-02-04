@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/browser';
 import React, { Component, ErrorInfo } from 'react';
 
-class ExampleBoundary extends Component {
+class ErrorBoundary extends Component {
   public static getDerivedStateFromError() {
     return { hasError: true };
   }
@@ -26,4 +26,4 @@ class ExampleBoundary extends Component {
   }
 }
 
-export default ExampleBoundary;
+export default ErrorBoundary;
