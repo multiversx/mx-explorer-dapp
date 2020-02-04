@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/browser';
-import React, { Component, ErrorInfo } from 'react';
+import { Component, ErrorInfo } from 'react';
 
 class ExampleBoundary extends Component {
   public static getDerivedStateFromError() {
@@ -18,11 +18,7 @@ class ExampleBoundary extends Component {
   public render() {
     if (this.state.hasError) {
       // render fallback UI
-      return (
-        <button onClick={() => Sentry.showReportDialog({ eventId: this.state.eventId })}>
-          Report feedback
-        </button>
-      );
+      return this.props.children;
     }
 
     // when there's not an error, render children untouched
