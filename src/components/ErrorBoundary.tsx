@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/browser';
 import { Component, ErrorInfo } from 'react';
 
 class ExampleBoundary extends Component {
@@ -8,11 +7,11 @@ class ExampleBoundary extends Component {
   public state = { eventId: undefined, hasError: false };
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    Sentry.withScope(scope => {
-      scope.setExtras(errorInfo);
-      const eventId = Sentry.captureException(error);
-      this.setState({ eventId });
-    });
+    // Sentry.withScope(scope => {
+    //   scope.setExtras(errorInfo);
+    //   const eventId = Sentry.captureException(error);
+    //   this.setState({ eventId });
+    // });
   }
 
   public render() {
