@@ -81,25 +81,15 @@ export const App = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
 };
 
 const RoutedApp = () => {
-  const Wrapper = ({ children }: any) => <>{children}</>;
-  const ProdWrapper = process.env.NODE_ENV === 'production' ? ErrorBoundary : Wrapper;
-
-  const throwError = () => {
-    throw new Error('An error has occured in Buggy component!');
-  };
+  const DevWrapper = ({ children }: any) => <>{children}</>;
+  const ProdErrorBoundary = process.env.NODE_ENV === 'production' ? ErrorBoundary : DevWrapper;
 
   return (
-    <ProdWrapper>
-      <div>
-        <button className="btn btn-lg btn-primary" onClick={throwError}>
-          ERROR!
-        </button>
-
-        <Router>
-          <App />
-        </Router>
-      </div>
-    </ProdWrapper>
+    <ProdErrorBoundary>
+      <Router>
+        <App />
+      </Router>
+    </ProdErrorBoundary>
   );
 };
 
