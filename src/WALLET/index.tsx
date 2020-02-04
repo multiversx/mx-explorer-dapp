@@ -1,12 +1,16 @@
+import * as Sentry from '@sentry/browser';
+import ErrorBoundary from 'components/ErrorBoundary';
+import Layout from 'components/Layout';
+import { GlobalProvider } from 'context';
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
-import { GlobalProvider } from 'context';
-import { WalletProvider, useWalletDispatch } from './context';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Layout from 'components/Layout';
 import { Routes } from '../App';
-import routes from './routes';
+import { useWalletDispatch, WalletProvider } from './context';
 import Navbar from './Navbar';
+import routes from './routes';
+
+Sentry.init({ dsn: 'https://0483ca0493764b0cbfa1222a2614afbe@sentry.io/2234135' });
 
 const SessionStarter = () => {
   const dispatch = useWalletDispatch();
@@ -35,10 +39,17 @@ export const App: React.FC = () => {
   );
 };
 
-const RoutedApp = () => (
-  <Router>
-    <App />
-  </Router>
-);
+const RoutedApp = () => {
+  const DevWrapper = ({ children }: any) => <>{children}</>;
+  const ProdErrorBoundary = process.env.NODE_ENV === 'production' ? ErrorBoundary : DevWrapper;
+
+  return (
+    <ProdErrorBoundary>
+      <Router>
+        <App />
+      </Router>
+    </ProdErrorBoundary>
+  );
+};
 
 export default hot(RoutedApp);
