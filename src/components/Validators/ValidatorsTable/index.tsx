@@ -102,7 +102,7 @@ const ValidatorsTable = (
         <div className="card">
           <div className="card-body card-list">
             <ValidatorStats
-              shownValidatorsLength={data.length}
+              shownValidatorsLength={dataSource.total()}
               filteredValidatorsLength={newValidators.length}
               setSearchValue={resetPager(setSearchValue)}
               includeObservers={includeObservers}
