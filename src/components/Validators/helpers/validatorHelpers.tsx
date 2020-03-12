@@ -66,18 +66,6 @@ export function populateValidatorsTable({
       peerType: validator.peerType
         ? getPeerType(validator.peerType)
         : getPeerType(validator.isValidator ? 'eligible' : 'observer'),
-      // TODO: remove start
-      ...(process.env.NODE_ENV === 'development' && !validator.peerType
-        ? {
-            peerType: (() => {
-              const peerTypeValues = ['waiting', 'eligible'];
-              const randomIndex = Math.floor(Math.random() * 2);
-              const value = peerTypeValues[randomIndex] === 'waiting' ? 'waiting' : 'eligible';
-              return validator.isValidator ? value : 'observer';
-            })(),
-          }
-        : {}),
-      // TODO: remove end
       leader:
         nrLeaderSuccess !== 0 || nrLeaderFailure !== 0
           ? Math.floor((nrLeaderSuccess * 100) / (nrLeaderSuccess + nrLeaderFailure))
