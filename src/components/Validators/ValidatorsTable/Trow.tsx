@@ -1,4 +1,4 @@
-import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faEye } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { truncate } from './../../../helpers';
@@ -36,14 +36,15 @@ const ValidatorRow = ({
   ) : (
     <></>
   );
+
   return (
     <tr className="animated fadeIn">
       <td>
-        {!validator.isValidator && (
-          <>
-            <FontAwesomeIcon icon={faEye} className="w300" />
-            &nbsp;
-          </>
+        {validator.peerType === 'observer' && (
+          <FontAwesomeIcon title="observer" icon={faEye} className="w300 mr-1" />
+        )}
+        {validator.peerType === 'waiting' && (
+          <FontAwesomeIcon icon={faClock} className="w300 mr-1" />
         )}
         {validatorDetails ? (
           <TestnetLink

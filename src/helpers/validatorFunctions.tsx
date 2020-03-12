@@ -4,7 +4,10 @@ import { ValidatorType } from './../components/Validators';
 export function getShardId(validator: ValidatorType, metaChainShardId: number) {
   let shardId: string;
   let star = false;
-  if (validator.isValidator === true) {
+  const isValidator =
+    validator.isValidator || (validator.peerType && !validator.peerType.includes('observer'));
+
+  if (isValidator === true) {
     shardId = validator.computedShardID.toString();
     if (validator.isActive === true && validator.computedShardID !== validator.receivedShardID) {
       star = true;
@@ -15,7 +18,7 @@ export function getShardId(validator: ValidatorType, metaChainShardId: number) {
   return {
     shardId: shardId === metaChainShardId.toString() ? 'Metachain' : shardId, // eslint-disable-line
     shardNumber: parseInt(shardId), // this is excluding the Metachain string, used for searching
-    star: star,
+    star,
   };
 }
 

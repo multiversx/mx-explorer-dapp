@@ -13,6 +13,7 @@ export interface ValidatorType {
   hexPublicKey: string;
   isActive: boolean;
   isValidator: boolean;
+  peerType: 'waiting' | 'eligible' | 'observer';
   maxInactiveTime: string;
   nodeDisplayName: string;
   receivedShardID: number;

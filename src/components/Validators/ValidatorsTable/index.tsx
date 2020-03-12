@@ -76,9 +76,9 @@ const ValidatorsTable = (
 
   if (validatorObserverValue !== '') {
     mainFilter.filters.push({
-      field: 'isValidator',
-      operator: 'eq',
-      value: validatorObserverValue === 'validator',
+      field: 'peerType',
+      operator: 'contains',
+      value: validatorObserverValue,
     });
   }
 
@@ -95,6 +95,10 @@ const ValidatorsTable = (
   dataSource.page(page);
 
   const newValidators: ValidatorType[] = dataSource.view();
+
+  const hasWaitingValidators = validatorsAndObservers.some(
+    validator => validator.peerType === 'waiting'
+  );
 
   return (
     <div className="row pb-3">
@@ -115,6 +119,7 @@ const ValidatorsTable = (
               <table className="table mt-4">
                 <ValidatorTableHead
                   includeObservers={includeObservers}
+                  hasWaitingValidators={hasWaitingValidators}
                   sortBy={resetPager(setSort)}
                   sort={sort}
                   shardData={shardData}

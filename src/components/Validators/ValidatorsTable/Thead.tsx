@@ -18,6 +18,7 @@ interface ValidatorsTableHeaderType {
   validatorObserverValue: string;
   setValidatorObserverValue: React.Dispatch<React.SetStateAction<string>>;
   validatorStatistics: boolean;
+  hasWaitingValidators: boolean;
 }
 
 const ValidatorsTableHeader = ({
@@ -32,6 +33,7 @@ const ValidatorsTableHeader = ({
   validatorObserverValue,
   setValidatorObserverValue,
   validatorStatistics,
+  hasWaitingValidators,
 }: ValidatorsTableHeaderType) => {
   const headers: HeadersType[] = [
     {
@@ -126,7 +128,7 @@ const ValidatorsTableHeader = ({
             {sort.dir === 'desc' && sort.field === header.id && (
               <FontAwesomeIcon icon={faArrowDown} className="empty-icon" />
             )}
-            {header.id === 'hexPublicKey' && includeObservers && (
+            {header.id === 'hexPublicKey' && (hasWaitingValidators || includeObservers) && (
               <OverlayTrigger
                 trigger="click"
                 key="popover"
@@ -137,24 +139,40 @@ const ValidatorsTableHeader = ({
                     <Popover.Content>
                       <a
                         className={`nav-link ${
-                          validatorObserverValue === 'validator' ? 'active' : ''
+                          validatorObserverValue === 'eligible' ? 'active' : ''
                         }`}
                         href="#/validators"
                         data-testid="filterByValidators"
-                        onClick={e => changeValidatorObserver(e, 'validator')}
+                        onClick={e => changeValidatorObserver(e, 'eligible')}
                       >
-                        Validator
+                        Validator{hasWaitingValidators ? ' (eligible)' : ''}
                       </a>
-                      <a
-                        className={`nav-link ${
-                          validatorObserverValue === 'observer' ? 'active' : ''
-                        }`}
-                        href="#/validators"
-                        data-testid="filterByObservers"
-                        onClick={e => changeValidatorObserver(e, 'observer')}
-                      >
-                        Observer
-                      </a>
+                      {hasWaitingValidators && (
+                        <a
+                          className={`nav-link ${
+                            validatorObserverValue === 'waiting' ? 'active' : ''
+                          }`}
+                          href="#/validators"
+                          data-testid="filterByValidators"
+                          onClick={e => changeValidatorObserver(e, 'waiting')}
+                        >
+                          Validator (waiting)
+                        </a>
+                      )}
+
+                      {includeObservers && (
+                        <a
+                          className={`nav-link ${
+                            validatorObserverValue === 'observer' ? 'active' : ''
+                          }`}
+                          href="#/validators"
+                          data-testid="filterByObservers"
+                          onClick={e => changeValidatorObserver(e, 'observer')}
+                        >
+                          Observer
+                        </a>
+                      )}
+
                       <a
                         className={`nav-link ${validatorObserverValue === '' ? 'active' : ''}`}
                         key={-1}

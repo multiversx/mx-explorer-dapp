@@ -2,6 +2,7 @@ import axios from 'axios';
 import { getShardId, getUptimeDowntime } from './../../../helpers';
 import { BlockType } from './../../Blocks';
 import { ValidatorType } from './../../Validators';
+import { getPeerType } from './../../Validators/helpers/validatorHelpers';
 import { initialState } from './../index';
 
 interface GetValidatorType {
@@ -176,13 +177,7 @@ export async function getValidator({
 
     const { shardId, shardNumber } = getShardId(currentValidator, metaChainShardId);
 
-    const {
-      versionNumber,
-      isActive,
-      nodeDisplayName,
-      isValidator,
-      publicKeyBlockSign,
-    } = currentValidator;
+    const { versionNumber, isActive, nodeDisplayName, publicKeyBlockSign } = currentValidator;
 
     const {
       totalDownTimePercentege,
@@ -191,9 +186,17 @@ export async function getValidator({
       totalDownTimeLabel,
     } = getUptimeDowntime(currentValidator);
 
-    const instanceType = currentValidator.isValidator ? 'Validator' : 'Observer';
+    const isValidator =
+      currentValidator.isValidator ||
+      (currentValidator.peerType && !currentValidator.peerType.includes('observer'));
 
-    if (currentValidator.isValidator) {
+    const peerType = currentValidator.peerType
+      ? getPeerType(currentValidator.peerType)
+      : getPeerType(currentValidator.isValidator ? 'eligible' : 'observer');
+
+    const instanceType = isValidator ? `Validator (${peerType})` : 'Observer';
+
+    if (isValidator) {
       const {
         data: {
           hits: { hits },

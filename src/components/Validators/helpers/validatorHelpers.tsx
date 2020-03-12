@@ -12,6 +12,17 @@ export interface StatisticsType {
   [hash: string]: ValidatorStatisticsData;
 }
 
+export const getPeerType = (peerType: string) => {
+  switch (true) {
+    case peerType.includes('observer'):
+      return 'observer';
+    case peerType.includes('waiting'):
+      return 'waiting';
+    default:
+      return 'eligible';
+  }
+};
+
 export function populateValidatorsTable({
   data,
   metaChainShardId,
@@ -52,6 +63,21 @@ export function populateValidatorsTable({
       shardId,
       shardNumber,
       star,
+      peerType: validator.peerType
+        ? getPeerType(validator.peerType)
+        : getPeerType(validator.isValidator ? 'eligible' : 'observer'),
+      // TODO: remove start
+      ...(process.env.NODE_ENV === 'development' && !validator.peerType
+        ? {
+            peerType: (() => {
+              const peerTypeValues = ['waiting', 'eligible'];
+              const randomIndex = Math.floor(Math.random() * 2);
+              const value = peerTypeValues[randomIndex] === 'waiting' ? 'waiting' : 'eligible';
+              return validator.isValidator ? value : 'observer';
+            })(),
+          }
+        : {}),
+      // TODO: remove end
       leader:
         nrLeaderSuccess !== 0 || nrLeaderFailure !== 0
           ? Math.floor((nrLeaderSuccess * 100) / (nrLeaderSuccess + nrLeaderFailure))
@@ -62,7 +88,7 @@ export function populateValidatorsTable({
           : 0,
     };
 
-    if (validator.isValidator) {
+    if (['eligible', 'waiting'].includes(validator.peerType)) {
       validators.push(validator);
     }
     validatorsAndObservers.push(validator);
@@ -70,7 +96,7 @@ export function populateValidatorsTable({
     allShardIDs.push(shardId.toString()); // TODO: check shardID
 
     if (validator.shardId && validator.shardId in shardData) {
-      if (validator.isValidator) {
+      if (validator.peerType === 'eligible') {
         shardData[shardId].allValidators = shardData[shardId].allValidators + 1;
         shardData[shardId].allActiveValidators = validator.isActive
           ? shardData[shardId].allActiveValidators + 1
@@ -82,8 +108,9 @@ export function populateValidatorsTable({
         allActiveValidators: 0,
         shardNumber: validator.shardNumber,
       };
-      shardData[shardId].allValidators = validator.isValidator ? 1 : 0;
-      shardData[shardId].allActiveValidators = validator.isValidator && validator.isActive ? 1 : 0;
+      shardData[shardId].allValidators = validator.peerType === 'eligible' ? 1 : 0;
+      shardData[shardId].allActiveValidators =
+        validator.peerType === 'eligible' && validator.isActive ? 1 : 0;
     }
   });
 
