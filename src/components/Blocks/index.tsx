@@ -1,9 +1,9 @@
 import { faCube } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useGlobalState } from 'context';
 import * as React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
-import { useGlobalState } from '../../context';
-import { BlocksTable, Loader, Pager, ShardSpan } from './../../sharedComponents';
+import { BlocksTable, Loader, Pager, ShardSpan } from 'sharedComponents';
 import { getBlocks, getTotalBlocks } from './helpers/asyncRequests';
 
 export interface BlockType {
