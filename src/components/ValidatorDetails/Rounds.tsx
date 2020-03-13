@@ -31,23 +31,38 @@ const Rounds = ({ rounds, roundsFetched }: { rounds: RoundType[]; roundsFetched:
                 </div>
               </div>
             ) : (
-              <div className="squares ml-1" data-testid="rounds">
-                {rounds.length &&
-                  rounds.map((round: any) => (
-                    <OverlayTrigger
-                      key={round.key}
-                      placement="top"
-                      delay={{ show: 250, hide: 400 }}
-                      overlay={(props: any) => (
-                        <Tooltip id={round.key} {...props}>
-                          {round.key.indexOf('_') > 0 ? round.key.split('_').pop() : round.key}
-                        </Tooltip>
-                      )}
-                    >
-                      <div className={round.value ? 'full square-block' : 'square-block'} />
-                    </OverlayTrigger>
-                  ))}
-              </div>
+              <>
+                <div className="row">
+                  <div className="squares ml-1" data-testid="rounds">
+                    {rounds.length &&
+                      rounds.map((round: any) => (
+                        <OverlayTrigger
+                          key={round.key}
+                          placement="top"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={(props: any) => (
+                            <Tooltip id={round.key} {...props}>
+                              {round.key.indexOf('_') > 0 ? round.key.split('_').pop() : round.key}
+                            </Tooltip>
+                          )}
+                        >
+                          <div className={round.value ? 'full square-block' : 'square-block'} />
+                        </OverlayTrigger>
+                      ))}
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="d-flex mt-3">
+                    <div className="squares ml-1 pr-2" data-testid="rounds">
+                      <div className="full square-block" /> Block proposed
+                    </div>
+                    <div className="squares" data-testid="rounds">
+                      <div className="square-block" /> Block not proposed
+                    </div>
+                  </div>
+                </div>
+              </>
             )}
           </div>
         </div>
