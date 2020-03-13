@@ -72,16 +72,22 @@ const TransactionDetails: React.FC = () => {
                     <div className="card-body card-details">
                       <div className="row">
                         <div className="col-lg-2 card-label">Hash</div>
-                        <div className="col-lg-10">{transaction.hash}</div>
+                        <div className="col-lg-10">
+                          <ScAddressIcon
+                            initiator={transaction.sender}
+                            secondInitiator={transaction.receiver}
+                          />
+                          {transaction.hash}
+                        </div>
                       </div>
                       <hr className="hr-space" />
                       <div className="row">
                         <div className="col-lg-2 card-label">Status</div>
                         <div className="col-lg-10">
                           {transaction.status === 'Success' ? (
-                            <FontAwesomeIcon icon={faCheckCircle} className="mr-2" />
+                            <FontAwesomeIcon icon={faCheckCircle} className="mr-2 text-success" />
                           ) : (
-                            <FontAwesomeIcon icon={faHourglass} className="mr-2" />
+                            <FontAwesomeIcon icon={faHourglass} className="mr-2 text-warning" />
                           )}
                           {transaction.status}
                         </div>
@@ -104,7 +110,7 @@ const TransactionDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">From</div>
                         <div className="col-lg-10">
-                          <ScAddressIcon value={transaction.sender} />
+                          <ScAddressIcon initiator={transaction.sender} />
                           {addressIsHash(transaction.sender) ? (
                             <>
                               <TestnetLink to={`/address/${transaction.sender}`}>
@@ -128,7 +134,7 @@ const TransactionDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">To</div>
                         <div className="col-lg-10">
-                          <ScAddressIcon value={transaction.receiver} />
+                          <ScAddressIcon initiator={transaction.receiver} />
                           <TestnetLink to={`/address/${transaction.receiver}`}>
                             {transaction.receiver}
                           </TestnetLink>

@@ -1,9 +1,9 @@
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useGlobalState } from 'context';
+import { addressIsHash, dateFormatted, trimHash, truncate } from 'helpers';
 import * as React from 'react';
-import { useGlobalState } from '../../context';
-import { addressIsHash, dateFormatted, trimHash, truncate } from './../../helpers';
-import { ShardSpan, TestnetLink, TimeAgo } from './../../sharedComponents';
+import { ScAddressIcon, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { TransactionType } from './../Transactions';
 import { getTransactions } from './helpers/asyncRequests';
 
@@ -63,13 +63,18 @@ const LatestTransactions: React.FC = () => {
                             <FontAwesomeIcon icon={faExchangeAlt} />
                           </i>
                         </span>
-                        <TestnetLink
-                          to={`/transactions/${transaction.hash}`}
-                          data-testid={`transactionLink${i}`}
-                        >
-                          {truncate(transaction.hash, 20)}
-                        </TestnetLink>
-                        <br />
+                        <div>
+                          <ScAddressIcon
+                            initiator={transaction.sender}
+                            secondInitiator={transaction.receiver}
+                          />
+                          <TestnetLink
+                            to={`/transactions/${transaction.hash}`}
+                            data-testid={`transactionLink${i}`}
+                          >
+                            {truncate(transaction.hash, 20)}
+                          </TestnetLink>
+                        </div>
                         <span
                           className="text-secondary"
                           title={dateFormatted(transaction.timestamp)}

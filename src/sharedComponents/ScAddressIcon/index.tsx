@@ -1,20 +1,22 @@
-import React from 'react';
 import { faCode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 import { useGlobalState } from '../../context';
 
 interface ScAddressIconType {
-  value: string;
+  initiator: string;
+  secondInitiator?: string;
 }
 
-const ScAddressIcon = ({ value }: ScAddressIconType) => {
+const isContract = (initiator: string | undefined, charNum: number) =>
+  initiator && charNum > 0 && initiator.startsWith('0'.repeat(charNum));
+
+const ScAddressIcon = ({ initiator, secondInitiator }: ScAddressIconType) => {
   const {
-    activeTestnet: { numInitCharactersForScAddress },
+    activeTestnet: { numInitCharactersForScAddress: charNum },
   } = useGlobalState();
 
-  const showIcon =
-    numInitCharactersForScAddress > 0 &&
-    value.startsWith('0'.repeat(numInitCharactersForScAddress));
+  const showIcon = isContract(initiator, charNum) || isContract(secondInitiator, charNum);
 
   return showIcon ? <FontAwesomeIcon icon={faCode} className="w300 mr-1" /> : null;
 };

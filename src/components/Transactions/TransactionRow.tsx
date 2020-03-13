@@ -18,6 +18,7 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
   return (
     <tr className="animated fadeIn">
       <td>
+        <ScAddressIcon initiator={transaction.sender} secondInitiator={transaction.receiver} />
         <TestnetLink to={`/transactions/${transaction.hash}`} data-testid="transactionLink">
           {truncate(transaction.hash, 20)}
         </TestnetLink>
@@ -48,7 +49,7 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
         </TestnetLink>
       </td>
       <td>
-        <ScAddressIcon value={transaction.sender} />
+        <ScAddressIcon initiator={transaction.sender} />
         {addressId === transaction.sender ? (
           <span>{trimHash(transaction.sender)}</span>
         ) : (
@@ -64,7 +65,7 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
         )}
       </td>
       <td>
-        <ScAddressIcon value={transaction.receiver} />
+        <ScAddressIcon initiator={transaction.receiver} />
         {addressId === transaction.receiver ? (
           <span>{trimHash(transaction.receiver)}</span>
         ) : (
