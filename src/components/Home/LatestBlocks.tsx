@@ -2,7 +2,7 @@ import { faCube } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useGlobalState } from '../../context';
-import { dateFormatted, truncate } from './../../helpers';
+import { dateFormatted, trimHash } from './../../helpers';
 import { ShardSpan, TestnetLink, TimeAgo } from './../../sharedComponents';
 import { BlockType } from './../Blocks';
 import { getBlocks } from './helpers/asyncRequests';
@@ -74,7 +74,7 @@ const LatestBlocks: React.FC = () => {
                       <div className="col-6">
                         Hash&nbsp;
                         <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockHashLink${i}`}>
-                          {truncate(block.hash, 20)}
+                          {trimHash(block.hash)}
                         </TestnetLink>
                         <br />
                         {block.txCount} txns

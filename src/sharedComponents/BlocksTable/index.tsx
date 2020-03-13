@@ -1,6 +1,6 @@
 import { BlockType } from 'components/Blocks';
+import { dateFormatted, sizeFormat, trimHash } from 'helpers';
 import React from 'react';
-import { dateFormatted, sizeFormat, truncate } from './../../helpers';
 import { ShardSpan, TestnetLink, TimeAgo } from './../index';
 
 const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number | undefined }) => {
@@ -46,7 +46,7 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
               <td>{sizeFormat(block.size)}</td>
               <td>
                 <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockHashLink${i}`}>
-                  {truncate(block.hash, 20)}
+                  {trimHash(block.hash)}
                 </TestnetLink>
               </td>
             </tr>
