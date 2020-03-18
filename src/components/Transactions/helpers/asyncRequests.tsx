@@ -148,7 +148,7 @@ export async function getAddressDetails({ nodeUrl, addressId, timeout }: Details
       addressId: '',
       balance: '',
       code: '',
-      detailsFetched: true,
+      detailsFetched: false,
     };
   }
 }

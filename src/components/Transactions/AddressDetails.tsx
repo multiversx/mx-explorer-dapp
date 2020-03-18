@@ -1,107 +1,64 @@
 import { faCode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
 import { Denominate } from 'sharedComponents';
-import { useGlobalState } from '../../context';
-import { getAddressDetails } from './helpers/asyncRequests';
 
-interface StateType {
+export interface AddressDetailsType {
   addressId: string;
   code: string;
   balance: string;
   detailsFetched: boolean;
 }
 
-const initialState = {
-  addressId: '',
-  code: '',
-  balance: '...',
-  detailsFetched: true,
-};
-
-const AddressDetails = ({ reference }: { reference: React.MutableRefObject<null> }) => {
-  const ref = reference;
-  const { hash: addressId } = useParams();
-  const [state, setState] = React.useState<StateType>(initialState);
-
-  const {
-    activeTestnet: { nodeUrl },
-    timeout,
-  } = useGlobalState();
-
-  const getDetails = () => {
-    if (addressId && ref.current !== null) {
-      getAddressDetails({ nodeUrl, addressId, timeout }).then((data: any) => {
-        if (ref.current !== null) {
-          setState(data);
-        }
-      });
-    }
-  };
-
-  React.useEffect(getDetails, [nodeUrl, addressId, timeout]);
-
-  const Address = useMemo(
-    () => (
-      <div ref={ref}>
-        <div>
-          <div className="row">
-            <div className="col-12">
-              <div className="card">
-                {!state.detailsFetched ? (
-                  <div className="card-body card-details">
-                    <div className="empty">
-                      <FontAwesomeIcon icon={faCode} className="empty-icon" />
-                      <span className="h4 empty-heading">Unable to locate this address hash</span>
-                      <span className="empty-details">{addressId}</span>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-lg-1 card-label">Address</div>
-                      <div className="col-lg-11">{addressId}</div>
-                    </div>
-                    <hr className="hr-space" />
-                    <div className="row">
-                      <div className="col-lg-1 card-label">Balance</div>
-                      <div className="col-lg-11">
-                        {state.balance !== '...' ? (
-                          <Denominate value={state.balance} />
-                        ) : (
-                          state.balance
-                        )}
-                      </div>
-                    </div>
-                    {state.code && (
-                      <>
-                        <hr className="hr-space" />
-                        <div className="row">
-                          <div className="col-lg-1 card-label">Code</div>
-                          <div className="col-lg-11">
-                            <textarea
-                              readOnly
-                              className="form-control col-lg-12 cursor-text"
-                              rows={2}
-                              defaultValue={state.code}
-                            />
-                          </div>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                )}
+const AddressDetails = (props: AddressDetailsType) => {
+  const Address = (
+    <div className="row mb-4">
+      <div className="col-12">
+        <div className="card">
+          {!props.detailsFetched ? (
+            <div className="card-body card-details">
+              <div className="empty">
+                <FontAwesomeIcon icon={faCode} className="empty-icon" />
+                <span className="h4 empty-heading">Unable to locate this address hash</span>
+                <span className="empty-details">{props.addressId}</span>
               </div>
             </div>
-          </div>
+          ) : (
+            <div className="card-body">
+              <div className="row">
+                <div className="col-lg-1 card-label">Address</div>
+                <div className="col-lg-11">{props.addressId}</div>
+              </div>
+              <hr className="hr-space" />
+              <div className="row">
+                <div className="col-lg-1 card-label">Balance</div>
+                <div className="col-lg-11">
+                  {props.balance !== '...' ? <Denominate value={props.balance} /> : props.balance}
+                </div>
+              </div>
+              {props.code && (
+                <>
+                  <hr className="hr-space" />
+                  <div className="row">
+                    <div className="col-lg-1 card-label">Code</div>
+                    <div className="col-lg-11">
+                      <textarea
+                        readOnly
+                        className="form-control col-lg-12 cursor-text"
+                        rows={2}
+                        defaultValue={props.code}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
         </div>
-        <div className="mb-4" />
       </div>
-    ),
-    [state, ref, addressId]
+    </div>
   );
-  return addressId ? Address : null;
+  return props.addressId ? Address : null;
 };
 
 export default AddressDetails;

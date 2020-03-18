@@ -2,10 +2,11 @@ import * as React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useGlobalState } from '../../context';
 import { Loader, Pager, ShardSpan } from './../../sharedComponents';
-import AddressDetails from './AddressDetails';
+import AddressDetails, { AddressDetailsType } from './AddressDetails';
 import FailedAddress from './FailedAddress';
 import FailedTransaction from './FailedTransaction';
-import { getTotalTransactions, getTransactions } from './helpers/asyncRequests';
+import { getAddressDetails, getTotalTransactions, getTransactions } from './helpers/asyncRequests';
+import NoTransactions from './NoTransactions';
 import TransactionRow from './TransactionRow';
 
 export interface TransactionType {
@@ -36,12 +37,22 @@ function getDirection(type: string | undefined) {
   return shardMap[String(type)] || shardMap.default;
 }
 
+const initialAddressDetails: AddressDetailsType = {
+  addressId: '',
+  code: '',
+  balance: '...',
+  detailsFetched: true,
+};
+
 const Transactions: React.FC = () => {
   const ref = React.useRef(null);
-  const addressRef = React.useRef(null);
+  const [addressDetails, setAddressDetails] = React.useState<AddressDetailsType>(
+    initialAddressDetails
+  );
+  const [addressDetailsLoading, setAddressDetailsLoading] = React.useState<boolean>(true);
 
   const {
-    activeTestnet: { elasticUrl },
+    activeTestnet: { elasticUrl, nodeUrl },
     refresh: { timestamp },
     timeout,
   } = useGlobalState();
@@ -86,12 +97,29 @@ const Transactions: React.FC = () => {
     }
   };
 
+  const getAddrDetails = () => {
+    if (addressId && ref.current !== null) {
+      getAddressDetails({ nodeUrl, addressId, timeout }).then((data: any) => {
+        if (ref.current !== null) {
+          setAddressDetails(data);
+          setAddressDetailsLoading(false);
+        }
+      });
+    } else {
+      setAddressDetailsLoading(false);
+    }
+  };
+
+  React.useEffect(getAddrDetails, [nodeUrl, addressId, timeout]);
+
   React.useEffect(fetchTransactions, [elasticUrl, size, addressId, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
 
   let slug = addressId ? `address/${addressId}` : 'transactions';
   slug = shardType ? `transactions/${shardDirection}/${shardId}` : slug;
 
   const title = indexOfTransactions >= 0 ? 'Transactions' : 'Address Details';
+
+  const errorState = addressDetails.balance === '0' || !addressDetails.detailsFetched;
 
   const Component = () => {
     return (
@@ -111,12 +139,10 @@ const Transactions: React.FC = () => {
               </h4>
             </div>
           </div>
-          {transactionsFetched && transactions.length === 0 && <Loader />}
-          {transactionsFetched && transactions.length > 0 && (
+          {addressDetailsLoading && addressDetails.detailsFetched && <Loader />}
+          {!addressDetailsLoading && addressDetails.detailsFetched && !errorState && (
             <>
-              <div className={transactionsFetched ? '' : 'd-none'}>
-                <AddressDetails reference={addressRef} />
-              </div>
+              <AddressDetails {...addressDetails} />
               <div className="row">
                 <div className="col-12">
                   {title !== 'Transactions' && (
@@ -173,7 +199,13 @@ const Transactions: React.FC = () => {
                       </div>
                     </div>
                   ) : (
-                    <Loader />
+                    <>
+                      {transactionsFetched ? (
+                        <Loader />
+                      ) : (
+                        pathname.includes('address') && <NoTransactions />
+                      )}
+                    </>
                   )}
                 </div>
               </div>
@@ -181,7 +213,9 @@ const Transactions: React.FC = () => {
           )}
           {!transactionsFetched && (
             <>
-              {pathname.includes('address') && <FailedAddress addressId={addressId} />}
+              {pathname.includes('address') && errorState && (
+                <FailedAddress addressId={addressId} />
+              )}
               {pathname.includes('transactions') && <FailedTransaction />}
             </>
           )}
@@ -189,7 +223,7 @@ const Transactions: React.FC = () => {
       </div>
     );
   };
-  return React.useMemo(Component, [transactions, transactionsFetched]);
+  return React.useMemo(Component, [transactions, transactionsFetched, addressDetailsLoading]);
 };
 
 export default Transactions;
