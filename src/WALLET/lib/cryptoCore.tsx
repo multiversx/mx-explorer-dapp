@@ -27,7 +27,6 @@ export default (function cryptoCore() {
 
   function generateKeyFileFromPrivateKey(privateKey: string, password: string) {
     const account = new elrondCoreJS.account(); // eslint-disable-line
-    console.warn(account);
 
     const kdFile = account.generateKeyFileFromPrivateKey(privateKey, password); // eslint-disable-line
 
@@ -36,7 +35,7 @@ export default (function cryptoCore() {
 
   function loadAccountFromPEMSecret(privateKey: string) {
     const account = new elrondCoreJS.account(); // eslint-disable-line
-    account.loadFromSeed(privateKey);
+    account.loadFromPrivateKey(privateKey);
     return account;
   }
 
