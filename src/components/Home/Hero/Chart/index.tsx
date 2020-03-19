@@ -1,17 +1,17 @@
-import React from 'react';
 import { Chart } from 'chart.js';
+import React from 'react';
 import { useGlobalState } from '../../../../context';
 import { addValueToChart } from './helpers/chartHelpers';
 
-type ChartType = {
+interface ChartType {
   liveTps: number;
-};
+}
 
 let myChart: any;
 let requestsCount = 1;
 
 const HeroChart = ({ liveTps }: ChartType) => {
-  let ref = React.useRef(null);
+  const ref = React.useRef(null);
 
   const {
     activeTestnet: { refreshRate: activeRoundTime },
@@ -85,16 +85,16 @@ const HeroChart = ({ liveTps }: ChartType) => {
         },
       });
     }
-    let prePopulateCount = 20;
-    let roundTime = activeRoundTime / 1000;
+    const prePopulateCount = 20;
+    const roundTime = activeRoundTime / 1000;
 
     for (let i = prePopulateCount + 1; i > 1; i--) {
       initialValuesCount++;
 
       if (initialValuesCount === 20) {
         for (let i = 21; i > 1; i--) {
-          let dataLag = 2 * roundTime * 1000;
-          let myTime = new Date().getTime() - dataLag - i * roundTime + roundTime;
+          const dataLag = 2 * roundTime * 1000;
+          const myTime = new Date().getTime() - dataLag - i * roundTime + roundTime;
           requestsCount = addValueToChart(0, myTime, requestsCount, myChart);
         }
       }
