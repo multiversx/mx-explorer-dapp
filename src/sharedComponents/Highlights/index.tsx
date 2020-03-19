@@ -65,7 +65,7 @@ const Hightlights = ({
         if (ref.current !== null) {
           const sameTestnet = oldTestnetId === activeTestnetId;
           if (success || (!success && !sameTestnet)) {
-            setLiveTps(newState.liveTPS);
+            setLiveTps(data.liveTPS);
             setState(newState);
           }
         }
