@@ -116,7 +116,7 @@ const Blocks: React.FC = () => {
                       <div className="card-body card-list">
                         <BlocksTable blocks={state.blocks} shardId={shardId} />
                         <Pager
-                          slug={shardId ? `blocks/shards/${shardId}` : 'blocks'}
+                          slug={!isNaN(shardId!) ? `blocks/shards/${shardId}` : 'blocks'}
                           total={totalBlocks}
                           start={(size - 1) * 25 + (size === 1 ? 1 : 0)}
                           end={
