@@ -23,6 +23,7 @@ function convertNewWallet(kdContent: string) {
       publicKey: account.publicKeyAsString(),
     };
   } catch (e) {
+    console.warn(e);
     return {
       success: false,
       privateKey: '',
