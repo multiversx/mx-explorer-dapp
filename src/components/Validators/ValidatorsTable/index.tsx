@@ -39,6 +39,7 @@ const ValidatorsTable = (
   const [includeObservers, setIncludeObsevers] = React.useState(false);
   const [sort, setSort] = React.useState<SortType>(initialSort);
   const [ratingOrder, setRatingOrder] = React.useState<number[]>([]);
+  const [isInitialRatingDesc, setIsInitialRatingDesc] = React.useState(false);
   const [page, setPage] = React.useState<number>(1);
   const [searchValue, setSearchValue] = React.useState<string>('');
   const [shardValue, setShardValue] = React.useState<string>('');
@@ -103,11 +104,12 @@ const ValidatorsTable = (
 
   const getRatings = () => {
     const uniqueRatings = validators
-      .map(v => Math.floor(v.rating))
+      .map(v => v.rating)
       .sort()
       .reverse()
       .filter((item, i, ar) => ar.indexOf(item) === i);
     setRatingOrder(uniqueRatings);
+    setIsInitialRatingDesc(true);
   };
 
   React.useEffect(getRatings, [validatorsAndObservers, validators, page]);
@@ -146,6 +148,8 @@ const ValidatorsTable = (
                   validatorObserverValue={validatorObserverValue}
                   setValidatorObserverValue={resetPager(setValidatorObserverValue)}
                   validatorStatistics={props.validatorStatistics}
+                  isInitialRatingDesc={isInitialRatingDesc}
+                  setIsInitialRatingDesc={setIsInitialRatingDesc}
                 />
                 <tbody>
                   {newValidators.map((validator, i) => (

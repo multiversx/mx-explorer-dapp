@@ -19,6 +19,8 @@ interface ValidatorsTableHeaderType {
   setValidatorObserverValue: React.Dispatch<React.SetStateAction<string>>;
   validatorStatistics: boolean;
   hasWaitingValidators: boolean;
+  isInitialRatingDesc: boolean;
+  setIsInitialRatingDesc: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ValidatorsTableHeader = ({
@@ -34,6 +36,8 @@ const ValidatorsTableHeader = ({
   setValidatorObserverValue,
   validatorStatistics,
   hasWaitingValidators,
+  isInitialRatingDesc,
+  setIsInitialRatingDesc,
 }: ValidatorsTableHeaderType) => {
   const headers: HeadersType[] = [
     {
@@ -83,6 +87,9 @@ const ValidatorsTableHeader = ({
   }
 
   const toggleSort = (currentSortColumn: string) => () => {
+    if (currentSortColumn === 'rating') {
+      setIsInitialRatingDesc(false);
+    }
     const { field: oldSortColumn, dir: oldDir } = sort;
     const { field, dir } = getNewSortData({ oldDir, oldSortColumn, currentSortColumn });
     sortBy({ field, dir });
@@ -117,7 +124,9 @@ const ValidatorsTableHeader = ({
       <tr>
         {headers.map(header => (
           <th
-            className={`sortable ${['totalUpTimeSec'].includes(header.id) ? 'text-right' : ''}`}
+            className={`sortable ${
+              ['totalUpTimeSec', 'rating'].includes(header.id) ? 'text-right' : ''
+            }`}
             key={header.id}
           >
             <span onClick={toggleSort(header.id)}>{header.label}&nbsp;</span>
@@ -125,7 +134,10 @@ const ValidatorsTableHeader = ({
               <FontAwesomeIcon icon={faArrowUp} className="empty-icon" />
             )}
             {sort.dir === 'desc' && sort.field === header.id && (
-              <FontAwesomeIcon icon={faArrowDown} className="empty-icon" />
+              <FontAwesomeIcon
+                icon={faArrowDown}
+                className={sort.field === 'rating' && isInitialRatingDesc ? 'd-none' : 'empty-icon'}
+              />
             )}
             {header.id === 'hexPublicKey' && (hasWaitingValidators || includeObservers) && (
               <OverlayTrigger
