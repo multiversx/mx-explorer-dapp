@@ -2,10 +2,6 @@ import { getShardId } from './../../../helpers';
 import { ShardDataType, ValidatorType } from './../index';
 
 export interface ValidatorStatisticsData {
-  nrLeaderSuccess: number;
-  nrLeaderFailure: number;
-  nrValidatorSuccess: number;
-  nrValidatorFailure: number;
   rating: number;
 }
 

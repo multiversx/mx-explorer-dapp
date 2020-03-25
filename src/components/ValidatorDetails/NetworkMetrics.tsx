@@ -19,22 +19,11 @@ const NetworkMetrics = ({
   totalDownTimePercentege,
   totalUpTimeLabel,
   totalDownTimeLabel,
-  nrLeaderSuccess,
-  nrLeaderFailure,
-  nrValidatorSuccess,
-  nrValidatorFailure,
+  rating,
 }: NetworkMetricsType & ValidatorStatisticsData) => {
   const {
     activeTestnet: { validatorStatistics },
   } = useGlobalState();
-  const leaderPercentage =
-    nrLeaderSuccess !== 0 || nrLeaderFailure !== 0
-      ? Math.floor((nrLeaderSuccess * 100) / (nrLeaderSuccess + nrLeaderFailure))
-      : 0;
-  const validatorPercentage =
-    nrValidatorSuccess !== 0 || nrValidatorFailure !== 0
-      ? Math.floor((nrValidatorSuccess * 100) / (nrValidatorSuccess + nrValidatorFailure))
-      : 0;
 
   const cardBodyClassValidatorStatistics = validatorStatistics
     ? 'card-body mt-1 mb-1' // 'card-body mt-2 mb-2'
@@ -50,6 +39,11 @@ const NetworkMetrics = ({
       </div>
       <div className="card" style={{ height: 'auto' }}>
         <div className={cardBodyClass}>
+          <div className="row">
+            <div className={labelClass}>Rating</div>
+            <div className={dataClass}>{rating}</div>
+          </div>
+          <hr className="hr-space" />
           <div className="row">
             <div className={labelClass}>Status</div>
             <div className={dataClass}>
@@ -78,35 +72,7 @@ const NetworkMetrics = ({
               />
             </div>
           </div>
-          {validatorStatistics && (
-            <>
-              <hr className="hr-space" />
-              <div className="row">
-                <div className="col-lg-3 card-label">Leader Success</div>
-                <div className="col-lg-9">
-                  <PercentegeBar
-                    totalDownTimeLabel={`${100 - leaderPercentage}% failure (${nrLeaderFailure})`}
-                    totalUpTimeLabel={`${leaderPercentage}% success (${nrLeaderSuccess})`}
-                    totalUpTimePercentege={leaderPercentage}
-                    totalDownTimePercentege={100 - leaderPercentage}
-                  />
-                </div>
-              </div>
-              {/* <hr className="hr-space" />
-              <div className="row">
-                <div className="col-lg-3 card-label">Validator Success</div>
-                <div className="col-lg-9">
-                  <PercentegeBar
-                    totalDownTimeLabel={`${100 -
-                      validatorPercentage}% failure (${nrValidatorFailure})`}
-                    totalUpTimeLabel={`${validatorPercentage}% success (${nrValidatorSuccess})`}
-                    totalUpTimePercentege={validatorPercentage}
-                    totalDownTimePercentege={100 - validatorPercentage}
-                  />
-                </div>
-              </div> */}
-            </>
-          )}
+          {validatorStatistics && <></>}
         </div>
       </div>
     </>

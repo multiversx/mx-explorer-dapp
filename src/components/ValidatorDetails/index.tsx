@@ -39,10 +39,6 @@ export const initialState: StateType = {
   endBlockNr: 0,
   signersIndex: -1,
   success: true,
-  nrLeaderSuccess: 0,
-  nrLeaderFailure: 0,
-  nrValidatorSuccess: 0,
-  nrValidatorFailure: 0,
   rating: 0,
 };
 
@@ -92,18 +88,10 @@ const ValidatorDetails = () => {
             getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }).then(
               ({ statistics }: any) => {
                 if (data.publicKey in statistics) {
-                  const {
-                    nrLeaderSuccess,
-                    nrLeaderFailure,
-                    nrValidatorSuccess,
-                    nrValidatorFailure,
-                  } = statistics[data.publicKey];
+                  const { rating } = statistics[data.publicKey];
                   setState(currentState => ({
+                    rating,
                     ...currentState,
-                    nrLeaderSuccess,
-                    nrLeaderFailure,
-                    nrValidatorSuccess,
-                    nrValidatorFailure,
                   }));
                 }
               }
