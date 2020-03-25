@@ -68,6 +68,20 @@ const ValidatorsTableHeader = ({
       dir: 'none',
     },
   ];
+
+  if (validatorStatistics) {
+    headers.splice(0, 0, {
+      id: '#',
+      label: '#',
+      dir: 'none',
+    });
+    headers.splice(5, 0, {
+      id: 'rating',
+      label: 'Rating',
+      dir: 'none',
+    });
+  }
+
   const toggleSort = (currentSortColumn: string) => () => {
     const { field: oldSortColumn, dir: oldDir } = sort;
     const { field, dir } = getNewSortData({ oldDir, oldSortColumn, currentSortColumn });
@@ -98,27 +112,12 @@ const ValidatorsTableHeader = ({
     setValidatorObserverValue(validatorObs);
   };
 
-  if (validatorStatistics && !headers.some(header => ['leader', 'validator'].includes(header.id))) {
-    headers.splice(4, 0, {
-      id: 'leader',
-      label: 'Leader Success',
-      dir: 'none',
-    });
-    // headers.splice(5, 0, {
-    //   id: 'validator',
-    //   label: 'Validator Success',
-    //   dir: 'none',
-    // });
-  }
-
   return (
     <thead>
       <tr>
         {headers.map(header => (
           <th
-            className={`sortable ${
-              ['totalUpTimeSec', 'leader', 'validator'].includes(header.id) ? 'text-right' : ''
-            }`}
+            className={`sortable ${['totalUpTimeSec'].includes(header.id) ? 'text-right' : ''}`}
             key={header.id}
           >
             <span onClick={toggleSort(header.id)}>{header.label}&nbsp;</span>

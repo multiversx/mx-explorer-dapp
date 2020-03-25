@@ -6,6 +6,7 @@ export interface ValidatorStatisticsData {
   nrLeaderFailure: number;
   nrValidatorSuccess: number;
   nrValidatorFailure: number;
+  rating: number;
 }
 
 export interface StatisticsType {
@@ -41,22 +42,16 @@ export function populateValidatorsTable({
     const { shardId, shardNumber, star } = getShardId(validator, metaChainShardId);
 
     const statisticsHasValidatorHash =
+      statistics !== undefined &&
+      statistics !== null &&
       typeof statistics === 'object' &&
       Object.keys(statistics).length &&
       validator.hexPublicKey in statistics;
 
-    const {
-      nrLeaderSuccess,
-      nrLeaderFailure,
-      nrValidatorSuccess,
-      nrValidatorFailure,
-    } = statisticsHasValidatorHash
+    const { rating } = statisticsHasValidatorHash
       ? statistics[validator.hexPublicKey]
       : {
-          nrLeaderSuccess: 0,
-          nrLeaderFailure: 0,
-          nrValidatorSuccess: 0,
-          nrValidatorFailure: 0,
+          rating: 0,
         };
     validator = {
       ...validator,
@@ -66,14 +61,7 @@ export function populateValidatorsTable({
       peerType: validator.peerType
         ? getPeerType(validator.peerType)
         : getPeerType(validator.isValidator ? 'eligible' : 'observer'),
-      leader:
-        nrLeaderSuccess !== 0 || nrLeaderFailure !== 0
-          ? Math.floor((nrLeaderSuccess * 100) / (nrLeaderSuccess + nrLeaderFailure))
-          : 0,
-      validator:
-        nrValidatorSuccess !== 0 || nrValidatorFailure !== 0
-          ? Math.floor((nrValidatorSuccess * 100) / (nrValidatorSuccess + nrValidatorFailure))
-          : 0,
+      rating,
     };
 
     if (['eligible', 'waiting'].includes(validator.peerType)) {

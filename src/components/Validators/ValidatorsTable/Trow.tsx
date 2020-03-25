@@ -10,35 +10,21 @@ const ValidatorRow = ({
   validatorDetails,
   validatorStatistics,
   rowIndex,
+  ratingOrder,
 }: {
   validator: ValidatorType;
   rowIndex: number;
   validatorDetails: boolean;
   validatorStatistics: boolean;
+  ratingOrder: number[];
 }) => {
-  const validatorStatisticsCells = validatorStatistics ? (
-    <>
-      <td className="text-right">
-        {validator.leader !== 0 ? (
-          <span>{validator.leader}%</span>
-        ) : (
-          <span className="text-muted">N/A</span>
-        )}
-      </td>
-      {/* <td className="text-right">
-        {validator.validator !== 0 ? (
-          <span>{validator.validator}%</span>
-        ) : (
-          <span className="text-muted">N/A</span>
-        )}
-      </td> */}
-    </>
-  ) : (
-    <></>
-  );
-
   return (
     <tr className="animated fadeIn">
+      {validatorStatistics ? (
+        <td>{ratingOrder.indexOf(Math.floor(validator.rating)) + 1}</td>
+      ) : (
+        <></>
+      )}
       <td>
         {validator.peerType === 'observer' && (
           <FontAwesomeIcon title="observer" icon={faEye} className="w300 mr-1" />
@@ -75,12 +61,12 @@ const ValidatorRow = ({
       </td>
       <td>
         {validator.versionNumber ? (
-          truncate(validator.versionNumber, 20)
+          truncate(validator.versionNumber.split('-')[0], 20)
         ) : (
           <span className="text-muted">N/A</span>
         )}
       </td>
-      {validatorStatisticsCells}
+      {validatorStatistics ? <td>{Math.floor(validator.rating)}</td> : <></>}
       <td className="text-right">
         {(validator.totalUpTimeSec !== 0 || validator.totalDownTimeSec !== 0) && (
           <span>

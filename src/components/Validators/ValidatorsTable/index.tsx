@@ -27,13 +27,18 @@ export interface SortType {
   field: string;
   dir: DirectioinsType;
 }
+
 export type ValidatorValueType = string;
 
 const ValidatorsTable = (
   props: StateType & { validatorDetails: boolean; validatorStatistics: boolean }
 ) => {
+  const initialSort: SortType = props.validatorStatistics
+    ? { field: 'rating', dir: 'desc' }
+    : { field: '', dir: 'none' };
   const [includeObservers, setIncludeObsevers] = React.useState(false);
-  const [sort, setSort] = React.useState<SortType>({ field: '', dir: 'none' });
+  const [sort, setSort] = React.useState<SortType>(initialSort);
+  const [ratingOrder, setRatingOrder] = React.useState<number[]>([]);
   const [page, setPage] = React.useState<number>(1);
   const [searchValue, setSearchValue] = React.useState<string>('');
   const [shardValue, setShardValue] = React.useState<string>('');
@@ -96,6 +101,17 @@ const ValidatorsTable = (
 
   const newValidators: ValidatorType[] = dataSource.view();
 
+  const getRatings = () => {
+    const uniqueRatings = validators
+      .map(v => Math.floor(v.rating))
+      .sort()
+      .reverse()
+      .filter((item, i, ar) => ar.indexOf(item) === i);
+    setRatingOrder(uniqueRatings);
+  };
+
+  React.useEffect(getRatings, [validatorsAndObservers, validators, page]);
+
   const hasWaitingValidators = validatorsAndObservers.some(
     validator => validator.peerType === 'waiting'
   );
@@ -135,6 +151,7 @@ const ValidatorsTable = (
                   {newValidators.map((validator, i) => (
                     <ValidatorTableRow
                       key={validator.hexPublicKey}
+                      ratingOrder={ratingOrder}
                       rowIndex={i}
                       validator={validator}
                       validatorDetails={validatorDetails}

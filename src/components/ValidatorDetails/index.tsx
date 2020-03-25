@@ -43,6 +43,7 @@ export const initialState: StateType = {
   nrLeaderFailure: 0,
   nrValidatorSuccess: 0,
   nrValidatorFailure: 0,
+  rating: 0,
 };
 
 const ValidatorDetails = () => {

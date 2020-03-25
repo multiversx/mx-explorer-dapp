@@ -24,8 +24,7 @@ export interface ValidatorType {
   shardId: string;
   shardNumber: number;
   star: boolean;
-  leader: number;
-  validator: number;
+  rating: number;
 }
 
 export const initialState: StateType = {
@@ -62,27 +61,27 @@ const Validators = () => {
   const [state, setState] = React.useState({ success: true, data: initialState });
 
   const getData = () => {
-    if (ref.current !== null) {
+    Promise.all([
       getValidatorsData({
         nodeUrl: validatorsApiUrl || nodeUrl,
         timeout: Math.max(timeout, 10000),
-      }).then(({ data, success }) => {
+      }),
+      getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }),
+    ]).then(([getValidatorsDataResponse, validatorStats]) => {
+      const { data, success } = getValidatorsDataResponse;
+      if (validatorStatistics) {
+        const { statistics } = validatorStats;
+        const newState = populateValidatorsTable({ data, metaChainShardId, statistics });
+        if (ref.current !== null) {
+          setState({ success, data: newState });
+        }
+      } else {
         const newState = populateValidatorsTable({ data, metaChainShardId });
         if (ref.current !== null) {
           setState({ success, data: newState });
         }
-        if (validatorStatistics) {
-          getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }).then(
-            ({ statistics }: any) => {
-              const newState = populateValidatorsTable({ data, metaChainShardId, statistics });
-              if (ref.current !== null) {
-                setState({ success, data: newState });
-              }
-            }
-          );
-        }
-      });
-    }
+      }
+    });
   };
 
   React.useEffect(getData, [nodeUrl, timeout]);
