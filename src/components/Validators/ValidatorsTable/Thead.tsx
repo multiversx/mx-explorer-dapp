@@ -75,7 +75,7 @@ const ValidatorsTableHeader = ({
 
   if (validatorStatistics) {
     headers.splice(0, 0, {
-      id: '#',
+      id: 'ratingOrder',
       label: '#',
       dir: 'none',
     });
@@ -87,6 +87,9 @@ const ValidatorsTableHeader = ({
   }
 
   const toggleSort = (currentSortColumn: string) => () => {
+    if (currentSortColumn === 'ratingOrder') {
+      return;
+    }
     if (currentSortColumn === 'rating') {
       setIsInitialRatingDesc(false);
     }
