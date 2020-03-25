@@ -70,10 +70,10 @@ const Validators = () => {
     ]).then(([getValidatorsDataResponse, validatorStats]) => {
       const { data, success } = getValidatorsDataResponse;
       if (validatorStatistics) {
-        const { statistics } = validatorStats;
+        const { statistics, success: validatorsSuccess } = validatorStats;
         const newState = populateValidatorsTable({ data, metaChainShardId, statistics });
         if (ref.current !== null) {
-          setState({ success, data: newState });
+          setState({ success: success && validatorsSuccess, data: newState });
         }
       } else {
         const newState = populateValidatorsTable({ data, metaChainShardId });
