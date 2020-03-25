@@ -103,7 +103,8 @@ const ValidatorsTable = (
   const newValidators: ValidatorType[] = dataSource.view();
 
   const getRatings = () => {
-    const uniqueRatings = validators
+    const data = includeObservers ? validatorsAndObservers : validators;
+    const uniqueRatings = data
       .map(v => v.rating)
       .sort()
       .reverse()
@@ -112,7 +113,7 @@ const ValidatorsTable = (
     setIsInitialRatingDesc(true);
   };
 
-  React.useEffect(getRatings, [validatorsAndObservers, validators, page]);
+  React.useEffect(getRatings, [validatorsAndObservers, validators, page, includeObservers]);
 
   const hasWaitingValidators = validatorsAndObservers.some(
     validator => validator.peerType === 'waiting'
