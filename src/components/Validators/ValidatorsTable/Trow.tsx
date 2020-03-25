@@ -20,7 +20,11 @@ const ValidatorRow = ({
 }) => {
   return (
     <tr className="animated fadeIn">
-      {validatorStatistics ? <td>{ratingOrder.indexOf(validator.rating) + 1}</td> : <></>}
+      {validatorStatistics ? (
+        <td>{validator.rating > 0 ? ratingOrder.indexOf(validator.rating) + 1 : null}</td>
+      ) : (
+        <></>
+      )}
       <td>
         {validator.peerType === 'observer' && (
           <FontAwesomeIcon title="observer" icon={faEye} className="w300 mr-1" />
@@ -28,7 +32,7 @@ const ValidatorRow = ({
         {validator.peerType === 'waiting' && (
           <FontAwesomeIcon icon={faClock} className="w300 mr-1" />
         )}
-        {validatorDetails ? (
+        {validator.peerType !== 'observer' ? (
           <TestnetLink
             to={`/validators/${validator.hexPublicKey}`}
             data-testid={`publicKeyLink${rowIndex}`}
@@ -62,7 +66,11 @@ const ValidatorRow = ({
           <span className="text-muted">N/A</span>
         )}
       </td>
-      {validatorStatistics ? <td className="text-right">{Math.floor(validator.rating)}</td> : <></>}
+      {validatorStatistics ? (
+        <td className="text-right">{validator.rating > 0 ? Math.floor(validator.rating) : null}</td>
+      ) : (
+        <></>
+      )}
       <td className="text-right">
         {(validator.totalUpTimeSec !== 0 || validator.totalDownTimeSec !== 0) && (
           <span>
