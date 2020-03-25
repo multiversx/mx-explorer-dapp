@@ -51,7 +51,7 @@ const CONFIG = {
       data: true,
       validatorDetails: true,
       faucet: false,
-      validatorStatistics: false,
+      validatorStatistics: true,
     },
     {
       id: 'cryptobubbles',
