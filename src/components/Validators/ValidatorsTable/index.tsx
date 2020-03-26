@@ -38,7 +38,7 @@ const ValidatorsTable = (
     : { field: '', dir: 'none' };
   const [includeObservers, setIncludeObsevers] = React.useState(false);
   const [sort, setSort] = React.useState<SortType>(initialSort);
-  const [ratingOrder, setRatingOrder] = React.useState<number[]>([]);
+  const [ratingOrder, setRatingOrder] = React.useState<string[]>([]);
   const [isInitialRatingDesc, setIsInitialRatingDesc] = React.useState(false);
   const [page, setPage] = React.useState<number>(1);
   const [searchValue, setSearchValue] = React.useState<string>('');
@@ -105,10 +105,9 @@ const ValidatorsTable = (
   const getRatings = () => {
     const data = includeObservers ? validatorsAndObservers : validators;
     const uniqueRatings = data
-      .map(v => v.rating)
-      .sort()
+      .sort((a, b) => a.rating - b.rating)
       .reverse()
-      .filter((item, i, ar) => ar.indexOf(item) === i);
+      .map(v => v.hexPublicKey);
     setRatingOrder(uniqueRatings);
     setIsInitialRatingDesc(true);
   };

@@ -16,12 +16,12 @@ const ValidatorRow = ({
   rowIndex: number;
   validatorDetails: boolean;
   validatorStatistics: boolean;
-  ratingOrder: number[];
+  ratingOrder: string[];
 }) => {
   return (
     <tr className="animated fadeIn">
       {validatorStatistics ? (
-        <td>{validator.rating > 0 ? ratingOrder.indexOf(validator.rating) + 1 : null}</td>
+        <td>{validator.rating > 0 ? ratingOrder.indexOf(validator.hexPublicKey) + 1 : null}</td>
       ) : (
         <></>
       )}
