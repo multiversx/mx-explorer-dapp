@@ -39,9 +39,25 @@ const NetworkMetrics = ({
       </div>
       <div className="card" style={{ height: 'auto' }}>
         <div className={cardBodyClass}>
+          {validatorStatistics && (
+            <>
+              <div className="row">
+                <div className={labelClass}>Rating</div>
+                <div className={dataClass}>{rating}</div>
+              </div>
+              <hr className="hr-space" />
+            </>
+          )}
           <div className="row">
-            <div className={labelClass}>Rating</div>
-            <div className={dataClass}>{rating}</div>
+            <div className={labelClass}>Uptime</div>
+            <div className={dataClass}>
+              <PercentegeBar
+                totalDownTimeLabel={totalDownTimeLabel}
+                totalUpTimeLabel={totalUpTimeLabel}
+                totalUpTimePercentege={totalUpTimePercentege}
+                totalDownTimePercentege={totalDownTimePercentege}
+              />
+            </div>
           </div>
           <hr className="hr-space" />
           <div className="row">
@@ -60,19 +76,6 @@ const NetworkMetrics = ({
               )}
             </div>
           </div>
-          <hr className="hr-space" />
-          <div className="row">
-            <div className={labelClass}>Uptime</div>
-            <div className={dataClass}>
-              <PercentegeBar
-                totalDownTimeLabel={totalDownTimeLabel}
-                totalUpTimeLabel={totalUpTimeLabel}
-                totalUpTimePercentege={totalUpTimePercentege}
-                totalDownTimePercentege={totalDownTimePercentege}
-              />
-            </div>
-          </div>
-          {validatorStatistics && <></>}
         </div>
       </div>
     </>
