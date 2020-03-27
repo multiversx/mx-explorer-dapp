@@ -32,7 +32,7 @@ const ValidatorRow = ({
         {validator.peerType === 'waiting' && (
           <FontAwesomeIcon icon={faClock} className="w300 mr-1" />
         )}
-        {validator.peerType !== 'observer' ? (
+        {validator.peerType !== 'observer' && validatorDetails ? (
           <TestnetLink
             to={`/validators/${validator.hexPublicKey}`}
             data-testid={`publicKeyLink${rowIndex}`}
