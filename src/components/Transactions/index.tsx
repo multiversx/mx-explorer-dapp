@@ -42,6 +42,7 @@ const initialAddressDetails: AddressDetailsType = {
   addressId: '',
   code: '',
   balance: '...',
+  nonce: 0,
   detailsFetched: true,
 };
 
@@ -131,8 +132,6 @@ const Transactions: React.FC = () => {
 
   const title = indexOfTransactions >= 0 ? 'Transactions' : 'Address Details';
 
-  const errorState = addressDetails.balance === '0' || !addressDetails.detailsFetched;
-
   const Component = () => {
     return (
       <div ref={ref}>
@@ -152,7 +151,7 @@ const Transactions: React.FC = () => {
             </div>
           </div>
           {addressDetailsLoading && addressDetails.detailsFetched && <Loader />}
-          {!addressDetailsLoading && addressDetails.detailsFetched && !errorState && (
+          {!addressDetailsLoading && addressDetails.detailsFetched && (
             <>
               <AddressDetails {...addressDetails} />
               <div className="row">
@@ -223,14 +222,11 @@ const Transactions: React.FC = () => {
               </div>
             </>
           )}
-          {!transactionsFetched && (
-            <>
-              {pathname.includes('address') && errorState && (
-                <FailedAddress addressId={addressId} />
-              )}
-              {pathname.includes('transactions') && <FailedTransaction />}
-            </>
-          )}
+          {!transactionsFetched &&
+            addressDetails.balance === '0' &&
+            addressDetails.nonce === 0 &&
+            pathname.includes('address') && <FailedAddress addressId={addressId} />}
+          {!transactionsFetched && pathname.includes('transactions') && <FailedTransaction />}
         </div>
       </div>
     );

@@ -8,6 +8,7 @@ export interface AddressDetailsType {
   addressId: string;
   code: string;
   balance: string;
+  nonce: number;
   detailsFetched: boolean;
 }
 
