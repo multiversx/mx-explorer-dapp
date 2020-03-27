@@ -5,11 +5,10 @@ import {
   faHourglass,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useGlobalState } from 'context';
+import { addressFromHexPublicKey, addressIsHash, dateFormatted } from 'helpers';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { useGlobalState } from '../../context';
-import { TransactionType } from '../Transactions';
-import { addressIsHash, dateFormatted } from './../../helpers';
 import {
   Denominate,
   Loader,
@@ -17,7 +16,8 @@ import {
   ShardSpan,
   TestnetLink,
   TimeAgo,
-} from './../../sharedComponents';
+} from 'sharedComponents';
+import { TransactionType } from '../Transactions';
 import { getTransaction } from './helpers/asyncRequests';
 
 const TransactionDetails: React.FC = () => {
@@ -113,8 +113,10 @@ const TransactionDetails: React.FC = () => {
                           <ScAddressIcon initiator={transaction.sender} />
                           {addressIsHash(transaction.sender) ? (
                             <>
-                              <TestnetLink to={`/address/${transaction.sender}`}>
-                                {transaction.sender}
+                              <TestnetLink
+                                to={`/address/${addressFromHexPublicKey(transaction.sender)}`}
+                              >
+                                {addressFromHexPublicKey(transaction.sender)}
                               </TestnetLink>
                               <TestnetLink
                                 to={`/transactions/shard-from/${transaction.senderShard}`}
@@ -135,8 +137,10 @@ const TransactionDetails: React.FC = () => {
                         <div className="col-lg-2 card-label">To</div>
                         <div className="col-lg-10">
                           <ScAddressIcon initiator={transaction.receiver} />
-                          <TestnetLink to={`/address/${transaction.receiver}`}>
-                            {transaction.receiver}
+                          <TestnetLink
+                            to={`/address/${addressFromHexPublicKey(transaction.receiver)}`}
+                          >
+                            {addressFromHexPublicKey(transaction.receiver)}
                           </TestnetLink>
                           &nbsp;
                           {Boolean(transaction.receiverShard) && (

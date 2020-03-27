@@ -1,7 +1,7 @@
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { addressIsHash, dateFormatted, trimHash, truncate } from 'helpers';
+import { addressFromHexPublicKey, addressIsHash, dateFormatted, trimHash, truncate } from 'helpers';
 import * as React from 'react';
 import { ScAddressIcon, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { TransactionType } from './../Transactions';
@@ -69,7 +69,7 @@ const LatestTransactions: React.FC = () => {
                             secondInitiator={transaction.receiver}
                           />
                           <TestnetLink
-                            to={`/transactions/${transaction.hash}`}
+                            to={`/transactions/${addressFromHexPublicKey(transaction.hash)}`}
                             data-testid={`transactionLink${i}`}
                           >
                             {truncate(transaction.hash, 20)}
@@ -85,8 +85,10 @@ const LatestTransactions: React.FC = () => {
                       <div className="col-6">
                         From&nbsp;
                         {addressIsHash(transaction.sender) ? (
-                          <TestnetLink to={`/address/${transaction.sender}`}>
-                            {trimHash(transaction.sender)}
+                          <TestnetLink
+                            to={`/address/${addressFromHexPublicKey(transaction.sender)}`}
+                          >
+                            {trimHash(addressFromHexPublicKey(transaction.sender))}
                           </TestnetLink>
                         ) : (
                           <ShardSpan shardId={transaction.sender} />
@@ -94,10 +96,10 @@ const LatestTransactions: React.FC = () => {
                         <br />
                         To&nbsp;
                         <TestnetLink
-                          to={`/address/${transaction.receiver}`}
+                          to={`/address/${addressFromHexPublicKey(transaction.receiver)}`}
                           data-testid={`transactionLinkTo${i}`}
                         >
-                          {trimHash(transaction.receiver)}
+                          {trimHash(addressFromHexPublicKey(transaction.receiver))}
                         </TestnetLink>
                       </div>
                     </div>

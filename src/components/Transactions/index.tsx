@@ -1,3 +1,4 @@
+import { addressIsBach32, hexPublicKeyFromAddress } from 'helpers';
 import * as React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useGlobalState } from '../../context';
@@ -73,33 +74,44 @@ const Transactions: React.FC = () => {
 
   const refreshFirstPage = size === 1 ? timestamp : 0;
 
+  const address = addressIsBach32(addressId) ? hexPublicKeyFromAddress(addressId) : addressId;
+
   const fetchTransactions = () => {
     if (ref.current !== null) {
-      getTransactions({ elasticUrl, size, addressId, shardId, shardType, timeout }).then(
-        ({ data, success }) => {
-          if (ref.current !== null) {
-            if (success) {
-              setTransactions(data);
-              setTransactionsFetched(true);
-            } else if (transactions.length === 0) {
-              setTransactionsFetched(false);
-            }
+      getTransactions({
+        elasticUrl,
+        size,
+        addressId: address,
+        shardId,
+        shardType,
+        timeout,
+      }).then(({ data, success }) => {
+        if (ref.current !== null) {
+          if (success) {
+            setTransactions(data);
+            setTransactionsFetched(true);
+          } else if (transactions.length === 0) {
+            setTransactionsFetched(false);
           }
         }
-      );
-      getTotalTransactions({ elasticUrl, addressId, shardId, timeout, shardType }).then(
-        ({ count, success }) => {
-          if (ref.current !== null && success) {
-            setTotalTransactions(count);
-          }
+      });
+      getTotalTransactions({
+        elasticUrl,
+        addressId: address,
+        shardId,
+        timeout,
+        shardType,
+      }).then(({ count, success }) => {
+        if (ref.current !== null && success) {
+          setTotalTransactions(count);
         }
-      );
+      });
     }
   };
 
   const getAddrDetails = () => {
     if (addressId && ref.current !== null) {
-      getAddressDetails({ nodeUrl, addressId, timeout }).then((data: any) => {
+      getAddressDetails({ nodeUrl, addressId: address, timeout }).then((data: any) => {
         if (ref.current !== null) {
           setAddressDetails(data);
           setAddressDetailsLoading(false);

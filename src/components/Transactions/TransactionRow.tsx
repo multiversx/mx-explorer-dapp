@@ -1,5 +1,5 @@
+import { addressFromHexPublicKey, addressIsHash, dateFormatted, trimHash, truncate } from 'helpers';
 import React from 'react';
-import { addressIsHash, dateFormatted, trimHash, truncate } from './../../helpers';
 import {
   Denominate,
   ScAddressIcon,
@@ -51,12 +51,15 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
       <td>
         <ScAddressIcon initiator={transaction.sender} />
         {addressId === transaction.sender ? (
-          <span>{trimHash(transaction.sender)}</span>
+          <span>{trimHash(addressFromHexPublicKey(transaction.sender))}</span>
         ) : (
           <>
             {addressIsHash(transaction.sender) ? (
-              <TestnetLink to={`/address/${transaction.sender}`} data-testid="senderLink">
-                {trimHash(transaction.sender)}
+              <TestnetLink
+                to={`/address/${addressFromHexPublicKey(transaction.sender)}`}
+                data-testid="senderLink"
+              >
+                {trimHash(addressFromHexPublicKey(transaction.sender))}
               </TestnetLink>
             ) : (
               <ShardSpan shardId={transaction.sender} />
@@ -67,10 +70,13 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
       <td>
         <ScAddressIcon initiator={transaction.receiver} />
         {addressId === transaction.receiver ? (
-          <span>{trimHash(transaction.receiver)}</span>
+          <span>{trimHash(addressFromHexPublicKey(transaction.receiver))}</span>
         ) : (
-          <TestnetLink to={`/address/${transaction.receiver}`} data-testid="receiverLink">
-            {trimHash(transaction.receiver)}
+          <TestnetLink
+            to={`/address/${addressFromHexPublicKey(transaction.receiver)}`}
+            data-testid="receiverLink"
+          >
+            {trimHash(addressFromHexPublicKey(transaction.receiver))}
           </TestnetLink>
         )}
       </td>

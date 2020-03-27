@@ -1,9 +1,9 @@
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useGlobalState } from 'context';
+import { addressIsBach32, hexPublicKeyFromAddress, testnetRoute } from 'helpers';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useGlobalState } from '../../context';
-import { testnetRoute } from '../../helpers';
 import { isAddress, isBlock, isTransaction } from './helpers/asyncRequests';
 
 const isValidator = (hash: string) => hash.length === 256 && /^[a-zA-Z0-9]+$/g.test(hash);
@@ -23,13 +23,16 @@ const Search: React.FC = () => {
     }
   };
   const onClick = async () => {
+    const address = addressIsBach32(hash) ? hexPublicKeyFromAddress(hash) : hash;
     if (isValidator(hash)) {
-      history.push(testnetRoute({ to: `/validators/${hash}`, activeTestnetId }));
+      history.push(
+        testnetRoute({ to: `/validators/${hexPublicKeyFromAddress(hash)}`, activeTestnetId })
+      );
     } else if (await isBlock({ elasticUrl, hash, timeout })) {
       history.push(testnetRoute({ to: `/blocks/${hash}`, activeTestnetId }));
     } else if (await isTransaction({ elasticUrl, hash, timeout })) {
       history.push(testnetRoute({ to: `/transactions/${hash}`, activeTestnetId }));
-    } else if (await isAddress({ nodeUrl, hash, timeout })) {
+    } else if (await isAddress({ nodeUrl, hash: address, timeout })) {
       history.push(testnetRoute({ to: `/address/${hash}`, activeTestnetId }));
     } else {
       history.push(testnetRoute({ to: `/search/${hash}`, activeTestnetId }));
