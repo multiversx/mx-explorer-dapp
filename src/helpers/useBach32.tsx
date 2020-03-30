@@ -27,12 +27,12 @@ export default function useBach32() {
   } = useGlobalState();
 
   const getAddress = (publicKey: string) =>
-    addressIsHash(publicKey) && !hasBach32
+    addressIsHash(publicKey) && hasBach32
       ? (cryptoCore.newAccount() as any).addressFromHexPublicKey(publicKey)
       : publicKey;
 
   const getPublicKey = (address = '') =>
-    addressIsBach32(address) && !hasBach32
+    addressIsBach32(address) && hasBach32
       ? (cryptoCore.newAccount() as any).hexPublicKeyFromAddress(address)
       : address;
 
