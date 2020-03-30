@@ -56,7 +56,7 @@ const CONFIG = {
       bach32LocalTransform: false
     },
     {
-      id: 'battle-of-nodes-bach32',
+      id: 'bon-bach32',
       name: 'BoN (Bach32)',
       nodeUrl: 'https://wallet-api.elrond.com',
       validatorsApiUrl: 'https://api.elrond.com',
