@@ -134,6 +134,96 @@ const Transactions: React.FC = () => {
 
   const title = indexOfTransactions >= 0 ? 'Transactions' : 'Address Details';
 
+  const PageData = () => (
+    <>
+      <AddressDetails {...addressDetails} />
+      <div className="row">
+        <div className="col-12">
+          {title !== 'Transactions' && (
+            <div className="row">
+              <div className="col-12">
+                <h4>
+                  <span>Transactions</span>
+                </h4>
+              </div>
+            </div>
+          )}
+          {transactions.length > 0 ? (
+            <div className="card" style={{ height: 'auto' }}>
+              <div className="card-body card-list">
+                <div className="table-responsive">
+                  <table className="table mt-4" data-testid="transactionsTable">
+                    <thead>
+                      <tr>
+                        <th scope="col">Txn Hash</th>
+                        <th scope="col">Block</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Shard</th>
+                        <th scope="col">From</th>
+                        <th scope="col">To</th>
+                        <th scope="col" className="text-right">
+                          Value
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {transactions.map(transaction => (
+                        <TransactionRow
+                          transaction={transaction}
+                          key={transaction.hash}
+                          addressId={addressId}
+                        />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <Pager
+                  slug={slug}
+                  total={totalTransactions}
+                  start={(size - 1) * 50 + (size === 1 ? 1 : 0)}
+                  end={
+                    (size - 1) * 50 +
+                    (parseInt(totalTransactions.toString()) < 50
+                      ? parseInt(totalTransactions.toString())
+                      : 50)
+                  }
+                  show={transactions.length > 0}
+                />
+              </div>
+            </div>
+          ) : (
+            <>
+              {transactionsFetched ? (
+                <Loader />
+              ) : (
+                pathname.includes('address') && <NoTransactions />
+              )}
+            </>
+          )}
+        </div>
+      </div>
+    </>
+  );
+
+  const ComponentState = () => {
+    switch (true) {
+      case addressDetailsLoading && addressDetails.detailsFetched:
+        return <Loader />;
+      case !transactionsFetched &&
+        addressDetails.balance === '0' &&
+        addressDetails.nonce === 0 &&
+        pathname.includes('address'):
+        return <FailedAddress addressId={addressId} />;
+      case !transactionsFetched && pathname.includes('transactions'):
+        return <FailedTransaction />;
+      case !addressDetailsLoading && addressDetails.detailsFetched:
+        return <PageData />;
+      default:
+        return null;
+    }
+  };
+
   const Component = () => {
     return (
       <div ref={ref}>
@@ -152,83 +242,7 @@ const Transactions: React.FC = () => {
               </h4>
             </div>
           </div>
-          {addressDetailsLoading && addressDetails.detailsFetched && <Loader />}
-          {!addressDetailsLoading && addressDetails.detailsFetched && (
-            <>
-              <AddressDetails {...addressDetails} />
-              <div className="row">
-                <div className="col-12">
-                  {title !== 'Transactions' && (
-                    <div className="row">
-                      <div className="col-12">
-                        <h4>
-                          <span>Transactions</span>
-                        </h4>
-                      </div>
-                    </div>
-                  )}
-                  {transactions.length > 0 ? (
-                    <div className="card" style={{ height: 'auto' }}>
-                      <div className="card-body card-list">
-                        <div className="table-responsive">
-                          <table className="table mt-4" data-testid="transactionsTable">
-                            <thead>
-                              <tr>
-                                <th scope="col">Txn Hash</th>
-                                <th scope="col">Block</th>
-                                <th scope="col">Age</th>
-                                <th scope="col">Shard</th>
-                                <th scope="col">From</th>
-                                <th scope="col">To</th>
-                                <th scope="col" className="text-right">
-                                  Value
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {transactions.map(transaction => (
-                                <TransactionRow
-                                  transaction={transaction}
-                                  key={transaction.hash}
-                                  addressId={addressId}
-                                />
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-
-                        <Pager
-                          slug={slug}
-                          total={totalTransactions}
-                          start={(size - 1) * 50 + (size === 1 ? 1 : 0)}
-                          end={
-                            (size - 1) * 50 +
-                            (parseInt(totalTransactions.toString()) < 50
-                              ? parseInt(totalTransactions.toString())
-                              : 50)
-                          }
-                          show={transactions.length > 0}
-                        />
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      {transactionsFetched ? (
-                        <Loader />
-                      ) : (
-                        pathname.includes('address') && <NoTransactions />
-                      )}
-                    </>
-                  )}
-                </div>
-              </div>
-            </>
-          )}
-          {!transactionsFetched &&
-            addressDetails.balance === '0' &&
-            addressDetails.nonce === 0 &&
-            pathname.includes('address') && <FailedAddress addressId={addressId} />}
-          {!transactionsFetched && pathname.includes('transactions') && <FailedTransaction />}
+          <ComponentState />
         </div>
       </div>
     );

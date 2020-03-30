@@ -147,7 +147,7 @@ export async function getAddressDetails({ nodeUrl, addressId, timeout }: Details
   } catch (err) {
     return {
       addressId: '',
-      balance: '',
+      balance: '0',
       nonce: 0,
       code: '',
       detailsFetched: false,
