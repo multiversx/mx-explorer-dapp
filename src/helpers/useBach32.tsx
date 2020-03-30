@@ -1,6 +1,5 @@
 import { useGlobalState } from './../context';
 import cryptoCore from './../lib/cryptoCore';
-import addressIsHash from './addressIsHash';
 
 function canTransformToPublicKey(address: string) {
   try {
@@ -23,16 +22,16 @@ function addressIsBach32(destinationAddress = '') {
 
 export default function useBach32() {
   const {
-    activeTestnet: { hasBach32 },
+    activeTestnet: { bach32LocalTransform },
   } = useGlobalState();
 
   const getAddress = (publicKey: string) =>
-    addressIsHash(publicKey) && hasBach32
+    bach32LocalTransform
       ? (cryptoCore.newAccount() as any).addressFromHexPublicKey(publicKey)
       : publicKey;
 
   const getPublicKey = (address = '') =>
-    addressIsBach32(address) && hasBach32
+    bach32LocalTransform
       ? (cryptoCore.newAccount() as any).hexPublicKeyFromAddress(address)
       : address;
 

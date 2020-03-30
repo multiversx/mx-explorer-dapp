@@ -30,7 +30,7 @@ const CONFIG = {
         wallet: (default) true
         faucet: (default) false (faucet)
         validatorStatistics: (default) false
-        hasBach32: (default) false
+        bach32LocalTransform: (default) false
     */
   testnets: [
     {
@@ -53,6 +53,7 @@ const CONFIG = {
       validatorDetails: true,
       faucet: false,
       validatorStatistics: true,
+      bach32LocalTransform: false
     },
     {
       id: 'cryptobubbles',
