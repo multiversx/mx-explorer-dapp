@@ -30,6 +30,7 @@ const CONFIG = {
         wallet: (default) true
         faucet: (default) false (faucet)
         validatorStatistics: (default) false
+        hasBach32: (default) false
     */
   testnets: [
     {

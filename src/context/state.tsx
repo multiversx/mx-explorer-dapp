@@ -12,6 +12,8 @@ export interface TestnetType {
         gasLimitEditable: (default) false
         data: (default) false
         faucet: (default) false (faucet)
+        validatorStatistics: (default) false
+        hasBach32: (default) false
   */
   default: boolean;
   id: string;
@@ -34,6 +36,7 @@ export interface TestnetType {
   wallet?: boolean;
   faucet: boolean;
   validatorStatistics: boolean;
+  hasBach32?: boolean;
 }
 
 type AppIdType = 'wallet' | 'explorer' | 'studio' | 'docs';
@@ -102,6 +105,7 @@ export const defaultTestnet = {
   validatorDetails: false,
   faucet: false,
   validatorStatistics: false,
+  hasBach32: false,
 };
 
 const configKey: any = 'CONFIG';
