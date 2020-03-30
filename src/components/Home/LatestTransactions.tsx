@@ -1,7 +1,7 @@
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { addressFromHexPublicKey, addressIsHash, dateFormatted, trimHash, truncate } from 'helpers';
+import { addressIsHash, dateFormatted, trimHash, truncate, useBach32 } from 'helpers';
 import * as React from 'react';
 import { ScAddressIcon, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { TransactionType } from './../Transactions';
@@ -16,6 +16,8 @@ const LatestTransactions: React.FC = () => {
   } = useGlobalState();
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
+
+  const { getAddress } = useBach32();
 
   const fetchTransactions = () => {
     if (ref.current !== null) {
@@ -69,7 +71,7 @@ const LatestTransactions: React.FC = () => {
                             secondInitiator={transaction.receiver}
                           />
                           <TestnetLink
-                            to={`/transactions/${addressFromHexPublicKey(transaction.hash)}`}
+                            to={`/transactions/${transaction.hash}`}
                             data-testid={`transactionLink${i}`}
                           >
                             {truncate(transaction.hash, 20)}
@@ -85,10 +87,8 @@ const LatestTransactions: React.FC = () => {
                       <div className="col-6">
                         From&nbsp;
                         {addressIsHash(transaction.sender) ? (
-                          <TestnetLink
-                            to={`/address/${addressFromHexPublicKey(transaction.sender)}`}
-                          >
-                            {trimHash(addressFromHexPublicKey(transaction.sender))}
+                          <TestnetLink to={`/address/${getAddress(transaction.sender)}`}>
+                            {trimHash(getAddress(transaction.sender))}
                           </TestnetLink>
                         ) : (
                           <ShardSpan shardId={transaction.sender} />
@@ -96,10 +96,10 @@ const LatestTransactions: React.FC = () => {
                         <br />
                         To&nbsp;
                         <TestnetLink
-                          to={`/address/${addressFromHexPublicKey(transaction.receiver)}`}
+                          to={`/address/${getAddress(transaction.receiver)}`}
                           data-testid={`transactionLinkTo${i}`}
                         >
-                          {trimHash(addressFromHexPublicKey(transaction.receiver))}
+                          {trimHash(getAddress(transaction.receiver))}
                         </TestnetLink>
                       </div>
                     </div>

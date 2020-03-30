@@ -1,4 +1,4 @@
-import { addressIsBach32, hexPublicKeyFromAddress } from 'helpers';
+import { useBach32 } from 'helpers';
 import * as React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useGlobalState } from '../../context';
@@ -75,14 +75,14 @@ const Transactions: React.FC = () => {
 
   const refreshFirstPage = size === 1 ? timestamp : 0;
 
-  const address = addressIsBach32(addressId) ? hexPublicKeyFromAddress(addressId) : addressId;
+  const { getPublicKey } = useBach32();
 
   const fetchTransactions = () => {
     if (ref.current !== null) {
       getTransactions({
         elasticUrl,
         size,
-        addressId: address,
+        addressId: getPublicKey(addressId),
         shardId,
         shardType,
         timeout,
@@ -98,7 +98,7 @@ const Transactions: React.FC = () => {
       });
       getTotalTransactions({
         elasticUrl,
-        addressId: address,
+        addressId: getPublicKey(addressId),
         shardId,
         timeout,
         shardType,
@@ -112,12 +112,14 @@ const Transactions: React.FC = () => {
 
   const getAddrDetails = () => {
     if (addressId && ref.current !== null) {
-      getAddressDetails({ nodeUrl, addressId: address, timeout }).then((data: any) => {
-        if (ref.current !== null) {
-          setAddressDetails(data);
-          setAddressDetailsLoading(false);
+      getAddressDetails({ nodeUrl, addressId: getPublicKey(addressId), timeout }).then(
+        (data: any) => {
+          if (ref.current !== null) {
+            setAddressDetails(data);
+            setAddressDetailsLoading(false);
+          }
         }
-      });
+      );
     } else {
       setAddressDetailsLoading(false);
     }
@@ -131,6 +133,8 @@ const Transactions: React.FC = () => {
   slug = shardType ? `transactions/${shardDirection}/${shardId}` : slug;
 
   const title = indexOfTransactions >= 0 ? 'Transactions' : 'Address Details';
+
+  console.warn(11, addressDetailsLoading, addressDetails.detailsFetched, transactions);
 
   const Component = () => {
     return (

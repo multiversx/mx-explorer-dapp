@@ -1,6 +1,6 @@
 import { faCode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { addressFromHexPublicKey, addressIsHash } from 'helpers';
+import { useBach32 } from 'helpers';
 import React from 'react';
 import { Denominate } from 'sharedComponents';
 
@@ -13,9 +13,8 @@ export interface AddressDetailsType {
 }
 
 const AddressDetails = (props: AddressDetailsType) => {
-  const address = addressIsHash(props.addressId)
-    ? addressFromHexPublicKey(props.addressId)
-    : props.addressId;
+  const { getAddress } = useBach32();
+  const address = getAddress(props.addressId);
   const Address = (
     <div className="row mb-4">
       <div className="col-12">

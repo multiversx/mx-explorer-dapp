@@ -1,4 +1,4 @@
-import { addressFromHexPublicKey, addressIsHash, dateFormatted, trimHash, truncate } from 'helpers';
+import { addressIsHash, dateFormatted, trimHash, truncate, useBach32 } from 'helpers';
 import React from 'react';
 import {
   Denominate,
@@ -15,6 +15,8 @@ interface PropsType {
 }
 
 const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
+  const { getAddress } = useBach32();
+
   return (
     <tr className="animated fadeIn">
       <td>
@@ -51,15 +53,15 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
       <td>
         <ScAddressIcon initiator={transaction.sender} />
         {addressId === transaction.sender ? (
-          <span>{trimHash(addressFromHexPublicKey(transaction.sender))}</span>
+          <span>{trimHash(getAddress(transaction.sender))}</span>
         ) : (
           <>
             {addressIsHash(transaction.sender) ? (
               <TestnetLink
-                to={`/address/${addressFromHexPublicKey(transaction.sender)}`}
+                to={`/address/${getAddress(transaction.sender)}`}
                 data-testid="senderLink"
               >
-                {trimHash(addressFromHexPublicKey(transaction.sender))}
+                {trimHash(getAddress(transaction.sender))}
               </TestnetLink>
             ) : (
               <ShardSpan shardId={transaction.sender} />
@@ -70,13 +72,13 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
       <td>
         <ScAddressIcon initiator={transaction.receiver} />
         {addressId === transaction.receiver ? (
-          <span>{trimHash(addressFromHexPublicKey(transaction.receiver))}</span>
+          <span>{trimHash(getAddress(transaction.receiver))}</span>
         ) : (
           <TestnetLink
-            to={`/address/${addressFromHexPublicKey(transaction.receiver)}`}
+            to={`/address/${getAddress(transaction.receiver)}`}
             data-testid="receiverLink"
           >
-            {trimHash(addressFromHexPublicKey(transaction.receiver))}
+            {trimHash(getAddress(transaction.receiver))}
           </TestnetLink>
         )}
       </td>
