@@ -134,8 +134,6 @@ const Transactions: React.FC = () => {
 
   const title = indexOfTransactions >= 0 ? 'Transactions' : 'Address Details';
 
-  console.warn(11, addressDetailsLoading, addressDetails.detailsFetched, transactions);
-
   const Component = () => {
     return (
       <div ref={ref}>
