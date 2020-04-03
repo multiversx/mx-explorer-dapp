@@ -72,36 +72,39 @@ const ValidatorDetails = () => {
         metaChainShardId,
         nodeUrl,
       }).then(({ signersIndex, shardNumber, success, ...data }: any) => {
-        getEpoch({ nodeUrl, shardNumber, timeout }).then(({ epoch, epochSuccess }) => {
-          if (ref.current !== null && epochSuccess) {
-            setState({ ...data, shardNumber });
-            setSuccess(success);
-            const props = {
-              elasticUrl,
-              timeout: Math.max(timeout, 10000),
-              shardNumber,
-              signersIndex,
-              epoch,
-            };
-            getRounds(props).then(({ rounds, roundsFetched }) => {
-              setRounds({ rounds, roundsFetched });
-            });
-            if (validatorStatistics) {
-              getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }).then(
-                ({ statistics }: any) => {
-                  if (data.publicKey in statistics) {
-                    const { rating } = statistics[data.publicKey];
-                    setState(currentState => ({
-                      rating,
-                      ...currentState,
-                    }));
+        getEpoch({ nodeUrl, shardNumber, timeout }).then(
+          ({ epoch, roundAtEpochStart, epochSuccess }) => {
+            if (ref.current !== null && epochSuccess) {
+              setState({ ...data, shardNumber });
+              setSuccess(success);
+              const props = {
+                elasticUrl,
+                timeout: Math.max(timeout, 10000),
+                shardNumber,
+                signersIndex,
+                epoch,
+                roundAtEpochStart,
+              };
+              getRounds(props).then(({ rounds, roundsFetched }) => {
+                setRounds({ rounds, roundsFetched });
+              });
+              if (validatorStatistics) {
+                getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }).then(
+                  ({ statistics }: any) => {
+                    if (data.publicKey in statistics) {
+                      const { rating } = statistics[data.publicKey];
+                      setState(currentState => ({
+                        rating,
+                        ...currentState,
+                      }));
+                    }
                   }
-                }
-              );
+                );
+              }
+              searchBlocks(props).then((blockdata: any) => setFetchedBlocks(blockdata));
             }
-            searchBlocks(props).then((blockdata: any) => setFetchedBlocks(blockdata));
           }
-        });
+        );
       });
     }
   }, [elasticUrl, timeout, hexPublicKey, nodeUrl, metaChainShardId, validatorStatistics]); // run the operation only once since the parameter does not change

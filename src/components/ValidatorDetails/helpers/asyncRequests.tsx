@@ -48,6 +48,7 @@ interface GetRoundsType {
   shardNumber: number;
   signersIndex: number;
   timeout: number;
+  roundAtEpochStart: number;
   epoch: number;
 }
 
@@ -56,7 +57,7 @@ export async function getRounds({
   shardNumber,
   signersIndex,
   timeout,
-  epoch,
+  roundAtEpochStart: round,
 }: GetRoundsType) {
   try {
     const resp = await axios.post(
@@ -75,11 +76,11 @@ export async function getRounds({
                   signersIndexes: signersIndex,
                 },
               },
-              // {
-              //   match: {
-              //     epoch,
-              //   },
-              // },
+              {
+                match: {
+                  round,
+                },
+              },
             ],
           },
         },
@@ -131,12 +132,13 @@ export async function getEpoch({ nodeUrl, shardNumber, timeout }: GetEpochType) 
 
     return {
       epoch: message.epochData.erd_epoch_number,
-      roundAtEpochStart: message.erd_round_at_epoch_start,
+      roundAtEpochStart: message.epochData.erd_round_at_epoch_start,
       epochSuccess: true,
     };
   } catch {
     return {
       epoch: 0,
+      roundAtEpochStart: 0,
       epochSuccess: false,
     };
   }
