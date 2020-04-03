@@ -20,6 +20,7 @@ export interface BlockType {
   timestamp: number;
   txCount: number;
   validators: number[];
+  notarizedBlocksHashes: string[];
 }
 
 interface StateType {

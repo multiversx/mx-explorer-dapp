@@ -31,6 +31,7 @@ export const initialState = {
     timestamp: 0,
     txCount: 0,
     validators: [],
+    notarizedBlocksHashes: [],
   },
   proposer: '',
   consensusItems: [],
@@ -196,6 +197,23 @@ const BlockDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">State Root Hash</div>
                         <div className="col-lg-10">{block.stateRootHash}</div>
+                      </div>
+                      <hr className="hr-space" />
+                      <div className="row">
+                        <div className="col-lg-2 card-label">Notarized Blocks</div>
+                        <div className="col-lg-10">
+                          {block.notarizedBlocksHashes === null ? (
+                            <span className="text-muted">N/A</span>
+                          ) : (
+                            <>
+                              {block.notarizedBlocksHashes.map(item => (
+                                <span className="hash" key={item}>
+                                  {truncate(item, 100)}
+                                </span>
+                              ))}
+                            </>
+                          )}
+                        </div>
                       </div>
                       <hr className="hr-space" />
                       <div className="row">
