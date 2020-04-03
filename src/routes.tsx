@@ -72,7 +72,7 @@ const routes: RouteType[] = [
   },
   {
     path: '/miniblocks/:hash',
-    title: 'Block Details',
+    title: 'Miniblock Details',
     component: MiniBlockDetails,
   },
   {
