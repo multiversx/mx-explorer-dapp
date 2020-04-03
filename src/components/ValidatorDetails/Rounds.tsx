@@ -12,7 +12,7 @@ const Rounds = ({ rounds, roundsFetched }: { rounds: RoundType[]; roundsFetched:
   return (
     <div>
       <div className="mt-4">
-        <h4>Last Rounds</h4>
+        <h4>Last Consensus Rounds</h4>
       </div>
       {roundsFetched ? (
         <div className="card" style={{ height: 'auto' }}>
