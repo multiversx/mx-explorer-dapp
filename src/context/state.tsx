@@ -154,7 +154,7 @@ const extendedConfig = {
             id: 'new-api',
             name: 'New API',
             nodeUrl: 'https://wallet-api.elrond.com',
-            validatorsApiUrl: 'https://api.elrond.com',
+            validatorsApiUrl: '***REMOVED***',
             elasticUrl: '***REMOVED***',
             refreshRate: 6000,
             numInitCharactersForScAddress: 20,
