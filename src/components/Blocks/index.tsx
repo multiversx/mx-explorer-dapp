@@ -9,6 +9,7 @@ import { getBlocks, getTotalBlocks } from './helpers/asyncRequests';
 export interface BlockType {
   hash: string;
   nonce: number;
+  epoch: number;
   prevHash: string;
   proposer: number;
   pubKeyBitmap: string;

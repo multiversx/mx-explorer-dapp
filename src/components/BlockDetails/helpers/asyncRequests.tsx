@@ -1,31 +1,39 @@
 import axios from 'axios';
 import { initialState } from './../index';
 
-type GetBlocksType = {
+interface GetBlocksType {
   elasticUrl: string;
   timeout: number;
   blockId?: string;
-};
+}
 
-async function searchCall({ elasticUrl, timeout }: GetBlocksType) {
+interface SearchCallType {
+  elasticUrl: string;
+  timeout: number;
+  shardId: number;
+  epoch: number;
+  blockId?: string;
+}
+
+async function searchCall({ elasticUrl, timeout, shardId, epoch }: SearchCallType) {
   try {
     const {
       data: {
         hits: { hits },
       },
-    } = await axios.get(`${elasticUrl}/validators/_search`, { timeout });
+    } = await axios.get(`${elasticUrl}/validators/_doc/${shardId}_${epoch}`, { timeout });
     return hits;
   } catch {
     return [];
   }
 }
 
-type GetNextBlockType = {
+interface GetNextBlockType {
   currentBlockId: number;
   currentShardId: number;
   elasticUrl: string;
   timeout: number;
-};
+}
 
 async function getNextBlock({
   elasticUrl,
@@ -63,14 +71,25 @@ async function getNextBlock({
 export async function getBlock({ elasticUrl, timeout, blockId = '' }: GetBlocksType) {
   try {
     const { data } = await axios.get(`${elasticUrl}/blocks/_doc/${blockId}`, { timeout });
-    const block = data._source;
+    const block = { hash: data._id, ...data._source };
 
-    const hits = await searchCall({ elasticUrl, timeout });
+    const hits = await searchCall({
+      elasticUrl,
+      timeout,
+      shardId: block.shardId,
+      epoch: block.epoch,
+    });
+    console.warn(
+      'here1',
+      block.shardId.toString(),
+      hits.map((hit: any) => hit._id)
+    );
 
     const consensusArray = hits.length
-      ? hits.filter((hit: any) => hit['_id'] === block.shardId.toString()).pop()['_source']
-          .publicKeys
+      ? hits.filter((hit: any) => hit._id === block.shardId.toString()).pop()._source.publicKeys
       : [];
+
+    console.warn('here2');
 
     const consensusItems = consensusArray.length
       ? block.validators.map((id: any) => consensusArray[id])
@@ -82,6 +101,8 @@ export async function getBlock({ elasticUrl, timeout, blockId = '' }: GetBlocksT
       currentShardId: block.shardId,
       timeout,
     });
+
+    console.warn('here');
 
     return {
       block,

@@ -32,7 +32,7 @@ export async function getBlocks({ elasticUrl, size = 1, shardId, timeout }: GetB
     const { data } = await axios.post(`${elasticUrl}/blocks/_search`, query, { timeout });
 
     const { hits } = data;
-    const blocks = hits.hits.map((block: any) => block._source);
+    const blocks = hits.hits.map((block: any) => ({ hash: block._id, ...block._source }));
 
     let min = blocks[0].nonce;
     let max = min;

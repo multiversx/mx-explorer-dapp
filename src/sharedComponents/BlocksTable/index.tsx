@@ -10,6 +10,7 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
         <thead>
           <tr>
             <th>Block</th>
+            <th>Epoch</th>
             <th>Age</th>
             <th>Txns</th>
             <th>Shard</th>
@@ -25,6 +26,7 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
                   {block.nonce}
                 </TestnetLink>
               </td>
+              <td>{block.epoch}</td>
               <td>
                 <span title={dateFormatted(block.timestamp)}>
                   <TimeAgo value={block.timestamp} />

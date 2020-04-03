@@ -20,6 +20,7 @@ export const initialState = {
   block: {
     hash: '',
     nonce: 0,
+    epoch: 0,
     prevHash: '',
     proposer: 0,
     pubKeyBitmap: '',
@@ -119,6 +120,11 @@ const BlockDetails: React.FC = () => {
                             </ul>
                           </div>
                         </div>
+                      </div>
+                      <hr className="hr-space" />
+                      <div className="row">
+                        <div className="col-lg-2 card-label">Epoch</div>
+                        <div className="col-lg-10">{block.epoch}</div>
                       </div>
                       <hr className="hr-space" />
                       <div className="row">
