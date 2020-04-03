@@ -15,7 +15,10 @@ interface GetValidatorType {
 
 function getBlocks(response: any) {
   const { hits } = response.data;
-  const blocks: BlockType[] = hits.hits.map((block: any) => block._source);
+  const blocks: BlockType[] = hits.hits.map((block: any) => ({
+    hash: block._id,
+    ...block._source,
+  }));
 
   let min = blocks[0].nonce;
   let max = min;
@@ -45,9 +48,16 @@ interface GetRoundsType {
   shardNumber: number;
   signersIndex: number;
   timeout: number;
+  epoch: number;
 }
 
-export async function getRounds({ elasticUrl, shardNumber, signersIndex, timeout }: GetRoundsType) {
+export async function getRounds({
+  elasticUrl,
+  shardNumber,
+  signersIndex,
+  timeout,
+  epoch,
+}: GetRoundsType) {
   try {
     const resp = await axios.post(
       `${elasticUrl}/rounds/_search`,
@@ -65,6 +75,11 @@ export async function getRounds({ elasticUrl, shardNumber, signersIndex, timeout
                   signersIndexes: signersIndex,
                 },
               },
+              // {
+              //   match: {
+              //     epoch,
+              //   },
+              // },
             ],
           },
         },
@@ -100,11 +115,39 @@ export async function getRounds({ elasticUrl, shardNumber, signersIndex, timeout
   }
 }
 
+interface GetEpochType {
+  nodeUrl: string;
+  shardNumber: number;
+  timeout: number;
+}
+
+export async function getEpoch({ nodeUrl, shardNumber, timeout }: GetEpochType) {
+  try {
+    const {
+      data: { message },
+    } = await axios.get(`${nodeUrl}/node/epoch/${shardNumber}`, {
+      timeout,
+    });
+
+    return {
+      epoch: message.epochData.erd_epoch_number,
+      roundAtEpochStart: message.erd_round_at_epoch_start,
+      epochSuccess: true,
+    };
+  } catch {
+    return {
+      epoch: 0,
+      epochSuccess: false,
+    };
+  }
+}
+
 export async function searchBlocks({
   elasticUrl,
   shardNumber,
   signersIndex,
   timeout,
+  epoch,
 }: GetRoundsType) {
   try {
     const response = await axios.post(
@@ -121,6 +164,11 @@ export async function searchBlocks({
               {
                 match: {
                   shardId: shardNumber,
+                },
+              },
+              {
+                match: {
+                  epoch,
                 },
               },
             ],
@@ -205,7 +253,7 @@ export async function getValidator({
 
       const {
         _source: { publicKeys: consensusArray },
-      } = hits.filter((hit: any) => hit._id.toString() === shardNumber.toString()).pop();
+      } = hits.filter((hit: any) => hit._id.split('_')[0] === shardNumber.toString()).pop();
 
       const signersIndex = consensusArray.indexOf(hexPublicKey);
 
