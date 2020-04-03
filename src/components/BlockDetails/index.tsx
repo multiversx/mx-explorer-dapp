@@ -205,7 +205,9 @@ const BlockDetails: React.FC = () => {
                           <div className="row">
                             <div className="col-lg-2 card-label">Notarized Blocks</div>
                             <div className="col-lg-10">
-                              {block.notarizedBlocksHashes === null ? (
+                              {block.notarizedBlocksHashes === null ||
+                              (Array.isArray(block.notarizedBlocksHashes) &&
+                                block.notarizedBlocksHashes.length === 0) ? (
                                 <span className="text-muted">N/A</span>
                               ) : (
                                 <>
