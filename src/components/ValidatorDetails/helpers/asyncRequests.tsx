@@ -77,8 +77,10 @@ export async function getRounds({
                 },
               },
               {
-                match: {
-                  round,
+                range: {
+                  round: {
+                    gte: round,
+                  },
                 },
               },
             ],

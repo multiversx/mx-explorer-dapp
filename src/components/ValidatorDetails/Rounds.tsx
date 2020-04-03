@@ -42,7 +42,7 @@ const Rounds = ({ rounds, roundsFetched }: { rounds: RoundType[]; roundsFetched:
                           delay={{ show: 250, hide: 400 }}
                           overlay={(props: any) => (
                             <Tooltip id={round.key} {...props}>
-                              Block {round.value ? ' ' : ' not '} proposed
+                              Block {round.value ? ' ' : ' not '} proposed{' '}
                               {round.key.indexOf('_') > 0 ? round.key.split('_').pop() : round.key}
                             </Tooltip>
                           )}
