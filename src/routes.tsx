@@ -3,6 +3,7 @@ import BlockDetails from './components/BlockDetails';
 import Blocks from './components/Blocks';
 import EmptySearch from './components/EmptySearch';
 import Home from './components/Home';
+import MiniBlockDetails from './components/MiniBlockDetails';
 import TransactionDetails from './components/TransactionDetails';
 import Transactions from './components/Transactions';
 import ValidatorDetails from './components/ValidatorDetails';
@@ -68,6 +69,11 @@ const routes: RouteType[] = [
     path: '/blocks/:hash',
     title: 'Block Details',
     component: BlockDetails,
+  },
+  {
+    path: '/miniblocks/:hash',
+    title: 'Block Details',
+    component: MiniBlockDetails,
   },
   {
     path: '/blocks/shards/:shard/page/:page',

@@ -47,7 +47,11 @@ export default function ExplorerNavbar({
             Dashboard
           </TestnetLink>
           <TestnetLink
-            className={`nav-link ${pathname.toString().includes('blocks') ? 'active' : ''}`}
+            className={`nav-link ${
+              pathname.toString().includes('blocks') && !pathname.toString().includes('miniblocks')
+                ? 'active'
+                : ''
+            }`}
             to="/blocks"
             onClick={() => onToggle(false)}
           >
