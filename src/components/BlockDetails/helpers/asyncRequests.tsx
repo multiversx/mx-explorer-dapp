@@ -58,7 +58,7 @@ async function getNextBlock({
     );
 
     if (hits[0]) {
-      return hits[0]._source.hash;
+      return hits[0]._id;
     }
     return '';
   } catch {
