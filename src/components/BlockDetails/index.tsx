@@ -210,11 +210,7 @@ const BlockDetails: React.FC = () => {
                               ) : (
                                 <>
                                   {block.notarizedBlocksHashes.map(item => (
-                                    <TestnetLink
-                                      className="hash"
-                                      key={item}
-                                      to={`/validators/${item}`}
-                                    >
+                                    <TestnetLink className="hash" key={item} to={`/blocks/${item}`}>
                                       {truncate(item, 100)}
                                     </TestnetLink>
                                   ))}
