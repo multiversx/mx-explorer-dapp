@@ -86,6 +86,16 @@ const routes: RouteType[] = [
     component: Blocks,
   },
   {
+    path: '/blocks/epoch/:epoch/page/:page',
+    title: 'Epoch Details',
+    component: Blocks,
+  },
+  {
+    path: '/blocks/epoch/:epoch',
+    title: 'Epoch Details',
+    component: Blocks,
+  },
+  {
     path: '/transactions/shard-to/:shard/page/:page',
     title: 'Shard Details',
     component: Transactions,

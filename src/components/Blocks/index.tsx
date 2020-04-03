@@ -46,8 +46,9 @@ function isValidInt(number: number) {
 }
 
 const Blocks: React.FC = () => {
-  const { page, shard } = useParams();
+  const { page, shard, epoch } = useParams();
   const shardId = parseInt(shard!) >= 0 ? parseInt(shard!) : undefined;
+  const epochId = parseInt(epoch!) >= 0 ? parseInt(epoch!) : undefined;
 
   const ref = React.useRef(null);
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;
@@ -65,7 +66,7 @@ const Blocks: React.FC = () => {
 
   const fetchBlocks = () => {
     if (ref.current !== null) {
-      getBlocks({ elasticUrl, size, shardId, timeout }).then(data => {
+      getBlocks({ elasticUrl, size, shardId, timeout, epochId }).then(data => {
         if (ref.current !== null) {
           if (data.blocksFetched) {
             setState(data);
@@ -74,7 +75,7 @@ const Blocks: React.FC = () => {
           }
         }
       });
-      getTotalBlocks({ elasticUrl, shardId, timeout }).then(({ count, success }) => {
+      getTotalBlocks({ elasticUrl, shardId, timeout, epochId }).then(({ count, success }) => {
         if (ref.current !== null && success) {
           setTotalBlocks(count);
         }
@@ -83,6 +84,16 @@ const Blocks: React.FC = () => {
   };
 
   React.useEffect(fetchBlocks, [elasticUrl, size, shardId, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
+
+  let slug = 'blocks';
+  switch (true) {
+    case !isNaN(shardId!):
+      slug = `blocks/shards/${shardId}`;
+      break;
+    case !isNaN(epochId!):
+      slug = `blocks/epoch/${epochId}`;
+      break;
+  }
 
   const Component = () => {
     return (
@@ -116,9 +127,9 @@ const Blocks: React.FC = () => {
                   {state.blocks.length > 0 ? (
                     <div className="card">
                       <div className="card-body card-list">
-                        <BlocksTable blocks={state.blocks} shardId={shardId} />
+                        <BlocksTable blocks={state.blocks} shardId={shardId} epochId={epochId} />
                         <Pager
-                          slug={!isNaN(shardId!) ? `blocks/shards/${shardId}` : 'blocks'}
+                          slug={slug}
                           total={totalBlocks}
                           start={(size - 1) * 25 + (size === 1 ? 1 : 0)}
                           end={

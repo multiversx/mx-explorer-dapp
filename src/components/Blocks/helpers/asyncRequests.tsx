@@ -4,6 +4,7 @@ export interface GetBlocksParamsType {
   elasticUrl: string;
   size?: number;
   shardId: number | undefined;
+  epochId: number | undefined;
   timeout: number;
 }
 
@@ -20,13 +21,33 @@ const setShardsQuery = (shardId: number | undefined) =>
         query: { match_all: {} },
       };
 
-export async function getBlocks({ elasticUrl, size = 1, shardId, timeout }: GetBlocksParamsType) {
+const setEpochsQuery = (epoch: number | undefined) =>
+  epoch !== undefined
+    ? {
+        query: {
+          bool: {
+            must: [{ match: { epoch } }],
+          },
+        },
+      }
+    : {
+        query: { match_all: {} },
+      };
+
+export async function getBlocks({
+  elasticUrl,
+  size = 1,
+  shardId,
+  timeout,
+  epochId,
+}: GetBlocksParamsType) {
   try {
     const query = {
       sort: { timestamp: { order: 'desc' } },
       from: (size - 1) * 25,
       size: 25,
       ...setShardsQuery(shardId),
+      ...setEpochsQuery(epochId),
     };
 
     const { data } = await axios.post(`${elasticUrl}/blocks/_search`, query, { timeout });
@@ -64,11 +85,21 @@ export async function getBlocks({ elasticUrl, size = 1, shardId, timeout }: GetB
   }
 }
 
-export async function getTotalBlocks({ elasticUrl, shardId, timeout }: GetBlocksParamsType) {
+export async function getTotalBlocks({
+  elasticUrl,
+  shardId,
+  timeout,
+  epochId,
+}: GetBlocksParamsType) {
   try {
+    const query = {
+      ...setShardsQuery(shardId),
+      ...setEpochsQuery(epochId),
+    };
+
     const {
       data: { count },
-    } = await axios.post(`${elasticUrl}/blocks/_count`, setShardsQuery(shardId), {
+    } = await axios.post(`${elasticUrl}/blocks/_count`, query, {
       timeout,
     });
 

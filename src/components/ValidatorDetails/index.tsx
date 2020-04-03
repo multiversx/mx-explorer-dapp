@@ -159,7 +159,11 @@ const ValidatorDetails = () => {
                               <div className="card">
                                 <div className="card-body">
                                   Last 25 proposed blocks
-                                  <BlocksTable blocks={fetchedBlocks.blocks} shardId={undefined} />
+                                  <BlocksTable
+                                    blocks={fetchedBlocks.blocks}
+                                    shardId={undefined}
+                                    epochId={undefined}
+                                  />
                                 </div>
                               </div>
                             </div>
