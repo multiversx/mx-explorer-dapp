@@ -17,12 +17,10 @@ interface SearchCallType {
 
 async function searchCall({ elasticUrl, timeout, shardId, epoch }: SearchCallType) {
   try {
-    const {
-      data: {
-        hits: { hits },
-      },
-    } = await axios.get(`${elasticUrl}/validators/_doc/${shardId}_${epoch}`, { timeout });
-    return hits;
+    const { data } = await axios.get(`${elasticUrl}/validators/_doc/${shardId}_${epoch}`, {
+      timeout,
+    });
+    return data;
   } catch {
     return [];
   }
@@ -73,23 +71,14 @@ export async function getBlock({ elasticUrl, timeout, blockId = '' }: GetBlocksT
     const { data } = await axios.get(`${elasticUrl}/blocks/_doc/${blockId}`, { timeout });
     const block = { hash: data._id, ...data._source };
 
-    const hits = await searchCall({
+    const hit = await searchCall({
       elasticUrl,
       timeout,
       shardId: block.shardId,
       epoch: block.epoch,
     });
-    console.warn(
-      'here1',
-      block.shardId.toString(),
-      hits.map((hit: any) => hit._id)
-    );
 
-    const consensusArray = hits.length
-      ? hits.filter((hit: any) => hit._id === block.shardId.toString()).pop()._source.publicKeys
-      : [];
-
-    console.warn('here2');
+    const consensusArray = Object.keys(hit).length ? hit._source.publicKeys : [];
 
     const consensusItems = consensusArray.length
       ? block.validators.map((id: any) => consensusArray[id])
@@ -101,8 +90,6 @@ export async function getBlock({ elasticUrl, timeout, blockId = '' }: GetBlocksT
       currentShardId: block.shardId,
       timeout,
     });
-
-    console.warn('here');
 
     return {
       block,
