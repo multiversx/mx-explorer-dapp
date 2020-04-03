@@ -53,7 +53,7 @@ export interface ShardDataType {
 const Validators = () => {
   const ref = React.useRef(null);
   const {
-    activeTestnet: { nodeUrl, validatorDetails, validatorStatistics, validatorsApiUrl },
+    activeTestnet: { nodeUrl, validatorDetails, validatorStatistics },
     timeout,
     config: { metaChainShardId },
   } = useGlobalState();
@@ -63,7 +63,7 @@ const Validators = () => {
   const getData = () => {
     Promise.all([
       getValidatorsData({
-        nodeUrl: validatorsApiUrl || nodeUrl,
+        nodeUrl,
         timeout: Math.max(timeout, 10000),
       }),
       getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }),

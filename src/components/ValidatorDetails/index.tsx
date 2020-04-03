@@ -48,7 +48,7 @@ const ValidatorDetails = () => {
   const ref = React.useRef(null);
 
   const {
-    activeTestnet: { elasticUrl, nodeUrl, validatorStatistics, validatorsApiUrl },
+    activeTestnet: { elasticUrl, nodeUrl, validatorStatistics },
     config: { metaChainShardId },
     timeout,
   } = useGlobalState();
@@ -70,7 +70,7 @@ const ValidatorDetails = () => {
         timeout: Math.max(timeout, 10000),
         hexPublicKey: hexPublicKey || '',
         metaChainShardId,
-        nodeUrl: validatorsApiUrl || nodeUrl,
+        nodeUrl,
       }).then(({ signersIndex, shardNumber, success, ...data }: any) => {
         if (ref.current !== null) {
           setState({ ...data, shardNumber });
@@ -101,15 +101,7 @@ const ValidatorDetails = () => {
         }
       });
     }
-  }, [
-    elasticUrl,
-    timeout,
-    hexPublicKey,
-    nodeUrl,
-    metaChainShardId,
-    validatorStatistics,
-    validatorsApiUrl,
-  ]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, timeout, hexPublicKey, nodeUrl, metaChainShardId, validatorStatistics]); // run the operation only once since the parameter does not change
 
   const { publicKey, isValidator } = state;
 

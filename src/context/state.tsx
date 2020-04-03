@@ -19,7 +19,6 @@ export interface TestnetType {
   id: string;
   name: string;
   nodeUrl: string;
-  validatorsApiUrl?: string;
   numInitCharactersForScAddress: number;
   elasticUrl: string;
   refreshRate: number;
@@ -153,8 +152,7 @@ const extendedConfig = {
             default: false,
             id: 'new-api',
             name: 'New API',
-            nodeUrl: 'https://wallet-api.elrond.com',
-            validatorsApiUrl: '***REMOVED***',
+            nodeUrl: '***REMOVED***',
             elasticUrl: '***REMOVED***',
             refreshRate: 6000,
             numInitCharactersForScAddress: 20,
