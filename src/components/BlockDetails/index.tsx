@@ -49,6 +49,7 @@ const BlockDetails: React.FC = () => {
     activeTestnet: { elasticUrl },
     activeTestnetId,
     timeout,
+    config: { metaChainShardId },
   } = useGlobalState();
 
   const [state, setState] = React.useState<StateType>(initialState);
@@ -198,23 +199,31 @@ const BlockDetails: React.FC = () => {
                         <div className="col-lg-2 card-label">State Root Hash</div>
                         <div className="col-lg-10">{block.stateRootHash}</div>
                       </div>
-                      <hr className="hr-space" />
-                      <div className="row">
-                        <div className="col-lg-2 card-label">Notarized Blocks</div>
-                        <div className="col-lg-10">
-                          {block.notarizedBlocksHashes === null ? (
-                            <span className="text-muted">N/A</span>
-                          ) : (
-                            <>
-                              {block.notarizedBlocksHashes.map(item => (
-                                <span className="hash" key={item}>
-                                  {truncate(item, 100)}
-                                </span>
-                              ))}
-                            </>
-                          )}
-                        </div>
-                      </div>
+                      {block.shardId === metaChainShardId && (
+                        <>
+                          <hr className="hr-space" />
+                          <div className="row">
+                            <div className="col-lg-2 card-label">Notarized Blocks</div>
+                            <div className="col-lg-10">
+                              {block.notarizedBlocksHashes === null ? (
+                                <span className="text-muted">N/A</span>
+                              ) : (
+                                <>
+                                  {block.notarizedBlocksHashes.map(item => (
+                                    <TestnetLink
+                                      className="hash"
+                                      key={item}
+                                      to={`/validators/${item}`}
+                                    >
+                                      {truncate(item, 100)}
+                                    </TestnetLink>
+                                  ))}
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        </>
+                      )}
                       <hr className="hr-space" />
                       <div className="row">
                         <div className="col-lg-2 card-label">Previous Hash</div>
