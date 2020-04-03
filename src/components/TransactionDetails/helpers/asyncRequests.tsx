@@ -1,19 +1,19 @@
 import axios from 'axios';
 
-type GetTransactionsType = {
+interface GetTransactionsType {
   elasticUrl: string;
   timeout: number;
   transactionId: string;
-};
+}
 
 export async function getTransaction({ elasticUrl, transactionId, timeout }: GetTransactionsType) {
   try {
     const {
-      data: { _source },
+      data: { _id, _source },
     } = await axios.get(`${elasticUrl}/transactions/_doc/${transactionId}`, { timeout });
 
     return {
-      data: _source,
+      data: { hash: _id, ..._source },
       transactionFetched: true,
     };
   } catch {

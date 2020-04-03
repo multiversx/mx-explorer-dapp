@@ -72,7 +72,7 @@ export async function getTransactions({
       { timeout }
     );
 
-    data = hits.hits.map((entry: any) => entry._source);
+    data = hits.hits.map((entry: any) => ({ hash: entry._id, ...entry._source }));
 
     return {
       data,
