@@ -27,7 +27,7 @@ export async function getBlocks({ elasticUrl, timeout }: GetBlocksType) {
       { timeout }
     );
 
-    const data = hits.map((block: any) => block._source);
+    const data = hits.map((block: any) => ({ hash: block._id, ...block._source }));
 
     return {
       data,
@@ -62,7 +62,10 @@ export async function getTransactions({ elasticUrl, timeout }: GetBlocksType) {
       },
       { timeout }
     );
-    const data = hits.map((transaction: any) => transaction._source);
+    const data = hits.map((transaction: any) => ({
+      hash: transaction._id,
+      ...transaction._source,
+    }));
 
     return {
       data,
