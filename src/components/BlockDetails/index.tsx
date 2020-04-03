@@ -31,6 +31,7 @@ export const initialState = {
     timestamp: 0,
     txCount: 0,
     validators: [],
+    miniBlocksHashes: [],
     notarizedBlocksHashes: [],
   },
   proposer: '',
@@ -199,18 +200,42 @@ const BlockDetails: React.FC = () => {
                         <div className="col-lg-2 card-label">State Root Hash</div>
                         <div className="col-lg-10">{block.stateRootHash}</div>
                       </div>
+                      {block.shardId === metaChainShardId && (
+                        <>
+                          <hr className="hr-space" />
+                          <div className="row">
+                            <div className="col-lg-2 card-label">Notarized Blocks</div>
+                            <div className="col-lg-10">
+                              {block.notarizedBlocksHashes === null ||
+                              (Array.isArray(block.notarizedBlocksHashes) &&
+                                block.notarizedBlocksHashes.length === 0) ? (
+                                <span className="text-muted">N/A</span>
+                              ) : (
+                                <>
+                                  {block.notarizedBlocksHashes.map(item => (
+                                    <TestnetLink className="hash" key={item} to={`/blocks/${item}`}>
+                                      {truncate(item, 100)}
+                                    </TestnetLink>
+                                  ))}
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        </>
+                      )}
+
                       <hr className="hr-space" />
                       <div className="row">
-                        <div className="col-lg-2 card-label">Notarized Blocks</div>
+                        <div className="col-lg-2 card-label">Miniblocks</div>
                         <div className="col-lg-10">
-                          {block.notarizedBlocksHashes === null ||
-                          (Array.isArray(block.notarizedBlocksHashes) &&
-                            block.notarizedBlocksHashes.length === 0) ? (
+                          {block.miniBlocksHashes === null ||
+                          (Array.isArray(block.miniBlocksHashes) &&
+                            block.miniBlocksHashes.length === 0) ? (
                             <span className="text-muted">N/A</span>
                           ) : (
                             <>
-                              {block.notarizedBlocksHashes.map(item => (
-                                <TestnetLink className="hash" key={item} to={`/blocks/${item}`}>
+                              {block.miniBlocksHashes.map(item => (
+                                <TestnetLink className="hash" key={item} to={`/miniblocks/${item}`}>
                                   {truncate(item, 100)}
                                 </TestnetLink>
                               ))}
@@ -218,6 +243,7 @@ const BlockDetails: React.FC = () => {
                           )}
                         </div>
                       </div>
+
                       <hr className="hr-space" />
                       <div className="row">
                         <div className="col-lg-2 card-label">Previous Hash</div>
