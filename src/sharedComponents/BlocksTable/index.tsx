@@ -18,7 +18,7 @@ const BlocksTable = ({
         <thead>
           <tr>
             <th>Block</th>
-            <th>Epoch</th>
+            {/* <th>Epoch</th> */}
             <th>Age</th>
             <th>Txns</th>
             <th>Shard</th>
@@ -34,7 +34,7 @@ const BlocksTable = ({
                   {block.nonce}
                 </TestnetLink>
               </td>
-              <td>
+              {/* <td>
                 {epochId !== undefined ? (
                   epochId
                 ) : (
@@ -45,7 +45,7 @@ const BlocksTable = ({
                     {block.epoch}
                   </TestnetLink>
                 )}
-              </td>
+              </td> */}
               <td>
                 <span title={dateFormatted(block.timestamp)}>
                   <TimeAgo value={block.timestamp} />
