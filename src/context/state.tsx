@@ -125,7 +125,27 @@ const extendedConfig = {
     ...(process.env.REACT_APP_WALLET && process.env.NODE_ENV === 'development'
       ? [
           {
-            default: true,
+            default: false,
+            id: 'digital-ocean-toronto',
+            name: 'DigitalOcean Toronto',
+            nodeUrl: '***REMOVED***',
+            elasticUrl: '***REMOVED***',
+            refreshRate: 6000,
+            numInitCharactersForScAddress: 20,
+            decimals: 4,
+            denomination: 4,
+            gasPrice: 10,
+            gasLimit: 1000,
+            gasPerDataByte: 1500,
+            gasLimitEditable: true,
+            economics: true,
+            data: true,
+            validatorDetails: true,
+            faucet: true,
+            validatorStatistics: false,
+          },
+          {
+            default: false,
             id: 'ireland',
             name: 'Ireland',
             nodeUrl: 'http://108.129.20.194',
