@@ -80,7 +80,10 @@ export async function getLatestTransactions({
     );
 
     return {
-      transactions: hits.map((transaction: any) => transaction._source),
+      transactions: hits.map((transaction: any) => ({
+        hash: transaction._id,
+        ...transaction._source,
+      })),
       success: true,
     };
   } catch (err) {
