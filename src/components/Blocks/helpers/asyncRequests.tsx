@@ -46,8 +46,7 @@ export async function getBlocks({
       sort: { timestamp: { order: 'desc' } },
       from: (size - 1) * 25,
       size: 25,
-      ...setShardsQuery(shardId),
-      ...setEpochsQuery(epochId),
+      ...(shardId !== undefined ? { ...setShardsQuery(shardId) } : { ...setEpochsQuery(epochId) }),
     };
 
     const { data } = await axios.post(`${elasticUrl}/blocks/_search`, query, { timeout });
