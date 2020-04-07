@@ -1,6 +1,7 @@
 import { faChevronLeft, faChevronRight, faClock, faCube } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 import { useGlobalState } from '../../context';
 import { addressIsHash, dateFormatted, sizeFormat, testnetRoute, truncate } from '../../helpers';
@@ -27,6 +28,7 @@ export const initialState = {
     round: 0,
     shardId: 0,
     size: 0,
+    sizeTxs: 0,
     stateRootHash: '',
     timestamp: 0,
     txCount: 0,
@@ -158,7 +160,26 @@ const BlockDetails: React.FC = () => {
                       <hr className="hr-space" />
                       <div className="row">
                         <div className="col-lg-2 card-label">Size</div>
-                        <div className="col-lg-10">{sizeFormat(block.size)}</div>
+                        <div className="col-lg-10">
+                          <OverlayTrigger
+                            placement="top"
+                            delay={{ show: 250, hide: 400 }}
+                            overlay={(props: any) => (
+                              <Tooltip id="size" {...props} show={props.show.toString()}>
+                                {sizeFormat(block.size)} (size)
+                                {block.sizeTxs !== undefined && (
+                                  <> + {sizeFormat(block.sizeTxs)} (sizetxs)</>
+                                )}
+                              </Tooltip>
+                            )}
+                          >
+                            <span>
+                              {block.sizeTxs !== undefined
+                                ? sizeFormat(block.size + block.sizeTxs)
+                                : sizeFormat(block.size)}
+                            </span>
+                          </OverlayTrigger>
+                        </div>
                       </div>
                       <hr className="hr-space" />
                       <div className="row">

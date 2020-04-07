@@ -16,6 +16,7 @@ export interface BlockType {
   round: number;
   shardId: number;
   size: number;
+  sizeTxs: number;
   stateRootHash: string;
   timestamp: number;
   txCount: number;
