@@ -26,7 +26,11 @@ const AddressDetails = (props: AddressDetailsType) => {
             <div className="row">
               <div className="col-lg-1 card-label">Balance</div>
               <div className="col-lg-11">
-                {props.balance !== '...' ? <Denominate value={props.balance} /> : props.balance}
+                {props.balance !== '...' ? (
+                  <Denominate value={props.balance} showLastNonZeroDecimal />
+                ) : (
+                  props.balance
+                )}
               </div>
             </div>
             {props.code && (
