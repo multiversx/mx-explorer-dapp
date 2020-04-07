@@ -4,10 +4,11 @@ import denominate from './denominate';
 
 interface DenominateType {
   value: string;
-  showAllDecimals?: boolean;
+  showLastNonZeroDecimal?: boolean;
+  showErd?: boolean;
 }
 
-const Denominate = ({ value, showAllDecimals = false }: DenominateType) => {
+const Denominate = ({ value, showLastNonZeroDecimal = false, showErd = true }: DenominateType) => {
   const {
     activeTestnet: { denomination, decimals },
   } = useGlobalState();
@@ -16,10 +17,15 @@ const Denominate = ({ value, showAllDecimals = false }: DenominateType) => {
     input: value,
     denomination,
     decimals,
-    showAllDecimals,
+    showLastNonZeroDecimal,
   });
 
-  return <>{denominatedValue}&nbsp;ERD</>;
+  return (
+    <>
+      {denominatedValue}
+      {showErd && <> ERD</>}
+    </>
+  );
 };
 
 export default Denominate;

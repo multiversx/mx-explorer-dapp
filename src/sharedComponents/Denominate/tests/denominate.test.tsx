@@ -1,5 +1,4 @@
 import denominate from './../denominate';
-// file.only
 
 describe('denomination 4,4', () => {
   const numbers: { [key: string]: string } = {
@@ -12,7 +11,12 @@ describe('denomination 4,4', () => {
     const input = Object.keys(numbers)[i];
     const output = numbers[input];
     it(`denominate ${input} -> ${output}`, () => {
-      const withCommas = denominate({ input, denomination, decimals, showAllDecimals: false });
+      const withCommas = denominate({
+        input,
+        denomination,
+        decimals,
+        showLastNonZeroDecimal: false,
+      });
       expect(withCommas).toBe(output);
     });
   }
@@ -30,7 +34,12 @@ describe('denomination 8,4', () => {
     const input = Object.keys(numbers)[i];
     const output = numbers[input];
     it(`denominate ${input} -> ${output}`, () => {
-      const withCommas = denominate({ input, denomination, decimals, showAllDecimals: false });
+      const withCommas = denominate({
+        input,
+        denomination,
+        decimals,
+        showLastNonZeroDecimal: false,
+      });
       expect(withCommas).toBe(output);
     });
   }
@@ -46,13 +55,18 @@ describe('denomination 0,0', () => {
     const input = Object.keys(numbers)[i];
     const output = numbers[input];
     it(`denominate ${input} -> ${output}`, () => {
-      const withCommas = denominate({ input, denomination, decimals, showAllDecimals: false });
+      const withCommas = denominate({
+        input,
+        denomination,
+        decimals,
+        showLastNonZeroDecimal: false,
+      });
       expect(withCommas).toBe(output);
     });
   }
 });
 
-describe('denomination 4,4,true', () => {
+describe('denomination 4,8,true', () => {
   const numbers: { [key: string]: string } = {
     '12345678901234567890123': '123,456,789,012,345.67890123',
   };
@@ -62,23 +76,12 @@ describe('denomination 4,4,true', () => {
     const input = Object.keys(numbers)[i];
     const output = numbers[input];
     it(`denominate ${input} -> ${output}`, () => {
-      const withCommas = denominate({ input, denomination, decimals, showAllDecimals: true });
-      expect(withCommas).toBe(output);
-    });
-  }
-});
-
-describe('denomination 4,4,true', () => {
-  const numbers: { [key: string]: string } = {
-    '20000000000000000000': '20.00000000',
-  };
-  const denomination = 18;
-  const decimals = 8;
-  for (let i = 0; i < Object.keys(numbers).length; i++) {
-    const input = Object.keys(numbers)[i];
-    const output = numbers[input];
-    it(`denominate ${input} -> ${output}`, () => {
-      const withCommas = denominate({ input, denomination, decimals, showAllDecimals: false });
+      const withCommas = denominate({
+        input,
+        denomination,
+        decimals,
+        showLastNonZeroDecimal: true,
+      });
       expect(withCommas).toBe(output);
     });
   }
