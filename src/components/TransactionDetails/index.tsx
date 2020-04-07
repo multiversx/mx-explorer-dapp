@@ -5,6 +5,7 @@ import {
   faHourglass,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BigNumber from 'bignumber.js';
 import { useGlobalState } from 'context';
 import { addressIsHash, dateFormatted, useBach32 } from 'helpers';
 import * as React from 'react';
@@ -17,8 +18,17 @@ import {
   TestnetLink,
   TimeAgo,
 } from 'sharedComponents';
+import Web3 from 'web3';
 import { TransactionType } from '../Transactions';
 import { getTransaction } from './helpers/asyncRequests';
+
+const getFee = (transaction: TransactionType) => {
+  const web3 = new Web3();
+  const bNgasPrice = new BigNumber(transaction.gasPrice);
+  const bNgasLimit = new BigNumber(transaction.gasLimit);
+  const output = web3.utils.toBN(bNgasPrice.times(bNgasLimit) as any).toString(10);
+  return output;
+};
 
 const TransactionDetails: React.FC = () => {
   const { hash: transactionId } = useParams();
@@ -48,6 +58,7 @@ const TransactionDetails: React.FC = () => {
       );
     }
   }, [elasticUrl, transactionId, timeout]); // run the operation only once since the parameter does not change
+
   return (
     <div ref={ref}>
       <div className="container pt-3 pb-3">
@@ -168,16 +179,14 @@ const TransactionDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">Value</div>
                         <div className="col-lg-10">
-                          <Denominate value={transaction.value} />
+                          <Denominate value={transaction.value} showLastNonZeroDecimal />
                         </div>
                       </div>
                       <hr className="hr-space" />
                       <div className="row">
                         <div className="col-lg-2 card-label">Fee</div>
                         <div className="col-lg-10">
-                          <Denominate
-                            value={(transaction.gasPrice * transaction.gasLimit).toString()}
-                          />
+                          <Denominate value={getFee(transaction)} showLastNonZeroDecimal />
                         </div>
                       </div>
                       <hr className="hr-space" />
