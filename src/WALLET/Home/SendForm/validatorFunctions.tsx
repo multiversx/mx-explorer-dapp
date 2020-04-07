@@ -143,14 +143,19 @@ export const entireBalance = ({
   // entireBalance >= 0
   if (entireBalance.comparedTo(0) === 1 || entireBalance.comparedTo(0) === 0) {
     const input = web3.utils.toBN(entireBalance as any).toString(10);
-    const denominated = denominate({ input, denomination, decimals, showAllDecimals: true });
-    return denominated.replace(/,/g, '');
+    return denominate({
+      input,
+      denomination,
+      decimals,
+      showLastNonZeroDecimal: true,
+      addCommas: false,
+    });
   }
   return undefined;
 };
 
 export const denominateGasPrice = ({ gasPrice, denomination, decimals }: EntireBalanceType) =>
-  denominate({ input: gasPrice.toString(), denomination, decimals, showAllDecimals: true });
+  denominate({ input: gasPrice.toString(), denomination, decimals, showLastNonZeroDecimal: true });
 
 interface PrepareTransactionType {
   balance: string;
