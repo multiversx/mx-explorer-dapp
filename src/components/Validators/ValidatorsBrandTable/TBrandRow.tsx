@@ -54,9 +54,9 @@ const ValidatorBrandRow = ({
                                             <th>Node Name</th>
                                             <th>Shard</th>
                                             <th>Version</th>
-                                            <th className="text-right">Rating</th>
                                             <th className="text-right">Uptime</th>
-                                            <th>Status</th>
+                                            <th className="text-right">Status</th>
+                                            <th className="text-right">Rating</th>
                                         </tr>
                                     </thead>
                                     <tbody>

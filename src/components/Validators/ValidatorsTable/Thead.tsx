@@ -79,7 +79,7 @@ const ValidatorsTableHeader = ({
       label: '#',
       dir: 'none',
     });
-    headers.splice(5, 0, {
+    headers.splice(7, 0, {
       id: 'rating',
       label: 'Rating',
       dir: 'none',
@@ -127,9 +127,10 @@ const ValidatorsTableHeader = ({
       <tr>
         {headers.map(header => (
           <th
-            className={`sortable ${
-              ['totalUpTimeSec', 'rating'].includes(header.id) ? 'text-right' : ''
-            }`}
+            className={`sortable 
+              ${['totalUpTimeSec', 'rating'].includes(header.id) ? 'text-right' : ''}
+              ${header.label === 'Status' ? 'text-right' : ''}`
+            }
             key={header.id}
           >
             <span onClick={toggleSort(header.id)}>{header.label}&nbsp;</span>

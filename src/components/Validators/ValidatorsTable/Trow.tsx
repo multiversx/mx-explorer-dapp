@@ -68,11 +68,7 @@ const ValidatorRow = ({
           <span className="text-muted">N/A</span>
         )}
       </td>
-      {validatorStatistics ? (
-        <td className="text-right">{validator.rating > 0 ? Math.floor(validator.rating) : null}</td>
-      ) : (
-        <></>
-      )}
+      
       <td className="text-right">
         {(validator.totalUpTimeSec !== 0 || validator.totalDownTimeSec !== 0) && (
           <span>
@@ -91,7 +87,7 @@ const ValidatorRow = ({
           validator.isActive === false && <span>0%</span>}
       </td>
 
-      <td>
+      <td className="text-right">
         {validator.isActive === true ? (
           <div>
             <span className="badge badge-pill badge-success badge-status">&nbsp;</span>
@@ -106,6 +102,12 @@ const ValidatorRow = ({
           </div>
         )}
       </td>
+    
+      {validatorStatistics ? (
+        <td className="text-right">{validator.rating > 0 ? Math.floor(validator.rating) : null}</td>
+      ) : (
+        <></>
+      )}
     </tr>
   );
 };
