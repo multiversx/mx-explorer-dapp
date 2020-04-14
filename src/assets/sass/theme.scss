@@ -782,31 +782,42 @@ svg[data-prefix='fas'] {
 -------------------------------------------------- */
 .branded-validators {
   table {
-    tr {
-      &.details-row {
+
+    .brand-tr {
+      &:hover {
         background-color: #f8f9fa;
+        cursor: pointer;
+      }
+    }
+    
+    .details-tr {
+      background-color: rgba(0, 0, 0, 0.075);
 
-        .content {
-          tr {
-            background-color: #f8f9fa;
-          }
+      .content {
+        th {
+          background: none;
         }
 
-        &.collapsed {
-          td { 
-            border-top: 0;
-  
-            .content {
-              max-height: 0;
-              overflow: hidden;
-            }
-          }
+        tr {
+          background-color:rgba(0, 0, 0, 0.075);
+          color: #212529;
         }
       }
 
-      td {
-        vertical-align: middle;
+      &.collapsed {
+        td { 
+          border-top: 0;
+
+          .content {
+            max-height: 0;
+            overflow: hidden;
+          }
+        }
       }
+    }
+
+    td {
+      vertical-align: middle;
     }
   }
 }

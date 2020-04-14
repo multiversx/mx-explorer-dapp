@@ -20,22 +20,36 @@ const ValidatorBrandRow = ({
 
     return (
         <>
-            <tr onClick={(e) => setCollapsed(!collapsed)}>
+            <tr onClick={(e) => setCollapsed(!collapsed)} className="brand-tr">
                 <td>{rank}</td>
-                <td><img src={brand.avatar ? brand.avatar : elrondLogo} alt={brand.name} className="mr-2" height="30" /></td>
-                <td>{brand.name}</td>
+                <td>
+                    <div className="d-flex align-items-center">
+                        <img src={brand.avatar ? brand.avatar : elrondLogo} alt={brand.name} className="mr-3" height="30" />
+                        {brand.name}
+                    </div>
+                </td>
                 <td>{brand.validators.length}</td>
-                <td className="text-right">{Math.floor(brand.totalRating)}</td>
+                <td className="text-right">{brand.cumulativeUptime}</td>
+                <td className="text-right">
+                    <div>
+                        <span className={"badge badge-pill badge-status " + (
+                            brand.cumulativeStatus === 'Online' ? 'badge-success'
+                            : (brand.cumulativeStatus === 'Offline' ? 'badge-danger' : 'badge-warning')
+                            )}>&nbsp;</span>
+                        &nbsp;
+                        <span>{brand.cumulativeStatus}</span>
+                    </div>
+                </td>
+                <td className="text-right">{Math.floor(brand.cumulativeRating)}</td>
             </tr>
-            <tr className={collapsed ? 'details-row collapsed' : 'details-row'}>
-                <td colSpan={5} className="p-0">
+            <tr className={collapsed ? 'details-tr collapsed' : 'details-tr'}>
+                <td colSpan={6} className="p-0">
                     <div className="content">
-                        <div className="inner-content p-2 ml-4">
+                        <div className="inner-content px-0 py-2">
                             <div className="table-responsive" style={{ minHeight: '100px' }}>
                                 <table className="table">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
                                             <th>Public Key</th>
                                             <th>Node Name</th>
                                             <th>Shard</th>
@@ -54,6 +68,7 @@ const ValidatorBrandRow = ({
                                                 validator={validator}
                                                 validatorDetails={validatorDetails}
                                                 validatorStatistics={validatorStatistics}
+                                                hideRankCol={true}
                                             />
                                         ))}
                                     </tbody>

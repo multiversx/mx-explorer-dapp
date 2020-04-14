@@ -11,16 +11,18 @@ const ValidatorRow = ({
   validatorStatistics,
   rowIndex,
   ratingOrder,
+  hideRankCol
 }: {
   validator: ValidatorType;
   rowIndex: number;
   validatorDetails: boolean;
   validatorStatistics: boolean;
   ratingOrder: string[];
+  hideRankCol?: boolean;
 }) => {
   return (
     <tr className="animated fadeIn">
-      {validatorStatistics ? (
+      {validatorStatistics && !hideRankCol ? (
         <td>{validator.rating > 0 ? ratingOrder.indexOf(validator.hexPublicKey) + 1 : null}</td>
       ) : (
         <></>

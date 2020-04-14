@@ -5,8 +5,10 @@ import { ValidatorType } from './../index';
 export interface ValidatorBrand {
     name: string;
     avatar: string;
+    cumulativeUptime: string;
+    cumulativeStatus: string;
+    cumulativeRating: number;
     validators: ValidatorType[];
-    totalRating: number;
 };
 
 export interface JsonValidatorBrand {
@@ -15,16 +17,16 @@ export interface JsonValidatorBrand {
     nodesPubKeys: string[];
 };
 
-const groupAndSortValidators = (brandsJson: JsonValidatorBrand[], allValidators: ValidatorType[]) => {
+const groupByBrandAndSort = (brandsJson: JsonValidatorBrand[], allValidators: ValidatorType[]) => {
     const sortedBrands: ValidatorBrand[] = [];
 
-    brandsJson.map((jsonBrand: JsonValidatorBrand) => {
-        const ownedValidators = allValidators.filter(
+    brandsJson.forEach((jsonBrand: JsonValidatorBrand) => {
+        const brandValidators: ValidatorType[] = allValidators.filter(
             validator => jsonBrand.nodesPubKeys.indexOf(validator.hexPublicKey) > -1
         );
 
-        // remove owned from allValidators
-        ownedValidators.forEach(validator => {
+        // remove owned nodes from allValidators
+        brandValidators.forEach(validator => {
             const index = allValidators.indexOf(validator);
 
             if (index > -1) { 
@@ -33,35 +35,85 @@ const groupAndSortValidators = (brandsJson: JsonValidatorBrand[], allValidators:
         });
         
         // sort DESC
-        ownedValidators.sort((a, b) => b.rating - a.rating);
+        brandValidators.sort((a, b) => b.rating - a.rating);
 
-        let _totalRating = 0;
-        if (ownedValidators && ownedValidators.length > 0) {
-            _totalRating = ownedValidators.map(o => o.rating).reduce((a, c) => { return a + c }) / ownedValidators.length;
-        }
-
-        sortedBrands.push({
-            name: jsonBrand.name,
-            avatar: jsonBrand.avatar,
-            validators: ownedValidators,
-            totalRating: _totalRating 
-        });
+        sortedBrands.push(generateBrandRowWithStats(jsonBrand, brandValidators));
     });
 
     // add the rest of the brandless validators
     allValidators.forEach(validator => {
-        sortedBrands.push({
-            name: validator.nodeDisplayName,
-            avatar: "",
-            validators: [validator],
-            totalRating: validator.rating 
-        });
+        sortedBrands.push(
+            generateBrandRowWithStats({
+                    name: validator.nodeDisplayName,
+                    avatar: '',
+                    nodesPubKeys: [validator.hexPublicKey]
+                }, 
+                [validator]
+            )
+        );
     });
 
     // sort DESC
-    sortedBrands.sort((a, b) => b.totalRating - a.totalRating);
+    sortedBrands.sort((a, b) => b.cumulativeRating - a.cumulativeRating);
 
     return sortedBrands;
+};
+
+const generateBrandRowWithStats = (jsonBrand: JsonValidatorBrand, brandValidators: ValidatorType[]) => {
+    // RATING
+    let _cumulativeRating = 0;
+    if (brandValidators && brandValidators.length > 0) {
+        _cumulativeRating = brandValidators.map(o => o.rating).reduce((a, c) => { return a + c });
+    }
+
+    // STATUS
+    let _cumulativeStatus = 'Online';
+    let offlineValidators: number = brandValidators.filter(validator => 
+        validator.isActive === false
+    ).length;
+
+    if (offlineValidators === brandValidators.length) {
+        _cumulativeStatus = 'Offline';
+    } else if (offlineValidators > 0) {
+        _cumulativeStatus = 'Mixed';
+    }
+
+    // UPTIME
+    let _cumulativeUptime = 0;
+
+    brandValidators.forEach(validator => {
+        let uptime = 0;
+
+        if (validator.totalUpTimeSec !== 0 || validator.totalDownTimeSec !== 0) {
+            uptime = Math.floor(
+                (validator.totalUpTimeSec * 100) /
+                (validator.totalUpTimeSec + validator.totalDownTimeSec)
+            );
+        } else {
+            if (validator.totalUpTimeSec === 0 &&
+                validator.totalDownTimeSec === 0 &&
+                validator.isActive === true) {
+                    uptime = 100;
+                }              
+                
+            if (validator.totalUpTimeSec === 0 &&
+                validator.totalDownTimeSec === 0 &&
+                validator.isActive === false) {
+                    uptime = 0;
+                }
+        }
+
+        _cumulativeUptime += uptime;
+    });
+    
+   return {
+        name: jsonBrand.name,
+        avatar: jsonBrand.avatar,
+        cumulativeUptime: (_cumulativeUptime / brandValidators.length) + '%',
+        cumulativeStatus: _cumulativeStatus,
+        cumulativeRating: _cumulativeRating,
+        validators: brandValidators
+    };
 };
 
 const ValidatorsBrandTable = ({
@@ -74,7 +126,7 @@ const ValidatorsBrandTable = ({
     validatorStatistics: boolean;
   }) => {
     const brandsJson: JsonValidatorBrand[] = require('../../../../public/validators_branding.json');
-    const sortedBrands: ValidatorBrand[] = groupAndSortValidators(brandsJson, allValidators);
+    const sortedBrands: ValidatorBrand[] = groupByBrandAndSort(brandsJson, allValidators);
   
     return (
         <div className="branded-validators row mb-3">
@@ -85,10 +137,11 @@ const ValidatorsBrandTable = ({
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Avatar</th>
-                        <th>Name</th>
+                        <th>Validator Name</th>
                         <th>Nodes</th>
-                        <th className="text-right">Rating</th>
+                        <th className="text-right">Uptime</th>
+                        <th className="text-right">Status</th>
+                        <th className="text-right">Cumulative Rating</th>
                     </tr>
                     </thead>
                     <tbody>
