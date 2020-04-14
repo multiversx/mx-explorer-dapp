@@ -7,6 +7,8 @@ import { getValidatorsData, getValidatorStatistics } from './helpers/asyncReques
 import { populateValidatorsTable } from './helpers/validatorHelpers';
 import ShardsList from './ShardsList';
 import ValidatorsTable, { StateType } from './ValidatorsTable';
+import ValidatorsBrandTable from './ValidatorsBrandTable';
+import { useLocation } from 'react-router-dom';
 
 export interface ValidatorType {
   computedShardID: number;
@@ -84,6 +86,9 @@ const Validators = () => {
     });
   };
 
+  const showBrand = useLocation().pathname === '/validators/brand';
+  console.log(showBrand);
+
   React.useEffect(getData, [nodeUrl, timeout]);
 
   return useMemo(
@@ -92,7 +97,7 @@ const Validators = () => {
         <div className="container pt-3 pb-3">
           <div className="row">
             <div className="col-12">
-              <h4 data-testid="title">Validators</h4>
+              <h4 data-testid="title">Validators {showBrand ? ' Brand' : ''}</h4>
             </div>
           </div>
           {state.success ? (
@@ -100,11 +105,19 @@ const Validators = () => {
               {state.data.validatorsAndObservers.length > 0 ? (
                 <>
                   <ShardsList shardData={state.data.shardData} />
-                  <ValidatorsTable
-                    {...state.data}
-                    validatorStatistics={validatorStatistics}
-                    validatorDetails={validatorDetails || false}
-                  />
+
+                  {showBrand
+                    ? <ValidatorsBrandTable 
+                        allValidators={state.data.validators}
+                        validatorStatistics={validatorStatistics}
+                        validatorDetails={validatorDetails || false}  
+                      />
+                    : <ValidatorsTable
+                        {...state.data}
+                        validatorStatistics={validatorStatistics}
+                        validatorDetails={validatorDetails || false}
+                      />
+                  }
                 </>
               ) : (
                 <Loader />
@@ -123,7 +136,7 @@ const Validators = () => {
         </div>
       </div>
     ),
-    [state, validatorDetails, validatorStatistics]
+    [state, validatorDetails, validatorStatistics, showBrand]
   );
 };
 

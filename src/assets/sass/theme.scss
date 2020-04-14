@@ -777,3 +777,36 @@ svg[data-prefix='fas'] {
     }
   }
 }
+
+/* Branded Validators
+-------------------------------------------------- */
+.branded-validators {
+  table {
+    tr {
+      &.details-row {
+        background-color: #f8f9fa;
+
+        .content {
+          tr {
+            background-color: #f8f9fa;
+          }
+        }
+
+        &.collapsed {
+          td { 
+            border-top: 0;
+  
+            .content {
+              max-height: 0;
+              overflow: hidden;
+            }
+          }
+        }
+      }
+
+      td {
+        vertical-align: middle;
+      }
+    }
+  }
+}
