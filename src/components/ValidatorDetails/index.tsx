@@ -43,7 +43,7 @@ export const initialState: StateType = {
 };
 
 const ValidatorDetails = () => {
-  const { hash: hexPublicKey } = useParams();
+  const { hash } = useParams();
 
   const ref = React.useRef(null);
 
@@ -68,7 +68,7 @@ const ValidatorDetails = () => {
       getValidator({
         elasticUrl,
         timeout: Math.max(timeout, 10000),
-        hexPublicKey: hexPublicKey || '',
+        publicKey: hash || '',
         metaChainShardId,
         nodeUrl,
       }).then(({ signersIndex, shardNumber, success, ...data }: any) => {
@@ -107,7 +107,7 @@ const ValidatorDetails = () => {
         );
       });
     }
-  }, [elasticUrl, timeout, hexPublicKey, nodeUrl, metaChainShardId, validatorStatistics]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, timeout, hash, nodeUrl, metaChainShardId, validatorStatistics]); // run the operation only once since the parameter does not change
 
   const { publicKey, isValidator } = state;
 

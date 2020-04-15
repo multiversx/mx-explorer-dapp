@@ -21,7 +21,7 @@ const ValidatorRow = ({
   return (
     <tr className="animated fadeIn">
       {validatorStatistics ? (
-        <td>{validator.rating > 0 ? ratingOrder.indexOf(validator.hexPublicKey) + 1 : null}</td>
+        <td>{validator.rating > 0 ? ratingOrder.indexOf(validator.publicKey) + 1 : null}</td>
       ) : (
         <></>
       )}
@@ -34,13 +34,13 @@ const ValidatorRow = ({
         )}
         {validator.peerType !== 'observer' && validatorDetails ? (
           <TestnetLink
-            to={`/validators/${validator.hexPublicKey}`}
+            to={`/validators/${validator.publicKey}`}
             data-testid={`publicKeyLink${rowIndex}`}
           >
-            {truncate(validator.hexPublicKey, 20)}
+            {truncate(validator.publicKey, 20)}
           </TestnetLink>
         ) : (
-          <span>{truncate(validator.hexPublicKey, 20)}</span>
+          <span>{truncate(validator.publicKey, 20)}</span>
         )}
       </td>
       <td>

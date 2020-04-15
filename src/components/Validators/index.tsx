@@ -12,7 +12,7 @@ import { useLocation } from 'react-router-dom';
 
 export interface ValidatorType {
   computedShardID: number;
-  hexPublicKey: string;
+  publicKey: string;
   isActive: boolean;
   isValidator: boolean;
   peerType: 'waiting' | 'eligible' | 'observer';

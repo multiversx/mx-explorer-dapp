@@ -41,7 +41,7 @@ const ValidatorsTableHeader = ({
 }: ValidatorsTableHeaderType) => {
   const headers: HeadersType[] = [
     {
-      id: 'hexPublicKey',
+      id: 'publicKey',
       label: 'Public Key',
       dir: 'none',
     },
@@ -143,7 +143,7 @@ const ValidatorsTableHeader = ({
                 className={sort.field === 'rating' && isInitialRatingDesc ? 'd-none' : 'empty-icon'}
               />
             )}
-            {header.id === 'hexPublicKey' && (hasWaitingValidators || includeObservers) && (
+            {header.id === 'publicKey' && (hasWaitingValidators || includeObservers) && (
               <OverlayTrigger
                 trigger="click"
                 key="popover"
