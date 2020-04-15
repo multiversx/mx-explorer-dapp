@@ -1,20 +1,14 @@
 import React from 'react';
 import elrondLogo from 'assets/img/elrond-symbol.svg';
-import ValidatorTableRow from '../ValidatorsTable/Trow';
+import ValidatorBrandDetailsRow from './TBrandDetailsRow';
 import { ValidatorBrand } from './index';
 
 const ValidatorBrandRow = ({ 
         brand, 
-        rank,
-        validatorDetails,
-        validatorStatistics,
-        ratingOrder
+        rank
     } : { 
-        brand: ValidatorBrand, 
-        rank: number,
-        validatorDetails: boolean,
-        validatorStatistics: boolean,
-        ratingOrder: string[]
+        brand: ValidatorBrand;
+        rank: number;
     }) => {
     const [collapsed, setCollapsed] = React.useState(true);
 
@@ -28,9 +22,9 @@ const ValidatorBrandRow = ({
                         {brand.name}
                     </div>
                 </td>
-                <td>{brand.validators.length}</td>
-                <td className="text-right">{brand.cumulativeUptime}</td>
-                <td className="text-right">
+                <td className="text-right">{brand.validators.length}</td>
+                <td className="w-10 text-right">{brand.cumulativeUptime}</td>
+                <td className="w-10 text-right">
                     <div>
                         <span className={"badge badge-pill badge-status " + (
                             brand.cumulativeStatus === 'Online' ? 'badge-success'
@@ -40,7 +34,7 @@ const ValidatorBrandRow = ({
                         <span>{brand.cumulativeStatus}</span>
                     </div>
                 </td>
-                <td className="text-right">{Math.floor(brand.cumulativeRating)}</td>
+                <td className="w-10 text-right">{Math.floor(brand.cumulativeRating)}</td>
             </tr>
             <tr className={collapsed ? 'details-tr collapsed' : 'details-tr'}>
                 <td colSpan={6} className="p-0">
@@ -54,21 +48,17 @@ const ValidatorBrandRow = ({
                                             <th>Node Name</th>
                                             <th>Shard</th>
                                             <th>Version</th>
-                                            <th className="text-right">Uptime</th>
-                                            <th className="text-right">Status</th>
-                                            <th className="text-right">Rating</th>
+                                            <th className="w-10 text-right">Uptime</th>
+                                            <th className="w-10 text-right">Status</th>
+                                            <th className="w-10 text-right">Rating</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {brand.validators.map((validator, i) => (
-                                            <ValidatorTableRow
+                                            <ValidatorBrandDetailsRow
                                                 key={validator.hexPublicKey}
-                                                ratingOrder={ratingOrder}
                                                 rowIndex={i}
                                                 validator={validator}
-                                                validatorDetails={validatorDetails}
-                                                validatorStatistics={validatorStatistics}
-                                                hideRankCol={true}
                                             />
                                         ))}
                                     </tbody>

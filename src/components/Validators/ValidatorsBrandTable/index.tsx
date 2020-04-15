@@ -105,11 +105,15 @@ const generateBrandRowWithStats = (jsonBrand: JsonValidatorBrand, brandValidator
 
         _cumulativeUptime += uptime;
     });
+
+    if (_cumulativeUptime > 0) {
+        _cumulativeUptime = (_cumulativeUptime / brandValidators.length);
+    }
     
    return {
         name: jsonBrand.name,
         avatar: jsonBrand.avatar,
-        cumulativeUptime: (_cumulativeUptime / brandValidators.length) + '%',
+        cumulativeUptime: _cumulativeUptime + '%',
         cumulativeStatus: _cumulativeStatus,
         cumulativeRating: _cumulativeRating,
         validators: brandValidators
@@ -117,13 +121,9 @@ const generateBrandRowWithStats = (jsonBrand: JsonValidatorBrand, brandValidator
 };
 
 const ValidatorsBrandTable = ({
-    allValidators,
-    validatorDetails,
-    validatorStatistics
+    allValidators
   }: {
     allValidators: ValidatorType[];
-    validatorDetails: boolean;
-    validatorStatistics: boolean;
   }) => {
     const brandsJson: JsonValidatorBrand[] = require('../../../../public/validators_branding.json');
     const sortedBrands: ValidatorBrand[] = groupByBrandAndSort(brandsJson, allValidators);
@@ -138,10 +138,10 @@ const ValidatorsBrandTable = ({
                     <tr>
                         <th>#</th>
                         <th>Validator Name</th>
-                        <th>Nodes</th>
-                        <th className="text-right">Uptime</th>
-                        <th className="text-right">Status</th>
-                        <th className="text-right">Cumulative Rating</th>
+                        <th className="text-right">Nodes</th>
+                        <th className="w-10 text-right">Uptime</th>
+                        <th className="w-10 text-right">Status</th>
+                        <th className="w-10 text-right">Rating</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -150,9 +150,6 @@ const ValidatorsBrandTable = ({
                             key={i} 
                             rank={i+1} 
                             brand={brand}
-                            ratingOrder={brand.validators.map(validator => validator.hexPublicKey)}
-                            validatorDetails={validatorDetails}
-                            validatorStatistics={validatorStatistics}
                         />
                     )}
                     </tbody>

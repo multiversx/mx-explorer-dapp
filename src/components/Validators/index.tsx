@@ -108,9 +108,7 @@ const Validators = () => {
 
                   {showBrand
                     ? <ValidatorsBrandTable 
-                        allValidators={state.data.validators}
-                        validatorStatistics={validatorStatistics}
-                        validatorDetails={validatorDetails || false}  
+                        allValidators={state.data.validators} 
                       />
                     : <ValidatorsTable
                         {...state.data}

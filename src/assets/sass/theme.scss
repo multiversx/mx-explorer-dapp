@@ -782,6 +782,7 @@ svg[data-prefix='fas'] {
 -------------------------------------------------- */
 .branded-validators {
   table {
+    .w-10 { width: 10% }
 
     .brand-tr {
       &:hover {
@@ -800,7 +801,7 @@ svg[data-prefix='fas'] {
 
         tr {
           background-color:rgba(0, 0, 0, 0.075);
-          color: #212529;
+          color: #5a6169;
         }
       }
 
