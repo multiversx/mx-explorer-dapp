@@ -125,7 +125,7 @@ const ValidatorsBrandTable = ({
   }: {
     allValidators: ValidatorType[];
   }) => {
-    const brandsJson: JsonValidatorBrand[] = require('../../../../public/validators_branding.json');
+    const brandsJson: JsonValidatorBrand[] = require('../../../validators_branding.json');
     const sortedBrands: ValidatorBrand[] = groupByBrandAndSort(brandsJson, allValidators);
   
     return (
