@@ -22,7 +22,7 @@ const groupByBrandAndSort = (brandsJson: JsonValidatorBrand[], allValidators: Va
 
     brandsJson.forEach((jsonBrand: JsonValidatorBrand) => {
         const brandValidators: ValidatorType[] = allValidators.filter(
-            validator => jsonBrand.nodesPubKeys.indexOf(validator.hexPublicKey) > -1
+            validator => jsonBrand.nodesPubKeys.indexOf(validator.publicKey) > -1
         );
 
         // remove owned nodes from allValidators
@@ -46,7 +46,7 @@ const groupByBrandAndSort = (brandsJson: JsonValidatorBrand[], allValidators: Va
             generateBrandRowWithStats({
                     name: validator.nodeDisplayName,
                     avatar: '',
-                    nodesPubKeys: [validator.hexPublicKey]
+                    nodesPubKeys: [validator.publicKey]
                 }, 
                 [validator]
             )
@@ -133,27 +133,27 @@ const ValidatorsBrandTable = ({
             <div className="col-12">
             <div className="card p-3">
                 <div className="table-responsive" style={{ minHeight: '50px' }}>
-                <table className="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Validator Name</th>
-                        <th className="text-right">Nodes</th>
-                        <th className="w-10 text-right">Uptime</th>
-                        <th className="w-10 text-right">Status</th>
-                        <th className="w-10 text-right">Rating</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {sortedBrands.map((brand, i) =>
-                        <ValidatorBrandRow 
-                            key={i} 
-                            rank={i+1} 
-                            brand={brand}
-                        />
-                    )}
-                    </tbody>
-                </table>
+                    <table className="table table-hover">
+                        <thead>
+                        <tr>
+                            <th style={{ width: '12px' }}>#</th>
+                            <th>Validator Name</th>
+                            <th className="w-10 text-right">Nodes</th>
+                            <th className="text-right d-none">Uptime</th>
+                            <th className="text-right d-none">Status</th>
+                            <th className="w-10 text-right">Rating</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {sortedBrands.map((brand, i) =>
+                                <ValidatorBrandRow 
+                                    key={i} 
+                                    rank={i+1} 
+                                    brand={brand}
+                                />
+                            )}
+                        </tbody>
+                    </table>
                 </div>
             </div>
             </div>

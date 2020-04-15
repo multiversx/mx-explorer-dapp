@@ -19,12 +19,12 @@ const ValidatorBrandRow = ({
                 <td>
                     <div className="d-flex align-items-center">
                         <img src={brand.avatar ? brand.avatar : elrondLogo} alt={brand.name} className="mr-3" height="30" />
-                        {brand.name}
+                        {brand.name ? brand.name : 'N/A'}
                     </div>
                 </td>
                 <td className="text-right">{brand.validators.length}</td>
-                <td className="w-10 text-right">{brand.cumulativeUptime}</td>
-                <td className="w-10 text-right">
+                <td className="text-right d-none">{brand.cumulativeUptime}</td>
+                <td className="text-right d-none">
                     <div>
                         <span className={"badge badge-pill badge-status " + (
                             brand.cumulativeStatus === 'Online' ? 'badge-success'
@@ -34,36 +34,34 @@ const ValidatorBrandRow = ({
                         <span>{brand.cumulativeStatus}</span>
                     </div>
                 </td>
-                <td className="w-10 text-right">{Math.floor(brand.cumulativeRating)}</td>
+                <td className="text-right">{Math.floor(brand.cumulativeRating)}</td>
             </tr>
             <tr className={collapsed ? 'details-tr collapsed' : 'details-tr'}>
                 <td colSpan={6} className="p-0">
                     <div className="content">
-                        <div className="inner-content px-0 py-2">
-                            <div className="table-responsive" style={{ minHeight: '100px' }}>
-                                <table className="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Public Key</th>
-                                            <th>Node Name</th>
-                                            <th>Shard</th>
-                                            <th>Version</th>
-                                            <th className="w-10 text-right">Uptime</th>
-                                            <th className="w-10 text-right">Status</th>
-                                            <th className="w-10 text-right">Rating</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {brand.validators.map((validator, i) => (
-                                            <ValidatorBrandDetailsRow
-                                                key={validator.hexPublicKey}
-                                                rowIndex={i}
-                                                validator={validator}
-                                            />
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div className="table-responsive px-4 pt-3" style={{ minHeight: '50px' }}>
+                            <table className="table mb-2">
+                                <thead>
+                                    <tr>
+                                        <th>Public Key</th>
+                                        <th>Node Name</th>
+                                        <th>Shard</th>
+                                        <th>Version</th>
+                                        <th className="text-right">Uptime</th>
+                                        <th className="text-right">Status</th>
+                                        <th className="text-right">Rating</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {brand.validators.map((validator, i) => (
+                                        <ValidatorBrandDetailsRow
+                                            key={validator.publicKey}
+                                            rowIndex={i}
+                                            validator={validator}
+                                        />
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </td>

@@ -14,10 +14,10 @@ const ValidatorBrandDetailsRow = ({
     <tr>
         <td>
             <TestnetLink
-                to={`/validators/${validator.hexPublicKey}`}
+                to={`/validators/${validator.publicKey}`}
                 data-testid={`hexPublicKeyLink${rowIndex}`}
             >
-                {truncate(validator.hexPublicKey, 20)}
+                {truncate(validator.publicKey, 20)}
             </TestnetLink>
         </td>
         <td>
