@@ -61,7 +61,7 @@ const ValidatorsTable = (
     filters:
       searchValue !== ''
         ? [
-            { field: 'hexPublicKey', operator: 'contains', value: searchValue },
+            { field: 'publicKey', operator: 'contains', value: searchValue },
             { field: 'nodeDisplayName', operator: 'contains', value: searchValue },
             { field: 'versionNumber', operator: 'contains', value: searchValue },
           ]
@@ -107,7 +107,7 @@ const ValidatorsTable = (
     const uniqueRatings = data
       .sort((a, b) => a.rating - b.rating)
       .reverse()
-      .map(v => v.hexPublicKey);
+      .map(v => v.publicKey);
     setRatingOrder(uniqueRatings);
     setIsInitialRatingDesc(true);
   };
@@ -154,7 +154,7 @@ const ValidatorsTable = (
                 <tbody>
                   {newValidators.map((validator, i) => (
                     <ValidatorTableRow
-                      key={validator.hexPublicKey}
+                      key={validator.publicKey}
                       ratingOrder={ratingOrder}
                       rowIndex={i}
                       validator={validator}

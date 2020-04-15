@@ -10,7 +10,7 @@ import ValidatorsTable, { StateType } from './ValidatorsTable';
 
 export interface ValidatorType {
   computedShardID: number;
-  hexPublicKey: string;
+  publicKey: string;
   isActive: boolean;
   isValidator: boolean;
   peerType: 'waiting' | 'eligible' | 'observer';

@@ -8,7 +8,7 @@ import { initialState } from './../index';
 interface GetValidatorType {
   nodeUrl: string;
   elasticUrl: string;
-  hexPublicKey: string;
+  publicKey: string;
   timeout: number;
   metaChainShardId: number;
 }
@@ -216,15 +216,15 @@ export async function getValidator({
   elasticUrl,
   metaChainShardId,
   timeout,
-  hexPublicKey,
+  publicKey,
 }: GetValidatorType) {
   try {
     const {
       data: { message },
-    } = await axios.get(`${nodeUrl}/node/heartbeatstatus?key=${hexPublicKey}`, { timeout });
+    } = await axios.get(`${nodeUrl}/node/heartbeatstatus?key=${publicKey}`, { timeout });
 
     const currentValidator = message
-      .filter((validator: ValidatorType) => validator.hexPublicKey === hexPublicKey)
+      .filter((validator: ValidatorType) => validator.publicKey === publicKey)
       .pop();
 
     const { shardId, shardNumber } = getShardId(currentValidator, metaChainShardId);
@@ -259,7 +259,7 @@ export async function getValidator({
         _source: { publicKeys: consensusArray },
       } = hits.filter((hit: any) => hit._id.split('_')[0] === shardNumber.toString()).pop();
 
-      const signersIndex = consensusArray.indexOf(hexPublicKey);
+      const signersIndex = consensusArray.indexOf(publicKey);
 
       return {
         shardId,
@@ -275,7 +275,7 @@ export async function getValidator({
         totalDownTimeLabel,
         instanceType,
         signersIndex,
-        publicKey: hexPublicKey,
+        publicKey: publicKey,
         success: true,
       };
     }

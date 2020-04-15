@@ -12,7 +12,7 @@ describe('Rounds', () => {
     mockGet.mockReturnValueOnce(Promise.resolve({ data: validators }));
 
     const render = renderWithRouter({
-      route: `/validators/${heartbeatstatus.message[0].hexPublicKey}`,
+      route: `/validators/${heartbeatstatus.message[0].publicKey}`,
     });
     await wait(async () => {
       expect(render.getByTestId('roundsLoading')).toBeDefined();
@@ -27,7 +27,7 @@ describe('Rounds', () => {
     mockPost.mockRejectedValueOnce(new Error('rounds error'));
 
     const render = renderWithRouter({
-      route: `/validators/${heartbeatstatus.message[0].hexPublicKey}`,
+      route: `/validators/${heartbeatstatus.message[0].publicKey}`,
     });
     await wait(async () => {
       expect(render.getByTestId('roundsErrorScreen')).toBeDefined();

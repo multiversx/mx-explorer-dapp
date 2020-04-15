@@ -31,7 +31,7 @@ describe('Node Information', () => {
     });
 
     const render = renderWithRouter({
-      route: `/validators/${heartbeatstatus.message[0].hexPublicKey}`,
+      route: `/validators/${heartbeatstatus.message[0].publicKey}`,
     });
 
     await wait(async () => {
@@ -57,7 +57,7 @@ describe('Node Information', () => {
 
   test('Node Information loading state', async () => {
     const render = renderWithRouter({
-      route: `/validators/${heartbeatstatus.message[0].hexPublicKey}`,
+      route: `/validators/${heartbeatstatus.message[0].publicKey}`,
     });
     expect(render.getByTestId('loader')).toBeDefined();
   });
@@ -102,7 +102,7 @@ describe('Validator Details links', () => {
     });
 
     const render = renderWithRouter({
-      route: `/validators/${heartbeatstatus.message[0].hexPublicKey}`,
+      route: `/validators/${heartbeatstatus.message[0].publicKey}`,
     });
 
     const shardLink = await render.findByTestId('shardLink');

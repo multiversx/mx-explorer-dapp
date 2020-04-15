@@ -42,10 +42,10 @@ export function populateValidatorsTable({
       statistics !== null &&
       typeof statistics === 'object' &&
       Object.keys(statistics).length &&
-      validator.hexPublicKey in statistics;
+      validator.publicKey in statistics;
 
     const { rating } = statisticsHasValidatorHash
-      ? statistics[validator.hexPublicKey]
+      ? statistics[validator.publicKey]
       : {
           rating: 0,
         };
