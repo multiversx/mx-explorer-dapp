@@ -36,6 +36,11 @@ const routes: RouteType[] = [
     component: Validators, // React.lazy(() => import('./components/Validators')),
   },
   {
+    path: '/validators/brand/',
+    title: 'Validators Brand',
+    component: Validators, // React.lazy(() => import('./components/Validators')),
+  },
+  {
     path: '/validators/:hash',
     title: 'Validator Details',
     component: ValidatorDetails,
