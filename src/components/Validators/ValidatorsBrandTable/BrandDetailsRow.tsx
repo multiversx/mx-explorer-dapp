@@ -1,15 +1,17 @@
 import * as React from 'react';
-import { truncate } from './../../../helpers';
-import { ShardSpan, TestnetLink } from './../../../sharedComponents';
-import { ValidatorType } from './../index';
+import { truncate } from '../../../helpers';
+import { ShardSpan, TestnetLink } from '../../../sharedComponents';
+import { ValidatorType } from '../index';
 
-const ValidatorBrandDetailsRow = ({
+interface BrandDetailsRowType {
+    validator: ValidatorType;
+    rowIndex: number;
+}
+
+const BrandDetailsRow = ({
   validator,
   rowIndex
-}: {
-  validator: ValidatorType;
-  rowIndex: number;
-}) => {
+}: BrandDetailsRowType) => {
   return (
     <tr>
         <td>
@@ -83,4 +85,4 @@ const ValidatorBrandDetailsRow = ({
   );
 };
 
-export default ValidatorBrandDetailsRow;
+export default BrandDetailsRow;

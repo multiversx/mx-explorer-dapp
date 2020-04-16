@@ -1,20 +1,26 @@
 import React from 'react';
 import elrondLogo from 'assets/img/elrond-symbol.svg';
-import ValidatorBrandDetailsRow from './TBrandDetailsRow';
-import { ValidatorBrand } from './index';
+import BrandDetailsRow from './BrandDetailsRow';
+import { BrandType } from './index';
 
-const ValidatorBrandRow = ({ 
+interface BrandRowType { 
+    brand: BrandType;
+    rank: number;
+};
+
+const BrandRow = ({
         brand, 
         rank
-    } : { 
-        brand: ValidatorBrand;
-        rank: number;
-    }) => {
+    } : BrandRowType ) => {
     const [collapsed, setCollapsed] = React.useState(true);
+
+    const onClick = () => {
+        setCollapsed(!collapsed);
+    };
 
     return (
         <>
-            <tr onClick={(e) => setCollapsed(!collapsed)} className="brand-tr">
+            <tr onClick={onClick} className="brand-tr">
                 <td>{rank}</td>
                 <td>
                     <div className="d-flex align-items-center">
@@ -34,7 +40,7 @@ const ValidatorBrandRow = ({
                         <span>{brand.cumulativeStatus}</span>
                     </div>
                 </td>
-                <td className="text-right">{Math.floor(brand.cumulativeRating)}</td>
+                <td className="text-right">{Math.floor(brand.score)}</td>
             </tr>
             <tr className={collapsed ? 'details-tr collapsed' : 'details-tr'}>
                 <td colSpan={6} className="p-0">
@@ -54,7 +60,7 @@ const ValidatorBrandRow = ({
                                 </thead>
                                 <tbody>
                                     {brand.validators.map((validator, i) => (
-                                        <ValidatorBrandDetailsRow
+                                        <BrandDetailsRow
                                             key={validator.publicKey}
                                             rowIndex={i}
                                             validator={validator}
@@ -70,4 +76,4 @@ const ValidatorBrandRow = ({
     );
   };
   
-  export default ValidatorBrandRow;
+  export default BrandRow;

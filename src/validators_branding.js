@@ -1,4 +1,4 @@
-[
+const brands = [
   {
     "name": "Kevin",
     "avatar": "",
@@ -17,4 +17,6 @@
       "a5496a416b1ad2712866bfe689db9c39d6fa225464db7d4e448a8707b0bc5fbe2ca890cc7d0d2f9bdf75597c681e35035306d1dbc2ad74795cfa6188a454d8965b06b11982ce075c87ca82a450001d2f8b3f7cb5894590bc134cb5bf4557d192"
     ]
   }
-]
+];
+
+export default brands;
