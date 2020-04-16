@@ -14,7 +14,7 @@ const ShardSpan = ({ shardId }: ShardSpanType) => {
     shardId = shardId.replace('Shard', '');
   }
 
-  const isMetachain = metaChainShardId === shardId;
+  const isMetachain = metaChainShardId.toString() === shardId.toString();
 
   return isMetachain ? <span>Metachain</span> : <span>Shard {shardId}</span>;
 };
