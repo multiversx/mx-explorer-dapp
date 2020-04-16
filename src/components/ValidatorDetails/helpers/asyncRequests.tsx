@@ -249,15 +249,17 @@ export async function getValidator({
     const instanceType = isValidator ? `Validator (${peerType})` : 'Observer';
 
     if (isValidator) {
-      const {
-        data: {
-          hits: { hits },
-        },
-      } = await axios.get(`${elasticUrl}/validators/_search`, { timeout });
+      const { epoch, roundAtEpochStart } = await getEpoch({
+        nodeUrl,
+        shardNumber,
+        timeout,
+      });
 
       const {
-        _source: { publicKeys: consensusArray },
-      } = hits.filter((hit: any) => hit._id.split('_')[0] === shardNumber.toString()).pop();
+        data: {
+          _source: { publicKeys: consensusArray },
+        },
+      } = await axios.get(`${elasticUrl}/validators/_doc/${shardNumber}_${epoch}`, { timeout });
 
       const signersIndex = consensusArray.indexOf(publicKey);
 
@@ -275,7 +277,9 @@ export async function getValidator({
         totalDownTimeLabel,
         instanceType,
         signersIndex,
-        publicKey: publicKey,
+        publicKey,
+        epoch,
+        roundAtEpochStart,
         success: true,
       };
     }
