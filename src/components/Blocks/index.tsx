@@ -120,7 +120,7 @@ const Blocks: React.FC = () => {
                   <div className="card-body card-details">
                     <div className="empty">
                       <FontAwesomeIcon icon={faCube} className="empty-icon" />
-                      <span className="h4 empty-heading">Unable to load blocks</span>
+                      <span className="h4 empty-heading">No blocks found</span>
                     </div>
                   </div>
                 </div>

@@ -173,7 +173,7 @@ const ValidatorDetails = () => {
                             <div className="card-body card-details" data-testid="errorScreen">
                               <div className="empty">
                                 <FontAwesomeIcon icon={faCube} className="empty-icon" />
-                                <span className="h4 empty-heading">Unable to load blocks</span>
+                                <span className="h4 empty-heading">No blocks found</span>
                               </div>
                             </div>
                           </div>
