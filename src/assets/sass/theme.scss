@@ -821,6 +821,7 @@ svg[data-prefix='fas'] {
           border-top: 13px solid #fff;
           border-left: 15px solid transparent;
           border-right: 15px solid transparent;
+          filter: drop-shadow(0 4px 2px rgba(0, 0, 0, 0.1));
         }
 
         th {
