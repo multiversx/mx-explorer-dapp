@@ -1,7 +1,7 @@
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { addressIsHash, dateFormatted, trimHash, truncate, useBach32 } from 'helpers';
+import { addressIsBach32, dateFormatted, trimHash, truncate, useBach32 } from 'helpers';
 import * as React from 'react';
 import { ScAddressIcon, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { TransactionType } from './../Transactions';
@@ -86,7 +86,7 @@ const LatestTransactions: React.FC = () => {
                       </div>
                       <div className="col-6">
                         From&nbsp;
-                        {addressIsHash(transaction.sender) ? (
+                        {addressIsBach32(transaction.sender) ? (
                           <TestnetLink to={`/address/${getAddress(transaction.sender)}`}>
                             {trimHash(getAddress(transaction.sender))}
                           </TestnetLink>

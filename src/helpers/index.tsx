@@ -1,4 +1,5 @@
-import addressIsHash from './addressIsHash';
+import isHash from './isHash';
+import addressIsBach32 from './addressIsBach32';
 import copyToClipboard from './copyToClipboard';
 import dateFormatted from './dateFormatted';
 import sizeFormat from './sizeFormat';
@@ -12,7 +13,8 @@ export {
   truncate,
   sizeFormat,
   dateFormatted,
-  addressIsHash,
+  isHash,
+  addressIsBach32,
   testnetRoute,
   copyToClipboard,
   getShardId,

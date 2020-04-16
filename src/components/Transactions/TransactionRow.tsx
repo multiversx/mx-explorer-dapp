@@ -1,4 +1,4 @@
-import { addressIsHash, dateFormatted, trimHash, truncate, useBach32 } from 'helpers';
+import { addressIsBach32, dateFormatted, trimHash, truncate, useBach32 } from 'helpers';
 import React from 'react';
 import {
   Denominate,
@@ -56,7 +56,7 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
           <span>{trimHash(getAddress(transaction.sender))}</span>
         ) : (
           <>
-            {addressIsHash(transaction.sender) ? (
+            {addressIsBach32(transaction.sender) ? (
               <TestnetLink
                 to={`/address/${getAddress(transaction.sender)}`}
                 data-testid="senderLink"

@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { useGlobalState } from 'context';
-import { addressIsHash, dateFormatted, useBach32 } from 'helpers';
+import { addressIsBach32, dateFormatted, useBach32 } from 'helpers';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import {
@@ -137,7 +137,7 @@ const TransactionDetails: React.FC = () => {
                         <div className="col-lg-2 card-label">From</div>
                         <div className="col-lg-10">
                           <ScAddressIcon initiator={transaction.sender} />
-                          {addressIsHash(transaction.sender) ? (
+                          {addressIsBach32(transaction.sender) ? (
                             <>
                               <TestnetLink to={`/address/${getAddress(transaction.sender)}`}>
                                 {getAddress(transaction.sender)}
