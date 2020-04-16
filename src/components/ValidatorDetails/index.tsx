@@ -71,40 +71,36 @@ const ValidatorDetails = () => {
         publicKey: hash || '',
         metaChainShardId,
         nodeUrl,
-      }).then(({ signersIndex, shardNumber, success, ...data }: any) => {
-        getEpoch({ nodeUrl, shardNumber, timeout }).then(
-          ({ epoch, roundAtEpochStart, epochSuccess }) => {
-            if (ref.current !== null && epochSuccess) {
-              setState({ ...data, shardNumber });
-              setSuccess(success);
-              const props = {
-                elasticUrl,
-                timeout: Math.max(timeout, 10000),
-                shardNumber,
-                signersIndex,
-                epoch,
-                roundAtEpochStart,
-              };
-              getRounds(props).then(({ rounds, roundsFetched }) => {
-                setRounds({ rounds, roundsFetched });
-              });
-              if (validatorStatistics) {
-                getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }).then(
-                  ({ statistics }: any) => {
-                    if (data.publicKey in statistics) {
-                      const { rating } = statistics[data.publicKey];
-                      setState(currentState => ({
-                        rating,
-                        ...currentState,
-                      }));
-                    }
-                  }
-                );
+      }).then(({ signersIndex, shardNumber, epoch, roundAtEpochStart, success, ...data }: any) => {
+        if (ref.current !== null) {
+          setState({ ...data, shardNumber });
+          setSuccess(success);
+          const props = {
+            elasticUrl,
+            timeout: Math.max(timeout, 10000),
+            shardNumber,
+            signersIndex,
+            epoch,
+            roundAtEpochStart,
+          };
+          getRounds(props).then(({ rounds, roundsFetched }) => {
+            setRounds({ rounds, roundsFetched });
+          });
+          if (validatorStatistics) {
+            getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }).then(
+              ({ statistics }: any) => {
+                if (data.publicKey in statistics) {
+                  const { rating } = statistics[data.publicKey];
+                  setState(currentState => ({
+                    rating,
+                    ...currentState,
+                  }));
+                }
               }
-              searchBlocks(props).then((blockdata: any) => setFetchedBlocks(blockdata));
-            }
+            );
           }
-        );
+          searchBlocks(props).then((blockdata: any) => setFetchedBlocks(blockdata));
+        }
       });
     }
   }, [elasticUrl, timeout, hash, nodeUrl, metaChainShardId, validatorStatistics]); // run the operation only once since the parameter does not change
@@ -177,7 +173,7 @@ const ValidatorDetails = () => {
                             <div className="card-body card-details" data-testid="errorScreen">
                               <div className="empty">
                                 <FontAwesomeIcon icon={faCube} className="empty-icon" />
-                                <span className="h4 empty-heading">Unable to load blocks</span>
+                                <span className="h4 empty-heading">No blocks found</span>
                               </div>
                             </div>
                           </div>

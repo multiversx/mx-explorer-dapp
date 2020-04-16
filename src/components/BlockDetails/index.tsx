@@ -4,7 +4,7 @@ import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 import { useGlobalState } from '../../context';
-import { addressIsHash, dateFormatted, sizeFormat, testnetRoute, truncate } from '../../helpers';
+import { isHash, dateFormatted, sizeFormat, testnetRoute, truncate } from '../../helpers';
 import { Loader, ShardSpan, TestnetLink, TimeAgo } from '../../sharedComponents';
 import { BlockType } from '../Blocks';
 import { getBlock } from './helpers/asyncRequests';
@@ -57,7 +57,7 @@ const BlockDetails: React.FC = () => {
 
   const [state, setState] = React.useState<StateType>(initialState);
 
-  if (blockId && !addressIsHash(blockId)) {
+  if (blockId && !isHash(blockId)) {
     history.push(testnetRoute({ to: `/not-found`, activeTestnetId }));
   }
 

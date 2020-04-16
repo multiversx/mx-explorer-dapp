@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import Web3 from 'web3';
 import { boolean, mixed, number, object, ObjectSchema, string } from 'yup';
 import cryptoCore from '../../lib/cryptoCore';
-import { addressIsHash } from './../../../helpers';
+import { isHash } from './../../../helpers';
 import denominate from './../../../sharedComponents/Denominate/denominate';
 
 export function isValidNumber(number: number) {
@@ -57,7 +57,7 @@ const amountDenomination = (amount: string, denomination: number) => {
 export const validationSchema = object().shape({
   dstAddress: string()
     .required('Required')
-    .test('addressIsHash', 'Invalid address', value => value && addressIsHash(value)),
+    .test('addressIsHash', 'Invalid address', value => value && isHash(value)),
   amount: mixed()
     .typeError('Invalid number')
     .required('Required')

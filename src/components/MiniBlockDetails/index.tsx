@@ -1,7 +1,7 @@
 import { faCube } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { addressIsHash, testnetRoute } from 'helpers';
+import { isHash, testnetRoute } from 'helpers';
 import * as React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Loader, ShardSpan, TestnetLink } from 'sharedComponents';
@@ -47,7 +47,7 @@ const MiniBlockDetails: React.FC = () => {
 
   const [state, setState] = React.useState<StateType>(initialState);
 
-  if (blockId && !addressIsHash(blockId)) {
+  if (blockId && !isHash(blockId)) {
     history.push(testnetRoute({ to: `/not-found`, activeTestnetId }));
   }
 
