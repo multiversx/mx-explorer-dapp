@@ -2,13 +2,13 @@ import { useBach32 } from 'helpers';
 import * as React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useGlobalState } from '../../context';
-import { Loader, Pager, ShardSpan } from './../../sharedComponents';
+import { Loader, ShardSpan } from './../../sharedComponents';
 import AddressDetails, { AddressDetailsType } from './AddressDetails';
 import FailedAddress from './FailedAddress';
 import FailedTransaction from './FailedTransaction';
 import { getAddressDetails, getTotalTransactions, getTransactions } from './helpers/asyncRequests';
 import NoTransactions from './NoTransactions';
-import TransactionRow from './TransactionRow';
+import TransactionsTable from './../../sharedComponents/TransactionsTable';
 
 export interface TransactionType {
   blockHash: string;
@@ -149,49 +149,13 @@ const Transactions: React.FC = () => {
             </div>
           )}
           {transactions.length > 0 ? (
-            <div className="card" style={{ height: 'auto' }}>
-              <div className="card-body card-list">
-                <div className="table-responsive">
-                  <table className="table mt-4" data-testid="transactionsTable">
-                    <thead>
-                      <tr>
-                        <th scope="col">Txn Hash</th>
-                        <th scope="col">Block</th>
-                        <th scope="col">Age</th>
-                        <th scope="col">Shard</th>
-                        <th scope="col">From</th>
-                        <th scope="col">To</th>
-                        <th scope="col" className="text-right">
-                          Value
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {transactions.map(transaction => (
-                        <TransactionRow
-                          transaction={transaction}
-                          key={transaction.hash}
-                          addressId={addressId}
-                        />
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-
-                <Pager
-                  slug={slug}
-                  total={totalTransactions}
-                  start={(size - 1) * 50 + (size === 1 ? 1 : 0)}
-                  end={
-                    (size - 1) * 50 +
-                    (parseInt(totalTransactions.toString()) < 50
-                      ? parseInt(totalTransactions.toString())
-                      : 50)
-                  }
-                  show={transactions.length > 0}
-                />
-              </div>
-            </div>
+            <TransactionsTable 
+              transactions={transactions}
+              addressId={addressId}
+              totalTransactions={totalTransactions}
+              slug={slug}
+              size={size}
+            />
           ) : (
             <>
               {transactionsFetched ? (
