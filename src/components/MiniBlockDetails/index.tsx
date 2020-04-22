@@ -1,14 +1,12 @@
-import { faCube } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { isHash, testnetRoute } from 'helpers';
 import * as React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Loader, ShardSpan, TestnetLink } from 'sharedComponents';
+import { Loader, ShardSpan, TestnetLink, TransactionsTable } from 'sharedComponents';
 import { getMiniBlock, getTransactions, getTotalTransactions } from './helpers/asyncRequests';
-import TransactionsTable from '../../sharedComponents/TransactionsTable';
-import { TransactionType } from '../Transactions';
-import NoTransactions from '../Transactions/NoTransactions';
+import { TransactionType } from 'sharedComponents/TransactionsTable';
+import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
+import MiniBlockNotFound from './MiniBlockNotFound';
 
 interface MiniBlockType {
   senderShard: number;
@@ -116,15 +114,7 @@ const MiniBlockDetails: React.FC = () => {
         {!blockFetched ? (
           <div className="row">
             <div className="col-12">
-                <div className="card">
-                  <div className="card-body card-details">
-                    <div className="empty">
-                      <FontAwesomeIcon icon={faCube} className="empty-icon" />
-                      <span className="h4 empty-heading">Unable to locate this miniblock hash</span>
-                      <span className="empty-details">{miniBlockHash}</span>
-                    </div>
-                  </div>
-                </div>
+              <MiniBlockNotFound miniBlockHash={miniBlockHash} />
             </div>
           </div>
         ) : (
@@ -198,7 +188,7 @@ const MiniBlockDetails: React.FC = () => {
                     </div>
                   </div>
                 </div>
-       
+
                 <div className="row pt-3">
                   <div className="col-12">
                     <h4 data-testid="title">Transactions</h4>

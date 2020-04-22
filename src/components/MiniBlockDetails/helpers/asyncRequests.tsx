@@ -46,7 +46,7 @@ export async function getTransactions({
         size: 50,
         query: {
           bool: {
-            should: [{ match: { miniBlockHash: miniBlockHash } }],
+            should: [{ match: { miniBlockHash } }],
           },
         },
       },
@@ -81,7 +81,7 @@ export async function getTotalTransactions({
       {
         query: {
           bool: {
-            should: [{ match: { miniBlockHash: miniBlockHash } }],
+            should: [{ match: { miniBlockHash } }],
           },
         },
       },

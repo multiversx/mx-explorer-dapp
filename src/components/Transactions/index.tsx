@@ -1,33 +1,14 @@
 import { useBach32 } from 'helpers';
 import * as React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useGlobalState } from '../../context';
-import { Loader, ShardSpan } from './../../sharedComponents';
+import { useGlobalState } from 'context';
+import { Loader, ShardSpan, TransactionsTable } from 'sharedComponents';
+import { TransactionType } from 'sharedComponents/TransactionsTable';
+import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import AddressDetails, { AddressDetailsType } from './AddressDetails';
 import FailedAddress from './FailedAddress';
 import FailedTransaction from './FailedTransaction';
 import { getAddressDetails, getTotalTransactions, getTransactions } from './helpers/asyncRequests';
-import NoTransactions from './NoTransactions';
-import TransactionsTable from './../../sharedComponents/TransactionsTable';
-
-export interface TransactionType {
-  blockHash: string;
-  data: string;
-  gasLimit: number;
-  gasPrice: number;
-  hash: string;
-  miniBlockHash: string;
-  nonce: number;
-  receiver: string;
-  receiverShard: number;
-  round: number;
-  sender: string;
-  senderShard: number;
-  signature: string;
-  status: string;
-  timestamp: number;
-  value: string;
-}
 
 function getDirection(type: string | undefined) {
   const shardMap: any = {
@@ -46,7 +27,7 @@ const initialAddressDetails: AddressDetailsType = {
   detailsFetched: true,
 };
 
-const Transactions: React.FC = () => {
+const Transactions = () => {
   const ref = React.useRef(null);
   const [addressDetails, setAddressDetails] = React.useState<AddressDetailsType>(
     initialAddressDetails
@@ -149,7 +130,7 @@ const Transactions: React.FC = () => {
             </div>
           )}
           {transactions.length > 0 ? (
-            <TransactionsTable 
+            <TransactionsTable
               transactions={transactions}
               addressId={addressId}
               totalTransactions={totalTransactions}

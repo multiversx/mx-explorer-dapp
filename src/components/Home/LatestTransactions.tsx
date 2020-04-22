@@ -4,7 +4,7 @@ import { useGlobalState } from 'context';
 import { addressIsBach32, dateFormatted, trimHash, truncate, useBach32 } from 'helpers';
 import * as React from 'react';
 import { ScAddressIcon, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
-import { TransactionType } from './../Transactions';
+import { TransactionType } from 'sharedComponents/TransactionsTable';
 import { getTransactions } from './helpers/asyncRequests';
 
 const LatestTransactions: React.FC = () => {

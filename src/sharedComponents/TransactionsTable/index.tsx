@@ -1,7 +1,25 @@
-import TransactionRow from '../../components/Transactions/TransactionRow';
+import TransactionRow from './TransactionRow';
 import Pager from '../Pager';
 import * as React from 'react';
-import { TransactionType } from '../../components/Transactions';
+
+export interface TransactionType {
+  blockHash: string;
+  data: string;
+  gasLimit: number;
+  gasPrice: number;
+  hash: string;
+  miniBlockHash: string;
+  nonce: number;
+  receiver: string;
+  receiverShard: number;
+  round: number;
+  sender: string;
+  senderShard: number;
+  signature: string;
+  status: string;
+  timestamp: number;
+  value: string;
+}
 
 interface TransactionsTableType {
   transactions: TransactionType[];

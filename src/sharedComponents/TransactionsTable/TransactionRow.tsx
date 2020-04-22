@@ -1,12 +1,6 @@
 import { addressIsBach32, dateFormatted, trimHash, truncate, useBach32 } from 'helpers';
 import React from 'react';
-import {
-  Denominate,
-  ScAddressIcon,
-  ShardSpan,
-  TestnetLink,
-  TimeAgo,
-} from './../../sharedComponents';
+import { Denominate, ScAddressIcon, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { TransactionType } from './index';
 
 interface PropsType {

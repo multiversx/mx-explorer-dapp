@@ -1,6 +1,6 @@
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { TransactionType } from 'components/Transactions';
+import { TransactionType } from 'sharedComponents/TransactionsTable';
 import { dateFormatted, truncate } from 'helpers';
 import React from 'react';
 import { Loader, TimeAgo } from 'sharedComponents';
