@@ -20,7 +20,7 @@ const brands = [
   },
   {
     name: 'DrDelphi',
-    avatar: 'drdelphi.jpeg',
+    avatar: 'drdelphi.png',
     nodesPubKeys: [
       '006de20fb7a6dd388be9cc16fcc8eeb73890e9c801863538519d563f921bc80f5343752e7536c720b0d46e5eb00efb16310e026f65c62a93799c75bd04242a589c314296f02487b315b9a0610a22bc74bc94de4e16d452a211f5dcf9efb4468a',
       '1d4979ee32434023397fde6953f9b19bdcf5717f80e396cbdec700688be2ccabc301b3d04ec7489ac94ba1f88b791808754ae806eef729a5ff1bb54ebf26d4e99ff6fb299430a79cc690086d5affbc6f63cadf83ef43d73c8cab84ae52bc0090',
