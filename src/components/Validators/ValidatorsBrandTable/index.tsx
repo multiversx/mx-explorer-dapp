@@ -37,8 +37,8 @@ const ValidatorsBrandTable = ({ allValidators }: ValidatorsBrandTableType) => {
                 <tr>
                   <th className="th-rank">#</th>
                   <th className="th-name">Validator Name</th>
-                  <th className="text-right">Stake</th>
-                  <th className="th-stake-percent text-right">Stake percent</th>
+                  <th>Stake</th>
+                  <th className="th-stake-percent">Stake percent</th>
                   <th className="w-10 text-right">Nodes</th>
                   <th className="w-10 text-right">Score</th>
                   <th className="th-details">&nbsp;</th>

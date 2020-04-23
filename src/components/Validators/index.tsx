@@ -88,7 +88,6 @@ const Validators = () => {
   };
 
   const showBrand = useLocation().pathname === '/validators/brand';
-  console.log(showBrand);
 
   React.useEffect(getData, [nodeUrl, timeout]);
 
@@ -98,7 +97,7 @@ const Validators = () => {
         <div className="container pt-3 pb-3">
           <div className="row">
             <div className="col-12">
-              <h4 data-testid="title">Validators {showBrand ? ' Brand' : ''}</h4>
+              <h4 data-testid="title">Validators</h4>
             </div>
           </div>
           {state.success ? (
