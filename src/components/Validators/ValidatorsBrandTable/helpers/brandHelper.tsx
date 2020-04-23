@@ -9,7 +9,7 @@ export function groupByBrandAndSort({
   allValidators: ValidatorType[];
 }) {
   const sortedBrands: BrandType[] = [];
-  const stakePerValidator = 200;
+  const stakePerValidator = 2500000;
   const blockchainTotalStake = allValidators.length * stakePerValidator;
 
   brandsJson.forEach((jsonBrand: JsonBrandType) => {

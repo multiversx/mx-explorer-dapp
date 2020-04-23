@@ -789,10 +789,8 @@ svg[data-prefix='fas'] {
       width: 12px;
     }
 
-    .th-stake {
+    .th-stake-percent {
       width: 260px;
-      height: 10px;
-      padding:  0 10px 0 0;
     }
 
     .brand-tr {
@@ -819,41 +817,42 @@ svg[data-prefix='fas'] {
 
       .stake-bar-col {
         position: relative;
-        height: 10px;
 
-        .stake-bar-wrapper {
-          .stake-bar-overall {
-            background-color: blue;
-            opacity: 0.2;
-            height: 100%;
-          }
+        .progress {
+          margin-top: 2px;
+          margin-right: 60px;
 
-          .stake-bar {
-            background-color: red;
-            opacity: 0.5;
-            height: 100%;
+          .progress-bar {
             min-width: 1px;
           }
 
-          .stake-percent {
-            left: 10px;
-            right: auto;
+          .bg-success {
+            background-color: #86C7F2 !important;
           }
 
-          .stake-percent,
-          .stake-value {
-            position: absolute;
-            right: 10px;
-            opacity: 1;
-            top: 50%;
-            transform: translateY(-50%);
+          .bg-danger {
+            background-color: #0E8FE5 !important;
           }
+        }
+
+        .stake-percent {
+          position: absolute;
+          right: 10px;
+          opacity: 1;
+          top: 50%;
+          transform: translateY(-50%);
         }
       }
     }
+
+    $detailsTableBgColor: rgba(0, 0, 0, 0.075);
     
     .details-tr {
-      background-color: rgba(0, 0, 0, 0.075);
+      background-color: $detailsTableBgColor;
+
+      &:hover {
+        background-color: $detailsTableBgColor;
+      }
 
       .content {
         box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -863,10 +862,11 @@ svg[data-prefix='fas'] {
           background: none;
           text-transform: uppercase;
           font-size: 0.785rem;
+          border-bottom: 0;
         }
 
         tr {
-          background-color:rgba(0, 0, 0, 0.075);
+          background-color:$detailsTableBgColor;
           color: #5a6169;
         }
       }
