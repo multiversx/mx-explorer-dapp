@@ -780,6 +780,13 @@ svg[data-prefix='fas'] {
 
 /* Branded Validators
 -------------------------------------------------- */
+$brandRowOpenBgColor: rgba(0, 0, 0, 0.125);
+$brandRowHoverBgColor: #f8f9fa;
+$brandRowBorderColor: $brandRowOpenBgColor;
+
+$detailsRowOpenBgColor: $brandRowOpenBgColor;
+$detailsRowBorderColor: $brandRowOpenBgColor;
+
 .branded-validators {
   table {
     .w-10 { width: 10% }
@@ -799,14 +806,22 @@ svg[data-prefix='fas'] {
       position: relative;
 
       &:hover {
-        background-color: #f8f9fa;
+        background-color: $brandRowHoverBgColor;
         cursor: pointer;
       }
 
+      &:not(.collapsed) {
+        background-color: $brandRowOpenBgColor;
+      }
+
       &.collapsed {
-        .details-arrow {
+        .carret-down{
           transform: rotateZ(-90deg);
         }
+      }
+
+      td {
+        border-color: $brandRowBorderColor;
       }
 
       .avatar {
@@ -853,10 +868,13 @@ svg[data-prefix='fas'] {
     }
     
     .details-tr {
-      background-color: rgba(0, 0, 0, 0.075);
+      background-color: $detailsRowOpenBgColor;
+
+      &:hover {
+        background-color: $detailsRowOpenBgColor; // fixes a bug
+      }
 
       .content {
-        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
         position: relative;
 
         th {
@@ -866,7 +884,7 @@ svg[data-prefix='fas'] {
         }
 
         tr {
-          background-color:rgba(0, 0, 0, 0.075);
+          background-color: $detailsRowOpenBgColor;
           color: #5a6169;
         }
       }
@@ -884,6 +902,10 @@ svg[data-prefix='fas'] {
             transform: rotateZ(-90deg);
           }
         }
+      }
+
+      td {
+        // border-color: $detailsRowBorderColor;
       }
     }
 

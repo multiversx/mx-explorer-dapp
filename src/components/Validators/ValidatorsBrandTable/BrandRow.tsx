@@ -1,6 +1,7 @@
 import React from 'react';
-import elrondLogo from 'assets/img/elrond-symbol.svg';
+import defaultLogo from 'assets/img/validator-placeholder.svg';
 import carretDown from 'assets/img/carret-down.svg';
+import carretDownWhite from 'assets/img/carret-down-white.svg';
 import BrandDetailsRow from './BrandDetailsRow';
 import { BrandType } from './index';
 
@@ -25,7 +26,7 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
             <div className="mr-3">
               <img
                 className={brand.avatar ? 'avatar' : 'avatar gray'}
-                src={brand.avatar ? `/validators/${brand.avatar}` : elrondLogo}
+                src={brand.avatar ? `/validators/${brand.avatar}` : defaultLogo}
                 alt={brand.name}
                 height="30"
               />
@@ -49,14 +50,25 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
         <td className="text-right">{brand.validators.length}</td>
         <td className="text-right">{Math.floor(brand.score)}</td>
         <td className="text-right">
-          <img src={carretDown} className="details-arrow" alt="details-arrow" height="8" />
+          <img
+            src={carretDown}
+            className={collapsed ? 'carret-down' : 'd-none'}
+            alt="details-arrow"
+            height="8"
+          />
+          <img
+            src={carretDownWhite}
+            className={collapsed ? 'd-none' : 'carret-down'}
+            alt="details-arrow"
+            height="8"
+          />
         </td>
       </tr>
       <tr className={collapsed ? 'details-tr collapsed' : 'details-tr'}>
         <td colSpan={6} className="p-0">
           <div className="content">
-            <div className="table-responsive px-4 pt-3" style={{ minHeight: '50px' }}>
-              <table className="table mb-2">
+            <div className="table-responsive" style={{ minHeight: '50px' }}>
+              <table className="table mb-2 mt-3">
                 <thead>
                   <tr>
                     <th>Public Key</th>
