@@ -40,6 +40,7 @@ export const initialState: StateType = {
   signersIndex: -1,
   success: true,
   rating: 0,
+  ratingModifier: 0,
 };
 
 const ValidatorDetails = () => {

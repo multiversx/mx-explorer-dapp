@@ -27,6 +27,7 @@ export interface ValidatorType {
   shardNumber: number;
   star: boolean;
   rating: number;
+  ratingModifier: number;
 }
 
 export const initialState: StateType = {
@@ -106,16 +107,15 @@ const Validators = () => {
                 <>
                   <ShardsList shardData={state.data.shardData} />
 
-                  {showBrand
-                    ? <ValidatorsBrandTable 
-                        allValidators={state.data.validators} 
-                      />
-                    : <ValidatorsTable
-                        {...state.data}
-                        validatorStatistics={validatorStatistics}
-                        validatorDetails={validatorDetails || false}
-                      />
-                  }
+                  {showBrand ? (
+                    <ValidatorsBrandTable allValidators={state.data.validators} />
+                  ) : (
+                    <ValidatorsTable
+                      {...state.data}
+                      validatorStatistics={validatorStatistics}
+                      validatorDetails={validatorDetails || false}
+                    />
+                  )}
                 </>
               ) : (
                 <Loader />

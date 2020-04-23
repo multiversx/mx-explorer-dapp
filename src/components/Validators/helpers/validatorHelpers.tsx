@@ -3,6 +3,7 @@ import { ShardDataType, ValidatorType } from './../index';
 
 export interface ValidatorStatisticsData {
   rating: number;
+  ratingModifier: number;
 }
 
 export interface StatisticsType {
@@ -49,6 +50,13 @@ export function populateValidatorsTable({
       : {
           rating: 0,
         };
+
+    const { ratingModifier } = statisticsHasValidatorHash
+      ? statistics[validator.publicKey]
+      : {
+          ratingModifier: 0,
+        };
+
     validator = {
       ...validator,
       shardId,
@@ -58,6 +66,7 @@ export function populateValidatorsTable({
         ? getPeerType(validator.peerType)
         : getPeerType(validator.isValidator ? 'eligible' : 'observer'),
       rating,
+      ratingModifier,
     };
 
     if (['eligible', 'waiting'].includes(validator.peerType)) {
