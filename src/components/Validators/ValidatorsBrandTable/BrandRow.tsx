@@ -1,9 +1,8 @@
 import React from 'react';
-import defaultLogo from 'assets/img/validator-placeholder.svg';
 import carretDown from 'assets/img/carret-down.svg';
-import carretDownWhite from 'assets/img/carret-down-white.svg';
 import BrandDetailsRow from './BrandDetailsRow';
 import { BrandType } from './index';
+import PercentegeBar from 'components/ValidatorDetails/PercentegeBar';
 
 interface BrandRowType {
   brand: BrandType;
@@ -17,6 +16,12 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
     setCollapsed(!collapsed);
   };
 
+  const stake = brand.stake
+    .toLocaleString('en')
+    .replace(',000,000', 'm')
+    .replace('00,000', 'm')
+    .replace(',', '.');
+
   return (
     <>
       <tr onClick={onClick} className={collapsed ? 'brand-tr collapsed' : 'brand-tr'}>
@@ -26,7 +31,9 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
             <div className="mr-3">
               <img
                 className={brand.avatar ? 'avatar' : 'avatar gray'}
-                src={brand.avatar ? `/validators/${brand.avatar}` : defaultLogo}
+                src={
+                  brand.avatar ? `/validators/${brand.avatar}` : '/validators/default-avatar.svg'
+                }
                 alt={brand.name}
                 height="30"
               />
@@ -35,40 +42,29 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
           </div>
         </td>
 
-        <td className="stake-bar-col p-0">
-          <div className="stake-bar-wrapper d-flex justify-content-start h-100 w-100">
-            <div className="stake-bar-overall" style={{ width: brand.overallStakeBarWidth + '%' }}>
-              &nbsp;
-            </div>
-            <div className="stake-bar" style={{ width: brand.stakeBarWidth + '%' }}>
-              &nbsp;
-            </div>
-            <div className="stake-percent">{brand.stakeBarWidth.toFixed(2)}%</div>
-            <div className="stake-value">{brand.stake}</div>
+        <td className="text-right">{stake} ERD</td>
+        <td className="stake-bar-col">
+          <PercentegeBar
+            totalDownTimeLabel={Math.round(brand.stakeBarWidth) + '%'}
+            totalUpTimeLabel={Math.round(brand.overallStakeBarWidth) + '%'}
+            totalUpTimePercentege={brand.overallStakeBarWidth}
+            totalDownTimePercentege={brand.stakeBarWidth}
+          />
+          <div className="stake-percent">
+            {Math.round(brand.stakeBarWidth) > 0 ? Math.round(brand.stakeBarWidth) : '< 1'}%
           </div>
         </td>
         <td className="text-right">{brand.validators.length}</td>
-        <td className="text-right">{Math.floor(brand.score)}</td>
+        <td className="text-right">{Math.floor(brand.score).toLocaleString()}</td>
         <td className="text-right">
-          <img
-            src={carretDown}
-            className={collapsed ? 'carret-down' : 'd-none'}
-            alt="details-arrow"
-            height="8"
-          />
-          <img
-            src={carretDownWhite}
-            className={collapsed ? 'd-none' : 'carret-down'}
-            alt="details-arrow"
-            height="8"
-          />
+          <img src={carretDown} className="details-arrow" alt="details-arrow" height="8" />
         </td>
       </tr>
       <tr className={collapsed ? 'details-tr collapsed' : 'details-tr'}>
-        <td colSpan={6} className="p-0">
+        <td colSpan={7} className="p-0">
           <div className="content">
-            <div className="table-responsive" style={{ minHeight: '50px' }}>
-              <table className="table mb-2 mt-3">
+            <div className="table-responsive px-4 pt-2" style={{ minHeight: '50px' }}>
+              <table className="table mb-2">
                 <thead>
                   <tr>
                     <th>Public Key</th>
