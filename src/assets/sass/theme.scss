@@ -780,13 +780,6 @@ svg[data-prefix='fas'] {
 
 /* Branded Validators
 -------------------------------------------------- */
-$brandRowOpenBgColor: rgba(0, 0, 0, 0.125);
-$brandRowHoverBgColor: #f8f9fa;
-$brandRowBorderColor: $brandRowOpenBgColor;
-
-$detailsRowOpenBgColor: $brandRowOpenBgColor;
-$detailsRowBorderColor: $brandRowOpenBgColor;
-
 .branded-validators {
   table {
     .w-10 { width: 10% }
@@ -806,22 +799,14 @@ $detailsRowBorderColor: $brandRowOpenBgColor;
       position: relative;
 
       &:hover {
-        background-color: $brandRowHoverBgColor;
+        background-color: #f8f9fa;
         cursor: pointer;
       }
 
-      &:not(.collapsed) {
-        background-color: $brandRowOpenBgColor;
-      }
-
       &.collapsed {
-        .carret-down{
+        .details-arrow {
           transform: rotateZ(-90deg);
         }
-      }
-
-      td {
-        border-color: $brandRowBorderColor;
       }
 
       .avatar {
@@ -868,13 +853,10 @@ $detailsRowBorderColor: $brandRowOpenBgColor;
     }
     
     .details-tr {
-      background-color: $detailsRowOpenBgColor;
-
-      &:hover {
-        background-color: $detailsRowOpenBgColor; // fixes a bug
-      }
+      background-color: rgba(0, 0, 0, 0.075);
 
       .content {
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
         position: relative;
 
         th {
@@ -884,7 +866,7 @@ $detailsRowBorderColor: $brandRowOpenBgColor;
         }
 
         tr {
-          background-color: $detailsRowOpenBgColor;
+          background-color:rgba(0, 0, 0, 0.075);
           color: #5a6169;
         }
       }
@@ -902,10 +884,6 @@ $detailsRowBorderColor: $brandRowOpenBgColor;
             transform: rotateZ(-90deg);
           }
         }
-      }
-
-      td {
-        // border-color: $detailsRowBorderColor;
       }
     }
 
