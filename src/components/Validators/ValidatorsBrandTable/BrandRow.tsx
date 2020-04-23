@@ -45,13 +45,13 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
         <td className="text-right">{stake} ERD</td>
         <td className="stake-bar-col">
           <PercentegeBar
-            totalDownTimeLabel={Math.round(brand.stakeBarWidth) + '%'}
-            totalUpTimeLabel={Math.round(brand.overallStakeBarWidth) + '%'}
-            totalUpTimePercentege={brand.overallStakeBarWidth}
-            totalDownTimePercentege={brand.stakeBarWidth}
+            totalUpTimeLabel={Math.round(brand.overallStakePercent) + '%'}
+            totalUpTimePercentege={brand.overallStakePercent}
+            totalDownTimeLabel={Math.round(brand.stakePercent) + '%'}
+            totalDownTimePercentege={brand.stakePercent}
           />
           <div className="stake-percent">
-            {Math.round(brand.stakeBarWidth) > 0 ? Math.round(brand.stakeBarWidth) : '< 1'}%
+            {Math.round(brand.stakePercent) > 0 ? Math.round(brand.stakePercent) : '< 1'}%
           </div>
         </td>
         <td className="text-right">{brand.validators.length}</td>

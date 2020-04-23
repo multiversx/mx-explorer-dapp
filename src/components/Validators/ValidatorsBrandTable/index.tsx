@@ -9,11 +9,9 @@ export interface BrandType {
   avatar: string;
   score: number;
   stake: number;
-  stakeBarWidth: number;
-  overallStakeBarWidth: number;
+  stakePercent: number;
+  overallStakePercent: number;
   validators: ValidatorType[];
-  cumulativeUptime: number;
-  cumulativeStatus: string;
 }
 
 export interface JsonBrandType {

@@ -50,10 +50,10 @@ export function groupByBrandAndSort({
   // calculate STAKEBARS width
   sortedBrands.forEach((brand, i, arr) => {
     const prevBrand = arr[i - 1];
-    brand.stakeBarWidth = (brand.stake / blockchainTotalStake) * 100;
+    brand.stakePercent = (brand.stake / blockchainTotalStake) * 100;
 
-    brand.overallStakeBarWidth = prevBrand
-      ? prevBrand.overallStakeBarWidth + prevBrand.stakeBarWidth
+    brand.overallStakePercent = prevBrand
+      ? prevBrand.overallStakePercent + prevBrand.stakePercent
       : 0;
   });
 
@@ -83,63 +83,15 @@ function generateBrandTypeWithStats({
   // STAKE
   const stake = stakePerValidator * validators.length;
 
-  // STATUS - NOT USED
-  let cumulativeStatus = 'Online';
-  const offlineValidators: number = validators.filter(validator => validator.isActive === false)
-    .length;
-
-  if (offlineValidators === validators.length) {
-    cumulativeStatus = 'Offline';
-  } else if (offlineValidators > 0) {
-    cumulativeStatus = 'Mixed';
-  }
-
-  // UPTIME - NOT USED
-  let cumulativeUptime = 0;
-
-  validators.forEach(validator => {
-    let uptime = 0;
-
-    if (validator.totalUpTimeSec !== 0 || validator.totalDownTimeSec !== 0) {
-      uptime = Math.floor(
-        (validator.totalUpTimeSec * 100) / (validator.totalUpTimeSec + validator.totalDownTimeSec)
-      );
-    } else {
-      if (
-        validator.totalUpTimeSec === 0 &&
-        validator.totalDownTimeSec === 0 &&
-        validator.isActive === true
-      ) {
-        uptime = 100;
-      }
-
-      if (
-        validator.totalUpTimeSec === 0 &&
-        validator.totalDownTimeSec === 0 &&
-        validator.isActive === false
-      ) {
-        uptime = 0;
-      }
-    }
-
-    cumulativeUptime += uptime;
-  });
-
-  if (cumulativeUptime > 0) {
-    cumulativeUptime = cumulativeUptime / validators.length;
-  }
-
   const { name, avatar } = jsonBrand;
 
   return {
     name,
     avatar,
-    cumulativeUptime,
-    cumulativeStatus,
     score,
     stake,
-    stakeBarWidth: 0,
-    overallStakeBarWidth: 0,
+    stakePercent: 0,
+    overallStakePercent: 0,
     validators,
   };
 }
