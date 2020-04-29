@@ -31,9 +31,7 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
             <div className="mr-3">
               <img
                 className={brand.avatar ? 'avatar' : 'avatar gray'}
-                src={
-                  brand.avatar ? `/validators/${brand.avatar}` : '/validators/default-avatar.svg'
-                }
+                src={brand.avatar ? brand.avatar : '/validators/default-avatar.svg'}
                 alt={brand.name}
                 height="30"
               />

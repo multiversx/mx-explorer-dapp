@@ -59,6 +59,8 @@ export function populateValidatorsTable({
 
     validator = {
       ...validator,
+      //TODO: change to identity
+      identity: validator.nodeDisplayName,
       shardId,
       shardNumber,
       star,

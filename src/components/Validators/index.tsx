@@ -18,6 +18,7 @@ export interface ValidatorType {
   peerType: 'waiting' | 'eligible' | 'observer';
   maxInactiveTime: string;
   nodeDisplayName: string;
+  identity: string;
   receivedShardID: number;
   timeStamp: string;
   totalDownTimeSec: number;

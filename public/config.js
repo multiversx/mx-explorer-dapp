@@ -17,6 +17,7 @@ const CONFIG = {
       to: 'https://docs.elrond.com/',
     },
   ],
+  explorerApi: 'https://explorer-api.elrond.com',
   /*
       Legend:
         decimals: number of displayed ERD decimals in explorer

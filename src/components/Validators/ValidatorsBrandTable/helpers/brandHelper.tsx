@@ -1,20 +1,20 @@
-import { JsonBrandType, BrandType } from '../index';
+import { BrandDataType, BrandType } from '../index';
 import { ValidatorType } from '../../index';
 
 export function groupByBrandAndSort({
-  brandsJson,
+  keybaseData,
   allValidators,
 }: {
-  brandsJson: JsonBrandType[];
+  keybaseData: BrandDataType[];
   allValidators: ValidatorType[];
 }) {
   const sortedBrands: BrandType[] = [];
   const stakePerValidator = 2500000;
   const blockchainTotalStake = allValidators.length * stakePerValidator;
 
-  brandsJson.forEach((jsonBrand: JsonBrandType) => {
+  keybaseData.forEach((brand: BrandDataType) => {
     const validators: ValidatorType[] = allValidators.filter(validator =>
-      jsonBrand.nodesPubKeys.includes(validator.publicKey)
+      brand.publicKeys.includes(validator.publicKey)
     );
 
     // remove owned nodes from allValidators
@@ -29,19 +29,20 @@ export function groupByBrandAndSort({
     // sort DESC
     validators.sort((a, b) => b.rating - a.rating);
 
-    sortedBrands.push(generateBrandTypeWithStats({ jsonBrand, validators, stakePerValidator }));
+    sortedBrands.push(generateBrandTypeWithStats({ brand, validators, stakePerValidator }));
   });
 
   // add the rest of the brandless validators
   allValidators.forEach(validator => {
-    const jsonBrand = {
+    const brand = {
       name: validator.nodeDisplayName,
       avatar: '',
-      nodesPubKeys: [validator.publicKey],
+      publicKeys: [validator.publicKey],
+      identity: '',
     };
     const validators = [validator];
 
-    sortedBrands.push(generateBrandTypeWithStats({ jsonBrand, validators, stakePerValidator }));
+    sortedBrands.push(generateBrandTypeWithStats({ brand, validators, stakePerValidator }));
   });
 
   // sort DESC
@@ -61,11 +62,11 @@ export function groupByBrandAndSort({
 }
 
 function generateBrandTypeWithStats({
-  jsonBrand,
+  brand,
   validators,
   stakePerValidator,
 }: {
-  jsonBrand: JsonBrandType;
+  brand: BrandDataType;
   validators: ValidatorType[];
   stakePerValidator: number;
 }) {
@@ -83,7 +84,7 @@ function generateBrandTypeWithStats({
   // STAKE
   const stake = stakePerValidator * validators.length;
 
-  const { name, avatar } = jsonBrand;
+  const { name, avatar } = brand;
 
   return {
     name,

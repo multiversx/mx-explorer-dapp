@@ -2,7 +2,8 @@ import React from 'react';
 import BrandRow from './BrandRow';
 import { ValidatorType } from './../index';
 import { groupByBrandAndSort } from './helpers/brandHelper';
-import brandsJson from '../../../validators_branding.js';
+import { getBrandData, KeybaseArrayType } from './helpers/asyncRequests';
+import { useGlobalState } from 'context';
 
 export interface BrandType {
   name: string;
@@ -14,18 +15,46 @@ export interface BrandType {
   validators: ValidatorType[];
 }
 
-export interface JsonBrandType {
-  name: string;
-  avatar: string;
-  nodesPubKeys: string[];
-}
-
 interface ValidatorsBrandTableType {
   allValidators: ValidatorType[];
 }
 
+export type BrandDataType = {
+  name: string;
+  avatar: string;
+} & KeybaseArrayType;
+
 const ValidatorsBrandTable = ({ allValidators }: ValidatorsBrandTableType) => {
-  const sortedBrands: BrandType[] = groupByBrandAndSort({ brandsJson, allValidators });
+  const [keybaseData, setKeybaseData] = React.useState<BrandDataType[]>([]);
+  const {
+    timeout,
+    config: { explorerApi },
+  } = useGlobalState();
+
+  React.useEffect(() => {
+    const keybaseObj: { [key: string]: string[] } = {};
+    allValidators.map(v => {
+      if (keybaseObj[v.identity] === undefined) {
+        keybaseObj[v.identity] = [];
+      }
+      keybaseObj[v.identity].push(v.publicKey);
+      return null;
+    });
+    const keybaseArray = Object.keys(keybaseObj).map(identity => ({
+      identity,
+      publicKeys: keybaseObj[identity],
+    }));
+    getBrandData({ keybaseArray, explorerApi, timeout }).then(({ data, success }) => {
+      if (success) {
+        setKeybaseData(data as any);
+      }
+    });
+  }, [allValidators, explorerApi, timeout]);
+
+  const sortedBrands: BrandType[] = groupByBrandAndSort({
+    keybaseData,
+    allValidators: [...allValidators],
+  });
 
   return (
     <div className="branded-validators row mb-3">
