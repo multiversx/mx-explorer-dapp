@@ -2,17 +2,17 @@ import { BrandDataType, BrandType } from '../index';
 import { ValidatorType } from '../../index';
 
 export function groupByBrandAndSort({
-  keybaseData,
+  brandData,
   allValidators,
 }: {
-  keybaseData: BrandDataType[];
+  brandData: BrandDataType[];
   allValidators: ValidatorType[];
 }) {
   const sortedBrands: BrandType[] = [];
   const stakePerValidator = 2500000;
   const blockchainTotalStake = allValidators.length * stakePerValidator;
 
-  keybaseData.forEach((brand: BrandDataType) => {
+  brandData.forEach((brand: BrandDataType) => {
     const validators: ValidatorType[] = allValidators.filter(validator =>
       brand.publicKeys.includes(validator.publicKey)
     );

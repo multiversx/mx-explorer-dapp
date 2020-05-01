@@ -45,3 +45,29 @@ export async function getValidatorStatistics({ nodeUrl, timeout }: ParamsType) {
     };
   }
 }
+
+interface KeybaseArrayType {
+  identity: string;
+  publicKeys: string[];
+}
+
+interface BrandDataParamsType {
+  explorerApi: string;
+  timeout: number;
+}
+
+export async function getBrandData({ explorerApi, timeout }: BrandDataParamsType) {
+  try {
+    const { data } = await axios.get(`${explorerApi}/validators`, { timeout });
+
+    return {
+      data,
+      success: true,
+    };
+  } catch {
+    return {
+      data: [],
+      success: false,
+    };
+  }
+}

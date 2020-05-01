@@ -1,13 +1,13 @@
 import { faCogs } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useMemo } from 'react';
-import { useGlobalState } from '../../context';
-import { Loader } from './../../sharedComponents';
-import { getValidatorsData, getValidatorStatistics } from './helpers/asyncRequests';
+import { useGlobalState } from 'context';
+import { Loader } from 'sharedComponents';
+import { getValidatorsData, getValidatorStatistics, getBrandData } from './helpers/asyncRequests';
 import { populateValidatorsTable } from './helpers/validatorHelpers';
 import ShardsList from './ShardsList';
 import ValidatorsTable, { StateType } from './ValidatorsTable';
-import ValidatorsBrandTable from './ValidatorsBrandTable';
+import ValidatorsBrandTable, { BrandDataType } from './ValidatorsBrandTable';
 import { useLocation } from 'react-router-dom';
 
 export interface ValidatorType {
@@ -59,10 +59,11 @@ const Validators = () => {
   const {
     activeTestnet: { nodeUrl, validatorDetails, validatorStatistics },
     timeout,
-    config: { metaChainShardId },
+    config: { metaChainShardId, explorerApi },
   } = useGlobalState();
 
   const [state, setState] = React.useState({ success: true, data: initialState });
+  const [brandData, setBrandData] = React.useState<BrandDataType[]>([]);
 
   const getData = () => {
     Promise.all([
@@ -71,7 +72,8 @@ const Validators = () => {
         timeout: Math.max(timeout, 10000),
       }),
       getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }),
-    ]).then(([getValidatorsDataResponse, validatorStats]) => {
+      getBrandData({ explorerApi, timeout }),
+    ]).then(([getValidatorsDataResponse, validatorStats, brandData]) => {
       const { data, success } = getValidatorsDataResponse;
       if (validatorStatistics) {
         const { statistics, success: validatorsSuccess } = validatorStats;
@@ -85,6 +87,7 @@ const Validators = () => {
           setState({ success, data: newState });
         }
       }
+      setBrandData(brandData.data);
     });
   };
 
@@ -108,7 +111,10 @@ const Validators = () => {
                   <ShardsList shardData={state.data.shardData} />
 
                   {showBrand ? (
-                    <ValidatorsBrandTable allValidators={state.data.validators} />
+                    <ValidatorsBrandTable
+                      allValidators={state.data.validators}
+                      brandData={brandData}
+                    />
                   ) : (
                     <ValidatorsTable
                       {...state.data}
@@ -134,7 +140,7 @@ const Validators = () => {
         </div>
       </div>
     ),
-    [state, validatorDetails, validatorStatistics, showBrand]
+    [state, validatorDetails, validatorStatistics, showBrand, brandData]
   );
 };
 
