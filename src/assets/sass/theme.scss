@@ -619,6 +619,7 @@ main .form-search .form-control:focus {
   -moz-transition: opacity 0.2s ease-in-out;
   -ms-transition: opacity 0.2s ease-in-out;
   -o-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
   opacity: 1;
 
   z-index: 100;
@@ -778,60 +779,135 @@ svg[data-prefix='fas'] {
   }
 }
 
+.overall-card {
+  span {
+    color: $white;
+  }
+}
+
+/* Branded Validators
+-------------------------------------------------- */
+.validators-nav {
+  border-color: #dee2e6;
+
+  .nav-link {
+    font-size: 1rem;
+
+    &.active {
+      border-bottom-color: $white !important;
+    }
+
+    &:not(.active) {
+      border-color: $white;
+      border-bottom-color: #dee2e6;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
 /* Branded Validators
 -------------------------------------------------- */
 .branded-validators {
   table {
     .w-10 { width: 10% }
 
+    th {
+      background-color: $white;
+    }
+
+    .th-details,
+    .th-rank {
+      width: 12px;
+    }
+
+    .th-stake-percent {
+      width: 260px;
+    }
+
     .brand-tr {
       position: relative;
+
+      &:first-child {
+        .progress-bar {
+          min-width: auto!important;
+        }
+      }
 
       &:hover {
         background-color: #f8f9fa;
         cursor: pointer;
+      }
 
-        + .details-tr {
+      &.collapsed {
+        .details-arrow {
+          transform: rotateZ(-90deg);
+        }
+      }
 
-          .content:before {
-            border-top-color: #f8f9fa;
+      .avatar {
+        box-shadow: rgba(189, 197, 209, 0.5) 0px 0.1rem 1.2rem;
+        border-radius: 50%;
+
+        &.gray {
+          opacity: 0.4;
+        }
+      }
+
+      .stake-bar-col {
+        position: relative;
+
+        .progress {
+          margin-top: 2px;
+          margin-right: 60px;
+
+          .progress-bar {
+            min-width: 1px;
           }
+
+          .bg-success {
+            background-color: #86C7F2 !important;
+          }
+
+          .bg-danger {
+            background-color: #0E8FE5 !important;
+          }
+        }
+
+        .stake-percent {
+          position: absolute;
+          right: 10px;
+          opacity: 1;
+          top: 50%;
+          transform: translateY(-50%);
         }
       }
     }
+
+    $detailsTableBgColor: rgba(0, 0, 0, 0.075);
     
     .details-tr {
-      background-color: rgba(0, 0, 0, 0.075);
+      background-color: $detailsTableBgColor;
+
+      &:hover {
+        background-color: $detailsTableBgColor;
+      }
 
       .content {
         box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
         position: relative;
 
-        &:before {
-          position: absolute;
-          margin-left: auto;
-          margin-right: auto;
-          width: 0;
-          height: 0;
-          top: -1px;
-          left: 0;
-          right: 0;
-          content: "";
-          display: block;
-          border-top: 13px solid #fff;
-          border-left: 15px solid transparent;
-          border-right: 15px solid transparent;
-          filter: drop-shadow(0 4px 2px rgba(0, 0, 0, 0.1));
-        }
-
         th {
           background: none;
           text-transform: uppercase;
           font-size: 0.785rem;
+          border-bottom: 0;
         }
 
         tr {
-          background-color:rgba(0, 0, 0, 0.075);
+          background-color:$detailsTableBgColor;
           color: #5a6169;
         }
       }
@@ -843,6 +919,10 @@ svg[data-prefix='fas'] {
           .content {
             max-height: 0;
             overflow: hidden;
+          }
+
+          .details-arrow {
+            transform: rotateZ(-90deg);
           }
         }
       }

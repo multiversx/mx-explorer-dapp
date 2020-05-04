@@ -49,6 +49,7 @@ interface AppsType {
 export interface ConfigType {
   metaChainShardId: number;
   elrondApps: AppsType[];
+  explorerApi: string;
   testnets: TestnetType[];
 }
 
@@ -77,6 +78,7 @@ const buildInitialConfig = (config: any): ConfigType => {
             to: 'https://elrond.com/',
           },
         ],
+    explorerApi: config.explorerApi,
     testnets:
       config.testnets && config.testnets.length
         ? config.testnets.map((testnet: any) => ({ ...defaultTestnet, ...testnet }))

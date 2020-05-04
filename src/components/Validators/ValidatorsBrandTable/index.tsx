@@ -2,61 +2,66 @@ import React from 'react';
 import BrandRow from './BrandRow';
 import { ValidatorType } from './../index';
 import { groupByBrandAndSort } from './helpers/brandHelper';
-import brandsJson from '../../../validators_branding.js';
+import Tabs from '../Tabs';
 
 export interface BrandType {
-    name: string;
-    avatar: string;
-    cumulativeUptime: number;
-    cumulativeStatus: string;
-    score: number;
-    validators: ValidatorType[];
-};
+  name: string;
+  avatar: string;
+  score: number;
+  stake: number;
+  stakePercent: number;
+  overallStakePercent: number;
+  validators: ValidatorType[];
+}
 
-export interface JsonBrandType {
-    name: string;
-    avatar: string;
-    nodesPubKeys: string[];
-};
+interface ValidatorsBrandTableType {
+  allValidators: ValidatorType[];
+  brandData: BrandDataType[];
+}
 
-const ValidatorsBrandTable = ({
-    allValidators
-  }: {
-    allValidators: ValidatorType[];
-  }) => {
-    const sortedBrands: BrandType[] = groupByBrandAndSort({brandsJson, allValidators});
-  
-    return (
-        <div className="branded-validators row mb-3">
-            <div className="col-12">
-            <div className="card p-3">
-                <div className="table-responsive" style={{ minHeight: '50px' }}>
-                    <table className="table table-hover">
-                        <thead>
-                        <tr>
-                            <th style={{ width: '12px' }}>#</th>
-                            <th>Validator Name</th>
-                            <th className="w-10 text-right">Nodes</th>
-                            <th className="text-right d-none">Uptime</th>
-                            <th className="text-right d-none">Status</th>
-                            <th className="w-10 text-right">Score</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {sortedBrands.map((brand, i) =>
-                                <BrandRow 
-                                    key={i} 
-                                    rank={i+1} 
-                                    brand={brand}
-                                />
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            </div>
+export interface BrandDataType {
+  avatar: string;
+  name: string;
+  identity: string;
+  publicKeys: string[];
+}
+
+const ValidatorsBrandTable = ({ allValidators, brandData }: ValidatorsBrandTableType) => {
+  const sortedBrands: BrandType[] = groupByBrandAndSort({
+    brandData,
+    allValidators: [...allValidators],
+  });
+
+  return (
+    <div className="branded-validators row mb-3">
+      <div className="col-12">
+        <div className="card p-3">
+          <Tabs />
+
+          <div className="table-responsive" style={{ minHeight: '50px' }}>
+            <table className="table table-hover">
+              <thead>
+                <tr>
+                  <th className="th-rank">#</th>
+                  <th className="th-name">Validator Name</th>
+                  <th>Stake</th>
+                  <th className="th-stake-percent">Cumulative stake</th>
+                  <th className="w-10 text-right">Nodes</th>
+                  <th className="w-10 text-right">Score</th>
+                  <th className="th-details">&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sortedBrands.map((brand, i) => (
+                  <BrandRow key={i} rank={i + 1} brand={brand} />
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default ValidatorsBrandTable;

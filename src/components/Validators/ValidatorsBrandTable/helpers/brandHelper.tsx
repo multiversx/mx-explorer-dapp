@@ -1,119 +1,98 @@
-import { JsonBrandType, BrandType } from '../index';
+import { BrandDataType, BrandType } from '../index';
 import { ValidatorType } from '../../index';
 
 export function groupByBrandAndSort({
-        brandsJson, 
-        allValidators
-    } : {
-        brandsJson: JsonBrandType[];
-        allValidators: ValidatorType[];
-    }) {
-    const sortedBrands: BrandType[] = [];
+  brandData,
+  allValidators,
+}: {
+  brandData: BrandDataType[];
+  allValidators: ValidatorType[];
+}) {
+  const sortedBrands: BrandType[] = [];
+  const stakePerValidator = 2500000;
+  const blockchainTotalStake = allValidators.length * stakePerValidator;
 
-    brandsJson.forEach((jsonBrand: JsonBrandType) => {
-        const validators: ValidatorType[] = allValidators.filter(
-            validator => jsonBrand.nodesPubKeys.includes(validator.publicKey)
-        );
+  brandData.forEach((brand: BrandDataType) => {
+    const validators: ValidatorType[] = allValidators.filter(validator =>
+      brand.publicKeys.includes(validator.publicKey)
+    );
 
-        // remove owned nodes from allValidators
-        validators.forEach(validator => {
-            const index = allValidators.indexOf(validator);
+    // remove owned nodes from allValidators
+    validators.forEach(validator => {
+      const index = allValidators.indexOf(validator);
 
-            if (index > -1) { 
-                allValidators.splice(index, 1);
-            }
-        });
-        
-        // sort DESC
-        validators.sort((a, b) => b.rating - a.rating);
-
-        sortedBrands.push(generateBrandTypeWithStats({jsonBrand, validators}));
-    });
-
-    // add the rest of the brandless validators
-    allValidators.forEach(validator => {
-        const jsonBrand = {
-            name: validator.nodeDisplayName,
-            avatar: '',
-            nodesPubKeys: [validator.publicKey]
-        };
-        const validators = [validator];
-
-        sortedBrands.push(generateBrandTypeWithStats({jsonBrand, validators}));
+      if (index > -1) {
+        allValidators.splice(index, 1);
+      }
     });
 
     // sort DESC
-    sortedBrands.sort((a, b) => b.score - a.score);
+    validators.sort((a, b) => b.rating - a.rating);
 
-    return sortedBrands;
-};
+    sortedBrands.push(generateBrandTypeWithStats({ brand, validators, stakePerValidator }));
+  });
+
+  // add the rest of the brandless validators
+  allValidators.forEach(validator => {
+    const brand = {
+      name: validator.nodeDisplayName,
+      avatar: '',
+      publicKeys: [validator.publicKey],
+      identity: '',
+    };
+    const validators = [validator];
+
+    sortedBrands.push(generateBrandTypeWithStats({ brand, validators, stakePerValidator }));
+  });
+
+  // sort DESC
+  sortedBrands.sort((a, b) => b.score - a.score);
+
+  // calculate STAKEBARS width
+  sortedBrands.forEach((brand, i, arr) => {
+    const prevBrand = arr[i - 1];
+    brand.stakePercent = (brand.stake / blockchainTotalStake) * 100;
+
+    brand.overallStakePercent = prevBrand
+      ? prevBrand.overallStakePercent + prevBrand.stakePercent
+      : 0;
+  });
+
+  return sortedBrands;
+}
 
 function generateBrandTypeWithStats({
-        jsonBrand,
-        validators
-    } : {
-        jsonBrand: JsonBrandType;
-        validators: ValidatorType[];
-    }) {
-    // SCORE
-    let score = 0;
-    if (validators && validators.length > 0) {
-        score = validators.map(o => o.rating).reduce((a, c) => { return a + c });
-        score = score / validators.length * 100;
-    }
+  brand,
+  validators,
+  stakePerValidator,
+}: {
+  brand: BrandDataType;
+  validators: ValidatorType[];
+  stakePerValidator: number;
+}) {
+  // SCORE
+  let score = 0;
+  if (validators && validators.length > 0) {
+    score = validators
+      .map(o => o.ratingModifier)
+      .reduce((a, c) => {
+        return a + c;
+      });
+    score = score * 100;
+  }
 
-    // STATUS
-    let cumulativeStatus = 'Online';
-    let offlineValidators: number = validators.filter(validator => 
-        validator.isActive === false
-    ).length;
+  // STAKE
+  const stake = stakePerValidator * validators.length;
 
-    if (offlineValidators === validators.length) {
-        cumulativeStatus = 'Offline';
-    } else if (offlineValidators > 0) {
-        cumulativeStatus = 'Mixed';
-    }
+  const { name, avatar } = brand;
 
-    // UPTIME
-    let cumulativeUptime = 0;
-
-    validators.forEach(validator => {
-        let uptime = 0;
-
-        if (validator.totalUpTimeSec !== 0 || validator.totalDownTimeSec !== 0) {
-            uptime = Math.floor(
-                (validator.totalUpTimeSec * 100) /
-                (validator.totalUpTimeSec + validator.totalDownTimeSec)
-            );
-        } else {
-            if (validator.totalUpTimeSec === 0 &&
-                validator.totalDownTimeSec === 0 &&
-                validator.isActive === true) {
-                    uptime = 100;
-                }              
-                
-            if (validator.totalUpTimeSec === 0 &&
-                validator.totalDownTimeSec === 0 &&
-                validator.isActive === false) {
-                    uptime = 0;
-                }
-        }
-
-        cumulativeUptime += uptime;
-    });
-
-    if (cumulativeUptime > 0) {
-        cumulativeUptime = cumulativeUptime / validators.length;
-    }
-    
-    const { name, avatar } = jsonBrand;
-
-    return {
-        name,
-        avatar,
-        cumulativeUptime,
-        cumulativeStatus,
-        score,
-        validators
-    };
-};
+  return {
+    name,
+    avatar,
+    score,
+    stake,
+    stakePercent: 0,
+    overallStakePercent: 0,
+    validators,
+  };
+}

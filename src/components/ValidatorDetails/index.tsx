@@ -6,7 +6,7 @@ import { useGlobalState } from '../../context';
 import { BlocksTable, Loader } from '../../sharedComponents';
 import { getValidatorStatistics } from './../Validators/helpers/asyncRequests';
 import { ValidatorStatisticsData } from './../Validators/helpers/validatorHelpers';
-import { getEpoch, getRounds, getValidator, searchBlocks } from './helpers/asyncRequests';
+import { getRounds, getValidator, searchBlocks } from './helpers/asyncRequests';
 import NetworkMetrics, { NetworkMetricsType } from './NetworkMetrics';
 import NodeInformation, { NodeInformationType } from './NodeInformation';
 import Rounds from './Rounds';
@@ -40,6 +40,7 @@ export const initialState: StateType = {
   signersIndex: -1,
   success: true,
   rating: 0,
+  ratingModifier: 0,
 };
 
 const ValidatorDetails = () => {
