@@ -9,6 +9,7 @@ import ShardsList from './ShardsList';
 import ValidatorsTable, { StateType } from './ValidatorsTable';
 import ValidatorsBrandTable, { BrandDataType } from './ValidatorsBrandTable';
 import { useLocation } from 'react-router-dom';
+import { validatorsRouteNames } from 'routes';
 
 export interface ValidatorType {
   computedShardID: number;
@@ -91,7 +92,7 @@ const Validators = () => {
     });
   };
 
-  const showBrand = useLocation().pathname === '/validators/brand';
+  const showNodes = useLocation().pathname === validatorsRouteNames.validatorsNodes;
 
   React.useEffect(getData, [nodeUrl, timeout]);
 
@@ -110,16 +111,16 @@ const Validators = () => {
                 <>
                   <ShardsList shardData={state.data.shardData} />
 
-                  {showBrand ? (
-                    <ValidatorsBrandTable
-                      allValidators={state.data.validators}
-                      brandData={brandData}
-                    />
-                  ) : (
+                  {showNodes ? (
                     <ValidatorsTable
                       {...state.data}
                       validatorStatistics={validatorStatistics}
                       validatorDetails={validatorDetails || false}
+                    />
+                  ) : (
+                    <ValidatorsBrandTable
+                      allValidators={state.data.validators}
+                      brandData={brandData}
                     />
                   )}
                 </>
@@ -140,7 +141,7 @@ const Validators = () => {
         </div>
       </div>
     ),
-    [state, validatorDetails, validatorStatistics, showBrand, brandData]
+    [state, validatorDetails, validatorStatistics, showNodes, brandData]
   );
 };
 
