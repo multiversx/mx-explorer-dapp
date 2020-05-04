@@ -800,10 +800,6 @@ svg[data-prefix='fas'] {
     &:not(.active) {
       border-color: $white;
       border-bottom-color: #dee2e6;
-
-      &:hover {
-        text-decoration: underline;
-      }
     }
   }
 }
