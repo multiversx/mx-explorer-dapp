@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faServer } from '@fortawesome/free-solid-svg-icons';
 
 interface ShardType {
   shardID: string;
@@ -34,6 +36,7 @@ function generateCard(shardEntry: ShardType, isOverall?: boolean) {
             )}
             <span>
               {shardEntry.allActiveValidators}/{shardEntry.allValidators}
+              {!isOverall && <FontAwesomeIcon icon={faServer} className="shard-icon ml-2" />}
             </span>
           </span>
         </div>
