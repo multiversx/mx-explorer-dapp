@@ -791,6 +791,8 @@ svg[data-prefix='fas'] {
   border-color: #dee2e6;
 
   .nav-link {
+    font-size: 1rem;
+
     &.active {
       border-bottom-color: $white !important;
     }

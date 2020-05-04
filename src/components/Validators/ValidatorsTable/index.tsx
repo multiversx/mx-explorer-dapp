@@ -136,7 +136,7 @@ const ValidatorsTable = (
               setValidatorObserverValue={resetPager(setValidatorObserverValue)}
             />
             <div className="table-responsive" style={{ minHeight: '290px' }}>
-              <table className="table mt-4">
+              <table className="table mt-3">
                 <ValidatorTableHead
                   includeObservers={includeObservers}
                   hasWaitingValidators={hasWaitingValidators}
