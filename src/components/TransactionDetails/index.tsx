@@ -170,7 +170,7 @@ const TransactionDetails: React.FC = () => {
                               to={`/transactions/shard-to/${transaction.receiverShard}`}
                               className="small-link"
                             >
-                              (Shard {transaction.receiverShard})
+                              (<ShardSpan shardId={transaction.receiverShard} />)
                             </TestnetLink>
                           )}
                         </div>
