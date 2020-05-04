@@ -22,7 +22,7 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
     .replace('00,000', 'm')
     .replace(',', '.');
 
-  return (
+  return brand.validators.length ? (
     <>
       <tr onClick={onClick} className={collapsed ? 'brand-tr collapsed' : 'brand-tr'}>
         <td>{rank}</td>
@@ -85,6 +85,8 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
         </td>
       </tr>
     </>
+  ) : (
+    <></>
   );
 };
 
