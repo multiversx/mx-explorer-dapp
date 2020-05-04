@@ -2,6 +2,7 @@ import React from 'react';
 import BrandRow from './BrandRow';
 import { ValidatorType } from './../index';
 import { groupByBrandAndSort } from './helpers/brandHelper';
+import Tabs from '../Tabs';
 
 export interface BrandType {
   name: string;
@@ -35,6 +36,8 @@ const ValidatorsBrandTable = ({ allValidators, brandData }: ValidatorsBrandTable
     <div className="branded-validators row mb-3">
       <div className="col-12">
         <div className="card p-3">
+          <Tabs />
+
           <div className="table-responsive" style={{ minHeight: '50px' }}>
             <table className="table table-hover">
               <thead>

@@ -19,6 +19,11 @@ interface RouteType {
 // INFO: to split the app in chunks use:
 // component: React.lazy(() => import('./components/Validators')),
 
+export const validatorsRouteNames = {
+  validators: '/validators',
+  validatorsNodes: '/validators/nodes',
+};
+
 const routes: RouteType[] = [
   {
     path: '/transactions/page/:page',
@@ -31,13 +36,13 @@ const routes: RouteType[] = [
     component: Transactions,
   },
   {
-    path: '/validators',
+    path: validatorsRouteNames.validators,
     title: 'Validators',
     component: Validators, // React.lazy(() => import('./components/Validators')),
   },
   {
-    path: '/validators/brand/',
-    title: 'Validators Brand',
+    path: validatorsRouteNames.validatorsNodes,
+    title: 'Validators Nodes',
     component: Validators, // React.lazy(() => import('./components/Validators')),
   },
   {

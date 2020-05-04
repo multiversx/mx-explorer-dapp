@@ -7,6 +7,7 @@ import ValidatorStats from './Stats';
 import ValidatorTableHead from './Thead';
 import ValidatorTableRow from './Trow';
 import ValidatorsPager from './ValidatorsPager';
+import Tabs from '../Tabs';
 
 export interface ComputedShard {
   shardID: string;
@@ -123,6 +124,7 @@ const ValidatorsTable = (
       <div className="col-12">
         <div className="card">
           <div className="card-body card-list">
+            <Tabs />
             <ValidatorStats
               shownValidatorsLength={dataSource.total()}
               filteredValidatorsLength={newValidators.length}
@@ -134,7 +136,7 @@ const ValidatorsTable = (
               setValidatorObserverValue={resetPager(setValidatorObserverValue)}
             />
             <div className="table-responsive" style={{ minHeight: '290px' }}>
-              <table className="table mt-4">
+              <table className="table mt-3">
                 <ValidatorTableHead
                   includeObservers={includeObservers}
                   hasWaitingValidators={hasWaitingValidators}

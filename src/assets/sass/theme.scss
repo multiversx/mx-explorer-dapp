@@ -779,11 +779,44 @@ svg[data-prefix='fas'] {
   }
 }
 
+.overall-card {
+  span {
+    color: $white;
+  }
+}
+
+/* Branded Validators
+-------------------------------------------------- */
+.validators-nav {
+  border-color: #dee2e6;
+
+  .nav-link {
+    font-size: 1rem;
+
+    &.active {
+      border-bottom-color: $white !important;
+    }
+
+    &:not(.active) {
+      border-color: $white;
+      border-bottom-color: #dee2e6;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
 /* Branded Validators
 -------------------------------------------------- */
 .branded-validators {
   table {
     .w-10 { width: 10% }
+
+    th {
+      background-color: $white;
+    }
 
     .th-details,
     .th-rank {
@@ -797,6 +830,12 @@ svg[data-prefix='fas'] {
     .brand-tr {
       position: relative;
 
+      &:first-child {
+        .progress-bar {
+          min-width: auto!important;
+        }
+      }
+
       &:hover {
         background-color: #f8f9fa;
         cursor: pointer;
@@ -809,6 +848,7 @@ svg[data-prefix='fas'] {
       }
 
       .avatar {
+        box-shadow: rgba(189, 197, 209, 0.5) 0px 0.1rem 1.2rem;
         border-radius: 50%;
 
         &.gray {
