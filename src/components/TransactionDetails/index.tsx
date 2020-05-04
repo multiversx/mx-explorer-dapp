@@ -19,7 +19,7 @@ import {
   TimeAgo,
 } from 'sharedComponents';
 import Web3 from 'web3';
-import { TransactionType } from '../Transactions';
+import { TransactionType } from 'sharedComponents/TransactionsTable';
 import { getTransaction } from './helpers/asyncRequests';
 
 const getFee = (transaction: TransactionType) => {

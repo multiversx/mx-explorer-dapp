@@ -86,6 +86,11 @@ const routes: RouteType[] = [
     component: MiniBlockDetails,
   },
   {
+    path: '/miniblocks/:hash/page/:page',
+    title: 'Miniblock Details',
+    component: MiniBlockDetails,
+  },
+  {
     path: '/blocks/shards/:shard/page/:page',
     title: 'Shard Details',
     component: Blocks,

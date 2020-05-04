@@ -10,6 +10,7 @@ import ShardSpan from './ShardSpan';
 import TestnetLink from './TestnetLink';
 import TestnetReady, { withTestnetReady } from './TestnetReady';
 import TimeAgo from './TimeAgo';
+import TransactionsTable from './TransactionsTable';
 
 export {
   Denominate,
@@ -25,4 +26,5 @@ export {
   Search,
   BlocksTable,
   Loader,
+  TransactionsTable,
 };
