@@ -120,80 +120,108 @@ const configIsDefined =
 
 const config = configIsDefined ? buildInitialConfig(importedConfig) : buildInitialConfig({});
 
+const localTestnets = [
+  ...(process.env.REACT_APP_WALLET && process.env.NODE_ENV === 'development'
+    ? [
+        {
+          default: false,
+          id: 'digital-ocean-toronto',
+          name: 'DigitalOcean Toronto',
+          nodeUrl: '***REMOVED***',
+          elasticUrl: '***REMOVED***',
+          refreshRate: 6000,
+          numInitCharactersForScAddress: 20,
+          decimals: 4,
+          denomination: 4,
+          gasPrice: 10,
+          gasLimit: 1000,
+          gasPerDataByte: 1500,
+          gasLimitEditable: true,
+          economics: true,
+          data: true,
+          validatorDetails: true,
+          faucet: true,
+          validatorStatistics: false,
+        },
+        {
+          default: false,
+          id: 'ireland',
+          name: 'Ireland',
+          nodeUrl: 'http://108.129.20.194',
+          elasticUrl: 'http://18.200.142.29',
+          refreshRate: 6000,
+          numInitCharactersForScAddress: 20,
+          decimals: 4,
+          denomination: 4,
+          gasPrice: 10,
+          gasLimit: 1000,
+          gasPerDataByte: 1500,
+          gasLimitEditable: true,
+          economics: true,
+          data: true,
+          validatorDetails: true,
+          faucet: true,
+          validatorStatistics: false,
+        },
+      ]
+    : []),
+  ...(process.env.NODE_ENV === 'development'
+    ? [
+        {
+          default: false,
+          id: 'new-api',
+          name: 'New API',
+          nodeUrl: '***REMOVED***',
+          elasticUrl: '***REMOVED***',
+          refreshRate: 6000,
+          numInitCharactersForScAddress: 20,
+          decimals: 4,
+          denomination: 18,
+          gasPrice: 100000000000000,
+          gasLimit: 100000,
+          gasPerDataByte: 1500,
+          gasLimitEditable: true,
+          economics: true,
+          data: true,
+          validatorDetails: true,
+          faucet: false,
+          validatorStatistics: true,
+          bach32LocalTransform: false,
+        },
+        {
+          default: true,
+          id: 'personal',
+          name: 'Personal',
+          nodeUrl: 'http://137.116.230.165:8079',
+          elasticUrl: 'http://137.116.230.165:9200',
+          refreshRate: 6000,
+          numInitCharactersForScAddress: 20,
+          decimals: 4,
+          denomination: 18,
+          gasPrice: 100000000000000,
+          gasLimit: 100000,
+          gasPerDataByte: 1500,
+          gasLimitEditable: true,
+          economics: true,
+          data: true,
+          validatorDetails: true,
+          faucet: false,
+          validatorStatistics: true,
+          bach32LocalTransform: false,
+        },
+      ]
+    : []),
+];
+
+let configTestnets = [...config.testnets];
+
+if (localTestnets.some(testnet => testnet.default)) {
+  configTestnets = configTestnets.map(testnet => ({ ...testnet, default: false }));
+}
+
 const extendedConfig = {
   ...config,
-  testnets: [
-    ...config.testnets,
-    ...(process.env.REACT_APP_WALLET && process.env.NODE_ENV === 'development'
-      ? [
-          {
-            default: false,
-            id: 'digital-ocean-toronto',
-            name: 'DigitalOcean Toronto',
-            nodeUrl: '***REMOVED***',
-            elasticUrl: '***REMOVED***',
-            refreshRate: 6000,
-            numInitCharactersForScAddress: 20,
-            decimals: 4,
-            denomination: 4,
-            gasPrice: 10,
-            gasLimit: 1000,
-            gasPerDataByte: 1500,
-            gasLimitEditable: true,
-            economics: true,
-            data: true,
-            validatorDetails: true,
-            faucet: true,
-            validatorStatistics: false,
-          },
-          {
-            default: false,
-            id: 'ireland',
-            name: 'Ireland',
-            nodeUrl: 'http://108.129.20.194',
-            elasticUrl: 'http://18.200.142.29',
-            refreshRate: 6000,
-            numInitCharactersForScAddress: 20,
-            decimals: 4,
-            denomination: 4,
-            gasPrice: 10,
-            gasLimit: 1000,
-            gasPerDataByte: 1500,
-            gasLimitEditable: true,
-            economics: true,
-            data: true,
-            validatorDetails: true,
-            faucet: true,
-            validatorStatistics: false,
-          },
-        ]
-      : []),
-    ...(process.env.NODE_ENV === 'development'
-      ? [
-          {
-            default: false,
-            id: 'new-api',
-            name: 'New API',
-            nodeUrl: '***REMOVED***',
-            elasticUrl: '***REMOVED***',
-            refreshRate: 6000,
-            numInitCharactersForScAddress: 20,
-            decimals: 4,
-            denomination: 18,
-            gasPrice: 100000000000000,
-            gasLimit: 100000,
-            gasPerDataByte: 1500,
-            gasLimitEditable: true,
-            economics: true,
-            data: true,
-            validatorDetails: true,
-            faucet: false,
-            validatorStatistics: true,
-            bach32LocalTransform: false,
-          },
-        ]
-      : []),
-  ],
+  testnets: [...configTestnets, ...localTestnets],
 };
 
 const stateConfig = {
@@ -208,14 +236,11 @@ const stateConfig = {
 };
 
 const initialState = (optionalConfig?: ConfigType): StateType => {
-  const initialConfig = optionalConfig !== undefined ? optionalConfig : config;
   const configObject = optionalConfig !== undefined ? optionalConfig : stateConfig;
   return {
     config: configObject,
-    defaultTestnet:
-      initialConfig.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
-    activeTestnet:
-      initialConfig.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
+    defaultTestnet: stateConfig.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
+    activeTestnet: stateConfig.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
     activeTestnetId: '',
     timeout: 3 * 1000,
     refresh: {
