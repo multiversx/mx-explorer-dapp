@@ -215,7 +215,7 @@ const localTestnets = [
 
 let configTestnets = [...config.testnets];
 
-if (localTestnets.some(testnet => testnet.default)) {
+if (localTestnets.some(testnet => testnet.default) && !process.env.REACT_APP_USE_GLOBAL_DEFAULT) {
   configTestnets = configTestnets.map(testnet => ({ ...testnet, default: false }));
 }
 
