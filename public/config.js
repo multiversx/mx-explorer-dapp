@@ -38,7 +38,7 @@ const CONFIG = {
       default: true,
       id: 'battle-of-nodes',
       name: 'Battle of Nodes',
-      nodeUrl: 'https://wallet-api.elrond.com',
+      nodeUrl: 'https://api.elrond.com',
       validatorsApiUrl: 'https://api.elrond.com',
       elasticUrl: 'https://elastic-aws.elrond.com',
       refreshRate: 6000,
@@ -59,7 +59,7 @@ const CONFIG = {
     {
       id: 'bon-bach32',
       name: 'BoN (Bach32)',
-      nodeUrl: 'https://wallet-api.elrond.com',
+      nodeUrl: 'https://api.elrond.com',
       validatorsApiUrl: 'https://api.elrond.com',
       elasticUrl: 'https://elastic-aws.elrond.com',
       refreshRate: 6000,

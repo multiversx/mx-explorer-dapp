@@ -1,6 +1,6 @@
 import { fireEvent, renderWithRouter } from './../../../utils/test-utils';
 
-const config = {
+const optionalConfig = {
   metaChainShardId: 4294967295,
   elrondApps: [
     {
@@ -19,12 +19,13 @@ const config = {
       to: 'https://docs.elrond.com/',
     },
   ],
+  explorerApi: '',
   testnets: [
     {
       default: true,
       id: 'battle-of-nodes',
       name: 'Battle of Nodes',
-      nodeUrl: 'https://wallet-api.elrond.com',
+      nodeUrl: 'https://api.elrond.com',
       elasticUrl: 'https://elastic-aws.elrond.com',
       refreshRate: 6000,
       numInitCharactersForScAddress: 20,
@@ -67,7 +68,7 @@ describe('Testnet Router', () => {
   test('Change route on testnet change', async () => {
     const render = renderWithRouter({
       route: '/',
-      optionalConfig: config,
+      optionalConfig,
     });
     const testnetSwitch = render.getByTestId('testnetSwitch');
     expect(testnetSwitch.textContent).toBe('Battle of Nodes ');

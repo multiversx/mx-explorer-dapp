@@ -12,7 +12,7 @@ const formProps = {
   privateKey: '39e82d234b7c73c34f76091818f2c9f68d93914d12f3e0c507c59a9d3e38ad29',
   denomination: 4,
   nonce: 0,
-  nodeUrl: 'https://wallet-api.elrond.com',
+  nodeUrl: 'https://api.elrond.com',
   timeout: 3000,
   data: true,
   gasLimitEditable: true,
