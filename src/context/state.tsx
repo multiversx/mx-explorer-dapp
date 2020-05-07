@@ -38,7 +38,7 @@ export interface TestnetType {
   bach32LocalTransform?: boolean;
 }
 
-type AppIdType = 'wallet' | 'explorer' | 'studio' | 'docs';
+type AppIdType = 'wallet' | 'explorer' | 'studio' | 'docs' | string;
 
 interface AppsType {
   id: AppIdType;
