@@ -3,18 +3,16 @@ import { useLocation } from 'react-router-dom';
 import { validatorsRouteNames } from 'routes';
 import { TestnetLink } from 'sharedComponents';
 
-const Tabs = () => {
+const Tabs = ({ extraClasses }: { extraClasses?: string }) => {
   const activePath = useLocation().pathname;
-  const validatorsPage =
-    activePath === validatorsRouteNames.validators ||
-    activePath === validatorsRouteNames.validators + '/';
-
   const nodesPage =
-    activePath === validatorsRouteNames.validatorsNodes ||
-    activePath === validatorsRouteNames.validatorsNodes + '/';
+    activePath.endsWith(validatorsRouteNames.validatorsNodes) ||
+    activePath.endsWith(validatorsRouteNames.validatorsNodes + '/');
+
+  const validatorsPage = !nodesPage;
 
   return (
-    <div className={nodesPage ? 'pb-3' : ''}>
+    <div className={`pb-3 ${extraClasses}`}>
       <ul className="validators-nav nav nav-tabs">
         <li className="nav-item">
           <TestnetLink

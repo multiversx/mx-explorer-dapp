@@ -785,9 +785,17 @@ svg[data-prefix='fas'] {
   }
 }
 
-.shard-icon {
-  color: #d1d4d8!important;
-  width: 14px!important;
+.shard-icon-container {
+  width: 1.429rem;
+  height: 1.429rem;
+  border-radius: 50%;
+  background-color: lighten(#999999, 35);
+
+  .shard-icon {
+    color: #d1d4d8!important;
+    width: 0.8571rem!important;
+    height: auto;
+  }
 }
 
 /* Branded Validators
@@ -814,10 +822,6 @@ svg[data-prefix='fas'] {
 .branded-validators {
   table {
     .w-10 { width: 10% }
-
-    th {
-      background-color: $white;
-    }
 
     .th-details,
     .th-rank {
