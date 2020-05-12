@@ -7,6 +7,16 @@ const CONFIG = {
       to: 'https://wallet.elrond.com/',
     },
     {
+      id: 'staking',
+      name: 'Staking',
+      to: 'https://genesis.elrond.com',
+    },
+    {
+      id: 'pre-staking',
+      name: 'Pre-staking',
+      to: 'https://stake.elrond.com',
+    },
+    {
       id: 'explorer',
       name: 'Explorer',
       to: 'https://explorer.elrond.com/',
