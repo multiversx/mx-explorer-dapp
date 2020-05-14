@@ -18,11 +18,6 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
         </TestnetLink>
       </td>
       <td>
-        <TestnetLink to={`/blocks/${transaction.blockHash}`} data-testid="blockLink">
-          {truncate(transaction.blockHash, 20)}
-        </TestnetLink>
-      </td>
-      <td>
         <span title={dateFormatted(transaction.timestamp)}>
           <TimeAgo value={transaction.timestamp} />
         </span>

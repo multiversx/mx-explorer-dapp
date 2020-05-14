@@ -44,7 +44,6 @@ const TransactionsTable = ({
             <thead>
               <tr>
                 <th scope="col">Txn Hash</th>
-                <th scope="col">Block</th>
                 <th scope="col">Age</th>
                 <th scope="col">Shard</th>
                 <th scope="col">From</th>

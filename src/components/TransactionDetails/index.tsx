@@ -114,15 +114,6 @@ const TransactionDetails: React.FC = () => {
                       </div>
                       <hr className="hr-space" />
                       <div className="row">
-                        <div className="col-lg-2 card-label">Block</div>
-                        <div className="col-lg-10">
-                          <TestnetLink to={`/blocks/${transaction.blockHash}`}>
-                            {transaction.blockHash}
-                          </TestnetLink>
-                        </div>
-                      </div>
-                      <hr className="hr-space" />
-                      <div className="row">
                         <div className="col-lg-2 card-label">Miniblock</div>
                         <div className="col-lg-10">
                           <TestnetLink to={`/miniblocks/${transaction.miniBlockHash}`}>
