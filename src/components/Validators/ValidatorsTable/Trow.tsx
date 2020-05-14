@@ -1,8 +1,8 @@
 import { faClock, faEye } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
-import { truncate } from './../../../helpers';
-import { ShardSpan, TestnetLink } from './../../../sharedComponents';
+import { truncate, trimHash } from 'helpers';
+import { ShardSpan, TestnetLink } from 'sharedComponents';
 import { ValidatorType } from './../index';
 
 const ValidatorRow = ({
@@ -10,7 +10,7 @@ const ValidatorRow = ({
   validatorDetails,
   validatorStatistics,
   rowIndex,
-  ratingOrder
+  ratingOrder,
 }: {
   validator: ValidatorType;
   rowIndex: number;
@@ -37,10 +37,10 @@ const ValidatorRow = ({
             to={`/validators/${validator.publicKey}`}
             data-testid={`publicKeyLink${rowIndex}`}
           >
-            {truncate(validator.publicKey, 20)}
+            {trimHash(validator.publicKey)}
           </TestnetLink>
         ) : (
-          <span>{truncate(validator.publicKey, 20)}</span>
+          <span>{trimHash(validator.publicKey)}</span>
         )}
       </td>
       <td>
@@ -66,7 +66,7 @@ const ValidatorRow = ({
           <span className="text-muted">N/A</span>
         )}
       </td>
-      
+
       <td className="text-right">
         {(validator.totalUpTimeSec !== 0 || validator.totalDownTimeSec !== 0) && (
           <span>
@@ -100,7 +100,7 @@ const ValidatorRow = ({
           </div>
         )}
       </td>
-    
+
       {validatorStatistics ? (
         <td className="text-right">{validator.rating > 0 ? Math.floor(validator.rating) : null}</td>
       ) : (

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { truncate } from 'helpers';
+import { truncate, trimHash } from 'helpers';
 import { ShardSpan, TestnetLink } from 'sharedComponents';
 import { ValidatorType } from '../index';
 
@@ -16,7 +16,7 @@ const BrandDetailsRow = ({ validator, rowIndex }: BrandDetailsRowType) => {
           to={`/validators/${validator.publicKey}`}
           data-testid={`hexPublicKeyLink${rowIndex}`}
         >
-          {truncate(validator.publicKey, 20)}
+          {trimHash(validator.publicKey)}
         </TestnetLink>
       </td>
       <td>
