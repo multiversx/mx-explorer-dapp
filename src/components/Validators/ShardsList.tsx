@@ -19,7 +19,7 @@ function generateCard(shardEntry: ShardType, isOverall?: boolean) {
               ? shardEntry.shardID
               : 'Shard ' + shardEntry.shardID}
           </span>
-          <span className="metric-value">
+          <span className="metric-value d-flex align-items-center">
             {!isOverall && (
               <>
                 <span
@@ -36,8 +36,12 @@ function generateCard(shardEntry: ShardType, isOverall?: boolean) {
             )}
             <span>
               {shardEntry.allActiveValidators}/{shardEntry.allValidators}
-              {!isOverall && <FontAwesomeIcon icon={faServer} className="shard-icon ml-2" />}
             </span>
+            {!isOverall && (
+              <span className="shard-icon-container d-flex align-items-center justify-content-center ml-2">
+                <FontAwesomeIcon icon={faServer} className="shard-icon" />
+              </span>
+            )}
           </span>
         </div>
       </div>

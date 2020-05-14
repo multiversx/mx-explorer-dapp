@@ -92,7 +92,7 @@ const Validators = () => {
     });
   };
 
-  const showNodes = useLocation().pathname === validatorsRouteNames.validatorsNodes;
+  const showNodes = useLocation().pathname.endsWith(validatorsRouteNames.validatorsNodes);
 
   React.useEffect(getData, [nodeUrl, timeout]);
 
