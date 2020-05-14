@@ -35,7 +35,6 @@ export interface TestnetType {
   wallet?: boolean;
   faucet: boolean;
   validatorStatistics: boolean;
-  bach32LocalTransform?: boolean;
 }
 
 type AppIdType = 'wallet' | 'explorer' | 'studio' | 'docs' | string;
@@ -106,7 +105,6 @@ export const defaultTestnet = {
   validatorDetails: false,
   faucet: false,
   validatorStatistics: false,
-  bach32LocalTransform: false,
 };
 
 const configKey: any = 'CONFIG';
@@ -186,7 +184,6 @@ const localTestnets = [
           validatorDetails: true,
           faucet: false,
           validatorStatistics: true,
-          bach32LocalTransform: false,
         },
         {
           default: true,
@@ -207,7 +204,6 @@ const localTestnets = [
           validatorDetails: true,
           faucet: false,
           validatorStatistics: true,
-          bach32LocalTransform: false,
         },
       ]
     : []),
