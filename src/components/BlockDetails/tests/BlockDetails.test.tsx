@@ -37,7 +37,7 @@ describe('Block Details', () => {
       switch (true) {
         case url.includes('/tps/_doc/meta'):
           return Promise.resolve({ data: meta });
-        case url.includes(`/blocks/_doc/${doc._source.hash}`):
+        case url.includes(`/blocks/_doc/${doc._id}`):
           return Promise.resolve({ data: doc });
         case url.includes('/validators/_search'):
           return Promise.resolve({ data: validators });
@@ -46,7 +46,7 @@ describe('Block Details', () => {
     mockPost.mockReturnValueOnce(Promise.resolve({ data: blocks }));
 
     const render = renderWithRouter({
-      route: `/blocks/${doc._source.hash}`,
+      route: `/blocks/${doc._id}`,
     });
     expect(document.title).toEqual('Block Details • Elrond Explorer');
     await wait(async () => {
@@ -56,7 +56,7 @@ describe('Block Details', () => {
   });
   test('Block Details page loading state', async () => {
     const render = renderWithRouter({
-      route: `/blocks/${doc._source.hash}`,
+      route: `/blocks/${doc._id}`,
     });
 
     const loader = await render.findByTestId('loader');
@@ -68,7 +68,7 @@ describe('Block Details', () => {
     mockGet.mockRejectedValueOnce(new Error('doc error'));
 
     const render = renderWithRouter({
-      route: `/blocks/${doc._source.hash}`,
+      route: `/blocks/${doc._id}`,
     });
 
     const failedState = await render.findByText('Unable to locate this block hash');
@@ -86,12 +86,13 @@ describe('Block Details Links', () => {
     mockPost.mockReturnValueOnce(Promise.resolve({ data: blocks }));
 
     const render = renderWithRouter({
-      route: `/blocks/${doc._source.hash}`,
+      route: `/blocks/${doc._id}`,
     });
     expect(document.title).toEqual('Block Details • Elrond Explorer');
     await wait(async () => {
       expect(render.queryByTestId('title')!.innerHTML).toBe('Block Details');
     });
+
     expect(render.getByText(doc._source.nonce.toString())).toBeInTheDocument();
   });
 });
