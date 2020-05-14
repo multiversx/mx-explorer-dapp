@@ -1,7 +1,7 @@
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { testnetRoute, useBach32 } from 'helpers';
+import { testnetRoute } from 'helpers';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { isAddress, isBlock, isTransaction } from './helpers/asyncRequests';
@@ -22,7 +22,6 @@ const Search: React.FC = () => {
       onClick();
     }
   };
-  const { getPublicKey } = useBach32();
   const onClick = async () => {
     if (isValidator(hash)) {
       history.push(testnetRoute({ to: `/validators/${hash}`, activeTestnetId }));
@@ -30,7 +29,7 @@ const Search: React.FC = () => {
       history.push(testnetRoute({ to: `/blocks/${hash}`, activeTestnetId }));
     } else if (await isTransaction({ elasticUrl, hash, timeout })) {
       history.push(testnetRoute({ to: `/transactions/${hash}`, activeTestnetId }));
-    } else if (await isAddress({ nodeUrl, hash: getPublicKey(hash), timeout })) {
+    } else if (await isAddress({ nodeUrl, hash, timeout })) {
       history.push(testnetRoute({ to: `/address/${hash}`, activeTestnetId }));
     } else {
       history.push(testnetRoute({ to: `/search/${hash}`, activeTestnetId }));

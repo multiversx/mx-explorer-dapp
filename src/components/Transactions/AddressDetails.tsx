@@ -1,4 +1,3 @@
-import { useBach32 } from 'helpers';
 import React from 'react';
 import { Denominate } from 'sharedComponents';
 
@@ -11,8 +10,6 @@ export interface AddressDetailsType {
 }
 
 const AddressDetails = (props: AddressDetailsType) => {
-  const { getAddress } = useBach32();
-  const address = getAddress(props.addressId);
   const Address = (
     <div className="row mb-4">
       <div className="col-12">
@@ -20,7 +17,7 @@ const AddressDetails = (props: AddressDetailsType) => {
           <div className="card-body">
             <div className="row">
               <div className="col-lg-1 card-label">Address</div>
-              <div className="col-lg-11">{address}</div>
+              <div className="col-lg-11">{props.addressId}</div>
             </div>
             <hr className="hr-space" />
             <div className="row">

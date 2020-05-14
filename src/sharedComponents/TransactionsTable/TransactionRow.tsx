@@ -1,4 +1,4 @@
-import { addressIsBach32, dateFormatted, trimHash, truncate, useBach32 } from 'helpers';
+import { addressIsBach32, dateFormatted, trimHash, truncate } from 'helpers';
 import React from 'react';
 import { Denominate, ScAddressIcon, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { TransactionType } from './index';
@@ -9,8 +9,6 @@ interface PropsType {
 }
 
 const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
-  const { getAddress } = useBach32();
-
   return (
     <tr className="animated fadeIn">
       <td>
@@ -47,15 +45,12 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
       <td>
         <ScAddressIcon initiator={transaction.sender} />
         {addressId === transaction.sender ? (
-          <span>{trimHash(getAddress(transaction.sender))}</span>
+          <span>{trimHash(transaction.sender)}</span>
         ) : (
           <>
             {addressIsBach32(transaction.sender) ? (
-              <TestnetLink
-                to={`/address/${getAddress(transaction.sender)}`}
-                data-testid="senderLink"
-              >
-                {trimHash(getAddress(transaction.sender))}
+              <TestnetLink to={`/address/${transaction.sender}`} data-testid="senderLink">
+                {trimHash(transaction.sender)}
               </TestnetLink>
             ) : (
               <ShardSpan shardId={transaction.sender} />
@@ -66,13 +61,10 @@ const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
       <td>
         <ScAddressIcon initiator={transaction.receiver} />
         {addressId === transaction.receiver ? (
-          <span>{trimHash(getAddress(transaction.receiver))}</span>
+          <span>{trimHash(transaction.receiver)}</span>
         ) : (
-          <TestnetLink
-            to={`/address/${getAddress(transaction.receiver)}`}
-            data-testid="receiverLink"
-          >
-            {trimHash(getAddress(transaction.receiver))}
+          <TestnetLink to={`/address/${transaction.receiver}`} data-testid="receiverLink">
+            {trimHash(transaction.receiver)}
           </TestnetLink>
         )}
       </td>

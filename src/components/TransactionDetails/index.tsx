@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { useGlobalState } from 'context';
-import { addressIsBach32, dateFormatted, useBach32 } from 'helpers';
+import { addressIsBach32, dateFormatted } from 'helpers';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import {
@@ -41,8 +41,6 @@ const TransactionDetails: React.FC = () => {
 
   const [transaction, setTransaction] = React.useState<TransactionType | undefined>(undefined);
   const [transactionFetched, setTransactionFetched] = React.useState<boolean>(true);
-
-  const { getAddress } = useBach32();
 
   React.useEffect(() => {
     if (transactionId && ref.current !== null) {
@@ -139,8 +137,8 @@ const TransactionDetails: React.FC = () => {
                           <ScAddressIcon initiator={transaction.sender} />
                           {addressIsBach32(transaction.sender) ? (
                             <>
-                              <TestnetLink to={`/address/${getAddress(transaction.sender)}`}>
-                                {getAddress(transaction.sender)}
+                              <TestnetLink to={`/address/${transaction.sender}`}>
+                                {transaction.sender}
                               </TestnetLink>
                               <TestnetLink
                                 to={`/transactions/shard-from/${transaction.senderShard}`}
@@ -161,8 +159,8 @@ const TransactionDetails: React.FC = () => {
                         <div className="col-lg-2 card-label">To</div>
                         <div className="col-lg-10">
                           <ScAddressIcon initiator={transaction.receiver} />
-                          <TestnetLink to={`/address/${getAddress(transaction.receiver)}`}>
-                            {getAddress(transaction.receiver)}
+                          <TestnetLink to={`/address/${transaction.receiver}`}>
+                            {transaction.receiver}
                           </TestnetLink>
                           &nbsp;
                           {Boolean(transaction.receiverShard) && (

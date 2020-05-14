@@ -1,7 +1,7 @@
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { addressIsBach32, dateFormatted, trimHash, truncate, useBach32 } from 'helpers';
+import { addressIsBach32, dateFormatted, trimHash, truncate } from 'helpers';
 import * as React from 'react';
 import { ScAddressIcon, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
@@ -16,8 +16,6 @@ const LatestTransactions: React.FC = () => {
   } = useGlobalState();
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
-
-  const { getAddress } = useBach32();
 
   const fetchTransactions = () => {
     if (ref.current !== null) {
@@ -87,8 +85,8 @@ const LatestTransactions: React.FC = () => {
                       <div className="col-6">
                         From&nbsp;
                         {addressIsBach32(transaction.sender) ? (
-                          <TestnetLink to={`/address/${getAddress(transaction.sender)}`}>
-                            {trimHash(getAddress(transaction.sender))}
+                          <TestnetLink to={`/address/${transaction.sender}`}>
+                            {trimHash(transaction.sender)}
                           </TestnetLink>
                         ) : (
                           <ShardSpan shardId={transaction.sender} />
@@ -96,10 +94,10 @@ const LatestTransactions: React.FC = () => {
                         <br />
                         To&nbsp;
                         <TestnetLink
-                          to={`/address/${getAddress(transaction.receiver)}`}
+                          to={`/address/${transaction.receiver}`}
                           data-testid={`transactionLinkTo${i}`}
                         >
-                          {trimHash(getAddress(transaction.receiver))}
+                          {trimHash(transaction.receiver)}
                         </TestnetLink>
                       </div>
                     </div>

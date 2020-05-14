@@ -1,4 +1,3 @@
-import { useBach32 } from 'helpers';
 import * as React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
@@ -56,14 +55,12 @@ const Transactions = () => {
 
   const refreshFirstPage = size === 1 ? timestamp : 0;
 
-  const { getPublicKey } = useBach32();
-
   const fetchTransactions = () => {
     if (ref.current !== null) {
       getTransactions({
         elasticUrl,
         size,
-        addressId: getPublicKey(addressId),
+        addressId,
         shardId,
         shardType,
         timeout,
@@ -79,7 +76,7 @@ const Transactions = () => {
       });
       getTotalTransactions({
         elasticUrl,
-        addressId: getPublicKey(addressId),
+        addressId,
         shardId,
         timeout,
         shardType,
@@ -93,14 +90,12 @@ const Transactions = () => {
 
   const getAddrDetails = () => {
     if (addressId && ref.current !== null) {
-      getAddressDetails({ nodeUrl, addressId: getPublicKey(addressId), timeout }).then(
-        (data: any) => {
-          if (ref.current !== null) {
-            setAddressDetails(data);
-            setAddressDetailsLoading(false);
-          }
+      getAddressDetails({ nodeUrl, addressId, timeout }).then((data: any) => {
+        if (ref.current !== null) {
+          setAddressDetails(data);
+          setAddressDetailsLoading(false);
         }
-      );
+      });
     } else {
       setAddressDetailsLoading(false);
     }

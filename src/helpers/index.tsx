@@ -6,7 +6,6 @@ import sizeFormat from './sizeFormat';
 import testnetRoute from './testnetRoute';
 import trimHash from './trimHash';
 import truncate from './truncate';
-import useBach32 from './useBach32';
 import { getShardId, getUptimeDowntime } from './validatorFunctions';
 
 export {
@@ -20,5 +19,4 @@ export {
   getShardId,
   getUptimeDowntime,
   trimHash,
-  useBach32,
 };
