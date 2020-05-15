@@ -1,30 +1,5 @@
 import axios from 'axios';
-import { renderWithRouter, wait } from './../../../utils/test-utils';
-
-const meta = {
-  _index: 'tps',
-  _type: '_doc',
-  _id: 'meta',
-  _version: 46328,
-  _seq_no: 73927,
-  _primary_term: 1,
-  found: true,
-  _source: {
-    liveTPS: 164,
-    peakTPS: 858,
-    nrOfShards: 5,
-    nrOfNodes: 100,
-    blockNumber: 8833,
-    roundNumber: 10539,
-    roundTime: 6,
-    averageBlockTxCount: 376,
-    lastBlockTxCount: 987,
-    totalProcessedTxCount: 3324341,
-    shardID: 0,
-    averageTPS: null,
-    currentBlockNonce: 0,
-  },
-};
+import { renderWithRouter, wait, meta } from './../../../utils/test-utils';
 
 const doc = {
   _index: 'transactions',

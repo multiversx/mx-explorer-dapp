@@ -1,32 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
-import { renderWithRouter, wait } from '../../../utils/test-utils';
+import { renderWithRouter, wait, meta } from '../../../utils/test-utils';
 import search from './_search';
-
-const meta = {
-  _index: 'tps',
-  _type: '_doc',
-  _id: 'meta',
-  _version: 56330,
-  _seq_no: 89868,
-  _primary_term: 1,
-  found: true,
-  _source: {
-    liveTPS: 19,
-    peakTPS: 19,
-    nrOfShards: 5,
-    nrOfNodes: 100,
-    blockNumber: 10433,
-    roundNumber: 12904,
-    roundTime: 6,
-    averageBlockTxCount: 0,
-    lastBlockTxCount: 114,
-    totalProcessedTxCount: 114,
-    shardID: 0,
-    averageTPS: null,
-    currentBlockNonce: 0,
-  },
-};
 
 const address = {
   account: {
@@ -46,6 +21,7 @@ describe('Address', () => {
     const mockGet = jest.spyOn(axios, 'get');
     const mockPost = jest.spyOn(axios, 'post');
     mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
+    mockGet.mockReturnValueOnce(Promise.resolve({ data: address }));
     mockPost.mockReturnValueOnce(Promise.resolve({ data: search }));
     mockPost.mockReturnValueOnce(Promise.resolve({ data: count }));
 

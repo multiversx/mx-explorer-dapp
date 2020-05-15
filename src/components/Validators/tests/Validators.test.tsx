@@ -1,38 +1,15 @@
 import axios from 'axios';
-import { fireEvent, renderWithRouter, wait } from '../../../utils/test-utils';
+import { fireEvent, renderWithRouter, wait, meta } from '../../../utils/test-utils';
 import heartbeatstatus from './heartbeatstatus';
-
-const meta = {
-  _index: 'tps',
-  _type: '_doc',
-  _id: 'meta',
-  _version: 46783,
-  _seq_no: 74642,
-  _primary_term: 1,
-  found: true,
-  _source: {
-    liveTPS: 164,
-    peakTPS: 858,
-    nrOfShards: 5,
-    nrOfNodes: 100,
-    blockNumber: 8833,
-    roundNumber: 10539,
-    roundTime: 6,
-    averageBlockTxCount: 376,
-    lastBlockTxCount: 987,
-    totalProcessedTxCount: 3324341,
-    shardID: 0,
-    averageTPS: null,
-    currentBlockNonce: 0,
-  },
-};
+import statistics from './statistics';
 
 const goToValidatorsPage = () => {
   const mockGet = jest.spyOn(axios, 'get');
   mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
   mockGet.mockReturnValueOnce(Promise.resolve({ data: heartbeatstatus }));
+  mockGet.mockReturnValueOnce(Promise.resolve({ data: statistics }));
   return renderWithRouter({
-    route: '/validators',
+    route: '/validators/nodes',
   });
 };
 
@@ -46,7 +23,7 @@ describe('Validators', () => {
   });
   test('Validators page loading state', async () => {
     const render = renderWithRouter({
-      route: '/validators',
+      route: '/validators/nodes',
     });
 
     const loader = await render.findByTestId('loader');
@@ -58,7 +35,7 @@ describe('Validators', () => {
     mockGet.mockRejectedValueOnce(new Error('heartbeatstatus error'));
 
     const render = renderWithRouter({
-      route: '/validators',
+      route: '/validators/nodes',
     });
 
     const failedState = await render.findByText('Unable to load validators');
@@ -153,7 +130,7 @@ describe('Validators links', () => {
   test('Validators public key link', async () => {
     const render = goToValidatorsPage();
     const publicKeyLink = await render.findByTestId('publicKeyLink0');
-    expect(publicKeyLink.textContent).toBe('0098f4b04bbf9b4ac...');
+    expect(publicKeyLink.textContent).toBe('8f2873e1bef8...9813162f367b');
     fireEvent.click(publicKeyLink);
     await wait(async () => {
       expect(document.title).toEqual('Validator Details • Elrond Explorer');
@@ -162,7 +139,7 @@ describe('Validators links', () => {
   test('Validators shard link', async () => {
     const render = goToValidatorsPage();
     const publicKeyLink = await render.findByTestId('shardLink0');
-    expect(publicKeyLink.textContent).toBe('Shard 3');
+    expect(publicKeyLink.textContent).toBe('Shard 0');
     fireEvent.click(publicKeyLink);
     await wait(async () => {
       expect(document.title).toEqual('Shard Details • Elrond Explorer');

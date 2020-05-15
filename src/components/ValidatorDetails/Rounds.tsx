@@ -10,20 +10,17 @@ interface RoundType {
 
 const Rounds = ({ rounds, roundsFetched }: { rounds: RoundType[]; roundsFetched: boolean }) => {
   return (
-    <div>
+    <div data-testid="roundsContainer">
       <div className="mt-4">
         <h4>Last Consensus Rounds</h4>
+        {rounds.length === 0 ? 'unu' : 'doi'}
       </div>
       {roundsFetched ? (
         <div className="card" style={{ height: 'auto' }}>
           <div className="card-body">
             {rounds.length === 0 ? (
-              <div
-                style={{ minHeight: '95px' }}
-                className="d-flex justify-content-center"
-                data-testid="roundsLoading"
-              >
-                <div className="lds-ellipsis align-self-center">
+              <div style={{ minHeight: '95px' }} className="d-flex justify-content-center">
+                <div className="lds-ellipsis align-self-center" data-testid="roundsLoading">
                   <div />
                   <div />
                   <div />

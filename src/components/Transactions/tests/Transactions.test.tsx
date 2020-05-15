@@ -67,7 +67,7 @@ describe('Transactions Page', () => {
 
   test('Transactions errorScreen showing', async () => {
     const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockRejectedValueOnce(new Error('transaction error'));
+    mockPost.mockRejectedValue(new Error('transaction error'));
 
     const render = renderWithRouter({
       route: '/transactions/page/1',
@@ -102,27 +102,6 @@ describe('Transactions Page Links', () => {
       expect(document.title).toEqual('Transaction Details • Elrond Explorer');
     });
   });
-  test('Block link', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockReturnValueOnce(Promise.resolve({ data: search }));
-    mockPost.mockReturnValue(
-      Promise.resolve({
-        data: { count: 6538186, _shards: { total: 1, successful: 1, skipped: 0, failed: 0 } },
-      })
-    );
-
-    const render = renderWithRouter({
-      route: '/transactions',
-    });
-
-    const links = await render.findAllByTestId('blockLink');
-    expect(links[0].textContent).toBe('a8a12902ed110204b...');
-
-    fireEvent.click(links[0]);
-    await wait(async () => {
-      expect(document.title).toEqual('Block Details • Elrond Explorer');
-    });
-  });
   test('Shard from link', async () => {
     const mockPost = jest.spyOn(axios, 'post');
     mockPost.mockReturnValueOnce(Promise.resolve({ data: search }));
@@ -137,7 +116,7 @@ describe('Transactions Page Links', () => {
     });
 
     const links = await render.findAllByTestId('shardFromLink');
-    expect(links[0].textContent).toBe('4');
+    expect(links[0].textContent).toBe('Shard 4');
 
     fireEvent.click(links[0]);
     await wait(async () => {
@@ -158,7 +137,7 @@ describe('Transactions Page Links', () => {
     });
 
     const links = await render.findAllByTestId('shardToLink');
-    expect(links[0].textContent).toBe('2');
+    expect(links[0].textContent).toBe('Shard 2');
 
     fireEvent.click(links[0]);
     await wait(async () => {

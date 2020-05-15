@@ -1,33 +1,8 @@
 import axios from 'axios';
-import { renderWithRouter, wait } from '../../../utils/test-utils';
+import { renderWithRouter, wait, meta } from '../../../utils/test-utils';
 import blocks from './blocks';
 import doc from './doc';
 import validators from './validators';
-
-const meta = {
-  _index: 'tps',
-  _type: '_doc',
-  _id: 'meta',
-  _version: 47628,
-  _seq_no: 76004,
-  _primary_term: 1,
-  found: true,
-  _source: {
-    liveTPS: 125,
-    peakTPS: 858,
-    nrOfShards: 5,
-    nrOfNodes: 100,
-    blockNumber: 9480,
-    roundNumber: 11502,
-    roundTime: 6,
-    averageBlockTxCount: 351,
-    lastBlockTxCount: 755,
-    totalProcessedTxCount: 3332899,
-    shardID: 0,
-    averageTPS: null,
-    currentBlockNonce: 0,
-  },
-};
 
 describe('Block Details', () => {
   test('Block Details page is displaying', async () => {
