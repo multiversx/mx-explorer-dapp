@@ -1,14 +1,9 @@
 import * as React from 'react';
 import { Highlights, Search } from './../../../sharedComponents';
-import Chart from './Chart';
 import Leaflet from './Leaflet';
 // import Map from './Map';
 
 const HeroHighlights: React.FC = () => {
-  const [liveTps, setLiveTps] = React.useState(0);
-
-  const ChartJS = process.env.NODE_ENV !== 'test' ? <Chart liveTps={liveTps} /> : null;
-
   return (
     <>
       <div className="bg-black">

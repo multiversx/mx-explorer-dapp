@@ -1,7 +1,7 @@
 .leaflet-marker-icon {
   height: 25px;
   width: 25px;
-  background-color: #fff;
+  // background-color: #fff;
   border-radius: 50%;
   display: inline-block;
 }
@@ -15,4 +15,12 @@
   &:hover {
     opacity: 0.5;
   }
+}
+
+.leaflet-container {
+  background-color: rgba(255, 0, 0, 0);
+}
+
+.leader-marker {
+  z-index: 1059 !important;
 }

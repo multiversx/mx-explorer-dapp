@@ -1,5 +1,6 @@
 // @ts-ignore
 import kendo from 'kendo-ui-core/js/kendo.data';
+import { MarkerType } from './asyncRequests';
 
 export interface MarkerPoint {
   name: string;
@@ -11,6 +12,7 @@ export interface MarkerPoint {
 
 export interface MapDisplayType {
   markers: MarkerPoint[];
+  leaders: MarkerPoint[];
 }
 
 const getGroupedCities = (markers: MarkerPoint[]) => {
@@ -47,6 +49,31 @@ const getRadius = (groupedCities: Array<{ items: number[] }>) => {
     return null;
   });
   return mapping;
+};
+
+export const processMarkers = (data: any) => {
+  const locationsArray: MarkerType[] = Object.keys(data).map(id => ({
+    ...data[id],
+    publicKey: id,
+  }));
+  const markersArray = locationsArray
+    .map(loc => {
+      const lat = parseFloat(loc.loc.split(',')[0]);
+      const lon = parseFloat(loc.loc.split(',')[1]);
+      if (!isNaN(lat) && !isNaN(lon)) {
+        return {
+          name: loc.city,
+          lat,
+          lon,
+          markerOffset: 0,
+          ip: loc.ip,
+          publicKey: loc.publicKey,
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
+  return markersArray;
 };
 
 export { getRadius, getGroupedCities };
