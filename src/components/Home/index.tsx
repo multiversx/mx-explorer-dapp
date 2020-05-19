@@ -3,7 +3,7 @@ import Hero from './Hero';
 import LatestBlocks from './LatestBlocks';
 import LatestTransactions from './LatestTransactions';
 
-const TransactionDetails: React.FC = () => {
+const TransactionDetails = () => {
   return (
     <div>
       <Hero />
