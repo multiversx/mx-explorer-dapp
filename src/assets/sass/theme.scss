@@ -6,10 +6,13 @@ $link-color: #6db8ee;
 
 .bg-blue {
   // background-image: linear-gradient(150deg, #0baae9, #1851db);
-  // background-color: #1b46c2;
-  background-color: #000;
+  background-color: #1b46c2;
   // background-image: linear-gradient(150deg,lighten($blue,20%),$blue);
   background-repeat: repeat-x;
+}
+
+.bg-black {
+  background-color: #000;
 }
 
 .leaflet-container {
@@ -444,7 +447,7 @@ main .form-search .form-control:focus {
 }
 
 .canvas {
-  height: 100%;
+  height: 450px;
 }
 
 /* Last minute TODO: review;

@@ -20,9 +20,9 @@ L.Icon.Default.mergeOptions({
 
 export default function MapDisplay({ markers }: MapDisplayType) {
   const state = {
-    lat: 45.257017,
-    lng: 4.077524,
-    zoom: 3,
+    lat: 40.257017,
+    lng: 2.077524,
+    zoom: 2.5,
   };
   const position: any = [state.lat, state.lng];
 
@@ -35,17 +35,21 @@ export default function MapDisplay({ markers }: MapDisplayType) {
   // const stamenTonerAttr =
   //   'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 
+  const tiles = 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png';
+  const attr =
+    '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+
   return (
     <Map
       zoomControl={false}
-      attributionControl={false}
+      // attributionControl={false}
       center={position}
       zoom={state.zoom}
       maxZoom={13}
       style={{ height: '100%', width: '100%' }}
     >
-      {/* <TileLayer attribution={stamenTonerAttr} url={stamenTonerTiles} style /> */}
-      <GeoJSON
+      <TileLayer attribution={attr} url={tiles} style />
+      {/* <GeoJSON
         data={countries as any}
         style={{
           color: '#1b46c240',
@@ -54,7 +58,7 @@ export default function MapDisplay({ markers }: MapDisplayType) {
           fillColor: '#fff',
           fillOpacity: 1,
         }}
-      />
+      /> */}
       {groupedCities.map(({ items, value }: any, i: number) => {
         const { lat, lon } = items[0];
         return (
