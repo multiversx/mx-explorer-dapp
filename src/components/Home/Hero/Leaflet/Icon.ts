@@ -7,8 +7,10 @@ import L from 'leaflet';
 //   iconSize: new L.Point(60, 75),
 //   className: 'leaflet-div-icon',
 // });
-const Icon = L.divIcon({
-  className: 'leaflet-div-icon',
-});
+const Icon = (size = 10) =>
+  L.divIcon({
+    className: 'leaflet-div-icon',
+    iconSize: [size, size],
+  });
 
 export default Icon;

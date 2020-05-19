@@ -1,13 +1,10 @@
 import React from 'react';
 import L from 'leaflet';
-// @ts-ignore
-import kendo from 'kendo-ui-core/js/kendo.data';
-import { Map, Marker, Popup, GeoJSON, useLeaflet } from 'react-leaflet';
-import 'leaflet.markercluster';
+import { Map, Marker, Popup, GeoJSON, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import 'leaflet.markercluster/dist/MarkerCluster.css';
-import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import { MarkerPoint, MapDisplayType, getRadius, getGroupedCities } from './helpers/processing';
 import countries from './countries.json';
+// import waters from './waters.json';
 import Icon from './Icon';
 import './icon.scss';
 
@@ -21,83 +18,22 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-const mcg = L.markerClusterGroup({
-  chunkedLoading: true,
-  iconCreateFunction: cluster => {
-    const markers = cluster.getAllChildMarkers();
-    const html = `<div class="marker-circle">${markers.length}</div>`;
-    return L.divIcon({ html, className: 'leaflet-div-icon', iconSize: L.point(32, 32) });
-  },
-  spiderfyOnMaxZoom: true,
-  showCoverageOnHover: false,
-
-  // zoomToBoundsOnClick: false,
-});
-
-mcg.on('clusterclick', a => {
-  const latLngBounds = a.layer.getBounds();
-  console.warn(latLngBounds);
-});
-
-const MarkerCluster = ({ markers }: MapDisplayType) => {
-  const { map } = useLeaflet();
-
-  React.useEffect(() => {
-    mcg.clearLayers();
-    markers.forEach(({ lat, lon, name }) => {
-      return L.marker(new L.LatLng(lat, lon), {
-        // icon: Icon,
-      })
-        .addTo(mcg)
-        .on('click', a => {
-          console.warn(a.target._popup._content);
-        })
-        .bindPopup(name);
-    });
-
-    // optionally center the map around the markers
-    // map.fitBounds(mcg.getBounds());
-    // // add the marker cluster group to the map
-    (map as any).addLayer(mcg);
-  }, [markers, map]);
-
-  return null;
-};
-
-export interface MarkerPoint {
-  name: string;
-  lat: number;
-  lon: number;
-  markerOffset: number;
-  ip: string;
-}
-
-interface MapDisplayType {
-  markers: MarkerPoint[];
-}
-
 export default function MapDisplay({ markers }: MapDisplayType) {
   const state = {
-    lat: 41.257017,
-    lng: 29.077524,
+    lat: 45.257017,
+    lng: 4.077524,
     zoom: 3,
   };
   const position: any = [state.lat, state.lng];
+
+  const groupedCities = getGroupedCities(markers);
+
+  const radiusByCity = getRadius(groupedCities);
 
   // const stamenTonerTiles =
   //   'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
   // const stamenTonerAttr =
   //   'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
-
-  const dataSource = new kendo.data.DataSource({
-    data: markers,
-  });
-  dataSource.group({ field: 'name' });
-  const groupedCities = dataSource.view();
-  const totalNodesArray = groupedCities.map((city: any) => city.items.length);
-  const uniqueTotalNodes = [...new (Set as any)(totalNodesArray)];
-
-  console.log();
 
   return (
     <Map
@@ -112,7 +48,7 @@ export default function MapDisplay({ markers }: MapDisplayType) {
       <GeoJSON
         data={countries as any}
         style={{
-          color: '#6db8ee',
+          color: '#1b46c240',
           weight: 1,
           opacity: 1,
           fillColor: '#fff',
@@ -122,7 +58,17 @@ export default function MapDisplay({ markers }: MapDisplayType) {
       {groupedCities.map(({ items, value }: any, i: number) => {
         const { lat, lon } = items[0];
         return (
-          <Marker key={value + i} position={new L.LatLng(lat, lon)} icon={Icon}>
+          <Marker
+            key={value + i}
+            position={new L.LatLng(lat, lon)}
+            icon={Icon(radiusByCity[value])}
+            onMouseOver={(e: any) => {
+              e.target.openPopup();
+            }}
+            onMouseOut={(e: any) => {
+              e.target.closePopup();
+            }}
+          >
             <Popup>
               {value}: {items.length} nodes
             </Popup>
