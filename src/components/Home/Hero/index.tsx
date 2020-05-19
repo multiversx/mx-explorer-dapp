@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Highlights, Search } from './../../../sharedComponents';
 import Chart from './Chart';
+// import Leaflet from './Leaflet';
+import Map from './Map';
 
 const HeroHighlights: React.FC = () => {
   const [liveTps, setLiveTps] = React.useState(0);
@@ -15,10 +17,13 @@ const HeroHighlights: React.FC = () => {
             <Highlights hero setLiveTps={setLiveTps} />
           </div>
           <div className="col-lg-7 mt-4 mb-4">
-            <span className="highlight-label d-block text-center mt-4 mb-3">
+            {/* <span className="highlight-label d-block text-center mt-4 mb-3">
               LIVE TPS • LAST 3 MIN
-            </span>
-            <div className="canvas">{ChartJS}</div>
+            </span> */}
+            <div className="canvas">
+              <Map />
+            </div>
+            {/* <div className="canvas">{ChartJS}</div> */}
           </div>
         </div>
         <div className="row">
