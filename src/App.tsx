@@ -9,7 +9,9 @@ import { GlobalProvider, useGlobalState } from './context';
 import { ConfigType, TestnetType } from './context/state';
 import routes from './routes';
 
-Sentry.init({ dsn: 'https://8ed464acd35d44a6a582ff624dd3c38d@sentry.io/485879' });
+if (process.env.NODE_ENV === 'production') {
+  Sentry.init({ dsn: 'https://8ed464acd35d44a6a582ff624dd3c38d@sentry.io/485879' });
+}
 
 export const Routes = ({
   routes,
