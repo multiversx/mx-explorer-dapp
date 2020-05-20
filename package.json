@@ -56,6 +56,11 @@
     "eject": "react-scripts eject",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"
   },
+  "husky": {
+    "hooks": {
+      "pre-push": "CI=true npm run test --runInBand"
+    }
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -74,6 +79,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "4.2.0",
     "@testing-library/react": "9.3.0",
+    "husky": "4.2.5",
     "prettier": "1.19.1",
     "tslint": "5.20.0",
     "tslint-config-prettier": "1.18.0",
