@@ -8,11 +8,14 @@ export interface MarkerPoint {
   lon: number;
   markerOffset: number;
   ip: string;
+  publicKey: string;
+  shard?: number;
 }
 
 export interface MapDisplayType {
   markers: MarkerPoint[];
   leaders: MarkerPoint[];
+  metaChainShardId: number;
 }
 
 const getGroupedCities = (markers: MarkerPoint[]) => {

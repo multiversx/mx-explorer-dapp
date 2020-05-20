@@ -6,7 +6,7 @@ import { MapDisplayType, getRadius, getGroupedCities } from './helpers/processin
 import Icon from './Icon';
 import './leaflet.scss';
 
-export default function MapDisplay({ markers, leaders }: MapDisplayType) {
+export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDisplayType) {
   const state = {
     lat: 33,
     lng: -2,
@@ -51,27 +51,30 @@ export default function MapDisplay({ markers, leaders }: MapDisplayType) {
           </Marker>
         );
       })}
-      {leaders.map((leader, i) => (
-        <Marker
-          key={leader.name + i}
-          position={new L.LatLng(leader.lat, leader.lon)}
-          icon={L.icon({
-            iconUrl: require('assets/img/markers/shard-1.png'),
-            iconRetinaUrl: require('assets/img/markers/shard-1@2x.png'),
-            iconSize: [20, 24],
-            iconAnchor: [10, 24], // point of the icon which will correspond to marker's location
-            className: 'leader-marker',
-          })}
-          onMouseOver={(e: any) => {
-            e.target.openPopup();
-          }}
-          onMouseOut={(e: any) => {
-            e.target.closePopup();
-          }}
-        >
-          {/* <Popup>{leader.name}</Popup> */}
-        </Marker>
-      ))}
+      {leaders.map((leader, i) => {
+        const iconName = leader.shard === metaChainShardId ? 'metachain' : leader.shard;
+        return (
+          <Marker
+            key={leader.name + i}
+            position={new L.LatLng(leader.lat, leader.lon)}
+            icon={L.icon({
+              iconUrl: require(`assets/img/markers/shard-${iconName}.png`),
+              iconRetinaUrl: require(`assets/img/markers/shard-${iconName}@2x.png`),
+              iconSize: [20, 24],
+              iconAnchor: [10, 24], // point of the icon which will correspond to marker's location
+              className: 'leader-marker',
+            })}
+            onMouseOver={(e: any) => {
+              e.target.openPopup();
+            }}
+            onMouseOut={(e: any) => {
+              e.target.closePopup();
+            }}
+          >
+            {/* <Popup>{leader.name}</Popup> */}
+          </Marker>
+        );
+      })}
     </Map>
   );
 }

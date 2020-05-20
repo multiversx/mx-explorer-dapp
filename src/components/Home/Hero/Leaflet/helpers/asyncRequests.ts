@@ -1,6 +1,8 @@
-// import axios from 'axios';
+import axios from 'axios';
 import { object, string, number, InferType } from 'yup';
 import markers from './markers';
+import { validatorFunctions, blockFunctions } from 'helpers';
+import { getBlocks } from './../../../../Blocks/helpers/asyncRequests';
 
 interface GetMarkersType {
   timeout: number;
@@ -42,34 +44,120 @@ export async function getMarkers({ timeout }: GetMarkersType) {
   }
 }
 
-export async function getLeaders({ timeout }: GetMarkersType) {
+export interface GetBlocksType {
+  elasticUrl: string;
+  nonce: number;
+  shardId: number;
+  timeout: number;
+}
+
+async function getNonceBlocks({ elasticUrl, nonce, timeout, shardId }: GetBlocksType) {
   try {
-    // const response = await axios.get(
-    //   `http://144.91.95.131:53135/geo`,
+    const {
+      data: {
+        hits: { hits },
+      },
+    } = await axios.post(
+      `${elasticUrl}/blocks/_search`,
+      {
+        query: {
+          bool: {
+            must: [{ match: { nonce } }, { match: { shardId } }],
+          },
+        },
+        size: 1,
+      },
+      { timeout }
+    );
 
-    //   { timeout }
-    // );
-
-    schema
-      .validate((markers as any)[Object.keys(markers)[0]], { strict: true })
-      .catch(({ errors }) => {
-        console.error('Markers format errors: ', errors);
-      });
-
-    const randomFiveKeys = Object.keys(markers)
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 5);
-
-    const leaderMarkers: any = {};
-    randomFiveKeys.forEach((element, i) => {
-      leaderMarkers[element] = (markers as any)[element] as any;
-    });
-
-    return new Promise(resolve => setTimeout(() => resolve(leaderMarkers), 0));
-  } catch {
+    if (hits[0]) {
+      return hits[0]._id;
+    }
+    return nonce;
+  } catch (err) {
     return {
-      data: [],
-      markersFetched: false,
+      blocks: [],
+      blocksFetched: false,
     };
   }
 }
+
+interface GetShardLeaderType {
+  nodeUrl: string;
+  elasticUrl: string;
+  timeout: number;
+  shardNumber: number;
+}
+
+export const getShardLeader1 = async ({
+  nodeUrl,
+  timeout,
+  elasticUrl,
+  shardNumber,
+}: GetShardLeaderType) => {
+  const { epoch, roundAtEpochStart } = await validatorFunctions.getEpoch({
+    nodeUrl,
+    shardNumber,
+    timeout,
+  });
+  const props = {
+    elasticUrl,
+    timeout: Math.max(timeout, 10000),
+    shardNumber,
+    epoch,
+    roundAtEpochStart,
+    size: 1,
+  };
+  const { rounds } = await validatorFunctions.getRounds(props);
+
+  const nonceString =
+    rounds[0].key.indexOf('_') > 0 ? rounds[0].key.split('_').pop() : rounds[0].key;
+
+  const nonce = parseInt(nonceString || '-1');
+  // const firstProposedBlock = rounds.find({value} => round.value)
+  const blocks = await getNonceBlocks({
+    elasticUrl,
+    nonce /*: 92813*/,
+    timeout,
+    shardId: shardNumber,
+  });
+
+  // const data = await blockFunctions.getBlock({ elasticUrl, blockId, timeout });
+
+  // console.log(data);
+};
+
+export const getShardLeader = async ({
+  nodeUrl,
+  timeout,
+  elasticUrl,
+  shardNumber,
+}: GetShardLeaderType) => {
+  try {
+    const { epoch } = await validatorFunctions.getEpoch({
+      nodeUrl,
+      shardNumber,
+      timeout,
+    });
+    const { blocks } = await getBlocks({
+      elasticUrl,
+      epochId: epoch,
+      timeout,
+      shardId: shardNumber,
+    });
+
+    const blockId: string = blocks[0].hash;
+
+    const { proposer } = await blockFunctions.getBlock({ elasticUrl, timeout, blockId });
+
+    return {
+      proposer,
+      shard: shardNumber,
+    };
+  } catch (err) {
+    return {
+      proposer: '',
+      shard: shardNumber,
+    };
+  }
+};
