@@ -70,8 +70,6 @@ const Transactions = () => {
             setTransactions(data);
             setTransactionsFetched(true);
           } else if (transactions.length === 0) {
-            console.warn('here');
-
             setTransactionsFetched(false);
           }
         }
@@ -149,15 +147,6 @@ const Transactions = () => {
   );
 
   const ComponentState = () => {
-    console.log(9, addressDetailsLoading && addressDetails.detailsFetched);
-    console.log(
-      10,
-      !transactionsFetched &&
-        addressDetails.balance === '0' &&
-        addressDetails.nonce === 0 &&
-        pathname.includes('address')
-    );
-    console.log(11, !transactionsFetched && pathname.includes('transactions'));
     switch (true) {
       case addressDetailsLoading && addressDetails.detailsFetched:
         return <Loader />;
