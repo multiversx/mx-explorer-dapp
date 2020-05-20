@@ -1,8 +1,28 @@
 import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
-import { fireEvent, renderWithRouter, wait, waitForElement } from 'utils/test-utils';
+import { fireEvent, renderWithRouter, wait, waitForElement, meta } from 'utils/test-utils';
 import search from './_search';
 import searchPage2 from './_searchPage2';
+
+const beforeAll = (times = 1) => {
+  const mockGet = jest.spyOn(axios, 'get');
+  mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
+  const mockPost = jest.spyOn(axios, 'post');
+  mockPost.mockReturnValueOnce(Promise.resolve({ data: search }));
+  mockPost.mockReturnValue(
+    Promise.resolve({
+      data: { count: 6538186, _shards: { total: 1, successful: 1, skipped: 0, failed: 0 } },
+    })
+  );
+  const render = renderWithRouter({
+    route: '/transactions',
+  });
+  // expect(mockGet).toHaveBeenCalledTimes(times);
+  // expect(mockGet).toHaveBeenLastCalledWith('https://elastic-aws.elrond.com/tps/_doc/meta', {
+  //   timeout: 3000,
+  // });
+  return render;
+};
 
 describe('Transactions Page', () => {
   test('Transactions page is displaying', () => {
@@ -13,33 +33,18 @@ describe('Transactions Page', () => {
   });
 
   test('Transactions data is displayed correctly', async () => {
-    const mockGet = jest.spyOn(axios, 'get');
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockReturnValueOnce(Promise.resolve({ data: search }));
-    mockPost.mockReturnValue(
-      Promise.resolve({
-        data: { count: 6538186, _shards: { total: 1, successful: 1, skipped: 0, failed: 0 } },
-      })
-    );
-
-    const { queryByTestId } = renderWithRouter({
-      route: '/transactions/page/1',
-    });
-
-    expect(mockGet).toHaveBeenCalledTimes(1);
-    expect(mockGet).toHaveBeenLastCalledWith('https://elastic-aws.elrond.com/tps/_doc/meta', {
-      timeout: 3000,
-    });
-
-    const pageInterval = await waitForElement(() => queryByTestId('pageInterval'));
+    const render = beforeAll();
+    const pageInterval = await waitForElement(() => render.queryByTestId('pageInterval'));
     expect(pageInterval!.innerHTML).toBe('1-50');
 
-    const table = queryByTestId('transactionsTable');
+    const table = render.queryByTestId('transactionsTable');
     const numberOfRows = table!.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
     expect(numberOfRows).toHaveLength(2);
   });
 
   test('Transactions pager working', async () => {
+    const mockGet = jest.spyOn(axios, 'get');
+    mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
     const mockPost = jest.spyOn(axios, 'post');
     mockPost.mockReturnValueOnce(Promise.resolve({ data: search }));
     mockPost.mockReturnValueOnce(
@@ -64,38 +69,14 @@ describe('Transactions Page', () => {
     const pageInterval = await waitForElement(() => queryByTestId('pageInterval'));
     expect(pageInterval!.innerHTML).toBe('1-50');
   });
-
-  test('Transactions errorScreen showing', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockRejectedValue(new Error('transaction error'));
-
-    const render = renderWithRouter({
-      route: '/transactions/page/1',
-    });
-
-    // await wait(async () => {
-    const errorScreen = await render.findByTestId('errorScreen');
-    expect(errorScreen).toBeInTheDocument();
-    // });
-  });
 });
 
 describe('Transactions Page Links', () => {
   test('Transaction link', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockReturnValueOnce(Promise.resolve({ data: search }));
-    mockPost.mockReturnValue(
-      Promise.resolve({
-        data: { count: 6538186, _shards: { total: 1, successful: 1, skipped: 0, failed: 0 } },
-      })
-    );
-
-    const render = renderWithRouter({
-      route: '/transactions',
-    });
+    const render = beforeAll();
 
     const links = await render.findAllByTestId('transactionLink');
-    expect(links[0].textContent).toBe('e4cb2e0faaca38982...');
+    expect(links[0].textContent).toBe('86a1ecbfbdf802692...');
 
     fireEvent.click(links[0]);
     await wait(async () => {
@@ -103,17 +84,7 @@ describe('Transactions Page Links', () => {
     });
   });
   test('Shard from link', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockReturnValueOnce(Promise.resolve({ data: search }));
-    mockPost.mockReturnValue(
-      Promise.resolve({
-        data: { count: 6538186, _shards: { total: 1, successful: 1, skipped: 0, failed: 0 } },
-      })
-    );
-
-    const render = renderWithRouter({
-      route: '/transactions',
-    });
+    const render = beforeAll();
 
     const links = await render.findAllByTestId('shardFromLink');
     expect(links[0].textContent).toBe('Shard 4');
@@ -124,17 +95,7 @@ describe('Transactions Page Links', () => {
     });
   });
   test('Shard to link', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockReturnValueOnce(Promise.resolve({ data: search }));
-    mockPost.mockReturnValue(
-      Promise.resolve({
-        data: { count: 6538186, _shards: { total: 1, successful: 1, skipped: 0, failed: 0 } },
-      })
-    );
-
-    const render = renderWithRouter({
-      route: '/transactions',
-    });
+    const render = beforeAll();
 
     const links = await render.findAllByTestId('shardToLink');
     expect(links[0].textContent).toBe('Shard 2');
@@ -145,17 +106,7 @@ describe('Transactions Page Links', () => {
     });
   });
   test('Receiver link', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockReturnValueOnce(Promise.resolve({ data: search }));
-    mockPost.mockReturnValue(
-      Promise.resolve({
-        data: { count: 6538186, _shards: { total: 1, successful: 1, skipped: 0, failed: 0 } },
-      })
-    );
-
-    const render = renderWithRouter({
-      route: '/transactions',
-    });
+    const render = beforeAll();
 
     const links = await render.findAllByTestId('receiverLink');
     expect(links[0].textContent).toBe('f03c105f05dc...08260085333a');

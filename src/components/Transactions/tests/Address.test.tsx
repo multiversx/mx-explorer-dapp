@@ -51,15 +51,17 @@ describe('Address', () => {
     expect(loader).toBeDefined();
   });
 
-  //   test('Transactions errorScreen showing', async () => {
-  //     const mockPost = jest.spyOn(axios, 'post');
-  //     mockPost.mockReturnValue(Promise.resolve({ data: errorResponse }));
+  test('Transactions errorScreen showing', async () => {
+    const mockGet = jest.spyOn(axios, 'get');
+    mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
+    const mockPost = jest.spyOn(axios, 'post');
+    mockPost.mockRejectedValue(new Error('transaction error'));
 
-  //     const { queryByTestId } = renderWithRouter({
-  //       route: '/transactions/page/1',
-  //     });
+    const render = renderWithRouter({
+      route: '/transactions/page/1',
+    });
 
-  //     const errorScreen = await waitForElement(() => queryByTestId('errorScreen'));
-  //     expect(errorScreen).toBeInTheDocument();
-  //   });
+    const errorScreen = await render.findByTestId('errorScreen');
+    expect(errorScreen).toBeInTheDocument();
+  });
 });

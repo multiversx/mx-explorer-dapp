@@ -17,7 +17,7 @@ describe('Validators', () => {
   test('Validators page is displaying', async () => {
     const render = goToValidatorsPage();
     await wait(async () => {
-      expect(document.title).toEqual('Validators • Elrond Explorer');
+      expect(document.title).toEqual('Validators Nodes • Elrond Explorer');
       expect(render.queryByTestId('title')!.innerHTML).toBe('Validators');
     });
   });
@@ -32,7 +32,7 @@ describe('Validators', () => {
   test('Validators page failed state', async () => {
     const mockGet = jest.spyOn(axios, 'get');
     mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
-    mockGet.mockRejectedValueOnce(new Error('heartbeatstatus error'));
+    mockGet.mockRejectedValue(new Error('heartbeatstatus error'));
 
     const render = renderWithRouter({
       route: '/validators/nodes',
