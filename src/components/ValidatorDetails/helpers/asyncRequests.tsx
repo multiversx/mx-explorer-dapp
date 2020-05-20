@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getShardId, getUptimeDowntime } from './../../../helpers';
+import { validatorFunctions } from 'helpers';
 import { BlockType } from './../../Blocks';
 import { ValidatorType } from './../../Validators';
 import { getPeerType } from './../../Validators/helpers/validatorHelpers';
@@ -43,116 +43,13 @@ function getBlocks(response: any) {
   };
 }
 
-interface GetRoundsType {
-  elasticUrl: string;
-  shardNumber: number;
-  signersIndex: number;
-  timeout: number;
-  roundAtEpochStart: number;
-  epoch: number;
-}
-
-export async function getRounds({
-  elasticUrl,
-  shardNumber,
-  signersIndex,
-  timeout,
-  roundAtEpochStart: round,
-}: GetRoundsType) {
-  try {
-    const resp = await axios.post(
-      `${elasticUrl}/rounds/_search`,
-      {
-        query: {
-          bool: {
-            must: [
-              {
-                match: {
-                  shardId: shardNumber,
-                },
-              },
-              {
-                match: {
-                  signersIndexes: signersIndex,
-                },
-              },
-              {
-                range: {
-                  round: {
-                    gte: round,
-                  },
-                },
-              },
-            ],
-          },
-        },
-        sort: {
-          timestamp: {
-            order: 'desc',
-          },
-        },
-        from: 0,
-        size: 100,
-      },
-      {
-        timeout,
-      }
-    );
-
-    const rounds = resp.data.hits.hits.map((round: any) => ({
-      key: round._id,
-      value: round._source.blockWasProposed,
-    }));
-    return {
-      rounds,
-      roundsFetched: rounds.length > 0,
-    };
-  } catch {
-    if (process.env.NODE_ENV !== 'test') {
-      console.error('Failed rounds');
-    }
-    return {
-      rounds: [],
-      roundsFetched: false,
-    };
-  }
-}
-
-interface GetEpochType {
-  nodeUrl: string;
-  shardNumber: number;
-  timeout: number;
-}
-
-export async function getEpoch({ nodeUrl, shardNumber, timeout }: GetEpochType) {
-  try {
-    const {
-      data: { message },
-    } = await axios.get(`${nodeUrl}/node/epoch/${shardNumber}`, {
-      timeout,
-    });
-
-    return {
-      epoch: message.epochData.erd_epoch_number,
-      roundAtEpochStart: message.epochData.erd_round_at_epoch_start,
-      epochSuccess: true,
-    };
-  } catch {
-    return {
-      epoch: 0,
-      roundAtEpochStart: 0,
-      epochSuccess: false,
-    };
-  }
-}
-
 export async function searchBlocks({
   elasticUrl,
   shardNumber,
   signersIndex,
   timeout,
   epoch,
-}: GetRoundsType) {
+}: validatorFunctions.GetRoundsType) {
   try {
     const response = await axios.post(
       `${elasticUrl}/blocks/_search`,
@@ -227,7 +124,10 @@ export async function getValidator({
       .filter((validator: ValidatorType) => validator.publicKey === publicKey)
       .pop();
 
-    const { shardId, shardNumber } = getShardId(currentValidator, metaChainShardId);
+    const { shardId, shardNumber } = validatorFunctions.getShardId(
+      currentValidator,
+      metaChainShardId
+    );
 
     const { versionNumber, isActive, nodeDisplayName, publicKeyBlockSign } = currentValidator;
 
@@ -236,7 +136,7 @@ export async function getValidator({
       totalUpTimePercentege,
       totalUpTimeLabel,
       totalDownTimeLabel,
-    } = getUptimeDowntime(currentValidator);
+    } = validatorFunctions.getUptimeDowntime(currentValidator);
 
     const isValidator =
       currentValidator.isValidator ||
@@ -249,7 +149,7 @@ export async function getValidator({
     const instanceType = isValidator ? `Validator (${peerType})` : 'Observer';
 
     if (isValidator) {
-      const { epoch, roundAtEpochStart } = await getEpoch({
+      const { epoch, roundAtEpochStart } = await validatorFunctions.getEpoch({
         nodeUrl,
         shardNumber,
         timeout,

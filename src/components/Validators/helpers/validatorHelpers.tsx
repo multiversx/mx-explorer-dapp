@@ -1,4 +1,4 @@
-import { getShardId } from './../../../helpers';
+import { validatorFunctions } from 'helpers';
 import { ShardDataType, ValidatorType } from './../index';
 
 export interface ValidatorStatisticsData {
@@ -36,7 +36,10 @@ export function populateValidatorsTable({
   const validatorsAndObservers: ValidatorType[] = [];
 
   data.forEach((validator: ValidatorType, i) => {
-    const { shardId, shardNumber, star } = getShardId(validator, metaChainShardId);
+    const { shardId, shardNumber, star } = validatorFunctions.getShardId(
+      validator,
+      metaChainShardId
+    );
 
     const statisticsHasValidatorHash =
       statistics !== undefined &&
