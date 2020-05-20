@@ -13,7 +13,6 @@ const Rounds = ({ rounds, roundsFetched }: { rounds: RoundType[]; roundsFetched:
     <div data-testid="roundsContainer">
       <div className="mt-4">
         <h4>Last Consensus Rounds</h4>
-        {rounds.length === 0 ? 'unu' : 'doi'}
       </div>
       {roundsFetched ? (
         <div className="card" style={{ height: 'auto' }}>
