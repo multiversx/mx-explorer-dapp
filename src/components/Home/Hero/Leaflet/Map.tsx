@@ -22,6 +22,14 @@ export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDi
   const attr =
     '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
 
+  const style = {
+    dangerouslySetInnerHTML: {
+      __html: `.leader-marker {
+        z-index: ${markers.length + 1000} !important;
+      }`,
+    },
+  };
+
   return (
     <Map
       zoomControl={false}
@@ -30,6 +38,7 @@ export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDi
       maxZoom={13}
       style={{ height: '100%', width: '100%' }}
     >
+      <style {...style} />
       <TileLayer attribution={attr} url={tiles} style />
       {groupedCities.map(({ items, value }: any, i: number) => {
         const { lat, lon } = items[0];
