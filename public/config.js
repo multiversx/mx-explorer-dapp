@@ -2,6 +2,11 @@ const CONFIG = {
   metaChainShardId: 4294967295,
   elrondApps: [
     {
+      id: 'main-site',
+      name: 'Main site',
+      to: 'https://elrond.com/',
+    },
+    {
       id: 'wallet',
       name: 'Wallet',
       to: 'https://wallet.elrond.com/',
