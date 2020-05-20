@@ -51,8 +51,7 @@
     "start": "react-app-rewired start",
     "start-wallet": "REACT_APP_WALLET=true react-app-rewired start",
     "build": "REACT_APP_CACHE_BUST=$(git describe --always) react-scripts build",
-    "test": "react-scripts test --testPathIgnorePatterns=src/WALLET",
-    "test-wallet": "REACT_APP_WALLET=true react-scripts test",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"
   },
