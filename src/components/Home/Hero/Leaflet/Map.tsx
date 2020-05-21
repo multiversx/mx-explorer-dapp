@@ -92,9 +92,18 @@ export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDi
       <Control position="bottomleft">
         <p className="text-white mb-0">Leaders</p>
         <ul className="list-unstyled text-white">
-          <li>Shard 1: {firstShardLeader ? firstShardLeader!.name : ''} </li>
-          <li>Shard 2: {secondShardLeader ? secondShardLeader!.name : ''} </li>
-          <li>Metachain: {metachainLeader ? metachainLeader!.name : ''} </li>
+          <li>
+            Shard 1:
+            {firstShardLeader ? ` ${firstShardLeader!.name}, ${firstShardLeader!.country}` : ''}
+          </li>
+          <li>
+            Shard 2:
+            {secondShardLeader ? ` ${secondShardLeader!.name}, ${secondShardLeader!.country}` : ''}
+          </li>
+          <li>
+            Metachain:
+            {metachainLeader ? ` ${metachainLeader!.name}, ${metachainLeader!.country}` : ''}
+          </li>
         </ul>
       </Control>
     </Map>

@@ -1,8 +1,8 @@
-import axios from 'axios';
+// import axios from 'axios';
 import { object, string, number, InferType } from 'yup';
 import markers from './markers';
 import { validatorFunctions, blockFunctions } from 'helpers';
-import { getBlocks } from './../../../../Blocks/helpers/asyncRequests';
+import { getBlocks } from 'components/Blocks/helpers/asyncRequests';
 
 interface GetMarkersType {
   timeout: number;
@@ -51,36 +51,36 @@ export interface GetBlocksType {
   timeout: number;
 }
 
-async function getNonceBlocks({ elasticUrl, nonce, timeout, shardId }: GetBlocksType) {
-  try {
-    const {
-      data: {
-        hits: { hits },
-      },
-    } = await axios.post(
-      `${elasticUrl}/blocks/_search`,
-      {
-        query: {
-          bool: {
-            must: [{ match: { nonce } }, { match: { shardId } }],
-          },
-        },
-        size: 1,
-      },
-      { timeout }
-    );
+// async function getNonceBlocks({ elasticUrl, nonce, timeout, shardId }: GetBlocksType) {
+//   try {
+//     const {
+//       data: {
+//         hits: { hits },
+//       },
+//     } = await axios.post(
+//       `${elasticUrl}/blocks/_search`,
+//       {
+//         query: {
+//           bool: {
+//             must: [{ match: { nonce } }, { match: { shardId } }],
+//           },
+//         },
+//         size: 1,
+//       },
+//       { timeout }
+//     );
 
-    if (hits[0]) {
-      return hits[0]._id;
-    }
-    return nonce;
-  } catch (err) {
-    return {
-      blocks: [],
-      blocksFetched: false,
-    };
-  }
-}
+//     if (hits[0]) {
+//       return hits[0]._id;
+//     }
+//     return nonce;
+//   } catch (err) {
+//     return {
+//       blocks: [],
+//       blocksFetched: false,
+//     };
+//   }
+// }
 
 interface GetShardLeaderType {
   nodeUrl: string;
@@ -89,43 +89,43 @@ interface GetShardLeaderType {
   shardNumber: number;
 }
 
-export const getShardLeader1 = async ({
-  nodeUrl,
-  timeout,
-  elasticUrl,
-  shardNumber,
-}: GetShardLeaderType) => {
-  const { epoch, roundAtEpochStart } = await validatorFunctions.getEpoch({
-    nodeUrl,
-    shardNumber,
-    timeout,
-  });
-  const props = {
-    elasticUrl,
-    timeout: Math.max(timeout, 10000),
-    shardNumber,
-    epoch,
-    roundAtEpochStart,
-    size: 1,
-  };
-  const { rounds } = await validatorFunctions.getRounds(props);
+// export const getShardLeader1 = async ({
+//   nodeUrl,
+//   timeout,
+//   elasticUrl,
+//   shardNumber,
+// }: GetShardLeaderType) => {
+//   const { epoch, roundAtEpochStart } = await validatorFunctions.getEpoch({
+//     nodeUrl,
+//     shardNumber,
+//     timeout,
+//   });
+//   const props = {
+//     elasticUrl,
+//     timeout: Math.max(timeout, 10000),
+//     shardNumber,
+//     epoch,
+//     roundAtEpochStart,
+//     size: 1,
+//   };
+//   const { rounds } = await validatorFunctions.getRounds(props);
 
-  const nonceString =
-    rounds[0].key.indexOf('_') > 0 ? rounds[0].key.split('_').pop() : rounds[0].key;
+//   const nonceString =
+//     rounds[0].key.indexOf('_') > 0 ? rounds[0].key.split('_').pop() : rounds[0].key;
 
-  const nonce = parseInt(nonceString || '-1');
-  // const firstProposedBlock = rounds.find({value} => round.value)
-  const blocks = await getNonceBlocks({
-    elasticUrl,
-    nonce /*: 92813*/,
-    timeout,
-    shardId: shardNumber,
-  });
+//   const nonce = parseInt(nonceString || '-1');
+//   // const firstProposedBlock = rounds.find({value} => round.value)
+//   const blocks = await getNonceBlocks({
+//     elasticUrl,
+//     nonce /*: 92813*/,
+//     timeout,
+//     shardId: shardNumber,
+//   });
 
-  // const data = await blockFunctions.getBlock({ elasticUrl, blockId, timeout });
+//   // const data = await blockFunctions.getBlock({ elasticUrl, blockId, timeout });
 
-  // console.log(data);
-};
+//   // console.log(data);
+// };
 
 export const getShardLeader = async ({
   nodeUrl,

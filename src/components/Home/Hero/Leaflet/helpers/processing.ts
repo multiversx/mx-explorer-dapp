@@ -4,6 +4,7 @@ import { MarkerType } from './asyncRequests';
 
 export interface MarkerPoint {
   name: string;
+  country: string;
   lat: number;
   lon: number;
   markerOffset: number;
@@ -72,6 +73,7 @@ export const processMarkers = (data: any) => {
           markerOffset: 0,
           ip: loc.ip,
           publicKey: loc.publicKey,
+          country: loc.country,
         };
       }
       return null;
