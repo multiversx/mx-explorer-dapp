@@ -14,7 +14,7 @@ const MapChart = () => {
     config: { metaChainShardId, explorerApi },
   } = useGlobalState();
 
-  const shardsArray = [1, 2, metaChainShardId];
+  const shardsArray = [1, 2, 3, 4, 5, 6, metaChainShardId];
 
   const fetchMarkers = () => {
     getMarkers({ timeout, explorerApi }).then(({ data }) => {
@@ -68,7 +68,14 @@ const MapChart = () => {
 
   React.useEffect(fetchLeaders, [timestamp, markers]);
 
-  return <Map markers={markers} leaders={leaders} metaChainShardId={metaChainShardId} />;
+  return (
+    <Map
+      markers={markers}
+      shardsArray={shardsArray}
+      leaders={leaders}
+      metaChainShardId={metaChainShardId}
+    />
+  );
 };
 
 export default MapChart;

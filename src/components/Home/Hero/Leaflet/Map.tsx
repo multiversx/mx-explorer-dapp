@@ -9,7 +9,12 @@ import Icon from './Icon';
 import Control from 'react-leaflet-control';
 import './leaflet.scss';
 
-export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDisplayType) {
+export default function MapDisplay({
+  markers,
+  leaders,
+  metaChainShardId,
+  shardsArray,
+}: MapDisplayType) {
   const state = {
     lat: 33,
     lng: -2,
@@ -32,10 +37,6 @@ export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDi
       }`,
     },
   });
-
-  const firstShardLeader = leaders.find(l => l.shard === 1);
-  const secondShardLeader = leaders.find(l => l.shard === 2);
-  const metachainLeader = leaders.find(l => l.shard === metaChainShardId);
 
   return (
     <Map
@@ -96,18 +97,16 @@ export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDi
           <FontAwesomeIcon icon={faMapMarker} /> <b>Leaders</b>
         </p>
         <ul className="list-unstyled text-white">
-          <li>
-            Shard 1:
-            {firstShardLeader ? ` ${firstShardLeader!.name}, ${firstShardLeader!.country}` : ''}
-          </li>
-          <li>
-            Shard 2:
-            {secondShardLeader ? ` ${secondShardLeader!.name}, ${secondShardLeader!.country}` : ''}
-          </li>
-          <li>
-            Metachain:
-            {metachainLeader ? ` ${metachainLeader!.name}, ${metachainLeader!.country}` : ''}
-          </li>
+          {shardsArray.map(shard => {
+            const shardName = shard === metaChainShardId ? 'Metachain' : `Shard ${shard}`;
+            const shardObj = leaders.find(l => l.shard === shard);
+            const shardLeader = shardObj ? ` ${shardObj!.name}, ${shardObj!.country}` : '';
+            return shardLeader ? (
+              <li key={shard}>
+                {shardName}: {shardLeader}
+              </li>
+            ) : null;
+          })}
         </ul>
       </Control>
     </Map>

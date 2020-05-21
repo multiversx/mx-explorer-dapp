@@ -17,6 +17,7 @@ export interface MapDisplayType {
   markers: MarkerPoint[];
   leaders: MarkerPoint[];
   metaChainShardId: number;
+  shardsArray: number[];
 }
 
 const getGroupedCities = (markers: MarkerPoint[]) => {
