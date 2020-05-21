@@ -8,7 +8,6 @@ export interface MarkerPoint {
   lat: number;
   lon: number;
   markerOffset: number;
-  ip: string;
   publicKey: string;
   shard?: number;
   offset?: number;
@@ -71,7 +70,6 @@ export const processMarkers = (data: any) => {
           lat,
           lon,
           markerOffset: 0,
-          ip: loc.ip,
           publicKey: loc.publicKey,
           country: loc.country,
         };
