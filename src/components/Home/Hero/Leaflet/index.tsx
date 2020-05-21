@@ -32,11 +32,24 @@ const MapChart = () => {
     ]).then(leadersArray => {
       const publicKeys = leadersArray.map(l => l.proposer);
       const leaderMarkers = markers.filter(marker => publicKeys.includes(marker.publicKey));
+
+      const offsets: Array<{ publicKey: string; name: string; offset: number }> = [];
+      leaderMarkers.forEach(leader => {
+        const occurences = offsets.map(offset => offset.name).filter(p => p === leader.name);
+
+        offsets.push({
+          name: leader.name,
+          publicKey: leader.publicKey,
+          offset: occurences.length > 0 ? -occurences.length - 3 : 0,
+        });
+      });
+
       const shardLeaders = leaderMarkers.map(leader => {
         const { shard } = leadersArray.find(l => l.proposer === leader.publicKey) || {};
         return {
           ...leader,
           shard,
+          offset: offsets.find(o => o.publicKey === leader.publicKey)!.offset || 0,
         };
       });
 

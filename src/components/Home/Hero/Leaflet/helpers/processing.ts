@@ -10,6 +10,7 @@ export interface MarkerPoint {
   ip: string;
   publicKey: string;
   shard?: number;
+  offset?: number;
 }
 
 export interface MapDisplayType {

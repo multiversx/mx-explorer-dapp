@@ -22,13 +22,13 @@ export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDi
   const attr =
     '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
 
-  const style = {
+  const style = (publicKey: string, offset = 0) => ({
     dangerouslySetInnerHTML: {
-      __html: `.leader-marker {
-        z-index: ${markers.length + 1000} !important;
+      __html: `.leader-marker-${publicKey} {
+        z-index: ${markers.length + offset + 1000} !important;
       }`,
     },
-  };
+  });
 
   return (
     <Map
@@ -38,7 +38,6 @@ export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDi
       maxZoom={13}
       style={{ height: '100%', width: '100%' }}
     >
-      <style {...style} />
       <TileLayer attribution={attr} url={tiles} style />
       {groupedCities.map(({ items, value }: any, i: number) => {
         const { lat, lon } = items[0];
@@ -60,6 +59,9 @@ export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDi
           </Marker>
         );
       })}
+      {leaders.map((leader, i) => (
+        <style {...style(leader.publicKey, leader.offset)} key={leader.name + i} />
+      ))}
       {leaders.map((leader, i) => {
         const iconName = leader.shard === metaChainShardId ? 'metachain' : leader.shard;
         return (
@@ -67,11 +69,11 @@ export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDi
             key={leader.name + i}
             position={new L.LatLng(leader.lat, leader.lon)}
             icon={L.icon({
-              iconUrl: require(`assets/img/markers/shard-${iconName}.png`),
-              iconRetinaUrl: require(`assets/img/markers/shard-${iconName}@2x.png`),
+              iconUrl: require(`assets/img/markers/shard-${iconName}.svg`),
+              // iconRetinaUrl: require(`assets/img/markers/shard-${iconName}@2x.png`),
               iconSize: [20, 24],
-              iconAnchor: [10, 24], // point of the icon which will correspond to marker's location
-              className: 'leader-marker',
+              iconAnchor: [10 + leader.offset!, 24], // point of the icon which will correspond to marker's location
+              className: `leader-marker-${leader.publicKey}`,
             })}
             onMouseOver={(e: any) => {
               e.target.openPopup();
