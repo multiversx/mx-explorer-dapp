@@ -1,8 +1,8 @@
 /* Last minute variables overrides (TODO: review these)
 -------------------------------------------------- */
 
-$blue: #0e8fe5;
-$link-color: #6db8ee;
+$blue: #1b46c2;
+$link-color: #6b8ffb;
 
 .bg-blue {
   // background-image: linear-gradient(150deg, #0baae9, #1851db);
@@ -884,11 +884,11 @@ svg[data-prefix='fas'] {
           }
 
           .bg-success {
-            background-color: #86c7f2 !important;
+            background-color: $link-color !important;
           }
 
           .bg-danger {
-            background-color: #0e8fe5 !important;
+            background-color: $blue !important;
           }
         }
 
