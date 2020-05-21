@@ -1,6 +1,6 @@
 import React from 'react';
 import Map from './Map';
-import { getMarkers, getShardLeader } from './helpers/asyncRequests';
+import { getMarkers, getLeaders } from './helpers/asyncRequests';
 import { useGlobalState } from 'context';
 import { MarkerPoint, processMarkers } from './helpers/processing';
 
@@ -10,27 +10,24 @@ const MapChart = () => {
 
   const {
     timeout,
-    activeTestnet: { nodeUrl, elasticUrl },
     refresh: { timestamp },
-    config: { metaChainShardId },
+    config: { metaChainShardId, explorerApi },
   } = useGlobalState();
 
+  const shardsArray = [1, 2, metaChainShardId];
+
   const fetchMarkers = () => {
-    getMarkers({ timeout }).then((data: any) => {
+    getMarkers({ timeout, explorerApi }).then(({ data }) => {
       const markersArray = processMarkers(data);
       setMarkers(markersArray as MarkerPoint[]);
     });
-    getLeaders();
+    fetchLeaders();
   };
   React.useEffect(fetchMarkers, []);
 
-  const getLeaders = () => {
+  const fetchLeaders = () => {
     if (markers.length > 0) {
-      Promise.all([
-        getShardLeader({ timeout, nodeUrl, elasticUrl, shardNumber: 1 }),
-        getShardLeader({ timeout, nodeUrl, elasticUrl, shardNumber: 2 }),
-        getShardLeader({ timeout, nodeUrl, elasticUrl, shardNumber: metaChainShardId }),
-      ]).then(leadersArray => {
+      getLeaders({ timeout, explorerApi, shardsArray }).then(leadersArray => {
         const publicKeys = leadersArray.map(l => l.proposer);
         const leaderMarkers = markers.filter(marker => publicKeys.includes(marker.publicKey));
 
@@ -69,7 +66,7 @@ const MapChart = () => {
     }
   };
 
-  React.useEffect(getLeaders, [timestamp, markers]);
+  React.useEffect(fetchLeaders, [timestamp, markers]);
 
   return <Map markers={markers} leaders={leaders} metaChainShardId={metaChainShardId} />;
 };

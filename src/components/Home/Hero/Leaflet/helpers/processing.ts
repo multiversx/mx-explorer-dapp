@@ -29,7 +29,6 @@ const getGroupedCities = (markers: MarkerPoint[]) => {
 
 const maxLineLength = 20;
 const lineLen = (x: number, max: number) => (maxLineLength * Math.log(x + 15)) / Math.log(max + 15);
-// let events = [1, 48, 3, 8, 12, 45, 5, 72, 32, 2, 6, 4, 28, 153];
 const getRadius = (groupedCities: Array<{ items: number[] }>) => {
   const totalNodesArray = groupedCities.map((city: any) => city.items.length);
   const uniqueTotalNodes = [...new (Set as any)(totalNodesArray)];
@@ -60,6 +59,7 @@ export const processMarkers = (data: any) => {
     ...data[id],
     publicKey: id,
   }));
+
   const markersArray = locationsArray
     .map(loc => {
       const lat = parseFloat(loc.loc.split(',')[0]);
