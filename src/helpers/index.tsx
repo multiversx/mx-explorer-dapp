@@ -6,7 +6,8 @@ import sizeFormat from './sizeFormat';
 import testnetRoute from './testnetRoute';
 import trimHash from './trimHash';
 import truncate from './truncate';
-import { getShardId, getUptimeDowntime } from './validatorFunctions';
+import * as validatorFunctions from './validatorFunctions';
+import * as blockFunctions from './blockFunctions';
 
 export {
   truncate,
@@ -16,7 +17,7 @@ export {
   addressIsBach32,
   testnetRoute,
   copyToClipboard,
-  getShardId,
-  getUptimeDowntime,
   trimHash,
+  validatorFunctions,
+  blockFunctions,
 };

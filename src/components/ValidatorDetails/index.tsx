@@ -6,7 +6,8 @@ import { useGlobalState } from '../../context';
 import { BlocksTable, Loader } from '../../sharedComponents';
 import { getValidatorStatistics } from './../Validators/helpers/asyncRequests';
 import { ValidatorStatisticsData } from './../Validators/helpers/validatorHelpers';
-import { getRounds, getValidator, searchBlocks } from './helpers/asyncRequests';
+import { getValidator, searchBlocks } from './helpers/asyncRequests';
+import { validatorFunctions } from 'helpers';
 import NetworkMetrics, { NetworkMetricsType } from './NetworkMetrics';
 import NodeInformation, { NodeInformationType } from './NodeInformation';
 import Rounds from './Rounds';
@@ -61,7 +62,10 @@ const ValidatorDetails = () => {
     endBlockNr: 0,
     blocksFetched: true,
   });
-  const [rounds, setRounds] = React.useState({ rounds: [], roundsFetched: true });
+  const [rounds, setRounds] = React.useState<validatorFunctions.GetRoundsReturnType>({
+    rounds: [],
+    roundsFetched: true,
+  });
   const [success, setSuccess] = React.useState(true);
 
   React.useEffect(() => {
@@ -84,7 +88,7 @@ const ValidatorDetails = () => {
             epoch,
             roundAtEpochStart,
           };
-          getRounds(props).then(({ rounds, roundsFetched }) => {
+          validatorFunctions.getRounds(props).then(({ rounds, roundsFetched }) => {
             setRounds({ rounds, roundsFetched });
           });
           if (validatorStatistics) {

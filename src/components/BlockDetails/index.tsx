@@ -3,11 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
-import { useGlobalState } from '../../context';
-import { isHash, dateFormatted, sizeFormat, testnetRoute, truncate } from '../../helpers';
-import { Loader, ShardSpan, TestnetLink, TimeAgo } from '../../sharedComponents';
+import { useGlobalState } from 'context';
+import { isHash, dateFormatted, sizeFormat, testnetRoute, truncate, blockFunctions } from 'helpers';
+import { Loader, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { BlockType } from '../Blocks';
-import { getBlock } from './helpers/asyncRequests';
 
 export interface StateType {
   block: BlockType;
@@ -16,31 +15,6 @@ export interface StateType {
   nextHash: string;
   blockFetched: boolean;
 }
-
-export const initialState = {
-  block: {
-    hash: '',
-    nonce: 0,
-    epoch: 0,
-    prevHash: '',
-    proposer: 0,
-    pubKeyBitmap: '',
-    round: 0,
-    shardId: 0,
-    size: 0,
-    sizeTxs: 0,
-    stateRootHash: '',
-    timestamp: 0,
-    txCount: 0,
-    validators: [],
-    miniBlocksHashes: [],
-    notarizedBlocksHashes: [],
-  },
-  proposer: '',
-  consensusItems: [],
-  nextHash: '',
-  blockFetched: true,
-};
 
 const BlockDetails: React.FC = () => {
   const { hash: blockId } = useParams();
@@ -55,7 +29,7 @@ const BlockDetails: React.FC = () => {
     config: { metaChainShardId },
   } = useGlobalState();
 
-  const [state, setState] = React.useState<StateType>(initialState);
+  const [state, setState] = React.useState<StateType>(blockFunctions.initialState);
 
   if (blockId && !isHash(blockId)) {
     history.push(testnetRoute({ to: `/not-found`, activeTestnetId }));
@@ -63,9 +37,9 @@ const BlockDetails: React.FC = () => {
 
   React.useEffect(() => {
     if (blockId) {
-      getBlock({ elasticUrl, blockId, timeout }).then(
-        data => ref.current !== null && setState(data)
-      );
+      blockFunctions
+        .getBlock({ elasticUrl, blockId, timeout })
+        .then(data => ref.current !== null && setState(data));
     }
   }, [elasticUrl, blockId, timeout]); // run the operation only once since the parameter does not change
 

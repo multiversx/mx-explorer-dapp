@@ -1,5 +1,29 @@
 import axios from 'axios';
-import { initialState } from './../index';
+
+export const initialState = {
+  block: {
+    hash: '',
+    nonce: 0,
+    epoch: 0,
+    prevHash: '',
+    proposer: 0,
+    pubKeyBitmap: '',
+    round: 0,
+    shardId: 0,
+    size: 0,
+    sizeTxs: 0,
+    stateRootHash: '',
+    timestamp: 0,
+    txCount: 0,
+    validators: [],
+    miniBlocksHashes: [],
+    notarizedBlocksHashes: [],
+  },
+  proposer: '',
+  consensusItems: [],
+  nextHash: '',
+  blockFetched: true,
+};
 
 interface GetBlocksType {
   elasticUrl: string;

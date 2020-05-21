@@ -77,13 +77,11 @@ export default function ExplorerNavbar({
           )}
         </Nav>
         <Nav className="ml-auto">
-          {!['/', `/${activeTestnetId}`, `/${activeTestnetId}/`].includes(pathname) && (
-            <div className="form-inline py-sm-2" role="search">
-              <div className="input-group input-group-seamless" style={{ maxWidth: '18rem' }}>
-                <Search />
-              </div>
+          <div className="form-inline py-sm-2" role="search">
+            <div className="input-group input-group-seamless" style={{ maxWidth: '18rem' }}>
+              <Search />
             </div>
-          )}
+          </div>
         </Nav>
         <Nav className="testnetSwithcerNav">
           <TestnetSwitcher onToggle={onToggle} />

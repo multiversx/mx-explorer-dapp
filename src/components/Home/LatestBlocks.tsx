@@ -1,9 +1,9 @@
 import { faCube } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
-import { useGlobalState } from '../../context';
-import { dateFormatted, trimHash } from './../../helpers';
-import { ShardSpan, TestnetLink, TimeAgo } from './../../sharedComponents';
+import { useGlobalState } from 'context';
+import { dateFormatted, trimHash } from 'helpers';
+import { ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { BlockType } from './../Blocks';
 import { getBlocks } from './helpers/asyncRequests';
 

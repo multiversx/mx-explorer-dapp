@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const PageNotFound = () => {
-  let { pathname } = useLocation();
+  const { pathname } = useLocation();
   return (
     <div className="container pt-3 pb-3">
       <div className="row">

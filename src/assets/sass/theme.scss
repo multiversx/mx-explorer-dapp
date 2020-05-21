@@ -1,13 +1,22 @@
 /* Last minute variables overrides (TODO: review these)
 -------------------------------------------------- */
 
-$blue: #0e8fe5;
-$link-color: #6db8ee;
+$blue: #1b46c2;
+$link-color: #6b8ffb;
 
 .bg-blue {
-  background-image: linear-gradient(150deg, #0baae9, #1851db);
+  // background-image: linear-gradient(150deg, #0baae9, #1851db);
+  background-color: #1b46c2 !important;
   // background-image: linear-gradient(150deg,lighten($blue,20%),$blue);
   background-repeat: repeat-x;
+}
+
+.bg-black {
+  background-color: #000;
+}
+
+.leaflet-container {
+  background-color: transparent;
 }
 
 $google-fonts-import: 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,600|Roboto+Mono' !default; // Includes: Poppins: Light, Regular, Medium, Semi-bold; Roboto Mono: Regular
@@ -438,7 +447,7 @@ main .form-search .form-control:focus {
 }
 
 .canvas {
-  height: 175px;
+  height: 450px;
 }
 
 /* Last minute TODO: review;
@@ -792,8 +801,8 @@ svg[data-prefix='fas'] {
   background-color: lighten(#999999, 35);
 
   .shard-icon {
-    color: #d1d4d8!important;
-    width: 0.8571rem!important;
+    color: #d1d4d8 !important;
+    width: 0.8571rem !important;
     height: auto;
   }
 }
@@ -821,7 +830,9 @@ svg[data-prefix='fas'] {
 -------------------------------------------------- */
 .branded-validators {
   table {
-    .w-10 { width: 10% }
+    .w-10 {
+      width: 10%;
+    }
 
     .th-details,
     .th-rank {
@@ -837,7 +848,7 @@ svg[data-prefix='fas'] {
 
       &:first-child {
         .progress-bar {
-          min-width: auto!important;
+          min-width: auto !important;
         }
       }
 
@@ -873,11 +884,11 @@ svg[data-prefix='fas'] {
           }
 
           .bg-success {
-            background-color: #86C7F2 !important;
+            background-color: $link-color !important;
           }
 
           .bg-danger {
-            background-color: #0E8FE5 !important;
+            background-color: $blue !important;
           }
         }
 
@@ -892,7 +903,7 @@ svg[data-prefix='fas'] {
     }
 
     $detailsTableBgColor: rgba(0, 0, 0, 0.075);
-    
+
     .details-tr {
       background-color: $detailsTableBgColor;
 
@@ -912,13 +923,13 @@ svg[data-prefix='fas'] {
         }
 
         tr {
-          background-color:$detailsTableBgColor;
+          background-color: $detailsTableBgColor;
           color: #5a6169;
         }
       }
 
       &.collapsed {
-        td { 
+        td {
           border-top: 0;
 
           .content {

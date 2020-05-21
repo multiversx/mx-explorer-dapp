@@ -2,13 +2,9 @@ import { faCogs } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { validatorFunctions } from 'helpers';
 
-interface RoundType {
-  key: string;
-  value: string;
-}
-
-const Rounds = ({ rounds, roundsFetched }: { rounds: RoundType[]; roundsFetched: boolean }) => {
+const Rounds = ({ rounds, roundsFetched }: validatorFunctions.GetRoundsReturnType) => {
   return (
     <div data-testid="roundsContainer">
       <div className="mt-4">
