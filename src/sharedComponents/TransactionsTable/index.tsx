@@ -7,6 +7,7 @@ export interface TransactionType {
   data: string;
   gasLimit: number;
   gasPrice: number;
+  gasUsed: number;
   hash: string;
   miniBlockHash: string;
   nonce: number;
