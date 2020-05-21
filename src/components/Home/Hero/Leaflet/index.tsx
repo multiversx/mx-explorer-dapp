@@ -14,7 +14,7 @@ const MapChart = () => {
     config: { metaChainShardId, explorerApi },
   } = useGlobalState();
 
-  const shardsArray = [1, 2, 3, 4, 5, 6, metaChainShardId];
+  const shardsArray = [0, 1, 2, 3, 4, 5, metaChainShardId];
 
   const fetchMarkers = () => {
     getMarkers({ timeout, explorerApi }).then(({ data }) => {
