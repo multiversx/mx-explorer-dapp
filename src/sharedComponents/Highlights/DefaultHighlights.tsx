@@ -54,7 +54,7 @@ const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
             </div>
           </div>
         </li>
-        <li className="mt-4 mb-4">
+        <li className="mt-4 mb-4 pr-1 mr-sm-0">
           <div className="media">
             <span className="highlight-icon">
               <FontAwesomeIcon icon={faChartBar} />
