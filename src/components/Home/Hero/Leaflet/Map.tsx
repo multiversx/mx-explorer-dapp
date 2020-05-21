@@ -1,7 +1,9 @@
 import React from 'react';
 import L from 'leaflet';
-import { Map, Marker, Popup, TileLayer, MapControl } from 'react-leaflet';
+import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import { faMapMarker } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MapDisplayType, getRadius, getGroupedCities } from './helpers/processing';
 import Icon from './Icon';
 import Control from 'react-leaflet-control';
@@ -90,7 +92,9 @@ export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDi
         );
       })}
       <Control position="bottomleft">
-        <p className="text-white mb-0">Leaders</p>
+        <p className="text-white mb-0">
+          <FontAwesomeIcon icon={faMapMarker} /> <b>Leaders</b>
+        </p>
         <ul className="list-unstyled text-white">
           <li>
             Shard 1:
