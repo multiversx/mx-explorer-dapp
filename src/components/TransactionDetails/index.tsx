@@ -5,6 +5,8 @@ import {
   faHourglass,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BigNumber from 'bignumber.js';
+import Web3 from 'web3';
 import { useGlobalState } from 'context';
 import { addressIsBach32, dateFormatted } from 'helpers';
 import * as React from 'react';
@@ -19,6 +21,14 @@ import {
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import { getTransaction } from './helpers/asyncRequests';
+
+const getFee = (transaction: TransactionType) => {
+  const web3 = new Web3();
+  const bNgasPrice = new BigNumber(transaction.gasPrice);
+  const bNgasLimit = new BigNumber(transaction.gasLimit);
+  const output = web3.utils.toBN(bNgasPrice.times(bNgasLimit) as any).toString(10);
+  return output;
+};
 
 const TransactionDetails: React.FC = () => {
   const { hash: transactionId } = useParams();
@@ -163,6 +173,13 @@ const TransactionDetails: React.FC = () => {
                       </div>
                       <hr className="hr-space" />
                       <div className="row">
+                        <div className="col-lg-2 card-label">Fee</div>
+                        <div className="col-lg-10">
+                          <Denominate value={getFee(transaction)} showLastNonZeroDecimal />
+                        </div>
+                      </div>
+                      {/* <hr className="hr-space" />
+                      <div className="row">
                         <div className="col-lg-2 card-label">Gas Price</div>
                         <div className="col-lg-10">
                           <Denominate
@@ -180,7 +197,7 @@ const TransactionDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">Gas Used</div>
                         <div className="col-lg-10">{transaction.gasUsed.toLocaleString('en')}</div>
-                      </div>
+                      </div> */}
                       <hr className="hr-space" />
                       <div className="row">
                         <div className="col-lg-2 card-label">Nonce</div>
