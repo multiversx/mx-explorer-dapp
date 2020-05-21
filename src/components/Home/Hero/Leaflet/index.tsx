@@ -25,36 +25,48 @@ const MapChart = () => {
   React.useEffect(fetchMarkers, []);
 
   const getLeaders = () => {
-    Promise.all([
-      getShardLeader({ timeout, nodeUrl, elasticUrl, shardNumber: 1 }),
-      getShardLeader({ timeout, nodeUrl, elasticUrl, shardNumber: 2 }),
-      getShardLeader({ timeout, nodeUrl, elasticUrl, shardNumber: metaChainShardId }),
-    ]).then(leadersArray => {
-      const publicKeys = leadersArray.map(l => l.proposer);
-      const leaderMarkers = markers.filter(marker => publicKeys.includes(marker.publicKey));
+    if (markers.length > 0) {
+      Promise.all([
+        getShardLeader({ timeout, nodeUrl, elasticUrl, shardNumber: 1 }),
+        getShardLeader({ timeout, nodeUrl, elasticUrl, shardNumber: 2 }),
+        getShardLeader({ timeout, nodeUrl, elasticUrl, shardNumber: metaChainShardId }),
+      ]).then(leadersArray => {
+        const publicKeys = leadersArray.map(l => l.proposer);
+        const leaderMarkers = markers.filter(marker => publicKeys.includes(marker.publicKey));
 
-      const offsets: Array<{ publicKey: string; name: string; offset: number }> = [];
-      leaderMarkers.forEach(leader => {
-        const occurences = offsets.map(offset => offset.name).filter(p => p === leader.name);
+        const offsets: Array<{ publicKey: string; name: string; offset: number }> = [];
+        leaderMarkers.forEach(leader => {
+          const occurences = offsets.map(offset => offset.name).filter(p => p === leader.name);
 
-        offsets.push({
-          name: leader.name,
-          publicKey: leader.publicKey,
-          offset: occurences.length > 0 ? -occurences.length - 3 : 0,
+          offsets.push({
+            name: leader.name,
+            publicKey: leader.publicKey,
+            offset: occurences.length > 0 ? -occurences.length - 3 : 0,
+          });
         });
-      });
 
-      const shardLeaders = leaderMarkers.map(leader => {
-        const { shard } = leadersArray.find(l => l.proposer === leader.publicKey) || {};
-        return {
-          ...leader,
-          shard,
-          offset: offsets.find(o => o.publicKey === leader.publicKey)!.offset || 0,
-        };
-      });
+        const shardLeaders = leaderMarkers.map(leader => {
+          const { shard } = leadersArray.find(l => l.proposer === leader.publicKey) || {};
+          return {
+            ...leader,
+            shard,
+            offset: offsets.find(o => o.publicKey === leader.publicKey)!.offset || 0,
+          };
+        });
 
-      setLeaders(shardLeaders);
-    });
+        if (setLeaders.length < 3) {
+          const distinctShards = shardLeaders
+            .map(l => l.shard)
+            .filter((value, index, self) => self.indexOf(value) === index);
+          setLeaders(currentLeaders => [
+            ...currentLeaders.filter(l => !distinctShards.includes(l.shard)),
+            ...shardLeaders,
+          ]);
+        } else {
+          setLeaders(shardLeaders);
+        }
+      });
+    }
   };
 
   React.useEffect(getLeaders, [timestamp, markers]);

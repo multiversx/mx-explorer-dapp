@@ -1,9 +1,10 @@
 import React from 'react';
 import L from 'leaflet';
-import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
+import { Map, Marker, Popup, TileLayer, MapControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MapDisplayType, getRadius, getGroupedCities } from './helpers/processing';
 import Icon from './Icon';
+import Control from 'react-leaflet-control';
 import './leaflet.scss';
 
 export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDisplayType) {
@@ -30,6 +31,10 @@ export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDi
     },
   });
 
+  const firstShardLeader = leaders.find(l => l.shard === 1);
+  const secondShardLeader = leaders.find(l => l.shard === 2);
+  const metachainLeader = leaders.find(l => l.shard === metaChainShardId);
+
   return (
     <Map
       zoomControl={false}
@@ -39,6 +44,7 @@ export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDi
       style={{ height: '100%', width: '100%' }}
     >
       <TileLayer attribution={attr} url={tiles} style />
+
       {groupedCities.map(({ items, value }: any, i: number) => {
         const { lat, lon } = items[0];
         return (
@@ -70,9 +76,8 @@ export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDi
             position={new L.LatLng(leader.lat, leader.lon)}
             icon={L.icon({
               iconUrl: require(`assets/img/markers/shard-${iconName}.svg`),
-              // iconRetinaUrl: require(`assets/img/markers/shard-${iconName}@2x.png`),
               iconSize: [20, 24],
-              iconAnchor: [10 + leader.offset!, 24], // point of the icon which will correspond to marker's location
+              iconAnchor: [10 + leader.offset!, 24],
               className: `leader-marker-${leader.publicKey}`,
             })}
             onMouseOver={(e: any) => {
@@ -81,11 +86,17 @@ export default function MapDisplay({ markers, leaders, metaChainShardId }: MapDi
             onMouseOut={(e: any) => {
               e.target.closePopup();
             }}
-          >
-            {/* <Popup>{leader.name}</Popup> */}
-          </Marker>
+          />
         );
       })}
+      <Control position="bottomleft">
+        <p className="text-white mb-0">Leaders</p>
+        <ul className="list-unstyled text-white">
+          <li>Shard 1: {firstShardLeader ? firstShardLeader!.name : ''} </li>
+          <li>Shard 2: {secondShardLeader ? secondShardLeader!.name : ''} </li>
+          <li>Metachain: {metachainLeader ? metachainLeader!.name : ''} </li>
+        </ul>
+      </Control>
     </Map>
   );
 }
