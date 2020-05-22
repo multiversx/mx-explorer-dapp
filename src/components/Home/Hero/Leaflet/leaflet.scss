@@ -1,5 +1,8 @@
-$map-bg: #191a1a;
-$map-gray: #343332;
+// $map-water: #191a1a;
+// $map-land: #343332;
+
+$map-water: #262626;
+$map-land: #090909;
 
 .leaflet-marker-icon {
   height: 25px;
@@ -9,7 +12,7 @@ $map-gray: #343332;
 }
 
 .leaflet-div-icon {
-  border: 1px solid $map-gray;
+  border: 1px solid $map-land;
 }
 
 .leaflet-control-attribution {
@@ -20,13 +23,13 @@ $map-gray: #343332;
 }
 
 .leaflet-container {
-  background-color: $map-bg !important;
+  background-color: $map-water !important;
 }
 
 .leaflet-control p,
 .leaflet-control li {
-  text-shadow: -1px -1px 0 $map-gray, 1px -1px 0 $map-gray, -1px 1px 0 $map-gray,
-    1px 1px 0 $map-gray;
+  text-shadow: -1px -1px 0 $map-land, 1px -1px 0 $map-land, -1px 1px 0 $map-land,
+    1px 1px 0 $map-land;
   font-weight: 400;
 }
 

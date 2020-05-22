@@ -26,10 +26,14 @@ export default function MapDisplay({
 
   const radiusByCity = getRadius(groupedCities);
 
-  const tiles =
-    'https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=***REMOVED***';
+  // const tiles =
+  //   'https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=***REMOVED***';
+  // const attribution =
+  //   '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
+  const tiles = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
   const attribution =
-    '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
   const style = (publicKey: string, offset = 0) => ({
     dangerouslySetInnerHTML: {
