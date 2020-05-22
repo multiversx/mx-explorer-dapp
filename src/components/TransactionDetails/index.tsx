@@ -173,13 +173,6 @@ const TransactionDetails: React.FC = () => {
                       </div>
                       <hr className="hr-space" />
                       <div className="row">
-                        <div className="col-lg-2 card-label">Fee</div>
-                        <div className="col-lg-10">
-                          <Denominate value={getFee(transaction)} showLastNonZeroDecimal />
-                        </div>
-                      </div>
-                      {/* <hr className="hr-space" />
-                      <div className="row">
                         <div className="col-lg-2 card-label">Gas Price</div>
                         <div className="col-lg-10">
                           <Denominate
@@ -197,7 +190,7 @@ const TransactionDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">Gas Used</div>
                         <div className="col-lg-10">{transaction.gasUsed.toLocaleString('en')}</div>
-                      </div> */}
+                      </div>
                       <hr className="hr-space" />
                       <div className="row">
                         <div className="col-lg-2 card-label">Nonce</div>
