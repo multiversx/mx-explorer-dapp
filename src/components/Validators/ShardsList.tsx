@@ -1,15 +1,9 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faServer } from '@fortawesome/free-solid-svg-icons';
+import { ComputedShard } from './ValidatorsTable';
 
-interface ShardType {
-  shardID: string;
-  status: string;
-  allValidators: number;
-  allActiveValidators: number;
-}
-
-function generateCard(shardEntry: ShardType, isOverall?: boolean) {
+function generateCard(shardEntry: ComputedShard, isOverall?: boolean) {
   return (
     <div className="flex-grow-1 mr-3 mb-3 pb-3" key={shardEntry.shardID}>
       <div className={`card ${isOverall ? 'overall-card bg-blue' : ''}`}>
@@ -49,9 +43,15 @@ function generateCard(shardEntry: ShardType, isOverall?: boolean) {
   );
 }
 
-const ShardsList = ({ shardData }: { shardData: ShardType[] }) => {
-  const blockchainStatus: ShardType = {
+interface ShardsListType {
+  shardData: ComputedShard[];
+  disabledShards?: number[];
+}
+
+const ShardsList = ({ shardData, disabledShards }: ShardsListType) => {
+  const blockchainStatus: ComputedShard = {
     shardID: 'Active Validators',
+    shardNumber: -1,
     status: '',
     allValidators: shardData.reduce(
       (totalValidators, shardEntry) => totalValidators + shardEntry.allValidators,
@@ -67,7 +67,9 @@ const ShardsList = ({ shardData }: { shardData: ShardType[] }) => {
   return (
     <div className="row d-flex flex-row pl-3">
       {generateCard(blockchainStatus, true)}
-      {shardData.map(shardEntry => generateCard(shardEntry))}
+      {shardData
+        .filter(s => disabledShards !== undefined && !disabledShards.includes(s.shardNumber))
+        .map(shardEntry => generateCard(shardEntry))}
     </div>
   );
 };

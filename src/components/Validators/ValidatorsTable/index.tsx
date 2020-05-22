@@ -31,9 +31,13 @@ export interface SortType {
 
 export type ValidatorValueType = string;
 
-const ValidatorsTable = (
-  props: StateType & { validatorDetails: boolean; validatorStatistics: boolean }
-) => {
+interface ValidatorsTableType {
+  validatorDetails: boolean;
+  validatorStatistics: boolean;
+  disabledShards?: number[];
+}
+
+const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
   const initialSort: SortType = props.validatorStatistics
     ? { field: 'rating', dir: 'desc' }
     : { field: '', dir: 'none' };
@@ -142,7 +146,11 @@ const ValidatorsTable = (
                   hasWaitingValidators={hasWaitingValidators}
                   sortBy={resetPager(setSort)}
                   sort={sort}
-                  shardData={shardData}
+                  shardData={shardData.filter(
+                    s =>
+                      props.disabledShards !== undefined &&
+                      !props.disabledShards.includes(s.shardNumber)
+                  )}
                   shardValue={shardValue}
                   setShardValue={resetPager(setShardValue)}
                   statusValue={statusValue}
