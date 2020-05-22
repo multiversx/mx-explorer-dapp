@@ -16,9 +16,9 @@ export default function MapDisplay({
   shardsArray,
 }: MapDisplayType) {
   const state = {
-    lat: 33,
+    lat: 15,
     lng: -2,
-    zoom: 2.5,
+    zoom: 1.5,
   };
   const position: any = [state.lat, state.lng];
 
@@ -27,7 +27,7 @@ export default function MapDisplay({
   const radiusByCity = getRadius(groupedCities);
 
   const tiles = 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png';
-  const attr =
+  const attribution =
     '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
 
   const style = (publicKey: string, offset = 0) => ({
@@ -38,6 +38,13 @@ export default function MapDisplay({
     },
   });
 
+  const tileProps = {
+    attribution,
+    url: tiles,
+    style: true,
+    noWrap: true,
+  };
+
   return (
     <Map
       zoomControl={false}
@@ -46,7 +53,7 @@ export default function MapDisplay({
       maxZoom={13}
       style={{ height: '100%', width: '100%' }}
     >
-      <TileLayer attribution={attr} url={tiles} style />
+      <TileLayer {...tileProps} />
 
       {groupedCities.map(({ items, value }: any, i: number) => {
         const { lat, lon } = items[0];
