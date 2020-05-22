@@ -63,7 +63,7 @@ export default function MapDisplay({
             }}
           >
             <Popup>
-              {value}: {items.length} nodes
+              {value}: {`${items.length} node${items.length === 1 ? '' : 's'}`}
             </Popup>
           </Marker>
         );
