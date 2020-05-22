@@ -96,7 +96,7 @@ export default function MapDisplay({
         <p className="text-white mb-0">
           <FontAwesomeIcon icon={faMapMarker} /> <b>Leaders</b>
         </p>
-        <ul className="list-unstyled text-white">
+        <ul className="list-unstyled text-white leaflet-legend">
           {shardsArray.map(shard => {
             const shardName = shard === metaChainShardId ? 'Metachain' : `Shard ${shard}`;
             const shardObj = leaders.find(l => l.shard === shard);
