@@ -25,8 +25,8 @@ import { getTransaction } from './helpers/asyncRequests';
 const getFee = (transaction: TransactionType) => {
   const web3 = new Web3();
   const bNgasPrice = new BigNumber(transaction.gasPrice);
-  const bNgasLimit = new BigNumber(transaction.gasLimit);
-  const output = web3.utils.toBN(bNgasPrice.times(bNgasLimit) as any).toString(10);
+  const bNgasUsed = new BigNumber(transaction.gasUsed);
+  const output = web3.utils.toBN(bNgasPrice.times(bNgasUsed) as any).toString(10);
   return output;
 };
 
@@ -173,12 +173,9 @@ const TransactionDetails: React.FC = () => {
                       </div>
                       <hr className="hr-space" />
                       <div className="row">
-                        <div className="col-lg-2 card-label">Gas Price</div>
+                        <div className="col-lg-2 card-label">Transaction Fee</div>
                         <div className="col-lg-10">
-                          <Denominate
-                            value={transaction.gasPrice.toString()}
-                            showLastNonZeroDecimal
-                          />
+                          <Denominate value={getFee(transaction)} showLastNonZeroDecimal />
                         </div>
                       </div>
                       <hr className="hr-space" />
@@ -190,6 +187,16 @@ const TransactionDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">Gas Used</div>
                         <div className="col-lg-10">{transaction.gasUsed.toLocaleString('en')}</div>
+                      </div>
+                      <hr className="hr-space" />
+                      <div className="row">
+                        <div className="col-lg-2 card-label">Gas Price</div>
+                        <div className="col-lg-10">
+                          <Denominate
+                            value={transaction.gasPrice.toString()}
+                            showLastNonZeroDecimal
+                          />
+                        </div>
                       </div>
                       <hr className="hr-space" />
                       <div className="row">
