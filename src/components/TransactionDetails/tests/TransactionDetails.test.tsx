@@ -22,6 +22,7 @@ const doc = {
     senderShard: 3,
     gasPrice: 0,
     gasLimit: 0,
+    gasUsed: 0,
     data: '',
     signature: '',
     timestamp: 1579096326,
