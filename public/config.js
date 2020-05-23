@@ -69,7 +69,6 @@ const CONFIG = {
       validatorDetails: true,
       faucet: false,
       validatorStatistics: true,
-      disabledShards: [4],
     },
   ],
 };
