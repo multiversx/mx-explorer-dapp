@@ -45,10 +45,9 @@ function generateCard(shardEntry: ComputedShard, isOverall?: boolean) {
 
 interface ShardsListType {
   shardData: ComputedShard[];
-  disabledShards?: number[];
 }
 
-const ShardsList = ({ shardData, disabledShards }: ShardsListType) => {
+const ShardsList = ({ shardData }: ShardsListType) => {
   const blockchainStatus: ComputedShard = {
     shardID: 'Active Validators',
     shardNumber: -1,
@@ -67,9 +66,7 @@ const ShardsList = ({ shardData, disabledShards }: ShardsListType) => {
   return (
     <div className="row d-flex flex-row pl-3">
       {generateCard(blockchainStatus, true)}
-      {shardData
-        .filter(s => disabledShards !== undefined && !disabledShards.includes(s.shardNumber))
-        .map(shardEntry => generateCard(shardEntry))}
+      {shardData.map(shardEntry => generateCard(shardEntry))}
     </div>
   );
 };

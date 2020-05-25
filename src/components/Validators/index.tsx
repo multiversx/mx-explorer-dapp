@@ -58,7 +58,7 @@ export interface ShardDataType {
 const Validators = () => {
   const ref = React.useRef(null);
   const {
-    activeTestnet: { nodeUrl, validatorDetails, validatorStatistics, disabledShards },
+    activeTestnet: { nodeUrl, validatorDetails, validatorStatistics },
     timeout,
     config: { metaChainShardId, explorerApi },
   } = useGlobalState();
@@ -109,12 +109,11 @@ const Validators = () => {
             <>
               {state.data.validatorsAndObservers.length > 0 ? (
                 <>
-                  <ShardsList shardData={state.data.shardData} disabledShards={disabledShards} />
+                  <ShardsList shardData={state.data.shardData} />
 
                   {showNodes ? (
                     <ValidatorsTable
                       {...state.data}
-                      disabledShards={disabledShards}
                       validatorStatistics={validatorStatistics}
                       validatorDetails={validatorDetails || false}
                     />

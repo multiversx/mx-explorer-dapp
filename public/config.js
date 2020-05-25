@@ -46,7 +46,6 @@ const CONFIG = {
         wallet: (default) true
         faucet: (default) false (faucet)
         validatorStatistics: (default) false
-        disabledShards: array of shard numbers that don't show up in UI
     */
   testnets: [
     {
@@ -69,7 +68,6 @@ const CONFIG = {
       validatorDetails: true,
       faucet: false,
       validatorStatistics: true,
-      disabledShards: [4],
     },
   ],
 };

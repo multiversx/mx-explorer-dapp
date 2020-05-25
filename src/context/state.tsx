@@ -35,7 +35,6 @@ export interface TestnetType {
   wallet?: boolean;
   faucet: boolean;
   validatorStatistics: boolean;
-  disabledShards?: number[];
 }
 
 type AppIdType = 'wallet' | 'explorer' | 'studio' | 'docs' | string;
