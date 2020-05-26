@@ -46,11 +46,17 @@ export default function MapDisplay({
     noWrap: true,
   };
 
+  const southWest = L.latLng(-90, -90);
+  const northEast = L.latLng(90, 90);
+  const bounds = L.latLngBounds(southWest, northEast);
+
   return (
     <Map
       zoomControl={false}
       center={position}
       zoom={state.zoom}
+      maxBounds={bounds}
+      maxBoundsViscosity={1.0}
       minZoom={state.minZoom}
       style={{ height: '100%', width: '100%' }}
     >
