@@ -9,7 +9,7 @@ interface ScAddressIconType {
 }
 
 const isContract = (initiator: string | undefined, charNum: number) =>
-  initiator && charNum > 0 && initiator.startsWith('0'.repeat(charNum));
+  initiator && charNum > 0 && initiator.substr('erd1'.length).startsWith('q'.repeat(charNum));
 
 const ScAddressIcon = ({ initiator, secondInitiator }: ScAddressIconType) => {
   const {
