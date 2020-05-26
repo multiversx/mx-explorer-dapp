@@ -19,6 +19,7 @@ export default function MapDisplay({
     lat: 15,
     lng: -2,
     zoom: 1.5,
+    minZoom: 1.5,
   };
   const position: any = [state.lat, state.lng];
 
@@ -50,7 +51,7 @@ export default function MapDisplay({
       zoomControl={false}
       center={position}
       zoom={state.zoom}
-      maxZoom={13}
+      minZoom={state.minZoom}
       style={{ height: '100%', width: '100%' }}
     >
       <TileLayer {...tileProps} />
