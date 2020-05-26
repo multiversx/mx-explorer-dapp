@@ -10,7 +10,8 @@ export default function timeAgo(timestamp: number) {
     let minsms = hrsms % (60 * 1000);
     let secs = Math.floor(minsms / 1000);
 
-    let diff = ' ago';
+    // let diff = ' ago';
+    let diff = '';
     let secsString = secs + ' sec';
     let minsString = mins + ' min';
     let hrsString = hrs + ' hr';
