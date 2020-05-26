@@ -76,7 +76,7 @@ describe('Transactions Page Links', () => {
     const render = beforeAll();
 
     const links = await render.findAllByTestId('transactionLink');
-    expect(links[0].textContent).toBe('e4cb2e0faa...5062d0b6c7');
+    expect(links[0].textContent).toBe('86a1ecbfbd...9422b69c0f');
 
     fireEvent.click(links[0]);
     await wait(async () => {
