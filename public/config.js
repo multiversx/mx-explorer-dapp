@@ -56,7 +56,7 @@ const CONFIG = {
       validatorsApiUrl: 'https://api.elrond.com',
       elasticUrl: 'https://elastic-aws.elrond.com',
       refreshRate: 6000,
-      numInitCharactersForScAddress: 20,
+      numInitCharactersForScAddress: 14,
       decimals: 4,
       denomination: 18,
       gasPrice: 200000000000,
