@@ -3,7 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faServer } from '@fortawesome/free-solid-svg-icons';
 import { ComputedShard } from './ValidatorsTable';
 
-function generateCard(shardEntry: ComputedShard, isOverall?: boolean) {
+interface ShardCardType {
+  shardEntry: ComputedShard;
+  isOverall?: boolean;
+}
+
+const ShardCard = ({ shardEntry, isOverall = false }: ShardCardType) => {
   return (
     <div className="flex-grow-1 mr-3 mb-3 pb-3" key={shardEntry.shardID}>
       <div className={`card ${isOverall ? 'overall-card bg-blue' : ''}`}>
@@ -41,7 +46,7 @@ function generateCard(shardEntry: ComputedShard, isOverall?: boolean) {
       </div>
     </div>
   );
-}
+};
 
 interface ShardsListType {
   shardData: ComputedShard[];
@@ -64,9 +69,18 @@ const ShardsList = ({ shardData }: ShardsListType) => {
   };
 
   return (
-    <div className="row d-flex flex-row pl-3">
-      {generateCard(blockchainStatus, true)}
-      {shardData.map(shardEntry => generateCard(shardEntry))}
+    <div className="row d-flex pl-3">
+      <ShardCard shardEntry={blockchainStatus} isOverall />
+      {shardData.map((shardEntry, i) => {
+        return (
+          <>
+            {i === shardData.length - 3 && (
+              <div className="d-none d-lg-block d-xl-none" style={{ flexBasis: '100%' }} />
+            )}
+            <ShardCard key={shardEntry.shardNumber} shardEntry={shardEntry} />
+          </>
+        );
+      })}
     </div>
   );
 };
