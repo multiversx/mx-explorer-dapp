@@ -1,4 +1,4 @@
-import { faBan } from '@fortawesome/free-solid-svg-icons';
+import { faBan, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { addressIsBach32, dateFormatted, trimHash } from 'helpers';
@@ -14,9 +14,13 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
   return (
     <tr className="animated fadeIn">
       <td>
-        {['Not Executed', 'Failed'].includes(transaction.status) && (
+        {transaction.status === 'Failed' && (
+          <FontAwesomeIcon icon={faTimes} className="w300 mr-1" />
+        )}
+        {transaction.status === 'Not Executed' && (
           <FontAwesomeIcon icon={faBan} className="w300 mr-1" />
         )}
+
         <ScAddressIcon initiator={transaction.sender} secondInitiator={transaction.receiver} />
         <TestnetLink to={`/transactions/${transaction.hash}`} data-testid="transactionLink">
           {trimHash(transaction.hash)}

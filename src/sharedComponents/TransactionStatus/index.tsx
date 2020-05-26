@@ -1,5 +1,5 @@
 import React from 'react';
-import { faCheckCircle, faBan, faHourglass } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faBan, faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface TransactionStatusType {
@@ -10,8 +10,10 @@ const TransactionStatus = ({ status }: TransactionStatusType) => {
   let Icon = () => <></>;
   switch (status) {
     case 'Not Executed':
-    case 'Failed':
       Icon = () => <FontAwesomeIcon icon={faBan} className="mr-2 text-danger" />;
+      break;
+    case 'Failed':
+      Icon = () => <FontAwesomeIcon icon={faTimes} className="mr-2 text-danger" />;
       break;
     case 'Success':
       Icon = () => <FontAwesomeIcon icon={faCheckCircle} className="mr-2 text-success" />;
