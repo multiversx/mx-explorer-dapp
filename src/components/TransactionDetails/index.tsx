@@ -18,6 +18,7 @@ import {
   ShardSpan,
   TestnetLink,
   TimeAgo,
+  TransactionStatus,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import { getTransaction } from './helpers/asyncRequests';
@@ -95,12 +96,7 @@ const TransactionDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">Status</div>
                         <div className="col-lg-10">
-                          {transaction.status === 'Success' ? (
-                            <FontAwesomeIcon icon={faCheckCircle} className="mr-2 text-success" />
-                          ) : (
-                            <FontAwesomeIcon icon={faHourglass} className="mr-2 text-warning" />
-                          )}
-                          {transaction.status}
+                          <TransactionStatus status={transaction.status} />
                         </div>
                       </div>
                       <hr className="hr-space" />
@@ -154,7 +150,7 @@ const TransactionDetails: React.FC = () => {
                             {transaction.receiver}
                           </TestnetLink>
                           &nbsp;
-                          {Boolean(transaction.receiverShard) && (
+                          {!isNaN(transaction.receiverShard) && (
                             <TestnetLink
                               to={`/transactions/shard-to/${transaction.receiverShard}`}
                               className="small-link"

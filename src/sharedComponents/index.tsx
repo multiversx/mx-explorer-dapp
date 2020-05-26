@@ -11,6 +11,7 @@ import TestnetLink from './TestnetLink';
 import TestnetReady, { withTestnetReady } from './TestnetReady';
 import TimeAgo from './TimeAgo';
 import TransactionsTable from './TransactionsTable';
+import TransactionStatus from './TransactionStatus';
 
 export {
   Denominate,
@@ -27,4 +28,5 @@ export {
   BlocksTable,
   Loader,
   TransactionsTable,
+  TransactionStatus,
 };

@@ -1,17 +1,22 @@
-import { addressIsBach32, dateFormatted, trimHash, truncate } from 'helpers';
+import { faBan } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { addressIsBach32, dateFormatted, trimHash, truncate } from 'helpers';
 import { Denominate, ScAddressIcon, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { TransactionType } from './index';
 
-interface PropsType {
+interface TransactionRowType {
   transaction: TransactionType;
   addressId?: string | undefined;
 }
 
-const TransactionRow: React.FC<PropsType> = ({ transaction, addressId }) => {
+const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
   return (
     <tr className="animated fadeIn">
       <td>
+        {['Not Executed', 'Failed'].includes(transaction.status) && (
+          <FontAwesomeIcon icon={faBan} className="w300 mr-1" />
+        )}
         <ScAddressIcon initiator={transaction.sender} secondInitiator={transaction.receiver} />
         <TestnetLink to={`/transactions/${transaction.hash}`} data-testid="transactionLink">
           {truncate(transaction.hash, 20)}
