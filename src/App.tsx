@@ -6,7 +6,9 @@ import ErrorBoundary from './components/ErrorBoundary';
 import Layout from './components/Layout';
 import PageNotFoud from './components/PageNotFoud';
 import { GlobalProvider, useGlobalState } from './context';
-import { ConfigType, TestnetType } from './context/state';
+import { ConfigType, TestnetType, InitialStateType } from './context/state';
+import getAsyncConfig from './context/getAsyncConfig';
+import config from './context/config';
 import routes from './routes';
 
 if (process.env.NODE_ENV === 'production') {
@@ -72,13 +74,34 @@ export const Routes = ({
 };
 
 export const App = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
-  return (
-    <GlobalProvider optionalConfig={optionalConfig}>
+  const [asyncConfig, setAsyncConfig] = React.useState<InitialStateType['asyncConfig']>([]);
+
+  const fetchAsyncConfig = () => {
+    if (optionalConfig === undefined) {
+      const testnets = config.testnets.map(({ id, nodeUrl }) => ({
+        id,
+        nodeUrl,
+        timeout: 3 * 1000,
+      }));
+      const promises = testnets.map(t => getAsyncConfig(t));
+      Promise.all(promises).then((data: any) => {
+        const config = data as InitialStateType['asyncConfig'];
+        setAsyncConfig(config);
+      });
+    }
+  };
+
+  React.useEffect(fetchAsyncConfig, []);
+
+  const providerReady = asyncConfig !== undefined && asyncConfig.length > 0;
+
+  return providerReady ? (
+    <GlobalProvider optionalConfig={optionalConfig} asyncConfig={asyncConfig}>
       <Layout>
         <Routes routes={routes} />
       </Layout>
     </GlobalProvider>
-  );
+  ) : null;
 };
 
 const RoutedApp = () => {
