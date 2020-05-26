@@ -1,7 +1,7 @@
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { addressIsBach32, dateFormatted, trimHash, truncate } from 'helpers';
+import { addressIsBach32, dateFormatted, trimHash } from 'helpers';
 import * as React from 'react';
 import { ScAddressIcon, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
@@ -72,7 +72,7 @@ const LatestTransactions: React.FC = () => {
                             to={`/transactions/${transaction.hash}`}
                             data-testid={`transactionLink${i}`}
                           >
-                            {truncate(transaction.hash, 20)}
+                            {trimHash(transaction.hash)}
                           </TestnetLink>
                         </div>
                         <span

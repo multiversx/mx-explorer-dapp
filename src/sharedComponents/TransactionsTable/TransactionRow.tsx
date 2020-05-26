@@ -1,7 +1,7 @@
 import { faBan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { addressIsBach32, dateFormatted, trimHash, truncate } from 'helpers';
+import { addressIsBach32, dateFormatted, trimHash } from 'helpers';
 import { Denominate, ScAddressIcon, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { TransactionType } from './index';
 
@@ -19,7 +19,7 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
         )}
         <ScAddressIcon initiator={transaction.sender} secondInitiator={transaction.receiver} />
         <TestnetLink to={`/transactions/${transaction.hash}`} data-testid="transactionLink">
-          {truncate(transaction.hash, 20)}
+          {trimHash(transaction.hash)}
         </TestnetLink>
       </td>
       <td>
