@@ -57,7 +57,7 @@ const CONFIG = {
       elasticUrl: 'https://elastic-aws.elrond.com',
       refreshRate: 6000,
       numInitCharactersForScAddress: 14,
-      decimals: 4,
+      decimals: 2,
       denomination: 18,
       gasPrice: 200000000000,
       gasLimit: 50000,
