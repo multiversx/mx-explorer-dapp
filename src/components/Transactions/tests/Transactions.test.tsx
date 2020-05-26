@@ -76,7 +76,7 @@ describe('Transactions Page Links', () => {
     const render = beforeAll();
 
     const links = await render.findAllByTestId('transactionLink');
-    expect(links[0].textContent).toBe('86a1ecbfbdf802692...');
+    expect(links[0].textContent).toBe('e4cb2e0faa...5062d0b6c7');
 
     fireEvent.click(links[0]);
     await wait(async () => {
@@ -109,7 +109,7 @@ describe('Transactions Page Links', () => {
     const render = beforeAll();
 
     const links = await render.findAllByTestId('receiverLink');
-    expect(links[0].textContent).toBe('f03c105f05dc...08260085333a');
+    expect(links[0].textContent).toBe('f03c105f05...260085333a');
 
     fireEvent.click(links[0]);
     await wait(async () => {

@@ -130,7 +130,7 @@ describe('Validators links', () => {
   test('Validators public key link', async () => {
     const render = goToValidatorsPage();
     const publicKeyLink = await render.findByTestId('publicKeyLink0');
-    expect(publicKeyLink.textContent).toBe('8f2873e1bef8...9813162f367b');
+    expect(publicKeyLink.textContent).toBe('8f2873e1be...13162f367b');
     fireEvent.click(publicKeyLink);
     await wait(async () => {
       expect(document.title).toEqual('Validator Details • Elrond Explorer');

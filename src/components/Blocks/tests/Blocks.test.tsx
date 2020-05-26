@@ -81,7 +81,7 @@ describe('Blocks Page Links', () => {
     const render = beforeAll();
 
     const link = await render.findByTestId('blockHashLink0');
-    expect(link.textContent).toBe('d075d4fef60b...de80c35e7097');
+    expect(link.textContent).toBe('d075d4fef6...80c35e7097');
 
     fireEvent.click(link);
     await wait(async () => {

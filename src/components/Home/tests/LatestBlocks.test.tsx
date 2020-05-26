@@ -75,7 +75,7 @@ describe('Latest Blocks Links', () => {
     const blockHashLink = await render.findByTestId('blockHashLink0');
     expect(blockHashLink).toBeInTheDocument();
 
-    expect(blockHashLink.innerHTML).toBe('a34f4608be3c...99a972097a38');
+    expect(blockHashLink.innerHTML).toBe('a34f4608be...a972097a38');
     fireEvent.click(blockHashLink);
     await wait(async () => {
       expect(document.title).toEqual('Block Details • Elrond Explorer');
