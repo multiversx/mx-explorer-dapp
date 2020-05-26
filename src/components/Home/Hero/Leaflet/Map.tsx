@@ -46,8 +46,8 @@ export default function MapDisplay({
     noWrap: true,
   };
 
-  const southWest = L.latLng(-90, -90);
-  const northEast = L.latLng(90, 90);
+  const southWest = L.latLng(-90, -180);
+  const northEast = L.latLng(90, 180);
   const bounds = L.latLngBounds(southWest, northEast);
 
   return (
