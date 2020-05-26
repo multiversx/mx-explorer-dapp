@@ -12,7 +12,7 @@ const ShardCard = ({ shardEntry, isOverall = false }: ShardCardType) => {
   return (
     <div className="flex-grow-1 mr-3 mb-3 pb-3" key={shardEntry.shardID}>
       <div className={`card ${isOverall ? 'overall-card bg-blue' : ''}`}>
-        <div className="card-body">
+        <div className="card-body px-3">
           <span className="metric-label">
             {shardEntry.shardID === 'Metachain' || isOverall
               ? shardEntry.shardID
