@@ -1,9 +1,4 @@
-import {
-  faCheckCircle,
-  faClock,
-  faExchangeAlt,
-  faHourglass,
-} from '@fortawesome/free-solid-svg-icons';
+import { faClock, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import Web3 from 'web3';
