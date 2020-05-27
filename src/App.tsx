@@ -7,6 +7,8 @@ import Layout from './components/Layout';
 import PageNotFoud from './components/PageNotFoud';
 import { GlobalProvider, useGlobalState } from './context';
 import { ConfigType, TestnetType } from './context/state';
+import { buildInitialConfig } from './context/config';
+import buildConfig from './context/getAsyncConfig';
 import routes from './routes';
 
 if (process.env.NODE_ENV === 'production') {
@@ -72,13 +74,29 @@ export const Routes = ({
 };
 
 export const App = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
-  return (
-    <GlobalProvider optionalConfig={optionalConfig}>
+  const [config, setConfig] = React.useState<ConfigType>(optionalConfig as any);
+
+  const fetchAsyncConfig = () => {
+    if (optionalConfig === undefined) {
+      buildConfig().then((data: any) => {
+        const config = data as ConfigType;
+        setConfig(config);
+      });
+    }
+  };
+
+  React.useEffect(fetchAsyncConfig, []);
+
+  return config !== undefined ? (
+    <GlobalProvider
+      optionalConfig={optionalConfig}
+      config={config !== undefined ? config : buildInitialConfig()}
+    >
       <Layout>
         <Routes routes={routes} />
       </Layout>
     </GlobalProvider>
-  );
+  ) : null;
 };
 
 const RoutedApp = () => {

@@ -6,6 +6,7 @@ import { createMemoryHistory, History } from 'history';
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { App } from '../App';
+import config from './config';
 
 const customRender = (ui: any, options: any = {}) => render(ui, { wrapper: App, ...options });
 
@@ -21,9 +22,9 @@ const renderWithRouter = ({
   history = createMemoryHistory({ initialEntries: [route] });
   return {
     ...render(
-      <GlobalProvider>
+      <GlobalProvider config={config}>
         <Router history={history}>
-          <App optionalConfig={optionalConfig} />
+          <App optionalConfig={optionalConfig || config} />
         </Router>
       </GlobalProvider>
     ),
