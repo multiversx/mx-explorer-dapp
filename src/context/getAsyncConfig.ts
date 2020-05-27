@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { object, string, number, InferType } from 'yup';
+import config from './config';
 
 const schema = object({
   message: object({
@@ -27,7 +28,7 @@ interface GetAsyncConfigType {
   timeout: number;
 }
 
-export default async function getAsyncConfig({ nodeUrl, timeout, id }: GetAsyncConfigType) {
+async function getAsyncConfig({ nodeUrl, timeout, id }: GetAsyncConfigType) {
   try {
     const { data } = await axios.get(`${nodeUrl}/network/config`, { timeout });
 
@@ -42,9 +43,39 @@ export default async function getAsyncConfig({ nodeUrl, timeout, id }: GetAsyncC
       config,
     };
   } catch (err) {
-    return {
-      id,
-      config: {},
-    };
+    if (process.env.NODE_ENV === 'production') {
+      console.error(`Faild to get config for ${id} testnet`);
+    }
+    return err;
   }
+}
+
+export default async function buildConfig() {
+  const testnets = config.testnets.map(({ id, nodeUrl }) => ({
+    id,
+    nodeUrl,
+    timeout: 1 * 1000,
+  }));
+
+  const promises = testnets.map(testnet => getAsyncConfig(testnet));
+  const results = await Promise.all(promises);
+  const asyncData = results.filter(result => !(result instanceof Error));
+
+  const testnetIds = asyncData.map(result => result.id);
+  const foundTestnets = config.testnets.filter(t => testnetIds.includes(t.id));
+
+  const configObject = {
+    ...config,
+    testnets: foundTestnets.map(testnet => {
+      const testnetData: any = asyncData.find(entry => entry.id === testnet.id);
+      return {
+        ...testnet,
+        gasLimit: testnetData.config.erd_min_gas_limit,
+        gasPrice: testnetData.config.erd_min_gas_price,
+        gasPerDataByte: testnetData.config.erd_gas_per_data_byte,
+        refreshRate: testnetData.config.erd_round_duration,
+      };
+    }),
+  };
+  return configObject;
 }

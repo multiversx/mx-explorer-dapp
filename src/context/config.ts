@@ -1,4 +1,5 @@
 import { ConfigType } from './state';
+import localTestnets from './localTestnets';
 
 export const defaultTestnet = {
   default: false,
@@ -22,7 +23,7 @@ export const defaultTestnet = {
   validatorStatistics: false,
 };
 
-const buildInitialConfig = (config: any): ConfigType => {
+export const buildInitialConfig = (config?: any): ConfigType => {
   return {
     metaChainShardId: config.metaChainShardId || 4294967295,
     elrondApps: config.elrondApps.length
@@ -53,4 +54,26 @@ const configIsDefined =
 
 const config = configIsDefined ? buildInitialConfig(importedConfig) : buildInitialConfig({});
 
-export default config;
+let configTestnets = [...config.testnets];
+
+if (localTestnets.some(testnet => testnet.default) && !process.env.REACT_APP_USE_GLOBAL_DEFAULT) {
+  configTestnets = configTestnets.map(testnet => ({ ...testnet, default: false }));
+}
+
+const extendedConfig = {
+  ...config,
+  testnets: [...configTestnets, ...localTestnets],
+};
+
+export const stateConfig = {
+  ...extendedConfig,
+  testnets: extendedConfig.testnets
+    .sort((a, b) => {
+      const defaultA = a.default ? 1 : 0;
+      const defaultB = b.default ? 1 : 0;
+      return defaultA - defaultB;
+    })
+    .reverse(),
+};
+
+export default stateConfig;

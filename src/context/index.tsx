@@ -1,22 +1,19 @@
 import * as React from 'react';
 import { ActionType, globalReducer } from './reducer';
-import initialState, { StateType, InitialStateType } from './state';
+import initialState, { StateType, ConfigType } from './state';
 
 type DispatchType = (action: ActionType) => void;
 export interface GlobalContextProviderType {
   children: React.ReactNode;
-  optionalConfig?: InitialStateType['optionalConfig'];
-  asyncConfig?: InitialStateType['asyncConfig'];
+  optionalConfig?: ConfigType;
+  config: ConfigType;
 }
 
 const GlobalStateContext = React.createContext<StateType | undefined>(undefined);
 const GlobalDispatchContext = React.createContext<DispatchType | undefined>(undefined);
 
-function GlobalProvider({ children, optionalConfig, asyncConfig }: GlobalContextProviderType) {
-  const [state, dispatch] = React.useReducer(
-    globalReducer,
-    initialState(asyncConfig, optionalConfig)
-  );
+function GlobalProvider({ children, optionalConfig, config }: GlobalContextProviderType) {
+  const [state, dispatch] = React.useReducer(globalReducer, initialState(config, optionalConfig));
 
   return (
     <GlobalStateContext.Provider value={state}>

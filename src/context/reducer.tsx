@@ -1,4 +1,4 @@
-import initialState, { StateType } from './state';
+import { StateType } from './state';
 
 export type ActionType =
   | { type: 'changeTestnet'; testnetId: string }
@@ -9,7 +9,7 @@ export type ActionType =
       testnetId: string;
     };
 
-export function globalReducer(state: StateType = initialState(), action: ActionType): StateType {
+export function globalReducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
     case 'changeTestnet': {
       const newTestnet = state.config.testnets.filter(testnet => testnet.id === action.testnetId);
