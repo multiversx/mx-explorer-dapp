@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { useGlobalDispatch, useGlobalState } from '../../context';
+import { useGlobalDispatch, useGlobalState } from 'context';
 
 export default function TestnetRouter() {
   const globalState = useGlobalState();
