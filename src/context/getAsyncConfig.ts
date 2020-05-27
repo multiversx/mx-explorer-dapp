@@ -54,7 +54,7 @@ export default async function buildConfig() {
   const testnets = config.testnets.map(({ id, nodeUrl }) => ({
     id,
     nodeUrl,
-    timeout: 1 * 1000,
+    timeout: 3 * 1000,
   }));
 
   const promises = testnets.map(testnet => getAsyncConfig(testnet));
