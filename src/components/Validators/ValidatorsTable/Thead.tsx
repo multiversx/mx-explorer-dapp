@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { SyntheticEvent } from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { ShardSpan } from './../../../sharedComponents';
-import { getNewSortData, HeadersType } from './../helpers/validatorHelpers';
+import { getNewSortData } from './../helpers/validatorHelpers';
 import { ComputedShard, SortType } from './index';
+import headers from './headers';
 
 interface ValidatorsTableHeaderType {
   includeObservers: boolean;
@@ -37,51 +38,6 @@ const ValidatorsTableHeader = ({
   isInitialRatingDesc,
   setIsInitialRatingDesc,
 }: ValidatorsTableHeaderType) => {
-  const headers: HeadersType[] = [
-    {
-      id: 'publicKey',
-      label: 'Public Key',
-      dir: 'none',
-    },
-    {
-      id: 'nodeDisplayName',
-      label: 'Node Name',
-      dir: 'none',
-    },
-    {
-      id: 'shardID',
-      label: 'Shard',
-      dir: 'none',
-    },
-    {
-      id: 'versionNumber',
-      label: 'Version',
-      dir: 'none',
-    },
-
-    {
-      id: 'totalUpTimeSec',
-      label: 'Uptime',
-      dir: 'none',
-    },
-    {
-      id: 'isActive',
-      label: 'Status',
-      dir: 'none',
-    },
-  ];
-
-  headers.splice(0, 0, {
-    id: 'ratingOrder',
-    label: '#',
-    dir: 'none',
-  });
-  headers.splice(7, 0, {
-    id: 'rating',
-    label: 'Rating',
-    dir: 'none',
-  });
-
   const toggleSort = (currentSortColumn: string) => () => {
     if (currentSortColumn === 'ratingOrder') {
       return;
