@@ -8,23 +8,18 @@ import { ValidatorType } from './../index';
 const ValidatorRow = ({
   validator,
   validatorDetails,
-  validatorStatistics,
   rowIndex,
   ratingOrder,
 }: {
   validator: ValidatorType;
   rowIndex: number;
   validatorDetails: boolean;
-  validatorStatistics: boolean;
   ratingOrder: string[];
 }) => {
   return (
     <tr className="animated fadeIn">
-      {validatorStatistics ? (
-        <td>{validator.rating > 0 ? ratingOrder.indexOf(validator.publicKey) + 1 : null}</td>
-      ) : (
-        <></>
-      )}
+      <td>{validator.rating > 0 ? ratingOrder.indexOf(validator.publicKey) + 1 : null}</td>
+
       <td>
         {validator.peerType === 'observer' && (
           <FontAwesomeIcon title="observer" icon={faEye} className="w300 mr-1" />
@@ -101,11 +96,7 @@ const ValidatorRow = ({
         )}
       </td>
 
-      {validatorStatistics ? (
-        <td className="text-right">{validator.rating > 0 ? Math.floor(validator.rating) : null}</td>
-      ) : (
-        <></>
-      )}
+      <td className="text-right">{validator.rating > 0 ? Math.floor(validator.rating) : null}</td>
     </tr>
   );
 };

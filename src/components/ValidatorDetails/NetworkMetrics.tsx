@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { useGlobalState } from '../../context';
-import { ValidatorStatisticsData } from './../Validators/helpers/validatorHelpers';
 import PercentegeBar from './PercentegeBar';
 
 export interface NetworkMetricsType {
@@ -20,18 +18,9 @@ const NetworkMetrics = ({
   totalUpTimeLabel,
   totalDownTimeLabel,
   rating,
-}: NetworkMetricsType & ValidatorStatisticsData) => {
-  const {
-    activeTestnet: { validatorStatistics },
-  } = useGlobalState();
+}: NetworkMetricsType & { rating: number }) => {
+  const cardBodyClass = isValidator ? 'card-body mt-1 mb-1' : 'card-body';
 
-  const cardBodyClassValidatorStatistics = validatorStatistics
-    ? 'card-body mt-1 mb-1' // 'card-body mt-2 mb-2'
-    : 'card-body mt-4 mb-4';
-  const cardBodyClass = isValidator ? cardBodyClassValidatorStatistics : 'card-body';
-
-  const labelClass = validatorStatistics ? 'col-lg-3 card-label' : 'col-lg-2 card-label';
-  const dataClass = validatorStatistics ? 'col-lg-9' : 'col-lg-10';
   return (
     <>
       <div className="mt-4">
@@ -39,18 +28,15 @@ const NetworkMetrics = ({
       </div>
       <div className="card" style={{ height: 'auto' }}>
         <div className={cardBodyClass}>
-          {validatorStatistics && (
-            <>
-              <div className="row">
-                <div className={labelClass}>Rating</div>
-                <div className={dataClass}>{rating}</div>
-              </div>
-              <hr className="hr-space" />
-            </>
-          )}
           <div className="row">
-            <div className={labelClass}>Uptime</div>
-            <div className={dataClass}>
+            <div className="col-lg-3 card-label">Rating</div>
+            <div className="col-lg-9">{rating}</div>
+          </div>
+          <hr className="hr-space" />
+
+          <div className="row">
+            <div className="col-lg-3 card-label">Uptime</div>
+            <div className="col-lg-9">
               <PercentegeBar
                 totalDownTimeLabel={totalDownTimeLabel}
                 totalUpTimeLabel={totalUpTimeLabel}
@@ -61,8 +47,8 @@ const NetworkMetrics = ({
           </div>
           <hr className="hr-space" />
           <div className="row">
-            <div className={labelClass}>Status</div>
-            <div className={dataClass}>
+            <div className="col-lg-3 card-label">Status</div>
+            <div className="col-lg-9">
               {isActive ? (
                 <div ng-if="isActive === true">
                   <span className="badge badge-pill badge-success badge-status">&nbsp;</span>

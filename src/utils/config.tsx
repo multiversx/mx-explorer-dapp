@@ -29,7 +29,6 @@ export default {
       wallet: true,
       validatorDetails: true,
       faucet: false,
-      validatorStatistics: true,
       validatorsApiUrl: 'https://api.elrond.com',
     },
   ],

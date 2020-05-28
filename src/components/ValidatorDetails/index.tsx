@@ -5,21 +5,23 @@ import { useParams } from 'react-router-dom';
 import { useGlobalState } from '../../context';
 import { BlocksTable, Loader } from '../../sharedComponents';
 import { getValidatorStatistics } from './../Validators/helpers/asyncRequests';
-import { ValidatorStatisticsData } from './../Validators/helpers/validatorHelpers';
 import { getValidator, searchBlocks } from './helpers/asyncRequests';
 import { validatorFunctions } from 'helpers';
 import NetworkMetrics, { NetworkMetricsType } from './NetworkMetrics';
 import NodeInformation, { NodeInformationType } from './NodeInformation';
 import Rounds from './Rounds';
+// import BrandInformation from './BrandInformation';
 
 export type StateType = NetworkMetricsType &
-  ValidatorStatisticsData &
+  // ValidatorStatisticsData &
   NodeInformationType & {
     shardId: string;
     startBlockNr: number;
     endBlockNr: number;
     signersIndex: number;
     success: boolean;
+    rating: number;
+    ratingModifier: number;
   };
 
 export const initialState: StateType = {
@@ -50,7 +52,7 @@ const ValidatorDetails = () => {
   const ref = React.useRef(null);
 
   const {
-    activeTestnet: { elasticUrl, nodeUrl, validatorStatistics },
+    activeTestnet: { elasticUrl, nodeUrl },
     config: { metaChainShardId },
     timeout,
   } = useGlobalState();
@@ -91,54 +93,61 @@ const ValidatorDetails = () => {
           validatorFunctions.getRounds(props).then(({ rounds, roundsFetched }) => {
             setRounds({ rounds, roundsFetched });
           });
-          if (validatorStatistics) {
-            getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }).then(
-              ({ statistics }: any) => {
-                if (data.publicKey in statistics) {
-                  const { rating } = statistics[data.publicKey];
-                  setState(currentState => ({
-                    rating,
-                    ...currentState,
-                  }));
-                }
+
+          getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }).then(
+            ({ statistics }: any) => {
+              if (data.publicKey in statistics) {
+                const { rating } = statistics[data.publicKey];
+                setState(currentState => ({
+                  rating,
+                  ...currentState,
+                }));
               }
-            );
-          }
+            }
+          );
+
           searchBlocks(props).then((blockdata: any) => setFetchedBlocks(blockdata));
         }
       });
     }
-  }, [elasticUrl, timeout, hash, nodeUrl, metaChainShardId, validatorStatistics]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, timeout, hash, nodeUrl, metaChainShardId]); // run the operation only once since the parameter does not change
 
   const { publicKey, isValidator } = state;
 
-  const networkMetricsStatisticsClass = validatorStatistics ? 'col-md-8' : 'col-md-7'; // 'col-md-9' : 'col-md-7';
-  const networkMetricsClass = isValidator ? networkMetricsStatisticsClass : 'col-12';
-  const roundsClass = validatorStatistics ? 'col-md-4' : 'col-md-5'; // 'col-md-3' : 'col-md-5';
+  const networkMetricsClass = isValidator ? 'col-md-8' : 'col-12';
 
   return (
     <div ref={ref}>
       <div className="container pt-3 pb-3">
         <div className="row">
-          <div className="col-12">
+          <div className={success ? 'col-md-12' /* col-md-7 */ : 'col-12'}>
             <h4 data-testid="title">Node Information</h4>
           </div>
+          {/* {publicKey !== '' && (
+            <div className="col-md-5">
+              <h4>Brand Info</h4>
+            </div>
+          )} */}
         </div>
         {success ? (
           <>
             {publicKey !== '' ? (
               <>
                 <div className="row">
-                  <div className="col-12">
+                  {/* col-md-7 */}
+                  <div className="col-md-12">
                     <NodeInformation {...state} />
                   </div>
+                  {/* <div className="col-md-5">
+                    <BrandInformation />
+                  </div> */}
                 </div>
                 <div className="row">
                   <div className={networkMetricsClass}>
                     <NetworkMetrics {...state} />
                   </div>
                   {isValidator && (
-                    <div className={roundsClass}>
+                    <div className="col-md-4">
                       <Rounds {...rounds} />
                     </div>
                   )}

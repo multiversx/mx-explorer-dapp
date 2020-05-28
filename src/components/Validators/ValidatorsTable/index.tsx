@@ -33,13 +33,10 @@ export type ValidatorValueType = string;
 
 interface ValidatorsTableType {
   validatorDetails: boolean;
-  validatorStatistics: boolean;
 }
 
 const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
-  const initialSort: SortType = props.validatorStatistics
-    ? { field: 'rating', dir: 'desc' }
-    : { field: '', dir: 'none' };
+  const initialSort: SortType = { field: 'rating', dir: 'desc' };
   const [includeObservers, setIncludeObsevers] = React.useState(false);
   const [sort, setSort] = React.useState<SortType>(initialSort);
   const [ratingOrder, setRatingOrder] = React.useState<string[]>([]);
@@ -152,7 +149,6 @@ const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
                   setStatusValue={resetPager(setStatusValue)}
                   validatorObserverValue={validatorObserverValue}
                   setValidatorObserverValue={resetPager(setValidatorObserverValue)}
-                  validatorStatistics={props.validatorStatistics}
                   isInitialRatingDesc={isInitialRatingDesc}
                   setIsInitialRatingDesc={setIsInitialRatingDesc}
                 />
@@ -164,7 +160,6 @@ const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
                       rowIndex={i}
                       validator={validator}
                       validatorDetails={validatorDetails}
-                      validatorStatistics={props.validatorStatistics}
                     />
                   ))}
                 </tbody>

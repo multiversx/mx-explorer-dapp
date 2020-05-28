@@ -19,7 +19,6 @@ const localTestnets = [
           data: true,
           validatorDetails: true,
           faucet: true,
-          validatorStatistics: false,
         },
         {
           default: false,
@@ -39,7 +38,6 @@ const localTestnets = [
           data: true,
           validatorDetails: true,
           faucet: true,
-          validatorStatistics: false,
         },
       ]
     : []),
@@ -63,7 +61,6 @@ const localTestnets = [
           data: true,
           validatorDetails: true,
           faucet: false,
-          validatorStatistics: true,
         },
         {
           default: true,
@@ -83,7 +80,6 @@ const localTestnets = [
           data: true,
           validatorDetails: true,
           faucet: false,
-          validatorStatistics: true,
         },
       ]
     : []),
