@@ -26,7 +26,7 @@ const NodeInformation = ({
           <div className="card-body">
             <div className="row">
               <div className="col-lg-2 card-label">Public Key</div>
-              <div className="col-lg-10">{truncate(publicKey, 100)}</div>
+              <div className="col-lg-10">{truncate(publicKey, 100 /* 70 */)}</div>
             </div>
             <hr className="hr-space" />
             {publicKeyBlockSign !== undefined && (
