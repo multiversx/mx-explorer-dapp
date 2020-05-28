@@ -2,11 +2,7 @@ import moment from 'moment';
 import axios from 'axios';
 import { ValidatorType } from './../components/Validators';
 
-export function getShardId(
-  validator: ValidatorType,
-  metaChainShardId: number,
-  statisticsShardId: number | undefined
-) {
+export function getShardId(validator: ValidatorType, metaChainShardId: number) {
   let shardId: string;
   let star = false;
   const isValidator = validator.peerType && !validator.peerType.includes('observer');
@@ -18,10 +14,6 @@ export function getShardId(
     }
   } else {
     shardId = validator.receivedShardID.toString();
-  }
-
-  if (statisticsShardId !== undefined) {
-    shardId = statisticsShardId.toString();
   }
 
   return {

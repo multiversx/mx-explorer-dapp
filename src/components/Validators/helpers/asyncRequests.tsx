@@ -1,15 +1,20 @@
 import axios from 'axios';
+import fakeHeartbeatstatus from './mockHearbeat';
+import fakeStatistics from './mockStatistics';
+import fakeBrandData from './mockBrandData';
 
 interface ParamsType {
   nodeUrl: string;
   timeout: number;
 }
 
-export async function getValidatorsData({ nodeUrl, timeout }: ParamsType) {
+export async function getValidatorsHeartbeat({ nodeUrl, timeout }: ParamsType) {
   try {
-    const {
+    let {
       data: { message },
     } = await axios.get(`${nodeUrl}/node/heartbeatstatus`, { timeout });
+
+    message = fakeHeartbeatstatus.message ? fakeHeartbeatstatus.message : message;
 
     if (Array.isArray(message)) {
       return {
@@ -31,9 +36,12 @@ export async function getValidatorsData({ nodeUrl, timeout }: ParamsType) {
 
 export async function getValidatorStatistics({ nodeUrl, timeout }: ParamsType) {
   try {
-    const {
+    let {
       data: { statistics },
     } = await axios.get(`${nodeUrl}/validator/statistics`, { timeout });
+
+    statistics = fakeStatistics.statistics ? fakeStatistics.statistics : statistics;
+
     return {
       statistics,
       success: true,
@@ -58,7 +66,9 @@ interface BrandDataParamsType {
 
 export async function getBrandData({ explorerApi, timeout }: BrandDataParamsType) {
   try {
-    const { data } = await axios.get(`${explorerApi}/validators`, { timeout });
+    let { data } = await axios.get(`${explorerApi}/validators`, { timeout });
+
+    data = fakeBrandData ? fakeBrandData : data;
 
     return {
       data,

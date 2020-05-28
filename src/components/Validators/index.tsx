@@ -3,7 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useMemo } from 'react';
 import { useGlobalState } from 'context';
 import { Loader } from 'sharedComponents';
-import { getValidatorsData, getValidatorStatistics, getBrandData } from './helpers/asyncRequests';
+import {
+  getValidatorsHeartbeat,
+  getValidatorStatistics,
+  getBrandData,
+} from './helpers/asyncRequests';
 import { populateValidatorsTable } from './helpers/validatorHelpers';
 import ShardsList from './ShardsList';
 import ValidatorsTable, { StateType } from './ValidatorsTable';
@@ -16,7 +20,7 @@ export interface ValidatorType {
   publicKey: string;
   isActive: boolean;
   isValidator: boolean;
-  peerType: 'waiting' | 'eligible' | 'observer';
+  peerType: 'waiting' | 'eligible' | 'observer' | 'new';
   nodeDisplayName: string;
   identity: string;
   receivedShardID: number;
@@ -67,7 +71,7 @@ const Validators = () => {
 
   const getData = () => {
     Promise.all([
-      getValidatorsData({
+      getValidatorsHeartbeat({
         nodeUrl,
         timeout: Math.max(timeout, 10000),
       }),
