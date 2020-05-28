@@ -18,197 +18,154 @@ export const getPeerType = (peerType: ValidatorType['peerType']) => {
       return 'observer';
     case peerType.includes('waiting'):
       return 'waiting';
-    default:
+    case peerType.includes('eligible'):
       return 'eligible';
+    default:
+      return 'new';
   }
 };
-
-interface ComputeValidatorType {
-  validator: ValidatorType;
-  statistics: StatisticsType;
-  metaChainShardId: number;
-}
-
-export function computeValidator({
-  validator,
-  statistics,
-  metaChainShardId,
-}: ComputeValidatorType) {
-  const statisticsHasValidatorHash =
-    statistics !== undefined &&
-    statistics !== null &&
-    typeof statistics === 'object' &&
-    Object.keys(statistics).length &&
-    validator.publicKey in statistics;
-
-  const { rating } = statisticsHasValidatorHash
-    ? statistics[validator.publicKey]
-    : {
-        rating: 0,
-      };
-
-  const statisticsShardId = statisticsHasValidatorHash
-    ? statistics[validator.publicKey].shardId
-    : undefined;
-
-  const { shardId, shardNumber, star } = validatorFunctions.getShardId(
-    validator,
-    metaChainShardId,
-    statisticsShardId
-  );
-
-  const { ratingModifier } = statisticsHasValidatorHash
-    ? statistics[validator.publicKey]
-    : {
-        ratingModifier: 0,
-      };
-
-  let peerType: ValidatorType['peerType'] = getPeerType(validator.peerType);
-
-  peerType =
-    statisticsHasValidatorHash && statistics[validator.publicKey].validatorStatus
-      ? statistics[validator.publicKey].validatorStatus
-      : peerType;
-
-  const isActive = statisticsHasValidatorHash ? false : validator.isActive;
-
-  const totalUpTimeSec = statisticsHasValidatorHash ? 0 : validator.totalUpTimeSec;
-  const totalDownTimeSec = statisticsHasValidatorHash ? 0 : validator.totalDownTimeSec;
-  const versionNumber = statisticsHasValidatorHash ? '' : validator.versionNumber;
-  const nodeDisplayName = !statisticsHasValidatorHash
-    ? validator.publicKey
-    : validator.nodeDisplayName;
-
-  validator = {
-    ...validator,
-    totalUpTimeSec,
-    totalDownTimeSec,
-    isActive,
-    versionNumber,
-    shardId,
-    nodeDisplayName,
-    shardNumber,
-    star,
-    peerType,
-    rating,
-    ratingModifier,
-  };
-  return { validator, shardId };
-}
 
 export function populateValidatorsTable({
   data,
   metaChainShardId,
-  statistics = {},
+  statistics,
 }: {
   data: ValidatorType[];
   metaChainShardId: number;
-  statistics?: StatisticsType;
+  statistics: StatisticsType;
 }) {
   const shardData: ShardDataType = {};
   const allShardIDs: string[] = [];
   const validators: ValidatorType[] = [];
   const validatorsAndObservers: ValidatorType[] = [];
+  const heartbeatObservers = data.filter(v => !Object.keys(statistics).includes(v.publicKey));
 
-  if (statistics !== undefined) {
-    const statisticsData = Object.keys(statistics).map(publicKey => {
-      return {
+  const statisticsData = Object.keys(statistics).map(publicKey => {
+    return {
+      publicKey,
+      ...statistics[publicKey],
+    };
+  });
+  const validatorData: { [key: string]: ValidatorType } = {};
+  data.map(validator => {
+    validatorData[validator.publicKey] = { ...validator };
+    return null;
+  });
+  statisticsData.forEach(
+    ({
+      publicKey,
+      shardId: statisticsShardId,
+      validatorStatus: peerType,
+      rating,
+      ratingModifier,
+    }) => {
+      const pKeyinValidatorData = publicKey in validatorData;
+
+      //TODO: e corect?
+      const computedShardID = pKeyinValidatorData
+        ? validatorData[publicKey].computedShardID
+        : statisticsShardId;
+      const receivedShardID = pKeyinValidatorData
+        ? validatorData[publicKey].receivedShardID
+        : statisticsShardId;
+
+      const isActive = pKeyinValidatorData ? validatorData[publicKey].isActive : false;
+      const nodeDisplayName = pKeyinValidatorData
+        ? validatorData[publicKey].nodeDisplayName
+        : publicKey;
+      const identity = pKeyinValidatorData ? validatorData[publicKey].identity : '';
+      const timeStamp = pKeyinValidatorData ? validatorData[publicKey].timeStamp : '';
+      const totalDownTimeSec = pKeyinValidatorData ? validatorData[publicKey].totalDownTimeSec : 0;
+      const totalUpTimeSec = pKeyinValidatorData ? validatorData[publicKey].totalUpTimeSec : 0;
+      const versionNumber = pKeyinValidatorData ? validatorData[publicKey].versionNumber : '';
+      const shardId =
+        statisticsShardId === metaChainShardId ? 'Metachain' : statisticsShardId.toString();
+
+      const star = isActive === true && computedShardID !== receivedShardID;
+
+      const validator: ValidatorType = {
         publicKey,
-        ...statistics[publicKey],
-      };
-    });
-    const validatorData: { [key: string]: ValidatorType } = {};
-    data.map(validator => {
-      validatorData[validator.publicKey] = { ...validator };
-      return null;
-    });
-    statisticsData.forEach(
-      ({
-        publicKey,
-        shardId: statisticsShardId,
-        validatorStatus: peerType,
+        isValidator: peerType !== 'observer',
+        computedShardID,
+        receivedShardID,
+        isActive,
+        peerType,
+        nodeDisplayName,
+        identity,
+        timeStamp,
+        totalDownTimeSec,
+        totalUpTimeSec,
+        versionNumber,
+        shardId,
+        shardNumber: statisticsShardId,
+        star,
         rating,
         ratingModifier,
-      }) => {
-        const pKeyinValidatorData = publicKey in validatorData;
+      };
 
-        //TODO: e corect?
-        const computedShardID = pKeyinValidatorData
-          ? validatorData[publicKey].computedShardID
-          : statisticsShardId;
-        const receivedShardID = pKeyinValidatorData
-          ? validatorData[publicKey].receivedShardID
-          : statisticsShardId;
-
-        const isActive = pKeyinValidatorData ? validatorData[publicKey].isActive : false;
-        const nodeDisplayName = pKeyinValidatorData
-          ? validatorData[publicKey].nodeDisplayName
-          : publicKey;
-        const identity = pKeyinValidatorData ? validatorData[publicKey].identity : '';
-        const timeStamp = pKeyinValidatorData ? validatorData[publicKey].timeStamp : '';
-        const totalDownTimeSec = pKeyinValidatorData
-          ? validatorData[publicKey].totalDownTimeSec
-          : 0;
-        const totalUpTimeSec = pKeyinValidatorData ? validatorData[publicKey].totalUpTimeSec : 0;
-        const versionNumber = pKeyinValidatorData ? validatorData[publicKey].versionNumber : '';
-        const shardId =
-          statisticsShardId === metaChainShardId ? 'Metachain' : statisticsShardId.toString();
-
-        const star = isActive === true && computedShardID !== receivedShardID;
-
-        const validator: ValidatorType = {
-          publicKey,
-          isValidator: peerType !== 'observer',
-          computedShardID,
-          receivedShardID,
-          isActive,
-          peerType,
-          nodeDisplayName,
-          identity,
-          timeStamp,
-          totalDownTimeSec,
-          totalUpTimeSec,
-          versionNumber,
-          shardId,
-          shardNumber: statisticsShardId,
-          star,
-          rating,
-          ratingModifier,
-        };
-
-        if (['eligible', 'waiting'].includes(validator.peerType)) {
-          validators.push(validator);
-        }
-        validatorsAndObservers.push(validator);
-
-        allShardIDs.push(shardId.toString()); // TODO: check shardID
-
-        if (validator.shardId && validator.shardId in shardData) {
-          if (validator.peerType === 'eligible') {
-            shardData[shardId].allValidators = shardData[shardId].allValidators + 1;
-            shardData[shardId].allActiveValidators = validator.isActive
-              ? shardData[shardId].allActiveValidators + 1
-              : shardData[shardId].allActiveValidators;
-          }
-        } else if (validator.shardId) {
-          shardData[shardId] = {
-            allValidators: 0,
-            allActiveValidators: 0,
-            shardNumber: validator.shardNumber,
-          };
-          shardData[shardId].allValidators = validator.peerType === 'eligible' ? 1 : 0;
-          shardData[shardId].allActiveValidators =
-            validator.peerType === 'eligible' && validator.isActive ? 1 : 0;
-        }
+      if (['eligible', 'waiting'].includes(validator.peerType)) {
+        validators.push(validator);
       }
-    );
-  } else {
-    data.forEach((validatorEntry: ValidatorType, i) => {
-      const { validator, shardId } = computeValidator({
-        validator: validatorEntry,
-        statistics,
-        metaChainShardId,
-      });
+      validatorsAndObservers.push(validator);
+
+      allShardIDs.push(shardId.toString()); // TODO: check shardID
+
+      if (validator.shardId && validator.shardId in shardData) {
+        if (validator.peerType === 'eligible') {
+          shardData[shardId].allValidators = shardData[shardId].allValidators + 1;
+          shardData[shardId].allActiveValidators = validator.isActive
+            ? shardData[shardId].allActiveValidators + 1
+            : shardData[shardId].allActiveValidators;
+        }
+      } else if (validator.shardId) {
+        shardData[shardId] = {
+          allValidators: 0,
+          allActiveValidators: 0,
+          shardNumber: validator.shardNumber,
+        };
+        shardData[shardId].allValidators = validator.peerType === 'eligible' ? 1 : 0;
+        shardData[shardId].allActiveValidators =
+          validator.peerType === 'eligible' && validator.isActive ? 1 : 0;
+      }
+    }
+  );
+  if (heartbeatObservers.length > 0) {
+    heartbeatObservers.forEach((validator: ValidatorType, i) => {
+      const { shardId, shardNumber, star } = validatorFunctions.getShardId(
+        validator,
+        metaChainShardId
+      );
+
+      const statisticsHasValidatorHash =
+        statistics !== undefined &&
+        statistics !== null &&
+        typeof statistics === 'object' &&
+        Object.keys(statistics).length &&
+        validator.publicKey in statistics;
+
+      const { rating } = statisticsHasValidatorHash
+        ? statistics[validator.publicKey]
+        : {
+            rating: 0,
+          };
+
+      const { ratingModifier } = statisticsHasValidatorHash
+        ? statistics[validator.publicKey]
+        : {
+            ratingModifier: 0,
+          };
+
+      validator = {
+        ...validator,
+        shardId,
+        shardNumber,
+        star,
+        peerType: validator.peerType
+          ? getPeerType(validator.peerType)
+          : getPeerType(validator.isValidator ? 'eligible' : 'observer'),
+        rating,
+        ratingModifier,
+      };
 
       if (['eligible', 'waiting'].includes(validator.peerType)) {
         validators.push(validator);

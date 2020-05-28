@@ -132,8 +132,7 @@ export async function getValidator({
 
     const { shardId, shardNumber } = validatorFunctions.getShardId(
       currentValidator,
-      metaChainShardId,
-      statistics[publicKey].shardId
+      metaChainShardId
     );
 
     const { versionNumber, isActive, nodeDisplayName, publicKeyBlockSign } = currentValidator;

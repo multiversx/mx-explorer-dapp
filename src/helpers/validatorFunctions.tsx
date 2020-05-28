@@ -2,14 +2,11 @@ import moment from 'moment';
 import axios from 'axios';
 import { ValidatorType } from './../components/Validators';
 
-export function getShardId(
-  validator: ValidatorType,
-  metaChainShardId: number,
-  statisticsShardId: number | undefined
-) {
+export function getShardId(validator: ValidatorType, metaChainShardId: number) {
   let shardId: string;
   let star = false;
-  const isValidator = validator.peerType && !validator.peerType.includes('observer');
+  const isValidator =
+    validator.isValidator || (validator.peerType && !validator.peerType.includes('observer'));
 
   if (isValidator === true) {
     shardId = validator.computedShardID.toString();
@@ -19,11 +16,6 @@ export function getShardId(
   } else {
     shardId = validator.receivedShardID.toString();
   }
-
-  if (statisticsShardId !== undefined) {
-    shardId = statisticsShardId.toString();
-  }
-
   return {
     shardId: shardId === metaChainShardId.toString() ? 'Metachain' : shardId, // eslint-disable-line
     shardNumber: parseInt(shardId), // this is excluding the Metachain string, used for searching
