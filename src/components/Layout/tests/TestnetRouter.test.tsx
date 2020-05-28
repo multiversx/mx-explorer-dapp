@@ -39,7 +39,6 @@ const optionalConfig = {
       data: true,
       validatorDetails: true,
       faucet: false,
-      validatorStatistics: false,
     },
     {
       default: false,
@@ -59,7 +58,6 @@ const optionalConfig = {
       data: true,
       validatorDetails: true,
       faucet: false,
-      validatorStatistics: false,
     },
   ],
 };

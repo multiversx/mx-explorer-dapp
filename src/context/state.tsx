@@ -14,7 +14,6 @@ export interface TestnetType {
         gasLimitEditable: (default) false
         data: (default) false
         faucet: (default) false (faucet)
-        validatorStatistics: (default) false
         hasBach32: (default) false
   */
   default: boolean;
@@ -36,7 +35,6 @@ export interface TestnetType {
   validatorDetails?: boolean;
   wallet?: boolean;
   faucet: boolean;
-  validatorStatistics: boolean;
 }
 
 type AppIdType = 'wallet' | 'explorer' | 'studio' | 'docs' | string;

@@ -17,7 +17,6 @@ export interface ValidatorType {
   isActive: boolean;
   isValidator: boolean;
   peerType: 'waiting' | 'eligible' | 'observer';
-  maxInactiveTime: string;
   nodeDisplayName: string;
   identity: string;
   receivedShardID: number;
@@ -58,7 +57,7 @@ export interface ShardDataType {
 const Validators = () => {
   const ref = React.useRef(null);
   const {
-    activeTestnet: { nodeUrl, validatorDetails, validatorStatistics },
+    activeTestnet: { nodeUrl, validatorDetails },
     timeout,
     config: { metaChainShardId, explorerApi },
   } = useGlobalState();
@@ -76,17 +75,10 @@ const Validators = () => {
       getBrandData({ explorerApi, timeout }),
     ]).then(([getValidatorsDataResponse, validatorStats, brandData]) => {
       const { data, success } = getValidatorsDataResponse;
-      if (validatorStatistics) {
-        const { statistics, success: validatorsSuccess } = validatorStats;
-        const newState = populateValidatorsTable({ data, metaChainShardId, statistics });
-        if (ref.current !== null) {
-          setState({ success: success && validatorsSuccess, data: newState });
-        }
-      } else {
-        const newState = populateValidatorsTable({ data, metaChainShardId });
-        if (ref.current !== null) {
-          setState({ success, data: newState });
-        }
+      const { statistics, success: validatorsSuccess } = validatorStats;
+      const newState = populateValidatorsTable({ data, metaChainShardId, statistics });
+      if (ref.current !== null) {
+        setState({ success: success && validatorsSuccess, data: newState });
       }
       setBrandData(brandData.data);
     });
@@ -112,11 +104,7 @@ const Validators = () => {
                   <ShardsList shardData={state.data.shardData} />
 
                   {showNodes ? (
-                    <ValidatorsTable
-                      {...state.data}
-                      validatorStatistics={validatorStatistics}
-                      validatorDetails={validatorDetails || false}
-                    />
+                    <ValidatorsTable {...state.data} validatorDetails={validatorDetails || false} />
                   ) : (
                     <ValidatorsBrandTable
                       allValidators={state.data.validators}
@@ -141,7 +129,7 @@ const Validators = () => {
         </div>
       </div>
     ),
-    [state, validatorDetails, validatorStatistics, showNodes, brandData]
+    [state, validatorDetails, showNodes, brandData]
   );
 };
 

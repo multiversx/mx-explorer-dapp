@@ -4,6 +4,7 @@ import { BlockType } from './../../Blocks';
 import { ValidatorType } from './../../Validators';
 import { getPeerType } from './../../Validators/helpers/validatorHelpers';
 import { initialState } from './../index';
+import { getValidatorStatistics } from './../../Validators/helpers/asyncRequests';
 
 interface GetValidatorType {
   nodeUrl: string;
@@ -120,13 +121,19 @@ export async function getValidator({
       data: { message },
     } = await axios.get(`${nodeUrl}/node/heartbeatstatus?key=${publicKey}`, { timeout });
 
+    const { statistics } = await getValidatorStatistics({
+      nodeUrl,
+      timeout,
+    });
+
     const currentValidator = message
       .filter((validator: ValidatorType) => validator.publicKey === publicKey)
       .pop();
 
     const { shardId, shardNumber } = validatorFunctions.getShardId(
       currentValidator,
-      metaChainShardId
+      metaChainShardId,
+      statistics[publicKey].shardId
     );
 
     const { versionNumber, isActive, nodeDisplayName, publicKeyBlockSign } = currentValidator;

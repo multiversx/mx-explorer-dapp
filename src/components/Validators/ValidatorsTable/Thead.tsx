@@ -17,7 +17,6 @@ interface ValidatorsTableHeaderType {
   setStatusValue: React.Dispatch<React.SetStateAction<string>>;
   validatorObserverValue: string;
   setValidatorObserverValue: React.Dispatch<React.SetStateAction<string>>;
-  validatorStatistics: boolean;
   hasWaitingValidators: boolean;
   isInitialRatingDesc: boolean;
   setIsInitialRatingDesc: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,7 +33,6 @@ const ValidatorsTableHeader = ({
   setStatusValue,
   validatorObserverValue,
   setValidatorObserverValue,
-  validatorStatistics,
   hasWaitingValidators,
   isInitialRatingDesc,
   setIsInitialRatingDesc,
@@ -73,18 +71,16 @@ const ValidatorsTableHeader = ({
     },
   ];
 
-  if (validatorStatistics) {
-    headers.splice(0, 0, {
-      id: 'ratingOrder',
-      label: '#',
-      dir: 'none',
-    });
-    headers.splice(7, 0, {
-      id: 'rating',
-      label: 'Rating',
-      dir: 'none',
-    });
-  }
+  headers.splice(0, 0, {
+    id: 'ratingOrder',
+    label: '#',
+    dir: 'none',
+  });
+  headers.splice(7, 0, {
+    id: 'rating',
+    label: 'Rating',
+    dir: 'none',
+  });
 
   const toggleSort = (currentSortColumn: string) => () => {
     if (currentSortColumn === 'ratingOrder') {
@@ -129,8 +125,7 @@ const ValidatorsTableHeader = ({
           <th
             className={`sortable 
               ${['totalUpTimeSec', 'rating'].includes(header.id) ? 'text-right' : ''}
-              ${header.label === 'Status' ? 'text-right' : ''}`
-            }
+              ${header.label === 'Status' ? 'text-right' : ''}`}
             key={header.id}
           >
             <span onClick={toggleSort(header.id)}>{header.label}&nbsp;</span>
