@@ -1,7 +1,7 @@
 import { faCogs } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useMemo } from 'react';
-import { useGlobalState } from 'context';
+import { useGlobalState, useGlobalDispatch } from 'context';
 import { Loader } from 'sharedComponents';
 import {
   getValidatorsHeartbeat,
@@ -11,7 +11,7 @@ import {
 import { populateValidatorsTable } from './helpers/validatorHelpers';
 import ShardsList from './ShardsList';
 import ValidatorsTable, { StateType } from './ValidatorsTable';
-import ValidatorsBrandTable, { BrandDataType } from './ValidatorsBrandTable';
+import ValidatorsBrandTable from './ValidatorsBrandTable';
 import { useLocation } from 'react-router-dom';
 import { validatorsRouteNames } from 'routes';
 
@@ -64,10 +64,12 @@ const Validators = () => {
     activeTestnet: { nodeUrl, validatorDetails },
     timeout,
     config: { metaChainShardId, explorerApi },
+    validatorData,
+    brandData,
   } = useGlobalState();
+  const dispatch = useGlobalDispatch();
 
-  const [state, setState] = React.useState({ success: true, data: initialState });
-  const [brandData, setBrandData] = React.useState<BrandDataType[]>([]);
+  const [success, setSuccess] = React.useState(true);
 
   const getData = () => {
     Promise.all([
@@ -77,14 +79,16 @@ const Validators = () => {
       }),
       getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }),
       getBrandData({ explorerApi, timeout }),
-    ]).then(([getValidatorsDataResponse, validatorStats, brandData]) => {
+    ]).then(([getValidatorsDataResponse, validatorStats, brand]) => {
       const { data, success } = getValidatorsDataResponse;
       const { statistics, success: validatorsSuccess } = validatorStats;
-      const newState = populateValidatorsTable({ data, metaChainShardId, statistics });
+      const validatorData = populateValidatorsTable({ data, metaChainShardId, statistics });
+      dispatch({ type: 'setValidatorData', validatorData });
+      const { data: brandData } = brand;
+      dispatch({ type: 'setBrandData', brandData });
       if (ref.current !== null) {
-        setState({ success: success && validatorsSuccess, data: newState });
+        setSuccess(success && validatorsSuccess);
       }
-      setBrandData(brandData.data);
     });
   };
 
@@ -101,17 +105,20 @@ const Validators = () => {
               <h4 data-testid="title">Validators</h4>
             </div>
           </div>
-          {state.success ? (
+          {success ? (
             <>
-              {state.data.validatorsAndObservers.length > 0 ? (
+              {validatorData.validatorsAndObservers.length > 0 ? (
                 <>
-                  <ShardsList shardData={state.data.shardData} />
+                  <ShardsList shardData={validatorData.shardData} />
 
                   {showNodes ? (
-                    <ValidatorsTable {...state.data} validatorDetails={validatorDetails || false} />
+                    <ValidatorsTable
+                      {...validatorData}
+                      validatorDetails={validatorDetails || false}
+                    />
                   ) : (
                     <ValidatorsBrandTable
-                      allValidators={state.data.validators}
+                      allValidators={validatorData.validators}
                       brandData={brandData}
                     />
                   )}
@@ -133,7 +140,7 @@ const Validators = () => {
         </div>
       </div>
     ),
-    [state, validatorDetails, showNodes, brandData]
+    [success, validatorDetails, validatorData, showNodes, brandData]
   );
 };
 

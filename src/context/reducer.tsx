@@ -2,6 +2,8 @@ import { StateType } from './state';
 
 export type ActionType =
   | { type: 'changeTestnet'; testnetId: string }
+  | { type: 'setValidatorData'; validatorData: StateType['validatorData'] }
+  | { type: 'setBrandData'; brandData: StateType['brandData'] }
   | { type: 'triggerNewRound' }
   | {
       type: 'setNewRoundIntervalId';
@@ -35,6 +37,20 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
           intervalId,
           testnetId,
         },
+      };
+    }
+    case 'setValidatorData': {
+      const { validatorData } = action;
+      return {
+        ...state,
+        validatorData,
+      };
+    }
+    case 'setBrandData': {
+      const { brandData } = action;
+      return {
+        ...state,
+        brandData,
       };
     }
     default: {

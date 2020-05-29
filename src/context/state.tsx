@@ -1,4 +1,5 @@
 import { defaultTestnet } from './config';
+import { validatorData, brandData } from './validators';
 
 export interface TestnetType {
   /*
@@ -63,6 +64,8 @@ export interface StateType {
     intervalId: ReturnType<typeof setInterval>;
     testnetId: string;
   };
+  validatorData: typeof validatorData;
+  brandData: typeof brandData;
 }
 
 const initialState = (config: ConfigType, optionalConfig?: ConfigType): StateType => {
@@ -79,6 +82,8 @@ const initialState = (config: ConfigType, optionalConfig?: ConfigType): StateTyp
       intervalId: setInterval(() => null, 100000000000),
       testnetId: 'default',
     },
+    validatorData,
+    brandData,
   };
 };
 
