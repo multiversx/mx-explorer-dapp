@@ -65,10 +65,12 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
     rounds: [],
     roundsFetched: true,
   });
-  const [success, setSuccess] = React.useState(validator !== undefined);
+  const [success, setSuccess] = React.useState(
+    validator !== undefined && validator.peerType !== 'observer'
+  );
 
   React.useEffect(() => {
-    if (ref.current !== null && validator !== undefined) {
+    if (ref.current !== null && validator !== undefined && validator.peerType !== 'observer') {
       getValidator({
         currentValidator: validator,
         elasticUrl,
@@ -78,7 +80,7 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
         nodeUrl,
       }).then(({ signersIndex, shardNumber, epoch, roundAtEpochStart, success, ...data }: any) => {
         if (ref.current !== null) {
-          setState({ ...data, shardNumber });
+          setState({ ...data, shardNumber, rating: validator.rating });
           setSuccess(success);
           const props = {
             elasticUrl,
