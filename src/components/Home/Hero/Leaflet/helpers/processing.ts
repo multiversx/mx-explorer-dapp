@@ -29,7 +29,9 @@ const getGroupedCities = (markers: MarkerPoint[]) => {
 };
 
 const maxLineLength = 20;
-const lineLen = (x: number, max: number) => (maxLineLength * Math.log(x + 15)) / Math.log(max + 15);
+const min = 5;
+const lineLen = (x: number, max: number) =>
+  (maxLineLength * Math.log(x + min)) / Math.log(max + min);
 const getRadius = (groupedCities: Array<{ items: number[] }>) => {
   const totalNodesArray = groupedCities.map((city: any) => city.items.length);
   const uniqueTotalNodes = [...new (Set as any)(totalNodesArray)];
