@@ -14,7 +14,7 @@ export async function getValidatorsHeartbeat({ nodeUrl, timeout }: ParamsType) {
       data: { message },
     } = await axios.get(`${nodeUrl}/node/heartbeatstatus`, { timeout });
 
-    message = fakeHeartbeatstatus.message ? fakeHeartbeatstatus.message : message;
+    // message = fakeHeartbeatstatus.message ? fakeHeartbeatstatus.message : message;
 
     if (Array.isArray(message)) {
       return {
@@ -40,7 +40,7 @@ export async function getValidatorStatistics({ nodeUrl, timeout }: ParamsType) {
       data: { statistics },
     } = await axios.get(`${nodeUrl}/validator/statistics`, { timeout });
 
-    statistics = fakeStatistics.statistics ? fakeStatistics.statistics : statistics;
+    // statistics = fakeStatistics.statistics ? fakeStatistics.statistics : statistics;
 
     return {
       statistics,
