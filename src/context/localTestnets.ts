@@ -2,7 +2,7 @@ const localTestnets = [
   ...(process.env.NODE_ENV === 'development'
     ? [
         {
-          default: true,
+          default: false,
           id: 'testnet-do-toronto',
           name: 'Toronto',
           nodeUrl: 'http://159.203.3.48:8080',
