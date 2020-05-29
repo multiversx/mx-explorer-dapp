@@ -1,17 +1,9 @@
 import axios from 'axios';
 import { fireEvent, renderWithRouter, wait } from 'utils/test-utils';
-import blocks from './blocks';
-import data from './transactions';
 import { beforeAll } from './LatestBlocks.test';
 
 describe('Latest Transactions', () => {
   test('Latest Transactions component is displaying', async () => {
-    // const mockPost = jest.spyOn(axios, 'post');
-    // mockPost.mockReturnValueOnce(Promise.resolve({ data: blocks }));
-    // mockPost.mockReturnValueOnce(Promise.resolve({ data }));
-    // const render = renderWithRouter({
-    //   route: '/',
-    // });
     const render = beforeAll();
     const transactions = await render.findByTestId('transactionsList');
     expect(transactions!.childElementCount).toBe(20);
