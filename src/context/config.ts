@@ -55,7 +55,10 @@ const config = configIsDefined ? buildInitialConfig(importedConfig) : buildIniti
 
 let configTestnets = [...config.testnets];
 
-if (localTestnets.some(testnet => testnet.default) && !process.env.REACT_APP_USE_GLOBAL_DEFAULT) {
+if (
+  localTestnets.some(testnet => testnet.default) &&
+  process.env.REACT_APP_USE_GLOBAL_DEFAULT === 'false'
+) {
   configTestnets = configTestnets.map(testnet => ({ ...testnet, default: false }));
 }
 
