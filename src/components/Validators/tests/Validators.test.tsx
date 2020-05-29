@@ -53,7 +53,7 @@ describe('Validators filters', () => {
     const checkbox = render.getByTestId('includeObservers');
     fireEvent.click(checkbox);
 
-    expect(totalPages.textContent).toBe('474');
+    expect(totalPages.textContent).toBe('984');
   });
   test('Filter by observers working', async () => {
     if (document) {

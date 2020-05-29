@@ -46,7 +46,9 @@ const TransactionDetails: React.FC = () => {
             setTransaction(data);
             setTransactionFetched(true);
           } else {
-            setTransactionFetched(false);
+            if (ref.current !== null) {
+              setTransactionFetched(false);
+            }
           }
         }
       );

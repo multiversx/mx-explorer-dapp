@@ -79,7 +79,7 @@ const initialState = (config: ConfigType, optionalConfig?: ConfigType): StateTyp
     timeout: 3 * 1000,
     refresh: {
       timestamp: Date.now(),
-      intervalId: setInterval(() => null, 100000000000),
+      intervalId: setInterval(() => null, 10000000),
       testnetId: 'default',
     },
     validatorData,

@@ -87,10 +87,10 @@ const Validators = () => {
       const { data, success } = getValidatorsDataResponse;
       const { statistics, success: validatorsSuccess } = validatorStats;
       const validatorData = populateValidatorsTable({ data, metaChainShardId, statistics });
-      dispatch({ type: 'setValidatorData', validatorData });
-      const { data: brandData } = brand;
-      dispatch({ type: 'setBrandData', brandData });
       if (ref.current !== null) {
+        dispatch({ type: 'setValidatorData', validatorData });
+        const { data: brandData } = brand;
+        dispatch({ type: 'setBrandData', brandData });
         setSuccess(success && validatorsSuccess);
       }
     });

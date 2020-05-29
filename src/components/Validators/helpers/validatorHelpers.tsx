@@ -62,7 +62,7 @@ export const buildValidator = ({
   const totalUpTimeSec = pKeyinValidatorData ? validatorData[publicKey].totalUpTimeSec : 0;
   const versionNumber = pKeyinValidatorData ? validatorData[publicKey].versionNumber : '';
   const shardId =
-    statisticsShardId === metaChainShardId ? 'Metachain' : statisticsShardId.toString();
+    statisticsShardId === metaChainShardId ? 'Metachain' : String(statisticsShardId).toString();
 
   const star = isActive === true && computedShardID !== receivedShardID;
 

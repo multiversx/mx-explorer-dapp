@@ -73,7 +73,7 @@ const ShardsList = ({ shardData }: ShardsListType) => {
       <ShardCard shardEntry={blockchainStatus} isOverall />
       {shardData.map((shardEntry, i) => {
         return (
-          <React.Fragment key={shardEntry.shardNumber}>
+          <React.Fragment key={shardEntry.shardNumber + i}>
             {i === shardData.length - 3 && (
               <div className="d-none d-lg-block d-xl-none" style={{ flexBasis: '100%' }} />
             )}

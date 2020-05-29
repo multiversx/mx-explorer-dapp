@@ -77,7 +77,7 @@ const ValidatorsTableHeader = ({
   return (
     <thead>
       <tr>
-        {headers.map(header => (
+        {headers.map((header, i) => (
           <th
             className={`sortable 
               ${['totalUpTimeSec', 'rating'].includes(header.id) ? 'text-right' : ''}
@@ -173,11 +173,11 @@ const ValidatorsTableHeader = ({
                 overlay={
                   <Popover id="popover-positioned-bottom">
                     <Popover.Content>
-                      {shardData.map(({ shardNumber, shardID }) => {
+                      {shardData.map(({ shardNumber, shardID }, i) => {
                         return (
                           <a
                             className={`nav-link ${shardValue === shardID ? 'active' : ''}`}
-                            key={shardNumber}
+                            key={shardNumber + i}
                             href="#/validators"
                             onClick={e => changeShard(e, shardID)}
                           >
