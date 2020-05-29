@@ -66,9 +66,9 @@ interface BrandDataParamsType {
 
 export async function getBrandData({ explorerApi, timeout }: BrandDataParamsType) {
   try {
-    let { data } = await axios.get(`${explorerApi}/validators`, { timeout });
+    const { data } = await axios.get(`${explorerApi}/validators`, { timeout });
 
-    data = fakeBrandData ? fakeBrandData : data;
+    // data = fakeBrandData ? fakeBrandData : data;
 
     return {
       data,
