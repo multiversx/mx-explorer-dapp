@@ -55,6 +55,13 @@ const TransactionDetails: React.FC = () => {
     }
   }, [elasticUrl, transactionId, timeout]); // run the operation only once since the parameter does not change
 
+  const errorMessage =
+    transaction &&
+    ['Not Executed'].includes(transaction.status) &&
+    transaction.scResults !== undefined
+      ? transaction.scResults[0].returnMessage
+      : '';
+
   return (
     <div ref={ref}>
       <div className="container pt-3 pb-3">
@@ -94,6 +101,7 @@ const TransactionDetails: React.FC = () => {
                         <div className="col-lg-2 card-label">Status</div>
                         <div className="col-lg-10">
                           <TransactionStatus status={transaction.status} />
+                          {errorMessage && <span className="text-muted"> ({errorMessage})</span>}
                         </div>
                       </div>
                       <hr className="hr-space" />

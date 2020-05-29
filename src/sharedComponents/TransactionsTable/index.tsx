@@ -20,6 +20,9 @@ export interface TransactionType {
   status: string;
   timestamp: number;
   value: string;
+  scResults?: Array<{
+    returnMessage: string;
+  }>;
 }
 
 interface TransactionsTableType {
