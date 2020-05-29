@@ -100,7 +100,10 @@ const Validators = () => {
 
   React.useEffect(getData, [nodeUrl, timeout]);
 
-  const validator = validatorData.validators.find(v => v.publicKey === hash);
+  let validator = validatorData.validatorsAndObservers.find(v => v.publicKey === hash);
+  if (hash && validator === undefined && validatorData.validatorsAndObservers.length > 0) {
+    validator = { peerType: 'observer' } as any;
+  }
 
   return useMemo(
     () => (
