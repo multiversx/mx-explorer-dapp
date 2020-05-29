@@ -36,7 +36,10 @@ async function getAsyncConfig({ nodeUrl, timeout, id }: GetAsyncConfigType) {
       console.error('Async config errors: ', errors);
     });
 
-    const { config } = data.message as AsyncConfigType['message'];
+    const { config } =
+      'message' in data
+        ? (data.message as AsyncConfigType['message'])
+        : (data as AsyncConfigType['message']);
 
     return {
       id,
@@ -54,7 +57,7 @@ export default async function buildConfig() {
   const testnets = config.testnets.map(({ id, nodeUrl }) => ({
     id,
     nodeUrl,
-    timeout: 3 * 1000,
+    timeout: 5 * 1000,
   }));
 
   const promises = testnets.map(testnet => getAsyncConfig(testnet));
