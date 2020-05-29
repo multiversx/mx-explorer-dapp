@@ -1,32 +1,37 @@
 import axios from 'axios';
-import { fireEvent, renderWithRouter, wait } from 'utils/test-utils';
+import { fireEvent, renderWithRouter, wait, meta } from 'utils/test-utils';
 import data from './blocks';
+import markers from './markers';
+import transactions from './transactions';
+
+export const beforeAll = () => {
+  const mockPost = jest.spyOn(axios, 'post');
+  const mockGet = jest.spyOn(axios, 'get');
+  mockPost.mockReturnValueOnce(Promise.resolve({ data }));
+  mockPost.mockReturnValueOnce(Promise.resolve({ data: transactions }));
+  mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
+  mockGet.mockReturnValueOnce(Promise.resolve({ data: markers }));
+  return renderWithRouter({
+    route: '/',
+  });
+};
 
 describe('Latest Blocks', () => {
   test('Latest Blocks component is displaying', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockReturnValueOnce(Promise.resolve({ data }));
-    const render = renderWithRouter({
-      route: '/',
-    });
-
+    const render = beforeAll();
     await wait(async () => {
       expect(render.queryByTestId('blocksList')!.childElementCount).toBe(20);
     });
   });
   test('Latest Blocks component loading state', async () => {
-    const render = renderWithRouter({
-      route: '/',
-    });
+    const render = beforeAll();
     expect(render.queryByTestId('blocksLoader')).toBeDefined();
   });
   test('Latest Blocks component failing state', async () => {
     const mockPost = jest.spyOn(axios, 'post');
     mockPost.mockRejectedValueOnce(new Error('the error'));
 
-    const render = renderWithRouter({
-      route: '/',
-    });
+    const render = beforeAll();
     await wait(async () => {
       expect(render.queryByText('Unable to load blocks')).toBeDefined();
     });
@@ -35,11 +40,7 @@ describe('Latest Blocks', () => {
 
 describe('Latest Blocks Links', () => {
   test('View All Blocks', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockReturnValueOnce(Promise.resolve({ data }));
-    const render = renderWithRouter({
-      route: '/',
-    });
+    const render = beforeAll();
 
     const allBlocksLink = await render.findByText('View All Blocks');
     expect(allBlocksLink).toBeInTheDocument();
@@ -50,11 +51,7 @@ describe('Latest Blocks Links', () => {
     });
   });
   test('Block Link', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockReturnValueOnce(Promise.resolve({ data }));
-    const render = renderWithRouter({
-      route: '/',
-    });
+    const render = beforeAll();
 
     const blockLink = await render.findByTestId('blockLink0');
     expect(blockLink).toBeInTheDocument();
@@ -66,11 +63,7 @@ describe('Latest Blocks Links', () => {
     });
   });
   test('Block Hash Link', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockReturnValueOnce(Promise.resolve({ data }));
-    const render = renderWithRouter({
-      route: '/',
-    });
+    const render = beforeAll();
 
     const blockHashLink = await render.findByTestId('blockHashLink0');
     expect(blockHashLink).toBeInTheDocument();

@@ -2,23 +2,22 @@ import axios from 'axios';
 import { fireEvent, renderWithRouter, wait } from 'utils/test-utils';
 import blocks from './blocks';
 import data from './transactions';
+import { beforeAll } from './LatestBlocks.test';
 
 describe('Latest Transactions', () => {
   test('Latest Transactions component is displaying', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockReturnValueOnce(Promise.resolve({ data: blocks }));
-    mockPost.mockReturnValueOnce(Promise.resolve({ data }));
-    const render = renderWithRouter({
-      route: '/',
-    });
-
+    // const mockPost = jest.spyOn(axios, 'post');
+    // mockPost.mockReturnValueOnce(Promise.resolve({ data: blocks }));
+    // mockPost.mockReturnValueOnce(Promise.resolve({ data }));
+    // const render = renderWithRouter({
+    //   route: '/',
+    // });
+    const render = beforeAll();
     const transactions = await render.findByTestId('transactionsList');
     expect(transactions!.childElementCount).toBe(20);
   });
   test('Latest Transactions component loading state', async () => {
-    const render = renderWithRouter({
-      route: '/',
-    });
+    const render = beforeAll();
     expect(render.queryByTestId('transactionsLoader')).toBeDefined();
   });
   test('Latest Transactions component failing state', async () => {
@@ -37,12 +36,7 @@ describe('Latest Transactions', () => {
 
 describe('Latest Transactions Links', () => {
   test('Wiew all Transactions', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockReturnValueOnce(Promise.resolve({ data: blocks }));
-    mockPost.mockReturnValueOnce(Promise.resolve({ data }));
-    const render = renderWithRouter({
-      route: '/',
-    });
+    const render = beforeAll();
 
     const link = render.getByText('View All Transactions');
     fireEvent.click(link);
@@ -51,12 +45,7 @@ describe('Latest Transactions Links', () => {
     });
   });
   test('TxHash link', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockReturnValueOnce(Promise.resolve({ data: blocks }));
-    mockPost.mockReturnValueOnce(Promise.resolve({ data }));
-    const render = renderWithRouter({
-      route: '/',
-    });
+    const render = beforeAll();
 
     const link = await render.findByTestId('transactionLink0');
 
@@ -66,12 +55,7 @@ describe('Latest Transactions Links', () => {
     });
   });
   test('Tx To link', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockReturnValueOnce(Promise.resolve({ data: blocks }));
-    mockPost.mockReturnValueOnce(Promise.resolve({ data }));
-    const render = renderWithRouter({
-      route: '/',
-    });
+    const render = beforeAll();
 
     const link = await render.findByTestId('transactionLinkTo0');
 
