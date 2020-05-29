@@ -100,17 +100,19 @@ const Validators = () => {
 
   React.useEffect(getData, [nodeUrl, timeout]);
 
+  const validator = validatorData.validators.find(v => v.publicKey === hash);
+
   return useMemo(
     () => (
       <>
-        {hash !== undefined ? (
-          <ValidatorDetails validator={validatorData.validators.find(v => v.publicKey === hash)} />
+        {validator !== undefined ? (
+          <ValidatorDetails validator={validator} />
         ) : (
           <div ref={ref}>
             <div className="container pt-3 pb-3">
               <div className="row">
                 <div className="col-12">
-                  <h4 data-testid="title">Validators</h4>
+                  <h4 data-testid="title">{hash ? 'Node Information' : 'Validators'}</h4>
                 </div>
               </div>
               {success ? (
