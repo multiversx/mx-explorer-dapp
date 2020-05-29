@@ -1,6 +1,7 @@
 import { faCogs } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useMemo } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import { useGlobalState, useGlobalDispatch } from 'context';
 import { Loader } from 'sharedComponents';
 import {
@@ -12,7 +13,8 @@ import { populateValidatorsTable } from './helpers/validatorHelpers';
 import ShardsList from './ShardsList';
 import ValidatorsTable, { StateType } from './ValidatorsTable';
 import ValidatorsBrandTable from './ValidatorsBrandTable';
-import { useLocation } from 'react-router-dom';
+import ValidatorDetails from './ValidatorDetails';
+
 import { validatorsRouteNames } from 'routes';
 
 export interface ValidatorType {
@@ -68,6 +70,8 @@ const Validators = () => {
     brandData,
   } = useGlobalState();
   const dispatch = useGlobalDispatch();
+  const { pathname } = useLocation();
+  const { hash } = useParams();
 
   const [success, setSuccess] = React.useState(true);
 
@@ -92,53 +96,59 @@ const Validators = () => {
     });
   };
 
-  const showNodes = useLocation().pathname.endsWith(validatorsRouteNames.validatorsNodes);
+  const showNodes = pathname.endsWith(validatorsRouteNames.validatorsNodes);
 
   React.useEffect(getData, [nodeUrl, timeout]);
 
   return useMemo(
     () => (
-      <div ref={ref}>
-        <div className="container pt-3 pb-3">
-          <div className="row">
-            <div className="col-12">
-              <h4 data-testid="title">Validators</h4>
-            </div>
-          </div>
-          {success ? (
-            <>
-              {validatorData.validatorsAndObservers.length > 0 ? (
+      <>
+        {hash !== undefined ? (
+          <ValidatorDetails validator={validatorData.validators.find(v => v.publicKey === hash)} />
+        ) : (
+          <div ref={ref}>
+            <div className="container pt-3 pb-3">
+              <div className="row">
+                <div className="col-12">
+                  <h4 data-testid="title">Validators</h4>
+                </div>
+              </div>
+              {success ? (
                 <>
-                  <ShardsList shardData={validatorData.shardData} />
+                  {validatorData.validatorsAndObservers.length > 0 ? (
+                    <>
+                      <ShardsList shardData={validatorData.shardData} />
 
-                  {showNodes ? (
-                    <ValidatorsTable
-                      {...validatorData}
-                      validatorDetails={validatorDetails || false}
-                    />
+                      {showNodes ? (
+                        <ValidatorsTable
+                          {...validatorData}
+                          validatorDetails={validatorDetails || false}
+                        />
+                      ) : (
+                        <ValidatorsBrandTable
+                          allValidators={validatorData.validators}
+                          brandData={brandData}
+                        />
+                      )}
+                    </>
                   ) : (
-                    <ValidatorsBrandTable
-                      allValidators={validatorData.validators}
-                      brandData={brandData}
-                    />
+                    <Loader />
                   )}
                 </>
               ) : (
-                <Loader />
-              )}
-            </>
-          ) : (
-            <div className="card">
-              <div className="card-body card-details" data-testid="errorScreen">
-                <div className="empty">
-                  <FontAwesomeIcon icon={faCogs} className="empty-icon" />
-                  <span className="h4 empty-heading">Unable to load validators</span>
+                <div className="card">
+                  <div className="card-body card-details" data-testid="errorScreen">
+                    <div className="empty">
+                      <FontAwesomeIcon icon={faCogs} className="empty-icon" />
+                      <span className="h4 empty-heading">Unable to load validators</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
+          </div>
+        )}
+      </>
     ),
     [success, validatorDetails, validatorData, showNodes, brandData]
   );

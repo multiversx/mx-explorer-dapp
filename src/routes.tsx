@@ -48,7 +48,7 @@ const routes: RouteType[] = [
   {
     path: '/validators/:hash',
     title: 'Validator Details',
-    component: ValidatorDetails,
+    component: Validators,
   },
   {
     path: '/address/:hash',
