@@ -829,6 +829,14 @@ svg[data-prefix='fas'] {
 /* Branded Validators
 -------------------------------------------------- */
 .branded-validators {
+  .avatar {
+    box-shadow: rgba(189, 197, 209, 0.5) 0px 0.1rem 1.2rem;
+    border-radius: 50%;
+
+    &.gray {
+      opacity: 0.4;
+    }
+  }
   table {
     .w-10 {
       width: 10%;
@@ -860,15 +868,6 @@ svg[data-prefix='fas'] {
       &.collapsed {
         .details-arrow {
           transform: rotateZ(-90deg);
-        }
-      }
-
-      .avatar {
-        box-shadow: rgba(189, 197, 209, 0.5) 0px 0.1rem 1.2rem;
-        border-radius: 50%;
-
-        &.gray {
-          opacity: 0.4;
         }
       }
 

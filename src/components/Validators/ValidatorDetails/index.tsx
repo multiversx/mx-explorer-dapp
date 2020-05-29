@@ -9,7 +9,7 @@ import { validatorFunctions } from 'helpers';
 import NetworkMetrics, { NetworkMetricsType } from './NetworkMetrics';
 import NodeInformation, { NodeInformationType } from './NodeInformation';
 import Rounds from './Rounds';
-// import BrandInformation from './BrandInformation';
+import BrandInformation from './BrandInformation';
 
 export type StateType = NetworkMetricsType &
   // ValidatorStatisticsData &
@@ -104,31 +104,33 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
 
   const networkMetricsClass = isValidator ? 'col-md-8' : 'col-12';
 
+  const nodeClass = 'col-md-8';
+  const brandClass = 'col-md-4';
+
   return (
     <div ref={ref}>
       <div className="container pt-3 pb-3">
         <div className="row">
-          <div className={success ? 'col-md-12' /* col-md-7 */ : 'col-12'}>
+          <div className={success ? nodeClass : 'col-12'}>
             <h4 data-testid="title">Node Information</h4>
           </div>
-          {/* {publicKey !== '' && (
-            <div className="col-md-5">
-              <h4>Brand Info</h4>
+          {publicKey !== '' && (
+            <div className={brandClass}>
+              <h4 className="d-sm-none d-lg-block">&nbsp;</h4>
             </div>
-          )} */}
+          )}
         </div>
         {success ? (
           <>
             {publicKey !== '' ? (
               <>
                 <div className="row">
-                  {/* col-md-7 */}
-                  <div className="col-md-12">
+                  <div className={nodeClass}>
                     <NodeInformation {...state} />
                   </div>
-                  {/* <div className="col-md-5">
-                    <BrandInformation />
-                  </div> */}
+                  <div className={brandClass}>
+                    <BrandInformation publicKey={state.publicKey} />
+                  </div>
                 </div>
                 <div className="row">
                   <div className={networkMetricsClass}>

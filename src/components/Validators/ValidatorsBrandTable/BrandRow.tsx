@@ -9,18 +9,22 @@ interface BrandRowType {
   rank: number;
 }
 
+export const stake = (brand: BrandType) =>
+  brand.stake
+    .toLocaleString('en')
+    .replace(',000,000', 'm')
+    .replace('00,000', 'm')
+    .replace(',', '.');
+
+export const cumulativeStakePercent = (brand: BrandType) =>
+  `${Math.round(brand.stakePercent) > 0 ? Math.round(brand.stakePercent) : '< 1'}%`;
+
 const BrandRow = ({ brand, rank }: BrandRowType) => {
   const [collapsed, setCollapsed] = React.useState(true);
 
   const onClick = () => {
     setCollapsed(!collapsed);
   };
-
-  const stake = brand.stake
-    .toLocaleString('en')
-    .replace(',000,000', 'm')
-    .replace('00,000', 'm')
-    .replace(',', '.');
 
   return brand.validators.length ? (
     <>
@@ -40,7 +44,7 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
           </div>
         </td>
 
-        <td>{stake} ERD</td>
+        <td>{stake(brand)} ERD</td>
         <td className="stake-bar-col">
           <PercentegeBar
             totalUpTimeLabel={Math.round(brand.overallStakePercent) + '%'}
@@ -48,9 +52,7 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
             totalDownTimeLabel={Math.round(brand.stakePercent) + '%'}
             totalDownTimePercentege={brand.stakePercent}
           />
-          <div className="stake-percent">
-            {Math.round(brand.stakePercent) > 0 ? Math.round(brand.stakePercent) : '< 1'}%
-          </div>
+          <div className="stake-percent">{cumulativeStakePercent(brand)}</div>
         </td>
         <td className="text-right">{brand.validators.length}</td>
         <td className="text-right">{Math.floor(brand.score).toLocaleString()}</td>
