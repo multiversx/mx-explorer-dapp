@@ -2,7 +2,7 @@ import React from 'react';
 import carretDown from 'assets/img/carret-down.svg';
 import BrandDetailsRow from './BrandDetailsRow';
 import { BrandType } from './index';
-import PercentegeBar from 'components/ValidatorDetails/PercentegeBar';
+import PercentegeBar from '../ValidatorDetails/PercentegeBar';
 
 interface BrandRowType {
   brand: BrandType;

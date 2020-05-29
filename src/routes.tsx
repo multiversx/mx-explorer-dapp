@@ -6,7 +6,6 @@ import Home from './components/Home';
 import MiniBlockDetails from './components/MiniBlockDetails';
 import TransactionDetails from './components/TransactionDetails';
 import Transactions from './components/Transactions';
-import ValidatorDetails from './components/ValidatorDetails';
 import Validators from './components/Validators';
 import { withPageTitle, withTestnetReady } from './sharedComponents';
 
