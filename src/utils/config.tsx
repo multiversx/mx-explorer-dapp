@@ -30,6 +30,7 @@ export default {
       validatorDetails: true,
       faucet: false,
       validatorsApiUrl: 'https://api.elrond.com',
+      nrOfShards: 5,
     },
   ],
 };

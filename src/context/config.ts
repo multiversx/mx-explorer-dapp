@@ -20,6 +20,7 @@ export const defaultTestnet = {
   wallet: true,
   validatorDetails: false,
   faucet: false,
+  nrOfShards: 0,
 };
 
 export const buildInitialConfig = (config?: any): ConfigType => {

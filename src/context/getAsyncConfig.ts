@@ -77,6 +77,7 @@ export default async function buildConfig() {
         gasPrice: testnetData.config.erd_min_gas_price,
         gasPerDataByte: testnetData.config.erd_gas_per_data_byte,
         refreshRate: testnetData.config.erd_round_duration,
+        nrOfShards: testnetData.config.erd_num_shards_without_meta,
       };
     }),
   };

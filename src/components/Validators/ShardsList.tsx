@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faServer } from '@fortawesome/free-solid-svg-icons';
+import { useGlobalState } from 'context';
 import { ComputedShard } from './ValidatorsTable';
 
 interface ShardCardType {
@@ -53,6 +54,11 @@ interface ShardsListType {
 }
 
 const ShardsList = ({ shardData }: ShardsListType) => {
+  const {
+    activeTestnet: { nrOfShards },
+    config: { metaChainShardId },
+  } = useGlobalState();
+
   const blockchainStatus: ComputedShard = {
     shardID: 'Active Validators',
     shardNumber: -1,
@@ -68,6 +74,8 @@ const ShardsList = ({ shardData }: ShardsListType) => {
     ),
   };
 
+  const allowedShards = [...Array.from(Array(nrOfShards).keys()), metaChainShardId];
+
   return (
     <div className="row d-flex pl-3">
       <ShardCard shardEntry={blockchainStatus} isOverall />
@@ -77,7 +85,9 @@ const ShardsList = ({ shardData }: ShardsListType) => {
             {i === shardData.length - 3 && (
               <div className="d-none d-lg-block d-xl-none" style={{ flexBasis: '100%' }} />
             )}
-            <ShardCard shardEntry={shardEntry} />
+            {allowedShards.includes(shardEntry.shardNumber) && (
+              <ShardCard shardEntry={shardEntry} />
+            )}
           </React.Fragment>
         );
       })}
