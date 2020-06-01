@@ -31,9 +31,21 @@ const ValidatorsBrandTable = ({ allValidators, brandData }: ValidatorsBrandTable
     brandData,
     allValidators: [...allValidators],
   });
+  const ref = React.useRef(null);
+  const [brands, setBrands] = React.useState([...sortedBrands].slice(0, 10));
+
+  const delayRendering = () => {
+    setTimeout(() => {
+      if (ref.current !== null) {
+        setBrands(sortedBrands);
+      }
+    }, 100);
+  };
+
+  React.useEffect(delayRendering, []);
 
   return (
-    <div className="branded-validators row mb-3">
+    <div className="branded-validators row mb-3" ref={ref}>
       <div className="col-12">
         <div className="card">
           <div className="card-body card-list">
@@ -53,7 +65,7 @@ const ValidatorsBrandTable = ({ allValidators, brandData }: ValidatorsBrandTable
                   </tr>
                 </thead>
                 <tbody>
-                  {sortedBrands.map((brand, i) => (
+                  {brands.map((brand, i) => (
                     <BrandRow key={i} rank={i + 1} brand={brand} />
                   ))}
                 </tbody>

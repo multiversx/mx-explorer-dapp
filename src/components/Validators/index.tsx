@@ -1,19 +1,14 @@
-import { faCogs } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useGlobalState, useGlobalDispatch } from 'context';
-import { Loader } from 'sharedComponents';
 import {
   getValidatorsHeartbeat,
   getValidatorStatistics,
   getBrandData,
 } from './helpers/asyncRequests';
 import { populateValidatorsTable } from './helpers/validatorHelpers';
-import ShardsList from './ShardsList';
-import ValidatorsTable, { StateType } from './ValidatorsTable';
-import ValidatorsBrandTable from './ValidatorsBrandTable';
-import ValidatorDetails from './ValidatorDetails';
+import { StateType } from './ValidatorsTable';
+import ValidatorSwitch from './ValidatorSwitch';
 
 import { validatorsRouteNames } from 'routes';
 
@@ -108,57 +103,20 @@ const Validators = () => {
     }
   }
 
-  return useMemo(
-    () => (
-      <>
-        {validator !== undefined ? (
-          <ValidatorDetails validator={validator} />
-        ) : (
-          <div ref={ref}>
-            <div className="container pt-3 pb-3">
-              <div className="row">
-                <div className="col-12">
-                  <h4 data-testid="title">{hash ? 'Node Information' : 'Validators'}</h4>
-                </div>
-              </div>
-              {success ? (
-                <>
-                  {validatorData.validatorsAndObservers.length > 0 ? (
-                    <>
-                      <ShardsList shardData={validatorData.shardData} />
+  const props = {
+    validator,
+    hash,
+    success,
+    validatorData,
+    showNodes,
+    validatorDetails,
+    brandData,
+  };
 
-                      {showNodes ? (
-                        <ValidatorsTable
-                          {...validatorData}
-                          validatorDetails={validatorDetails || false}
-                        />
-                      ) : (
-                        <ValidatorsBrandTable
-                          allValidators={validatorData.validators}
-                          brandData={brandData}
-                        />
-                      )}
-                    </>
-                  ) : (
-                    <Loader />
-                  )}
-                </>
-              ) : (
-                <div className="card">
-                  <div className="card-body card-details" data-testid="errorScreen">
-                    <div className="empty">
-                      <FontAwesomeIcon icon={faCogs} className="empty-icon" />
-                      <span className="h4 empty-heading">Unable to load validators</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-      </>
-    ),
-    [success, validatorDetails, validatorData, showNodes, brandData]
+  return (
+    <div ref={ref}>
+      <ValidatorSwitch {...props} />
+    </div>
   );
 };
 
