@@ -2,12 +2,14 @@ import axios from 'axios';
 import { fireEvent, renderWithRouter, wait, meta } from '../../../utils/test-utils';
 import heartbeatstatus from './heartbeatstatus';
 import statistics from './statistics';
+import validators from './validators';
 
 const goToValidatorsPage = () => {
   const mockGet = jest.spyOn(axios, 'get');
   mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
   mockGet.mockReturnValueOnce(Promise.resolve({ data: heartbeatstatus }));
   mockGet.mockReturnValueOnce(Promise.resolve({ data: statistics }));
+  mockGet.mockReturnValueOnce(Promise.resolve({ data: validators }));
   return renderWithRouter({
     route: '/validators/nodes',
   });
