@@ -30,7 +30,9 @@ const NetworkMetrics = ({
         <div className={cardBodyClass}>
           <div className="row">
             <div className="col-lg-3 card-label">Rating</div>
-            <div className="col-lg-9">{rating}</div>
+            <div className="col-lg-9">
+              {!isNaN(rating) ? rating : <span className="text-muted">N/A</span>}
+            </div>
           </div>
           <hr className="hr-space" />
 
