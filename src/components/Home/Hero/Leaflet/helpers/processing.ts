@@ -29,7 +29,7 @@ const getGroupedCities = (markers: MarkerPoint[]) => {
 };
 
 const maxLineLength = 20;
-const min = 5;
+const min = 10;
 const lineLen = (x: number, max: number) =>
   (maxLineLength * Math.log(x + min)) / Math.log(max + min);
 const getRadius = (groupedCities: Array<{ items: number[] }>) => {
