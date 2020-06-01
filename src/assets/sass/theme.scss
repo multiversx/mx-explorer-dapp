@@ -1,20 +1,6 @@
 /* Last minute variables overrides (TODO: review these)
 -------------------------------------------------- */
 
-$blue: #1b46c2;
-$link-color: #6b8ffb;
-
-.bg-blue {
-  // background-image: linear-gradient(150deg, #0baae9, #1851db);
-  background-color: #1b46c2 !important;
-  // background-image: linear-gradient(150deg,lighten($blue,20%),$blue);
-  background-repeat: repeat-x;
-}
-
-.bg-black {
-  background-color: #000;
-}
-
 .leaflet-container {
   background-color: transparent;
 }
@@ -33,6 +19,7 @@ $headings-font-weight: 300 !important;
 @import './shards/shards';
 @import './validatorInfos';
 @import './type';
+@import './variables';
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -822,129 +809,6 @@ svg[data-prefix='fas'] {
     &:not(.active) {
       border-color: $white;
       border-bottom-color: #dee2e6;
-    }
-  }
-}
-
-/* Branded Validators
--------------------------------------------------- */
-.branded-validators {
-  .avatar {
-    box-shadow: rgba(189, 197, 209, 0.5) 0px 0.1rem 1.2rem;
-    border-radius: 50%;
-
-    &.gray {
-      opacity: 0.4;
-    }
-  }
-  table {
-    .w-10 {
-      width: 10%;
-    }
-
-    .th-details,
-    .th-rank {
-      width: 12px;
-    }
-
-    .th-stake-percent {
-      width: 260px;
-    }
-
-    .brand-tr {
-      position: relative;
-
-      &:first-child {
-        .progress-bar {
-          min-width: auto !important;
-        }
-      }
-
-      &:hover {
-        background-color: #f8f9fa;
-        cursor: pointer;
-      }
-
-      &.collapsed {
-        .details-arrow {
-          transform: rotateZ(-90deg);
-        }
-      }
-
-      .stake-bar-col {
-        position: relative;
-
-        .progress {
-          margin-top: 2px;
-          margin-right: 60px;
-
-          .progress-bar {
-            min-width: 1px;
-          }
-
-          .bg-success {
-            background-color: $link-color !important;
-          }
-
-          .bg-danger {
-            background-color: $blue !important;
-          }
-        }
-
-        .stake-percent {
-          position: absolute;
-          right: 10px;
-          opacity: 1;
-          top: 50%;
-          transform: translateY(-50%);
-        }
-      }
-    }
-
-    $detailsTableBgColor: rgba(0, 0, 0, 0.075);
-
-    .details-tr {
-      background-color: $detailsTableBgColor;
-
-      &:hover {
-        background-color: $detailsTableBgColor;
-      }
-
-      .content {
-        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-        position: relative;
-
-        th {
-          background: none;
-          text-transform: uppercase;
-          font-size: 0.785rem;
-          border-bottom: 0;
-        }
-
-        tr {
-          background-color: $detailsTableBgColor;
-          color: #5a6169;
-        }
-      }
-
-      &.collapsed {
-        td {
-          border-top: 0;
-
-          .content {
-            max-height: 0;
-            overflow: hidden;
-          }
-
-          .details-arrow {
-            transform: rotateZ(-90deg);
-          }
-        }
-      }
-    }
-
-    td {
-      vertical-align: middle;
     }
   }
 }
