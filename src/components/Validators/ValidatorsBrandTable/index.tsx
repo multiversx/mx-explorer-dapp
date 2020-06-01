@@ -3,6 +3,7 @@ import BrandRow from './BrandRow';
 import { ValidatorType } from './../index';
 import { groupByBrandAndSort } from './helpers/brandHelper';
 import Tabs from '../Tabs';
+import './validatorsBrand.scss';
 
 export interface BrandType {
   name: string;
