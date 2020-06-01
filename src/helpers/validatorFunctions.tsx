@@ -53,7 +53,7 @@ export async function getEpoch({ nodeUrl, shardNumber, timeout }: GetEpochType) 
   try {
     const {
       data: { message },
-    } = await axios.get(`${nodeUrl}/node/epoch/${shardNumber}`, {
+    } = await axios.get(`${nodeUrl}/network/status/${shardNumber}`, {
       timeout,
     });
 
