@@ -29,9 +29,12 @@ export function groupByBrandAndSort({
 
     // sort DESC
     validators.sort((a, b) => b.rating - a.rating);
-
     sortedBrands.push(generateBrandTypeWithStats({ brand, validators, stakePerValidator }));
   });
+
+  if (sortedBrands.every(b => b.score === 0)) {
+    sortedBrands.sort((a, b) => b.stake - a.stake);
+  }
 
   // add the rest of the brandless validators
   allValidators.forEach(validator => {
