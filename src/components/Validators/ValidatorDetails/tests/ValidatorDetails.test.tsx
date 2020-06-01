@@ -15,7 +15,7 @@ export const beforeAll = () => {
         return Promise.resolve({ data: meta });
       case url.includes(`/node/heartbeatstatus`):
         return Promise.resolve({ data: heartbeatstatus });
-      case url.includes('/node/epoch/1'):
+      case url.includes('/network/status/1'):
         return Promise.resolve({ data: epoch });
       case url.includes('/validators/_doc/1_36'):
         return Promise.resolve({ data: doc });
@@ -48,9 +48,9 @@ describe('Node Information', () => {
       expect(render.getByText('Node Information')).toBeDefined();
     });
 
-    expect(render.getByTestId('versionNumber').innerHTML).toBe(
-      'v1.0.115-0-g40e42e696-dirty/go1.13.5/linux-amd64'
-    );
+    const versionNumber = await render.findByTestId('versionNumber');
+
+    expect(versionNumber.innerHTML).toBe('v1.0.115-0-g40e42e696-dirty/go1.13.5/linux-amd64');
 
     expect(render.getByTestId('progresUpTimeBar').id).toBe('100.00% (2 days)100');
     expect(render.getByTestId('progresDownTimeBar').id).toBe('0.00% (a few seconds)0');
