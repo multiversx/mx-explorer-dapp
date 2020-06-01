@@ -27,8 +27,8 @@ const ValidatorSwitch = ({
   showNodes,
   validatorDetails,
   brandData,
-}: ValidatorSwitchType) =>
-  useMemo(() => {
+}: ValidatorSwitchType) => {
+  return useMemo(() => {
     return (
       <>
         {validator !== undefined ? (
@@ -43,7 +43,7 @@ const ValidatorSwitch = ({
               </div>
               {success ? (
                 <>
-                  {validatorData.validatorsAndObservers.length > 0 ? (
+                  {validatorData.validatorsAndObservers.length > 0 && brandData.length > 0 ? (
                     <>
                       <ShardsList shardData={validatorData.shardData} />
 
@@ -78,6 +78,7 @@ const ValidatorSwitch = ({
         )}
       </>
     );
-  }, [success, validatorData, showNodes, brandData]);
+  }, [success, validatorData, showNodes, brandData, validator]);
+};
 
 export default ValidatorSwitch;

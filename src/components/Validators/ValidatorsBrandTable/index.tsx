@@ -31,18 +31,21 @@ const ValidatorsBrandTable = ({ allValidators, brandData }: ValidatorsBrandTable
     brandData,
     allValidators: [...allValidators],
   });
+
   const ref = React.useRef(null);
   const [brands, setBrands] = React.useState([...sortedBrands].slice(0, 10));
 
   const delayRendering = () => {
-    setTimeout(() => {
-      if (ref.current !== null) {
-        setBrands(sortedBrands);
-      }
-    }, 100);
+    if (brands.length !== sortedBrands.length) {
+      setTimeout(() => {
+        if (ref.current !== null) {
+          setBrands(sortedBrands);
+        }
+      }, 100);
+    }
   };
 
-  React.useEffect(delayRendering, []);
+  React.useEffect(delayRendering, [sortedBrands]);
 
   return (
     <div className="branded-validators row mb-3" ref={ref}>
