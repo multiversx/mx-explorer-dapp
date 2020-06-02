@@ -74,13 +74,14 @@ const ShardsList = ({ shardData }: ShardsListType) => {
     ),
   };
 
-  const allowedShards = [...Array.from(Array(nrOfShards).keys()), metaChainShardId];
+  const allowedShards = [metaChainShardId, ...Array.from(Array(nrOfShards).keys())];
 
   return (
     <div className="row d-flex pl-3">
       <ShardCard shardEntry={blockchainStatus} isOverall />
-      {shardData.map((shardEntry, i) => {
-        return (
+      {allowedShards.map((shard, i) => {
+        const shardEntry = shardData.find(sh => sh.shardNumber === shard);
+        return shardEntry ? (
           <React.Fragment key={shardEntry.shardNumber + i}>
             {i === shardData.length - 3 && (
               <div className="d-none d-lg-block d-xl-none" style={{ flexBasis: '100%' }} />
@@ -89,7 +90,7 @@ const ShardsList = ({ shardData }: ShardsListType) => {
               <ShardCard shardEntry={shardEntry} />
             )}
           </React.Fragment>
-        );
+        ) : null;
       })}
     </div>
   );
