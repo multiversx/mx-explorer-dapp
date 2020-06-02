@@ -119,6 +119,8 @@ const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
     validator => validator.peerType === 'waiting'
   );
 
+  const start = (page - 1) * pageSize + (page === 1 ? 1 : 0);
+
   return (
     <div className="row pb-3">
       <div className="col-12">
@@ -158,6 +160,7 @@ const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
                       key={validator.publicKey}
                       ratingOrder={ratingOrder}
                       rowIndex={i}
+                      start={start}
                       validator={validator}
                       validatorDetails={validatorDetails}
                     />
@@ -168,7 +171,7 @@ const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
                 setPage={setPage}
                 total={dataSource.total()}
                 page={page}
-                start={(page - 1) * pageSize + (page === 1 ? 1 : 0)}
+                start={start}
                 end={
                   (page - 1) * pageSize +
                   (parseInt(newValidators.length.toString()) < pageSize

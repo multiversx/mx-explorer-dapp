@@ -10,15 +10,19 @@ const ValidatorRow = ({
   validatorDetails,
   rowIndex,
   ratingOrder,
+  start,
 }: {
   validator: ValidatorType;
   rowIndex: number;
+  start: number;
   validatorDetails: boolean;
   ratingOrder: string[];
 }) => {
   return (
     <tr className="animated fadeIn">
-      <td>{validator.rating > 0 ? ratingOrder.indexOf(validator.publicKey) + 1 : rowIndex + 1}</td>
+      <td>
+        {validator.rating > 0 ? ratingOrder.indexOf(validator.publicKey) + 1 : rowIndex + start}
+      </td>
 
       <td>
         {validator.peerType === 'observer' && (
