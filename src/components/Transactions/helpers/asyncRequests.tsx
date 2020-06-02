@@ -60,7 +60,7 @@ export async function getTransactions({
     } = await axios.post(
       `${elasticUrl}/transactions/_search`,
       {
-        sort: { timestamp: { order: 'desc' } },
+        sort: { timestamp: { order: 'desc' }, nonce: { order: 'desc' } },
         from: (size - 1) * 50,
         size: 50,
         ...{
