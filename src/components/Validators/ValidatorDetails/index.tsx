@@ -156,7 +156,7 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
                             <div className="col-12">
                               <div className="card">
                                 <div className="card-body">
-                                  Last 25 proposed blocks
+                                  Last {fetchedBlocks.blocks.length} proposed blocks
                                   <BlocksTable
                                     blocks={fetchedBlocks.blocks}
                                     shardId={undefined}
