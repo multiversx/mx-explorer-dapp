@@ -16,6 +16,8 @@ const RowIcon = ({ validator }: { validator: ValidatorType }) => {
     activeTestnet: { versionNumber },
   } = useGlobalState();
   switch (true) {
+    case validator.peerType === 'observer':
+      return <FontAwesomeIcon title="observer" icon={faEye} className="w300 mr-1" />;
     case validator.peerType === 'new':
       return <FontAwesomeIcon title="new" icon={faLeaf} className="w300 mr-1" />;
     case validator.star:
@@ -34,8 +36,6 @@ const RowIcon = ({ validator }: { validator: ValidatorType }) => {
           <FontAwesomeIcon icon={faExclamationTriangle} className="text-warning w300 mr-1" />
         </OverlayTrigger>
       );
-    case validator.peerType === 'observer':
-      return <FontAwesomeIcon title="observer" icon={faEye} className="w300 mr-1" />;
     case validator.peerType === 'jailed':
       return <FontAwesomeIcon title="jailed" icon={faLock} className="w300 mr-1" />;
     default:
