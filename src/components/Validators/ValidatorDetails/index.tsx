@@ -9,6 +9,7 @@ import { validatorFunctions } from 'helpers';
 import NetworkMetrics, { NetworkMetricsType } from './NetworkMetrics';
 import NodeInformation, { NodeInformationType } from './NodeInformation';
 import Rounds from './Rounds';
+import RatingsChart from './RatingsChart';
 import BrandInformation from './BrandInformation';
 
 export type StateType = NetworkMetricsType &
@@ -102,7 +103,7 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
 
   const { publicKey, isValidator } = state;
 
-  const networkMetricsClass = isValidator ? 'col-md-8' : 'col-12';
+  const networkMetricsClass = isValidator ? 'col-md-4' : 'col-8';
 
   const nodeClass = 'col-md-8';
   const brandClass = 'col-md-4';
@@ -137,6 +138,9 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
                 <div className="row">
                   <div className={networkMetricsClass}>
                     <NetworkMetrics {...state} />
+                  </div>
+                  <div className="col-md-4">
+                    <RatingsChart />
                   </div>
                   {isValidator && (
                     <div className="col-md-4">
