@@ -1,5 +1,7 @@
 import moment from 'moment';
 import axios from 'axios';
+import { object, number, InferType } from 'yup';
+
 import { ValidatorType } from './../components/Validators';
 
 export function getShardId(validator: ValidatorType, metaChainShardId: number) {
@@ -49,17 +51,34 @@ interface GetEpochType {
   timeout: number;
 }
 
+const schema = object({
+  status: object({
+    erd_current_round: number().required(),
+    erd_epoch_number: number().required(),
+    erd_nonce: number().required(),
+    erd_nonce_at_epoch_start: number().required(),
+    erd_nonces_passed_in_current_epoch: number().required(),
+    erd_round_at_epoch_start: number().required(),
+    erd_rounds_passed_in_current_epoch: number().required(),
+    erd_rounds_per_epoch: number().required(),
+  }).required(),
+});
+
 export async function getEpoch({ nodeUrl, shardNumber, timeout }: GetEpochType) {
   try {
-    const {
-      data: { message },
-    } = await axios.get(`${nodeUrl}/network/status/${shardNumber}`, {
+    const { data } = await axios.get(`${nodeUrl}/network/status/${shardNumber}`, {
       timeout,
     });
 
+    const message: InferType<typeof schema> = data.message;
+
+    schema.validate(message, { strict: true }).catch(({ errors }) => {
+      console.error('network/status response format errors: ', errors);
+    });
+
     return {
-      epoch: message.epochData.erd_epoch_number,
-      roundAtEpochStart: message.epochData.erd_round_at_epoch_start,
+      epoch: message.status.erd_epoch_number,
+      roundAtEpochStart: message.status.erd_round_at_epoch_start,
       epochSuccess: true,
     };
   } catch {
