@@ -31,6 +31,7 @@ interface GetAsyncConfigType {
 interface GetAsyncConfigReturnType {
   id: string;
   config: AsyncConfigType['message']['config'];
+  versionNumber: string; //TODO: remove
 }
 
 async function getAsyncConfig({
@@ -40,6 +41,12 @@ async function getAsyncConfig({
 }: GetAsyncConfigType): Promise<GetAsyncConfigReturnType> {
   try {
     const { data } = await axios.get(`${nodeUrl}/network/config`, { timeout });
+    const {
+      //TODO: remove
+      data: {
+        message: { details },
+      },
+    } = await axios.get(`${nodeUrl}/node/status/0`, { timeout });
 
     schema.validate(data, { strict: true }).catch(({ errors }) => {
       console.error('Async config errors: ', errors);
@@ -53,6 +60,7 @@ async function getAsyncConfig({
     return {
       id,
       config,
+      versionNumber: details.erd_latest_tag_software_version, //TODO: remove
     };
   } catch (err) {
     if (process.env.NODE_ENV === 'production') {
@@ -87,7 +95,7 @@ export default async function buildConfig() {
         gasPerDataByte: testnetData!.config.erd_gas_per_data_byte,
         refreshRate: testnetData!.config.erd_round_duration,
         nrOfShards: testnetData!.config.erd_num_shards_without_meta,
-        versionNumber: testnetData!.config.erd_chain_id,
+        versionNumber: testnetData!.versionNumber || testnetData!.config.erd_chain_id,
       };
     }),
   };

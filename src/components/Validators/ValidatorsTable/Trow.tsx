@@ -1,9 +1,8 @@
-import { faClock, faEye } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { truncate, trimHash } from 'helpers';
 import { ShardSpan, TestnetLink } from 'sharedComponents';
 import { ValidatorType } from './../index';
+import RowIcon from './RowIcon';
 
 const ValidatorRow = ({
   validator,
@@ -25,12 +24,7 @@ const ValidatorRow = ({
       </td>
 
       <td>
-        {validator.peerType === 'observer' && (
-          <FontAwesomeIcon title="observer" icon={faEye} className="w300 mr-1" />
-        )}
-        {validator.peerType === 'waiting' && (
-          <FontAwesomeIcon icon={faClock} className="w300 mr-1" />
-        )}
+        <RowIcon validator={validator} />
         {validator.peerType !== 'observer' && validatorDetails ? (
           <TestnetLink
             to={`/validators/${validator.publicKey}`}
@@ -55,7 +49,6 @@ const ValidatorRow = ({
           data-testid={`shardLink${rowIndex}`}
         >
           <ShardSpan shardId={validator.shardNumber} />
-          {validator.star && <span>*</span>}
         </TestnetLink>
       </td>
       <td>
