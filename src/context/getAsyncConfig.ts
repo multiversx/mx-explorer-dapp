@@ -5,19 +5,19 @@ import config from './config';
 const schema = object({
   message: object({
     config: object({
-      erd_chain_id: string(),
-      erd_gas_per_data_byte: number(),
-      erd_meta_consensus_group_size: number(),
-      erd_min_gas_limit: number(),
-      erd_min_gas_price: number(),
-      erd_num_metachain_nodes: number(),
-      erd_num_nodes_in_shard: number(),
-      erd_num_shards_without_meta: number(),
-      erd_round_duration: number(),
-      erd_shard_consensus_group_size: number(),
-      erd_start_time: number(),
-    }),
-  }),
+      erd_chain_id: string().required(),
+      erd_gas_per_data_byte: number().required(),
+      erd_meta_consensus_group_size: number().required(),
+      erd_min_gas_limit: number().required(),
+      erd_min_gas_price: number().required(),
+      erd_num_metachain_nodes: number().required(),
+      erd_num_nodes_in_shard: number().required(),
+      erd_num_shards_without_meta: number().required(),
+      erd_round_duration: number().required(),
+      erd_shard_consensus_group_size: number().required(),
+      erd_start_time: number().required(),
+    }).required(),
+  }).required(),
 });
 
 export type AsyncConfigType = InferType<typeof schema>;
@@ -28,7 +28,16 @@ interface GetAsyncConfigType {
   timeout: number;
 }
 
-async function getAsyncConfig({ nodeUrl, timeout, id }: GetAsyncConfigType) {
+interface GetAsyncConfigReturnType {
+  id: string;
+  config: AsyncConfigType['message']['config'];
+}
+
+async function getAsyncConfig({
+  nodeUrl,
+  timeout,
+  id,
+}: GetAsyncConfigType): Promise<GetAsyncConfigReturnType> {
   try {
     const { data } = await axios.get(`${nodeUrl}/network/config`, { timeout });
 
@@ -70,14 +79,15 @@ export default async function buildConfig() {
   const configObject = {
     ...config,
     testnets: foundTestnets.map(testnet => {
-      const testnetData: any = asyncData.find(entry => entry.id === testnet.id);
+      const testnetData = asyncData.find(entry => entry.id === testnet.id);
       return {
         ...testnet,
-        gasLimit: testnetData.config.erd_min_gas_limit,
-        gasPrice: testnetData.config.erd_min_gas_price,
-        gasPerDataByte: testnetData.config.erd_gas_per_data_byte,
-        refreshRate: testnetData.config.erd_round_duration,
-        nrOfShards: testnetData.config.erd_num_shards_without_meta,
+        gasLimit: testnetData!.config.erd_min_gas_limit,
+        gasPrice: testnetData!.config.erd_min_gas_price,
+        gasPerDataByte: testnetData!.config.erd_gas_per_data_byte,
+        refreshRate: testnetData!.config.erd_round_duration,
+        nrOfShards: testnetData!.config.erd_num_shards_without_meta,
+        versionNumber: testnetData!.config.erd_chain_id,
       };
     }),
   };

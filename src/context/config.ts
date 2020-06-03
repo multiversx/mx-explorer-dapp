@@ -21,6 +21,7 @@ export const defaultTestnet = {
   validatorDetails: false,
   faucet: false,
   nrOfShards: 0,
+  versionNumber: '',
 };
 
 export const buildInitialConfig = (config?: any): ConfigType => {
