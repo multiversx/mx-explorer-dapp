@@ -3,6 +3,7 @@ import { validatorFunctions } from 'helpers';
 import { BlockType } from 'components/Blocks';
 import { ValidatorType } from './../../';
 import { initialState } from './../index';
+import processHistoricRatings from './ratingsHelpers';
 
 interface GetValidatorType {
   currentValidator: ValidatorType;
@@ -149,6 +150,12 @@ export async function getValidator({
 
       const signersIndex = consensusArray.indexOf(publicKey);
 
+      const historicRatings: Array<{ epoch: number; rating: string }> = await getHistoricRatings({
+        elasticUrl,
+        timeout,
+        publicKey,
+      });
+
       return {
         shardId,
         shardNumber,
@@ -166,6 +173,7 @@ export async function getValidator({
         publicKey,
         epoch,
         roundAtEpochStart,
+        historicRatings,
         success: true,
       };
     }
@@ -177,5 +185,27 @@ export async function getValidator({
       data: initialState,
       success: false,
     };
+  }
+}
+
+interface HistoricRatingsType {
+  elasticUrl: string;
+  timeout: number;
+  publicKey: string;
+}
+
+async function getHistoricRatings({ elasticUrl, timeout, publicKey }: HistoricRatingsType) {
+  try {
+    const {
+      data: {
+        hits: { hits },
+      },
+    } = await axios.get(`${elasticUrl}/rating/_search?size=15`, { timeout });
+
+    const ratings = processHistoricRatings(hits);
+
+    return ratings[publicKey];
+  } catch {
+    return [];
   }
 }

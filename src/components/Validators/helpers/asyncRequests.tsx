@@ -67,28 +67,3 @@ export async function getBrandData({ explorerApi, timeout }: BrandDataParamsType
     };
   }
 }
-
-interface HistoricRatingsType {
-  elasticUrl: string;
-  timeout: number;
-}
-
-export async function getHistoricRatings({ elasticUrl, timeout }: HistoricRatingsType) {
-  try {
-    const {
-      data: {
-        hits: { hits },
-      },
-    } = await axios.get(`${elasticUrl}/rating/_search?size=15`, { timeout });
-
-    return {
-      data: hits,
-      success: true,
-    };
-  } catch {
-    return {
-      data: [],
-      success: false,
-    };
-  }
-}

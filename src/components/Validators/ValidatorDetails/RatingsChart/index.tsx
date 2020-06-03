@@ -2,11 +2,18 @@ import * as React from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 
-const RatingsChart = () => {
+export interface HistoricRatingType {
+  epoch: number;
+  rating: number;
+}
+
+const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType[] }) => {
+  console.warn(historicRatings);
+
   const series = [
     {
-      name: 'series-1',
-      data: [30, 40, 45, 50, 49, 60, 70, 91],
+      name: 'rating',
+      data: historicRatings.map(rating => rating.rating),
     },
   ];
   const options: ApexOptions = {
@@ -17,8 +24,15 @@ const RatingsChart = () => {
         show: false,
       },
     },
+    yaxis: {
+      labels: {
+        formatter: function format(value) {
+          return parseInt(String(value)).toString();
+        },
+      },
+    },
     xaxis: {
-      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+      categories: historicRatings.map(rating => rating.epoch),
     },
   };
   return (

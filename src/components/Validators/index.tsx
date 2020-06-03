@@ -5,9 +5,7 @@ import {
   getValidatorsHeartbeat,
   getValidatorStatistics,
   getBrandData,
-  getHistoricRatings,
 } from './helpers/asyncRequests';
-import processHistoricRatings from './helpers/ratingsHelpers';
 import { populateValidatorsTable } from './helpers/validatorHelpers';
 import { StateType } from './ValidatorsTable';
 import ValidatorSwitch from './ValidatorSwitch';
@@ -62,10 +60,9 @@ const Validators = () => {
       }),
       getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }),
       getBrandData({ explorerApi, timeout }),
-      getHistoricRatings({ elasticUrl, timeout }),
-    ]).then(([getValidatorsDataResponse, validatorStats, brand, historicRatings]) => {
+    ]).then(([getValidatorsDataResponse, validatorStats, brand]) => {
       const { data, success } = getValidatorsDataResponse;
-      const ratings = processHistoricRatings(historicRatings.data);
+
       const { statistics, success: validatorsSuccess } = validatorStats;
       const validatorData = populateValidatorsTable({ data, metaChainShardId, statistics });
       if (ref.current !== null) {
