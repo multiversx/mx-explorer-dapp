@@ -4,7 +4,7 @@ import { ShardSpan, TestnetLink } from 'sharedComponents';
 
 export interface NodeInformationType {
   publicKey: string;
-  instanceType: number;
+  instanceType: string;
   shardNumber: number;
   versionNumber: string;
   nodeDisplayName: string;

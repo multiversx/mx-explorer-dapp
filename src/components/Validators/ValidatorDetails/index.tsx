@@ -36,7 +36,7 @@ export const initialState: StateType = {
   totalUpTimePercentege: 0,
   totalUpTimeLabel: '',
   totalDownTimeLabel: '',
-  instanceType: 0,
+  instanceType: '0',
   startBlockNr: 0,
   endBlockNr: 0,
   signersIndex: -1,
@@ -107,6 +107,8 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
   const nodeClass = 'col-md-8';
   const brandClass = 'col-md-4';
 
+  const isWaiting = state.instanceType.includes('waiting');
+
   return (
     <div ref={ref}>
       <div className="container pt-3 pb-3">
@@ -138,7 +140,7 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
                   </div>
                   {isValidator && (
                     <div className="col-md-4">
-                      <Rounds {...rounds} />
+                      <Rounds {...rounds} isWaiting={isWaiting} />
                     </div>
                   )}
                 </div>
@@ -177,7 +179,9 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
                             <div className="card-body card-details" data-testid="errorScreen">
                               <div className="empty">
                                 <FontAwesomeIcon icon={faCube} className="empty-icon" />
-                                <span className="h4 empty-heading">No blocks found</span>
+                                <span className="h4 empty-heading">
+                                  {isWaiting ? 'Validator not in consensus' : 'No blocks found'}
+                                </span>
                               </div>
                             </div>
                           </div>

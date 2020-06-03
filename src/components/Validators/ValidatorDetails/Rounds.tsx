@@ -4,7 +4,11 @@ import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { validatorFunctions } from 'helpers';
 
-const Rounds = ({ rounds, roundsFetched }: validatorFunctions.GetRoundsReturnType) => {
+type RoundsType = validatorFunctions.GetRoundsReturnType & {
+  isWaiting: boolean;
+};
+
+const Rounds = ({ rounds, roundsFetched, isWaiting }: RoundsType) => {
   return (
     <div data-testid="roundsContainer">
       <div className="mt-4">
@@ -53,7 +57,9 @@ const Rounds = ({ rounds, roundsFetched }: validatorFunctions.GetRoundsReturnTyp
           <div className="card-body card-details" data-testid="roundsErrorScreen">
             <div className="empty">
               <FontAwesomeIcon icon={faCogs} className="empty-icon" />
-              <span className="h4 empty-heading">Unable to load rounds</span>
+              <span className="h4 empty-heading">
+                {isWaiting ? 'Validator not in consensus' : 'Unable to load rounds'}
+              </span>
             </div>
           </div>
         </div>
