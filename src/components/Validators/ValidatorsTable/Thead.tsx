@@ -5,6 +5,7 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { ShardSpan } from './../../../sharedComponents';
 import { getNewSortData } from './../helpers/validatorHelpers';
 import { ComputedShard, SortType } from './index';
+import { ValidatorType } from './../index';
 import headers from './headers';
 
 interface ValidatorsTableHeaderType {
@@ -18,7 +19,7 @@ interface ValidatorsTableHeaderType {
   setStatusValue: React.Dispatch<React.SetStateAction<string>>;
   validatorObserverValue: string;
   setValidatorObserverValue: React.Dispatch<React.SetStateAction<string>>;
-  hasWaitingValidators: boolean;
+  validatorsAndObservers: ValidatorType[];
   isInitialRatingDesc: boolean;
   setIsInitialRatingDesc: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -34,7 +35,7 @@ const ValidatorsTableHeader = ({
   setStatusValue,
   validatorObserverValue,
   setValidatorObserverValue,
-  hasWaitingValidators,
+  validatorsAndObservers,
   isInitialRatingDesc,
   setIsInitialRatingDesc,
 }: ValidatorsTableHeaderType) => {
@@ -73,6 +74,14 @@ const ValidatorsTableHeader = ({
     document.body.click();
     setValidatorObserverValue(validatorObs);
   };
+
+  const hasWaitingValidators = validatorsAndObservers.some(
+    validator => validator.peerType === 'waiting'
+  );
+  const hasNewValidators = validatorsAndObservers.some(validator => validator.peerType === 'new');
+  const hasJailedValidators = validatorsAndObservers.some(
+    validator => validator.peerType === 'jailed'
+  );
 
   return (
     <thead>
@@ -123,6 +132,28 @@ const ValidatorsTableHeader = ({
                           onClick={e => changeValidatorObserver(e, 'waiting')}
                         >
                           Validator (waiting)
+                        </a>
+                      )}
+                      {hasNewValidators && (
+                        <a
+                          className={`nav-link ${validatorObserverValue === 'new' ? 'active' : ''}`}
+                          href="#/validators"
+                          data-testid="filterByValidators"
+                          onClick={e => changeValidatorObserver(e, 'new')}
+                        >
+                          New
+                        </a>
+                      )}
+                      {hasJailedValidators && (
+                        <a
+                          className={`nav-link ${
+                            validatorObserverValue === 'jailed' ? 'active' : ''
+                          }`}
+                          href="#/validators"
+                          data-testid="filterByValidators"
+                          onClick={e => changeValidatorObserver(e, 'jailed')}
+                        >
+                          Jailed
                         </a>
                       )}
 

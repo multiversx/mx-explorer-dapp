@@ -115,10 +115,6 @@ const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
 
   React.useEffect(getRatings, [validatorsAndObservers, validators, page, includeObservers]);
 
-  const hasWaitingValidators = validatorsAndObservers.some(
-    validator => validator.peerType === 'waiting'
-  );
-
   const start = (page - 1) * pageSize + (page === 1 ? 1 : 0);
 
   return (
@@ -141,7 +137,7 @@ const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
               <table className="table mt-3">
                 <ValidatorTableHead
                   includeObservers={includeObservers}
-                  hasWaitingValidators={hasWaitingValidators}
+                  validatorsAndObservers={validatorsAndObservers}
                   sortBy={resetPager(setSort)}
                   sort={sort}
                   shardData={shardData}

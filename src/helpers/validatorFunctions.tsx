@@ -1,7 +1,6 @@
 import moment from 'moment';
 import axios from 'axios';
 import { object, number, InferType } from 'yup';
-
 import { ValidatorType } from './../components/Validators';
 
 export function getShardId(validator: ValidatorType, metaChainShardId: number) {

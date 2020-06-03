@@ -1,4 +1,10 @@
-import { faClock, faEye, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faClock,
+  faEye,
+  faExclamationTriangle,
+  faLeaf,
+  faLock,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import * as React from 'react';
@@ -10,6 +16,8 @@ const RowIcon = ({ validator }: { validator: ValidatorType }) => {
     activeTestnet: { versionNumber },
   } = useGlobalState();
   switch (true) {
+    case validator.peerType === 'new':
+      return <FontAwesomeIcon title="new" icon={faLeaf} className="w300 mr-1" />;
     case validator.star:
     case versionNumber !== validator.versionNumber.split('-')[0]:
       return (
@@ -26,12 +34,13 @@ const RowIcon = ({ validator }: { validator: ValidatorType }) => {
           <FontAwesomeIcon icon={faExclamationTriangle} className="text-warning w300 mr-1" />
         </OverlayTrigger>
       );
+    case validator.peerType === 'observer':
+      return <FontAwesomeIcon title="observer" icon={faEye} className="w300 mr-1" />;
+    case validator.peerType === 'jailed':
+      return <FontAwesomeIcon title="jailed" icon={faLock} className="w300 mr-1" />;
     default:
       return (
         <>
-          {validator.peerType === 'observer' && (
-            <FontAwesomeIcon title="observer" icon={faEye} className="w300 mr-1" />
-          )}
           {validator.peerType === 'waiting' && (
             <FontAwesomeIcon icon={faClock} className="w300 mr-1" />
           )}

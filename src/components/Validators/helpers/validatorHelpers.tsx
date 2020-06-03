@@ -14,6 +14,8 @@ export interface StatisticsType {
 
 export const getPeerType = (peerType: ValidatorType['peerType']) => {
   switch (true) {
+    case peerType.includes('jailed'):
+      return 'jailed';
     case peerType.includes('observer'):
       return 'observer';
     case peerType.includes('waiting'):
@@ -129,7 +131,7 @@ export function populateValidatorsTable({
 
     const shardId = validator.shardId;
 
-    if (['eligible', 'waiting'].includes(validator.peerType)) {
+    if (['eligible', 'waiting', 'jailed', 'new'].includes(validator.peerType)) {
       validators.push(validator);
     }
     validatorsAndObservers.push(validator);
@@ -194,7 +196,7 @@ export function populateValidatorsTable({
         ratingModifier,
       };
 
-      if (['eligible', 'waiting'].includes(validator.peerType)) {
+      if (['eligible', 'waiting', 'jailed', 'new'].includes(validator.peerType)) {
         validators.push(validator);
       }
       validatorsAndObservers.push(validator);
