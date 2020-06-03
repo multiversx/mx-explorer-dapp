@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useReducer } from 'reinspect';
 import { ActionType, globalReducer } from './reducer';
 import initialState, { StateType, ConfigType } from './state';
 
@@ -13,7 +14,21 @@ const GlobalStateContext = React.createContext<StateType | undefined>(undefined)
 const GlobalDispatchContext = React.createContext<DispatchType | undefined>(undefined);
 
 function GlobalProvider({ children, optionalConfig, config }: GlobalContextProviderType) {
-  const [state, dispatch] = React.useReducer(globalReducer, initialState(config, optionalConfig));
+  // const [state, dispatch] = React.useReducer(globalReducer, initialState(config, optionalConfig));
+
+  const [prodState, prodDispatch] = React.useReducer(
+    globalReducer,
+    initialState(config, optionalConfig)
+  );
+
+  const [devState, devDispatch] = useReducer(
+    globalReducer,
+    initialState(config, optionalConfig),
+    'global'
+  );
+
+  const state = process.env.NODE_ENV === 'development' ? devState : prodState;
+  const dispatch = process.env.NODE_ENV === 'development' ? devDispatch : prodDispatch;
 
   return (
     <GlobalStateContext.Provider value={state}>

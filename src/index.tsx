@@ -1,18 +1,20 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
+import { StateInspector } from 'reinspect';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './assets/sass/theme.scss';
-import * as serviceWorker from './serviceWorker';
+
+let MountedApp = <App />;
 
 if (process.env.NODE_ENV === 'development') {
   const whyDidYouRender = require('@welldone-software/why-did-you-render/dist/no-classes-transpile/umd/whyDidYouRender.min.js');
   whyDidYouRender(React);
+  MountedApp = (
+    <StateInspector name="App">
+      <App />
+    </StateInspector>
+  );
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render(MountedApp, document.getElementById('root'));
