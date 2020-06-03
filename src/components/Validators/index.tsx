@@ -9,28 +9,10 @@ import {
 import { populateValidatorsTable } from './helpers/validatorHelpers';
 import { StateType } from './ValidatorsTable';
 import ValidatorSwitch from './ValidatorSwitch';
-
 import { validatorsRouteNames } from 'routes';
+import { ValidatorType as StateValidatorType } from 'context/validators';
 
-export interface ValidatorType {
-  computedShardID: number;
-  publicKey: string;
-  isActive: boolean;
-  isValidator: boolean;
-  peerType: 'waiting' | 'eligible' | 'observer' | 'new';
-  nodeDisplayName: string;
-  identity: string;
-  receivedShardID: number;
-  timeStamp: string;
-  totalDownTimeSec: number;
-  totalUpTimeSec: number;
-  versionNumber: string;
-  shardId: string;
-  shardNumber: number;
-  star: boolean;
-  rating: number;
-  ratingModifier: number;
-}
+export type ValidatorType = StateValidatorType;
 
 export const initialState: StateType = {
   shardData: [

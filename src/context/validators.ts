@@ -1,9 +1,9 @@
-interface ValidatorType {
+export interface ValidatorType {
   computedShardID: number;
   publicKey: string;
   isActive: boolean;
   isValidator: boolean;
-  peerType: 'waiting' | 'eligible' | 'observer' | 'new';
+  peerType: 'waiting' | 'eligible' | 'observer' | 'new' | 'jailed';
   nodeDisplayName: string;
   identity: string;
   receivedShardID: number;
