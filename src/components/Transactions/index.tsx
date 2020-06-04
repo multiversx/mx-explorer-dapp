@@ -8,6 +8,7 @@ import AddressDetails, { AddressDetailsType } from './AddressDetails';
 import FailedAddress from './FailedAddress';
 import FailedTransaction from './FailedTransaction';
 import { getAddressDetails, getTotalTransactions, getTransactions } from './helpers/asyncRequests';
+import { addressIsBech32 } from 'helpers';
 
 function getDirection(type: string | undefined) {
   const shardMap: any = {
@@ -112,7 +113,7 @@ const Transactions = () => {
 
   const PageData = () => (
     <>
-      <AddressDetails {...addressDetails} />
+      <AddressDetails {...{ ...addressDetails, addressId: addressId || '' }} />
       <div className="row">
         <div className="col-12">
           {title !== 'Transactions' && (
@@ -150,10 +151,7 @@ const Transactions = () => {
     switch (true) {
       case addressDetailsLoading && addressDetails.detailsFetched:
         return <Loader />;
-      case !transactionsFetched &&
-        addressDetails.balance === '0' &&
-        addressDetails.nonce === 0 &&
-        pathname.includes('address'):
+      case !addressIsBech32(addressId) && pathname.includes('address'):
         return <FailedAddress addressId={addressId} />;
       case !transactionsFetched && pathname.includes('transactions'):
         return <FailedTransaction />;

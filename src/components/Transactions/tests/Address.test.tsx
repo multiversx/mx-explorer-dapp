@@ -5,7 +5,7 @@ import search from './_search';
 
 const address = {
   account: {
-    address: 'fe1b38412a3eaf6c8a887c2f2114b5eda5e1c3a80ab9c3aee782fd48a602cd57',
+    address: 'erd1s5zs68g3j463rgqjskueh9288qhv3w2l7xac4g78vn9jue88ddds6alj03',
     nonce: 0,
     balance: '74200000000000000000000',
     code: '',

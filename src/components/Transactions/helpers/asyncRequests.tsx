@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { addressIsBech32 } from 'helpers';
 
 interface ParamsType {
   elasticUrl: string;
@@ -150,7 +151,7 @@ export async function getAddressDetails({ nodeUrl, addressId, timeout }: Details
       balance: '0',
       nonce: 0,
       code: '',
-      detailsFetched: false,
+      detailsFetched: addressIsBech32(addressId),
     };
   }
 }
