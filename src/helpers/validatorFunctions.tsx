@@ -63,13 +63,15 @@ const schema = object({
   }).required(),
 });
 
+export type NetworkStatusType = InferType<typeof schema>;
+
 export async function getEpoch({ nodeUrl, shardNumber, timeout }: GetEpochType) {
   try {
     const { data } = await axios.get(`${nodeUrl}/network/status/${shardNumber}`, {
       timeout,
     });
 
-    const message: InferType<typeof schema> = data.message;
+    const message: NetworkStatusType = data.message;
 
     schema.validate(message, { strict: true }).catch(({ errors }) => {
       console.error('network/status response format errors: ', errors);
