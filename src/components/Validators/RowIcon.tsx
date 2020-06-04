@@ -21,6 +21,20 @@ const RowIcon = ({ validator }: { validator: ValidatorType }) => {
     case validator.peerType === 'new':
       return <FontAwesomeIcon title="new" icon={faLeaf} className="w300 mr-1" />;
     case validator.star:
+      return (
+        <OverlayTrigger
+          key="popover"
+          placement="top"
+          rootClose
+          overlay={
+            <Popover id="popover-positioned-bottom">
+              <Popover.Content>Outdated client configuration</Popover.Content>
+            </Popover>
+          }
+        >
+          <FontAwesomeIcon icon={faExclamationTriangle} className="text-warning w300 mr-1" />
+        </OverlayTrigger>
+      );
     case versionNumber !== validator.versionNumber.split('-')[0]:
       return (
         <OverlayTrigger
@@ -29,7 +43,7 @@ const RowIcon = ({ validator }: { validator: ValidatorType }) => {
           rootClose
           overlay={
             <Popover id="popover-positioned-bottom">
-              <Popover.Content>Missed configuration</Popover.Content>
+              <Popover.Content>Outdated client version</Popover.Content>
             </Popover>
           }
         >

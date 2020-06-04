@@ -27,7 +27,7 @@ export default function AppSwitcher() {
     <NavDropdown
       title={
         <span className="appSwitcherButton" onClick={onClick}>
-          <img src={elrondLogo} alt="Elrond logo" className="mr-2" height="30" />
+          <img src={elrondLogo} alt="Elrond Logo" className="mr-2" height="30" />
           <span className="activeApp">
             {(apps.filter(app => app.id === activeAppId).pop() as any).name}{' '}
             <small>
