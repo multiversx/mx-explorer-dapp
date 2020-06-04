@@ -1,5 +1,5 @@
 import isHash from './isHash';
-import addressIsBach32 from './addressIsBach32';
+import addressIsBech32 from './addressIsBech32';
 import copyToClipboard from './copyToClipboard';
 import dateFormatted from './dateFormatted';
 import sizeFormat from './sizeFormat';
@@ -14,7 +14,7 @@ export {
   sizeFormat,
   dateFormatted,
   isHash,
-  addressIsBach32,
+  addressIsBech32,
   testnetRoute,
   copyToClipboard,
   trimHash,
