@@ -128,7 +128,7 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
               <>
                 <div className="row">
                   <div className={nodeClass}>
-                    <NodeInformation {...state} />
+                    <NodeInformation {...state} validator={validator} />
                   </div>
                   <div className={brandClass}>
                     <BrandInformation publicKey={state.publicKey} />

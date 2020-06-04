@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { ValidatorType } from './../index';
+import { ValidatorType } from './';
 
 const RowIcon = ({ validator }: { validator: ValidatorType }) => {
   const {

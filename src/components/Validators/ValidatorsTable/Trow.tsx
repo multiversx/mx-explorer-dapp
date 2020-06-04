@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { truncate, trimHash } from 'helpers';
 import { ShardSpan, TestnetLink } from 'sharedComponents';
-import { ValidatorType } from './../index';
-import RowIcon from './RowIcon';
+import { ValidatorType } from './../';
+import RowIcon from './../RowIcon';
 
 const ValidatorRow = ({
   validator,
