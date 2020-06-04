@@ -8,8 +8,6 @@ export interface HistoricRatingType {
 }
 
 const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType[] }) => {
-  console.warn(historicRatings);
-
   const series = [
     {
       name: 'rating',
@@ -35,13 +33,16 @@ const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType
       categories: historicRatings.map(rating => rating.epoch),
     },
   };
+
   return (
     <div data-testid="chartContainer">
       <div className="mt-4">
         <h4>History</h4>
       </div>
       <div className="card">
-        <Chart options={options} series={series} type="line" width="100%" height="152px" />
+        {process.env.NODE_ENV !== 'test' && (
+          <Chart options={options} series={series} type="line" width="100%" height="152px" />
+        )}
       </div>
     </div>
   );
