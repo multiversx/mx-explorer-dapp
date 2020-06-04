@@ -121,6 +121,7 @@ export function populateValidatorsTable({
     validatorData[validator.publicKey] = { ...validator };
     return null;
   });
+
   statisticsData.forEach(statisticsValidator => {
     const validator = buildValidator({
       publicKey: statisticsValidator.publicKey,
@@ -143,10 +144,9 @@ export function populateValidatorsTable({
     if (validator.shardId && validator.shardId in shardData) {
       if (activeValidator) {
         shardData[shardId].allValidators = shardData[shardId].allValidators + 1;
-        shardData[shardId].allActiveValidators =
-          validator.isActive || validator.peerType === 'waiting'
-            ? shardData[shardId].allActiveValidators + 1
-            : shardData[shardId].allActiveValidators;
+        shardData[shardId].allActiveValidators = validator.isActive
+          ? shardData[shardId].allActiveValidators + 1
+          : shardData[shardId].allActiveValidators;
       }
     } else if (validator.shardId) {
       shardData[shardId] = {
@@ -203,8 +203,10 @@ export function populateValidatorsTable({
 
       allShardIDs.push(shardId.toString()); // TODO: check shardID
 
+      const activeValidator = validator.peerType === 'eligible' || validator.peerType === 'waiting';
+
       if (validator.shardId && validator.shardId in shardData) {
-        if (validator.peerType === 'eligible') {
+        if (activeValidator) {
           shardData[shardId].allValidators = shardData[shardId].allValidators + 1;
           shardData[shardId].allActiveValidators = validator.isActive
             ? shardData[shardId].allActiveValidators + 1
@@ -216,9 +218,8 @@ export function populateValidatorsTable({
           allActiveValidators: 0,
           shardNumber: validator.shardNumber,
         };
-        shardData[shardId].allValidators = validator.peerType === 'eligible' ? 1 : 0;
-        shardData[shardId].allActiveValidators =
-          validator.peerType === 'eligible' && validator.isActive ? 1 : 0;
+        shardData[shardId].allValidators = activeValidator ? 1 : 0;
+        shardData[shardId].allActiveValidators = activeValidator && validator.isActive ? 1 : 0;
       }
     });
   }
