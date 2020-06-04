@@ -43,7 +43,7 @@ async function getAsyncConfig({
     const { data } = await axios.get(`${nodeUrl}/network/config`, { timeout });
 
     schema.validate(data, { strict: true }).catch(({ errors }) => {
-      console.error('Async config errors: ', errors);
+      console.error('Async config errors: ', `${nodeUrl}/network/config`, errors);
     });
 
     const { config } =
