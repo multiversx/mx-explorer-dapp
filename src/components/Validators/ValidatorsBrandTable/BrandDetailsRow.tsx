@@ -34,7 +34,6 @@ const BrandDetailsRow = ({ validator, rowIndex }: BrandDetailsRowType) => {
           data-testid={`shardLink${rowIndex}`}
         >
           <ShardSpan shardId={validator.shardNumber} />
-          {validator.star && <span>*</span>}
         </TestnetLink>
       </td>
       <td>

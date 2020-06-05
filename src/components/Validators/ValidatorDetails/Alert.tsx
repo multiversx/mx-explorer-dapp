@@ -1,6 +1,14 @@
 import * as React from 'react';
 import { Card } from 'react-bootstrap';
-import { useGlobalState } from 'context';
+import {
+  faClock,
+  faEye,
+  faExclamationTriangle,
+  faLeaf,
+  faLock,
+  faSync,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ValidatorType } from './../';
 import RowIcon from './../RowIcon';
 
@@ -14,10 +22,7 @@ const Container = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
-const PercentegeBar = ({ validator }: { validator: ValidatorType }) => {
-  const {
-    activeTestnet: { versionNumber },
-  } = useGlobalState();
+const Alert = ({ validator }: { validator: ValidatorType }) => {
   switch (true) {
     case validator.peerType === 'jailed':
       return (
@@ -26,18 +31,22 @@ const PercentegeBar = ({ validator }: { validator: ValidatorType }) => {
           Jailed
         </Container>
       );
-    case validator.star:
+    case validator.issue !== '':
       return (
         <Container>
           <RowIcon validator={validator} />
-          Outdated client configuration
+          {validator.issue}
         </Container>
       );
-    case 'versionNumber' in validator && versionNumber !== validator.versionNumber.split('-')[0]:
+    case validator.isActive === false:
       return (
         <Container>
-          <RowIcon validator={validator} />
-          Outdated client version
+          <FontAwesomeIcon
+            title="Offline"
+            icon={faExclamationTriangle}
+            className="text-warning w300 mr-1"
+          />
+          <span className={validator.isValidator === false ? 'text-muted' : ''}>&nbsp;Offline</span>
         </Container>
       );
 
@@ -45,4 +54,4 @@ const PercentegeBar = ({ validator }: { validator: ValidatorType }) => {
       return null;
   }
 };
-export default PercentegeBar;
+export default Alert;

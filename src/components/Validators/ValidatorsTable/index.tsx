@@ -1,5 +1,7 @@
 // @ts-ignore
 import kendo from 'kendo-ui-core/js/kendo.data';
+import { faServer } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { DirectioinsType } from './../helpers/validatorHelpers';
 import { ValidatorType } from './../index';
@@ -37,7 +39,7 @@ interface ValidatorsTableType {
 
 const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
   const initialSort: SortType = { field: 'rating', dir: 'desc' };
-  const [includeObservers, setIncludeObsevers] = React.useState(false);
+  const [includeObservers] = React.useState(true);
   const [sort, setSort] = React.useState<SortType>(initialSort);
   const [ratingOrder, setRatingOrder] = React.useState<string[]>([]);
   const [isInitialRatingDesc, setIsInitialRatingDesc] = React.useState(false);
@@ -81,12 +83,49 @@ const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
     mainFilter.filters.push({ field: 'isActive', operator: 'eq', value: statusValue === 'online' });
   }
 
-  if (validatorObserverValue !== '') {
-    mainFilter.filters.push({
-      field: 'peerType',
-      operator: 'contains',
-      value: validatorObserverValue,
-    });
+  switch (validatorObserverValue) {
+    case 'observer':
+      mainFilter.filters.push({
+        field: 'peerType',
+        operator: 'contains',
+        value: validatorObserverValue,
+      });
+      break;
+    case 'issue':
+      mainFilter.filters.push({
+        field: 'issue',
+        operator: 'isnotempty',
+      });
+      break;
+    case 'validator':
+      mainFilter.filters.push({
+        logic: 'or',
+        filters: [
+          {
+            field: 'peerType',
+            operator: 'contains',
+            value: 'eligible',
+          },
+          {
+            field: 'peerType',
+            operator: 'contains',
+            value: 'waiting',
+          },
+          {
+            field: 'peerType',
+            operator: 'contains',
+            value: 'new',
+          },
+        ],
+      });
+      break;
+    default:
+      mainFilter.filters.push({
+        field: 'peerType',
+        operator: 'contains',
+        value: validatorObserverValue,
+      });
+      break;
   }
 
   const data = includeObservers ? validatorsAndObservers : validators;
@@ -124,21 +163,18 @@ const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
           <div className="card-body card-list">
             <Tabs />
             <ValidatorStats
+              validatorsAndObservers={validatorsAndObservers}
+              validatorObserverValue={validatorObserverValue}
               shownValidatorsLength={dataSource.total()}
               filteredValidatorsLength={newValidators.length}
               setSearchValue={resetPager(setSearchValue)}
-              includeObservers={includeObservers}
-              setIncludeObsevers={resetPager(setIncludeObsevers)}
-              setShardValue={resetPager(setShardValue)}
-              setStatusValue={resetPager(setStatusValue)}
               setValidatorObserverValue={resetPager(setValidatorObserverValue)}
             />
             <div className="table-responsive" style={{ minHeight: '290px' }}>
               <table className="table mt-3">
                 <ValidatorTableHead
-                  includeObservers={includeObservers}
-                  validatorsAndObservers={validatorsAndObservers}
                   sortBy={resetPager(setSort)}
+                  total={dataSource.total()}
                   sort={sort}
                   shardData={shardData}
                   shardValue={shardValue}
@@ -146,7 +182,6 @@ const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
                   statusValue={statusValue}
                   setStatusValue={resetPager(setStatusValue)}
                   validatorObserverValue={validatorObserverValue}
-                  setValidatorObserverValue={resetPager(setValidatorObserverValue)}
                   isInitialRatingDesc={isInitialRatingDesc}
                   setIsInitialRatingDesc={setIsInitialRatingDesc}
                 />
@@ -163,6 +198,16 @@ const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
                   ))}
                 </tbody>
               </table>
+              {dataSource.total() === 0 && (
+                <div className="card">
+                  <div className="card-body card-details" data-testid="errorScreen">
+                    <div className="empty">
+                      <FontAwesomeIcon icon={faServer} className="empty-icon" />
+                      <span className="h4 empty-heading">No nodes</span>
+                    </div>
+                  </div>
+                </div>
+              )}
               <ValidatorsPager
                 setPage={setPage}
                 total={dataSource.total()}

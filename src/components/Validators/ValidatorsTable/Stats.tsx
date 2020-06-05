@@ -1,35 +1,26 @@
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Dropdown } from 'react-bootstrap';
 import * as React from 'react';
+import { ValidatorType } from './../index';
 
 interface ValidatorsStatsType {
-  includeObservers: boolean;
-  setIncludeObsevers: React.Dispatch<React.SetStateAction<boolean>>;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-  setShardValue: React.Dispatch<React.SetStateAction<string>>;
-  setStatusValue: React.Dispatch<React.SetStateAction<string>>;
   setValidatorObserverValue: React.Dispatch<React.SetStateAction<string>>;
   shownValidatorsLength: number;
   filteredValidatorsLength: number;
+  validatorsAndObservers: ValidatorType[];
+  validatorObserverValue: string;
 }
 
 const ValidatorsStats = ({
-  includeObservers,
-  setIncludeObsevers,
+  validatorsAndObservers,
   setSearchValue,
   shownValidatorsLength,
   filteredValidatorsLength,
-  setShardValue,
-  setStatusValue,
   setValidatorObserverValue,
+  validatorObserverValue,
 }: ValidatorsStatsType) => {
-  const changeIncludeObsevers: React.ChangeEventHandler<HTMLInputElement> = () => {
-    setIncludeObsevers(!includeObservers);
-    setShardValue('');
-    setStatusValue('');
-    setValidatorObserverValue('');
-  };
-
   const [inputValue, setInputValue] = React.useState('');
 
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = e => {
@@ -45,6 +36,14 @@ const ValidatorsStats = ({
   const resetValidatorValue = () => {
     setSearchValue('');
     setInputValue('');
+  };
+
+  const changeValidatorObserver = (e: any, validatorObs: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    document.body.click();
+    setValidatorObserverValue(validatorObs);
   };
 
   return (
@@ -82,24 +81,114 @@ const ValidatorsStats = ({
         </div>
       </div>
       <div className="float-right mt-2 mr-4">
-        <label>
-          <input
-            type="checkbox"
-            name="checkbox"
-            className="form-check-input"
-            checked={includeObservers}
-            onChange={changeIncludeObsevers}
-            data-testid="includeObservers"
-          />
-          Include observers
-        </label>
-      </div>
-      <div className="mt-2 d-none d-md-block">
         {shownValidatorsLength
           ? `Showing ${filteredValidatorsLength.toLocaleString(
               'en'
             )} of ${shownValidatorsLength.toLocaleString('en')}`
           : ''}
+      </div>
+      <div className="mt-1">
+        <ul className="list-inline">
+          <li className="list-inline-item">
+            <button
+              className={`btn btn-sm btn-outline-light btn-pill ${
+                validatorObserverValue === '' ? 'active' : ''
+              }`}
+              onClick={() => {
+                setValidatorObserverValue('');
+              }}
+            >
+              All
+            </button>
+          </li>
+          <li className="list-inline-item">
+            <button
+              className={`btn btn-sm btn-outline-light btn-pill ${
+                validatorObserverValue === 'validator' ? 'active' : ''
+              }`}
+              onClick={() => {
+                setValidatorObserverValue('validator');
+              }}
+            >
+              Validators
+            </button>
+          </li>
+          <li className="list-inline-item">
+            <button
+              className={`btn btn-sm btn-outline-light btn-pill ${
+                validatorObserverValue === 'observer' ? 'active' : ''
+              }`}
+              onClick={() => {
+                setValidatorObserverValue('observer');
+              }}
+            >
+              Observers
+            </button>
+          </li>
+          <li className="list-inline-item">
+            <button
+              className={`btn btn-sm btn-outline-light btn-pill ${
+                validatorObserverValue === 'issue' ? 'active' : ''
+              }`}
+              onClick={() => {
+                setValidatorObserverValue('issue');
+              }}
+            >
+              Issues
+            </button>
+          </li>
+          <li className="list-inline-item">
+            <Dropdown>
+              <Dropdown.Toggle
+                variant="outline-light"
+                size="sm"
+                className={`btn-pill ${
+                  ['eligible', 'waiting', 'new', 'jailed'].includes(validatorObserverValue)
+                    ? 'active'
+                    : ''
+                }`}
+                id="more"
+              >
+                More
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  className={`${['eligible'].includes(validatorObserverValue) ? 'active' : ''}`}
+                  data-testid="filterByValidators"
+                  href="#/validators"
+                  onClick={(e: any) => changeValidatorObserver(e, 'eligible')}
+                >
+                  Eligible
+                </Dropdown.Item>
+                <Dropdown.Item
+                  className={`${['waiting'].includes(validatorObserverValue) ? 'active' : ''}`}
+                  data-testid="filterByValidators"
+                  href="#/validators"
+                  onClick={(e: any) => changeValidatorObserver(e, 'waiting')}
+                >
+                  Waiting
+                </Dropdown.Item>
+                <Dropdown.Item
+                  className={`${['new'].includes(validatorObserverValue) ? 'active' : ''}`}
+                  data-testid="filterByValidators"
+                  href="#/validators"
+                  onClick={(e: any) => changeValidatorObserver(e, 'new')}
+                >
+                  New
+                </Dropdown.Item>
+                <Dropdown.Item
+                  className={`${validatorObserverValue === 'jailed' ? 'active' : ''}`}
+                  data-testid="filterByValidators"
+                  href="#/validators"
+                  onClick={(e: any) => changeValidatorObserver(e, 'jailed')}
+                >
+                  Jailed
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </li>
+        </ul>
       </div>
     </>
   );

@@ -13,9 +13,9 @@ export interface ValidatorType {
   versionNumber: string;
   shardId: string;
   shardNumber: number;
-  star: boolean;
   rating: number;
   ratingModifier: number;
+  issue: 'Outdated client version' | 'Outdated client configuration' | '';
 }
 
 interface ComputedShard {

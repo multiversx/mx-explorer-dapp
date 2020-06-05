@@ -40,7 +40,7 @@ export interface ShardDataType {
 const Validators = () => {
   const ref = React.useRef(null);
   const {
-    activeTestnet: { nodeUrl, validatorDetails },
+    activeTestnet: { nodeUrl, validatorDetails, versionNumber, nrOfShards },
     timeout,
     config: { metaChainShardId, explorerApi },
     validatorData,
@@ -63,7 +63,13 @@ const Validators = () => {
     ]).then(([getValidatorsDataResponse, validatorStats, brand]) => {
       const { data, success } = getValidatorsDataResponse;
       const { statistics, success: validatorsSuccess } = validatorStats;
-      const validatorData = populateValidatorsTable({ data, metaChainShardId, statistics });
+      const validatorData = populateValidatorsTable({
+        data,
+        metaChainShardId,
+        statistics,
+        versionNumber,
+        nrOfShards,
+      });
       if (ref.current !== null) {
         dispatch({ type: 'setValidatorData', validatorData });
         const { data: brandData } = brand;

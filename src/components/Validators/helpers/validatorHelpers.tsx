@@ -1,42 +1,31 @@
 import { validatorFunctions } from 'helpers';
 import { ShardDataType, ValidatorType } from './../index';
-
+import { validatorIssues } from './../RowIcon';
+import getPeerType from './getPeerType';
 export interface ValidatorStatisticsData {
   rating: number;
   ratingModifier: number;
   shardId: number;
   validatorStatus: ValidatorType['peerType'];
 }
-
 export interface StatisticsType {
   [hash: string]: ValidatorStatisticsData;
 }
-
-export const getPeerType = (peerType: ValidatorType['peerType']) => {
-  switch (true) {
-    case peerType.includes('jailed'):
-      return 'jailed';
-    case peerType.includes('observer'):
-      return 'observer';
-    case peerType.includes('waiting'):
-      return 'waiting';
-    case peerType.includes('eligible'):
-      return 'eligible';
-    default:
-      return 'new';
-  }
-};
 
 export const buildValidator = ({
   publicKey,
   statisticsValidator,
   validatorData,
   metaChainShardId,
+  configVersionNumber,
+  nrOfShards,
 }: {
   publicKey: string;
   statisticsValidator: ValidatorStatisticsData;
   validatorData: ValidatorDataType;
   metaChainShardId: number;
+  nrOfShards: number;
+  configVersionNumber: string;
 }) => {
   const {
     shardId: statisticsShardId,
@@ -46,7 +35,6 @@ export const buildValidator = ({
   } = statisticsValidator;
   const pKeyinValidatorData = publicKey in validatorData;
 
-  //TODO: e corect?
   const computedShardID = pKeyinValidatorData
     ? validatorData[publicKey].computedShardID
     : statisticsShardId;
@@ -66,8 +54,6 @@ export const buildValidator = ({
   const shardId =
     statisticsShardId === metaChainShardId ? 'Metachain' : String(statisticsShardId).toString();
 
-  const star = isActive === true && computedShardID !== receivedShardID;
-
   const validator: ValidatorType = {
     publicKey,
     isValidator: peerType !== 'observer',
@@ -83,10 +69,17 @@ export const buildValidator = ({
     versionNumber,
     shardId,
     shardNumber: statisticsShardId,
-    star,
     rating,
     ratingModifier,
+    issue: '',
   };
+
+  validator.issue = validatorIssues({
+    validator,
+    versionNumber: configVersionNumber,
+    nrOfShards,
+    metaChainShardId,
+  });
 
   return validator;
 };
@@ -94,15 +87,18 @@ export const buildValidator = ({
 export interface ValidatorDataType {
   [key: string]: ValidatorType;
 }
-
 export function populateValidatorsTable({
   data,
   metaChainShardId,
   statistics,
+  versionNumber,
+  nrOfShards,
 }: {
   data: ValidatorType[];
   metaChainShardId: number;
+  nrOfShards: number;
   statistics: StatisticsType;
+  versionNumber: string;
 }) {
   const shardData: ShardDataType = {};
   const allShardIDs: string[] = [];
@@ -128,6 +124,8 @@ export function populateValidatorsTable({
       metaChainShardId,
       validatorData,
       statisticsValidator,
+      configVersionNumber: versionNumber,
+      nrOfShards,
     });
 
     const shardId = validator.shardId;
@@ -160,10 +158,7 @@ export function populateValidatorsTable({
   });
   if (heartbeatObservers.length > 0) {
     heartbeatObservers.forEach((validator: ValidatorType, i) => {
-      const { shardId, shardNumber, star } = validatorFunctions.getShardId(
-        validator,
-        metaChainShardId
-      );
+      const { shardId, shardNumber } = validatorFunctions.getShardId(validator, metaChainShardId);
 
       const statisticsHasValidatorHash =
         statistics !== undefined &&
@@ -188,13 +183,19 @@ export function populateValidatorsTable({
         ...validator,
         shardId,
         shardNumber,
-        star,
         peerType: validator.peerType
           ? getPeerType(validator.peerType)
           : getPeerType(validator.isValidator ? 'eligible' : 'observer'),
         rating,
         ratingModifier,
+        issue: '',
       };
+      validator.issue = validatorIssues({
+        validator,
+        versionNumber,
+        nrOfShards,
+        metaChainShardId,
+      });
 
       if (['eligible', 'waiting', 'jailed', 'new'].includes(validator.peerType)) {
         validators.push(validator);
