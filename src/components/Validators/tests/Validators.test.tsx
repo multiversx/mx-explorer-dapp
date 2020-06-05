@@ -55,28 +55,16 @@ describe('Validators', () => {
 });
 
 describe('Validators filters', () => {
-  //TODO: refacere filtre
-  // test('Filter by observers working', async () => {
-  //   if (document) {
-  //     (document.createRange as any) = () => ({
-  //       setStart: () => null,
-  //       setEnd: () => null,
-  //       commonAncestorContainer: {
-  //         nodeName: 'BODY',
-  //         ownerDocument: document,
-  //       },
-  //     });
-  //   }
+  test('Filter by observers working', async () => {
+    const render = goToValidatorsPage();
 
-  //   const render = goToValidatorsPage();
+    const filterByObservers = await render.findByTestId('filterByObservers');
 
-  //   const filterByObservers = await render.findByTestId('filterByObservers');
+    fireEvent.click(filterByObservers);
 
-  //   fireEvent.click(filterByObservers);
-
-  //   const totalPages = render.getByTestId('totalPages');
-  //   expect(totalPages.textContent).toBe('62');
-  // });
+    const totalPages = render.getByTestId('totalPages');
+    expect(totalPages.textContent).toBe('62');
+  });
   test('Validator search working', async () => {
     const render = goToValidatorsPage();
 

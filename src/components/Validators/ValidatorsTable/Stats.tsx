@@ -115,6 +115,7 @@ const ValidatorsStats = ({
           </li>
           <li className="list-inline-item">
             <button
+              data-testid="filterByObservers"
               className={`btn btn-sm btn-outline-light btn-pill ${
                 validatorObserverValue === 'observer' ? 'active' : ''
               }`}
