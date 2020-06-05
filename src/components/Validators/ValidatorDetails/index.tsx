@@ -10,6 +10,7 @@ import NetworkMetrics, { NetworkMetricsType } from './NetworkMetrics';
 import NodeInformation, { NodeInformationType } from './NodeInformation';
 import Rounds from './Rounds';
 import BrandInformation from './BrandInformation';
+import Alert from './Alert';
 
 export type StateType = NetworkMetricsType &
   // ValidatorStatisticsData &
@@ -122,6 +123,7 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
             </div>
           )}
         </div>
+        {validator !== undefined && <Alert validator={validator} />}
         {success ? (
           <>
             {publicKey !== '' ? (
