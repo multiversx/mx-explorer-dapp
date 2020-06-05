@@ -44,14 +44,14 @@ const RowIcon = ({ validator }: { validator: ValidatorType }) => {
     case validator.peerType === 'new':
       return <FontAwesomeIcon title="New" icon={faLeaf} className="w300 mr-1" />;
 
-    case validator.issue !== '':
-      return (
-        <FontAwesomeIcon
-          title={validator.issue}
-          icon={faExclamationTriangle}
-          className="text-warning w300 mr-1"
-        />
-      );
+    // case validator.issue !== '':
+    //   return (
+    //     <FontAwesomeIcon
+    //       title={validator.issue}
+    //       icon={faExclamationTriangle}
+    //       className="text-warning w300 mr-1"
+    //     />
+    //   );
 
     case validator.receivedShardID !== validator.computedShardID:
       return <FontAwesomeIcon title="Changing shard" icon={faSync} className="w300 mr-1" />;
