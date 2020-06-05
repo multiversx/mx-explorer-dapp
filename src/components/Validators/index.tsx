@@ -67,7 +67,9 @@ const Validators = () => {
       if (ref.current !== null) {
         dispatch({ type: 'setValidatorData', validatorData });
         const { data: brandData } = brand;
-        dispatch({ type: 'setBrandData', brandData });
+        if (brandData.length > 0) {
+          dispatch({ type: 'setBrandData', brandData });
+        }
         setSuccess(success && validatorsSuccess);
       }
     });
