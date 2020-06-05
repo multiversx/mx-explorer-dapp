@@ -4,6 +4,15 @@ import heartbeatstatus from './heartbeatstatus';
 import statistics from './statistics';
 import validators from './validators';
 
+(global as any).document.createRange = () => ({
+  setStart: () => {},
+  setEnd: () => {},
+  commonAncestorContainer: {
+    nodeName: 'BODY',
+    ownerDocument: document,
+  },
+});
+
 const goToValidatorsPage = () => {
   const mockGet = jest.spyOn(axios, 'get');
   mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
@@ -98,40 +107,38 @@ describe('Validators filters', () => {
 
     expect(totalPages.textContent).toBe('1,640');
   });
-  // TODO: refa
-  // test('Filter by status working', async () => {
-  //   const render = goToValidatorsPage();
 
-  //   const filterByStatus = await render.findByTestId('filterByStatus');
-  //   fireEvent.click(filterByStatus);
+  test('Filter by status working', async () => {
+    const render = goToValidatorsPage();
 
-  //   const offline = await render.findByTestId('filterByStatusOffline');
-  //   fireEvent.click(offline);
+    const filterByStatus = await render.findByTestId('filterByStatus');
+    fireEvent.click(filterByStatus);
 
-  //   const totalPages = await render.findByTestId('totalPages');
-  //   expect(totalPages.textContent).toBe('1,203');
-  // });
+    const offline = await render.findByTestId('filterByStatusOffline');
+    fireEvent.click(offline);
+
+    const totalPages = await render.findByTestId('totalPages');
+    expect(totalPages.textContent).toBe('1,203');
+  });
 });
 
-// TODO: refa
-// describe('Validators links', () => {
-
-// test('Validators public key link', async () => {
-//   const render = goToValidatorsPage();
-//   const publicKeyLink = await render.findByTestId('publicKeyLink0');
-//   expect(publicKeyLink.textContent).toBe('360a9de7dd...d4f3dee28d');
-//   fireEvent.click(publicKeyLink);
-//   await wait(async () => {
-//     expect(document.title).toEqual('Validator Details • Elrond Explorer');
-//   });
-// });
-// test('Validators shard link', async () => {
-//   const render = goToValidatorsPage();
-//   const publicKeyLink = await render.findByTestId('shardLink0');
-//   expect(publicKeyLink.textContent).toBe('Metachain');
-//   fireEvent.click(publicKeyLink);
-//   await wait(async () => {
-//     expect(document.title).toEqual('Shard Details • Elrond Explorer');
-//   });
-// });
-// });
+describe('Validators links', () => {
+  test('Validators public key link', async () => {
+    const render = goToValidatorsPage();
+    const publicKeyLink = await render.findByTestId('publicKeyLink0');
+    expect(publicKeyLink.textContent).toBe('360a9de7dd...d4f3dee28d');
+    fireEvent.click(publicKeyLink);
+    await wait(async () => {
+      expect(document.title).toEqual('Validator Details • Elrond Explorer');
+    });
+  });
+  test('Validators shard link', async () => {
+    const render = goToValidatorsPage();
+    const publicKeyLink = await render.findByTestId('shardLink0');
+    expect(publicKeyLink.textContent).toBe('Metachain');
+    fireEvent.click(publicKeyLink);
+    await wait(async () => {
+      expect(document.title).toEqual('Shard Details • Elrond Explorer');
+    });
+  });
+});
