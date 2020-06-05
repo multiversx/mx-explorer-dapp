@@ -33,7 +33,7 @@ const PercentegeBar = ({ validator }: { validator: ValidatorType }) => {
           Outdated client configuration
         </Container>
       );
-    case versionNumber !== validator.versionNumber.split('-')[0]:
+    case 'versionNumber' in validator && versionNumber !== validator.versionNumber.split('-')[0]:
       return (
         <Container>
           <RowIcon validator={validator} />
