@@ -2,6 +2,7 @@ import * as React from 'react';
 import { truncate, trimHash } from 'helpers';
 import { ShardSpan, TestnetLink } from 'sharedComponents';
 import { ValidatorType } from '../index';
+import RowIcon from './../RowIcon';
 
 interface BrandDetailsRowType {
   validator: ValidatorType;
@@ -12,6 +13,7 @@ const BrandDetailsRow = ({ validator, rowIndex }: BrandDetailsRowType) => {
   return (
     <tr>
       <td>
+        <RowIcon validator={validator} />
         <TestnetLink
           to={`/validators/${validator.publicKey}`}
           data-testid={`hexPublicKeyLink${rowIndex}`}
