@@ -11,53 +11,65 @@ import * as React from 'react';
 import { useGlobalState } from 'context';
 import { ValidatorType } from './';
 
+const Overlay = ({ message, children }: { message: string; children: React.ReactNode }) => (
+  <OverlayTrigger
+    key="popover"
+    placement="top"
+    rootClose
+    overlay={
+      <Popover id="popover-positioned-bottom">
+        <Popover.Content>{message}</Popover.Content>
+      </Popover>
+    }
+  >
+    {children}
+  </OverlayTrigger>
+);
+
 const RowIcon = ({ validator }: { validator: ValidatorType }) => {
   const {
     activeTestnet: { versionNumber },
   } = useGlobalState();
   switch (true) {
     case validator.peerType === 'jailed':
-      return <FontAwesomeIcon title="jailed" icon={faLock} className="text-danger w300 mr-1" />;
+      return (
+        <Overlay message="Jailed">
+          <FontAwesomeIcon icon={faLock} className="text-danger w300 mr-1" />;
+        </Overlay>
+      );
     case validator.peerType === 'observer':
-      return <FontAwesomeIcon title="observer" icon={faEye} className="w300 mr-1" />;
+      return (
+        <Overlay message="Observer">
+          <FontAwesomeIcon icon={faEye} className="w300 mr-1" />;
+        </Overlay>
+      );
     case validator.peerType === 'new':
-      return <FontAwesomeIcon title="new" icon={faLeaf} className="w300 mr-1" />;
+      return (
+        <Overlay message="New">
+          <FontAwesomeIcon icon={faLeaf} className="w300 mr-1" />;
+        </Overlay>
+      );
+
     case validator.star:
       return (
-        <OverlayTrigger
-          key="popover"
-          placement="top"
-          rootClose
-          overlay={
-            <Popover id="popover-positioned-bottom">
-              <Popover.Content>Outdated client configuration</Popover.Content>
-            </Popover>
-          }
-        >
+        <Overlay message="Outdated client configuration">
           <FontAwesomeIcon icon={faExclamationTriangle} className="text-warning w300 mr-1" />
-        </OverlayTrigger>
+        </Overlay>
       );
     case versionNumber !== validator.versionNumber.split('-')[0]:
       return (
-        <OverlayTrigger
-          key="popover"
-          placement="top"
-          rootClose
-          overlay={
-            <Popover id="popover-positioned-bottom">
-              <Popover.Content>Outdated client version</Popover.Content>
-            </Popover>
-          }
-        >
+        <Overlay message="Outdated client version">
           <FontAwesomeIcon icon={faExclamationTriangle} className="text-warning w300 mr-1" />
-        </OverlayTrigger>
+        </Overlay>
       );
 
     default:
       return (
         <>
           {validator.peerType === 'waiting' && (
-            <FontAwesomeIcon icon={faClock} className="w300 mr-1" />
+            <Overlay message="Waiting">
+              <FontAwesomeIcon icon={faClock} className="w300 mr-1" />
+            </Overlay>
           )}
         </>
       );
