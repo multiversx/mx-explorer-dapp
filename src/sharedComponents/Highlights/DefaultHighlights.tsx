@@ -31,18 +31,23 @@ const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
             </span>
             <div className="media-body">
               <span className="highlight-label epoch-label">
-                <span className="fade">EPOCH</span> <span className="text-white">{epoch}</span>
+                <span className="fade">EPOCH</span>
               </span>
-              <div className="epoch-progress">
-                <div className="fill" style={{ width: `${epochPercentage}%` }}>
-                  &nbsp;
-                </div>
-              </div>
-              {epochTimeRemaining && (
-                <div className="highlight-label epoch-time">
-                  <small>{epochTimeRemaining} remaining</small>
-                </div>
-              )}
+              <span className="highlight-value d-flex">
+                <span>{epoch}</span>
+                {epochTimeRemaining !== '...' && (
+                  <div className="px-2">
+                    <div className="highlight-label epoch-time d-flex flex-column">
+                      <div className="epoch-progress">
+                        <div className="fill" style={{ width: `${epochPercentage}%` }}>
+                          &nbsp;
+                        </div>
+                      </div>
+                      <small>{epochTimeRemaining} remaining</small>
+                    </div>
+                  </div>
+                )}
+              </span>
             </div>
           </div>
         </li>

@@ -63,6 +63,7 @@ const Hightlights = ({
   const getHighlights = () => {
     if (ref.current !== null) {
       getStats({ elasticUrl, nodeUrl, metaChainShardId, timeout }).then(({ data, success }) => {
+        const check = data.roundsPerEpoch >= data.roundsPassed;
         const newState = success
           ? {
               blockNumber: parseInt(data.blockNumber).toLocaleString('en'),
@@ -73,12 +74,18 @@ const Hightlights = ({
               peakTPS: parseInt(data.peakTPS).toLocaleString('en'),
               totalProcessedTxCount: parseInt(data.totalProcessedTxCount).toLocaleString('en'),
               epoch: data.epoch.toLocaleString('en'),
-              epochPercentage: (100 * data.roundsPassed) / data.roundsPerEpoch,
-              epochTotalTime: moment.utc(refreshRate * data.roundsPerEpoch).format('HH:mm'),
-              epochTimeElapsed: moment.utc(refreshRate * data.roundsPassed).format('HH:mm'),
-              epochTimeRemaining: moment
-                .utc(refreshRate * (data.roundsPerEpoch - data.roundsPassed))
-                .format('HH:mm'),
+              epochPercentage: check ? (100 * data.roundsPassed) / data.roundsPerEpoch : 0,
+              epochTotalTime: check
+                ? moment.utc(refreshRate * data.roundsPerEpoch).format('HH:mm')
+                : '...',
+              epochTimeElapsed: check
+                ? moment.utc(refreshRate * data.roundsPassed).format('HH:mm')
+                : '...',
+              epochTimeRemaining: check
+                ? moment
+                    .utc(refreshRate * (data.roundsPerEpoch - data.roundsPassed))
+                    .format('HH:mm')
+                : '...',
             }
           : initialState;
         if (ref.current !== null) {

@@ -96,13 +96,15 @@
 }
 
 .epoch-progress {
-  width: 130px;
-  height: 8px;
+  width: 90px;
+  height: 4px;
   border-radius: 2px;
+  margin-top: 2px;
+  margin-bottom: 1px;
   background: rgba(255, 255, 255, 0.5);
   .fill {
     background: #fff;
-    height: 8px;
+    height: 4px;
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px;
   }
