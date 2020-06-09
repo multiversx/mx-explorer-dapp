@@ -1,4 +1,4 @@
-import { faClock, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faExchangeAlt, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import Web3 from 'web3';
@@ -57,8 +57,9 @@ const TransactionDetails: React.FC = () => {
 
   const errorMessage =
     transaction &&
-    ['Not Executed'].includes(transaction.status) &&
-    transaction.scResults !== undefined
+    transaction.scResults !== null &&
+    transaction.scResults !== undefined &&
+    transaction.scResults[0].returnMessage
       ? transaction.scResults[0].returnMessage
       : '';
 
@@ -101,7 +102,6 @@ const TransactionDetails: React.FC = () => {
                         <div className="col-lg-2 card-label">Status</div>
                         <div className="col-lg-10">
                           <TransactionStatus status={transaction.status} />
-                          {errorMessage && <span className="text-muted"> ({errorMessage})</span>}
                         </div>
                       </div>
                       <hr className="hr-space" />
@@ -162,6 +162,17 @@ const TransactionDetails: React.FC = () => {
                             >
                               (<ShardSpan shardId={transaction.receiverShard} />)
                             </TestnetLink>
+                          )}
+                          {errorMessage && (
+                            <>
+                              <br />
+                              <FontAwesomeIcon
+                                icon={faExclamationTriangle}
+                                className="text-danger"
+                                size="xs"
+                              />
+                              <small className="text-danger"> {errorMessage}</small>
+                            </>
                           )}
                         </div>
                       </div>
