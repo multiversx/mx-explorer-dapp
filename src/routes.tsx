@@ -23,7 +23,7 @@ interface RouteType {
 
 export const validatorsRoutes = {
   index: '/validators',
-  brandDetails: `'/validators/:identity`,
+  brandDetails: `/validators/:identity`,
   nodes: '/validators/nodes',
   validatorDetails: '/validators/nodes/:hash',
 };
