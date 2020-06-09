@@ -9,6 +9,7 @@ import './validatorsBrand.scss';
 export interface BrandType {
   name: string;
   avatar: string;
+  identity: string;
   score: number;
   stake: number;
   stakePercent: number;

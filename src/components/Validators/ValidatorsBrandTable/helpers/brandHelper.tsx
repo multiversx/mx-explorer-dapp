@@ -88,9 +88,10 @@ function generateBrandTypeWithStats({
   // STAKE
   const stake = stakePerValidator * validators.length;
 
-  const { name, avatar } = brand;
+  const { name, avatar, identity } = brand;
 
   return {
+    identity,
     name,
     avatar,
     score,
