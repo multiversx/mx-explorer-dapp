@@ -24,7 +24,6 @@ const ValidatorsTable = ({ title, children }: { title: string; children: React.R
               <>
                 <ShardsList shardData={validatorData.shardData} />
                 {children}
-                )}
               </>
             ) : (
               <Loader />
