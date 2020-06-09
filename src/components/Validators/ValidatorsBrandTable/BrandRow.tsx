@@ -2,8 +2,9 @@ import React from 'react';
 import carretDown from 'assets/img/carret-down.svg';
 import BrandDetailsRow from './BrandDetailsRow';
 import { BrandType } from './BrandTable';
+import { TestnetLink } from 'sharedComponents';
 import PercentegeBar from '../ValidatorDetails/PercentegeBar';
-
+import { validatorsRoutes } from 'routes';
 interface BrandRowType {
   brand: BrandType;
   rank: number;
@@ -33,14 +34,18 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
         <td>
           <div className="d-flex align-items-center">
             <div className="mr-3">
-              <img
-                className={brand.avatar ? 'avatar' : 'avatar gray'}
-                src={brand.avatar ? brand.avatar : '/validators/default-avatar.svg'}
-                alt={brand.name}
-                height="42"
-              />
+              <TestnetLink to={`${validatorsRoutes.index}/${brand.identity}`}>
+                <img
+                  className={brand.avatar ? 'avatar' : 'avatar gray'}
+                  src={brand.avatar ? brand.avatar : '/validators/default-avatar.svg'}
+                  alt={brand.name}
+                  height="42"
+                />
+              </TestnetLink>
             </div>
-            {brand.name ? brand.name : 'N/A'}
+            <TestnetLink to={`${validatorsRoutes.index}/${brand.identity}`}>
+              {brand.name ? brand.name : 'N/A'}
+            </TestnetLink>
           </div>
         </td>
 
