@@ -1,6 +1,6 @@
 import { trimHash } from 'helpers';
-import { BrandDataType, BrandType } from '../index';
-import { ValidatorType } from '../../index';
+import { BrandDataType, BrandType } from '../BrandTable';
+import { ValidatorType } from 'context/validators';
 
 export function groupByBrandAndSort({
   brandData,

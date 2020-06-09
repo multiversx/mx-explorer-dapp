@@ -1,7 +1,4 @@
 import axios from 'axios';
-import fakeHeartbeatstatus from './mockHearbeat';
-import fakeStatistics from './mockStatistics';
-import fakeBrandData from './mockBrandData';
 
 interface ParamsType {
   nodeUrl: string;

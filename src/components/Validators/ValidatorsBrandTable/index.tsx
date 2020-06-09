@@ -1,82 +1,57 @@
+import { faCogs } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useGlobalState } from 'context';
 import React from 'react';
-import BrandRow from './BrandRow';
-import { ValidatorType } from './../index';
-import { groupByBrandAndSort } from './helpers/brandHelper';
-import Tabs from '../Tabs';
-import './validatorsBrand.scss';
-
-export interface BrandType {
-  name: string;
-  avatar: string;
-  score: number;
-  stake: number;
-  stakePercent: number;
-  overallStakePercent: number;
-  validators: ValidatorType[];
-}
+import { populateValidatorsTable } from './../helpers/validatorHelpers';
+import { Loader } from 'sharedComponents';
+import ShardsList from './../ShardsList';
+import BrandTable, { BrandDataType } from './BrandTable';
+import useSetValidatorsData from './../useSetValidatorsData';
 
 interface ValidatorsBrandTableType {
-  allValidators: ValidatorType[];
+  success: boolean;
+  validatorData: ReturnType<typeof populateValidatorsTable>;
+  showNodes: boolean;
+  validatorDetails: boolean | undefined;
   brandData: BrandDataType[];
 }
 
-export interface BrandDataType {
-  avatar: string;
-  name: string;
-  identity: string;
-  publicKeys: string[];
-}
-
-const ValidatorsBrandTable = ({ allValidators, brandData }: ValidatorsBrandTableType) => {
-  const sortedBrands: BrandType[] = groupByBrandAndSort({
+const ValidatorsBrandTable = () => {
+  const {
+    activeTestnet: { validatorDetails },
+    validatorData,
     brandData,
-    allValidators: [...allValidators],
-  });
-
-  const ref = React.useRef(null);
-  const [brands, setBrands] = React.useState([...sortedBrands].slice(0, 10));
-
-  const delayRendering = () => {
-    if (brands.length !== sortedBrands.length) {
-      setTimeout(() => {
-        if (ref.current !== null) {
-          setBrands(sortedBrands);
-        }
-      }, 100);
-    }
-  };
-
-  React.useEffect(delayRendering, [sortedBrands]);
-
+  } = useGlobalState();
+  const success = useSetValidatorsData();
   return (
-    <div className="branded-validators row mb-3" ref={ref}>
-      <div className="col-12">
-        <div className="card">
-          <div className="card-body card-list">
-            <Tabs extraClasses={'mb-2'} />
-
-            <div className="table-responsive" style={{ minHeight: '50px' }}>
-              <table className="table table-hover">
-                <thead>
-                  <tr>
-                    <th className="th-rank">#</th>
-                    <th className="th-name">Validator Name</th>
-                    <th>Stake</th>
-                    <th className="th-stake-percent">Cumulative stake</th>
-                    <th className="w-10 text-right">Nodes</th>
-                    <th className="w-10 text-right">Score</th>
-                    <th className="th-details">&nbsp;</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {brands.map((brand, i) => (
-                    <BrandRow key={i} rank={i + 1} brand={brand} />
-                  ))}
-                </tbody>
-              </table>
-            </div>
+    <div>
+      <div className="container pt-3 pb-3">
+        <div className="row">
+          <div className="col-12">
+            <h4 data-testid="title">{'Node Information'}</h4>
           </div>
         </div>
+        {success ? (
+          <>
+            {validatorData.validatorsAndObservers.length > 0 && brandData.length > 0 ? (
+              <>
+                <ShardsList shardData={validatorData.shardData} />
+                <BrandTable allValidators={validatorData.validators} brandData={brandData} />
+              </>
+            ) : (
+              <Loader />
+            )}
+          </>
+        ) : (
+          <div className="card">
+            <div className="card-body card-details" data-testid="errorScreen">
+              <div className="empty">
+                <FontAwesomeIcon icon={faCogs} className="empty-icon" />
+                <span className="h4 empty-heading">Unable to load validators</span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

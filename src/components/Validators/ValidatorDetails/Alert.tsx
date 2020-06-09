@@ -1,15 +1,9 @@
 import * as React from 'react';
 import { Card } from 'react-bootstrap';
-import {
-  faClock,
-  faEye,
-  faExclamationTriangle,
-  faLeaf,
-  faLock,
-  faSync,
-} from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ValidatorType } from './../';
+import { ValidatorType } from 'context/validators';
+
 import RowIcon from './../RowIcon';
 
 const Container = ({ children }: { children: React.ReactNode }) => (

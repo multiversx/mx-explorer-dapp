@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { validatorFunctions } from 'helpers';
 import { BlockType } from 'components/Blocks';
-import { ValidatorType } from './../../';
+import { ValidatorType } from 'context/validators';
 import { initialState } from './../index';
 
 interface GetValidatorType {

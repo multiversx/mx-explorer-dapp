@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { truncate } from 'helpers';
 import { ShardSpan, TestnetLink } from 'sharedComponents';
-import { ValidatorType } from './../';
+import { ValidatorType } from 'context/validators';
 
 export interface NodeInformationType {
   publicKey: string;

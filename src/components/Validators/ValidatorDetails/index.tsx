@@ -1,9 +1,10 @@
 import { faCogs, faCube } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useParams } from 'react-router-dom';
 import * as React from 'react';
 import { useGlobalState } from 'context';
 import { BlocksTable, Loader } from 'sharedComponents';
-import { ValidatorType } from './../';
+import { ValidatorType } from 'context/validators';
 import { getValidator, searchBlocks } from './helpers/asyncRequests';
 import { validatorFunctions } from 'helpers';
 import NetworkMetrics, { NetworkMetricsType } from './NetworkMetrics';
@@ -46,14 +47,25 @@ export const initialState: StateType = {
   ratingModifier: 0,
 };
 
-const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined }) => {
+const ValidatorDetails = () => {
   const ref = React.useRef(null);
+
+  const { hash } = useParams();
 
   const {
     activeTestnet: { elasticUrl, nodeUrl },
     config: { metaChainShardId },
     timeout,
+    validatorData,
   } = useGlobalState();
+
+  let validator: ValidatorType | undefined;
+  if (hash) {
+    validator = validatorData.validatorsAndObservers.find(v => v.publicKey === hash);
+    if (validator === undefined && validatorData.validatorsAndObservers.length > 0) {
+      validator = { peerType: 'observer' } as any;
+    }
+  }
 
   const [state, setState] = React.useState(initialState);
   const [fetchedBlocks, setFetchedBlocks] = React.useState({
@@ -81,7 +93,7 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
         nodeUrl,
       }).then(({ signersIndex, shardNumber, epoch, roundAtEpochStart, success, ...data }: any) => {
         if (ref.current !== null) {
-          setState({ ...data, shardNumber, rating: validator.rating });
+          setState({ ...data, shardNumber, rating: validator!.rating });
           setSuccess(success);
           const props = {
             elasticUrl,

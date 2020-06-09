@@ -1,14 +1,7 @@
-import {
-  faClock,
-  faEye,
-  faExclamationTriangle,
-  faLeaf,
-  faLock,
-  faSync,
-} from '@fortawesome/free-solid-svg-icons';
+import { faClock, faEye, faLeaf, faLock, faSync } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
-import { ValidatorType } from './';
+import { ValidatorType } from 'context/validators';
 
 interface ValidatorIssuesType {
   validator: ValidatorType;

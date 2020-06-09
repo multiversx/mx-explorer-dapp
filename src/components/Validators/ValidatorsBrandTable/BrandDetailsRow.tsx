@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { truncate, trimHash } from 'helpers';
 import { ShardSpan, TestnetLink } from 'sharedComponents';
-import { ValidatorType } from '../index';
+import { ValidatorType } from 'context/validators';
 import RowIcon from './../RowIcon';
 import { validatorsRoutes } from 'routes';
 

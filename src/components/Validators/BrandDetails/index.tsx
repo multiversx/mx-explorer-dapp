@@ -1,22 +1,22 @@
 import * as React from 'react';
+import { useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
-import { stake, cumulativeStakePercent } from './../ValidatorsBrandTable/BrandRow';
 import { groupByBrandAndSort } from './../ValidatorsBrandTable/helpers/brandHelper';
+import { stake, cumulativeStakePercent } from './../ValidatorsBrandTable/BrandRow';
 
-const BrandInformation = ({ publicKey }: { publicKey: string }) => {
+const BrandDetails = () => {
   const { brandData, validatorData } = useGlobalState();
+  const { identity } = useParams();
 
-  const sortedBrands = groupByBrandAndSort({
-    brandData,
+  const [brand] = groupByBrandAndSort({
+    brandData: brandData.filter(b => b.identity === identity),
     allValidators: [...validatorData.validators],
   });
-
-  const brand = sortedBrands.find(b => b.validators.some((v: any) => v.publicKey === publicKey));
 
   const labelClass = 'col-lg-5 card-label';
   const dataClass = 'col-lg-7';
 
-  return brand !== undefined ? (
+  return (
     <div data-testid="brandContainer">
       <div className="card branded-validators mt-sm-5 mt-md-0">
         <div className="card-body">
@@ -75,7 +75,7 @@ const BrandInformation = ({ publicKey }: { publicKey: string }) => {
         </div>
       </div>
     </div>
-  ) : null;
+  );
 };
 
-export default BrandInformation;
+export default BrandDetails;

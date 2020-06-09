@@ -6,7 +6,10 @@ import Home from './components/Home';
 import MiniBlockDetails from './components/MiniBlockDetails';
 import TransactionDetails from './components/TransactionDetails';
 import Transactions from './components/Transactions';
-import Validators from './components/Validators';
+import ValidatorsTable from './components/Validators/ValidatorsTable';
+import BrandDetails from './components/Validators/BrandDetails';
+import ValidatorDetails from './components/Validators/ValidatorDetails';
+import ValidatorsBrandTable from './components/Validators/ValidatorsBrandTable';
 import { withPageTitle, withTestnetReady } from './sharedComponents';
 
 interface RouteType {
@@ -20,7 +23,9 @@ interface RouteType {
 
 export const validatorsRoutes = {
   index: '/validators',
+  brandDetails: `'/validators/:identity`,
   nodes: '/validators/nodes',
+  validatorDetails: '/validators/nodes/:hash',
 };
 
 const routes: RouteType[] = [
@@ -37,22 +42,22 @@ const routes: RouteType[] = [
   {
     path: validatorsRoutes.index,
     title: 'Validators',
-    component: Validators,
+    component: ValidatorsBrandTable,
   },
   {
     path: validatorsRoutes.nodes,
     title: 'Validators Nodes',
-    component: Validators,
+    component: ValidatorsTable,
   },
   {
-    path: `${validatorsRoutes.index}/:identity`,
+    path: validatorsRoutes.brandDetails,
     title: 'Validator Details',
-    component: Validators,
+    component: BrandDetails,
   },
   {
-    path: `${validatorsRoutes.nodes}/:hash`,
+    path: validatorsRoutes.validatorDetails,
     title: 'Node Details',
-    component: Validators,
+    component: ValidatorDetails,
   },
   {
     path: '/address/:hash',

@@ -1,7 +1,15 @@
 import { validatorFunctions } from 'helpers';
-import { ShardDataType, ValidatorType } from './../index';
+import { ValidatorType } from 'context/validators';
 import { validatorIssues } from './../RowIcon';
 import getPeerType from './getPeerType';
+
+interface ShardDataType {
+  [key: string]: {
+    allValidators: number;
+    allActiveValidators: number;
+    shardNumber: number;
+  };
+}
 export interface ValidatorStatisticsData {
   rating: number;
   ratingModifier: number;
