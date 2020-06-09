@@ -9,7 +9,7 @@ import {
 import { populateValidatorsTable } from './helpers/validatorHelpers';
 import { StateType } from './ValidatorsTable';
 import ValidatorSwitch from './ValidatorSwitch';
-import { validatorsRouteNames } from 'routes';
+import { validatorsRoutes } from 'routes';
 import { ValidatorType as StateValidatorType } from 'context/validators';
 
 export type ValidatorType = StateValidatorType;
@@ -81,7 +81,7 @@ const Validators = () => {
     });
   };
 
-  const showNodes = pathname.endsWith(validatorsRouteNames.validatorsNodes);
+  const showNodes = pathname.endsWith(validatorsRoutes.nodes);
 
   React.useEffect(getData, [nodeUrl, timeout]);
 
