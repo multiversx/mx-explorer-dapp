@@ -6,13 +6,13 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { isAddress, isBlock, isTransaction } from './helpers/asyncRequests';
 
-const isValidator = (hash: string) => hash.length === 256 && /^[a-zA-Z0-9]+$/g.test(hash);
-
 const Search: React.FC = () => {
   const {
     activeTestnet: { elasticUrl, nodeUrl },
     activeTestnetId,
     timeout,
+    brandData,
+    validatorData,
   } = useGlobalState();
   const history = useHistory();
   const [hash, setHash] = React.useState<string>('');
@@ -22,9 +22,28 @@ const Search: React.FC = () => {
       onClick();
     }
   };
+
   const onClick = async () => {
-    if (isValidator(hash)) {
-      history.push(testnetRoute({ to: `/validators/${hash}`, activeTestnetId }));
+    const isValidator =
+      hash &&
+      validatorData.validators.length &&
+      validatorData.validators.some(validator => validator.publicKey === hash);
+    const brand =
+      hash &&
+      validatorData.validators.length &&
+      brandData.some(
+        brand => brand.identity === hash || brand.name.toLowerCase() === hash.trim().toLowerCase()
+      )
+        ? brandData.find(
+            brand =>
+              brand.identity === hash || brand.name.toLowerCase() === hash.trim().toLowerCase()
+          )!.identity
+        : '';
+
+    if (isValidator) {
+      history.push(testnetRoute({ to: `/validators/nodes/${hash}`, activeTestnetId }));
+    } else if (brand) {
+      history.push(testnetRoute({ to: `/validators/${brand}`, activeTestnetId }));
     } else if (await isBlock({ elasticUrl, hash, timeout })) {
       history.push(testnetRoute({ to: `/blocks/${hash}`, activeTestnetId }));
     } else if (await isTransaction({ elasticUrl, hash, timeout })) {
