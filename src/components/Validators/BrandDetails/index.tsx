@@ -33,8 +33,10 @@ const BrandDetails = () => {
 
   React.useEffect(setBrandData, [success, brandData, validatorData]);
 
-  const labelClass = 'col-lg-5 card-label';
-  const dataClass = 'col-lg-7';
+  const labelClass = 'col-lg-4 card-label';
+  const dataClass = 'col-lg-8';
+  const validatorLabelClass = 'col-lg-3 card-label';
+  const validatorDataClass = 'col-lg-9';
 
   return notFound ? (
     <PageNotFound />
@@ -42,19 +44,13 @@ const BrandDetails = () => {
     <div className="container pt-3 pb-3">
       <div className="row">
         <div className="col-12">
-          <div className="row">
-            <div className="col-12">
-              <h4>
-                <span>Validator Details</span>
-              </h4>
-            </div>
-          </div>
+          <h4>Validator Details</h4>
         </div>
       </div>
       {brand !== undefined ? (
         <>
           <div className="row mb-4" data-testid="brandDetailsContainer">
-            <div className="col-md-8 col-xs-12">
+            <div className="col-md-6 col-xs-12">
               <div className="card branded-validators">
                 <div className="card-body">
                   <div className="row">
@@ -75,8 +71,8 @@ const BrandDetails = () => {
                   </div>
                   <hr className="hr-space" />
                   <div className="row">
-                    <div className={labelClass}>Location</div>
-                    <div className={dataClass}>
+                    <div className={validatorLabelClass}>Location</div>
+                    <div className={validatorDataClass}>
                       <div className="d-flex align-items-center">
                         <div className="mr-3">{'Craiova, Romania'}</div>
                       </div>
@@ -84,8 +80,8 @@ const BrandDetails = () => {
                   </div>
                   <hr className="hr-space" />
                   <div className="row">
-                    <div className={labelClass}>Twitter</div>
-                    <div className={dataClass}>
+                    <div className={validatorLabelClass}>Twitter</div>
+                    <div className={validatorDataClass}>
                       <div className="d-flex align-items-center">
                         <div className="mr-3">
                           <a href={'https://twitter.com/staking_agency'}>{'staking_agency'}</a>{' '}
@@ -95,8 +91,8 @@ const BrandDetails = () => {
                   </div>
                   <hr className="hr-space" />
                   <div className="row">
-                    <div className={labelClass}>Web</div>
-                    <div className={dataClass}>
+                    <div className={validatorLabelClass}>Web</div>
+                    <div className={validatorDataClass}>
                       <div className="d-flex align-items-center">
                         <div className="mr-3">
                           <a href={'https://staking.agency/'}>{'https://staking.agency'}</a>{' '}
@@ -107,7 +103,7 @@ const BrandDetails = () => {
                 </div>
               </div>
             </div>
-            <div className="col-md-4 col-xs-12 mt-4 mt-md-0">
+            <div className="col-md-6 col-xs-12 mt-4 mt-md-0">
               <div className="card">
                 <div className="card-body">
                   <div className="row">
@@ -147,6 +143,11 @@ const BrandDetails = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <h4>Nodes</h4>
             </div>
           </div>
           <div className="row">
