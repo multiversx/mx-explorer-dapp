@@ -20,7 +20,7 @@ const ValidatorsTable = ({ title, children }: { title: string; children: React.R
         </div>
         {success ? (
           <>
-            {validatorData.validatorsAndObservers.length > 0 && brandData.length > 0 ? (
+            {brandData.length > 0 ? (
               <>
                 <ShardsList shardData={validatorData.shardData} />
                 {children}
