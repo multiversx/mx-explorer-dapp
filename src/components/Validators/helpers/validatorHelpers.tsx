@@ -114,12 +114,14 @@ export function populateValidatorsTable({
   const validatorsAndObservers: ValidatorType[] = [];
   const heartbeatObservers = data.filter(v => !Object.keys(statistics).includes(v.publicKey));
 
-  const statisticsData = Object.keys(statistics).map(publicKey => {
-    return {
-      publicKey,
-      ...statistics[publicKey],
-    };
-  });
+  const statisticsData = statistics
+    ? Object.keys(statistics).map(publicKey => {
+        return {
+          publicKey,
+          ...statistics[publicKey],
+        };
+      })
+    : [];
   const validatorData: ValidatorDataType = {};
   data.map(validator => {
     validatorData[validator.publicKey] = { ...validator };
