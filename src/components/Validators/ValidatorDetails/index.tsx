@@ -12,9 +12,9 @@ import NodeInformation, { NodeInformationType } from './NodeInformation';
 import Rounds from './Rounds';
 import BrandInformation from './BrandInformation';
 import Alert from './Alert';
+import useSetValidatorsData from './../useSetValidatorsData';
 
 export type StateType = NetworkMetricsType &
-  // ValidatorStatisticsData &
   NodeInformationType & {
     shardId: string;
     startBlockNr: number;
@@ -49,24 +49,9 @@ export const initialState: StateType = {
 
 const ValidatorDetails = () => {
   const ref = React.useRef(null);
-
   const { hash } = useParams();
-
-  const {
-    activeTestnet: { elasticUrl, nodeUrl },
-    config: { metaChainShardId },
-    timeout,
-    validatorData,
-  } = useGlobalState();
-
-  let validator: ValidatorType | undefined;
-  if (hash) {
-    validator = validatorData.validatorsAndObservers.find(v => v.publicKey === hash);
-    if (validator === undefined && validatorData.validatorsAndObservers.length > 0) {
-      validator = { peerType: 'observer' } as any;
-    }
-  }
-
+  const [validator, setValidator] = React.useState<ValidatorType>();
+  const [dataFetched] = React.useState(useSetValidatorsData());
   const [state, setState] = React.useState(initialState);
   const [fetchedBlocks, setFetchedBlocks] = React.useState({
     blocks: [],
@@ -78,9 +63,26 @@ const ValidatorDetails = () => {
     rounds: [],
     roundsFetched: true,
   });
-  const [success, setSuccess] = React.useState(
-    validator !== undefined && validator.peerType !== 'observer'
-  );
+
+  const {
+    activeTestnet: { elasticUrl, nodeUrl },
+    config: { metaChainShardId },
+    timeout,
+    validatorData,
+  } = useGlobalState();
+
+  React.useEffect(() => {
+    if (hash) {
+      const foundValidator = validatorData.validatorsAndObservers.find(v => v.publicKey === hash);
+      if (foundValidator === undefined && validatorData.validatorsAndObservers.length > 0) {
+        setSuccess(false);
+      } else {
+        setValidator(foundValidator);
+      }
+    }
+  }, [hash, validatorData, dataFetched]);
+
+  const [success, setSuccess] = React.useState(true);
 
   React.useEffect(() => {
     if (ref.current !== null && validator !== undefined && validator.peerType !== 'observer') {
@@ -142,7 +144,7 @@ const ValidatorDetails = () => {
               <>
                 <div className="row">
                   <div className={nodeClass}>
-                    <NodeInformation {...state} validator={validator} />
+                    <NodeInformation {...state} />
                   </div>
                   <div className={brandClass}>
                     <BrandInformation publicKey={state.publicKey} />
