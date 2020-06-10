@@ -1,8 +1,11 @@
 import axios from 'axios';
-import { fireEvent, renderWithRouter, wait, meta } from '../../../utils/test-utils';
+import { fireEvent, renderWithRouter, wait, meta } from 'utils/test-utils';
+import optionalConfig from 'utils/config';
 import heartbeatstatus from './heartbeatstatus';
 import statistics from './statistics';
 import validators from './validators';
+import doc from './doc';
+import epoch from './epoch';
 
 (global as any).document.createRange = () => ({
   setStart: () => {},
@@ -13,14 +16,32 @@ import validators from './validators';
   },
 });
 
-const goToValidatorsPage = () => {
+export const mockGet = () => {
   const mockGet = jest.spyOn(axios, 'get');
-  mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
-  mockGet.mockReturnValueOnce(Promise.resolve({ data: heartbeatstatus }));
-  mockGet.mockReturnValueOnce(Promise.resolve({ data: statistics }));
-  mockGet.mockReturnValueOnce(Promise.resolve({ data: validators }));
+  mockGet.mockImplementation((url: string): any => {
+    switch (true) {
+      case url.includes('/tps/_doc/meta'):
+        return Promise.resolve({ data: meta });
+      case url.includes(`/node/heartbeatstatus`):
+        return Promise.resolve({ data: heartbeatstatus });
+      case url.includes('/validator/statistics'):
+        return Promise.resolve({ data: statistics });
+      case url.endsWith('/validators'):
+        return Promise.resolve({ data: validators });
+      case url.includes('/network/status'):
+        return Promise.resolve({ data: epoch });
+      case url.includes('/validators/_doc'):
+        return Promise.resolve({ data: doc });
+    }
+  });
+};
+
+const goToValidatorsPage = () => {
+  mockGet();
+
   return renderWithRouter({
     route: '/validators/nodes',
+    optionalConfig,
   });
 };
 
@@ -37,7 +58,7 @@ describe('Validators', () => {
       route: '/validators/nodes',
     });
 
-    const loader = await render.findByTestId('loader');
+    const loader = render.getByTestId('loader');
     expect(loader).toBeInTheDocument();
   });
   test('Validators page failed state', async () => {
@@ -117,7 +138,7 @@ describe('Validators links', () => {
     expect(publicKeyLink.textContent).toBe('360a9de7dd...d4f3dee28d');
     fireEvent.click(publicKeyLink);
     await wait(async () => {
-      expect(document.title).toEqual('Validator Details • Elrond Explorer');
+      expect(document.title).toEqual('Node Details • Elrond Explorer');
     });
   });
   test('Validators shard link', async () => {
