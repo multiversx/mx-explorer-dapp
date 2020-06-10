@@ -7,6 +7,7 @@ import { useGlobalState } from 'context';
 import { isHash, dateFormatted, sizeFormat, testnetRoute, truncate, blockFunctions } from 'helpers';
 import { Loader, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { BlockType } from '../Blocks';
+import { validatorsRoutes } from 'routes';
 
 export interface StateType {
   block: BlockType;
@@ -162,7 +163,7 @@ const BlockDetails: React.FC = () => {
                           {proposer === '' ? (
                             <span className="text-muted">N/A</span>
                           ) : (
-                            <TestnetLink to={`/validators/${proposer}`}>
+                            <TestnetLink to={`${validatorsRoutes.nodes}/${proposer}`}>
                               {truncate(proposer, 100)}
                             </TestnetLink>
                           )}
@@ -177,7 +178,11 @@ const BlockDetails: React.FC = () => {
                           ) : (
                             <>
                               {consensusItems.map(item => (
-                                <TestnetLink className="hash" key={item} to={`/validators/${item}`}>
+                                <TestnetLink
+                                  className="hash"
+                                  key={item}
+                                  to={`${validatorsRoutes.nodes}/${item}`}
+                                >
                                   {truncate(item, 100)}
                                 </TestnetLink>
                               ))}
