@@ -12,6 +12,8 @@ export default function useSetValidatorsData() {
     activeTestnet: { nodeUrl, versionNumber, nrOfShards },
     timeout,
     config: { metaChainShardId, explorerApi },
+    validatorData: configValidatorData,
+    brandData: configBrandData,
   } = useGlobalState();
   const dispatch = useGlobalDispatch();
 
@@ -35,14 +37,16 @@ export default function useSetValidatorsData() {
         versionNumber,
         nrOfShards,
       });
-      if (validatorData.validatorsAndObservers.length > 0) {
-        dispatch({ type: 'setValidatorData', validatorData });
-      }
       const { data: brandData } = brand;
-      if (brandData.length > 0) {
+      if (validatorData.validatorsAndObservers.length > 0 && brandData.length > 0) {
+        dispatch({ type: 'setValidatorData', validatorData });
         dispatch({ type: 'setBrandData', brandData });
+      } else if (
+        configValidatorData.validatorsAndObservers.length === 0 &&
+        configBrandData.length === 0
+      ) {
+        setSuccess(success && validatorsSuccess);
       }
-      setSuccess(success && validatorsSuccess);
     });
   };
 
