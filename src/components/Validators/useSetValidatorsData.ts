@@ -35,7 +35,9 @@ export default function useSetValidatorsData() {
         versionNumber,
         nrOfShards,
       });
-      dispatch({ type: 'setValidatorData', validatorData });
+      if (validatorData.validatorsAndObservers.length > 0) {
+        dispatch({ type: 'setValidatorData', validatorData });
+      }
       const { data: brandData } = brand;
       if (brandData.length > 0) {
         dispatch({ type: 'setBrandData', brandData });
