@@ -22,24 +22,16 @@ export const cumulativeStakePercent = (brand: BrandType) =>
 
 const BrandRow = ({ brand, rank }: BrandRowType) => {
   const [collapsed, setCollapsed] = React.useState(true);
-  const [hasHover, setHasHover] = React.useState(false);
+  const [showDetails, setShowDetails] = React.useState(false);
 
   const onClick = () => {
-    setHasHover(true);
+    setShowDetails(true);
     setCollapsed(!collapsed);
-  };
-
-  const setHover = () => {
-    setHasHover(true);
   };
 
   return brand.validators.length ? (
     <>
-      <tr
-        onClick={onClick}
-        className={collapsed ? 'brand-tr collapsed' : 'brand-tr'}
-        onMouseOver={setHover}
-      >
+      <tr onClick={onClick} className={collapsed ? 'brand-tr collapsed' : 'brand-tr'}>
         <td>{rank}</td>
         <td>
           <div className="d-flex align-items-center">
@@ -75,7 +67,7 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
           <img src={carretDown} className="details-arrow" alt="details-arrow" height="8" />
         </td>
       </tr>
-      {hasHover && (
+      {showDetails && (
         <tr className={collapsed ? 'details-tr collapsed' : 'details-tr'}>
           <td colSpan={7} className="p-0">
             <div className="content">
