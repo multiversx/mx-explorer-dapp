@@ -22,14 +22,24 @@ export const cumulativeStakePercent = (brand: BrandType) =>
 
 const BrandRow = ({ brand, rank }: BrandRowType) => {
   const [collapsed, setCollapsed] = React.useState(true);
+  const [hasHover, setHasHover] = React.useState(false);
 
   const onClick = () => {
+    setHasHover(true);
     setCollapsed(!collapsed);
+  };
+
+  const setHover = () => {
+    setHasHover(true);
   };
 
   return brand.validators.length ? (
     <>
-      <tr onClick={onClick} className={collapsed ? 'brand-tr collapsed' : 'brand-tr'}>
+      <tr
+        onClick={onClick}
+        className={collapsed ? 'brand-tr collapsed' : 'brand-tr'}
+        onMouseOver={setHover}
+      >
         <td>{rank}</td>
         <td>
           <div className="d-flex align-items-center">
@@ -65,32 +75,38 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
           <img src={carretDown} className="details-arrow" alt="details-arrow" height="8" />
         </td>
       </tr>
-      <tr className={collapsed ? 'details-tr collapsed' : 'details-tr'}>
-        <td colSpan={7} className="p-0">
-          <div className="content">
-            <div className="table-responsive px-4 pt-2" style={{ minHeight: '50px' }}>
-              <table className="table mb-2">
-                <thead>
-                  <tr>
-                    <th>Public Key</th>
-                    <th>Node Name</th>
-                    <th>Shard</th>
-                    <th>Version</th>
-                    <th className="text-right">Uptime</th>
-                    <th className="text-right">Status</th>
-                    <th className="text-right">Rating</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {brand.validators.map((validator, i) => (
-                    <BrandDetailsRow key={validator.publicKey} rowIndex={i} validator={validator} />
-                  ))}
-                </tbody>
-              </table>
+      {hasHover && (
+        <tr className={collapsed ? 'details-tr collapsed' : 'details-tr'}>
+          <td colSpan={7} className="p-0">
+            <div className="content">
+              <div className="table-responsive px-4 pt-2" style={{ minHeight: '50px' }}>
+                <table className="table mb-2">
+                  <thead>
+                    <tr>
+                      <th>Public Key</th>
+                      <th>Node Name</th>
+                      <th>Shard</th>
+                      <th>Version</th>
+                      <th className="text-right">Uptime</th>
+                      <th className="text-right">Status</th>
+                      <th className="text-right">Rating</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {brand.validators.map((validator, i) => (
+                      <BrandDetailsRow
+                        key={validator.publicKey}
+                        rowIndex={i}
+                        validator={validator}
+                      />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-        </td>
-      </tr>
+          </td>
+        </tr>
+      )}
     </>
   ) : (
     <></>
