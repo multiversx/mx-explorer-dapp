@@ -6,7 +6,9 @@ import { createMemoryHistory, History } from 'history';
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { App } from '../App';
-import config from './config';
+import defaultConfig from './config';
+
+export const config = defaultConfig;
 
 const customRender = (ui: any, options: any = {}) => render(ui, { wrapper: App, ...options });
 

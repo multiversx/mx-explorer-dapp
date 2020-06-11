@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { fireEvent, renderWithRouter, wait } from 'utils/test-utils';
-import blocks from './rawData/blocks';
-import heartbeatstatus from './../../tests/heartbeatstatus';
+import { blocks, heartbeatstatus } from 'utils/rawData';
 import rounds from './rawData/rounds';
 import { mockGet } from './../../tests/Validators.test';
 
@@ -43,7 +42,7 @@ describe('Node Information', () => {
     });
 
     await wait(async () => {
-      expect(render.getByTestId('blocksTable').childElementCount).toBe(2);
+      expect(render.getByTestId('blocksTable').childElementCount).toBe(25);
     });
   });
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { fireEvent, renderWithRouter, wait, meta } from 'utils/test-utils';
-import data from './blocks';
+import { blocks as data } from '../../../utils/rawData';
 
 const count = { count: 49932, _shards: { total: 5, successful: 5, skipped: 0, failed: 0 } };
 

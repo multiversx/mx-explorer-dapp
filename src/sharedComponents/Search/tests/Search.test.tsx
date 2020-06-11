@@ -1,55 +1,88 @@
 import axios from 'axios';
-import { fireEvent, renderWithRouter, wait } from './../../../utils/test-utils';
-import addressResponse from './address';
-import blocksResponse from './blocks';
-import transactionsResponse from './transactions';
+import {
+  fireEvent,
+  renderWithRouter,
+  wait,
+  config as optionalConfig,
+  meta,
+  act,
+} from 'utils/test-utils';
+import {
+  transactions as transactionsResponse,
+  heartbeatstatus,
+  statistics,
+  validators,
+  epoch,
+  block,
+  validatorsdoc,
+} from 'utils/rawData';
+import addressResponse from './rawData/address';
+
+const beforeAll = (fail = ['']) => {
+  const mockGet = jest.spyOn(axios, 'get');
+  mockGet.mockImplementation((url: string): any => {
+    switch (true) {
+      // --- page load ---
+      case url.includes('/tps/_doc/meta'):
+        return Promise.resolve({ data: meta });
+      case url.includes(`/node/heartbeatstatus`):
+        return Promise.resolve({ data: heartbeatstatus });
+      case url.includes('/validator/statistics'):
+        return Promise.resolve({ data: statistics });
+      case url.endsWith('/validators'):
+        return Promise.resolve({ data: validators });
+      // --- page load ---
+      case url.includes('validators/_doc'):
+        return Promise.resolve({ data: validatorsdoc });
+      case url.includes('network/status'):
+        return Promise.resolve({ data: epoch });
+      case url.includes('/address/') && !fail.includes('address'):
+        return Promise.resolve({ data: addressResponse });
+      case url.includes('/blocks/_doc') && !fail.includes('blocks'):
+        return Promise.resolve({ data: block });
+      case url.includes('/transactions/_search') && !fail.includes('transactions'):
+      case url.includes('/transactions/_doc') && !fail.includes('transactions'):
+        return Promise.resolve({ data: transactionsResponse });
+      default:
+        return Promise.resolve(new Error('error'));
+    }
+  });
+  return renderWithRouter({
+    route: '/search',
+    optionalConfig,
+  });
+};
 
 describe('Search', () => {
   test('Seach finds validator', async () => {
-    const render = renderWithRouter({
-      route: '/search',
-    });
+    const render = beforeAll();
 
     const search = render.getByTestId('search');
     const data = {
       target: {
         value:
-          '8f2756c3dbe37c9a249f0e1472f80f8142126c09ee77608e1e61e6e1aa2b6d786ef891653db163e3fa55e70e94cdf37f359c25edccd44773e6acd3a2c9ebb1154c758845a6034625104427bd9343b5db7c65e4df13a7cbe2b123e461e3deeccb3b79594d347a3cad1a8ce0162ed3aa2995bfd455f3fbe9a94b37e699523b8cc5',
+          '000523677f6c7f594de2452960c67411cb3503925d65124002edb2aefe125593c9bf588687655a04e4592ab4ade9911257581a71c44fa223752b2cfb7b8d43f1f9ef675d9513f3aa3ca6003118343e05269974848582e5141932be2c31aab582',
       },
     };
     fireEvent.change(search, data);
 
-    const searchButton = render.getByTestId('searchButton');
+    const searchButton = await render.findByTestId('searchButton');
     fireEvent.click(searchButton);
 
     await wait(async () => {
-      expect(document.title).toEqual('Validator Details • Elrond Explorer');
+      expect(document.title).toEqual('Node Details • Elrond Explorer');
     });
   });
-  test('Seach finds block', async () => {
-    const mockGet = jest.spyOn(axios, 'get');
-    mockGet.mockReturnValueOnce(
-      Promise.resolve({
-        data: blocksResponse,
-      })
-    );
-    mockGet.mockReturnValueOnce(
-      Promise.resolve({
-        data: blocksResponse,
-      })
-    );
-
-    const render = renderWithRouter({
-      route: '/search',
-    });
+  test('Search finds block', async () => {
+    const render = beforeAll();
 
     const search = render.getByTestId('search');
     const data = {
-      target: { value: '901e887c820aaf651f87c0c8b65aadb41d9bfb652c6d47be3575395307324d5c' },
+      target: { value: 'c51471d4b6a439af44c51bff7372c4f02a8c98ba3bf81e7e080fe461c074d1c1' },
     };
     fireEvent.change(search, data);
 
-    const searchButton = render.getByTestId('searchButton');
+    const searchButton = await render.findByTestId('searchButton');
     fireEvent.click(searchButton);
 
     await wait(async () => {
@@ -57,25 +90,9 @@ describe('Search', () => {
     });
   });
   test('Seach finds transaction', async () => {
-    const mockGet = jest.spyOn(axios, 'get');
-    mockGet
-      .mockReturnValueOnce(Promise.resolve(new Error('blocks error')))
-      .mockReturnValueOnce(
-        Promise.resolve({
-          data: { data: { found: true } },
-        })
-      )
-      .mockReturnValueOnce(
-        Promise.resolve({
-          data: transactionsResponse,
-        })
-      );
+    const render = beforeAll(['blocks']);
 
-    const render = renderWithRouter({
-      route: '/search',
-    });
-
-    const search = render.getByTestId('search');
+    const search = await render.findByTestId('search');
     const data = {
       target: { value: '41fa1461ac134ee095dbee60c3cc2848255181aaa2bdd6f5aae386d58e0d4a80' },
     };
@@ -89,24 +106,9 @@ describe('Search', () => {
     });
   });
   test('Seach finds address', async () => {
-    const mockGet = jest.spyOn(axios, 'get');
+    const render = beforeAll(['blocks', 'transactions']);
 
-    mockGet.mockImplementation((url: string): any => {
-      switch (true) {
-        case url.includes('/blocks/'):
-          return Promise.reject(new Error('blocks error'));
-        case url.includes(`/transactions/`):
-          return Promise.resolve(new Error('transactions error'));
-        case url.includes('/address/'):
-          return Promise.resolve({ data: addressResponse });
-      }
-    });
-
-    const render = renderWithRouter({
-      route: '/search',
-    });
-
-    const search = render.getByTestId('search');
+    const search = await render.findByTestId('search');
     const data = {
       target: { value: addressResponse.account.address },
     };
@@ -120,14 +122,7 @@ describe('Search', () => {
     });
   });
   test('Seach does not find anything', async () => {
-    const mockGet = jest.spyOn(axios, 'get');
-    mockGet.mockRejectedValueOnce(new Error('blocks error'));
-    mockGet.mockRejectedValueOnce(new Error('transactions error'));
-    mockGet.mockRejectedValueOnce(new Error('address error'));
-
-    const render = renderWithRouter({
-      route: '/search',
-    });
+    const render = beforeAll(['blocks', 'transactions', 'address']);
 
     const search = render.getByTestId('search');
     const data = {
@@ -135,12 +130,13 @@ describe('Search', () => {
     };
     fireEvent.change(search, data);
 
-    const searchButton = render.getByTestId('searchButton');
+    const searchButton = await render.findByTestId('searchButton');
     fireEvent.click(searchButton);
 
-    await wait(async () => {
-      // expect(document.title).toEqual('Search • Elrond Explorer');
-      expect(render.getByText('random1234').innerHTML).toBe('random1234');
+    await act(async () => {
+      await wait(async () => {
+        expect(render.getByText('random1234').innerHTML).toBe('random1234');
+      });
     });
   });
 });

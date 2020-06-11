@@ -1,11 +1,18 @@
 import axios from 'axios';
-import { fireEvent, renderWithRouter, wait, meta } from 'utils/test-utils';
-import optionalConfig from 'utils/config';
-import heartbeatstatus from './heartbeatstatus';
-import statistics from './statistics';
-import validators from './validators';
-import doc from './doc';
-import epoch from './epoch';
+import {
+  fireEvent,
+  renderWithRouter,
+  wait,
+  meta,
+  config as optionalConfig,
+} from 'utils/test-utils';
+import {
+  heartbeatstatus,
+  validators,
+  validatorsdoc as doc,
+  epoch,
+  statistics,
+} from 'utils/rawData';
 
 (global as any).document.createRange = () => ({
   setStart: () => {},
@@ -20,6 +27,7 @@ export const mockGet = () => {
   const mockGet = jest.spyOn(axios, 'get');
   mockGet.mockImplementation((url: string): any => {
     switch (true) {
+      // --- page load ---
       case url.includes('/tps/_doc/meta'):
         return Promise.resolve({ data: meta });
       case url.includes(`/node/heartbeatstatus`):
@@ -28,6 +36,7 @@ export const mockGet = () => {
         return Promise.resolve({ data: statistics });
       case url.endsWith('/validators'):
         return Promise.resolve({ data: validators });
+      // --- page load ---
       case url.includes('/network/status'):
         return Promise.resolve({ data: epoch });
       case url.includes('/validators/_doc'):
