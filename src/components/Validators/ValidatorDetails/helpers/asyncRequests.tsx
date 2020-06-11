@@ -10,7 +10,6 @@ interface GetValidatorType {
   elasticUrl: string;
   publicKey: string;
   timeout: number;
-  metaChainShardId: number;
 }
 
 function getBlocks(response: any) {
@@ -112,7 +111,6 @@ export async function getValidator({
   currentValidator,
   nodeUrl,
   elasticUrl,
-  metaChainShardId,
   timeout,
   publicKey,
 }: GetValidatorType) {
