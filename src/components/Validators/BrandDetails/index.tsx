@@ -74,7 +74,13 @@ const BrandDetails = () => {
                     <div className={validatorLabelClass}>Location</div>
                     <div className={validatorDataClass}>
                       <div className="d-flex align-items-center">
-                        <div className="mr-3">{'Craiova, Romania'}</div>
+                        <div className="mr-3">
+                          {brand.location ? (
+                            brand.location
+                          ) : (
+                            <span className="text-muted">N/A</span>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -84,7 +90,11 @@ const BrandDetails = () => {
                     <div className={validatorDataClass}>
                       <div className="d-flex align-items-center">
                         <div className="mr-3">
-                          <a href={'https://twitter.com/staking_agency'}>{'staking_agency'}</a>{' '}
+                          {brand.twitter ? (
+                            <a href={brand.twitter}>{brand.twitter.split('/').pop()}</a>
+                          ) : (
+                            <span className="text-muted">N/A</span>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -95,7 +105,11 @@ const BrandDetails = () => {
                     <div className={validatorDataClass}>
                       <div className="d-flex align-items-center">
                         <div className="mr-3">
-                          <a href={'https://staking.agency/'}>{'https://staking.agency'}</a>{' '}
+                          {brand.web ? (
+                            <a href={brand.web}>{brand.web}</a>
+                          ) : (
+                            <span className="text-muted">N/A</span>
+                          )}
                         </div>
                       </div>
                     </div>

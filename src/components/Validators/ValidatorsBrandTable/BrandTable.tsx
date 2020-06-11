@@ -1,6 +1,6 @@
 import React from 'react';
 import BrandRow from './BrandRow';
-import { ValidatorType } from 'context/validators';
+import { ValidatorType, BrandDataType as ContextBrandDataType } from 'context/validators';
 
 import { groupByBrandAndSort } from './helpers/brandHelper';
 import Tabs from '../Tabs';
@@ -12,21 +12,18 @@ export interface BrandType {
   identity: string;
   score: number;
   stake: number;
+  twitter: string;
+  web: string;
+  location: string;
   stakePercent: number;
   overallStakePercent: number;
   validators: ValidatorType[];
 }
 
+export type BrandDataType = ContextBrandDataType;
 interface BrandTableType {
   allValidators: ValidatorType[];
   brandData: BrandDataType[];
-}
-
-export interface BrandDataType {
-  avatar: string;
-  name: string;
-  identity: string;
-  publicKeys: string[];
 }
 
 const BrandTable = ({ allValidators, brandData }: BrandTableType) => {
