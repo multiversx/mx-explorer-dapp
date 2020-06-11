@@ -3,10 +3,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { testnetRoute } from 'helpers';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { isAddress, isBlock, isTransaction } from './helpers/asyncRequests';
+import useSetValidatorsData from 'components/Validators/useSetValidatorsData';
 
-const Search: React.FC = () => {
+const FetchValidatorsComponent = () => {
+  const ref = React.useRef(null);
+  useSetValidatorsData(ref);
+  return <i ref={ref} />;
+};
+
+const Search = () => {
   const {
     activeTestnet: { elasticUrl, nodeUrl },
     activeTestnetId,
@@ -14,6 +21,8 @@ const Search: React.FC = () => {
     brandData,
     validatorData,
   } = useGlobalState();
+  const { pathname } = useLocation();
+
   const history = useHistory();
   const [hash, setHash] = React.useState<string>('');
 
@@ -59,6 +68,7 @@ const Search: React.FC = () => {
 
   return (
     <>
+      {!pathname.includes('validators') && brandData.length === 0 && <FetchValidatorsComponent />}
       <input
         type="text"
         className="form-control mr-sm-2"
@@ -70,16 +80,18 @@ const Search: React.FC = () => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
-      <div className="input-group-append">
-        <button
-          type="submit"
-          className="input-group-text"
-          onClick={onClick}
-          data-testid="searchButton"
-        >
-          <FontAwesomeIcon icon={faSearch} />
-        </button>
-      </div>
+      {validatorData.validators.length && (
+        <div className="input-group-append">
+          <button
+            type="submit"
+            className="input-group-text"
+            onClick={onClick}
+            data-testid="searchButton"
+          >
+            <FontAwesomeIcon icon={faSearch} />
+          </button>
+        </div>
+      )}
     </>
   );
 };
