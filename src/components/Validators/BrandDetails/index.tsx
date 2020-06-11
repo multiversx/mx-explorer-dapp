@@ -10,11 +10,12 @@ import BrandDetailsRow from './../ValidatorsBrandTable/BrandDetailsRow';
 import PageNotFound from 'components/PageNotFoud';
 
 const BrandDetails = () => {
+  const ref = React.useRef(null);
   const { brandData, validatorData } = useGlobalState();
   const { identity } = useParams();
   const [brand, setBrand] = React.useState<BrandType>();
   const [notFound, setNotFound] = React.useState(false);
-  const success = useSetValidatorsData();
+  const success = useSetValidatorsData(ref);
 
   const setBrandData = () => {
     if (success && brandData.length > 0 && validatorData.validatorsAndObservers.length > 0) {
@@ -41,7 +42,7 @@ const BrandDetails = () => {
   return notFound ? (
     <PageNotFound />
   ) : (
-    <div className="container pt-3 pb-3">
+    <div className="container pt-3 pb-3" ref={ref}>
       <div className="row">
         <div className="col-12">
           <h4>Validator Details</h4>

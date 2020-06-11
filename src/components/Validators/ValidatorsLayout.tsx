@@ -7,11 +7,12 @@ import { Loader } from 'sharedComponents';
 import ShardsList from './ShardsList';
 
 const ValidatorsTable = ({ title, children }: { title: string; children: React.ReactNode }) => {
+  const ref = React.useRef(null);
   const { validatorData, brandData } = useGlobalState();
-  const success = useSetValidatorsData();
+  const success = useSetValidatorsData(ref);
 
   return (
-    <div>
+    <div ref={ref}>
       <div className="container pt-3 pb-3">
         <div className="row">
           <div className="col-12">

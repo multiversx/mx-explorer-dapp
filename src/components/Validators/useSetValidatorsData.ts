@@ -7,7 +7,7 @@ import {
 } from './helpers/asyncRequests';
 import { populateValidatorsTable } from './helpers/validatorHelpers';
 
-export default function useSetValidatorsData() {
+export default function useSetValidatorsData(ref: React.RefObject<HTMLInputElement>) {
   const {
     activeTestnet: { nodeUrl, versionNumber, nrOfShards },
     timeout,
@@ -37,15 +37,17 @@ export default function useSetValidatorsData() {
         versionNumber,
         nrOfShards,
       });
-      const { data: brandData } = brand;
-      if (validatorData.validatorsAndObservers.length > 0 && brandData.length > 0) {
-        dispatch({ type: 'setValidatorData', validatorData });
-        dispatch({ type: 'setBrandData', brandData });
-      } else if (
-        configValidatorData.validatorsAndObservers.length === 0 &&
-        configBrandData.length === 0
-      ) {
-        setSuccess(success && validatorsSuccess);
+      if (ref.current) {
+        const { data: brandData } = brand;
+        if (validatorData.validatorsAndObservers.length > 0 && brandData.length > 0) {
+          dispatch({ type: 'setValidatorData', validatorData });
+          dispatch({ type: 'setBrandData', brandData });
+        } else if (
+          configValidatorData.validatorsAndObservers.length === 0 &&
+          configBrandData.length === 0
+        ) {
+          setSuccess(success && validatorsSuccess);
+        }
       }
     });
   };

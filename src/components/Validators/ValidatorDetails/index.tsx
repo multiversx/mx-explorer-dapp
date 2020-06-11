@@ -51,7 +51,7 @@ const ValidatorDetails = () => {
   const ref = React.useRef(null);
   const { hash } = useParams();
   const [validator, setValidator] = React.useState<ValidatorType>();
-  const [dataFetched] = React.useState(useSetValidatorsData());
+  const [dataFetched] = React.useState(useSetValidatorsData(ref));
   const [state, setState] = React.useState(initialState);
   const [fetchedBlocks, setFetchedBlocks] = React.useState({
     blocks: [],
@@ -91,7 +91,6 @@ const ValidatorDetails = () => {
         elasticUrl,
         timeout: Math.max(timeout, 10000),
         publicKey: validator.publicKey,
-        metaChainShardId,
         nodeUrl,
       }).then(({ signersIndex, shardNumber, epoch, roundAtEpochStart, success, ...data }: any) => {
         if (ref.current !== null) {
@@ -175,11 +174,7 @@ const ValidatorDetails = () => {
                               <div className="card">
                                 <div className="card-body">
                                   Last {fetchedBlocks.blocks.length} proposed blocks
-                                  <BlocksTable
-                                    blocks={fetchedBlocks.blocks}
-                                    shardId={undefined}
-                                    epochId={undefined}
-                                  />
+                                  <BlocksTable blocks={fetchedBlocks.blocks} shardId={undefined} />
                                 </div>
                               </div>
                             </div>
