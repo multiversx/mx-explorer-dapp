@@ -177,10 +177,10 @@ const BlockDetails: React.FC = () => {
                             <span className="text-muted">N/A</span>
                           ) : (
                             <>
-                              {consensusItems.map(item => (
+                              {consensusItems.map((item, i) => (
                                 <TestnetLink
                                   className="hash"
-                                  key={item}
+                                  key={`${item}/${i}`}
                                   to={`${validatorsRoutes.nodes}/${item}`}
                                 >
                                   {truncate(item, 100)}
@@ -212,8 +212,12 @@ const BlockDetails: React.FC = () => {
                                 <span className="text-muted">N/A</span>
                               ) : (
                                 <>
-                                  {block.notarizedBlocksHashes.map(item => (
-                                    <TestnetLink className="hash" key={item} to={`/blocks/${item}`}>
+                                  {block.notarizedBlocksHashes.map((item, i) => (
+                                    <TestnetLink
+                                      className="hash"
+                                      key={item + i}
+                                      to={`/blocks/${item}`}
+                                    >
                                       {truncate(item, 100)}
                                     </TestnetLink>
                                   ))}
