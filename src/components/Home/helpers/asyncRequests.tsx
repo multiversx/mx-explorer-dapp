@@ -50,6 +50,24 @@ export async function getTransactions({ elasticUrl, timeout }: GetBlocksType) {
     } = await axios.post(
       `${elasticUrl}/transactions/_search`,
       {
+        _source: [
+          'miniBlockHash',
+          'nonce',
+          'round',
+          'value',
+          'receiver',
+          'sender',
+          'receiverShard',
+          'senderShard',
+          'gasPrice',
+          'gasLimit',
+          'gasUsed',
+          // 'data',
+          'signature',
+          'timestamp',
+          'status',
+          'scResults',
+        ],
         query: {
           match_all: {},
         },
