@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-
+import './chart.scss';
 export interface HistoricRatingType {
   epoch: number;
   rating: number;
@@ -22,6 +22,19 @@ const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType
         show: false,
       },
     },
+    tooltip: {
+      enabled: true,
+      // onDatasetHover: {
+      //   highlightDataSeries: false,
+      // },
+      intersect: false,
+      x: {
+        show: false,
+      },
+      marker: {
+        show: false,
+      },
+    },
     yaxis: {
       labels: {
         formatter: function format(value) {
@@ -37,9 +50,9 @@ const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType
   return (
     <div data-testid="chartContainer">
       <div className="mt-4">
-        <h4>History</h4>
+        <h4>Rating History</h4>
       </div>
-      <div className="card">
+      <div className="card pr-3">
         {process.env.NODE_ENV !== 'test' && (
           <Chart options={options} series={series} type="line" width="100%" height="152px" />
         )}

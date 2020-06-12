@@ -5,7 +5,7 @@ import * as React from 'react';
 import { useGlobalState } from 'context';
 import { BlocksTable, Loader } from 'sharedComponents';
 import { ValidatorType } from 'context/validators';
-import { getValidator, searchBlocks } from './helpers/asyncRequests';
+import { getValidator, searchBlocks, getHistoricRatings } from './helpers/asyncRequests';
 import { validatorFunctions } from 'helpers';
 import NetworkMetrics, { NetworkMetricsType } from './NetworkMetrics';
 import NodeInformation, { NodeInformationType } from './NodeInformation';
@@ -69,7 +69,7 @@ const ValidatorDetails = () => {
 
   const {
     activeTestnet: { elasticUrl, nodeUrl },
-    config: { metaChainShardId },
+    config: { metaChainShardId, explorerApi },
     timeout,
     validatorData,
   } = useGlobalState();
@@ -95,6 +95,7 @@ const ValidatorDetails = () => {
         timeout: Math.max(timeout, 10000),
         publicKey: validator.publicKey,
         nodeUrl,
+        explorerApi,
       }).then(({ signersIndex, shardNumber, epoch, roundAtEpochStart, success, ...data }: any) => {
         if (ref.current !== null) {
           setState({ ...data, shardNumber, rating: validator!.rating });
@@ -107,6 +108,13 @@ const ValidatorDetails = () => {
             epoch,
             roundAtEpochStart,
           };
+
+          getHistoricRatings({ explorerApi, timeout, publicKey: validator.publicKey }).then(
+            (historicRatings: HistoricRatingType[]) => {
+              setState(state => ({ ...state, historicRatings }));
+            }
+          );
+
           validatorFunctions.getRounds(props).then(({ rounds, roundsFetched }) => {
             if (ref.current !== null) {
               setRounds({ rounds, roundsFetched });
@@ -121,7 +129,7 @@ const ValidatorDetails = () => {
         }
       });
     }
-  }, [elasticUrl, timeout, nodeUrl, metaChainShardId, validator]); // run the operation only once since the parameter does not change
+  }, [elasticUrl, timeout, nodeUrl, metaChainShardId, validator, explorerApi]); // run the operation only once since the parameter does not change
 
   const { publicKey, isValidator } = state;
 

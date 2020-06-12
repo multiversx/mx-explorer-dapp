@@ -3,13 +3,13 @@ import { validatorFunctions } from 'helpers';
 import { BlockType } from 'components/Blocks';
 import { ValidatorType } from 'context/validators';
 import { initialState } from './../index';
-import processHistoricRatings from './ratingsHelpers';
 
 interface GetValidatorType {
   currentValidator: ValidatorType;
   nodeUrl: string;
   elasticUrl: string;
   publicKey: string;
+  explorerApi: string;
   timeout: number;
 }
 
@@ -113,6 +113,7 @@ export async function getValidator({
   nodeUrl,
   elasticUrl,
   timeout,
+  explorerApi,
   publicKey,
 }: GetValidatorType) {
   try {
@@ -149,7 +150,7 @@ export async function getValidator({
       const signersIndex = consensusArray.indexOf(publicKey);
 
       const historicRatings: Array<{ epoch: number; rating: string }> = await getHistoricRatings({
-        elasticUrl,
+        explorerApi,
         timeout,
         publicKey,
       });
@@ -187,22 +188,15 @@ export async function getValidator({
 }
 
 interface HistoricRatingsType {
-  elasticUrl: string;
+  explorerApi: string;
   timeout: number;
   publicKey: string;
 }
 
-async function getHistoricRatings({ elasticUrl, timeout, publicKey }: HistoricRatingsType) {
+export async function getHistoricRatings({ explorerApi, timeout, publicKey }: HistoricRatingsType) {
   try {
-    const {
-      data: {
-        hits: { hits },
-      },
-    } = await axios.get(`${elasticUrl}/rating/_search?size=15`, { timeout });
-
-    const ratings = processHistoricRatings(hits);
-
-    return ratings[publicKey];
+    const { data } = await axios.get(`${explorerApi}/ratingshistory/${publicKey}`, { timeout });
+    return data;
   } catch {
     return [];
   }
