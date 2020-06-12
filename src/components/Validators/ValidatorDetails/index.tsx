@@ -105,10 +105,16 @@ const ValidatorDetails = () => {
             roundAtEpochStart,
           };
           validatorFunctions.getRounds(props).then(({ rounds, roundsFetched }) => {
-            setRounds({ rounds, roundsFetched });
+            if (ref.current !== null) {
+              setRounds({ rounds, roundsFetched });
+            }
           });
 
-          searchBlocks(props).then((blockdata: any) => setFetchedBlocks(blockdata));
+          searchBlocks(props).then((blockdata: any) => {
+            if (ref.current !== null) {
+              setFetchedBlocks(blockdata);
+            }
+          });
         }
       });
     }
