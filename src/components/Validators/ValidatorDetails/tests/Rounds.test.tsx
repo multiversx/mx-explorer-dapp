@@ -1,16 +1,14 @@
-import axios from 'axios';
-import { wait } from 'utils/test-utils';
-import { beforeAll } from './ValidatorDetails.test';
+import React from 'react';
+import { render } from '@testing-library/react';
+import Rounds from './../Rounds';
 
 describe('Rounds', () => {
+  test('Rounds loading state', async () => {
+    const methods = render(<Rounds rounds={[]} roundsFetched={true} isWaiting={false} />);
+    expect(methods.getByTestId('roundsLoading')).toBeDefined();
+  });
   test('Rounds failed state', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockRejectedValueOnce(new Error('rounds error'));
-
-    const render = beforeAll();
-
-    await wait(async () => {
-      expect(render.getByTestId('roundsErrorScreen')).toBeDefined();
-    });
+    const methods = render(<Rounds rounds={[]} roundsFetched={false} isWaiting={false} />);
+    expect(methods.getByTestId('roundsErrorScreen')).toBeDefined();
   });
 });
