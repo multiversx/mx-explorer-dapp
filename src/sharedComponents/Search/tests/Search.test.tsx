@@ -66,7 +66,10 @@ describe('Search', () => {
     };
     fireEvent.change(search, data);
 
-    const searchButton = await render.findByTestId('searchButton');
+    const searchButton = render.getByTestId('searchButton');
+    await wait(async () => {
+      expect(searchButton).toBeEnabled();
+    });
     fireEvent.click(searchButton);
 
     await wait(async () => {
@@ -82,7 +85,10 @@ describe('Search', () => {
     };
     fireEvent.change(search, data);
 
-    const searchButton = await render.findByTestId('searchButton');
+    const searchButton = render.getByTestId('searchButton');
+    await wait(async () => {
+      expect(searchButton).toBeEnabled();
+    });
     fireEvent.click(searchButton);
 
     await wait(async () => {

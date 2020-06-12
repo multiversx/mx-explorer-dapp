@@ -80,18 +80,17 @@ const Search = () => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
-      {validatorData.validators.length && (
-        <div className="input-group-append">
-          <button
-            type="submit"
-            className="input-group-text"
-            onClick={onClick}
-            data-testid="searchButton"
-          >
-            <FontAwesomeIcon icon={faSearch} />
-          </button>
-        </div>
-      )}
+      <div className="input-group-append">
+        <button
+          type="submit"
+          className="input-group-text"
+          onClick={onClick}
+          data-testid="searchButton"
+          disabled={validatorData.validators.length === 0}
+        >
+          <FontAwesomeIcon icon={faSearch} />
+        </button>
+      </div>
     </>
   );
 };
