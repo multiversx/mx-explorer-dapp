@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useGlobalState } from 'context';
 import Hero from './Hero';
 import LatestBlocks from './LatestBlocks';
 import LatestTransactions from './LatestTransactions';
