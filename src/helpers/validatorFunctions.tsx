@@ -1,18 +1,14 @@
 import moment from 'moment';
 import axios from 'axios';
 import { object, number, InferType } from 'yup';
-import { ValidatorType } from './../components/Validators';
+import { ValidatorType } from 'context/validators';
 
 export function getShardId(validator: ValidatorType, metaChainShardId: number) {
   let shardId: string;
-  let star = false;
   const isValidator = validator.peerType && !validator.peerType.includes('observer');
 
   if (isValidator === true) {
     shardId = validator.computedShardID.toString();
-    if (validator.isActive === true && validator.computedShardID !== validator.receivedShardID) {
-      star = true;
-    }
   } else {
     shardId = validator.receivedShardID.toString();
   }
@@ -20,7 +16,6 @@ export function getShardId(validator: ValidatorType, metaChainShardId: number) {
   return {
     shardId: shardId === metaChainShardId.toString() ? 'Metachain' : shardId, // eslint-disable-line
     shardNumber: parseInt(shardId), // this is excluding the Metachain string, used for searching
-    star,
   };
 }
 
@@ -63,13 +58,15 @@ const schema = object({
   }).required(),
 });
 
+export type NetworkStatusType = InferType<typeof schema>;
+
 export async function getEpoch({ nodeUrl, shardNumber, timeout }: GetEpochType) {
   try {
     const { data } = await axios.get(`${nodeUrl}/network/status/${shardNumber}`, {
       timeout,
     });
 
-    const message: InferType<typeof schema> = data.message;
+    const message: NetworkStatusType = data.message;
 
     schema.validate(message, { strict: true }).catch(({ errors }) => {
       console.error('network/status response format errors: ', errors);

@@ -1,51 +1,59 @@
-import {
-  faClock,
-  faEye,
-  faExclamationTriangle,
-  faLeaf,
-  faLock,
-} from '@fortawesome/free-solid-svg-icons';
+import { faClock, faEye, faLeaf, faLock, faSync } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
 import * as React from 'react';
-import { useGlobalState } from 'context';
-import { ValidatorType } from './';
+import { ValidatorType } from 'context/validators';
+
+interface ValidatorIssuesType {
+  validator: ValidatorType;
+  versionNumber: string;
+  metaChainShardId: number;
+  nrOfShards: number;
+}
+
+export const validatorIssues = ({
+  validator,
+  versionNumber,
+  metaChainShardId,
+  nrOfShards,
+}: ValidatorIssuesType) => {
+  switch (true) {
+    case versionNumber !== validator.versionNumber.split('-')[0]:
+      return 'Outdated client version';
+    case validator.receivedShardID !== metaChainShardId && validator.receivedShardID > nrOfShards:
+      return 'Outdated client configuration';
+    default:
+      return '';
+  }
+};
 
 const RowIcon = ({ validator }: { validator: ValidatorType }) => {
-  const {
-    activeTestnet: { versionNumber },
-  } = useGlobalState();
   switch (true) {
-    case validator.peerType === 'observer':
-      return <FontAwesomeIcon title="observer" icon={faEye} className="w300 mr-1" />;
-    case validator.peerType === 'new':
-      return <FontAwesomeIcon title="new" icon={faLeaf} className="w300 mr-1" />;
-    case validator.star:
-    case versionNumber !== validator.versionNumber.split('-')[0]:
-      return (
-        <OverlayTrigger
-          key="popover"
-          placement="top"
-          rootClose
-          overlay={
-            <Popover id="popover-positioned-bottom">
-              <Popover.Content>Missed configuration</Popover.Content>
-            </Popover>
-          }
-        >
-          <FontAwesomeIcon icon={faExclamationTriangle} className="text-warning w300 mr-1" />
-        </OverlayTrigger>
-      );
     case validator.peerType === 'jailed':
-      return <FontAwesomeIcon title="jailed" icon={faLock} className="w300 mr-1" />;
+      return <FontAwesomeIcon title="Jailed" icon={faLock} className="text-danger w300 mr-1" />;
+
+    case validator.peerType === 'observer':
+      return <FontAwesomeIcon title="Observer" icon={faEye} className="w300 mr-1" />;
+
+    case validator.peerType === 'new':
+      return <FontAwesomeIcon title="New" icon={faLeaf} className="w300 mr-1" />;
+
+    // case validator.issue !== '':
+    //   return (
+    //     <FontAwesomeIcon
+    //       title={validator.issue}
+    //       icon={faExclamationTriangle}
+    //       className="text-warning w300 mr-1"
+    //     />
+    //   );
+
+    case validator.receivedShardID !== validator.computedShardID:
+      return <FontAwesomeIcon title="Changing shard" icon={faSync} className="w300 mr-1" />;
+
+    case validator.peerType === 'waiting':
+      return <FontAwesomeIcon title="Waiting" icon={faClock} className="w300 mr-1" />;
+
     default:
-      return (
-        <>
-          {validator.peerType === 'waiting' && (
-            <FontAwesomeIcon icon={faClock} className="w300 mr-1" />
-          )}
-        </>
-      );
+      return null;
   }
 };
 

@@ -1,22 +1,14 @@
-import axios from 'axios';
-import { renderWithRouter, wait, meta } from 'utils/test-utils';
-import heartbeatstatus from './rawData/heartbeatstatus';
+import React from 'react';
+import { render } from '@testing-library/react';
+import Rounds from './../Rounds';
 
 describe('Rounds', () => {
+  test('Rounds loading state', async () => {
+    const methods = render(<Rounds rounds={[]} roundsFetched={true} isWaiting={false} />);
+    expect(methods.getByTestId('roundsLoading')).toBeDefined();
+  });
   test('Rounds failed state', async () => {
-    // const mockGet = jest.spyOn(axios, 'get');
-    // const mockPost = jest.spyOn(axios, 'post');
-    // mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
-    // mockGet.mockReturnValueOnce(Promise.resolve({ data: heartbeatstatus }));
-    // // mockGet.mockReturnValueOnce(Promise.resolve({ data: validators }));
-    // mockPost.mockRejectedValueOnce(new Error('rounds error'));
-
-    // const render = renderWithRouter({
-    //   route: `/validators/${heartbeatstatus.message[0].publicKey}`,
-    // });
-    // await wait(async () => {
-    //   expect(render.getByTestId('roundsErrorScreen')).toBeDefined();
-    // });
-    expect('todo').toEqual('todo');
+    const methods = render(<Rounds rounds={[]} roundsFetched={false} isWaiting={false} />);
+    expect(methods.getByTestId('roundsErrorScreen')).toBeDefined();
   });
 });

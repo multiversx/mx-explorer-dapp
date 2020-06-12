@@ -3,15 +3,7 @@ import { dateFormatted, sizeFormat, trimHash } from 'helpers';
 import React from 'react';
 import { ShardSpan, TestnetLink, TimeAgo } from './../index';
 
-const BlocksTable = ({
-  blocks,
-  shardId,
-  epochId,
-}: {
-  blocks: BlockType[];
-  shardId: number | undefined;
-  epochId: number | undefined;
-}) => {
+const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number | undefined }) => {
   return (
     <div className="table-responsive">
       <table className="table mt-4">

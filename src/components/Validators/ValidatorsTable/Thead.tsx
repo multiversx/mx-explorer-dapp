@@ -2,40 +2,34 @@ import { faArrowDown, faArrowUp, faFilter } from '@fortawesome/free-solid-svg-ic
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { SyntheticEvent } from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { ShardSpan } from './../../../sharedComponents';
+import { ShardSpan } from 'sharedComponents';
 import { getNewSortData } from './../helpers/validatorHelpers';
-import { ComputedShard, SortType } from './index';
-import { ValidatorType } from './../index';
+import { ComputedShard, SortType } from './Table';
 import headers from './headers';
 
 interface ValidatorsTableHeaderType {
-  includeObservers: boolean;
   sortBy: ({ field, dir }: { field: string; dir: 'none' | 'asc' | 'desc' }) => void;
   sort: SortType;
+  total: number;
   shardData: ComputedShard[];
   shardValue: string;
   setShardValue: React.Dispatch<React.SetStateAction<string>>;
   statusValue: string;
   setStatusValue: React.Dispatch<React.SetStateAction<string>>;
   validatorObserverValue: string;
-  setValidatorObserverValue: React.Dispatch<React.SetStateAction<string>>;
-  validatorsAndObservers: ValidatorType[];
   isInitialRatingDesc: boolean;
   setIsInitialRatingDesc: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ValidatorsTableHeader = ({
-  includeObservers,
   sortBy,
   sort,
+  total,
   shardData,
   shardValue,
   setShardValue,
   statusValue,
   setStatusValue,
-  validatorObserverValue,
-  setValidatorObserverValue,
-  validatorsAndObservers,
   isInitialRatingDesc,
   setIsInitialRatingDesc,
 }: ValidatorsTableHeaderType) => {
@@ -67,22 +61,6 @@ const ValidatorsTableHeader = ({
     setStatusValue(status);
   };
 
-  const changeValidatorObserver = (e: SyntheticEvent, validatorObs: string) => {
-    e.preventDefault();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-    document.body.click();
-    setValidatorObserverValue(validatorObs);
-  };
-
-  const hasWaitingValidators = validatorsAndObservers.some(
-    validator => validator.peerType === 'waiting'
-  );
-  const hasNewValidators = validatorsAndObservers.some(validator => validator.peerType === 'new');
-  const hasJailedValidators = validatorsAndObservers.some(
-    validator => validator.peerType === 'jailed'
-  );
-
   return (
     <thead>
       <tr>
@@ -103,99 +81,7 @@ const ValidatorsTableHeader = ({
                 className={sort.field === 'rating' && isInitialRatingDesc ? 'd-none' : 'empty-icon'}
               />
             )}
-            {header.id === 'publicKey' && (hasWaitingValidators || includeObservers) && (
-              <OverlayTrigger
-                trigger="click"
-                key="popover"
-                placement="bottom"
-                rootClose
-                overlay={
-                  <Popover id="popover-positioned-bottom">
-                    <Popover.Content>
-                      <a
-                        className={`nav-link ${
-                          validatorObserverValue === 'eligible' ? 'active' : ''
-                        }`}
-                        href="#/validators"
-                        data-testid="filterByValidators"
-                        onClick={e => changeValidatorObserver(e, 'eligible')}
-                      >
-                        Validator{hasWaitingValidators ? ' (eligible)' : ''}
-                      </a>
-                      {hasWaitingValidators && (
-                        <a
-                          className={`nav-link ${
-                            validatorObserverValue === 'waiting' ? 'active' : ''
-                          }`}
-                          href="#/validators"
-                          data-testid="filterByValidators"
-                          onClick={e => changeValidatorObserver(e, 'waiting')}
-                        >
-                          Validator (waiting)
-                        </a>
-                      )}
-                      {hasNewValidators && (
-                        <a
-                          className={`nav-link ${validatorObserverValue === 'new' ? 'active' : ''}`}
-                          href="#/validators"
-                          data-testid="filterByValidators"
-                          onClick={e => changeValidatorObserver(e, 'new')}
-                        >
-                          New
-                        </a>
-                      )}
-                      {hasJailedValidators && (
-                        <a
-                          className={`nav-link ${
-                            validatorObserverValue === 'jailed' ? 'active' : ''
-                          }`}
-                          href="#/validators"
-                          data-testid="filterByValidators"
-                          onClick={e => changeValidatorObserver(e, 'jailed')}
-                        >
-                          Jailed
-                        </a>
-                      )}
-
-                      {includeObservers && (
-                        <a
-                          className={`nav-link ${
-                            validatorObserverValue === 'observer' ? 'active' : ''
-                          }`}
-                          href="#/validators"
-                          data-testid="filterByObservers"
-                          onClick={e => changeValidatorObserver(e, 'observer')}
-                        >
-                          Observer
-                        </a>
-                      )}
-
-                      <a
-                        className={`nav-link ${validatorObserverValue === '' ? 'active' : ''}`}
-                        key={-1}
-                        href="#/validators"
-                        data-testid="clearFilterValidatorObserver"
-                        onClick={e => changeValidatorObserver(e, '')}
-                      >
-                        Show all
-                      </a>
-                    </Popover.Content>
-                  </Popover>
-                }
-              >
-                <span
-                  id="switch"
-                  className="switch d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
-                  data-testid="filterValidatorObserver"
-                >
-                  <FontAwesomeIcon
-                    icon={faFilter}
-                    className={validatorObserverValue !== '' ? 'text-primary' : ''}
-                  />
-                </span>
-              </OverlayTrigger>
-            )}
-            {header.id === 'shardID' && (
+            {header.id === 'shardID' && total > 0 && (
               <OverlayTrigger
                 trigger="click"
                 key="popover"
@@ -240,7 +126,7 @@ const ValidatorsTableHeader = ({
                 </span>
               </OverlayTrigger>
             )}
-            {header.id === 'isActive' && (
+            {header.id === 'isActive' && total > 0 && (
               <OverlayTrigger
                 trigger="click"
                 key="popover"

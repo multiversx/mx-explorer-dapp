@@ -13,9 +13,9 @@ export interface ValidatorType {
   versionNumber: string;
   shardId: string;
   shardNumber: number;
-  star: boolean;
   rating: number;
   ratingModifier: number;
+  issue: 'Outdated client version' | 'Outdated client configuration' | '';
 }
 
 interface ComputedShard {
@@ -33,11 +33,14 @@ interface ValidatorDataType {
   validatorsAndObservers: ValidatorType[];
 }
 
-interface BrandDataType {
+export interface BrandDataType {
   avatar: string;
   name: string;
   identity: string;
   publicKeys: string[];
+  twitter: string;
+  web: string;
+  location: string;
 }
 
 export const validatorData: ValidatorDataType = {

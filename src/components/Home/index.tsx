@@ -3,7 +3,7 @@ import Hero from './Hero';
 import LatestBlocks from './LatestBlocks';
 import LatestTransactions from './LatestTransactions';
 
-const TransactionDetails = () => {
+const Home = () => {
   return (
     <div>
       <Hero />
@@ -21,4 +21,4 @@ const TransactionDetails = () => {
   );
 };
 
-export default TransactionDetails;
+export default Home;

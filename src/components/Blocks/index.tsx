@@ -129,7 +129,7 @@ const Blocks: React.FC = () => {
                   {state.blocks.length > 0 ? (
                     <div className="card">
                       <div className="card-body card-list">
-                        <BlocksTable blocks={state.blocks} shardId={shardId} epochId={epochId} />
+                        <BlocksTable blocks={state.blocks} shardId={shardId} />
                         <Pager
                           slug={slug}
                           total={totalBlocks}

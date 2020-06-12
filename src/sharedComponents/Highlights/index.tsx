@@ -1,5 +1,6 @@
 import React from 'react';
-import { useGlobalState } from '../../context';
+import moment from 'moment';
+import { useGlobalState } from 'context';
 import DefaultHighlights from './DefaultHighlights';
 import { getStats } from './helpers/asyncRequests';
 import HeroHighlights from './HeroHighlights';
@@ -12,6 +13,11 @@ export interface StateType {
   liveTPS: string;
   peakTPS: string;
   totalProcessedTxCount: string;
+  epochPercentage: number;
+  epochTotalTime: string;
+  epochTimeElapsed: string;
+  epochTimeRemaining: string;
+  epoch: string;
 }
 
 const initialState = {
@@ -22,6 +28,11 @@ const initialState = {
   liveTPS: '...',
   peakTPS: '...',
   totalProcessedTxCount: '...',
+  epochPercentage: 0,
+  epoch: '...',
+  epochTotalTime: '...',
+  epochTimeElapsed: '...',
+  epochTimeRemaining: '',
 };
 
 const Hightlights = ({
@@ -34,8 +45,9 @@ const Hightlights = ({
   setLiveTps?: React.Dispatch<React.SetStateAction<any>>;
 }) => {
   const {
-    activeTestnet: { elasticUrl },
+    activeTestnet: { elasticUrl, nodeUrl, refreshRate },
     activeTestnetId,
+    config: { metaChainShardId },
     timeout,
     refresh: { timestamp },
   } = useGlobalState();
@@ -50,7 +62,8 @@ const Hightlights = ({
 
   const getHighlights = () => {
     if (ref.current !== null) {
-      getStats({ elasticUrl, timeout }).then(({ data, success }) => {
+      getStats({ elasticUrl, nodeUrl, metaChainShardId, timeout }).then(({ data, success }) => {
+        const check = data.roundsPerEpoch >= data.roundsPassed;
         const newState = success
           ? {
               blockNumber: parseInt(data.blockNumber).toLocaleString('en'),
@@ -60,6 +73,19 @@ const Hightlights = ({
               liveTPS: parseInt(data.liveTPS).toLocaleString('en'),
               peakTPS: parseInt(data.peakTPS).toLocaleString('en'),
               totalProcessedTxCount: parseInt(data.totalProcessedTxCount).toLocaleString('en'),
+              epoch: data.epoch.toLocaleString('en'),
+              epochPercentage: check ? (100 * data.roundsPassed) / data.roundsPerEpoch : 0,
+              epochTotalTime: check
+                ? moment.utc(refreshRate * data.roundsPerEpoch).format('HH:mm')
+                : '...',
+              epochTimeElapsed: check
+                ? moment.utc(refreshRate * data.roundsPassed).format('HH:mm')
+                : '...',
+              epochTimeRemaining: check
+                ? moment
+                    .utc(refreshRate * (data.roundsPerEpoch - data.roundsPassed))
+                    .format('HH:mm')
+                : '...',
             }
           : initialState;
         if (ref.current !== null) {

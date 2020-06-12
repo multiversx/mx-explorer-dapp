@@ -52,12 +52,12 @@ const NetworkMetrics = ({
             <div className="col-lg-3 card-label">Status</div>
             <div className="col-lg-9">
               {isActive ? (
-                <div ng-if="isActive === true">
+                <div>
                   <span className="badge badge-pill badge-success badge-status">&nbsp;</span>
                   <span>&nbsp;Online</span>
                 </div>
               ) : (
-                <div ng-if="isActive === false">
+                <div>
                   <span className="badge badge-pill badge-danger badge-status">&nbsp;</span>
                   <span className={isValidator === false ? 'text-muted' : ''}>&nbsp;Offline</span>
                 </div>

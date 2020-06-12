@@ -1,17 +1,57 @@
 import axios from 'axios';
-import { fireEvent, renderWithRouter, wait, meta } from '../../../utils/test-utils';
-import heartbeatstatus from './heartbeatstatus';
-import statistics from './statistics';
-import validators from './validators';
+import {
+  fireEvent,
+  renderWithRouter,
+  wait,
+  meta,
+  config as optionalConfig,
+  waitForElement,
+} from 'utils/test-utils';
+import {
+  heartbeatstatus,
+  validators,
+  validatorsdoc as doc,
+  epoch,
+  statistics,
+} from 'utils/rawData';
+
+(global as any).document.createRange = () => ({
+  setStart: () => {},
+  setEnd: () => {},
+  commonAncestorContainer: {
+    nodeName: 'BODY',
+    ownerDocument: document,
+  },
+});
+
+export const mockGet = () => {
+  const mockGet = jest.spyOn(axios, 'get');
+  mockGet.mockImplementation((url: string): any => {
+    switch (true) {
+      // --- page load ---
+      case url.includes('/tps/_doc/meta'):
+        return Promise.resolve({ data: meta });
+      case url.includes(`/node/heartbeatstatus`):
+        return Promise.resolve({ data: heartbeatstatus });
+      case url.includes('/validator/statistics'):
+        return Promise.resolve({ data: statistics });
+      case url.endsWith('/validators'):
+        return Promise.resolve({ data: validators });
+      // --- page load ---
+      case url.includes('/network/status'):
+        return Promise.resolve({ data: epoch });
+      case url.includes('/validators/_doc'):
+        return Promise.resolve({ data: doc });
+    }
+  });
+};
 
 const goToValidatorsPage = () => {
-  const mockGet = jest.spyOn(axios, 'get');
-  mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
-  mockGet.mockReturnValueOnce(Promise.resolve({ data: heartbeatstatus }));
-  mockGet.mockReturnValueOnce(Promise.resolve({ data: statistics }));
-  mockGet.mockReturnValueOnce(Promise.resolve({ data: validators }));
+  mockGet();
+
   return renderWithRouter({
     route: '/validators/nodes',
+    optionalConfig,
   });
 };
 
@@ -26,10 +66,11 @@ describe('Validators', () => {
   test('Validators page loading state', async () => {
     const render = renderWithRouter({
       route: '/validators/nodes',
+      optionalConfig,
     });
 
-    const loader = await render.findByTestId('loader');
-    expect(loader).toBeInTheDocument();
+    const loader = await waitForElement(() => render.getByTestId('loader'));
+    expect(loader).toBeDefined();
   });
   test('Validators page failed state', async () => {
     const mockGet = jest.spyOn(axios, 'get');
@@ -38,6 +79,7 @@ describe('Validators', () => {
 
     const render = renderWithRouter({
       route: '/validators/nodes',
+      optionalConfig,
     });
 
     const failedState = await render.findByText('Unable to load validators');
@@ -46,36 +88,8 @@ describe('Validators', () => {
 });
 
 describe('Validators filters', () => {
-  test('Include observers working', async () => {
-    const render = goToValidatorsPage();
-
-    const totalPages = await render.findByTestId('totalPages');
-    expect(totalPages.textContent).toBe('412');
-
-    const checkbox = render.getByTestId('includeObservers');
-    fireEvent.click(checkbox);
-
-    expect(totalPages.textContent).toBe('984');
-  });
   test('Filter by observers working', async () => {
-    if (document) {
-      (document.createRange as any) = () => ({
-        setStart: () => null,
-        setEnd: () => null,
-        commonAncestorContainer: {
-          nodeName: 'BODY',
-          ownerDocument: document,
-        },
-      });
-    }
-
     const render = goToValidatorsPage();
-
-    const checkbox = await render.findByTestId('includeObservers');
-    fireEvent.click(checkbox);
-
-    const filter = await render.findByTestId('filterValidatorObserver');
-    fireEvent.click(filter);
 
     const filterByObservers = await render.findByTestId('filterByObservers');
 
@@ -92,12 +106,12 @@ describe('Validators filters', () => {
     fireEvent.change(searchInput, data);
 
     const totalPages = await render.findByTestId('totalPages');
-    expect(totalPages.textContent).toBe('124');
+    expect(totalPages.textContent).toBe('138');
 
     const resetSearch = await render.findByTestId('resetSearch');
     fireEvent.click(resetSearch);
 
-    expect(totalPages.textContent).toBe('412');
+    expect(totalPages.textContent).toBe('1,640');
   });
   test('Filter by shard working', async () => {
     const render = goToValidatorsPage();
@@ -107,24 +121,12 @@ describe('Validators filters', () => {
     fireEvent.change(searchInput, data);
 
     const totalPages = await render.findByTestId('totalPages');
-    expect(totalPages.textContent).toBe('124');
+    expect(totalPages.textContent).toBe('138');
 
     const resetSearch = await render.findByTestId('resetSearch');
     fireEvent.click(resetSearch);
 
-    expect(totalPages.textContent).toBe('412');
-  });
-  test('Filter by status working', async () => {
-    const render = goToValidatorsPage();
-
-    const filterByStatus = await render.findByTestId('filterByStatus');
-    fireEvent.click(filterByStatus);
-
-    const offline = await render.findByTestId('filterByStatusOffline');
-    fireEvent.click(offline);
-
-    const totalPages = await render.findByTestId('totalPages');
-    expect(totalPages.textContent).toBe('26');
+    expect(totalPages.textContent).toBe('1,640');
   });
 });
 
@@ -132,16 +134,16 @@ describe('Validators links', () => {
   test('Validators public key link', async () => {
     const render = goToValidatorsPage();
     const publicKeyLink = await render.findByTestId('publicKeyLink0');
-    expect(publicKeyLink.textContent).toBe('8f2873e1be...13162f367b');
+    expect(publicKeyLink.textContent).toBe('360a9de7dd...d4f3dee28d');
     fireEvent.click(publicKeyLink);
     await wait(async () => {
-      expect(document.title).toEqual('Validator Details • Elrond Explorer');
+      expect(document.title).toEqual('Node Details • Elrond Explorer');
     });
   });
   test('Validators shard link', async () => {
     const render = goToValidatorsPage();
     const publicKeyLink = await render.findByTestId('shardLink0');
-    expect(publicKeyLink.textContent).toBe('Shard 0');
+    expect(publicKeyLink.textContent).toBe('Metachain');
     fireEvent.click(publicKeyLink);
     await wait(async () => {
       expect(document.title).toEqual('Shard Details • Elrond Explorer');

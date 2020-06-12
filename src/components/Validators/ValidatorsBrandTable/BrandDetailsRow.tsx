@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { truncate, trimHash } from 'helpers';
 import { ShardSpan, TestnetLink } from 'sharedComponents';
-import { ValidatorType } from '../index';
+import { ValidatorType } from 'context/validators';
+import RowIcon from './../RowIcon';
+import { validatorsRoutes } from 'routes';
 
 interface BrandDetailsRowType {
   validator: ValidatorType;
@@ -12,8 +14,9 @@ const BrandDetailsRow = ({ validator, rowIndex }: BrandDetailsRowType) => {
   return (
     <tr>
       <td>
+        <RowIcon validator={validator} />
         <TestnetLink
-          to={`/validators/${validator.publicKey}`}
+          to={`${validatorsRoutes.nodes}/${validator.publicKey}`}
           data-testid={`hexPublicKeyLink${rowIndex}`}
         >
           {trimHash(validator.publicKey)}
@@ -32,7 +35,6 @@ const BrandDetailsRow = ({ validator, rowIndex }: BrandDetailsRowType) => {
           data-testid={`shardLink${rowIndex}`}
         >
           <ShardSpan shardId={validator.shardNumber} />
-          {validator.star && <span>*</span>}
         </TestnetLink>
       </td>
       <td>
