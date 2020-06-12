@@ -89,7 +89,7 @@ export async function getTransactions({ elasticUrl, timeout }: GetBlocksType) {
       data,
       transactionsFetched: data.length > 0,
     };
-  } catch {
+  } catch (e) {
     return {
       data: [],
       transactionsFetched: false,

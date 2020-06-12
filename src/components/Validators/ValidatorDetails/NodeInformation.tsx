@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { truncate } from 'helpers';
 import { ShardSpan, TestnetLink } from 'sharedComponents';
-import { ValidatorType } from './../';
 
 export interface NodeInformationType {
   publicKey: string;
@@ -10,7 +9,6 @@ export interface NodeInformationType {
   versionNumber: string;
   nodeDisplayName: string;
   publicKeyBlockSign: string;
-  validator?: ValidatorType;
 }
 
 const NodeInformation = ({
@@ -20,7 +18,6 @@ const NodeInformation = ({
   versionNumber,
   nodeDisplayName,
   publicKeyBlockSign,
-  validator,
 }: NodeInformationType) => {
   return (
     <div className="row">

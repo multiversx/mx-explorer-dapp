@@ -6,7 +6,10 @@ import Home from './components/Home';
 import MiniBlockDetails from './components/MiniBlockDetails';
 import TransactionDetails from './components/TransactionDetails';
 import Transactions from './components/Transactions';
-import Validators from './components/Validators';
+import ValidatorsTable from './components/Validators/ValidatorsTable';
+import BrandDetails from './components/Validators/BrandDetails';
+import ValidatorDetails from './components/Validators/ValidatorDetails';
+import ValidatorsBrandTable from './components/Validators/ValidatorsBrandTable';
 import { withPageTitle, withTestnetReady } from './sharedComponents';
 
 interface RouteType {
@@ -18,9 +21,11 @@ interface RouteType {
 // INFO: to split the app in chunks use:
 // component: React.lazy(() => import('./components/Validators')),
 
-export const validatorsRouteNames = {
-  validators: '/validators',
-  validatorsNodes: '/validators/nodes',
+export const validatorsRoutes = {
+  index: '/validators',
+  brandDetails: `/validators/:identity`,
+  nodes: '/validators/nodes',
+  validatorDetails: '/validators/nodes/:hash',
 };
 
 const routes: RouteType[] = [
@@ -35,19 +40,24 @@ const routes: RouteType[] = [
     component: Transactions,
   },
   {
-    path: validatorsRouteNames.validators,
+    path: validatorsRoutes.index,
     title: 'Validators',
-    component: Validators, // React.lazy(() => import('./components/Validators')),
+    component: ValidatorsBrandTable,
   },
   {
-    path: validatorsRouteNames.validatorsNodes,
+    path: validatorsRoutes.nodes,
     title: 'Validators Nodes',
-    component: Validators, // React.lazy(() => import('./components/Validators')),
+    component: ValidatorsTable,
   },
   {
-    path: '/validators/:hash',
+    path: validatorsRoutes.brandDetails,
     title: 'Validator Details',
-    component: Validators,
+    component: BrandDetails,
+  },
+  {
+    path: validatorsRoutes.validatorDetails,
+    title: 'Node Details',
+    component: ValidatorDetails,
   },
   {
     path: '/address/:hash',

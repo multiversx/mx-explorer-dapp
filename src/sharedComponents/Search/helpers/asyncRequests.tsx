@@ -33,6 +33,7 @@ export async function isAddress({ nodeUrl, hash, timeout }: NodeParamsType) {
 export async function isTransaction({ elasticUrl, hash, timeout }: ElasticParamsType) {
   try {
     const { data } = await axios.get(`${elasticUrl}/transactions/_doc/${hash}`, { timeout });
+
     return data.found;
   } catch (e) {
     return false;

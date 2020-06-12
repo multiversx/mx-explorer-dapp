@@ -7,6 +7,7 @@ import { useGlobalState } from 'context';
 import { isHash, dateFormatted, sizeFormat, testnetRoute, truncate, blockFunctions } from 'helpers';
 import { Loader, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { BlockType } from '../Blocks';
+import { validatorsRoutes } from 'routes';
 
 export interface StateType {
   block: BlockType;
@@ -162,7 +163,7 @@ const BlockDetails: React.FC = () => {
                           {proposer === '' ? (
                             <span className="text-muted">N/A</span>
                           ) : (
-                            <TestnetLink to={`/validators/${proposer}`}>
+                            <TestnetLink to={`${validatorsRoutes.nodes}/${proposer}`}>
                               {truncate(proposer, 100)}
                             </TestnetLink>
                           )}
@@ -176,8 +177,12 @@ const BlockDetails: React.FC = () => {
                             <span className="text-muted">N/A</span>
                           ) : (
                             <>
-                              {consensusItems.map(item => (
-                                <TestnetLink className="hash" key={item} to={`/validators/${item}`}>
+                              {consensusItems.map((item, i) => (
+                                <TestnetLink
+                                  className="hash"
+                                  key={`${item}/${i}`}
+                                  to={`${validatorsRoutes.nodes}/${item}`}
+                                >
                                   {truncate(item, 100)}
                                 </TestnetLink>
                               ))}
@@ -207,8 +212,12 @@ const BlockDetails: React.FC = () => {
                                 <span className="text-muted">N/A</span>
                               ) : (
                                 <>
-                                  {block.notarizedBlocksHashes.map(item => (
-                                    <TestnetLink className="hash" key={item} to={`/blocks/${item}`}>
+                                  {block.notarizedBlocksHashes.map((item, i) => (
+                                    <TestnetLink
+                                      className="hash"
+                                      key={item + i}
+                                      to={`/blocks/${item}`}
+                                    >
                                       {truncate(item, 100)}
                                     </TestnetLink>
                                   ))}

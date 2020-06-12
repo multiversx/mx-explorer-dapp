@@ -1,9 +1,10 @@
 import { faCogs, faCube } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useParams } from 'react-router-dom';
 import * as React from 'react';
 import { useGlobalState } from 'context';
 import { BlocksTable, Loader } from 'sharedComponents';
-import { ValidatorType } from './../';
+import { ValidatorType } from 'context/validators';
 import { getValidator, searchBlocks } from './helpers/asyncRequests';
 import { validatorFunctions } from 'helpers';
 import NetworkMetrics, { NetworkMetricsType } from './NetworkMetrics';
@@ -11,9 +12,9 @@ import NodeInformation, { NodeInformationType } from './NodeInformation';
 import Rounds from './Rounds';
 import BrandInformation from './BrandInformation';
 import Alert from './Alert';
+import useSetValidatorsData from './../useSetValidatorsData';
 
 export type StateType = NetworkMetricsType &
-  // ValidatorStatisticsData &
   NodeInformationType & {
     shardId: string;
     startBlockNr: number;
@@ -46,15 +47,11 @@ export const initialState: StateType = {
   ratingModifier: 0,
 };
 
-const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined }) => {
+const ValidatorDetails = () => {
   const ref = React.useRef(null);
-
-  const {
-    activeTestnet: { elasticUrl, nodeUrl },
-    config: { metaChainShardId },
-    timeout,
-  } = useGlobalState();
-
+  const { hash } = useParams();
+  const [validator, setValidator] = React.useState<ValidatorType>();
+  const [dataFetched] = React.useState(useSetValidatorsData(ref));
   const [state, setState] = React.useState(initialState);
   const [fetchedBlocks, setFetchedBlocks] = React.useState({
     blocks: [],
@@ -66,9 +63,26 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
     rounds: [],
     roundsFetched: true,
   });
-  const [success, setSuccess] = React.useState(
-    validator !== undefined && validator.peerType !== 'observer'
-  );
+
+  const {
+    activeTestnet: { elasticUrl, nodeUrl },
+    config: { metaChainShardId },
+    timeout,
+    validatorData,
+  } = useGlobalState();
+
+  React.useEffect(() => {
+    if (hash) {
+      const foundValidator = validatorData.validatorsAndObservers.find(v => v.publicKey === hash);
+      if (foundValidator === undefined && validatorData.validatorsAndObservers.length > 0) {
+        setSuccess(false);
+      } else {
+        setValidator(foundValidator);
+      }
+    }
+  }, [hash, validatorData, dataFetched]);
+
+  const [success, setSuccess] = React.useState(true);
 
   React.useEffect(() => {
     if (ref.current !== null && validator !== undefined && validator.peerType !== 'observer') {
@@ -77,11 +91,10 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
         elasticUrl,
         timeout: Math.max(timeout, 10000),
         publicKey: validator.publicKey,
-        metaChainShardId,
         nodeUrl,
       }).then(({ signersIndex, shardNumber, epoch, roundAtEpochStart, success, ...data }: any) => {
         if (ref.current !== null) {
-          setState({ ...data, shardNumber, rating: validator.rating });
+          setState({ ...data, shardNumber, rating: validator!.rating });
           setSuccess(success);
           const props = {
             elasticUrl,
@@ -92,10 +105,16 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
             roundAtEpochStart,
           };
           validatorFunctions.getRounds(props).then(({ rounds, roundsFetched }) => {
-            setRounds({ rounds, roundsFetched });
+            if (ref.current !== null) {
+              setRounds({ rounds, roundsFetched });
+            }
           });
 
-          searchBlocks(props).then((blockdata: any) => setFetchedBlocks(blockdata));
+          searchBlocks(props).then((blockdata: any) => {
+            if (ref.current !== null) {
+              setFetchedBlocks(blockdata);
+            }
+          });
         }
       });
     }
@@ -130,7 +149,7 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
               <>
                 <div className="row">
                   <div className={nodeClass}>
-                    <NodeInformation {...state} validator={validator} />
+                    <NodeInformation {...state} />
                   </div>
                   <div className={brandClass}>
                     <BrandInformation publicKey={state.publicKey} />
@@ -161,11 +180,7 @@ const ValidatorDetails = ({ validator }: { validator: ValidatorType | undefined 
                               <div className="card">
                                 <div className="card-body">
                                   Last {fetchedBlocks.blocks.length} proposed blocks
-                                  <BlocksTable
-                                    blocks={fetchedBlocks.blocks}
-                                    shardId={undefined}
-                                    epochId={undefined}
-                                  />
+                                  <BlocksTable blocks={fetchedBlocks.blocks} shardId={undefined} />
                                 </div>
                               </div>
                             </div>

@@ -1,6 +1,6 @@
 import { trimHash } from 'helpers';
-import { BrandDataType, BrandType } from '../index';
-import { ValidatorType } from '../../index';
+import { BrandDataType, BrandType } from '../BrandTable';
+import { ValidatorType } from 'context/validators';
 
 export function groupByBrandAndSort({
   brandData,
@@ -43,6 +43,9 @@ export function groupByBrandAndSort({
       avatar: '',
       publicKeys: [validator.publicKey],
       identity: '',
+      twitter: '',
+      web: '',
+      location: '',
     };
     const validators = [validator];
 
@@ -88,11 +91,15 @@ function generateBrandTypeWithStats({
   // STAKE
   const stake = stakePerValidator * validators.length;
 
-  const { name, avatar } = brand;
+  const { name, avatar, identity, twitter, web, location } = brand;
 
   return {
+    identity,
     name,
     avatar,
+    twitter,
+    location,
+    web,
     score,
     stake,
     stakePercent: 0,

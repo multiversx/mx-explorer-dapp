@@ -3,17 +3,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { testnetRoute } from 'helpers';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { isAddress, isBlock, isTransaction } from './helpers/asyncRequests';
+import useSetValidatorsData from 'components/Validators/useSetValidatorsData';
 
-const isValidator = (hash: string) => hash.length === 256 && /^[a-zA-Z0-9]+$/g.test(hash);
+const FetchValidatorsComponent = () => {
+  const ref = React.useRef(null);
+  useSetValidatorsData(ref);
+  return <i ref={ref} />;
+};
 
-const Search: React.FC = () => {
+const Search = () => {
   const {
     activeTestnet: { elasticUrl, nodeUrl },
     activeTestnetId,
     timeout,
+    brandData,
+    validatorData,
   } = useGlobalState();
+  const { pathname } = useLocation();
+
   const history = useHistory();
   const [hash, setHash] = React.useState<string>('');
 
@@ -22,9 +31,28 @@ const Search: React.FC = () => {
       onClick();
     }
   };
+
   const onClick = async () => {
-    if (isValidator(hash)) {
-      history.push(testnetRoute({ to: `/validators/${hash}`, activeTestnetId }));
+    const isValidator =
+      hash &&
+      validatorData.validators.length &&
+      validatorData.validators.some(validator => validator.publicKey === hash);
+    const brand =
+      hash &&
+      validatorData.validators.length &&
+      brandData.some(
+        brand => brand.identity === hash || brand.name.toLowerCase() === hash.trim().toLowerCase()
+      )
+        ? brandData.find(
+            brand =>
+              brand.identity === hash || brand.name.toLowerCase() === hash.trim().toLowerCase()
+          )!.identity
+        : '';
+
+    if (isValidator) {
+      history.push(testnetRoute({ to: `/validators/nodes/${hash}`, activeTestnetId }));
+    } else if (brand) {
+      history.push(testnetRoute({ to: `/validators/${brand}`, activeTestnetId }));
     } else if (await isBlock({ elasticUrl, hash, timeout })) {
       history.push(testnetRoute({ to: `/blocks/${hash}`, activeTestnetId }));
     } else if (await isTransaction({ elasticUrl, hash, timeout })) {
@@ -40,6 +68,7 @@ const Search: React.FC = () => {
 
   return (
     <>
+      {!pathname.includes('validators') && brandData.length === 0 && <FetchValidatorsComponent />}
       <input
         type="text"
         className="form-control mr-sm-2"
@@ -57,6 +86,7 @@ const Search: React.FC = () => {
           className="input-group-text"
           onClick={onClick}
           data-testid="searchButton"
+          disabled={validatorData.validators.length === 0}
         >
           <FontAwesomeIcon icon={faSearch} />
         </button>

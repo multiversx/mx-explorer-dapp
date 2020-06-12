@@ -1,4 +1,4 @@
-import { ValidatorType } from './../index';
+import { ValidatorType } from 'context/validators';
 
 const getPeerType = (peerType: ValidatorType['peerType']) => {
   switch (true) {

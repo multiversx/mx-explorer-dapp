@@ -11,7 +11,7 @@ const BrandInformation = ({ publicKey }: { publicKey: string }) => {
     allValidators: [...validatorData.validators],
   });
 
-  const brand = sortedBrands.find(b => b.validators.some(v => v.publicKey === publicKey));
+  const brand = sortedBrands.find(b => b.validators.some((v: any) => v.publicKey === publicKey));
 
   const labelClass = 'col-lg-5 card-label';
   const dataClass = 'col-lg-7';

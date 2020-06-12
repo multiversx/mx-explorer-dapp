@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { validatorFunctions } from 'helpers';
 import { BlockType } from 'components/Blocks';
-import { ValidatorType } from './../../';
+import { ValidatorType } from 'context/validators';
 import { initialState } from './../index';
 
 interface GetValidatorType {
@@ -10,7 +10,6 @@ interface GetValidatorType {
   elasticUrl: string;
   publicKey: string;
   timeout: number;
-  metaChainShardId: number;
 }
 
 function getBlocks(response: any) {
@@ -112,7 +111,6 @@ export async function getValidator({
   currentValidator,
   nodeUrl,
   elasticUrl,
-  metaChainShardId,
   timeout,
   publicKey,
 }: GetValidatorType) {

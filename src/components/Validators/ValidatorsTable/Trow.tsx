@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { truncate, trimHash } from 'helpers';
 import { ShardSpan, TestnetLink } from 'sharedComponents';
-import { ValidatorType } from './../';
+import { ValidatorType } from 'context/validators';
 import RowIcon from './../RowIcon';
+import { validatorsRoutes } from 'routes';
 
 const ValidatorRow = ({
   validator,
@@ -27,7 +28,7 @@ const ValidatorRow = ({
         <RowIcon validator={validator} />
         {validator.peerType !== 'observer' && validatorDetails ? (
           <TestnetLink
-            to={`/validators/${validator.publicKey}`}
+            to={`${validatorsRoutes.nodes}/${validator.publicKey}`}
             data-testid={`publicKeyLink${rowIndex}`}
           >
             {trimHash(validator.publicKey)}

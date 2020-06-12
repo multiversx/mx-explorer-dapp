@@ -1,7 +1,16 @@
 import { validatorFunctions } from 'helpers';
-import { ShardDataType, ValidatorType } from './../index';
+import { ValidatorType } from 'context/validators';
 import { validatorIssues } from './../RowIcon';
 import getPeerType from './getPeerType';
+import computeShardStatus from './computeShardStatus';
+
+interface ShardDataType {
+  [key: string]: {
+    allValidators: number;
+    allActiveValidators: number;
+    shardNumber: number;
+  };
+}
 export interface ValidatorStatisticsData {
   rating: number;
   ratingModifier: number;
@@ -106,12 +115,14 @@ export function populateValidatorsTable({
   const validatorsAndObservers: ValidatorType[] = [];
   const heartbeatObservers = data.filter(v => !Object.keys(statistics).includes(v.publicKey));
 
-  const statisticsData = Object.keys(statistics).map(publicKey => {
-    return {
-      publicKey,
-      ...statistics[publicKey],
-    };
-  });
+  const statisticsData = statistics
+    ? Object.keys(statistics).map(publicKey => {
+        return {
+          publicKey,
+          ...statistics[publicKey],
+        };
+      })
+    : [];
   const validatorData: ValidatorDataType = {};
   data.map(validator => {
     validatorData[validator.publicKey] = { ...validator };
@@ -246,19 +257,6 @@ export function populateValidatorsTable({
     validators,
     validatorsAndObservers,
   };
-}
-
-function computeShardStatus(allActiveValidators: number, allValidators: number) {
-  const danger = Math.ceil(allValidators * (2 / 3)) + 1;
-  const warning = Math.ceil(allValidators - (allValidators - danger) / 2);
-  switch (true) {
-    case allActiveValidators >= warning:
-      return 'success';
-    case danger <= allActiveValidators && allActiveValidators < warning:
-      return 'warning';
-    default:
-      return 'danger';
-  }
 }
 
 export type DirectioinsType = 'none' | 'desc' | 'asc';

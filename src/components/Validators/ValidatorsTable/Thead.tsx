@@ -4,7 +4,7 @@ import React, { SyntheticEvent } from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { ShardSpan } from 'sharedComponents';
 import { getNewSortData } from './../helpers/validatorHelpers';
-import { ComputedShard, SortType } from './index';
+import { ComputedShard, SortType } from './Table';
 import headers from './headers';
 
 interface ValidatorsTableHeaderType {

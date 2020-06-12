@@ -33,11 +33,14 @@ interface ValidatorDataType {
   validatorsAndObservers: ValidatorType[];
 }
 
-interface BrandDataType {
+export interface BrandDataType {
   avatar: string;
   name: string;
   identity: string;
   publicKeys: string[];
+  twitter: string;
+  web: string;
+  location: string;
 }
 
 export const validatorData: ValidatorDataType = {
