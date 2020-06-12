@@ -6,7 +6,7 @@ import ValidatorsLayout from './../ValidatorsLayout';
 const ValidatorsBrandTable = () => {
   const { validatorData, brandData } = useGlobalState();
   return (
-    <ValidatorsLayout title="Node Information">
+    <ValidatorsLayout>
       <BrandTable allValidators={validatorData.validators} brandData={brandData} />
     </ValidatorsLayout>
   );

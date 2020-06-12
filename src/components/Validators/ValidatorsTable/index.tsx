@@ -10,7 +10,7 @@ const ValidatorsTable = () => {
   } = useGlobalState();
 
   return (
-    <ValidatorsLayout title="Validators">
+    <ValidatorsLayout>
       <Table {...validatorData} validatorDetails={validatorDetails || false} />
     </ValidatorsLayout>
   );

@@ -6,7 +6,7 @@ import useSetValidatorsData from './useSetValidatorsData';
 import { Loader } from 'sharedComponents';
 import ShardsList from './ShardsList';
 
-const ValidatorsTable = ({ title, children }: { title: string; children: React.ReactNode }) => {
+const ValidatorsTable = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { validatorData, brandData } = useGlobalState();
   const success = useSetValidatorsData(ref);
@@ -16,7 +16,7 @@ const ValidatorsTable = ({ title, children }: { title: string; children: React.R
       <div className="container pt-3 pb-3">
         <div className="row">
           <div className="col-12">
-            <h4 data-testid="title">{title}</h4>
+            <h4 data-testid="title">Validators</h4>
           </div>
         </div>
         {success ? (
