@@ -17,6 +17,7 @@ import {
   validatorsdoc,
 } from 'utils/rawData';
 import addressResponse from './rawData/address';
+import ratings from './rawData/ratings';
 
 const beforeAll = (fail = ['']) => {
   const mockGet = jest.spyOn(axios, 'get');
@@ -36,6 +37,8 @@ const beforeAll = (fail = ['']) => {
         return Promise.resolve({ data: validatorsdoc });
       case url.includes('network/status'):
         return Promise.resolve({ data: epoch });
+      case url.includes('/ratingshistory/'):
+        return Promise.resolve({ data: ratings });
       case url.includes('/address/') && !fail.includes('address'):
         return Promise.resolve({ data: addressResponse });
       case url.includes('/blocks/_doc') && !fail.includes('blocks'):
