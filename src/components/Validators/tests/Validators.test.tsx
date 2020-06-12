@@ -5,6 +5,7 @@ import {
   wait,
   meta,
   config as optionalConfig,
+  waitForElement,
 } from 'utils/test-utils';
 import {
   heartbeatstatus,
@@ -65,10 +66,11 @@ describe('Validators', () => {
   test('Validators page loading state', async () => {
     const render = renderWithRouter({
       route: '/validators/nodes',
+      optionalConfig,
     });
 
-    const loader = render.getByTestId('loader');
-    expect(loader).toBeInTheDocument();
+    const loader = await waitForElement(() => render.getByTestId('loader'));
+    expect(loader).toBeDefined();
   });
   test('Validators page failed state', async () => {
     const mockGet = jest.spyOn(axios, 'get');
@@ -77,6 +79,7 @@ describe('Validators', () => {
 
     const render = renderWithRouter({
       route: '/validators/nodes',
+      optionalConfig,
     });
 
     const failedState = await render.findByText('Unable to load validators');
@@ -124,19 +127,6 @@ describe('Validators filters', () => {
     fireEvent.click(resetSearch);
 
     expect(totalPages.textContent).toBe('1,640');
-  });
-
-  test('Filter by status working', async () => {
-    const render = goToValidatorsPage();
-
-    const filterByStatus = await render.findByTestId('filterByStatus');
-    fireEvent.click(filterByStatus);
-
-    const offline = await render.findByTestId('filterByStatusOffline');
-    fireEvent.click(offline);
-
-    const totalPages = await render.findByTestId('totalPages');
-    expect(totalPages.textContent).toBe('1,203');
   });
 });
 

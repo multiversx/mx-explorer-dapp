@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { fireEvent, renderWithRouter, wait } from 'utils/test-utils';
+import {
+  fireEvent,
+  renderWithRouter,
+  wait,
+  config as optionalConfig,
+  waitForElement,
+} from 'utils/test-utils';
 import { blocks, heartbeatstatus } from 'utils/rawData';
 import rounds from './rawData/rounds';
 import { mockGet } from './../../tests/Validators.test';
@@ -18,6 +24,7 @@ export const beforeAll = () => {
 
   return renderWithRouter({
     route: `/validators/nodes/${heartbeatstatus.message[0].publicKey}`,
+    optionalConfig,
   });
 };
 
@@ -49,18 +56,17 @@ describe('Node Information', () => {
   test('Node Information loading state', async () => {
     const render = renderWithRouter({
       route: `/validators/nodes/${heartbeatstatus.message[0].publicKey}`,
+      optionalConfig,
     });
-    expect(render.getByTestId('loader')).toBeDefined();
+    const loader = await waitForElement(() => render.queryByTestId('loader'));
+    expect(loader).toBeDefined();
   });
 
   test('Node Information failed state', async () => {
-    const mockGet = jest.spyOn(axios, 'get');
-    mockGet.mockRejectedValueOnce(new Error('meta error'));
-    mockGet.mockRejectedValueOnce(new Error('heartbeatstatus error'));
-    // mockGet.mockRejectedValueOnce(new Error('validators error'));
-    // mockGet.mockRejectedValueOnce(new Error('rounds error'));
+    mockGet();
     const render = renderWithRouter({
       route: `/validators/nodes/123`,
+      optionalConfig,
     });
     await wait(async () => {
       expect(render.getByTestId('errorScreen')).toBeDefined();
