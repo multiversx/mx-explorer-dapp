@@ -24,7 +24,6 @@
     "@types/react-google-recaptcha": "1.1.1",
     "@types/react-leaflet": "2.5.1",
     "@types/react-router-dom": "5.1.0",
-    "@types/react-simple-maps": "1.0.2",
     "@types/yup": "0.26.24",
     "@welldone-software/why-did-you-render": "3.3.9",
     "apexcharts": "^3.19.2",
