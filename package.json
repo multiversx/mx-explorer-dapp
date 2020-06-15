@@ -84,7 +84,7 @@
     "react-app-rewire-hot-loader": "2.0.1",
     "react-app-rewired": "2.1.4",
     "react-hot-loader": "4.12.15",
-    "reinspect": "^1.1.0",
+    "reinspect": "1.0.2",
     "tslint": "5.20.0",
     "tslint-config-prettier": "1.18.0",
     "tslint-plugin-prettier": "2.0.1",
