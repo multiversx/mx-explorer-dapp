@@ -23,7 +23,9 @@ const BrandDetails = () => {
       if (foundBrand) {
         const [found] = groupByBrandAndSort({
           brandData: [foundBrand],
-          allValidators: [...validatorData.validators],
+          allValidators: validatorData.validators.filter(v =>
+            foundBrand.publicKeys.includes(v.publicKey)
+          ),
         });
         setBrand(found);
       } else {
