@@ -31,6 +31,12 @@ const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType
       x: {
         show: false,
       },
+      y: {
+        formatter: function format(value, { series, seriesIndex, dataPointIndex, w }) {
+          const rating = parseInt(String(value)).toString();
+          return `${rating}, epoch ${historicRatings[dataPointIndex].epoch}`;
+        },
+      },
       marker: {
         show: false,
       },
@@ -43,7 +49,17 @@ const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType
       },
     },
     xaxis: {
+      tickPlacement: 'between',
       categories: historicRatings.map(rating => rating.epoch),
+      labels: {
+        rotate: 0,
+        formatter: function format(value) {
+          if (historicRatings.length > 20) {
+            return parseInt(value) % 5 === 0 ? value : '';
+          }
+          return value;
+        },
+      },
     },
   };
 
