@@ -32,7 +32,7 @@ const maxLineLength = 20;
 const min = 10;
 const lineLen = (x: number, max: number) =>
   (maxLineLength * Math.log(x + min)) / Math.log(max + min);
-const getRadius = (groupedCities: Array<{ items: number[] }>) => {
+const getRadius = (groupedCities: { items: number[] }[]) => {
   const totalNodesArray = groupedCities.map((city: any) => city.items.length);
   const uniqueTotalNodes = [...new (Set as any)(totalNodesArray)];
 
@@ -47,7 +47,7 @@ const getRadius = (groupedCities: Array<{ items: number[] }>) => {
   } = {};
 
   uniqueTotalNodes.map((node, i) => {
-    const cities = groupedCities.filter(item => item.items.length === node) || [];
+    const cities = groupedCities.filter((item) => item.items.length === node) || [];
     cities.map((city: any) => {
       mapping[city.value] = Math.round(radiuses[i]);
       return null;
@@ -58,13 +58,13 @@ const getRadius = (groupedCities: Array<{ items: number[] }>) => {
 };
 
 export const processMarkers = (data: any) => {
-  const locationsArray: MarkerType[] = Object.keys(data).map(id => ({
+  const locationsArray: MarkerType[] = Object.keys(data).map((id) => ({
     ...data[id],
     publicKey: id,
   }));
 
   const markersArray = locationsArray
-    .map(loc => {
+    .map((loc) => {
       const lat = parseFloat(loc.loc.split(',')[0]);
       const lon = parseFloat(loc.loc.split(',')[1]);
       if (!isNaN(lat) && !isNaN(lon)) {

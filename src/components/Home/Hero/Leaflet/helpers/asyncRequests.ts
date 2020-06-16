@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { object, string, number, InferType } from 'yup';
+import { object, string, InferType } from 'yup';
 
 interface GetMarkersType {
   timeout: number;
