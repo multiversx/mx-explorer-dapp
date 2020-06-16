@@ -7,14 +7,9 @@ interface GetMarkersType {
 }
 
 const schema = object({
-  ip: string().defined(),
   city: string().defined(),
   country: string().defined(),
   loc: string().defined(),
-  org: string().defined(),
-  telegram: string().defined(),
-  nodeName: string().defined(),
-  shardID: number().defined(),
 }).defined();
 
 export type MarkerType = InferType<typeof schema> & { publicKey: string };
@@ -43,9 +38,7 @@ export async function getLeaders({
   timeout,
   explorerApi,
   shardsArray,
-}: GetMarkersType & { shardsArray: number[] }): Promise<
-  Array<{ proposer: string; shard: number }>
-> {
+}: GetMarkersType & { shardsArray: number[] }): Promise<{ proposer: string; shard: number }[]> {
   try {
     const { data } = await axios.post(`${explorerApi}/leaders`, shardsArray, {
       timeout,
