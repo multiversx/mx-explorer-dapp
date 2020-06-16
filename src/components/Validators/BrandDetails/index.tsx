@@ -19,11 +19,11 @@ const BrandDetails = () => {
 
   const setBrandData = () => {
     if (success && brandData.length > 0 && validatorData.validatorsAndObservers.length > 0) {
-      const foundBrand = brandData.find(b => b.identity === identity);
+      const foundBrand = brandData.find((b) => b.identity === identity);
       if (foundBrand) {
         const [found] = groupByBrandAndSort({
           brandData: [foundBrand],
-          allValidators: validatorData.validators.filter(v =>
+          allValidators: validatorData.validators.filter((v) =>
             foundBrand.publicKeys.includes(v.publicKey)
           ),
         });
@@ -47,7 +47,7 @@ const BrandDetails = () => {
     <div className="container pt-3 pb-3" ref={ref}>
       <div className="row">
         <div className="col-12">
-          <h4>Validator Details</h4>
+          <h4 data-testid="title">Validator Details</h4>
         </div>
       </div>
       {brand !== undefined ? (
