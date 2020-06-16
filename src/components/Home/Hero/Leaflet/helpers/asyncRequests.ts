@@ -7,15 +7,15 @@ interface GetMarkersType {
 }
 
 const schema = object({
-  ip: string(),
-  city: string(),
-  country: string(),
-  loc: string(),
-  org: string(),
-  telegram: string(),
-  nodeName: string(),
-  shardID: number(),
-});
+  ip: string().defined(),
+  city: string().defined(),
+  country: string().defined(),
+  loc: string().defined(),
+  org: string().defined(),
+  telegram: string().defined(),
+  nodeName: string().defined(),
+  shardID: number().defined(),
+}).defined();
 
 export type MarkerType = InferType<typeof schema> & { publicKey: string };
 

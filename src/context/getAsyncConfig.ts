@@ -19,7 +19,7 @@ const schema = object({
       erd_start_time: number().required(),
     }).required(),
   }).required(),
-});
+}).defined();
 
 export type AsyncConfigType = InferType<typeof schema>;
 

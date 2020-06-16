@@ -56,7 +56,7 @@ const schema = object({
     erd_rounds_passed_in_current_epoch: number().required(),
     erd_rounds_per_epoch: number().required(),
   }).required(),
-});
+}).defined();
 
 export type NetworkStatusType = InferType<typeof schema>;
 
