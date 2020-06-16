@@ -75,7 +75,7 @@
     "@hot-loader/react-dom": "16.13.0",
     "@testing-library/jest-dom": "4.2.0",
     "@testing-library/react": "9.3.0",
-    "@welldone-software/why-did-you-render": "3.3.9",
+    "@welldone-software/why-did-you-render": "4.2.5",
     "husky": "4.2.5",
     "prettier": "2.0.5",
     "react-app-rewire-hot-loader": "2.0.1",
