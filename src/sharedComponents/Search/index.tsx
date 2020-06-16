@@ -36,16 +36,18 @@ const Search = () => {
     const isValidator =
       hash &&
       validatorData.validators.length &&
-      validatorData.validators.some(validator => validator.publicKey === hash);
+      validatorData.validators.some((validator) => validator.publicKey === hash);
     const brand =
       hash &&
       validatorData.validators.length &&
       brandData.some(
-        brand => brand.identity === hash || brand.name.toLowerCase() === hash.trim().toLowerCase()
+        (brand) =>
+          brand.identity === hash || brand.name.toLowerCase().includes(hash.trim().toLowerCase())
       )
         ? brandData.find(
-            brand =>
-              brand.identity === hash || brand.name.toLowerCase() === hash.trim().toLowerCase()
+            (brand) =>
+              brand.identity === hash ||
+              brand.name.toLowerCase().includes(hash.trim().toLowerCase())
           )!.identity
         : '';
 
