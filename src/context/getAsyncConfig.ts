@@ -70,17 +70,17 @@ export default async function buildConfig() {
     timeout: 5 * 1000,
   }));
 
-  const promises = testnets.map(testnet => getAsyncConfig(testnet));
+  const promises = testnets.map((testnet) => getAsyncConfig(testnet));
   const results = await Promise.all(promises);
-  const asyncData = results.filter(result => !(result instanceof Error));
+  const asyncData = results.filter((result) => !(result instanceof Error));
 
-  const testnetIds = asyncData.map(result => result.id);
-  const foundTestnets = config.testnets.filter(t => testnetIds.includes(t.id));
+  const testnetIds = asyncData.map((result) => result.id);
+  const foundTestnets = config.testnets.filter((t) => testnetIds.includes(t.id));
 
   const configObject = {
     ...config,
-    testnets: foundTestnets.map(testnet => {
-      const testnetData = asyncData.find(entry => entry.id === testnet.id);
+    testnets: foundTestnets.map((testnet) => {
+      const testnetData = asyncData.find((entry) => entry.id === testnet.id);
       return {
         ...testnet,
         gasLimit: testnetData!.config.erd_min_gas_limit,
