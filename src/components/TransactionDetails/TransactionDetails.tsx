@@ -13,6 +13,7 @@ import {
   TransactionStatus,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
+import TransactionDetail from './TransactionDetail';
 
 const getFee = (transaction: TransactionType) => {
   const web3 = new Web3();
@@ -34,136 +35,97 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
   return (
     <div className="card">
       <div className="card-body card-details">
-        <div className="row">
-          <div className="col-lg-2 card-label">Hash</div>
-          <div className="col-lg-10">
-            <ScAddressIcon initiator={transaction.sender} secondInitiator={transaction.receiver} />
-            {transaction.hash}
-          </div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">Status</div>
-          <div className="col-lg-10">
-            <TransactionStatus status={transaction.status} />
-          </div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">Timestamp</div>
-          <div className="col-lg-10">
-            <FontAwesomeIcon icon={faClock} className="mr-2" />
-            <TimeAgo value={transaction.timestamp} />
-            &nbsp;({dateFormatted(transaction.timestamp)})
-          </div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">Miniblock</div>
-          <div className="col-lg-10">
-            <TestnetLink to={`/miniblocks/${transaction.miniBlockHash}`}>
-              {transaction.miniBlockHash}
-            </TestnetLink>
-          </div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">From</div>
-          <div className="col-lg-10">
-            <ScAddressIcon initiator={transaction.sender} />
-            {addressIsBech32(transaction.sender) ? (
-              <>
-                <TestnetLink to={`/address/${transaction.sender}`}>
-                  {transaction.sender}
-                </TestnetLink>
-                <TestnetLink
-                  to={`/transactions/shard-from/${transaction.senderShard}`}
-                  className="small-link"
-                >
-                  &nbsp;(
-                  <ShardSpan shardId={transaction.senderShard} />)
-                </TestnetLink>
-              </>
-            ) : (
-              <ShardSpan shardId={transaction.sender} />
-            )}
-            &nbsp;
-          </div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">To</div>
-          <div className="col-lg-10">
-            <ScAddressIcon initiator={transaction.receiver} />
-            <TestnetLink to={`/address/${transaction.receiver}`}>
-              {transaction.receiver}
-            </TestnetLink>
-            &nbsp;
-            {!isNaN(transaction.receiverShard) && (
+        <TransactionDetail label="Hash">
+          <ScAddressIcon initiator={transaction.sender} secondInitiator={transaction.receiver} />
+          {transaction.hash}
+        </TransactionDetail>
+
+        <TransactionDetail label="Status">
+          <TransactionStatus status={transaction.status} />
+        </TransactionDetail>
+
+        <TransactionDetail label="Timestamp">
+          <FontAwesomeIcon icon={faClock} className="mr-2" />
+          <TimeAgo value={transaction.timestamp} />
+          &nbsp;({dateFormatted(transaction.timestamp)})
+        </TransactionDetail>
+
+        <TransactionDetail label="Miniblock">
+          <TestnetLink to={`/miniblocks/${transaction.miniBlockHash}`}>
+            {transaction.miniBlockHash}
+          </TestnetLink>
+        </TransactionDetail>
+
+        <TransactionDetail label="From">
+          <ScAddressIcon initiator={transaction.sender} />
+          {addressIsBech32(transaction.sender) ? (
+            <>
+              <TestnetLink to={`/address/${transaction.sender}`}>{transaction.sender}</TestnetLink>
               <TestnetLink
-                to={`/transactions/shard-to/${transaction.receiverShard}`}
+                to={`/transactions/shard-from/${transaction.senderShard}`}
                 className="small-link"
               >
-                (<ShardSpan shardId={transaction.receiverShard} />)
+                &nbsp;(
+                <ShardSpan shardId={transaction.senderShard} />)
               </TestnetLink>
-            )}
-            {errorMessage && (
-              <>
-                <br />
-                <FontAwesomeIcon icon={faExclamationTriangle} className="text-danger" size="xs" />
-                <small className="text-danger"> {errorMessage}</small>
-              </>
-            )}
-          </div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">Value</div>
-          <div className="col-lg-10">
-            <Denominate value={transaction.value} showLastNonZeroDecimal />
-          </div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">Transaction Fee</div>
-          <div className="col-lg-10">
-            <Denominate value={getFee(transaction)} showLastNonZeroDecimal />
-          </div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">Gas Limit</div>
-          <div className="col-lg-10">{transaction.gasLimit.toLocaleString('en')}</div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">Gas Used</div>
-          <div className="col-lg-10">{transaction.gasUsed.toLocaleString('en')}</div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">Gas Price</div>
-          <div className="col-lg-10">
-            <Denominate value={transaction.gasPrice.toString()} showLastNonZeroDecimal />
-          </div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">Nonce</div>
-          <div className="col-lg-10">{transaction.nonce}</div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">Input Data</div>
-          <div className="col-lg-10">
-            <textarea
-              readOnly
-              className="form-control col-lg-12 cursor-text"
-              rows={2}
-              defaultValue={transaction.data}
-            />
-          </div>
-        </div>
+            </>
+          ) : (
+            <ShardSpan shardId={transaction.sender} />
+          )}
+          &nbsp;
+        </TransactionDetail>
+
+        <TransactionDetail label="To">
+          <ScAddressIcon initiator={transaction.receiver} />
+          <TestnetLink to={`/address/${transaction.receiver}`}>{transaction.receiver}</TestnetLink>
+          &nbsp;
+          {!isNaN(transaction.receiverShard) && (
+            <TestnetLink
+              to={`/transactions/shard-to/${transaction.receiverShard}`}
+              className="small-link"
+            >
+              (<ShardSpan shardId={transaction.receiverShard} />)
+            </TestnetLink>
+          )}
+          {errorMessage && (
+            <>
+              <br />
+              <FontAwesomeIcon icon={faExclamationTriangle} className="text-danger" size="xs" />
+              <small className="text-danger"> {errorMessage}</small>
+            </>
+          )}
+        </TransactionDetail>
+
+        <TransactionDetail label="Value">
+          <Denominate value={transaction.value} showLastNonZeroDecimal />
+        </TransactionDetail>
+
+        <TransactionDetail label="Transaction Fee">
+          <Denominate value={getFee(transaction)} showLastNonZeroDecimal />
+        </TransactionDetail>
+
+        <TransactionDetail label="Gas Limit">
+          {transaction.gasLimit.toLocaleString('en')}
+        </TransactionDetail>
+
+        <TransactionDetail label="Gas Used">
+          {transaction.gasUsed.toLocaleString('en')}
+        </TransactionDetail>
+
+        <TransactionDetail label="Gas Price">
+          <Denominate value={transaction.gasPrice.toString()} showLastNonZeroDecimal />
+        </TransactionDetail>
+
+        <TransactionDetail label="Nonce">{transaction.nonce}</TransactionDetail>
+
+        <TransactionDetail label="Input Data">
+          <textarea
+            readOnly
+            className="form-control col-lg-12 cursor-text"
+            rows={2}
+            defaultValue={transaction.data}
+          />
+        </TransactionDetail>
       </div>
     </div>
   );

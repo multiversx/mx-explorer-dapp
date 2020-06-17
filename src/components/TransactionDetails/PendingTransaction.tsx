@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Denominate, ScAddressIcon, TestnetLink, TransactionStatus } from 'sharedComponents';
-
+import { faClock } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import TransactionDetail from './TransactionDetail';
 export interface PendingTransactionType {
   epoch: number;
   receiver: string;
@@ -14,47 +16,65 @@ const PendingTransaction = ({ transaction }: { transaction: PendingTransactionTy
   return (
     <div className="card">
       <div className="card-body card-details">
-        <div className="row">
-          <div className="col-lg-2 card-label">Hash</div>
-          <div className="col-lg-10">
-            <ScAddressIcon initiator={transaction.receiver} />
-            {transaction.hash}
-          </div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">Status</div>
-          <div className="col-lg-10">
-            <TransactionStatus status={transaction.type} />
-          </div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">To</div>
-          <div className="col-lg-10">
-            <ScAddressIcon initiator={transaction.receiver} />
-            <TestnetLink to={`/address/${transaction.receiver}`}>
-              {transaction.receiver}
-            </TestnetLink>
-          </div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">Value</div>
-          <div className="col-lg-10">
-            <Denominate value={transaction.value} showLastNonZeroDecimal />
-          </div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">Epoch</div>
-          <div className="col-lg-10">{transaction.epoch}</div>
-        </div>
-        <hr className="hr-space" />
-        <div className="row">
-          <div className="col-lg-2 card-label">Round</div>
-          <div className="col-lg-10">{transaction.round}</div>
-        </div>
+        <TransactionDetail hideDelimiter label="Hash">
+          <ScAddressIcon initiator={transaction.receiver} />
+          {transaction.hash}
+        </TransactionDetail>
+
+        <TransactionDetail label="Status">
+          <TransactionStatus status="Pending" />
+        </TransactionDetail>
+
+        <TransactionDetail label="Timestamp">
+          <FontAwesomeIcon icon={faClock} className="mr-2" />
+          <span className="text-muted">N/A</span>
+        </TransactionDetail>
+
+        <TransactionDetail label="Miniblock">
+          <span className="text-muted">N/A</span>
+        </TransactionDetail>
+
+        <TransactionDetail label="From">
+          <span className="text-muted">N/A</span>
+        </TransactionDetail>
+
+        <TransactionDetail label="To">
+          <ScAddressIcon initiator={transaction.receiver} />
+          <TestnetLink to={`/address/${transaction.receiver}`}>{transaction.receiver}</TestnetLink>
+        </TransactionDetail>
+
+        <TransactionDetail label="Value">
+          <Denominate value={transaction.value} showLastNonZeroDecimal />
+        </TransactionDetail>
+
+        <TransactionDetail label="Transaction Fee">
+          <span className="text-muted">N/A</span>
+        </TransactionDetail>
+
+        <TransactionDetail label="Gas Limit">
+          <span className="text-muted">N/A</span>
+        </TransactionDetail>
+
+        <TransactionDetail label="Gas Used">
+          <span className="text-muted">N/A</span>
+        </TransactionDetail>
+
+        <TransactionDetail label="Gas Price">
+          <span className="text-muted">N/A</span>
+        </TransactionDetail>
+
+        <TransactionDetail label="Nonce">
+          <span className="text-muted">N/A</span>
+        </TransactionDetail>
+
+        <TransactionDetail label="Input Data">
+          <textarea
+            readOnly
+            className="form-control col-lg-12 cursor-text"
+            rows={2}
+            defaultValue={''}
+          />
+        </TransactionDetail>
       </div>
     </div>
   );
