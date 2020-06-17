@@ -1,5 +1,6 @@
 import { defaultTestnet } from './config';
 import { validatorData, brandData } from './validators';
+import { CancelTokenSource } from 'axios';
 
 export interface TestnetType {
   /*
@@ -61,6 +62,7 @@ export interface StateType {
   activeTestnet: TestnetType;
   activeTestnetId: string;
   timeout: number; // axios
+  cancelToken: CancelTokenSource | undefined;
   refresh: {
     timestamp: number;
     intervalId: ReturnType<typeof setInterval>;
@@ -75,10 +77,11 @@ const initialState = (config: ConfigType, optionalConfig?: ConfigType): StateTyp
 
   return {
     config: configObject,
-    defaultTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
-    activeTestnet: config.testnets.filter(testnet => testnet.default).pop() || defaultTestnet,
+    defaultTestnet: config.testnets.filter((testnet) => testnet.default).pop() || defaultTestnet,
+    activeTestnet: config.testnets.filter((testnet) => testnet.default).pop() || defaultTestnet,
     activeTestnetId: '',
     timeout: 3 * 1000,
+    cancelToken: undefined,
     refresh: {
       timestamp: Date.now(),
       intervalId: setInterval(() => null, 10000000),

@@ -1,12 +1,14 @@
 import axios from 'axios';
 import { object, number, InferType } from 'yup';
 import { NetworkStatusType } from 'helpers/validatorFunctions';
+import { StateType } from 'context/state';
 
 interface GetStatsType {
   elasticUrl: string;
   nodeUrl: string;
   metaChainShardId: number;
   timeout: number;
+  cancelToken: StateType['cancelToken'];
 }
 
 const schema = object({
@@ -25,10 +27,19 @@ const schema = object({
   totalProcessedTxCount: number().required(),
 }).required();
 
-export async function getStats({ elasticUrl, nodeUrl, metaChainShardId, timeout }: GetStatsType) {
+export async function getStats({
+  elasticUrl,
+  nodeUrl,
+  metaChainShardId,
+  timeout,
+  cancelToken,
+}: GetStatsType) {
   const data = {};
   try {
-    const { data } = await axios.get(`${elasticUrl}/tps/_doc/meta`, { timeout });
+    const { data } = await axios.get(`${elasticUrl}/tps/_doc/meta`, {
+      timeout,
+      ...(cancelToken ? { cancelToken: cancelToken.token } : {}),
+    });
 
     const source: InferType<typeof schema> = data._source;
 

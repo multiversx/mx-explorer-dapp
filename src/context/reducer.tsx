@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { StateType } from './state';
 
 export type ActionType =
@@ -5,6 +6,7 @@ export type ActionType =
   | { type: 'setValidatorData'; validatorData: StateType['validatorData'] }
   | { type: 'setBrandData'; brandData: StateType['brandData'] }
   | { type: 'triggerNewRound' }
+  | { type: 'cancelAllRequests' }
   | {
       type: 'setNewRoundIntervalId';
       intervalId: ReturnType<typeof setInterval>;
@@ -14,7 +16,7 @@ export type ActionType =
 export function globalReducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
     case 'changeTestnet': {
-      const newTestnet = state.config.testnets.filter(testnet => testnet.id === action.testnetId);
+      const newTestnet = state.config.testnets.filter((testnet) => testnet.id === action.testnetId);
       const activeTestnet = [...newTestnet].pop() || state.defaultTestnet;
       // once activeTestnetId is populated, routes get prepended by testnetId
       return { ...state, activeTestnet, activeTestnetId: action.testnetId };
@@ -51,6 +53,14 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
       return {
         ...state,
         brandData,
+      };
+    }
+    case 'cancelAllRequests': {
+      const cancelToken = axios.CancelToken.source();
+      cancelToken.cancel();
+      return {
+        ...state,
+        cancelToken,
       };
     }
     default: {

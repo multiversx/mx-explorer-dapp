@@ -1,5 +1,6 @@
 import React from 'react';
-import { useGlobalState, useGlobalDispatch } from '../../context';
+import { useGlobalState, useGlobalDispatch } from 'context';
+import { defaultTestnet } from 'context/config';
 
 export default function RoundManager() {
   const globalState = useGlobalState();
@@ -7,17 +8,21 @@ export default function RoundManager() {
 
   function setRoundsForCurrentTestnet() {
     const {
-      activeTestnet: { refreshRate },
+      activeTestnet: { refreshRate, name },
       activeTestnetId,
       refresh: { testnetId, intervalId: oldIntervalId },
     } = globalState;
 
-    if (testnetId !== activeTestnetId) {
-      clearInterval(oldIntervalId);
-      const intervalId = setInterval(() => {
-        dispatch({ type: 'triggerNewRound' });
-      }, refreshRate);
-      dispatch({ type: 'setNewRoundIntervalId', intervalId, testnetId });
+    if (name === defaultTestnet.name) {
+      dispatch({ type: 'cancelAllRequests' });
+    } else {
+      if (testnetId !== activeTestnetId) {
+        clearInterval(oldIntervalId);
+        const intervalId = setInterval(() => {
+          dispatch({ type: 'triggerNewRound' });
+        }, refreshRate);
+        dispatch({ type: 'setNewRoundIntervalId', intervalId, testnetId });
+      }
     }
   }
 
