@@ -83,12 +83,14 @@ export const buildValidator = ({
     issue: '',
   };
 
-  validator.issue = validatorIssues({
-    validator,
-    versionNumber: configVersionNumber,
-    nrOfShards,
-    metaChainShardId,
-  });
+  if (validator.isValidator) {
+    validator.issue = validatorIssues({
+      validator,
+      versionNumber: configVersionNumber,
+      nrOfShards,
+      metaChainShardId,
+    });
+  }
 
   return validator;
 };
@@ -113,10 +115,10 @@ export function populateValidatorsTable({
   const allShardIDs: string[] = [];
   const validators: ValidatorType[] = [];
   const validatorsAndObservers: ValidatorType[] = [];
-  const heartbeatObservers = data.filter(v => !Object.keys(statistics).includes(v.publicKey));
+  const heartbeatObservers = data.filter((v) => !Object.keys(statistics).includes(v.publicKey));
 
   const statisticsData = statistics
-    ? Object.keys(statistics).map(publicKey => {
+    ? Object.keys(statistics).map((publicKey) => {
         return {
           publicKey,
           ...statistics[publicKey],
@@ -124,12 +126,12 @@ export function populateValidatorsTable({
       })
     : [];
   const validatorData: ValidatorDataType = {};
-  data.map(validator => {
+  data.map((validator) => {
     validatorData[validator.publicKey] = { ...validator };
     return null;
   });
 
-  statisticsData.forEach(statisticsValidator => {
+  statisticsData.forEach((statisticsValidator) => {
     const validator = buildValidator({
       publicKey: statisticsValidator.publicKey,
       metaChainShardId,
@@ -201,12 +203,14 @@ export function populateValidatorsTable({
         ratingModifier,
         issue: '',
       };
-      validator.issue = validatorIssues({
-        validator,
-        versionNumber,
-        nrOfShards,
-        metaChainShardId,
-      });
+      if (validator.isValidator) {
+        validator.issue = validatorIssues({
+          validator,
+          versionNumber,
+          nrOfShards,
+          metaChainShardId,
+        });
+      }
 
       if (['eligible', 'waiting', 'jailed', 'new'].includes(validator.peerType)) {
         validators.push(validator);

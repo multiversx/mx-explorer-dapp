@@ -1,4 +1,11 @@
-import { faClock, faEye, faLeaf, faLock, faSync } from '@fortawesome/free-solid-svg-icons';
+import {
+  faClock,
+  faEye,
+  faLeaf,
+  faLock,
+  faSync,
+  faExclamationTriangle,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { ValidatorType } from 'context/validators';
@@ -15,10 +22,13 @@ export const validatorIssues = ({
   versionNumber,
   metaChainShardId,
   nrOfShards,
-}: ValidatorIssuesType) => {
+}: ValidatorIssuesType): ValidatorType['issue'] => {
   switch (true) {
     case versionNumber !== validator.versionNumber.split('-')[0]:
       return 'Outdated client version';
+    case validator.receivedShardID !== validator.computedShardID &&
+      validator.peerType === 'eligible':
+      return 'Shuffle out restart failed';
     case validator.receivedShardID !== metaChainShardId && validator.receivedShardID > nrOfShards:
       return 'Outdated client configuration';
     default:
@@ -45,6 +55,15 @@ const RowIcon = ({ validator }: { validator: ValidatorType }) => {
     //       className="text-warning w300 mr-1"
     //     />
     //   );
+
+    case validator.issue !== '':
+      return (
+        <FontAwesomeIcon
+          title={validator.issue}
+          icon={faExclamationTriangle}
+          className="w300 mr-1 text-warning"
+        />
+      );
 
     case validator.receivedShardID !== validator.computedShardID:
       return <FontAwesomeIcon title="Changing shard" icon={faSync} className="w300 mr-1" />;

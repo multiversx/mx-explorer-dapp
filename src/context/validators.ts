@@ -15,7 +15,11 @@ export interface ValidatorType {
   shardNumber: number;
   rating: number;
   ratingModifier: number;
-  issue: 'Outdated client version' | 'Outdated client configuration' | '';
+  issue:
+    | 'Outdated client version'
+    | 'Outdated client configuration'
+    | 'Shuffle out restart failed'
+    | '';
 }
 
 interface ComputedShard {

@@ -16,6 +16,17 @@ const Container = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
+const issueMessage = (issue: ValidatorType['issue']) => {
+  switch (true) {
+    case issue === 'Outdated client version':
+      return 'Outdated client version, please update the node';
+    case issue === 'Shuffle out restart failed':
+      return 'Shuffle out restart failed, please manually restart the node';
+    default:
+      return issue;
+  }
+};
+
 const Alert = ({ validator }: { validator: ValidatorType }) => {
   switch (true) {
     case validator.peerType === 'jailed':
@@ -29,7 +40,7 @@ const Alert = ({ validator }: { validator: ValidatorType }) => {
       return (
         <Container>
           <RowIcon validator={validator} />
-          {validator.issue}
+          {issueMessage(validator.issue)}
         </Container>
       );
     case validator.isActive === false:
