@@ -34,9 +34,7 @@ const PendingTransaction = ({ transaction }: { transaction: PendingTransactionTy
           <span className="text-muted">N/A</span>
         </TransactionDetail>
 
-        <TransactionDetail label="From">
-          <span className="text-muted">N/A</span>
-        </TransactionDetail>
+        <TransactionDetail label="From">Metachain</TransactionDetail>
 
         <TransactionDetail label="To">
           <ScAddressIcon initiator={transaction.receiver} />
