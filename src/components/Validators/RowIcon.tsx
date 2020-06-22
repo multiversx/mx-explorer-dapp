@@ -24,6 +24,8 @@ export const validatorIssues = ({
   nrOfShards,
 }: ValidatorIssuesType): ValidatorType['issue'] => {
   switch (true) {
+    case validator.totalUpTimeSec === 0:
+      return 'Offline since genesis';
     case versionNumber !== validator.versionNumber.split('-')[0]:
       return 'Outdated client version';
     case validator.receivedShardID !== validator.computedShardID &&
@@ -46,15 +48,6 @@ const RowIcon = ({ validator }: { validator: ValidatorType }) => {
 
     case validator.peerType === 'new':
       return <FontAwesomeIcon title="New" icon={faLeaf} className="w300 mr-1" />;
-
-    // case validator.issue !== '':
-    //   return (
-    //     <FontAwesomeIcon
-    //       title={validator.issue}
-    //       icon={faExclamationTriangle}
-    //       className="text-warning w300 mr-1"
-    //     />
-    //   );
 
     case validator.issue !== '':
       return (

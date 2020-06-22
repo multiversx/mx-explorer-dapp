@@ -19,6 +19,7 @@ export interface ValidatorType {
     | 'Outdated client version'
     | 'Outdated client configuration'
     | 'Shuffle out restart failed'
+    | 'Offline since genesis'
     | '';
 }
 
