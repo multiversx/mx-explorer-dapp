@@ -76,7 +76,7 @@ const ValidatorDetails = () => {
 
   React.useEffect(() => {
     if (hash) {
-      const foundValidator = validatorData.validatorsAndObservers.find(v => v.publicKey === hash);
+      const foundValidator = validatorData.validatorsAndObservers.find((v) => v.publicKey === hash);
       if (foundValidator === undefined && validatorData.validatorsAndObservers.length > 0) {
         setSuccess(false);
       } else {
@@ -111,7 +111,7 @@ const ValidatorDetails = () => {
 
           getHistoricRatings({ explorerApi, timeout, publicKey: validator.publicKey }).then(
             (historicRatings: HistoricRatingType[]) => {
-              setState(state => ({ ...state, historicRatings }));
+              setState((state) => ({ ...state, historicRatings }));
             }
           );
 
