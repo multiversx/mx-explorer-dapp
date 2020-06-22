@@ -62,7 +62,7 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
           <div className="stake-percent">{cumulativeStakePercent(brand)}</div>
         </td>
         <td className="text-right">{brand.validators.length}</td>
-        <td className="text-right">{Math.floor(brand.score).toLocaleString()}</td>
+        <td className="text-right">{Math.round(brand.score).toLocaleString()}</td>
         <td className="text-right">
           <img src={carretDown} className="details-arrow" alt="details-arrow" height="8" />
         </td>
