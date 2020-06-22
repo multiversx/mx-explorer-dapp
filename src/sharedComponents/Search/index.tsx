@@ -73,7 +73,7 @@ const Search = () => {
       {!pathname.includes('validators') && brandData.length === 0 && <FetchValidatorsComponent />}
       <input
         type="text"
-        className="form-control mr-sm-2"
+        className="form-control mr-sm-2 pl-3"
         placeholder="Address / Txn Hash / Block Hash"
         name="requestType"
         data-testid="search"
