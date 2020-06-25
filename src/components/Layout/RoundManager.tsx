@@ -17,11 +17,11 @@ export default function RoundManager() {
       dispatch({ type: 'cancelAllRequests' });
     } else {
       if (testnetId !== activeTestnetId) {
-        clearInterval(oldIntervalId);
-        const intervalId = setInterval(() => {
-          dispatch({ type: 'triggerNewRound' });
-        }, refreshRate);
-        dispatch({ type: 'setNewRoundIntervalId', intervalId, testnetId });
+        // clearInterval(oldIntervalId);
+        // const intervalId = setInterval(() => {
+        //   dispatch({ type: 'triggerNewRound' });
+        // }, refreshRate);
+        // dispatch({ type: 'setNewRoundIntervalId', intervalId, testnetId });
       }
     }
   }
