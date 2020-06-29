@@ -52,8 +52,7 @@ export const Routes = ({
           />
           ,
           {routes.map((route, i) => {
-            const validatorsDisabled =
-              activeTestnet.validators === false || activeTestnet.name !== 'Battle of Nodes';
+            const validatorsDisabled = activeTestnet.validators === false;
             if (route.path.includes('validators') && validatorsDisabled) {
               return null;
             }

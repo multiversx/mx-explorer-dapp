@@ -16,7 +16,7 @@ export default function ExplorerNavbar({
   setExpanded = () => null,
 }: ExplorerNavbarType) {
   const {
-    activeTestnet: { validators, name: activeTestnetName },
+    activeTestnet: { validators },
     activeTestnetId,
   } = useGlobalState();
 
@@ -66,7 +66,7 @@ export default function ExplorerNavbar({
             Transactions
           </TestnetLink>
 
-          {validators !== false && activeTestnetName === 'Battle of Nodes' && (
+          {validators !== false && (
             <TestnetLink
               className={`nav-link ${pathname.toString().includes('validators') ? 'active' : ''}`}
               to="/validators"
