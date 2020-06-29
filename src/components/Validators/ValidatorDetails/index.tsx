@@ -138,7 +138,7 @@ const ValidatorDetails = () => {
   const nodeClass = 'col-md-8';
   const brandClass = 'col-md-4';
 
-  const isWaiting = state.instanceType.includes('waiting');
+  const isWaiting = state.instanceType && state.instanceType.includes('waiting');
 
   return (
     <div ref={ref}>
@@ -175,7 +175,7 @@ const ValidatorDetails = () => {
                   </div>
                   {isValidator && (
                     <div className="col-md-4">
-                      <Rounds {...rounds} isWaiting={isWaiting} />
+                      <Rounds {...rounds} isWaiting={Boolean(isWaiting)} />
                     </div>
                   )}
                 </div>
