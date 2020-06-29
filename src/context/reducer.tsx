@@ -16,9 +16,10 @@ export type ActionType =
 export function globalReducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
     case 'changeTestnet': {
-      const newTestnet = state.config.testnets.filter((testnet) => testnet.id === action.testnetId);
-      const activeTestnet = [...newTestnet].pop() || state.defaultTestnet;
+      const newTestnet = state.config.testnets.find((testnet) => testnet.id === action.testnetId);
+      const activeTestnet = newTestnet || state.defaultTestnet;
       // once activeTestnetId is populated, routes get prepended by testnetId
+
       return { ...state, activeTestnet, activeTestnetId: action.testnetId };
     }
     case 'triggerNewRound': {
