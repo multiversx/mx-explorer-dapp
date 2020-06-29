@@ -51,10 +51,14 @@ async function getAsyncConfig({
         ? (data.message as AsyncConfigType['message'])
         : (data as AsyncConfigType['message']);
 
-    return {
-      id,
-      config,
-    };
+    if (config !== undefined) {
+      return {
+        id,
+        config,
+      };
+    } else {
+      throw new Error(data.message.error);
+    }
   } catch (err) {
     if (process.env.NODE_ENV === 'production') {
       console.error(`Faild to get config for ${id} testnet`);
@@ -81,6 +85,8 @@ export default async function buildConfig() {
     ...config,
     testnets: foundTestnets.map((testnet) => {
       const testnetData = asyncData.find((entry) => entry.id === testnet.id);
+      console.warn(11, testnetData, asyncData);
+
       return {
         ...testnet,
         gasLimit: testnetData!.config.erd_min_gas_limit,
