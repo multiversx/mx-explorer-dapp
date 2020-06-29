@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 export default function TestnetSwitcher({ onToggle }: { onToggle: (prop: boolean) => void }) {
   const globalState = useGlobalState();
 
-  const liksArray = globalState.config.testnets.map(testnet => ({
+  const liksArray = globalState.config.testnets.map((testnet) => ({
     name: testnet.name,
     to: testnet.id === globalState.defaultTestnet.id ? '' : testnet.id,
     key: testnet.id,
@@ -30,7 +30,7 @@ export default function TestnetSwitcher({ onToggle }: { onToggle: (prop: boolean
         }
         id="basic-nav-dropdown"
       >
-        {liksArray.map(link => {
+        {liksArray.map((link) => {
           return (
             <Link
               className={`dropdown-item ${globalState.activeTestnetId === link.to ? 'active' : ''}`}

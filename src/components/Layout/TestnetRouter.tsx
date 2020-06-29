@@ -11,7 +11,7 @@ export default function TestnetRouter() {
 
   const testnetId = locationArray[0];
 
-  const allTestnetIds = globalState.config.testnets.map(testnet => testnet.id);
+  const allTestnetIds = globalState.config.testnets.map((testnet) => testnet.id);
 
   function changeTestnet() {
     const {
@@ -21,7 +21,6 @@ export default function TestnetRouter() {
 
     if (allTestnetIds.includes(testnetId) && activeTestnetId !== testnetId) {
       // if route contains a testnet at the beginning replace the testnet
-
       dispatch({ type: 'changeTestnet', testnetId });
     } else if (
       (allTestnetIds.includes(testnetId) && defaultTestnetId === testnetId) ||
