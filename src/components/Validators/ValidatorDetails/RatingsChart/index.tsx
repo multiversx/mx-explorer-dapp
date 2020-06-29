@@ -8,25 +8,22 @@ export interface HistoricRatingType {
 }
 
 const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType[] }) => {
+  const ratings = historicRatings ? historicRatings : [];
   const series = [
     {
       name: 'rating',
-      data: historicRatings.map(rating => rating.rating),
+      data: ratings.map((rating) => rating.rating),
     },
   ];
   const options: ApexOptions = {
     chart: {
       id: 'basic-bar',
-      // background: '#fff',
       toolbar: {
         show: false,
       },
     },
     tooltip: {
       enabled: true,
-      // onDatasetHover: {
-      //   highlightDataSeries: false,
-      // },
       intersect: false,
       x: {
         show: false,
@@ -34,7 +31,7 @@ const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType
       y: {
         formatter: function format(value, { series, seriesIndex, dataPointIndex, w }) {
           const rating = parseInt(String(value)).toString();
-          return `${rating}, epoch ${historicRatings[dataPointIndex].epoch}`;
+          return `${rating}, epoch ${ratings[dataPointIndex].epoch}`;
         },
       },
       marker: {
@@ -50,11 +47,11 @@ const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType
     },
     xaxis: {
       tickPlacement: 'between',
-      categories: historicRatings.map(rating => rating.epoch),
+      categories: ratings.map((rating) => rating.epoch),
       labels: {
         rotate: 0,
         formatter: function format(value) {
-          if (historicRatings.length > 20) {
+          if (ratings.length > 20) {
             return parseInt(value) % 5 === 0 ? value : '';
           }
           return value;
