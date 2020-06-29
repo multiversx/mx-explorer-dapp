@@ -94,7 +94,9 @@ const BrandDetails = () => {
                       <div className="d-flex align-items-center">
                         <div className="mr-3">
                           {brand.twitter ? (
-                            <a href={brand.twitter}>{brand.twitter.split('/').pop()}</a>
+                            <a target={`_blank`} href={brand.twitter}>
+                              {brand.twitter.split('/').pop()}
+                            </a>
                           ) : (
                             <span className="text-muted">N/A</span>
                           )}
@@ -109,7 +111,9 @@ const BrandDetails = () => {
                       <div className="d-flex align-items-center">
                         <div className="mr-3">
                           {brand.web ? (
-                            <a href={brand.web}>{brand.web}</a>
+                            <a target={`_blank`} href={brand.web}>
+                              {brand.web}
+                            </a>
                           ) : (
                             <span className="text-muted">N/A</span>
                           )}
