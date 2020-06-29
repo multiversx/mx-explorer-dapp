@@ -21,6 +21,7 @@ export default function TestnetRouter() {
 
     if (allTestnetIds.includes(testnetId) && activeTestnetId !== testnetId) {
       // if route contains a testnet at the beginning replace the testnet
+      dispatch({ type: 'setBrandData', brandData: [] });
       dispatch({ type: 'changeTestnet', testnetId });
     } else if (
       (allTestnetIds.includes(testnetId) && defaultTestnetId === testnetId) ||
