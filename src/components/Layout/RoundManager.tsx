@@ -26,7 +26,7 @@ export default function RoundManager() {
     }
   }
 
-  // React.useEffect(setRoundsForCurrentTestnet, [globalState.activeTestnetId]);
+  React.useEffect(setRoundsForCurrentTestnet, [globalState.activeTestnetId]);
 
   return <></>;
 }
