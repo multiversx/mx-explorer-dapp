@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { TestnetLink } from 'sharedComponents';
 import { useGlobalState } from 'context';
+import { validatorsRoutes } from 'routes';
 import { stake, cumulativeStakePercent } from './../ValidatorsBrandTable/BrandRow';
 import { groupByBrandAndSort } from './../ValidatorsBrandTable/helpers/brandHelper';
 
@@ -11,7 +13,7 @@ const BrandInformation = ({ publicKey }: { publicKey: string }) => {
     allValidators: [...validatorData.validators],
   });
 
-  const brand = sortedBrands.find(b => b.validators.some((v: any) => v.publicKey === publicKey));
+  const brand = sortedBrands.find((b) => b.validators.some((v: any) => v.publicKey === publicKey));
 
   const labelClass = 'col-lg-5 card-label';
   const dataClass = 'col-lg-7';
@@ -32,7 +34,9 @@ const BrandInformation = ({ publicKey }: { publicKey: string }) => {
                     height="42"
                   />
                 </div>
-                {brand.name ? brand.name : 'N/A'}
+                <TestnetLink to={`${validatorsRoutes.index}/${brand.identity}`}>
+                  {brand.name ? brand.name : 'N/A'}
+                </TestnetLink>
               </div>
             </div>
           </div>
