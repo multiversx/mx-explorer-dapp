@@ -3,21 +3,18 @@ import { object, string, number, InferType } from 'yup';
 import config from './config';
 
 const schema = object({
-  message: object({
-    config: object({
-      erd_chain_id: string().required(),
-      erd_gas_per_data_byte: number().required(),
-      erd_latest_tag_software_version: string().required(),
-      erd_meta_consensus_group_size: number().required(),
-      erd_min_gas_limit: number().required(),
-      erd_min_gas_price: number().required(),
-      erd_num_metachain_nodes: number().required(),
-      erd_num_nodes_in_shard: number().required(),
-      erd_num_shards_without_meta: number().required(),
-      erd_round_duration: number().required(),
-      erd_shard_consensus_group_size: number().required(),
-      erd_start_time: number().required(),
-    }).required(),
+  config: object({
+    erd_chain_id: string().required(),
+    erd_gas_per_data_byte: number().required(),
+    erd_meta_consensus_group_size: number().required(),
+    erd_min_gas_limit: number().required(),
+    erd_min_gas_price: number().required(),
+    erd_num_metachain_nodes: number().required(),
+    erd_num_nodes_in_shard: number().required(),
+    erd_num_shards_without_meta: number().required(),
+    erd_round_duration: number().required(),
+    erd_shard_consensus_group_size: number().required(),
+    erd_start_time: number().required(),
   }).required(),
 }).defined();
 
@@ -31,38 +28,31 @@ interface GetAsyncConfigType {
 
 interface GetAsyncConfigReturnType {
   id: string;
-  config: AsyncConfigType['message']['config'];
+  config: AsyncConfigType['config'];
 }
 
-async function getAsyncConfig({
-  nodeUrl,
-  timeout,
-  id,
-}: GetAsyncConfigType): Promise<GetAsyncConfigReturnType> {
+async function getAsyncConfig({ nodeUrl, timeout, id }: GetAsyncConfigType) {
   try {
-    const { data } = await axios.get(`${nodeUrl}/network/config`, { timeout });
+    const {
+      data: { data, code, error },
+    } = await axios.get(`${nodeUrl}/network/config`, { timeout });
 
-    schema.validate(data, { strict: true }).catch(({ errors }) => {
-      console.error('Async config errors: ', `${nodeUrl}/network/config`, errors);
-    });
+    if (code === 'successful') {
+      schema.validate(data, { strict: true }).catch(({ errors }) => {
+        console.error(`Faild to get config for ${id} testnet.`, errors, code, error);
+      });
 
-    const { config } =
-      'message' in data
-        ? (data.message as AsyncConfigType['message'])
-        : (data as AsyncConfigType['message']);
+      const { config } = data as AsyncConfigType;
 
-    if (config !== undefined) {
       return {
         id,
         config,
       };
     } else {
-      throw new Error(data.message.error);
+      throw new Error(error);
     }
   } catch (err) {
-    if (process.env.NODE_ENV === 'production') {
-      console.error(`Faild to get config for ${id} testnet`);
-    }
+    console.error(`Faild to get config for ${id} testnet.`);
     return err;
   }
 }

@@ -27,20 +27,20 @@ const beforeAll = (fail = ['']) => {
       case url.includes('/tps/_doc/meta'):
         return Promise.resolve({ data: meta });
       case url.includes(`/node/heartbeatstatus`):
-        return Promise.resolve({ data: heartbeatstatus });
+        return Promise.resolve({ data: { data: heartbeatstatus, code: 'successful' } });
       case url.includes('/validator/statistics'):
-        return Promise.resolve({ data: statistics });
+        return Promise.resolve({ data: { data: statistics, code: 'successful' } });
       case url.endsWith('/validators'):
         return Promise.resolve({ data: validators });
       // --- page load ---
       case url.includes('validators/_doc'):
         return Promise.resolve({ data: validatorsdoc });
       case url.includes('network/status'):
-        return Promise.resolve({ data: epoch });
+        return Promise.resolve({ data: { data: epoch, code: 'successful' } });
       case url.includes('/ratingshistory/'):
         return Promise.resolve({ data: ratings });
       case url.includes('/address/') && !fail.includes('address'):
-        return Promise.resolve({ data: addressResponse });
+        return Promise.resolve({ data: { data: addressResponse, code: 'successful' } });
       case url.includes('/blocks/_doc') && !fail.includes('blocks'):
         return Promise.resolve({ data: block });
       case url.includes('/transactions/_search') && !fail.includes('transactions'):

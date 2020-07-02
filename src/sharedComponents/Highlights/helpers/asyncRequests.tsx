@@ -47,27 +47,32 @@ export async function getStats({
       console.error('Meta _source format errors: ', errors);
     });
 
-    const { data: epochData } = await axios.get(`${nodeUrl}/network/status/${metaChainShardId}`, {
+    const {
+      data: { data: epochData, code, error },
+    } = await axios.get(`${nodeUrl}/network/status/${metaChainShardId}`, {
       timeout,
     });
+    if (code === 'successful') {
+      const message: NetworkStatusType = epochData;
 
-    const message: NetworkStatusType = epochData.message;
+      const epoch = message.status.erd_epoch_number;
+      const roundsPassed = message.status.erd_rounds_passed_in_current_epoch;
+      const roundsPerEpoch = message.status.erd_rounds_per_epoch;
 
-    const epoch = message.status.erd_epoch_number;
-    const roundsPassed = message.status.erd_rounds_passed_in_current_epoch;
-    const roundsPerEpoch = message.status.erd_rounds_per_epoch;
+      if (!data.found) {
+        return {
+          data: { ...data, epoch, roundsPassed, roundsPerEpoch },
+          success: false,
+        };
+      }
 
-    if (!data.found) {
       return {
-        data: { ...data, epoch, roundsPassed, roundsPerEpoch },
-        success: false,
+        data: { ...source, epoch, roundsPassed, roundsPerEpoch },
+        success: true,
       };
+    } else {
+      throw new Error(error);
     }
-
-    return {
-      data: { ...source, epoch, roundsPassed, roundsPerEpoch },
-      success: true,
-    };
   } catch {
     return {
       data,
