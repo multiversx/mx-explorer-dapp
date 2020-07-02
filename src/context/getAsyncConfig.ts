@@ -75,7 +75,6 @@ export default async function buildConfig() {
     ...config,
     testnets: foundTestnets.map((testnet) => {
       const testnetData = asyncData.find((entry) => entry.id === testnet.id);
-      console.warn(11, testnetData, asyncData);
 
       return {
         ...testnet,
