@@ -34,9 +34,13 @@ const BrandInformation = ({ publicKey }: { publicKey: string }) => {
                     height="42"
                   />
                 </div>
-                <TestnetLink to={`${validatorsRoutes.index}/${brand.identity}`}>
-                  {brand.name ? brand.name : 'N/A'}
-                </TestnetLink>
+                {brand.identity ? (
+                  <TestnetLink to={`${validatorsRoutes.index}/${brand.identity}`}>
+                    {brand.name ? brand.name : 'N/A'}
+                  </TestnetLink>
+                ) : (
+                  <>{brand.name ? brand.name : 'N/A'}</>
+                )}
               </div>
             </div>
           </div>
