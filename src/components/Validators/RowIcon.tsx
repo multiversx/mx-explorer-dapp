@@ -23,13 +23,16 @@ export const validatorIssues = ({
   metaChainShardId,
   nrOfShards,
 }: ValidatorIssuesType): ValidatorType['issue'] => {
+  const shuffleOut =
+    validator.receivedShardID !== validator.computedShardID && validator.peerType === 'eligible';
   switch (true) {
     case validator.totalUpTimeSec === 0:
       return 'Offline since genesis';
     case versionNumber !== validator.versionNumber.split('-')[0]:
       return 'Outdated client version';
-    case validator.receivedShardID !== validator.computedShardID &&
-      validator.peerType === 'eligible':
+    case shuffleOut && !validator.isActive:
+      return '';
+    case shuffleOut:
       return 'Shuffle out restart failed';
     case validator.receivedShardID !== metaChainShardId && validator.receivedShardID > nrOfShards:
       return 'Outdated client configuration';
