@@ -5,7 +5,9 @@ import config from './config';
 const schema = object({
   config: object({
     erd_chain_id: string().required(),
+    erd_denomination: number().required(),
     erd_gas_per_data_byte: number().required(),
+    erd_latest_tag_software_version: string().required(),
     erd_meta_consensus_group_size: number().required(),
     erd_min_gas_limit: number().required(),
     erd_min_gas_price: number().required(),
@@ -31,7 +33,11 @@ interface GetAsyncConfigReturnType {
   config: AsyncConfigType['config'];
 }
 
-async function getAsyncConfig({ nodeUrl, timeout, id }: GetAsyncConfigType) {
+async function getAsyncConfig({
+  nodeUrl,
+  timeout,
+  id,
+}: GetAsyncConfigType): Promise<GetAsyncConfigReturnType> {
   try {
     const {
       data: { data, code, error },
@@ -84,6 +90,7 @@ export default async function buildConfig() {
         refreshRate: testnetData!.config.erd_round_duration,
         nrOfShards: testnetData!.config.erd_num_shards_without_meta,
         versionNumber: testnetData!.config.erd_latest_tag_software_version,
+        denomination: testnetData!.config.erd_denomination,
       };
     }),
   };
