@@ -52,7 +52,6 @@ const CONFIG = {
       id: 'battle-of-nodes',
       name: 'Battle of Nodes',
       nodeUrl: 'https://api.elrond.com',
-      validatorsApiUrl: 'https://api.elrond.com',
       elasticUrl: 'https://elastic-aws.elrond.com',
       numInitCharactersForScAddress: 14,
       gasLimitEditable: true,
