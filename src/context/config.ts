@@ -1,7 +1,7 @@
-import { ConfigType } from './state';
+import { ConfigType, TestnetType } from './state';
 import localTestnets from './localTestnets';
 
-export const defaultTestnet = {
+export const defaultTestnet: TestnetType = {
   default: false,
   id: 'not-configured',
   name: 'NOT CONFIGURED',
@@ -14,10 +14,6 @@ export const defaultTestnet = {
   gasPrice: 0,
   gasLimit: 0,
   gasPerDataByte: 0,
-  gasLimitEditable: false,
-  economics: false,
-  data: false,
-  wallet: true,
   validatorDetails: false,
   faucet: false,
   nrOfShards: 0,
@@ -58,10 +54,10 @@ const config = configIsDefined ? buildInitialConfig(importedConfig) : buildIniti
 let configTestnets = [...config.testnets];
 
 if (
-  localTestnets.some(testnet => testnet.default) &&
+  localTestnets.some((testnet) => testnet.default) &&
   process.env.REACT_APP_USE_GLOBAL_DEFAULT === 'false'
 ) {
-  configTestnets = configTestnets.map(testnet => ({ ...testnet, default: false }));
+  configTestnets = configTestnets.map((testnet) => ({ ...testnet, default: false }));
 }
 
 const extendedConfig = {

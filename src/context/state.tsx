@@ -14,9 +14,7 @@ export interface TestnetType {
         validatorDetails: (default) false
         economics: (default) false
         gasLimitEditable: (default) false
-        data: (default) false
         faucet: (default) false (faucet)
-        hasBach32: (default) false
   */
   default: boolean;
   id: string;
@@ -31,11 +29,7 @@ export interface TestnetType {
   gasPrice: number;
   gasLimit: number;
   gasPerDataByte: number;
-  gasLimitEditable?: boolean;
-  economics?: boolean;
-  data?: boolean;
   validatorDetails?: boolean;
-  wallet?: boolean;
   faucet: boolean;
   nrOfShards: number;
   versionNumber: string;
