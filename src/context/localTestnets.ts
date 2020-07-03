@@ -25,8 +25,6 @@ const localTestnets = [
           nodeUrl: 'http://51.144.228.174:8080',
           elasticUrl: 'http://13.81.247.54',
           numInitCharactersForScAddress: 20,
-          decimals: 2,
-          denomination: 18,
           faucet: true,
         },
       ]

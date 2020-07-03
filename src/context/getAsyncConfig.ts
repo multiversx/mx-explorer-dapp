@@ -91,6 +91,7 @@ export default async function buildConfig() {
         nrOfShards: testnetData!.config.erd_num_shards_without_meta,
         versionNumber: testnetData!.config.erd_latest_tag_software_version,
         denomination: testnetData!.config.erd_denomination,
+        decimals: testnet.decimals || 2,
       };
     }),
   };
