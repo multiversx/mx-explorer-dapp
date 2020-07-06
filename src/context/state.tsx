@@ -74,7 +74,7 @@ const initialState = (config: ConfigType, optionalConfig?: ConfigType): StateTyp
     defaultTestnet: config.testnets.filter((testnet) => testnet.default).pop() || defaultTestnet,
     activeTestnet: config.testnets.filter((testnet) => testnet.default).pop() || defaultTestnet,
     activeTestnetId: '',
-    timeout: 5 * 1000,
+    timeout: 3 * 1000,
     cancelToken: undefined,
     refresh: {
       timestamp: Date.now(),
