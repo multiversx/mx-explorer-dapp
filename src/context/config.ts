@@ -62,7 +62,13 @@ if (
 
 const extendedConfig = {
   ...config,
-  testnets: [...configTestnets, ...localTestnets],
+  testnets: [
+    ...configTestnets,
+    ...localTestnets.map((t: any) => ({
+      ...defaultTestnet,
+      ...t,
+    })),
+  ],
 };
 
 export const stateConfig = {

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { object, string, number, InferType } from 'yup';
-import config from './config';
+import { ConfigType, TestnetType } from './state';
+import config, { defaultTestnet } from './config';
 
 const schema = object({
   config: object({
@@ -20,7 +21,7 @@ const schema = object({
   }).required(),
 }).defined();
 
-export type AsyncConfigType = InferType<typeof schema>;
+export type AsyncConfigType = InferType<typeof schema> & { fetchedFromNetworkConfig?: boolean };
 
 interface GetAsyncConfigType {
   id: string;
@@ -63,27 +64,24 @@ async function getAsyncConfig({
   }
 }
 
-export default async function buildConfig() {
-  const testnets = config.testnets.map(({ id, nodeUrl }) => ({
-    id,
-    nodeUrl,
-    timeout: 5 * 1000,
-  }));
+export default async function buildConfig(
+  id?: string,
+  stateConfig?: ConfigType
+): Promise<ConfigType> {
+  const internalConfig = stateConfig ? stateConfig : config;
 
-  const promises = testnets.map((testnet) => getAsyncConfig(testnet));
-  const results = await Promise.all(promises);
-  const asyncData = results.filter((result) => !(result instanceof Error));
+  const configTestnet =
+    config.testnets.find((testnet) => {
+      if (id) {
+        return testnet.id === id;
+      } else return testnet.default;
+    }) || defaultTestnet;
 
-  const testnetIds = asyncData.map((result) => result.id);
-  const foundTestnets = config.testnets.filter((t) => testnetIds.includes(t.id));
-
-  const configObject = {
-    ...config,
-    testnets: foundTestnets.map((testnet) => {
-      const testnetData = asyncData.find((entry) => entry.id === testnet.id);
-
-      return {
-        ...testnet,
+  if (!configTestnet.fetchedFromNetworkConfig && process.env.NODE_ENV !== 'test') {
+    const testnetData = await getAsyncConfig({ ...configTestnet, timeout: 3000 });
+    if (!(testnetData instanceof Error)) {
+      const newTestnet: TestnetType = {
+        ...configTestnet,
         gasLimit: testnetData!.config.erd_min_gas_limit,
         gasPrice: testnetData!.config.erd_min_gas_price,
         gasPerDataByte: testnetData!.config.erd_gas_per_data_byte,
@@ -91,9 +89,28 @@ export default async function buildConfig() {
         nrOfShards: testnetData!.config.erd_num_shards_without_meta,
         versionNumber: testnetData!.config.erd_latest_tag_software_version,
         denomination: testnetData!.config.erd_denomination,
-        decimals: testnet.decimals || 2,
+        decimals: configTestnet.decimals || 2,
+        fetchedFromNetworkConfig: true,
       };
-    }),
+      const configObject: ConfigType = {
+        ...config,
+        testnets: [newTestnet, ...internalConfig.testnets.filter((t) => t.id !== newTestnet.id)],
+      };
+      console.warn(11, 'why');
+
+      return configObject;
+    }
+  }
+  console.warn(11, 'not');
+  const newTestnet: TestnetType = {
+    ...configTestnet,
+    fetchedFromNetworkConfig: false,
   };
+
+  const configObject: ConfigType = {
+    ...config,
+    testnets: [newTestnet, ...internalConfig.testnets.filter((t) => t.id !== newTestnet.id)],
+  };
+
   return configObject;
 }

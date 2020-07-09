@@ -31,6 +31,7 @@ export default {
       faucet: false,
       nrOfShards: 5,
       versionNumber: 'v1.0.123',
+      fetchedFromNetworkConfig: true,
     },
   ],
 };

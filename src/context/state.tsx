@@ -33,6 +33,7 @@ export interface TestnetType {
   faucet: boolean;
   nrOfShards: number;
   versionNumber: string;
+  fetchedFromNetworkConfig?: boolean;
 }
 
 type AppIdType = 'wallet' | 'explorer' | 'studio' | 'docs' | string;
