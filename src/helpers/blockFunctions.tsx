@@ -41,7 +41,7 @@ interface SearchCallType {
 
 async function searchCall({ elasticUrl, timeout, shardId, epoch }: SearchCallType) {
   try {
-    const { data } = await axios.get(`${elasticUrl}/validators/_doc/${shardId}_${epoch}`, {
+    const { data } = await axios.get(`${elasticUrl}/validators/${shardId}_${epoch}`, {
       timeout,
     });
     return data;
@@ -65,26 +65,14 @@ async function getNextBlock({
 }: GetNextBlockType) {
   const nextBlockId = currentBlockId + 1;
   try {
-    const {
-      data: {
-        hits: { hits },
-      },
-    } = await axios.post(
-      `${elasticUrl}/blocks/_search`,
-      {
-        query: {
-          bool: {
-            must: [{ match: { nonce: nextBlockId } }, { match: { shardId: currentShardId } }],
-          },
-        },
-      },
-      { timeout }
-    );
+    const params = {
+      nonce: nextBlockId,
+      shardId: currentShardId,
+    };
 
-    if (hits[0]) {
-      return hits[0]._id;
-    }
-    return '';
+    const { data } = await axios.get(`${elasticUrl}/blocks`, { params, timeout });
+
+    return data[0] ? data[0].id : '';
   } catch {
     return '';
   }
@@ -92,8 +80,8 @@ async function getNextBlock({
 
 export async function getBlock({ elasticUrl, timeout, blockId = '' }: GetBlocksType) {
   try {
-    const { data } = await axios.get(`${elasticUrl}/blocks/_doc/${blockId}`, { timeout });
-    const block = { hash: data._id, ...data._source };
+    const { data } = await axios.get(`${elasticUrl}/blocks/${blockId}`, { timeout });
+    const block = { hash: data.id, ...data };
 
     const hit = await searchCall({
       elasticUrl,
@@ -102,7 +90,7 @@ export async function getBlock({ elasticUrl, timeout, blockId = '' }: GetBlocksT
       epoch: block.epoch,
     });
 
-    const consensusArray = Object.keys(hit).length ? hit._source.publicKeys : [];
+    const consensusArray = Object.keys(hit).length ? hit.publicKeys : [];
 
     const consensusItems = consensusArray.length
       ? block.validators.map((id: any) => consensusArray[id])

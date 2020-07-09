@@ -16,8 +16,8 @@ interface ParamsType {
 
 export async function getMiniBlock({ elasticUrl, timeout, miniBlockHash = '' }: GetMiniBlocksType) {
   try {
-    const { data } = await axios.get(`${elasticUrl}/miniblocks/_doc/${miniBlockHash}`, { timeout });
-    const miniBlock = { hash: data._id, ...data._source };
+    const { data } = await axios.get(`${elasticUrl}/miniblocks/${miniBlockHash}`, { timeout });
+    const miniBlock = { hash: data.id, ...data };
 
     return {
       miniBlock,
@@ -34,44 +34,15 @@ export async function getTransactions({
   miniBlockHash = '',
   size = 1,
 }: ParamsType) {
-  let data = [];
   try {
-    const {
-      data: { hits },
-    } = await axios.post(
-      `${elasticUrl}/transactions/_search`,
-      {
-        sort: { timestamp: { order: 'desc' } },
-        from: (size - 1) * 50,
-        size: 50,
-        _source: [
-          'miniBlockHash',
-          'nonce',
-          'round',
-          'value',
-          'receiver',
-          'sender',
-          'receiverShard',
-          'senderShard',
-          'gasPrice',
-          'gasLimit',
-          'gasUsed',
-          // 'data',
-          'signature',
-          'timestamp',
-          'status',
-          'scResults',
-        ],
-        query: {
-          bool: {
-            should: [{ match: { miniBlockHash } }],
-          },
-        },
-      },
-      { timeout }
-    );
+    const params = {
+      from: (size - 1) * 50,
+      size: 50,
+      miniBlockHash,
+    };
 
-    data = hits.hits.map((entry: any) => ({ hash: entry._id, ...entry._source }));
+    let { data } = await axios.get(`${elasticUrl}/transactions`, { params, timeout });
+    data = data.map((transaction: any) => ({ hash: transaction.id, ...transaction }));
 
     return {
       data,
@@ -79,7 +50,7 @@ export async function getTransactions({
     };
   } catch {
     return {
-      data,
+      data: [],
       success: false,
     };
   }
@@ -92,24 +63,14 @@ export async function getTotalTransactions({
   size = 1,
 }: ParamsType) {
   try {
-    const {
-      data: { count },
-    } = await axios.post(
-      `${elasticUrl}/transactions/_count`,
-      {
-        query: {
-          bool: {
-            should: [{ match: { miniBlockHash } }],
-          },
-        },
-      },
-      {
-        timeout,
-      }
-    );
+    const params = {
+      miniBlockHash,
+    };
+
+    const { data } = await axios.get(`${elasticUrl}/transactions/count`, { params, timeout });
 
     return {
-      count,
+      count: data,
       success: true,
     };
   } catch {

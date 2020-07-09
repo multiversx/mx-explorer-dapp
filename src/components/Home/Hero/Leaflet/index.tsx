@@ -27,13 +27,13 @@ const MapChart = () => {
 
   const fetchLeaders = () => {
     if (markers.length > 0) {
-      getLeaders({ timeout, explorerApi, shardsArray }).then(leadersArray => {
-        const publicKeys = leadersArray.map(l => l.proposer);
-        const leaderMarkers = markers.filter(marker => publicKeys.includes(marker.publicKey));
+      getLeaders({ timeout, explorerApi, shardsArray }).then((leadersArray) => {
+        const publicKeys = leadersArray.map((l) => l.proposer);
+        const leaderMarkers = markers.filter((marker) => publicKeys.includes(marker.publicKey));
 
         const offsets: Array<{ publicKey: string; name: string; offset: number }> = [];
-        leaderMarkers.forEach(leader => {
-          const occurences = offsets.map(offset => offset.name).filter(p => p === leader.name);
+        leaderMarkers.forEach((leader) => {
+          const occurences = offsets.map((offset) => offset.name).filter((p) => p === leader.name);
 
           offsets.push({
             name: leader.name,
@@ -42,21 +42,21 @@ const MapChart = () => {
           });
         });
 
-        const shardLeaders = leaderMarkers.map(leader => {
-          const { shard } = leadersArray.find(l => l.proposer === leader.publicKey) || {};
+        const shardLeaders = leaderMarkers.map((leader) => {
+          const { shard } = leadersArray.find((l) => l.proposer === leader.publicKey) || {};
           return {
             ...leader,
             shard,
-            offset: offsets.find(o => o.publicKey === leader.publicKey)!.offset || 0,
+            offset: offsets.find((o) => o.publicKey === leader.publicKey)!.offset || 0,
           };
         });
 
         if (setLeaders.length < 3) {
           const distinctShards = shardLeaders
-            .map(l => l.shard)
+            .map((l) => l.shard)
             .filter((value, index, self) => self.indexOf(value) === index);
-          setLeaders(currentLeaders => [
-            ...currentLeaders.filter(l => !distinctShards.includes(l.shard)),
+          setLeaders((currentLeaders) => [
+            ...currentLeaders.filter((l) => !distinctShards.includes(l.shard)),
             ...shardLeaders,
           ]);
         } else {

@@ -68,7 +68,7 @@ const Blocks: React.FC = () => {
 
   const fetchBlocks = () => {
     if (ref.current !== null) {
-      getBlocks({ elasticUrl, size, shardId, timeout, epochId }).then(data => {
+      getBlocks({ elasticUrl, size, shardId, timeout, epochId }).then((data) => {
         if (ref.current !== null) {
           if (data.blocksFetched) {
             setState(data);

@@ -36,14 +36,16 @@ export async function getStats({
 }: GetStatsType) {
   const data = {};
   try {
-    const { data } = await axios.get(`${elasticUrl}/tps/_doc/meta`, {
+    const { data } = await axios.get(`${elasticUrl}/tps/meta`, {
       timeout,
       ...(cancelToken ? { cancelToken: cancelToken.token } : {}),
     });
+    let dataValid = true;
 
-    const source: InferType<typeof schema> = data._source;
+    const source: InferType<typeof schema> = data;
 
     schema.validate(source, { strict: true }).catch(({ errors }) => {
+      dataValid = false;
       console.error('Meta _source format errors: ', errors);
     });
 
@@ -57,7 +59,7 @@ export async function getStats({
     const roundsPassed = message.status.erd_rounds_passed_in_current_epoch;
     const roundsPerEpoch = message.status.erd_rounds_per_epoch;
 
-    if (!data.found) {
+    if (!dataValid) {
       return {
         data: { ...data, epoch, roundsPassed, roundsPerEpoch },
         success: false,

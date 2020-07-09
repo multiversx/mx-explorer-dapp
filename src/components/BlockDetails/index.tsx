@@ -40,7 +40,7 @@ const BlockDetails: React.FC = () => {
     if (blockId) {
       blockFunctions
         .getBlock({ elasticUrl, blockId, timeout })
-        .then(data => ref.current !== null && setState(data));
+        .then((data) => ref.current !== null && setState(data));
     }
   }, [elasticUrl, blockId, timeout]); // run the operation only once since the parameter does not change
 
@@ -238,7 +238,7 @@ const BlockDetails: React.FC = () => {
                             <span className="text-muted">N/A</span>
                           ) : (
                             <>
-                              {block.miniBlocksHashes.map(item => (
+                              {block.miniBlocksHashes.map((item) => (
                                 <TestnetLink className="hash" key={item} to={`/miniblocks/${item}`}>
                                   {truncate(item, 100)}
                                 </TestnetLink>

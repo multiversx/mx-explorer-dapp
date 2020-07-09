@@ -7,30 +7,15 @@ interface GetBlocksType {
 
 export async function getBlocks({ elasticUrl, timeout }: GetBlocksType) {
   try {
-    const {
-      data: {
-        hits: { hits },
-      },
-    } = await axios.post(
-      `${elasticUrl}/blocks/_search`,
-      {
-        query: {
-          match_all: {},
-        },
-        sort: {
-          timestamp: {
-            order: 'desc',
-          },
-        },
-        size: 20,
-      },
-      { timeout }
-    );
+    const params = {
+      size: 25,
+    };
 
-    const data = hits.map((block: any) => ({ hash: block._id, ...block._source }));
+    const { data } = await axios.get(`${elasticUrl}/blocks`, { params, timeout });
+    const blocks = data.map((block: any) => ({ hash: block.id, ...block }));
 
     return {
-      data,
+      data: blocks,
       blocksFetched: data.length > 0,
     };
   } catch {
@@ -43,50 +28,18 @@ export async function getBlocks({ elasticUrl, timeout }: GetBlocksType) {
 
 export async function getTransactions({ elasticUrl, timeout }: GetBlocksType) {
   try {
-    const {
-      data: {
-        hits: { hits },
-      },
-    } = await axios.post(
-      `${elasticUrl}/transactions/_search`,
-      {
-        _source: [
-          'miniBlockHash',
-          'nonce',
-          'round',
-          'value',
-          'receiver',
-          'sender',
-          'receiverShard',
-          'senderShard',
-          'gasPrice',
-          'gasLimit',
-          'gasUsed',
-          // 'data',
-          'signature',
-          'timestamp',
-          'status',
-          'scResults',
-        ],
-        query: {
-          match_all: {},
-        },
-        sort: {
-          timestamp: {
-            order: 'desc',
-          },
-        },
-        size: 20,
-      },
-      { timeout }
-    );
-    const data = hits.map((transaction: any) => ({
-      hash: transaction._id,
-      ...transaction._source,
+    const params = {
+      size: 20,
+    };
+    const { data } = await axios.get(`${elasticUrl}/transactions`, { params, timeout });
+
+    const transactions = data.map((transaction: any) => ({
+      hash: transaction.id,
+      ...transaction,
     }));
 
     return {
-      data,
+      data: transactions,
       transactionsFetched: data.length > 0,
     };
   } catch (e) {

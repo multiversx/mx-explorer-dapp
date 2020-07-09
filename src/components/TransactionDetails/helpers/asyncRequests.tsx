@@ -8,12 +8,10 @@ interface GetTransactionsType {
 }
 
 export async function getTransaction({ elasticUrl, transactionId, timeout }: GetTransactionsType) {
-  const {
-    data: { _id, _source },
-  } = await axios.get(`${elasticUrl}/transactions/_doc/${transactionId}`, { timeout });
+  const { data } = await axios.get(`${elasticUrl}/transactions/${transactionId}`, { timeout });
 
   return {
-    data: { hash: _id, ..._source },
+    data: { hash: data.id, ...data },
     transactionFetched: true,
   };
 }

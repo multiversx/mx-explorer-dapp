@@ -10,39 +10,21 @@ interface ParamsType {
   timeout: number;
 }
 
-const setAddressQuery = (addressId: string | undefined) =>
+const getAddressParams = (addressId: string | undefined) =>
   addressId
     ? {
-        query: {
-          bool: {
-            should: [{ match: { sender: addressId } }, { match: { receiver: addressId } }],
-          },
-        },
+        sender: addressId,
+        receiver: addressId,
       }
     : {};
 
-const shardQuery = (
+const getShardTypeParams = (
   shardId: number | undefined,
-  size = 1,
   shardType: 'senderShard' | 'receiverShard' | undefined
 ) =>
   shardId && shardType
     ? {
-        query: { bool: { must: [{ match: { [shardType]: shardId } }] } },
-        sort: { timestamp: { order: 'desc' } },
-        from: (size - 1) * 25,
-        size: 25,
-      }
-    : {};
-
-const shardQueryCount = (
-  shardId: number | undefined,
-  size = 1,
-  shardType: 'senderShard' | 'receiverShard' | undefined
-) =>
-  shardId && shardType
-    ? {
-        query: { bool: { must: [{ match: { [shardType]: shardId } }] } },
+        [shardType]: shardId,
       }
     : {};
 
@@ -54,44 +36,17 @@ export async function getTransactions({
   shardType,
   timeout,
 }: ParamsType) {
-  let data = [];
-  try {
-    const {
-      data: { hits },
-    } = await axios.post(
-      `${elasticUrl}/transactions/_search`,
-      {
-        sort: { timestamp: { order: 'desc' } },
-        from: (size - 1) * 50,
-        size: 50,
-        ...{
-          _source: [
-            'miniBlockHash',
-            'nonce',
-            'round',
-            'value',
-            'receiver',
-            'sender',
-            'receiverShard',
-            'senderShard',
-            'gasPrice',
-            'gasLimit',
-            'gasUsed',
-            // 'data',
-            'signature',
-            'timestamp',
-            'status',
-            'scResults',
-          ],
-          query: { match_all: {} },
-          ...setAddressQuery(addressId),
-          ...shardQuery(shardId, size, shardType),
-        },
-      },
-      { timeout }
-    );
+  const params = {
+    from: (size - 1) * 50,
+    size: 50,
+    ...getAddressParams(addressId),
+    ...getShardTypeParams(shardId, shardType),
+  };
 
-    data = hits.hits.map((entry: any) => ({ hash: entry._id, ...entry._source }));
+  try {
+    let { data } = await axios.get(`${elasticUrl}/transactions`, { params, timeout });
+
+    data = data.map((entry: any) => ({ hash: entry.id, ...entry }));
 
     return {
       data,
@@ -99,7 +54,7 @@ export async function getTransactions({
     };
   } catch {
     return {
-      data,
+      data: [],
       success: false,
     };
   }
@@ -114,24 +69,15 @@ export async function getTotalTransactions({
   timeout,
 }: ParamsType) {
   try {
-    const {
-      data: { count },
-    } = await axios.post(
-      `${elasticUrl}/transactions/_count`,
-      {
-        ...{
-          query: { match_all: {} },
-          ...setAddressQuery(addressId),
-          ...shardQueryCount(shardId, size, shardType),
-        },
-      },
-      {
-        timeout,
-      }
-    );
+    const params = {
+      ...getAddressParams(addressId),
+      ...getShardTypeParams(shardId, shardType),
+    };
+
+    const { data } = await axios.get(`${elasticUrl}/transactions/count`, { params, timeout });
 
     return {
-      count,
+      count: data,
       success: true,
     };
   } catch {

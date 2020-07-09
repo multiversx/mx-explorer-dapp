@@ -8,8 +8,8 @@ interface ElasticParamsType {
 
 export async function isBlock({ elasticUrl, hash, timeout }: ElasticParamsType) {
   try {
-    const { data } = await axios.get(`${elasticUrl}/blocks/_doc/${hash}`, { timeout });
-    return data.found;
+    const { data } = await axios.get(`${elasticUrl}/blocks/${hash}`, { timeout });
+    return data ? true : false;
   } catch (e) {
     return false;
   }
@@ -32,9 +32,9 @@ export async function isAddress({ nodeUrl, hash, timeout }: NodeParamsType) {
 
 export async function isTransaction({ elasticUrl, hash, timeout }: ElasticParamsType) {
   try {
-    const { data } = await axios.get(`${elasticUrl}/transactions/_doc/${hash}`, { timeout });
+    const { data } = await axios.get(`${elasticUrl}/transactions/${hash}`, { timeout });
 
-    return data.found;
+    return data ? true : false;
   } catch (e) {
     return false;
   }

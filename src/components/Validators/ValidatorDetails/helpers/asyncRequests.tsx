@@ -13,11 +13,10 @@ interface GetValidatorType {
   timeout: number;
 }
 
-function getBlocks(response: any) {
-  const { hits } = response.data;
-  const blocks: BlockType[] = hits.hits.map((block: any) => ({
-    hash: block._id,
-    ...block._source,
+function getBlocks(data: any) {
+  const blocks: BlockType[] = data.map((block: any) => ({
+    hash: block.id,
+    ...block,
   }));
 
   let min = blocks[0].nonce;
@@ -51,44 +50,17 @@ export async function searchBlocks({
   epoch,
 }: validatorFunctions.GetRoundsType) {
   try {
-    const response = await axios.post(
-      `${elasticUrl}/blocks/_search`,
-      {
-        query: {
-          bool: {
-            must: [
-              {
-                match: {
-                  proposer: signersIndex,
-                },
-              },
-              {
-                match: {
-                  shardId: shardNumber,
-                },
-              },
-              {
-                match: {
-                  epoch,
-                },
-              },
-            ],
-          },
-        },
-        sort: {
-          timestamp: {
-            order: 'desc',
-          },
-        },
-        from: 0,
-        size: 25,
-      },
-      {
-        timeout,
-      }
-    );
+    const params = {
+      from: 0,
+      size: 25,
+      proposer: signersIndex,
+      shardId: shardNumber,
+      epoch,
+    };
 
-    const { blocks, startBlockNr, endBlockNr } = getBlocks(response);
+    const { data } = await axios.get(`${elasticUrl}/blocks`, { params, timeout });
+    const { blocks, startBlockNr, endBlockNr } = getBlocks(data);
+
     return {
       blocks,
       startBlockNr,
@@ -118,7 +90,6 @@ export async function getValidator({
 }: GetValidatorType) {
   try {
     const { shardId, shardNumber } = currentValidator;
-
     const { versionNumber, isActive, nodeDisplayName } = currentValidator;
 
     const {
@@ -142,10 +113,8 @@ export async function getValidator({
       });
 
       const {
-        data: {
-          _source: { publicKeys: consensusArray },
-        },
-      } = await axios.get(`${elasticUrl}/validators/_doc/${shardNumber}_${epoch}`, { timeout });
+        data: { publicKeys: consensusArray },
+      } = await axios.get(`${elasticUrl}/validators/${shardNumber}_${epoch}`, { timeout });
 
       const signersIndex = consensusArray.indexOf(publicKey);
 

@@ -114,53 +114,20 @@ export async function getRounds({
   roundAtEpochStart: round,
   size = 100,
 }: GetRoundsType): Promise<GetRoundsReturnType> {
-  try {
-    const resp = await axios.post(
-      `${elasticUrl}/rounds/_search`,
-      {
-        query: {
-          bool: {
-            must: [
-              {
-                match: {
-                  shardId: shardNumber,
-                },
-              },
-              ...(signersIndex !== undefined
-                ? [
-                    {
-                      match: {
-                        signersIndexes: signersIndex,
-                      },
-                    },
-                  ]
-                : []),
-              {
-                range: {
-                  round: {
-                    gte: round,
-                  },
-                },
-              },
-            ],
-          },
-        },
-        sort: {
-          timestamp: {
-            order: 'desc',
-          },
-        },
-        from: 0,
-        size,
-      },
-      {
-        timeout,
-      }
-    );
+  const params = {
+    from: 0,
+    size,
+    round,
+    shardId: shardNumber,
+    signersIndexes: signersIndex,
+  };
 
-    const rounds = resp.data.hits.hits.map((round: any) => ({
-      key: round._id,
-      value: round._source.blockWasProposed,
+  try {
+    const { data } = await axios.get(`${elasticUrl}/rounds`, { params, timeout });
+
+    const rounds = data.map((round: any) => ({
+      key: round.id,
+      value: round.blockWasProposed,
     }));
     return {
       rounds,

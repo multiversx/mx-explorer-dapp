@@ -8,28 +8,14 @@ export interface GetBlocksParamsType {
   timeout: number;
 }
 
-const getShardsOrEpochQuery = (shardId: number | undefined, epoch: number | undefined) => {
+const getShardOrEpochParam = (shardId: number | undefined, epoch: number | undefined) => {
   switch (true) {
     case shardId !== undefined:
-      return {
-        query: {
-          bool: {
-            must: [{ match: { shardId } }],
-          },
-        },
-      };
+      return { shardId };
     case epoch !== undefined:
-      return {
-        query: {
-          bool: {
-            must: [{ match: { epoch } }],
-          },
-        },
-      };
+      return { epoch };
     default:
-      return {
-        query: { match_all: {} },
-      };
+      return {};
   }
 };
 
@@ -41,21 +27,19 @@ export async function getBlocks({
   epochId,
 }: GetBlocksParamsType) {
   try {
-    const query = {
-      sort: { timestamp: { order: 'desc' } },
+    const params = {
       from: (size - 1) * 25,
       size: 25,
-      ...getShardsOrEpochQuery(shardId, epochId),
+      ...getShardOrEpochParam(shardId, epochId),
     };
 
-    const { data } = await axios.post(`${elasticUrl}/blocks/_search`, query, { timeout });
-
-    const { hits } = data;
-    const blocks = hits.hits.map((block: any) => ({ hash: block._id, ...block._source }));
+    const { data } = await axios.get(`${elasticUrl}/blocks`, { params, timeout });
+    const blocks = data.map((block: any) => ({ hash: block.id, ...block }));
 
     let min = blocks[0].nonce;
     let max = min;
     for (const block in blocks) {
+      // tslint:disable-line
       if (blocks[block].nonce < min) {
         min = blocks[block].nonce;
       }
@@ -90,18 +74,14 @@ export async function getTotalBlocks({
   epochId,
 }: GetBlocksParamsType) {
   try {
-    const query = {
-      ...getShardsOrEpochQuery(shardId, epochId),
+    const params = {
+      ...getShardOrEpochParam(shardId, epochId),
     };
 
-    const {
-      data: { count },
-    } = await axios.post(`${elasticUrl}/blocks/_count`, query, {
-      timeout,
-    });
+    const { data } = await axios.get(`${elasticUrl}/blocks/count`, { params, timeout });
 
     return {
-      count,
+      count: data,
       success: true,
     };
   } catch {
