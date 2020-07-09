@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useGlobalState } from 'context';
 import { dateFormatted, trimHash } from 'helpers';
-import { ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
+import { ShardSpan, TestnetLink, TimeAgo, TooltipWithCopy } from 'sharedComponents';
 import { BlockType } from './../Blocks';
 import { getBlocks } from './helpers/asyncRequests';
 
@@ -73,9 +73,11 @@ const LatestBlocks: React.FC = () => {
                       </div>
                       <div className="col-6">
                         Hash&nbsp;
+                        {/* <TooltipWithCopy textToCopy={block.hash}> */}
                         <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockHashLink${i}`}>
                           {trimHash(block.hash)}
                         </TestnetLink>
+                        {/* </TooltipWithCopy> */}
                         <br />
                         {block.txCount} txns
                       </div>
