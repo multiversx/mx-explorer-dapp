@@ -6,10 +6,12 @@ import TransactionDetail from './TransactionDetail';
 export interface PendingTransactionType {
   epoch: number;
   receiver: string;
+  sender: string;
   round: number;
   type: string;
   value: string;
   hash: string;
+  status: string;
 }
 
 const PendingTransaction = ({ transaction }: { transaction: PendingTransactionType }) => {
@@ -22,7 +24,11 @@ const PendingTransaction = ({ transaction }: { transaction: PendingTransactionTy
         </TransactionDetail>
 
         <TransactionDetail label="Status">
-          <TransactionStatus status="Pending" />
+          {transaction.status === 'executed' ? (
+            <TransactionStatus status="Success" />
+          ) : (
+            <TransactionStatus status="Pending" />
+          )}
         </TransactionDetail>
 
         <TransactionDetail label="Timestamp">
@@ -34,7 +40,18 @@ const PendingTransaction = ({ transaction }: { transaction: PendingTransactionTy
           <span className="text-muted">N/A</span>
         </TransactionDetail>
 
-        <TransactionDetail label="From">Metachain</TransactionDetail>
+        <TransactionDetail label="From">
+          {Boolean(transaction.sender) ? (
+            <>
+              <ScAddressIcon initiator={transaction.sender} />
+              <TestnetLink to={`/address/${transaction.sender}`}>
+                {transaction.receiver}
+              </TestnetLink>
+            </>
+          ) : (
+            <>Metachain</>
+          )}
+        </TransactionDetail>
 
         <TransactionDetail label="To">
           <ScAddressIcon initiator={transaction.receiver} />
