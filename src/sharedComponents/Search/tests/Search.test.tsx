@@ -24,7 +24,7 @@ const beforeAll = (fail = ['']) => {
   mockGet.mockImplementation((url: string): any => {
     switch (true) {
       // --- page load ---
-      case url.includes('/tps/_doc/meta'):
+      case url.includes('/tps/meta'):
         return Promise.resolve({ data: meta });
       case url.includes(`/node/heartbeatstatus`):
         return Promise.resolve({ data: heartbeatstatus });
@@ -33,7 +33,7 @@ const beforeAll = (fail = ['']) => {
       case url.endsWith('/validators'):
         return Promise.resolve({ data: validators });
       // --- page load ---
-      case url.includes('validators/_doc'):
+      case url.includes('validators'):
         return Promise.resolve({ data: validatorsdoc });
       case url.includes('network/status'):
         return Promise.resolve({ data: epoch });
@@ -41,10 +41,9 @@ const beforeAll = (fail = ['']) => {
         return Promise.resolve({ data: ratings });
       case url.includes('/address/') && !fail.includes('address'):
         return Promise.resolve({ data: addressResponse });
-      case url.includes('/blocks/_doc') && !fail.includes('blocks'):
+      case url.includes('/blocks') && !fail.includes('blocks'):
         return Promise.resolve({ data: block });
-      case url.includes('/transactions/_search') && !fail.includes('transactions'):
-      case url.includes('/transactions/_doc') && !fail.includes('transactions'):
+      case url.includes('/transactions') && !fail.includes('transactions'):
         return Promise.resolve({ data: transactionsResponse });
       default:
         return Promise.resolve(new Error('error'));

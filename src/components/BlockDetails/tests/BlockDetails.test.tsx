@@ -10,7 +10,6 @@ import {
 } from 'utils/rawData';
 
 const beforeAll = (success = true) => {
-  const mockPost = jest.spyOn(axios, 'post');
   const mockGet = jest.spyOn(axios, 'get');
   mockGet.mockImplementation((url: string): any => {
     switch (true) {
@@ -24,16 +23,17 @@ const beforeAll = (success = true) => {
       case url.endsWith('/validators'):
         return Promise.resolve({ data: validators });
       // --- page load ---
-      case url.includes(`/validators/_doc`):
+      case url.includes(`/validators`):
         return Promise.resolve({ data: validatorsdoc });
-      case url.includes(`/blocks/_doc/${doc._id}`) && success:
+      case url.includes(`/blocks/${doc.id}`) && success:
         return Promise.resolve({ data: doc });
+      case url.includes('/blocks'):
+        return Promise.resolve({ data: blocks });
     }
   });
-  mockPost.mockReturnValueOnce(Promise.resolve({ data: blocks }));
 
   return renderWithRouter({
-    route: `/blocks/${doc._id}`,
+    route: `/blocks/${doc.id}`,
     optionalConfig,
   });
 };
@@ -45,12 +45,10 @@ describe('Block Details', () => {
     await wait(async () => {
       expect(render.queryByTestId('title')!.innerHTML).toBe('Block Details');
     });
-    expect(render.getByText(doc._source.nonce.toString())).toBeInTheDocument();
+    expect(render.getByText(doc.nonce.toString())).toBeInTheDocument();
   });
   test('Block Details page loading state', async () => {
-    const render = renderWithRouter({
-      route: `/blocks/${doc._id}`,
-    });
+    const render = beforeAll();
 
     const loader = await render.findByTestId('loader');
     expect(loader.innerHTML).toBeDefined();

@@ -1,18 +1,42 @@
 import axios from 'axios';
-import { fireEvent, renderWithRouter, wait, meta } from 'utils/test-utils';
-import { blocks as data } from '../../../utils/rawData';
+import {
+  fireEvent,
+  renderWithRouter,
+  wait,
+  meta,
+  config as optionalConfig,
+} from 'utils/test-utils';
+import { blocks } from '../../../utils/rawData';
+import { heartbeatstatus, validators, statistics } from 'utils/rawData';
 
-const count = { count: 49932, _shards: { total: 5, successful: 5, skipped: 0, failed: 0 } };
-
-const beforeAll = () => {
-  const mockPost = jest.spyOn(axios, 'post');
+export const beforeAll = (blocksError = false) => {
   const mockGet = jest.spyOn(axios, 'get');
-  mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
-  mockPost.mockReturnValueOnce(Promise.resolve({ data }));
-  mockPost.mockReturnValueOnce(Promise.resolve({ data: count }));
+
+  mockGet.mockImplementation((url: string): any => {
+    switch (true) {
+      // --- page load ---
+      case url.includes('/tps/meta'):
+        return Promise.resolve({ data: meta });
+      case url.includes(`/node/heartbeatstatus`):
+        return Promise.resolve({ data: heartbeatstatus });
+      case url.includes('/validator/statistics'):
+        return Promise.resolve({ data: statistics });
+      case url.endsWith('/validators'):
+        return Promise.resolve({ data: validators });
+      case url.includes('/blokcs/count'):
+        return Promise.resolve({ data: 239890 });
+      case url.includes('/blocks'):
+        if (blocksError) {
+          return Promise.resolve(new Error('blocks error'));
+        }
+        return Promise.resolve({ data: blocks });
+      // --- page load ---
+    }
+  });
 
   return renderWithRouter({
     route: '/blocks',
+    optionalConfig,
   });
 };
 
@@ -28,24 +52,16 @@ describe('Blocks', () => {
       expect(table.childElementCount).toBe(25);
     });
   });
+
   test('Blocks page loading state', async () => {
-    const render = renderWithRouter({
-      route: '/blocks',
-    });
+    const render = beforeAll();
 
     const loader = await render.findByTestId('loader');
     expect(loader.innerHTML).toBeDefined();
   });
-  test('Blocks page failed state', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    const mockGet = jest.spyOn(axios, 'get');
-    mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
-    mockPost.mockRejectedValueOnce(new Error('the error'));
-    mockPost.mockRejectedValueOnce(new Error('the error'));
 
-    const render = renderWithRouter({
-      route: '/blocks',
-    });
+  test('Blocks page failed state', async () => {
+    const render = beforeAll(true);
 
     const failedState = await render.findByText('No blocks found');
     expect(failedState.innerHTML).toBeDefined();
@@ -57,7 +73,7 @@ describe('Blocks Page Links', () => {
     const render = beforeAll();
 
     const link = await render.findByTestId('blockLink0');
-    expect(link.innerHTML).toBe('9111');
+    expect(link.innerHTML).toBe('82768');
 
     fireEvent.click(link);
     await wait(async () => {
@@ -69,7 +85,7 @@ describe('Blocks Page Links', () => {
     const render = beforeAll();
 
     const link = await render.findByTestId('blockShardLink0');
-    expect(link.textContent).toBe('Shard 1');
+    expect(link.textContent).toBe('Shard 0');
 
     fireEvent.click(link);
     await wait(async () => {
@@ -81,7 +97,7 @@ describe('Blocks Page Links', () => {
     const render = beforeAll();
 
     const link = await render.findByTestId('blockHashLink0');
-    expect(link.textContent).toBe('d075d4fef6...80c35e7097');
+    expect(link.textContent).toBe('7d6df53015...fcf9990698');
 
     fireEvent.click(link);
     await wait(async () => {

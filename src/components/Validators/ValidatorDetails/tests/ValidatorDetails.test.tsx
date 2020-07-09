@@ -5,25 +5,40 @@ import {
   wait,
   config as optionalConfig,
   waitForElement,
+  meta,
 } from 'utils/test-utils';
-import { blocks, heartbeatstatus } from 'utils/rawData';
+import { blocks, heartbeatstatus, statistics, validators, validatorsdoc } from 'utils/rawData';
 import rounds from './rawData/rounds';
-import { mockGet } from './../../tests/Validators.test';
+import ratings from 'sharedComponents/Search/tests/rawData/ratings';
 
-export const beforeAll = () => {
-  mockGet();
-  const mockPost = jest.spyOn(axios, 'post');
-  mockPost.mockImplementation((url: string): any => {
+export const beforeAll = (route = `/validators/nodes/${heartbeatstatus.message[1].publicKey}`) => {
+  const mockGet = jest.spyOn(axios, 'get');
+
+  mockGet.mockImplementation((url: string): any => {
     switch (true) {
-      case url.includes('/rounds/_search'):
+      // --- page load ---
+      case url.includes('/tps/meta'):
+        return Promise.resolve({ data: meta });
+      case url.includes(`/node/heartbeatstatus`):
+        return Promise.resolve({ data: heartbeatstatus });
+      case url.includes('/validator/statistics'):
+        return Promise.resolve({ data: statistics });
+      case url.endsWith('/validators'):
+        return Promise.resolve({ data: validators });
+      case url.includes('/validators'):
+        return Promise.resolve({ data: validatorsdoc });
+      // --- page load ---
+      case url.includes('/ratingshistory'):
+        return Promise.resolve({ data: ratings });
+      case url.includes('/rounds'):
         return Promise.resolve({ data: rounds });
-      case url.includes('/blocks/_search'):
+      case url.includes('/blocks'):
         return Promise.resolve({ data: blocks });
     }
   });
 
   return renderWithRouter({
-    route: `/validators/nodes/${heartbeatstatus.message[0].publicKey}`,
+    route,
     optionalConfig,
   });
 };
@@ -38,10 +53,9 @@ describe('Node Information', () => {
     });
 
     const versionNumber = await render.findByTestId('versionNumber');
+    expect(versionNumber.innerHTML).toBe('v1.0.136-0-gf681ca167/go1.13.5/linux-amd64/9f4807ec70');
 
-    expect(versionNumber.innerHTML).toBe('v1.0.77-0-g9d8013a8-dirty/go1.13/linux-amd64');
-
-    expect(render.getByTestId('progresUpTimeBar').id).toBe('100.00% (19 hours)100');
+    expect(render.getByTestId('progresUpTimeBar').id).toBe('100.00% (7 days)100');
     expect(render.getByTestId('progresDownTimeBar').id).toBe('0.00% (a few seconds)0');
 
     await wait(async () => {
@@ -54,20 +68,14 @@ describe('Node Information', () => {
   });
 
   test('Node Information loading state', async () => {
-    const render = renderWithRouter({
-      route: `/validators/nodes/${heartbeatstatus.message[0].publicKey}`,
-      optionalConfig,
-    });
+    const render = beforeAll();
     const loader = await waitForElement(() => render.queryByTestId('loader'));
     expect(loader).toBeDefined();
   });
 
   test('Node Information failed state', async () => {
-    mockGet();
-    const render = renderWithRouter({
-      route: `/validators/nodes/123`,
-      optionalConfig,
-    });
+    const render = beforeAll(`/validators/nodes/123`);
+
     await wait(async () => {
       expect(render.getByTestId('errorScreen')).toBeDefined();
     });
@@ -80,7 +88,7 @@ describe('Validator Details links', () => {
 
     const shardLink = await render.findByTestId('shardLink');
 
-    expect(shardLink.textContent).toBe('Shard 3');
+    expect(shardLink.textContent).toBe('Shard 0');
 
     fireEvent.click(shardLink);
 

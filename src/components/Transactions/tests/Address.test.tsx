@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
-import { renderWithRouter, wait, meta } from '../../../utils/test-utils';
-import search from './_search';
+import { renderWithRouter, wait, meta, config as optionalConfig } from '../../../utils/test-utils';
+import { heartbeatstatus, validators, transactionsSearch, statistics } from 'utils/rawData';
 
 const address = {
   account: {
@@ -14,20 +14,40 @@ const address = {
   },
 };
 
-const count = { count: 6107, _shards: { total: 5, successful: 5, skipped: 0, failed: 0 } };
+export const beforeAll = (route = '', transactionsError = false) => {
+  const mockGet = jest.spyOn(axios, 'get');
+
+  mockGet.mockImplementation((url: string): any => {
+    switch (true) {
+      // --- page load ---
+      case url.includes('/tps/meta'):
+        return Promise.resolve({ data: meta });
+      case url.includes(`/node/heartbeatstatus`):
+        return Promise.resolve({ data: heartbeatstatus });
+      case url.includes('/validator/statistics'):
+        return Promise.resolve({ data: statistics });
+      // --- page load ---
+      case url.endsWith('/validators'):
+        return Promise.resolve({ data: validators });
+      case url.includes('/transactions/count'):
+        return Promise.resolve({ data: 14253408 });
+      case url.includes('/transactions'):
+        if (transactionsError) {
+          return Promise.resolve(new Error('transaction error'));
+        }
+        return Promise.resolve({ data: transactionsSearch });
+    }
+  });
+
+  return renderWithRouter({
+    route,
+    optionalConfig,
+  });
+};
 
 describe('Address', () => {
   test('Address page is displaying', async () => {
-    const mockGet = jest.spyOn(axios, 'get');
-    const mockPost = jest.spyOn(axios, 'post');
-    mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
-    mockGet.mockReturnValueOnce(Promise.resolve({ data: address }));
-    mockPost.mockReturnValueOnce(Promise.resolve({ data: search }));
-    mockPost.mockReturnValueOnce(Promise.resolve({ data: count }));
-
-    const render = renderWithRouter({
-      route: `/address/${address.account.address}`,
-    });
+    const render = beforeAll(`/address/${address.account.address}`);
     expect(document.title).toEqual('Address Details • Elrond Explorer');
 
     await wait(async () => {
@@ -37,29 +57,13 @@ describe('Address', () => {
     });
   });
   test('Address page loading state', async () => {
-    const mockGet = jest.spyOn(axios, 'get');
-    const mockPost = jest.spyOn(axios, 'post');
-    mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
-    mockPost.mockReturnValueOnce(Promise.resolve({ data: search }));
-    mockPost.mockReturnValueOnce(Promise.resolve({ data: count }));
-
-    const render = renderWithRouter({
-      route: `/address/${address.account.address}`,
-    });
-
+    const render = beforeAll(`/address/${address.account.address}`);
     const loader = await render.findByTestId('loader');
     expect(loader).toBeDefined();
   });
 
   test('Transactions errorScreen showing', async () => {
-    const mockGet = jest.spyOn(axios, 'get');
-    mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockRejectedValue(new Error('transaction error'));
-
-    const render = renderWithRouter({
-      route: '/transactions/page/1',
-    });
+    const render = beforeAll('/transactions/', true);
 
     const errorScreen = await render.findByTestId('errorScreen');
     expect(errorScreen).toBeInTheDocument();

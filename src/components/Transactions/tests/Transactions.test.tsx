@@ -1,93 +1,105 @@
 import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
-import { fireEvent, renderWithRouter, wait, waitForElement, meta } from 'utils/test-utils';
-import search from './_search';
-import searchPage2 from './_searchPage2';
+import {
+  renderWithRouter,
+  wait,
+  meta,
+  config as optionalConfig,
+  waitForElement,
+  fireEvent,
+  act,
+} from '../../../utils/test-utils';
+import {
+  heartbeatstatus,
+  validators,
+  transactions,
+  transactionsSearch,
+  statistics,
+} from 'utils/rawData';
 
-const beforeAll = (times = 1) => {
+export const beforeAll = (route = '', transactionsError = false) => {
   const mockGet = jest.spyOn(axios, 'get');
-  mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
-  const mockPost = jest.spyOn(axios, 'post');
-  mockPost.mockReturnValueOnce(Promise.resolve({ data: search }));
-  mockPost.mockReturnValue(
-    Promise.resolve({
-      data: { count: 6538186, _shards: { total: 1, successful: 1, skipped: 0, failed: 0 } },
-    })
-  );
-  const render = renderWithRouter({
-    route: '/transactions',
+
+  mockGet.mockImplementation((url: string): any => {
+    switch (true) {
+      // --- page load ---
+      case url.includes('/tps/meta'):
+        return Promise.resolve({ data: meta });
+      case url.includes(`/node/heartbeatstatus`):
+        return Promise.resolve({ data: heartbeatstatus });
+      case url.includes('/validator/statistics'):
+        return Promise.resolve({ data: statistics });
+      // --- page load ---
+      case url.endsWith('/validators'):
+        return Promise.resolve({ data: validators });
+      case url.includes('/transactions/count'):
+        return Promise.resolve({ data: 14253408 });
+      case url.endsWith('/transactions'):
+        if (transactionsError) {
+          return Promise.resolve(new Error('transaction error'));
+        }
+        return Promise.resolve({ data: transactionsSearch });
+      case url.includes('/transactions'):
+        if (transactionsError) {
+          return Promise.resolve(new Error('transaction error'));
+        }
+        return Promise.resolve({ data: transactions });
+    }
   });
-  // expect(mockGet).toHaveBeenCalledTimes(times);
-  // expect(mockGet).toHaveBeenLastCalledWith('https://elastic-aws.elrond.com/tps/_doc/meta', {
-  //   timeout: 3000,
-  // });
-  return render;
+
+  return renderWithRouter({
+    route,
+    optionalConfig,
+  });
 };
 
 describe('Transactions Page', () => {
-  test('Transactions page is displaying', () => {
-    const { queryByTestId } = renderWithRouter({
-      route: '/transactions/page/1',
-    });
-    expect(queryByTestId('title')!.innerHTML).toBe('Transactions');
+  test('Transactions page is displaying', async () => {
+    const render = beforeAll('/transactions');
+    const title = await waitForElement(() => render.queryByTestId('title')!.innerHTML);
+    expect(title).toBe('Transactions');
   });
 
   test('Transactions data is displayed correctly', async () => {
-    const render = beforeAll();
+    const render = beforeAll('/transactions');
     const pageInterval = await waitForElement(() => render.queryByTestId('pageInterval'));
     expect(pageInterval!.innerHTML).toBe('1-50');
 
     const table = render.queryByTestId('transactionsTable');
     const numberOfRows = table!.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-    expect(numberOfRows).toHaveLength(2);
+    expect(numberOfRows).toHaveLength(50);
   });
 
   test('Transactions pager working', async () => {
-    const mockGet = jest.spyOn(axios, 'get');
-    mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockReturnValueOnce(Promise.resolve({ data: search }));
-    mockPost.mockReturnValueOnce(
-      Promise.resolve({
-        data: { count: 6538186, _shards: { total: 1, successful: 1, skipped: 0, failed: 0 } },
-      })
-    );
-    mockPost.mockReturnValueOnce(Promise.resolve({ data: searchPage2 }));
-    mockPost.mockReturnValueOnce(
-      Promise.resolve({
-        data: { count: 6538186, _shards: { total: 1, successful: 1, skipped: 0, failed: 0 } },
-      })
-    );
+    const render = beforeAll('/transactions/page/1');
 
-    const { queryByTestId } = renderWithRouter({
-      route: '/transactions/page/1',
-    });
-
-    const nextButton = await waitForElement(() => queryByTestId('disabledNextPageButton'));
+    const nextButton = await waitForElement(() => render.queryByTestId('disabledNextPageButton'));
     expect(nextButton).toBeInTheDocument();
 
-    const pageInterval = await waitForElement(() => queryByTestId('pageInterval'));
+    const pageInterval = await waitForElement(() => render.queryByTestId('pageInterval'));
     expect(pageInterval!.innerHTML).toBe('1-50');
   });
 });
 
 describe('Transactions Page Links', () => {
   test('Transaction link', async () => {
-    const render = beforeAll();
+    const render = beforeAll('/transactions');
 
     const links = await render.findAllByTestId('transactionLink');
-    expect(links[0].textContent).toBe('86a1ecbfbd...9422b69c0f');
+    expect(links[0].textContent).toBe('72d26fd09e...5f600a9a91');
 
     fireEvent.click(links[0]);
-    await wait(async () => {
-      expect(document.title).toEqual('Transaction Details • Elrond Explorer');
+    await act(async () => {
+      await wait(async () => {
+        expect(document.title).toEqual('Transaction Details • Elrond Explorer');
+      });
     });
   });
   test('Shard from link', async () => {
-    const render = beforeAll();
+    const render = beforeAll('/transactions');
 
     const links = await render.findAllByTestId('shardFromLink');
-    expect(links[0].textContent).toBe('Shard 4');
+    expect(links[0].textContent).toBe('Shard 1');
 
     fireEvent.click(links[0]);
     await wait(async () => {
@@ -95,10 +107,10 @@ describe('Transactions Page Links', () => {
     });
   });
   test('Shard to link', async () => {
-    const render = beforeAll();
+    const render = beforeAll('/transactions');
 
     const links = await render.findAllByTestId('shardToLink');
-    expect(links[0].textContent).toBe('Shard 2');
+    expect(links[0].textContent).toBe('Shard 0');
 
     fireEvent.click(links[0]);
     await wait(async () => {
@@ -106,10 +118,10 @@ describe('Transactions Page Links', () => {
     });
   });
   test('Receiver link', async () => {
-    const render = beforeAll();
+    const render = beforeAll('/transactions');
 
     const links = await render.findAllByTestId('receiverLink');
-    expect(links[0].textContent).toBe('f03c105f05...260085333a');
+    expect(links[0].textContent).toBe('erd1hqplna...r6fq40f044');
 
     fireEvent.click(links[0]);
     await wait(async () => {
