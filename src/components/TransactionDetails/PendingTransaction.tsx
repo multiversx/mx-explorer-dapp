@@ -12,6 +12,8 @@ export interface PendingTransactionType {
   value: string;
   hash: string;
   status: string;
+  gasPrice: number;
+  gasLimit: number;
 }
 
 const PendingTransaction = ({ transaction }: { transaction: PendingTransactionType }) => {
@@ -67,7 +69,7 @@ const PendingTransaction = ({ transaction }: { transaction: PendingTransactionTy
         </TransactionDetail>
 
         <TransactionDetail label="Gas Limit">
-          <span className="text-muted">N/A</span>
+          <span className="text-muted">{transaction.gasLimit.toLocaleString('en')}</span>
         </TransactionDetail>
 
         <TransactionDetail label="Gas Used">
@@ -75,7 +77,9 @@ const PendingTransaction = ({ transaction }: { transaction: PendingTransactionTy
         </TransactionDetail>
 
         <TransactionDetail label="Gas Price">
-          <span className="text-muted">N/A</span>
+          <span className="text-muted">
+            <Denominate value={transaction.gasPrice.toString()} showLastNonZeroDecimal />
+          </span>
         </TransactionDetail>
 
         <TransactionDetail label="Nonce">
