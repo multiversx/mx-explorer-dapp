@@ -1,0 +1,31 @@
+.animated-list {
+  & > div {
+    height: 66px;
+    position: relative;
+    max-height: 100px;
+    overflow: hidden;
+    transition: max-height 0.25s linear;
+    @for $i from 0 through 20 {
+      &:nth-child(#{20 - $i}) {
+        transition-delay: (#{$i * 0.25s});
+      }
+    }
+  }
+
+  .animated-row {
+    height: 66px;
+    position: absolute;
+    bottom: 0rem;
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 15px;
+    // padding-bottom: 10px;
+  }
+  .collapsed {
+    max-height: 0;
+    .blocks-row {
+      padding-top: 0px;
+    }
+  }
+}
