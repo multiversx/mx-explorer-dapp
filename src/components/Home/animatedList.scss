@@ -2,14 +2,8 @@
   & > div {
     height: 66px;
     position: relative;
-    max-height: 100px;
-    overflow: hidden;
-    transition: max-height 0.25s linear;
-    @for $i from 0 through 20 {
-      &:nth-child(#{20 - $i}) {
-        transition-delay: (#{$i * 0.25s});
-      }
-    }
+    background-color: white;
+    transition: background-color 0.25s ease-out;
   }
 
   .animated-row {
@@ -20,10 +14,9 @@
     right: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding-top: 15px;
-    // padding-bottom: 10px;
   }
-  .collapsed {
-    max-height: 0;
+  .new {
+    background-color: #fafafa;
     .blocks-row {
       padding-top: 0px;
     }

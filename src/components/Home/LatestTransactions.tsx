@@ -28,9 +28,7 @@ const LatestTransactions = () => {
         ({ data, transactionsFetched }) => {
           if (ref.current !== null) {
             if (transactionsFetched) {
-              const sortedTransactions = data.sort(
-                (a: TransactionType, b: TransactionType) => b.timestamp - a.timestamp
-              );
+              const sortedTransactions = data;
               if (transactions.length === 0) {
                 const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
                   ...transaction,
@@ -81,7 +79,7 @@ const LatestTransactions = () => {
                   {transactions.map((transaction, i) => (
                     <div
                       key={transaction.hash}
-                      className={transaction.isNew && someNew ? 'collapsed' : ''}
+                      className={transaction.isNew && someNew ? 'new' : ''}
                     >
                       <div className="row animated-row">
                         <div className="col-6">

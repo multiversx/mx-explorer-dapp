@@ -27,9 +27,7 @@ const LatestBlocks: React.FC = () => {
       getBlocks({ elasticUrl, timeout }).then(({ data, blocksFetched }) => {
         if (ref.current !== null) {
           if (blocksFetched) {
-            const sortedBlocks = data.sort(
-              (a: BlockType, b: BlockType) => b.timestamp - a.timestamp
-            );
+            const sortedBlocks = data;
             if (blocks.length === 0) {
               const newBlocks = sortedBlocks.map((block: BlockType) => ({
                 ...block,
@@ -76,7 +74,7 @@ const LatestBlocks: React.FC = () => {
               {blocks.length ? (
                 <div className="animated-list" data-testid="blocksList">
                   {blocks.map((block, i) => (
-                    <div key={block.hash} className={block.isNew && someNew ? 'collapsed' : ''}>
+                    <div key={block.hash} className={block.isNew && someNew ? 'new' : ''}>
                       <div className="row animated-row">
                         <div className="col-6">
                           <span className="icon-container">
