@@ -1,22 +1,18 @@
 .animated-list {
   & > div {
-    height: 66px;
-    position: relative;
-    background-color: white;
-    transition: background-color 0.25s ease-out;
+    // transition: background-color 0.25s ease-in-out;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
 
-  .animated-row {
-    height: 66px;
-    position: absolute;
-    bottom: 0rem;
-    left: 0;
-    right: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    padding-top: 15px;
-  }
   .new {
-    background-color: #fafafa;
+    @keyframes highlight {
+      from {
+        background-color: #ececec;
+      }
+    }
+    animation: highlight 1000ms ease-in-out;
     .blocks-row {
       padding-top: 0px;
     }

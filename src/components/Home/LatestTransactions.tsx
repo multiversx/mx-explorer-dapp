@@ -79,52 +79,50 @@ const LatestTransactions = () => {
                   {transactions.map((transaction, i) => (
                     <div
                       key={transaction.hash}
-                      className={transaction.isNew && someNew ? 'new' : ''}
+                      className={`row animated-row ${transaction.isNew && someNew ? 'new' : ''}`}
                     >
-                      <div className="row animated-row">
-                        <div className="col-6">
-                          <span className="icon-container-round">
-                            <i>
-                              <FontAwesomeIcon icon={faExchangeAlt} />
-                            </i>
-                          </span>
-                          <div>
-                            <ScAddressIcon
-                              initiator={transaction.sender}
-                              secondInitiator={transaction.receiver}
-                            />
-                            <TestnetLink
-                              to={`/transactions/${transaction.hash}`}
-                              data-testid={`transactionLink${i}`}
-                            >
-                              {trimHash(transaction.hash)}
-                            </TestnetLink>
-                          </div>
-                          <span
-                            className="text-secondary"
-                            title={dateFormatted(transaction.timestamp)}
-                          >
-                            <TimeAgo value={transaction.timestamp} />
-                          </span>
-                        </div>
-                        <div className="col-6">
-                          From&nbsp;
-                          {addressIsBech32(transaction.sender) ? (
-                            <TestnetLink to={`/address/${transaction.sender}`}>
-                              {trimHash(transaction.sender)}
-                            </TestnetLink>
-                          ) : (
-                            <ShardSpan shardId={transaction.sender} />
-                          )}
-                          <br />
-                          To&nbsp;
+                      <div className="col-6">
+                        <span className="icon-container-round">
+                          <i>
+                            <FontAwesomeIcon icon={faExchangeAlt} />
+                          </i>
+                        </span>
+                        <div>
+                          <ScAddressIcon
+                            initiator={transaction.sender}
+                            secondInitiator={transaction.receiver}
+                          />
                           <TestnetLink
-                            to={`/address/${transaction.receiver}`}
-                            data-testid={`transactionLinkTo${i}`}
+                            to={`/transactions/${transaction.hash}`}
+                            data-testid={`transactionLink${i}`}
                           >
-                            {trimHash(transaction.receiver)}
+                            {trimHash(transaction.hash)}
                           </TestnetLink>
                         </div>
+                        <span
+                          className="text-secondary"
+                          title={dateFormatted(transaction.timestamp)}
+                        >
+                          <TimeAgo value={transaction.timestamp} />
+                        </span>
+                      </div>
+                      <div className="col-6">
+                        From&nbsp;
+                        {addressIsBech32(transaction.sender) ? (
+                          <TestnetLink to={`/address/${transaction.sender}`}>
+                            {trimHash(transaction.sender)}
+                          </TestnetLink>
+                        ) : (
+                          <ShardSpan shardId={transaction.sender} />
+                        )}
+                        <br />
+                        To&nbsp;
+                        <TestnetLink
+                          to={`/address/${transaction.receiver}`}
+                          data-testid={`transactionLinkTo${i}`}
+                        >
+                          {trimHash(transaction.receiver)}
+                        </TestnetLink>
                       </div>
                     </div>
                   ))}

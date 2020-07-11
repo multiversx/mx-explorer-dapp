@@ -74,37 +74,35 @@ const LatestBlocks: React.FC = () => {
               {blocks.length ? (
                 <div className="animated-list" data-testid="blocksList">
                   {blocks.map((block, i) => (
-                    <div key={block.hash} className={block.isNew && someNew ? 'new' : ''}>
-                      <div className="row animated-row">
-                        <div className="col-6">
-                          <span className="icon-container">
-                            <i>
-                              <FontAwesomeIcon icon={faCube} />
-                            </i>
-                          </span>
-                          <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
-                            {block.nonce}
-                          </TestnetLink>
-                          &nbsp;in&nbsp;
-                          <ShardSpan shardId={block.shardId} />
-                          <br />
-                          <span title={dateFormatted(block.timestamp)} className="text-secondary">
-                            <TimeAgo value={block.timestamp} />
-                          </span>
-                        </div>
-                        <div className="col-6">
-                          Hash&nbsp;
-                          {/* <TooltipWithCopy textToCopy={block.hash}> */}
-                          <TestnetLink
-                            to={`/blocks/${block.hash}`}
-                            data-testid={`blockHashLink${i}`}
-                          >
-                            {trimHash(block.hash)}
-                          </TestnetLink>
-                          {/* </TooltipWithCopy> */}
-                          <br />
-                          {block.txCount} txns
-                        </div>
+                    <div
+                      key={block.hash}
+                      className={`row animated-row ${block.isNew && someNew ? 'new' : ''}`}
+                    >
+                      <div className="col-6">
+                        <span className="icon-container">
+                          <i>
+                            <FontAwesomeIcon icon={faCube} />
+                          </i>
+                        </span>
+                        <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
+                          {block.nonce}
+                        </TestnetLink>
+                        &nbsp;in&nbsp;
+                        <ShardSpan shardId={block.shardId} />
+                        <br />
+                        <span title={dateFormatted(block.timestamp)} className="text-secondary">
+                          <TimeAgo value={block.timestamp} />
+                        </span>
+                      </div>
+                      <div className="col-6">
+                        Hash&nbsp;
+                        {/* <TooltipWithCopy textToCopy={block.hash}> */}
+                        <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockHashLink${i}`}>
+                          {trimHash(block.hash)}
+                        </TestnetLink>
+                        {/* </TooltipWithCopy> */}
+                        <br />
+                        {block.txCount} txns
                       </div>
                     </div>
                   ))}
