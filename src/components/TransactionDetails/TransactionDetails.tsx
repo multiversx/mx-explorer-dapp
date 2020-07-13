@@ -1,7 +1,6 @@
 import { faClock, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
-import Web3 from 'web3';
 import { addressIsBech32, dateFormatted } from 'helpers';
 import * as React from 'react';
 import {
@@ -16,10 +15,9 @@ import { TransactionType } from 'sharedComponents/TransactionsTable';
 import TransactionDetail from './TransactionDetail';
 
 const getFee = (transaction: TransactionType) => {
-  const web3 = new Web3();
   const bNgasPrice = new BigNumber(transaction.gasPrice);
   const bNgasUsed = new BigNumber(transaction.gasUsed);
-  const output = web3.utils.toBN(bNgasPrice.times(bNgasUsed) as any).toString(10);
+  const output = bNgasPrice.times(bNgasUsed).toString();
   return output;
 };
 

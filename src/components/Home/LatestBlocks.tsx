@@ -6,6 +6,11 @@ import { dateFormatted, trimHash } from 'helpers';
 import { ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { BlockType } from './../Blocks';
 import { getBlocks } from './helpers/asyncRequests';
+import './animatedList.scss';
+
+type LatestBlockType = BlockType & {
+  isNew: boolean;
+};
 
 const LatestBlocks: React.FC = () => {
   const ref = React.useRef(null);
@@ -14,7 +19,7 @@ const LatestBlocks: React.FC = () => {
     timeout,
     refresh: { timestamp },
   } = useGlobalState();
-  const [blocks, setBlocks] = React.useState<BlockType[]>([]);
+  const [blocks, setBlocks] = React.useState<LatestBlockType[]>([]);
   const [blocksFetched, setBlocksFetched] = React.useState<boolean>(true);
 
   const fetchBlocks = () => {
@@ -22,7 +27,21 @@ const LatestBlocks: React.FC = () => {
       getBlocks({ elasticUrl, timeout }).then(({ data, blocksFetched }) => {
         if (ref.current !== null) {
           if (blocksFetched) {
-            setBlocks(data);
+            const sortedBlocks = data;
+            if (blocks.length === 0) {
+              const newBlocks = sortedBlocks.map((block: BlockType) => ({
+                ...block,
+                isNew: false,
+              }));
+              setBlocks(newBlocks);
+            } else {
+              const existingHashes = blocks.map((b) => b.hash);
+              const newBlocks = sortedBlocks.map((block: BlockType) => ({
+                ...block,
+                isNew: !existingHashes.includes(block.hash),
+              }));
+              setBlocks(newBlocks);
+            }
             setBlocksFetched(true);
           } else if (blocks.length === 0) {
             setBlocksFetched(false);
@@ -34,27 +53,31 @@ const LatestBlocks: React.FC = () => {
 
   React.useEffect(fetchBlocks, [elasticUrl, timeout, timestamp]);
 
-  const Component = () => (
-    <div className="card" ref={ref}>
-      {!blocksFetched ? (
-        <div className="card-body card-details" data-testid="errorScreen">
-          <div className="empty">
-            <FontAwesomeIcon icon={faCube} className="empty-icon" />
-            <span className="h4 empty-heading">Unable to load blocks</span>
+  const Component = () => {
+    const someNew = blocks.some((block) => block.isNew);
+    return (
+      <div className="card" ref={ref}>
+        {!blocksFetched ? (
+          <div className="card-body card-details" data-testid="errorScreen">
+            <div className="empty">
+              <FontAwesomeIcon icon={faCube} className="empty-icon" />
+              <span className="h4 empty-heading">Unable to load blocks</span>
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="card-body">
-          <div className="d-flex align-items-center flex-row mb-3">
-            <h4 className="card-title mb-0 mr-auto">Latest Blocks</h4>
-            <TestnetLink to="/blocks">View All Blocks</TestnetLink>
-          </div>
-          <div className="card-scroll">
-            {blocks.length ? (
-              <div className="animated fadeIn" data-testid="blocksList">
-                {blocks.map((block: BlockType, i) => (
-                  <div key={block.hash}>
-                    <div className="row">
+        ) : (
+          <div className="card-body">
+            <div className="d-flex align-items-center flex-row mb-3">
+              <h4 className="card-title mb-0 mr-auto">Latest Blocks</h4>
+              <TestnetLink to="/blocks">View All Blocks</TestnetLink>
+            </div>
+            <div className="card-scroll pt-0">
+              {blocks.length ? (
+                <div className="animated-list" data-testid="blocksList">
+                  {blocks.map((block, i) => (
+                    <div
+                      key={block.hash}
+                      className={`row animated-row ${block.isNew && someNew ? 'new' : ''}`}
+                    >
                       <div className="col-6">
                         <span className="icon-container">
                           <i>
@@ -73,37 +96,38 @@ const LatestBlocks: React.FC = () => {
                       </div>
                       <div className="col-6">
                         Hash&nbsp;
+                        {/* <TooltipWithCopy textToCopy={block.hash}> */}
                         <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockHashLink${i}`}>
                           {trimHash(block.hash)}
                         </TestnetLink>
+                        {/* </TooltipWithCopy> */}
                         <br />
                         {block.txCount} txns
                       </div>
                     </div>
-                    {i !== blocks.length - 1 && <hr className="hr-space" />}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div
-                className="row h-100 justify-content-center align-items-center"
-                data-testid="blocksLoader"
-              >
-                <div className="col-12 text-center">
-                  <div className="lds-ellipsis mx-auto">
-                    <div />
-                    <div />
-                    <div />
-                    <div />
+                  ))}
+                </div>
+              ) : (
+                <div
+                  className="row h-100 justify-content-center align-items-center"
+                  data-testid="blocksLoader"
+                >
+                  <div className="col-12 text-center">
+                    <div className="lds-ellipsis mx-auto">
+                      <div />
+                      <div />
+                      <div />
+                      <div />
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
-        </div>
-      )}
-    </div>
-  );
+        )}
+      </div>
+    );
+  };
   return React.useMemo(Component, [blocks, blocksFetched]);
 };
 export default LatestBlocks;

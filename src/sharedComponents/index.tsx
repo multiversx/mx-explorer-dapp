@@ -12,6 +12,8 @@ import TestnetReady, { withTestnetReady } from './TestnetReady';
 import TimeAgo from './TimeAgo';
 import TransactionsTable from './TransactionsTable';
 import TransactionStatus from './TransactionStatus';
+import TooltipWithCopy from './TooltipWithCopy';
+import CopyButton from './CopyButton';
 
 export {
   Denominate,
@@ -29,4 +31,6 @@ export {
   Loader,
   TransactionsTable,
   TransactionStatus,
+  TooltipWithCopy,
+  CopyButton,
 };

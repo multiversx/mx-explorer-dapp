@@ -1,0 +1,20 @@
+.animated-list {
+  & > div {
+    // transition: background-color 0.25s ease-in-out;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .new {
+    @keyframes highlight {
+      from {
+        background-color: #ececec;
+      }
+    }
+    animation: highlight 1000ms ease-in-out;
+    .blocks-row {
+      padding-top: 0px;
+    }
+  }
+}
