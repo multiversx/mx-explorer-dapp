@@ -98,17 +98,25 @@ export async function getAddressDetails({ nodeUrl, addressId, timeout }: Details
   try {
     const {
       data: {
-        account: { balance, code, nonce },
+        data: {
+          account: { balance, code, nonce },
+        },
+        code: responseCode,
+        error,
       },
     } = await axios.get(`${nodeUrl}/address/${addressId}`, { timeout });
 
-    return {
-      addressId,
-      balance,
-      nonce,
-      code,
-      detailsFetched: true,
-    };
+    if (responseCode === 'successful') {
+      return {
+        addressId,
+        balance,
+        nonce,
+        code,
+        detailsFetched: true,
+      };
+    } else {
+      throw new Error(error);
+    }
   } catch (err) {
     return {
       addressId: '',

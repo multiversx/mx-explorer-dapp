@@ -8,19 +8,27 @@ interface ParamsType {
 export async function getValidatorsHeartbeat({ nodeUrl, timeout }: ParamsType) {
   try {
     const {
-      data: { message },
+      data: {
+        data: { message },
+        code,
+        error,
+      },
     } = await axios.get(`${nodeUrl}/node/heartbeatstatus`, { timeout });
 
-    if (Array.isArray(message)) {
+    if (code === 'successful') {
+      if (Array.isArray(message)) {
+        return {
+          data: message,
+          success: message.length >= 1,
+        };
+      }
       return {
-        data: message,
-        success: message.length >= 1,
+        data: [],
+        success: false,
       };
+    } else {
+      throw new Error(error);
     }
-    return {
-      data: [],
-      success: false,
-    };
   } catch {
     return {
       data: [],
@@ -32,13 +40,21 @@ export async function getValidatorsHeartbeat({ nodeUrl, timeout }: ParamsType) {
 export async function getValidatorStatistics({ nodeUrl, timeout }: ParamsType) {
   try {
     const {
-      data: { statistics },
+      data: {
+        data: { statistics },
+        code,
+        error,
+      },
     } = await axios.get(`${nodeUrl}/validator/statistics`, { timeout });
 
-    return {
-      statistics,
-      success: true,
-    };
+    if (code === 'successful') {
+      return {
+        statistics,
+        success: true,
+      };
+    } else {
+      throw new Error(error);
+    }
   } catch {
     return {
       statistics: {},

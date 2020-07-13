@@ -23,13 +23,21 @@ export async function getPendingTransaction({
 }: GetTransactionsType) {
   try {
     const {
-      data: { transaction },
+      data: {
+        data: { transaction },
+        code,
+        error,
+      },
     } = await axios.get(`${nodeUrl}/transaction/${transactionId}`, { timeout });
 
-    return {
-      data: { hash: transactionId, ...transaction },
-      transactionFetched: true,
-    };
+    if (code === 'successful') {
+      return {
+        data: { hash: transactionId, ...transaction },
+        transactionFetched: true,
+      };
+    } else {
+      throw new Error(error);
+    }
   } catch {
     return {
       data: {},

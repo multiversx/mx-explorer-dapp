@@ -26,14 +26,14 @@ export const mockGet = () => {
       case url.includes('/tps/meta'):
         return Promise.resolve({ data: meta });
       case url.includes(`/node/heartbeatstatus`):
-        return Promise.resolve({ data: heartbeatstatus });
+        return Promise.resolve({ data: { data: heartbeatstatus, code: 'successful' } });
       case url.includes('/validator/statistics'):
-        return Promise.resolve({ data: statistics });
+        return Promise.resolve({ data: { data: statistics, code: 'successful' } });
       case url.endsWith('/validators'):
         return Promise.resolve({ data: validators });
       // --- page load ---
       case url.includes('/network/status'):
-        return Promise.resolve({ data: epoch });
+        return Promise.resolve({ data: { data: epoch, code: 'successful' } });
       case url.includes('/validators'):
         return Promise.resolve({ data: validatorsdoc });
     }

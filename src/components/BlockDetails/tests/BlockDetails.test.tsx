@@ -17,9 +17,9 @@ const beforeAll = (success = true) => {
       case url.includes('/tps/_doc/meta'):
         return Promise.resolve({ data: meta });
       case url.includes(`/node/heartbeatstatus`):
-        return Promise.resolve({ data: heartbeatstatus });
+        return Promise.resolve({ data: { data: heartbeatstatus, code: 'successful' } });
       case url.includes('/validator/statistics'):
-        return Promise.resolve({ data: statistics });
+        return Promise.resolve({ data: { data: statistics, code: 'successful' } });
       case url.endsWith('/validators'):
         return Promise.resolve({ data: validators });
       // --- page load ---
