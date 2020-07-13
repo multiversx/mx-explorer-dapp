@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { renderWithRouter, wait, meta, config as optionalConfig } from 'utils/test-utils';
+import { renderWithRouter, meta, config as optionalConfig } from 'utils/test-utils';
 import { heartbeatstatus, validators, statistics } from 'utils/rawData';
 
 export const beforeAll = () => {

@@ -9,7 +9,7 @@ export async function getValidatorsHeartbeat({ nodeUrl, timeout }: ParamsType) {
   try {
     const {
       data: {
-        data: { message },
+        data: { heartbeats: message },
         code,
         error,
       },
