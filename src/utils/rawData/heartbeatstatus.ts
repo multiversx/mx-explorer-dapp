@@ -1,5 +1,5 @@
 export default {
-  message: [
+  heartbeats: [
     {
       timeStamp: '2020-07-08T15:01:17.772382314Z',
       publicKey:

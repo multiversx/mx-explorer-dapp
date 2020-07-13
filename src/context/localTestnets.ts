@@ -19,7 +19,7 @@ const localTestnets = [
           validatorStatistics: true,
         },
         {
-          default: true,
+          default: false,
           id: 'testnet-do-toronto',
           name: 'DigitalOcean TOR Testnet',
           nodeUrl: '***REMOVED***',
