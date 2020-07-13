@@ -29,7 +29,6 @@ export default {
       wallet: true,
       validatorDetails: true,
       faucet: false,
-      validatorsApiUrl: 'https://api.elrond.com',
       nrOfShards: 5,
       versionNumber: 'v1.0.123',
     },

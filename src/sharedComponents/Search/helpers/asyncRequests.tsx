@@ -30,12 +30,28 @@ export async function isAddress({ nodeUrl, hash, timeout }: NodeParamsType) {
   }
 }
 
-export async function isTransaction({ elasticUrl, hash, timeout }: ElasticParamsType) {
+export async function isTransaction({
+  elasticUrl,
+  nodeUrl,
+  hash,
+  timeout,
+}: ElasticParamsType & { nodeUrl: string }) {
   try {
     const { data } = await axios.get(`${elasticUrl}/transactions/_doc/${hash}`, { timeout });
 
     return data.found;
   } catch (e) {
-    return false;
+    try {
+      const {
+        data: { code },
+      } = await axios.get(`${nodeUrl}/transaction/${hash}`, { timeout });
+
+      if (code === 'successful') {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
   }
 }

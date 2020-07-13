@@ -57,7 +57,7 @@ const Search = () => {
       history.push(testnetRoute({ to: `/validators/${brand}`, activeTestnetId }));
     } else if (await isBlock({ elasticUrl, hash, timeout })) {
       history.push(testnetRoute({ to: `/blocks/${hash}`, activeTestnetId }));
-    } else if (await isTransaction({ elasticUrl, hash, timeout })) {
+    } else if (await isTransaction({ elasticUrl, hash, nodeUrl, timeout })) {
       history.push(testnetRoute({ to: `/transactions/${hash}`, activeTestnetId }));
     } else if (await isAddress({ nodeUrl, hash, timeout })) {
       history.push(testnetRoute({ to: `/address/${hash}`, activeTestnetId }));

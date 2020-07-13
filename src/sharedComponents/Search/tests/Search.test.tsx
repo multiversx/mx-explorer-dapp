@@ -9,6 +9,7 @@ import {
 } from 'utils/test-utils';
 import {
   transactions as transactionsResponse,
+  pendingTransaction,
   heartbeatstatus,
   statistics,
   validators,
@@ -27,25 +28,27 @@ const beforeAll = (fail = ['']) => {
       case url.includes('/tps/_doc/meta'):
         return Promise.resolve({ data: meta });
       case url.includes(`/node/heartbeatstatus`):
-        return Promise.resolve({ data: heartbeatstatus });
+        return Promise.resolve({ data: { data: heartbeatstatus, code: 'successful' } });
       case url.includes('/validator/statistics'):
-        return Promise.resolve({ data: statistics });
+        return Promise.resolve({ data: { data: statistics, code: 'successful' } });
       case url.endsWith('/validators'):
         return Promise.resolve({ data: validators });
       // --- page load ---
       case url.includes('validators/_doc'):
         return Promise.resolve({ data: validatorsdoc });
       case url.includes('network/status'):
-        return Promise.resolve({ data: epoch });
+        return Promise.resolve({ data: { data: epoch, code: 'successful' } });
       case url.includes('/ratingshistory/'):
         return Promise.resolve({ data: ratings });
       case url.includes('/address/') && !fail.includes('address'):
-        return Promise.resolve({ data: addressResponse });
+        return Promise.resolve({ data: { data: addressResponse, code: 'successful' } });
       case url.includes('/blocks/_doc') && !fail.includes('blocks'):
         return Promise.resolve({ data: block });
       case url.includes('/transactions/_search') && !fail.includes('transactions'):
       case url.includes('/transactions/_doc') && !fail.includes('transactions'):
         return Promise.resolve({ data: transactionsResponse });
+      case url.includes('/transaction/') && !fail.includes('pendingTransaction'):
+        return Promise.resolve({ data: { data: pendingTransaction, code: 'successful' } });
       default:
         return Promise.resolve(new Error('error'));
     }
@@ -114,8 +117,24 @@ describe('Search', () => {
       expect(document.title).toEqual('Transaction Details • Elrond Explorer');
     });
   });
-  test('Seach finds address', async () => {
+  test('Seach finds pending transaction', async () => {
     const render = beforeAll(['blocks', 'transactions']);
+
+    const search = await render.findByTestId('search');
+    const data = {
+      target: { value: 'bfef4ed34748e13c01503ac317eff5612c629c807905afe9c73ace6e45d3fe91' },
+    };
+    fireEvent.change(search, data);
+
+    const searchButton = render.getByTestId('searchButton');
+    fireEvent.click(searchButton);
+
+    await wait(async () => {
+      expect(document.title).toEqual('Transaction Details • Elrond Explorer');
+    });
+  });
+  test('Seach finds address', async () => {
+    const render = beforeAll(['blocks', 'transactions', 'pendingTransaction']);
 
     const search = await render.findByTestId('search');
     const data = {
@@ -131,7 +150,7 @@ describe('Search', () => {
     });
   });
   test('Seach does not find anything', async () => {
-    const render = beforeAll(['blocks', 'transactions', 'address']);
+    const render = beforeAll(['blocks', 'transactions', 'address', 'pendingTransaction']);
 
     const search = render.getByTestId('search');
     const data = {
