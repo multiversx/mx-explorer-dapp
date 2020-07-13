@@ -1,8 +1,12 @@
 import axios from 'axios';
-import { StateType } from './state';
+import { StateType, ConfigType } from './state';
 
 export type ActionType =
   | { type: 'changeTestnet'; testnetId: string }
+  | {
+      type: 'updateTestnets';
+      config: ConfigType;
+    }
   | { type: 'setValidatorData'; validatorData: StateType['validatorData'] }
   | { type: 'setBrandData'; brandData: StateType['brandData'] }
   | { type: 'triggerNewRound' }
@@ -21,6 +25,9 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
       // once activeTestnetId is populated, routes get prepended by testnetId
 
       return { ...state, activeTestnet, activeTestnetId: action.testnetId };
+    }
+    case 'updateTestnets': {
+      return { ...state, config: action.config };
     }
     case 'triggerNewRound': {
       return {

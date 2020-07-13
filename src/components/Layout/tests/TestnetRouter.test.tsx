@@ -1,6 +1,7 @@
-import { fireEvent, renderWithRouter } from './../../../utils/test-utils';
+import { fireEvent, renderWithRouter } from 'utils/test-utils';
+import { ConfigType } from 'context/state';
 
-const optionalConfig = {
+const optionalConfig: ConfigType = {
   metaChainShardId: 4294967295,
   elrondApps: [
     {
@@ -34,11 +35,11 @@ const optionalConfig = {
       gasPrice: 100000000000000,
       gasLimit: 1000000,
       gasPerDataByte: 1500,
-      gasLimitEditable: true,
-      economics: true,
-      data: true,
       validatorDetails: true,
       faucet: false,
+      nrOfShards: 1,
+      versionNumber: '2',
+      fetchedFromNetworkConfig: true,
     },
     {
       default: false,
@@ -53,11 +54,11 @@ const optionalConfig = {
       gasPrice: 100000000000000,
       gasLimit: 1000000,
       gasPerDataByte: 1500,
-      gasLimitEditable: true,
-      economics: true,
-      data: true,
       validatorDetails: true,
       faucet: false,
+      nrOfShards: 1,
+      versionNumber: '2',
+      fetchedFromNetworkConfig: true,
     },
   ],
 };
