@@ -7,11 +7,20 @@ import {
   waitForElement,
   meta,
 } from 'utils/test-utils';
-import { blocks, heartbeatstatus, statistics, validators, validatorsdoc } from 'utils/rawData';
+import {
+  blocks,
+  heartbeatstatus,
+  statistics,
+  validators,
+  validatorsdoc,
+  epoch,
+} from 'utils/rawData';
 import rounds from './rawData/rounds';
 import ratings from 'sharedComponents/Search/tests/rawData/ratings';
 
-export const beforeAll = (route = `/validators/nodes/${heartbeatstatus.message[1].publicKey}`) => {
+export const beforeAll = (
+  route = `/validators/nodes/${heartbeatstatus.heartbeats[1].publicKey}`
+) => {
   const mockGet = jest.spyOn(axios, 'get');
 
   mockGet.mockImplementation((url: string): any => {
@@ -20,13 +29,15 @@ export const beforeAll = (route = `/validators/nodes/${heartbeatstatus.message[1
       case url.includes('/tps/meta'):
         return Promise.resolve({ data: meta });
       case url.includes(`/node/heartbeatstatus`):
-        return Promise.resolve({ data: heartbeatstatus });
+        return Promise.resolve({ data: heartbeatstatus, code: 'successful' });
       case url.includes('/validator/statistics'):
-        return Promise.resolve({ data: statistics });
+        return Promise.resolve({ data: statistics, code: 'successful' });
       case url.endsWith('/validators'):
         return Promise.resolve({ data: validators });
       case url.includes('/validators'):
         return Promise.resolve({ data: validatorsdoc });
+      case url.includes('/network/status'):
+        return Promise.resolve({ data: { data: epoch, code: 'successful' } });
       // --- page load ---
       case url.includes('/ratingshistory'):
         return Promise.resolve({ data: ratings });
@@ -50,9 +61,10 @@ describe('Node Information', () => {
     await wait(async () => {
       expect(document.title).toEqual('Node Details • Elrond Explorer');
       expect(render.getByText('Node Information')).toBeDefined();
+      expect(render.getByText('Version')).toBeDefined();
     });
 
-    const versionNumber = await render.findByTestId('versionNumber');
+    const versionNumber = await waitForElement(() => render.getByTestId('versionNumber'));
     expect(versionNumber.innerHTML).toBe('v1.0.136-0-gf681ca167/go1.13.5/linux-amd64/9f4807ec70');
 
     expect(render.getByTestId('progresUpTimeBar').id).toBe('100.00% (7 days)100');
@@ -85,11 +97,9 @@ describe('Node Information', () => {
 describe('Validator Details links', () => {
   test('Validator Details Shard link', async () => {
     const render = beforeAll();
-
-    const shardLink = await render.findByTestId('shardLink');
+    const shardLink = await waitForElement(() => render.getByTestId('shardLink'));
 
     expect(shardLink.textContent).toBe('Shard 0');
-
     fireEvent.click(shardLink);
 
     await wait(async () => {

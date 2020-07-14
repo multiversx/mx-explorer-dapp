@@ -17,7 +17,7 @@ export default {
       numInitCharactersForScAddress: 20,
       nodeUrl: 'https://api.elrond.com',
       refreshRate: 6000,
-      elasticUrl: 'https://elastic-aws.elrond.com',
+      elasticUrl: 'https://api-facade.elrond.com',
       decimals: 4,
       denomination: 18,
       gasPrice: 200000000000,

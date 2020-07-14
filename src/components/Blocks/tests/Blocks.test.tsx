@@ -18,9 +18,9 @@ export const beforeAll = (blocksError = false) => {
       case url.includes('/tps/meta'):
         return Promise.resolve({ data: meta });
       case url.includes(`/node/heartbeatstatus`):
-        return Promise.resolve({ data: heartbeatstatus });
+        return Promise.resolve({ data: heartbeatstatus, code: 'successful' });
       case url.includes('/validator/statistics'):
-        return Promise.resolve({ data: statistics });
+        return Promise.resolve({ data: statistics, code: 'successful' });
       case url.endsWith('/validators'):
         return Promise.resolve({ data: validators });
       case url.includes('/blokcs/count'):
