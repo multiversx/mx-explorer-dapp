@@ -47,9 +47,7 @@ const PendingTransaction = ({ transaction }: { transaction: PendingTransactionTy
           {Boolean(transaction.sender) ? (
             <>
               <ScAddressIcon initiator={transaction.sender} />
-              <TestnetLink to={`/address/${transaction.sender}`}>
-                {transaction.receiver}
-              </TestnetLink>
+              <TestnetLink to={`/address/${transaction.sender}`}>{transaction.sender}</TestnetLink>
             </>
           ) : (
             <>Metachain</>
