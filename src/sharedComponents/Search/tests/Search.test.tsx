@@ -23,7 +23,6 @@ import ratings from './rawData/ratings';
 const beforeAll = (fail = ['']) => {
   const mockGet = jest.spyOn(axios, 'get');
   mockGet.mockImplementation((url: string): any => {
-    console.log(url);
     switch (true) {
       // --- page load ---
       case url.includes('/tps/meta'):
@@ -118,7 +117,7 @@ describe('Search', () => {
     });
   });
   test('Search finds pending transaction', async () => {
-    const render = beforeAll(['blocks', 'transactions', 'address']);
+    const render = beforeAll(['blocks', 'transactions']);
 
     const search = await render.findByTestId('search');
     const data = {

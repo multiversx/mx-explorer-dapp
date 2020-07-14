@@ -39,6 +39,10 @@ export async function isTransaction({
   try {
     const { data } = await axios.get(`${elasticUrl}/transactions/${hash}`, { timeout });
 
+    if (data === undefined) {
+      throw new Error('not found');
+    }
+
     return data ? true : false;
   } catch (e) {
     try {
