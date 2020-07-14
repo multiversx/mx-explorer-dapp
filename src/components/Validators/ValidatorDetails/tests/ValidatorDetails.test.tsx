@@ -23,7 +23,7 @@ export const beforeAll = () => {
   });
 
   return renderWithRouter({
-    route: `/validators/nodes/${heartbeatstatus.message[0].publicKey}`,
+    route: `/validators/nodes/${heartbeatstatus.heartbeats[0].publicKey}`,
     optionalConfig,
   });
 };
@@ -55,7 +55,7 @@ describe('Node Information', () => {
 
   test('Node Information loading state', async () => {
     const render = renderWithRouter({
-      route: `/validators/nodes/${heartbeatstatus.message[0].publicKey}`,
+      route: `/validators/nodes/${heartbeatstatus.heartbeats[0].publicKey}`,
       optionalConfig,
     });
     const loader = await waitForElement(() => render.queryByTestId('loader'));
