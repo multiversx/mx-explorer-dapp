@@ -42,16 +42,12 @@ const beforeAll = (fail = ['']) => {
       case url.includes('/ratingshistory/'):
         return Promise.resolve({ data: ratings });
       case url.includes('/address/') && !fail.includes('address'):
-        console.log('Address');
         return Promise.resolve({ data: { data: addressResponse, code: 'successful' } });
       case url.includes('/blocks') && !fail.includes('blocks'):
-        console.log('Blocks');
         return Promise.resolve({ data: block });
       case url.includes('/transactions/') && !fail.includes('transactions'):
-        console.log('Trans');
         return Promise.resolve({ data: transactionsResponse });
       case url.includes('/transaction/') && !fail.includes('pendingTransaction'):
-        console.log('Pending');
         return Promise.resolve({ data: { data: pendingTransaction, code: 'successful' } });
       default:
         return Promise.resolve(new Error('error'));
