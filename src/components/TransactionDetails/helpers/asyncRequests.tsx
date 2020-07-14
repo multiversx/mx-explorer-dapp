@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { transactions } from 'utils/rawData';
 
 interface GetTransactionsType {
   elasticUrl?: string;
@@ -30,6 +31,8 @@ export async function getPendingTransaction({
       },
     } = await axios.get(`${nodeUrl}/transaction/${transactionId}`, { timeout });
 
+    console.log(transaction);
+
     if (code === 'successful') {
       return {
         data: { hash: transactionId, ...transaction },
@@ -39,6 +42,7 @@ export async function getPendingTransaction({
       throw new Error(error);
     }
   } catch {
+    console.log('Errrrr');
     return {
       data: {},
       transactionFetched: false,
