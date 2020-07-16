@@ -149,7 +149,7 @@ export async function getValidator({
 
       const signersIndex = consensusArray.indexOf(publicKey);
 
-      const historicRatings: Array<{ epoch: number; rating: string }> = await getHistoricRatings({
+      const historicRatings: { epoch: number; rating: string }[] = await getHistoricRatings({
         explorerApi,
         timeout,
         publicKey,
