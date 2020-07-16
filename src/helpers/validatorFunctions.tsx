@@ -69,7 +69,7 @@ export async function getEpoch({ nodeUrl, shardNumber, timeout }: GetEpochType) 
     });
 
     if (code === 'successful') {
-      const message: NetworkStatusType = data.message;
+      const message: NetworkStatusType = data;
 
       schema.validate(message, { strict: true }).catch(({ errors }) => {
         console.error('network/status response format errors: ', errors);
