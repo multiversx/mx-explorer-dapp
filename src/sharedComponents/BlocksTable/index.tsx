@@ -56,7 +56,11 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
                   </TestnetLink>
                 )}
               </td>
-              <td>{sizeFormat(block.size)}</td>
+              <td>
+                {block.sizeTxs !== undefined
+                  ? sizeFormat(block.size + block.sizeTxs)
+                  : sizeFormat(block.size)}
+              </td>
               <td>
                 <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockHashLink${i}`}>
                   {trimHash(block.hash)}
