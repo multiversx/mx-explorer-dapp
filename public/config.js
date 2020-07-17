@@ -51,7 +51,7 @@ const CONFIG = {
       default: true,
       id: 'battle-of-nodes',
       name: 'Battle of Nodes',
-      nodeUrl: 'https://api.elrond.com',
+      nodeUrl: 'https://api-facade.elrond.com',
       elasticUrl: 'https://api-facade.elrond.com',
       numInitCharactersForScAddress: 14,
       gasLimitEditable: true,
