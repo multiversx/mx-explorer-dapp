@@ -12,8 +12,8 @@ export default {
   testnets: [
     {
       default: true,
-      id: 'battle-of-nodes',
-      name: 'Battle of Nodes',
+      id: 'zero-to-one',
+      name: 'Zero to One',
       numInitCharactersForScAddress: 20,
       nodeUrl: 'https://api.elrond.com',
       refreshRate: 6000,
