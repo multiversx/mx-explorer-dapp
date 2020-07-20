@@ -22,6 +22,16 @@ export default function MapDisplay({
     minZoom: 1.5,
   };
   const position: any = [state.lat, state.lng];
+  const ref = React.useRef(null);
+
+  const handleScroll = () => {
+    if (ref.current) {
+      const elem: HTMLElement = L.DomUtil.get('legend') as any;
+      L.DomEvent.on(elem, 'mousewheel', L.DomEvent.stopPropagation);
+    }
+  };
+
+  React.useEffect(handleScroll, [ref.current]);
 
   const groupedCities = getGroupedCities(markers);
 
@@ -86,13 +96,18 @@ export default function MapDisplay({
         <style {...style(leader.publicKey, leader.offset)} key={leader.name + i} />
       ))}
       {leaders.map((leader, i) => {
-        const iconName = leader.shard === metaChainShardId ? 'metachain' : leader.shard;
+        let iconName = `shard-${leader.shard}.svg`;
+        if (leader.shard === metaChainShardId) {
+          iconName = 'shard-metachain.svg';
+        } else if (leaders.length > 6) {
+          iconName = 'shard.svg';
+        }
         return (
           <Marker
             key={leader.name + i}
             position={new L.LatLng(leader.lat, leader.lon)}
             icon={L.icon({
-              iconUrl: require(`assets/img/markers/shard-${iconName}.svg`),
+              iconUrl: require(`assets/img/markers/${iconName}`),
               iconSize: [20, 24],
               iconAnchor: [10 + leader.offset!, 24],
               className: `leader-marker-${leader.publicKey}`,
@@ -110,10 +125,10 @@ export default function MapDisplay({
         <p className="text-white mb-0">
           <FontAwesomeIcon icon={faMapMarker} /> <b>Leaders</b>
         </p>
-        <ul className="list-unstyled text-white leaflet-legend">
-          {shardsArray.map(shard => {
+        <ul className="list-unstyled text-white leaflet-legend map-legend" id="legend" ref={ref}>
+          {shardsArray.map((shard) => {
             const shardName = shard === metaChainShardId ? 'Metachain' : `Shard ${shard}`;
-            const shardObj = leaders.find(l => l.shard === shard);
+            const shardObj = leaders.find((l) => l.shard === shard);
             const shardLeader = shardObj ? ` ${shardObj!.name}, ${shardObj!.country}` : '';
             return shardLeader ? (
               <li key={shard}>

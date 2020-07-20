@@ -10,11 +10,12 @@ const MapChart = () => {
 
   const {
     timeout,
+    activeTestnet: { nrOfShards },
     refresh: { timestamp },
     config: { metaChainShardId, explorerApi },
   } = useGlobalState();
 
-  const shardsArray = [0, 1, 2, 3, 4, 5, metaChainShardId];
+  const shardsArray = [...Array.from(Array(nrOfShards).keys()), metaChainShardId];
 
   const fetchMarkers = () => {
     getMarkers({ timeout, explorerApi }).then(({ data }) => {
@@ -31,7 +32,7 @@ const MapChart = () => {
         const publicKeys = leadersArray.map((l) => l.proposer);
         const leaderMarkers = markers.filter((marker) => publicKeys.includes(marker.publicKey));
 
-        const offsets: Array<{ publicKey: string; name: string; offset: number }> = [];
+        const offsets: { publicKey: string; name: string; offset: number }[] = [];
         leaderMarkers.forEach((leader) => {
           const occurences = offsets.map((offset) => offset.name).filter((p) => p === leader.name);
 
