@@ -96,10 +96,9 @@ export default function MapDisplay({
         <style {...style(leader.publicKey, leader.offset)} key={leader.name + i} />
       ))}
       {leaders.map((leader, i) => {
-        let iconName = `shard-${leader.shard}.svg`;
-        if (leader.shard === metaChainShardId) {
-          iconName = 'shard-metachain.svg';
-        } else if (leaders.length > 6) {
+        let iconName =
+          leader.shard === metaChainShardId ? 'shard-metachain.svg' : `shard-${leader.shard}.svg`;
+        if (leaders.length > 6) {
           iconName = 'shard.svg';
         }
         return (
