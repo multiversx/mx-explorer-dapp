@@ -70,7 +70,7 @@ describe('Testnet Router', () => {
       optionalConfig,
     });
     const testnetSwitch = render.getByTestId('testnetSwitch');
-    expect(testnetSwitch.textContent).toBe('Zero to One ');
+    expect(testnetSwitch.textContent).toBe('Zero to One ');
     fireEvent.click(testnetSwitch);
     const digitalOcean = render.getByText('DigitalOcean TOR Testnet');
     fireEvent.click(digitalOcean);
