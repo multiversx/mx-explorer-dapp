@@ -36,3 +36,9 @@ $map-land: #333;
 .leaflet-popup-close-button {
   display: none;
 }
+
+.map-legend {
+  overflow: auto;
+  overflow-y: scroll;
+  max-height: 390px;
+}
