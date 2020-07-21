@@ -29,6 +29,10 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
     setCollapsed(!collapsed);
   };
 
+  const link = brand.identity
+    ? `${validatorsRoutes.index}/${brand.identity}`
+    : `${validatorsRoutes.nodes}/${brand.validators[0].publicKey}`;
+
   return brand.validators.length ? (
     <>
       <tr onClick={onClick} className={collapsed ? 'brand-tr collapsed' : 'brand-tr'}>
@@ -45,9 +49,7 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
                 />
               </TestnetLink>
             </div>
-            <TestnetLink to={`${validatorsRoutes.index}/${brand.identity}`}>
-              {brand.name ? brand.name : 'N/A'}
-            </TestnetLink>
+            <TestnetLink to={link}>{brand.name ? brand.name : 'N/A'}</TestnetLink>
           </div>
         </td>
 
