@@ -60,6 +60,19 @@ export default function MapDisplay({
   const northEast = L.latLng(90, 180);
   const bounds = L.latLngBounds(southWest, northEast);
 
+  const shardLeaders: { shard: number; leader: string; valid: boolean }[] = shardsArray
+    .map((shard) => {
+      const shardName = shard === metaChainShardId ? 'Metachain' : `Shard ${shard}`;
+      const shardObj = leaders.find((l) => l.shard === shard);
+      const shardLeader = shardObj ? ` ${shardObj!.name}, ${shardObj!.country}` : '';
+      return {
+        shard,
+        leader: `${shardName}: ${shardLeader}`,
+        valid: shardLeader !== '',
+      };
+    })
+    .filter(({ valid }) => valid);
+
   return (
     <Map
       zoomControl={false}
@@ -120,23 +133,18 @@ export default function MapDisplay({
           />
         );
       })}
-      <Control position="bottomleft">
-        <p className="text-white mb-0">
-          <FontAwesomeIcon icon={faMapMarker} /> <b>Leaders</b>
-        </p>
-        <ul className="list-unstyled text-white leaflet-legend map-legend" id="legend" ref={ref}>
-          {shardsArray.map((shard) => {
-            const shardName = shard === metaChainShardId ? 'Metachain' : `Shard ${shard}`;
-            const shardObj = leaders.find((l) => l.shard === shard);
-            const shardLeader = shardObj ? ` ${shardObj!.name}, ${shardObj!.country}` : '';
-            return shardLeader ? (
-              <li key={shard}>
-                {shardName}: {shardLeader}
-              </li>
-            ) : null;
-          })}
-        </ul>
-      </Control>
+      {shardLeaders.length > 0 && (
+        <Control position="bottomleft">
+          <p className="text-white mb-0">
+            <FontAwesomeIcon icon={faMapMarker} /> <b>Leaders</b>
+          </p>
+          <ul className="list-unstyled text-white leaflet-legend map-legend" id="legend" ref={ref}>
+            {shardLeaders.map(({ shard, leader }) => (
+              <li key={shard}>{leader}</li>
+            ))}
+          </ul>
+        </Control>
+      )}
     </Map>
   );
 }
