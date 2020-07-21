@@ -14,12 +14,12 @@ export function groupByBrandAndSort({
   const blockchainTotalStake = allValidators.length * stakePerValidator;
 
   brandData.forEach((brand: BrandDataType) => {
-    const validators: ValidatorType[] = allValidators.filter(validator =>
+    const validators: ValidatorType[] = allValidators.filter((validator) =>
       brand.publicKeys.includes(validator.publicKey)
     );
 
     // remove owned nodes from allValidators
-    validators.forEach(validator => {
+    validators.forEach((validator) => {
       const index = allValidators.indexOf(validator);
 
       if (index > -1) {
@@ -32,12 +32,12 @@ export function groupByBrandAndSort({
     sortedBrands.push(generateBrandTypeWithStats({ brand, validators, stakePerValidator }));
   });
 
-  if (sortedBrands.every(b => b.score === 0)) {
+  if (sortedBrands.every((b) => b.score === 0)) {
     sortedBrands.sort((a, b) => b.stake - a.stake);
   }
 
   // add the rest of the brandless validators
-  allValidators.forEach(validator => {
+  allValidators.forEach((validator) => {
     const brand = {
       name: trimHash(validator.publicKey),
       avatar: '',
@@ -58,6 +58,7 @@ export function groupByBrandAndSort({
   // calculate STAKEBARS width
   sortedBrands.forEach((brand, i, arr) => {
     const prevBrand = arr[i - 1];
+
     brand.stakePercent = (brand.stake / blockchainTotalStake) * 100;
 
     brand.overallStakePercent = prevBrand
@@ -81,7 +82,7 @@ function generateBrandTypeWithStats({
   let score = 0;
   if (validators && validators.length > 0) {
     score = validators
-      .map(o => o.ratingModifier)
+      .map((o) => o.ratingModifier)
       .reduce((a, c) => {
         return a + c;
       });
