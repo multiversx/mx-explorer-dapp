@@ -21,11 +21,13 @@ const BrandDetails = () => {
     if (success && brandData.length > 0 && validatorData.validatorsAndObservers.length > 0) {
       const foundBrand = brandData.find((b) => b.identity === identity);
       if (foundBrand) {
+        const allValidators = validatorData.validators.filter((v) =>
+          foundBrand.publicKeys.includes(v.publicKey)
+        );
         const [found] = groupByBrandAndSort({
           brandData: [foundBrand],
-          allValidators: validatorData.validators.filter((v) =>
-            foundBrand.publicKeys.includes(v.publicKey)
-          ),
+          allValidators,
+          totalValidators: validatorData.validators.length,
         });
         setBrand(found);
       } else {

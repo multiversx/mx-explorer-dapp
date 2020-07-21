@@ -5,13 +5,15 @@ import { ValidatorType } from 'context/validators';
 export function groupByBrandAndSort({
   brandData,
   allValidators,
+  totalValidators,
 }: {
   brandData: BrandDataType[];
   allValidators: ValidatorType[];
+  totalValidators: number;
 }) {
   const sortedBrands: BrandType[] = [];
   const stakePerValidator = 2500000;
-  const blockchainTotalStake = allValidators.length * stakePerValidator;
+  const blockchainTotalStake = totalValidators * stakePerValidator;
 
   brandData.forEach((brand: BrandDataType) => {
     const validators: ValidatorType[] = allValidators.filter((validator) =>
@@ -29,6 +31,7 @@ export function groupByBrandAndSort({
 
     // sort DESC
     validators.sort((a, b) => b.rating - a.rating);
+
     sortedBrands.push(generateBrandTypeWithStats({ brand, validators, stakePerValidator }));
   });
 

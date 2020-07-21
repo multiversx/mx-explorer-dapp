@@ -30,6 +30,7 @@ const BrandTable = ({ allValidators, brandData }: BrandTableType) => {
   const sortedBrands: BrandType[] = groupByBrandAndSort({
     brandData,
     allValidators: [...allValidators],
+    totalValidators: allValidators.length,
   });
 
   const ref = React.useRef(null);
