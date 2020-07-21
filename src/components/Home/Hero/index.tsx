@@ -2,8 +2,10 @@ import * as React from 'react';
 import { useGlobalState } from 'context';
 import Leaflet from './Leaflet';
 
-const HeroHighlights = () =>
-  useGlobalState().activeTestnet.name === 'Zero to One' ? (
+const HeroHighlights = () => {
+  const { activeTestnet } = useGlobalState();
+  const isMain = activeTestnet.default && activeTestnet.elasticUrl.includes('api-facade');
+  return isMain ? (
     <div className="bg-black">
       <div className="container-fluid">
         <div className="row">
@@ -14,5 +16,6 @@ const HeroHighlights = () =>
       </div>
     </div>
   ) : null;
+};
 
 export default HeroHighlights;
