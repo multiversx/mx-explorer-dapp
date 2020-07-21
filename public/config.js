@@ -49,8 +49,8 @@ const CONFIG = {
   testnets: [
     {
       default: true,
-      id: 'battle-of-nodes',
-      name: 'Battle of Nodes',
+      id: 'zero-to-one',
+      name: 'Zero to One',
       nodeUrl: 'https://api-facade.elrond.com',
       elasticUrl: 'https://api-facade.elrond.com',
       numInitCharactersForScAddress: 14,

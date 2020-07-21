@@ -3,7 +3,7 @@ import { useGlobalState } from 'context';
 import Leaflet from './Leaflet';
 
 const HeroHighlights = () =>
-  useGlobalState().activeTestnet.name === 'Battle of Nodes' ? (
+  useGlobalState().activeTestnet.name === 'Zero to One' ? (
     <div className="bg-black">
       <div className="container-fluid">
         <div className="row">

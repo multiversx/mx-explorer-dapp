@@ -24,8 +24,8 @@ const optionalConfig: ConfigType = {
   testnets: [
     {
       default: true,
-      id: 'battle-of-nodes',
-      name: 'Battle of Nodes',
+      id: 'zero-to-one',
+      name: 'Zero to One',
       nodeUrl: 'https://api.elrond.com',
       elasticUrl: 'https://api-facade.elrond.com',
       refreshRate: 6000,
@@ -70,7 +70,7 @@ describe('Testnet Router', () => {
       optionalConfig,
     });
     const testnetSwitch = render.getByTestId('testnetSwitch');
-    expect(testnetSwitch.textContent).toBe('Battle of Nodes ');
+    expect(testnetSwitch.textContent).toBe('Zero to One ');
     fireEvent.click(testnetSwitch);
     const digitalOcean = render.getByText('DigitalOcean TOR Testnet');
     fireEvent.click(digitalOcean);
