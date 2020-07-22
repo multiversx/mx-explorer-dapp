@@ -23,10 +23,10 @@ export default function useSetValidatorsData(ref: React.RefObject<HTMLInputEleme
     Promise.all([
       getValidatorsHeartbeat({
         nodeUrl,
-        timeout: Math.max(timeout, 10000),
+        timeout: Math.max(timeout, 25000),
       }),
-      getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }),
-      getBrandData({ explorerApi, timeout: Math.max(timeout, 10000) }),
+      getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 25000) }),
+      getBrandData({ explorerApi, timeout: Math.max(timeout, 25000) }),
     ]).then(([getValidatorsDataResponse, validatorStats, brand]) => {
       const { data, success } = getValidatorsDataResponse;
       const { statistics, success: validatorsSuccess } = validatorStats;
