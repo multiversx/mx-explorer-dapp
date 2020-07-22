@@ -18,11 +18,11 @@ const ValidatorRow = ({
   validatorDetails: boolean;
   ratingOrder: string[];
 }) => {
+  const index = start > 1 ? rowIndex + start + 1 : rowIndex + start;
+
   return (
     <tr className="animated fadeIn">
-      <td>
-        {validator.rating > 0 ? ratingOrder.indexOf(validator.publicKey) + 1 : rowIndex + start}
-      </td>
+      <td>{validator.rating > 0 ? ratingOrder.indexOf(validator.publicKey) + 1 : index}</td>
 
       <td>
         <RowIcon validator={validator} />
