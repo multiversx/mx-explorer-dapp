@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Navbar from './Navbar/index';
@@ -10,13 +11,15 @@ import { Highlights } from 'sharedComponents';
 
 const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: React.ReactNode }) => {
   const { activeTestnet } = useGlobalState();
+  const { pathname } = useLocation();
+  const validators = pathname.includes('/validators');
   return (
     <>
       <TestnetRouter />
       <RoundManager />
       {navbar ? navbar : <Navbar />}
       <main role="main">
-        {activeTestnet.fetchedFromNetworkConfig === false ? (
+        {activeTestnet.fetchedFromNetworkConfig === false && !validators ? (
           <div className="container pt-3 pb-3">
             <div className="row">
               <div className="offset-lg-3 col-lg-6 mt-4 mb-4">
