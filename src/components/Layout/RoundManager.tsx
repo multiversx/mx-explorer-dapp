@@ -8,12 +8,13 @@ export default function RoundManager() {
 
   function setRoundsForCurrentTestnet() {
     const {
-      activeTestnet: { refreshRate, name },
+      activeTestnet: { refreshRate, name, fetchedFromNetworkConfig },
       activeTestnetId,
       refresh: { testnetId, intervalId: oldIntervalId },
     } = globalState;
 
-    if (name === defaultTestnet.name) {
+    if (name === defaultTestnet.name || !fetchedFromNetworkConfig) {
+      clearInterval(oldIntervalId);
       dispatch({ type: 'cancelAllRequests' });
     } else {
       if (testnetId !== activeTestnetId) {
