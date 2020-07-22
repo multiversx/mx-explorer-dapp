@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'production') {
 export const Routes = ({
   routes,
 }: {
-  routes: Array<{ path: string; component: React.ComponentClass }>;
+  routes: { path: string; component: React.ComponentClass }[];
 }) => {
   const {
     config: { testnets },
