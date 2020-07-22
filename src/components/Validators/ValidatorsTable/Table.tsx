@@ -57,7 +57,7 @@ const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
     func(data);
   };
 
-  const mainFilter: { logic: string; filters: Array<{}> } = { logic: 'and', filters: [] };
+  const mainFilter: { logic: string; filters: {}[] } = { logic: 'and', filters: [] };
 
   const searchValueFilter = {
     logic: 'or',
@@ -147,7 +147,7 @@ const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
     const uniqueRatings = data
       .sort((a, b) => a.rating - b.rating)
       .reverse()
-      .map(v => v.publicKey);
+      .map((v) => v.publicKey);
     setRatingOrder(uniqueRatings);
     setIsInitialRatingDesc(true);
   };
