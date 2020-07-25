@@ -121,7 +121,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
             readOnly
             className="form-control col-lg-12 cursor-text"
             rows={2}
-            defaultValue={transaction.data}
+            defaultValue={Buffer.from(transaction.data, 'base64').toString()}
           />
         </TransactionDetail>
       </div>
