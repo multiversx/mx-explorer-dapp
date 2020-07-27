@@ -25,7 +25,8 @@ const ValidatorsPager = ({
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;
   const prevPageNo = size === 2 ? 1 : size - 1;
 
-  const lastPage = Math.ceil(parseInt(total.toString()) / (end - start + 1));
+  const correction = size === 2 ? 0 : 1;
+  const lastPage = Math.ceil(parseInt(total.toString()) / (end - start + correction));
 
   const goToFirst = () => setPage(1);
   const goToPrev = () => setPage(prevPageNo);
