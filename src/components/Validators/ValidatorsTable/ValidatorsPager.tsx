@@ -23,7 +23,9 @@ const ValidatorsPager = ({
   const goToPrev = () => setPage(prevPageNo);
   const goToNext = () => setPage(size + 1);
 
-  const startEnd = end === 1 ? 1 : `${start.toLocaleString('en')}-${end.toLocaleString('en')}`;
+  const begin = start > 1 ? start + 1 : start;
+
+  const startEnd = end === 1 ? 1 : `${begin.toLocaleString('en')}-${end.toLocaleString('en')}`;
 
   const PagerComponent = (
     <div className="float-right mt-3">
