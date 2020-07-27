@@ -691,6 +691,10 @@ svg[data-prefix='fas'] {
       cursor: not-allowed;
     }
   }
+  svg {
+    position: relative;
+    top: 1px;
+  }
 }
 
 .overall-card {
