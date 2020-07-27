@@ -30,6 +30,18 @@ const localTestnets = [
           validatorDetails: true,
           faucet: false,
         },
+        {
+          default: false,
+          id: 'testnet-do-amsterdam',
+          name: 'DigitalOcean AMS Testnet',
+          nodeUrl: 'http://206.189.240.132:8080',
+          elasticUrl: 'http://206.189.240.135',
+          numInitCharactersForScAddress: 14,
+          gasLimitEditable: true,
+          data: true,
+          validatorDetails: true,
+          faucet: false,
+        },
       ]
     : []),
 ];
