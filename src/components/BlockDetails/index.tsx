@@ -8,6 +8,7 @@ import { isHash, dateFormatted, sizeFormat, testnetRoute, truncate, blockFunctio
 import { Loader, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { BlockType } from '../Blocks';
 import { validatorsRoutes } from 'routes';
+import './blockDetails.scss';
 
 function decodeHex(hex: string) {
   let str = '';
@@ -270,26 +271,24 @@ const BlockDetails: React.FC = () => {
                           )}
                         </div>
                       </div>
-                      {isFirsBlock && (
-                        <>
-                          <hr className="hr-space" />
-                          <div className="row">
-                            <div className="col-lg-2 card-label">Genesis Message</div>
-                            <textarea
-                              readOnly
-                              className="form-control col-lg-10 cursor-text"
-                              rows={2}
-                              defaultValue={decodeHex(block.prevHash)}
-                            />
-                          </div>
-                        </>
-                      )}
-
                       <hr className="hr-space" />
                       <div className="row">
                         <div className="col-lg-2 card-label">Public Keys Bitmap</div>
                         <div className="col-lg-10">{block.pubKeyBitmap}</div>
                       </div>
+                      {isFirsBlock && (
+                        <>
+                          <hr className="hr-space" />
+                          <div className="row">
+                            <div className="col-lg-2 card-label">Genesis Message</div>
+                            <div className="col-lg-10">
+                              <pre className="genesis rounded border px-3 pt-2 pb-4">
+                                {decodeHex(block.prevHash)}
+                              </pre>
+                            </div>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 ) : (
