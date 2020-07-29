@@ -28,7 +28,8 @@ const Pager = ({
 
   const startEnd = end === 1 ? 1 : `${start.toLocaleString('en')}-${end.toLocaleString('en')}`;
 
-  const lastPage = Math.ceil(parseInt(total.toString()) / (end - start + 1));
+  const correction = size > 2 ? 0 : 1;
+  const lastPage = Math.ceil(parseInt(total.toString()) / (end - start + correction));
 
   const PagerComponent = (
     <div className="float-right mt-3">
