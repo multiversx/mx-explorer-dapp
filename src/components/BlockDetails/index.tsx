@@ -9,6 +9,13 @@ import { Loader, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { BlockType } from '../Blocks';
 import { validatorsRoutes } from 'routes';
 
+function decodeHex(hex: string) {
+  let str = '';
+  for (let i = 0; i < hex.length; i += 2)
+    str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+  return str;
+}
+
 export interface StateType {
   block: BlockType;
   proposer: string;
@@ -45,6 +52,8 @@ const BlockDetails: React.FC = () => {
   }, [elasticUrl, blockId, timeout]); // run the operation only once since the parameter does not change
 
   const { block, proposer, consensusItems, nextHash, blockFetched } = state;
+
+  const isFirsBlock = block.prevHash.length > 64;
 
   return (
     <div ref={ref}>
@@ -171,7 +180,7 @@ const BlockDetails: React.FC = () => {
                       </div>
                       <hr className="hr-space" />
                       <div className="row">
-                        <div className="col-lg-2 card-label">Consensus group</div>
+                        <div className="col-lg-2 card-label">Consensus Group</div>
                         <div className="col-lg-10">
                           {consensusItems.length === 0 ? (
                             <span className="text-muted">N/A</span>
@@ -252,11 +261,30 @@ const BlockDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">Previous Hash</div>
                         <div className="col-lg-10">
-                          <TestnetLink className="hash" to={`/blocks/${block.prevHash}`}>
-                            {block.prevHash}
-                          </TestnetLink>
+                          {isFirsBlock ? (
+                            <span className="text-muted">N/A</span>
+                          ) : (
+                            <TestnetLink className="hash" to={`/blocks/${block.prevHash}`}>
+                              {block.prevHash}
+                            </TestnetLink>
+                          )}
                         </div>
                       </div>
+                      {isFirsBlock && (
+                        <>
+                          <hr className="hr-space" />
+                          <div className="row">
+                            <div className="col-lg-2 card-label">Genesis Message</div>
+                            <textarea
+                              readOnly
+                              className="form-control col-lg-10 cursor-text"
+                              rows={2}
+                              defaultValue={decodeHex(block.prevHash)}
+                            />
+                          </div>
+                        </>
+                      )}
+
                       <hr className="hr-space" />
                       <div className="row">
                         <div className="col-lg-2 card-label">Public Keys Bitmap</div>
