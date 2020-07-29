@@ -42,6 +42,18 @@ const localTestnets = [
           validatorDetails: true,
           faucet: false,
         },
+        {
+          default: false,
+          id: 'testnet-do-london',
+          name: 'DigitalOcean LON Testnet',
+          nodeUrl: 'http://167.172.58.140:8080',
+          elasticUrl: 'http://134.209.27.15',
+          numInitCharactersForScAddress: 14,
+          gasLimitEditable: true,
+          data: true,
+          validatorDetails: true,
+          faucet: false,
+        },
       ]
     : []),
 ];
