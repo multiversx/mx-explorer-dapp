@@ -53,7 +53,7 @@ const BlockDetails: React.FC = () => {
 
   const { block, proposer, consensusItems, nextHash, blockFetched } = state;
 
-  const isFirsBlock = block.prevHash.length > 64;
+  const isFirsBlock = block.prevHash && block.prevHash.length > 64;
 
   return (
     <div ref={ref}>
