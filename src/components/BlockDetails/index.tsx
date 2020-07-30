@@ -280,8 +280,7 @@ const BlockDetails: React.FC = () => {
                         <>
                           <hr className="hr-space" />
                           <div className="row">
-                            <div className="col-lg-2 card-label">Genesis Message</div>
-                            <div className="col-lg-10">
+                            <div className="col-lg-12">
                               <pre className="genesis rounded border px-3 pt-2 pb-4">
                                 {decodeHex(block.prevHash)}
                               </pre>
