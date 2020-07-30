@@ -1,4 +1,5 @@
 import React from 'react';
+import BigNumber from 'bignumber.js';
 import carretDown from 'assets/img/carret-down.svg';
 import BrandDetailsRow from './BrandDetailsRow';
 import { BrandType } from './BrandTable';
@@ -11,7 +12,7 @@ interface BrandRowType {
 }
 
 export const stake = (brand: BrandType) =>
-  brand.stake
+  parseFloat(new BigNumber(brand.stake).dividedBy(1000).valueOf())
     .toLocaleString('en')
     .replace(',000,000', 'm')
     .replace('00,000', 'm')
