@@ -8,6 +8,14 @@ import { isHash, dateFormatted, sizeFormat, testnetRoute, truncate, blockFunctio
 import { Loader, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { BlockType } from '../Blocks';
 import { validatorsRoutes } from 'routes';
+import './blockDetails.scss';
+
+function decodeHex(hex: string) {
+  let str = '';
+  for (let i = 0; i < hex.length; i += 2)
+    str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+  return str;
+}
 
 export interface StateType {
   block: BlockType;
@@ -45,6 +53,8 @@ const BlockDetails: React.FC = () => {
   }, [elasticUrl, blockId, timeout]); // run the operation only once since the parameter does not change
 
   const { block, proposer, consensusItems, nextHash, blockFetched } = state;
+
+  const isFirsBlock = block.prevHash && block.prevHash.length > 64;
 
   return (
     <div ref={ref}>
@@ -171,7 +181,7 @@ const BlockDetails: React.FC = () => {
                       </div>
                       <hr className="hr-space" />
                       <div className="row">
-                        <div className="col-lg-2 card-label">Consensus group</div>
+                        <div className="col-lg-2 card-label">Consensus Group</div>
                         <div className="col-lg-10">
                           {consensusItems.length === 0 ? (
                             <span className="text-muted">N/A</span>
@@ -252,9 +262,13 @@ const BlockDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">Previous Hash</div>
                         <div className="col-lg-10">
-                          <TestnetLink className="hash" to={`/blocks/${block.prevHash}`}>
-                            {block.prevHash}
-                          </TestnetLink>
+                          {isFirsBlock ? (
+                            <span className="text-muted">N/A</span>
+                          ) : (
+                            <TestnetLink className="hash" to={`/blocks/${block.prevHash}`}>
+                              {block.prevHash}
+                            </TestnetLink>
+                          )}
                         </div>
                       </div>
                       <hr className="hr-space" />
@@ -262,6 +276,18 @@ const BlockDetails: React.FC = () => {
                         <div className="col-lg-2 card-label">Public Keys Bitmap</div>
                         <div className="col-lg-10">{block.pubKeyBitmap}</div>
                       </div>
+                      {isFirsBlock && (
+                        <>
+                          <hr className="hr-space" />
+                          <div className="row">
+                            <div className="col-lg-12">
+                              <pre className="genesis rounded border px-3 pt-2 pb-4">
+                                {decodeHex(block.prevHash)}
+                              </pre>
+                            </div>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 ) : (

@@ -53,7 +53,7 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
           </div>
         </td>
 
-        <td>{stake(brand)} ERD</td>
+        <td>{stake(brand)} EGLD</td>
         <td className="stake-bar-col">
           <PercentegeBar
             totalUpTimeLabel={Math.round(brand.overallStakePercent) + '%'}

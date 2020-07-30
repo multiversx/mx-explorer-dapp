@@ -23,7 +23,7 @@ const Denominate = ({ value, showLastNonZeroDecimal = false, showErd = true }: D
   return (
     <>
       {denominatedValue}
-      {showErd && <> ERD</>}
+      {showErd && <> EGLD</>}
     </>
   );
 };

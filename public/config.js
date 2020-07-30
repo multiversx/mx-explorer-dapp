@@ -49,8 +49,8 @@ const CONFIG = {
   testnets: [
     {
       default: true,
-      id: 'zero-to-one',
-      name: 'Zero to One',
+      id: 'mainnet',
+      name: 'Mainnet',
       nodeUrl: 'https://api-facade.elrond.com',
       elasticUrl: 'https://api-facade.elrond.com',
       numInitCharactersForScAddress: 14,
