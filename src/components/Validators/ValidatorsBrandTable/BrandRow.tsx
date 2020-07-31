@@ -15,7 +15,6 @@ export const stake = (brand: BrandType) =>
   parseFloat(new BigNumber(brand.stake).dividedBy(1000).valueOf())
     .toLocaleString('en')
     .replace(',000,000', 'm')
-    .replace('00,000', 'm')
     .replace(',', '.');
 
 export const cumulativeStakePercent = (brand: BrandType) =>
