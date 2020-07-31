@@ -80,6 +80,11 @@ const routes: RouteType[] = [
     component: Blocks,
   },
   {
+    path: '/blocks/page/last',
+    title: 'Block Details',
+    component: BlockDetails,
+  },
+  {
     path: '/blocks',
     title: 'Blocks',
     component: Blocks,
@@ -157,7 +162,7 @@ const routes: RouteType[] = [
 ];
 
 const wrappedRoutes = () =>
-  routes.map(route => {
+  routes.map((route) => {
     const title = route.title ? `${route.title} • Elrond Explorer` : 'Elrond Explorer';
     return {
       path: route.path,

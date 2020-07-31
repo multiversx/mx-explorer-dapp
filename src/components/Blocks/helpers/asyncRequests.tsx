@@ -67,6 +67,48 @@ export async function getBlocks({
   }
 }
 
+export async function getLastBlocks({
+  elasticUrl,
+  timeout,
+}: {
+  elasticUrl: string;
+  timeout: number;
+}) {
+  try {
+    const { data } = await axios.get(`${elasticUrl}/blocks/last`, { timeout });
+    const blocks = data.map((block: any) => ({ hash: block.id, ...block }));
+
+    let min = blocks[0].nonce;
+    let max = min;
+    for (const block in blocks) {
+      // tslint:disable-line
+      if (blocks[block].nonce < min) {
+        min = blocks[block].nonce;
+      }
+
+      if (blocks[block].nonce > max) {
+        max = blocks[block].nonce;
+      }
+    }
+
+    const startBlockNr = min;
+    const endBlockNr = max;
+    return {
+      blocks,
+      startBlockNr,
+      endBlockNr,
+      blocksFetched: true,
+    };
+  } catch (err) {
+    return {
+      blocks: [],
+      startBlockNr: 0,
+      endBlockNr: 0,
+      blocksFetched: false,
+    };
+  }
+}
+
 export async function getTotalBlocks({
   elasticUrl,
   shardId,
