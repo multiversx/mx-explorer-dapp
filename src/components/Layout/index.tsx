@@ -30,7 +30,7 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
                       <span className="h4 empty-heading">
                         {activeTestnet.default
                           ? `${activeTestnet.name} unavailable`
-                          : `${activeTestnet.name} testnet unavialable`}
+                          : `${activeTestnet.name} network unavialable`}
                       </span>
                     </div>
                   </div>

@@ -46,7 +46,7 @@ async function getAsyncConfig({
 
     if (code === 'successful') {
       schema.validate(data, { strict: true }).catch(({ errors }) => {
-        console.error(`Faild to get config for ${id} testnet.`, errors, code, error);
+        console.error(`Faild to get config for ${id} network.`, errors, code, error);
       });
 
       const { config } = data as AsyncConfigType;
@@ -59,7 +59,7 @@ async function getAsyncConfig({
       throw new Error(error);
     }
   } catch (err) {
-    console.error(`Faild to get config for ${id} testnet.`);
+    console.error(`Faild to get config for ${id} network.`);
     return err;
   }
 }
