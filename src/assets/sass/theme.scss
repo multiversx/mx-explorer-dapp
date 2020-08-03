@@ -653,6 +653,14 @@ span.switch {
   padding: 0;
 }
 
+.badge-blue {
+  background-color: $blue;
+}
+
+.badge-blue-light {
+  background-color: $link-color;
+}
+
 th .fa,
 th svg {
   display: inline-block;
