@@ -12,10 +12,7 @@ interface BrandRowType {
 }
 
 export const stake = (brand: BrandType) =>
-  parseFloat(new BigNumber(brand.stake).dividedBy(1000).valueOf())
-    .toLocaleString('en')
-    .replace(',000,000', 'm')
-    .replace(',', '.');
+  parseFloat(new BigNumber(brand.stake).dividedBy(1000).valueOf()).toLocaleString('en');
 
 export const cumulativeStakePercent = (brand: BrandType) =>
   `${Math.round(brand.stakePercent) > 0 ? Math.round(brand.stakePercent) : '< 1'}%`;
