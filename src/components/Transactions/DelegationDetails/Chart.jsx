@@ -22,22 +22,17 @@ export default class ApexChart extends React.Component {
         },
       },
       fill: {
-        colors: ['#6b8ffb', '#1b46c2'],
+        colors: ['#fff', '#6B87D7'],
       },
       tooltip: {
         enabled: false,
       },
       plotOptions: {
-        radialBar: {
-          hollow: {
-            size: '70%',
-          },
-        },
         pie: {
           startAngle: 0,
           expandOnClick: false,
           offsetX: 0,
-          offsetY: 12,
+          offsetY: 0,
           customScale: 1,
           donut: {
             size: '80%',
@@ -51,6 +46,12 @@ export default class ApexChart extends React.Component {
       legend: {
         show: false,
       },
+      responsive: [
+        {
+          breakpoint: undefined,
+          options: {},
+        },
+      ],
       stroke: {
         show: false,
       },
@@ -59,7 +60,8 @@ export default class ApexChart extends React.Component {
     return (
       <ReactApexChart
         options={options}
-        series={[this.props.claimableRewards, this.props.stake]}
+        // series={[this.props.claimableRewards, this.props.stake]}
+        series={[this.props.claimableRewards * 10, this.props.stake]}
         type="donut"
         height={100}
       />

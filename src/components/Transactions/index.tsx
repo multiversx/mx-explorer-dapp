@@ -8,6 +8,7 @@ import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import AddressDetails, { AddressDetailsType } from './AddressDetails';
 import FailedAddress from './FailedAddress';
 import FailedTransaction from './FailedTransaction';
+import DelegationDetails from './DelegationDetails';
 import {
   getAddressDetails,
   getTotalTransactions,
@@ -110,7 +111,7 @@ const Transactions = () => {
             const claimableRewards = parseFloat(
               denominate({
                 input,
-                decimals: 4,
+                decimals: 2,
                 denomination,
                 showLastNonZeroDecimal: false,
                 addCommas: false,
@@ -121,7 +122,7 @@ const Transactions = () => {
               const stake = parseFloat(
                 denominate({
                   input,
-                  decimals: 4,
+                  decimals: 2,
                   denomination,
                   showLastNonZeroDecimal: false,
                   addCommas: false,
@@ -150,7 +151,6 @@ const Transactions = () => {
 
   const PageData = () => (
     <>
-      <AddressDetails {...{ ...addressDetails, addressId: addressId || '' }} />
       <div className="row">
         <div className="col-12">
           {title !== 'Transactions' && (
@@ -184,9 +184,11 @@ const Transactions = () => {
     </>
   );
 
+  const loader = addressDetailsLoading && addressDetails.detailsFetched;
+
   const ComponentState = () => {
     switch (true) {
-      case addressDetailsLoading && addressDetails.detailsFetched:
+      case loader:
         return <Loader />;
       case !addressIsBech32(addressId) && pathname.includes('address'):
         return <FailedAddress addressId={addressId} />;
@@ -204,7 +206,7 @@ const Transactions = () => {
       <div ref={ref}>
         <div className="container pt-3 pb-3">
           <div className="row">
-            <div className={addressDetails.stake > 0 ? 'col-md-8' : 'col-12'}>
+            <div className={addressDetails.stake > 0 ? 'col-md-6' : 'col-12'}>
               <h4>
                 <span data-testid="title">{title}</span>
                 {shardId !== undefined && shardId >= 0 && (
@@ -215,10 +217,18 @@ const Transactions = () => {
                   </>
                 )}
               </h4>
+              {!loader && (
+                <div className="row mb-4">
+                  <AddressDetails {...{ ...addressDetails, addressId: addressId || '' }} />
+                </div>
+              )}
             </div>
             {addressDetails.stake > 0 && (
-              <div className="d-none d-md-block col-md-4">
+              <div className="col-md-6">
                 <h4>Delegation</h4>
+                <div className="row mb-4">
+                  <DelegationDetails {...{ ...addressDetails, addressId: addressId || '' }} />
+                </div>
               </div>
             )}
           </div>
