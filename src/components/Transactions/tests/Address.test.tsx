@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
+import { trimHash } from 'helpers';
 import { renderWithRouter, wait, meta, config as optionalConfig } from '../../../utils/test-utils';
 import { heartbeatstatus, validators, transactionsSearch, statistics } from 'utils/rawData';
 
@@ -51,7 +52,6 @@ describe('Address', () => {
     expect(document.title).toEqual('Address Details • Elrond Explorer');
 
     await wait(async () => {
-      expect(render.getByText(address.account.address)).toBeInTheDocument();
       const pageInterval = render.getByTestId('pageInterval');
       expect(pageInterval!.innerHTML).toBe('1-50');
     });
