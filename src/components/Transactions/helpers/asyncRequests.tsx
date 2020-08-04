@@ -1,5 +1,4 @@
 import axios from 'axios';
-import bech32 from 'bech32';
 import { addressIsBech32 } from 'helpers';
 
 interface ParamsType {
@@ -129,38 +128,13 @@ export async function getAddressDetails({ nodeUrl, addressId, timeout }: Details
   }
 }
 
-function hexPublicKeyFromAddress(bech32addr: string) {
-  const dec = bech32.decode(bech32addr, 256);
-  return Buffer.from(bech32.fromWords(dec.words)).toString('hex');
-}
-
-export async function getRewards({
-  timeout,
-  addressId,
-  func,
-}: {
-  func: 'getClaimableRewards' | 'getUserStake';
-  timeout: number;
-  addressId: string;
-}) {
+export async function getRewards({ nodeUrl, addressId, timeout }: DetailsType) {
   try {
     const {
-      data: { data, code: responseCode, error },
-    } = await axios.post(
-      `http://18.157.134.171:8080/vm-values/int`,
-      JSON.stringify({
-        ScAddress: 'erd1qqqqqqqqqqqqqpgqxwakt2g7u9atsnr03gqcgmhcv38pt7mkd94q6shuwt',
-        FuncName: func,
-        Args: [hexPublicKeyFromAddress(addressId)],
-      }),
-      { timeout }
-    );
-    if (responseCode === 'successful') {
-      return data.data;
-    } else {
-      throw new Error(error);
-    }
+      data: { claimableRewards, userStake },
+    } = await axios.get(`${nodeUrl}/delegations/${addressId}`, { timeout });
+    return { claimableRewards, userStake };
   } catch (err) {
-    return 0;
+    return { claimableRewards: 0, userStake: 0 };
   }
 }

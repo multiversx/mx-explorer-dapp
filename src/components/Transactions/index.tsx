@@ -107,31 +107,27 @@ const Transactions = () => {
             stake,
             claimableRewards,
           }));
-          getRewards({ addressId, timeout, func: 'getClaimableRewards' }).then((input) => {
-            const claimableRewards = parseFloat(
+          getRewards({ nodeUrl, addressId, timeout }).then((data: any) => {
+            const rewards = parseFloat(
               denominate({
-                input,
+                input: data.claimableRewards,
                 decimals: 2,
                 denomination,
                 showLastNonZeroDecimal: false,
                 addCommas: false,
               })
             );
-            setAddressDetails((details) => ({ ...details, claimableRewards }));
-            getRewards({ addressId, timeout, func: 'getUserStake' }).then((input) => {
-              const stake = parseFloat(
-                denominate({
-                  input,
-                  decimals: 2,
-                  denomination,
-                  showLastNonZeroDecimal: false,
-                  addCommas: false,
-                })
-              );
-
-              setAddressDetails((details) => ({ ...details, stake }));
-              setAddressDetailsLoading(false);
-            });
+            const stake = parseFloat(
+              denominate({
+                input: data.userStake,
+                decimals: 2,
+                denomination,
+                showLastNonZeroDecimal: false,
+                addCommas: false,
+              })
+            );
+            setAddressDetails((details) => ({ ...details, claimableRewards: rewards, stake }));
+            setAddressDetailsLoading(false);
           });
         }
       });

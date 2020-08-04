@@ -60,8 +60,7 @@ export default class ApexChart extends React.Component {
     return (
       <ReactApexChart
         options={options}
-        // series={[this.props.claimableRewards, this.props.stake]}
-        series={[this.props.claimableRewards * 10, this.props.stake]}
+        series={[this.props.claimableRewards, this.props.stake]}
         type="donut"
         height={100}
       />
