@@ -12,19 +12,23 @@ export interface AddressDetailsType {
 }
 
 const AddressDetails = (props: AddressDetailsType) => {
-  const labelClass = `card-label col-md-2 col-lg-1`;
-  const dataClass = 'col-md-10 col-lg-11';
+  const labelClass = `card-label`;
+  const dataClass = 'col';
   const Address = (
     <div className="col-12" style={{ minHeight: '8.357rem' }}>
       <div className="card">
         <div className="card-body">
           <div className="row mt-2">
-            <div className={labelClass}>Address</div>
+            <div className={labelClass} style={{ width: '100px' }}>
+              Address
+            </div>
             <div className={dataClass}>{props.addressId}</div>
           </div>
           <hr className="hr-space" />
           <div className="row">
-            <div className={labelClass}>Balance</div>
+            <div className={labelClass} style={{ width: '100px' }}>
+              Balance
+            </div>
             <div className={dataClass}>
               {props.balance !== '...' ? (
                 <Denominate value={props.balance} showLastNonZeroDecimal />
@@ -37,8 +41,10 @@ const AddressDetails = (props: AddressDetailsType) => {
             <>
               <hr className="hr-space" />
               <div className="row">
-                <div className="col-lg-1 card-label">Code</div>
-                <div className="col-lg-11">
+                <div className="card-label" style={{ width: '100px' }}>
+                  Code
+                </div>
+                <div className="col">
                   <textarea
                     readOnly
                     className="form-control col-lg-12 cursor-text"
