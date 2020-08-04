@@ -13,15 +13,15 @@ export interface AddressDetailsType {
 }
 
 const AddressDetails = (props: AddressDetailsType) => {
-  const labelClass = `card-label col-lg-3`;
+  const labelClass = `card-label col-lg-2`;
   const dataClass = 'col-lg-9';
   const Address = (
-    <div className="col-12" style={{ height: '8.357rem' }}>
+    <div className="col-12" style={{ minHeight: '8.357rem' }}>
       <div className="card">
         <div className="card-body">
           <div className="row mt-2">
             <div className={labelClass}>Address</div>
-            <div className={dataClass}>{trimHash(props.addressId, 20)}</div>
+            <div className={dataClass}>{props.addressId}</div>
           </div>
           <hr className="hr-space" />
           <div className="row">

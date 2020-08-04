@@ -20,18 +20,16 @@ const DelegationDetails = (props: AddressDetailsType) => {
                   <span className="delegation-label">Total:</span>{' '}
                   {(props.stake + props.claimableRewards).toLocaleString('en')} eGLD{' '}
                 </p>
-                <div className="d-flex">
-                  <div className="mr-3">
-                    <span className={`badge badge-pill badge-status badge-delegation`}>&nbsp;</span>
-                    &nbsp;<span className="delegation-label">Delegation:</span>{' '}
-                    {props.stake.toLocaleString('en')}
-                  </div>
-                  <div>
-                    <span className={`badge badge-pill badge-status badge-rewards`}>&nbsp;</span>
-                    &nbsp;<span className="delegation-label">Rewards:</span>{' '}
-                    {props.claimableRewards.toLocaleString('en')}
-                  </div>
-                </div>
+                <p className="mb-1">
+                  <span className={`badge badge-pill badge-status badge-delegation`}>&nbsp;</span>
+                  &nbsp;<span className="delegation-label">Delegation:</span>{' '}
+                  {props.stake.toLocaleString('en')}
+                </p>
+                <p className="mb-0">
+                  <span className={`badge badge-pill badge-status badge-rewards`}>&nbsp;</span>
+                  &nbsp;<span className="delegation-label">Rewards:</span>{' '}
+                  {props.claimableRewards.toLocaleString('en')}
+                </p>
               </div>
             </div>
           </div>
