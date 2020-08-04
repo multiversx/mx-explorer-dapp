@@ -1,6 +1,5 @@
 import React from 'react';
 import { Denominate } from 'sharedComponents';
-import { trimHash } from 'helpers';
 
 export interface AddressDetailsType {
   addressId: string;
@@ -13,8 +12,8 @@ export interface AddressDetailsType {
 }
 
 const AddressDetails = (props: AddressDetailsType) => {
-  const labelClass = `card-label col-lg-2`;
-  const dataClass = 'col-lg-9';
+  const labelClass = `card-label col-md-2 col-lg-1`;
+  const dataClass = 'col-md-10 col-lg-11';
   const Address = (
     <div className="col-12" style={{ minHeight: '8.357rem' }}>
       <div className="card">
