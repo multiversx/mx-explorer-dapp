@@ -44,7 +44,7 @@ const Transactions = () => {
   const [addressDetailsLoading, setAddressDetailsLoading] = React.useState<boolean>(true);
 
   const {
-    activeTestnet: { elasticUrl, nodeUrl, denomination },
+    activeTestnet: { elasticUrl, nodeUrl, denomination, decimals },
     refresh: { timestamp },
     timeout,
   } = useGlobalState();
@@ -111,7 +111,7 @@ const Transactions = () => {
             const rewards = parseFloat(
               denominate({
                 input: data.claimableRewards,
-                decimals: 2,
+                decimals,
                 denomination,
                 showLastNonZeroDecimal: false,
                 addCommas: false,
@@ -120,7 +120,7 @@ const Transactions = () => {
             const stake = parseFloat(
               denominate({
                 input: data.userStake,
-                decimals: 2,
+                decimals,
                 denomination,
                 showLastNonZeroDecimal: false,
                 addCommas: false,

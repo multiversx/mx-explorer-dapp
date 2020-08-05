@@ -18,17 +18,20 @@ const DelegationDetails = (props: AddressDetailsType) => {
               <div className="text-white ml-1">
                 <p className="font-weight-bold mb-1">
                   <span className="delegation-label">Total:</span>{' '}
-                  {(props.stake + props.claimableRewards).toLocaleString('en')} eGLD{' '}
+                  {(props.stake + props.claimableRewards).toLocaleString('en', {
+                    minimumFractionDigits: 4,
+                  })}{' '}
+                  eGLD{' '}
                 </p>
                 <p className="mb-1">
                   <span className={`badge badge-pill badge-status badge-delegation`}>&nbsp;</span>
                   &nbsp;<span className="delegation-label">Delegation:</span>{' '}
-                  {props.stake.toLocaleString('en')}
+                  {props.stake.toLocaleString('en', { minimumFractionDigits: 4 })}
                 </p>
                 <p className="mb-0">
                   <span className={`badge badge-pill badge-status badge-rewards`}>&nbsp;</span>
                   &nbsp;<span className="delegation-label">Rewards:</span>{' '}
-                  {props.claimableRewards.toLocaleString('en')}
+                  {props.claimableRewards.toLocaleString('en', { minimumFractionDigits: 4 })}
                 </p>
               </div>
             </div>
