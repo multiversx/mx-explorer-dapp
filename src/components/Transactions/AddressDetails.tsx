@@ -1,6 +1,5 @@
 import React from 'react';
 import { Denominate } from 'sharedComponents';
-import { trimHash } from 'helpers';
 
 export interface AddressDetailsType {
   addressId: string;
@@ -13,19 +12,23 @@ export interface AddressDetailsType {
 }
 
 const AddressDetails = (props: AddressDetailsType) => {
-  const labelClass = `card-label col-lg-3`;
-  const dataClass = 'col-lg-9';
+  const labelClass = `card-label col flex-grow-0`;
+  const dataClass = 'col';
   const Address = (
-    <div className="col-12" style={{ height: '8.357rem' }}>
+    <div className="col-12" style={{ minHeight: '8.357rem' }}>
       <div className="card">
         <div className="card-body">
           <div className="row mt-2">
-            <div className={labelClass}>Address</div>
-            <div className={dataClass}>{trimHash(props.addressId, 20)}</div>
+            <div className={labelClass} style={{ minWidth: '100px' }}>
+              Address
+            </div>
+            <div className={dataClass}>{props.addressId}</div>
           </div>
           <hr className="hr-space" />
           <div className="row">
-            <div className={labelClass}>Balance</div>
+            <div className={labelClass} style={{ minWidth: '100px' }}>
+              Balance
+            </div>
             <div className={dataClass}>
               {props.balance !== '...' ? (
                 <Denominate value={props.balance} showLastNonZeroDecimal />
@@ -38,8 +41,10 @@ const AddressDetails = (props: AddressDetailsType) => {
             <>
               <hr className="hr-space" />
               <div className="row">
-                <div className="col-lg-1 card-label">Code</div>
-                <div className="col-lg-11">
+                <div className="card-label col flex-grow-0" style={{ minWidth: '100px' }}>
+                  Code
+                </div>
+                <div className="col">
                   <textarea
                     readOnly
                     className="form-control col-lg-12 cursor-text"

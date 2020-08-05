@@ -202,7 +202,7 @@ const Transactions = () => {
       <div ref={ref}>
         <div className="container pt-3 pb-3">
           <div className="row">
-            <div className={addressDetails.stake > 0 ? 'col-md-6' : 'col-12'}>
+            <div className={addressDetails.stake > 0 ? 'col-lg-8' : 'col-12'}>
               <h4>
                 <span data-testid="title">{title}</span>
                 {shardId !== undefined && shardId >= 0 && (
@@ -220,7 +220,7 @@ const Transactions = () => {
               )}
             </div>
             {addressDetails.stake > 0 && (
-              <div className="col-md-6">
+              <div className="col-lg-4">
                 <h4>Delegation</h4>
                 <div className="row mb-4">
                   <DelegationDetails {...{ ...addressDetails, addressId: addressId || '' }} />
