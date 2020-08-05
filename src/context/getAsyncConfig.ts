@@ -89,7 +89,7 @@ export default async function buildConfig(
         nrOfShards: testnetData!.config.erd_num_shards_without_meta,
         versionNumber: testnetData!.config.erd_latest_tag_software_version,
         denomination: testnetData!.config.erd_denomination,
-        decimals: configTestnet.decimals || 2,
+        decimals: configTestnet.decimals || 4,
         fetchedFromNetworkConfig: true,
       };
       const configObject: ConfigType = {
