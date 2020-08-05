@@ -15,6 +15,7 @@ const schema = object({
   averageBlockTxCount: number().nullable(true),
   averageTPS: number().nullable(true),
   blockNumber: number().required(),
+  blockCount: number(),
   currentBlockNonce: number().required(),
   lastBlockTxCount: number().required(),
   liveTPS: number().required(),

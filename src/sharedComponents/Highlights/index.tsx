@@ -69,7 +69,9 @@ const Hightlights = ({
           const check = data.roundsPerEpoch >= data.roundsPassed;
           const newState = success
             ? {
-                blockNumber: parseInt(data.blockNumber).toLocaleString('en'),
+                blockNumber: data.blockCount
+                  ? parseInt(data.blockCount).toLocaleString('en')
+                  : parseInt(data.blockNumber).toLocaleString('en'),
                 nrOfNodes: parseInt(data.nrOfNodes).toLocaleString('en'),
                 nrOfShards: parseInt(data.nrOfShards).toLocaleString('en'),
                 roundNumber: parseInt(data.roundNumber).toLocaleString('en'),
