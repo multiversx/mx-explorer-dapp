@@ -4,7 +4,7 @@ import Leaflet from './Leaflet';
 
 const HeroHighlights = () => {
   const { activeTestnet } = useGlobalState();
-  const isMain = activeTestnet.default && activeTestnet.elasticUrl.includes('api-facade');
+  const isMain = activeTestnet.default;
   return isMain ? (
     <div className="bg-black">
       <div className="container-fluid">
