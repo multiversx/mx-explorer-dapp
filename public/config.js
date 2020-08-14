@@ -59,6 +59,17 @@ const CONFIG = {
       validatorDetails: true,
       faucet: false,
     },
+    {
+      id: 'testnet',
+      name: 'Testnet',
+      nodeUrl: 'https://api-testnet.elrond.com',
+      elasticUrl: 'https://api-testnet.elrond.com',
+      numInitCharactersForScAddress: 14,
+      gasLimitEditable: true,
+      data: true,
+      validatorDetails: true,
+      faucet: false,
+    },
   ],
 };
 
