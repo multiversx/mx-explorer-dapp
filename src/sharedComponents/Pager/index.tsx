@@ -26,9 +26,7 @@ const Pager = ({
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;
   const prevPageNo = size === 2 ? `/${slug}` : `/${slug}/page/${size - 1}`;
 
-  const last = !isNaN(parseInt(total.toString()))
-    ? Math.min(end, parseInt(total.toString()))
-    : false;
+  const last = !isNaN(parseInt(total.toString())) ? Math.min(end, parseInt(total.toString())) : end;
 
   const startEnd = end === 1 ? 1 : `${start.toLocaleString('en')}-${last.toLocaleString('en')}`;
 
