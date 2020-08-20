@@ -32,7 +32,7 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
                         {!activeTestnet.default && (
                           <>
                             <br />
-                            `${activeTestnet.name} network`
+                            {`${activeTestnet.name} network`}
                           </>
                         )}
                       </span>
