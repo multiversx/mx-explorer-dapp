@@ -92,7 +92,7 @@ const Transactions = () => {
         shardType,
       }).then(({ count, success }) => {
         if (ref.current !== null && success) {
-          setTotalTransactions(count);
+          setTotalTransactions(Math.min(count, 10000));
         }
       });
     }
