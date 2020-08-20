@@ -131,11 +131,11 @@ const Blocks: React.FC = () => {
                     <div className="card">
                       <div className="card-body card-list">
                         <p className="mb-0">
-                          {totalBlocks !== '...' ? (
-                            <>Showing last 10,000 of {totalBlocks.toLocaleString('en')} blocks</>
-                          ) : (
-                            <>&nbsp;</>
-                          )}
+                          Showing last 10,000
+                          {totalBlocks !== '...' && (
+                            <> of {totalBlocks.toLocaleString('en')}</>
+                          )}{' '}
+                          blocks
                         </p>
                         <BlocksTable blocks={state.blocks} shardId={shardId} />
                         <Pager
