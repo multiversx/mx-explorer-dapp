@@ -140,7 +140,7 @@ const Blocks: React.FC = () => {
                         <BlocksTable blocks={state.blocks} shardId={shardId} />
                         <Pager
                           slug={slug}
-                          total={totalBlocks}
+                          total={10000}
                           start={(size - 1) * 25 + (size === 1 ? 1 : 0)}
                           end={
                             (size - 1) * 25 +
