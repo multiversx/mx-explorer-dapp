@@ -6,7 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import TestnetLink from './../TestnetLink';
 
 const Pager = ({
@@ -23,30 +23,24 @@ const Pager = ({
   show: boolean;
 }) => {
   const { page } = useParams();
-  const { pathname } = useLocation();
-
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;
   const prevPageNo = size === 2 ? `/${slug}` : `/${slug}/page/${size - 1}`;
 
-  const startEnd = end === 1 ? 1 : `${start.toLocaleString('en')}-${end.toLocaleString('en')}`;
+  const last = !isNaN(parseInt(total.toString()))
+    ? Math.min(end, parseInt(total.toString()))
+    : false;
+
+  const startEnd = end === 1 ? 1 : `${start.toLocaleString('en')}-${last.toLocaleString('en')}`;
 
   const correction = size > 2 ? 0 : 1;
-  const lastPage = `${Math.ceil(parseInt(total.toString()) / (end - start + correction))}`;
-
-  const blocksPager = pathname.includes('/blocks');
-
-  const isLastBlocksPage = page === 'last';
-
-  const firstCondition = blocksPager ? size === 1 && !isLastBlocksPage : size === 1;
-  const prevCondition = blocksPager ? size === 1 || isLastBlocksPage : size === 1;
-  const nextCondition = blocksPager ? end < total && !isLastBlocksPage : end < total;
+  const lastPage = Math.ceil(parseInt(total.toString()) / (end - start + correction));
 
   const PagerComponent = (
     <div className="float-right mt-3">
       <ul className="list-inline">
         <li className="list-inline-item">
           <div className="pager">
-            {firstCondition ? (
+            {size === 1 ? (
               <span>
                 <FontAwesomeIcon icon={faAngleDoubleLeft} /> First
               </span>
@@ -58,7 +52,7 @@ const Pager = ({
           </div>
         </li>
         <li className="list-inline-item">
-          {prevCondition ? (
+          {size === 1 ? (
             <div className="pager">
               <span data-testid="disabledPreviousPageButton">
                 <FontAwesomeIcon icon={faAngleLeft} /> Prev
@@ -80,7 +74,7 @@ const Pager = ({
           </span>
         </li>
         <li className="list-inline-item ml-2">
-          {nextCondition ? (
+          {end < total ? (
             <div className="pager">
               <TestnetLink data-testid="nextPageButton" to={`/${slug}/page/${size + 1}`}>
                 Next <FontAwesomeIcon icon={faAngleRight} />
@@ -97,25 +91,14 @@ const Pager = ({
 
         <li className="list-inline-item">
           <div className="pager">
-            {page === 'last' ? (
+            {!isNaN(lastPage) && end < total ? (
+              <TestnetLink data-testid="nextPageButton" to={`/${slug}/page/${lastPage}`}>
+                Last <FontAwesomeIcon icon={faAngleDoubleRight} />
+              </TestnetLink>
+            ) : (
               <span>
                 Last <FontAwesomeIcon icon={faAngleDoubleRight} />
               </span>
-            ) : (
-              <>
-                {!isNaN(Number(lastPage)) && end < total ? (
-                  <TestnetLink
-                    data-testid="nextPageButton"
-                    to={`/${slug}/page/${blocksPager ? 'last' : lastPage}`}
-                  >
-                    Last <FontAwesomeIcon icon={faAngleDoubleRight} />
-                  </TestnetLink>
-                ) : (
-                  <span>
-                    Last <FontAwesomeIcon icon={faAngleDoubleRight} />
-                  </span>
-                )}
-              </>
             )}
           </div>
         </li>
