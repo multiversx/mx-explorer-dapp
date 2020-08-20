@@ -4,7 +4,7 @@ import { useGlobalState } from 'context';
 import * as React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { BlocksTable, Loader, Pager, ShardSpan } from 'sharedComponents';
-import { getBlocks, getTotalBlocks, getLastBlocks } from './helpers/asyncRequests';
+import { getBlocks, getTotalBlocks } from './helpers/asyncRequests';
 
 export interface BlockType {
   hash: string;
@@ -68,27 +68,16 @@ const Blocks: React.FC = () => {
 
   const fetchBlocks = () => {
     if (ref.current !== null) {
-      if (page !== 'last') {
-        getBlocks({ elasticUrl, size, shardId, timeout, epochId }).then((data) => {
-          if (ref.current !== null) {
-            if (data.blocksFetched) {
-              setState(data);
-            } else if (state.blocks.length === 0) {
-              setState({ ...initialState, blocksFetched: false });
-            }
+      getBlocks({ elasticUrl, size, shardId, timeout, epochId }).then((data) => {
+        if (ref.current !== null) {
+          if (data.blocksFetched) {
+            setState(data);
+          } else if (state.blocks.length === 0) {
+            setState({ ...initialState, blocksFetched: false });
           }
-        });
-      } else {
-        getLastBlocks({ elasticUrl, timeout }).then((data) => {
-          if (ref.current !== null) {
-            if (data.blocksFetched) {
-              setState(data);
-            } else if (state.blocks.length === 0) {
-              setState({ ...initialState, blocksFetched: false });
-            }
-          }
-        });
-      }
+        }
+      });
+
       getTotalBlocks({ elasticUrl, shardId, timeout, epochId }).then(({ count, success }) => {
         if (ref.current !== null && success) {
           setTotalBlocks(count);
@@ -141,6 +130,13 @@ const Blocks: React.FC = () => {
                   {state.blocks.length > 0 ? (
                     <div className="card">
                       <div className="card-body card-list">
+                        <p className="mb-0">
+                          {totalBlocks !== '...' ? (
+                            <>Showing last 10,000 of {totalBlocks.toLocaleString('en')} blocks</>
+                          ) : (
+                            <>&nbsp;</>
+                          )}
+                        </p>
                         <BlocksTable blocks={state.blocks} shardId={shardId} />
                         <Pager
                           slug={slug}
