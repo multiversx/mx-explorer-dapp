@@ -3,15 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { testnetRoute } from 'helpers';
 import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { isAddress, isBlock, isTransaction } from './helpers/asyncRequests';
-import useSetValidatorsData from 'components/Validators/useSetValidatorsData';
-
-const FetchValidatorsComponent = () => {
-  const ref = React.useRef(null);
-  useSetValidatorsData(ref);
-  return <i ref={ref} />;
-};
 
 const Search = () => {
   const {
@@ -21,7 +14,6 @@ const Search = () => {
     brandData,
     validatorData,
   } = useGlobalState();
-  const { pathname } = useLocation();
 
   const history = useHistory();
   const [hash, setHash] = React.useState<string>('');
@@ -66,11 +58,12 @@ const Search = () => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setHash(e.target.value);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHash(e.target.value);
+  };
 
   return (
     <>
-      {!pathname.includes('validators') && brandData.length === 0 && <FetchValidatorsComponent />}
       <input
         type="text"
         className="form-control mr-sm-2 pl-3"
@@ -88,7 +81,6 @@ const Search = () => {
           className="input-group-text"
           onClick={onClick}
           data-testid="searchButton"
-          disabled={validatorData.validators.length === 0}
         >
           <FontAwesomeIcon icon={faSearch} />
         </button>
