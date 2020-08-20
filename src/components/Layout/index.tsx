@@ -28,9 +28,7 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
                     <div className="empty">
                       <FontAwesomeIcon icon={faBan} className="empty-icon" />
                       <span className="h4 empty-heading">
-                        {activeTestnet.default
-                          ? `${activeTestnet.name} unavailable`
-                          : `${activeTestnet.name} network unavialable`}
+                        There was an internal website error. Please try again.
                       </span>
                     </div>
                   </div>
