@@ -9,7 +9,7 @@ export type ActionType =
     }
   | { type: 'setValidatorData'; validatorData: StateType['validatorData'] }
   | { type: 'setBrandData'; brandData: StateType['brandData'] }
-  | { type: 'triggerNewRound' }
+  | { type: 'triggerNewRound'; intervalId: any }
   | { type: 'cancelAllRequests' }
   | {
       type: 'setNewRoundIntervalId';
@@ -30,6 +30,10 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
       return { ...state, config: action.config };
     }
     case 'triggerNewRound': {
+      if (action.intervalId !== state.refresh.intervalId) {
+        clearInterval(action.intervalId);
+      }
+
       return {
         ...state,
         refresh: {
