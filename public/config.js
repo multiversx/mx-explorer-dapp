@@ -33,6 +33,7 @@ const CONFIG = {
     },
   ],
   explorerApi: 'https://explorer-api.elrond.com',
+  // secondary: true,
   /*
       Legend:
         decimals: number of displayed ERD decimals in explorer
