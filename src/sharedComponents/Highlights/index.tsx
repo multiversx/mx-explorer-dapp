@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import { useGlobalState } from 'context';
-import { defaultTestnet } from 'context/config';
 import DefaultHighlights from './DefaultHighlights';
 import { getStats } from './helpers/asyncRequests';
 import HeroHighlights from './HeroHighlights';
@@ -65,7 +64,7 @@ const Hightlights = ({
   }, [activeTestnetId]);
 
   const getHighlights = () => {
-    if (ref.current !== null && activeTestnetId !== defaultTestnet.id) {
+    if (ref.current !== null) {
       getStats({
         elasticUrl,
         nodeUrl,
@@ -115,7 +114,7 @@ const Hightlights = ({
     }
   };
 
-  React.useEffect(getHighlights, [timestamp]); // run the operation only once since the parameter does not change
+  React.useEffect(getHighlights, [timestamp, activeTestnetId]); // run the operation only once since the parameter does not change
 
   const props = activeTestnetId in state ? state[activeTestnetId] : initialState;
 
