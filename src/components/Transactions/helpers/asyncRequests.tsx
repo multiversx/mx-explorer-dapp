@@ -93,8 +93,6 @@ export async function getTransactions({
 
     data = hits.hits.map((entry: any) => ({ hash: entry._id, ...entry._source }));
 
-    console.log(data);
-
     return {
       data,
       success: data.length > 0,
