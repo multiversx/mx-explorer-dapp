@@ -60,8 +60,6 @@ export interface StateType {
   cancelToken: CancelTokenSource | undefined;
   refresh: {
     timestamp: number;
-    intervalId: ReturnType<typeof setInterval>;
-    testnetId: string;
   };
   validatorData: typeof validatorData;
   brandData: typeof brandData;
@@ -79,8 +77,6 @@ const initialState = (config: ConfigType, optionalConfig?: ConfigType): StateTyp
     cancelToken: undefined,
     refresh: {
       timestamp: Date.now(),
-      intervalId: setInterval(() => null, 10000000),
-      testnetId: 'default',
     },
     validatorData,
     brandData,

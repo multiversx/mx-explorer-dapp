@@ -9,13 +9,8 @@ export type ActionType =
     }
   | { type: 'setValidatorData'; validatorData: StateType['validatorData'] }
   | { type: 'setBrandData'; brandData: StateType['brandData'] }
-  | { type: 'triggerNewRound'; intervalId: any }
-  | { type: 'cancelAllRequests' }
-  | {
-      type: 'setNewRoundIntervalId';
-      intervalId: ReturnType<typeof setInterval>;
-      testnetId: string;
-    };
+  | { type: 'triggerNewRound' }
+  | { type: 'cancelAllRequests' };
 
 export function globalReducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
@@ -24,32 +19,23 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
       const activeTestnet = newTestnet || state.defaultTestnet;
       // once activeTestnetId is populated, routes get prepended by testnetId
 
-      return { ...state, activeTestnet, activeTestnetId: action.testnetId };
+      return {
+        ...state,
+        activeTestnet,
+        activeTestnetId: action.testnetId,
+        refresh: {
+          timestamp: Date.now(),
+        },
+      };
     }
     case 'updateTestnets': {
       return { ...state, config: action.config };
     }
     case 'triggerNewRound': {
-      if (action.intervalId !== state.refresh.intervalId) {
-        clearInterval(action.intervalId);
-      }
-
       return {
         ...state,
         refresh: {
-          ...state.refresh,
           timestamp: Date.now(),
-        },
-      };
-    }
-    case 'setNewRoundIntervalId': {
-      const { intervalId, testnetId } = action;
-      return {
-        ...state,
-        refresh: {
-          ...state.refresh,
-          intervalId,
-          testnetId,
         },
       };
     }

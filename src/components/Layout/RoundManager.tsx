@@ -1,32 +1,31 @@
 import React from 'react';
+import moment from 'moment';
 import { useGlobalState, useGlobalDispatch } from 'context';
-import { defaultTestnet } from 'context/config';
 
 export default function RoundManager() {
-  const globalState = useGlobalState();
+  const {
+    activeTestnet: { refreshRate },
+    refresh: { timestamp },
+  } = useGlobalState();
   const dispatch = useGlobalDispatch();
+  const [int, setInt] = React.useState<any>(-1);
 
-  function setRoundsForCurrentTestnet() {
-    const {
-      activeTestnet: { refreshRate, name, fetchedFromNetworkConfig },
-      activeTestnetId,
-      refresh: { testnetId, intervalId: oldIntervalId },
-    } = globalState;
+  const withinInterval = moment().subtract(refreshRate, 'ms').isAfter(moment(timestamp));
 
-    if (name === defaultTestnet.name || !fetchedFromNetworkConfig) {
-      clearInterval(oldIntervalId);
-    } else {
-      if (testnetId !== activeTestnetId) {
-        clearInterval(oldIntervalId);
-        const intervalId = setInterval(() => {
-          dispatch({ type: 'triggerNewRound', intervalId });
-        }, refreshRate);
-        dispatch({ type: 'setNewRoundIntervalId', intervalId, testnetId });
+  const setRounds = () => {
+    clearInterval(int);
+    const intervalId = setInterval(() => {
+      if (!withinInterval) {
+        dispatch({
+          type: 'triggerNewRound',
+        });
       }
-    }
-  }
+    }, refreshRate);
+    setInt(intervalId);
+  };
 
-  React.useEffect(setRoundsForCurrentTestnet, [globalState.activeTestnetId]);
+  // TODO: add refreshRate as parameter
+  React.useEffect(setRounds, []);
 
   return <></>;
 }
