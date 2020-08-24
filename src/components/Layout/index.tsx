@@ -10,9 +10,28 @@ import RoundManager from './RoundManager';
 import { Highlights } from 'sharedComponents';
 
 const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: React.ReactNode }) => {
-  const { activeTestnet } = useGlobalState();
+  const {
+    activeTestnet,
+    config: { secondary },
+  } = useGlobalState();
   const { pathname } = useLocation();
   const validators = pathname.includes('/validators');
+
+  React.useEffect(() => {
+    if (secondary) {
+      if (process.env.NODE_ENV === 'production') {
+        const stylesheet = document.querySelector('#primary-stylesheet');
+        if (stylesheet) {
+          (stylesheet as any).parentNode.removeChild(stylesheet);
+        }
+      } else {
+        require('assets/sass/secondary.scss');
+      }
+    } else {
+      require('assets/sass/primary.scss');
+    }
+  }, [secondary]);
+
   return (
     <>
       <TestnetRouter />
