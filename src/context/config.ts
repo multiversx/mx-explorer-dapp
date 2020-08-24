@@ -23,6 +23,7 @@ export const defaultTestnet: TestnetType = {
 export const buildInitialConfig = (config?: any): ConfigType => {
   return {
     metaChainShardId: config.metaChainShardId || 4294967295,
+    secondary: Boolean(config.secondary),
     elrondApps: config.elrondApps.length
       ? config.elrondApps
       : [

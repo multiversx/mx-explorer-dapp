@@ -49,6 +49,7 @@ export interface ConfigType {
   elrondApps: AppsType[];
   explorerApi: string;
   testnets: TestnetType[];
+  secondary: boolean;
 }
 
 export interface StateType {
