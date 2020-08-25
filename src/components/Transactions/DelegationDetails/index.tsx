@@ -1,9 +1,13 @@
 import React from 'react';
 import Chart from './Chart';
+import { useGlobalState } from 'context';
 import { AddressDetailsType } from './../AddressDetails';
 import './delegationDetails.scss';
 
 const DelegationDetails = (props: AddressDetailsType) => {
+  const {
+    config: { erdLabel },
+  } = useGlobalState();
   const Delegation = (
     <>
       {props.stake > 0 && (
@@ -21,7 +25,7 @@ const DelegationDetails = (props: AddressDetailsType) => {
                   {(props.stake + props.claimableRewards).toLocaleString('en', {
                     minimumFractionDigits: 4,
                   })}{' '}
-                  eGLD{' '}
+                  {erdLabel}{' '}
                 </p>
                 <p className="mb-1">
                   <span className={`badge badge-pill badge-status badge-delegation`}>&nbsp;</span>

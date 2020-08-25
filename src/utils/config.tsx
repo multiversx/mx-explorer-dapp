@@ -1,5 +1,6 @@
 export default {
   metaChainShardId: 4294967295,
+  erdLabel: 'eGLD',
   elrondApps: [
     { id: 'main-site', name: 'Main site', to: 'https://elrond.com/' },
     { id: 'wallet', name: 'Wallet', to: 'https://wallet.elrond.com/' },

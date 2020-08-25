@@ -46,6 +46,7 @@ interface AppsType {
 
 export interface ConfigType {
   metaChainShardId: number;
+  erdLabel: string;
   elrondApps: AppsType[];
   explorerApi: string;
   testnets: TestnetType[];

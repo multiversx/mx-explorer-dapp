@@ -1,5 +1,6 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
+import { useGlobalState } from 'context';
 import carretDown from 'assets/img/carret-down.svg';
 import BrandDetailsRow from './BrandDetailsRow';
 import { BrandType } from './BrandTable';
@@ -20,6 +21,10 @@ export const cumulativeStakePercent = (brand: BrandType) =>
 const BrandRow = ({ brand, rank }: BrandRowType) => {
   const [collapsed, setCollapsed] = React.useState(true);
   const [showDetails, setShowDetails] = React.useState(false);
+
+  const {
+    config: { erdLabel },
+  } = useGlobalState();
 
   const onClick = () => {
     setShowDetails(true);
@@ -50,7 +55,9 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
           </div>
         </td>
 
-        <td>{stake(brand)} eGLD</td>
+        <td>
+          {stake(brand)} {erdLabel}
+        </td>
         <td className="stake-bar-col">
           <PercentegeBar
             totalUpTimeLabel={Math.round(brand.overallStakePercent) + '%'}

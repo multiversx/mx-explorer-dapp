@@ -11,6 +11,7 @@ interface DenominateType {
 const Denominate = ({ value, showLastNonZeroDecimal = false, showErd = true }: DenominateType) => {
   const {
     activeTestnet: { denomination, decimals },
+    config: { erdLabel },
   } = useGlobalState();
 
   const denominatedValue = denominate({
@@ -23,7 +24,7 @@ const Denominate = ({ value, showLastNonZeroDecimal = false, showErd = true }: D
   return (
     <>
       {denominatedValue}
-      {showErd && <> eGLD</>}
+      {showErd && <> {erdLabel}</>}
     </>
   );
 };

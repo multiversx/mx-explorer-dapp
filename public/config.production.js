@@ -1,5 +1,6 @@
 const CONFIG = {
   metaChainShardId: 4294967295,
+  erdLabel: 'eGLD',
   elrondApps: [
     {
       id: 'main-site',
