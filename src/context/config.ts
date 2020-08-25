@@ -24,6 +24,7 @@ export const buildInitialConfig = (config?: any): ConfigType => {
   return {
     metaChainShardId: config.metaChainShardId || 4294967295,
     erdLabel: config.erdLabel,
+    secondary: Boolean(config.secondary),
     elrondApps: config.elrondApps.length
       ? config.elrondApps
       : [
