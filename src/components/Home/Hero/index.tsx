@@ -4,7 +4,7 @@ import Leaflet from './Leaflet';
 
 const HeroHighlights = () => {
   const { activeTestnet } = useGlobalState();
-  const isMain = activeTestnet.name === 'Mainnet';
+  const isMain = activeTestnet.name.toLocaleLowerCase() === 'mainnet';
   return isMain ? (
     <div className="bg-black">
       <div className="container-fluid">
