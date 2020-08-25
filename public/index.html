@@ -60,10 +60,12 @@
     </script>
     <!-- Website configuration file -->
     <script src="%PUBLIC_URL%/config.js?cachebust=%REACT_APP_CACHE_BUST%"></script>
-
-
   </head>
   <body>
+    <link id="scondary-stylesheet" rel="stylesheet" type="text/css" href="%PUBLIC_URL%/secondary.css?cachebust=%REACT_APP_CACHE_BUST%"></link>
+    <!-- Remove this for dev -->
+    <link id="primary-stylesheet" rel="stylesheet" type="text/css" href="%PUBLIC_URL%/primary.css?cachebust=%REACT_APP_CACHE_BUST%"></link>
+    <!-- Remove this for dev -->
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
@@ -77,8 +79,4 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
-  <link id="scondary-stylesheet" rel="stylesheet" type="text/css" href="%PUBLIC_URL%/secondary.css?cachebust=%REACT_APP_CACHE_BUST%"></link>
-  <!-- Remove this for dev -->
-  <link id="primary-stylesheet" rel="stylesheet" type="text/css" href="%PUBLIC_URL%/primary.css?cachebust=%REACT_APP_CACHE_BUST%"></link>
-  <!-- Remove this for dev -->
 </html>

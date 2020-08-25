@@ -19,16 +19,17 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
 
   React.useEffect(() => {
     if (secondary) {
-      if (process.env.NODE_ENV === 'production') {
-        const stylesheet = document.querySelector('#primary-stylesheet');
-        if (stylesheet) {
-          (stylesheet as any).parentNode.removeChild(stylesheet);
-        }
-      } else {
+      const stylesheet = document.querySelector('#primary-stylesheet');
+      if (stylesheet) {
+        (stylesheet as any).parentNode.removeChild(stylesheet);
+      }
+      if (process.env.NODE_ENV === 'development') {
         require('assets/sass/secondary.scss');
       }
     } else {
-      require('assets/sass/primary.scss');
+      if (process.env.NODE_ENV === 'development') {
+        require('assets/sass/primary.scss');
+      }
     }
   }, [secondary]);
 
