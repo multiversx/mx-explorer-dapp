@@ -9,6 +9,13 @@ import { useGlobalState } from 'context';
 import RoundManager from './RoundManager';
 import { Highlights } from 'sharedComponents';
 
+const removeStylesheet = (stylesheetId: string) => {
+  const stylesheet = document.querySelector(stylesheetId);
+  if (stylesheet) {
+    (stylesheet as any).parentNode.removeChild(stylesheet);
+  }
+};
+
 const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: React.ReactNode }) => {
   const {
     activeTestnet,
@@ -18,18 +25,16 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
   const validators = pathname.includes('/validators');
 
   React.useEffect(() => {
-    if (secondary) {
-      const stylesheet = document.querySelector('#primary-stylesheet');
-      if (stylesheet) {
-        (stylesheet as any).parentNode.removeChild(stylesheet);
-      }
-      if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development') {
+      removeStylesheet('#primary-stylesheet');
+      removeStylesheet('#scondary-stylesheet');
+      if (secondary) {
         require('assets/sass/secondary.scss');
-      }
-    } else {
-      if (process.env.NODE_ENV === 'development') {
+      } else {
         require('assets/sass/primary.scss');
       }
+    } else if (secondary) {
+      removeStylesheet('#primary-stylesheet');
     }
   }, [secondary]);
 
