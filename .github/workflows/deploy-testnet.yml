@@ -12,6 +12,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: api
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
@@ -22,7 +24,7 @@ jobs:
         uses: canastro/copy-file-action@master
         with:
           source: 'public/config.testnet.js'
-          target: 'public/config.js'
+          target: 'build/config.js'
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --follow-symlinks --delete
