@@ -1,6 +1,7 @@
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
+import { defaultTestnet } from 'context/config';
 import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -17,6 +18,33 @@ export default function TestnetSwitcher({ onToggle }: { onToggle: (prop: boolean
   const hidePopover = () => {
     document.body.click();
     onToggle(false);
+  };
+
+  const changeTestnet = (testnetId: string) => (e: React.MouseEvent) => {
+    hidePopover();
+    if (globalState.activeTestnetId !== testnetId) {
+      const testnet =
+        globalState.config.testnets.find((t) => {
+          if (testnetId) {
+            return t.id === testnetId;
+          } else return t.default;
+        }) || defaultTestnet;
+
+      if (!testnet.default) {
+        switch (testnet.name.toLocaleLowerCase()) {
+          case 'mainnet':
+            e.preventDefault();
+            window.location.href = 'https://explorer.elrond.com/';
+            break;
+          case 'testnet':
+            e.preventDefault();
+            window.location.href = 'https://testnet-explorer.elrond.com/';
+            break;
+          default:
+            break;
+        }
+      }
+    }
   };
 
   return (
@@ -36,7 +64,7 @@ export default function TestnetSwitcher({ onToggle }: { onToggle: (prop: boolean
               className={`dropdown-item ${globalState.activeTestnetId === link.to ? 'active' : ''}`}
               key={link.key}
               to={`/${link.to}`}
-              onClick={hidePopover}
+              onClick={changeTestnet(link.to)}
             >
               {link.name}
             </Link>
