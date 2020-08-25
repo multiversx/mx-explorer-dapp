@@ -10,6 +10,7 @@ export default {
     { id: 'docs', name: 'Docs', to: 'https://docs.elrond.com/' },
   ],
   explorerApi: 'https://explorer-api.elrond.com',
+  secondary: false,
   testnets: [
     {
       default: true,

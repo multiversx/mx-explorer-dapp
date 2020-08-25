@@ -9,10 +9,35 @@ import { useGlobalState } from 'context';
 import RoundManager from './RoundManager';
 import { Highlights } from 'sharedComponents';
 
+const removeStylesheet = (stylesheetId: string) => {
+  const stylesheet = document.querySelector(stylesheetId);
+  if (stylesheet) {
+    (stylesheet as any).parentNode.removeChild(stylesheet);
+  }
+};
+
 const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: React.ReactNode }) => {
-  const { activeTestnet } = useGlobalState();
+  const {
+    activeTestnet,
+    config: { secondary },
+  } = useGlobalState();
   const { pathname } = useLocation();
   const validators = pathname.includes('/validators');
+
+  React.useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      removeStylesheet('#primary-stylesheet');
+      removeStylesheet('#scondary-stylesheet');
+      if (secondary) {
+        require('assets/sass/secondary.scss');
+      } else {
+        require('assets/sass/primary.scss');
+      }
+    } else if (secondary) {
+      removeStylesheet('#primary-stylesheet');
+    }
+  }, [secondary]);
+
   return (
     <>
       <TestnetRouter />

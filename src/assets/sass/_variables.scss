@@ -1,9 +1,6 @@
-$blue: #1b46c2;
-$link-color: #6b8ffb;
-
 .bg-blue {
   // background-image: linear-gradient(150deg, #0baae9, #1851db);
-  background-color: #1b46c2 !important;
+  background-color: $blue !important;
   // background-image: linear-gradient(150deg,lighten($blue,20%),$blue);
   background-repeat: repeat-x;
 }

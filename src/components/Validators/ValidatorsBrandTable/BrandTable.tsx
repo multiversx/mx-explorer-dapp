@@ -4,7 +4,7 @@ import { ValidatorType, BrandDataType as ContextBrandDataType } from 'context/va
 
 import { groupByBrandAndSort } from './helpers/brandHelper';
 import Tabs from '../Tabs';
-import './validatorsBrand.scss';
+// import './validatorsBrand.scss';
 
 export interface BrandType {
   name: string;
