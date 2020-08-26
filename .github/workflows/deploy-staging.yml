@@ -5,6 +5,7 @@ on:
     branches: [api]
   repository_dispatch:
     types: deploy-staging
+  workflow_dispatch:
 
 jobs:
   build:
@@ -34,3 +35,12 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: 'eu-central-1'
           SOURCE_DIR: 'build'
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_ICON_EMOJI: ':globe_with_meridians:'
+          SLACK_USERNAME: explorer.elrond.com
+          SLACK_MESSAGE: 'Build deployed to -> ***REMOVED***/'
+          SLACK_FOOTER: ''
+          MSG_MINIMAL: true
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
