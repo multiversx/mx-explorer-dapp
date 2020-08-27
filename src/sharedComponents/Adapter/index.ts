@@ -1,7 +1,7 @@
 import { useGlobalState } from 'context';
 import elastic from './elastic';
 import api from './api';
-import { getLatestBlocks, getLatestTransactions } from './functions';
+import { getLatestBlocks, getLatestTransactions, getBlocks, GetBlocksType } from './functions';
 
 const providers = {
   api,
@@ -19,5 +19,7 @@ export default function useAdapter() {
   return {
     getLatestBlocks: () => getLatestBlocks({ provider, elasticUrl, timeout }),
     getLatestTransactions: () => getLatestTransactions({ provider, elasticUrl, timeout }),
+    getBlocks: ({ size, shardId, epochId }: GetBlocksType) =>
+      getBlocks({ provider, elasticUrl, size, shardId, epochId, timeout }),
   };
 }
