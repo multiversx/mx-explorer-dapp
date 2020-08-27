@@ -20,7 +20,7 @@ export async function getTransaction({
 }
 
 interface GetTransactionsType {
-  nodeUrl: string;
+  baseUrl: string;
   timeout: number;
   transactionId: string;
 }
@@ -28,7 +28,7 @@ interface GetTransactionsType {
 export async function getPendingTransaction({
   transactionId,
   timeout,
-  nodeUrl,
+  baseUrl,
 }: GetTransactionsType) {
   try {
     const {
@@ -37,7 +37,7 @@ export async function getPendingTransaction({
         code,
         error,
       },
-    } = await axios.get(`${nodeUrl}/transaction/${transactionId}`, { timeout });
+    } = await axios.get(`${baseUrl}/transaction/${transactionId}`, { timeout });
 
     if (code === 'successful') {
       return {
