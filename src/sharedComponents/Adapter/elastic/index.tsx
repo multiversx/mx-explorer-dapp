@@ -80,24 +80,23 @@ const wrapper = ({ baseUrl, url, params = {}, timeout }: any) => {
   }
 
   if (id === 'count') {
-    return axios({
-      method: 'POST',
-      url: `${baseUrl}/${collection}/_count`,
-      data: {
+    return axios.post(
+      `${baseUrl}/${collection}/_count`,
+      {
         query,
       },
-      timeout,
-      transformResponse: [
-        (data) => {
-          const { count } = JSON.parse(data);
-          return count;
-        },
-      ],
-    });
+      {
+        timeout,
+        transformResponse: [
+          (data) => {
+            const { count } = JSON.parse(data);
+            return count;
+          },
+        ],
+      }
+    );
   } else if (id !== undefined) {
-    return axios({
-      method: 'GET',
-      url: `${baseUrl}/${collection}/_doc/${id}`,
+    return axios.get(`${baseUrl}/${collection}/_doc/${id}`, {
       timeout,
       transformResponse: [
         (resp) => {
@@ -109,30 +108,31 @@ const wrapper = ({ baseUrl, url, params = {}, timeout }: any) => {
   } else {
     const { from = 0, size = 25 } = params || {};
 
-    return axios({
-      method: 'POST',
-      url: `${baseUrl}/${collection}/_search`,
-      timeout,
-      data: {
+    return axios.post(
+      `${baseUrl}/${collection}/_search`,
+      {
         sort: { timestamp: { order: 'desc' } },
         query,
         from,
         size,
       },
-      transformResponse: [
-        (data) => {
-          const {
-            hits: { hits },
-          } = JSON.parse(data);
-          const body: any = [];
-          hits.map(({ _id, _source }: any) => {
-            body.push({ id: _id, ..._source });
-            return null;
-          });
-          return body;
-        },
-      ],
-    });
+      {
+        timeout,
+        transformResponse: [
+          (data) => {
+            const {
+              hits: { hits },
+            } = JSON.parse(data);
+            const body: any = [];
+            hits.map(({ _id, _source }: any) => {
+              body.push({ id: _id, ..._source });
+              return null;
+            });
+            return body;
+          },
+        ],
+      }
+    );
   }
 };
 

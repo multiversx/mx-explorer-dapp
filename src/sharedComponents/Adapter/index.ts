@@ -11,11 +11,6 @@ import {
   getPendingTransaction,
 } from './functions';
 
-const providers = {
-  api,
-  elastic,
-};
-
 // TODO: daca pun ruta de elastic default
 
 export default function useAdapter() {
@@ -24,7 +19,18 @@ export default function useAdapter() {
     timeout,
   } = useGlobalState();
 
-  const provider = providers[adapter];
+  const providers = {
+    api: {
+      provider: api,
+      proxyUrl: elasticUrl,
+    },
+    elastic: {
+      provider: elastic,
+      proxyUrl: nodeUrl,
+    },
+  };
+
+  const { provider, proxyUrl } = providers[adapter];
 
   return {
     getLatestBlocks: () => getLatestBlocks({ provider, elasticUrl, timeout }),
@@ -36,6 +42,6 @@ export default function useAdapter() {
     getTransaction: ({ transactionId }: { transactionId: string }) =>
       getTransaction({ provider, elasticUrl, transactionId, timeout }),
     getPendingTransaction: ({ transactionId }: { transactionId: string }) =>
-      getPendingTransaction({ nodeUrl, transactionId, timeout }),
+      getPendingTransaction({ baseUrl: proxyUrl, transactionId, timeout }),
   };
 }
