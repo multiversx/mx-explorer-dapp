@@ -14,6 +14,7 @@ import TransactionsTable from './TransactionsTable';
 import TransactionStatus from './TransactionStatus';
 import TooltipWithCopy from './TooltipWithCopy';
 import CopyButton from './CopyButton';
+import adapter from './Adapter';
 
 export {
   Denominate,
@@ -33,4 +34,5 @@ export {
   TransactionStatus,
   TooltipWithCopy,
   CopyButton,
+  adapter,
 };

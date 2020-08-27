@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useGlobalState } from 'context';
 import { dateFormatted, trimHash } from 'helpers';
-import { ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
+import { ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
 import { BlockType } from './../Blocks';
 import { getBlocks } from './helpers/asyncRequests';
 import './animatedList.scss';
@@ -21,6 +21,14 @@ const LatestBlocks: React.FC = () => {
   } = useGlobalState();
   const [blocks, setBlocks] = React.useState<LatestBlockType[]>([]);
   const [blocksFetched, setBlocksFetched] = React.useState<boolean>(true);
+
+  const provider = adapter();
+
+  const get = () => {
+    // provider.getBlocks();
+  };
+
+  React.useEffect(get, []);
 
   const fetchBlocks = () => {
     if (ref.current !== null) {
