@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios';
 import getLatestBlocks from './getLatestBlocks';
 import getLatestTransactions from './getLatestTransactions';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
+import { getTransaction, getPendingTransaction } from './getTransaction';
 
 interface ProviderPropsType {
   elasticUrl: string;
@@ -15,4 +16,11 @@ export type AdapterFunctionType = ProviderPropsType & { provider: ProviderType }
 
 export type GetBlocksType = GetBlocksParamsType;
 
-export { getLatestBlocks, getLatestTransactions, getBlocks, getBlocksCount };
+export {
+  getLatestBlocks,
+  getLatestTransactions,
+  getBlocks,
+  getBlocksCount,
+  getTransaction,
+  getPendingTransaction,
+};

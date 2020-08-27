@@ -7,6 +7,8 @@ import {
   getBlocks,
   GetBlocksType,
   getBlocksCount,
+  getTransaction,
+  getPendingTransaction,
 } from './functions';
 
 const providers = {
@@ -14,9 +16,11 @@ const providers = {
   elastic,
 };
 
+// TODO: daca pun ruta de elastic default
+
 export default function useAdapter() {
   const {
-    activeTestnet: { elasticUrl, adapter },
+    activeTestnet: { elasticUrl, adapter, nodeUrl },
     timeout,
   } = useGlobalState();
 
@@ -29,5 +33,9 @@ export default function useAdapter() {
       getBlocks({ provider, elasticUrl, size, shardId, epochId, timeout }),
     getBlocksCount: ({ size, shardId, epochId }: GetBlocksType) =>
       getBlocksCount({ provider, elasticUrl, size, shardId, epochId, timeout }),
+    getTransaction: ({ transactionId }: { transactionId: string }) =>
+      getTransaction({ provider, elasticUrl, transactionId, timeout }),
+    getPendingTransaction: ({ transactionId }: { transactionId: string }) =>
+      getPendingTransaction({ nodeUrl, transactionId, timeout }),
   };
 }
