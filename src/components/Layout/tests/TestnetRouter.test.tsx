@@ -3,6 +3,8 @@ import { ConfigType } from 'context/state';
 
 const optionalConfig: ConfigType = {
   metaChainShardId: 4294967295,
+  erdLabel: 'eGLD',
+  secondary: false,
   elrondApps: [
     {
       id: 'wallet',
@@ -28,6 +30,7 @@ const optionalConfig: ConfigType = {
       name: 'Zero to One',
       nodeUrl: 'https://api.elrond.com',
       elasticUrl: 'https://api-facade.elrond.com',
+      adapter: 'api',
       refreshRate: 6000,
       numInitCharactersForScAddress: 20,
       decimals: 4,
@@ -47,6 +50,7 @@ const optionalConfig: ConfigType = {
       name: 'DigitalOcean TOR Testnet',
       nodeUrl: '***REMOVED***',
       elasticUrl: '***REMOVED***',
+      adapter: 'api',
       refreshRate: 6000,
       numInitCharactersForScAddress: 20,
       decimals: 4,
