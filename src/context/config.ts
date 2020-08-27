@@ -9,6 +9,7 @@ export const defaultTestnet: TestnetType = {
   nodeUrl: '',
   refreshRate: 0,
   elasticUrl: '',
+  adapter: 'api',
   decimals: 0,
   denomination: 0,
   gasPrice: 0,

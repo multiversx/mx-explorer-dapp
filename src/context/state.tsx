@@ -22,6 +22,7 @@ export interface TestnetType {
   nodeUrl: string;
   numInitCharactersForScAddress: number;
   elasticUrl: string;
+  adapter: 'api' | 'elastic';
   refreshRate: number;
   decimals: number;
   validators?: boolean;
