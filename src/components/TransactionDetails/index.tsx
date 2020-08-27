@@ -27,6 +27,7 @@ const TransactionDetails: React.FC = () => {
 
   const fetchTransaction = React.useCallback(() => {
     if (transactionId && ref.current !== null) {
+      // TODO: trec la logica de aici
       getTransaction({ elasticUrl, transactionId, timeout })
         .then(({ data, transactionFetched }) => {
           if (transactionFetched) {
