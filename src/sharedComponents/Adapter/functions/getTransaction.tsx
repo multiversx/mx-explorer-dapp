@@ -1,19 +1,28 @@
 import axios from 'axios';
+import { AdapterFunctionType } from './index';
 
-interface GetTransactionsType {
-  elasticUrl?: string;
-  nodeUrl?: string;
-  timeout: number;
-  transactionId: string;
-}
-
-export async function getTransaction({ elasticUrl, transactionId, timeout }: GetTransactionsType) {
-  const { data } = await axios.get(`${elasticUrl}/transactions/${transactionId}`, { timeout });
+export async function getTransaction({
+  provider,
+  elasticUrl,
+  timeout,
+  transactionId,
+}: AdapterFunctionType & { transactionId: string }) {
+  const { data } = await provider({
+    elasticUrl,
+    url: `/transactions/${transactionId}`,
+    timeout,
+  });
 
   return {
     data: { hash: data.id, ...data },
     transactionFetched: true,
   };
+}
+
+interface GetTransactionsType {
+  nodeUrl: string;
+  timeout: number;
+  transactionId: string;
 }
 
 export async function getPendingTransaction({
