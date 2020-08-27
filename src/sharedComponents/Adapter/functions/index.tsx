@@ -3,6 +3,11 @@ import getLatestBlocks from './getLatestBlocks';
 import getLatestTransactions from './getLatestTransactions';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
 import { getTransaction, getPendingTransaction } from './getTransaction';
+import {
+  getMiniBlock,
+  getMiniBlockTransactions,
+  getMiniBlockTransactionsCount,
+} from './getMiniBlocks';
 
 interface ProviderPropsType {
   elasticUrl: string;
@@ -23,4 +28,7 @@ export {
   getBlocksCount,
   getTransaction,
   getPendingTransaction,
+  getMiniBlock,
+  getMiniBlockTransactions,
+  getMiniBlockTransactionsCount,
 };
