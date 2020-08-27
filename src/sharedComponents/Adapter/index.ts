@@ -9,6 +9,9 @@ import {
   getBlocksCount,
   getTransaction,
   getPendingTransaction,
+  getMiniBlock,
+  getMiniBlockTransactions,
+  getMiniBlockTransactionsCount,
 } from './functions';
 
 // TODO: daca pun ruta de elastic default
@@ -34,14 +37,28 @@ export default function useAdapter() {
 
   return {
     getLatestBlocks: () => getLatestBlocks({ provider, elasticUrl, timeout }),
+
     getLatestTransactions: () => getLatestTransactions({ provider, elasticUrl, timeout }),
+
     getBlocks: ({ size, shardId, epochId }: GetBlocksType) =>
       getBlocks({ provider, elasticUrl, size, shardId, epochId, timeout }),
+
     getBlocksCount: ({ size, shardId, epochId }: GetBlocksType) =>
       getBlocksCount({ provider, elasticUrl, size, shardId, epochId, timeout }),
+
     getTransaction: ({ transactionId }: { transactionId: string }) =>
       getTransaction({ provider, elasticUrl, transactionId, timeout }),
+
     getPendingTransaction: ({ transactionId }: { transactionId: string }) =>
       getPendingTransaction({ baseUrl: proxyUrl, transactionId, timeout }),
+
+    getMiniBlock: ({ miniBlockHash }: { miniBlockHash: string }) =>
+      getMiniBlock({ provider, elasticUrl, miniBlockHash, timeout }),
+
+    getMiniBlockTransactions: ({ miniBlockHash, size }: { miniBlockHash: string; size: number }) =>
+      getMiniBlockTransactions({ provider, elasticUrl, miniBlockHash, timeout, size }),
+
+    getMiniBlockTransactionsCount: ({ miniBlockHash }: { miniBlockHash: string }) =>
+      getMiniBlockTransactionsCount({ provider, miniBlockHash, timeout, elasticUrl }),
   };
 }
