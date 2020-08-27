@@ -11,7 +11,20 @@ export async function getBlocks({ elasticUrl, timeout }: GetBlocksType) {
       size: 25,
     };
 
-    const { data } = await axios.get(`${elasticUrl}/blocks`, { params, timeout });
+    // const { data } = await axios.get(`${elasticUrl}/blocks`, { params, timeout });
+    const { data } = await axios({
+      method: 'GET',
+      baseURL: elasticUrl,
+      url: '/blocks',
+      params,
+      timeout,
+      transformResponse: [
+        (data) => {
+          return JSON.parse(data);
+        },
+      ],
+    });
+
     const blocks = data.map((block: any) => ({ hash: block.id, ...block }));
 
     return {
