@@ -5,7 +5,6 @@ import { useGlobalState } from 'context';
 import { dateFormatted, trimHash } from 'helpers';
 import { ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
 import { BlockType } from './../Blocks';
-import { getBlocks } from './helpers/asyncRequests';
 import './animatedList.scss';
 
 type LatestBlockType = BlockType & {
@@ -24,15 +23,9 @@ const LatestBlocks: React.FC = () => {
 
   const provider = adapter();
 
-  const get = () => {
-    // provider.getBlocks();
-  };
-
-  React.useEffect(get, []);
-
   const fetchBlocks = () => {
     if (ref.current !== null) {
-      getBlocks({ elasticUrl, timeout }).then(({ data, blocksFetched }) => {
+      provider.getLatestBlocks().then(({ data, blocksFetched }) => {
         if (ref.current !== null) {
           if (blocksFetched) {
             const sortedBlocks = data;

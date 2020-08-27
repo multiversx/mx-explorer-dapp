@@ -3,9 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { addressIsBech32, dateFormatted, trimHash } from 'helpers';
 import * as React from 'react';
-import { ScAddressIcon, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
+import { ScAddressIcon, ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
-import { getTransactions } from './helpers/asyncRequests';
 import './animatedList.scss';
 
 type LatestTransactionType = TransactionType & {
@@ -16,40 +15,39 @@ const LatestTransactions = () => {
   const ref = React.useRef(null);
   const {
     activeTestnet: { elasticUrl },
-    timeout,
     refresh: { timestamp },
   } = useGlobalState();
   const [transactions, setTransactions] = React.useState<LatestTransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
 
+  const provider = adapter();
+
   const fetchTransactions = () => {
     if (ref.current !== null) {
-      getTransactions({ elasticUrl, timeout: timeout * 2 }).then(
-        ({ data, transactionsFetched }) => {
-          if (ref.current !== null) {
-            if (transactionsFetched) {
-              const sortedTransactions = data;
-              if (transactions.length === 0) {
-                const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
-                  ...transaction,
-                  isNew: false,
-                }));
-                setTransactions(newTransactions);
-              } else {
-                const existingHashes = transactions.map((b) => b.hash);
-                const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
-                  ...transaction,
-                  isNew: !existingHashes.includes(transaction.hash),
-                }));
-                setTransactions(newTransactions);
-              }
-              setTransactionsFetched(true);
-            } else if (transactions.length === 0) {
-              setTransactionsFetched(false);
+      provider.getLatestTransactions().then(({ data, transactionsFetched }) => {
+        if (ref.current !== null) {
+          if (transactionsFetched) {
+            const sortedTransactions = data;
+            if (transactions.length === 0) {
+              const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
+                ...transaction,
+                isNew: false,
+              }));
+              setTransactions(newTransactions);
+            } else {
+              const existingHashes = transactions.map((b) => b.hash);
+              const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
+                ...transaction,
+                isNew: !existingHashes.includes(transaction.hash),
+              }));
+              setTransactions(newTransactions);
             }
+            setTransactionsFetched(true);
+          } else if (transactions.length === 0) {
+            setTransactionsFetched(false);
           }
         }
-      );
+      });
     }
   };
 
