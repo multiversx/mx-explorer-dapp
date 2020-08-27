@@ -1,4 +1,6 @@
-export default {
+import { ConfigType } from 'context/state';
+
+const config: ConfigType = {
   metaChainShardId: 4294967295,
   erdLabel: 'eGLD',
   elrondApps: [
@@ -20,15 +22,12 @@ export default {
       nodeUrl: 'https://api.elrond.com',
       refreshRate: 6000,
       elasticUrl: 'https://api-facade.elrond.com',
+      adapter: 'api',
       decimals: 4,
       denomination: 18,
       gasPrice: 200000000000,
       gasLimit: 50000,
       gasPerDataByte: 1500,
-      gasLimitEditable: true,
-      economics: true,
-      data: true,
-      wallet: true,
       validatorDetails: true,
       faucet: false,
       nrOfShards: 5,
@@ -37,3 +36,5 @@ export default {
     },
   ],
 };
+
+export default config;
