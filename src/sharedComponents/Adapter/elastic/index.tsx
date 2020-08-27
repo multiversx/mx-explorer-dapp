@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ProviderType } from './../functions';
 
 const createMustQuery = (value: any, boolQuery: any) => {
   const firstKey = Object.keys(value)[0];
@@ -135,18 +136,13 @@ const wrapper = ({ baseUrl, url, params = {}, timeout }: any) => {
   }
 };
 
-interface ElasticType {
-  elasticUrl: string;
-  url: string;
-  params?: object;
-  timeout: number;
-}
-
-export default function elastic({ elasticUrl, url, params, timeout }: ElasticType) {
+const elastic: ProviderType = async ({ elasticUrl, url, params, timeout }) => {
   return wrapper({
     baseUrl: elasticUrl,
     url,
     params,
     timeout,
   });
-}
+};
+
+export default elastic;

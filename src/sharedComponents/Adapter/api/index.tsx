@@ -1,13 +1,7 @@
 import axios from 'axios';
+import { ProviderType } from './../functions';
 
-interface ApiType {
-  elasticUrl: string;
-  url: string;
-  params?: object;
-  timeout: number;
-}
-
-const api = ({ elasticUrl, url, params, timeout }: ApiType) =>
+const api: ProviderType = ({ elasticUrl, url, params, timeout }) =>
   axios({
     method: 'GET',
     baseURL: elasticUrl,
