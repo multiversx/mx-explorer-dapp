@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import getLatestBlocks from './getLatestBlocks';
 import getLatestTransactions from './getLatestTransactions';
+import { getBlocks, GetBlocksParamsType } from './getBlocks';
 
 interface ProviderPropsType {
   elasticUrl: string;
@@ -12,4 +13,6 @@ export type ProviderType = (props: ProviderPropsType & { url: string }) => Promi
 
 export type AdapterFunctionType = ProviderPropsType & { provider: ProviderType };
 
-export { getLatestBlocks, getLatestTransactions };
+export type GetBlocksType = GetBlocksParamsType;
+
+export { getLatestBlocks, getLatestTransactions, getBlocks };

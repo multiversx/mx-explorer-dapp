@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import * as React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
-import { BlocksTable, Loader, Pager, ShardSpan } from 'sharedComponents';
-import { getBlocks, getTotalBlocks } from './helpers/asyncRequests';
+import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'sharedComponents';
+import { getTotalBlocks } from './helpers/asyncRequests';
 
 export interface BlockType {
   hash: string;
@@ -64,11 +64,13 @@ const Blocks: React.FC = () => {
     activeTestnetId,
   } = useGlobalState();
 
+  const provider = adapter();
+
   const refreshFirstPage = size === 1 ? timestamp : 0;
 
   const fetchBlocks = () => {
     if (ref.current !== null) {
-      getBlocks({ elasticUrl, size, shardId, timeout, epochId }).then((data) => {
+      provider.getBlocks({ size, shardId, epochId }).then((data) => {
         if (ref.current !== null) {
           if (data.blocksFetched) {
             setState(data);
