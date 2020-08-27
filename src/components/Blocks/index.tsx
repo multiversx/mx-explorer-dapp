@@ -4,7 +4,6 @@ import { useGlobalState } from 'context';
 import * as React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'sharedComponents';
-import { getTotalBlocks } from './helpers/asyncRequests';
 
 export interface BlockType {
   hash: string;
@@ -80,7 +79,7 @@ const Blocks: React.FC = () => {
         }
       });
 
-      getTotalBlocks({ elasticUrl, shardId, timeout, epochId }).then(({ count, success }) => {
+      provider.getBlocksCount({ size, shardId, epochId }).then(({ count, success }) => {
         if (ref.current !== null && success) {
           setTotalBlocks(count);
         }

@@ -71,3 +71,34 @@ export async function getBlocks({
     };
   }
 }
+
+export async function getBlocksCount({
+  provider,
+  elasticUrl,
+  shardId,
+  timeout,
+  epochId,
+}: AdapterFunctionType & GetBlocksParamsType) {
+  try {
+    const params = {
+      ...getShardOrEpochParam(shardId, epochId),
+    };
+
+    const { data } = await provider({
+      elasticUrl,
+      url: `/blocks/count`,
+      params,
+      timeout,
+    });
+
+    return {
+      count: data,
+      success: true,
+    };
+  } catch {
+    return {
+      count: 0,
+      success: false,
+    };
+  }
+}
