@@ -7,7 +7,6 @@ import testnetRoute from './testnetRoute';
 import trimHash from './trimHash';
 import truncate from './truncate';
 import * as validatorFunctions from './validatorFunctions';
-import * as blockFunctions from './blockFunctions';
 
 export {
   truncate,
@@ -19,5 +18,4 @@ export {
   copyToClipboard,
   trimHash,
   validatorFunctions,
-  blockFunctions,
 };

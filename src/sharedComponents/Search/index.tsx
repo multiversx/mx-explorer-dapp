@@ -4,16 +4,12 @@ import { useGlobalState } from 'context';
 import { testnetRoute } from 'helpers';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { isAddress, isBlock, isTransaction } from './helpers/asyncRequests';
+import { adapter } from 'sharedComponents';
 
 const Search = () => {
-  const {
-    activeTestnet: { elasticUrl, nodeUrl },
-    activeTestnetId,
-    timeout,
-    brandData,
-    validatorData,
-  } = useGlobalState();
+  const { activeTestnetId, brandData, validatorData } = useGlobalState();
+
+  const { isAddress, isBlock, isTransaction } = adapter();
 
   const history = useHistory();
   const [hash, setHash] = React.useState<string>('');
@@ -47,11 +43,11 @@ const Search = () => {
       history.push(testnetRoute({ to: `/validators/nodes/${hash}`, activeTestnetId }));
     } else if (brand) {
       history.push(testnetRoute({ to: `/validators/${brand}`, activeTestnetId }));
-    } else if (await isBlock({ elasticUrl, hash, timeout })) {
+    } else if (await isBlock({ hash })) {
       history.push(testnetRoute({ to: `/blocks/${hash}`, activeTestnetId }));
-    } else if (await isTransaction({ elasticUrl, hash, nodeUrl, timeout })) {
+    } else if (await isTransaction({ hash })) {
       history.push(testnetRoute({ to: `/transactions/${hash}`, activeTestnetId }));
-    } else if (await isAddress({ nodeUrl, hash, timeout })) {
+    } else if (await isAddress({ hash })) {
       history.push(testnetRoute({ to: `/address/${hash}`, activeTestnetId }));
     } else {
       history.push(testnetRoute({ to: `/search/${hash}`, activeTestnetId }));

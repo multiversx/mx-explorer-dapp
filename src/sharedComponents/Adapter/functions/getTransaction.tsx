@@ -1,14 +1,17 @@
 import axios from 'axios';
+import { AdapterFunctionType } from './index';
 
-interface GetTransactionsType {
-  elasticUrl?: string;
-  nodeUrl?: string;
-  timeout: number;
-  transactionId: string;
-}
-
-export async function getTransaction({ elasticUrl, transactionId, timeout }: GetTransactionsType) {
-  const { data } = await axios.get(`${elasticUrl}/transactions/${transactionId}`, { timeout });
+export async function getTransaction({
+  provider,
+  elasticUrl,
+  timeout,
+  transactionId,
+}: AdapterFunctionType & { transactionId: string }) {
+  const { data } = await provider({
+    elasticUrl,
+    url: `/transactions/${transactionId}`,
+    timeout,
+  });
 
   return {
     data: { hash: data.id, ...data },
@@ -16,10 +19,16 @@ export async function getTransaction({ elasticUrl, transactionId, timeout }: Get
   };
 }
 
+interface GetTransactionsType {
+  proxyUrl: string;
+  timeout: number;
+  transactionId: string;
+}
+
 export async function getPendingTransaction({
   transactionId,
   timeout,
-  nodeUrl,
+  proxyUrl,
 }: GetTransactionsType) {
   try {
     const {
@@ -28,7 +37,7 @@ export async function getPendingTransaction({
         code,
         error,
       },
-    } = await axios.get(`${nodeUrl}/transaction/${transactionId}`, { timeout });
+    } = await axios.get(`${proxyUrl}/transaction/${transactionId}`, { timeout });
 
     if (code === 'successful') {
       return {
