@@ -73,6 +73,19 @@ const CONFIG = {
       validatorDetails: true,
       faucet: false,
     },
+    {
+      default: false,
+      id: 'mainnet-elastic',
+      name: 'Elastic',
+      nodeUrl: 'https://api.elrond.com',
+      elasticUrl: 'https://elastic-aws.elrond.com',
+      adapter: 'elastic',
+      numInitCharactersForScAddress: 14,
+      gasLimitEditable: true,
+      data: true,
+      validatorDetails: true,
+      faucet: false,
+    },
   ],
 };
 
