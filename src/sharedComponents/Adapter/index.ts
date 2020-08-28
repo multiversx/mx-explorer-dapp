@@ -1,30 +1,7 @@
 import { useGlobalState } from 'context';
 import elastic from './elastic';
 import api from './api';
-import {
-  getHighlights,
-  getLatestBlocks,
-  getLatestTransactions,
-  getBlock,
-  getBlocks,
-  GetBlocksType,
-  getBlocksCount,
-  getTransaction,
-  getPendingTransaction,
-  getMiniBlock,
-  getMiniBlockTransactions,
-  getMiniBlockTransactionsCount,
-  TransactionsType,
-  getTransactions,
-  getTransactionsCount,
-  getAddressDetails,
-  getRewards,
-  isBlock,
-  isAddress,
-  isTransaction,
-} from './functions';
-
-// TODO: daca pun ruta de elastic default
+import * as f from './functions';
 
 export default function useAdapter() {
   const {
@@ -50,63 +27,106 @@ export default function useAdapter() {
     /* Homepage */
 
     getHighlights: () =>
-      getHighlights({ provider, proxyUrl, elasticUrl, timeout, metaChainShardId }),
+      f.getHighlights({ provider, proxyUrl, elasticUrl, timeout, metaChainShardId }),
 
-    getLatestBlocks: () => getLatestBlocks({ provider, elasticUrl, timeout }),
+    getLatestBlocks: () => f.getLatestBlocks({ provider, elasticUrl, timeout }),
 
-    getLatestTransactions: () => getLatestTransactions({ provider, elasticUrl, timeout }),
+    getLatestTransactions: () => f.getLatestTransactions({ provider, elasticUrl, timeout }),
 
     /* Blocks */
 
     getBlock: ({ blockId }: { blockId: string }) =>
-      getBlock({ provider, elasticUrl, blockId, timeout }),
+      f.getBlock({ provider, elasticUrl, blockId, timeout }),
 
-    getBlocks: ({ size, shardId, epochId }: GetBlocksType) =>
-      getBlocks({ provider, elasticUrl, size, shardId, epochId, timeout }),
+    getBlocks: ({ size, shardId, epochId }: f.GetBlocksType) =>
+      f.getBlocks({ provider, elasticUrl, size, shardId, epochId, timeout }),
 
-    getBlocksCount: ({ size, shardId, epochId }: GetBlocksType) =>
-      getBlocksCount({ provider, elasticUrl, size, shardId, epochId, timeout }),
+    getBlocksCount: ({ size, shardId, epochId }: f.GetBlocksType) =>
+      f.getBlocksCount({ provider, elasticUrl, size, shardId, epochId, timeout }),
 
     /* Transaction */
 
     getTransaction: ({ transactionId }: { transactionId: string }) =>
-      getTransaction({ provider, elasticUrl, transactionId, timeout }),
+      f.getTransaction({ provider, elasticUrl, transactionId, timeout }),
 
     getPendingTransaction: ({ transactionId }: { transactionId: string }) =>
-      getPendingTransaction({ proxyUrl, transactionId, timeout }),
+      f.getPendingTransaction({ proxyUrl, transactionId, timeout }),
 
     /* Miniblocks */
 
     getMiniBlock: ({ miniBlockHash }: { miniBlockHash: string }) =>
-      getMiniBlock({ provider, elasticUrl, miniBlockHash, timeout }),
+      f.getMiniBlock({ provider, elasticUrl, miniBlockHash, timeout }),
 
     getMiniBlockTransactions: ({ miniBlockHash, size }: { miniBlockHash: string; size: number }) =>
-      getMiniBlockTransactions({ provider, elasticUrl, miniBlockHash, timeout, size }),
+      f.getMiniBlockTransactions({ provider, elasticUrl, miniBlockHash, timeout, size }),
 
     getMiniBlockTransactionsCount: ({ miniBlockHash }: { miniBlockHash: string }) =>
-      getMiniBlockTransactionsCount({ provider, miniBlockHash, timeout, elasticUrl }),
+      f.getMiniBlockTransactionsCount({ provider, miniBlockHash, timeout, elasticUrl }),
 
     /* Transactions */
 
-    getTransactions: ({ size, addressId, shardId, shardType }: TransactionsType) =>
-      getTransactions({ provider, elasticUrl, timeout, addressId, size, shardId, shardType }),
+    getTransactions: ({ size, addressId, shardId, shardType }: f.TransactionsType) =>
+      f.getTransactions({ provider, elasticUrl, timeout, addressId, size, shardId, shardType }),
 
-    getTransactionsCount: ({ size, addressId, shardId, shardType }: TransactionsType) =>
-      getTransactionsCount({ provider, elasticUrl, timeout, addressId, size, shardId, shardType }),
+    getTransactionsCount: ({ size, addressId, shardId, shardType }: f.TransactionsType) =>
+      f.getTransactionsCount({
+        provider,
+        elasticUrl,
+        timeout,
+        addressId,
+        size,
+        shardId,
+        shardType,
+      }),
 
     getAddressDetails: ({ addressId }: { addressId: string }) =>
-      getAddressDetails({ proxyUrl, timeout, addressId }),
+      f.getAddressDetails({ proxyUrl, timeout, addressId }),
 
     getRewards: ({ addressId }: { addressId: string }) =>
-      getRewards({ proxyUrl, timeout, addressId }),
+      f.getRewards({ proxyUrl, timeout, addressId }),
+
+    /* Validators */
+
+    getRounds: ({ shardNumber, signersIndex, epoch, roundAtEpochStart }: f.GetRoundsType) =>
+      f.getRounds({
+        provider,
+        elasticUrl,
+        shardNumber,
+        signersIndex,
+        epoch,
+        timeout: Math.max(timeout, 10000),
+        roundAtEpochStart,
+      }),
+
+    getValidator: ({ currentValidator, explorerApi, publicKey }: f.GetValidatorType) =>
+      f.getValidator({
+        provider,
+        currentValidator,
+        proxyUrl,
+        elasticUrl,
+        timeout: Math.max(timeout, 10000),
+        explorerApi,
+        publicKey,
+      }),
+
+    searchBlocks: ({ shardNumber, signersIndex, epoch, roundAtEpochStart }: f.GetRoundsType) =>
+      f.searchBlocks({
+        provider,
+        elasticUrl,
+        shardNumber,
+        signersIndex,
+        epoch,
+        timeout: Math.max(timeout, 10000),
+        roundAtEpochStart,
+      }),
 
     /* Search */
 
-    isBlock: ({ hash }: { hash: string }) => isBlock({ provider, elasticUrl, hash, timeout }),
+    isBlock: ({ hash }: { hash: string }) => f.isBlock({ provider, elasticUrl, hash, timeout }),
 
-    isAddress: ({ hash }: { hash: string }) => isAddress({ proxyUrl, hash, timeout }),
+    isAddress: ({ hash }: { hash: string }) => f.isAddress({ proxyUrl, hash, timeout }),
 
     isTransaction: ({ hash }: { hash: string }) =>
-      isTransaction({ provider, elasticUrl, proxyUrl, hash, timeout }),
+      f.isTransaction({ provider, elasticUrl, proxyUrl, hash, timeout }),
   };
 }

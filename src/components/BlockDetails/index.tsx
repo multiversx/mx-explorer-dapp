@@ -6,8 +6,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { isHash, dateFormatted, sizeFormat, testnetRoute, truncate } from 'helpers';
 import { Loader, ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
-import { initialState } from 'sharedComponents/Adapter/functions/getBlock';
-import { BlockType } from '../Blocks';
+import { initialState, BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 import { validatorsRoutes } from 'routes';
 import './blockDetails.scss';
 
