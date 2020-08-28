@@ -16,7 +16,7 @@ const TransactionDetails: React.FC = () => {
     refresh: { timestamp },
   } = useGlobalState();
 
-  const provider = adapter();
+  const { getTransaction, getPendingTransaction } = adapter();
 
   const [transaction, setTransaction] = React.useState<TransactionType | undefined>(undefined);
   const [pendingTransaction, setPendingTransaction] = React.useState<
@@ -26,8 +26,7 @@ const TransactionDetails: React.FC = () => {
 
   const fetchTransaction = React.useCallback(() => {
     if (transactionId && ref.current !== null) {
-      provider
-        .getTransaction({ transactionId })
+      getTransaction({ transactionId })
         .then(({ data, transactionFetched }) => {
           if (transactionFetched) {
             setTransaction(data);
@@ -36,7 +35,7 @@ const TransactionDetails: React.FC = () => {
           }
         })
         .catch(() => {
-          provider.getPendingTransaction({ transactionId }).then(({ data, transactionFetched }) => {
+          getPendingTransaction({ transactionId }).then(({ data, transactionFetched }) => {
             if (transactionFetched) {
               setPendingTransaction(data);
               setTransactionFetched(true);
@@ -48,7 +47,7 @@ const TransactionDetails: React.FC = () => {
           });
         });
     }
-  }, [provider, transactionId]);
+  }, [getPendingTransaction, getTransaction, transactionId]);
 
   React.useEffect(fetchTransaction, []);
 

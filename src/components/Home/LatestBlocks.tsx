@@ -14,18 +14,17 @@ type LatestBlockType = BlockType & {
 const LatestBlocks: React.FC = () => {
   const ref = React.useRef(null);
   const {
-    activeTestnet: { elasticUrl },
-    timeout,
+    activeTestnetId,
     refresh: { timestamp },
   } = useGlobalState();
   const [blocks, setBlocks] = React.useState<LatestBlockType[]>([]);
   const [blocksFetched, setBlocksFetched] = React.useState<boolean>(true);
 
-  const provider = adapter();
+  const { getLatestBlocks } = adapter();
 
   const fetchBlocks = () => {
     if (ref.current !== null) {
-      provider.getLatestBlocks().then(({ data, blocksFetched }) => {
+      getLatestBlocks().then(({ data, blocksFetched }) => {
         if (ref.current !== null) {
           if (blocksFetched) {
             const sortedBlocks = data;
@@ -52,7 +51,7 @@ const LatestBlocks: React.FC = () => {
     }
   };
 
-  React.useEffect(fetchBlocks, [elasticUrl, timeout, timestamp]);
+  React.useEffect(fetchBlocks, [activeTestnetId, timestamp]);
 
   const Component = () => {
     const someNew = blocks.some((block) => block.isNew);
