@@ -2,6 +2,7 @@ import { useGlobalState } from 'context';
 import elastic from './elastic';
 import api from './api';
 import {
+  getHighlights,
   getLatestBlocks,
   getLatestTransactions,
   getBlocks,
@@ -19,6 +20,7 @@ import {
 export default function useAdapter() {
   const {
     activeTestnet: { elasticUrl, adapter, nodeUrl },
+    config: { metaChainShardId },
     timeout,
   } = useGlobalState();
 
@@ -36,6 +38,9 @@ export default function useAdapter() {
   const { provider, proxyUrl } = providers[adapter];
 
   return {
+    getHighlights: () =>
+      getHighlights({ provider, proxyUrl, elasticUrl, timeout, metaChainShardId }),
+
     getLatestBlocks: () => getLatestBlocks({ provider, elasticUrl, timeout }),
 
     getLatestTransactions: () => getLatestTransactions({ provider, elasticUrl, timeout }),
@@ -50,7 +55,7 @@ export default function useAdapter() {
       getTransaction({ provider, elasticUrl, transactionId, timeout }),
 
     getPendingTransaction: ({ transactionId }: { transactionId: string }) =>
-      getPendingTransaction({ baseUrl: proxyUrl, transactionId, timeout }),
+      getPendingTransaction({ proxyUrl, transactionId, timeout }),
 
     getMiniBlock: ({ miniBlockHash }: { miniBlockHash: string }) =>
       getMiniBlock({ provider, elasticUrl, miniBlockHash, timeout }),
