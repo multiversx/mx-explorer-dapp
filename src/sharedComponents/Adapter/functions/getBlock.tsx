@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { AdapterFunctionType } from './index';
 
 export const initialState = {
   block: {
@@ -25,25 +25,26 @@ export const initialState = {
   blockFetched: true,
 };
 
-interface GetBlocksType {
-  elasticUrl: string;
-  timeout: number;
-  blockId?: string;
-}
-
 interface SearchCallType {
-  elasticUrl: string;
-  timeout: number;
   shardId: number;
   epoch: number;
   blockId?: string;
 }
 
-async function searchCall({ elasticUrl, timeout, shardId, epoch }: SearchCallType) {
+async function searchCall({
+  provider,
+  elasticUrl,
+  timeout,
+  shardId,
+  epoch,
+}: AdapterFunctionType & SearchCallType) {
   try {
-    const { data } = await axios.get(`${elasticUrl}/validators/${shardId}_${epoch}`, {
+    const { data } = await provider({
+      elasticUrl,
+      url: `/validators/${shardId}_${epoch}`,
       timeout,
     });
+
     return data;
   } catch {
     return [];
@@ -53,16 +54,15 @@ async function searchCall({ elasticUrl, timeout, shardId, epoch }: SearchCallTyp
 interface GetNextBlockType {
   currentBlockId: number;
   currentShardId: number;
-  elasticUrl: string;
-  timeout: number;
 }
 
 async function getNextBlock({
+  provider,
   elasticUrl,
   currentBlockId,
   currentShardId,
   timeout,
-}: GetNextBlockType) {
+}: AdapterFunctionType & GetNextBlockType) {
   const nextBlockId = currentBlockId + 1;
   try {
     const params = {
@@ -70,7 +70,12 @@ async function getNextBlock({
       shardId: currentShardId,
     };
 
-    const { data } = await axios.get(`${elasticUrl}/blocks`, { params, timeout });
+    const { data } = await provider({
+      elasticUrl,
+      url: `/blocks`,
+      params,
+      timeout,
+    });
 
     return data[0] ? data[0].id : '';
   } catch {
@@ -78,12 +83,23 @@ async function getNextBlock({
   }
 }
 
-export async function getBlock({ elasticUrl, timeout, blockId = '' }: GetBlocksType) {
+export default async function getBlock({
+  provider,
+  elasticUrl,
+  timeout,
+  blockId = '',
+}: AdapterFunctionType & { blockId: string }) {
   try {
-    const { data } = await axios.get(`${elasticUrl}/blocks/${blockId}`, { timeout });
+    const { data } = await provider({
+      elasticUrl,
+      url: `/blocks/${blockId}`,
+      timeout,
+    });
+
     const block = { hash: data.id, ...data };
 
     const hit = await searchCall({
+      provider,
       elasticUrl,
       timeout,
       shardId: block.shardId,
@@ -97,6 +113,7 @@ export async function getBlock({ elasticUrl, timeout, blockId = '' }: GetBlocksT
       : [];
 
     const nextHash = await getNextBlock({
+      provider,
       elasticUrl,
       currentBlockId: block.nonce,
       currentShardId: block.shardId,

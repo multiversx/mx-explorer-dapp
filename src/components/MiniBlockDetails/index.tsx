@@ -2,10 +2,10 @@ import { useGlobalState } from 'context';
 import { isHash, testnetRoute } from 'helpers';
 import * as React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Loader, ShardSpan, TestnetLink, TransactionsTable } from 'sharedComponents';
-import { getMiniBlock, getTransactions, getTotalTransactions } from './helpers/asyncRequests';
+import { Loader, ShardSpan, TestnetLink, TransactionsTable, adapter } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
+import { initialState } from 'sharedComponents/Adapter/functions/getMiniBlocks';
 import MiniBlockNotFound from './MiniBlockNotFound';
 
 interface MiniBlockType {
@@ -22,23 +22,13 @@ export interface StateType {
   blockFetched: boolean;
 }
 
-export const initialState = {
-  miniBlock: {
-    senderShard: 0,
-    receiverShard: 0,
-    senderBlockHash: '',
-    receiverBlockHash: '',
-    type: '',
-    hash: '',
-  },
-  blockFetched: true,
-};
-
 const MiniBlockDetails: React.FC = () => {
   const { page, hash: miniBlockHash } = useParams();
   const history = useHistory();
 
   const ref = React.useRef(null);
+
+  const provider = adapter();
 
   const {
     activeTestnet: { elasticUrl },
@@ -65,40 +55,42 @@ const MiniBlockDetails: React.FC = () => {
 
   const fetchTransactions = () => {
     if (ref.current !== null) {
-      getTransactions({
-        elasticUrl,
-        size,
-        miniBlockHash,
-        timeout,
-      }).then(({ data, success }) => {
-        if (ref.current !== null) {
-          if (success) {
-            setTransactions(data);
-            setTransactionsFetched(true);
-          } else if (transactions.length === 0) {
-            setTransactionsFetched(false);
+      provider
+        .getMiniBlockTransactions({
+          size,
+          miniBlockHash,
+        })
+        .then(({ data, success }) => {
+          if (ref.current !== null) {
+            if (success) {
+              setTransactions(data);
+              setTransactionsFetched(true);
+            } else if (transactions.length === 0) {
+              setTransactionsFetched(false);
+            }
           }
-        }
-      });
-      getTotalTransactions({
-        elasticUrl,
-        miniBlockHash,
-        timeout,
-      }).then(({ count, success }) => {
-        if (ref.current !== null && success) {
-          setTotalTransactions(count);
-        }
-      });
+        });
+      provider
+        .getMiniBlockTransactionsCount({
+          miniBlockHash,
+        })
+        .then(({ count, success }) => {
+          if (ref.current !== null && success) {
+            setTotalTransactions(count);
+          }
+        });
     }
   };
 
-  React.useEffect(() => {
+  const getMiniBlock = () => {
     if (miniBlockHash) {
-      getMiniBlock({ elasticUrl, miniBlockHash, timeout }).then(
-        (data: any) => ref.current !== null && setState(data)
-      );
+      provider
+        .getMiniBlock({ miniBlockHash })
+        .then((data: any) => ref.current !== null && setState(data));
     }
-  }, [elasticUrl, miniBlockHash, timeout]); // run the operation only once since the parameter does not change
+  };
+
+  React.useEffect(getMiniBlock, [elasticUrl, miniBlockHash, timeout]); // run the operation only once since the parameter does not change
 
   React.useEffect(fetchTransactions, [elasticUrl, size, miniBlockHash, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
 
