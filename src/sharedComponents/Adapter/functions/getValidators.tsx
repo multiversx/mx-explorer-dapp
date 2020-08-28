@@ -215,8 +215,6 @@ export async function getValidator({
         timeout,
       });
 
-      console.warn(11, `${elasticUrl}/validators/${shardNumber}_${epoch}`);
-
       const signersIndex = consensusArray.indexOf(publicKey);
 
       const historicRatings: { epoch: number; rating: string }[] = await getHistoricRatings({
