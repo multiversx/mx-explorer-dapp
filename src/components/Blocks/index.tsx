@@ -59,17 +59,16 @@ const Blocks: React.FC = () => {
   const {
     activeTestnet: { elasticUrl },
     refresh: { timestamp },
-    timeout,
     activeTestnetId,
   } = useGlobalState();
 
-  const provider = adapter();
+  const { getBlocks, getBlocksCount } = adapter();
 
   const refreshFirstPage = size === 1 ? timestamp : 0;
 
   const fetchBlocks = () => {
     if (ref.current !== null) {
-      provider.getBlocks({ size, shardId, epochId }).then((data) => {
+      getBlocks({ size, shardId, epochId }).then((data) => {
         if (ref.current !== null) {
           if (data.blocksFetched) {
             setState(data);
@@ -79,7 +78,7 @@ const Blocks: React.FC = () => {
         }
       });
 
-      provider.getBlocksCount({ size, shardId, epochId }).then(({ count, success }) => {
+      getBlocksCount({ size, shardId, epochId }).then(({ count, success }) => {
         if (ref.current !== null && success) {
           setTotalBlocks(count);
         }
@@ -87,7 +86,7 @@ const Blocks: React.FC = () => {
     }
   };
 
-  React.useEffect(fetchBlocks, [elasticUrl, size, shardId, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
+  React.useEffect(fetchBlocks, [elasticUrl, size, shardId, refreshFirstPage]); // run the operation only once since the parameter does not change
 
   let slug = 'blocks';
   switch (true) {

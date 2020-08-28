@@ -45,15 +45,12 @@ const Hightlights = ({
   setLiveTps?: React.Dispatch<React.SetStateAction<any>>;
 }) => {
   const {
-    activeTestnet: { elasticUrl, nodeUrl, refreshRate },
+    activeTestnet: { refreshRate },
     activeTestnetId,
-    config: { metaChainShardId },
-    cancelToken,
-    timeout,
     refresh: { timestamp },
   } = useGlobalState();
 
-  const provider = adapter();
+  const { getHighlights } = adapter();
 
   const [state, setState] = React.useState({
     [activeTestnetId]: initialState,
@@ -65,9 +62,9 @@ const Hightlights = ({
     setOldTestnetId(activeTestnetId);
   }, [activeTestnetId]);
 
-  const getHighlights = () => {
+  const getData = () => {
     if (ref.current !== null) {
-      provider.getHighlights().then(({ data, success }) => {
+      getHighlights().then(({ data, success }) => {
         const check = data.roundsPerEpoch >= data.roundsPassed;
         const newState = success
           ? {
@@ -110,7 +107,7 @@ const Hightlights = ({
     }
   };
 
-  React.useEffect(getHighlights, [timestamp, activeTestnetId]); // run the operation only once since the parameter does not change
+  React.useEffect(getData, [timestamp, activeTestnetId]); // run the operation only once since the parameter does not change
 
   const props = activeTestnetId in state ? state[activeTestnetId] : initialState;
 

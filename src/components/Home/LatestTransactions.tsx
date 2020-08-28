@@ -14,17 +14,17 @@ type LatestTransactionType = TransactionType & {
 const LatestTransactions = () => {
   const ref = React.useRef(null);
   const {
-    activeTestnet: { elasticUrl },
+    activeTestnetId,
     refresh: { timestamp },
   } = useGlobalState();
   const [transactions, setTransactions] = React.useState<LatestTransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
 
-  const provider = adapter();
+  const { getLatestTransactions } = adapter();
 
   const fetchTransactions = () => {
     if (ref.current !== null) {
-      provider.getLatestTransactions().then(({ data, transactionsFetched }) => {
+      getLatestTransactions().then(({ data, transactionsFetched }) => {
         if (ref.current !== null) {
           if (transactionsFetched) {
             const sortedTransactions = data;
@@ -51,7 +51,7 @@ const LatestTransactions = () => {
     }
   };
 
-  React.useEffect(fetchTransactions, [elasticUrl, timestamp]);
+  React.useEffect(fetchTransactions, [activeTestnetId, timestamp]);
 
   const Component = () => {
     const someNew = transactions.some((transaction) => transaction.isNew);
