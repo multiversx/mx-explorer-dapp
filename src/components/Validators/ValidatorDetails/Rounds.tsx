@@ -2,9 +2,9 @@ import { faCogs } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { validatorFunctions } from 'helpers';
+import { GetRoundsReturnType } from 'sharedComponents/Adapter/functions/getValidators';
 
-type RoundsType = validatorFunctions.GetRoundsReturnType & {
+type RoundsType = GetRoundsReturnType & {
   isWaiting: boolean;
 };
 

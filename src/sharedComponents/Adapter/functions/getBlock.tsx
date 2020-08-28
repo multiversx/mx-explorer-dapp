@@ -1,24 +1,45 @@
 import { AdapterFunctionType } from './index';
 
+export interface BlockType {
+  hash: string;
+  nonce: number;
+  epoch: number;
+  prevHash: string;
+  proposer: number;
+  pubKeyBitmap: string;
+  round: number;
+  shardId: number;
+  size: number;
+  sizeTxs: number;
+  stateRootHash: string;
+  timestamp: number;
+  txCount: number;
+  validators: number[];
+  miniBlocksHashes: string[];
+  notarizedBlocksHashes: string[];
+}
+
+const emptyBlock: BlockType = {
+  hash: '',
+  nonce: 0,
+  epoch: 0,
+  prevHash: '',
+  proposer: 0,
+  pubKeyBitmap: '',
+  round: 0,
+  shardId: 0,
+  size: 0,
+  sizeTxs: 0,
+  stateRootHash: '',
+  timestamp: 0,
+  txCount: 0,
+  validators: [],
+  miniBlocksHashes: [],
+  notarizedBlocksHashes: [],
+};
+
 export const initialState = {
-  block: {
-    hash: '',
-    nonce: 0,
-    epoch: 0,
-    prevHash: '',
-    proposer: 0,
-    pubKeyBitmap: '',
-    round: 0,
-    shardId: 0,
-    size: 0,
-    sizeTxs: 0,
-    stateRootHash: '',
-    timestamp: 0,
-    txCount: 0,
-    validators: [],
-    miniBlocksHashes: [],
-    notarizedBlocksHashes: [],
-  },
+  block: emptyBlock,
   proposer: '',
   consensusItems: [],
   nextHash: '',
