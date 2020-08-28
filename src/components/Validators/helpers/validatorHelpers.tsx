@@ -1,8 +1,8 @@
-import { validatorFunctions } from 'helpers';
 import { ValidatorType } from 'context/validators';
 import { validatorIssues } from './../RowIcon';
 import getPeerType from './getPeerType';
 import computeShardStatus from './computeShardStatus';
+import { getShardId } from 'sharedComponents/Adapter/functions/getValidators';
 
 interface ShardDataType {
   [key: string]: {
@@ -171,7 +171,7 @@ export function populateValidatorsTable({
   });
   if (heartbeatObservers.length > 0) {
     heartbeatObservers.forEach((validator: ValidatorType, i) => {
-      const { shardId, shardNumber } = validatorFunctions.getShardId(validator, metaChainShardId);
+      const { shardId, shardNumber } = getShardId(validator, metaChainShardId);
 
       const statisticsHasValidatorHash =
         statistics !== undefined &&

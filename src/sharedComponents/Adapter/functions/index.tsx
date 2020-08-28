@@ -3,7 +3,7 @@ import getHighlights from './getHighlights';
 import getLatestBlocks from './getLatestBlocks';
 import getLatestTransactions from './getLatestTransactions';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
-import getBlock from './getBlock';
+import getBlock, { BlockType as BlockInterface } from './getBlock';
 import {
   getTransactions,
   getTransactionsCount,
@@ -17,6 +17,13 @@ import {
   getMiniBlockTransactions,
   getMiniBlockTransactionsCount,
 } from './getMiniBlocks';
+import {
+  getRounds,
+  GetRoundsType as RoundsType,
+  searchBlocks,
+  getValidator,
+  GetValidatorType as GetValidatorInterface
+} from './getValidators';
 import { isBlock, isAddress, isTransaction } from './getSearch';
 
 interface ProviderPropsType {
@@ -32,6 +39,12 @@ export type AdapterFunctionType = ProviderPropsType & { provider: ProviderType }
 export type GetBlocksType = GetBlocksParamsType;
 
 export type TransactionsType = TransactionsInterface;
+
+export type GetRoundsType = RoundsType;
+
+export type BlockType = BlockInterface;
+
+export type GetValidatorType = GetValidatorInterface;
 
 export {
   getHighlights,
@@ -52,4 +65,7 @@ export {
   isBlock,
   isAddress,
   isTransaction,
+  getRounds,
+  searchBlocks,
+  getValidator,
 };
