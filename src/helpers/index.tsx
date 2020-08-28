@@ -6,7 +6,6 @@ import sizeFormat from './sizeFormat';
 import testnetRoute from './testnetRoute';
 import trimHash from './trimHash';
 import truncate from './truncate';
-import * as validatorFunctions from './validatorFunctions';
 
 export {
   truncate,
@@ -17,5 +16,4 @@ export {
   testnetRoute,
   copyToClipboard,
   trimHash,
-  validatorFunctions,
 };

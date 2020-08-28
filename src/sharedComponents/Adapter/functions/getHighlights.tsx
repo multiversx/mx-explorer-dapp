@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { object, number, InferType } from 'yup';
-import { NetworkStatusType } from 'helpers/validatorFunctions';
+import { NetworkStatusType } from 'sharedComponents/Adapter/functions/getValidators';
 import { AdapterFunctionType } from './index';
 
 const schema = object({

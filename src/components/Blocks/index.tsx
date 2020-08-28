@@ -4,25 +4,7 @@ import { useGlobalState } from 'context';
 import * as React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'sharedComponents';
-
-export interface BlockType {
-  hash: string;
-  nonce: number;
-  epoch: number;
-  prevHash: string;
-  proposer: number;
-  pubKeyBitmap: string;
-  round: number;
-  shardId: number;
-  size: number;
-  sizeTxs: number;
-  stateRootHash: string;
-  timestamp: number;
-  txCount: number;
-  validators: number[];
-  miniBlocksHashes: string[];
-  notarizedBlocksHashes: string[];
-}
+import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 
 interface StateType {
   blocks: BlockType[];
