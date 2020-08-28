@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import getHighlights from './getHighlights';
 import getLatestBlocks from './getLatestBlocks';
 import getLatestTransactions from './getLatestTransactions';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
@@ -22,6 +23,7 @@ export type AdapterFunctionType = ProviderPropsType & { provider: ProviderType }
 export type GetBlocksType = GetBlocksParamsType;
 
 export {
+  getHighlights,
   getLatestBlocks,
   getLatestTransactions,
   getBlocks,

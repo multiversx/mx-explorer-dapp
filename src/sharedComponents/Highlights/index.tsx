@@ -1,8 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import { useGlobalState } from 'context';
+import { adapter } from 'sharedComponents';
 import DefaultHighlights from './DefaultHighlights';
-import { getStats } from './helpers/asyncRequests';
 import HeroHighlights from './HeroHighlights';
 
 export interface StateType {
@@ -53,6 +53,8 @@ const Hightlights = ({
     refresh: { timestamp },
   } = useGlobalState();
 
+  const provider = adapter();
+
   const [state, setState] = React.useState({
     [activeTestnetId]: initialState,
   });
@@ -65,13 +67,7 @@ const Hightlights = ({
 
   const getHighlights = () => {
     if (ref.current !== null) {
-      getStats({
-        elasticUrl,
-        nodeUrl,
-        metaChainShardId,
-        timeout,
-        cancelToken,
-      }).then(({ data, success }) => {
+      provider.getHighlights().then(({ data, success }) => {
         const check = data.roundsPerEpoch >= data.roundsPassed;
         const newState = success
           ? {
