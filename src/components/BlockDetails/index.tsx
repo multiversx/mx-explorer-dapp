@@ -4,8 +4,9 @@ import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
-import { isHash, dateFormatted, sizeFormat, testnetRoute, truncate, blockFunctions } from 'helpers';
-import { Loader, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
+import { isHash, dateFormatted, sizeFormat, testnetRoute, truncate } from 'helpers';
+import { Loader, ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
+import { initialState } from 'sharedComponents/Adapter/functions/getBlock';
 import { BlockType } from '../Blocks';
 import { validatorsRoutes } from 'routes';
 import './blockDetails.scss';
@@ -32,25 +33,25 @@ const BlockDetails: React.FC = () => {
   const ref = React.useRef(null);
 
   const {
-    activeTestnet: { elasticUrl },
     activeTestnetId,
-    timeout,
     config: { metaChainShardId },
   } = useGlobalState();
 
-  const [state, setState] = React.useState<StateType>(blockFunctions.initialState);
+  const { getBlock } = adapter();
+
+  const [state, setState] = React.useState<StateType>(initialState);
 
   if (blockId && !isHash(blockId)) {
     history.push(testnetRoute({ to: `/not-found`, activeTestnetId }));
   }
 
-  React.useEffect(() => {
+  const fetchBlock = () => {
     if (blockId) {
-      blockFunctions
-        .getBlock({ elasticUrl, blockId, timeout })
-        .then((data) => ref.current !== null && setState(data));
+      getBlock({ blockId }).then((data) => ref.current !== null && setState(data));
     }
-  }, [elasticUrl, blockId, timeout]); // run the operation only once since the parameter does not change
+  };
+
+  React.useEffect(fetchBlock, [blockId]); // run the operation only once since the parameter does not change
 
   const { block, proposer, consensusItems, nextHash, blockFetched } = state;
 
