@@ -25,7 +25,8 @@ export type AsyncConfigType = InferType<typeof schema> & { fetchedFromNetworkCon
 
 interface GetAsyncConfigType {
   id: string;
-  nodeUrl: string;
+  proxyUrl: string;
+  apiUrl: string;
   timeout: number;
 }
 
@@ -35,10 +36,12 @@ interface GetAsyncConfigReturnType {
 }
 
 async function getAsyncConfig({
-  nodeUrl,
+  proxyUrl,
+  apiUrl,
   timeout,
   id,
 }: GetAsyncConfigType): Promise<GetAsyncConfigReturnType> {
+  const nodeUrl = apiUrl || proxyUrl;
   try {
     const {
       data: { data, code, error },

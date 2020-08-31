@@ -9,7 +9,8 @@ import { populateValidatorsTable } from './helpers/validatorHelpers';
 
 export default function useSetValidatorsData(ref: React.RefObject<HTMLInputElement>) {
   const {
-    activeTestnet: { nodeUrl, versionNumber, nrOfShards },
+    activeTestnet: { apiUrl, proxyUrl, versionNumber, nrOfShards },
+    activeTestnetId,
     timeout,
     config: { metaChainShardId, explorerApi },
     validatorData: configValidatorData,
@@ -20,9 +21,11 @@ export default function useSetValidatorsData(ref: React.RefObject<HTMLInputEleme
   const [success, setSuccess] = React.useState(true);
 
   const getData = () => {
+    // TODO: move logic on server
+    const nodeUrl = apiUrl || proxyUrl || '';
     Promise.all([
       getValidatorsHeartbeat({
-        nodeUrl,
+        nodeUrl: apiUrl || proxyUrl || '',
         timeout: Math.max(timeout, 30000),
       }),
       getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 30000) }),
@@ -52,7 +55,7 @@ export default function useSetValidatorsData(ref: React.RefObject<HTMLInputEleme
     });
   };
 
-  React.useEffect(getData, [nodeUrl, timeout]);
+  React.useEffect(getData, [activeTestnetId, timeout]);
 
   return success;
 }

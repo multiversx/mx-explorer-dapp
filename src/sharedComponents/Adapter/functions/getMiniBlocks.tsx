@@ -13,14 +13,14 @@ export const initialState = {
 };
 
 export async function getMiniBlock({
-  elasticUrl,
+  providerUrl,
   timeout,
   miniBlockHash = '',
   provider,
 }: AdapterFunctionType & { miniBlockHash: string }) {
   try {
     const { data } = await provider({
-      elasticUrl,
+      providerUrl,
       url: `/miniblocks/${miniBlockHash}`,
       timeout,
     });
@@ -39,7 +39,7 @@ type MiniBlockType = AdapterFunctionType & { miniBlockHash: string };
 
 export async function getMiniBlockTransactions({
   provider,
-  elasticUrl,
+  providerUrl,
   timeout,
   miniBlockHash = '',
   size = 1,
@@ -52,7 +52,7 @@ export async function getMiniBlockTransactions({
     };
 
     let { data } = await provider({
-      elasticUrl,
+      providerUrl,
       params,
       url: `/transactions`,
       timeout,
@@ -74,7 +74,7 @@ export async function getMiniBlockTransactions({
 
 export async function getMiniBlockTransactionsCount({
   provider,
-  elasticUrl,
+  providerUrl,
   timeout,
   miniBlockHash = '',
 }: MiniBlockType) {
@@ -84,7 +84,7 @@ export async function getMiniBlockTransactionsCount({
     };
 
     const { data } = await provider({
-      elasticUrl,
+      providerUrl,
       params,
       url: `/transactions/count`,
       timeout,

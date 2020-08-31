@@ -39,7 +39,6 @@ const Blocks: React.FC = () => {
   const [totalBlocks, setTotalBlocks] = React.useState<number | string>('...');
 
   const {
-    activeTestnet: { elasticUrl },
     refresh: { timestamp },
     activeTestnetId,
   } = useGlobalState();
@@ -68,7 +67,7 @@ const Blocks: React.FC = () => {
     }
   };
 
-  React.useEffect(fetchBlocks, [elasticUrl, size, shardId, refreshFirstPage]); // run the operation only once since the parameter does not change
+  React.useEffect(fetchBlocks, [activeTestnetId, size, shardId, refreshFirstPage]); // run the operation only once since the parameter does not change
 
   let slug = 'blocks';
   switch (true) {

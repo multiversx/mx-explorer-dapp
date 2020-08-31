@@ -22,12 +22,12 @@ import {
   GetRoundsType as RoundsType,
   searchBlocks,
   getValidator,
-  GetValidatorType as GetValidatorInterface
+  GetValidatorType as GetValidatorInterface,
 } from './getValidators';
 import { isBlock, isAddress, isTransaction } from './getSearch';
 
 interface ProviderPropsType {
-  elasticUrl: string;
+  providerUrl: string;
   params?: object;
   timeout: number;
 }

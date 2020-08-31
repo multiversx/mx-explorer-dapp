@@ -22,7 +22,7 @@ const schema = object({
 
 export default async function getHighlights({
   provider,
-  elasticUrl,
+  providerUrl,
   proxyUrl,
   timeout,
   metaChainShardId,
@@ -33,7 +33,7 @@ export default async function getHighlights({
   const data = {};
   try {
     const { data } = await provider({
-      elasticUrl,
+      providerUrl,
       url: `/tps/meta`,
       timeout,
     });

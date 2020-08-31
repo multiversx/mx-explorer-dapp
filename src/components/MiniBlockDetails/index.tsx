@@ -31,7 +31,6 @@ const MiniBlockDetails: React.FC = () => {
   const provider = adapter();
 
   const {
-    activeTestnet: { elasticUrl },
     activeTestnetId,
     refresh: { timestamp },
     timeout,
@@ -90,9 +89,15 @@ const MiniBlockDetails: React.FC = () => {
     }
   };
 
-  React.useEffect(getMiniBlock, [elasticUrl, miniBlockHash, timeout]); // run the operation only once since the parameter does not change
+  React.useEffect(getMiniBlock, [activeTestnetId, miniBlockHash, timeout]); // run the operation only once since the parameter does not change
 
-  React.useEffect(fetchTransactions, [elasticUrl, size, miniBlockHash, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
+  React.useEffect(fetchTransactions, [
+    activeTestnetId,
+    size,
+    miniBlockHash,
+    timeout,
+    refreshFirstPage,
+  ]); // run the operation only once since the parameter does not change
 
   return (
     <div ref={ref}>

@@ -2,7 +2,7 @@ import { AdapterFunctionType } from './index';
 
 export default async function getLatestBlocks({
   provider,
-  elasticUrl,
+  providerUrl,
   timeout,
 }: AdapterFunctionType) {
   try {
@@ -11,7 +11,7 @@ export default async function getLatestBlocks({
     };
 
     const { data } = await provider({
-      elasticUrl,
+      providerUrl,
       url: `/blocks`,
       params,
       timeout,

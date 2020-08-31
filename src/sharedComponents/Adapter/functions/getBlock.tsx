@@ -54,14 +54,14 @@ interface SearchCallType {
 
 async function searchCall({
   provider,
-  elasticUrl,
+  providerUrl,
   timeout,
   shardId,
   epoch,
 }: AdapterFunctionType & SearchCallType) {
   try {
     const { data } = await provider({
-      elasticUrl,
+      providerUrl,
       url: `/validators/${shardId}_${epoch}`,
       timeout,
     });
@@ -79,7 +79,7 @@ interface GetNextBlockType {
 
 async function getNextBlock({
   provider,
-  elasticUrl,
+  providerUrl,
   currentBlockId,
   currentShardId,
   timeout,
@@ -92,7 +92,7 @@ async function getNextBlock({
     };
 
     const { data } = await provider({
-      elasticUrl,
+      providerUrl,
       url: `/blocks`,
       params,
       timeout,
@@ -106,13 +106,13 @@ async function getNextBlock({
 
 export default async function getBlock({
   provider,
-  elasticUrl,
+  providerUrl,
   timeout,
   blockId = '',
 }: AdapterFunctionType & { blockId: string }) {
   try {
     const { data } = await provider({
-      elasticUrl,
+      providerUrl,
       url: `/blocks/${blockId}`,
       timeout,
     });
@@ -121,7 +121,7 @@ export default async function getBlock({
 
     const hit = await searchCall({
       provider,
-      elasticUrl,
+      providerUrl,
       timeout,
       shardId: block.shardId,
       epoch: block.epoch,
@@ -135,7 +135,7 @@ export default async function getBlock({
 
     const nextHash = await getNextBlock({
       provider,
-      elasticUrl,
+      providerUrl,
       currentBlockId: block.nonce,
       currentShardId: block.shardId,
       timeout,
