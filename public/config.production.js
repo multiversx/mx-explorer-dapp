@@ -66,10 +66,7 @@ const CONFIG = {
       adapter: 'api',
       apiUrl: 'https://api-testnet.elrond.com',
       numInitCharactersForScAddress: 14,
-      gasLimitEditable: true,
-      data: true,
       validatorDetails: true,
-      faucet: false,
     },
     {
       default: false,
@@ -79,10 +76,7 @@ const CONFIG = {
       proxyUrl: 'https://api.elrond.com',
       elasticUrl: 'https://elastic-aws.elrond.com',
       numInitCharactersForScAddress: 14,
-      gasLimitEditable: true,
-      data: true,
       validatorDetails: true,
-      faucet: false,
     },
   ],
 };
