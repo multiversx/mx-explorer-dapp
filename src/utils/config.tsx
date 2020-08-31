@@ -30,7 +30,6 @@ const config: ConfigType = {
       gasLimit: 50000,
       gasPerDataByte: 1500,
       validatorDetails: true,
-      faucet: false,
       nrOfShards: 5,
       versionNumber: 'v1.0.123',
       fetchedFromNetworkConfig: true,
