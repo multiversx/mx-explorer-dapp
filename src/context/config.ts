@@ -1,5 +1,27 @@
+import { object, string, number, boolean } from 'yup';
 import { ConfigType, TestnetType } from './state';
 import localTestnets from './localTestnets';
+
+export const schema = object({
+  default: boolean(),
+  id: string().defined().required(),
+  name: string().defined().required(),
+  numInitCharactersForScAddress: number().defined().required(),
+  adapter: string().defined().oneOf(['api', 'elastic']),
+  apiUrl: string().when('adapter', {
+    is: 'api',
+    then: string().required(),
+  }),
+  elasticUrl: string().when('adapter', {
+    is: 'elastic',
+    then: string().required(),
+  }),
+  proxyUrl: string().when('adapter', {
+    is: 'elastic',
+    then: string().required(),
+  }),
+  validatorDetails: boolean(),
+}).required();
 
 export const defaultTestnet: TestnetType = {
   default: false,
@@ -15,7 +37,6 @@ export const defaultTestnet: TestnetType = {
   gasLimit: 0,
   gasPerDataByte: 0,
   validatorDetails: false,
-  faucet: false,
   nrOfShards: 0,
   versionNumber: '',
 };
@@ -37,7 +58,12 @@ export const buildInitialConfig = (config?: any): ConfigType => {
     explorerApi: config.explorerApi,
     testnets:
       config.testnets && config.testnets.length
-        ? config.testnets.map((testnet: any) => ({ ...defaultTestnet, ...testnet }))
+        ? config.testnets.map((testnet: any) => {
+            schema.validate(testnet, { strict: true }).catch(({ errors }) => {
+              console.error(`Wrong config for ${testnet.name} network.`, errors);
+            });
+            return { ...defaultTestnet, ...testnet };
+          })
         : [defaultTestnet],
   };
 };

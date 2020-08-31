@@ -1,29 +1,11 @@
-import { defaultTestnet } from './config';
+import { InferType } from 'yup';
+import { defaultTestnet, schema } from './config';
 import { validatorData, brandData } from './validators';
 import { CancelTokenSource } from 'axios';
 
+export type PublicConfigType = InferType<typeof schema>;
+
 interface BasicTestnetType {
-  /*
-    Legend:
-        decimals: number of displayed ERD decimals in explorer
-        denomination: number by which transaction are divided
-        numInitCharactersForScAddress: number of zeros to hide
-    Possbile flags:
-        wallet: (default) true
-        validators: (default) true
-        validatorDetails: (default) false
-        economics: (default) false
-        gasLimitEditable: (default) false
-        faucet: (default) false (faucet)
-  */
-  default: boolean;
-  id: string;
-  name: string;
-  numInitCharactersForScAddress: number;
-  adapter: 'api' | 'elastic';
-  // apiUrl: string;
-  // elasticUrl: string;
-  // proxyUrl: string;
   refreshRate: number;
   decimals: number;
   validators?: boolean;
@@ -31,24 +13,12 @@ interface BasicTestnetType {
   gasPrice: number;
   gasLimit: number;
   gasPerDataByte: number;
-  validatorDetails?: boolean;
-  faucet: boolean;
   nrOfShards: number;
   versionNumber: string;
   fetchedFromNetworkConfig?: boolean;
 }
 
-interface Adapter {
-  api: {
-    apiUrl?: string;
-  };
-  elastic: {
-    elasticUrl?: string;
-    proxyUrl?: string;
-  };
-}
-
-export type TestnetType = BasicTestnetType & Adapter['api'] & Adapter['elastic'];
+export type TestnetType = BasicTestnetType & PublicConfigType;
 
 type AppIdType = 'wallet' | 'explorer' | 'studio' | 'docs' | string;
 
