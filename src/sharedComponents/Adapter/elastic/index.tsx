@@ -136,9 +136,9 @@ const wrapper = ({ baseUrl, url, params = {}, timeout }: any) => {
   }
 };
 
-const elastic: ProviderType = async ({ elasticUrl, url, params, timeout }) => {
+const elastic: ProviderType = async ({ providerUrl, url, params, timeout }) => {
   return wrapper({
-    baseUrl: elasticUrl,
+    baseUrl: providerUrl,
     url,
     params,
     timeout,

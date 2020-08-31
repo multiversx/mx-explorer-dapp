@@ -3,12 +3,12 @@ import { AdapterFunctionType } from './index';
 
 export async function getTransaction({
   provider,
-  elasticUrl,
+  providerUrl,
   timeout,
   transactionId,
 }: AdapterFunctionType & { transactionId: string }) {
   const { data } = await provider({
-    elasticUrl,
+    providerUrl,
     url: `/transactions/${transactionId}`,
     timeout,
   });

@@ -29,7 +29,7 @@ export interface TransactionsType {
 
 export async function getTransactions({
   provider,
-  elasticUrl,
+  providerUrl,
   timeout,
   addressId = '',
   size = 1,
@@ -45,7 +45,7 @@ export async function getTransactions({
 
   try {
     let { data } = await provider({
-      elasticUrl,
+      providerUrl,
       url: `/transactions`,
       params,
       timeout,
@@ -67,7 +67,7 @@ export async function getTransactions({
 
 export async function getTransactionsCount({
   provider,
-  elasticUrl,
+  providerUrl,
   addressId = '',
   shardId,
   shardType,
@@ -80,7 +80,7 @@ export async function getTransactionsCount({
     };
 
     const { data } = await provider({
-      elasticUrl,
+      providerUrl,
       url: `/transactions/count`,
       params,
       timeout,

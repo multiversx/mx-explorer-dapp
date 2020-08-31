@@ -2,7 +2,7 @@ import { defaultTestnet } from './config';
 import { validatorData, brandData } from './validators';
 import { CancelTokenSource } from 'axios';
 
-export interface TestnetType {
+interface BasicTestnetType {
   /*
     Legend:
         decimals: number of displayed ERD decimals in explorer
@@ -19,10 +19,11 @@ export interface TestnetType {
   default: boolean;
   id: string;
   name: string;
-  nodeUrl: string;
   numInitCharactersForScAddress: number;
-  elasticUrl: string;
   adapter: 'api' | 'elastic';
+  // apiUrl: string;
+  // elasticUrl: string;
+  // proxyUrl: string;
   refreshRate: number;
   decimals: number;
   validators?: boolean;
@@ -36,6 +37,18 @@ export interface TestnetType {
   versionNumber: string;
   fetchedFromNetworkConfig?: boolean;
 }
+
+interface Adapter {
+  api: {
+    apiUrl?: string;
+  };
+  elastic: {
+    elasticUrl?: string;
+    proxyUrl?: string;
+  };
+}
+
+export type TestnetType = BasicTestnetType & Adapter['api'] & Adapter['elastic'];
 
 type AppIdType = 'wallet' | 'explorer' | 'studio' | 'docs' | string;
 

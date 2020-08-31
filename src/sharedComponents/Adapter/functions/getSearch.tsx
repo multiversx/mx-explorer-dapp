@@ -3,13 +3,13 @@ import { AdapterFunctionType } from './index';
 
 export async function isBlock({
   provider,
-  elasticUrl,
+  providerUrl,
   hash,
   timeout,
 }: AdapterFunctionType & { hash: string }) {
   try {
     const { data } = await provider({
-      elasticUrl,
+      providerUrl,
       url: `/blocks/${hash}`,
       timeout,
     });
@@ -37,14 +37,14 @@ export async function isAddress({ proxyUrl, hash, timeout }: NodeParamsType) {
 
 export async function isTransaction({
   provider,
-  elasticUrl,
+  providerUrl,
   proxyUrl,
   hash,
   timeout,
 }: AdapterFunctionType & { proxyUrl: string; hash: string }) {
   try {
     const { data } = await provider({
-      elasticUrl,
+      providerUrl,
       url: `/transactions/${hash}`,
       timeout,
     });

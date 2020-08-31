@@ -38,7 +38,8 @@ const Transactions = () => {
   const [addressDetailsLoading, setAddressDetailsLoading] = React.useState<boolean>(true);
 
   const {
-    activeTestnet: { elasticUrl, nodeUrl, denomination, decimals },
+    activeTestnet: { denomination, decimals },
+    activeTestnetId,
     refresh: { timestamp },
   } = useGlobalState();
   const { page, hash: addressId, shard } = useParams();
@@ -127,9 +128,9 @@ const Transactions = () => {
     }
   };
 
-  React.useEffect(getAddrDetails, [nodeUrl, addressId]);
+  React.useEffect(getAddrDetails, [activeTestnetId, addressId]);
 
-  React.useEffect(fetchTransactions, [elasticUrl, size, addressId, refreshFirstPage]); // run the operation only once since the parameter does not change
+  React.useEffect(fetchTransactions, [activeTestnetId, size, addressId, refreshFirstPage]); // run the operation only once since the parameter does not change
 
   let slug = addressId ? `address/${addressId}` : 'transactions';
   slug = shardType ? `transactions/${shardDirection}/${shardId}` : slug;

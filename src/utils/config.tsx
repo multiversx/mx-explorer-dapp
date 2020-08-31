@@ -19,7 +19,7 @@ const config: ConfigType = {
       id: 'zero-to-one',
       name: 'Zero to One',
       numInitCharactersForScAddress: 20,
-      nodeUrl: 'https://api.elrond.com',
+      apiUrl: 'https://api.elrond.com',
       refreshRate: 6000,
       // TODO: check axios not working inf wrong address ex: api-facade
       elasticUrl: 'https://api.elrond.com',
