@@ -20,6 +20,9 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
         {transaction.status === 'Not Executed' && (
           <FontAwesomeIcon icon={faBan} className="w300 mr-1" />
         )}
+        {transaction.status === 'Invalid' && (
+          <FontAwesomeIcon icon={faBan} className="w300 mr-1 text-danger" />
+        )}
         <TestnetLink to={`/transactions/${transaction.hash}`} data-testid="transactionLink">
           {trimHash(transaction.hash)}
         </TestnetLink>
