@@ -19,7 +19,7 @@ export interface GetBlocksParamsType {
 
 export async function getBlocks({
   provider,
-  providerUrl,
+  baseUrl,
   size = 1,
   shardId,
   timeout,
@@ -33,7 +33,7 @@ export async function getBlocks({
     };
 
     const { data } = await provider({
-      providerUrl,
+      baseUrl,
       url: `/blocks`,
       params,
       timeout,
@@ -74,18 +74,18 @@ export async function getBlocks({
 
 export async function getBlocksCount({
   provider,
-  providerUrl,
+  baseUrl,
   shardId,
   timeout,
   epochId,
 }: AdapterFunctionType & GetBlocksParamsType) {
   try {
-    const params = {
+    const params: AdapterFunctionType['params'] = {
       ...getShardOrEpochParam(shardId, epochId),
     };
 
     const { data } = await provider({
-      providerUrl,
+      baseUrl,
       url: `/blocks/count`,
       params,
       timeout,

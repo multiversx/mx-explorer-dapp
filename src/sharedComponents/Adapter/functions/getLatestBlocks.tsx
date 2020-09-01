@@ -1,19 +1,13 @@
 import { AdapterFunctionType } from './index';
 
-export default async function getLatestBlocks({
-  provider,
-  providerUrl,
-  timeout,
-}: AdapterFunctionType) {
+export default async function getLatestBlocks({ provider, baseUrl, timeout }: AdapterFunctionType) {
   try {
-    const params = {
-      size: 25,
-    };
-
     const { data } = await provider({
-      providerUrl,
+      baseUrl,
       url: `/blocks`,
-      params,
+      params: {
+        size: 25,
+      },
       timeout,
     });
 

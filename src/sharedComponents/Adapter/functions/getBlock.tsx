@@ -54,14 +54,14 @@ interface SearchCallType {
 
 async function searchCall({
   provider,
-  providerUrl,
+  baseUrl,
   timeout,
   shardId,
   epoch,
 }: AdapterFunctionType & SearchCallType) {
   try {
     const { data } = await provider({
-      providerUrl,
+      baseUrl,
       url: `/validators/${shardId}_${epoch}`,
       timeout,
     });
@@ -79,22 +79,20 @@ interface GetNextBlockType {
 
 async function getNextBlock({
   provider,
-  providerUrl,
+  baseUrl,
   currentBlockId,
   currentShardId,
   timeout,
 }: AdapterFunctionType & GetNextBlockType) {
   const nextBlockId = currentBlockId + 1;
   try {
-    const params = {
-      nonce: nextBlockId,
-      shardId: currentShardId,
-    };
-
     const { data } = await provider({
-      providerUrl,
+      baseUrl,
       url: `/blocks`,
-      params,
+      params: {
+        nonce: nextBlockId,
+        shardId: currentShardId,
+      },
       timeout,
     });
 
@@ -106,13 +104,13 @@ async function getNextBlock({
 
 export default async function getBlock({
   provider,
-  providerUrl,
+  baseUrl,
   timeout,
   blockId = '',
 }: AdapterFunctionType & { blockId: string }) {
   try {
     const { data } = await provider({
-      providerUrl,
+      baseUrl,
       url: `/blocks/${blockId}`,
       timeout,
     });
@@ -121,7 +119,7 @@ export default async function getBlock({
 
     const hit = await searchCall({
       provider,
-      providerUrl,
+      baseUrl,
       timeout,
       shardId: block.shardId,
       epoch: block.epoch,
@@ -135,7 +133,7 @@ export default async function getBlock({
 
     const nextHash = await getNextBlock({
       provider,
-      providerUrl,
+      baseUrl,
       currentBlockId: block.nonce,
       currentShardId: block.shardId,
       timeout,

@@ -48,7 +48,7 @@ export interface GetRoundsReturnType {
 
 export async function getRounds({
   provider,
-  providerUrl,
+  baseUrl,
   shardNumber,
   signersIndex,
   timeout,
@@ -65,7 +65,7 @@ export async function getRounds({
 
   try {
     const { data } = await provider({
-      providerUrl,
+      baseUrl,
       url: `/rounds`,
       params,
       timeout,
@@ -127,25 +127,23 @@ function getBlocks(data: any) {
 
 export async function searchBlocks({
   provider,
-  providerUrl,
+  baseUrl,
   shardNumber,
   signersIndex,
   epoch,
   timeout,
 }: AdapterFunctionType & GetRoundsType) {
   try {
-    const params = {
-      from: 0,
-      size: 25,
-      proposer: signersIndex,
-      shardId: shardNumber,
-      epoch,
-    };
-
     const { data } = await provider({
-      providerUrl,
+      baseUrl,
       url: `/blocks`,
-      params,
+      params: {
+        from: 0,
+        size: 25,
+        proposer: signersIndex,
+        shardId: shardNumber,
+        epoch,
+      },
       timeout,
     });
 
@@ -174,14 +172,14 @@ export async function getValidator({
   provider,
   currentValidator,
   proxyUrl,
-  providerUrl,
+  baseUrl,
   timeout,
   explorerApi,
   publicKey,
 }: AdapterFunctionType &
   GetValidatorType & {
     proxyUrl: string;
-    providerUrl: string;
+    baseUrl: string;
   }) {
   try {
     const { shardId, shardNumber } = currentValidator;
@@ -210,7 +208,7 @@ export async function getValidator({
       const {
         data: { publicKeys: consensusArray },
       } = await provider({
-        providerUrl,
+        baseUrl,
         url: `/validators/${shardNumber}_${epoch}`,
         timeout,
       });

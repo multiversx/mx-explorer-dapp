@@ -29,14 +29,14 @@ export interface TransactionsType {
 
 export async function getTransactions({
   provider,
-  providerUrl,
+  baseUrl,
   timeout,
   addressId = '',
   size = 1,
   shardId,
   shardType,
 }: AdapterFunctionType & TransactionsType) {
-  const params = {
+  const params: AdapterFunctionType['params'] = {
     from: (size - 1) * 50,
     size: 50,
     ...getAddressParams(addressId),
@@ -45,7 +45,7 @@ export async function getTransactions({
 
   try {
     let { data } = await provider({
-      providerUrl,
+      baseUrl,
       url: `/transactions`,
       params,
       timeout,
@@ -67,20 +67,20 @@ export async function getTransactions({
 
 export async function getTransactionsCount({
   provider,
-  providerUrl,
+  baseUrl,
   addressId = '',
   shardId,
   shardType,
   timeout,
 }: AdapterFunctionType & TransactionsType) {
   try {
-    const params = {
+    const params: AdapterFunctionType['params'] = {
       ...getAddressParams(addressId),
       ...getShardTypeParams(shardId, shardType),
     };
 
     const { data } = await provider({
-      providerUrl,
+      baseUrl,
       url: `/transactions/count`,
       params,
       timeout,
