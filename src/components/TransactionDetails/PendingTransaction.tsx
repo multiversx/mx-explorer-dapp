@@ -68,7 +68,9 @@ const PendingTransaction = ({ transaction }: { transaction: PendingTransactionTy
         </TransactionDetail>
 
         <TransactionDetail label="Gas Limit">
-          <span className="text-muted">{transaction.gasLimit.toLocaleString('en')}</span>
+          <span className="text-muted">
+            {'gasLimit' in transaction ? transaction.gasLimit.toLocaleString('en') : 'N/A'}
+          </span>
         </TransactionDetail>
 
         <TransactionDetail label="Gas Used">
