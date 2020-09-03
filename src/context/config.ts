@@ -2,11 +2,7 @@ import { object, string, number, boolean } from 'yup';
 import { ConfigType, TestnetType } from './state';
 import localTestnets from './localTestnets';
 
-export const schema = object({
-  default: boolean(),
-  id: string().defined().required(),
-  name: string().defined().required(),
-  numInitCharactersForScAddress: number().defined().required(),
+export const adapterSchema = object({
   adapter: string().defined().oneOf(['api', 'elastic']),
   apiUrl: string().when('adapter', {
     is: 'api',
@@ -20,8 +16,17 @@ export const schema = object({
     is: 'elastic',
     then: string().required(),
   }),
+}).required();
+
+const baseSchema = object({
+  default: boolean(),
+  id: string().defined().required(),
+  name: string().defined().required(),
+  numInitCharactersForScAddress: number().defined().required(),
   validatorDetails: boolean(),
 }).required();
+
+export const schema = baseSchema.concat(adapterSchema);
 
 export const defaultTestnet: TestnetType = {
   default: false,

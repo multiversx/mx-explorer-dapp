@@ -1,9 +1,10 @@
 import { InferType } from 'yup';
-import { defaultTestnet, schema } from './config';
+import { defaultTestnet, schema, adapterSchema } from './config';
 import { validatorData, brandData } from './validators';
 import { CancelTokenSource } from 'axios';
 
 export type PublicConfigType = InferType<typeof schema>;
+export type AdapterType = InferType<typeof adapterSchema>;
 
 interface BasicTestnetType {
   refreshRate: number;

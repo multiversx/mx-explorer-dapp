@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { object, string, number, InferType } from 'yup';
-import { ConfigType, TestnetType } from './state';
+import { ConfigType, TestnetType, AdapterType } from './state';
 import config, { defaultTestnet } from './config';
 
 const schema = object({
@@ -25,8 +25,6 @@ export type AsyncConfigType = InferType<typeof schema> & { fetchedFromNetworkCon
 
 interface GetAsyncConfigType {
   id: string;
-  proxyUrl: string;
-  apiUrl: string;
   timeout: number;
 }
 
@@ -40,7 +38,7 @@ async function getAsyncConfig({
   apiUrl,
   timeout,
   id,
-}: GetAsyncConfigType): Promise<GetAsyncConfigReturnType> {
+}: GetAsyncConfigType & AdapterType): Promise<GetAsyncConfigReturnType> {
   const nodeUrl = apiUrl || proxyUrl;
   try {
     const {
