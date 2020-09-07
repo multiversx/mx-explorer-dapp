@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { object, string, number, InferType } from 'yup';
-import { ConfigType, TestnetType, AdapterType } from './state';
-import config, { defaultTestnet } from './config';
+import { ConfigType, NetworkType, AdapterType } from './state';
+import config, { defaultNetwork } from './config';
 
 const schema = object({
   config: object({
@@ -71,44 +71,44 @@ export default async function buildConfig(
 ): Promise<ConfigType> {
   const internalConfig = stateConfig ? stateConfig : config;
 
-  const configTestnet =
-    config.testnets.find((testnet) => {
+  const configNetwork =
+    config.networks.find((network) => {
       if (id) {
-        return testnet.id === id;
-      } else return testnet.default;
-    }) || defaultTestnet;
+        return network.id === id;
+      } else return network.default;
+    }) || defaultNetwork;
 
-  if (!configTestnet.fetchedFromNetworkConfig && process.env.NODE_ENV !== 'test') {
-    const testnetData = await getAsyncConfig({ ...configTestnet, timeout: 3000 });
-    if (!(testnetData instanceof Error)) {
-      const newTestnet: TestnetType = {
-        ...configTestnet,
-        gasLimit: testnetData!.config.erd_min_gas_limit,
-        gasPrice: testnetData!.config.erd_min_gas_price,
-        gasPerDataByte: testnetData!.config.erd_gas_per_data_byte,
-        refreshRate: testnetData!.config.erd_round_duration,
-        nrOfShards: testnetData!.config.erd_num_shards_without_meta,
-        versionNumber: testnetData!.config.erd_latest_tag_software_version,
-        denomination: testnetData!.config.erd_denomination,
-        decimals: configTestnet.decimals || 4,
+  if (!configNetwork.fetchedFromNetworkConfig && process.env.NODE_ENV !== 'test') {
+    const networkData = await getAsyncConfig({ ...configNetwork, timeout: 3000 });
+    if (!(networkData instanceof Error)) {
+      const newNetwork: NetworkType = {
+        ...configNetwork,
+        gasLimit: networkData!.config.erd_min_gas_limit,
+        gasPrice: networkData!.config.erd_min_gas_price,
+        gasPerDataByte: networkData!.config.erd_gas_per_data_byte,
+        refreshRate: networkData!.config.erd_round_duration,
+        nrOfShards: networkData!.config.erd_num_shards_without_meta,
+        versionNumber: networkData!.config.erd_latest_tag_software_version,
+        denomination: networkData!.config.erd_denomination,
+        decimals: configNetwork.decimals || 4,
         fetchedFromNetworkConfig: true,
       };
       const configObject: ConfigType = {
         ...config,
-        testnets: [newTestnet, ...internalConfig.testnets.filter((t) => t.id !== newTestnet.id)],
+        networks: [newNetwork, ...internalConfig.networks.filter((t) => t.id !== newNetwork.id)],
       };
 
       return configObject;
     }
   }
-  const newTestnet: TestnetType = {
-    ...configTestnet,
+  const newNetwork: NetworkType = {
+    ...configNetwork,
     fetchedFromNetworkConfig: false,
   };
 
   const configObject: ConfigType = {
     ...config,
-    testnets: [newTestnet, ...internalConfig.testnets.filter((t) => t.id !== newTestnet.id)],
+    networks: [newNetwork, ...internalConfig.networks.filter((t) => t.id !== newNetwork.id)],
   };
 
   return configObject;

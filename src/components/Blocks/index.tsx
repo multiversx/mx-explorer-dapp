@@ -40,7 +40,7 @@ const Blocks: React.FC = () => {
 
   const {
     refresh: { timestamp },
-    activeTestnetId,
+    activeNetworkId,
   } = useGlobalState();
 
   const { getBlocks, getBlocksCount } = adapter();
@@ -67,7 +67,7 @@ const Blocks: React.FC = () => {
     }
   };
 
-  React.useEffect(fetchBlocks, [activeTestnetId, size, shardId, refreshFirstPage]); // run the operation only once since the parameter does not change
+  React.useEffect(fetchBlocks, [activeNetworkId, size, shardId, refreshFirstPage]); // run the operation only once since the parameter does not change
 
   let slug = 'blocks';
   switch (true) {
@@ -152,7 +152,7 @@ const Blocks: React.FC = () => {
   ]);
 
   if (shard && !isValidInt(parseInt(shard!))) {
-    return <Redirect to={activeTestnetId ? `/${activeTestnetId}/not-found` : '/not-found'} />;
+    return <Redirect to={activeNetworkId ? `/${activeNetworkId}/not-found` : '/not-found'} />;
   }
 
   return memoBlocks;

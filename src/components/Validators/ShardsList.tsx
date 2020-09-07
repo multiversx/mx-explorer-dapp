@@ -55,7 +55,7 @@ interface ShardsListType {
 
 const ShardsList = ({ shardData }: ShardsListType) => {
   const {
-    activeTestnet: { nrOfShards },
+    activeNetwork: { nrOfShards },
     config: { metaChainShardId },
   } = useGlobalState();
 
@@ -80,7 +80,7 @@ const ShardsList = ({ shardData }: ShardsListType) => {
     <div className="row d-flex pl-3">
       <ShardCard shardEntry={blockchainStatus} isOverall />
       {allowedShards.map((shard, i) => {
-        const shardEntry = shardData.find(sh => sh.shardNumber === shard);
+        const shardEntry = shardData.find((sh) => sh.shardNumber === shard);
         return shardEntry ? (
           <React.Fragment key={shardEntry.shardNumber + i}>
             {i === shardData.length - 3 && (

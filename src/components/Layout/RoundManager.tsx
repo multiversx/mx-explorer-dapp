@@ -4,7 +4,7 @@ import { useGlobalState, useGlobalDispatch } from 'context';
 
 export default function RoundManager() {
   const {
-    activeTestnet: { refreshRate },
+    activeNetwork: { refreshRate },
     refresh: { timestamp },
   } = useGlobalState();
   const dispatch = useGlobalDispatch();

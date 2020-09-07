@@ -1,13 +1,13 @@
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { testnetRoute } from 'helpers';
+import { networkRoute } from 'helpers';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { adapter } from 'sharedComponents';
 
 const Search = () => {
-  const { activeTestnetId, brandData, validatorData } = useGlobalState();
+  const { activeNetworkId, brandData, validatorData } = useGlobalState();
 
   const { isAddress, isBlock, isTransaction } = adapter();
 
@@ -40,17 +40,17 @@ const Search = () => {
         : '';
 
     if (isValidator) {
-      history.push(testnetRoute({ to: `/validators/nodes/${hash}`, activeTestnetId }));
+      history.push(networkRoute({ to: `/validators/nodes/${hash}`, activeNetworkId }));
     } else if (brand) {
-      history.push(testnetRoute({ to: `/validators/${brand}`, activeTestnetId }));
+      history.push(networkRoute({ to: `/validators/${brand}`, activeNetworkId }));
     } else if (await isBlock({ hash })) {
-      history.push(testnetRoute({ to: `/blocks/${hash}`, activeTestnetId }));
+      history.push(networkRoute({ to: `/blocks/${hash}`, activeNetworkId }));
     } else if (await isTransaction({ hash })) {
-      history.push(testnetRoute({ to: `/transactions/${hash}`, activeTestnetId }));
+      history.push(networkRoute({ to: `/transactions/${hash}`, activeNetworkId }));
     } else if (await isAddress({ hash })) {
-      history.push(testnetRoute({ to: `/address/${hash}`, activeTestnetId }));
+      history.push(networkRoute({ to: `/address/${hash}`, activeNetworkId }));
     } else {
-      history.push(testnetRoute({ to: `/search/${hash}`, activeTestnetId }));
+      history.push(networkRoute({ to: `/search/${hash}`, activeNetworkId }));
     }
   };
 
