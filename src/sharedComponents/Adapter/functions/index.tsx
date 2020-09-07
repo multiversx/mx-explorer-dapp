@@ -26,9 +26,23 @@ import {
 } from './getValidators';
 import { isBlock, isAddress, isTransaction } from './getSearch';
 
-interface ProviderPropsType {
-  providerUrl: string;
-  params?: object;
+export interface ProviderPropsType {
+  baseUrl: string;
+  params?: {
+    nonce?: number;
+    shardId?: number;
+    epoch?: number;
+    proposer?: number;
+    miniBlockHash?: string;
+    sender?: string;
+    receiver?: string;
+    senderShard?: number;
+    receiverShard?: number;
+    signersIndexes?: number;
+    round?: number;
+    from?: number;
+    size?: number;
+  };
   timeout: number;
 }
 

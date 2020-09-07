@@ -14,7 +14,7 @@ type LatestTransactionType = TransactionType & {
 const LatestTransactions = () => {
   const ref = React.useRef(null);
   const {
-    activeTestnetId,
+    activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
   const [transactions, setTransactions] = React.useState<LatestTransactionType[]>([]);
@@ -51,7 +51,7 @@ const LatestTransactions = () => {
     }
   };
 
-  React.useEffect(fetchTransactions, [activeTestnetId, timestamp]);
+  React.useEffect(fetchTransactions, [activeNetworkId, timestamp]);
 
   const Component = () => {
     const someNew = transactions.some((transaction) => transaction.isNew);

@@ -10,7 +10,7 @@ import ValidatorsTable from './components/Validators/ValidatorsTable';
 import BrandDetails from './components/Validators/BrandDetails';
 import ValidatorDetails from './components/Validators/ValidatorDetails';
 import ValidatorsBrandTable from './components/Validators/ValidatorsBrandTable';
-import { withPageTitle, withTestnetReady } from './sharedComponents';
+import { withPageTitle, withNetworkReady } from './sharedComponents';
 
 interface RouteType {
   path: string;
@@ -168,7 +168,7 @@ const wrappedRoutes = () =>
       path: route.path,
       component: (withPageTitle(
         title,
-        withTestnetReady(route.component)
+        withNetworkReady(route.component)
       ) as any) as React.ComponentClass<{}, any>,
     };
   });

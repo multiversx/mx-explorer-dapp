@@ -13,7 +13,7 @@ const isContract = (initiator: string | undefined, charNum: number) =>
 
 const ScAddressIcon = ({ initiator, secondInitiator }: ScAddressIconType) => {
   const {
-    activeTestnet: { numInitCharactersForScAddress: charNum },
+    activeNetwork: { numInitCharactersForScAddress: charNum },
   } = useGlobalState();
 
   const showIcon = isContract(initiator, charNum) || isContract(secondInitiator, charNum);

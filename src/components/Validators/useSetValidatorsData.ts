@@ -9,8 +9,8 @@ import { populateValidatorsTable } from './helpers/validatorHelpers';
 
 export default function useSetValidatorsData(ref: React.RefObject<HTMLInputElement>) {
   const {
-    activeTestnet: { apiUrl, proxyUrl, versionNumber, nrOfShards },
-    activeTestnetId,
+    activeNetwork: { apiUrl, proxyUrl, versionNumber, nrOfShards },
+    activeNetworkId,
     timeout,
     config: { metaChainShardId, explorerApi },
     validatorData: configValidatorData,
@@ -55,7 +55,7 @@ export default function useSetValidatorsData(ref: React.RefObject<HTMLInputEleme
     });
   };
 
-  React.useEffect(getData, [activeTestnetId, timeout]);
+  React.useEffect(getData, [activeNetworkId, timeout]);
 
   return success;
 }
