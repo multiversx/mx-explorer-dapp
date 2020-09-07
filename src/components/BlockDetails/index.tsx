@@ -4,7 +4,7 @@ import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
-import { isHash, dateFormatted, sizeFormat, testnetRoute, truncate } from 'helpers';
+import { isHash, dateFormatted, sizeFormat, networkRoute, truncate } from 'helpers';
 import { Loader, ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
 import { initialState, BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 import { validatorsRoutes } from 'routes';
@@ -26,13 +26,15 @@ export interface StateType {
 }
 
 const BlockDetails: React.FC = () => {
-  const { hash: blockId } = useParams();
+  const params: any = useParams();
+
+  const { hash: blockId } = params;
   const history = useHistory();
 
   const ref = React.useRef(null);
 
   const {
-    activeTestnetId,
+    activeNetworkId,
     config: { metaChainShardId },
   } = useGlobalState();
 
@@ -41,7 +43,7 @@ const BlockDetails: React.FC = () => {
   const [state, setState] = React.useState<StateType>(initialState);
 
   if (blockId && !isHash(blockId)) {
-    history.push(testnetRoute({ to: `/not-found`, activeTestnetId }));
+    history.push(networkRoute({ to: `/not-found`, activeNetworkId }));
   }
 
   const fetchBlock = () => {

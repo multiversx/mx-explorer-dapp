@@ -5,7 +5,7 @@ import React from 'react';
 
 export default function FailedAddress({ addressId }: { addressId: string | undefined }) {
   const {
-    activeTestnet: { numInitCharactersForScAddress },
+    activeNetwork: { numInitCharactersForScAddress },
   } = useGlobalState();
 
   const showIcon =

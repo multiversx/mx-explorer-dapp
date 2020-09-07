@@ -13,7 +13,7 @@ const config: ConfigType = {
   ],
   explorerApi: 'https://explorer-api.elrond.com',
   secondary: false,
-  testnets: [
+  networks: [
     {
       default: true,
       id: 'zero-to-one',

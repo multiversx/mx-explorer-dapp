@@ -1,55 +1,55 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useGlobalDispatch, useGlobalState } from 'context';
-import { defaultTestnet } from 'context/config';
+import { defaultNetwork } from 'context/config';
 import buildConfig from 'context/getAsyncConfig';
 
-export default function TestnetRouter() {
+export default function NetworkRouter() {
   const {
     config,
-    activeTestnetId,
-    defaultTestnet: { id: defaultTestnetId },
+    activeNetworkId,
+    defaultNetwork: { id: defaultNetworkId },
   } = useGlobalState();
   const dispatch = useGlobalDispatch();
   const { pathname } = useLocation();
 
   const locationArray = pathname.substr(1).split('/');
 
-  const testnetId = locationArray[0];
+  const networkId = locationArray[0];
 
-  const allTestnetIds = config.testnets.map((testnet) => testnet.id);
+  const allNetworkIds = config.networks.map((network) => network.id);
 
-  function changeTestnet() {
-    const testnet =
-      config.testnets.find((t) => {
-        if (testnetId) {
-          return t.id === testnetId;
+  function changeNetwork() {
+    const network =
+      config.networks.find((t) => {
+        if (networkId) {
+          return t.id === networkId;
         } else return t.default;
-      }) || defaultTestnet;
+      }) || defaultNetwork;
 
-    if (allTestnetIds.includes(testnetId) && activeTestnetId !== testnetId) {
-      // if route contains a testnet at the beginning replace the testnet
+    if (allNetworkIds.includes(networkId) && activeNetworkId !== networkId) {
+      // if route contains a network at the beginning replace the network
       dispatch({ type: 'setBrandData', brandData: [] });
-      if (testnet.fetchedFromNetworkConfig === undefined) {
-        buildConfig(testnetId, config).then((config) => {
-          dispatch({ type: 'updateTestnets', config });
-          dispatch({ type: 'changeTestnet', testnetId });
+      if (network.fetchedFromNetworkConfig === undefined) {
+        buildConfig(networkId, config).then((config) => {
+          dispatch({ type: 'updateNetworks', config });
+          dispatch({ type: 'changeNetwork', networkId });
         });
       } else {
-        dispatch({ type: 'changeTestnet', testnetId });
+        dispatch({ type: 'changeNetwork', networkId });
       }
 
-      dispatch({ type: 'changeTestnet', testnetId });
+      dispatch({ type: 'changeNetwork', networkId });
     } else if (
-      (allTestnetIds.includes(testnetId) && defaultTestnetId === testnetId) ||
-      (testnetId === '' && activeTestnetId !== '')
+      (allNetworkIds.includes(networkId) && defaultNetworkId === networkId) ||
+      (networkId === '' && activeNetworkId !== '')
     ) {
       // if selected testnet is the same as the default, reset the default
-      dispatch({ type: 'changeTestnet', testnetId: '' });
+      dispatch({ type: 'changeNetwork', networkId: '' });
     }
   }
 
-  React.useEffect(changeTestnet, [testnetId]);
+  React.useEffect(changeNetwork, [networkId]);
 
   return <></>;
 }

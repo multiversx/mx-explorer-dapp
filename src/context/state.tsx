@@ -1,12 +1,12 @@
 import { InferType } from 'yup';
-import { defaultTestnet, schema, adapterSchema } from './config';
+import { defaultNetwork, schema, adapterSchema } from './config';
 import { validatorData, brandData } from './validators';
 import { CancelTokenSource } from 'axios';
 
 export type PublicConfigType = InferType<typeof schema>;
 export type AdapterType = InferType<typeof adapterSchema>;
 
-interface BasicTestnetType {
+interface BasicNetworkType {
   refreshRate: number;
   decimals: number;
   validators?: boolean;
@@ -19,7 +19,7 @@ interface BasicTestnetType {
   fetchedFromNetworkConfig?: boolean;
 }
 
-export type TestnetType = BasicTestnetType & PublicConfigType;
+export type NetworkType = BasicNetworkType & PublicConfigType;
 
 type AppIdType = 'wallet' | 'explorer' | 'studio' | 'docs' | string;
 
@@ -34,15 +34,15 @@ export interface ConfigType {
   erdLabel: string;
   elrondApps: AppsType[];
   explorerApi: string;
-  testnets: TestnetType[];
+  networks: NetworkType[];
   secondary: boolean;
 }
 
 export interface StateType {
   config: ConfigType;
-  defaultTestnet: TestnetType;
-  activeTestnet: TestnetType;
-  activeTestnetId: string;
+  defaultNetwork: NetworkType;
+  activeNetwork: NetworkType;
+  activeNetworkId: string;
   timeout: number; // axios
   cancelToken: CancelTokenSource | undefined;
   refresh: {
@@ -57,9 +57,9 @@ const initialState = (config: ConfigType, optionalConfig?: ConfigType): StateTyp
 
   return {
     config: configObject,
-    defaultTestnet: config.testnets.filter((testnet) => testnet.default).pop() || defaultTestnet,
-    activeTestnet: config.testnets.filter((testnet) => testnet.default).pop() || defaultTestnet,
-    activeTestnetId: '',
+    defaultNetwork: config.networks.filter((network) => network.default).pop() || defaultNetwork,
+    activeNetwork: config.networks.filter((network) => network.default).pop() || defaultNetwork,
+    activeNetworkId: '',
     timeout: 3 * 1000,
     cancelToken: undefined,
     refresh: {

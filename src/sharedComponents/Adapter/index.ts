@@ -5,7 +5,7 @@ import * as f from './functions';
 
 export default function useAdapter() {
   const {
-    activeTestnet: { elasticUrl, adapter, proxyUrl: nodeUrl, apiUrl },
+    activeNetwork: { elasticUrl, adapter, proxyUrl: nodeUrl, apiUrl },
     config: { metaChainShardId },
     timeout,
   } = useGlobalState();

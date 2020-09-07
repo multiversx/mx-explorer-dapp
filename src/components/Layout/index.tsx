@@ -18,7 +18,7 @@ const removeStylesheet = (stylesheetId: string) => {
 
 const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: React.ReactNode }) => {
   const {
-    activeTestnet,
+    activeNetwork,
     config: { secondary },
   } = useGlobalState();
   const { pathname } = useLocation();
@@ -44,7 +44,7 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
       <RoundManager />
       {navbar ? navbar : <Navbar />}
       <main role="main">
-        {activeTestnet.fetchedFromNetworkConfig === false && !validators ? (
+        {activeNetwork.fetchedFromNetworkConfig === false && !validators ? (
           <div className="container pt-3 pb-3">
             <div className="row">
               <div className="offset-lg-3 col-lg-6 mt-4 mb-4">
@@ -54,10 +54,10 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
                       <FontAwesomeIcon icon={faBan} className="empty-icon" />
                       <span className="h4 empty-heading">
                         There was an internal website error. Please try again later.
-                        {!activeTestnet.default && (
+                        {!activeNetwork.default && (
                           <>
                             <br />
-                            {`${activeTestnet.name} network`}
+                            {`${activeNetwork.name} network`}
                           </>
                         )}
                       </span>

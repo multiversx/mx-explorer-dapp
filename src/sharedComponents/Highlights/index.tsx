@@ -45,22 +45,22 @@ const Hightlights = ({
   setLiveTps?: React.Dispatch<React.SetStateAction<any>>;
 }) => {
   const {
-    activeTestnet: { refreshRate },
-    activeTestnetId,
+    activeNetwork: { refreshRate },
+    activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
 
   const { getHighlights } = adapter();
 
   const [state, setState] = React.useState({
-    [activeTestnetId]: initialState,
+    [activeNetworkId]: initialState,
   });
   const [oldTestnetId, setOldTestnetId] = React.useState<string>('');
   const ref = React.useRef(null);
 
   React.useEffect(() => {
-    setOldTestnetId(activeTestnetId);
-  }, [activeTestnetId]);
+    setOldTestnetId(activeNetworkId);
+  }, [activeNetworkId]);
 
   const getData = () => {
     if (ref.current !== null) {
@@ -94,12 +94,12 @@ const Hightlights = ({
           : initialState;
 
         if (ref.current !== null) {
-          const sameTestnet = oldTestnetId === activeTestnetId;
+          const sameTestnet = oldTestnetId === activeNetworkId;
           if (success || (!success && !sameTestnet)) {
             setLiveTps(data.liveTPS);
             setState((state) => ({
               ...state,
-              [activeTestnetId]: newState,
+              [activeNetworkId]: newState,
             }));
           }
         }
@@ -107,9 +107,9 @@ const Hightlights = ({
     }
   };
 
-  React.useEffect(getData, [timestamp, activeTestnetId]); // run the operation only once since the parameter does not change
+  React.useEffect(getData, [timestamp, activeNetworkId]); // run the operation only once since the parameter does not change
 
-  const props = activeTestnetId in state ? state[activeTestnetId] : initialState;
+  const props = activeNetworkId in state ? state[activeNetworkId] : initialState;
 
   return (
     <div ref={ref}>{!hero ? <DefaultHighlights {...props} /> : <HeroHighlights {...props} />}</div>
