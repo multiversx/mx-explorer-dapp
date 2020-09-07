@@ -4,7 +4,7 @@ import { faBan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Navbar from './Navbar/index';
 import Footer from './Footer';
-import TestnetRouter from './TestnetRouter';
+import NetworkRouter from './NetworkRouter';
 import { useGlobalState } from 'context';
 import RoundManager from './RoundManager';
 import { Highlights } from 'sharedComponents';
@@ -40,7 +40,7 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
 
   return (
     <>
-      <TestnetRouter />
+      <NetworkRouter />
       <RoundManager />
       {navbar ? navbar : <Navbar />}
       <main role="main">
