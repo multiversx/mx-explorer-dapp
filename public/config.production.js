@@ -13,6 +13,11 @@ const CONFIG = {
       to: 'https://wallet.elrond.com/',
     },
     {
+      id: 'bridge',
+      name: 'Bridge',
+      to: 'https://bridge.elrond.com/',
+    },
+    {
       id: 'staking',
       name: 'Staking',
       to: 'https://genesis.elrond.com',
