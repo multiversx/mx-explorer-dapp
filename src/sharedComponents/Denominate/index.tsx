@@ -10,7 +10,7 @@ interface DenominateType {
 
 const Denominate = ({ value, showLastNonZeroDecimal = false, showErd = true }: DenominateType) => {
   const {
-    activeTestnet: { denomination, decimals },
+    activeNetwork: { denomination, decimals },
     config: { erdLabel },
   } = useGlobalState();
 

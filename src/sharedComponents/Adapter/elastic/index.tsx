@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ProviderType } from './../functions';
+import { ProviderType, ProviderPropsType } from './../functions';
 
 const createMustQuery = (value: any, boolQuery: any) => {
   const firstKey = Object.keys(value)[0];
@@ -28,7 +28,7 @@ const createShouldQuery = (value: any, boolQuery: any) => {
   return boolQuery;
 };
 
-const wrapper = ({ baseUrl, url, params = {}, timeout }: any) => {
+const wrapper = ({ baseUrl, url, params = {}, timeout }: ProviderPropsType & { url: string }) => {
   const [, collection, id] = url.split('/');
 
   let query: any = {};
@@ -136,9 +136,9 @@ const wrapper = ({ baseUrl, url, params = {}, timeout }: any) => {
   }
 };
 
-const elastic: ProviderType = async ({ providerUrl, url, params, timeout }) => {
+const elastic: ProviderType = async ({ baseUrl, url, params, timeout }) => {
   return wrapper({
-    baseUrl: providerUrl,
+    baseUrl,
     url,
     params,
     timeout,

@@ -14,7 +14,7 @@ type LatestBlockType = BlockType & {
 const LatestBlocks: React.FC = () => {
   const ref = React.useRef(null);
   const {
-    activeTestnetId,
+    activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
   const [blocks, setBlocks] = React.useState<LatestBlockType[]>([]);
@@ -51,7 +51,7 @@ const LatestBlocks: React.FC = () => {
     }
   };
 
-  React.useEffect(fetchBlocks, [activeTestnetId, timestamp]);
+  React.useEffect(fetchBlocks, [activeNetworkId, timestamp]);
 
   const Component = () => {
     const someNew = blocks.some((block) => block.isNew);

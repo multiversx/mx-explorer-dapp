@@ -10,7 +10,7 @@ const MapChart = () => {
 
   const {
     timeout,
-    activeTestnet: { nrOfShards },
+    activeNetwork: { nrOfShards },
     refresh: { timestamp },
     config: { metaChainShardId, explorerApi },
   } = useGlobalState();

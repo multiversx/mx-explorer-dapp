@@ -8,7 +8,7 @@ import ScAddressIcon from './ScAddressIcon';
 import Search from './Search';
 import ShardSpan from './ShardSpan';
 import TestnetLink from './TestnetLink';
-import TestnetReady, { withTestnetReady } from './TestnetReady';
+import NetworkReady, { withNetworkReady } from './NetworkReady';
 import TimeAgo from './TimeAgo';
 import TransactionsTable from './TransactionsTable';
 import TransactionStatus from './TransactionStatus';
@@ -23,8 +23,8 @@ export {
   ScAddressIcon,
   TestnetLink,
   TimeAgo,
-  TestnetReady,
-  withTestnetReady,
+  NetworkReady,
+  withNetworkReady,
   withPageTitle,
   ShardSpan,
   Search,

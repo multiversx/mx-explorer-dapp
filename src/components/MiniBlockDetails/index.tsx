@@ -1,5 +1,5 @@
 import { useGlobalState } from 'context';
-import { isHash, testnetRoute } from 'helpers';
+import { isHash, networkRoute } from 'helpers';
 import * as React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Loader, ShardSpan, TestnetLink, TransactionsTable, adapter } from 'sharedComponents';
@@ -31,7 +31,7 @@ const MiniBlockDetails: React.FC = () => {
   const provider = adapter();
 
   const {
-    activeTestnetId,
+    activeNetworkId,
     refresh: { timestamp },
     timeout,
   } = useGlobalState();
@@ -39,7 +39,7 @@ const MiniBlockDetails: React.FC = () => {
   const [state, setState] = React.useState<StateType>(initialState);
 
   if (miniBlockHash && !isHash(miniBlockHash)) {
-    history.push(testnetRoute({ to: `/not-found`, activeTestnetId }));
+    history.push(networkRoute({ to: `/not-found`, activeNetworkId }));
   }
 
   const { miniBlock, blockFetched } = state;
@@ -89,10 +89,10 @@ const MiniBlockDetails: React.FC = () => {
     }
   };
 
-  React.useEffect(getMiniBlock, [activeTestnetId, miniBlockHash, timeout]); // run the operation only once since the parameter does not change
+  React.useEffect(getMiniBlock, [activeNetworkId, miniBlockHash, timeout]); // run the operation only once since the parameter does not change
 
   React.useEffect(fetchTransactions, [
-    activeTestnetId,
+    activeNetworkId,
     size,
     miniBlockHash,
     timeout,

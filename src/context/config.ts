@@ -1,12 +1,8 @@
 import { object, string, number, boolean } from 'yup';
-import { ConfigType, TestnetType } from './state';
+import { ConfigType, NetworkType } from './state';
 import localTestnets from './localTestnets';
 
-export const schema = object({
-  default: boolean(),
-  id: string().defined().required(),
-  name: string().defined().required(),
-  numInitCharactersForScAddress: number().defined().required(),
+export const adapterSchema = object({
   adapter: string().defined().oneOf(['api', 'elastic']),
   apiUrl: string().when('adapter', {
     is: 'api',
@@ -20,10 +16,19 @@ export const schema = object({
     is: 'elastic',
     then: string().required(),
   }),
+}).required();
+
+const baseSchema = object({
+  default: boolean(),
+  id: string().defined().required(),
+  name: string().defined().required(),
+  numInitCharactersForScAddress: number().defined().required(),
   validatorDetails: boolean(),
 }).required();
 
-export const defaultTestnet: TestnetType = {
+export const schema = baseSchema.concat(adapterSchema);
+
+export const defaultNetwork: NetworkType = {
   default: false,
   id: 'not-configured',
   name: 'NOT CONFIGURED',
@@ -56,15 +61,15 @@ export const buildInitialConfig = (config?: any): ConfigType => {
           },
         ],
     explorerApi: config.explorerApi,
-    testnets:
-      config.testnets && config.testnets.length
-        ? config.testnets.map((testnet: any) => {
-            schema.validate(testnet, { strict: true }).catch(({ errors }) => {
-              console.error(`Wrong config for ${testnet.name} network.`, errors);
+    networks:
+      config.networks && config.networks.length
+        ? config.networks.map((network: any) => {
+            schema.validate(network, { strict: true }).catch(({ errors }) => {
+              console.error(`Wrong config for ${network.name} network.`, errors);
             });
-            return { ...defaultTestnet, ...testnet };
+            return { ...defaultNetwork, ...network };
           })
-        : [defaultTestnet],
+        : [defaultNetwork],
   };
 };
 
@@ -79,21 +84,26 @@ const configIsDefined =
 
 const config = configIsDefined ? buildInitialConfig(importedConfig) : buildInitialConfig({});
 
-let configTestnets = [...config.testnets];
+let configNetworks = [...config.networks];
 
 if (
   localTestnets.some((testnet) => testnet.default) &&
   process.env.REACT_APP_USE_GLOBAL_DEFAULT === 'false'
 ) {
-  configTestnets = configTestnets.map((testnet) => ({ ...testnet, default: false }));
+  configNetworks = configNetworks.map((network) => {
+    schema.validate(network, { strict: true }).catch(({ errors }) => {
+      console.error(`Wrong config for ${network.name} network.`, errors);
+    });
+    return { ...network, default: false };
+  });
 }
 
 const extendedConfig = {
   ...config,
-  testnets: [
-    ...configTestnets,
+  networks: [
+    ...configNetworks,
     ...localTestnets.map((t: any) => ({
-      ...defaultTestnet,
+      ...defaultNetwork,
       ...t,
     })),
   ],
@@ -101,7 +111,7 @@ const extendedConfig = {
 
 export const stateConfig = {
   ...extendedConfig,
-  testnets: extendedConfig.testnets
+  networks: extendedConfig.networks
     .sort((a, b) => {
       const defaultA = a.default ? 1 : 0;
       const defaultB = b.default ? 1 : 0;

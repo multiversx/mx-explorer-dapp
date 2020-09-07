@@ -2,18 +2,16 @@ import { AdapterFunctionType } from './index';
 
 export default async function getLatestTransactions({
   provider,
-  providerUrl,
+  baseUrl,
   timeout,
 }: AdapterFunctionType) {
   try {
-    const params = {
-      size: 20,
-    };
-
     const { data } = await provider({
-      providerUrl,
+      baseUrl,
       url: `/transactions`,
-      params,
+      params: {
+        size: 20,
+      },
       timeout,
     });
 

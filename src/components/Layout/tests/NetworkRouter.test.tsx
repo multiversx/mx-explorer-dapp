@@ -23,13 +23,12 @@ const optionalConfig: ConfigType = {
     },
   ],
   explorerApi: '',
-  testnets: [
+  networks: [
     {
       default: true,
       id: 'zero-to-one',
       name: 'Zero to One',
-      nodeUrl: 'https://api.elrond.com',
-      elasticUrl: 'https://api-facade.elrond.com',
+      apiUrl: 'https://api.elrond.com',
       adapter: 'api',
       refreshRate: 6000,
       numInitCharactersForScAddress: 20,
@@ -39,7 +38,6 @@ const optionalConfig: ConfigType = {
       gasLimit: 1000000,
       gasPerDataByte: 1500,
       validatorDetails: true,
-      faucet: false,
       nrOfShards: 1,
       versionNumber: '2',
       fetchedFromNetworkConfig: true,
@@ -48,9 +46,9 @@ const optionalConfig: ConfigType = {
       default: false,
       id: 'testnet-do-toronto',
       name: 'DigitalOcean TOR Testnet',
-      nodeUrl: '***REMOVED***',
+      proxyUrl: '***REMOVED***',
       elasticUrl: '***REMOVED***',
-      adapter: 'api',
+      adapter: 'elastic',
       refreshRate: 6000,
       numInitCharactersForScAddress: 20,
       decimals: 4,
@@ -59,7 +57,6 @@ const optionalConfig: ConfigType = {
       gasLimit: 1000000,
       gasPerDataByte: 1500,
       validatorDetails: true,
-      faucet: false,
       nrOfShards: 1,
       versionNumber: '2',
       fetchedFromNetworkConfig: true,
@@ -67,15 +64,15 @@ const optionalConfig: ConfigType = {
   ],
 };
 
-describe('Testnet Router', () => {
-  test('Change route on testnet change', async () => {
+describe('Network Router', () => {
+  test('Change route on network change', async () => {
     const render = renderWithRouter({
       route: '/',
       optionalConfig,
     });
-    const testnetSwitch = render.getByTestId('testnetSwitch');
-    expect(testnetSwitch.textContent).toBe('Zero to One ');
-    fireEvent.click(testnetSwitch);
+    const networkSwitch = render.getByTestId('networkSwitch');
+    expect(networkSwitch.textContent).toBe('Zero to One ');
+    fireEvent.click(networkSwitch);
     const digitalOcean = render.getByText('DigitalOcean TOR Testnet');
     fireEvent.click(digitalOcean);
     expect(render.history.location.pathname).toBe('/testnet-do-toronto');

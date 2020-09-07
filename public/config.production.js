@@ -47,7 +47,7 @@ const CONFIG = {
         wallet: (default) true
         faucet: (default) false (faucet)
     */
-  testnets: [
+  networks: [
     {
       default: true,
       id: 'mainnet',
