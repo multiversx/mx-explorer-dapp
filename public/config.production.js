@@ -73,16 +73,6 @@ const CONFIG = {
       numInitCharactersForScAddress: 14,
       validatorDetails: true,
     },
-    {
-      default: false,
-      id: 'mainnet-elastic',
-      name: 'Elastic',
-      adapter: 'elastic',
-      proxyUrl: 'https://api.elrond.com',
-      elasticUrl: 'https://elastic-aws.elrond.com',
-      numInitCharactersForScAddress: 14,
-      validatorDetails: true,
-    },
   ],
 };
 
