@@ -40,7 +40,7 @@ jobs:
         env:
           SLACK_ICON_EMOJI: ':globe_with_meridians:'
           SLACK_USERNAME: explorer.elrond.com
-          SLACK_MESSAGE: 'Build deployed to -> https://testnet-explorer.elrond.com/'
+          SLACK_MESSAGE: ${{ secrets.AWS_S3_BUCKET_TESTNET }}
           SLACK_FOOTER: ''
           MSG_MINIMAL: true
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
