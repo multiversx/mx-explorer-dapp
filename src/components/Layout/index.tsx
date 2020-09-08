@@ -9,13 +9,6 @@ import { useGlobalState } from 'context';
 import RoundManager from './RoundManager';
 import { Highlights } from 'sharedComponents';
 
-const removeStylesheet = (stylesheetId: string) => {
-  const stylesheet = document.querySelector(stylesheetId);
-  if (stylesheet) {
-    (stylesheet as any).parentNode.removeChild(stylesheet);
-  }
-};
-
 const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: React.ReactNode }) => {
   const {
     activeNetwork,
@@ -26,15 +19,20 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
 
   React.useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
-      removeStylesheet('#primary-stylesheet');
-      removeStylesheet('#scondary-stylesheet');
       if (secondary) {
         require('assets/sass/secondary.scss');
       } else {
         require('assets/sass/primary.scss');
       }
-    } else if (secondary) {
-      removeStylesheet('#primary-stylesheet');
+    } else {
+      const stylesheet = document.getElementById('stylesheet');
+      if (stylesheet) {
+        const href: string = (stylesheet as any).href;
+        (stylesheet as any).href = href.replace(
+          '__stylesheet__.css',
+          secondary ? 'secondary.css' : 'primary.css'
+        );
+      }
     }
   }, [secondary]);
 
