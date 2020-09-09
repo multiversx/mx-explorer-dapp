@@ -14,7 +14,7 @@ const getShardTypeParams = (
   shardId: number | undefined,
   shardType: 'senderShard' | 'receiverShard' | undefined
 ) =>
-  shardId && shardType
+  shardId !== undefined && shardType
     ? {
         [shardType]: shardId,
       }
