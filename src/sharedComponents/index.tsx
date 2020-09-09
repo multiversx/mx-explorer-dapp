@@ -8,12 +8,13 @@ import ScAddressIcon from './ScAddressIcon';
 import Search from './Search';
 import ShardSpan from './ShardSpan';
 import TestnetLink from './TestnetLink';
-import TestnetReady, { withTestnetReady } from './TestnetReady';
+import NetworkReady, { withNetworkReady } from './NetworkReady';
 import TimeAgo from './TimeAgo';
 import TransactionsTable from './TransactionsTable';
 import TransactionStatus from './TransactionStatus';
 import TooltipWithCopy from './TooltipWithCopy';
 import CopyButton from './CopyButton';
+import adapter from './Adapter';
 
 export {
   Denominate,
@@ -22,8 +23,8 @@ export {
   ScAddressIcon,
   TestnetLink,
   TimeAgo,
-  TestnetReady,
-  withTestnetReady,
+  NetworkReady,
+  withNetworkReady,
   withPageTitle,
   ShardSpan,
   Search,
@@ -33,4 +34,5 @@ export {
   TransactionStatus,
   TooltipWithCopy,
   CopyButton,
+  adapter,
 };

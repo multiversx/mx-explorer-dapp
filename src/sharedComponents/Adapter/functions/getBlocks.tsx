@@ -1,12 +1,4 @@
-import axios from 'axios';
-
-export interface GetBlocksParamsType {
-  elasticUrl: string;
-  size?: number;
-  shardId: number | undefined;
-  epochId: number | undefined;
-  timeout: number;
-}
+import { AdapterFunctionType } from './index';
 
 const getShardOrEpochParam = (shardId: number | undefined, epoch: number | undefined) => {
   switch (true) {
@@ -19,13 +11,20 @@ const getShardOrEpochParam = (shardId: number | undefined, epoch: number | undef
   }
 };
 
+export interface GetBlocksParamsType {
+  size?: number;
+  shardId: number | undefined;
+  epochId: number | undefined;
+}
+
 export async function getBlocks({
-  elasticUrl,
+  provider,
+  baseUrl,
   size = 1,
   shardId,
   timeout,
   epochId,
-}: GetBlocksParamsType) {
+}: AdapterFunctionType & GetBlocksParamsType) {
   try {
     const params = {
       from: (size - 1) * 25,
@@ -33,7 +32,13 @@ export async function getBlocks({
       ...getShardOrEpochParam(shardId, epochId),
     };
 
-    const { data } = await axios.get(`${elasticUrl}/blocks`, { params, timeout });
+    const { data } = await provider({
+      baseUrl,
+      url: `/blocks`,
+      params,
+      timeout,
+    });
+
     const blocks = data.map((block: any) => ({ hash: block.id, ...block }));
 
     let min = blocks[0].nonce;
@@ -67,18 +72,24 @@ export async function getBlocks({
   }
 }
 
-export async function getTotalBlocks({
-  elasticUrl,
+export async function getBlocksCount({
+  provider,
+  baseUrl,
   shardId,
   timeout,
   epochId,
-}: GetBlocksParamsType) {
+}: AdapterFunctionType & GetBlocksParamsType) {
   try {
-    const params = {
+    const params: AdapterFunctionType['params'] = {
       ...getShardOrEpochParam(shardId, epochId),
     };
 
-    const { data } = await axios.get(`${elasticUrl}/blocks/count`, { params, timeout });
+    const { data } = await provider({
+      baseUrl,
+      url: `/blocks/count`,
+      params,
+      timeout,
+    });
 
     return {
       count: data,

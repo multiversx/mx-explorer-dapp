@@ -13,6 +13,11 @@ const CONFIG = {
       to: 'https://wallet.elrond.com/',
     },
     {
+      id: 'bridge',
+      name: 'Bridge',
+      to: 'https://bridge.elrond.com/',
+    },
+    {
       id: 'staking',
       name: 'Staking',
       to: 'https://genesis.elrond.com',
@@ -47,13 +52,13 @@ const CONFIG = {
         wallet: (default) true
         faucet: (default) false (faucet)
     */
-  testnets: [
+  networks: [
     {
       default: true,
       id: 'mainnet',
       name: 'Mainnet',
-      nodeUrl: 'https://api.elrond.com',
-      elasticUrl: 'https://api.elrond.com',
+      adapter: 'api',
+      apiUrl: 'https://api.elrond.com',
       numInitCharactersForScAddress: 14,
       gasLimitEditable: true,
       data: true,
@@ -63,13 +68,10 @@ const CONFIG = {
     {
       id: 'testnet',
       name: 'Testnet',
-      nodeUrl: 'https://api-testnet.elrond.com',
-      elasticUrl: 'https://api-testnet.elrond.com',
+      adapter: 'api',
+      apiUrl: 'https://api-testnet.elrond.com',
       numInitCharactersForScAddress: 14,
-      gasLimitEditable: true,
-      data: true,
       validatorDetails: true,
-      faucet: false,
     },
   ],
 };

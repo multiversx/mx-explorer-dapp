@@ -3,10 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams } from 'react-router-dom';
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { BlocksTable, Loader } from 'sharedComponents';
+import { BlocksTable, Loader, adapter } from 'sharedComponents';
 import { ValidatorType } from 'context/validators';
-import { getValidator, searchBlocks, getHistoricRatings } from './helpers/asyncRequests';
-import { validatorFunctions } from 'helpers';
+import {
+  GetRoundsReturnType,
+  initialState,
+  getHistoricRatings,
+} from 'sharedComponents/Adapter/functions/getValidators';
 import NetworkMetrics, { NetworkMetricsType } from './NetworkMetrics';
 import NodeInformation, { NodeInformationType } from './NodeInformation';
 import Rounds from './Rounds';
@@ -27,29 +30,6 @@ export type StateType = NetworkMetricsType &
     historicRatings: HistoricRatingType[];
   };
 
-export const initialState: StateType = {
-  shardId: '0',
-  publicKey: '',
-  shardNumber: 0,
-  versionNumber: '0',
-  isActive: false,
-  nodeDisplayName: '0',
-  isValidator: false,
-  publicKeyBlockSign: '0',
-  totalDownTimePercentege: 0,
-  totalUpTimePercentege: 0,
-  totalUpTimeLabel: '',
-  totalDownTimeLabel: '',
-  instanceType: '0',
-  startBlockNr: 0,
-  endBlockNr: 0,
-  signersIndex: -1,
-  success: true,
-  rating: 0,
-  ratingModifier: 0,
-  historicRatings: [],
-};
-
 const ValidatorDetails = () => {
   const ref = React.useRef(null);
   const { hash } = useParams();
@@ -62,17 +42,18 @@ const ValidatorDetails = () => {
     endBlockNr: 0,
     blocksFetched: true,
   });
-  const [rounds, setRounds] = React.useState<validatorFunctions.GetRoundsReturnType>({
+  const [rounds, setRounds] = React.useState<GetRoundsReturnType>({
     rounds: [],
     roundsFetched: true,
   });
 
   const {
-    activeTestnet: { elasticUrl, nodeUrl },
     config: { metaChainShardId, explorerApi },
     timeout,
     validatorData,
   } = useGlobalState();
+
+  const { getRounds, getValidator, searchBlocks } = adapter();
 
   React.useEffect(() => {
     if (hash) {
@@ -87,49 +68,44 @@ const ValidatorDetails = () => {
 
   const [success, setSuccess] = React.useState(true);
 
-  React.useEffect(() => {
+  const getData = () => {
     if (ref.current !== null && validator !== undefined && validator.peerType !== 'observer') {
       getValidator({
         currentValidator: validator,
-        elasticUrl,
-        timeout: Math.max(timeout, 10000),
         publicKey: validator.publicKey,
-        nodeUrl,
         explorerApi,
       }).then(({ signersIndex, shardNumber, epoch, roundAtEpochStart, success, ...data }: any) => {
         if (ref.current !== null) {
           setState({ ...data, shardNumber, rating: validator!.rating });
           setSuccess(success);
-          const props = {
-            elasticUrl,
-            timeout: Math.max(timeout, 10000),
-            shardNumber,
-            signersIndex,
-            epoch,
-            roundAtEpochStart,
-          };
 
           getHistoricRatings({ explorerApi, timeout, publicKey: validator.publicKey }).then(
             (historicRatings: HistoricRatingType[]) => {
-              setState((state) => ({ ...state, historicRatings }));
+              setState((state: any) => ({ ...state, historicRatings }));
             }
           );
 
-          validatorFunctions.getRounds(props).then(({ rounds, roundsFetched }) => {
-            if (ref.current !== null) {
-              setRounds({ rounds, roundsFetched });
+          getRounds({ shardNumber, signersIndex, epoch, roundAtEpochStart }).then(
+            ({ rounds, roundsFetched }) => {
+              if (ref.current !== null) {
+                setRounds({ rounds, roundsFetched });
+              }
             }
-          });
+          );
 
-          searchBlocks(props).then((blockdata: any) => {
-            if (ref.current !== null) {
-              setFetchedBlocks(blockdata);
+          searchBlocks({ shardNumber, signersIndex, epoch, roundAtEpochStart }).then(
+            (blockdata: any) => {
+              if (ref.current !== null) {
+                setFetchedBlocks(blockdata);
+              }
             }
-          });
+          );
         }
       });
     }
-  }, [elasticUrl, timeout, nodeUrl, metaChainShardId, validator, explorerApi]); // run the operation only once since the parameter does not change
+  };
+
+  React.useEffect(getData, [metaChainShardId, validator, explorerApi]); // run the operation only once since the parameter does not change
 
   const { publicKey, isValidator } = state;
 
