@@ -9,6 +9,17 @@ import { useGlobalState } from 'context';
 import RoundManager from './RoundManager';
 import { Highlights } from 'sharedComponents';
 
+function addStylesheet(secondary: boolean) {
+  const stylesheet = document.getElementById('stylesheet');
+  if (stylesheet) {
+    const href: string = (stylesheet as any).href.replace(
+      '__stylesheet__.css',
+      secondary ? 'secondary.css' : 'primary.css'
+    );
+    (stylesheet as any).href = href;
+  }
+}
+
 const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: React.ReactNode }) => {
   const {
     activeNetwork,
@@ -25,14 +36,7 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
         require('assets/sass/primary.scss');
       }
     } else {
-      const stylesheet = document.getElementById('stylesheet');
-      if (stylesheet) {
-        const href: string = (stylesheet as any).href;
-        (stylesheet as any).href = href.replace(
-          '__stylesheet__.css',
-          secondary ? 'secondary.css' : 'primary.css'
-        );
-      }
+      addStylesheet(secondary);
     }
   }, [secondary]);
 
