@@ -37,9 +37,13 @@ export default function MapDisplay({
 
   const radiusByCity = getRadius(groupedCities);
 
-  const tiles = 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png';
+  const tiles = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
   const attribution =
-    '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+
+  // const tiles = 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png';
+  // const attribution =
+  //   '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
 
   const style = (publicKey: string, offset = 0) => ({
     dangerouslySetInnerHTML: {
@@ -59,6 +63,19 @@ export default function MapDisplay({
   const southWest = L.latLng(-90, -180);
   const northEast = L.latLng(90, 180);
   const bounds = L.latLngBounds(southWest, northEast);
+
+  const shardLeaders: { shard: number; leader: string; valid: boolean }[] = shardsArray
+    .map((shard) => {
+      const shardName = shard === metaChainShardId ? 'Metachain' : `Shard ${shard}`;
+      const shardObj = leaders.find((l) => l.shard === shard);
+      const shardLeader = shardObj ? ` ${shardObj!.name}, ${shardObj!.country}` : '';
+      return {
+        shard,
+        leader: `${shardName}: ${shardLeader}`,
+        valid: shardLeader !== '',
+      };
+    })
+    .filter(({ valid }) => valid);
 
   return (
     <Map
@@ -96,10 +113,9 @@ export default function MapDisplay({
         <style {...style(leader.publicKey, leader.offset)} key={leader.name + i} />
       ))}
       {leaders.map((leader, i) => {
-        let iconName = `shard-${leader.shard}.svg`;
-        if (leader.shard === metaChainShardId) {
-          iconName = 'shard-metachain.svg';
-        } else if (leaders.length > 6) {
+        let iconName =
+          leader.shard === metaChainShardId ? 'shard-metachain.svg' : `shard-${leader.shard}.svg`;
+        if (leaders.length > 6) {
           iconName = 'shard.svg';
         }
         return (
@@ -121,23 +137,18 @@ export default function MapDisplay({
           />
         );
       })}
-      <Control position="bottomleft">
-        <p className="text-white mb-0">
-          <FontAwesomeIcon icon={faMapMarker} /> <b>Leaders</b>
-        </p>
-        <ul className="list-unstyled text-white leaflet-legend map-legend" id="legend" ref={ref}>
-          {shardsArray.map((shard) => {
-            const shardName = shard === metaChainShardId ? 'Metachain' : `Shard ${shard}`;
-            const shardObj = leaders.find((l) => l.shard === shard);
-            const shardLeader = shardObj ? ` ${shardObj!.name}, ${shardObj!.country}` : '';
-            return shardLeader ? (
-              <li key={shard}>
-                {shardName}: {shardLeader}
-              </li>
-            ) : null;
-          })}
-        </ul>
-      </Control>
+      {shardLeaders.length > 0 && (
+        <Control position="bottomleft">
+          <p className="text-white mb-0">
+            <FontAwesomeIcon icon={faMapMarker} /> <b>Leaders</b>
+          </p>
+          <ul className="list-unstyled text-white leaflet-legend map-legend" id="legend" ref={ref}>
+            {shardLeaders.map(({ shard, leader }) => (
+              <li key={shard}>{leader}</li>
+            ))}
+          </ul>
+        </Control>
+      )}
     </Map>
   );
 }

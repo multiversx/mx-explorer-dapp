@@ -2,8 +2,8 @@ import denominate from './../denominate';
 
 describe('denomination 4,4', () => {
   const numbers: { [key: string]: string } = {
-    '9999999999999999999999990000': '999,999,999,999,999,999,999,999.0000',
-    '0': '0.0000',
+    '9999999999999999999999990000': '999,999,999,999,999,999,999,999',
+    '0': '0',
   };
   const denomination = 4;
   const decimals = 4;
@@ -25,7 +25,7 @@ describe('denomination 4,4', () => {
 describe('denomination 8,4', () => {
   const numbers: { [key: string]: string } = {
     '9999999999999999999899996000': '99,999,999,999,999,999,998.9999',
-    '0': '0.0000',
+    '0': '0',
     '10000': '0.0001',
   };
   const denomination = 8;

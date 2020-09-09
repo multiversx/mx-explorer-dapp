@@ -9,7 +9,8 @@ import { populateValidatorsTable } from './helpers/validatorHelpers';
 
 export default function useSetValidatorsData(ref: React.RefObject<HTMLInputElement>) {
   const {
-    activeTestnet: { nodeUrl, versionNumber, nrOfShards },
+    activeNetwork: { apiUrl, proxyUrl, versionNumber, nrOfShards },
+    activeNetworkId,
     timeout,
     config: { metaChainShardId, explorerApi },
     validatorData: configValidatorData,
@@ -20,13 +21,15 @@ export default function useSetValidatorsData(ref: React.RefObject<HTMLInputEleme
   const [success, setSuccess] = React.useState(true);
 
   const getData = () => {
+    // TODO: move logic on server
+    const nodeUrl = apiUrl || proxyUrl || '';
     Promise.all([
       getValidatorsHeartbeat({
-        nodeUrl,
-        timeout: Math.max(timeout, 10000),
+        nodeUrl: apiUrl || proxyUrl || '',
+        timeout: Math.max(timeout, 30000),
       }),
-      getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 10000) }),
-      getBrandData({ explorerApi, timeout: Math.max(timeout, 10000) }),
+      getValidatorStatistics({ nodeUrl, timeout: Math.max(timeout, 30000) }),
+      getBrandData({ explorerApi, timeout: Math.max(timeout, 30000) }),
     ]).then(([getValidatorsDataResponse, validatorStats, brand]) => {
       const { data, success } = getValidatorsDataResponse;
       const { statistics, success: validatorsSuccess } = validatorStats;
@@ -52,7 +55,7 @@ export default function useSetValidatorsData(ref: React.RefObject<HTMLInputEleme
     });
   };
 
-  React.useEffect(getData, [nodeUrl, timeout]);
+  React.useEffect(getData, [activeNetworkId, timeout]);
 
   return success;
 }

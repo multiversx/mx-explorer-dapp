@@ -3,7 +3,6 @@ import React from 'react';
 import { StateInspector } from 'reinspect';
 import ReactDOM from 'react-dom';
 import App from './App';
-import './assets/sass/theme.scss';
 
 let MountedApp = <App />;
 

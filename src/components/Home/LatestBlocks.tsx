@@ -3,9 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useGlobalState } from 'context';
 import { dateFormatted, trimHash } from 'helpers';
-import { ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
-import { BlockType } from './../Blocks';
-import { getBlocks } from './helpers/asyncRequests';
+import { ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
+import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 import './animatedList.scss';
 
 type LatestBlockType = BlockType & {
@@ -15,16 +14,17 @@ type LatestBlockType = BlockType & {
 const LatestBlocks: React.FC = () => {
   const ref = React.useRef(null);
   const {
-    activeTestnet: { elasticUrl },
-    timeout,
+    activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
   const [blocks, setBlocks] = React.useState<LatestBlockType[]>([]);
   const [blocksFetched, setBlocksFetched] = React.useState<boolean>(true);
 
+  const { getLatestBlocks } = adapter();
+
   const fetchBlocks = () => {
     if (ref.current !== null) {
-      getBlocks({ elasticUrl, timeout }).then(({ data, blocksFetched }) => {
+      getLatestBlocks().then(({ data, blocksFetched }) => {
         if (ref.current !== null) {
           if (blocksFetched) {
             const sortedBlocks = data;
@@ -51,7 +51,7 @@ const LatestBlocks: React.FC = () => {
     }
   };
 
-  React.useEffect(fetchBlocks, [elasticUrl, timeout, timestamp]);
+  React.useEffect(fetchBlocks, [activeNetworkId, timestamp]);
 
   const Component = () => {
     const someNew = blocks.some((block) => block.isNew);

@@ -26,7 +26,9 @@ const Pager = ({
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;
   const prevPageNo = size === 2 ? `/${slug}` : `/${slug}/page/${size - 1}`;
 
-  const startEnd = end === 1 ? 1 : `${start.toLocaleString('en')}-${end.toLocaleString('en')}`;
+  const last = !isNaN(parseInt(total.toString())) ? Math.min(end, parseInt(total.toString())) : end;
+
+  const startEnd = end === 1 ? 1 : `${start.toLocaleString('en')}-${last.toLocaleString('en')}`;
 
   const correction = size > 2 ? 0 : 1;
   const lastPage = Math.ceil(parseInt(total.toString()) / (end - start + correction));

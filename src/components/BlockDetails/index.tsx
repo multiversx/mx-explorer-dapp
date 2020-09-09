@@ -4,10 +4,18 @@ import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
-import { isHash, dateFormatted, sizeFormat, testnetRoute, truncate, blockFunctions } from 'helpers';
-import { Loader, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
-import { BlockType } from '../Blocks';
+import { isHash, dateFormatted, sizeFormat, networkRoute, truncate } from 'helpers';
+import { Loader, ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
+import { initialState, BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 import { validatorsRoutes } from 'routes';
+import './blockDetails.scss';
+
+function decodeHex(hex: string) {
+  let str = '';
+  for (let i = 0; i < hex.length; i += 2)
+    str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+  return str;
+}
 
 export interface StateType {
   block: BlockType;
@@ -18,33 +26,37 @@ export interface StateType {
 }
 
 const BlockDetails: React.FC = () => {
-  const { hash: blockId } = useParams();
+  const params: any = useParams();
+
+  const { hash: blockId } = params;
   const history = useHistory();
 
   const ref = React.useRef(null);
 
   const {
-    activeTestnet: { elasticUrl },
-    activeTestnetId,
-    timeout,
+    activeNetworkId,
     config: { metaChainShardId },
   } = useGlobalState();
 
-  const [state, setState] = React.useState<StateType>(blockFunctions.initialState);
+  const { getBlock } = adapter();
+
+  const [state, setState] = React.useState<StateType>(initialState);
 
   if (blockId && !isHash(blockId)) {
-    history.push(testnetRoute({ to: `/not-found`, activeTestnetId }));
+    history.push(networkRoute({ to: `/not-found`, activeNetworkId }));
   }
 
-  React.useEffect(() => {
+  const fetchBlock = () => {
     if (blockId) {
-      blockFunctions
-        .getBlock({ elasticUrl, blockId, timeout })
-        .then(data => ref.current !== null && setState(data));
+      getBlock({ blockId }).then((data) => ref.current !== null && setState(data));
     }
-  }, [elasticUrl, blockId, timeout]); // run the operation only once since the parameter does not change
+  };
+
+  React.useEffect(fetchBlock, [blockId]); // run the operation only once since the parameter does not change
 
   const { block, proposer, consensusItems, nextHash, blockFetched } = state;
+
+  const isFirsBlock = block.prevHash && block.prevHash.length > 64;
 
   return (
     <div ref={ref}>
@@ -171,7 +183,7 @@ const BlockDetails: React.FC = () => {
                       </div>
                       <hr className="hr-space" />
                       <div className="row">
-                        <div className="col-lg-2 card-label">Consensus group</div>
+                        <div className="col-lg-2 card-label">Consensus Group</div>
                         <div className="col-lg-10">
                           {consensusItems.length === 0 ? (
                             <span className="text-muted">N/A</span>
@@ -238,7 +250,7 @@ const BlockDetails: React.FC = () => {
                             <span className="text-muted">N/A</span>
                           ) : (
                             <>
-                              {block.miniBlocksHashes.map(item => (
+                              {block.miniBlocksHashes.map((item) => (
                                 <TestnetLink className="hash" key={item} to={`/miniblocks/${item}`}>
                                   {truncate(item, 100)}
                                 </TestnetLink>
@@ -252,9 +264,13 @@ const BlockDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">Previous Hash</div>
                         <div className="col-lg-10">
-                          <TestnetLink className="hash" to={`/blocks/${block.prevHash}`}>
-                            {block.prevHash}
-                          </TestnetLink>
+                          {isFirsBlock ? (
+                            <span className="text-muted">N/A</span>
+                          ) : (
+                            <TestnetLink className="hash" to={`/blocks/${block.prevHash}`}>
+                              {block.prevHash}
+                            </TestnetLink>
+                          )}
                         </div>
                       </div>
                       <hr className="hr-space" />
@@ -262,6 +278,18 @@ const BlockDetails: React.FC = () => {
                         <div className="col-lg-2 card-label">Public Keys Bitmap</div>
                         <div className="col-lg-10">{block.pubKeyBitmap}</div>
                       </div>
+                      {isFirsBlock && (
+                        <>
+                          <hr className="hr-space" />
+                          <div className="row">
+                            <div className="col-lg-12">
+                              <pre className="genesis rounded border px-3 pt-2 pb-4">
+                                {decodeHex(block.prevHash)}
+                              </pre>
+                            </div>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 ) : (

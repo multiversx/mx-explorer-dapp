@@ -1,5 +1,9 @@
 const CONFIG = {
   metaChainShardId: 4294967295,
+<<<<<<< HEAD
+=======
+  erdLabel: 'eGLD',
+>>>>>>> api
   elrondApps: [
     {
       id: 'main-site',
@@ -12,6 +16,14 @@ const CONFIG = {
       to: 'https://wallet.elrond.com/',
     },
     {
+<<<<<<< HEAD
+=======
+      id: 'bridge',
+      name: 'Bridge',
+      to: 'https://bridge.elrond.com/',
+    },
+    {
+>>>>>>> api
       id: 'staking',
       name: 'Staking',
       to: 'https://genesis.elrond.com',
@@ -46,6 +58,7 @@ const CONFIG = {
         wallet: (default) true
         faucet: (default) false (faucet)
     */
+<<<<<<< HEAD
   testnets: [
     {
       default: true,
@@ -53,12 +66,32 @@ const CONFIG = {
       name: 'Battle of Nodes',
       nodeUrl: 'https://api.elrond.com',
       elasticUrl: 'https://elastic-aws.elrond.com',
+=======
+  networks: [
+    {
+      default: true,
+      id: 'mainnet',
+      name: 'Mainnet',
+      adapter: 'api',
+      apiUrl: 'https://api.elrond.com',
+>>>>>>> api
       numInitCharactersForScAddress: 14,
       gasLimitEditable: true,
       data: true,
       validatorDetails: true,
       faucet: false,
     },
+<<<<<<< HEAD
+=======
+    {
+      id: 'testnet',
+      name: 'Testnet',
+      adapter: 'api',
+      apiUrl: 'https://api-testnet.elrond.com',
+      numInitCharactersForScAddress: 14,
+      validatorDetails: true,
+    },
+>>>>>>> api
   ],
 };
 

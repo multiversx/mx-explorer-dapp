@@ -7,46 +7,50 @@ export interface AddressDetailsType {
   balance: string;
   nonce: number;
   detailsFetched: boolean;
+  claimableRewards: number;
+  stake: number;
 }
 
 const AddressDetails = (props: AddressDetailsType) => {
+  const labelClass = `card-label col flex-grow-0`;
+  const dataClass = 'col';
   const Address = (
-    <div className="row mb-4">
-      <div className="col-12">
-        <div className="card">
-          <div className="card-body">
-            <div className="row">
-              <div className="col-lg-1 card-label">Address</div>
-              <div className="col-lg-11">{props.addressId}</div>
+    <div className="col-12" style={{ minHeight: '8.357rem' }}>
+      <div className="card">
+        <div className="card-body">
+          <div className="row mt-2">
+            <div className={labelClass} style={{ minWidth: '100px' }}>
+              Address
             </div>
-            <hr className="hr-space" />
-            <div className="row">
-              <div className="col-lg-1 card-label">Balance</div>
-              <div className="col-lg-11">
-                {props.balance !== '...' ? (
-                  <Denominate value={props.balance} showLastNonZeroDecimal />
-                ) : (
-                  props.balance
-                )}
-              </div>
-            </div>
-            {props.code && (
-              <>
-                <hr className="hr-space" />
-                <div className="row">
-                  <div className="col-lg-1 card-label">Code</div>
-                  <div className="col-lg-11">
-                    <textarea
-                      readOnly
-                      className="form-control col-lg-12 cursor-text"
-                      rows={2}
-                      defaultValue={props.code}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
+            <div className={dataClass}>{props.addressId}</div>
           </div>
+          <hr className="hr-space" />
+          <div className="row">
+            <div className={labelClass} style={{ minWidth: '100px' }}>
+              Balance
+            </div>
+            <div className={dataClass}>
+              {props.balance !== '...' ? <Denominate value={props.balance} /> : props.balance}
+            </div>
+          </div>
+          {props.code && (
+            <>
+              <hr className="hr-space" />
+              <div className="row">
+                <div className="card-label col flex-grow-0" style={{ minWidth: '100px' }}>
+                  Code
+                </div>
+                <div className="col">
+                  <textarea
+                    readOnly
+                    className="form-control col-lg-12 cursor-text"
+                    rows={2}
+                    defaultValue={props.code}
+                  />
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

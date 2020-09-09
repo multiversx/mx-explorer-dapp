@@ -3,27 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import * as React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
-import { BlocksTable, Loader, Pager, ShardSpan } from 'sharedComponents';
-import { getBlocks, getTotalBlocks } from './helpers/asyncRequests';
-
-export interface BlockType {
-  hash: string;
-  nonce: number;
-  epoch: number;
-  prevHash: string;
-  proposer: number;
-  pubKeyBitmap: string;
-  round: number;
-  shardId: number;
-  size: number;
-  sizeTxs: number;
-  stateRootHash: string;
-  timestamp: number;
-  txCount: number;
-  validators: number[];
-  miniBlocksHashes: string[];
-  notarizedBlocksHashes: string[];
-}
+import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'sharedComponents';
+import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 
 interface StateType {
   blocks: BlockType[];
@@ -58,17 +39,17 @@ const Blocks: React.FC = () => {
   const [totalBlocks, setTotalBlocks] = React.useState<number | string>('...');
 
   const {
-    activeTestnet: { elasticUrl },
     refresh: { timestamp },
-    timeout,
-    activeTestnetId,
+    activeNetworkId,
   } = useGlobalState();
+
+  const { getBlocks, getBlocksCount } = adapter();
 
   const refreshFirstPage = size === 1 ? timestamp : 0;
 
   const fetchBlocks = () => {
     if (ref.current !== null) {
-      getBlocks({ elasticUrl, size, shardId, timeout, epochId }).then(data => {
+      getBlocks({ size, shardId, epochId }).then((data) => {
         if (ref.current !== null) {
           if (data.blocksFetched) {
             setState(data);
@@ -77,7 +58,8 @@ const Blocks: React.FC = () => {
           }
         }
       });
-      getTotalBlocks({ elasticUrl, shardId, timeout, epochId }).then(({ count, success }) => {
+
+      getBlocksCount({ size, shardId, epochId }).then(({ count, success }) => {
         if (ref.current !== null && success) {
           setTotalBlocks(count);
         }
@@ -85,7 +67,7 @@ const Blocks: React.FC = () => {
     }
   };
 
-  React.useEffect(fetchBlocks, [elasticUrl, size, shardId, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
+  React.useEffect(fetchBlocks, [activeNetworkId, size, shardId, refreshFirstPage]); // run the operation only once since the parameter does not change
 
   let slug = 'blocks';
   switch (true) {
@@ -129,10 +111,17 @@ const Blocks: React.FC = () => {
                   {state.blocks.length > 0 ? (
                     <div className="card">
                       <div className="card-body card-list">
+                        <p className="mb-0">
+                          Showing last 10,000
+                          {totalBlocks !== '...' && (
+                            <> of {totalBlocks.toLocaleString('en')}</>
+                          )}{' '}
+                          blocks
+                        </p>
                         <BlocksTable blocks={state.blocks} shardId={shardId} />
                         <Pager
                           slug={slug}
-                          total={totalBlocks}
+                          total={10000}
                           start={(size - 1) * 25 + (size === 1 ? 1 : 0)}
                           end={
                             (size - 1) * 25 +
@@ -163,7 +152,7 @@ const Blocks: React.FC = () => {
   ]);
 
   if (shard && !isValidInt(parseInt(shard!))) {
-    return <Redirect to={activeTestnetId ? `/${activeTestnetId}/not-found` : '/not-found'} />;
+    return <Redirect to={activeNetworkId ? `/${activeNetworkId}/not-found` : '/not-found'} />;
   }
 
   return memoBlocks;

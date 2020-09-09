@@ -1,27 +1,15 @@
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { testnetRoute } from 'helpers';
+import { networkRoute } from 'helpers';
 import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { isAddress, isBlock, isTransaction } from './helpers/asyncRequests';
-import useSetValidatorsData from 'components/Validators/useSetValidatorsData';
-
-const FetchValidatorsComponent = () => {
-  const ref = React.useRef(null);
-  useSetValidatorsData(ref);
-  return <i ref={ref} />;
-};
+import { useHistory } from 'react-router-dom';
+import { adapter } from 'sharedComponents';
 
 const Search = () => {
-  const {
-    activeTestnet: { elasticUrl, nodeUrl },
-    activeTestnetId,
-    timeout,
-    brandData,
-    validatorData,
-  } = useGlobalState();
-  const { pathname } = useLocation();
+  const { activeNetworkId, brandData, validatorData } = useGlobalState();
+
+  const { isAddress, isBlock, isTransaction } = adapter();
 
   const history = useHistory();
   const [hash, setHash] = React.useState<string>('');
@@ -52,25 +40,26 @@ const Search = () => {
         : '';
 
     if (isValidator) {
-      history.push(testnetRoute({ to: `/validators/nodes/${hash}`, activeTestnetId }));
+      history.push(networkRoute({ to: `/validators/nodes/${hash}`, activeNetworkId }));
     } else if (brand) {
-      history.push(testnetRoute({ to: `/validators/${brand}`, activeTestnetId }));
-    } else if (await isBlock({ elasticUrl, hash, timeout })) {
-      history.push(testnetRoute({ to: `/blocks/${hash}`, activeTestnetId }));
-    } else if (await isTransaction({ elasticUrl, hash, nodeUrl, timeout })) {
-      history.push(testnetRoute({ to: `/transactions/${hash}`, activeTestnetId }));
-    } else if (await isAddress({ nodeUrl, hash, timeout })) {
-      history.push(testnetRoute({ to: `/address/${hash}`, activeTestnetId }));
+      history.push(networkRoute({ to: `/validators/${brand}`, activeNetworkId }));
+    } else if (await isBlock({ hash })) {
+      history.push(networkRoute({ to: `/blocks/${hash}`, activeNetworkId }));
+    } else if (await isTransaction({ hash })) {
+      history.push(networkRoute({ to: `/transactions/${hash}`, activeNetworkId }));
+    } else if (await isAddress({ hash })) {
+      history.push(networkRoute({ to: `/address/${hash}`, activeNetworkId }));
     } else {
-      history.push(testnetRoute({ to: `/search/${hash}`, activeTestnetId }));
+      history.push(networkRoute({ to: `/search/${hash}`, activeNetworkId }));
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setHash(e.target.value);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHash(e.target.value);
+  };
 
   return (
     <>
-      {!pathname.includes('validators') && brandData.length === 0 && <FetchValidatorsComponent />}
       <input
         type="text"
         className="form-control mr-sm-2 pl-3"
@@ -88,7 +77,6 @@ const Search = () => {
           className="input-group-text"
           onClick={onClick}
           data-testid="searchButton"
-          disabled={validatorData.validators.length === 0}
         >
           <FontAwesomeIcon icon={faSearch} />
         </button>

@@ -20,9 +20,9 @@ export interface TransactionType {
   status: string;
   timestamp: number;
   value: string;
-  scResults?: Array<{
+  scResults?: {
     returnMessage: string;
-  }>;
+  }[];
 }
 
 interface TransactionsTableType {
@@ -43,8 +43,14 @@ const TransactionsTable = ({
   return (
     <div className="card" style={{ height: 'auto' }}>
       <div className="card-body card-list">
+        {totalTransactions > 10000 && (
+          <p className="mb-0">
+            Showing last 10,000 of {totalTransactions.toLocaleString('en')} transactions
+          </p>
+        )}
+
         <div className="table-responsive">
-          <table className="table mt-4" data-testid="transactionsTable">
+          <table className="table mt-3" data-testid="transactionsTable">
             <thead>
               <tr>
                 <th scope="col">Txn Hash</th>
@@ -58,7 +64,7 @@ const TransactionsTable = ({
               </tr>
             </thead>
             <tbody>
-              {transactions.map(transaction => (
+              {transactions.map((transaction) => (
                 <TransactionRow
                   transaction={transaction}
                   key={transaction.hash}
@@ -71,7 +77,11 @@ const TransactionsTable = ({
 
         <Pager
           slug={slug}
-          total={totalTransactions}
+          total={
+            !isNaN(parseInt(totalTransactions.toString()))
+              ? Math.min(parseInt(totalTransactions.toString()), 10000)
+              : totalTransactions
+          }
           start={(size - 1) * 50 + (size === 1 ? 1 : 0)}
           end={
             (size - 1) * 50 +
