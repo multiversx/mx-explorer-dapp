@@ -1,4 +1,4 @@
-import { BlockType } from 'components/Blocks';
+import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 import { dateFormatted, sizeFormat, trimHash } from 'helpers';
 import React from 'react';
 import { ShardSpan, TestnetLink, TimeAgo } from './../index';

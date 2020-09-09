@@ -4,21 +4,14 @@ import { faBan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Navbar from './Navbar/index';
 import Footer from './Footer';
-import TestnetRouter from './TestnetRouter';
+import NetworkRouter from './NetworkRouter';
 import { useGlobalState } from 'context';
 import RoundManager from './RoundManager';
 import { Highlights } from 'sharedComponents';
 
-const removeStylesheet = (stylesheetId: string) => {
-  const stylesheet = document.querySelector(stylesheetId);
-  if (stylesheet) {
-    (stylesheet as any).parentNode.removeChild(stylesheet);
-  }
-};
-
 const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: React.ReactNode }) => {
   const {
-    activeTestnet,
+    activeNetwork,
     config: { secondary },
   } = useGlobalState();
   const { pathname } = useLocation();
@@ -26,25 +19,30 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
 
   React.useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
-      removeStylesheet('#primary-stylesheet');
-      removeStylesheet('#scondary-stylesheet');
       if (secondary) {
         require('assets/sass/secondary.scss');
       } else {
         require('assets/sass/primary.scss');
       }
-    } else if (secondary) {
-      removeStylesheet('#primary-stylesheet');
+    } else {
+      const stylesheet = document.getElementById('stylesheet');
+      if (stylesheet) {
+        const href: string = (stylesheet as any).href;
+        (stylesheet as any).href = href.replace(
+          '__stylesheet__.css',
+          secondary ? 'secondary.css' : 'primary.css'
+        );
+      }
     }
   }, [secondary]);
 
   return (
     <>
-      <TestnetRouter />
+      <NetworkRouter />
       <RoundManager />
       {navbar ? navbar : <Navbar />}
       <main role="main">
-        {activeTestnet.fetchedFromNetworkConfig === false && !validators ? (
+        {activeNetwork.fetchedFromNetworkConfig === false && !validators ? (
           <div className="container pt-3 pb-3">
             <div className="row">
               <div className="offset-lg-3 col-lg-6 mt-4 mb-4">
@@ -54,10 +52,10 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
                       <FontAwesomeIcon icon={faBan} className="empty-icon" />
                       <span className="h4 empty-heading">
                         There was an internal website error. Please try again later.
-                        {!activeTestnet.default && (
+                        {!activeNetwork.default && (
                           <>
                             <br />
-                            {`${activeTestnet.name} network`}
+                            {`${activeNetwork.name} network`}
                           </>
                         )}
                       </span>

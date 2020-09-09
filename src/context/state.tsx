@@ -1,27 +1,12 @@
-import { defaultTestnet } from './config';
+import { InferType } from 'yup';
+import { defaultNetwork, schema, adapterSchema } from './config';
 import { validatorData, brandData } from './validators';
 import { CancelTokenSource } from 'axios';
 
-export interface TestnetType {
-  /*
-    Legend:
-        decimals: number of displayed ERD decimals in explorer
-        denomination: number by which transaction are divided
-        numInitCharactersForScAddress: number of zeros to hide
-    Possbile flags:
-        wallet: (default) true
-        validators: (default) true
-        validatorDetails: (default) false
-        economics: (default) false
-        gasLimitEditable: (default) false
-        faucet: (default) false (faucet)
-  */
-  default: boolean;
-  id: string;
-  name: string;
-  nodeUrl: string;
-  numInitCharactersForScAddress: number;
-  elasticUrl: string;
+export type PublicConfigType = InferType<typeof schema>;
+export type AdapterType = InferType<typeof adapterSchema>;
+
+interface BasicNetworkType {
   refreshRate: number;
   decimals: number;
   validators?: boolean;
@@ -29,12 +14,12 @@ export interface TestnetType {
   gasPrice: number;
   gasLimit: number;
   gasPerDataByte: number;
-  validatorDetails?: boolean;
-  faucet: boolean;
   nrOfShards: number;
   versionNumber: string;
   fetchedFromNetworkConfig?: boolean;
 }
+
+export type NetworkType = BasicNetworkType & PublicConfigType;
 
 type AppIdType = 'wallet' | 'explorer' | 'studio' | 'docs' | string;
 
@@ -49,15 +34,15 @@ export interface ConfigType {
   erdLabel: string;
   elrondApps: AppsType[];
   explorerApi: string;
-  testnets: TestnetType[];
+  networks: NetworkType[];
   secondary: boolean;
 }
 
 export interface StateType {
   config: ConfigType;
-  defaultTestnet: TestnetType;
-  activeTestnet: TestnetType;
-  activeTestnetId: string;
+  defaultNetwork: NetworkType;
+  activeNetwork: NetworkType;
+  activeNetworkId: string;
   timeout: number; // axios
   cancelToken: CancelTokenSource | undefined;
   refresh: {
@@ -72,9 +57,9 @@ const initialState = (config: ConfigType, optionalConfig?: ConfigType): StateTyp
 
   return {
     config: configObject,
-    defaultTestnet: config.testnets.filter((testnet) => testnet.default).pop() || defaultTestnet,
-    activeTestnet: config.testnets.filter((testnet) => testnet.default).pop() || defaultTestnet,
-    activeTestnetId: '',
+    defaultNetwork: config.networks.filter((network) => network.default).pop() || defaultNetwork,
+    activeNetwork: config.networks.filter((network) => network.default).pop() || defaultNetwork,
+    activeNetworkId: '',
     timeout: 3 * 1000,
     cancelToken: undefined,
     refresh: {

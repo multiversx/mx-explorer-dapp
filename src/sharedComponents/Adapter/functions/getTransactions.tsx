@@ -1,14 +1,6 @@
 import axios from 'axios';
 import { addressIsBech32 } from 'helpers';
-
-interface ParamsType {
-  elasticUrl: string;
-  size?: number;
-  addressId?: string;
-  shardType: 'senderShard' | 'receiverShard' | undefined;
-  shardId: number | undefined;
-  timeout: number;
-}
+import { AdapterFunctionType } from './index';
 
 const getAddressParams = (addressId: string | undefined) =>
   addressId
@@ -22,21 +14,29 @@ const getShardTypeParams = (
   shardId: number | undefined,
   shardType: 'senderShard' | 'receiverShard' | undefined
 ) =>
-  shardId && shardType
+  shardId !== undefined && shardType
     ? {
         [shardType]: shardId,
       }
     : {};
 
+export interface TransactionsType {
+  size?: number;
+  addressId?: string;
+  shardType: 'senderShard' | 'receiverShard' | undefined;
+  shardId: number | undefined;
+}
+
 export async function getTransactions({
-  elasticUrl,
+  provider,
+  baseUrl,
+  timeout,
   addressId = '',
   size = 1,
   shardId,
   shardType,
-  timeout,
-}: ParamsType) {
-  const params = {
+}: AdapterFunctionType & TransactionsType) {
+  const params: AdapterFunctionType['params'] = {
     from: (size - 1) * 50,
     size: 50,
     ...getAddressParams(addressId),
@@ -44,7 +44,12 @@ export async function getTransactions({
   };
 
   try {
-    let { data } = await axios.get(`${elasticUrl}/transactions`, { params, timeout });
+    let { data } = await provider({
+      baseUrl,
+      url: `/transactions`,
+      params,
+      timeout,
+    });
 
     data = data.map((entry: any) => ({ hash: entry.id, ...entry }));
 
@@ -60,21 +65,26 @@ export async function getTransactions({
   }
 }
 
-export async function getTotalTransactions({
-  elasticUrl,
+export async function getTransactionsCount({
+  provider,
+  baseUrl,
   addressId = '',
-  size = 1,
   shardId,
   shardType,
   timeout,
-}: ParamsType) {
+}: AdapterFunctionType & TransactionsType) {
   try {
-    const params = {
+    const params: AdapterFunctionType['params'] = {
       ...getAddressParams(addressId),
       ...getShardTypeParams(shardId, shardType),
     };
 
-    const { data } = await axios.get(`${elasticUrl}/transactions/count`, { params, timeout });
+    const { data } = await provider({
+      baseUrl,
+      url: `/transactions/count`,
+      params,
+      timeout,
+    });
 
     return {
       count: data,
@@ -89,12 +99,12 @@ export async function getTotalTransactions({
 }
 
 interface DetailsType {
-  nodeUrl: string;
+  proxyUrl: string;
   addressId: string;
   timeout: number;
 }
 
-export async function getAddressDetails({ nodeUrl, addressId, timeout }: DetailsType) {
+export async function getAddressDetails({ proxyUrl, addressId, timeout }: DetailsType) {
   try {
     const {
       data: {
@@ -104,7 +114,7 @@ export async function getAddressDetails({ nodeUrl, addressId, timeout }: Details
         code: responseCode,
         error,
       },
-    } = await axios.get(`${nodeUrl}/address/${addressId}`, { timeout });
+    } = await axios.get(`${proxyUrl}/address/${addressId}`, { timeout });
 
     if (responseCode === 'successful') {
       return {
@@ -128,11 +138,11 @@ export async function getAddressDetails({ nodeUrl, addressId, timeout }: Details
   }
 }
 
-export async function getRewards({ nodeUrl, addressId, timeout }: DetailsType) {
+export async function getRewards({ proxyUrl, addressId, timeout }: DetailsType) {
   try {
     const {
       data: { claimableRewards, userStake },
-    } = await axios.get(`${nodeUrl}/delegations/${addressId}`, { timeout });
+    } = await axios.get(`${proxyUrl}/delegations/${addressId}`, { timeout });
     return { claimableRewards, userStake };
   } catch (err) {
     return { claimableRewards: 0, userStake: 0 };

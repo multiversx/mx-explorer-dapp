@@ -1,18 +1,18 @@
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { defaultTestnet } from 'context/config';
+import { defaultNetwork } from 'context/config';
 import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export default function TestnetSwitcher({ onToggle }: { onToggle: (prop: boolean) => void }) {
+export default function NetworkSwitcher({ onToggle }: { onToggle: (prop: boolean) => void }) {
   const globalState = useGlobalState();
 
-  const liksArray = globalState.config.testnets.map((testnet) => ({
-    name: testnet.name,
-    to: testnet.id === globalState.defaultTestnet.id ? '' : testnet.id,
-    key: testnet.id,
+  const liksArray = globalState.config.networks.map((network) => ({
+    name: network.name,
+    to: network.id === globalState.defaultNetwork.id ? '' : network.id,
+    key: network.id,
   }));
 
   const hidePopover = () => {
@@ -20,25 +20,25 @@ export default function TestnetSwitcher({ onToggle }: { onToggle: (prop: boolean
     onToggle(false);
   };
 
-  const changeTestnet = (testnetId: string) => (e: React.MouseEvent) => {
+  const changeNetwork = (networkId: string) => (e: React.MouseEvent) => {
     hidePopover();
-    if (globalState.activeTestnetId !== testnetId) {
-      const testnet =
-        globalState.config.testnets.find((t) => {
-          if (testnetId) {
-            return t.id === testnetId;
+    if (globalState.activeNetworkId !== networkId) {
+      const network =
+        globalState.config.networks.find((t) => {
+          if (networkId) {
+            return t.id === networkId;
           } else return t.default;
-        }) || defaultTestnet;
+        }) || defaultNetwork;
 
-      if (!testnet.default) {
-        switch (testnet.name.toLocaleLowerCase()) {
+      if (!network.default) {
+        switch (network.name.toLocaleLowerCase()) {
           case 'mainnet':
             e.preventDefault();
             window.location.href = 'https://explorer.elrond.com/';
             break;
-          case 'testnet':
+          case 'network':
             e.preventDefault();
-            window.location.href = 'https://testnet-explorer.elrond.com/';
+            window.location.href = 'https://network-explorer.elrond.com/';
             break;
           default:
             break;
@@ -51,8 +51,8 @@ export default function TestnetSwitcher({ onToggle }: { onToggle: (prop: boolean
     <>
       <NavDropdown
         title={
-          <span id="switch" data-testid="testnetSwitch" className="switch">
-            {globalState.activeTestnet.name}&nbsp;
+          <span id="switch" data-testid="networkSwitch" className="switch">
+            {globalState.activeNetwork.name}&nbsp;
             <FontAwesomeIcon icon={faAngleDown} />
           </span>
         }
@@ -61,10 +61,10 @@ export default function TestnetSwitcher({ onToggle }: { onToggle: (prop: boolean
         {liksArray.map((link) => {
           return (
             <Link
-              className={`dropdown-item ${globalState.activeTestnetId === link.to ? 'active' : ''}`}
+              className={`dropdown-item ${globalState.activeNetworkId === link.to ? 'active' : ''}`}
               key={link.key}
               to={`/${link.to}`}
-              onClick={changeTestnet(link.to)}
+              onClick={changeNetwork(link.to)}
             >
               {link.name}
             </Link>

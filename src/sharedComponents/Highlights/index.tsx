@@ -1,8 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import { useGlobalState } from 'context';
+import { adapter } from 'sharedComponents';
 import DefaultHighlights from './DefaultHighlights';
-import { getStats } from './helpers/asyncRequests';
 import HeroHighlights from './HeroHighlights';
 
 export interface StateType {
@@ -45,33 +45,26 @@ const Hightlights = ({
   setLiveTps?: React.Dispatch<React.SetStateAction<any>>;
 }) => {
   const {
-    activeTestnet: { elasticUrl, nodeUrl, refreshRate },
-    activeTestnetId,
-    config: { metaChainShardId },
-    cancelToken,
-    timeout,
+    activeNetwork: { refreshRate },
+    activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
 
+  const { getHighlights } = adapter();
+
   const [state, setState] = React.useState({
-    [activeTestnetId]: initialState,
+    [activeNetworkId]: initialState,
   });
   const [oldTestnetId, setOldTestnetId] = React.useState<string>('');
   const ref = React.useRef(null);
 
   React.useEffect(() => {
-    setOldTestnetId(activeTestnetId);
-  }, [activeTestnetId]);
+    setOldTestnetId(activeNetworkId);
+  }, [activeNetworkId]);
 
-  const getHighlights = () => {
+  const getData = () => {
     if (ref.current !== null) {
-      getStats({
-        elasticUrl,
-        nodeUrl,
-        metaChainShardId,
-        timeout,
-        cancelToken,
-      }).then(({ data, success }) => {
+      getHighlights().then(({ data, success }) => {
         const check = data.roundsPerEpoch >= data.roundsPassed;
         const newState = success
           ? {
@@ -101,12 +94,12 @@ const Hightlights = ({
           : initialState;
 
         if (ref.current !== null) {
-          const sameTestnet = oldTestnetId === activeTestnetId;
+          const sameTestnet = oldTestnetId === activeNetworkId;
           if (success || (!success && !sameTestnet)) {
             setLiveTps(data.liveTPS);
             setState((state) => ({
               ...state,
-              [activeTestnetId]: newState,
+              [activeNetworkId]: newState,
             }));
           }
         }
@@ -114,9 +107,9 @@ const Hightlights = ({
     }
   };
 
-  React.useEffect(getHighlights, [timestamp, activeTestnetId]); // run the operation only once since the parameter does not change
+  React.useEffect(getData, [timestamp, activeNetworkId]); // run the operation only once since the parameter does not change
 
-  const props = activeTestnetId in state ? state[activeTestnetId] : initialState;
+  const props = activeNetworkId in state ? state[activeNetworkId] : initialState;
 
   return (
     <div ref={ref}>{!hero ? <DefaultHighlights {...props} /> : <HeroHighlights {...props} />}</div>

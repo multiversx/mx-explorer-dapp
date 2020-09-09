@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
-import { Loader, ShardSpan, TransactionsTable } from 'sharedComponents';
+import { Loader, ShardSpan, TransactionsTable, adapter } from 'sharedComponents';
 import denominate from 'sharedComponents/Denominate/denominate';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
@@ -9,12 +9,6 @@ import AddressDetails, { AddressDetailsType } from './AddressDetails';
 import FailedAddress from './FailedAddress';
 import FailedTransaction from './FailedTransaction';
 import DelegationDetails from './DelegationDetails';
-import {
-  getAddressDetails,
-  getTotalTransactions,
-  getTransactions,
-  getRewards,
-} from './helpers/asyncRequests';
 import { addressIsBech32 } from 'helpers';
 
 function getDirection(type: string | undefined) {
@@ -44,12 +38,14 @@ const Transactions = () => {
   const [addressDetailsLoading, setAddressDetailsLoading] = React.useState<boolean>(true);
 
   const {
-    activeTestnet: { elasticUrl, nodeUrl, denomination, decimals },
+    activeNetwork: { denomination, decimals },
+    activeNetworkId,
     refresh: { timestamp },
-    timeout,
   } = useGlobalState();
   const { page, hash: addressId, shard } = useParams();
   const { pathname } = useLocation();
+
+  const { getAddressDetails, getTransactionsCount, getTransactions, getRewards } = adapter();
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
@@ -68,12 +64,10 @@ const Transactions = () => {
   const fetchTransactions = () => {
     if (ref.current !== null) {
       getTransactions({
-        elasticUrl,
         size,
         addressId,
         shardId,
         shardType,
-        timeout,
       }).then(({ data, success }) => {
         if (ref.current !== null) {
           if (success) {
@@ -84,11 +78,9 @@ const Transactions = () => {
           }
         }
       });
-      getTotalTransactions({
-        elasticUrl,
+      getTransactionsCount({
         addressId,
         shardId,
-        timeout,
         shardType,
       }).then(({ count, success }) => {
         if (ref.current !== null && success) {
@@ -100,14 +92,14 @@ const Transactions = () => {
 
   const getAddrDetails = () => {
     if (addressId && ref.current !== null) {
-      getAddressDetails({ nodeUrl, addressId, timeout }).then((data: any) => {
+      getAddressDetails({ addressId }).then((data: any) => {
         if (ref.current !== null) {
           setAddressDetails(({ stake, claimableRewards }) => ({
             ...data,
             stake,
             claimableRewards,
           }));
-          getRewards({ nodeUrl, addressId, timeout }).then((data: any) => {
+          getRewards({ addressId }).then((data: any) => {
             const rewards = parseFloat(
               denominate({
                 input: data.claimableRewards,
@@ -136,9 +128,9 @@ const Transactions = () => {
     }
   };
 
-  React.useEffect(getAddrDetails, [nodeUrl, addressId, timeout]);
+  React.useEffect(getAddrDetails, [activeNetworkId, addressId]);
 
-  React.useEffect(fetchTransactions, [elasticUrl, size, addressId, timeout, refreshFirstPage]); // run the operation only once since the parameter does not change
+  React.useEffect(fetchTransactions, [activeNetworkId, size, addressId, refreshFirstPage]); // run the operation only once since the parameter does not change
 
   let slug = addressId ? `address/${addressId}` : 'transactions';
   slug = shardType ? `transactions/${shardDirection}/${shardId}` : slug;

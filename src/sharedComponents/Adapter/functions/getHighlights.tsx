@@ -1,15 +1,7 @@
 import axios from 'axios';
 import { object, number, InferType } from 'yup';
-import { NetworkStatusType } from 'helpers/validatorFunctions';
-import { StateType } from 'context/state';
-
-interface GetStatsType {
-  elasticUrl: string;
-  nodeUrl: string;
-  metaChainShardId: number;
-  timeout: number;
-  cancelToken: StateType['cancelToken'];
-}
+import { NetworkStatusType } from 'sharedComponents/Adapter/functions/getValidators';
+import { AdapterFunctionType } from './index';
 
 const schema = object({
   averageBlockTxCount: number().nullable(true),
@@ -28,19 +20,24 @@ const schema = object({
   totalProcessedTxCount: number().required(),
 }).required();
 
-export async function getStats({
-  elasticUrl,
-  nodeUrl,
-  metaChainShardId,
+export default async function getHighlights({
+  provider,
+  baseUrl,
+  proxyUrl,
   timeout,
-  cancelToken,
-}: GetStatsType) {
+  metaChainShardId,
+}: AdapterFunctionType & {
+  metaChainShardId: number;
+  proxyUrl: string;
+}) {
   const data = {};
   try {
-    const { data } = await axios.get(`${elasticUrl}/tps/meta`, {
+    const { data } = await provider({
+      baseUrl,
+      url: `/tps/meta`,
       timeout,
-      ...(cancelToken ? { cancelToken: cancelToken.token } : {}),
     });
+
     let dataValid = true;
 
     const source: InferType<typeof schema> = data;
@@ -52,9 +49,10 @@ export async function getStats({
 
     const {
       data: { data: epochData, code, error },
-    } = await axios.get(`${nodeUrl}/network/status/${metaChainShardId}`, {
+    } = await axios.get(`${proxyUrl}/network/status/${metaChainShardId}`, {
       timeout,
     });
+
     if (code === 'successful') {
       const message: NetworkStatusType = epochData;
 

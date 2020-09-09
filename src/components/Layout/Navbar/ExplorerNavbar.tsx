@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
-import { useGlobalState } from '../../../context';
-import { Search, TestnetLink } from '../../../sharedComponents';
-import TestnetSwitcher from './TestnetSwitcher';
+import { useGlobalState } from 'context';
+import { Search, TestnetLink } from 'sharedComponents';
+import NetworkSwitcher from './NetworkSwitcher';
 interface ExplorerNavbarType {
   expanded?: boolean;
   setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,8 +16,8 @@ export default function ExplorerNavbar({
   setExpanded = () => null,
 }: ExplorerNavbarType) {
   const {
-    activeTestnet: { validators },
-    activeTestnetId,
+    activeNetwork: { validators },
+    activeNetworkId,
   } = useGlobalState();
 
   const onToggle = (isExpanded: boolean) => {
@@ -36,8 +36,8 @@ export default function ExplorerNavbar({
           <TestnetLink
             className={`nav-link ${
               pathname.toString() === '/' ||
-              pathname.toString() === `/${activeTestnetId}` ||
-              pathname.toString() === `/${activeTestnetId}/`
+              pathname.toString() === `/${activeNetworkId}` ||
+              pathname.toString() === `/${activeNetworkId}/`
                 ? 'active'
                 : ''
             }`}
@@ -83,8 +83,8 @@ export default function ExplorerNavbar({
             </div>
           </div>
         </Nav>
-        <Nav className="testnetSwithcerNav">
-          <TestnetSwitcher onToggle={onToggle} />
+        <Nav className="networkSwithcerNav">
+          <NetworkSwitcher onToggle={onToggle} />
         </Nav>
       </Navbar.Collapse>
     </>

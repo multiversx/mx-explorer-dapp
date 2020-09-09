@@ -12,7 +12,7 @@ interface TestnetLinkType {
 }
 
 const TestnetLink = ({ to, children, ...rest }: TestnetLinkType) => {
-  const { activeTestnetId } = useGlobalState();
+  const { activeNetworkId } = useGlobalState();
 
   if (!to.startsWith('/')) {
     console.error('Link not prepeded by / : ', to);
@@ -20,7 +20,7 @@ const TestnetLink = ({ to, children, ...rest }: TestnetLinkType) => {
   }
 
   const props = {
-    to: activeTestnetId ? `/${activeTestnetId}${to}` : to,
+    to: activeNetworkId ? `/${activeNetworkId}${to}` : to,
     ...rest,
   };
 
