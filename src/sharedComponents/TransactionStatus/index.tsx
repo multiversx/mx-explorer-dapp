@@ -18,6 +18,9 @@ const TransactionStatus = ({ status }: TransactionStatusType) => {
     case 'Success':
       Icon = () => <FontAwesomeIcon icon={faCheckCircle} className="mr-2 text-success" />;
       break;
+    case 'Invalid':
+      Icon = () => <FontAwesomeIcon icon={faBan} className="mr-2 text-danger" />;
+      break;
     default:
       Icon = () => <FontAwesomeIcon icon={faHourglass} className="mr-2 text-warning" />;
   }

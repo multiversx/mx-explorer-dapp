@@ -6,7 +6,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import Layout from './components/Layout';
 import PageNotFoud from './components/PageNotFoud';
 import { GlobalProvider, useGlobalState } from './context';
-import { ConfigType, TestnetType } from './context/state';
+import { ConfigType, NetworkType } from './context/state';
 import { buildInitialConfig } from './context/config';
 import buildConfig from './context/getAsyncConfig';
 import routes from './routes';
@@ -17,27 +17,27 @@ if (process.env.NODE_ENV === 'production') {
 export const Routes = ({
   routes,
 }: {
-  routes: Array<{ path: string; component: React.ComponentClass }>;
+  routes: { path: string; component: React.ComponentClass }[];
 }) => {
   const {
-    config: { testnets },
-    activeTestnet,
+    config: { networks },
+    activeNetwork,
   } = useGlobalState();
 
   return useMemo(
     () => (
       <React.Suspense fallback={<span>Loading...</span>}>
         <Switch>
-          {testnets.map((testnet: TestnetType, i: number) => {
-            const validatorsDisabled = testnet.validators === false;
+          {networks.map((network: NetworkType, i: number) => {
+            const validatorsDisabled = network.validators === false;
             return routes.map((route, i) => {
               if (route.path.includes('validators') && validatorsDisabled) {
                 return null;
               }
               return (
                 <Route
-                  path={`/${testnet.id}${route.path}`}
-                  key={testnet.id + route.path}
+                  path={`/${network.id}${route.path}`}
+                  key={network.id + route.path}
                   exact={true}
                   component={route.component}
                 />
@@ -45,14 +45,14 @@ export const Routes = ({
             });
           })}
           <Route
-            path={`${activeTestnet.id}/:any`}
-            key={activeTestnet.id + '404'}
+            path={`${activeNetwork.id}/:any`}
+            key={activeNetwork.id + '404'}
             exact={true}
             component={PageNotFoud}
           />
           ,
           {routes.map((route, i) => {
-            const validatorsDisabled = activeTestnet.validators === false;
+            const validatorsDisabled = activeNetwork.validators === false;
             if (route.path.includes('validators') && validatorsDisabled) {
               return null;
             }
@@ -69,7 +69,7 @@ export const Routes = ({
         </Switch>
       </React.Suspense>
     ),
-    [testnets, activeTestnet, routes]
+    [networks, activeNetwork, routes]
   );
 };
 

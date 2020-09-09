@@ -10,7 +10,7 @@ import ValidatorsTable from './components/Validators/ValidatorsTable';
 import BrandDetails from './components/Validators/BrandDetails';
 import ValidatorDetails from './components/Validators/ValidatorDetails';
 import ValidatorsBrandTable from './components/Validators/ValidatorsBrandTable';
-import { withPageTitle, withTestnetReady } from './sharedComponents';
+import { withPageTitle, withNetworkReady } from './sharedComponents';
 
 interface RouteType {
   path: string;
@@ -78,6 +78,11 @@ const routes: RouteType[] = [
     path: '/blocks/page/:page',
     title: 'Blocks',
     component: Blocks,
+  },
+  {
+    path: '/blocks/page/last',
+    title: 'Block Details',
+    component: BlockDetails,
   },
   {
     path: '/blocks',
@@ -157,13 +162,13 @@ const routes: RouteType[] = [
 ];
 
 const wrappedRoutes = () =>
-  routes.map(route => {
+  routes.map((route) => {
     const title = route.title ? `${route.title} • Elrond Explorer` : 'Elrond Explorer';
     return {
       path: route.path,
       component: (withPageTitle(
         title,
-        withTestnetReady(route.component)
+        withNetworkReady(route.component)
       ) as any) as React.ComponentClass<{}, any>,
     };
   });

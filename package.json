@@ -45,7 +45,10 @@
   "scripts": {
     "start": "react-app-rewired start",
     "start-wallet": "REACT_APP_WALLET=true react-app-rewired start",
-    "build": "REACT_APP_CACHE_BUST=$(git describe --always) react-scripts build",
+    "build": "npm run compile & REACT_APP_CACHE_BUST=$(git describe --always) react-scripts build",
+    "compile-primary": "node-sass src/assets/sass/primary.scss public/primary.css",
+    "compile-secondary": "node-sass src/assets/sass/secondary.scss public/secondary.css",
+    "compile": "npm run compile-primary & npm run compile-secondary",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"

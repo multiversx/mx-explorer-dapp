@@ -7,13 +7,7 @@ import {
   config as optionalConfig,
   waitForElement,
 } from 'utils/test-utils';
-import {
-  heartbeatstatus,
-  validators,
-  validatorsdoc as doc,
-  epoch,
-  statistics,
-} from 'utils/rawData';
+import { heartbeatstatus, validators, validatorsdoc, epoch, statistics } from 'utils/rawData';
 
 (global as any).document.createRange = () => ({
   setStart: () => {},
@@ -29,7 +23,7 @@ export const mockGet = () => {
   mockGet.mockImplementation((url: string): any => {
     switch (true) {
       // --- page load ---
-      case url.includes('/tps/_doc/meta'):
+      case url.includes('/tps/meta'):
         return Promise.resolve({ data: meta });
       case url.includes(`/node/heartbeatstatus`):
         return Promise.resolve({ data: { data: heartbeatstatus, code: 'successful' } });
@@ -40,8 +34,8 @@ export const mockGet = () => {
       // --- page load ---
       case url.includes('/network/status'):
         return Promise.resolve({ data: { data: epoch, code: 'successful' } });
-      case url.includes('/validators/_doc'):
-        return Promise.resolve({ data: doc });
+      case url.includes('/validators'):
+        return Promise.resolve({ data: validatorsdoc });
     }
   });
 };
@@ -96,39 +90,37 @@ describe('Validators filters', () => {
     fireEvent.click(filterByObservers);
 
     const totalPages = render.getByTestId('totalPages');
-    expect(totalPages.textContent).toBe('62');
+    expect(totalPages.textContent).toBe('150');
   });
   test('Validator search working', async () => {
     const render = goToValidatorsPage();
 
     const searchInput = await render.findByTestId('validatorSearch');
-    const data = { target: { value: 'bonw' } };
+    const data = { target: { value: 'bon' } };
     fireEvent.change(searchInput, data);
 
     const totalPages = await render.findByTestId('totalPages');
-    expect(totalPages.textContent).toBe('138');
+    expect(totalPages.textContent).toBe('4');
 
     const resetSearch = await render.findByTestId('resetSearch');
     fireEvent.click(resetSearch);
 
-    expect(totalPages.textContent).toBe('1,640');
+    expect(totalPages.textContent).toBe('1,638');
   });
   test('Filter by shard working', async () => {
     const render = goToValidatorsPage();
 
     const searchInput = await render.findByTestId('validatorSearch');
-    const data = { target: { value: 'bonw' } };
-
-    const totalPages = await render.findByTestId('totalPages');
-
+    const data = { target: { value: 'bon' } };
     fireEvent.change(searchInput, data);
 
-    expect(totalPages.textContent).toBe('138');
+    const totalPages = await render.findByTestId('totalPages');
+    expect(totalPages.textContent).toBe('4');
 
     const resetSearch = await render.findByTestId('resetSearch');
     fireEvent.click(resetSearch);
 
-    expect(totalPages.textContent).toBe('1,640');
+    expect(totalPages.textContent).toBe('1,638');
   });
 });
 
@@ -136,7 +128,7 @@ describe('Validators links', () => {
   test('Validators public key link', async () => {
     const render = goToValidatorsPage();
     const publicKeyLink = await render.findByTestId('publicKeyLink0');
-    expect(publicKeyLink.textContent).toBe('360a9de7dd...d4f3dee28d');
+    expect(publicKeyLink.textContent).toBe('ffd9951015...e4a6f33e03');
     fireEvent.click(publicKeyLink);
     await wait(async () => {
       expect(document.title).toEqual('Node Details • Elrond Explorer');
@@ -145,10 +137,42 @@ describe('Validators links', () => {
   test('Validators shard link', async () => {
     const render = goToValidatorsPage();
     const publicKeyLink = await render.findByTestId('shardLink0');
-    expect(publicKeyLink.textContent).toBe('Metachain');
+    expect(publicKeyLink.textContent).toBe('Shard 1');
     fireEvent.click(publicKeyLink);
     await wait(async () => {
       expect(document.title).toEqual('Shard Details • Elrond Explorer');
     });
+  });
+});
+
+const goToBrandDetailsPage = () => {
+  mockGet();
+  return renderWithRouter({
+    route: '/validators/elrondcom',
+    optionalConfig,
+  });
+};
+
+describe('Validators brand', () => {
+  test('Validators brand page is displaying', async () => {
+    const render = goToBrandDetailsPage();
+    expect(document.title).toEqual('Validator Details • Elrond Explorer');
+    const title = await waitForElement(() => render.getByTestId('title'));
+    expect(title.innerHTML).toBe('Validator Details');
+    const name = render.getByText('Elrond Foundational Nodes');
+    expect(name).toBeDefined();
+  });
+  test('Validators brand page loading', async () => {
+    const render = goToBrandDetailsPage();
+    const loader = await waitForElement(() => render.getByTestId('loader'));
+    expect(loader).toBeDefined();
+  });
+  test('Validators brand page failed', async () => {
+    const render = renderWithRouter({
+      route: '/validators/elrondcom1',
+      optionalConfig,
+    });
+    const name = await render.findByText('/validators/elrondcom1');
+    expect(name).toBeDefined();
   });
 });

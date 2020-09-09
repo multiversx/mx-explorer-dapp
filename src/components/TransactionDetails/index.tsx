@@ -3,9 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { Loader } from 'sharedComponents';
+import { Loader, adapter } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
-import { getTransaction, getPendingTransaction } from './helpers/asyncRequests';
 import Details from './TransactionDetails';
 import PendingTransaction, { PendingTransactionType } from './PendingTransaction';
 
@@ -14,10 +13,10 @@ const TransactionDetails: React.FC = () => {
   const ref = React.useRef(null);
 
   const {
-    activeTestnet: { elasticUrl, nodeUrl },
     refresh: { timestamp },
-    timeout,
   } = useGlobalState();
+
+  const { getTransaction, getPendingTransaction } = adapter();
 
   const [transaction, setTransaction] = React.useState<TransactionType | undefined>(undefined);
   const [pendingTransaction, setPendingTransaction] = React.useState<
@@ -27,7 +26,7 @@ const TransactionDetails: React.FC = () => {
 
   const fetchTransaction = React.useCallback(() => {
     if (transactionId && ref.current !== null) {
-      getTransaction({ elasticUrl, transactionId, timeout })
+      getTransaction({ transactionId })
         .then(({ data, transactionFetched }) => {
           if (transactionFetched) {
             setTransaction(data);
@@ -36,21 +35,19 @@ const TransactionDetails: React.FC = () => {
           }
         })
         .catch(() => {
-          getPendingTransaction({ nodeUrl, transactionId, timeout }).then(
-            ({ data, transactionFetched }) => {
-              if (transactionFetched) {
-                setPendingTransaction(data);
-                setTransactionFetched(true);
-              } else {
-                if (ref.current !== null) {
-                  setTransactionFetched(false);
-                }
+          getPendingTransaction({ transactionId }).then(({ data, transactionFetched }) => {
+            if (transactionFetched) {
+              setPendingTransaction(data);
+              setTransactionFetched(true);
+            } else {
+              if (ref.current !== null) {
+                setTransactionFetched(false);
               }
             }
-          );
+          });
         });
     }
-  }, [elasticUrl, nodeUrl, timeout, transactionId]);
+  }, [getPendingTransaction, getTransaction, transactionId]);
 
   React.useEffect(fetchTransaction, []);
 

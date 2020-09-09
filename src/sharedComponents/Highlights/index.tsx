@@ -1,9 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import { useGlobalState } from 'context';
-import { defaultTestnet } from 'context/config';
+import { adapter } from 'sharedComponents';
 import DefaultHighlights from './DefaultHighlights';
-import { getStats } from './helpers/asyncRequests';
 import HeroHighlights from './HeroHighlights';
 
 export interface StateType {
@@ -46,69 +45,74 @@ const Hightlights = ({
   setLiveTps?: React.Dispatch<React.SetStateAction<any>>;
 }) => {
   const {
-    activeTestnet: { elasticUrl, nodeUrl, refreshRate },
-    activeTestnetId,
-    config: { metaChainShardId },
-    cancelToken,
-    timeout,
+    activeNetwork: { refreshRate },
+    activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
 
-  const [state, setState] = React.useState<StateType>(initialState);
+  const { getHighlights } = adapter();
+
+  const [state, setState] = React.useState({
+    [activeNetworkId]: initialState,
+  });
   const [oldTestnetId, setOldTestnetId] = React.useState<string>('');
   const ref = React.useRef(null);
 
   React.useEffect(() => {
-    setOldTestnetId(activeTestnetId);
-  }, [activeTestnetId]);
+    setOldTestnetId(activeNetworkId);
+  }, [activeNetworkId]);
 
-  const getHighlights = () => {
-    if (ref.current !== null && activeTestnetId !== defaultTestnet.id) {
-      getStats({ elasticUrl, nodeUrl, metaChainShardId, timeout, cancelToken }).then(
-        ({ data, success }) => {
-          const check = data.roundsPerEpoch >= data.roundsPassed;
-          const newState = success
-            ? {
-                blockNumber: data.blockCount
-                  ? parseInt(data.blockCount).toLocaleString('en')
-                  : parseInt(data.blockNumber).toLocaleString('en'),
-                nrOfNodes: parseInt(data.nrOfNodes).toLocaleString('en'),
-                nrOfShards: parseInt(data.nrOfShards).toLocaleString('en'),
-                roundNumber: parseInt(data.roundNumber).toLocaleString('en'),
-                liveTPS: parseInt(data.liveTPS).toLocaleString('en'),
-                peakTPS: parseInt(data.peakTPS).toLocaleString('en'),
-                totalProcessedTxCount: parseInt(data.totalProcessedTxCount).toLocaleString('en'),
-                epoch: data.epoch.toLocaleString('en'),
-                epochPercentage: check ? (100 * data.roundsPassed) / data.roundsPerEpoch : 0,
-                epochTotalTime: check
-                  ? moment.utc(refreshRate * data.roundsPerEpoch).format('HH:mm')
-                  : '...',
-                epochTimeElapsed: check
-                  ? moment.utc(refreshRate * data.roundsPassed).format('HH:mm')
-                  : '...',
-                epochTimeRemaining: check
-                  ? moment
-                      .utc(refreshRate * (data.roundsPerEpoch - data.roundsPassed))
-                      .format('HH:mm')
-                  : '...',
-              }
-            : initialState;
-          if (ref.current !== null) {
-            const sameTestnet = oldTestnetId === activeTestnetId;
-            if (success || (!success && !sameTestnet)) {
-              setLiveTps(data.liveTPS);
-              setState(newState);
+  const getData = () => {
+    if (ref.current !== null) {
+      getHighlights().then(({ data, success }) => {
+        const check = data.roundsPerEpoch >= data.roundsPassed;
+        const newState = success
+          ? {
+              blockNumber: data.blockCount
+                ? parseInt(data.blockCount).toLocaleString('en')
+                : parseInt(data.blockNumber).toLocaleString('en'),
+              nrOfNodes: parseInt(data.nrOfNodes).toLocaleString('en'),
+              nrOfShards: parseInt(data.nrOfShards).toLocaleString('en'),
+              roundNumber: parseInt(data.roundNumber).toLocaleString('en'),
+              liveTPS: parseInt(data.liveTPS).toLocaleString('en'),
+              peakTPS: parseInt(data.peakTPS).toLocaleString('en'),
+              totalProcessedTxCount: parseInt(data.totalProcessedTxCount).toLocaleString('en'),
+              epoch: data.epoch.toLocaleString('en'),
+              epochPercentage: check ? (100 * data.roundsPassed) / data.roundsPerEpoch : 0,
+              epochTotalTime: check
+                ? moment.utc(refreshRate * data.roundsPerEpoch).format('HH:mm')
+                : '...',
+              epochTimeElapsed: check
+                ? moment.utc(refreshRate * data.roundsPassed).format('HH:mm')
+                : '...',
+              epochTimeRemaining: check
+                ? moment
+                    .utc(refreshRate * (data.roundsPerEpoch - data.roundsPassed))
+                    .format('HH:mm')
+                : '...',
             }
+          : initialState;
+
+        if (ref.current !== null) {
+          const sameTestnet = oldTestnetId === activeNetworkId;
+          if (success || (!success && !sameTestnet)) {
+            setLiveTps(data.liveTPS);
+            setState((state) => ({
+              ...state,
+              [activeNetworkId]: newState,
+            }));
           }
         }
-      );
+      });
     }
   };
 
-  React.useEffect(getHighlights, [elasticUrl, timeout, timestamp]); // run the operation only once since the parameter does not change
+  React.useEffect(getData, [timestamp, activeNetworkId]); // run the operation only once since the parameter does not change
+
+  const props = activeNetworkId in state ? state[activeNetworkId] : initialState;
 
   return (
-    <div ref={ref}>{!hero ? <DefaultHighlights {...state} /> : <HeroHighlights {...state} />}</div>
+    <div ref={ref}>{!hero ? <DefaultHighlights {...props} /> : <HeroHighlights {...props} />}</div>
   );
 };
 

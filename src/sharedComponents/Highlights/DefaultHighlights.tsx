@@ -92,7 +92,9 @@ const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
             </span>
             <div className="media-body">
               <span className="highlight-label">PEAK TPS</span>
-              <span className="highlight-value">{peakTPS}</span>
+              <span className="highlight-value" data-testid="peak-tps">
+                {peakTPS}
+              </span>
             </div>
           </div>
         </li>

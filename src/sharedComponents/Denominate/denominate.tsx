@@ -49,7 +49,18 @@ function format(
     }
     array = array.reverse();
   }
-  return array.join('');
+
+  const allDecimalsZero = array
+    .slice(array.indexOf('.') + 1)
+    .every((digit) => digit.toString() === '0');
+
+  const string = array.join('');
+
+  if (allDecimalsZero) {
+    return string.split('.')[0];
+  }
+
+  return decimals === 0 ? string.split('.').join('') : string;
 }
 
 interface DenominateType {

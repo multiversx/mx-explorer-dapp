@@ -11,6 +11,7 @@ const BrandInformation = ({ publicKey }: { publicKey: string }) => {
   const sortedBrands = groupByBrandAndSort({
     brandData,
     allValidators: [...validatorData.validators],
+    totalValidators: validatorData.validators.length,
   });
 
   const brand = sortedBrands.find((b) => b.validators.some((v: any) => v.publicKey === publicKey));

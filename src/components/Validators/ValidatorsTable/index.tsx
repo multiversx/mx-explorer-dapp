@@ -5,7 +5,7 @@ import ValidatorsLayout from './../ValidatorsLayout';
 
 const ValidatorsTable = () => {
   const {
-    activeTestnet: { validatorDetails },
+    activeNetwork: { validatorDetails },
     validatorData,
   } = useGlobalState();
 

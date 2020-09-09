@@ -1,18 +1,11 @@
-import axios from 'axios';
-import {
-  fireEvent,
-  renderWithRouter,
-  wait,
-  config as optionalConfig,
-  waitForElement,
-} from 'utils/test-utils';
+import { fireEvent, wait, waitForElement } from 'utils/test-utils';
 import { beforeAll } from './LatestBlocks.test';
 
 describe('Latest Transactions', () => {
   test('Latest Transactions component is displaying', async () => {
     const render = beforeAll();
     const transactions = await render.findByTestId('transactionsList');
-    expect(transactions!.childElementCount).toBe(20);
+    expect(transactions!.childElementCount).toBe(50);
   });
   test('Latest Transactions component loading state', async () => {
     const render = beforeAll();
@@ -22,14 +15,8 @@ describe('Latest Transactions', () => {
     expect(transactionsLoader).toBeDefined();
   });
   test('Latest Transactions component failing state', async () => {
-    const mockPost = jest.spyOn(axios, 'post');
-    mockPost.mockRejectedValueOnce(new Error('the error'));
-    mockPost.mockRejectedValueOnce(new Error('the error'));
+    const render = beforeAll(false, true);
 
-    const render = renderWithRouter({
-      route: '/',
-      optionalConfig,
-    });
     await wait(async () => {
       expect(render.queryByText('Unable to load transactions')).toBeDefined();
     });

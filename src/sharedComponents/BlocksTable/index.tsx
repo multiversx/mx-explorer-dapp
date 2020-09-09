@@ -1,4 +1,4 @@
-import { BlockType } from 'components/Blocks';
+import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 import { dateFormatted, sizeFormat, trimHash } from 'helpers';
 import React from 'react';
 import { ShardSpan, TestnetLink, TimeAgo } from './../index';
@@ -6,7 +6,7 @@ import { ShardSpan, TestnetLink, TimeAgo } from './../index';
 const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number | undefined }) => {
   return (
     <div className="table-responsive">
-      <table className="table mt-4">
+      <table className="table mt-3">
         <thead>
           <tr>
             <th>Block</th>

@@ -1,44 +1,36 @@
 import axios from 'axios';
-import { renderWithRouter, wait } from 'utils/test-utils';
-import meta from './meta';
+import { renderWithRouter, meta, config as optionalConfig } from 'utils/test-utils';
+import { heartbeatstatus, validators, statistics } from 'utils/rawData';
 
-const data = {
-  _index: 'tps',
-  _type: '_doc',
-  _id: 'meta',
-  _version: 940,
-  _seq_no: 3754,
-  _primary_term: 1,
-  found: true,
-  _source: {
-    liveTPS: 13,
-    peakTPS: 158,
-    nrOfShards: 5,
-    nrOfNodes: 100,
-    blockNumber: 186,
-    roundNumber: 345,
-    roundTime: 5,
-    averageBlockTxCount: 66,
-    lastBlockTxCount: 68,
-    totalProcessedTxCount: 12393,
-    shardID: 0,
-    averageTPS: null,
-    currentBlockNonce: 0,
-  },
+export const beforeAll = () => {
+  const mockGet = jest.spyOn(axios, 'get');
+
+  mockGet.mockImplementation((url: string): any => {
+    switch (true) {
+      // --- page load ---
+      case url.includes('/tps/meta'):
+        return Promise.resolve({ data: meta });
+      case url.includes(`/node/heartbeatstatus`):
+        return Promise.resolve({ data: { data: heartbeatstatus, code: 'successful' } });
+      case url.includes('/validator/statistics'):
+        return Promise.resolve({ data: { data: statistics, code: 'successful' } });
+      case url.endsWith('/validators'):
+        return Promise.resolve({ data: validators });
+      // --- page load ---
+    }
+  });
+
+  return renderWithRouter({
+    route: '/',
+    optionalConfig,
+  });
 };
 
 describe('Hero tests', () => {
   test('Hero bar is displaying fetched values', async () => {
-    // const mockGet = jest.spyOn(axios, 'get');
-    // mockGet.mockReturnValueOnce(Promise.resolve({ data: meta }));
-    // mockGet.mockReturnValueOnce(Promise.resolve({ data }));
-    // const render = renderWithRouter({
-    //   route: '/',
-    // });
-
+    // const render = beforeAll();
     // await wait(async () => {
-    //   expect(render.queryByTestId('peakTPS')!.innerHTML).toBe('158');
+    //   expect(render.queryByTestId('peak-tps')!.innerHTML).toBe('858');
     // });
-    expect('todo').toBe('todo');
   });
 });

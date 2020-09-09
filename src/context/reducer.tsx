@@ -2,50 +2,40 @@ import axios from 'axios';
 import { StateType, ConfigType } from './state';
 
 export type ActionType =
-  | { type: 'changeTestnet'; testnetId: string }
+  | { type: 'changeNetwork'; networkId: string }
   | {
-      type: 'updateTestnets';
+      type: 'updateNetworks';
       config: ConfigType;
     }
   | { type: 'setValidatorData'; validatorData: StateType['validatorData'] }
   | { type: 'setBrandData'; brandData: StateType['brandData'] }
   | { type: 'triggerNewRound' }
-  | { type: 'cancelAllRequests' }
-  | {
-      type: 'setNewRoundIntervalId';
-      intervalId: ReturnType<typeof setInterval>;
-      testnetId: string;
-    };
+  | { type: 'cancelAllRequests' };
 
 export function globalReducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
-    case 'changeTestnet': {
-      const newTestnet = state.config.testnets.find((testnet) => testnet.id === action.testnetId);
-      const activeTestnet = newTestnet || state.defaultTestnet;
-      // once activeTestnetId is populated, routes get prepended by testnetId
+    case 'changeNetwork': {
+      const newNetwork = state.config.networks.find((network) => network.id === action.networkId);
+      const activeNetwork = newNetwork || state.defaultNetwork;
+      // once activeNetworkId is populated, routes get prepended by networkId
 
-      return { ...state, activeTestnet, activeTestnetId: action.testnetId };
+      return {
+        ...state,
+        activeNetwork,
+        activeNetworkId: action.networkId,
+        refresh: {
+          timestamp: Date.now(),
+        },
+      };
     }
-    case 'updateTestnets': {
+    case 'updateNetworks': {
       return { ...state, config: action.config };
     }
     case 'triggerNewRound': {
       return {
         ...state,
         refresh: {
-          ...state.refresh,
           timestamp: Date.now(),
-        },
-      };
-    }
-    case 'setNewRoundIntervalId': {
-      const { intervalId, testnetId } = action;
-      return {
-        ...state,
-        refresh: {
-          ...state.refresh,
-          intervalId,
-          testnetId,
         },
       };
     }
