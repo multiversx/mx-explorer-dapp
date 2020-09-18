@@ -79,7 +79,11 @@ const PendingTransaction = ({ transaction }: { transaction: PendingTransactionTy
 
         <TransactionDetail label="Gas Price">
           <span className="text-muted">
-            <Denominate value={transaction.gasPrice.toString()} showLastNonZeroDecimal />
+            {'gasPrice' in transaction ? (
+              <Denominate value={transaction.gasPrice.toString()} showLastNonZeroDecimal />
+            ) : (
+              'N/A'
+            )}
           </span>
         </TransactionDetail>
 
