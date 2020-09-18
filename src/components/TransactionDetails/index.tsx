@@ -9,7 +9,8 @@ import Details from './TransactionDetails';
 import PendingTransaction, { PendingTransactionType } from './PendingTransaction';
 
 const TransactionDetails: React.FC = () => {
-  const { hash: transactionId } = useParams();
+  const params: any = useParams();
+  const { hash: transactionId } = params;
   const ref = React.useRef(null);
 
   const {
