@@ -1,0 +1,38 @@
+/* Dropzone */
+
+$dropzone-text-align: center !default;
+$dropzone-font-weight: 400 !default;
+$dropzone-padding: 0.75rem 1.0625rem !default;
+$dropzone-font-size: 13px !default;
+$dropzone-border: 1px dashed $border-color !default;
+$dropzone-border-radius: 0.375rem !default;
+
+$fm-dropzone-padding: 0.75rem 1.0625rem !default;
+$fm-dropzone-border-bottom: 1px solid $border-color !default;
+
+.dropzone {
+  text-align: $dropzone-text-align;
+  font-weight: $dropzone-font-weight;
+  padding: $dropzone-padding;
+  font-size: $dropzone-font-size;
+  border: $dropzone-border;
+  border-radius: $dropzone-border-radius;
+  color: $secondary;
+  outline: none;
+
+  &.is-invalid {
+    border-color: $danger;
+    border-width: 0.05rem;
+    background: transparent;
+  }
+
+  .file {
+    background-color: $card-bg;
+    color: $secondary;
+  }
+}
+
+.file-manager__dropzone {
+  padding: $fm-dropzone-padding;
+  border-bottom: $fm-dropzone-border-bottom;
+}

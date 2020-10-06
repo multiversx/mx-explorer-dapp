@@ -39,16 +39,19 @@
     "react-leaflet-control": "2.1.2",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
+    "shards-ui": "3.0.0",
     "typescript": "3.9.5",
     "yup": "0.29.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
     "start-wallet": "REACT_APP_WALLET=true react-app-rewired start",
-    "build": "npm run compile & REACT_APP_CACHE_BUST=$(git describe --always) react-scripts build",
-    "compile-primary": "node-sass src/assets/sass/primary.scss public/primary.css",
-    "compile-secondary": "node-sass src/assets/sass/secondary.scss public/secondary.css",
-    "compile": "npm run compile-primary & npm run compile-secondary",
+    "build": "REACT_APP_CACHE_BUST=$(git describe --always) react-scripts build",
+    "postbuild": "npm run compile",
+    "compile-default": "node-sass src/assets/styles/default.scss build/default.css",
+    "compile-dark": "node-sass src/assets/styles/dark.scss build/dark.css",
+    "compile-testnet": "node-sass src/assets/styles/testnet.scss build/testnet.css",
+    "compile": "npm run compile-default & npm run compile-dark & npm run compile-testnet",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"
