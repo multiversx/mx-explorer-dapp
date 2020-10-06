@@ -1,15 +1,11 @@
 import React from 'react';
-import { useGlobalState } from '../../context';
+import { metaChainShardId } from 'appConfig';
 
 interface ShardSpanType {
   shardId: number | string;
 }
 
 const ShardSpan = ({ shardId }: ShardSpanType) => {
-  const {
-    config: { metaChainShardId },
-  } = useGlobalState();
-
   if (typeof shardId === 'string' && shardId.includes('Shard')) {
     shardId = shardId.replace('Shard', '');
   }

@@ -9,6 +9,7 @@ import { Loader, ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponen
 import { initialState, BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 import { validatorsRoutes } from 'routes';
 import './blockDetails.scss';
+import { metaChainShardId } from 'appConfig';
 
 function decodeHex(hex: string) {
   let str = '';
@@ -33,10 +34,7 @@ const BlockDetails: React.FC = () => {
 
   const ref = React.useRef(null);
 
-  const {
-    activeNetworkId,
-    config: { metaChainShardId },
-  } = useGlobalState();
+  const { activeNetworkId } = useGlobalState();
 
   const { getBlock } = adapter();
 

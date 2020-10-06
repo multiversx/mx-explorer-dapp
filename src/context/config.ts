@@ -1,6 +1,17 @@
-import { object, string, number, boolean } from 'yup';
+import { object, string, array, boolean, InferType } from 'yup';
 import { ConfigType, NetworkType } from './state';
 import localTestnets from './localTestnets';
+
+const networkBaseSchema = object({
+  default: boolean(),
+  id: string().defined().required(),
+  erdLabel: string().defined().required(),
+  name: string().defined().required(),
+  validatorDetails: boolean(),
+  theme: string(),
+  walletAddress: string(),
+  explorerAddress: string(),
+}).required();
 
 export const adapterSchema = object({
   adapter: string().defined().oneOf(['api', 'elastic']),
@@ -18,58 +29,31 @@ export const adapterSchema = object({
   }),
 }).required();
 
-const baseSchema = object({
-  default: boolean(),
-  id: string().defined().required(),
-  name: string().defined().required(),
-  numInitCharactersForScAddress: number().defined().required(),
-  validatorDetails: boolean(),
-}).required();
+export const schema = networkBaseSchema.concat(adapterSchema);
 
-export const schema = baseSchema.concat(adapterSchema);
+export const configSchema = object({
+  networks: array().of(schema).required(),
+}).required();
 
 export const defaultNetwork: NetworkType = {
   default: false,
   id: 'not-configured',
   name: 'NOT CONFIGURED',
-  numInitCharactersForScAddress: 0,
   adapter: 'api',
+  erdLabel: '',
   apiUrl: 'https://api.elrond.com',
-  refreshRate: 0,
-  decimals: 0,
-  denomination: 0,
-  gasPrice: 0,
-  gasLimit: 0,
-  gasPerDataByte: 0,
   validatorDetails: false,
-  nrOfShards: 0,
-  versionNumber: '',
 };
 
-export const buildInitialConfig = (config?: any): ConfigType => {
+type ImportedConfigType = InferType<typeof configSchema>;
+
+export const buildInitialConfig = (config: ImportedConfigType): ConfigType => {
+  configSchema.validate(config, { strict: true }).catch(({ errors }) => {
+    console.error(`Config invalid format`, errors);
+  });
+
   return {
-    metaChainShardId: config.metaChainShardId || 4294967295,
-    erdLabel: config.erdLabel,
-    secondary: Boolean(config.secondary),
-    elrondApps: config.elrondApps.length
-      ? config.elrondApps
-      : [
-          {
-            id: 'studio',
-            name: 'Empty',
-            to: 'https://elrond.com/',
-          },
-        ],
-    explorerApi: config.explorerApi,
-    networks:
-      config.networks && config.networks.length
-        ? config.networks.map((network: any) => {
-            schema.validate(network, { strict: true }).catch(({ errors }) => {
-              console.error(`Wrong config for ${network.name} network.`, errors);
-            });
-            return { ...defaultNetwork, ...network };
-          })
-        : [defaultNetwork],
+    networks: config.networks.map((network: any) => ({ ...defaultNetwork, ...network })),
   };
 };
 
@@ -77,31 +61,14 @@ const configKey: any = 'CONFIG';
 const windowConfig: ConfigType = window[configKey] as any;
 const requireConfig = process.env.NODE_ENV === 'test' ? require('./../../public/config') : {};
 
-const importedConfig = { ...requireConfig, ...windowConfig };
+let config = { ...requireConfig, ...windowConfig };
 
-const configIsDefined =
-  typeof importedConfig !== 'undefined' && Boolean(Object.keys(importedConfig)[0]);
+config = buildInitialConfig(config);
 
-const config = configIsDefined ? buildInitialConfig(importedConfig) : buildInitialConfig({});
-
-let configNetworks = [...config.networks];
-
-if (
-  localTestnets.some((testnet) => testnet.default) &&
-  process.env.REACT_APP_USE_GLOBAL_DEFAULT === 'false'
-) {
-  configNetworks = configNetworks.map((network) => {
-    schema.validate(network, { strict: true }).catch(({ errors }) => {
-      console.error(`Wrong config for ${network.name} network.`, errors);
-    });
-    return { ...network, default: false };
-  });
-}
-
-const extendedConfig = {
+const extendedConfig: ConfigType = {
   ...config,
   networks: [
-    ...configNetworks,
+    ...config.networks,
     ...localTestnets.map((t: any) => ({
       ...defaultNetwork,
       ...t,

@@ -10,6 +10,7 @@ import FailedAddress from './FailedAddress';
 import FailedTransaction from './FailedTransaction';
 import DelegationDetails from './DelegationDetails';
 import { addressIsBech32 } from 'helpers';
+import { denomination, decimals } from 'appConfig';
 
 function getDirection(type: string | undefined) {
   const shardMap: any = {
@@ -38,11 +39,10 @@ const Transactions = () => {
   const [addressDetailsLoading, setAddressDetailsLoading] = React.useState<boolean>(true);
 
   const {
-    activeNetwork: { denomination, decimals },
     activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
-  const { page, hash: addressId, shard } = useParams();
+  const { page, hash: addressId, shard } = useParams() as any;
   const { pathname } = useLocation();
 
   const { getAddressDetails, getTransactionsCount, getTransactions, getRewards } = adapter();

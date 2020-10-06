@@ -3,6 +3,7 @@ import Map from './Map';
 import { getMarkers, getLeaders } from './helpers/asyncRequests';
 import { useGlobalState } from 'context';
 import { MarkerPoint, processMarkers } from './helpers/processing';
+import { nrOfShards, metaChainShardId, explorerApi } from 'appConfig';
 
 const MapChart = () => {
   const [markers, setMarkers] = React.useState<MarkerPoint[]>([]);
@@ -10,9 +11,7 @@ const MapChart = () => {
 
   const {
     timeout,
-    activeNetwork: { nrOfShards },
     refresh: { timestamp },
-    config: { metaChainShardId, explorerApi },
   } = useGlobalState();
 
   const shardsArray = [...Array.from(Array(nrOfShards).keys()), metaChainShardId];

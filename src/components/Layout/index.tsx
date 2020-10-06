@@ -21,24 +21,19 @@ function addStylesheet(secondary: boolean) {
 }
 
 const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: React.ReactNode }) => {
-  const {
-    activeNetwork,
-    config: { secondary },
-  } = useGlobalState();
+  const { activeNetwork } = useGlobalState();
   const { pathname } = useLocation();
   const validators = pathname.includes('/validators');
 
   React.useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
-      if (secondary) {
-        require('assets/sass/secondary.scss');
-      } else {
-        require('assets/sass/primary.scss');
-      }
+      require('assets/sass/primary.scss');
     } else {
-      addStylesheet(secondary);
+      addStylesheet(false);
     }
-  }, [secondary]);
+  }, []);
+
+  const offline = process.env.NODE_ENV !== 'test' && !window.navigator.onLine;
 
   return (
     <>
@@ -46,7 +41,7 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
       <RoundManager />
       {navbar ? navbar : <Navbar />}
       <main role="main">
-        {activeNetwork.fetchedFromNetworkConfig === false && !validators ? (
+        {offline ? (
           <div className="container pt-3 pb-3">
             <div className="row">
               <div className="offset-lg-3 col-lg-6 mt-4 mb-4">
