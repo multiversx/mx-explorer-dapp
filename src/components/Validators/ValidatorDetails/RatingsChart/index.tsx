@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-import './chart.scss';
+//import './chart.scss';
 export interface HistoricRatingType {
   epoch: number;
   rating: number;

@@ -2,7 +2,7 @@ import React from 'react';
 import Chart from './Chart';
 import { useGlobalState } from 'context';
 import { AddressDetailsType } from './../AddressDetails';
-import './delegationDetails.scss';
+//import './delegationDetails.scss';
 
 const DelegationDetails = (props: AddressDetailsType) => {
   const {

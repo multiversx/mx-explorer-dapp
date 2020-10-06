@@ -8,7 +8,7 @@ import { isHash, dateFormatted, sizeFormat, networkRoute, truncate } from 'helpe
 import { Loader, ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
 import { initialState, BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 import { validatorsRoutes } from 'routes';
-import './blockDetails.scss';
+//import './blockDetails.scss';
 import { metaChainShardId } from 'appConfig';
 
 function decodeHex(hex: string) {

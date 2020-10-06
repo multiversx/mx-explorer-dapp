@@ -5,7 +5,7 @@ import { addressIsBech32, dateFormatted, trimHash } from 'helpers';
 import * as React from 'react';
 import { ScAddressIcon, ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
-import './animatedList.scss';
+//import './animatedList.scss';
 
 type LatestTransactionType = TransactionType & {
   isNew: boolean;

@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { StateType as DefaultHighlightsProps } from './index';
-import './highlights.scss';
+//import './highlights.scss';
 
 const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
   blockNumber,

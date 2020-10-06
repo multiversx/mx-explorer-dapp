@@ -26,11 +26,7 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
   const validators = pathname.includes('/validators');
 
   React.useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      require('assets/sass/primary.scss');
-    } else {
-      addStylesheet(false);
-    }
+    require('assets/styles/default.scss');
   }, []);
 
   const offline = process.env.NODE_ENV !== 'test' && !window.navigator.onLine;
