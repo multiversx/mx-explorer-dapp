@@ -22,9 +22,10 @@ const renderWithRouter = ({
   optionalConfig?: ConfigType;
 }) => {
   history = createMemoryHistory({ initialEntries: [route] });
+
   return {
     ...render(
-      <GlobalProvider optionalConfig={config}>
+      <GlobalProvider optionalConfig={optionalConfig}>
         <Router history={history}>
           <App optionalConfig={optionalConfig || config} />
         </Router>

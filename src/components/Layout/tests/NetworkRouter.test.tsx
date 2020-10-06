@@ -2,27 +2,6 @@ import { fireEvent, renderWithRouter } from 'utils/test-utils';
 import { ConfigType } from 'context/state';
 
 const optionalConfig: ConfigType = {
-  metaChainShardId: 4294967295,
-  erdLabel: 'eGLD',
-  secondary: false,
-  elrondApps: [
-    {
-      id: 'wallet',
-      name: 'Wallet',
-      to: 'https://wallet.elrond.com/',
-    },
-    {
-      id: 'explorer',
-      name: 'Explorer',
-      to: 'https://explorer.elrond.com/',
-    },
-    {
-      id: 'docs',
-      name: 'Docs',
-      to: 'https://docs.elrond.com/',
-    },
-  ],
-  explorerApi: '',
   networks: [
     {
       default: true,
@@ -30,17 +9,7 @@ const optionalConfig: ConfigType = {
       name: 'Zero to One',
       apiUrl: 'https://api.elrond.com',
       adapter: 'api',
-      refreshRate: 6000,
-      numInitCharactersForScAddress: 20,
-      decimals: 4,
-      denomination: 18,
-      gasPrice: 100000000000000,
-      gasLimit: 1000000,
-      gasPerDataByte: 1500,
-      validatorDetails: true,
-      nrOfShards: 1,
-      versionNumber: '2',
-      fetchedFromNetworkConfig: true,
+      erdLabel: 'EGLD',
     },
     {
       default: false,
@@ -49,17 +18,8 @@ const optionalConfig: ConfigType = {
       proxyUrl: '***REMOVED***',
       elasticUrl: '***REMOVED***',
       adapter: 'elastic',
-      refreshRate: 6000,
-      numInitCharactersForScAddress: 20,
-      decimals: 4,
-      denomination: 18,
-      gasPrice: 100000000000000,
-      gasLimit: 1000000,
-      gasPerDataByte: 1500,
       validatorDetails: true,
-      nrOfShards: 1,
-      versionNumber: '2',
-      fetchedFromNetworkConfig: true,
+      erdLabel: 'EGLD',
     },
   ],
 };
