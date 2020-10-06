@@ -6,7 +6,7 @@ import './delegationDetails.scss';
 
 const DelegationDetails = (props: AddressDetailsType) => {
   const {
-    config: { erdLabel },
+    activeNetwork: { erdLabel },
   } = useGlobalState();
   const Delegation = (
     <>

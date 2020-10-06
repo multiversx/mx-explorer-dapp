@@ -17,6 +17,7 @@ import RatingsChart, { HistoricRatingType } from './RatingsChart';
 import BrandInformation from './BrandInformation';
 import Alert from './Alert';
 import useSetValidatorsData from './../useSetValidatorsData';
+import { metaChainShardId, explorerApi } from 'appConfig';
 
 export type StateType = NetworkMetricsType &
   NodeInformationType & {
@@ -32,7 +33,7 @@ export type StateType = NetworkMetricsType &
 
 const ValidatorDetails = () => {
   const ref = React.useRef(null);
-  const { hash } = useParams();
+  const { hash } = useParams() as any;
   const [validator, setValidator] = React.useState<ValidatorType>();
   const [dataFetched] = React.useState(useSetValidatorsData(ref));
   const [state, setState] = React.useState(initialState);
@@ -47,11 +48,7 @@ const ValidatorDetails = () => {
     roundsFetched: true,
   });
 
-  const {
-    config: { metaChainShardId, explorerApi },
-    timeout,
-    validatorData,
-  } = useGlobalState();
+  const { timeout, validatorData } = useGlobalState();
 
   const { getRounds, getValidator, searchBlocks } = adapter();
 

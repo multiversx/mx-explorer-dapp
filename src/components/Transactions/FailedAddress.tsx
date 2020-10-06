@@ -1,13 +1,9 @@
 import { faCode, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGlobalState } from 'context';
 import React from 'react';
+import { numInitCharactersForScAddress } from 'appConfig';
 
 export default function FailedAddress({ addressId }: { addressId: string | undefined }) {
-  const {
-    activeNetwork: { numInitCharactersForScAddress },
-  } = useGlobalState();
-
   const showIcon =
     numInitCharactersForScAddress > 0 &&
     String(addressId).startsWith('0'.repeat(numInitCharactersForScAddress));

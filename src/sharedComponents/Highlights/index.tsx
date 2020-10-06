@@ -4,6 +4,7 @@ import { useGlobalState } from 'context';
 import { adapter } from 'sharedComponents';
 import DefaultHighlights from './DefaultHighlights';
 import HeroHighlights from './HeroHighlights';
+import { refreshRate } from 'appConfig';
 
 export interface StateType {
   blockNumber: string;
@@ -45,7 +46,6 @@ const Hightlights = ({
   setLiveTps?: React.Dispatch<React.SetStateAction<any>>;
 }) => {
   const {
-    activeNetwork: { refreshRate },
     activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();

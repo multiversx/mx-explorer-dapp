@@ -7,8 +7,6 @@ import Layout from './components/Layout';
 import PageNotFoud from './components/PageNotFoud';
 import { GlobalProvider, useGlobalState } from './context';
 import { ConfigType, NetworkType } from './context/state';
-import { buildInitialConfig } from './context/config';
-import buildConfig from './context/getAsyncConfig';
 import routes from './routes';
 
 if (process.env.NODE_ENV === 'production') {
@@ -29,11 +27,7 @@ export const Routes = ({
       <React.Suspense fallback={<span>Loading...</span>}>
         <Switch>
           {networks.map((network: NetworkType, i: number) => {
-            const validatorsDisabled = network.validators === false;
             return routes.map((route, i) => {
-              if (route.path.includes('validators') && validatorsDisabled) {
-                return null;
-              }
               return (
                 <Route
                   path={`/${network.id}${route.path}`}
@@ -52,10 +46,6 @@ export const Routes = ({
           />
           ,
           {routes.map((route, i) => {
-            const validatorsDisabled = activeNetwork.validators === false;
-            if (route.path.includes('validators') && validatorsDisabled) {
-              return null;
-            }
             return (
               <Route
                 path={route.path}
@@ -74,29 +64,20 @@ export const Routes = ({
 };
 
 export const App = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
-  const [config, setConfig] = React.useState<ConfigType>(optionalConfig as any);
-
-  const fetchAsyncConfig = () => {
-    if (optionalConfig === undefined) {
-      buildConfig().then((data: any) => {
-        const config = data as ConfigType;
-        setConfig(config);
-      });
+  React.useEffect(() => {
+    if (process.env.REACT_APP_CACHE_BUST) {
+      // tslint:disable-next-line
+      console.log('Elrond Web wallet version: ', process.env.REACT_APP_CACHE_BUST);
     }
-  };
+  }, []);
 
-  React.useEffect(fetchAsyncConfig, []);
-
-  return config !== undefined ? (
-    <GlobalProvider
-      optionalConfig={optionalConfig}
-      config={config !== undefined ? config : buildInitialConfig()}
-    >
+  return (
+    <GlobalProvider optionalConfig={optionalConfig}>
       <Layout>
         <Routes routes={routes} />
       </Layout>
     </GlobalProvider>
-  ) : null;
+  );
 };
 
 const RoutedApp = () => {

@@ -24,7 +24,7 @@ const renderWithRouter = ({
   history = createMemoryHistory({ initialEntries: [route] });
   return {
     ...render(
-      <GlobalProvider config={config}>
+      <GlobalProvider optionalConfig={config}>
         <Router history={history}>
           <App optionalConfig={optionalConfig || config} />
         </Router>

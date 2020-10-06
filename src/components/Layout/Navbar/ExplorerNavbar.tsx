@@ -15,10 +15,7 @@ export default function ExplorerNavbar({
   expanded = false,
   setExpanded = () => null,
 }: ExplorerNavbarType) {
-  const {
-    activeNetwork: { validators },
-    activeNetworkId,
-  } = useGlobalState();
+  const { activeNetworkId } = useGlobalState();
 
   const onToggle = (isExpanded: boolean) => {
     setExpanded(isExpanded);
@@ -66,15 +63,13 @@ export default function ExplorerNavbar({
             Transactions
           </TestnetLink>
 
-          {validators !== false && (
-            <TestnetLink
-              className={`nav-link ${pathname.toString().includes('validators') ? 'active' : ''}`}
-              to="/validators"
-              onClick={() => onToggle(false)}
-            >
-              Validators
-            </TestnetLink>
-          )}
+          <TestnetLink
+            className={`nav-link ${pathname.toString().includes('validators') ? 'active' : ''}`}
+            to="/validators"
+            onClick={() => onToggle(false)}
+          >
+            Validators
+          </TestnetLink>
         </Nav>
         <Nav className="ml-auto">
           <div className="form-inline py-sm-2" role="search">

@@ -2,11 +2,11 @@ import { useGlobalState } from 'context';
 import elastic from './elastic';
 import api from './api';
 import * as f from './functions';
+import { metaChainShardId } from 'appConfig';
 
 export default function useAdapter() {
   const {
     activeNetwork: { elasticUrl, adapter, proxyUrl: nodeUrl, apiUrl },
-    config: { metaChainShardId },
     timeout,
   } = useGlobalState();
 

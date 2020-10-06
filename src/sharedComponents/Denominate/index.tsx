@@ -1,6 +1,7 @@
 import React from 'react';
 import { useGlobalState } from '../../context';
 import denominate from './denominate';
+import { denomination, decimals } from 'appConfig';
 
 interface DenominateType {
   value: string;
@@ -10,8 +11,7 @@ interface DenominateType {
 
 const Denominate = ({ value, showLastNonZeroDecimal = false, showErd = true }: DenominateType) => {
   const {
-    activeNetwork: { denomination, decimals },
-    config: { erdLabel },
+    activeNetwork: { erdLabel },
   } = useGlobalState();
 
   const denominatedValue = denominate({

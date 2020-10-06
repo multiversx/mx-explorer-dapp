@@ -23,7 +23,7 @@ const BrandRow = ({ brand, rank }: BrandRowType) => {
   const [showDetails, setShowDetails] = React.useState(false);
 
   const {
-    config: { erdLabel },
+    activeNetwork: { erdLabel },
   } = useGlobalState();
 
   const onClick = () => {

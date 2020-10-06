@@ -1,10 +1,10 @@
 import React from 'react';
 import moment from 'moment';
 import { useGlobalState, useGlobalDispatch } from 'context';
+import { refreshRate } from 'appConfig';
 
 export default function RoundManager() {
   const {
-    activeNetwork: { refreshRate },
     refresh: { timestamp },
   } = useGlobalState();
   const dispatch = useGlobalDispatch();

@@ -6,13 +6,13 @@ import {
   getBrandData,
 } from './helpers/asyncRequests';
 import { populateValidatorsTable } from './helpers/validatorHelpers';
+import { versionNumber, nrOfShards, metaChainShardId, explorerApi } from 'appConfig';
 
 export default function useSetValidatorsData(ref: React.RefObject<HTMLInputElement>) {
   const {
-    activeNetwork: { apiUrl, proxyUrl, versionNumber, nrOfShards },
+    activeNetwork: { apiUrl, proxyUrl },
     activeNetworkId,
     timeout,
-    config: { metaChainShardId, explorerApi },
     validatorData: configValidatorData,
     brandData: configBrandData,
   } = useGlobalState();

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faServer } from '@fortawesome/free-solid-svg-icons';
-import { useGlobalState } from 'context';
 import { ComputedShard } from './ValidatorsTable/Table';
+import { nrOfShards, metaChainShardId } from 'appConfig';
 
 interface ShardCardType {
   shardEntry: ComputedShard;
@@ -54,11 +54,6 @@ interface ShardsListType {
 }
 
 const ShardsList = ({ shardData }: ShardsListType) => {
-  const {
-    activeNetwork: { nrOfShards },
-    config: { metaChainShardId },
-  } = useGlobalState();
-
   const blockchainStatus: ComputedShard = {
     shardID: 'Active Validators',
     shardNumber: -1,
