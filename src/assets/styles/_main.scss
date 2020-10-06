@@ -1,0 +1,37 @@
+// Variables override
+@import './variables';
+
+// Bootstrap
+@import './../../../node_modules/bootstrap/scss/bootstrap.scss';
+
+// Main Shards Dashboard
+@import './shards-dashboard/shards-dashboards';
+
+// Fixes shards hardcoded values
+@import './../../../node_modules/bootstrap/scss/reboot';
+
+// Plugins
+@import './plugins/dropzone';
+
+// Elements
+@import './elements';
+
+// Components
+@import './components';
+@import './sharedComponents';
+
+// Final overrides
+@import './overrides';
+
+// .main-navbar {
+//   border-top: 4px solid $primary;
+// }
+
+.main-sidebar__nav-title {
+  border: 0;
+  padding: 1.5625rem 1.5625rem 0 1.5625rem;
+}
+
+.main-sidebar .nav {
+  border: 0;
+}

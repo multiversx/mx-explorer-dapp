@@ -47,6 +47,10 @@
     />
     <meta property="og:image" content="https://explorer.elrond.com/share.jpg" />
 
+    <link id="stylesheet" rel="stylesheet" type="text/css" href="%PUBLIC_URL%/default.css?cachebust=%REACT_APP_CACHE_BUST%"></link>
+    <link rel="stylesheet" href="%PUBLIC_URL%/dark.css?cachebust=%REACT_APP_CACHE_BUST%" media="print">
+    <link rel="stylesheet" href="%PUBLIC_URL%/testnet.css?cachebust=%REACT_APP_CACHE_BUST%" media="print">
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140910543-1"></script>
     <script>
@@ -62,7 +66,6 @@
     <script src="%PUBLIC_URL%/config.js?cachebust=%REACT_APP_CACHE_BUST%"></script>
   </head>
   <body>
-    <link id="stylesheet" rel="stylesheet" type="text/css" href="%PUBLIC_URL%/__stylesheet__.css?cachebust=%REACT_APP_CACHE_BUST%"></link>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
