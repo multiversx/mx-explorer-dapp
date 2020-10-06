@@ -29,8 +29,10 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
 
   return {
     config: configObject,
-    defaultNetwork: config.networks.filter((network) => network.default).pop() || defaultNetwork,
-    activeNetwork: config.networks.filter((network) => network.default).pop() || defaultNetwork,
+    defaultNetwork:
+      configObject.networks.filter((network) => network.default).pop() || defaultNetwork,
+    activeNetwork:
+      configObject.networks.filter((network) => network.default).pop() || defaultNetwork,
     activeNetworkId: '',
     timeout: 3 * 1000,
     cancelToken: undefined,
