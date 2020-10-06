@@ -3,6 +3,8 @@ import Denominate from './Denominate';
 import Highlights from './Highlights';
 import Loader from './Loader';
 import Pager from './Pager';
+import PageState from './PageState';
+import IconState from './IconState';
 import withPageTitle from './PageTitle';
 import ScAddressIcon from './ScAddressIcon';
 import Search from './Search';
@@ -34,5 +36,7 @@ export {
   TransactionStatus,
   TooltipWithCopy,
   CopyButton,
+  PageState,
+  IconState,
   adapter,
 };
