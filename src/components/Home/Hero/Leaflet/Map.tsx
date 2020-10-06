@@ -2,12 +2,12 @@ import React from 'react';
 import L from 'leaflet';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { faMapMarker } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarker } from '@fortawesome/pro-solid-svg-icons/faMapMarker';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MapDisplayType, getRadius, getGroupedCities } from './helpers/processing';
 import Icon from './Icon';
 import Control from 'react-leaflet-control';
-import './leaflet.scss';
+//import './leaflet.scss';
 
 export default function MapDisplay({
   markers,

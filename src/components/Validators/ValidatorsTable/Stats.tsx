@@ -1,4 +1,5 @@
-import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/pro-solid-svg-icons/faSearch';
+import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown } from 'react-bootstrap';
 import * as React from 'react';
@@ -23,7 +24,7 @@ const ValidatorsStats = ({
 }: ValidatorsStatsType) => {
   const [inputValue, setInputValue] = React.useState('');
 
-  const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = e => {
+  const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setInputValue(e.target.value);
     if (e.target.value.length >= 3) {
       setSearchValue(e.target.value.toString().toLowerCase());

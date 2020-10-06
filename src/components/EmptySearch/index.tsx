@@ -1,10 +1,10 @@
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/pro-solid-svg-icons/faSearch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 
 const EmptySearch = () => {
-  const { query } = useParams();
+  const { query } = useParams() as any;
 
   return (
     <>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { faBan } from '@fortawesome/free-solid-svg-icons';
+import { faBan } from '@fortawesome/pro-solid-svg-icons/faBan';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Navbar from './Navbar/index';
 import Footer from './Footer';
@@ -26,11 +26,7 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
   const validators = pathname.includes('/validators');
 
   React.useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      require('assets/sass/primary.scss');
-    } else {
-      addStylesheet(false);
-    }
+    require('assets/styles/default.scss');
   }, []);
 
   const offline = process.env.NODE_ENV !== 'test' && !window.navigator.onLine;
