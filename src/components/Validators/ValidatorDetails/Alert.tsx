@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Card } from 'react-bootstrap';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ValidatorType } from 'context/validators';
 

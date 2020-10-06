@@ -1,4 +1,5 @@
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faBars } from '@fortawesome/pro-solid-svg-icons/faBars';
+import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap';

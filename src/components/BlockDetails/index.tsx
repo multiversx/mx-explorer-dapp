@@ -1,4 +1,7 @@
-import { faChevronLeft, faChevronRight, faClock, faCube } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft } from '@fortawesome/pro-solid-svg-icons/faChevronLeft';
+import { faChevronRight } from '@fortawesome/pro-solid-svg-icons/faChevronRight';
+import { faClock } from '@fortawesome/pro-solid-svg-icons/faClock';
+import { faCube } from '@fortawesome/pro-solid-svg-icons/faCube';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -8,7 +11,7 @@ import { isHash, dateFormatted, sizeFormat, networkRoute, truncate } from 'helpe
 import { Loader, ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
 import { initialState, BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 import { validatorsRoutes } from 'routes';
-import './blockDetails.scss';
+//import './blockDetails.scss';
 import { metaChainShardId } from 'appConfig';
 
 function decodeHex(hex: string) {

@@ -1,11 +1,11 @@
-import { faCube } from '@fortawesome/free-solid-svg-icons';
+import { faCube } from '@fortawesome/pro-solid-svg-icons/faCube';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useGlobalState } from 'context';
 import { dateFormatted, trimHash } from 'helpers';
 import { ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
 import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
-import './animatedList.scss';
+//import './animatedList.scss';
 
 type LatestBlockType = BlockType & {
   isNew: boolean;

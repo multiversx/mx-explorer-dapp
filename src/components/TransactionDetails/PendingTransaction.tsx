@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Denominate, ScAddressIcon, TestnetLink, TransactionStatus } from 'sharedComponents';
-import { faClock } from '@fortawesome/free-solid-svg-icons';
+import { faClock } from '@fortawesome/pro-solid-svg-icons/faClock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TransactionDetail from './TransactionDetail';
 export interface PendingTransactionType {

@@ -1,0 +1,26 @@
+// Uncomment in case of reeboot override not working
+// html,
+// body {
+//   font-weight: 400;
+// }
+
+.card {
+  height: 100%;
+  overflow: hidden;
+
+  .card-header {
+    &:first-child {
+      border-radius: calc(#{$card-border-radius} - 1px) calc(#{$card-border-radius} - 1px) 0 0;
+    }
+  }
+}
+
+.main-content {
+  > .main-content-container {
+    &.container-fluid {
+      min-height: calc(
+        100vh - 9rem
+      ); // fixes content min height taking into account navbar and footer heights
+    }
+  }
+}

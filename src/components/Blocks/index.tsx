@@ -1,4 +1,4 @@
-import { faCube } from '@fortawesome/free-solid-svg-icons';
+import { faCube } from '@fortawesome/pro-solid-svg-icons/faCube';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import * as React from 'react';
@@ -29,7 +29,7 @@ function isValidInt(number: number) {
 }
 
 const Blocks: React.FC = () => {
-  const { page, shard, epoch } = useParams();
+  const { page, shard, epoch } = useParams() as any;
   const shardId = parseInt(shard!) >= 0 ? parseInt(shard!) : undefined;
   const epochId = parseInt(epoch!) >= 0 ? parseInt(epoch!) : undefined;
 
