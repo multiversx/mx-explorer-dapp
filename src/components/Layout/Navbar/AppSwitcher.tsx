@@ -1,4 +1,4 @@
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown } from '@fortawesome/pro-solid-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import elrondLogo from 'assets/img/elrond-symbol.svg';
 import { useGlobalState } from 'context';

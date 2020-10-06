@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck } from '@fortawesome/pro-solid-svg-icons/faCheck';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReactComponent as CopyIcon } from './../../assets/img/copy-icon.svg';
 import copyTextToClipboard from './helpers/copyToClipboard';

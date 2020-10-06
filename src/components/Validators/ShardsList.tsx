@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faServer } from '@fortawesome/free-solid-svg-icons';
+import { faServer } from '@fortawesome/pro-solid-svg-icons/faServer';
 import { ComputedShard } from './ValidatorsTable/Table';
 import { nrOfShards, metaChainShardId } from 'appConfig';
 
