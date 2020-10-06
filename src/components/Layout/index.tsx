@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { faBan } from '@fortawesome/free-solid-svg-icons';
+import { faBan } from '@fortawesome/pro-solid-svg-icons/faBan';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Navbar from './Navbar/index';
 import Footer from './Footer';

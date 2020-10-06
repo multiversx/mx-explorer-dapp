@@ -1,4 +1,4 @@
-import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { faExchangeAlt } from '@fortawesome/pro-solid-svg-icons/faExchangeAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { addressIsBech32, dateFormatted, trimHash } from 'helpers';

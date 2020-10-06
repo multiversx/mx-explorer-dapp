@@ -1,4 +1,6 @@
-import { faArrowDown, faArrowUp, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown } from '@fortawesome/pro-solid-svg-icons/faArrowDown';
+import { faArrowUp } from '@fortawesome/pro-solid-svg-icons/faArrowUp';
+import { faFilter } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { SyntheticEvent } from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
@@ -96,7 +98,7 @@ const ValidatorsTableHeader = ({
                             className={`nav-link ${shardValue === shardID ? 'active' : ''}`}
                             key={shardNumber + i}
                             href="#/validators"
-                            onClick={e => changeShard(e, shardID)}
+                            onClick={(e) => changeShard(e, shardID)}
                           >
                             <ShardSpan shardId={shardNumber} />
                           </a>
@@ -106,7 +108,7 @@ const ValidatorsTableHeader = ({
                         className={`nav-link ${shardValue === '' ? 'active' : ''}`}
                         key={-1}
                         href="#/validators"
-                        onClick={e => changeShard(e, '')}
+                        onClick={(e) => changeShard(e, '')}
                       >
                         Show all
                       </a>
@@ -138,7 +140,7 @@ const ValidatorsTableHeader = ({
                       <a
                         className={`nav-link ${statusValue === 'online' ? 'active' : ''}`}
                         href="#/validators"
-                        onClick={e => changeStatus(e, 'online')}
+                        onClick={(e) => changeStatus(e, 'online')}
                         data-testid="filterByStatusOnline"
                       >
                         Online
@@ -146,7 +148,7 @@ const ValidatorsTableHeader = ({
                       <a
                         className={`nav-link ${statusValue === 'offline' ? 'active' : ''}`}
                         href="#/validators"
-                        onClick={e => changeStatus(e, 'offline')}
+                        onClick={(e) => changeStatus(e, 'offline')}
                         data-testid="filterByStatusOffline"
                       >
                         Offiline
@@ -155,7 +157,7 @@ const ValidatorsTableHeader = ({
                         className={`nav-link ${statusValue === '' ? 'active' : ''}`}
                         key={-1}
                         href="#/validators"
-                        onClick={e => changeStatus(e, '')}
+                        onClick={(e) => changeStatus(e, '')}
                       >
                         Show all
                       </a>

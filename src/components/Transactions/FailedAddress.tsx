@@ -1,4 +1,5 @@
-import { faCode, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faCode } from '@fortawesome/pro-solid-svg-icons/faCode';
+import { faWallet } from '@fortawesome/pro-solid-svg-icons/faWallet';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { numInitCharactersForScAddress } from 'appConfig';

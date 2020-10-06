@@ -1,6 +1,6 @@
 // @ts-ignore
 import kendo from 'kendo-ui-core/js/kendo.data';
-import { faServer } from '@fortawesome/free-solid-svg-icons';
+import { faServer } from '@fortawesome/pro-solid-svg-icons/faServer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { DirectioinsType } from './../helpers/validatorHelpers';

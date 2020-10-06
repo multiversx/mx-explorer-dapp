@@ -1,4 +1,4 @@
-import { faCogs } from '@fortawesome/free-solid-svg-icons';
+import { faCogs } from '@fortawesome/pro-solid-svg-icons/faCogs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
