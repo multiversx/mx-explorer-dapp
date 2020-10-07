@@ -44,11 +44,13 @@ export default function Navbar() {
               </form>
             </div>
 
-            <div className="d-flex align-items-center">
-              <NetworkSwitcher onToggle={onToggle} />
+            <div className="d-none d-lg-flex">
+              <AppSwitcher />
             </div>
 
-            <AppSwitcher />
+            <div className="d-none d-lg-flex align-items-strech">
+              <NetworkSwitcher onToggle={onToggle} />
+            </div>
 
             <div className="nav d-lg-none">
               <a

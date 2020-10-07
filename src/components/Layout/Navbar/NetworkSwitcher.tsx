@@ -1,8 +1,8 @@
+import React from 'react';
 import { faAngleDown } from '@fortawesome/pro-solid-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { defaultNetwork } from 'context/config';
-import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -51,12 +51,13 @@ export default function NetworkSwitcher({ onToggle }: { onToggle: (prop: boolean
     <>
       <NavDropdown
         title={
-          <span id="switch" data-testid="networkSwitch" className="switch">
+          <div className="nav-link nav-link-icon text-center pr-0" data-testid="networkSwitch">
             {globalState.activeNetwork.name}&nbsp;
             <FontAwesomeIcon icon={faAngleDown} />
-          </span>
+          </div>
         }
-        id="basic-nav-dropdown"
+        id="network-switcher-dropdown"
+        alignRight
       >
         {liksArray.map((link) => {
           return (
