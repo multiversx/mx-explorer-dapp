@@ -35,7 +35,7 @@ export default function Navbar() {
             </div>
 
             <div className="d-flex flex-fill">
-              <form className="main-navbar__search w-100 d-none d-md-flex d-lg-flex">
+              <form className="main-navbar__search w-100 d-flex">
                 <div className="ml-3 input-group input-group-seamless">
                   <Search />
                 </div>
