@@ -53,7 +53,6 @@ export default function NetworkSwitcher({ onToggle }: { onToggle: (prop: boolean
         title={
           <span id="switch" data-testid="networkSwitch" className="switch">
             {globalState.activeNetwork.name}&nbsp;
-            <FontAwesomeIcon icon={faAngleDown} />
           </span>
         }
         id="basic-nav-dropdown"

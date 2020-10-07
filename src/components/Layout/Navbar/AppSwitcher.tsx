@@ -1,6 +1,5 @@
-import { faAngleDown } from '@fortawesome/pro-solid-svg-icons/faAngleDown';
+import { faTh } from '@fortawesome/pro-solid-svg-icons/faTh';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import elrondLogo from 'assets/img/elrond-symbol.svg';
 import { useGlobalState } from 'context';
 import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
@@ -27,18 +26,13 @@ export default function AppSwitcher() {
   return (
     <NavDropdown
       title={
-        <span className="appSwitcherButton" onClick={onClick}>
-          <img src={elrondLogo} alt="Elrond Logo" className="mr-2" height="30" />
-          <span className="activeApp">
-            {(apps.filter((app) => app.id === activeAppId).pop() as any).name}{' '}
-            <small>
-              <FontAwesomeIcon icon={faAngleDown} />
-            </small>
-          </span>
-        </span>
+        <div className="nav-link nav-link-icon text-center">
+          <i className="material-icons icon-sm m-0">
+            <FontAwesomeIcon icon={faTh} />
+          </i>
+        </div>
       }
       id="basic-nav-dropdown"
-      className="brandDropdown"
     >
       {apps.map((app) => {
         let { name, to } = app;

@@ -1,0 +1,51 @@
+.main-navbar {
+  background: $card-bg;
+
+  .main-symbol,
+  .main-logo {
+    g {
+      fill: $body;
+    }
+  }
+
+  #basic-nav-dropdown {
+    padding: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    &:after {
+      content: none;
+    }
+  }
+
+  .dropdown-menu {
+    border: 1px solid $border-color !important;
+    border-radius: 0.25rem !important;
+    left: auto !important;
+    right: 0 !important;
+  }
+
+  .nav-link,
+  .nav-link-icon {
+    transition: color 200ms ease;
+
+    .material-icons {
+      transition: color 200ms ease;
+      color: $muted;
+      top: 0;
+
+      &.icon-sm {
+        font-size: 1rem;
+      }
+    }
+
+    &:hover {
+      color: $primary;
+
+      .material-icons {
+        color: $primary;
+      }
+    }
+  }
+}

@@ -62,7 +62,7 @@ const Search = () => {
     <>
       <input
         type="text"
-        className="form-control mr-sm-2 pl-3"
+        className="form-control ml-3"
         placeholder="Address / Txn Hash / Block Hash"
         name="requestType"
         data-testid="search"
@@ -71,7 +71,7 @@ const Search = () => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
-      <div className="input-group-append">
+      <div className="input-group-prepend">
         <button
           type="submit"
           className="input-group-text"
