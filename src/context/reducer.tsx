@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { StateType, ConfigType } from './state';
+import moment from 'moment';
+import { storage } from 'helpers';
 
 export type ActionType =
   | { type: 'changeNetwork'; networkId: string }
@@ -10,7 +12,11 @@ export type ActionType =
   | { type: 'setValidatorData'; validatorData: StateType['validatorData'] }
   | { type: 'setBrandData'; brandData: StateType['brandData'] }
   | { type: 'triggerNewRound' }
-  | { type: 'cancelAllRequests' };
+  | { type: 'cancelAllRequests' }
+  | {
+      type: 'changeTheme';
+      theme: StateType['theme'];
+    };
 
 export function globalReducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
@@ -60,6 +66,16 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
         ...state,
         cancelToken,
       };
+    }
+    case 'changeTheme': {
+      const newState = { ...state, theme: action.theme };
+      const in6m = new Date(moment().add(6, 'months').toDate());
+      storage.saveToLocal({
+        key: 'theme',
+        data: action.theme,
+        expirationDate: in6m,
+      });
+      return newState;
     }
     default: {
       throw new Error(`Unhandled action type: ${action!.type}`);

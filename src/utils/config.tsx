@@ -15,6 +15,7 @@ const config: ConfigType = {
       erdLabel: 'EGLD',
       // nrOfShards: 5,
       // versionNumber: 'v1.0.123',
+      theme: 'default',
     },
   ],
 };
