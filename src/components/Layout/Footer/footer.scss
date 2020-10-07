@@ -1,0 +1,27 @@
+.footer {
+  height: 5rem;
+
+  .footer-inner {
+    margin: 0;
+    font-size: 0.925rem;
+    line-height: 1.155rem;
+    padding: 0 0.155rem;
+
+    a {
+      color: $body;
+
+      &:hover {
+        color: $body;
+      }
+
+      #heart {
+        height: 1rem;
+        width: 1rem;
+
+        path {
+          fill: #c00;
+        }
+      }
+    }
+  }
+}
