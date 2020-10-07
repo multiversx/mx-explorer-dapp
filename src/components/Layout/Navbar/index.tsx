@@ -3,6 +3,7 @@ import { Nav, Collapse } from 'react-bootstrap';
 import AppSwitcher from './AppSwitcher';
 import { Link } from 'react-router-dom';
 import { ReactComponent as ElrondLogo } from 'assets/img/logo.svg';
+import { ReactComponent as ElrondSymbol } from 'assets/img/symbol.svg';
 import { Search } from 'sharedComponents';
 import NetworkSwitcher from './NetworkSwitcher';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,7 +30,8 @@ export default function Navbar() {
           <Nav className="align-items-stretch flex-md-nowrap p-0 navbar">
             <div className="d-flex align-items-center navbar-brand">
               <Link to="/" className="mr-0 ml-3 mr-auto">
-                <ElrondLogo className="main-logo" />
+                <ElrondSymbol className="main-symbol d-sm-none" />
+                <ElrondLogo className="main-logo d-none d-sm-block" />
               </Link>
               <span className="text-secondary">Explorer</span>
             </div>
