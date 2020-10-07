@@ -25,7 +25,7 @@ export default function Navbar() {
   return (
     <>
       <div className="main-navbar sticky-top">
-        <div className="p-0 container-fluid">
+        <div className="p-0 container">
           <Nav className="align-items-stretch flex-md-nowrap p-0 navbar">
             <div className="d-flex align-items-center navbar-brand">
               <Link to="/" className="mr-0 ml-3 mr-auto">
