@@ -43,6 +43,7 @@ export const defaultNetwork: NetworkType = {
   erdLabel: '',
   apiUrl: 'https://api.elrond.com',
   validatorDetails: false,
+  theme: 'default',
 };
 
 type ImportedConfigType = InferType<typeof configSchema>;

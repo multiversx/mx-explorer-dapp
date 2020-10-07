@@ -9,25 +9,37 @@ import RoundManager from './RoundManager';
 import { PageState } from 'sharedComponents';
 import { Highlights } from 'sharedComponents';
 
-function addStylesheet(secondary: boolean) {
-  const stylesheet = document.getElementById('stylesheet');
-  if (stylesheet) {
-    const href: string = (stylesheet as any).href.replace(
-      '__stylesheet__.css',
-      secondary ? 'secondary.css' : 'primary.css'
-    );
-    (stylesheet as any).href = href;
-  }
-}
-
 const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: React.ReactNode }) => {
-  const { activeNetwork } = useGlobalState();
+  const { activeNetwork, theme } = useGlobalState();
   const { pathname } = useLocation();
   const validators = pathname.includes('/validators');
 
   React.useEffect(() => {
-    require('assets/styles/default.scss');
-  }, []);
+    const stylesheet = document.getElementById('stylesheet');
+
+    if (stylesheet) {
+      const href: string = (stylesheet as any).href;
+
+      if (process.env.NODE_ENV === 'development') {
+        (stylesheet as any).href = '';
+        switch (theme) {
+          case 'dark':
+            require('assets/styles/dark.scss');
+            break;
+          case 'testnet':
+            require('assets/styles/testnet.scss');
+            break;
+          default:
+            require('assets/styles/default.scss');
+            break;
+        }
+      } else {
+        const secondHrefPart = href.slice(href.lastIndexOf('/') + 1);
+        const currentTheme = secondHrefPart.slice(0, secondHrefPart.indexOf('.css'));
+        (stylesheet as any).href = href.replace(currentTheme, theme);
+      }
+    }
+  }, [theme]);
 
   const offline = process.env.NODE_ENV !== 'test' && !window.navigator.onLine;
 

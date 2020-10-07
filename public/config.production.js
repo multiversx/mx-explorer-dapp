@@ -17,6 +17,7 @@ const CONFIG = {
       erdLabel: 'EGLD',
       walletAddress: 'https://wallet.elrond.com/',
       explorerAddress: 'https://explorer.elrond.com/',
+      theme: 'default',
     },
     {
       id: 'testnet',
@@ -27,6 +28,7 @@ const CONFIG = {
       erdLabel: 'XeGLD',
       walletAddress: 'https://testnet-wallet.elrond.com/',
       explorerAddress: 'https://testnet-explorer.elrond.com/',
+      theme: 'testnet',
     },
   ],
 };
