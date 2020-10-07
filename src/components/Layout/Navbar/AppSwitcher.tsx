@@ -32,7 +32,8 @@ export default function AppSwitcher() {
           </i>
         </div>
       }
-      id="basic-nav-dropdown"
+      id="app-switcher-dropdown"
+      alignRight
     >
       {apps.map((app) => {
         let { name, to } = app;
