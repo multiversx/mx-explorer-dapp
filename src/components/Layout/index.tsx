@@ -49,7 +49,7 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
         <main className="main-content d-flex flex-column flex-grow-1">
           <NetworkRouter />
           <RoundManager />
-          {navbar ? navbar : <Navbar />}
+          <Navbar />
           <div className="main-content-container container-fluid d-flex flex-column">
             {offline ? (
               <div className="d-flex flex-fill align-items-center justify-content-center">

@@ -22,8 +22,8 @@
   .dropdown-menu {
     border: 1px solid $border-color !important;
     border-radius: 0.25rem !important;
-    left: auto !important;
-    right: 0 !important;
+    left: 0 !important;
+    right: auto !important;
   }
 
   .nav-link,
@@ -48,4 +48,8 @@
       }
     }
   }
+}
+
+.header-navbar {
+  background: $card-bg;
 }
