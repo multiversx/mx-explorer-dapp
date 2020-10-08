@@ -1,6 +1,4 @@
 .main-navbar {
-  background: $card-bg;
-
   .main-symbol,
   .main-logo {
     g {
@@ -8,8 +6,7 @@
     }
   }
 
-  #app-switcher-dropdown,
-  #network-switcher-dropdown {
+  .dropdown-toggle {
     padding: 0;
     height: 100%;
     display: flex;
@@ -18,15 +15,17 @@
     &:after {
       content: none;
     }
-  }
 
-  #network-switcher-dropdown {
+    .dropdown-menu {
+      border: 1px solid $border-color !important;
+      border-radius: 0.25rem !important;
+    }
   }
+}
 
-  .dropdown-menu {
-    border: 1px solid $border-color !important;
-    border-radius: 0.25rem !important;
-  }
+.main-navbar,
+.header-navbar {
+  background: $card-bg;
 
   .nav-link,
   .nav-link-icon {
@@ -50,8 +49,26 @@
       }
     }
   }
+
+  .dropdown-menu {
+    .dropdown-item {
+      &.active {
+        background-color: transparent;
+        color: $primary;
+      }
+    }
+  }
 }
 
 .header-navbar {
-  background: $card-bg;
+  .nav-link,
+  .nav-link.active {
+    @include media-breakpoint-down(md) {
+      border-bottom: 1px solid transparent !important;
+    }
+  }
+
+  .dropdown-menu {
+    padding-top: 0;
+  }
 }
