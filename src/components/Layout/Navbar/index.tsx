@@ -20,7 +20,17 @@ export default function Navbar() {
   const [headerNavCollapsed, setHeaderNavCollapsed] = React.useState(false);
   const toggleHeaderNav = (e: React.MouseEvent) => {
     e.preventDefault();
-    setHeaderNavCollapsed(!headerNavCollapsed);
+    const collapsed = !headerNavCollapsed;
+
+    if (collapsed) {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
+    }
+
+    setHeaderNavCollapsed(collapsed);
   };
 
   return (
