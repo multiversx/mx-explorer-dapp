@@ -112,9 +112,7 @@ const Hightlights = ({
   const props = activeNetworkId in state ? state[activeNetworkId] : initialState;
 
   return (
-    <div className="bg-primary" ref={ref}>
-      {!hero ? <DefaultHighlights {...props} /> : <HeroHighlights {...props} />}
-    </div>
+    <div ref={ref}>{!hero ? <DefaultHighlights {...props} /> : <HeroHighlights {...props} />}</div>
   );
 };
 
