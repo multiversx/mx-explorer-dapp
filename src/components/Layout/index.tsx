@@ -44,13 +44,13 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
   const offline = process.env.NODE_ENV !== 'test' && !window.navigator.onLine;
 
   return (
-    <div className="container-fluid d-flex">
-      <div className="row flex-fill vh-100">
+    <div className="d-flex">
+      <div className="flex-fill vh-100">
         <main className="main-content d-flex flex-column flex-grow-1">
           <NetworkRouter />
           <RoundManager />
           <Navbar />
-          <div className="main-content-container container-fluid d-flex flex-column">
+          <div className="main-content-container container-fluid p-0 d-flex flex-column">
             {offline ? (
               <div className="d-flex flex-fill align-items-center justify-content-center">
                 <PageState
