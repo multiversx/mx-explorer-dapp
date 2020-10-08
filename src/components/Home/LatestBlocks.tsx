@@ -5,7 +5,6 @@ import { useGlobalState } from 'context';
 import { dateFormatted, trimHash } from 'helpers';
 import { ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
 import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
-//import './animatedList.scss';
 
 type LatestBlockType = BlockType & {
   isNew: boolean;
@@ -56,7 +55,7 @@ const LatestBlocks: React.FC = () => {
   const Component = () => {
     const someNew = blocks.some((block) => block.isNew);
     return (
-      <div className="card" ref={ref}>
+      <div className="card card-small" ref={ref}>
         {!blocksFetched ? (
           <div className="card-body card-details" data-testid="errorScreen">
             <div className="empty">

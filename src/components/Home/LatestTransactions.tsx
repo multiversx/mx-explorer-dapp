@@ -5,7 +5,6 @@ import { addressIsBech32, dateFormatted, trimHash } from 'helpers';
 import * as React from 'react';
 import { ScAddressIcon, ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
-//import './animatedList.scss';
 
 type LatestTransactionType = TransactionType & {
   isNew: boolean;
@@ -57,7 +56,7 @@ const LatestTransactions = () => {
     const someNew = transactions.some((transaction) => transaction.isNew);
 
     return (
-      <div className="card" ref={ref}>
+      <div className="card card-small" ref={ref}>
         {!transactionsFetched ? (
           <div className="card-body card-details" data-testid="errorScreen">
             <div className="empty">
