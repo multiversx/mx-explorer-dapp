@@ -1,14 +1,12 @@
 import React from 'react';
 import { Nav, Collapse } from 'react-bootstrap';
 import AppSwitcher from './AppSwitcher';
-import { Link } from 'react-router-dom';
-import { ReactComponent as ElrondLogo } from 'assets/img/logo.svg';
-import { ReactComponent as ElrondSymbol } from 'assets/img/symbol.svg';
 import { Search } from 'sharedComponents';
 import NetworkSwitcher from './NetworkSwitcher';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars';
 import NavLinks from './NavLinks';
+import Logo from './Logo';
 
 export default function Navbar() {
   const toggleState = () => {
@@ -37,11 +35,7 @@ export default function Navbar() {
         <div className="p-0 container">
           <Nav className="align-items-stretch flex-nowrap p-0 navbar">
             <div className="d-flex align-items-center navbar-brand">
-              <Link to="/" className="mr-0 ml-3 mr-auto">
-                <ElrondSymbol className="main-symbol d-sm-none" />
-                <ElrondLogo className="main-logo d-none d-sm-block" />
-              </Link>
-              <span className="text-secondary">Explorer</span>
+              <Logo />
             </div>
 
             <div className="d-flex flex-fill">
