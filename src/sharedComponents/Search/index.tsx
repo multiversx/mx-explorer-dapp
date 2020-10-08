@@ -1,4 +1,4 @@
-import { faSearch } from '@fortawesome/pro-solid-svg-icons/faSearch';
+import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { networkRoute } from 'helpers';

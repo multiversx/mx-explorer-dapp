@@ -1,4 +1,4 @@
-import { faCube } from '@fortawesome/pro-solid-svg-icons/faCube';
+import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import * as React from 'react';

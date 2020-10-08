@@ -1,5 +1,5 @@
-import { faCogs } from '@fortawesome/pro-solid-svg-icons/faCogs';
-import { faCube } from '@fortawesome/pro-solid-svg-icons/faCube';
+import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
+import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams } from 'react-router-dom';
 import * as React from 'react';

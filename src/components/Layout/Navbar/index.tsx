@@ -7,7 +7,7 @@ import { ReactComponent as ElrondSymbol } from 'assets/img/symbol.svg';
 import { Search } from 'sharedComponents';
 import NetworkSwitcher from './NetworkSwitcher';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/pro-solid-svg-icons/faBars';
+import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars';
 import NavLinks from './NavLinks';
 
 export default function Navbar() {

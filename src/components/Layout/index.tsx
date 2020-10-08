@@ -1,5 +1,5 @@
 import React from 'react';
-import { faBan } from '@fortawesome/pro-solid-svg-icons/faBan';
+import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
 import Navbar from './Navbar/index';
 import Footer from './Footer/index';
 import NetworkRouter from './NetworkRouter';

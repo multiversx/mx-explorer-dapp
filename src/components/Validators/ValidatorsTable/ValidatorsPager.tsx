@@ -1,7 +1,7 @@
-import { faAngleLeft } from '@fortawesome/pro-solid-svg-icons/faAngleLeft';
-import { faAngleRight } from '@fortawesome/pro-solid-svg-icons/faAngleRight';
-import { faAngleDoubleRight } from '@fortawesome/pro-solid-svg-icons/faAngleDoubleRight';
-import { faAngleDoubleLeft } from '@fortawesome/pro-solid-svg-icons/faAngleDoubleLeft';
+import { faAngleLeft } from '@fortawesome/pro-regular-svg-icons/faAngleLeft';
+import { faAngleRight } from '@fortawesome/pro-regular-svg-icons/faAngleRight';
+import { faAngleDoubleRight } from '@fortawesome/pro-regular-svg-icons/faAngleDoubleRight';
+import { faAngleDoubleLeft } from '@fortawesome/pro-regular-svg-icons/faAngleDoubleLeft';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
