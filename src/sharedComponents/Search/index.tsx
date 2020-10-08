@@ -62,7 +62,7 @@ const Search = () => {
     <>
       <input
         type="text"
-        className="form-control ml-3"
+        className="form-control ml-3 pr-3"
         placeholder="Address / Txn Hash / Block Hash"
         name="requestType"
         data-testid="search"

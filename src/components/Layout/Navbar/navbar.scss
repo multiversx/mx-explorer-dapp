@@ -21,6 +21,12 @@
       border-radius: 0.25rem !important;
     }
   }
+
+  .main-navbar__search {
+    .input-group {
+      min-width: 1rem;
+    }
+  }
 }
 
 .main-navbar,
