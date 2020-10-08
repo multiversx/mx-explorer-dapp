@@ -25,7 +25,9 @@ export default function AppSwitcher({ onToggle }: { onToggle: () => void }) {
       title={
         <div className="nav-link-icon flex-fill text-lg-center">
           <i className="material-icons icon-sm m-0 d-none d-lg-block">
-            <FontAwesomeIcon icon={faTh} />
+            <span className="px-1 my-0 mx-2">
+              <FontAwesomeIcon icon={faTh} />
+            </span>
           </i>
           <span className="d-lg-none">Switch to</span>
         </div>
