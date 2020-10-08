@@ -11,15 +11,7 @@ import { faBars } from '@fortawesome/pro-solid-svg-icons/faBars';
 import NavLinks from './NavLinks';
 
 export default function Navbar() {
-  // TODO see if still needed
-  const [expanded, setExpanded] = React.useState(false);
-  const onToggle = (isExpanded: boolean) => {
-    setExpanded(isExpanded);
-  };
-
-  const [headerNavCollapsed, setHeaderNavCollapsed] = React.useState(false);
-  const toggleHeaderNav = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const toggleState = () => {
     const collapsed = !headerNavCollapsed;
 
     if (collapsed) {
@@ -31,6 +23,12 @@ export default function Navbar() {
     }
 
     setHeaderNavCollapsed(collapsed);
+  };
+
+  const [headerNavCollapsed, setHeaderNavCollapsed] = React.useState(false);
+  const toggleHeaderNav = (e: React.MouseEvent) => {
+    e.preventDefault();
+    toggleState();
   };
 
   return (
@@ -55,11 +53,11 @@ export default function Navbar() {
             </div>
 
             <div className="d-none d-lg-flex">
-              <AppSwitcher />
+              <AppSwitcher onToggle={() => {}} />
             </div>
 
             <div className="d-none d-lg-flex align-items-strech">
-              <NetworkSwitcher onToggle={onToggle} />
+              <NetworkSwitcher onToggle={() => {}} />
             </div>
 
             <div className="nav d-lg-none">
@@ -80,11 +78,11 @@ export default function Navbar() {
               <div className="col d-flex flex-column flex-lg-row py-3 py-lg-0">
                 <NavLinks setExpanded={setHeaderNavCollapsed} />
                 <div className="d-lg-none">
-                  <AppSwitcher />
+                  <AppSwitcher onToggle={toggleState} />
                 </div>
 
                 <div className="d-lg-none">
-                  <NetworkSwitcher onToggle={onToggle} />
+                  <NetworkSwitcher onToggle={toggleState} />
                 </div>
               </div>
             </div>
