@@ -62,3 +62,99 @@
     padding-left: 0.7rem;
   }
 }
+
+/* Cards
+-------------------------------------------------- */
+.card {
+  height: 100%;
+}
+
+.card-body {
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+}
+
+.card .lead {
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+}
+
+.card-title {
+  font-weight: 300;
+}
+
+.card-scroll {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-scroll {
+  height: 390px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.card-scroll .row > div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// .card-scroll .row div a {
+//     max-width: 10rem;
+//     overflow: hidden;
+//     display: inline-block;
+//     text-overflow: ellipsis;
+// }
+
+.icon-container i {
+  background: rgba(0, 0, 0, 0.1);
+  display: block;
+  width: 2.5rem;
+  line-height: 2.5rem;
+  text-align: center;
+  border-radius: 0.15rem;
+  margin-right: 1rem;
+  float: left;
+  color: $gray-600;
+}
+
+.icon-container-round i {
+  background: rgba(0, 0, 0, 0.1);
+  display: block;
+  width: 2.5rem;
+  line-height: 2.5rem;
+  text-align: center;
+  border-radius: 1.25rem;
+  margin-right: 1rem;
+  float: left;
+  color: $gray-600;
+}
+
+.card-body table {
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+// used on the details pages
+.card-details {
+  // background: green;
+
+  .hr-space {
+    margin-top: 0.7rem;
+    margin-bottom: 0.7rem;
+  }
+}
+
+// used on the scrollable boxes
+.card-scroll {
+  // background: blue;
+
+  .hr-space {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
