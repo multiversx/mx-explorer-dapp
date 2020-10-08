@@ -1,5 +1,4 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import { faBan } from '@fortawesome/pro-solid-svg-icons/faBan';
 import Navbar from './Navbar/index';
 import Footer from './Footer/index';
@@ -9,10 +8,8 @@ import RoundManager from './RoundManager';
 import { PageState } from 'sharedComponents';
 import { Highlights } from 'sharedComponents';
 
-const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: React.ReactNode }) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
   const { activeNetwork, theme } = useGlobalState();
-  const { pathname } = useLocation();
-  const validators = pathname.includes('/validators');
 
   React.useEffect(() => {
     const stylesheet = document.getElementById('stylesheet');
@@ -80,46 +77,6 @@ const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: Reac
       </div>
     </div>
   );
-
-  // return (
-  //   <>
-  //     <NetworkRouter />
-  //     <RoundManager />
-  //     {navbar ? navbar : <Navbar />}
-  //     <main role="main">
-  //       {offline ? (
-  //         <div className="container pt-3 pb-3">
-  //           <div className="row">
-  //             <div className="offset-lg-3 col-lg-6 mt-4 mb-4">
-  //               <div className="card">
-  //                 <div className="card-body card-details" data-testid="errorScreen">
-  //                   <div className="empty">
-  //                     <FontAwesomeIcon icon={faBan} className="empty-icon" />
-  //                     <span className="h4 empty-heading">
-  //                       There was an internal website error. Please try again later.
-  //                       {!activeNetwork.default && (
-  //                         <>
-  //                           <br />
-  //                           {`${activeNetwork.name} network`}
-  //                         </>
-  //                       )}
-  //                     </span>
-  //                   </div>
-  //                 </div>
-  //               </div>
-  //             </div>
-  //           </div>
-  //         </div>
-  //       ) : (
-  //         <>
-  //           <Highlights />
-  //           {children}
-  //         </>
-  //       )}
-  //     </main>
-  //     <Footer />
-  //   </>
-  // );
 };
 
 export default Layout;
