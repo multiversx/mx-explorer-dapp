@@ -1,5 +1,5 @@
-import { faSearch } from '@fortawesome/pro-solid-svg-icons/faSearch';
-import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
+import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
+import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown } from 'react-bootstrap';
 import * as React from 'react';

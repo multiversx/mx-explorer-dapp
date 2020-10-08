@@ -1,5 +1,5 @@
-import { faClock } from '@fortawesome/pro-solid-svg-icons/faClock';
-import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
+import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
+import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { addressIsBech32, dateFormatted } from 'helpers';

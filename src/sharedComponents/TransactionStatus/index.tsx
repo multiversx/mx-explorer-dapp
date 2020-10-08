@@ -1,8 +1,8 @@
 import React from 'react';
-import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
-import { faBan } from '@fortawesome/pro-solid-svg-icons/faBan';
-import { faHourglass } from '@fortawesome/pro-solid-svg-icons/faHourglass';
-import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
+import { faCheckCircle } from '@fortawesome/pro-regular-svg-icons/faCheckCircle';
+import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
+import { faHourglass } from '@fortawesome/pro-regular-svg-icons/faHourglass';
+import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface TransactionStatusType {

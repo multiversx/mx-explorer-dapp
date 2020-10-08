@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { faCube } from '@fortawesome/pro-solid-svg-icons/faCube';
-import { faClock } from '@fortawesome/pro-solid-svg-icons/faClock';
-import { faExchangeAlt } from '@fortawesome/pro-solid-svg-icons/faExchangeAlt';
-import { faChartBar } from '@fortawesome/pro-solid-svg-icons/faChartBar';
-import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
-import { faStopwatch } from '@fortawesome/pro-solid-svg-icons/faStopwatch';
+import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
+import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
+import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
+import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
+import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
+import { faStopwatch } from '@fortawesome/pro-regular-svg-icons/faStopwatch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { StateType as DefaultHighlightsProps } from './index';
 //import './highlights.scss';

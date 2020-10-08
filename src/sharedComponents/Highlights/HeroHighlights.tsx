@@ -1,9 +1,9 @@
-import { faChartBar } from '@fortawesome/pro-solid-svg-icons/faChartBar';
-import { faClock } from '@fortawesome/pro-solid-svg-icons/faClock';
-import { faCube } from '@fortawesome/pro-solid-svg-icons/faCube';
-import { faExchangeAlt } from '@fortawesome/pro-solid-svg-icons/faExchangeAlt';
-import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
-import { faStopwatch } from '@fortawesome/pro-solid-svg-icons/faStopwatch';
+import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
+import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
+import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
+import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
+import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
+import { faStopwatch } from '@fortawesome/pro-regular-svg-icons/faStopwatch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { StateType as HeroHighlightsProps } from './index';

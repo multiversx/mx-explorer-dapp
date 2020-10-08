@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
+import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 
 const PageNotFound = () => {
   const { pathname } = useLocation();

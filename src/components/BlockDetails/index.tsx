@@ -1,7 +1,7 @@
-import { faChevronLeft } from '@fortawesome/pro-solid-svg-icons/faChevronLeft';
-import { faChevronRight } from '@fortawesome/pro-solid-svg-icons/faChevronRight';
-import { faClock } from '@fortawesome/pro-solid-svg-icons/faClock';
-import { faCube } from '@fortawesome/pro-solid-svg-icons/faCube';
+import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons/faChevronLeft';
+import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
+import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
+import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';

@@ -1,6 +1,6 @@
-import { faArrowDown } from '@fortawesome/pro-solid-svg-icons/faArrowDown';
-import { faArrowUp } from '@fortawesome/pro-solid-svg-icons/faArrowUp';
-import { faFilter } from '@fortawesome/pro-solid-svg-icons/faFilter';
+import { faArrowDown } from '@fortawesome/pro-regular-svg-icons/faArrowDown';
+import { faArrowUp } from '@fortawesome/pro-regular-svg-icons/faArrowUp';
+import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { SyntheticEvent } from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';

@@ -1,4 +1,4 @@
-import { faCode } from '@fortawesome/pro-solid-svg-icons/faCode';
+import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { numInitCharactersForScAddress as charNum } from 'appConfig';

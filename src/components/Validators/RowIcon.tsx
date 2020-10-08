@@ -1,9 +1,9 @@
-import { faClock } from '@fortawesome/pro-solid-svg-icons/faClock';
-import { faEye } from '@fortawesome/pro-solid-svg-icons/faEye';
-import { faLeaf } from '@fortawesome/pro-solid-svg-icons/faLeaf';
-import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
-import { faSync } from '@fortawesome/pro-solid-svg-icons/faSync';
-import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
+import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
+import { faEye } from '@fortawesome/pro-regular-svg-icons/faEye';
+import { faLeaf } from '@fortawesome/pro-regular-svg-icons/faLeaf';
+import { faLock } from '@fortawesome/pro-regular-svg-icons/faLock';
+import { faSync } from '@fortawesome/pro-regular-svg-icons/faSync';
+import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { ValidatorType } from 'context/validators';
