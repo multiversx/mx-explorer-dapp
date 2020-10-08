@@ -38,7 +38,7 @@ export default function Navbar() {
 
             <div className="d-flex flex-fill">
               <form className="main-navbar__search w-100 d-flex">
-                <div className="ml-3 input-group input-group-seamless">
+                <div className="input-group input-group-seamless">
                   <Search />
                 </div>
               </form>
@@ -53,11 +53,7 @@ export default function Navbar() {
             </div>
 
             <div className="nav d-lg-none">
-              <a
-                className="nav-link nav-link-icon text-center border-left"
-                href="/"
-                onClick={toggleHeaderNav}
-              >
+              <a className="nav-link nav-link-icon text-center" href="/" onClick={toggleHeaderNav}>
                 <i className="material-icons">
                   <FontAwesomeIcon icon={faBars} />
                 </i>
@@ -71,8 +67,15 @@ export default function Navbar() {
         <Collapse in={headerNavCollapsed}>
           <div className="container d-lg-flex">
             <div className="row">
-              <div className="col d-flex flex-column flex-lg-row">
+              <div className="col d-flex flex-column flex-lg-row py-3 py-lg-0">
                 <NavLinks setExpanded={setHeaderNavCollapsed} />
+                <div className="d-lg-none">
+                  <AppSwitcher />
+                </div>
+
+                <div className="d-lg-none">
+                  <NetworkSwitcher onToggle={onToggle} />
+                </div>
               </div>
             </div>
           </div>

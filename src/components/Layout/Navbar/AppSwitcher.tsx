@@ -26,10 +26,11 @@ export default function AppSwitcher() {
   return (
     <NavDropdown
       title={
-        <div className="nav-link nav-link-icon text-center">
-          <i className="material-icons icon-sm m-0">
+        <div className="nav-link-icon flex-fill text-lg-center">
+          <i className="material-icons icon-sm m-0 d-none d-lg-block">
             <FontAwesomeIcon icon={faTh} />
           </i>
+          <span className="d-lg-none">Switch to</span>
         </div>
       }
       id="app-switcher-dropdown"
