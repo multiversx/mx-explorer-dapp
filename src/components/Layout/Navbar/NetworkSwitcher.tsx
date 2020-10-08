@@ -51,7 +51,7 @@ export default function NetworkSwitcher({ onToggle }: { onToggle: () => void }) 
     <>
       <NavDropdown
         title={
-          <div className="nav-link-icon flex-fill pr-0" data-testid="networkSwitch">
+          <div className="nav-link-icon flex-fill pr-0 pl-lg-1 ml-lg-2" data-testid="networkSwitch">
             {globalState.activeNetwork.name}&nbsp;
             <FontAwesomeIcon className="d-none d-lg-inline-block" icon={faAngleDown} />
           </div>

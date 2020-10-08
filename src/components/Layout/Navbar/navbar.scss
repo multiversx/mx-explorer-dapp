@@ -15,11 +15,15 @@
     &:after {
       content: none;
     }
+  }
 
-    .dropdown-menu {
-      border: 1px solid $border-color !important;
-      border-radius: 0.25rem !important;
-    }
+  .dropdown-menu {
+    border: 1px solid $border-color !important;
+    border-radius: 0.25rem !important;
+    top: -0.5rem !important;
+    width: auto !important;
+    right: auto !important;
+    left: 0 !important;
   }
 
   .main-navbar__search {
@@ -36,6 +40,7 @@
   .nav-link,
   .nav-link-icon {
     transition: color 200ms ease;
+    min-width: auto !important;
 
     .material-icons {
       transition: color 200ms ease;

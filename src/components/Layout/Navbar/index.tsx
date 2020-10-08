@@ -5,10 +5,16 @@ import { Search } from 'sharedComponents';
 import NetworkSwitcher from './NetworkSwitcher';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars';
+import { faMoon } from '@fortawesome/pro-regular-svg-icons/faMoon';
+import { faSun } from '@fortawesome/pro-regular-svg-icons/faSun';
 import NavLinks from './NavLinks';
 import Logo from './Logo';
+import { useGlobalState, useGlobalDispatch } from 'context';
 
 export default function Navbar() {
+  const { activeNetwork, theme } = useGlobalState();
+  const dispatch = useGlobalDispatch();
+
   const toggleState = () => {
     const collapsed = !headerNavCollapsed;
 
@@ -29,6 +35,14 @@ export default function Navbar() {
     toggleState();
   };
 
+  const handleThemeToggleChange = (e: React.MouseEvent) => {
+    e.preventDefault();
+    dispatch({
+      type: 'changeTheme',
+      theme: theme === 'dark' ? String(activeNetwork.theme) : 'dark',
+    });
+  };
+
   return (
     <>
       <div className="main-navbar sticky-top">
@@ -46,16 +60,35 @@ export default function Navbar() {
               </form>
             </div>
 
-            <div className="d-none d-lg-flex">
-              <AppSwitcher onToggle={() => {}} />
-            </div>
+            <ul className="flex-row navbar-nav">
+              {activeNetwork.id === 'mainnet' && (
+                <li className="nav-item d-flex align-items-center">
+                  <a
+                    href="/#"
+                    onClick={handleThemeToggleChange}
+                    className="nav-link nav-link-icon text-center"
+                  >
+                    <i className="material-icons icon-sm px-1 my-0 mx-2">
+                      <FontAwesomeIcon icon={theme === 'dark' ? faSun : faMoon} />
+                    </i>
+                  </a>
+                </li>
+              )}
+              <li className="nav-item d-none d-lg-flex">
+                <AppSwitcher onToggle={() => {}} />
+              </li>
 
-            <div className="d-none d-lg-flex align-items-strech">
-              <NetworkSwitcher onToggle={() => {}} />
-            </div>
+              <li className="nav-item d-none d-lg-flex align-items-strech">
+                <NetworkSwitcher onToggle={() => {}} />
+              </li>
+            </ul>
 
             <div className="nav d-lg-none">
-              <a className="nav-link nav-link-icon text-center" href="/" onClick={toggleHeaderNav}>
+              <a
+                className="nav-link nav-link-icon text-center d-flex align-items-center justify-content-center"
+                href="/"
+                onClick={toggleHeaderNav}
+              >
                 <i className="material-icons">
                   <FontAwesomeIcon icon={faBars} />
                 </i>
