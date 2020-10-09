@@ -1,0 +1,13 @@
+.home {
+  .card-scroll {
+    height: 25.8rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    .row > div {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

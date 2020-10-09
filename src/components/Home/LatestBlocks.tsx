@@ -1,9 +1,10 @@
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
+import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons/faSpinnerThird';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useGlobalState } from 'context';
 import { dateFormatted } from 'helpers';
-import { ShardSpan, TestnetLink, TimeAgo, adapter, TrimHash } from 'sharedComponents';
+import { ShardSpan, TestnetLink, TimeAgo, adapter, TrimHash, PageState } from 'sharedComponents';
 import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 
 type LatestBlockType = BlockType & {
@@ -57,12 +58,13 @@ const LatestBlocks: React.FC = () => {
     return (
       <div className="card card-small" ref={ref}>
         {!blocksFetched ? (
-          // TODO page state
-          <div className="card-body card-details" data-testid="errorScreen">
-            <div className="empty">
-              <FontAwesomeIcon icon={faCube} className="empty-icon" />
-              <span className="h4 empty-heading">Unable to load blocks</span>
-            </div>
+          <div className="card-body">
+            <PageState
+              icon={faCube}
+              title={'Unable to load blocks'}
+              className="py-spacer"
+              data-testid="errorScreen"
+            />
           </div>
         ) : (
           <>
@@ -121,20 +123,17 @@ const LatestBlocks: React.FC = () => {
                   ))}
                 </div>
               ) : (
-                // TODO page state loader?
-                <div
-                  className="row h-100 justify-content-center align-items-center"
-                  data-testid="blocksLoader"
-                >
-                  <div className="col-12 text-center">
-                    <div className="lds-ellipsis mx-auto">
-                      <div />
-                      <div />
-                      <div />
-                      <div />
-                    </div>
-                  </div>
-                </div>
+                <PageState
+                  title="Loading..."
+                  symbol={
+                    <FontAwesomeIcon
+                      icon={faSpinnerThird}
+                      size="5x"
+                      className="text-primary fa-spin fast-spin"
+                    />
+                  }
+                  className="d-flex h-100 align-items-center justify-content-center"
+                />
               )}
             </div>
           </>
