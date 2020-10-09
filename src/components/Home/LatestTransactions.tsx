@@ -91,35 +91,15 @@ const LatestTransactions = () => {
                       className={`row animated-row ${transaction.isNew && someNew ? 'new' : ''}`}
                     >
                       <div className="col-6 d-flex align-items-center">
-                        {/* <span className="icon-container-round">
-                          <i>
-                            <FontAwesomeIcon icon={faExchangeAlt} />
-                          </i>
-                        </span>
-                        <div>
-                          <ScAddressIcon
-                            initiator={transaction.sender}
-                            secondInitiator={transaction.receiver}
-                          />
-                          <TestnetLink
-                            to={`/transactions/${transaction.hash}`}
-                            data-testid={`transactionLink${i}`}
-                          >
-                            {trimHash(transaction.hash)}
-                          </TestnetLink>
-                        </div>
-                        <span
-                          className="text-secondary"
-                          title={dateFormatted(transaction.timestamp)}
-                        >
-                          <TimeAgo value={transaction.timestamp} />
-                        </span> */}
-
                         <div className="list-item-icon mr-3">
                           <FontAwesomeIcon icon={faExchangeAlt} />
                         </div>
                         <div className="content-fill d-flex flex-column list-item-text mw-100">
-                          <div className="trim-hash-container">
+                          <div className="trim-hash-container align-items-center">
+                            <ScAddressIcon
+                              initiator={transaction.sender}
+                              secondInitiator={transaction.receiver}
+                            />
                             <div className="content-fill">
                               <TestnetLink
                                 to={`/transactions/${transaction.hash}`}
