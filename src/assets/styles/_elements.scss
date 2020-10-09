@@ -62,17 +62,3 @@
     padding-left: 0.7rem;
   }
 }
-
-/* Cards
--------------------------------------------------- */
-.card-scroll {
-  height: 24rem;
-  overflow-x: hidden;
-  overflow-y: scroll;
-
-  .row > div {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}

@@ -5,7 +5,7 @@ import LatestTransactions from './LatestTransactions';
 
 const Home = () => {
   return (
-    <div>
+    <div className="home">
       <Hero />
       <div className="container pt-3 pb-3">
         <div className="row">
