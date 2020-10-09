@@ -1,21 +1,33 @@
 .animated-list {
-  & > div {
-    // transition: background-color 0.25s ease-in-out;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  .animated-row {
+    padding-top: 0.93rem;
+    padding-bottom: 0.93rem;
+    border-bottom: 1px solid $border-color;
   }
 
   .new {
     @keyframes highlight {
       from {
-        background-color: #ececec;
+        background-color: $light;
       }
     }
     animation: highlight 1000ms ease-in-out;
+  }
 
-    .blocks-row {
-      padding-top: 0px;
-    }
+  .list-item-icon {
+    border-radius: 50%;
+    font-size: 0.9375rem;
+    text-align: center;
+    color: $secondary;
+    width: 2.1875rem;
+    height: 2.1875rem;
+    line-height: 2.1875rem;
+    background: $light;
+    box-shadow: inset 0 0 3px rgba($secondary, 0.2);
+    flex-shrink: 0;
+  }
+
+  .list-item-text {
+    font-size: 80%;
   }
 }
