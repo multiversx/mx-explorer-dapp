@@ -1,9 +1,18 @@
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
+import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons/faSpinnerThird';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { addressIsBech32, dateFormatted, trimHash } from 'helpers';
+import { addressIsBech32, dateFormatted } from 'helpers';
 import * as React from 'react';
-import { ScAddressIcon, ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
+import {
+  ScAddressIcon,
+  ShardSpan,
+  TestnetLink,
+  TimeAgo,
+  adapter,
+  PageState,
+  TrimHash,
+} from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 
 type LatestTransactionType = TransactionType & {
@@ -54,23 +63,26 @@ const LatestTransactions = () => {
 
   const Component = () => {
     const someNew = transactions.some((transaction) => transaction.isNew);
-
     return (
       <div className="card card-small" ref={ref}>
         {!transactionsFetched ? (
-          <div className="card-body card-details" data-testid="errorScreen">
-            <div className="empty">
-              <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
-              <span className="h4 empty-heading">Unable to load transactions</span>
-            </div>
+          <div className="card-body">
+            <PageState
+              icon={faExchangeAlt}
+              title={'Unable to load transactions'}
+              className="py-spacer d-flex h-100 align-items-center justify-content-center"
+              data-testid="errorScreen"
+            />
           </div>
         ) : (
-          <div className="card-body">
-            <div className="d-flex align-items-center flex-row mb-3">
-              <h4 className="card-title mb-0 mr-auto">Latest Transactions</h4>
-              <TestnetLink to="/transactions">View All Transactions</TestnetLink>
+          <>
+            <div className="card-header border-bottom d-flex justify-content-between align-items-center">
+              <h6 className="m-0">Latest Transactions</h6>
+              <small>
+                <TestnetLink to="/transactions">View All Transactions</TestnetLink>
+              </small>
             </div>
-            <div className="card-scroll pt-0">
+            <div className="card-body card-scroll py-0">
               {transactions.length ? (
                 <div className="animated-list" data-testid="transactionsList">
                   {transactions.map((transaction, i) => (
@@ -78,8 +90,8 @@ const LatestTransactions = () => {
                       key={transaction.hash}
                       className={`row animated-row ${transaction.isNew && someNew ? 'new' : ''}`}
                     >
-                      <div className="col-6">
-                        <span className="icon-container-round">
+                      <div className="col-6 d-flex align-items-center">
+                        {/* <span className="icon-container-round">
                           <i>
                             <FontAwesomeIcon icon={faExchangeAlt} />
                           </i>
@@ -101,46 +113,70 @@ const LatestTransactions = () => {
                           title={dateFormatted(transaction.timestamp)}
                         >
                           <TimeAgo value={transaction.timestamp} />
-                        </span>
+                        </span> */}
+
+                        <div className="list-item-icon mr-3">
+                          <FontAwesomeIcon icon={faExchangeAlt} />
+                        </div>
+                        <div className="content-fill d-flex flex-column list-item-text mw-100">
+                          <div className="trim-hash-container">
+                            <div className="content-fill">
+                              <TestnetLink
+                                to={`/transactions/${transaction.hash}`}
+                                data-testid={`transactionLink${i}`}
+                              >
+                                <TrimHash text={transaction.hash} />
+                              </TestnetLink>
+                            </div>
+                          </div>
+                          <span title={dateFormatted(transaction.timestamp)} className="text-muted">
+                            <TimeAgo value={transaction.timestamp} />
+                          </span>
+                        </div>
                       </div>
-                      <div className="col-6">
-                        From&nbsp;
-                        {addressIsBech32(transaction.sender) ? (
-                          <TestnetLink to={`/address/${transaction.sender}`}>
-                            {trimHash(transaction.sender)}
-                          </TestnetLink>
-                        ) : (
-                          <ShardSpan shardId={transaction.sender} />
-                        )}
-                        <br />
-                        To&nbsp;
-                        <TestnetLink
-                          to={`/address/${transaction.receiver}`}
-                          data-testid={`transactionLinkTo${i}`}
-                        >
-                          {trimHash(transaction.receiver)}
-                        </TestnetLink>
+                      <div className="col-6 list-item-text text-secondary">
+                        <div className="trim-hash-container">
+                          <span className="text-nowrap mr-2">From</span>
+                          <div className="content-fill">
+                            {addressIsBech32(transaction.sender) ? (
+                              <TestnetLink to={`/address/${transaction.sender}`}>
+                                <TrimHash text={transaction.sender} />
+                              </TestnetLink>
+                            ) : (
+                              <ShardSpan shardId={transaction.sender} />
+                            )}
+                          </div>
+                        </div>
+                        <div className="trim-hash-container">
+                          <span className="text-nowrap mr-2">To</span>
+                          <div className="content-fill">
+                            <TestnetLink
+                              to={`/address/${transaction.receiver}`}
+                              data-testid={`transactionLinkTo${i}`}
+                            >
+                              <TrimHash text={transaction.receiver} />
+                            </TestnetLink>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div
-                  className="row h-100 justify-content-center align-items-center"
-                  data-testid="transactionsLoader"
-                >
-                  <div className="col-12 text-center">
-                    <div className="lds-ellipsis mx-auto">
-                      <div />
-                      <div />
-                      <div />
-                      <div />
-                    </div>
-                  </div>
-                </div>
+                <PageState
+                  title="Loading..."
+                  symbol={
+                    <FontAwesomeIcon
+                      icon={faSpinnerThird}
+                      size="5x"
+                      className="text-primary fa-spin fast-spin"
+                    />
+                  }
+                  className="py-spacer d-flex h-100 align-items-center justify-content-center"
+                />
               )}
             </div>
-          </div>
+          </>
         )}
       </div>
     );
