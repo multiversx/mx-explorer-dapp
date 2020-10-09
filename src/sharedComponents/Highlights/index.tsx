@@ -3,7 +3,6 @@ import moment from 'moment';
 import { useGlobalState } from 'context';
 import { adapter } from 'sharedComponents';
 import DefaultHighlights from './DefaultHighlights';
-import HeroHighlights from './HeroHighlights';
 import { refreshRate } from 'appConfig';
 
 export interface StateType {
@@ -112,7 +111,9 @@ const Hightlights = ({
   const props = activeNetworkId in state ? state[activeNetworkId] : initialState;
 
   return (
-    <div ref={ref}>{!hero ? <DefaultHighlights {...props} /> : <HeroHighlights {...props} />}</div>
+    <div ref={ref}>
+      <DefaultHighlights {...props} />
+    </div>
   );
 };
 

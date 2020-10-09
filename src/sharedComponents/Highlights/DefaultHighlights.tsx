@@ -18,25 +18,22 @@ const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
   totalProcessedTxCount,
   epoch,
 }) => (
-  <div className="bg-primary">
+  <div className="highligths bg-primary">
     <div className="container">
       <div className="row">
         <div className="col my-4">
-          <ul className="highlights d-flex flex-wrap justify-content-between m-0 p-0">
+          <ul className="list-unstyled d-flex flex-wrap justify-content-between m-0 p-0">
             <li className="my-3">
-              <div className="media">
-                <span className="highlight-icon">
-                  <FontAwesomeIcon className="fa-2x" icon={faClock} />
-                </span>
-                <div className="media-body">
-                  <span className="highlight-label epoch-label">
-                    <span className="fade">EPOCH</span>
-                  </span>
-                  <span className="highlight-value d-flex">
-                    <span>{epoch}</span>
+              <div className="highlight-item d-flex align-items-center">
+                <FontAwesomeIcon className="fa-2x" icon={faClock} />
+
+                <div className="d-flex flex-column ml-3">
+                  <small className="mb-1 epoch-label">EPOCH</small>
+                  <span className="d-flex">
+                    <span className="h5 mb-0 current-epoch">{epoch}</span>
                     {epochTimeRemaining !== '...' && (
                       <div className="px-2">
-                        <div className="highlight-label epoch-time d-flex flex-column">
+                        <div className="epoch-time d-flex flex-column">
                           <div className="epoch-progress">
                             <div className="fill" style={{ width: `${epochPercentage}%` }}>
                               &nbsp;
@@ -52,59 +49,53 @@ const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
             </li>
 
             <li className="my-3">
-              <div className="media">
-                <span className="highlight-icon">
-                  <FontAwesomeIcon className="fa-2x" icon={faCube} />
-                </span>
-                <div className="media-body">
-                  <span className="highlight-label">BLOCKS</span>
-                  <span className="highlight-value">{blockNumber}</span>
+              <div className="highlight-item d-flex align-items-center">
+                <FontAwesomeIcon className="fa-2x" icon={faCube} />
+                <div className="d-flex flex-column ml-3">
+                  <small className="mb-1">BLOCKS</small>
+                  <span className="h5 mb-0 font-weight-normal">{blockNumber}</span>
                 </div>
               </div>
             </li>
+
             <li className="my-3">
-              <div className="media">
-                <span className="highlight-icon">
-                  <FontAwesomeIcon className="fa-2x" icon={faLayerGroup} />
-                </span>
-                <div className="media-body">
-                  <span className="highlight-label">SHARDS</span>
-                  <span className="highlight-value">{nrOfShards}</span>
+              <div className="highlight-item d-flex align-items-center">
+                <FontAwesomeIcon className="fa-2x" icon={faLayerGroup} />
+                <div className="d-flex flex-column ml-3">
+                  <small className="mb-1">SHARDS</small>
+                  <span className="h5 mb-0 font-weight-normal">{nrOfShards}</span>
                 </div>
               </div>
             </li>
-            <li className="my-3 pr-1 mr-sm-0 d-none">
-              <div className="media">
-                <span className="highlight-icon">
-                  <FontAwesomeIcon className="fa-2x" icon={faChartBar} />
-                </span>
-                <div className="media-body">
-                  <span className="highlight-label">TPS</span>
-                  <span className="highlight-value">{liveTPS}</span>
+
+            <li className="my-3 d-none">
+              <div className="highlight-item d-flex align-items-center">
+                <FontAwesomeIcon className="fa-2x" icon={faChartBar} />
+                <div className="d-flex flex-column ml-3">
+                  <small className="mb-1">TPS</small>
+                  <span className="h5 mb-0 font-weight-normal">{liveTPS}</span>
                 </div>
               </div>
             </li>
+
             <li className="my-3">
-              <div className="media">
-                <span className="highlight-icon">
-                  <FontAwesomeIcon className="fa-2x" icon={faStopwatch} />
-                </span>
-                <div className="media-body">
-                  <span className="highlight-label">PEAK TPS</span>
-                  <span className="highlight-value" data-testid="peak-tps">
+              <div className="highlight-item d-flex align-items-center">
+                <FontAwesomeIcon className="fa-2x" icon={faStopwatch} />
+                <div className="d-flex flex-column ml-3">
+                  <small className="mb-1">PEAK TPS</small>
+                  <span className="h5 mb-0 font-weight-normal" data-testid="peak-tps">
                     {peakTPS}
                   </span>
                 </div>
               </div>
             </li>
+
             <li className="my-3">
-              <div className="media">
-                <span className="highlight-icon">
-                  <FontAwesomeIcon className="fa-2x" icon={faExchangeAlt} />
-                </span>
-                <div className="media-body">
-                  <span className="highlight-label">TRANSACTIONS</span>
-                  <span className="highlight-value">{totalProcessedTxCount}</span>
+              <div className="highlight-item d-flex align-items-center">
+                <FontAwesomeIcon className="fa-2x" icon={faExchangeAlt} />
+                <div className="d-flex flex-column ml-3">
+                  <small className="mb-1">TRANSACTIONS</small>
+                  <span className="h5 mb-0 font-weight-normal">{totalProcessedTxCount}</span>
                 </div>
               </div>
             </li>

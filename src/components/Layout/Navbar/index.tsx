@@ -98,7 +98,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className={`header-navbar d-lg-flex p-0 border-top`}>
+      <div className="header-navbar d-lg-flex p-0 border-top">
         <Collapse in={headerNavCollapsed}>
           <div className="container d-lg-flex">
             <div className="row">

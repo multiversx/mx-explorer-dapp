@@ -1,95 +1,32 @@
-.highlights li {
-  display: block;
-  margin-top: 0.6rem;
-  margin-bottom: 0.6rem;
-  padding: 0;
-}
+.highligths {
+  .highlight-item {
+    color: rgba($light, 0.6);
 
-.highlight-icon {
-  display: block;
-  text-align: center;
-  margin-right: 0.8rem;
-  float: left;
-  color: rgba($light, 0.6);
-}
+    .h5,
+    .current-epoch {
+      color: $card_bg;
+    }
 
-.highlight-label {
-  font-size: 0.9rem;
-  line-height: 0.9rem;
-  color: $light;
-  opacity: 0.7;
-  display: block;
-  margin-bottom: 0.2rem;
+    .epoch-time {
+      .epoch-progress {
+        width: 5.6rem;
+        height: 0.25rem;
+        border-radius: 0.125rem;
+        margin-top: 0.125rem;
+        margin-bottom: 0.187rem;
+        background: rgba($light, 0.5);
 
-  &.epoch-label {
-    opacity: 1;
-    .fade {
-      opacity: 0.7;
+        .fill {
+          background: $light;
+          height: 0.25rem;
+          border-top-left-radius: 0.125rem;
+          border-bottom-left-radius: 0.125rem;
+        }
+      }
+
+      small {
+        font-size: 60%;
+      }
     }
   }
-}
-
-.highlight-value {
-  color: $card_bg;
-  font-size: 1.2rem;
-  line-height: 1.7rem;
-  font-weight: 300;
-  float: left;
-}
-
-.epoch-progress {
-  width: 5.6rem;
-  height: 0.25rem;
-  border-radius: 0.125rem;
-  margin-top: 0.125rem;
-  margin-bottom: 0.187rem;
-  background: rgba($light, 0.5);
-  .fill {
-    background: $light;
-    height: 0.25rem;
-    border-top-left-radius: 0.125rem;
-    border-bottom-left-radius: 0.125rem;
-  }
-}
-
-.epoch-time {
-  padding-top: 0.11rem;
-}
-
-// TODO below
-.highlight-link {
-  display: inline-block;
-  float: left;
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 1.1rem;
-  margin-left: 0.6rem;
-  svg {
-    color: rgba(255, 255, 255, 0.4) !important;
-  }
-  &:hover {
-    svg {
-      color: rgba(255, 255, 255, 0.8) !important;
-    }
-  }
-}
-.highlight-link svg:hover {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.highlight-address {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 220px;
-
-  @include media-breakpoint-up(md) {
-    max-width: 600px;
-  }
-
-  @include media-breakpoint-up(lg) {
-    max-width: 800px;
-  }
-
-  // @include media-breakpoint-up(xl) {
-  //     max-width: 800px;
-  // }
 }
