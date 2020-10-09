@@ -5,14 +5,16 @@ import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import { elrondApps as apps } from 'appConfig';
 
-export default function AppSwitcher({ onToggle }: { onToggle: () => void }) {
+export default function AppSwitcher({ onToggle }: { onToggle?: () => void }) {
   const {
     activeNetwork: { explorerAddress, walletAddress },
   } = useGlobalState();
 
   const hidePopover = () => {
     document.body.click();
-    onToggle();
+    if (onToggle) {
+      onToggle();
+    }
   };
 
   const appId = apps.filter((app) => app.id === window.location.hostname.split('.')[0]).pop();

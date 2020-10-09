@@ -75,11 +75,11 @@ export default function Navbar() {
                 </li>
               )}
               <li className="nav-item d-none d-lg-flex">
-                <AppSwitcher onToggle={() => {}} />
+                <AppSwitcher />
               </li>
 
               <li className="nav-item d-none d-lg-flex align-items-strech">
-                <NetworkSwitcher onToggle={() => {}} />
+                <NetworkSwitcher />
               </li>
             </ul>
 

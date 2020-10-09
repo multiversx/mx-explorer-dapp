@@ -6,7 +6,7 @@ import { defaultNetwork } from 'context/config';
 import { NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export default function NetworkSwitcher({ onToggle }: { onToggle: () => void }) {
+export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void }) {
   const globalState = useGlobalState();
 
   const liksArray = globalState.config.networks.map((network) => ({
@@ -17,7 +17,9 @@ export default function NetworkSwitcher({ onToggle }: { onToggle: () => void }) 
 
   const hidePopover = () => {
     document.body.click();
-    onToggle();
+    if (onToggle) {
+      onToggle();
+    }
   };
 
   const changeNetwork = (networkId: string) => (e: React.MouseEvent) => {
