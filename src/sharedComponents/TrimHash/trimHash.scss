@@ -1,0 +1,12 @@
+.trim-hash-outer {
+  display: flex;
+  width: 100vw;
+  max-width: 100%;
+
+  .trim-hash-inner {
+    flex-basis: auto;
+    flex-grow: 1;
+    min-width: 0;
+    max-width: 100%;
+  }
+}

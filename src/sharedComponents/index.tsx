@@ -17,6 +17,7 @@ import TransactionStatus from './TransactionStatus';
 import TooltipWithCopy from './TooltipWithCopy';
 import CopyButton from './CopyButton';
 import adapter from './Adapter';
+import TrimHash from './TrimHash';
 
 export {
   Denominate,
@@ -39,4 +40,5 @@ export {
   PageState,
   IconState,
   adapter,
+  TrimHash,
 };

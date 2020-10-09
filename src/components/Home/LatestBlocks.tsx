@@ -2,8 +2,8 @@ import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { dateFormatted, trimHash } from 'helpers';
-import { ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
+import { dateFormatted } from 'helpers';
+import { ShardSpan, TestnetLink, TimeAgo, adapter, TrimHash } from 'sharedComponents';
 import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 
 type LatestBlockType = BlockType & {
@@ -57,6 +57,7 @@ const LatestBlocks: React.FC = () => {
     return (
       <div className="card card-small" ref={ref}>
         {!blocksFetched ? (
+          // TODO page state
           <div className="card-body card-details" data-testid="errorScreen">
             <div className="empty">
               <FontAwesomeIcon icon={faCube} className="empty-icon" />
@@ -64,12 +65,14 @@ const LatestBlocks: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="card-body">
-            <div className="d-flex align-items-center flex-row mb-3">
-              <h4 className="card-title mb-0 mr-auto">Latest Blocks</h4>
-              <TestnetLink to="/blocks">View All Blocks</TestnetLink>
+          <>
+            <div className="card-header border-bottom d-flex justify-content-between">
+              <h6 className="m-0">Latest Blocks</h6>
+              <small>
+                <TestnetLink to="/blocks">View All Blocks</TestnetLink>
+              </small>
             </div>
-            <div className="card-scroll pt-0">
+            <div className="card-body card-scroll py-0">
               {blocks.length ? (
                 <div className="animated-list" data-testid="blocksList">
                   {blocks.map((block, i) => (
@@ -78,35 +81,47 @@ const LatestBlocks: React.FC = () => {
                       className={`row animated-row ${block.isNew && someNew ? 'new' : ''}`}
                     >
                       <div className="col-6">
-                        <span className="icon-container">
-                          <i>
+                        <div className="d-flex align-items-center">
+                          <div className="list-item-icon mr-3">
                             <FontAwesomeIcon icon={faCube} />
-                          </i>
-                        </span>
-                        <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
-                          {block.nonce}
-                        </TestnetLink>
-                        &nbsp;in&nbsp;
-                        <ShardSpan shardId={block.shardId} />
-                        <br />
-                        <span title={dateFormatted(block.timestamp)} className="text-secondary">
-                          <TimeAgo value={block.timestamp} />
-                        </span>
+                          </div>
+                          <div className="d-flex flex-column list-item-text">
+                            <span className="text-secondary">
+                              <TestnetLink
+                                to={`/blocks/${block.hash}`}
+                                data-testid={`blockLink${i}`}
+                              >
+                                {block.nonce}
+                              </TestnetLink>
+                              &nbsp;in&nbsp;
+                              <ShardSpan shardId={block.shardId} />
+                            </span>
+                            <span title={dateFormatted(block.timestamp)} className="text-muted">
+                              <TimeAgo value={block.timestamp} />
+                            </span>
+                          </div>
+                        </div>
                       </div>
-                      <div className="col-6">
-                        Hash&nbsp;
-                        {/* <TooltipWithCopy textToCopy={block.hash}> */}
-                        <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockHashLink${i}`}>
-                          {trimHash(block.hash)}
-                        </TestnetLink>
-                        {/* </TooltipWithCopy> */}
-                        <br />
-                        {block.txCount} txns
+                      <div className="col-6 list-item-text text-secondary">
+                        <div className="trim-hash-outer">
+                          <span className="text-nowrap mr-2">Hash</span>
+
+                          <div className="trim-hash-inner">
+                            <TestnetLink
+                              to={`/blocks/${block.hash}`}
+                              data-testid={`blockHashLink${i}`}
+                            >
+                              <TrimHash text={block.hash} />
+                            </TestnetLink>
+                          </div>
+                        </div>
+                        <div>{block.txCount} txns</div>
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
+                // TODO page state loader?
                 <div
                   className="row h-100 justify-content-center align-items-center"
                   data-testid="blocksLoader"
@@ -122,7 +137,7 @@ const LatestBlocks: React.FC = () => {
                 </div>
               )}
             </div>
-          </div>
+          </>
         )}
       </div>
     );
