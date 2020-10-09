@@ -62,13 +62,13 @@ const LatestBlocks: React.FC = () => {
             <PageState
               icon={faCube}
               title={'Unable to load blocks'}
-              className="py-spacer"
+              className="py-spacer d-flex h-100 align-items-center justify-content-center"
               data-testid="errorScreen"
             />
           </div>
         ) : (
           <>
-            <div className="card-header border-bottom d-flex justify-content-between">
+            <div className="card-header border-bottom d-flex justify-content-between align-items-center">
               <h6 className="m-0">Latest Blocks</h6>
               <small>
                 <TestnetLink to="/blocks">View All Blocks</TestnetLink>
@@ -105,10 +105,10 @@ const LatestBlocks: React.FC = () => {
                         </div>
                       </div>
                       <div className="col-6 list-item-text text-secondary">
-                        <div className="trim-hash-outer">
+                        <div className="trim-hash-container">
                           <span className="text-nowrap mr-2">Hash</span>
 
-                          <div className="trim-hash-inner">
+                          <div className="content-fill">
                             <TestnetLink
                               to={`/blocks/${block.hash}`}
                               data-testid={`blockHashLink${i}`}
@@ -132,7 +132,7 @@ const LatestBlocks: React.FC = () => {
                       className="text-primary fa-spin fast-spin"
                     />
                   }
-                  className="d-flex h-100 align-items-center justify-content-center"
+                  className="py-spacer d-flex h-100 align-items-center justify-content-center"
                 />
               )}
             </div>
