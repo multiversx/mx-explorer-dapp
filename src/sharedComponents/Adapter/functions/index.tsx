@@ -42,6 +42,7 @@ export interface ProviderPropsType {
     round?: number;
     from?: number;
     size?: number;
+    condition?: string;
   };
   timeout: number;
 }
