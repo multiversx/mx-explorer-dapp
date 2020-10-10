@@ -36,13 +36,13 @@ export interface ProviderPropsType {
     miniBlockHash?: string;
     sender?: string;
     receiver?: string;
+    condition?: 'should' | 'must';
     senderShard?: number;
     receiverShard?: number;
     signersIndexes?: number;
     round?: number;
     from?: number;
     size?: number;
-    condition?: string;
   };
   timeout: number;
 }
