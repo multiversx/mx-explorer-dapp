@@ -1,10 +1,11 @@
+$highlights-light: #f5f5f5;
 .highligths {
   .highlight-item {
-    color: rgba($light, 0.6);
+    color: rgba($highlights-light, 0.6);
 
     .h5,
     .current-epoch {
-      color: $card_bg;
+      color: $white;
     }
 
     .epoch-time {
@@ -14,10 +15,10 @@
         border-radius: 0.125rem;
         margin-top: 0.125rem;
         margin-bottom: 0.187rem;
-        background: rgba($light, 0.5);
+        background: rgba($highlights-light, 0.5);
 
         .fill {
-          background: $light;
+          background: $highlights-light;
           height: 0.25rem;
           border-top-left-radius: 0.125rem;
           border-bottom-left-radius: 0.125rem;
