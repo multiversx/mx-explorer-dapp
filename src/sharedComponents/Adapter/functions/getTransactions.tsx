@@ -44,14 +44,12 @@ export async function getTransactions({
   };
 
   try {
-    let { data } = await provider({
+    const { data } = await provider({
       baseUrl,
       url: `/transactions`,
       params,
       timeout,
     });
-
-    data = data.map((entry: any) => ({ hash: entry.id, ...entry }));
 
     return {
       data,
