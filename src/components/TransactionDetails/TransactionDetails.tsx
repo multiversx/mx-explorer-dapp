@@ -35,7 +35,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
       <div className="card-body card-details">
         <TransactionDetail label="Hash">
           <ScAddressIcon initiator={transaction.sender} secondInitiator={transaction.receiver} />
-          {transaction.hash}
+          {transaction.txHash}
         </TransactionDetail>
 
         <TransactionDetail label="Status">

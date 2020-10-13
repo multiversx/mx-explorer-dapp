@@ -11,7 +11,7 @@ import {
   getRewards,
   TransactionsType as TransactionsInterface,
 } from './getTransactions';
-import { getTransaction, getPendingTransaction } from './getTransaction';
+import { getTransaction } from './getTransaction';
 import {
   getMiniBlock,
   getMiniBlockTransactions,
@@ -68,7 +68,6 @@ export {
   getBlocks,
   getBlocksCount,
   getTransaction,
-  getPendingTransaction,
   getMiniBlock,
   getMiniBlockTransactions,
   getMiniBlockTransactionsCount,
