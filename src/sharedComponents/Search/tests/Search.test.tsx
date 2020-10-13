@@ -8,7 +8,6 @@ import {
 } from 'utils/test-utils';
 import {
   transactions as transactionsResponse,
-  pendingTransaction,
   heartbeatstatus,
   statistics,
   validators,
@@ -45,8 +44,6 @@ const beforeAll = (fail = ['']) => {
         return Promise.resolve({ data: block });
       case url.includes('/transactions/') && !fail.includes('transactions'):
         return Promise.resolve({ data: transactionsResponse });
-      case url.includes('/transaction/') && !fail.includes('pendingTransaction'):
-        return Promise.resolve({ data: { data: pendingTransaction, code: 'successful' } });
       default:
         return Promise.resolve(new Error('error'));
     }
@@ -115,24 +112,8 @@ describe('Search', () => {
       expect(document.title).toEqual('Transaction Details • Elrond Explorer');
     });
   });
-  test('Search finds pending transaction', async () => {
-    const render = beforeAll(['blocks', 'transactions']);
-
-    const search = await render.findByTestId('search');
-    const data = {
-      target: { value: 'bfef4ed34748e13c01503ac317eff5612c629c807905afe9c73ace6e45d3fe91' },
-    };
-    fireEvent.change(search, data);
-
-    const searchButton = render.getByTestId('searchButton');
-    fireEvent.click(searchButton);
-
-    await wait(async () => {
-      expect(document.title).toEqual('Transaction Details • Elrond Explorer');
-    });
-  });
   test('Seach finds address', async () => {
-    const render = beforeAll(['blocks', 'transactions', 'pendingTransaction']);
+    const render = beforeAll(['blocks', 'transactions']);
 
     const search = await render.findByTestId('search');
     const data = {
@@ -149,7 +130,7 @@ describe('Search', () => {
   });
   // TODO: fix
   // test('Seach does not find anything', async () => {
-  //   const render = beforeAll(['blocks', 'transactions', 'address', 'pendingTransaction']);
+  //   const render = beforeAll(['blocks', 'transactions', 'address']);
 
   //   const search = render.getByTestId('search');
   //   const data = {

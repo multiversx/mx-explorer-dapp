@@ -25,7 +25,7 @@ const beforeAll = (success = true) => {
       // --- page load ---
       case url.includes(`/validators`):
         return Promise.resolve({ data: validatorsdoc });
-      case url.includes(`/blocks/${doc.id}`) && success:
+      case url.includes(`/blocks/${doc.hash}`) && success:
         return Promise.resolve({ data: doc });
       case url.includes('/blocks'):
         return Promise.resolve({ data: blocks });
@@ -33,7 +33,7 @@ const beforeAll = (success = true) => {
   });
 
   return renderWithRouter({
-    route: `/blocks/${doc.id}`,
+    route: `/blocks/${doc.hash}`,
     optionalConfig,
   });
 };
