@@ -142,7 +142,7 @@ export async function getRewards({ proxyUrl, addressId, timeout }: DetailsType) 
   try {
     const {
       data: { claimableRewards, userStake },
-    } = await axios.get(`${proxyUrl}/delegations/${addressId}`, { timeout });
+    } = await axios.get(`${proxyUrl}/addresses/${addressId}/delegation`, { timeout });
     return { claimableRewards, userStake };
   } catch (err) {
     return { claimableRewards: 0, userStake: 0 };
