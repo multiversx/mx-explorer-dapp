@@ -7,7 +7,7 @@ export const initialState = {
     senderBlockHash: '',
     receiverBlockHash: '',
     type: '',
-    hash: '',
+    miniBlockHash: '',
   },
   blockFetched: true,
 };
