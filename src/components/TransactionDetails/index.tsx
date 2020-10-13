@@ -5,7 +5,6 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader, adapter } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
-import { transactions } from 'utils/rawData';
 import Details from './TransactionDetails';
 
 const TransactionDetails: React.FC = () => {
