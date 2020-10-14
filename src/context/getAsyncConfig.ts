@@ -39,29 +39,50 @@ async function getAsyncConfig({
   timeout,
   id,
 }: GetAsyncConfigType & AdapterType): Promise<GetAsyncConfigReturnType> {
-  const nodeUrl = apiUrl || proxyUrl;
-  try {
-    const {
-      data: { data, code, error },
-    } = await axios.get(`${nodeUrl}/network/config`, { timeout });
+  if (id === 'mainnet') {
+    return {
+      id,
+      config: {
+        erd_chain_id: '1',
+        erd_denomination: 18,
+        erd_gas_per_data_byte: 1500,
+        erd_latest_tag_software_version: 'v1.1.0.1',
+        erd_meta_consensus_group_size: 400,
+        erd_min_gas_limit: 50000,
+        erd_min_gas_price: 1000000000,
+        erd_num_metachain_nodes: 400,
+        erd_num_nodes_in_shard: 400,
+        erd_num_shards_without_meta: 3,
+        erd_round_duration: 6000,
+        erd_shard_consensus_group_size: 63,
+        erd_start_time: 1596117600,
+      },
+    };
+  } else {
+    const nodeUrl = apiUrl || proxyUrl;
+    try {
+      const {
+        data: { data, code, error },
+      } = await axios.get(`${nodeUrl}/network/config`, { timeout });
 
-    if (code === 'successful') {
-      schema.validate(data, { strict: true }).catch(({ errors }) => {
-        console.error(`Faild to get config for ${id} network.`, errors, code, error);
-      });
+      if (code === 'successful') {
+        schema.validate(data, { strict: true }).catch(({ errors }) => {
+          console.error(`Faild to get config for ${id} network.`, errors, code, error);
+        });
 
-      const { config } = data as AsyncConfigType;
+        const { config } = data as AsyncConfigType;
 
-      return {
-        id,
-        config,
-      };
-    } else {
-      throw new Error(error);
+        return {
+          id,
+          config,
+        };
+      } else {
+        throw new Error(error);
+      }
+    } catch (err) {
+      console.error(`Faild to get config for ${id} network.`);
+      return err;
     }
-  } catch (err) {
-    console.error(`Faild to get config for ${id} network.`);
-    return err;
   }
 }
 
