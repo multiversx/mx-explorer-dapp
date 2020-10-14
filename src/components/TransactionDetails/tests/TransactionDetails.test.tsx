@@ -22,14 +22,14 @@ const beforeAll = (success = true) => {
         return Promise.resolve({ data: validators });
       case url.includes('validators/1_36'):
         return Promise.resolve({ data: validatorsdoc });
-      case url.includes(`/transactions/${doc.hash}`) && success:
+      case url.includes(`/transactions/${doc.txHash}`) && success:
         return Promise.resolve({ data: doc });
       default:
         return Promise.resolve(new Error('error'));
     }
   });
   return renderWithRouter({
-    route: `/transactions/${doc.hash}`,
+    route: `/transactions/${doc.txHash}`,
     optionalConfig,
   });
 };
@@ -39,7 +39,7 @@ describe('Transaction Details', () => {
     const render = beforeAll();
     expect(document.title).toEqual('Transaction Details • Elrond Explorer');
     await wait(async () => {
-      expect(render.getByText(doc.hash)).toBeInTheDocument();
+      expect(render.getByText(doc.txHash)).toBeInTheDocument();
     });
   });
 

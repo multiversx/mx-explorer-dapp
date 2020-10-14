@@ -35,7 +35,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
       <div className="card-body card-details">
         <TransactionDetail label="Hash">
           <ScAddressIcon initiator={transaction.sender} secondInitiator={transaction.receiver} />
-          {transaction.hash}
+          {transaction.txHash}
         </TransactionDetail>
 
         <TransactionDetail label="Status">
@@ -49,9 +49,13 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
         </TransactionDetail>
 
         <TransactionDetail label="Miniblock">
-          <TestnetLink to={`/miniblocks/${transaction.miniBlockHash}`}>
-            {transaction.miniBlockHash}
-          </TestnetLink>
+          {transaction.miniBlockHash ? (
+            <TestnetLink to={`/miniblocks/${transaction.miniBlockHash}`}>
+              {transaction.miniBlockHash}
+            </TestnetLink>
+          ) : (
+            <span className="text-muted">N/A</span>
+          )}
         </TransactionDetail>
 
         <TransactionDetail label="From">
@@ -106,8 +110,8 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
           {transaction.gasLimit.toLocaleString('en')}
         </TransactionDetail>
 
-        <TransactionDetail label="Gas Used">
-          {transaction.gasUsed.toLocaleString('en')}
+        <TransactionDetail label="Gas Used" disabled={!transaction.gasUsed}>
+          {transaction.gasUsed ? transaction.gasUsed.toLocaleString('en') : ''}
         </TransactionDetail>
 
         <TransactionDetail label="Gas Price">
