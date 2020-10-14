@@ -54,9 +54,6 @@ export default function useAdapter() {
     getTransaction: ({ transactionId }: { transactionId: string }) =>
       f.getTransaction({ provider, baseUrl, transactionId, timeout }),
 
-    getPendingTransaction: ({ transactionId }: { transactionId: string }) =>
-      f.getPendingTransaction({ proxyUrl, transactionId, timeout }),
-
     /* Miniblocks */
 
     getMiniBlock: ({ miniBlockHash }: { miniBlockHash: string }) =>

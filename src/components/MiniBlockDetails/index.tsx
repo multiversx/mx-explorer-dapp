@@ -14,7 +14,7 @@ interface MiniBlockType {
   senderBlockHash: string;
   receiverBlockHash: string;
   type: string;
-  hash: string;
+  miniBlockHash: string;
 }
 
 export interface StateType {
@@ -23,7 +23,7 @@ export interface StateType {
 }
 
 const MiniBlockDetails: React.FC = () => {
-  const { page, hash: miniBlockHash } = useParams();
+  const { page, hash: miniBlockHash } = useParams() as any;
   const history = useHistory();
 
   const ref = React.useRef(null);
@@ -116,7 +116,7 @@ const MiniBlockDetails: React.FC = () => {
           </div>
         ) : (
           <>
-            {miniBlock.hash ? (
+            {miniBlock.miniBlockHash ? (
               <>
                 <div className="row">
                   <div className="col-12">

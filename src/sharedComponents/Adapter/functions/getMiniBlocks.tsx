@@ -7,7 +7,7 @@ export const initialState = {
     senderBlockHash: '',
     receiverBlockHash: '',
     type: '',
-    hash: '',
+    miniBlockHash: '',
   },
   blockFetched: true,
 };
@@ -45,7 +45,7 @@ export async function getMiniBlockTransactions({
   size = 1,
 }: MiniBlockType & { size: number }) {
   try {
-    let { data } = await provider({
+    const { data } = await provider({
       baseUrl,
       params: {
         from: (size - 1) * 50,
@@ -55,8 +55,6 @@ export async function getMiniBlockTransactions({
       url: `/transactions`,
       timeout,
     });
-
-    data = data.map((transaction: any) => ({ hash: transaction.id, ...transaction }));
 
     return {
       data,
