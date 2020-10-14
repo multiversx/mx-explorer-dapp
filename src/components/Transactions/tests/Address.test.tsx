@@ -29,7 +29,7 @@ export const beforeAll = (route = '', transactionsError = false) => {
       // --- page load ---
       case url.endsWith('/validators'):
         return Promise.resolve({ data: validators });
-      case url.includes('/transactions/count'):
+      case url.includes('/transactions-alt/count'):
         return Promise.resolve({ data: 14253408 });
       case url.includes('/transactions'):
         if (transactionsError) {
