@@ -1,7 +1,9 @@
 import { AxiosResponse } from 'axios';
 import getHighlights from './getHighlights';
 import getLatestBlocks from './getLatestBlocks';
+import getNodes from './getNodes';
 import getLatestTransactions from './getLatestTransactions';
+import getNetworkConfig from './getNetworkConfig';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
 import getBlock, { BlockType as BlockInterface } from './getBlock';
 import {
@@ -81,4 +83,6 @@ export {
   getRounds,
   searchBlocks,
   getValidator,
+  getNodes,
+  getNetworkConfig,
 };

@@ -60,7 +60,7 @@ const initialState = (config: ConfigType, optionalConfig?: ConfigType): StateTyp
     defaultNetwork: config.networks.filter((network) => network.default).pop() || defaultNetwork,
     activeNetwork: config.networks.filter((network) => network.default).pop() || defaultNetwork,
     activeNetworkId: '',
-    timeout: 3 * 1000,
+    timeout: 10 * 1000,
     cancelToken: undefined,
     refresh: {
       timestamp: Date.now(),
