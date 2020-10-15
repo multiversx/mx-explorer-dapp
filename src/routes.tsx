@@ -6,6 +6,7 @@ import Home from './components/Home';
 import MiniBlockDetails from './components/MiniBlockDetails';
 import TransactionDetails from './components/TransactionDetails';
 import Transactions from './components/Transactions';
+import Nodes from './components/Nodes';
 import ValidatorsTable from './components/Validators/ValidatorsTable';
 import BrandDetails from './components/Validators/BrandDetails';
 import ValidatorDetails from './components/Validators/ValidatorDetails';
@@ -40,25 +41,30 @@ const routes: RouteType[] = [
     component: Transactions,
   },
   {
-    path: validatorsRoutes.index,
-    title: 'Validators',
-    component: ValidatorsBrandTable,
+    path: '/validators',
+    title: 'Nodes',
+    component: Nodes,
   },
-  {
-    path: validatorsRoutes.nodes,
-    title: 'Validators Nodes',
-    component: ValidatorsTable,
-  },
-  {
-    path: validatorsRoutes.brandDetails,
-    title: 'Validator Details',
-    component: BrandDetails,
-  },
-  {
-    path: validatorsRoutes.validatorDetails,
-    title: 'Node Details',
-    component: ValidatorDetails,
-  },
+  // {
+  //   path: validatorsRoutes.index,
+  //   title: 'Validators',
+  //   component: ValidatorsBrandTable,
+  // },
+  // {
+  //   path: validatorsRoutes.nodes,
+  //   title: 'Validators Nodes',
+  //   component: ValidatorsTable,
+  // },
+  // {
+  //   path: validatorsRoutes.brandDetails,
+  //   title: 'Validator Details',
+  //   component: BrandDetails,
+  // },
+  // {
+  //   path: validatorsRoutes.validatorDetails,
+  //   title: 'Node Details',
+  //   component: ValidatorDetails,
+  // },
   {
     path: '/address/:hash',
     title: 'Address Details',
