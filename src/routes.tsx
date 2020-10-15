@@ -41,7 +41,7 @@ const routes: RouteType[] = [
     component: Transactions,
   },
   {
-    path: '/validators',
+    path: '/nodes',
     title: 'Nodes',
     component: Nodes,
   },
