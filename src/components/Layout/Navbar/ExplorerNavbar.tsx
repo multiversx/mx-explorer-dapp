@@ -67,13 +67,20 @@ export default function ExplorerNavbar({
           </TestnetLink>
 
           {validators !== false && (
-            <TestnetLink
-              className={`nav-link ${pathname.toString().includes('nodes') ? 'active' : ''}`}
-              to="/nodes"
-              onClick={() => onToggle(false)}
-            >
-              Validators
-            </TestnetLink>
+            <>
+              <TestnetLink
+                className={`nav-link ${
+                  pathname.toString().includes('nodes') ||
+                  pathname.toString().includes('validators')
+                    ? 'active'
+                    : ''
+                }`}
+                to="/nodes"
+                onClick={() => onToggle(false)}
+              >
+                Validators
+              </TestnetLink>
+            </>
           )}
         </Nav>
         <Nav className="ml-auto">

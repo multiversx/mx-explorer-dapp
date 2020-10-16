@@ -89,7 +89,15 @@ export default function useAdapter() {
 
     /* Validators */
 
-    getNodes: () => f.getNodes({ provider, baseUrl, timeout }),
+    getNodes: ({
+      searchValue,
+      peerType,
+      issues,
+    }: {
+      searchValue?: string;
+      peerType?: string;
+      issues?: string;
+    }) => f.getNodes({ provider, baseUrl, timeout, searchValue, peerType, issues }),
 
     getNetworkConfig: () => f.getNetworkConfig({ proxyUrl, timeout }),
 

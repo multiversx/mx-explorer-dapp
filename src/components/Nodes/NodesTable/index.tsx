@@ -5,6 +5,8 @@ import { ShardSpan, TestnetLink } from 'sharedComponents';
 import RowIcon from './RowIcon';
 
 const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrder: string[] }) => {
+  console.log('render');
+
   return (
     <tbody>
       {nodes.map((node, index) => (
