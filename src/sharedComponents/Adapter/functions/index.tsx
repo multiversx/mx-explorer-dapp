@@ -44,6 +44,9 @@ export interface ProviderPropsType {
     round?: number;
     from?: number;
     size?: number;
+    searchValue?: string;
+    peerType?: string;
+    issues?: string;
   };
   timeout: number;
 }

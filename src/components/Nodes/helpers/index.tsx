@@ -1,17 +1,12 @@
 import { ValidatorType } from 'context/validators';
-import { metaChainShardId } from 'appConfig';
+import useGetFilters from './useGetFilters';
 
 interface NodesIssuesType {
   node: ValidatorType;
   versionNumber: string;
-  nrOfShards: number;
 }
 
-export const nodesIssues = ({
-  node,
-  versionNumber,
-  nrOfShards,
-}: NodesIssuesType): ValidatorType['issue'] => {
+export const nodesIssues = ({ node, versionNumber }: NodesIssuesType): ValidatorType['issue'] => {
   const shuffleOut = node.receivedShardID !== node.computedShardID && node.peerType === 'eligible';
   switch (true) {
     case node.totalUpTimeSec === 0:
@@ -22,9 +17,9 @@ export const nodesIssues = ({
       return '';
     case shuffleOut:
       return 'Shuffle out restart failed';
-    case node.receivedShardID !== metaChainShardId && node.receivedShardID > nrOfShards:
-      return 'Outdated client configuration';
     default:
       return '';
   }
 };
+
+export { useGetFilters };
