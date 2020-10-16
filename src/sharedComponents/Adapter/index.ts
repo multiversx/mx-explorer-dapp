@@ -89,6 +89,10 @@ export default function useAdapter() {
 
     /* Validators */
 
+    getNodes: () => f.getNodes({ provider, baseUrl, timeout }),
+
+    getNetworkConfig: () => f.getNetworkConfig({ proxyUrl, timeout }),
+
     getRounds: ({ shardNumber, signersIndex, epoch, roundAtEpochStart }: f.GetRoundsType) =>
       f.getRounds({
         provider,

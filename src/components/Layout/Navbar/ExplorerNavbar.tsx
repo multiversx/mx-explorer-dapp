@@ -68,11 +68,11 @@ export default function ExplorerNavbar({
 
           {validators !== false && (
             <TestnetLink
-              className={`nav-link ${pathname.toString().includes('validators') ? 'active' : ''}`}
-              to="/validators"
+              className={`nav-link ${pathname.toString().includes('nodes') ? 'active' : ''}`}
+              to="/nodes"
               onClick={() => onToggle(false)}
             >
-              Validators
+              Nodes
             </TestnetLink>
           )}
         </Nav>
