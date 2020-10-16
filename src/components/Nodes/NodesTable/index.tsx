@@ -11,7 +11,7 @@ const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrde
     <tbody>
       {nodes.map((node, index) => (
         <tr key={node.publicKey}>
-          <td>{node.nodeType === 'validator' ? ratingOrder.indexOf(node.publicKey) + 1 : ''}</td>
+          {/* <td>{node.nodeType === 'validator' ? ratingOrder.indexOf(node.publicKey) + 1 : ''}</td> */}
           <td>
             <RowIcon node={node} />
             <span>{trimHash(node.publicKey)}</span>
