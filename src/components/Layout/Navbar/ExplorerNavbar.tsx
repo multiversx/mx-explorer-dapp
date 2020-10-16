@@ -72,7 +72,7 @@ export default function ExplorerNavbar({
               to="/nodes"
               onClick={() => onToggle(false)}
             >
-              Nodes
+              Validators
             </TestnetLink>
           )}
         </Nav>
