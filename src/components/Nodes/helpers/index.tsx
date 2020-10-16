@@ -11,7 +11,7 @@ export const nodesIssues = ({ node, versionNumber }: NodesIssuesType): Validator
   switch (true) {
     case node.totalUpTimeSec === 0:
       return 'Offline since genesis';
-    case versionNumber !== node.versionNumber.split('-')[0]:
+    case versionNumber !== node.versionNumber:
       return 'Outdated client version';
     case shuffleOut && !node.isActive:
       return '';

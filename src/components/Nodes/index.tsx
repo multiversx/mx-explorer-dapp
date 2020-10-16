@@ -104,7 +104,7 @@ const Nodes = () => {
             setDataReady(true);
           }
         })
-        .catch(() => {
+        .catch((error) => {
           if (ref.current !== null) {
             setDataReady(false);
           }
@@ -145,7 +145,7 @@ const Nodes = () => {
                 <div className="col-12">
                   <div className="card">
                     <div className="card-body card-list">
-                    <NodesTabs />
+                      {/* <NodesTabs />
                       <Filters
                         resultsCount={nodes.length}
                         setSearchValue={setSearchValue}
@@ -154,18 +154,18 @@ const Nodes = () => {
                         searchValue={searchValue}
                         peerType={peerType}
                         issues={issues}
-                      />
+                      /> */}
                       <div className="table-responsive">
                         <table className="table mt-3">
                           <thead>
                             <tr>
-                              <th>#</th>
+                              {/* <th>#</th> */}
                               {headers.map((header) => (
                                 <th key={header.id}>{header.label}</th>
                               ))}
                             </tr>
                           </thead>
-                          <NodesTable nodes={nodes.slice(0, 10)} ratingOrder={ratingOrder} />
+                          <NodesTable nodes={nodes} ratingOrder={ratingOrder} />
                         </table>
                       </div>
                     </div>
