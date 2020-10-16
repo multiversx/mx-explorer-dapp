@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { object, string, number, InferType } from 'yup';
-import { AdapterFunctionType } from './index';
 
 const schema = object({
   config: object({
