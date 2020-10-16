@@ -5,11 +5,13 @@ import { ShardSpan, TestnetLink } from 'sharedComponents';
 import RowIcon from './RowIcon';
 
 const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrder: string[] }) => {
+  console.log('render');
+
   return (
     <tbody>
       {nodes.map((node, index) => (
         <tr key={node.publicKey}>
-          <td>{node.nodeType === 'validator' ? ratingOrder.indexOf(node.publicKey) + 1 : ''}</td>
+          {/* <td>{node.nodeType === 'validator' ? ratingOrder.indexOf(node.publicKey) + 1 : ''}</td> */}
           <td>
             <RowIcon node={node} />
             <span>{trimHash(node.publicKey)}</span>
