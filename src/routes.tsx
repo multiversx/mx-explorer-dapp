@@ -46,31 +46,31 @@ const routes: RouteType[] = [
     title: 'Nodes',
     component: Nodes,
   },
-  {
-    path: '/validatorsss',
-    title: 'Validators',
-    component: Identities,
-  },
   // {
-  //   path: validatorsRoutes.index,
+  //   path: '/validators',
   //   title: 'Validators',
-  //   component: ValidatorsBrandTable,
+  //   component: Identities,
   // },
-  // {
-  //   path: validatorsRoutes.nodes,
-  //   title: 'Validators Nodes',
-  //   component: ValidatorsTable,
-  // },
-  // {
-  //   path: validatorsRoutes.brandDetails,
-  //   title: 'Validator Details',
-  //   component: BrandDetails,
-  // },
-  // {
-  //   path: validatorsRoutes.validatorDetails,
-  //   title: 'Node Details',
-  //   component: ValidatorDetails,
-  // },
+  {
+    path: validatorsRoutes.index,
+    title: 'Validators',
+    component: ValidatorsBrandTable,
+  },
+  {
+    path: validatorsRoutes.nodes,
+    title: 'Validators Nodes',
+    component: ValidatorsTable,
+  },
+  {
+    path: validatorsRoutes.brandDetails,
+    title: 'Validator Details',
+    component: BrandDetails,
+  },
+  {
+    path: validatorsRoutes.validatorDetails,
+    title: 'Node Details',
+    component: ValidatorDetails,
+  },
   {
     path: '/address/:hash',
     title: 'Address Details',
