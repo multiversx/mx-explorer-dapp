@@ -75,7 +75,7 @@ export default function ExplorerNavbar({
                     ? 'active'
                     : ''
                 }`}
-                to="/nodes"
+                to="/validators"
                 onClick={() => onToggle(false)}
               >
                 Validators
