@@ -14,10 +14,10 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
   return (
     <tr className="animated fadeIn">
       <td>
-        {transaction.status === 'Failed' && (
+        {transaction.status.toLowerCase() === 'failed' && (
           <FontAwesomeIcon icon={faTimes} className="w300 mr-1" />
         )}
-        {['Not Executed', 'Invalid'].includes(transaction.status) && (
+        {['not executed', 'invalid'].includes(transaction.status.toLowerCase()) && (
           <FontAwesomeIcon icon={faBan} className="w300 mr-1" />
         )}
         <TestnetLink to={`/transactions/${transaction.txHash}`} data-testid="transactionLink">
