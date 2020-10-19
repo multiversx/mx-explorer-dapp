@@ -8,17 +8,17 @@ interface TransactionStatusType {
 
 const TransactionStatus = ({ status }: TransactionStatusType) => {
   let Icon = () => <></>;
-  switch (status) {
-    case 'Not Executed':
+  switch (status.toLowerCase()) {
+    case 'not executed':
       Icon = () => <FontAwesomeIcon icon={faBan} className="mr-2 text-danger" />;
       break;
-    case 'Failed':
+    case 'failed':
       Icon = () => <FontAwesomeIcon icon={faTimes} className="mr-2 text-danger" />;
       break;
-    case 'Success':
+    case 'success':
       Icon = () => <FontAwesomeIcon icon={faCheckCircle} className="mr-2 text-success" />;
       break;
-    case 'Invalid':
+    case 'invalid':
       Icon = () => <FontAwesomeIcon icon={faBan} className="mr-2 text-danger" />;
       break;
     default:

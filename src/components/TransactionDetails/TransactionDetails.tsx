@@ -43,9 +43,15 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
         </TransactionDetail>
 
         <TransactionDetail label="Timestamp">
-          <FontAwesomeIcon icon={faClock} className="mr-2" />
-          <TimeAgo value={transaction.timestamp} />
-          &nbsp;({dateFormatted(transaction.timestamp)})
+          {transaction.timestamp !== undefined ? (
+            <>
+              <FontAwesomeIcon icon={faClock} className="mr-2" />
+              <TimeAgo value={transaction.timestamp} />
+              &nbsp;({dateFormatted(transaction.timestamp)})
+            </>
+          ) : (
+            <span className="text-muted">N/A</span>
+          )}
         </TransactionDetail>
 
         <TransactionDetail label="Miniblock">
@@ -103,7 +109,11 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
         </TransactionDetail>
 
         <TransactionDetail label="Transaction Fee">
-          <Denominate value={getFee(transaction)} showLastNonZeroDecimal />
+          {transaction.gasUsed !== undefined ? (
+            <Denominate value={getFee(transaction)} showLastNonZeroDecimal />
+          ) : (
+            <span className="text-muted">N/A</span>
+          )}
         </TransactionDetail>
 
         <TransactionDetail label="Gas Limit">
