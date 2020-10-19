@@ -42,7 +42,7 @@ const Transactions = () => {
     activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
-  const { page, hash: addressId, shard } = useParams();
+  const { page, hash: addressId, shard } = useParams() as any;
   const { pathname } = useLocation();
 
   const { getAddressDetails, getTransactionsCount, getTransactions, getRewards } = adapter();
