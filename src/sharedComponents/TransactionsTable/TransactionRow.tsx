@@ -4,7 +4,7 @@ import React from 'react';
 import { addressIsBech32, dateFormatted, trimHash } from 'helpers';
 import { Denominate, ScAddressIcon, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { TransactionType } from './index';
-import txStatus from '../../components/TransactionDetails/txStatus';
+import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 
 interface TransactionRowType {
   transaction: TransactionType;
@@ -12,8 +12,8 @@ interface TransactionRowType {
 }
 
 const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
-  const statusIs = (compateTo: string) =>
-    transaction.status.toLowerCase() === compateTo.toLowerCase();
+  const statusIs = (compareTo: string) =>
+    transaction.status.toLowerCase() === compareTo.toLowerCase();
 
   return (
     <tr className="animated fadeIn">

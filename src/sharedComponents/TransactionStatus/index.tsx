@@ -1,7 +1,7 @@
 import React from 'react';
 import { faCheckCircle, faBan, faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import txStatus from '../../components/TransactionDetails/txStatus';
+import txStatus from './txStatus';
 
 interface TransactionStatusType {
   status: string;
@@ -12,7 +12,7 @@ const capitalizeFirstLetter = (str: string) => {
 };
 
 const TransactionStatus = ({ status }: TransactionStatusType) => {
-  const statusIs = (compateTo: string) => status.toLowerCase() === compateTo.toLowerCase();
+  const statusIs = (compareTo: string) => status.toLowerCase() === compareTo.toLowerCase();
 
   let Icon = () => <></>;
   switch (true) {
