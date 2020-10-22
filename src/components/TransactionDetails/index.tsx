@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { Loader, adapter } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import Details from './TransactionDetails';
-import txStatus from './txStatus';
+import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 
 const TransactionDetails: React.FC = () => {
   const params: any = useParams();
