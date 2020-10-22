@@ -1,24 +1,32 @@
 import React from 'react';
 import { faCheckCircle, faBan, faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import txStatus from './txStatus';
 
 interface TransactionStatusType {
   status: string;
 }
 
+const capitalizeFirstLetter = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
 const TransactionStatus = ({ status }: TransactionStatusType) => {
+  const statusIs = (compareTo: string) => status.toLowerCase() === compareTo.toLowerCase();
+
   let Icon = () => <></>;
-  switch (status.toLowerCase()) {
-    case 'not executed':
+  switch (true) {
+    case statusIs(txStatus.notExecuted):
       Icon = () => <FontAwesomeIcon icon={faBan} className="mr-2 text-danger" />;
       break;
-    case 'failed':
+    case statusIs(txStatus.fail):
+    case statusIs(txStatus.failed):
       Icon = () => <FontAwesomeIcon icon={faTimes} className="mr-2 text-danger" />;
       break;
-    case 'success':
+    case statusIs(txStatus.success):
       Icon = () => <FontAwesomeIcon icon={faCheckCircle} className="mr-2 text-success" />;
       break;
-    case 'invalid':
+    case statusIs(txStatus.invalid):
       Icon = () => <FontAwesomeIcon icon={faBan} className="mr-2 text-danger" />;
       break;
     default:
@@ -28,7 +36,7 @@ const TransactionStatus = ({ status }: TransactionStatusType) => {
   return (
     <>
       <Icon />
-      {status}
+      {capitalizeFirstLetter(status)}
     </>
   );
 };

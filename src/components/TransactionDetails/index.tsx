@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { Loader, adapter } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import Details from './TransactionDetails';
+import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 
 const TransactionDetails: React.FC = () => {
   const params: any = useParams();
@@ -37,7 +38,11 @@ const TransactionDetails: React.FC = () => {
   React.useEffect(fetchTransaction, []);
 
   const checkRefetch = () => {
-    if (transaction && transaction.status === 'Pending' && transactionFetched) {
+    if (
+      transaction &&
+      transaction.status.toLowerCase() === txStatus.pending.toLowerCase() &&
+      transactionFetched
+    ) {
       fetchTransaction();
     }
   };
