@@ -6,9 +6,9 @@ import NetworkSwitcher from './NetworkSwitcher';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars';
 import { faMoon } from '@fortawesome/pro-regular-svg-icons/faMoon';
-import { faSun } from '@fortawesome/pro-regular-svg-icons/faSun';
 import NavLinks from './NavLinks';
 import Logo from './Logo';
+import { ReactComponent as Sun } from 'assets/img/sun.svg';
 import { useGlobalState, useGlobalDispatch } from 'context';
 
 export default function Navbar() {
@@ -69,7 +69,11 @@ export default function Navbar() {
                     className="nav-link nav-link-icon text-center"
                   >
                     <i className="material-icons icon-sm px-1 my-0 mx-2">
-                      <FontAwesomeIcon icon={theme === 'dark' ? faSun : faMoon} />
+                      {theme === 'dark' ? (
+                        <Sun className="sun" />
+                      ) : (
+                        <FontAwesomeIcon icon={faMoon} />
+                      )}
                     </i>
                   </a>
                 </li>
