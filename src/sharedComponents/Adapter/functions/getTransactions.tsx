@@ -139,10 +139,28 @@ export async function getAddressDetails({ proxyUrl, addressId, timeout }: Detail
 export async function getRewards({ proxyUrl, addressId, timeout }: DetailsType) {
   try {
     const {
-      data: { claimableRewards, userStake },
+      data: {
+        claimableRewards,
+        userActiveStake,
+        userDeferredPaymentStake,
+        userUnstakedStake,
+        userWaitingStake,
+        userWithdrawOnlyStake,
+      },
     } = await axios.get(`${proxyUrl}/addresses/${addressId}/delegation`, { timeout });
-    return { claimableRewards, userStake };
+
+    return {
+      claimableRewards,
+      userActiveStake,
+      userDeferredPaymentStake,
+      userUnstakedStake,
+      userWaitingStake,
+      userWithdrawOnlyStake,
+      success: true,
+    };
   } catch (err) {
-    return { claimableRewards: 0, userStake: 0 };
+    return {
+      success: false,
+    };
   }
 }
