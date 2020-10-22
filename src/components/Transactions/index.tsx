@@ -1,4 +1,5 @@
 import * as React from 'react';
+import BigNumber from 'bignumber.js';
 import { useLocation, useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { Loader, ShardSpan, TransactionsTable, adapter } from 'sharedComponents';
@@ -110,9 +111,12 @@ const Transactions = () => {
                   addCommas: false,
                 })
               );
+              const bNuserActiveStake = new BigNumber(data.userActiveStake);
+              const bNuserWaitingStake = new BigNumber(data.userWaitingStake);
+              const bNstake = bNuserActiveStake.plus(bNuserWaitingStake);
               const stake = parseFloat(
                 denominate({
-                  input: data.userActiveStake,
+                  input: bNstake.toString(10),
                   decimals,
                   denomination,
                   showLastNonZeroDecimal: false,
