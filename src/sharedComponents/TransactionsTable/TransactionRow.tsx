@@ -14,7 +14,8 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
   return (
     <tr className="animated fadeIn">
       <td>
-        {transaction.status.toLowerCase() === 'failed' && (
+        {(transaction.status.toLowerCase() === 'failed' ||
+          transaction.status.toLowerCase() === 'fail') && (
           <FontAwesomeIcon icon={faTimes} className="w300 mr-1" />
         )}
         {['not executed', 'invalid'].includes(transaction.status.toLowerCase()) && (

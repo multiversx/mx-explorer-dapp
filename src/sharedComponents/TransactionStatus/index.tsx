@@ -6,12 +6,17 @@ interface TransactionStatusType {
   status: string;
 }
 
+const capitalizeFirstLetter = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
 const TransactionStatus = ({ status }: TransactionStatusType) => {
   let Icon = () => <></>;
   switch (status.toLowerCase()) {
     case 'not executed':
       Icon = () => <FontAwesomeIcon icon={faBan} className="mr-2 text-danger" />;
       break;
+    case 'fail':
     case 'failed':
       Icon = () => <FontAwesomeIcon icon={faTimes} className="mr-2 text-danger" />;
       break;
@@ -28,7 +33,7 @@ const TransactionStatus = ({ status }: TransactionStatusType) => {
   return (
     <>
       <Icon />
-      {status}
+      {capitalizeFirstLetter(status)}
     </>
   );
 };
