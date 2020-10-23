@@ -16,6 +16,7 @@ const Search = () => {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
       onClick();
     }
   };
@@ -75,7 +76,10 @@ const Search = () => {
         <button
           type="submit"
           className="input-group-text"
-          onClick={onClick}
+          onClick={(e) => {
+            e.preventDefault();
+            onClick();
+          }}
           data-testid="searchButton"
         >
           <FontAwesomeIcon icon={faSearch} />
