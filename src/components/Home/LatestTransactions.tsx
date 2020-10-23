@@ -90,7 +90,7 @@ const LatestTransactions = () => {
                       key={transaction.txHash}
                       className={`row animated-row ${transaction.isNew && someNew ? 'new' : ''}`}
                     >
-                      <div className="col-6 d-flex align-items-center">
+                      <div className="col-6 d-flex align-items-center pr-0">
                         <div className="list-item-icon mr-3">
                           <FontAwesomeIcon icon={faExchangeAlt} />
                         </div>
