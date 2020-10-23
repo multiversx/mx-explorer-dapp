@@ -5,6 +5,7 @@ import React from 'react';
 import { addressIsBech32, dateFormatted, trimHash } from 'helpers';
 import { Denominate, ScAddressIcon, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
 import { TransactionType } from './index';
+import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 
 interface TransactionRowType {
   transaction: TransactionType;
@@ -12,17 +13,20 @@ interface TransactionRowType {
 }
 
 const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
+  const statusIs = (compareTo: string) =>
+    transaction.status.toLowerCase() === compareTo.toLowerCase();
+
   return (
     <tr className="animated fadeIn">
       <td>
-        {transaction.status === 'Failed' && (
+        {(statusIs(txStatus.failed) || statusIs(txStatus.fail)) && (
           <FontAwesomeIcon icon={faTimes} className="w300 mr-1" />
         )}
-        {['Not Executed', 'Invalid'].includes(transaction.status) && (
+        {(statusIs(txStatus.notExecuted) || statusIs(txStatus.invalid)) && (
           <FontAwesomeIcon icon={faBan} className="w300 mr-1" />
         )}
-        <TestnetLink to={`/transactions/${transaction.hash}`} data-testid="transactionLink">
-          {trimHash(transaction.hash)}
+        <TestnetLink to={`/transactions/${transaction.txHash}`} data-testid="transactionLink">
+          {trimHash(transaction.txHash)}
         </TestnetLink>
       </td>
       <td>

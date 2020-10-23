@@ -9,8 +9,11 @@ export type ActionType =
       type: 'updateNetworks';
       config: ConfigType;
     }
-  | { type: 'setValidatorData'; validatorData: StateType['validatorData'] }
-  | { type: 'setBrandData'; brandData: StateType['brandData'] }
+  | { type: 'setValidatorData'; validatorData: StateType['validatorData'] } // TODO: remove
+  | { type: 'setBrandData'; brandData: StateType['brandData'] } // TODO: remove
+  | { type: 'setNodes'; nodes: StateType['nodes'] }
+  | { type: 'setBrands'; brands: StateType['brands'] }
+  | { type: 'setVersionNumber'; versionNumber: StateType['versionNumber'] }
   | { type: 'triggerNewRound' }
   | { type: 'cancelAllRequests' }
   | {
@@ -50,6 +53,24 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
       return {
         ...state,
         validatorData,
+      };
+    }
+    case 'setNodes': {
+      return {
+        ...state,
+        nodes: action.nodes,
+      };
+    }
+    case 'setBrands': {
+      return {
+        ...state,
+        brands: action.brands,
+      };
+    }
+    case 'setVersionNumber': {
+      return {
+        ...state,
+        versionNumber: action.versionNumber,
       };
     }
     case 'setBrandData': {

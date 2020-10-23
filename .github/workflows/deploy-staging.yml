@@ -21,6 +21,8 @@ jobs:
           node-version: '12.x'
       - run: npm install
       - run: npm run build
+        env:
+          CI: false
       - name: copy file
         uses: canastro/copy-file-action@master
         with:

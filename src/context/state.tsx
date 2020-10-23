@@ -1,6 +1,6 @@
 import { InferType } from 'yup';
 import config, { defaultNetwork, schema, adapterSchema } from './config';
-import { validatorData, brandData } from './validators';
+import { validatorData, brandData, ValidatorType } from './validators';
 import { CancelTokenSource } from 'axios';
 import { storage } from 'helpers';
 
@@ -9,6 +9,20 @@ export type AdapterType = InferType<typeof adapterSchema>;
 
 export interface ConfigType {
   networks: NetworkType[];
+}
+
+export interface BrandType {
+  name: string;
+  avatar: string;
+  identity: string;
+  score: number;
+  stake: number;
+  twitter: string;
+  web: string;
+  location: string;
+  stakePercent: number;
+  overallStakePercent: number;
+  nodesCount: number;
 }
 
 export interface StateType {
@@ -21,9 +35,12 @@ export interface StateType {
   refresh: {
     timestamp: number;
   };
-  validatorData: typeof validatorData;
+  validatorData: typeof validatorData; // todo: remove
   brandData: typeof brandData;
   theme: string;
+  nodes: ValidatorType[];
+  brands: BrandType[];
+  versionNumber: string;
 }
 
 const initialState = (optionalConfig?: ConfigType): StateType => {
@@ -36,7 +53,7 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
     activeNetwork:
       configObject.networks.filter((network) => network.default).pop() || defaultNetwork,
     activeNetworkId: '',
-    timeout: 3 * 1000,
+    timeout: 10 * 1000,
     cancelToken: undefined,
     refresh: {
       timestamp: Date.now(),
@@ -44,6 +61,9 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
     validatorData,
     brandData,
     theme: getTheme(),
+    nodes: [],
+    brands: [],
+    versionNumber: '',
   };
 };
 

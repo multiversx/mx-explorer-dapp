@@ -16,6 +16,7 @@ import TransactionsTable from './TransactionsTable';
 import TransactionStatus from './TransactionStatus';
 import TooltipWithCopy from './TooltipWithCopy';
 import CopyButton from './CopyButton';
+import NodesTabs from './NodesTabs';
 import adapter from './Adapter';
 import TrimHash from './TrimHash';
 
@@ -33,6 +34,7 @@ export {
   Search,
   BlocksTable,
   Loader,
+  NodesTabs,
   TransactionsTable,
   TransactionStatus,
   TooltipWithCopy,

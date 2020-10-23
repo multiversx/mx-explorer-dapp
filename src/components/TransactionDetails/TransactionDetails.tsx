@@ -36,7 +36,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
       <div className="card-body card-details">
         <TransactionDetail label="Hash">
           <ScAddressIcon initiator={transaction.sender} secondInitiator={transaction.receiver} />
-          {transaction.hash}
+          {transaction.txHash}
         </TransactionDetail>
 
         <TransactionDetail label="Status">
@@ -44,15 +44,25 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
         </TransactionDetail>
 
         <TransactionDetail label="Timestamp">
-          <FontAwesomeIcon icon={faClock} className="mr-2" />
-          <TimeAgo value={transaction.timestamp} />
-          &nbsp;({dateFormatted(transaction.timestamp)})
+          {transaction.timestamp !== undefined ? (
+            <>
+              <FontAwesomeIcon icon={faClock} className="mr-2" />
+              <TimeAgo value={transaction.timestamp} />
+              &nbsp;({dateFormatted(transaction.timestamp)})
+            </>
+          ) : (
+            <span className="text-muted">N/A</span>
+          )}
         </TransactionDetail>
 
         <TransactionDetail label="Miniblock">
-          <TestnetLink to={`/miniblocks/${transaction.miniBlockHash}`}>
-            {transaction.miniBlockHash}
-          </TestnetLink>
+          {transaction.miniBlockHash ? (
+            <TestnetLink to={`/miniblocks/${transaction.miniBlockHash}`}>
+              {transaction.miniBlockHash}
+            </TestnetLink>
+          ) : (
+            <span className="text-muted">N/A</span>
+          )}
         </TransactionDetail>
 
         <TransactionDetail label="From">
@@ -100,15 +110,19 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
         </TransactionDetail>
 
         <TransactionDetail label="Transaction Fee">
-          <Denominate value={getFee(transaction)} showLastNonZeroDecimal />
+          {transaction.gasUsed !== undefined ? (
+            <Denominate value={getFee(transaction)} showLastNonZeroDecimal />
+          ) : (
+            <span className="text-muted">N/A</span>
+          )}
         </TransactionDetail>
 
         <TransactionDetail label="Gas Limit">
           {transaction.gasLimit.toLocaleString('en')}
         </TransactionDetail>
 
-        <TransactionDetail label="Gas Used">
-          {transaction.gasUsed.toLocaleString('en')}
+        <TransactionDetail label="Gas Used" disabled={!transaction.gasUsed}>
+          {transaction.gasUsed ? transaction.gasUsed.toLocaleString('en') : ''}
         </TransactionDetail>
 
         <TransactionDetail label="Gas Price">

@@ -32,14 +32,12 @@ export async function getBlocks({
       ...getShardOrEpochParam(shardId, epochId),
     };
 
-    const { data } = await provider({
+    const { data: blocks } = await provider({
       baseUrl,
       url: `/blocks`,
       params,
       timeout,
     });
-
-    const blocks = data.map((block: any) => ({ hash: block.id, ...block }));
 
     let min = blocks[0].nonce;
     let max = min;

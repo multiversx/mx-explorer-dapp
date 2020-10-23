@@ -1,9 +1,11 @@
 export interface ValidatorType {
   computedShardID: number;
   publicKey: string;
-  isActive: boolean;
+  isActive: boolean; // remove
   isValidator: boolean;
   peerType: 'waiting' | 'eligible' | 'observer' | 'new' | 'jailed';
+  nodeType: 'observer' | 'validator';
+  status: 'online' | 'offline';
   nodeDisplayName: string;
   identity: string;
   receivedShardID: number;
@@ -11,7 +13,7 @@ export interface ValidatorType {
   totalDownTimeSec: number;
   totalUpTimeSec: number;
   versionNumber: string;
-  shardId: string;
+  shardId: string; // remove
   shardNumber: number;
   rating: number;
   ratingModifier: number;

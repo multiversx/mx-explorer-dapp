@@ -54,9 +54,6 @@ export default function useAdapter() {
     getTransaction: ({ transactionId }: { transactionId: string }) =>
       f.getTransaction({ provider, baseUrl, transactionId, timeout }),
 
-    getPendingTransaction: ({ transactionId }: { transactionId: string }) =>
-      f.getPendingTransaction({ proxyUrl, transactionId, timeout }),
-
     /* Miniblocks */
 
     getMiniBlock: ({ miniBlockHash }: { miniBlockHash: string }) =>
@@ -91,6 +88,18 @@ export default function useAdapter() {
       f.getRewards({ proxyUrl, timeout, addressId }),
 
     /* Validators */
+
+    getNodes: ({
+      searchValue,
+      peerType,
+      issues,
+    }: {
+      searchValue?: string;
+      peerType?: string;
+      issues?: string;
+    }) => f.getNodes({ provider, baseUrl, timeout, searchValue, peerType, issues }),
+
+    getNetworkConfig: () => f.getNetworkConfig({ proxyUrl, timeout }),
 
     getRounds: ({ shardNumber, signersIndex, epoch, roundAtEpochStart }: f.GetRoundsType) =>
       f.getRounds({

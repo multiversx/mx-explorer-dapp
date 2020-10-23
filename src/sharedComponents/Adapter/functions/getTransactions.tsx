@@ -44,14 +44,12 @@ export async function getTransactions({
   };
 
   try {
-    let { data } = await provider({
+    const { data } = await provider({
       baseUrl,
       url: `/transactions`,
       params,
       timeout,
     });
-
-    data = data.map((entry: any) => ({ hash: entry.id, ...entry }));
 
     return {
       data,
@@ -81,7 +79,7 @@ export async function getTransactionsCount({
 
     const { data } = await provider({
       baseUrl,
-      url: `/transactions/count`,
+      url: `/transactions-alt/count`,
       params,
       timeout,
     });
@@ -141,10 +139,28 @@ export async function getAddressDetails({ proxyUrl, addressId, timeout }: Detail
 export async function getRewards({ proxyUrl, addressId, timeout }: DetailsType) {
   try {
     const {
-      data: { claimableRewards, userStake },
-    } = await axios.get(`${proxyUrl}/delegations/${addressId}`, { timeout });
-    return { claimableRewards, userStake };
+      data: {
+        claimableRewards,
+        userActiveStake,
+        userDeferredPaymentStake,
+        userUnstakedStake,
+        userWaitingStake,
+        userWithdrawOnlyStake,
+      },
+    } = await axios.get(`${proxyUrl}/addresses/${addressId}/delegation`, { timeout });
+
+    return {
+      claimableRewards,
+      userActiveStake,
+      userDeferredPaymentStake,
+      userUnstakedStake,
+      userWaitingStake,
+      userWithdrawOnlyStake,
+      success: true,
+    };
   } catch (err) {
-    return { claimableRewards: 0, userStake: 0 };
+    return {
+      success: false,
+    };
   }
 }

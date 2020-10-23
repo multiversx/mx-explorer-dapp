@@ -1,7 +1,9 @@
 import { AxiosResponse } from 'axios';
 import getHighlights from './getHighlights';
 import getLatestBlocks from './getLatestBlocks';
+import getNodes from './getNodes';
 import getLatestTransactions from './getLatestTransactions';
+import getNetworkConfig from './getNetworkConfig';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
 import getBlock, { BlockType as BlockInterface } from './getBlock';
 import {
@@ -11,7 +13,7 @@ import {
   getRewards,
   TransactionsType as TransactionsInterface,
 } from './getTransactions';
-import { getTransaction, getPendingTransaction } from './getTransaction';
+import { getTransaction } from './getTransaction';
 import {
   getMiniBlock,
   getMiniBlockTransactions,
@@ -43,6 +45,9 @@ export interface ProviderPropsType {
     round?: number;
     from?: number;
     size?: number;
+    searchValue?: string;
+    peerType?: string;
+    issues?: string;
   };
   timeout: number;
 }
@@ -69,7 +74,6 @@ export {
   getBlocks,
   getBlocksCount,
   getTransaction,
-  getPendingTransaction,
   getMiniBlock,
   getMiniBlockTransactions,
   getMiniBlockTransactionsCount,
@@ -83,4 +87,6 @@ export {
   getRounds,
   searchBlocks,
   getValidator,
+  getNodes,
+  getNetworkConfig,
 };

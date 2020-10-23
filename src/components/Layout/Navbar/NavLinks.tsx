@@ -52,7 +52,11 @@ export default function NavLinks({ expanded = false, setExpanded = () => null }:
       </TestnetLink>
 
       <TestnetLink
-        className={`nav-link ${pathname.toString().includes('validators') ? 'active' : ''}`}
+        className={`nav-link ${
+          pathname.toString().includes('nodes') || pathname.toString().includes('validators')
+            ? 'active'
+            : ''
+        }`}
         to="/validators"
         onClick={() => onToggle(false)}
       >

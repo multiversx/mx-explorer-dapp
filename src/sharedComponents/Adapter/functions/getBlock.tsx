@@ -109,13 +109,11 @@ export default async function getBlock({
   blockId = '',
 }: AdapterFunctionType & { blockId: string }) {
   try {
-    const { data } = await provider({
+    const { data: block } = await provider({
       baseUrl,
       url: `/blocks/${blockId}`,
       timeout,
     });
-
-    const block = { hash: data.id, ...data };
 
     const hit = await searchCall({
       provider,

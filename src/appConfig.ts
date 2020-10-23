@@ -13,24 +13,14 @@ export const elrondApps = [
     to: '', // fetched from config
   },
   {
-    id: 'bridge',
-    name: 'Bridge',
-    to: 'https://bridge.elrond.com/',
-  },
-  {
-    id: 'staking',
-    name: 'Staking',
-    to: 'https://genesis.elrond.com',
-  },
-  {
-    id: 'pre-staking',
-    name: 'Pre-staking',
-    to: 'https://stake.elrond.com',
-  },
-  {
     id: 'explorer',
     name: 'Explorer',
     to: '', // fetched from config
+  },
+  {
+    id: 'bridge',
+    name: 'Bridge',
+    to: 'https://bridge.elrond.com/',
   },
   {
     id: 'docs',
