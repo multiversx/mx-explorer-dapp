@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { Loader, adapter } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import Details from './TransactionDetails';
-import PendingTransaction, { PendingTransactionType } from './PendingTransaction';
+import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 
 const TransactionDetails: React.FC = () => {
   const params: any = useParams();
@@ -17,45 +17,32 @@ const TransactionDetails: React.FC = () => {
     refresh: { timestamp },
   } = useGlobalState();
 
-  const { getTransaction, getPendingTransaction } = adapter();
+  const { getTransaction } = adapter();
 
-  const [transaction, setTransaction] = React.useState<TransactionType | undefined>(undefined);
-  const [pendingTransaction, setPendingTransaction] = React.useState<
-    PendingTransactionType | undefined
-  >(undefined);
-  const [transactionFetched, setTransactionFetched] = React.useState<boolean>(true);
+  const [transaction, setTransaction] = React.useState<TransactionType | undefined>();
+  const [transactionFetched, setTransactionFetched] = React.useState<boolean | undefined>();
 
   const fetchTransaction = React.useCallback(() => {
     if (transactionId && ref.current !== null) {
-      getTransaction({ transactionId })
-        .then(({ data, transactionFetched }) => {
-          if (transactionFetched) {
-            setTransaction(data);
-            setPendingTransaction(undefined);
-            setTransactionFetched(true);
-          }
-        })
-        .catch(() => {
-          getPendingTransaction({ transactionId }).then(({ data, transactionFetched }) => {
-            if (transactionFetched) {
-              setPendingTransaction(data);
-              setTransactionFetched(true);
-            } else {
-              if (ref.current !== null) {
-                setTransactionFetched(false);
-              }
-            }
-          });
-        });
+      getTransaction({ transactionId }).then(({ data, transactionFetched }) => {
+        if (transactionFetched) {
+          setTransaction(data);
+          setTransactionFetched(true);
+        } else {
+          setTransactionFetched(false);
+        }
+      });
     }
-  }, [getPendingTransaction, getTransaction, transactionId]);
+  }, [getTransaction, transactionId]);
 
   React.useEffect(fetchTransaction, []);
 
   const checkRefetch = () => {
-    const transactionIsPending =
-      transaction && !['Not Executed', 'Failed', 'Success'].includes(transaction.status);
-    if (transactionIsPending || pendingTransaction !== undefined) {
+    if (
+      transaction &&
+      transaction.status.toLowerCase() === txStatus.pending.toLowerCase() &&
+      transactionFetched
+    ) {
       fetchTransaction();
     }
   };
@@ -72,27 +59,23 @@ const TransactionDetails: React.FC = () => {
         </div>
         <div className="row">
           <div className="col-12">
-            {!transactionFetched ? (
-              <div className="card" data-testid="errorScreen">
-                <div className="card-body card-details">
-                  <div className="empty">
-                    <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
-                    <span className="h4 empty-heading">Unable to locate this transaction hash</span>
-                  </div>
-                </div>
-              </div>
+            {transactionFetched === undefined ? (
+              <Loader />
             ) : (
               <>
-                {transaction ? (
-                  <Details transaction={transaction} />
+                {transactionFetched === false ? (
+                  <div className="card" data-testid="errorScreen">
+                    <div className="card-body card-details">
+                      <div className="empty">
+                        <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
+                        <span className="h4 empty-heading">
+                          Unable to locate this transaction hash
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 ) : (
-                  <>
-                    {pendingTransaction ? (
-                      <PendingTransaction transaction={pendingTransaction} />
-                    ) : (
-                      <Loader />
-                    )}
-                  </>
+                  <>{transaction && <Details transaction={transaction} />}</>
                 )}
               </>
             )}

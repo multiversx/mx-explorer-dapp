@@ -1,5 +1,5 @@
 export default {
-  id: 'c51471d4b6a439af44c51bff7372c4f02a8c98ba3bf81e7e080fe461c074d1c1',
+  hash: 'c51471d4b6a439af44c51bff7372c4f02a8c98ba3bf81e7e080fe461c074d1c1',
   nonce: 547,
   round: 608,
   epoch: 0,

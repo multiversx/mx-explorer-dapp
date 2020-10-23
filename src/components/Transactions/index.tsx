@@ -1,4 +1,5 @@
 import * as React from 'react';
+import BigNumber from 'bignumber.js';
 import { useLocation, useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { Loader, ShardSpan, TransactionsTable, adapter } from 'sharedComponents';
@@ -99,26 +100,31 @@ const Transactions = () => {
             stake,
             claimableRewards,
           }));
-          getRewards({ addressId }).then((data: any) => {
-            const rewards = parseFloat(
-              denominate({
-                input: data.claimableRewards,
-                decimals,
-                denomination,
-                showLastNonZeroDecimal: false,
-                addCommas: false,
-              })
-            );
-            const stake = parseFloat(
-              denominate({
-                input: data.userStake,
-                decimals,
-                denomination,
-                showLastNonZeroDecimal: false,
-                addCommas: false,
-              })
-            );
-            setAddressDetails((details) => ({ ...details, claimableRewards: rewards, stake }));
+          getRewards({ addressId }).then((data) => {
+            if (data.success) {
+              const rewards = parseFloat(
+                denominate({
+                  input: data.claimableRewards,
+                  decimals,
+                  denomination,
+                  showLastNonZeroDecimal: false,
+                  addCommas: false,
+                })
+              );
+              const bNuserActiveStake = new BigNumber(data.userActiveStake);
+              const bNuserWaitingStake = new BigNumber(data.userWaitingStake);
+              const bNstake = bNuserActiveStake.plus(bNuserWaitingStake);
+              const stake = parseFloat(
+                denominate({
+                  input: bNstake.toString(10),
+                  decimals,
+                  denomination,
+                  showLastNonZeroDecimal: false,
+                  addCommas: false,
+                })
+              );
+              setAddressDetails((details) => ({ ...details, claimableRewards: rewards, stake }));
+            }
             setAddressDetailsLoading(false);
           });
         }

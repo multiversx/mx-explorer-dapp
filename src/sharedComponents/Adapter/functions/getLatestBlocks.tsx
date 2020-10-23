@@ -11,10 +11,8 @@ export default async function getLatestBlocks({ provider, baseUrl, timeout }: Ad
       timeout,
     });
 
-    const blocks = data.map((block: any) => ({ hash: block.id, ...block }));
-
     return {
-      data: blocks,
+      data,
       blocksFetched: data.length > 0,
     };
   } catch {

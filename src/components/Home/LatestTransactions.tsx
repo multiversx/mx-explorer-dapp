@@ -43,10 +43,10 @@ const LatestTransactions = () => {
               }));
               setTransactions(newTransactions);
             } else {
-              const existingHashes = transactions.map((b) => b.hash);
+              const existingHashes = transactions.map((b) => b.txHash);
               const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
                 ...transaction,
-                isNew: !existingHashes.includes(transaction.hash),
+                isNew: !existingHashes.includes(transaction.txHash),
               }));
               setTransactions(newTransactions);
             }
@@ -87,7 +87,7 @@ const LatestTransactions = () => {
                 <div className="animated-list" data-testid="transactionsList">
                   {transactions.map((transaction, i) => (
                     <div
-                      key={transaction.hash}
+                      key={transaction.txHash}
                       className={`row animated-row ${transaction.isNew && someNew ? 'new' : ''}`}
                     >
                       <div className="col-6 d-flex align-items-center">
@@ -102,10 +102,10 @@ const LatestTransactions = () => {
                             />
                             <div className="content-fill">
                               <TestnetLink
-                                to={`/transactions/${transaction.hash}`}
+                                to={`/transactions/${transaction.txHash}`}
                                 data-testid={`transactionLink${i}`}
                               >
-                                <TrimHash text={transaction.hash} />
+                                <TrimHash text={transaction.txHash} />
                               </TestnetLink>
                             </div>
                           </div>

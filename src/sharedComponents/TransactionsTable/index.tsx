@@ -8,7 +8,7 @@ export interface TransactionType {
   gasLimit: number;
   gasPrice: number;
   gasUsed: number;
-  hash: string;
+  txHash: string;
   miniBlockHash: string;
   nonce: number;
   receiver: string;
@@ -67,7 +67,7 @@ const TransactionsTable = ({
               {transactions.map((transaction) => (
                 <TransactionRow
                   transaction={transaction}
-                  key={transaction.hash}
+                  key={transaction.txHash}
                   addressId={addressId}
                 />
               ))}
