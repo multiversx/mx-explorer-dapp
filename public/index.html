@@ -48,15 +48,14 @@
     <meta property="og:image" content="https://explorer.elrond.com/share.jpg" />
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140910543-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=%REACT_APP_GA_ID%"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
       gtag('js', new Date());
-
-      gtag('config', 'UA-140910543-1');
+      gtag('config', '%REACT_APP_GA_ID%');
     </script>
     <!-- Website configuration file -->
     <script src="%PUBLIC_URL%/config.js?cachebust=%REACT_APP_CACHE_BUST%"></script>
