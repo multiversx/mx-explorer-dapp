@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className="home">
       <Hero />
-      <div className="container pt-3 pb-3">
+      <div className="container py-spacer">
         <div className="row">
           <div className="col-lg-6 mt-4 mb-4">
             <LatestBlocks />
