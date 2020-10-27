@@ -70,9 +70,7 @@ const LatestBlocks = () => {
           <>
             <div className="card-header border-bottom d-flex justify-content-between align-items-center">
               <h6 className="m-0">Latest Blocks</h6>
-              <small>
-                <TestnetLink to="/blocks">View All Blocks</TestnetLink>
-              </small>
+              <TestnetLink to="/blocks">View All Blocks</TestnetLink>
             </div>
             <div className="card-body card-scroll py-0">
               {blocks.length ? (

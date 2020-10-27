@@ -100,16 +100,18 @@ const BlockDetails: React.FC = () => {
                                   </TestnetLink>
                                 </div>
                               </li>
-                              <li className="ml-2 list-inline-item">
-                                <div className="pager">
-                                  <TestnetLink
-                                    data-testid="nextPageButton"
-                                    to={`/blocks/${nextHash}`}
-                                  >
-                                    Next <FontAwesomeIcon icon={faChevronRight} />
-                                  </TestnetLink>
-                                </div>
-                              </li>
+                              {nextHash !== '' && (
+                                <li className="ml-2 list-inline-item">
+                                  <div className="pager">
+                                    <TestnetLink
+                                      data-testid="nextPageButton"
+                                      to={`/blocks/${nextHash}`}
+                                    >
+                                      Next <FontAwesomeIcon icon={faChevronRight} />
+                                    </TestnetLink>
+                                  </div>
+                                </li>
+                              )}
                             </ul>
                           </div>
                         </div>
