@@ -29,12 +29,11 @@ function isValidInt(number: number) {
 }
 
 const Blocks: React.FC = () => {
-  const { page, shard, epoch } = useParams() as any;
+  const { page, shard } = useParams() as any;
   const shardId = parseInt(shard!) >= 0 ? parseInt(shard!) : undefined;
-  const epochId = parseInt(epoch!) >= 0 ? parseInt(epoch!) : undefined;
 
   const ref = React.useRef(null);
-  const size = !isNaN(page as any) ? parseInt(page as any) : 1;
+  const size = !isNaN(page) ? parseInt(page) : 1;
   const [state, setState] = React.useState<StateType>(initialState);
   const [totalBlocks, setTotalBlocks] = React.useState<number | string>('...');
 
@@ -49,7 +48,7 @@ const Blocks: React.FC = () => {
 
   const fetchBlocks = () => {
     if (ref.current !== null) {
-      getBlocks({ size, shardId, epochId }).then((data) => {
+      getBlocks({ size, shardId, epochId: undefined }).then((data) => {
         if (ref.current !== null) {
           if (data.blocksFetched) {
             setState(data);
@@ -59,7 +58,7 @@ const Blocks: React.FC = () => {
         }
       });
 
-      getBlocksCount({ size, shardId, epochId }).then(({ count, success }) => {
+      getBlocksCount({ size, shardId }).then(({ count, success }) => {
         if (ref.current !== null && success) {
           setTotalBlocks(count);
         }
@@ -69,15 +68,7 @@ const Blocks: React.FC = () => {
 
   React.useEffect(fetchBlocks, [activeNetworkId, size, shardId, refreshFirstPage]); // run the operation only once since the parameter does not change
 
-  let slug = 'blocks';
-  switch (true) {
-    case !isNaN(shardId!):
-      slug = `blocks/shards/${shardId}`;
-      break;
-    case !isNaN(epochId!):
-      slug = `blocks/epoch/${epochId}`;
-      break;
-  }
+  const slug = !isNaN(shardId!) ? `blocks/shards/${shardId}` : 'blocks';
 
   const Component = () => {
     return (

@@ -14,7 +14,7 @@ const getShardOrEpochParam = (shardId: number | undefined, epoch: number | undef
 export interface GetBlocksParamsType {
   size?: number;
   shardId: number | undefined;
-  epochId: number | undefined;
+  epochId?: number;
 }
 
 export async function getBlocks({
