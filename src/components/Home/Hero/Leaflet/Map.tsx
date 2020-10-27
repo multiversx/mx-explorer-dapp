@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MapDisplayType, getRadius, getGroupedCities } from './helpers/processing';
 import Icon from './Icon';
 import Control from 'react-leaflet-control';
-//import './leaflet.scss';
 
 export default function MapDisplay({
   markers,

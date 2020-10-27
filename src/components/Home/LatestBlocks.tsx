@@ -11,14 +11,14 @@ type LatestBlockType = BlockType & {
   isNew: boolean;
 };
 
-const LatestBlocks: React.FC = () => {
+const LatestBlocks = () => {
   const ref = React.useRef(null);
   const {
     activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
   const [blocks, setBlocks] = React.useState<LatestBlockType[]>([]);
-  const [blocksFetched, setBlocksFetched] = React.useState<boolean>(true);
+  const [blocksFetched, setBlocksFetched] = React.useState(true);
 
   const { getLatestBlocks } = adapter();
 

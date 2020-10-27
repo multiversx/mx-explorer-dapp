@@ -26,7 +26,7 @@ const LatestTransactions = () => {
     refresh: { timestamp },
   } = useGlobalState();
   const [transactions, setTransactions] = React.useState<LatestTransactionType[]>([]);
-  const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
+  const [transactionsFetched, setTransactionsFetched] = React.useState(true);
 
   const { getLatestTransactions } = adapter();
 

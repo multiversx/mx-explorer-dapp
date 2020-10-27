@@ -20,7 +20,7 @@ const Pager = ({
   end: number;
   show: boolean;
 }) => {
-  const { page } = useParams();
+  const { page } = useParams() as any;
   const size = !isNaN(page as any) ? parseInt(page as any) : 1;
   const prevPageNo = size === 2 ? `/${slug}` : `/${slug}/page/${size - 1}`;
 
