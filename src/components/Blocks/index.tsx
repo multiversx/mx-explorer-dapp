@@ -1,6 +1,7 @@
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
+import { useURLSearchParams } from 'helpers';
 import * as React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'sharedComponents';
@@ -29,11 +30,13 @@ function isValidInt(number: number) {
 }
 
 const Blocks: React.FC = () => {
-  const { page, shard } = useParams() as any;
+  const { shard } = useParams() as any;
   const shardId = parseInt(shard!) >= 0 ? parseInt(shard!) : undefined;
 
+  const { page } = useURLSearchParams();
+
   const ref = React.useRef(null);
-  const size = !isNaN(page) ? parseInt(page) : 1;
+  const size = !isNaN(parseInt(page)) ? parseInt(page) : 1;
   const [state, setState] = React.useState<StateType>(initialState);
   const [totalBlocks, setTotalBlocks] = React.useState<number | string>('...');
 
@@ -111,15 +114,11 @@ const Blocks: React.FC = () => {
                         </p>
                         <BlocksTable blocks={state.blocks} shardId={shardId} />
                         <Pager
+                          page={page}
                           slug={slug}
                           total={10000}
-                          start={(size - 1) * 25 + (size === 1 ? 1 : 0)}
-                          end={
-                            (size - 1) * 25 +
-                            (parseInt(totalBlocks.toString()) < 25
-                              ? parseInt(totalBlocks.toString())
-                              : 25)
-                          }
+                          itemsPerPage={25}
+                          max={parseInt(totalBlocks.toString())}
                           show={state.blocks.length > 0}
                         />
                       </div>

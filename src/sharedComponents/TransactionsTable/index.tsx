@@ -77,18 +77,14 @@ const TransactionsTable = ({
 
         <Pager
           slug={slug}
+          itemsPerPage={50}
+          page={String(size)}
           total={
             !isNaN(parseInt(totalTransactions.toString()))
               ? Math.min(parseInt(totalTransactions.toString()), 10000)
               : totalTransactions
           }
-          start={(size - 1) * 50 + (size === 1 ? 1 : 0)}
-          end={
-            (size - 1) * 50 +
-            (parseInt(totalTransactions.toString()) < 50
-              ? parseInt(totalTransactions.toString())
-              : 50)
-          }
+          max={parseInt(totalTransactions.toString())}
           show={transactions.length > 0}
         />
       </div>
