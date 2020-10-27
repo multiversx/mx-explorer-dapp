@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void }) {
   const globalState = useGlobalState();
 
-  const liksArray = globalState.config.networks.map((network) => ({
+  const linksArray = globalState.config.networks.map((network) => ({
     name: network.name,
     to: network.id === globalState.defaultNetwork.id ? '' : network.id,
     key: network.id,
@@ -61,7 +61,7 @@ export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void })
         id="network-switcher-dropdown"
         alignRight
       >
-        {liksArray.map((link) => {
+        {linksArray.map((link) => {
           return (
             <Link
               className={`dropdown-item ${globalState.activeNetworkId === link.to ? 'active' : ''}`}
