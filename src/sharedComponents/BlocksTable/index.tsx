@@ -26,18 +26,6 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
                   {block.nonce}
                 </TestnetLink>
               </td>
-              {/* <td>
-                {epochId !== undefined ? (
-                  epochId
-                ) : (
-                  <TestnetLink
-                    to={`/blocks/epoch/${block.epoch}`}
-                    data-testid={`blockShardLink${i}`}
-                  >
-                    {block.epoch}
-                  </TestnetLink>
-                )}
-              </td> */}
               <td>
                 <span title={dateFormatted(block.timestamp)}>
                   <TimeAgo value={block.timestamp} />
