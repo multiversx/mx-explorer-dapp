@@ -2,10 +2,10 @@ import * as React from 'react';
 import { useGlobalState } from 'context';
 import Leaflet from './Leaflet';
 
-const HeroHighlights = () => {
+const Hero = () => {
   const { activeNetwork } = useGlobalState();
-  const isMain = activeNetwork.name.toLocaleLowerCase() === 'mainnet';
-  return isMain ? (
+  const isMainnet = activeNetwork.name.toLowerCase() === 'mainnet';
+  return isMainnet ? (
     <div className="bg-black">
       <div className="container-fluid">
         <div className="row">
@@ -20,4 +20,4 @@ const HeroHighlights = () => {
   ) : null;
 };
 
-export default HeroHighlights;
+export default Hero;
