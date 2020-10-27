@@ -96,7 +96,7 @@ async function getNextBlock({
       timeout,
     });
 
-    return data[0] ? data[0].id : '';
+    return data[0] ? data[0].hash : '';
   } catch {
     return '';
   }
