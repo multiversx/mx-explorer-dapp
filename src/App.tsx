@@ -24,40 +24,38 @@ export const Routes = ({
 
   return useMemo(
     () => (
-      <React.Suspense fallback={<span>Loading...</span>}>
-        <Switch>
-          {networks.map((network: NetworkType, i: number) => {
-            return routes.map((route, i) => {
-              return (
-                <Route
-                  path={`/${network.id}${route.path}`}
-                  key={network.id + route.path}
-                  exact={true}
-                  component={route.component}
-                />
-              );
-            });
-          })}
-          <Route
-            path={`${activeNetwork.id}/:any`}
-            key={activeNetwork.id + '404'}
-            exact={true}
-            component={PageNotFoud}
-          />
-          ,
-          {routes.map((route, i) => {
+      <Switch>
+        {networks.map((network: NetworkType, i: number) => {
+          return routes.map((route, i) => {
             return (
               <Route
-                path={route.path}
-                key={route.path + i}
-                component={route.component}
+                path={`/${network.id}${route.path}`}
+                key={network.id + route.path}
                 exact={true}
+                component={route.component}
               />
             );
-          })}
-          <Route component={PageNotFoud} />
-        </Switch>
-      </React.Suspense>
+          });
+        })}
+        <Route
+          path={`${activeNetwork.id}/:any`}
+          key={activeNetwork.id + '404'}
+          exact={true}
+          component={PageNotFoud}
+        />
+        ,
+        {routes.map((route, i) => {
+          return (
+            <Route
+              path={route.path}
+              key={route.path + i}
+              component={route.component}
+              exact={true}
+            />
+          );
+        })}
+        <Route component={PageNotFoud} />
+      </Switch>
     ),
     [networks, activeNetwork, routes]
   );
