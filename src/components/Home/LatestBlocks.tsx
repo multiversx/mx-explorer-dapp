@@ -1,10 +1,17 @@
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
-import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons/faSpinnerThird';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useGlobalState } from 'context';
 import { dateFormatted } from 'helpers';
-import { ShardSpan, TestnetLink, TimeAgo, adapter, TrimHash, PageState } from 'sharedComponents';
+import {
+  ShardSpan,
+  TestnetLink,
+  TimeAgo,
+  adapter,
+  TrimHash,
+  PageState,
+  Loader,
+} from 'sharedComponents';
 import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 
 type LatestBlockType = BlockType & {
@@ -118,18 +125,7 @@ const LatestBlocks = () => {
                   ))}
                 </div>
               ) : (
-                <PageState
-                  title="Loading..."
-                  symbol={
-                    <FontAwesomeIcon
-                      icon={faSpinnerThird}
-                      size="5x"
-                      className="text-primary fa-spin fast-spin"
-                    />
-                  }
-                  dataTestId="blocksLoader"
-                  className="py-spacer d-flex h-100 align-items-center justify-content-center"
-                />
+                <Loader dataTestId="blocksLoader" hideCard />
               )}
             </div>
           </>

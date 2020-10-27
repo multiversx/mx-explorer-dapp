@@ -1,5 +1,4 @@
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
-import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons/faSpinnerThird';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { addressIsBech32, dateFormatted } from 'helpers';
@@ -12,6 +11,7 @@ import {
   adapter,
   PageState,
   TrimHash,
+  Loader,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 
@@ -141,18 +141,7 @@ const LatestTransactions = () => {
                   ))}
                 </div>
               ) : (
-                <PageState
-                  title="Loading..."
-                  symbol={
-                    <FontAwesomeIcon
-                      icon={faSpinnerThird}
-                      size="5x"
-                      className="text-primary fa-spin fast-spin"
-                    />
-                  }
-                  dataTestId="transactionsLoader"
-                  className="py-spacer d-flex h-100 align-items-center justify-content-center"
-                />
+                <Loader dataTestId="transactionsLoader" hideCard />
               )}
             </div>
           </>
