@@ -68,7 +68,9 @@ describe('Latest Blocks', () => {
     const render = beforeAll();
     // correct way to get rid of not wrapped in act
     // https://stackoverflow.com/a/60164821/4264699
-    const blocksLoader = await waitForElement(() => render.queryByTestId('blocksLoader'));
+    // const blocksLoader = await waitForElement(() => render.queryByTestId('blocksLoader'));
+
+    const blocksLoader = await render.findByTestId('blocksLoader');
     expect(blocksLoader).toBeDefined();
   });
 
@@ -111,7 +113,9 @@ describe('Latest Blocks Links', () => {
     const blockHashLink = await render.findByTestId('blockHashLink0');
     expect(blockHashLink).toBeInTheDocument();
 
-    expect(blockHashLink.innerHTML).toBe('7d6df53015...fcf9990698');
+    expect(blockHashLink.innerHTML).toBe(
+      '7d6df53015199a0991bc03cb8c60c8084dce5ead1a60c7eadafa4dfcf9990698'
+    );
     fireEvent.click(blockHashLink);
     await wait(async () => {
       expect(document.title).toEqual('Block Details • Elrond Explorer');
