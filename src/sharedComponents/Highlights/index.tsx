@@ -1,8 +1,13 @@
 import React from 'react';
 import moment from 'moment';
+import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
+import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
+import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
+import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
+import { faStopwatch } from '@fortawesome/pro-regular-svg-icons/faStopwatch';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { adapter } from 'sharedComponents';
-import DefaultHighlights from './DefaultHighlights';
 import { refreshRate } from 'appConfig';
 
 export interface StateType {
@@ -20,6 +25,24 @@ export interface StateType {
   epoch: string;
 }
 
+interface ItemType {
+  title: string;
+  value: string;
+  icon: typeof faCube;
+}
+
+const Item = ({ title, value, icon }: ItemType) => (
+  <li className="my-3">
+    <div className="highlight-item d-flex align-items-center">
+      <FontAwesomeIcon className="fa-2x" icon={icon} />
+      <div className="d-flex flex-column ml-3">
+        <small className="mb-1 text-capitalize">{title}</small>
+        <span className="h5 mb-0 font-weight-normal">{value}</span>
+      </div>
+    </div>
+  </li>
+);
+
 const initialState = {
   blockNumber: '...',
   nrOfNodes: '...',
@@ -35,15 +58,7 @@ const initialState = {
   epochTimeRemaining: '',
 };
 
-const Hightlights = ({
-  hero = false,
-  setLiveTps = () => {
-    return;
-  },
-}: {
-  hero?: boolean;
-  setLiveTps?: React.Dispatch<React.SetStateAction<any>>;
-}) => {
+const Hightlights = () => {
   const {
     activeNetworkId,
     refresh: { timestamp },
@@ -95,7 +110,6 @@ const Hightlights = ({
         if (ref.current !== null) {
           const sameTestnet = oldTestnetId === activeNetworkId;
           if (success || (!success && !sameTestnet)) {
-            setLiveTps(data.liveTPS);
             setState((state) => ({
               ...state,
               [activeNetworkId]: newState,
@@ -106,13 +120,58 @@ const Hightlights = ({
     }
   };
 
-  React.useEffect(getData, [timestamp, activeNetworkId]); // run the operation only once since the parameter does not change
+  React.useEffect(getData, [timestamp, activeNetworkId]);
 
-  const props = activeNetworkId in state ? state[activeNetworkId] : initialState;
+  const {
+    blockNumber,
+    epochTimeRemaining,
+    epochPercentage,
+    nrOfShards,
+    peakTPS,
+    totalProcessedTxCount,
+    epoch,
+  } = activeNetworkId in state ? state[activeNetworkId] : initialState;
 
   return (
     <div ref={ref}>
-      <DefaultHighlights {...props} />
+      <div className="highligths bg-primary">
+        <div className="container">
+          <div className="row">
+            <div className="col my-4">
+              <ul className="list-unstyled d-flex flex-wrap justify-content-between m-0 p-0">
+                <li className="my-3">
+                  <div className="highlight-item d-flex align-items-center">
+                    <FontAwesomeIcon className="fa-2x" icon={faClock} />
+                    <div className="d-flex flex-column ml-3">
+                      <small className="mb-1 epoch-label">EPOCH</small>
+                      <span className="d-flex">
+                        <span className="h5 mb-0 current-epoch">{epoch}</span>
+                        {epochTimeRemaining !== '...' && (
+                          <div className="px-2">
+                            <div className="epoch-time d-flex flex-column">
+                              <div className="epoch-progress">
+                                <div className="fill" style={{ width: `${epochPercentage}%` }}>
+                                  &nbsp;
+                                </div>
+                              </div>
+                              <small>{epochTimeRemaining} remaining</small>
+                            </div>
+                          </div>
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                </li>
+
+                <Item icon={faCube} title="Blocks" value={blockNumber} />
+                <Item icon={faLayerGroup} title="Shards" value={nrOfShards} />
+                <Item icon={faStopwatch} title="Peak Tps" value={peakTPS} />
+                <Item icon={faExchangeAlt} title="Transactions" value={totalProcessedTxCount} />
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
