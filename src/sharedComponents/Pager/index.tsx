@@ -4,25 +4,47 @@ import { faAngleDoubleRight } from '@fortawesome/pro-regular-svg-icons/faAngleDo
 import { faAngleDoubleLeft } from '@fortawesome/pro-regular-svg-icons/faAngleDoubleLeft';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import TestnetLink from './../TestnetLink';
 
 const Pager = ({
   slug,
   total,
-  start,
-  end,
   show,
+  page,
+  max,
+  itemsPerPage,
 }: {
   slug: string;
+  page: string;
   total: number | string;
-  start: number;
-  end: number;
+  itemsPerPage: number;
+  max: number;
   show: boolean;
 }) => {
-  const { page } = useParams() as any;
-  const size = !isNaN(page as any) ? parseInt(page as any) : 1;
-  const prevPageNo = size === 2 ? `/${slug}` : `/${slug}/page/${size - 1}`;
+  const urlParams = new URLSearchParams(useLocation().search);
+  const params = Object.fromEntries(urlParams);
+
+  const size = !isNaN(parseInt(page)) ? parseInt(page) : 1;
+
+  const start = (size - 1) * itemsPerPage + (size === 1 ? 1 : 0);
+  const end = (size - 1) * itemsPerPage + (max < itemsPerPage ? max : itemsPerPage);
+
+  const nextUrlParams = new URLSearchParams({
+    ...params,
+    page: `${size + 1}`,
+  }).toString();
+
+  const firstUrlParams = new URLSearchParams({
+    ...params,
+    page: '1',
+  }).toString();
+  const prevUrlParams = new URLSearchParams({
+    ...params,
+    page: `${size - 1}`,
+  }).toString();
+
+  const prevPageUrl = size === 2 ? `/${slug}?${firstUrlParams}` : `/${slug}?${prevUrlParams}`;
 
   const last = !isNaN(parseInt(total.toString())) ? Math.min(end, parseInt(total.toString())) : end;
 
@@ -30,6 +52,13 @@ const Pager = ({
 
   const correction = size > 2 ? 0 : 1;
   const lastPage = Math.ceil(parseInt(total.toString()) / (end - start + correction));
+
+  console.log(lastPage);
+
+  const lastUrlParams = new URLSearchParams({
+    ...params,
+    page: `${lastPage}`,
+  }).toString();
 
   const PagerComponent = (
     <div className="float-right mt-3">
@@ -41,7 +70,7 @@ const Pager = ({
                 <FontAwesomeIcon icon={faAngleDoubleLeft} /> First
               </span>
             ) : (
-              <TestnetLink data-testid="nextPageButton" to={`/${slug}/page/1`}>
+              <TestnetLink data-testid="nextPageButton" to={`/${slug}?${firstUrlParams}`}>
                 <FontAwesomeIcon icon={faAngleDoubleLeft} /> First
               </TestnetLink>
             )}
@@ -56,7 +85,7 @@ const Pager = ({
             </div>
           ) : (
             <div className="pager">
-              <TestnetLink to={prevPageNo} data-testid="previousPageButton">
+              <TestnetLink to={prevPageUrl} data-testid="previousPageButton">
                 <FontAwesomeIcon icon={faAngleLeft} /> Prev
               </TestnetLink>
             </div>
@@ -72,7 +101,7 @@ const Pager = ({
         <li className="list-inline-item ml-2">
           {end < total ? (
             <div className="pager">
-              <TestnetLink data-testid="nextPageButton" to={`/${slug}/page/${size + 1}`}>
+              <TestnetLink data-testid="nextPageButton" to={`/${slug}?${nextUrlParams}`}>
                 Next <FontAwesomeIcon icon={faAngleRight} />
               </TestnetLink>
             </div>
@@ -88,7 +117,7 @@ const Pager = ({
         <li className="list-inline-item">
           <div className="pager">
             {!isNaN(lastPage) && end < total ? (
-              <TestnetLink data-testid="nextPageButton" to={`/${slug}/page/${lastPage}`}>
+              <TestnetLink data-testid="nextPageButton" to={`/${slug}?${lastUrlParams}`}>
                 Last <FontAwesomeIcon icon={faAngleDoubleRight} />
               </TestnetLink>
             ) : (

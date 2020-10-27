@@ -7,6 +7,7 @@ import networkRoute from './networkRoute';
 import trimHash from './trimHash';
 import truncate from './truncate';
 import storage from './storage';
+import useURLSearchParams from './useURLSearchParams';
 
 export {
   truncate,
@@ -18,4 +19,5 @@ export {
   copyToClipboard,
   trimHash,
   storage,
+  useURLSearchParams,
 };
