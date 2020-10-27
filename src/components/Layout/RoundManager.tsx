@@ -8,12 +8,10 @@ export default function RoundManager() {
     refresh: { timestamp },
   } = useGlobalState();
   const dispatch = useGlobalDispatch();
-  const [int, setInt] = React.useState<any>(-1);
 
   const withinInterval = moment().subtract(refreshRate, 'ms').isAfter(moment(timestamp));
 
   const setRounds = () => {
-    clearInterval(int);
     const intervalId = setInterval(() => {
       if (!withinInterval) {
         dispatch({
@@ -21,10 +19,11 @@ export default function RoundManager() {
         });
       }
     }, refreshRate);
-    setInt(intervalId);
+    return () => {
+      clearInterval(intervalId);
+    };
   };
 
-  // TODO: add refreshRate as parameter
   React.useEffect(setRounds, []);
 
   return <></>;
