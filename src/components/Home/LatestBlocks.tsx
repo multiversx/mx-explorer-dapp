@@ -63,7 +63,7 @@ const LatestBlocks = () => {
               icon={faCube}
               title={'Unable to load blocks'}
               className="py-spacer d-flex h-100 align-items-center justify-content-center"
-              data-testid="errorScreen"
+              dataTestId="errorScreen"
             />
           </div>
         ) : (
@@ -109,11 +109,8 @@ const LatestBlocks = () => {
                           <span className="text-nowrap mr-2">Hash</span>
 
                           <div className="content-fill">
-                            <TestnetLink
-                              to={`/blocks/${block.hash}`}
-                              data-testid={`blockHashLink${i}`}
-                            >
-                              <TrimHash text={block.hash} />
+                            <TestnetLink to={`/blocks/${block.hash}`}>
+                              <TrimHash data-testid={`blockHashLink${i}`} text={block.hash} />
                             </TestnetLink>
                           </div>
                         </div>
@@ -132,6 +129,7 @@ const LatestBlocks = () => {
                       className="text-primary fa-spin fast-spin"
                     />
                   }
+                  dataTestId="blocksLoader"
                   className="py-spacer d-flex h-100 align-items-center justify-content-center"
                 />
               )}

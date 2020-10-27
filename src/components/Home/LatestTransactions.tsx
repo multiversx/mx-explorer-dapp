@@ -152,6 +152,7 @@ const LatestTransactions = () => {
                       className="text-primary fa-spin fast-spin"
                     />
                   }
+                  dataTestId="transactionsLoader"
                   className="py-spacer d-flex h-100 align-items-center justify-content-center"
                 />
               )}
