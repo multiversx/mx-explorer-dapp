@@ -30,9 +30,9 @@ describe('Network Router', () => {
       route: '/',
       optionalConfig,
     });
-    const networkSwitch = render.getByTestId('networkSwitch');
-    expect(networkSwitch.textContent).toBe('Zero to One ');
-    fireEvent.click(networkSwitch);
+    const networkSwitch = render.getAllByTestId('networkSwitch');
+    expect(networkSwitch[0].textContent).toBe('Zero to One ');
+    fireEvent.click(networkSwitch[0]);
     const digitalOcean = render.getByText('DigitalOcean TOR Testnet');
     fireEvent.click(digitalOcean);
     expect(render.history.location.pathname).toBe('/testnet-do-toronto');
