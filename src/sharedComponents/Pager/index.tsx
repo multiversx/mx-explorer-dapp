@@ -25,7 +25,7 @@ const Pager = ({
   const params = Object.fromEntries(urlParams);
 
   const { size, start, last, lastPage, end } = pagerHelper({
-    total: total === '...' ? 0 : total,
+    total,
     itemsPerPage,
     page,
   });
@@ -47,6 +47,8 @@ const Pager = ({
   const prevPageUrl = size === 2 ? `/${slug}?${firstUrlParams}` : `/${slug}?${prevUrlParams}`;
 
   const startEnd = end === 1 ? 1 : `${start.toLocaleString('en')}-${last.toLocaleString('en')}`;
+
+  console.log('\x1b[42m%s\x1b[0m', startEnd, last);
 
   const lastUrlParams = new URLSearchParams({
     ...params,
