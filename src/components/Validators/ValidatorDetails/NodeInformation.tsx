@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { truncate } from 'helpers';
+import { truncate, urlBuilder } from 'helpers';
 import { ShardSpan, TestnetLink } from 'sharedComponents';
 
 export interface NodeInformationType {
@@ -43,7 +43,7 @@ const NodeInformation = ({
               <div className="col-lg-2 card-label">Shard</div>
               <div className="col-lg-10">
                 {shardNumber !== undefined ? (
-                  <TestnetLink to={`/blocks/shards/${shardNumber}`} data-testid="shardLink">
+                  <TestnetLink to={urlBuilder.shard(shardNumber)} data-testid="shardLink">
                     <ShardSpan shardId={shardNumber} />
                   </TestnetLink>
                 ) : (

@@ -1,5 +1,5 @@
 import { useGlobalState } from 'context';
-import { isHash, networkRoute } from 'helpers';
+import { isHash, networkRoute, urlBuilder } from 'helpers';
 import * as React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Loader, ShardSpan, TestnetLink, TransactionsTable, adapter } from 'sharedComponents';
@@ -46,7 +46,7 @@ const MiniBlockDetails: React.FC = () => {
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
-  const [totalTransactions, setTotalTransactions] = React.useState<number | string>('...');
+  const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
 
   const size = parseInt(page!) ? parseInt(page!) : 1;
   const slug = `miniblocks/${miniBlockHash}`;
@@ -130,7 +130,7 @@ const MiniBlockDetails: React.FC = () => {
                         <div className="row">
                           <div className="col-lg-2 card-label">Sender Shard</div>
                           <div className="col-lg-10">
-                            <TestnetLink to={`/blocks/shards/${miniBlock.senderShard}`}>
+                            <TestnetLink to={urlBuilder.shard(miniBlock.senderShard)}>
                               <ShardSpan shardId={miniBlock.senderShard} />
                             </TestnetLink>
                           </div>
@@ -139,7 +139,7 @@ const MiniBlockDetails: React.FC = () => {
                         <div className="row">
                           <div className="col-lg-2 card-label">Receiver Shard</div>
                           <div className="col-lg-10">
-                            <TestnetLink to={`/blocks/shards/${miniBlock.receiverShard}`}>
+                            <TestnetLink to={urlBuilder.shard(miniBlock.receiverShard)}>
                               <ShardSpan shardId={miniBlock.receiverShard} />
                             </TestnetLink>
                           </div>
