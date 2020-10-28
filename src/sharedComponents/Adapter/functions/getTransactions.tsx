@@ -10,21 +10,11 @@ const getAddressParams = (addressId: string | undefined) =>
       }
     : {};
 
-const getShardTypeParams = (
-  shardId: number | undefined,
-  shardType: 'senderShard' | 'receiverShard' | undefined
-) =>
-  shardId !== undefined && shardType
-    ? {
-        [shardType]: shardId,
-      }
-    : {};
-
 export interface TransactionsType {
   size?: number;
   addressId?: string;
-  shardType: 'senderShard' | 'receiverShard' | undefined;
-  shardId: number | undefined;
+  senderShard?: number;
+  receiverShard?: number;
 }
 
 export async function getTransactions({
@@ -33,14 +23,15 @@ export async function getTransactions({
   timeout,
   addressId = '',
   size = 1,
-  shardId,
-  shardType,
+  senderShard,
+  receiverShard,
 }: AdapterFunctionType & TransactionsType) {
   const params: AdapterFunctionType['params'] = {
     from: (size - 1) * 50,
     size: 50,
     ...getAddressParams(addressId),
-    ...getShardTypeParams(shardId, shardType),
+    ...(senderShard !== undefined ? { senderShard } : {}),
+    ...(receiverShard !== undefined ? { receiverShard } : {}),
   };
 
   try {
@@ -67,14 +58,15 @@ export async function getTransactionsCount({
   provider,
   baseUrl,
   addressId = '',
-  shardId,
-  shardType,
+  senderShard,
+  receiverShard,
   timeout,
 }: AdapterFunctionType & TransactionsType) {
   try {
     const params: AdapterFunctionType['params'] = {
       ...getAddressParams(addressId),
-      ...getShardTypeParams(shardId, shardType),
+      ...(senderShard !== undefined ? { senderShard } : {}),
+      ...(receiverShard !== undefined ? { receiverShard } : {}),
     };
 
     const { data } = await provider({
