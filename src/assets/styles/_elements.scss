@@ -63,14 +63,15 @@
   }
 }
 
-.table-wrapper {
-  width: calc(100vw - 30px);
-  max-width: 100%;
-  overflow-x: auto;
-
-  @include media-breakpoint-up(lg) {
-    width: 100%;
+.fixed-width-sm {
+  @include media-breakpoint-down(sm) {
+    width: calc(100vw - 30px);
+    max-width: 100%;
   }
+}
+
+.table-wrapper {
+  overflow-x: auto;
 
   .table {
     white-space: nowrap;
