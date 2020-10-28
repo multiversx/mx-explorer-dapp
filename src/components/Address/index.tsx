@@ -110,40 +110,34 @@ const Address = () => {
 
   return (
     <div ref={ref}>
-      <div className="container pt-3 pb-3">
-        {loading && (
+      <div className="container py-spacer">
+        {(loading || failed) && (
           <>
             <div className="row">
               <div className="col-12">
-                <h4 data-testid="title">Address Details</h4>
+                <h3 className="mb-spacer" data-testid="title">
+                  Address Details
+                </h3>
               </div>
             </div>
-            <Loader dataTestId="loader" />
-          </>
-        )}
-        {failed && (
-          <>
-            <div className="row">
-              <div className="col-12">
-                <h4 data-testid="title">Address Details</h4>
-              </div>
-            </div>
-            <FailedAddress addressId={addressId} />
+            {loading ? <Loader dataTestId="loader" /> : <FailedAddress addressId={addressId} />}
           </>
         )}
         {!loading && !failed && (
           <>
             <div className="row">
               <div className={addressDetails.stake > 0 ? 'col-lg-8' : 'col-12'}>
-                <h4 data-testid="title">Address Details</h4>
-                <div className="row mb-4">
+                <h3 className="mb-spacer" data-testid="title">
+                  Address Details
+                </h3>
+                <div className="row mb-spacer">
                   <AddressDetails {...addressDetails} />
                 </div>
               </div>
               {addressDetails.stake > 0 && (
                 <div className="col-lg-4">
-                  <h4>Delegation</h4>
-                  <div className="row mb-4">
+                  <h3 className="mb-spacer">Delegation</h3>
+                  <div className="row mb-spacer">
                     <DelegationDetails {...addressDetails} />
                   </div>
                 </div>
@@ -153,9 +147,7 @@ const Address = () => {
               <div className="col-12">
                 <div className="row">
                   <div className="col-12">
-                    <h4>
-                      <span>Transactions</span>
-                    </h4>
+                    <h3 className="mb-spacer">Transactions</h3>
                   </div>
                 </div>
                 {transactionsFetched === true ? (

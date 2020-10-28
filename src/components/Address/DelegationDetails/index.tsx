@@ -18,7 +18,7 @@ const DelegationDetails = (props: AddressDetailsType) => {
     <>
       {props.stake > 0 && (
         <div className="col-12 chart">
-          <div className="card">
+          <div className="card card-small">
             <div className="card-body d-flex align-items-center">
               <div className="chart-container mr-4">
                 <div>
