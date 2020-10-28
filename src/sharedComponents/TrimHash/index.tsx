@@ -79,7 +79,11 @@ export default (props: TrimHashType) => {
   };
 
   return (
-    <div className={`flex-shrink-1 text-nowrap overflow-hidden ${className ? className : ''}`}>
+    <div
+      className={`trim-hash flex-shrink-1 text-nowrap overflow-hidden ${
+        className ? className : ''
+      }`}
+    >
       <div>
         <TrimHash>
           <span className="ellipseMe" {...spanProps}>

@@ -39,48 +39,54 @@ const TransactionsTable = ({
   size,
 }: TransactionsTableType) => {
   return (
-    <div className="card" style={{ height: 'auto' }}>
-      <div className="card-body card-list">
-        {totalTransactions > 10000 && (
-          <p className="mb-0">
-            Showing last 10,000 of {totalTransactions.toLocaleString('en')} transactions
-          </p>
-        )}
-
-        <div className="table-responsive">
-          <table className="table mt-3" data-testid="transactionsTable">
-            <thead>
-              <tr>
-                <th scope="col">Txn Hash</th>
-                <th scope="col">Age</th>
-                <th scope="col">Shard</th>
-                <th scope="col">From</th>
-                <th scope="col">To</th>
-                <th scope="col" className="text-right">
-                  Value
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((transaction) => (
-                <TransactionRow
-                  transaction={transaction}
-                  key={transaction.txHash}
-                  addressId={addressId}
-                />
-              ))}
-            </tbody>
-          </table>
+    <div className="transactions-table">
+      <div className="card card-small">
+        <div className="card-header border-0 p-0">
+          {totalTransactions > 10000 && (
+            <div className="card-header-item border-bottom p-3">
+              Showing last 10,000 of {totalTransactions.toLocaleString('en')} transactions
+            </div>
+          )}
         </div>
 
-        <Pager
-          itemsPerPage={50}
-          page={String(size)}
-          total={
-            totalTransactions !== '...' ? Math.min(totalTransactions, 10000) : totalTransactions
-          }
-          show={transactions.length > 0}
-        />
+        <div className="card-body p-0">
+          <div className="table-wrapper">
+            <table className="table m-0" data-testid="transactionsTable">
+              <thead>
+                <tr>
+                  <th scope="col">Txn Hash</th>
+                  <th scope="col">Age</th>
+                  <th scope="col">Shard</th>
+                  <th scope="col">From</th>
+                  <th scope="col">To</th>
+                  <th scope="col" className="text-right">
+                    Value
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.map((transaction) => (
+                  <TransactionRow
+                    transaction={transaction}
+                    key={transaction.txHash}
+                    addressId={addressId}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="card-footer border-top py-2">
+          <Pager
+            itemsPerPage={50}
+            page={String(size)}
+            total={
+              totalTransactions !== '...' ? Math.min(totalTransactions, 10000) : totalTransactions
+            }
+            show={transactions.length > 0}
+          />
+        </div>
       </div>
     </div>
   );
