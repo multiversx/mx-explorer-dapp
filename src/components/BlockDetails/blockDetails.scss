@@ -10,8 +10,8 @@
   // }
 
   .genesis {
-    background-color: #f5f6f7;
-    color: #495057;
+    background-color: $input-disabled-bg;
+    color: $secondary;
     font-size: 1rem;
     white-space: pre-wrap; /* Since CSS 2.1 */
     white-space: -moz-pre-wrap; /* Mozilla, since 1999 */

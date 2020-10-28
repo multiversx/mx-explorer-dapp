@@ -64,7 +64,7 @@ const BlockDetails: React.FC = () => {
 
   const { block, proposer, consensusItems, nextHash, blockFetched } = state;
 
-  const isFirsBlock = block.prevHash && block.prevHash.length > 64;
+  const isFirstBlock = block.prevHash && block.prevHash.length > 64;
 
   return (
     <div className="block-details" ref={ref}>
@@ -283,7 +283,7 @@ const BlockDetails: React.FC = () => {
                         <div className="row py-3 border-bottom">
                           <div className="col-lg-2 text-secondary text-lg-right">Previous Hash</div>
                           <div className="col">
-                            {isFirsBlock ? (
+                            {isFirstBlock ? (
                               <span className="text-muted">N/A</span>
                             ) : (
                               <TestnetLink className="hash" to={`/blocks/${block.prevHash}`}>
@@ -293,17 +293,17 @@ const BlockDetails: React.FC = () => {
                           </div>
                         </div>
 
-                        <div className="row py-3 border-bottom">
+                        <div className={`row py-3 ${isFirstBlock ? 'border-bottom' : ''}`}>
                           <div className="col-lg-2 text-secondary text-lg-right">
                             Public Keys Bitmap
                           </div>
                           <div className="col">{block.pubKeyBitmap}</div>
                         </div>
-                        {isFirsBlock && (
+                        {isFirstBlock && (
                           <>
-                            <div className="row py-3 border-bottom">
-                              <div className="col-lg-12">
-                                <pre className="genesis rounded border px-3 pt-2 pb-4">
+                            <div className="row py-3">
+                              <div className="col">
+                                <pre className="genesis px-3 pt-2 pb-4 m-0 rounded border">
                                   {decodeHex(block.prevHash)}
                                 </pre>
                               </div>
