@@ -8,7 +8,7 @@ export default function FailedTransactions() {
       <div className="card-body">
         <PageState
           icon={faExchangeAlt}
-          title={'Unable to load transactions'}
+          title="Unable to load transactions"
           className="py-spacer d-flex h-100 align-items-center justify-content-center"
           data-testid="errorScreen"
         />
