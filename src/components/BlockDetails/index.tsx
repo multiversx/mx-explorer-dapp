@@ -295,7 +295,7 @@ const BlockDetails: React.FC = () => {
                     </div>
                   </div>
                 ) : (
-                  <Loader />
+                  <Loader dataTestId="loader" />
                 )}
               </>
             )}
