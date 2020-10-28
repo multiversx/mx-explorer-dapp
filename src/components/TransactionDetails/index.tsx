@@ -48,10 +48,12 @@ const TransactionDetails = () => {
 
   return (
     <div ref={ref}>
-      <div className="container pt-3 pb-3">
+      <div className="container py-spacer">
         <div className="row">
           <div className="col-12">
-            <h4 data-testid="title">Transaction Details</h4>
+            <h3 className="mb-spacer" data-testid="title">
+              Transaction Details
+            </h3>
           </div>
         </div>
         <div className="row">
