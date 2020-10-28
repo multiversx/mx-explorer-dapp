@@ -1,12 +1,10 @@
 import * as React from 'react';
 import { ValidatorType } from 'context/validators';
-import { truncate, trimHash } from 'helpers';
+import { truncate, trimHash, urlBuilder } from 'helpers';
 import { ShardSpan, TestnetLink } from 'sharedComponents';
 import RowIcon from './RowIcon';
 
 const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrder: string[] }) => {
-  console.log('render');
-
   return (
     <tbody>
       {nodes.map((node, index) => (
@@ -24,7 +22,7 @@ const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrde
             )}
           </td>
           <td>
-            <TestnetLink to={`/blocks/shards/${node.shardId}`} data-testid={`shardLink${index}`}>
+            <TestnetLink to={urlBuilder.shard(node.shardId)} data-testid={`shardLink${index}`}>
               <ShardSpan shardId={node.shardId} />
             </TestnetLink>
           </td>

@@ -87,16 +87,6 @@ const routes: RouteType[] = [
     component: TransactionDetails,
   },
   {
-    path: '/blocks/page/:page',
-    title: 'Blocks',
-    component: Blocks,
-  },
-  {
-    path: '/blocks/page/last',
-    title: 'Block Details',
-    component: BlockDetails,
-  },
-  {
     path: '/blocks',
     title: 'Blocks',
     component: Blocks,
@@ -115,16 +105,6 @@ const routes: RouteType[] = [
     path: '/miniblocks/:hash/page/:page',
     title: 'Miniblock Details',
     component: MiniBlockDetails,
-  },
-  {
-    path: '/blocks/shards/:shard/page/:page',
-    title: 'Shard Details',
-    component: Blocks,
-  },
-  {
-    path: '/blocks/shards/:shard',
-    title: 'Shard Details',
-    component: Blocks,
   },
   {
     path: '/blocks/epoch/:epoch/page/:page',
