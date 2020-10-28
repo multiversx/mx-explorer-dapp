@@ -167,7 +167,7 @@ const Transactions = () => {
           ) : (
             <>
               {transactionsFetched ? (
-                <Loader />
+                <Loader dataTestId="loader" />
               ) : (
                 pathname.includes('address') && <NoTransactions />
               )}

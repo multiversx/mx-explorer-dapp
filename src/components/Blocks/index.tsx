@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { useURLSearchParams } from 'helpers';
 import * as React from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'sharedComponents';
 import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 
@@ -32,6 +32,12 @@ function isValidInt(number: number) {
 const Blocks: React.FC = () => {
   const { page, shard } = useURLSearchParams();
   const shardId = parseInt(shard!) >= 0 ? parseInt(shard!) : undefined;
+
+  React.useEffect(() => {
+    if (shardId !== undefined) {
+      document.title = document.title.replace('Blocks', 'Shard Details');
+    }
+  }, [shardId]);
 
   const ref = React.useRef(null);
   const size = !isNaN(parseInt(page)) ? parseInt(page) : 1;
@@ -121,7 +127,7 @@ const Blocks: React.FC = () => {
                       </div>
                     </div>
                   ) : (
-                    <Loader />
+                    <Loader dataTestId="loader" />
                   )}
                 </>
               )}
