@@ -44,13 +44,11 @@ const TransactionsTable = ({
     <div className="transactions-table">
       <div className="card card-small d-flex">
         <div className="card-header border-0 p-0">
-          {/* {true && ( */}
           {totalTransactions > 10000 && (
             <div className="card-header-item border-bottom p-3">
               Showing last 10,000 of {totalTransactions.toLocaleString('en')} transactions
             </div>
           )}
-          {false && <div className="card-header-item border-bottom p-3">extra content</div>}
         </div>
 
         <div className="card-body p-0">
@@ -81,7 +79,7 @@ const TransactionsTable = ({
           </div>
         </div>
 
-        <div className="card-footer bg-light py-1">
+        <div className="card-footer border-top">
           <Pager
             slug={slug}
             total={
