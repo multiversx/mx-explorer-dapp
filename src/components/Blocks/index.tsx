@@ -21,17 +21,9 @@ const initialState = {
   blocksFetched: true,
 };
 
-function isValidInt(number: number) {
-  return !(
-    isNaN(number) ||
-    isNaN(parseInt(number.toString())) ||
-    !/^\+?(0|[1-9]\d*)$/.test(number.toString())
-  );
-}
-
 const Blocks: React.FC = () => {
   const { page, shard } = useURLSearchParams();
-  const shardId = parseInt(shard!) >= 0 ? parseInt(shard!) : undefined;
+  const shardId = shard;
 
   React.useEffect(() => {
     if (shardId !== undefined) {
@@ -40,7 +32,7 @@ const Blocks: React.FC = () => {
   }, [shardId]);
 
   const ref = React.useRef(null);
-  const size = !isNaN(parseInt(page)) ? parseInt(page) : 1;
+  const size = page;
   const [state, setState] = React.useState<StateType>(initialState);
   const [totalBlocks, setTotalBlocks] = React.useState<number | '...'>('...');
 
@@ -116,7 +108,7 @@ const Blocks: React.FC = () => {
                         </p>
                         <BlocksTable blocks={state.blocks} shardId={shardId} />
                         <Pager
-                          page={page}
+                          page={String(page)}
                           total={totalBlocks !== '...' ? Math.min(totalBlocks, 10000) : totalBlocks}
                           itemsPerPage={25}
                           show={state.blocks.length > 0}
@@ -141,7 +133,7 @@ const Blocks: React.FC = () => {
     state.blocks.length,
   ]);
 
-  if (shard && !isValidInt(parseInt(shard!))) {
+  if (shard && shard < 0) {
     return <Redirect to={activeNetworkId ? `/${activeNetworkId}/not-found` : '/not-found'} />;
   }
 
