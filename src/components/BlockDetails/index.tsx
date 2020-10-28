@@ -97,7 +97,7 @@ const BlockDetails: React.FC = () => {
                     <div className="card-body p-0">
                       <div className="container-fluid">
                         <div className="row py-3 border-bottom">
-                          <div className="col-lg-2 text-light text-lg-right">Block Height</div>
+                          <div className="col-lg-2 text-secondary text-lg-right">Block Height</div>
                           <div className="col">
                             <div className="d-flex justify-content-between">
                               <div>{block.nonce}</div>
@@ -130,26 +130,26 @@ const BlockDetails: React.FC = () => {
                         </div>
 
                         <div className="row py-3 border-bottom">
-                          <div className="col-lg-2 text-light text-lg-right">Epoch</div>
+                          <div className="col-lg-2 text-secondary text-lg-right">Epoch</div>
                           <div className="col">{block.epoch}</div>
                         </div>
 
                         <div className="row py-3 border-bottom">
-                          <div className="col-lg-2 text-light text-lg-right">Timestamp</div>
+                          <div className="col-lg-2 text-secondary text-lg-right">Timestamp</div>
                           <div className="col">
-                            <FontAwesomeIcon icon={faClock} className="mr-2" />
+                            <FontAwesomeIcon icon={faClock} className="mr-2 text-muted" />
                             <TimeAgo value={block.timestamp} />
                             &nbsp;({dateFormatted(block.timestamp)})
                           </div>
                         </div>
 
                         <div className="row py-3 border-bottom">
-                          <div className="col-lg-2 text-light text-lg-right">Transactions</div>
+                          <div className="col-lg-2 text-secondary text-lg-right">Transactions</div>
                           <div className="col">{block.txCount + ' transactions in this block'}</div>
                         </div>
 
                         <div className="row py-3 border-bottom">
-                          <div className="col-lg-2 text-light text-lg-right">Shard</div>
+                          <div className="col-lg-2 text-secondary text-lg-right">Shard</div>
                           <div className="col">
                             <TestnetLink to={urlBuilder.shard(block.shardId)}>
                               <ShardSpan shardId={block.shardId} />
@@ -158,7 +158,7 @@ const BlockDetails: React.FC = () => {
                         </div>
 
                         <div className="row py-3 border-bottom">
-                          <div className="col-lg-2 text-light text-lg-right">Size</div>
+                          <div className="col-lg-2 text-secondary text-lg-right">Size</div>
                           <div className="col">
                             <OverlayTrigger
                               placement="top"
@@ -182,7 +182,7 @@ const BlockDetails: React.FC = () => {
                         </div>
 
                         <div className="row py-3 border-bottom">
-                          <div className="col-lg-2 text-light text-lg-right">Proposer</div>
+                          <div className="col-lg-2 text-secondary text-lg-right">Proposer</div>
                           <div className="col">
                             {proposer === '' ? (
                               <span className="text-muted">N/A</span>
@@ -195,7 +195,9 @@ const BlockDetails: React.FC = () => {
                         </div>
 
                         <div className="row py-3 border-bottom">
-                          <div className="col-lg-2 text-light text-lg-right">Consensus Group</div>
+                          <div className="col-lg-2 text-secondary text-lg-right">
+                            Consensus Group
+                          </div>
                           <div className="col">
                             {consensusItems.length === 0 ? (
                               <span className="text-muted">N/A</span>
@@ -216,18 +218,20 @@ const BlockDetails: React.FC = () => {
                         </div>
 
                         <div className="row py-3 border-bottom">
-                          <div className="col-lg-2 text-light text-lg-right">Block Hash</div>
+                          <div className="col-lg-2 text-secondary text-lg-right">Block Hash</div>
                           <div className="col">{block.hash}</div>
                         </div>
 
                         <div className="row py-3 border-bottom">
-                          <div className="col-lg-2 text-light text-lg-right">State Root Hash</div>
+                          <div className="col-lg-2 text-secondary text-lg-right">
+                            State Root Hash
+                          </div>
                           <div className="col">{block.stateRootHash}</div>
                         </div>
                         {block.shardId === metaChainShardId && (
                           <>
                             <div className="row py-3 border-bottom">
-                              <div className="col-lg-2 text-light text-lg-right">
+                              <div className="col-lg-2 text-secondary text-lg-right">
                                 Notarized Blocks
                               </div>
                               <div className="col">
@@ -254,7 +258,7 @@ const BlockDetails: React.FC = () => {
                         )}
 
                         <div className="row py-3 border-bottom">
-                          <div className="col-lg-2 text-light text-lg-right">Miniblocks</div>
+                          <div className="col-lg-2 text-secondary text-lg-right">Miniblocks</div>
                           <div className="col">
                             {block.miniBlocksHashes === null ||
                             (Array.isArray(block.miniBlocksHashes) &&
@@ -277,7 +281,7 @@ const BlockDetails: React.FC = () => {
                         </div>
 
                         <div className="row py-3 border-bottom">
-                          <div className="col-lg-2 text-light text-lg-right">Previous Hash</div>
+                          <div className="col-lg-2 text-secondary text-lg-right">Previous Hash</div>
                           <div className="col">
                             {isFirsBlock ? (
                               <span className="text-muted">N/A</span>
@@ -290,7 +294,7 @@ const BlockDetails: React.FC = () => {
                         </div>
 
                         <div className="row py-3 border-bottom">
-                          <div className="col-lg-2 text-light text-lg-right">
+                          <div className="col-lg-2 text-secondary text-lg-right">
                             Public Keys Bitmap
                           </div>
                           <div className="col">{block.pubKeyBitmap}</div>
