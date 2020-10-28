@@ -62,8 +62,8 @@ const BlockDetails: React.FC = () => {
     <div ref={ref}>
       <div className="container py-spacer">
         <div className="row">
-          <div className="col-12 mb-spacer">
-            <h3 className="m-0" data-testid="title">
+          <div className="col-12">
+            <h3 className="mb-spacer" data-testid="title">
               Block Details
             </h3>
           </div>
