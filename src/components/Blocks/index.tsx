@@ -30,15 +30,13 @@ function isValidInt(number: number) {
 }
 
 const Blocks: React.FC = () => {
-  const { shard } = useParams() as any;
+  const { page, shard } = useURLSearchParams();
   const shardId = parseInt(shard!) >= 0 ? parseInt(shard!) : undefined;
-
-  const { page } = useURLSearchParams();
 
   const ref = React.useRef(null);
   const size = !isNaN(parseInt(page)) ? parseInt(page) : 1;
   const [state, setState] = React.useState<StateType>(initialState);
-  const [totalBlocks, setTotalBlocks] = React.useState<number | string>('...');
+  const [totalBlocks, setTotalBlocks] = React.useState<number | '...'>('...');
 
   const {
     refresh: { timestamp },
@@ -71,7 +69,7 @@ const Blocks: React.FC = () => {
 
   React.useEffect(fetchBlocks, [activeNetworkId, size, shardId, refreshFirstPage]); // run the operation only once since the parameter does not change
 
-  const slug = !isNaN(shardId!) ? `blocks/shards/${shardId}` : 'blocks';
+  const slug = !isNaN(shardId!) ? `blocks/shard/${shardId}` : 'blocks';
 
   const Component = () => {
     return (
@@ -116,9 +114,8 @@ const Blocks: React.FC = () => {
                         <Pager
                           page={page}
                           slug={slug}
-                          total={10000}
+                          total={totalBlocks !== '...' ? Math.min(totalBlocks, 10000) : totalBlocks}
                           itemsPerPage={25}
-                          max={parseInt(totalBlocks.toString())}
                           show={state.blocks.length > 0}
                         />
                       </div>

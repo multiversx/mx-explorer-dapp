@@ -28,7 +28,7 @@ export interface TransactionType {
 interface TransactionsTableType {
   transactions: TransactionType[];
   addressId: string | undefined;
-  totalTransactions: number | string;
+  totalTransactions: number | '...';
   slug: string;
   size: number;
 }
@@ -80,11 +80,8 @@ const TransactionsTable = ({
           itemsPerPage={50}
           page={String(size)}
           total={
-            !isNaN(parseInt(totalTransactions.toString()))
-              ? Math.min(parseInt(totalTransactions.toString()), 10000)
-              : totalTransactions
+            totalTransactions !== '...' ? Math.min(totalTransactions, 10000) : totalTransactions
           }
-          max={parseInt(totalTransactions.toString())}
           show={transactions.length > 0}
         />
       </div>
