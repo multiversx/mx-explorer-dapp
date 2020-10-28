@@ -8,7 +8,7 @@ import {
   waitForElement,
   fireEvent,
   act,
-} from '../../../utils/test-utils';
+} from 'utils/test-utils';
 import {
   heartbeatstatus,
   validators,
@@ -71,7 +71,7 @@ describe('Transactions Page', () => {
   });
 
   test('Transactions pager working', async () => {
-    const render = beforeAll('/transactions/page/1');
+    const render = beforeAll('/transactions?page=1');
 
     const nextButton = await waitForElement(() => render.queryByTestId('disabledNextPageButton'));
     expect(nextButton).toBeInTheDocument();

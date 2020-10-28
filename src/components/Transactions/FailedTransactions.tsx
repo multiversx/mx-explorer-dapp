@@ -1,8 +1,8 @@
+import * as React from 'react';
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
 
-export default function FailedTransaction() {
+export default function FailedTransactions() {
   return (
     <div className="card">
       <div className="card-body card-details" data-testid="errorScreen">
