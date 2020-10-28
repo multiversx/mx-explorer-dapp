@@ -2,8 +2,15 @@ import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { addressIsBech32, dateFormatted, trimHash } from 'helpers';
-import { Denominate, ScAddressIcon, ShardSpan, TestnetLink, TimeAgo } from 'sharedComponents';
+import { addressIsBech32, dateFormatted } from 'helpers';
+import {
+  Denominate,
+  ScAddressIcon,
+  ShardSpan,
+  TestnetLink,
+  TimeAgo,
+  TrimHash,
+} from 'sharedComponents';
 import { TransactionType } from './index';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 
@@ -25,8 +32,11 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
         {(statusIs(txStatus.notExecuted) || statusIs(txStatus.invalid)) && (
           <FontAwesomeIcon icon={faBan} className="w300 mr-1" />
         )}
+
         <TestnetLink to={`/transactions/${transaction.txHash}`} data-testid="transactionLink">
-          {trimHash(transaction.txHash)}
+          <div className="trim-hash-container">
+            <TrimHash text={transaction.txHash} />
+          </div>
         </TestnetLink>
       </td>
       <td>
@@ -50,30 +60,42 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
         </TestnetLink>
       </td>
       <td>
-        <ScAddressIcon initiator={transaction.sender} />
-        {addressId === transaction.sender ? (
-          <span>{trimHash(transaction.sender)}</span>
-        ) : (
-          <>
-            {addressIsBech32(transaction.sender) ? (
-              <TestnetLink to={`/address/${transaction.sender}`} data-testid="senderLink">
-                {trimHash(transaction.sender)}
-              </TestnetLink>
-            ) : (
-              <ShardSpan shardId={transaction.sender} />
-            )}
-          </>
-        )}
+        <div className="content-fill">
+          <ScAddressIcon initiator={transaction.sender} />
+          {addressId === transaction.sender ? (
+            <div className="trim-hash-container">
+              <TrimHash text={transaction.sender} />
+            </div>
+          ) : (
+            <>
+              {addressIsBech32(transaction.sender) ? (
+                <TestnetLink to={`/address/${transaction.sender}`} data-testid="senderLink">
+                  <div className="trim-hash-container">
+                    <TrimHash text={transaction.sender} />
+                  </div>
+                </TestnetLink>
+              ) : (
+                <ShardSpan shardId={transaction.sender} />
+              )}
+            </>
+          )}
+        </div>
       </td>
       <td>
-        <ScAddressIcon initiator={transaction.receiver} />
-        {addressId === transaction.receiver ? (
-          <span>{trimHash(transaction.receiver)}</span>
-        ) : (
-          <TestnetLink to={`/address/${transaction.receiver}`} data-testid="receiverLink">
-            {trimHash(transaction.receiver)}
-          </TestnetLink>
-        )}
+        <div className="content-fill">
+          <ScAddressIcon initiator={transaction.receiver} />
+          {addressId === transaction.receiver ? (
+            <div className="trim-hash-container">
+              <TrimHash text={transaction.receiver} />
+            </div>
+          ) : (
+            <TestnetLink to={`/address/${transaction.receiver}`} data-testid="receiverLink">
+              <div className="trim-hash-container">
+                <TrimHash text={transaction.receiver} />
+              </div>
+            </TestnetLink>
+          )}
+        </div>
       </td>
       <td className="text-right">
         <Denominate value={transaction.value} />

@@ -41,56 +41,64 @@ const TransactionsTable = ({
   size,
 }: TransactionsTableType) => {
   return (
-    <div className="card" style={{ height: 'auto' }}>
-      <div className="card-body card-list">
-        {totalTransactions > 10000 && (
-          <p className="mb-0">
-            Showing last 10,000 of {totalTransactions.toLocaleString('en')} transactions
-          </p>
-        )}
-
-        <div className="table-responsive">
-          <table className="table mt-3" data-testid="transactionsTable">
-            <thead>
-              <tr>
-                <th scope="col">Txn Hash</th>
-                <th scope="col">Age</th>
-                <th scope="col">Shard</th>
-                <th scope="col">From</th>
-                <th scope="col">To</th>
-                <th scope="col" className="text-right">
-                  Value
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((transaction) => (
-                <TransactionRow
-                  transaction={transaction}
-                  key={transaction.txHash}
-                  addressId={addressId}
-                />
-              ))}
-            </tbody>
-          </table>
+    <div className="transactions-table">
+      <div className="card card-small d-flex">
+        <div className="card-header border-0 p-0">
+          {/* {true && ( */}
+          {totalTransactions > 10000 && (
+            <div className="card-header-item border-bottom p-3">
+              Showing last 10,000 of {totalTransactions.toLocaleString('en')} transactions
+            </div>
+          )}
+          {false && <div className="card-header-item border-bottom p-3">extra content</div>}
         </div>
 
-        <Pager
-          slug={slug}
-          total={
-            !isNaN(parseInt(totalTransactions.toString()))
-              ? Math.min(parseInt(totalTransactions.toString()), 10000)
-              : totalTransactions
-          }
-          start={(size - 1) * 50 + (size === 1 ? 1 : 0)}
-          end={
-            (size - 1) * 50 +
-            (parseInt(totalTransactions.toString()) < 50
-              ? parseInt(totalTransactions.toString())
-              : 50)
-          }
-          show={transactions.length > 0}
-        />
+        <div className="card-body p-0">
+          <div className="table-wrapper">
+            <table className="table m-0" data-testid="transactionsTable">
+              <thead>
+                <tr>
+                  <th scope="col">Txn Hash</th>
+                  <th scope="col">Age</th>
+                  <th scope="col">Shard</th>
+                  <th scope="col">From</th>
+                  <th scope="col">To</th>
+                  <th scope="col" className="text-right">
+                    Value
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.map((transaction) => (
+                  <TransactionRow
+                    transaction={transaction}
+                    key={transaction.txHash}
+                    addressId={addressId}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="card-footer bg-light py-1">
+          <Pager
+            slug={slug}
+            total={
+              !isNaN(parseInt(totalTransactions.toString()))
+                ? Math.min(parseInt(totalTransactions.toString()), 10000)
+                : totalTransactions
+            }
+            start={(size - 1) * 50 + (size === 1 ? 1 : 0)}
+            end={
+              (size - 1) * 50 +
+              (parseInt(totalTransactions.toString()) < 50
+                ? parseInt(totalTransactions.toString())
+                : 50)
+            }
+            show={transactions.length > 0}
+          />
+        </div>
       </div>
     </div>
   );
