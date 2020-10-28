@@ -50,7 +50,7 @@ const TransactionsTable = ({
         </div>
 
         <div className="card-body p-0">
-          <div className="table-wrapper">
+          <div className="table-wrapper fixed-width-sm">
             <table className="table m-0" data-testid="transactionsTable">
               <thead>
                 <tr>
