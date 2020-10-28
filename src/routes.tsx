@@ -6,6 +6,7 @@ import Home from './components/Home';
 import MiniBlockDetails from './components/MiniBlockDetails';
 import TransactionDetails from './components/TransactionDetails';
 import Transactions from './components/Transactions';
+import Address from './components/Address';
 import Nodes from './components/Nodes';
 import Identities from './components/Identities';
 import ValidatorsTable from './components/Validators/ValidatorsTable';
@@ -74,12 +75,12 @@ const routes: RouteType[] = [
   {
     path: '/address/:hash',
     title: 'Address Details',
-    component: Transactions,
+    component: Address,
   },
   {
     path: '/address/:hash/page/:page',
     title: 'Address Details',
-    component: Transactions,
+    component: Address,
   },
   {
     path: '/transactions/:hash',
@@ -115,26 +116,6 @@ const routes: RouteType[] = [
     path: '/blocks/epoch/:epoch',
     title: 'Epoch Details',
     component: Blocks,
-  },
-  {
-    path: '/transactions/shard-to/:shard/page/:page',
-    title: 'Shard Details',
-    component: Transactions,
-  },
-  {
-    path: '/transactions/shard-to/:shard',
-    title: 'Shard Details',
-    component: Transactions,
-  },
-  {
-    path: '/transactions/shard-from/:shard/page/:page',
-    title: 'Shard Details',
-    component: Transactions,
-  },
-  {
-    path: '/transactions/shard-from/:shard',
-    title: 'Shard Details',
-    component: Transactions,
   },
   {
     path: '/search/:query',
