@@ -59,7 +59,7 @@ const BlockDetails: React.FC = () => {
   const isFirsBlock = block.prevHash && block.prevHash.length > 64;
 
   return (
-    <div ref={ref}>
+    <div className="block-details" ref={ref}>
       <div className="container py-spacer">
         <div className="row">
           <div className="col-12">
