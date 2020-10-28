@@ -36,7 +36,7 @@ const Item = ({ title, value, icon }: ItemType) => (
     <div className="highlight-item d-flex align-items-center">
       <FontAwesomeIcon className="fa-2x" icon={icon} />
       <div className="d-flex flex-column ml-3">
-        <small className="mb-1 text-capitalize">{title}</small>
+        <small className="mb-1 text-uppercase">{title}</small>
         <span className="h5 mb-0 font-weight-normal">{value}</span>
       </div>
     </div>
