@@ -79,7 +79,7 @@ const TransactionsTable = ({
           </div>
         </div>
 
-        <div className="card-footer border-top">
+        <div className="card-footer border-top py-2">
           <Pager
             slug={slug}
             total={
