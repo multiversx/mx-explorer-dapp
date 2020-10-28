@@ -1,8 +1,8 @@
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { faWallet } from '@fortawesome/pro-regular-svg-icons/faWallet';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { numInitCharactersForScAddress } from 'appConfig';
+import { PageState } from 'sharedComponents';
 
 export default function FailedAddress({ addressId }: { addressId: string | undefined }) {
   const showIcon =
@@ -11,12 +11,13 @@ export default function FailedAddress({ addressId }: { addressId: string | undef
 
   return (
     <div className="card">
-      <div className="card-body card-details" data-testid="errorScreen">
-        <div className="empty">
-          <FontAwesomeIcon icon={showIcon ? faCode : faWallet} className="empty-icon" />
-          <span className="h4 empty-heading">Unable to locate this address hash</span>
-          <span className="empty-details">{addressId}</span>
-        </div>
+      <div className="card-body" data-testid="errorScreen">
+        <PageState
+          icon={showIcon ? faCode : faWallet}
+          title="Unable to locate this address hash"
+          description={addressId}
+          className="py-spacer d-flex h-100 align-items-center justify-content-center"
+        />
       </div>
     </div>
   );
