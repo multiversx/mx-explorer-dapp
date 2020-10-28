@@ -1,0 +1,30 @@
+.chart {
+  .card {
+    background-color: #1b46c2;
+  }
+  .chart-container {
+    width: 6rem;
+    height: 6rem;
+    margin: 0;
+    padding: 0;
+    background: url('./../../../assets/img/elrond-symbol-chart.svg') no-repeat;
+    background-position: center center;
+    & > div {
+      width: 8rem;
+      height: 8rem;
+      margin-top: -0.46rem;
+      margin-left: -1.09rem;
+    }
+  }
+  .badge-delegation {
+    background-color: #6b87d7;
+  }
+
+  .badge-rewards {
+    background-color: #d2d2d2;
+  }
+
+  .delegation-label {
+    opacity: 0.7;
+  }
+}
