@@ -2,15 +2,7 @@ import { useGlobalState } from 'context';
 import { isHash, networkRoute, urlBuilder } from 'helpers';
 import * as React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
-import {
-  Loader,
-  ShardSpan,
-  TestnetLink,
-  TransactionsTable,
-  adapter,
-  PageState,
-} from 'sharedComponents';
+import { Loader, ShardSpan, TestnetLink, TransactionsTable, adapter } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import { initialState } from 'sharedComponents/Adapter/functions/getMiniBlocks';
@@ -118,17 +110,7 @@ const MiniBlockDetails: React.FC = () => {
         {!blockFetched ? (
           <div className="row">
             <div className="col-12">
-              <div className="card card-small">
-                <div className="card-body ">
-                  <PageState
-                    icon={faCube}
-                    title={'Unable to locate this miniblock hash'}
-                    description={miniBlockHash}
-                    className="py-spacer d-flex h-100 align-items-center justify-content-center"
-                    dataTestId="errorScreen"
-                  />
-                </div>
-              </div>
+              <MiniBlockNotFound miniBlockHash={miniBlockHash} />
             </div>
           </div>
         ) : (
