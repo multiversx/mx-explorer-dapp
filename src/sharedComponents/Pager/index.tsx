@@ -58,7 +58,7 @@ const Pager = ({
         <li className="list-inline-item">
           <div className="pager">
             {size === 1 ? (
-              <span>
+              <span className="text-muted">
                 <FontAwesomeIcon icon={faAngleDoubleLeft} /> First
               </span>
             ) : (
@@ -71,7 +71,7 @@ const Pager = ({
         <li className="list-inline-item">
           {size === 1 ? (
             <div className="pager">
-              <span data-testid="disabledPreviousPageButton">
+              <span className="text-muted" data-testid="disabledPreviousPageButton">
                 <FontAwesomeIcon icon={faAngleLeft} /> Prev
               </span>
             </div>
@@ -99,7 +99,7 @@ const Pager = ({
             </div>
           ) : (
             <div className="pager">
-              <span data-testid="disabledNextPageButton">
+              <span className="text-muted" data-testid="disabledNextPageButton">
                 Next <FontAwesomeIcon icon={faAngleRight} />
               </span>
             </div>
@@ -113,7 +113,7 @@ const Pager = ({
                 Last <FontAwesomeIcon icon={faAngleDoubleRight} />
               </TestnetLink>
             ) : (
-              <span>
+              <span className="text-muted">
                 Last <FontAwesomeIcon icon={faAngleDoubleRight} />
               </span>
             )}
