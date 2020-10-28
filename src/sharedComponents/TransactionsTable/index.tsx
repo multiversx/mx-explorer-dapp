@@ -28,8 +28,7 @@ export interface TransactionType {
 interface TransactionsTableType {
   transactions: TransactionType[];
   addressId: string | undefined;
-  totalTransactions: number | string;
-  slug: string;
+  totalTransactions: number | '...';
   size: number;
 }
 
@@ -37,7 +36,6 @@ const TransactionsTable = ({
   transactions,
   addressId,
   totalTransactions,
-  slug,
   size,
 }: TransactionsTableType) => {
   return (
@@ -81,18 +79,10 @@ const TransactionsTable = ({
 
         <div className="card-footer border-top py-2">
           <Pager
-            slug={slug}
+            itemsPerPage={50}
+            page={String(size)}
             total={
-              !isNaN(parseInt(totalTransactions.toString()))
-                ? Math.min(parseInt(totalTransactions.toString()), 10000)
-                : totalTransactions
-            }
-            start={(size - 1) * 50 + (size === 1 ? 1 : 0)}
-            end={
-              (size - 1) * 50 +
-              (parseInt(totalTransactions.toString()) < 50
-                ? parseInt(totalTransactions.toString())
-                : 50)
+              totalTransactions !== '...' ? Math.min(totalTransactions, 10000) : totalTransactions
             }
             show={transactions.length > 0}
           />

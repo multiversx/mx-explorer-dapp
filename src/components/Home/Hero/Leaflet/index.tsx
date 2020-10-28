@@ -8,6 +8,7 @@ import { nrOfShards, metaChainShardId, explorerApi } from 'appConfig';
 const MapChart = () => {
   const [markers, setMarkers] = React.useState<MarkerPoint[]>([]);
   const [leaders, setLeaders] = React.useState<MarkerPoint[]>([]);
+  const ref = React.useRef(null);
 
   const {
     timeout,
@@ -19,7 +20,9 @@ const MapChart = () => {
   const fetchMarkers = () => {
     getMarkers({ timeout, explorerApi }).then(({ data }) => {
       const markersArray = processMarkers(data);
-      setMarkers(markersArray as MarkerPoint[]);
+      if (ref.current) {
+        setMarkers(markersArray as MarkerPoint[]);
+      }
     });
     fetchLeaders();
   };
@@ -55,12 +58,16 @@ const MapChart = () => {
           const distinctShards = shardLeaders
             .map((l) => l.shard)
             .filter((value, index, self) => self.indexOf(value) === index);
-          setLeaders((currentLeaders) => [
-            ...currentLeaders.filter((l) => !distinctShards.includes(l.shard)),
-            ...shardLeaders,
-          ]);
+          if (ref.current) {
+            setLeaders((currentLeaders) => [
+              ...currentLeaders.filter((l) => !distinctShards.includes(l.shard)),
+              ...shardLeaders,
+            ]);
+          }
         } else {
-          setLeaders(shardLeaders);
+          if (ref.current) {
+            setLeaders(shardLeaders);
+          }
         }
       });
     }
@@ -69,12 +76,14 @@ const MapChart = () => {
   React.useEffect(fetchLeaders, [timestamp, markers]);
 
   return (
-    <Map
-      markers={markers}
-      shardsArray={shardsArray}
-      leaders={leaders}
-      metaChainShardId={metaChainShardId}
-    />
+    <div ref={ref}>
+      <Map
+        markers={markers}
+        shardsArray={shardsArray}
+        leaders={leaders}
+        metaChainShardId={metaChainShardId}
+      />
+    </div>
   );
 };
 

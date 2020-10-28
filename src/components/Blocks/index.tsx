@@ -1,8 +1,9 @@
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
+import { useURLSearchParams } from 'helpers';
 import * as React from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'sharedComponents';
 import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 
@@ -29,13 +30,19 @@ function isValidInt(number: number) {
 }
 
 const Blocks: React.FC = () => {
-  const { page, shard } = useParams() as any;
+  const { page, shard } = useURLSearchParams();
   const shardId = parseInt(shard!) >= 0 ? parseInt(shard!) : undefined;
 
+  React.useEffect(() => {
+    if (shardId !== undefined) {
+      document.title = document.title.replace('Blocks', 'Shard Details');
+    }
+  }, [shardId]);
+
   const ref = React.useRef(null);
-  const size = !isNaN(page) ? parseInt(page) : 1;
+  const size = !isNaN(parseInt(page)) ? parseInt(page) : 1;
   const [state, setState] = React.useState<StateType>(initialState);
-  const [totalBlocks, setTotalBlocks] = React.useState<number | string>('...');
+  const [totalBlocks, setTotalBlocks] = React.useState<number | '...'>('...');
 
   const {
     refresh: { timestamp },
@@ -67,8 +74,6 @@ const Blocks: React.FC = () => {
   };
 
   React.useEffect(fetchBlocks, [activeNetworkId, size, shardId, refreshFirstPage]); // run the operation only once since the parameter does not change
-
-  const slug = !isNaN(shardId!) ? `blocks/shards/${shardId}` : 'blocks';
 
   const Component = () => {
     return (
@@ -111,21 +116,15 @@ const Blocks: React.FC = () => {
                         </p>
                         <BlocksTable blocks={state.blocks} shardId={shardId} />
                         <Pager
-                          slug={slug}
-                          total={10000}
-                          start={(size - 1) * 25 + (size === 1 ? 1 : 0)}
-                          end={
-                            (size - 1) * 25 +
-                            (parseInt(totalBlocks.toString()) < 25
-                              ? parseInt(totalBlocks.toString())
-                              : 25)
-                          }
+                          page={page}
+                          total={totalBlocks !== '...' ? Math.min(totalBlocks, 10000) : totalBlocks}
+                          itemsPerPage={25}
                           show={state.blocks.length > 0}
                         />
                       </div>
                     </div>
                   ) : (
-                    <Loader />
+                    <Loader dataTestId="loader" />
                   )}
                 </>
               )}

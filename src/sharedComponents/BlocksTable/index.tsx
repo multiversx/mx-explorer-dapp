@@ -1,5 +1,5 @@
 import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
-import { dateFormatted, sizeFormat, trimHash } from 'helpers';
+import { dateFormatted, sizeFormat, trimHash, urlBuilder } from 'helpers';
 import React from 'react';
 import { ShardSpan, TestnetLink, TimeAgo } from './../index';
 
@@ -10,7 +10,6 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
         <thead>
           <tr>
             <th>Block</th>
-            {/* <th>Epoch</th> */}
             <th>Age</th>
             <th>Txns</th>
             <th>Shard</th>
@@ -37,7 +36,7 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
                   <ShardSpan shardId={block.shardId} />
                 ) : (
                   <TestnetLink
-                    to={`/blocks/shards/${block.shardId}`}
+                    to={urlBuilder.shard(block.shardId)}
                     data-testid={`blockShardLink${i}`}
                   >
                     <ShardSpan shardId={block.shardId} />

@@ -7,11 +7,10 @@ import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
-import { isHash, dateFormatted, sizeFormat, networkRoute, truncate } from 'helpers';
+import { isHash, dateFormatted, sizeFormat, networkRoute, truncate, urlBuilder } from 'helpers';
 import { Loader, ShardSpan, TestnetLink, TimeAgo, adapter } from 'sharedComponents';
 import { initialState, BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 import { validatorsRoutes } from 'routes';
-//import './blockDetails.scss';
 import { metaChainShardId } from 'appConfig';
 
 function decodeHex(hex: string) {
@@ -142,7 +141,7 @@ const BlockDetails: React.FC = () => {
                       <div className="row">
                         <div className="col-lg-2 card-label">Shard</div>
                         <div className="col-lg-10">
-                          <TestnetLink to={`/blocks/shards/${block.shardId}`}>
+                          <TestnetLink to={urlBuilder.shard(block.shardId)}>
                             <ShardSpan shardId={block.shardId} />
                           </TestnetLink>
                         </div>
@@ -296,7 +295,7 @@ const BlockDetails: React.FC = () => {
                     </div>
                   </div>
                 ) : (
-                  <Loader />
+                  <Loader dataTestId="loader" />
                 )}
               </>
             )}
