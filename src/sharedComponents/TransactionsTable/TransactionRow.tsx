@@ -1,5 +1,6 @@
 import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
+import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { addressIsBech32, dateFormatted, urlBuilder } from 'helpers';
@@ -28,10 +29,10 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
       <td>
         <div className="d-flex align-items-center">
           {(statusIs(txStatus.failed) || statusIs(txStatus.fail)) && (
-            <FontAwesomeIcon icon={faTimes} className="mr-1 text-light" />
+            <FontAwesomeIcon icon={faTimes} className="mr-1 text-muted" />
           )}
           {(statusIs(txStatus.notExecuted) || statusIs(txStatus.invalid)) && (
-            <FontAwesomeIcon icon={faBan} className="mr-1 text-light" />
+            <FontAwesomeIcon icon={faBan} className="mr-1 text-muted" />
           )}
 
           <TestnetLink to={`/transactions/${transaction.txHash}`} data-testid="transactionLink">
@@ -45,19 +46,21 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
         </span>
       </td>
       <td>
-        <TestnetLink
-          to={urlBuilder.senderShard(transaction.senderShard)}
-          data-testid="shardFromLink"
-        >
-          <ShardSpan shardId={transaction.senderShard} />
-        </TestnetLink>
-        &nbsp;&gt;&nbsp;
-        <TestnetLink
-          to={urlBuilder.receiverShard(transaction.receiverShard)}
-          data-testid="shardToLink"
-        >
-          <ShardSpan shardId={transaction.receiverShard} />
-        </TestnetLink>
+        <div className="d-flex align-items-center">
+          <TestnetLink
+            to={urlBuilder.senderShard(transaction.senderShard)}
+            data-testid="shardFromLink"
+          >
+            <ShardSpan shardId={transaction.senderShard} />
+          </TestnetLink>
+          <FontAwesomeIcon icon={faChevronRight} className="text-muted mx-2" />
+          <TestnetLink
+            to={urlBuilder.receiverShard(transaction.receiverShard)}
+            data-testid="shardToLink"
+          >
+            <ShardSpan shardId={transaction.receiverShard} />
+          </TestnetLink>
+        </div>
       </td>
       <td>
         <div className="d-flex align-items-center">
