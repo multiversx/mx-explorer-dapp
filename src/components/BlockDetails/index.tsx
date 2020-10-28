@@ -79,8 +79,8 @@ const BlockDetails: React.FC = () => {
         <div className="row">
           <div className="col-12">
             {!blockFetched ? (
-              <div className="card">
-                <div className="card-body card-small">
+              <div className="card card-small">
+                <div className="card-body ">
                   <PageState
                     icon={faCube}
                     title={'Unable to locate this block hash'}

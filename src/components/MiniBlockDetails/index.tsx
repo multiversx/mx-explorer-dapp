@@ -2,7 +2,15 @@ import { useGlobalState } from 'context';
 import { isHash, networkRoute, urlBuilder } from 'helpers';
 import * as React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Loader, ShardSpan, TestnetLink, TransactionsTable, adapter } from 'sharedComponents';
+import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
+import {
+  Loader,
+  ShardSpan,
+  TestnetLink,
+  TransactionsTable,
+  adapter,
+  PageState,
+} from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import { initialState } from 'sharedComponents/Adapter/functions/getMiniBlocks';
@@ -100,17 +108,27 @@ const MiniBlockDetails: React.FC = () => {
 
   return (
     <div ref={ref}>
-      <div className="container pt-3 pb-3">
+      <div className="container py-spacer">
         <div className="row">
           <div className="col-12">
-            <h4 data-testid="title">Miniblock Details</h4>
+            <h3 className="mb-spacer">Miniblock Details</h3>
           </div>
         </div>
 
         {!blockFetched ? (
           <div className="row">
             <div className="col-12">
-              <MiniBlockNotFound miniBlockHash={miniBlockHash} />
+              <div className="card card-small">
+                <div className="card-body ">
+                  <PageState
+                    icon={faCube}
+                    title={'Unable to locate this miniblock hash'}
+                    description={miniBlockHash}
+                    className="py-spacer d-flex h-100 align-items-center justify-content-center"
+                    dataTestId="errorScreen"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         ) : (
@@ -119,75 +137,89 @@ const MiniBlockDetails: React.FC = () => {
               <>
                 <div className="row">
                   <div className="col-12">
-                    <div className="card">
-                      <div className="card-body card-details">
-                        <div className="row">
-                          <div className="col-lg-2 card-label">Miniblock Hash</div>
-                          <div className="col-lg-10">{miniBlockHash}</div>
-                        </div>
-                        <hr className="hr-space" />
-                        <div className="row">
-                          <div className="col-lg-2 card-label">Sender Shard</div>
-                          <div className="col-lg-10">
-                            <TestnetLink to={urlBuilder.shard(miniBlock.senderShard)}>
-                              <ShardSpan shardId={miniBlock.senderShard} />
-                            </TestnetLink>
+                    <div className="card card-small">
+                      <div className="card-body p-0">
+                        <div className="container-fluid">
+                          <div className="row py-3 border-bottom">
+                            <div className="col-lg-2 text-secondary text-lg-right">
+                              Miniblock Hash
+                            </div>
+                            <div className="col">{miniBlockHash}</div>
                           </div>
-                        </div>
-                        <hr className="hr-space" />
-                        <div className="row">
-                          <div className="col-lg-2 card-label">Receiver Shard</div>
-                          <div className="col-lg-10">
-                            <TestnetLink to={urlBuilder.shard(miniBlock.receiverShard)}>
-                              <ShardSpan shardId={miniBlock.receiverShard} />
-                            </TestnetLink>
-                          </div>
-                        </div>
-                        <hr className="hr-space" />
-                        <div className="row">
-                          <div className="col-lg-2 card-label">Sender Block</div>
-                          <div className="col-lg-10">
-                            {miniBlock.senderBlockHash !== '' ? (
-                              <TestnetLink
-                                className="hash"
-                                to={`/blocks/${miniBlock.senderBlockHash}`}
-                              >
-                                {miniBlock.senderBlockHash}
+
+                          <div className="row py-3 border-bottom">
+                            <div className="col-lg-2 text-secondary text-lg-right">
+                              Sender Shard
+                            </div>
+                            <div className="col">
+                              <TestnetLink to={urlBuilder.shard(miniBlock.senderShard)}>
+                                <ShardSpan shardId={miniBlock.senderShard} />
                               </TestnetLink>
-                            ) : (
-                              <span className="text-muted">N/A</span>
-                            )}
+                            </div>
                           </div>
-                        </div>
-                        <hr className="hr-space" />
-                        <div className="row">
-                          <div className="col-lg-2 card-label">Receiver Block</div>
-                          <div className="col-lg-10">
-                            {miniBlock.receiverBlockHash !== '' ? (
-                              <TestnetLink
-                                className="hash"
-                                to={`/blocks/${miniBlock.receiverBlockHash}`}
-                              >
-                                {miniBlock.receiverBlockHash}
+
+                          <div className="row py-3 border-bottom">
+                            <div className="col-lg-2 text-secondary text-lg-right">
+                              Receiver Shard
+                            </div>
+                            <div className="col">
+                              <TestnetLink to={urlBuilder.shard(miniBlock.receiverShard)}>
+                                <ShardSpan shardId={miniBlock.receiverShard} />
                               </TestnetLink>
-                            ) : (
-                              <span className="text-muted">N/A</span>
-                            )}
+                            </div>
                           </div>
-                        </div>
-                        <hr className="hr-space" />
-                        <div className="row">
-                          <div className="col-lg-2 card-label">Type</div>
-                          <div className="col-lg-10">{miniBlock.type}</div>
+
+                          <div className="row py-3 border-bottom">
+                            <div className="col-lg-2 text-secondary text-lg-right">
+                              Sender Block
+                            </div>
+                            <div className="col">
+                              {miniBlock.senderBlockHash !== '' ? (
+                                <TestnetLink
+                                  className="hash"
+                                  to={`/blocks/${miniBlock.senderBlockHash}`}
+                                >
+                                  {miniBlock.senderBlockHash}
+                                </TestnetLink>
+                              ) : (
+                                <span className="text-muted">N/A</span>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="row py-3 border-bottom">
+                            <div className="col-lg-2 text-secondary text-lg-right">
+                              Receiver Block
+                            </div>
+                            <div className="col">
+                              {miniBlock.receiverBlockHash !== '' ? (
+                                <TestnetLink
+                                  className="hash"
+                                  to={`/blocks/${miniBlock.receiverBlockHash}`}
+                                >
+                                  {miniBlock.receiverBlockHash}
+                                </TestnetLink>
+                              ) : (
+                                <span className="text-muted">N/A</span>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="row py-3 border-bottom">
+                            <div className="col-lg-2 text-secondary text-lg-right">Type</div>
+                            <div className="col">{miniBlock.type}</div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="row pt-3">
+                <div className="row pt-spacer">
                   <div className="col-12">
-                    <h4 data-testid="title">Transactions</h4>
+                    <h3 className="mb-spacer" data-testid="title">
+                      Transactions
+                    </h3>
                   </div>
                 </div>
                 <div className="row">
