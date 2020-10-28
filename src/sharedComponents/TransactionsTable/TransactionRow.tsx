@@ -26,18 +26,18 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
   return (
     <tr className="animated fadeIn">
       <td>
-        {(statusIs(txStatus.failed) || statusIs(txStatus.fail)) && (
-          <FontAwesomeIcon icon={faTimes} className="w300 mr-1" />
-        )}
-        {(statusIs(txStatus.notExecuted) || statusIs(txStatus.invalid)) && (
-          <FontAwesomeIcon icon={faBan} className="w300 mr-1" />
-        )}
+        <div className="d-flex align-items-center">
+          {(statusIs(txStatus.failed) || statusIs(txStatus.fail)) && (
+            <FontAwesomeIcon icon={faTimes} className="w300 mr-1" />
+          )}
+          {(statusIs(txStatus.notExecuted) || statusIs(txStatus.invalid)) && (
+            <FontAwesomeIcon icon={faBan} className="w300 mr-1" />
+          )}
 
-        <TestnetLink to={`/transactions/${transaction.txHash}`} data-testid="transactionLink">
-          <div className="trim-hash-container">
+          <TestnetLink to={`/transactions/${transaction.txHash}`} data-testid="transactionLink">
             <TrimHash text={transaction.txHash} />
-          </div>
-        </TestnetLink>
+          </TestnetLink>
+        </div>
       </td>
       <td>
         <span title={dateFormatted(transaction.timestamp)}>
@@ -60,19 +60,15 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
         </TestnetLink>
       </td>
       <td>
-        <div className="content-fill">
+        <div className="d-flex align-items-center">
           <ScAddressIcon initiator={transaction.sender} />
           {addressId === transaction.sender ? (
-            <div className="trim-hash-container">
-              <TrimHash text={transaction.sender} />
-            </div>
+            <TrimHash text={transaction.sender} />
           ) : (
             <>
               {addressIsBech32(transaction.sender) ? (
                 <TestnetLink to={`/address/${transaction.sender}`} data-testid="senderLink">
-                  <div className="trim-hash-container">
-                    <TrimHash text={transaction.sender} />
-                  </div>
+                  <TrimHash text={transaction.sender} />
                 </TestnetLink>
               ) : (
                 <ShardSpan shardId={transaction.sender} />
@@ -82,17 +78,13 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
         </div>
       </td>
       <td>
-        <div className="content-fill">
+        <div className="d-flex align-items-center">
           <ScAddressIcon initiator={transaction.receiver} />
           {addressId === transaction.receiver ? (
-            <div className="trim-hash-container">
-              <TrimHash text={transaction.receiver} />
-            </div>
+            <TrimHash text={transaction.receiver} />
           ) : (
             <TestnetLink to={`/address/${transaction.receiver}`} data-testid="receiverLink">
-              <div className="trim-hash-container">
-                <TrimHash text={transaction.receiver} />
-              </div>
+              <TrimHash text={transaction.receiver} />
             </TestnetLink>
           )}
         </div>
