@@ -3,10 +3,6 @@
     .trim-hash {
       max-width: 6rem;
 
-      @include media-breakpoint-up(md) {
-        max-width: 8rem;
-      }
-
       @include media-breakpoint-up(lg) {
         max-width: 10rem;
       }
