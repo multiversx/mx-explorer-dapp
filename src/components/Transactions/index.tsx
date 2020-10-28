@@ -50,7 +50,7 @@ const Transactions = () => {
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
-  const [totalTransactions, setTotalTransactions] = React.useState<number | string>('...');
+  const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
   const size = parseInt(page!) ? parseInt(page!) : 1;
   const shardId = parseInt(shard!) >= 0 ? parseInt(shard!) : undefined;
 
@@ -138,8 +138,8 @@ const Transactions = () => {
 
   React.useEffect(fetchTransactions, [activeNetworkId, size, addressId, refreshFirstPage]); // run the operation only once since the parameter does not change
 
-  let slug = addressId ? `address/${addressId}` : 'transactions';
-  slug = shardType ? `transactions/${shardDirection}/${shardId}` : slug;
+  // let slug = addressId ? `address/${addressId}` : 'transactions';
+  // slug = shardType ? `transactions/${shardDirection}/${shardId}` : slug;
 
   const title = indexOfTransactions >= 0 ? 'Transactions' : 'Address Details';
 
@@ -161,13 +161,12 @@ const Transactions = () => {
               transactions={transactions}
               addressId={addressId}
               totalTransactions={totalTransactions}
-              slug={slug}
               size={size}
             />
           ) : (
             <>
               {transactionsFetched ? (
-                <Loader />
+                <Loader dataTestId="loader" />
               ) : (
                 pathname.includes('address') && <NoTransactions />
               )}

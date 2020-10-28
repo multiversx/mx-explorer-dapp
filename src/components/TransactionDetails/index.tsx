@@ -60,7 +60,7 @@ const TransactionDetails: React.FC = () => {
         <div className="row">
           <div className="col-12">
             {transactionFetched === undefined ? (
-              <Loader />
+              <Loader dataTestId="loader" />
             ) : (
               <>
                 {transactionFetched === false ? (

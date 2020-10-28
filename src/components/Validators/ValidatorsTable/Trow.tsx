@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { truncate, trimHash } from 'helpers';
+import { truncate, trimHash, urlBuilder } from 'helpers';
 import { ShardSpan, TestnetLink } from 'sharedComponents';
 import { ValidatorType } from 'context/validators';
 import RowIcon from './../RowIcon';
@@ -46,7 +46,7 @@ const ValidatorRow = ({
       </td>
       <td>
         <TestnetLink
-          to={`/blocks/shards/${validator.shardNumber}`}
+          to={urlBuilder.shard(validator.shardNumber)}
           data-testid={`shardLink${rowIndex}`}
         >
           <ShardSpan shardId={validator.shardNumber} />
