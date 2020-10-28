@@ -28,10 +28,10 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
       <td>
         <div className="d-flex align-items-center">
           {(statusIs(txStatus.failed) || statusIs(txStatus.fail)) && (
-            <FontAwesomeIcon icon={faTimes} className="w300 mr-1" />
+            <FontAwesomeIcon icon={faTimes} className="mr-1 text-light" />
           )}
           {(statusIs(txStatus.notExecuted) || statusIs(txStatus.invalid)) && (
-            <FontAwesomeIcon icon={faBan} className="w300 mr-1" />
+            <FontAwesomeIcon icon={faBan} className="mr-1 text-light" />
           )}
 
           <TestnetLink to={`/transactions/${transaction.txHash}`} data-testid="transactionLink">
