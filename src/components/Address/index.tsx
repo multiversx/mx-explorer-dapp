@@ -6,6 +6,7 @@ import { Loader, TransactionsTable, adapter } from 'sharedComponents';
 import denominate from 'sharedComponents/Denominate/denominate';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
+import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import AddressDetails, { AddressDetailsType } from './AddressDetails';
 import FailedAddress from './FailedAddress';
 import DelegationDetails from './DelegationDetails';
@@ -157,15 +158,21 @@ const Address = () => {
                     </h4>
                   </div>
                 </div>
-                {transactions.length > 0 ? (
-                  <TransactionsTable
-                    transactions={transactions}
-                    addressId={addressId}
-                    totalTransactions={totalTransactions}
-                    size={size}
-                  />
+                {transactionsFetched === true ? (
+                  <>
+                    {transactions.length > 0 ? (
+                      <TransactionsTable
+                        transactions={transactions}
+                        addressId={addressId}
+                        totalTransactions={totalTransactions}
+                        size={size}
+                      />
+                    ) : (
+                      <NoTransactions />
+                    )}
+                  </>
                 ) : (
-                  <NoTransactions />
+                  <FailedTransactions />
                 )}
               </div>
             </div>
