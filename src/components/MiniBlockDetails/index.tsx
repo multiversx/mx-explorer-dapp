@@ -1,7 +1,7 @@
 import { useGlobalState } from 'context';
 import { isHash, networkRoute, urlBuilder } from 'helpers';
 import * as React from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import { Loader, ShardSpan, TestnetLink, TransactionsTable, adapter } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
@@ -24,81 +24,59 @@ export interface StateType {
 
 const MiniBlockDetails: React.FC = () => {
   const { page, hash: miniBlockHash } = useParams() as any;
-  const history = useHistory();
-
   const ref = React.useRef(null);
 
-  const provider = adapter();
+  const { getMiniBlockTransactions, getMiniBlockTransactionsCount, getMiniBlock } = adapter();
 
   const {
     activeNetworkId,
     refresh: { timestamp },
-    timeout,
   } = useGlobalState();
 
   const [state, setState] = React.useState<StateType>(initialState);
+  const [miniBlockFetched, setMiniBlockFetched] = React.useState<boolean | undefined>();
 
-  if (miniBlockHash && !isHash(miniBlockHash)) {
-    history.push(networkRoute({ to: `/not-found`, activeNetworkId }));
-  }
-
-  const { miniBlock, blockFetched } = state;
+  const { miniBlock } = state;
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
 
   const size = parseInt(page!) ? parseInt(page!) : 1;
-  const refreshFirstPage = size === 1 ? timestamp : 0;
 
-  const fetchTransactions = () => {
-    if (ref.current !== null) {
-      provider
-        .getMiniBlockTransactions({
+  const invalid = miniBlockHash && !isHash(miniBlockHash);
+
+  const fetchMiniBlockData = () => {
+    if (!invalid) {
+      Promise.all([
+        getMiniBlock({ miniBlockHash }),
+        getMiniBlockTransactions({
           size,
           miniBlockHash,
-        })
-        .then(({ data, success }) => {
-          if (ref.current !== null) {
-            if (success) {
-              setTransactions(data);
-              setTransactionsFetched(true);
-            } else if (transactions.length === 0) {
-              setTransactionsFetched(false);
-            }
-          }
-        });
-      provider
-        .getMiniBlockTransactionsCount({
-          miniBlockHash,
-        })
-        .then(({ count, success }) => {
-          if (ref.current !== null && success) {
-            setTotalTransactions(count);
-          }
-        });
+        }),
+      ]).then(([miniBlockData, miniBlocTransactionsData]) => {
+        if (ref.current !== null) {
+          setTransactions(miniBlocTransactionsData.data);
+          setTransactionsFetched(miniBlocTransactionsData.success);
+          setState(miniBlockData);
+          setMiniBlockFetched(miniBlockData.blockFetched);
+        }
+      });
+      getMiniBlockTransactionsCount({
+        miniBlockHash,
+      }).then(({ count, success }) => {
+        if (ref.current !== null && success) {
+          setTotalTransactions(count);
+        }
+      });
     }
   };
 
-  const getMiniBlock = () => {
-    if (miniBlockHash) {
-      provider
-        .getMiniBlock({ miniBlockHash })
-        .then((data: any) => ref.current !== null && setState(data));
-    }
-  };
+  React.useEffect(fetchMiniBlockData, [activeNetworkId, size, miniBlockHash, timestamp]);
 
-  React.useEffect(getMiniBlock, [activeNetworkId, miniBlockHash, timeout]); // run the operation only once since the parameter does not change
-
-  React.useEffect(fetchTransactions, [
-    activeNetworkId,
-    size,
-    miniBlockHash,
-    timeout,
-    refreshFirstPage,
-  ]); // run the operation only once since the parameter does not change
-
-  return (
+  return invalid ? (
+    <Redirect to={networkRoute({ to: `/not-found`, activeNetworkId })} />
+  ) : (
     <div ref={ref}>
       <div className="container pt-3 pb-3">
         <div className="row">
@@ -106,16 +84,11 @@ const MiniBlockDetails: React.FC = () => {
             <h4 data-testid="title">Miniblock Details</h4>
           </div>
         </div>
-
-        {!blockFetched ? (
-          <div className="row">
-            <div className="col-12">
-              <MiniBlockNotFound miniBlockHash={miniBlockHash} />
-            </div>
-          </div>
-        ) : (
-          <>
-            {miniBlock.miniBlockHash ? (
+        <div className="row">
+          <div className="col-12">
+            {miniBlockFetched === undefined && <Loader dataTestId="loader" />}
+            {miniBlockFetched === false && <MiniBlockNotFound miniBlockHash={miniBlockHash} />}
+            {miniBlockFetched && miniBlock.miniBlockHash && (
               <>
                 <div className="row">
                   <div className="col-12">
@@ -192,30 +165,21 @@ const MiniBlockDetails: React.FC = () => {
                 </div>
                 <div className="row">
                   <div className="col-12">
-                    {!transactionsFetched ? (
-                      <NoTransactions />
-                    ) : (
-                      <>
-                        {transactions.length > 0 ? (
-                          <TransactionsTable
-                            transactions={transactions}
-                            addressId={undefined}
-                            totalTransactions={totalTransactions}
-                            size={size}
-                          />
-                        ) : (
-                          <Loader />
-                        )}
-                      </>
+                    {transactionsFetched === false && <NoTransactions />}
+                    {transactionsFetched === true && (
+                      <TransactionsTable
+                        transactions={transactions}
+                        addressId={undefined}
+                        totalTransactions={totalTransactions}
+                        size={size}
+                      />
                     )}
                   </div>
                 </div>
               </>
-            ) : (
-              <Loader />
             )}
-          </>
-        )}
+          </div>
+        </div>
       </div>
     </div>
   );
