@@ -9,7 +9,7 @@ import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 
 interface TransactionRowType {
   transaction: TransactionType;
-  addressId?: string | undefined;
+  addressId?: string;
 }
 
 const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {

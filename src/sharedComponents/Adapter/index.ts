@@ -67,18 +67,26 @@ export default function useAdapter() {
 
     /* Transactions */
 
-    getTransactions: ({ size, addressId, shardId, shardType }: f.TransactionsType) =>
-      f.getTransactions({ provider, baseUrl, timeout, addressId, size, shardId, shardType }),
+    getTransactions: ({ size, addressId, senderShard, receiverShard }: f.TransactionsType) =>
+      f.getTransactions({
+        provider,
+        baseUrl,
+        timeout,
+        addressId,
+        size,
+        senderShard,
+        receiverShard,
+      }),
 
-    getTransactionsCount: ({ size, addressId, shardId, shardType }: f.TransactionsType) =>
+    getTransactionsCount: ({ size, addressId, senderShard, receiverShard }: f.TransactionsType) =>
       f.getTransactionsCount({
         provider,
         baseUrl,
         timeout,
         addressId,
         size,
-        shardId,
-        shardType,
+        senderShard,
+        receiverShard,
       }),
 
     getAddressDetails: ({ addressId }: { addressId: string }) =>

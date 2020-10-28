@@ -27,7 +27,7 @@ export interface TransactionType {
 
 interface TransactionsTableType {
   transactions: TransactionType[];
-  addressId: string | undefined;
+  addressId?: string;
   totalTransactions: number | '...';
   size: number;
 }
