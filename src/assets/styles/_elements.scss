@@ -62,3 +62,31 @@
     padding-left: 0.7rem;
   }
 }
+
+.table-wrapper {
+  @include media-breakpoint-down(lg) {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .table {
+    @include media-breakpoint-up(lg) {
+      table-layout: fixed;
+    }
+
+    th {
+      border: 0;
+      color: $body;
+      white-space: nowrap;
+
+      @extend .border-bottom;
+      @extend .text-semibold;
+      @extend .bg-light;
+    }
+
+    td {
+      color: $body;
+    }
+  }
+}
