@@ -42,7 +42,7 @@ const TransactionsTable = ({
 }: TransactionsTableType) => {
   return (
     <div className="transactions-table">
-      <div className="card card-small d-flex">
+      <div className="card card-small">
         <div className="card-header border-0 p-0">
           {totalTransactions > 10000 && (
             <div className="card-header-item border-bottom p-3">
