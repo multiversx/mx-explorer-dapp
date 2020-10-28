@@ -75,8 +75,6 @@ const Blocks: React.FC = () => {
 
   React.useEffect(fetchBlocks, [activeNetworkId, size, shardId, refreshFirstPage]); // run the operation only once since the parameter does not change
 
-  const slug = !isNaN(shardId!) ? `blocks/shard/${shardId}` : 'blocks';
-
   const Component = () => {
     return (
       <div ref={ref}>
@@ -119,7 +117,6 @@ const Blocks: React.FC = () => {
                         <BlocksTable blocks={state.blocks} shardId={shardId} />
                         <Pager
                           page={page}
-                          slug={slug}
                           total={totalBlocks !== '...' ? Math.min(totalBlocks, 10000) : totalBlocks}
                           itemsPerPage={25}
                           show={state.blocks.length > 0}

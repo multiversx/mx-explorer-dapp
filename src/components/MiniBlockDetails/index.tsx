@@ -49,7 +49,6 @@ const MiniBlockDetails: React.FC = () => {
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
 
   const size = parseInt(page!) ? parseInt(page!) : 1;
-  const slug = `miniblocks/${miniBlockHash}`;
   const refreshFirstPage = size === 1 ? timestamp : 0;
 
   const fetchTransactions = () => {
@@ -202,7 +201,6 @@ const MiniBlockDetails: React.FC = () => {
                             transactions={transactions}
                             addressId={undefined}
                             totalTransactions={totalTransactions}
-                            slug={slug}
                             size={size}
                           />
                         ) : (
