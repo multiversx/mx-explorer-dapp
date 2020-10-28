@@ -160,7 +160,7 @@ const MiniBlockDetails: React.FC = () => {
                             </div>
                           </div>
 
-                          <div className="row py-3 border-bottom">
+                          <div className="row py-3">
                             <div className="col-lg-2 text-secondary text-lg-right">Type</div>
                             <div className="col">{miniBlock.type}</div>
                           </div>

@@ -14,10 +14,9 @@ const TransactionDetail = ({
   disabled = false,
 }: TransactionDetailType) => (
   <>
-    {!hideDelimiter && <hr className="hr-space" />}
-    <div className="row">
-      <div className="col-lg-2 card-label">{label}</div>
-      <div className="col-lg-10">
+    <div className={`row py-3 ${hideDelimiter ? '' : 'border-bottom'}`}>
+      <div className="col-lg-2 text-secondary text-lg-right">{label}</div>
+      <div className="col">
         {disabled ? <span className="text-muted">N/A</span> : <>{children}</>}
       </div>
     </div>
