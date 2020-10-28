@@ -1,6 +1,6 @@
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { useGlobalState } from 'context';
-import { useURLSearchParams } from 'helpers';
+import { networkRoute, useURLSearchParams } from 'helpers';
 import * as React from 'react';
 import { Redirect } from 'react-router-dom';
 import { BlocksTable, Loader, Pager, ShardSpan, adapter, PageState } from 'sharedComponents';
@@ -65,7 +65,7 @@ const Blocks: React.FC = () => {
   React.useEffect(fetchBlocks, [activeNetworkId, size, shardId, refreshFirstPage]);
 
   return shard && shard < 0 ? (
-    <Redirect to={activeNetworkId ? `/${activeNetworkId}/not-found` : '/not-found'} />
+    <Redirect to={networkRoute({ to: `/not-found`, activeNetworkId })} />
   ) : (
     <div ref={ref}>
       <div className="container pt-3 pb-3">
