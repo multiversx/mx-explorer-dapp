@@ -4,7 +4,7 @@ import { PageState } from 'sharedComponents';
 
 export default function NoTransactions() {
   return (
-    <div className="card">
+    <div className="card card-small">
       <div className="card-body">
         <PageState
           icon={faExchangeAlt}
