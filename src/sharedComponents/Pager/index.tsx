@@ -9,19 +9,18 @@ import { TestnetLink } from 'sharedComponents';
 import pagerHelper from './pagerHelper';
 
 const Pager = ({
-  slug,
   total,
   show,
   page,
   itemsPerPage,
 }: {
-  slug: string;
   page: string;
   total: number | '...';
   itemsPerPage: number;
   show: boolean;
 }) => {
-  const urlParams = new URLSearchParams(useLocation().search);
+  const { search, pathname } = useLocation();
+  const urlParams = new URLSearchParams(search);
   const params = Object.fromEntries(urlParams);
 
   const { size, start, last, lastPage, end } = pagerHelper({
@@ -44,7 +43,7 @@ const Pager = ({
     page: `${size - 1}`,
   }).toString();
 
-  const prevPageUrl = size === 2 ? `/${slug}?${firstUrlParams}` : `/${slug}?${prevUrlParams}`;
+  const prevPageUrl = size === 2 ? `${pathname}?${firstUrlParams}` : `${pathname}?${prevUrlParams}`;
 
   const startEnd = end === 1 ? 1 : `${start.toLocaleString('en')}-${last.toLocaleString('en')}`;
 
@@ -63,7 +62,7 @@ const Pager = ({
                 <FontAwesomeIcon icon={faAngleDoubleLeft} /> First
               </span>
             ) : (
-              <TestnetLink data-testid="nextPageButton" to={`/${slug}?${firstUrlParams}`}>
+              <TestnetLink data-testid="nextPageButton" to={`${pathname}?${firstUrlParams}`}>
                 <FontAwesomeIcon icon={faAngleDoubleLeft} /> First
               </TestnetLink>
             )}
@@ -94,7 +93,7 @@ const Pager = ({
         <li className="list-inline-item ml-2">
           {end < total ? (
             <div className="pager">
-              <TestnetLink data-testid="nextPageButton" to={`/${slug}?${nextUrlParams}`}>
+              <TestnetLink data-testid="nextPageButton" to={`${pathname}?${nextUrlParams}`}>
                 Next <FontAwesomeIcon icon={faAngleRight} />
               </TestnetLink>
             </div>
@@ -110,7 +109,7 @@ const Pager = ({
         <li className="list-inline-item">
           <div className="pager">
             {!isNaN(lastPage) && end < total ? (
-              <TestnetLink data-testid="nextPageButton" to={`/${slug}?${lastUrlParams}`}>
+              <TestnetLink data-testid="nextPageButton" to={`${pathname}?${lastUrlParams}`}>
                 Last <FontAwesomeIcon icon={faAngleDoubleRight} />
               </TestnetLink>
             ) : (

@@ -29,7 +29,6 @@ interface TransactionsTableType {
   transactions: TransactionType[];
   addressId: string | undefined;
   totalTransactions: number | '...';
-  slug: string;
   size: number;
 }
 
@@ -37,7 +36,6 @@ const TransactionsTable = ({
   transactions,
   addressId,
   totalTransactions,
-  slug,
   size,
 }: TransactionsTableType) => {
   return (
@@ -76,7 +74,6 @@ const TransactionsTable = ({
         </div>
 
         <Pager
-          slug={slug}
           itemsPerPage={50}
           page={String(size)}
           total={
