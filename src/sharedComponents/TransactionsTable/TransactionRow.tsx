@@ -2,7 +2,7 @@ import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { addressIsBech32, dateFormatted } from 'helpers';
+import { addressIsBech32, dateFormatted, urlBuilder } from 'helpers';
 import {
   Denominate,
   ScAddressIcon,
@@ -46,14 +46,14 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
       </td>
       <td>
         <TestnetLink
-          to={`/transactions/shard-from/${transaction.senderShard}`}
+          to={urlBuilder.senderShard(transaction.senderShard)}
           data-testid="shardFromLink"
         >
           <ShardSpan shardId={transaction.senderShard} />
         </TestnetLink>
         &nbsp;&gt;&nbsp;
         <TestnetLink
-          to={`/transactions/shard-to/${transaction.receiverShard}`}
+          to={urlBuilder.receiverShard(transaction.receiverShard)}
           data-testid="shardToLink"
         >
           <ShardSpan shardId={transaction.receiverShard} />

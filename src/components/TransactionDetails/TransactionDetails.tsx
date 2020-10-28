@@ -2,7 +2,7 @@ import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
-import { addressIsBech32, dateFormatted } from 'helpers';
+import { addressIsBech32, dateFormatted, urlBuilder } from 'helpers';
 import * as React from 'react';
 import {
   Denominate,
@@ -71,7 +71,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
             <>
               <TestnetLink to={`/address/${transaction.sender}`}>{transaction.sender}</TestnetLink>
               <TestnetLink
-                to={`/transactions/shard-from/${transaction.senderShard}`}
+                to={urlBuilder.senderShard(transaction.senderShard)}
                 className="small-link"
               >
                 &nbsp;(
@@ -90,7 +90,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
           &nbsp;
           {!isNaN(transaction.receiverShard) && (
             <TestnetLink
-              to={`/transactions/shard-to/${transaction.receiverShard}`}
+              to={urlBuilder.receiverShard(transaction.receiverShard)}
               className="small-link"
             >
               (<ShardSpan shardId={transaction.receiverShard} />)
