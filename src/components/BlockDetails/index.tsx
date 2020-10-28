@@ -8,7 +8,15 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { isHash, dateFormatted, sizeFormat, networkRoute, urlBuilder } from 'helpers';
-import { Loader, ShardSpan, TestnetLink, TimeAgo, adapter, TrimHash } from 'sharedComponents';
+import {
+  Loader,
+  ShardSpan,
+  TestnetLink,
+  TimeAgo,
+  adapter,
+  TrimHash,
+  PageState,
+} from 'sharedComponents';
 import { initialState, BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 import { validatorsRoutes } from 'routes';
 import { metaChainShardId } from 'appConfig';
@@ -72,12 +80,14 @@ const BlockDetails: React.FC = () => {
           <div className="col-12">
             {!blockFetched ? (
               <div className="card">
-                <div className="card-body card-details">
-                  <div className="empty">
-                    <FontAwesomeIcon icon={faCube} className="empty-icon" />
-                    <span className="h4 empty-heading">Unable to locate this block hash</span>
-                    <span className="empty-details">{blockId}</span>
-                  </div>
+                <div className="card-body card-small">
+                  <PageState
+                    icon={faCube}
+                    title={'Unable to locate this block hash'}
+                    description={blockId}
+                    className="py-spacer d-flex h-100 align-items-center justify-content-center"
+                    dataTestId="errorScreen"
+                  />
                 </div>
               </div>
             ) : (
