@@ -50,7 +50,7 @@ const Transactions = () => {
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
-  const [totalTransactions, setTotalTransactions] = React.useState<number | string>('...');
+  const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
   const size = parseInt(page!) ? parseInt(page!) : 1;
   const shardId = parseInt(shard!) >= 0 ? parseInt(shard!) : undefined;
 

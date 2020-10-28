@@ -5,30 +5,30 @@ import { faAngleDoubleLeft } from '@fortawesome/pro-regular-svg-icons/faAngleDou
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import TestnetLink from './../TestnetLink';
+import { TestnetLink } from 'sharedComponents';
+import pagerHelper from './pagerHelper';
 
 const Pager = ({
   slug,
   total,
   show,
   page,
-  max,
   itemsPerPage,
 }: {
   slug: string;
   page: string;
-  total: number | string;
+  total: number | '...';
   itemsPerPage: number;
-  max: number;
   show: boolean;
 }) => {
   const urlParams = new URLSearchParams(useLocation().search);
   const params = Object.fromEntries(urlParams);
 
-  const size = !isNaN(parseInt(page)) ? parseInt(page) : 1;
-
-  const start = (size - 1) * itemsPerPage + (size === 1 ? 1 : 0);
-  const end = (size - 1) * itemsPerPage + (max < itemsPerPage ? max : itemsPerPage);
+  const { size, start, last, lastPage, end } = pagerHelper({
+    total: total === '...' ? 0 : total,
+    itemsPerPage,
+    page,
+  });
 
   const nextUrlParams = new URLSearchParams({
     ...params,
@@ -46,14 +46,7 @@ const Pager = ({
 
   const prevPageUrl = size === 2 ? `/${slug}?${firstUrlParams}` : `/${slug}?${prevUrlParams}`;
 
-  const last = !isNaN(parseInt(total.toString())) ? Math.min(end, parseInt(total.toString())) : end;
-
   const startEnd = end === 1 ? 1 : `${start.toLocaleString('en')}-${last.toLocaleString('en')}`;
-
-  const correction = size > 2 ? 0 : 1;
-  const lastPage = Math.ceil(parseInt(total.toString()) / (end - start + correction));
-
-  console.log(lastPage);
 
   const lastUrlParams = new URLSearchParams({
     ...params,
