@@ -62,10 +62,10 @@ const Transactions = () => {
 
   return (
     <div ref={ref}>
-      <div className="container pt-3 pb-3">
+      <div className="container py-spacer">
         <div className="row">
           <div className="col-12">
-            <h4>
+            <h3 className="mb-spacer">
               <span data-testid="title">Transactions</span>
               {senderShard !== undefined && (
                 <>
@@ -80,7 +80,7 @@ const Transactions = () => {
                   <ShardSpan shardId={receiverShard} />
                 </>
               )}
-            </h4>
+            </h3>
           </div>
         </div>
         {transactionsFetched === undefined && <Loader dataTestId="loader" />}
