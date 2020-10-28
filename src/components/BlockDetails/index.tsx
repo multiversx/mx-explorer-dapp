@@ -137,7 +137,6 @@ const BlockDetails: React.FC = () => {
                         <div className="row py-3 border-bottom">
                           <div className="col-lg-2 text-light text-lg-right">Timestamp</div>
                           <div className="col">
-                            &nbsp;
                             <FontAwesomeIcon icon={faClock} className="mr-2" />
                             <TimeAgo value={block.timestamp} />
                             &nbsp;({dateFormatted(block.timestamp)})
@@ -218,16 +217,12 @@ const BlockDetails: React.FC = () => {
 
                         <div className="row py-3 border-bottom">
                           <div className="col-lg-2 text-light text-lg-right">Block Hash</div>
-                          <div className="col">
-                            <TrimHash text={block.hash} />
-                          </div>
+                          <div className="col">{block.hash}</div>
                         </div>
 
                         <div className="row py-3 border-bottom">
                           <div className="col-lg-2 text-light text-lg-right">State Root Hash</div>
-                          <div className="col">
-                            <TrimHash text={block.stateRootHash} />
-                          </div>
+                          <div className="col">{block.stateRootHash}</div>
                         </div>
                         {block.shardId === metaChainShardId && (
                           <>
