@@ -64,7 +64,7 @@ const BlockDetails = () => {
                 </div>
               </div>
             )}
-            {blockFetched === true && <BlockData {...state} />}
+            {blockFetched === true && state.block.hash && <BlockData {...state} />}
           </div>
         </div>
       </div>

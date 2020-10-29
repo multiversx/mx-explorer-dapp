@@ -30,32 +30,26 @@ const LatestBlocks = () => {
   const { getLatestBlocks } = adapter();
 
   const fetchBlocks = () => {
-    if (ref.current !== null) {
-      getLatestBlocks().then(({ data, blocksFetched }) => {
-        if (ref.current !== null) {
-          if (blocksFetched) {
-            const sortedBlocks = data;
-            if (blocks.length === 0) {
-              const newBlocks = sortedBlocks.map((block: BlockType) => ({
-                ...block,
-                isNew: false,
-              }));
-              setBlocks(newBlocks);
-            } else {
-              const existingHashes = blocks.map((b) => b.hash);
-              const newBlocks = sortedBlocks.map((block: BlockType) => ({
-                ...block,
-                isNew: !existingHashes.includes(block.hash),
-              }));
-              setBlocks(newBlocks);
-            }
-            setBlocksFetched(true);
-          } else if (blocks.length === 0) {
-            setBlocksFetched(false);
-          }
+    getLatestBlocks().then(({ data, blocksFetched }) => {
+      if (ref.current !== null) {
+        const sortedBlocks = data;
+        if (blocks.length === 0) {
+          const newBlocks = sortedBlocks.map((block: BlockType) => ({
+            ...block,
+            isNew: false,
+          }));
+          setBlocks(newBlocks);
+        } else {
+          const existingHashes = blocks.map((b) => b.hash);
+          const newBlocks = sortedBlocks.map((block: BlockType) => ({
+            ...block,
+            isNew: !existingHashes.includes(block.hash),
+          }));
+          setBlocks(newBlocks);
         }
-      });
-    }
+        setBlocksFetched(blocksFetched);
+      }
+    });
   };
 
   React.useEffect(fetchBlocks, [activeNetworkId, timestamp]);

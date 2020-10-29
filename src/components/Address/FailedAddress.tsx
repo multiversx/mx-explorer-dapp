@@ -11,12 +11,13 @@ export default function FailedAddress({ addressId }: { addressId: string | undef
 
   return (
     <div className="card card-small">
-      <div className="card-body" data-testid="errorScreen">
+      <div className="card-body">
         <PageState
           icon={showIcon ? faCode : faWallet}
           title="Unable to locate this address hash"
           description={addressId}
           className="py-spacer d-flex h-100 align-items-center justify-content-center"
+          dataTestId="errorScreen"
         />
       </div>
     </div>
