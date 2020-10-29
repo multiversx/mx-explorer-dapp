@@ -73,9 +73,6 @@ describe('Transactions Page', () => {
   test('Transactions pager working', async () => {
     const render = beforeAll('/transactions?page=1');
 
-    const nextButton = await waitForElement(() => render.queryByTestId('disabledNextPageButton'));
-    expect(nextButton).toBeInTheDocument();
-
     const pageInterval = await waitForElement(() => render.queryByTestId('pageInterval'));
     expect(pageInterval!.innerHTML).toBe('1-50');
   });
@@ -86,7 +83,9 @@ describe('Transactions Page Links', () => {
     const render = beforeAll('/transactions');
 
     const links = await render.findAllByTestId('transactionLink');
-    expect(links[0].textContent).toBe('72d26fd09e...5f600a9a91');
+    expect(links[0].textContent).toBe(
+      '72d26fd09ed2d2bb649a401428eca1a0a7b5a11242daf5500990305f600a9a91'
+    );
 
     fireEvent.click(links[0]);
     await act(async () => {
@@ -121,7 +120,9 @@ describe('Transactions Page Links', () => {
     const render = beforeAll('/transactions');
 
     const links = await render.findAllByTestId('receiverLink');
-    expect(links[0].textContent).toBe('erd1hqplna...r6fq40f044');
+    expect(links[0].textContent).toBe(
+      'erd1hqplnafrhnd4zv846wumat2462jy9jkmwxtp3nwmw8ye9eclr6fq40f044'
+    );
 
     fireEvent.click(links[0]);
     await wait(async () => {
