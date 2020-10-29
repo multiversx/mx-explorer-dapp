@@ -8,7 +8,7 @@ import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars';
 import { faMoon } from '@fortawesome/pro-regular-svg-icons/faMoon';
 import NavLinks from './NavLinks';
 import Logo from './Logo';
-import { ReactComponent as Sun } from 'assets/img/sun.svg';
+import { ReactComponent as Sun } from 'assets/images/sun.svg';
 import { useGlobalState, useGlobalDispatch } from 'context';
 
 export default function Navbar() {
@@ -46,7 +46,7 @@ export default function Navbar() {
   return (
     <>
       <div className="main-navbar sticky-top">
-        <div className="p-0 container">
+        <div className="container">
           <Nav className="align-items-stretch flex-nowrap p-0 navbar">
             <div className="d-flex align-items-center navbar-brand">
               <Logo />
@@ -89,7 +89,7 @@ export default function Navbar() {
 
             <div className="nav d-lg-none">
               <a
-                className="nav-link nav-link-icon text-center d-flex align-items-center justify-content-center"
+                className="nav-link nav-link-icon text-center d-flex align-items-center justify-content-center pr-0"
                 href="/"
                 onClick={toggleHeaderNav}
               >

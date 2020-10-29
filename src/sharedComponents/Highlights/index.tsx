@@ -32,7 +32,7 @@ interface ItemType {
 }
 
 const Item = ({ title, value, icon }: ItemType) => (
-  <li className="my-3">
+  <li className="my-3 px-2">
     <div className="highlight-item d-flex align-items-center">
       <FontAwesomeIcon className="fa-2x" icon={icon} />
       <div className="d-flex flex-column ml-3">
@@ -139,7 +139,7 @@ const Hightlights = () => {
           <div className="row">
             <div className="col my-4">
               <ul className="list-unstyled d-flex flex-wrap justify-content-between m-0 p-0">
-                <li className="my-3">
+                <li className="my-3 px-2">
                   <div className="highlight-item d-flex align-items-center">
                     <FontAwesomeIcon className="fa-2x" icon={faClock} />
                     <div className="d-flex flex-column ml-3">
