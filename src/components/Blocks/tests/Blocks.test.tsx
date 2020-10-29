@@ -63,13 +63,13 @@ describe('Blocks', () => {
   test('Blocks page failed state', async () => {
     const render = beforeAll(true);
 
-    const failedState = await render.findByText('No blocks found');
+    const failedState = await render.findByTestId('errorScreen');
     expect(failedState.innerHTML).toBeDefined();
   });
 });
 
 describe('Blocks Page Links', () => {
-  test('Block link', async () => {
+  test('Block page link', async () => {
     const render = beforeAll();
 
     const link = await render.findByTestId('blockLink0');

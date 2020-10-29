@@ -61,8 +61,8 @@ describe('Address', () => {
     expect(loader).toBeDefined();
   });
 
-  test('Transactions errorScreen showing', async () => {
-    const render = beforeAll('/transactions/', true);
+  test('Address transactions errorScreen', async () => {
+    const render = beforeAll(`/address/${address.account.address}`, true);
 
     const errorScreen = await render.findByTestId('errorScreen');
     expect(errorScreen).toBeInTheDocument();
