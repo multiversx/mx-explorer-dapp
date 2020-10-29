@@ -9,7 +9,7 @@ const Logo = () => {
   const title = activeNetworkId === 'mainnet' ? 'Explorer' : 'Testnet Explorer';
 
   return (
-    <Link to="/" className="d-flex align-items-center navbar-brand mr-0 ml-3">
+    <Link to="/" className="d-flex align-items-center navbar-brand mr-0">
       <ElrondLogo
         className={`main-logo flex-shrink-0 ${
           activeNetworkId === 'mainnet' ? 'd-md-none d-xl-block' : 'd-none'
