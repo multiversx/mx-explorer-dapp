@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { useGlobalState } from 'context';
-import { ReactComponent as ElrondLogo } from 'assets/img/logo.svg';
-import { ReactComponent as ElrondSymbol } from 'assets/img/symbol.svg';
+import { ReactComponent as ElrondLogo } from 'assets/images/logo.svg';
+import { ReactComponent as ElrondSymbol } from 'assets/images/symbol.svg';
 
 const Logo = () => {
   const { activeNetworkId } = useGlobalState();
