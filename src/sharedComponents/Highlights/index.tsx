@@ -69,7 +69,7 @@ const Hightlights = () => {
   const [state, setState] = React.useState({
     [activeNetworkId]: initialState,
   });
-  const [oldTestnetId, setOldTestnetId] = React.useState<string>('');
+  const [oldTestnetId, setOldTestnetId] = React.useState('');
   const ref = React.useRef(null);
 
   React.useEffect(() => {
