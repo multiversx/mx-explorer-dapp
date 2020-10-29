@@ -17,11 +17,6 @@ export default function AppSwitcher({ onToggle }: { onToggle?: () => void }) {
     }
   };
 
-  const appId = apps.filter((app) => app.id === window.location.hostname.split('.')[0]).pop();
-  const devApp = process.env.REACT_APP_WALLET ? 'wallet' : 'explorer';
-
-  const activeAppId = appId ? appId.id : devApp;
-
   return (
     <NavDropdown
       title={
@@ -43,7 +38,8 @@ export default function AppSwitcher({ onToggle }: { onToggle?: () => void }) {
           to = walletAddress || to;
           name = walletAddress && walletAddress.includes('testnet') ? 'Testnet ' + name : name;
         }
-        if (app.id === 'explorer') {
+        const isExplorer = app.id === 'explorer';
+        if (isExplorer) {
           to = explorerAddress || '';
           name = explorerAddress && explorerAddress.includes('testnet') ? 'Testnet ' + name : name;
         }
@@ -52,9 +48,9 @@ export default function AppSwitcher({ onToggle }: { onToggle?: () => void }) {
             key={app.id}
             onClick={hidePopover}
             href={to}
-            target={`${activeAppId === app.id ? '' : '_blank'}`}
+            target={`${isExplorer ? '' : '_blank'}`}
             rel="noopener noreferrer"
-            className={`${activeAppId === app.id ? 'active' : ''}`}
+            className={`${isExplorer ? 'active' : ''}`}
           >
             {name}
           </NavDropdown.Item>
