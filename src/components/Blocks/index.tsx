@@ -65,50 +65,63 @@ const Blocks: React.FC = () => {
     <Redirect to={networkRoute({ to: `/not-found`, activeNetworkId })} />
   ) : (
     <div ref={ref}>
-      <div className="container pt-3 pb-3">
-        <div className="row">
+      <div className="container py-spacer">
+        <div className="row page-header mb-spacer">
           <div className="col-12">
-            <h4>
+            <h3 className="page-title">
               <span data-testid="title">Blocks</span>&nbsp;
               {shardId !== undefined && shardId >= 0 && <ShardSpan shardId={shardId} />}
-            </h4>
+            </h3>
           </div>
         </div>
-        <div className="card">
-          <div className="card-body">
-            {blocksFetched === undefined && <Loader dataTestId="loader" hideCard />}
-            {blocksFetched === false && (
+        <div className="card card-small">
+          {blocksFetched === undefined && (
+            <div className="card-body">
+              <Loader dataTestId="loader" hideCard />
+            </div>
+          )}
+          {blocksFetched === false && (
+            <div className="card-body">
               <PageState
                 icon={faCube}
                 title="Unable to load blocks"
                 className="py-spacer d-flex h-100 align-items-center justify-content-center"
                 dataTestId="errorScreen"
               />
-            )}
-            {state.blocks.length === 0 && blocksFetched && (
+            </div>
+          )}
+          {state.blocks.length === 0 && blocksFetched && (
+            <div className="card-body">
               <PageState
                 icon={faCube}
                 title="No blocks found"
                 className="py-spacer d-flex h-100 align-items-center justify-content-center"
                 data-testid="noBlocks"
               />
-            )}
-            {state.blocks.length > 0 && (
-              <>
-                <p className="mb-0">
+            </div>
+          )}
+          {state.blocks.length > 0 && (
+            <>
+              <div className="card-header border-0 p-0">
+                <div className="card-header-item border-bottom p-3">
                   Showing last 10,000
                   {totalBlocks !== '...' && <> of {totalBlocks.toLocaleString('en')}</>} blocks
-                </p>
+                </div>
+              </div>
+              <div className="card-body border-0 p-0">
                 <BlocksTable blocks={state.blocks} shardId={shardId} />
+              </div>
+
+              <div className="card-footer border-top py-2">
                 <Pager
                   page={String(page)}
                   total={totalBlocks !== '...' ? Math.min(totalBlocks, 10000) : totalBlocks}
                   itemsPerPage={25}
                   show={state.blocks.length > 0}
                 />
-              </>
-            )}
-          </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

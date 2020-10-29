@@ -5,8 +5,8 @@ import { ShardSpan, TestnetLink, TimeAgo } from './../index';
 
 const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number | undefined }) => {
   return (
-    <div className="table-responsive">
-      <table className="table mt-3">
+    <div className="table-wrapper fixed-width-sm">
+      <table className="table m-0">
         <thead>
           <tr>
             <th>Block</th>

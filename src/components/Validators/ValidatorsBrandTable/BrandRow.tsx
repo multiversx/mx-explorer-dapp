@@ -1,7 +1,7 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
 import { useGlobalState } from 'context';
-import carretDown from 'assets/img/carret-down.svg';
+import carretDown from 'assets/images/carret-down.svg';
 import BrandDetailsRow from './BrandDetailsRow';
 import { BrandType } from './BrandTable';
 import { TestnetLink } from 'sharedComponents';

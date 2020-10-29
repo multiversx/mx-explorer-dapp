@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { useGlobalState } from 'context';
 import { ValidatorType } from 'context/validators';
 import { BrandType } from 'context/state';
-import carretDown from 'assets/img/carret-down.svg';
+import carretDown from 'assets/images/carret-down.svg';
 import BrandDetailsRow from './IdenityDetailsRow';
 import { Loader, TestnetLink } from 'sharedComponents';
 import PercentegeBar from 'components/Validators/ValidatorDetails/PercentegeBar';
@@ -57,7 +57,9 @@ const IdentityRow = ({ brand, rank }: BrandRowType) => {
                 {}
                 <img
                   className={brand.avatar ? 'avatar' : 'avatar gray'}
-                  src={brand.avatar ? brand.avatar : require('../../assets/img/default-avatar.svg')}
+                  src={
+                    brand.avatar ? brand.avatar : require('../../assets/images/default-avatar.svg')
+                  }
                   alt={brand.name}
                   height="42"
                 />

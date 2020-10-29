@@ -115,9 +115,9 @@ const Address = () => {
       <div className="container py-spacer">
         {(loading || failed) && (
           <>
-            <div className="row">
+            <div className="row page-header mb-spacer">
               <div className="col-12">
-                <h3 className="mb-spacer" data-testid="title">
+                <h3 className="page-title" data-testid="title">
                   Address Details
                 </h3>
               </div>
@@ -128,19 +128,23 @@ const Address = () => {
         )}
         {ready && (
           <>
-            <div className="row">
-              <div className={addressDetails.stake > 0 ? 'col-lg-8' : 'col-12'}>
-                <h3 className="mb-spacer" data-testid="title">
+            <div className="row page-header">
+              <div
+                className={`d-flex flex-column
+                  ${addressDetails.stake > 0 ? 'col-lg-8' : 'col-12'}
+                `}
+              >
+                <h3 className="page-title mb-spacer" data-testid="title">
                   Address Details
                 </h3>
-                <div className="row mb-spacer">
+                <div className="mb-spacer flex-fill">
                   <AddressDetails {...addressDetails} />
                 </div>
               </div>
               {addressDetails.stake > 0 && (
-                <div className="col-lg-4">
-                  <h3 className="mb-spacer">Delegation</h3>
-                  <div className="row mb-spacer">
+                <div className="col-lg-4 d-flex flex-column">
+                  <h3 className="page-title mb-spacer">Delegation</h3>
+                  <div className="mb-spacer flex-fill">
                     <DelegationDetails {...addressDetails} />
                   </div>
                 </div>
@@ -148,9 +152,9 @@ const Address = () => {
             </div>
             <div className="row">
               <div className="col-12">
-                <div className="row">
+                <div className="row page-header mb-spacer">
                   <div className="col-12">
-                    <h3 className="mb-spacer">Transactions</h3>
+                    <h3 className="page-title">Transactions</h3>
                   </div>
                 </div>
                 {transactionsFetched === true && (
