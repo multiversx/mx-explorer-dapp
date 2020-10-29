@@ -19,6 +19,7 @@ import CopyButton from './CopyButton';
 import NodesTabs from './NodesTabs';
 import adapter from './Adapter';
 import TrimHash from './TrimHash';
+import DetailItem from './DetailItem';
 
 export {
   Denominate,
@@ -43,4 +44,5 @@ export {
   IconState,
   adapter,
   TrimHash,
+  DetailItem,
 };
