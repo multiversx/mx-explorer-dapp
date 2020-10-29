@@ -46,7 +46,6 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "start-wallet": "REACT_APP_WALLET=true react-app-rewired start",
     "build:production": "REACT_APP_GA_ID=UA-140910543-1 npm run build",
     "build:testnet": "REACT_APP_GA_ID=UA-129278450-2 npm run build",
     "build": "npm run compile & REACT_APP_CACHE_BUST=$(git describe --always) react-scripts build",
