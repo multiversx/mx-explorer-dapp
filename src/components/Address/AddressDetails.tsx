@@ -1,5 +1,5 @@
 import React from 'react';
-import { Denominate } from 'sharedComponents';
+import { Denominate, DetailItem } from 'sharedComponents';
 
 export interface AddressDetailsType {
   addressId: string;
@@ -17,30 +17,20 @@ const AddressDetails = (props: AddressDetailsType) => {
       <div className="card card-small">
         <div className="card-body p-0">
           <div className="container-fluid">
-            <div className="row py-3 border-bottom">
-              <div className="col-lg-2 text-secondary text-lg-right">Address</div>
-              <div className="col">{props.addressId}</div>
-            </div>
-            <div className={`row py-3 ${props.code ? 'border-bottom' : ''}`}>
-              <div className="col-lg-2 text-secondary text-lg-right">Balance</div>
-              <div className="col">
-                {props.balance !== '...' ? <Denominate value={props.balance} /> : props.balance}
-              </div>
-            </div>
+            <DetailItem title="Address">{props.addressId}</DetailItem>
+            <DetailItem title="Balance">
+              {props.balance !== '...' ? <Denominate value={props.balance} /> : props.balance}
+            </DetailItem>
+
             {props.code && (
-              <>
-                <div className="row py-3">
-                  <div className="col-lg-2 text-secondary text-lg-right">Code</div>
-                  <div className="col">
-                    <textarea
-                      readOnly
-                      className="form-control col cursor-text mt-2"
-                      rows={2}
-                      defaultValue={props.code}
-                    />
-                  </div>
-                </div>
-              </>
+              <DetailItem title="Code">
+                <textarea
+                  readOnly
+                  className="form-control col cursor-text mt-2"
+                  rows={2}
+                  defaultValue={props.code}
+                />
+              </DetailItem>
             )}
           </div>
         </div>

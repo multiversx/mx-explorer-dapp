@@ -11,9 +11,9 @@ import {
   TestnetLink,
   TimeAgo,
   TransactionStatus,
+  DetailItem,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
-import TransactionDetail from './TransactionDetail';
 
 const getFee = (transaction: TransactionType) => {
   const bNgasPrice = new BigNumber(transaction.gasPrice);
@@ -35,16 +35,16 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
     <div className="card card=small">
       <div className="card-body p-0">
         <div className="container-fluid">
-          <TransactionDetail label="Hash">
+          <DetailItem title="Hash">
             <ScAddressIcon initiator={transaction.sender} secondInitiator={transaction.receiver} />
             {transaction.txHash}
-          </TransactionDetail>
+          </DetailItem>
 
-          <TransactionDetail label="Status">
+          <DetailItem title="Status">
             <TransactionStatus status={transaction.status} />
-          </TransactionDetail>
+          </DetailItem>
 
-          <TransactionDetail label="Timestamp">
+          <DetailItem title="Timestamp">
             {transaction.timestamp !== undefined ? (
               <>
                 <FontAwesomeIcon icon={faClock} className="mr-2 text-muted" />
@@ -54,9 +54,9 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
             ) : (
               <span className="text-muted">N/A</span>
             )}
-          </TransactionDetail>
+          </DetailItem>
 
-          <TransactionDetail label="Miniblock">
+          <DetailItem title="Miniblock">
             {transaction.miniBlockHash ? (
               <TestnetLink to={`/miniblocks/${transaction.miniBlockHash}`}>
                 {transaction.miniBlockHash}
@@ -64,9 +64,9 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
             ) : (
               <span className="text-muted">N/A</span>
             )}
-          </TransactionDetail>
+          </DetailItem>
 
-          <TransactionDetail label="From">
+          <DetailItem title="From">
             <ScAddressIcon initiator={transaction.sender} />
             {addressIsBech32(transaction.sender) ? (
               <>
@@ -85,9 +85,9 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
               <ShardSpan shardId={transaction.sender} />
             )}
             &nbsp;
-          </TransactionDetail>
+          </DetailItem>
 
-          <TransactionDetail label="To">
+          <DetailItem title="To">
             <ScAddressIcon initiator={transaction.receiver} />
             <TestnetLink to={`/address/${transaction.receiver}`}>
               {transaction.receiver}
@@ -108,35 +108,37 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                 <small className="text-danger"> {errorMessage}</small>
               </>
             )}
-          </TransactionDetail>
+          </DetailItem>
 
-          <TransactionDetail label="Value">
+          <DetailItem title="Value">
             <Denominate value={transaction.value} showLastNonZeroDecimal />
-          </TransactionDetail>
+          </DetailItem>
 
-          <TransactionDetail label="Transaction Fee">
+          <DetailItem title="Transaction Fee">
             {transaction.gasUsed !== undefined ? (
               <Denominate value={getFee(transaction)} showLastNonZeroDecimal />
             ) : (
               <span className="text-muted">N/A</span>
             )}
-          </TransactionDetail>
+          </DetailItem>
 
-          <TransactionDetail label="Gas Limit">
-            {transaction.gasLimit.toLocaleString('en')}
-          </TransactionDetail>
+          <DetailItem title="Gas Limit">{transaction.gasLimit.toLocaleString('en')}</DetailItem>
 
-          <TransactionDetail label="Gas Used" disabled={!transaction.gasUsed}>
-            {transaction.gasUsed ? transaction.gasUsed.toLocaleString('en') : ''}
-          </TransactionDetail>
+          <DetailItem title="Gas Used">
+            {transaction.gasUsed ? (
+              <>{transaction.gasUsed.toLocaleString('en')}</>
+            ) : (
+              <span className="text-muted">N/A</span>
+            )}
+          </DetailItem>
 
-          <TransactionDetail label="Gas Price">
+          <DetailItem title="Gas Price">
             <Denominate value={transaction.gasPrice.toString()} showLastNonZeroDecimal />
-          </TransactionDetail>
+          </DetailItem>
 
-          <TransactionDetail label="Nonce">{transaction.nonce}</TransactionDetail>
+          <DetailItem title="Nonce">{transaction.nonce}</DetailItem>
 
-          <TransactionDetail label="Input Data" hideDelimiter={true}>
+          <DetailItem title="Input Data">
             <textarea
               readOnly
               className="form-control col cursor-text mt-1"
@@ -147,7 +149,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                   : transaction.data
               }
             />
-          </TransactionDetail>
+          </DetailItem>
         </div>
       </div>
     </div>
