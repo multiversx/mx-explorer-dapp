@@ -52,7 +52,7 @@ const Pager = ({
     page: `${lastPage}`,
   }).toString();
 
-  const PagerComponent = (
+  return show ? (
     <div className="float-right mt-3">
       <ul className="list-inline">
         <li className="list-inline-item">
@@ -91,7 +91,7 @@ const Pager = ({
           </span>
         </li>
         <li className="list-inline-item ml-2">
-          {end < total ? (
+          {total === '...' || end < total ? (
             <div className="pager">
               <TestnetLink data-testid="nextPageButton" to={`${pathname}?${nextUrlParams}`}>
                 Next <FontAwesomeIcon icon={faAngleRight} />
@@ -121,9 +121,7 @@ const Pager = ({
         </li>
       </ul>
     </div>
-  );
-
-  return show ? PagerComponent : null;
+  ) : null;
 };
 
 export default Pager;

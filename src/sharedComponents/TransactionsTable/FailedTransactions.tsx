@@ -10,7 +10,7 @@ export default function FailedTransactions() {
           icon={faExchangeAlt}
           title="Unable to load transactions"
           className="py-spacer d-flex h-100 align-items-center justify-content-center"
-          data-testid="errorScreen"
+          dataTestId="errorScreen"
         />
       </div>
     </div>

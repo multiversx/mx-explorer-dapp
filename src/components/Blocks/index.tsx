@@ -46,20 +46,17 @@ const Blocks: React.FC = () => {
   const refreshFirstPage = size === 1 ? timestamp : 0;
 
   const fetchBlocks = () => {
-    if (ref.current !== null) {
-      getBlocks({ size, shardId, epochId: undefined }).then((data) => {
-        if (ref.current !== null) {
-          setState(data);
-          setBlocksFetched(data.blocksFetched);
-        }
-      });
-
-      getBlocksCount({ size, shardId }).then(({ count, success }) => {
-        if (ref.current !== null && success) {
-          setTotalBlocks(count);
-        }
-      });
-    }
+    getBlocks({ size, shardId, epochId: undefined }).then((data) => {
+      if (ref.current !== null) {
+        setState(data);
+        setBlocksFetched(data.blocksFetched);
+      }
+    });
+    getBlocksCount({ size, shardId }).then(({ count, success }) => {
+      if (ref.current !== null && success) {
+        setTotalBlocks(count);
+      }
+    });
   };
 
   React.useEffect(fetchBlocks, [activeNetworkId, size, shardId, refreshFirstPage]);
@@ -83,9 +80,9 @@ const Blocks: React.FC = () => {
             {blocksFetched === false && (
               <PageState
                 icon={faCube}
-                title={'Unable to load blocks'}
+                title="Unable to load blocks"
                 className="py-spacer d-flex h-100 align-items-center justify-content-center"
-                data-testid="errorScreen"
+                dataTestId="errorScreen"
               />
             )}
             {state.blocks.length === 0 && blocksFetched && (
