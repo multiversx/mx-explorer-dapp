@@ -122,7 +122,7 @@ export default function MapDisplay({
             key={leader.name + i}
             position={new L.LatLng(leader.lat, leader.lon)}
             icon={L.icon({
-              iconUrl: require(`assets/img/markers/${iconName}`),
+              iconUrl: require(`assets/images/markers/${iconName}`),
               iconSize: [20, 24],
               iconAnchor: [10 + leader.offset!, 24],
               className: `leader-marker-${leader.publicKey}`,
