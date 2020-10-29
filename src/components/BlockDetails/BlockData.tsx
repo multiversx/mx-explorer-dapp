@@ -69,152 +69,118 @@ const BlockData = (props: BlockDataType) => {
             &nbsp;({dateFormatted(block.timestamp)})
           </DetailItem>
 
-          <div className="row py-3 border-bottom">
-            <div className="col-lg-2 text-secondary text-lg-right">Transactions</div>
-            <div className="col">{block.txCount + ' transactions in this block'}</div>
-          </div>
+          <DetailItem title="Transactions">
+            {block.txCount + ' transactions in this block'}
+          </DetailItem>
 
-          <div className="row py-3 border-bottom">
-            <div className="col-lg-2 text-secondary text-lg-right">Shard</div>
-            <div className="col">
-              <TestnetLink to={urlBuilder.shard(block.shardId)}>
-                <ShardSpan shardId={block.shardId} />
-              </TestnetLink>
-            </div>
-          </div>
+          <DetailItem title="Shard">
+            <TestnetLink to={urlBuilder.shard(block.shardId)}>
+              <ShardSpan shardId={block.shardId} />
+            </TestnetLink>
+          </DetailItem>
 
-          <div className="row py-3 border-bottom">
-            <div className="col-lg-2 text-secondary text-lg-right">Size</div>
-            <div className="col">
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={(props: any) => (
-                  <Tooltip id="size" {...props} show={props.show.toString()}>
-                    {sizeFormat(block.size)} (size)
-                    {block.sizeTxs !== undefined && <> + {sizeFormat(block.sizeTxs)} (sizetxs)</>}
-                  </Tooltip>
-                )}
-              >
-                <span>
-                  {block.sizeTxs !== undefined
-                    ? sizeFormat(block.size + block.sizeTxs)
-                    : sizeFormat(block.size)}
-                </span>
-              </OverlayTrigger>
-            </div>
-          </div>
-
-          <div className="row py-3 border-bottom">
-            <div className="col-lg-2 text-secondary text-lg-right">Proposer</div>
-            <div className="col">
-              {proposer === '' ? (
-                <span className="text-muted">N/A</span>
-              ) : (
-                <TestnetLink to={`${validatorsRoutes.nodes}/${proposer}`}>
-                  <TrimHash text={proposer} />
-                </TestnetLink>
+          <DetailItem title="Size">
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={(props: any) => (
+                <Tooltip id="size" {...props} show={props.show.toString()}>
+                  {sizeFormat(block.size)} (size)
+                  {block.sizeTxs !== undefined && <> + {sizeFormat(block.sizeTxs)} (sizetxs)</>}
+                </Tooltip>
               )}
-            </div>
-          </div>
+            >
+              <span>
+                {block.sizeTxs !== undefined
+                  ? sizeFormat(block.size + block.sizeTxs)
+                  : sizeFormat(block.size)}
+              </span>
+            </OverlayTrigger>
+          </DetailItem>
 
-          <div className="row py-3 border-bottom">
-            <div className="col-lg-2 text-secondary text-lg-right">Consensus Group</div>
-            <div className="col">
-              {consensusItems.length === 0 ? (
+          <DetailItem title="Proposer">
+            {proposer === '' ? (
+              <span className="text-muted">N/A</span>
+            ) : (
+              <TestnetLink to={`${validatorsRoutes.nodes}/${proposer}`}>
+                <TrimHash text={proposer} />
+              </TestnetLink>
+            )}
+          </DetailItem>
+
+          <DetailItem title="Consensus Group">
+            {consensusItems.length === 0 ? (
+              <span className="text-muted">N/A</span>
+            ) : (
+              <>
+                {consensusItems.map((item, i) => (
+                  <TestnetLink
+                    className="hash"
+                    key={`${item}/${i}`}
+                    to={`${validatorsRoutes.nodes}/${item}`}
+                  >
+                    <TrimHash text={item} />
+                  </TestnetLink>
+                ))}
+              </>
+            )}
+          </DetailItem>
+
+          <DetailItem title="Block Hash">{block.hash}</DetailItem>
+          <DetailItem title="State Root Hash">{block.stateRootHash}</DetailItem>
+
+          {block.shardId === metaChainShardId && (
+            <DetailItem title="Notarized Blocks">
+              {block.notarizedBlocksHashes === null ||
+              (Array.isArray(block.notarizedBlocksHashes) &&
+                block.notarizedBlocksHashes.length === 0) ? (
                 <span className="text-muted">N/A</span>
               ) : (
                 <>
-                  {consensusItems.map((item, i) => (
-                    <TestnetLink
-                      className="hash"
-                      key={`${item}/${i}`}
-                      to={`${validatorsRoutes.nodes}/${item}`}
-                    >
+                  {block.notarizedBlocksHashes.map((item, i) => (
+                    <TestnetLink className="hash" key={item + i} to={`/blocks/${item}`}>
                       <TrimHash text={item} />
                     </TestnetLink>
                   ))}
                 </>
               )}
-            </div>
-          </div>
-
-          <div className="row py-3 border-bottom">
-            <div className="col-lg-2 text-secondary text-lg-right">Block Hash</div>
-            <div className="col">{block.hash}</div>
-          </div>
-
-          <div className="row py-3 border-bottom">
-            <div className="col-lg-2 text-secondary text-lg-right">State Root Hash</div>
-            <div className="col">{block.stateRootHash}</div>
-          </div>
-          {block.shardId === metaChainShardId && (
-            <>
-              <div className="row py-3 border-bottom">
-                <div className="col-lg-2 text-secondary text-lg-right">Notarized Blocks</div>
-                <div className="col">
-                  {block.notarizedBlocksHashes === null ||
-                  (Array.isArray(block.notarizedBlocksHashes) &&
-                    block.notarizedBlocksHashes.length === 0) ? (
-                    <span className="text-muted">N/A</span>
-                  ) : (
-                    <>
-                      {block.notarizedBlocksHashes.map((item, i) => (
-                        <TestnetLink className="hash" key={item + i} to={`/blocks/${item}`}>
-                          <TrimHash text={item} />
-                        </TestnetLink>
-                      ))}
-                    </>
-                  )}
-                </div>
-              </div>
-            </>
+            </DetailItem>
           )}
 
-          <div className="row py-3 border-bottom">
-            <div className="col-lg-2 text-secondary text-lg-right">Miniblocks</div>
-            <div className="col">
-              {block.miniBlocksHashes === null ||
-              (Array.isArray(block.miniBlocksHashes) && block.miniBlocksHashes.length === 0) ? (
-                <span className="text-muted">N/A</span>
-              ) : (
-                <>
-                  {block.miniBlocksHashes.map((item) => (
-                    <TestnetLink className="hash" key={item} to={`/miniblocks/${item}`}>
-                      <TrimHash text={item} />
-                    </TestnetLink>
-                  ))}
-                </>
-              )}
-            </div>
-          </div>
+          <DetailItem title="Miniblocks">
+            {block.miniBlocksHashes === null ||
+            (Array.isArray(block.miniBlocksHashes) && block.miniBlocksHashes.length === 0) ? (
+              <span className="text-muted">N/A</span>
+            ) : (
+              <>
+                {block.miniBlocksHashes.map((item) => (
+                  <TestnetLink className="hash" key={item} to={`/miniblocks/${item}`}>
+                    <TrimHash text={item} />
+                  </TestnetLink>
+                ))}
+              </>
+            )}
+          </DetailItem>
 
-          <div className="row py-3 border-bottom">
-            <div className="col-lg-2 text-secondary text-lg-right">Previous Hash</div>
-            <div className="col">
-              {isFirstBlock ? (
-                <span className="text-muted">N/A</span>
-              ) : (
-                <TestnetLink className="hash" to={`/blocks/${block.prevHash}`}>
-                  <TrimHash text={block.prevHash} />
-                </TestnetLink>
-              )}
-            </div>
-          </div>
+          <DetailItem title="Previous Hash">
+            {isFirstBlock ? (
+              <span className="text-muted">N/A</span>
+            ) : (
+              <TestnetLink className="hash" to={`/blocks/${block.prevHash}`}>
+                <TrimHash text={block.prevHash} />
+              </TestnetLink>
+            )}
+          </DetailItem>
 
-          <div className={`row py-3 ${isFirstBlock ? 'border-bottom' : ''}`}>
-            <div className="col-lg-2 text-secondary text-lg-right">Public Keys Bitmap</div>
-            <div className="col">{block.pubKeyBitmap}</div>
-          </div>
+          <DetailItem title="Public Keys Bitmap">{block.pubKeyBitmap}</DetailItem>
+
           {isFirstBlock && (
             <>
-              <div className="row py-3">
-                <div className="col">
-                  <pre className="genesis px-3 pt-2 pb-4 m-0 rounded border">
-                    {decodeHex(block.prevHash)}
-                  </pre>
-                </div>
-              </div>
+              <DetailItem title="">
+                <pre className="genesis px-3 pt-2 pb-4 m-0 rounded border">
+                  {decodeHex(block.prevHash)}
+                </pre>
+              </DetailItem>
             </>
           )}
         </div>
