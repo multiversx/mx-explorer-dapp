@@ -108,6 +108,8 @@ const Address = () => {
 
   const failed = addressDetails.detailsFetched === false || !addressIsBech32(addressId);
 
+  const ready = !loading && !failed;
+
   return (
     <div ref={ref}>
       <div className="container py-spacer">
@@ -120,10 +122,11 @@ const Address = () => {
                 </h3>
               </div>
             </div>
-            {loading ? <Loader dataTestId="loader" /> : <FailedAddress addressId={addressId} />}
+            {loading === true && <Loader dataTestId="loader" />}
+            {loading === false && failed && <FailedAddress addressId={addressId} />}
           </>
         )}
-        {!loading && !failed && (
+        {ready && (
           <>
             <div className="row">
               <div className={addressDetails.stake > 0 ? 'col-lg-8' : 'col-12'}>
@@ -150,7 +153,7 @@ const Address = () => {
                     <h3 className="mb-spacer">Transactions</h3>
                   </div>
                 </div>
-                {transactionsFetched === true ? (
+                {transactionsFetched === true && (
                   <>
                     {transactions.length > 0 ? (
                       <TransactionsTable
@@ -163,9 +166,8 @@ const Address = () => {
                       <NoTransactions />
                     )}
                   </>
-                ) : (
-                  <FailedTransactions />
                 )}
+                {transactionsFetched === false && <FailedTransactions />}
               </div>
             </div>
           </>
