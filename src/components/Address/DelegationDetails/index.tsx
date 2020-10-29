@@ -17,27 +17,25 @@ const DelegationDetails = (props: AddressDetailsType) => {
   return props.addressId ? (
     <>
       {props.stake > 0 && (
-        <div className="col-12 chart">
-          <div className="card card-small">
-            <div className="card-body d-flex align-items-center">
-              <div className="chart-container mr-4">
-                <div>
-                  <Chart stake={props.stake} claimableRewards={props.claimableRewards} />
-                </div>
+        <div className="card card-small chart">
+          <div className="card-body bg-primary d-flex align-items-center">
+            <div className="chart-container mr-4">
+              <div>
+                <Chart stake={props.stake} claimableRewards={props.claimableRewards} />
               </div>
-              <div className="text-white ml-1">
-                <p className="font-weight-bold mb-1">
-                  <span className="delegation-label">Total:</span> {total} {erdLabel}{' '}
-                </p>
-                <p className="mb-1">
-                  <span className={`badge badge-pill badge-status badge-delegation`}>&nbsp;</span>
-                  &nbsp;<span className="delegation-label">Delegation:</span> {stake}
-                </p>
-                <p className="mb-0">
-                  <span className={`badge badge-pill badge-status badge-rewards`}>&nbsp;</span>
-                  &nbsp;<span className="delegation-label">Rewards:</span> {rewards}
-                </p>
-              </div>
+            </div>
+            <div className="text-white ml-1">
+              <p className="font-weight-bold mb-1">
+                <span className="delegation-label">Total:</span> {total} {erdLabel}{' '}
+              </p>
+              <p className="mb-1">
+                <span className={`badge badge-pill badge-status badge-delegation`}>&nbsp;</span>
+                &nbsp;<span className="delegation-label">Delegation:</span> {stake}
+              </p>
+              <p className="mb-0">
+                <span className={`badge badge-pill badge-status badge-rewards`}>&nbsp;</span>
+                &nbsp;<span className="delegation-label">Rewards:</span> {rewards}
+              </p>
             </div>
           </div>
         </div>

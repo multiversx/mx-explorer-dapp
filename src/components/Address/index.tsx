@@ -126,18 +126,22 @@ const Address = () => {
         {!loading && !failed && (
           <>
             <div className="row page-header">
-              <div className={addressDetails.stake > 0 ? 'col-lg-8' : 'col-12'}>
+              <div
+                className={`d-flex flex-column
+                  ${addressDetails.stake > 0 ? 'col-lg-8' : 'col-12'}
+                `}
+              >
                 <h3 className="page-title mb-spacer" data-testid="title">
                   Address Details
                 </h3>
-                <div className="row mb-spacer">
+                <div className="mb-spacer flex-fill">
                   <AddressDetails {...addressDetails} />
                 </div>
               </div>
               {addressDetails.stake > 0 && (
-                <div className="col-lg-4">
+                <div className="col-lg-4 d-flex flex-column">
                   <h3 className="page-title mb-spacer">Delegation</h3>
-                  <div className="row mb-spacer">
+                  <div className="mb-spacer flex-fill">
                     <DelegationDetails {...addressDetails} />
                   </div>
                 </div>
