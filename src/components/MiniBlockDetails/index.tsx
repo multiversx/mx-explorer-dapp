@@ -44,6 +44,8 @@ const MiniBlockDetails: React.FC = () => {
 
   const size = parseInt(page!) ? parseInt(page!) : 1;
 
+  const refreshFirstPage = size === 1 ? timestamp : 0;
+
   const invalid = miniBlockHash && !isHash(miniBlockHash);
 
   const fetchMiniBlockData = () => {
@@ -72,7 +74,7 @@ const MiniBlockDetails: React.FC = () => {
     }
   };
 
-  React.useEffect(fetchMiniBlockData, [activeNetworkId, size, miniBlockHash, timestamp]);
+  React.useEffect(fetchMiniBlockData, [activeNetworkId, size, miniBlockHash, refreshFirstPage]);
 
   return invalid ? (
     <Redirect to={networkRoute({ to: `/not-found`, activeNetworkId })} />
