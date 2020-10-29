@@ -21,6 +21,10 @@ $link-color: $primary;
 // NAVBAR
 $main-navbar-box-shadow: 0 0.125rem 0.625rem rgba($standard-box-shadow, 0.12);
 
+// HEADER NAVBAR
+$header-navbar-nav-link-color: $secondary;
+$header-navbar-nav-item-ahs-color: $primary;
+
 // SIDEBAR
 $page-subtitle-color: $secondary;
 
@@ -35,10 +39,6 @@ $main-sidebar-nav-link-active-background-color: $light;
 $main-sidebar-dropdown-item-color: $secondary;
 $main-sidebar-dropdown-item-background-hover: $light;
 $side-shadow: $main-navbar-box-shadow;
-
-// HEADER NAVBAR
-$header-navbar-nav-link-color: $secondary;
-$header-navbar-nav-item-ahs-color: $primary;
 
 // CARDS
 $card-border-radius: 0.65rem;
@@ -55,6 +55,17 @@ $dropdown-link-color: $secondary;
 $dropdown-link-hover-bg: $light;
 $dropdown-link-hover-color: $link-color;
 $dropdown-border-color: $border-color;
+
+// RANGE SLIDER
+$custom-range-thumb-bg: $primary;
+$custom-range-track-bg: $light;
+
+// LIST GROUP
+$list-group-bg: $card_bg;
+$list-group-border-color: $border-color;
+
+// FORM CHECKBOX
+$form-check-input-margin-y: 0.4rem;
 
 // MISC
 $small-stats-min-height: 7.8rem;

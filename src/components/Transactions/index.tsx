@@ -63,9 +63,9 @@ const Transactions = () => {
   return (
     <div ref={ref}>
       <div className="container py-spacer">
-        <div className="row">
+        <div className="row page-header mb-spacer">
           <div className="col-12">
-            <h3 className="mb-spacer">
+            <h3 className="page-title">
               <span data-testid="title">Transactions</span>
               {senderShard !== undefined && (
                 <>
@@ -86,21 +86,19 @@ const Transactions = () => {
         {transactionsFetched === undefined && <Loader dataTestId="loader" />}
         {transactionsFetched === false && <FailedTransactions />}
         {transactionsFetched === true && (
-          <>
-            <div className="row">
-              <div className="col-12">
-                {transactions.length > 0 ? (
-                  <TransactionsTable
-                    transactions={transactions}
-                    totalTransactions={totalTransactions}
-                    size={size}
-                  />
-                ) : (
-                  <NoTransactions />
-                )}
-              </div>
+          <div className="row">
+            <div className="col-12">
+              {transactions.length > 0 ? (
+                <TransactionsTable
+                  transactions={transactions}
+                  totalTransactions={totalTransactions}
+                  size={size}
+                />
+              ) : (
+                <NoTransactions />
+              )}
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>
