@@ -83,7 +83,7 @@ const Transactions = () => {
             </h3>
           </div>
         </div>
-        {transactionsFetched === undefined && <Loader dataTestId="loader" />}
+        {transactionsFetched === undefined && <Loader />}
         {transactionsFetched === false && <FailedTransactions />}
         {transactionsFetched === true && (
           <div className="row">

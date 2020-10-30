@@ -58,7 +58,7 @@ const TransactionDetails = () => {
         </div>
         <div className="row">
           <div className="col-12">
-            {transactionFetched === undefined && <Loader dataTestId="loader" />}
+            {transactionFetched === undefined && <Loader />}
             {transactionFetched === false && (
               <PageState
                 icon={faExchangeAlt}
