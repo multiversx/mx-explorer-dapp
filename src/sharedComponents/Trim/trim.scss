@@ -1,0 +1,52 @@
+.trim {
+  display: flex;
+  max-width: 100%;
+  overflow: hidden;
+
+  @include media-breakpoint-down(lg) {
+    max-width: 10rem;
+  }
+
+  &.overflow {
+    .ellipsis {
+      display: block;
+    }
+  }
+
+  .left {
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: transparent;
+    font-size: 1px;
+  }
+
+  .right {
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    direction: rtl;
+    text-align: left;
+    color: transparent;
+    font-size: 1px;
+  }
+
+  .left span,
+  .right span {
+    color: $body;
+    font-size: 1rem;
+  }
+
+  .ellipsis {
+    flex-shrink: 0;
+    display: none;
+  }
+}
+
+a:hover > .trim span {
+  color: $link-hover-color !important;
+}
+
+a > .trim span {
+  color: $primary !important;
+}
