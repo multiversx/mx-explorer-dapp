@@ -3,7 +3,7 @@ import { useGlobalState } from 'context';
 import { networkRoute, useURLSearchParams } from 'helpers';
 import * as React from 'react';
 import { Redirect } from 'react-router-dom';
-import { BlocksTable, Loader, Pager, ShardSpan, adapter, PageState } from 'sharedComponents';
+import { BlocksTable, Loader, Pager, ShardSpan, adapter, PageState, Trim } from 'sharedComponents';
 import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 
 interface StateType {
@@ -90,6 +90,15 @@ const Blocks: React.FC = () => {
                 </h3>
               </div>
             </div>
+            {/* <div className="row">
+              <div className="col-12">
+                <Trim
+                  text={
+                    'de31d8f587bab6d09481ae743e874ded79f469834f0a594858a243ba7ccfe7aeMIDDLEde31d8f587bab6d09481ae743e874ded79f469834f0a594858a243ba7ccfe7ae'
+                  }
+                />
+              </div>
+            </div> */}
             <div className="row">
               <div className="col-12">
                 <div className="card card-small">
