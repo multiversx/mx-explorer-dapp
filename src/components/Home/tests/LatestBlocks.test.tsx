@@ -1,65 +1,20 @@
-import axios from 'axios';
-import { fireEvent, renderWithRouter, wait, waitForElement } from 'utils/test-utils';
-import optionalConfig from 'utils/config';
-import {
-  heartbeatstatus,
-  validators,
-  transactions,
-  transactionsSearch,
-  blocks,
-  statistics,
-  meta,
-} from 'utils/rawData';
-
-export const beforeAll = (blocksError = false, transactionsError = false) => {
-  const mockGet = jest.spyOn(axios, 'get');
-
-  mockGet.mockImplementation((url: string): any => {
-    switch (true) {
-      // --- page load ---
-      case url.includes('/tps/meta'):
-        return Promise.resolve({ data: meta });
-      case url.includes(`/node/heartbeatstatus`):
-        return Promise.resolve({ data: { data: heartbeatstatus, code: 'successful' } });
-      case url.includes('/validator/statistics'):
-        return Promise.resolve({ data: { data: statistics, code: 'successful' } });
-      case url.endsWith('/validators'):
-        return Promise.resolve({ data: validators });
-      case url.includes('/blocks'):
-        if (blocksError) {
-          return Promise.resolve(new Error('blocks error'));
-        }
-        return Promise.resolve({ data: blocks });
-      case url.endsWith('/transactions'):
-        if (transactionsError) {
-          return Promise.resolve(new Error('transactions error'));
-        }
-        return Promise.resolve({ data: transactionsSearch });
-      case url.includes('/transactions'):
-        if (transactionsError) {
-          return Promise.resolve(new Error('transactions error'));
-        }
-        return Promise.resolve({ data: transactions });
-      // --- page load ---
-    }
-  });
-
-  return renderWithRouter({
-    route: '/',
-    optionalConfig,
-  });
-};
+import { fireEvent, wait, beforeAll } from 'utils/test-utils';
+import { blocks } from 'utils/rawData';
 
 describe('Latest Blocks', () => {
   test('Latest Blocks component is displaying', async () => {
-    const render = beforeAll();
+    const render = beforeAll({
+      route: '/',
+    });
     await wait(async () => {
       expect(render.queryByTestId('blocksList')!.childElementCount).toBe(25);
     });
   });
 
   test('Latest Blocks component loading state', async () => {
-    const render = beforeAll();
+    const render = beforeAll({
+      route: '/',
+    });
     // correct way to get rid of not wrapped in act
     // https://stackoverflow.com/a/60164821/4264699
     // const blocksLoader = await waitForElement(() => render.queryByTestId('blocksLoader'));
@@ -69,7 +24,12 @@ describe('Latest Blocks', () => {
   });
 
   test('Latest Blocks component failing state', async () => {
-    const render = beforeAll(true);
+    const render = beforeAll({
+      route: '/',
+      networkRequests: {
+        blocks: () => Promise.resolve(new Error('error')),
+      },
+    });
 
     await wait(async () => {
       expect(render.queryByText('Unable to load blocks')).toBeDefined();
@@ -79,7 +39,9 @@ describe('Latest Blocks', () => {
 
 describe('Latest Blocks Links', () => {
   test('View All Blocks', async () => {
-    const render = beforeAll();
+    const render = beforeAll({
+      route: '/',
+    });
 
     const allBlocksLink = await render.findByText('View All Blocks');
     expect(allBlocksLink).toBeInTheDocument();
@@ -90,7 +52,9 @@ describe('Latest Blocks Links', () => {
     });
   });
   test('Block Link', async () => {
-    const render = beforeAll();
+    const render = beforeAll({
+      route: '/',
+    });
 
     const blockLink = await render.findByTestId('blockLink0');
     expect(blockLink).toBeInTheDocument();
@@ -102,7 +66,9 @@ describe('Latest Blocks Links', () => {
     });
   });
   test('Block Hash Link', async () => {
-    const render = beforeAll();
+    const render = beforeAll({
+      route: '/',
+    });
 
     const blockHashLink = await render.findByTestId('blockHashLink0');
     expect(blockHashLink).toBeInTheDocument();
