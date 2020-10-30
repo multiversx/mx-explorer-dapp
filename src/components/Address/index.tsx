@@ -122,7 +122,7 @@ const Address = () => {
                 </h3>
               </div>
             </div>
-            {loading === true && <Loader dataTestId="loader" />}
+            {loading === true && <Loader />}
             {loading === false && failed && <FailedAddress addressId={addressId} />}
           </>
         )}

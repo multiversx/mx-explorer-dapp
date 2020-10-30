@@ -119,7 +119,7 @@ const LatestBlocks = () => {
                   ))}
                 </div>
               ) : (
-                <Loader dataTestId="blocksLoader" hideCard />
+                <Loader dataTestId="blocksLoader" />
               )}
             </div>
           </>

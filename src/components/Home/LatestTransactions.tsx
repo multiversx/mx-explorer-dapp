@@ -141,7 +141,7 @@ const LatestTransactions = () => {
                   ))}
                 </div>
               ) : (
-                <Loader dataTestId="transactionsLoader" hideCard />
+                <Loader dataTestId="transactionsLoader" />
               )}
             </div>
           </>
