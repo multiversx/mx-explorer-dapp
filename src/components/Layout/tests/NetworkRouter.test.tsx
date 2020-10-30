@@ -1,4 +1,4 @@
-import { fireEvent, renderWithRouter } from 'utils/test-utils';
+import { fireEvent, beforeAll, wait } from 'utils/test-utils';
 import { ConfigType } from 'context/state';
 
 const optionalConfig: ConfigType = {
@@ -15,9 +15,8 @@ const optionalConfig: ConfigType = {
       default: false,
       id: 'testnet-do-toronto',
       name: 'DigitalOcean TOR Testnet',
-      proxyUrl: '***REMOVED***',
-      elasticUrl: '***REMOVED***',
-      adapter: 'elastic',
+      apiUrl: 'https://api.elrond.com',
+      adapter: 'api',
       validatorDetails: true,
       erdLabel: 'EGLD',
     },
@@ -26,7 +25,7 @@ const optionalConfig: ConfigType = {
 
 describe('Network Router', () => {
   test('Change route on network change', async () => {
-    const render = renderWithRouter({
+    const render = beforeAll({
       route: '/',
       optionalConfig,
     });
@@ -35,6 +34,8 @@ describe('Network Router', () => {
     fireEvent.click(networkSwitch[0]);
     const digitalOcean = render.getByText('DigitalOcean TOR Testnet');
     fireEvent.click(digitalOcean);
-    expect(render.history.location.pathname).toBe('/testnet-do-toronto');
+    await wait(async () => {
+      expect(render.history.location.pathname).toBe('/testnet-do-toronto');
+    });
   });
 });
