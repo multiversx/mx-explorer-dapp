@@ -3,10 +3,6 @@
   max-width: 100%;
   overflow: hidden;
 
-  @include media-breakpoint-down(lg) {
-    max-width: 10rem;
-  }
-
   &.overflow {
     .ellipsis {
       display: block;
@@ -49,4 +45,10 @@ a:hover > .trim span {
 
 a > .trim span {
   color: $primary !important;
+}
+
+.table .trim {
+  @include media-breakpoint-down(lg) {
+    max-width: 10rem;
+  }
 }

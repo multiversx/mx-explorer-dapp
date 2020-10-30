@@ -66,7 +66,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             ) : (
               <>
                 <Highlights />
-                <div className="d-flex flex-fill flex-column">{children}</div>
+                <div className="page-container">{children}</div>
               </>
             )}
           </div>

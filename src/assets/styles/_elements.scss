@@ -63,9 +63,13 @@
   }
 }
 
-.fixed-width-sm {
+.page-container {
+  @extend .d-flex;
+  @extend .flex-fill;
+  @extend .flex-column;
+
   @include media-breakpoint-down(sm) {
-    width: calc(100vw - 30px);
+    width: 100vw;
     max-width: 100%;
   }
 }
