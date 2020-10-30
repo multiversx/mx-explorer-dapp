@@ -50,7 +50,7 @@ const BlockDetails = () => {
         </div>
         <div className="row">
           <div className="col-12">
-            {blockFetched === undefined && <Loader dataTestId="loader" />}
+            {blockFetched === undefined && <Loader />}
             {blockFetched === false && (
               <div className="card card-small">
                 <div className="card-body ">

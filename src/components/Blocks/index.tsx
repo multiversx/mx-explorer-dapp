@@ -68,14 +68,14 @@ const Blocks: React.FC = () => {
     <Redirect to={networkRoute({ to: `/not-found`, activeNetworkId })} />
   ) : (
     <>
-      {blocksFetched === undefined && <Loader dataTestId="loader" hideCard />}
+      {blocksFetched === undefined && <Loader />}
 
       {blocksFetched === false && (
         <PageState
           icon={faCube}
           title="Unable to load blocks"
           className="py-spacer my-auto"
-          data-testid="errorScreen"
+          dataTestId="errorScreen"
         />
       )}
 
