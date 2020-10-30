@@ -37,7 +37,7 @@ export default class Loader extends React.Component<{ hideCard?: boolean; dataTe
             />
           }
           dataTestId={this.props.dataTestId}
-          className="py-spacer d-flex h-100 align-items-center justify-content-center"
+          className="py-spacer my-auto d-flex h-100 align-items-center justify-content-center"
         />
       </Wrapper>
     );

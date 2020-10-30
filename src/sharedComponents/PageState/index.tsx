@@ -34,7 +34,7 @@ const PageState = ({
   dataTestId,
 }: PageStateType) => (
   <div className={`text-center ${className ? className : ''}`} data-testid={dataTestId}>
-    <div className="mb-spacer">
+    <div className="my-spacer">
       {symbol ? (
         <>{symbol}</>
       ) : (

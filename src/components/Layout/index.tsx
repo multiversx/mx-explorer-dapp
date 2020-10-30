@@ -49,26 +49,24 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <Navbar />
           <div className="main-content-container container-fluid p-0 d-flex flex-column">
             {offline ? (
-              <div className="d-flex flex-fill align-items-center justify-content-center">
-                <PageState
-                  icon={faBan}
-                  title={'There was an internal website error. Please try again later.'}
-                  description={
-                    !activeNetwork.default && (
-                      <>
-                        <br />
-                        {`${activeNetwork.name} network`}
-                      </>
-                    )
-                  }
-                  className="py-spacer"
-                  data-testid="errorScreen"
-                />
-              </div>
+              <PageState
+                icon={faBan}
+                title={'There was an internal website error. Please try again later.'}
+                description={
+                  !activeNetwork.default && (
+                    <>
+                      <br />
+                      {`${activeNetwork.name} network`}
+                    </>
+                  )
+                }
+                className="py-spacer m-auto"
+                data-testid="errorScreen"
+              />
             ) : (
               <>
                 <Highlights />
-                {children}
+                <div className="d-flex flex-fill flex-column">{children}</div>
               </>
             )}
           </div>
