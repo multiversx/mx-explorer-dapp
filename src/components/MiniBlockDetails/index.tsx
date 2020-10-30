@@ -95,7 +95,7 @@ const MiniBlockDetails: React.FC = () => {
         </div>
         <div className="row">
           <div className="col-12">
-            {miniBlockFetched === undefined && <Loader dataTestId="loader" />}
+            {miniBlockFetched === undefined && <Loader />}
             {miniBlockFetched === false && <MiniBlockNotFound miniBlockHash={miniBlockHash} />}
             {miniBlockFetched && miniBlock.miniBlockHash && (
               <>
