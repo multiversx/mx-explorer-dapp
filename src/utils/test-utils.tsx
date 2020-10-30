@@ -101,9 +101,11 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
 const beforeAll = ({
   route,
   networkRequests,
+  optionalConfig = defaultConfig,
 }: {
   route: string;
   networkRequests?: MockImplementationType['networkRequests'];
+  optionalConfig?: ConfigType;
 }) => {
   const mockGet = jest.spyOn(axios, 'get');
 
@@ -111,7 +113,7 @@ const beforeAll = ({
 
   return renderWithRouter({
     route,
-    optionalConfig: defaultConfig,
+    optionalConfig,
   });
 };
 
