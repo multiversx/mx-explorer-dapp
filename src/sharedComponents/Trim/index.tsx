@@ -5,7 +5,7 @@ const Trim = ({ text }: { text: string }) => {
   const [overflow, setOverflow] = useState(false);
 
   const resizeHandler = (node: any) => {
-    // TODO use ref?
+    // TODO use ref and debounce
     const wrapper = node.querySelector('.left');
     const content = wrapper.querySelector('span');
     setOverflow(content.offsetWidth > wrapper.offsetWidth);
