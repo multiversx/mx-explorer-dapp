@@ -1,61 +1,20 @@
-import '@testing-library/jest-dom/extend-expect';
-import axios from 'axios';
-import { renderWithRouter, wait, waitForElement, fireEvent, act } from 'utils/test-utils';
-import optionalConfig from 'utils/config';
-import {
-  heartbeatstatus,
-  validators,
-  transactions,
-  transactionsSearch,
-  statistics,
-  meta,
-} from 'utils/rawData';
-
-export const beforeAll = (route = '', transactionsError = false) => {
-  const mockGet = jest.spyOn(axios, 'get');
-
-  mockGet.mockImplementation((url: string): any => {
-    switch (true) {
-      // --- page load ---
-      case url.includes('/tps/meta'):
-        return Promise.resolve({ data: meta });
-      case url.includes(`/node/heartbeatstatus`):
-        return Promise.resolve({ data: { data: heartbeatstatus, code: 'successful' } });
-      case url.includes('/validator/statistics'):
-        return Promise.resolve({ data: { data: statistics, code: 'successful' } });
-      // --- page load ---
-      case url.endsWith('/validators'):
-        return Promise.resolve({ data: validators });
-      case url.includes('/transactions-alt/count'):
-        return Promise.resolve({ data: 14253408 });
-      case url.endsWith('/transactions'):
-        if (transactionsError) {
-          return Promise.resolve(new Error('transaction error'));
-        }
-        return Promise.resolve({ data: transactionsSearch });
-      case url.includes('/transactions'):
-        if (transactionsError) {
-          return Promise.resolve(new Error('transaction error'));
-        }
-        return Promise.resolve({ data: transactions });
-    }
-  });
-
-  return renderWithRouter({
-    route,
-    optionalConfig,
-  });
-};
+import { wait, waitForElement, fireEvent, act, beforeAll } from 'utils/test-utils';
 
 describe('Transactions Page', () => {
-  test('Transactions page is displaying', async () => {
-    const render = beforeAll('/transactions');
+  test('Transactions page loading state', async () => {
+    const render = beforeAll({
+      route: '/transactions',
+    });
+    const loader = await render.findByTestId('loader');
+    expect(loader.innerHTML).toBeDefined();
     const title = await waitForElement(() => render.queryByTestId('title')!.innerHTML);
     expect(title).toBe('Transactions');
   });
 
   test('Transactions data is displayed correctly', async () => {
-    const render = beforeAll('/transactions');
+    const render = beforeAll({
+      route: '/transactions',
+    });
     const pageInterval = await waitForElement(() => render.queryByTestId('pageInterval'));
     expect(pageInterval!.innerHTML).toBe('1-50');
 
@@ -65,7 +24,9 @@ describe('Transactions Page', () => {
   });
 
   test('Transactions pager working', async () => {
-    const render = beforeAll('/transactions?page=1');
+    const render = beforeAll({
+      route: '/transactions?page=1',
+    });
 
     const pageInterval = await waitForElement(() => render.queryByTestId('pageInterval'));
     expect(pageInterval!.innerHTML).toBe('1-50');
@@ -74,7 +35,9 @@ describe('Transactions Page', () => {
 
 describe('Transactions Page Links', () => {
   test('Transaction link', async () => {
-    const render = beforeAll('/transactions');
+    const render = beforeAll({
+      route: '/transactions',
+    });
 
     const links = await render.findAllByTestId('transactionLink');
     expect(links[0].textContent).toBe(
@@ -89,7 +52,9 @@ describe('Transactions Page Links', () => {
     });
   });
   test('Shard from link', async () => {
-    const render = beforeAll('/transactions');
+    const render = beforeAll({
+      route: '/transactions',
+    });
 
     const links = await render.findAllByTestId('shardFromLink');
     expect(links[0].textContent).toBe('Shard 1');
@@ -100,7 +65,9 @@ describe('Transactions Page Links', () => {
     });
   });
   test('Shard to link', async () => {
-    const render = beforeAll('/transactions');
+    const render = beforeAll({
+      route: '/transactions',
+    });
 
     const links = await render.findAllByTestId('shardToLink');
     expect(links[0].textContent).toBe('Shard 0');
@@ -111,7 +78,9 @@ describe('Transactions Page Links', () => {
     });
   });
   test('Receiver link', async () => {
-    const render = beforeAll('/transactions');
+    const render = beforeAll({
+      route: '/transactions',
+    });
 
     const links = await render.findAllByTestId('receiverLink');
     expect(links[0].textContent).toBe(
