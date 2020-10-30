@@ -1,15 +1,14 @@
 import React from 'react';
-import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
 import Navbar from './Navbar/index';
 import Footer from './Footer/index';
 import NetworkRouter from './NetworkRouter';
 import { useGlobalState } from 'context';
 import RoundManager from './RoundManager';
-import { PageState } from 'sharedComponents';
 import { Highlights } from 'sharedComponents';
+import Unavailable from './Unavailable';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { activeNetwork, theme } = useGlobalState();
+  const { theme } = useGlobalState();
 
   React.useEffect(() => {
     const stylesheet = document.getElementById('stylesheet');
@@ -38,7 +37,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     }
   }, [theme]);
 
-  const offline = process.env.NODE_ENV !== 'test' && !window.navigator.onLine;
+  const offline = !window.navigator.onLine;
 
   return (
     <div className="d-flex">
@@ -49,24 +48,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <Navbar />
           <div className="main-content-container container-fluid p-0 d-flex flex-column">
             {offline ? (
-              <PageState
-                icon={faBan}
-                title={'There was an internal website error. Please try again later.'}
-                description={
-                  !activeNetwork.default && (
-                    <>
-                      <br />
-                      {`${activeNetwork.name} network`}
-                    </>
-                  )
-                }
-                className="py-spacer m-auto"
-                data-testid="errorScreen"
-              />
+              <Unavailable />
             ) : (
               <>
                 <Highlights />
-                <div className="d-flex flex-fill flex-column">{children}</div>
+                <div className="d-flex flex-fill flex-column" data-testid="mainPageContent">
+                  {children}
+                </div>
               </>
             )}
           </div>
