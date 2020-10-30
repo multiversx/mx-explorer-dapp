@@ -1,7 +1,18 @@
 import * as React from 'react';
 import { useCallback, useState } from 'react';
 
-const Trim = ({ text }: { text: string }) => {
+interface TrimType {
+  text: string;
+  'data-testid'?: string;
+}
+
+const Trim = (props: TrimType) => {
+  const { text } = props;
+
+  const spanProps = {
+    ...(props['data-testid'] ? { 'data-testid': props['data-testid'] } : {}),
+  };
+
   const [overflow, setOverflow] = useState(false);
 
   const resizeHandler = (node: any) => {
@@ -21,7 +32,11 @@ const Trim = ({ text }: { text: string }) => {
   }, []);
 
   return (
-    <span ref={initializeResizeHandler} className={`trim ${overflow ? 'overflow' : ''}`}>
+    <span
+      ref={initializeResizeHandler}
+      className={`trim ${overflow ? 'overflow' : ''}`}
+      {...spanProps}
+    >
       <span className="left">
         <span>{text.substring(0, Math.floor(text.length / 2))}</span>
       </span>
