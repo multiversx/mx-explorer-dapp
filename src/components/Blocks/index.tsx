@@ -3,7 +3,7 @@ import { useGlobalState } from 'context';
 import { networkRoute, useURLSearchParams } from 'helpers';
 import * as React from 'react';
 import { Redirect } from 'react-router-dom';
-import { BlocksTable, Loader, Pager, ShardSpan, adapter, PageState, Trim } from 'sharedComponents';
+import { BlocksTable, Loader, Pager, ShardSpan, adapter, PageState } from 'sharedComponents';
 import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 
 interface StateType {
