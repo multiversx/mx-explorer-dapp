@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { renderWithRouter, meta, config as optionalConfig } from 'utils/test-utils';
-import { heartbeatstatus, validators, statistics } from 'utils/rawData';
+import { renderWithRouter } from 'utils/test-utils';
+import optionalConfig from 'utils/config';
+import { heartbeatstatus, validators, statistics, meta } from 'utils/rawData';
 
 export const beforeAll = () => {
   const mockGet = jest.spyOn(axios, 'get');
