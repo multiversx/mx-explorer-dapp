@@ -1,44 +1,42 @@
 import * as React from 'react';
-import { useCallback, useState } from 'react';
+import useDebounce from './useDebounce';
 
 interface TrimType {
   text: string;
-  'data-testid'?: string;
+  dataTestId?: string;
 }
 
-const Trim = (props: TrimType) => {
-  const { text } = props;
+const Trim = ({ text, dataTestId = '' }: TrimType) => {
+  const [debounce, setDebounce] = React.useState(0);
+  const [overflow, setOverflow] = React.useState(false);
+  const wrapperRef = React.useRef(document.createElement('span'));
+  const childRef = React.useRef(document.createElement('span'));
 
-  const spanProps = {
-    ...(props['data-testid'] ? { 'data-testid': props['data-testid'] } : {}),
+  const debounceTracker = useDebounce(debounce, 100);
+
+  const listener = () => {
+    setDebounce(debounce + 1);
   };
 
-  const [overflow, setOverflow] = useState(false);
-
-  const resizeHandler = (node: any) => {
-    // TODO use ref and debounce
-    const wrapper = node.querySelector('.left');
-    const content = wrapper.querySelector('span');
-    setOverflow(content.offsetWidth > wrapper.offsetWidth);
+  const effect = () => {
+    window.addEventListener('resize', listener);
+    return () => {
+      window.removeEventListener('resize', listener);
+    };
   };
 
-  const initializeResizeHandler = useCallback((node) => {
-    if (node !== null) {
-      window.addEventListener('resize', () => {
-        resizeHandler(node);
-      });
-      resizeHandler(node);
+  React.useEffect(effect, [debounce]);
+
+  React.useEffect(() => {
+    if (childRef.current && wrapperRef.current) {
+      setOverflow(childRef.current.offsetWidth > wrapperRef.current.offsetWidth);
     }
-  }, []);
+  }, [debounceTracker]);
 
   return (
-    <span
-      ref={initializeResizeHandler}
-      className={`trim ${overflow ? 'overflow' : ''}`}
-      {...spanProps}
-    >
-      <span className="left">
-        <span>{text.substring(0, Math.floor(text.length / 2))}</span>
+    <span className={`trim ${overflow ? 'overflow' : ''}`} data-testid={dataTestId}>
+      <span className="left" ref={wrapperRef}>
+        <span ref={childRef}>{text.substring(0, Math.floor(text.length / 2))}</span>
       </span>
       <span className="ellipsis">...</span>
       <span className="right">
