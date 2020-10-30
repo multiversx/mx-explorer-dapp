@@ -9,6 +9,7 @@ import {
   TransactionsTable,
   adapter,
   DetailItem,
+  Trim,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
@@ -104,7 +105,9 @@ const MiniBlockDetails: React.FC = () => {
                     <div className="card card-small">
                       <div className="card-body p-0">
                         <div className="container-fluid">
-                          <DetailItem title="Miniblock Hash">{miniBlockHash}</DetailItem>
+                          <DetailItem title="Miniblock Hash">
+                            <Trim text={miniBlockHash} />
+                          </DetailItem>
                           <DetailItem title="Sender Shard">
                             <TestnetLink to={urlBuilder.shard(miniBlock.senderShard)}>
                               <ShardSpan shardId={miniBlock.senderShard} />
@@ -120,10 +123,10 @@ const MiniBlockDetails: React.FC = () => {
                           <DetailItem title="Sender Block">
                             {miniBlock.senderBlockHash !== '' ? (
                               <TestnetLink
-                                className="hash"
+                                className="trim-wrapper"
                                 to={`/blocks/${miniBlock.senderBlockHash}`}
                               >
-                                {miniBlock.senderBlockHash}
+                                <Trim text={miniBlock.senderBlockHash} />
                               </TestnetLink>
                             ) : (
                               <span className="text-muted">N/A</span>
@@ -133,10 +136,10 @@ const MiniBlockDetails: React.FC = () => {
                           <DetailItem title="Receiver Block">
                             {miniBlock.receiverBlockHash !== '' ? (
                               <TestnetLink
-                                className="hash"
+                                className="trim-wrapper"
                                 to={`/blocks/${miniBlock.receiverBlockHash}`}
                               >
-                                {miniBlock.receiverBlockHash}
+                                <Trim text={miniBlock.receiverBlockHash} />
                               </TestnetLink>
                             ) : (
                               <span className="text-muted">N/A</span>
