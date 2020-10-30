@@ -46,6 +46,12 @@
   }
 }
 
+.trim-wrapper {
+  display: flex;
+  max-width: 100%;
+  overflow: hidden;
+}
+
 a:hover > .trim span {
   color: $link-hover-color !important;
 }

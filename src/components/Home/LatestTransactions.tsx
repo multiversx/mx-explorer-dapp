@@ -10,7 +10,7 @@ import {
   TimeAgo,
   adapter,
   PageState,
-  TrimHash,
+  Trim,
   Loader,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
@@ -88,24 +88,24 @@ const LatestTransactions = () => {
                       key={transaction.txHash}
                       className={`row animated-row ${transaction.isNew && someNew ? 'new' : ''}`}
                     >
-                      <div className="col-6 d-flex align-items-center pr-0">
+                      <div className="col-6 d-flex align-items-center">
                         <div className="list-item-icon mr-3">
                           <FontAwesomeIcon icon={faExchangeAlt} />
                         </div>
-                        <div className="content-fill d-flex flex-column list-item-text mw-100">
-                          <div className="trim-hash-container align-items-center">
+                        <div className="list-item-text min-w-0">
+                          <div className="d-flex align-items-center">
                             <ScAddressIcon
                               initiator={transaction.sender}
                               secondInitiator={transaction.receiver}
                             />
-                            <div className="content-fill">
-                              <TestnetLink
-                                to={`/transactions/${transaction.txHash}`}
-                                data-testid={`transactionLink${i}`}
-                              >
-                                <TrimHash text={transaction.txHash} />
-                              </TestnetLink>
-                            </div>
+
+                            <TestnetLink
+                              to={`/transactions/${transaction.txHash}`}
+                              data-testid={`transactionLink${i}`}
+                              className="trim-wrapper"
+                            >
+                              <Trim text={transaction.txHash} />
+                            </TestnetLink>
                           </div>
                           <span title={dateFormatted(transaction.timestamp)} className="text-muted">
                             <TimeAgo value={transaction.timestamp} />
@@ -113,28 +113,30 @@ const LatestTransactions = () => {
                         </div>
                       </div>
                       <div className="col-6 list-item-text text-secondary">
-                        <div className="trim-hash-container">
+                        <div className="d-flex align-items-center">
                           <span className="text-nowrap mr-2">From</span>
-                          <div className="content-fill">
-                            {addressIsBech32(transaction.sender) ? (
-                              <TestnetLink to={`/address/${transaction.sender}`}>
-                                <TrimHash text={transaction.sender} />
-                              </TestnetLink>
-                            ) : (
-                              <ShardSpan shardId={transaction.sender} />
-                            )}
-                          </div>
-                        </div>
-                        <div className="trim-hash-container">
-                          <span className="text-nowrap mr-2">To</span>
-                          <div className="content-fill">
+
+                          {addressIsBech32(transaction.sender) ? (
                             <TestnetLink
-                              to={`/address/${transaction.receiver}`}
-                              data-testid={`transactionLinkTo${i}`}
+                              to={`/address/${transaction.sender}`}
+                              className="trim-wrapper"
                             >
-                              <TrimHash text={transaction.receiver} />
+                              <Trim text={transaction.sender} />
                             </TestnetLink>
-                          </div>
+                          ) : (
+                            <ShardSpan shardId={transaction.sender} />
+                          )}
+                        </div>
+                        <div className="d-flex align-items-center">
+                          <span className="text-nowrap mr-2">To</span>
+
+                          <TestnetLink
+                            to={`/address/${transaction.receiver}`}
+                            data-testid={`transactionLinkTo${i}`}
+                            className="trim-wrapper"
+                          >
+                            <Trim text={transaction.receiver} />
+                          </TestnetLink>
                         </div>
                       </div>
                     </div>
