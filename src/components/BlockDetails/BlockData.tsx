@@ -181,7 +181,9 @@ const BlockData = (props: BlockDataType) => {
             )}
           </DetailItem>
 
-          <DetailItem title="Public Keys Bitmap">{block.pubKeyBitmap}</DetailItem>
+          <DetailItem title="Public Keys Bitmap">
+            <Trim text={block.pubKeyBitmap} />
+          </DetailItem>
 
           {isFirstBlock && (
             <>
