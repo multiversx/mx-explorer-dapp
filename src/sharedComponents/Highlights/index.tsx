@@ -28,16 +28,19 @@ export interface StateType {
 interface ItemType {
   title: string;
   value: string;
+  dataTestId?: string;
   icon: typeof faCube;
 }
 
-const Item = ({ title, value, icon }: ItemType) => (
+const Item = ({ title, value, icon, dataTestId = '' }: ItemType) => (
   <li className="my-3 px-2">
     <div className="highlight-item d-flex align-items-center">
       <FontAwesomeIcon className="fa-2x" icon={icon} />
       <div className="d-flex flex-column ml-3">
         <small className="mb-1 text-uppercase">{title}</small>
-        <span className="h5 mb-0 font-weight-normal">{value}</span>
+        <span className="h5 mb-0 font-weight-normal" data-testid={dataTestId}>
+          {value}
+        </span>
       </div>
     </div>
   </li>
@@ -154,7 +157,9 @@ const Hightlights = () => {
                                   &nbsp;
                                 </div>
                               </div>
-                              <small>{epochTimeRemaining} remaining</small>
+                              <small data-testid="metaEpochTimeRemaining">
+                                {epochTimeRemaining} remaining
+                              </small>
                             </div>
                           </div>
                         )}
@@ -163,10 +168,25 @@ const Hightlights = () => {
                   </div>
                 </li>
 
-                <Item icon={faCube} title="Blocks" value={blockNumber} />
-                <Item icon={faLayerGroup} title="Shards" value={nrOfShards} />
-                <Item icon={faStopwatch} title="Peak Tps" value={peakTPS} />
-                <Item icon={faExchangeAlt} title="Transactions" value={totalProcessedTxCount} />
+                <Item icon={faCube} title="Blocks" dataTestId="metaBlocks" value={blockNumber} />
+                <Item
+                  icon={faLayerGroup}
+                  title="Shards"
+                  dataTestId="metaShards"
+                  value={nrOfShards}
+                />
+                <Item
+                  icon={faStopwatch}
+                  title="Peak Tps"
+                  dataTestId="metaPeakTps"
+                  value={peakTPS}
+                />
+                <Item
+                  icon={faExchangeAlt}
+                  title="Transactions"
+                  dataTestId="metaTransactions"
+                  value={totalProcessedTxCount}
+                />
               </ul>
             </div>
           </div>
