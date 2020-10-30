@@ -112,7 +112,7 @@ const BlockData = (props: BlockDataType) => {
             )}
           </DetailItem>
 
-          <DetailItem title="Consensus Group">
+          <DetailItem title="Consensus Group" className="hash-group-row">
             {consensusItems.length === 0 ? (
               <span className="text-muted">N/A</span>
             ) : (
@@ -135,7 +135,7 @@ const BlockData = (props: BlockDataType) => {
           </DetailItem>
 
           {block.shardId === metaChainShardId && (
-            <DetailItem title="Notarized Blocks">
+            <DetailItem title="Notarized Blocks" className="hash-group-row">
               {block.notarizedBlocksHashes === null ||
               (Array.isArray(block.notarizedBlocksHashes) &&
                 block.notarizedBlocksHashes.length === 0) ? (
@@ -156,18 +156,22 @@ const BlockData = (props: BlockDataType) => {
             </DetailItem>
           )}
 
-          <DetailItem title="Miniblocks">
+          <DetailItem title="Miniblocks" className="hash-group-row">
             {block.miniBlocksHashes === null ||
             (Array.isArray(block.miniBlocksHashes) && block.miniBlocksHashes.length === 0) ? (
               <span className="text-muted">N/A</span>
             ) : (
-              <>
+              <div className="hash-group">
                 {block.miniBlocksHashes.map((item) => (
-                  <TestnetLink className="trim-wrapper" key={item} to={`/miniblocks/${item}`}>
+                  <TestnetLink
+                    className="trim-wrapper hash-item"
+                    key={item}
+                    to={`/miniblocks/${item}`}
+                  >
                     <Trim text={item} />
                   </TestnetLink>
                 ))}
-              </>
+              </div>
             )}
           </DetailItem>
 

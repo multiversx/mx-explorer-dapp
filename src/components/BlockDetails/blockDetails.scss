@@ -1,13 +1,24 @@
 .block-details {
-  .hash-group {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+  .hash-group-row {
+    .col {
+      padding-left: 0;
+      padding-right: 1px; // mobile fix
+    }
 
-    > .hash-item {
-      flex: 1 1 30%;
-      @extend .mx-2;
+    .hash-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+
+      > .hash-item {
+        flex: 1 1 40%;
+        margin: 0 1rem;
+      }
+    }
+
+    .text-muted {
+      margin-left: 0.94rem;
     }
   }
 
