@@ -1,20 +1,14 @@
 import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
-import {
-  renderWithRouter,
-  wait,
-  meta,
-  config as optionalConfig,
-  waitForElement,
-  fireEvent,
-  act,
-} from 'utils/test-utils';
+import { renderWithRouter, wait, waitForElement, fireEvent, act } from 'utils/test-utils';
+import optionalConfig from 'utils/config';
 import {
   heartbeatstatus,
   validators,
   transactions,
   transactionsSearch,
   statistics,
+  meta,
 } from 'utils/rawData';
 
 export const beforeAll = (route = '', transactionsError = false) => {

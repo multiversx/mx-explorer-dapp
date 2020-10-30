@@ -1,11 +1,13 @@
 import axios from 'axios';
-import { renderWithRouter, wait, meta, config as optionalConfig } from 'utils/test-utils';
+import { renderWithRouter, wait } from 'utils/test-utils';
+import optionalConfig from 'utils/config';
 import {
   transactions as doc,
   heartbeatstatus,
   statistics,
   validators,
   validatorsdoc,
+  meta,
 } from 'utils/rawData';
 
 const beforeAll = (success = true) => {

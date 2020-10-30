@@ -1,13 +1,6 @@
 import axios from 'axios';
-import {
-  fireEvent,
-  renderWithRouter,
-  wait,
-  meta,
-  config as optionalConfig,
-  waitForElement,
-} from 'utils/test-utils';
-
+import { fireEvent, renderWithRouter, wait, waitForElement } from 'utils/test-utils';
+import optionalConfig from 'utils/config';
 import {
   heartbeatstatus,
   validators,
@@ -15,6 +8,7 @@ import {
   transactionsSearch,
   blocks,
   statistics,
+  meta,
 } from 'utils/rawData';
 
 export const beforeAll = (blocksError = false, transactionsError = false) => {
