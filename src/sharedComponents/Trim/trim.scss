@@ -37,6 +37,13 @@
     flex-shrink: 0;
     display: none;
   }
+
+  /* fix ie */
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .right {
+      text-overflow: clip;
+    }
+  }
 }
 
 a:hover > .trim span {
