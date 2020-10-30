@@ -1,7 +1,7 @@
+import * as React from 'react';
 import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
-import { dateFormatted, sizeFormat, trimHash, urlBuilder } from 'helpers';
-import React from 'react';
-import { ShardSpan, TestnetLink, TimeAgo } from './../index';
+import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
+import { ShardSpan, TestnetLink, TimeAgo, Trim } from 'sharedComponents';
 
 const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number | undefined }) => {
   return (
@@ -50,7 +50,7 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
               </td>
               <td>
                 <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockHashLink${i}`}>
-                  {trimHash(block.hash)}
+                  <Trim text={block.hash} />
                 </TestnetLink>
               </td>
             </tr>

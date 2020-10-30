@@ -20,6 +20,7 @@ import NodesTabs from './NodesTabs';
 import adapter from './Adapter';
 import TrimHash from './TrimHash';
 import DetailItem from './DetailItem';
+import Trim from './Trim';
 
 export {
   Denominate,
@@ -45,4 +46,5 @@ export {
   adapter,
   TrimHash,
   DetailItem,
+  Trim,
 };
