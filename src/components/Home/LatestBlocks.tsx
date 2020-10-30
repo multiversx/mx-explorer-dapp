@@ -8,7 +8,7 @@ import {
   TestnetLink,
   TimeAgo,
   adapter,
-  TrimHash,
+  Trim,
   PageState,
   Loader,
 } from 'sharedComponents';
@@ -104,14 +104,12 @@ const LatestBlocks = () => {
                         </div>
                       </div>
                       <div className="col-6 list-item-text text-secondary">
-                        <div className="trim-hash-container">
-                          <span className="text-nowrap mr-2">Hash</span>
+                        <div className="d-flex align-items-center">
+                          <span className="mr-2">Hash</span>
 
-                          <div className="content-fill">
-                            <TestnetLink to={`/blocks/${block.hash}`}>
-                              <TrimHash data-testid={`blockHashLink${i}`} text={block.hash} />
-                            </TestnetLink>
-                          </div>
+                          <TestnetLink to={`/blocks/${block.hash}`} className="trim-wrapper">
+                            <Trim data-testid={`blockHashLink${i}`} text={block.hash} />
+                          </TestnetLink>
                         </div>
                         <div>{block.txCount} txns</div>
                       </div>
