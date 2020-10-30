@@ -41,7 +41,7 @@ describe('Transactions Page Links', () => {
 
     const links = await render.findAllByTestId('transactionLink');
     expect(links[0].textContent).toBe(
-      '72d26fd09ed2d2bb649a401428eca1a0a7b5a11242daf5500990305f600a9a91'
+      '72d26fd09ed2d2bb649a401428eca1a0...a7b5a11242daf5500990305f600a9a91'
     );
 
     fireEvent.click(links[0]);
@@ -84,7 +84,7 @@ describe('Transactions Page Links', () => {
 
     const links = await render.findAllByTestId('receiverLink');
     expect(links[0].textContent).toBe(
-      'erd1hqplnafrhnd4zv846wumat2462jy9jkmwxtp3nwmw8ye9eclr6fq40f044'
+      'erd1hqplnafrhnd4zv846wumat2462j...y9jkmwxtp3nwmw8ye9eclr6fq40f044'
     );
 
     fireEvent.click(links[0]);

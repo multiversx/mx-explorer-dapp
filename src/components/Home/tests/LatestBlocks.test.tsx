@@ -73,8 +73,8 @@ describe('Latest Blocks Links', () => {
     const blockHashLink = await render.findByTestId('blockHashLink0');
     expect(blockHashLink).toBeInTheDocument();
 
-    expect(blockHashLink.innerHTML).toBe(
-      '7d6df53015199a0991bc03cb8c60c8084dce5ead1a60c7eadafa4dfcf9990698'
+    expect(blockHashLink.textContent).toBe(
+      '7d6df53015199a0991bc03cb8c60c808...4dce5ead1a60c7eadafa4dfcf9990698'
     );
     fireEvent.click(blockHashLink);
     await wait(async () => {

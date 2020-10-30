@@ -108,7 +108,7 @@ const LatestBlocks = () => {
                           <span className="mr-2">Hash</span>
 
                           <TestnetLink to={`/blocks/${block.hash}`} className="trim-wrapper">
-                            <Trim data-testid={`blockHashLink${i}`} text={block.hash} />
+                            <Trim dataTestId={`blockHashLink${i}`} text={block.hash} />
                           </TestnetLink>
                         </div>
                         <div>{block.txCount} txns</div>
