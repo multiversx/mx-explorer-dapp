@@ -4,14 +4,7 @@ import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRigh
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { addressIsBech32, dateFormatted, urlBuilder } from 'helpers';
-import {
-  Denominate,
-  ScAddressIcon,
-  ShardSpan,
-  TestnetLink,
-  TimeAgo,
-  TrimHash,
-} from 'sharedComponents';
+import { Denominate, ScAddressIcon, ShardSpan, TestnetLink, TimeAgo, Trim } from 'sharedComponents';
 import { TransactionType } from './index';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 
@@ -35,8 +28,12 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
             <FontAwesomeIcon icon={faBan} className="mr-1 text-muted" />
           )}
 
-          <TestnetLink to={`/transactions/${transaction.txHash}`} data-testid="transactionLink">
-            <TrimHash text={transaction.txHash} />
+          <TestnetLink
+            to={`/transactions/${transaction.txHash}`}
+            data-testid="transactionLink"
+            className="trim-wrapper"
+          >
+            <Trim text={transaction.txHash} />
           </TestnetLink>
         </div>
       </td>
@@ -66,12 +63,16 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
         <div className="d-flex align-items-center">
           <ScAddressIcon initiator={transaction.sender} />
           {addressId === transaction.sender ? (
-            <TrimHash text={transaction.sender} />
+            <Trim text={transaction.sender} />
           ) : (
             <>
               {addressIsBech32(transaction.sender) ? (
-                <TestnetLink to={`/address/${transaction.sender}`} data-testid="senderLink">
-                  <TrimHash text={transaction.sender} />
+                <TestnetLink
+                  to={`/address/${transaction.sender}`}
+                  data-testid="senderLink"
+                  className="trim-wrapper"
+                >
+                  <Trim text={transaction.sender} />
                 </TestnetLink>
               ) : (
                 <ShardSpan shardId={transaction.sender} />
@@ -84,10 +85,14 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
         <div className="d-flex align-items-center">
           <ScAddressIcon initiator={transaction.receiver} />
           {addressId === transaction.receiver ? (
-            <TrimHash text={transaction.receiver} />
+            <Trim text={transaction.receiver} />
           ) : (
-            <TestnetLink to={`/address/${transaction.receiver}`} data-testid="receiverLink">
-              <TrimHash text={transaction.receiver} />
+            <TestnetLink
+              to={`/address/${transaction.receiver}`}
+              data-testid="receiverLink"
+              className="trim-wrapper"
+            >
+              <Trim text={transaction.receiver} />
             </TestnetLink>
           )}
         </div>
