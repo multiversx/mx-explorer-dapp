@@ -1,13 +1,15 @@
 .block-details {
-  // .hash {
-  //   white-space: nowrap;
-  //   max-width: 400px;
-  //   overflow: hidden;
-  //   text-overflow: ellipsis;
-  //   float: left;
-  //   display: inline-block;
-  //   margin-right: 10px;
-  // }
+  .hash-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    > .hash-item {
+      flex: 1 1 30%;
+      @extend .mx-2;
+    }
+  }
 
   .genesis {
     background-color: $input-disabled-bg;

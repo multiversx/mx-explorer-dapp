@@ -5,7 +5,7 @@ import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
-import { ShardSpan, TestnetLink, TimeAgo, TrimHash, DetailItem } from 'sharedComponents';
+import { ShardSpan, TestnetLink, TimeAgo, Trim, DetailItem } from 'sharedComponents';
 import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 import { validatorsRoutes } from 'routes';
 import { metaChainShardId } from 'appConfig';
@@ -30,7 +30,7 @@ const BlockData = (props: BlockDataType) => {
   const isFirstBlock = block.prevHash && block.prevHash.length > 64;
 
   return (
-    <div className="card card-small fixed-width-sm">
+    <div className="card card-small">
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Block Height">
@@ -59,6 +59,10 @@ const BlockData = (props: BlockDataType) => {
                 </li>
               </ul>
             </div>
+          </DetailItem>
+
+          <DetailItem title="Block Hash">
+            <Trim text={block.hash} />
           </DetailItem>
 
           <DetailItem title="Epoch">{block.epoch}</DetailItem>
@@ -102,8 +106,8 @@ const BlockData = (props: BlockDataType) => {
             {proposer === '' ? (
               <span className="text-muted">N/A</span>
             ) : (
-              <TestnetLink to={`${validatorsRoutes.nodes}/${proposer}`}>
-                <TrimHash text={proposer} />
+              <TestnetLink to={`${validatorsRoutes.nodes}/${proposer}`} className="trim-wrapper">
+                <Trim text={proposer} />
               </TestnetLink>
             )}
           </DetailItem>
@@ -112,22 +116,23 @@ const BlockData = (props: BlockDataType) => {
             {consensusItems.length === 0 ? (
               <span className="text-muted">N/A</span>
             ) : (
-              <>
+              <div className="hash-group">
                 {consensusItems.map((item, i) => (
                   <TestnetLink
-                    className="hash"
+                    className="trim-wrapper hash-item"
                     key={`${item}/${i}`}
                     to={`${validatorsRoutes.nodes}/${item}`}
                   >
-                    <TrimHash text={item} />
+                    <Trim text={item} />
                   </TestnetLink>
                 ))}
-              </>
+              </div>
             )}
           </DetailItem>
 
-          <DetailItem title="Block Hash">{block.hash}</DetailItem>
-          <DetailItem title="State Root Hash">{block.stateRootHash}</DetailItem>
+          <DetailItem title="State Root Hash">
+            <Trim text={block.stateRootHash} />
+          </DetailItem>
 
           {block.shardId === metaChainShardId && (
             <DetailItem title="Notarized Blocks">
@@ -136,13 +141,17 @@ const BlockData = (props: BlockDataType) => {
                 block.notarizedBlocksHashes.length === 0) ? (
                 <span className="text-muted">N/A</span>
               ) : (
-                <>
+                <div className="hash-group">
                   {block.notarizedBlocksHashes.map((item, i) => (
-                    <TestnetLink className="hash" key={item + i} to={`/blocks/${item}`}>
-                      <TrimHash text={item} />
+                    <TestnetLink
+                      className="trim-wrapper hash-item"
+                      key={item + i}
+                      to={`/blocks/${item}`}
+                    >
+                      <Trim text={item} />
                     </TestnetLink>
                   ))}
-                </>
+                </div>
               )}
             </DetailItem>
           )}
@@ -154,8 +163,8 @@ const BlockData = (props: BlockDataType) => {
             ) : (
               <>
                 {block.miniBlocksHashes.map((item) => (
-                  <TestnetLink className="hash" key={item} to={`/miniblocks/${item}`}>
-                    <TrimHash text={item} />
+                  <TestnetLink className="trim-wrapper" key={item} to={`/miniblocks/${item}`}>
+                    <Trim text={item} />
                   </TestnetLink>
                 ))}
               </>
@@ -166,8 +175,8 @@ const BlockData = (props: BlockDataType) => {
             {isFirstBlock ? (
               <span className="text-muted">N/A</span>
             ) : (
-              <TestnetLink className="hash" to={`/blocks/${block.prevHash}`}>
-                <TrimHash text={block.prevHash} />
+              <TestnetLink className="trim-wrapper" to={`/blocks/${block.prevHash}`}>
+                <Trim text={block.prevHash} />
               </TestnetLink>
             )}
           </DetailItem>
