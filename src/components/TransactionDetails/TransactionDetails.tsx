@@ -12,6 +12,7 @@ import {
   TimeAgo,
   TransactionStatus,
   DetailItem,
+  Trim,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 
@@ -32,12 +33,17 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
       : '';
 
   return (
-    <div className="card card=small">
+    <div className="card card-small">
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Hash">
-            <ScAddressIcon initiator={transaction.sender} secondInitiator={transaction.receiver} />
-            {transaction.txHash}
+            <div className="d-flex align-items-center text-break-all">
+              <ScAddressIcon
+                initiator={transaction.sender}
+                secondInitiator={transaction.receiver}
+              />
+              {transaction.txHash}
+            </div>
           </DetailItem>
 
           <DetailItem title="Status">
@@ -58,8 +64,8 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
 
           <DetailItem title="Miniblock">
             {transaction.miniBlockHash ? (
-              <TestnetLink to={`/miniblocks/${transaction.miniBlockHash}`}>
-                {transaction.miniBlockHash}
+              <TestnetLink to={`/miniblocks/${transaction.miniBlockHash}`} className="trim-wrapper">
+                <Trim text={transaction.miniBlockHash} />
               </TestnetLink>
             ) : (
               <span className="text-muted">N/A</span>
@@ -67,46 +73,48 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
           </DetailItem>
 
           <DetailItem title="From">
-            <ScAddressIcon initiator={transaction.sender} />
-            {addressIsBech32(transaction.sender) ? (
-              <>
-                <TestnetLink to={`/address/${transaction.sender}`}>
-                  {transaction.sender}
-                </TestnetLink>
-                <TestnetLink
-                  to={urlBuilder.senderShard(transaction.senderShard)}
-                  className="small-link"
-                >
-                  &nbsp;(
-                  <ShardSpan shardId={transaction.senderShard} />)
-                </TestnetLink>
-              </>
-            ) : (
-              <ShardSpan shardId={transaction.sender} />
-            )}
-            &nbsp;
+            <div className="d-flex align-items-center">
+              <ScAddressIcon initiator={transaction.sender} />
+              {addressIsBech32(transaction.sender) ? (
+                <>
+                  <TestnetLink to={`/address/${transaction.sender}`} className="trim-wrapper">
+                    <Trim text={transaction.sender} />
+                  </TestnetLink>
+                  <TestnetLink
+                    to={urlBuilder.senderShard(transaction.senderShard)}
+                    className="flex-shrink-0"
+                  >
+                    &nbsp;(
+                    <ShardSpan shardId={transaction.senderShard} />)
+                  </TestnetLink>
+                </>
+              ) : (
+                <ShardSpan shardId={transaction.sender} />
+              )}
+            </div>
           </DetailItem>
 
           <DetailItem title="To">
-            <ScAddressIcon initiator={transaction.receiver} />
-            <TestnetLink to={`/address/${transaction.receiver}`}>
-              {transaction.receiver}
-            </TestnetLink>
-            &nbsp;
-            {!isNaN(transaction.receiverShard) && (
-              <TestnetLink
-                to={urlBuilder.receiverShard(transaction.receiverShard)}
-                className="small-link"
-              >
-                (<ShardSpan shardId={transaction.receiverShard} />)
+            <div className="d-flex align-items-center">
+              <ScAddressIcon initiator={transaction.receiver} />
+              <TestnetLink to={`/address/${transaction.receiver}`} className="trim-wrapper">
+                <Trim text={transaction.receiver} />
               </TestnetLink>
-            )}
+              &nbsp;
+              {!isNaN(transaction.receiverShard) && (
+                <TestnetLink
+                  to={urlBuilder.receiverShard(transaction.receiverShard)}
+                  className="flex-shrink-0"
+                >
+                  (<ShardSpan shardId={transaction.receiverShard} />)
+                </TestnetLink>
+              )}
+            </div>
             {errorMessage && (
-              <>
-                <br />
+              <div>
                 <FontAwesomeIcon icon={faExclamationTriangle} className="text-danger" size="xs" />
                 <small className="text-danger"> {errorMessage}</small>
-              </>
+              </div>
             )}
           </DetailItem>
 
