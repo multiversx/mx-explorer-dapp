@@ -123,7 +123,7 @@ export async function getAddressDetails({ proxyUrl, addressId, timeout }: Detail
       balance: '0',
       nonce: 0,
       code: '',
-      detailsFetched: addressIsBech32(addressId),
+      detailsFetched: false, // addressIsBech32(addressId),
     };
   }
 }
