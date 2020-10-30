@@ -1,5 +1,5 @@
 import React from 'react';
-import { Denominate, DetailItem } from 'sharedComponents';
+import { Denominate, DetailItem, Trim } from 'sharedComponents';
 
 export interface AddressDetailsType {
   addressId: string;
@@ -16,7 +16,9 @@ const AddressDetails = (props: AddressDetailsType) => {
     <div className="card card-small">
       <div className="card-body p-0">
         <div className="container-fluid">
-          <DetailItem title="Address">{props.addressId}</DetailItem>
+          <DetailItem title="Address">
+            <Trim text={props.addressId} />
+          </DetailItem>
           <DetailItem title="Balance">
             {props.balance !== '...' ? <Denominate value={props.balance} /> : props.balance}
           </DetailItem>
