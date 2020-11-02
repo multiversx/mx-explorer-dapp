@@ -37,4 +37,4 @@ export const nrOfShards = 3;
 export const versionNumber = 'v1.1.0.0';
 export const denomination = 18;
 export const decimals = 4;
-export const numInitCharactersForScAddress = 14;
+export const numInitCharactersForScAddress = 13;
