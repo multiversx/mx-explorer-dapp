@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { truncate, urlBuilder } from 'helpers';
-import { ShardSpan, TestnetLink } from 'sharedComponents';
+import { ShardSpan, NetworkLink } from 'sharedComponents';
 
 export interface NodeInformationType {
   publicKey: string;
@@ -43,9 +43,9 @@ const NodeInformation = ({
               <div className="col-lg-2 card-label">Shard</div>
               <div className="col-lg-10">
                 {shardNumber !== undefined ? (
-                  <TestnetLink to={urlBuilder.shard(shardNumber)} data-testid="shardLink">
+                  <NetworkLink to={urlBuilder.shard(shardNumber)} data-testid="shardLink">
                     <ShardSpan shardId={shardNumber} />
-                  </TestnetLink>
+                  </NetworkLink>
                 ) : (
                   <span className="text-muted">N/A</span>
                 )}

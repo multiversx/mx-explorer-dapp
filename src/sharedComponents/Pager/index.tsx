@@ -5,7 +5,7 @@ import { faAngleDoubleLeft } from '@fortawesome/pro-regular-svg-icons/faAngleDou
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { TestnetLink } from 'sharedComponents';
+import { NetworkLink } from 'sharedComponents';
 import pagerHelper from './pagerHelper';
 
 const Pager = ({
@@ -62,9 +62,9 @@ const Pager = ({
                 <FontAwesomeIcon icon={faAngleDoubleLeft} /> First
               </span>
             ) : (
-              <TestnetLink data-testid="nextPageButton" to={`${pathname}?${firstUrlParams}`}>
+              <NetworkLink data-testid="nextPageButton" to={`${pathname}?${firstUrlParams}`}>
                 <FontAwesomeIcon icon={faAngleDoubleLeft} /> First
-              </TestnetLink>
+              </NetworkLink>
             )}
           </div>
         </li>
@@ -77,9 +77,9 @@ const Pager = ({
             </div>
           ) : (
             <div className="pager">
-              <TestnetLink to={prevPageUrl} data-testid="previousPageButton">
+              <NetworkLink to={prevPageUrl} data-testid="previousPageButton">
                 <FontAwesomeIcon icon={faAngleLeft} /> Prev
-              </TestnetLink>
+              </NetworkLink>
             </div>
           )}
         </li>
@@ -93,9 +93,9 @@ const Pager = ({
         <li className="list-inline-item ml-2">
           {total === '...' || end < total ? (
             <div className="pager">
-              <TestnetLink data-testid="nextPageButton" to={`${pathname}?${nextUrlParams}`}>
+              <NetworkLink data-testid="nextPageButton" to={`${pathname}?${nextUrlParams}`}>
                 Next <FontAwesomeIcon icon={faAngleRight} />
-              </TestnetLink>
+              </NetworkLink>
             </div>
           ) : (
             <div className="pager">
@@ -109,9 +109,9 @@ const Pager = ({
         <li className="list-inline-item">
           <div className="pager">
             {!isNaN(lastPage) && end < total ? (
-              <TestnetLink data-testid="nextPageButton" to={`${pathname}?${lastUrlParams}`}>
+              <NetworkLink data-testid="nextPageButton" to={`${pathname}?${lastUrlParams}`}>
                 Last <FontAwesomeIcon icon={faAngleDoubleRight} />
-              </TestnetLink>
+              </NetworkLink>
             ) : (
               <span className="text-muted">
                 Last <FontAwesomeIcon icon={faAngleDoubleRight} />

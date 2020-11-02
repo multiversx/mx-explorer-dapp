@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { truncate, trimHash, urlBuilder } from 'helpers';
-import { ShardSpan, TestnetLink } from 'sharedComponents';
+import { ShardSpan, NetworkLink } from 'sharedComponents';
 import { ValidatorType } from 'context/validators';
 import RowIcon from 'components/Nodes/NodesTable/RowIcon';
 import { validatorsRoutes } from 'routes';
@@ -15,12 +15,12 @@ const IdenityDetailsRow = ({ node, rowIndex }: IdenityDetailsRowType) => {
     <tr>
       <td>
         <RowIcon node={node} />
-        <TestnetLink
+        <NetworkLink
           to={`${validatorsRoutes.nodes}/${node.publicKey}`}
           data-testid={`hexPublicKeyLink${rowIndex}`}
         >
           {trimHash(node.publicKey)}
-        </TestnetLink>
+        </NetworkLink>
       </td>
       <td>
         {node.nodeDisplayName ? (
@@ -30,9 +30,9 @@ const IdenityDetailsRow = ({ node, rowIndex }: IdenityDetailsRowType) => {
         )}
       </td>
       <td>
-        <TestnetLink to={urlBuilder.shard(node.shardNumber)} data-testid={`shardLink${rowIndex}`}>
+        <NetworkLink to={urlBuilder.shard(node.shardNumber)} data-testid={`shardLink${rowIndex}`}>
           <ShardSpan shardId={node.shardNumber} />
-        </TestnetLink>
+        </NetworkLink>
       </td>
       <td>
         {node.versionNumber ? (

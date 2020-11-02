@@ -5,7 +5,7 @@ import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
-import { ShardSpan, TestnetLink, TimeAgo, Trim, DetailItem } from 'sharedComponents';
+import { ShardSpan, NetworkLink, TimeAgo, Trim, DetailItem } from 'sharedComponents';
 import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 import { validatorsRoutes } from 'routes';
 import { metaChainShardId } from 'appConfig';
@@ -43,17 +43,17 @@ const BlockData = (props: BlockDataType) => {
               <ul className="list-inline mb-0">
                 <li className="list-inline-item ml-2 mr-2">
                   <div className="pager">
-                    <TestnetLink to={`/blocks/${block.prevHash}`} data-testid="previousPageButton">
+                    <NetworkLink to={`/blocks/${block.prevHash}`} data-testid="previousPageButton">
                       <FontAwesomeIcon icon={faChevronLeft} /> Prev
-                    </TestnetLink>
+                    </NetworkLink>
                   </div>
                 </li>
                 <li className="ml-2 list-inline-item">
                   <div className="pager">
                     {nextHash !== '' ? (
-                      <TestnetLink data-testid="nextPageButton" to={`/blocks/${nextHash}`}>
+                      <NetworkLink data-testid="nextPageButton" to={`/blocks/${nextHash}`}>
                         Next <FontAwesomeIcon icon={faChevronRight} />
-                      </TestnetLink>
+                      </NetworkLink>
                     ) : (
                       <span className="text-muted">
                         Next <FontAwesomeIcon icon={faChevronRight} />
@@ -82,9 +82,9 @@ const BlockData = (props: BlockDataType) => {
           </DetailItem>
 
           <DetailItem title="Shard">
-            <TestnetLink to={urlBuilder.shard(block.shardId)}>
+            <NetworkLink to={urlBuilder.shard(block.shardId)}>
               <ShardSpan shardId={block.shardId} />
-            </TestnetLink>
+            </NetworkLink>
           </DetailItem>
 
           <DetailItem title="Size">
@@ -110,9 +110,9 @@ const BlockData = (props: BlockDataType) => {
             {proposer === '' ? (
               <span className="text-muted">N/A</span>
             ) : (
-              <TestnetLink to={`${validatorsRoutes.nodes}/${proposer}`} className="trim-wrapper">
+              <NetworkLink to={`${validatorsRoutes.nodes}/${proposer}`} className="trim-wrapper">
                 <Trim text={proposer} />
-              </TestnetLink>
+              </NetworkLink>
             )}
           </DetailItem>
 
@@ -122,13 +122,13 @@ const BlockData = (props: BlockDataType) => {
             ) : (
               <div className="hash-group">
                 {consensusItems.map((item, i) => (
-                  <TestnetLink
+                  <NetworkLink
                     className="trim-wrapper hash-item"
                     key={`${item}/${i}`}
                     to={`${validatorsRoutes.nodes}/${item}`}
                   >
                     <Trim text={item} />
-                  </TestnetLink>
+                  </NetworkLink>
                 ))}
                 {createHashItemIfLengthIsOdd(consensusItems.length)}
               </div>
@@ -148,13 +148,13 @@ const BlockData = (props: BlockDataType) => {
               ) : (
                 <div className="hash-group">
                   {block.notarizedBlocksHashes.map((item, i) => (
-                    <TestnetLink
+                    <NetworkLink
                       className="trim-wrapper hash-item"
                       key={item + i}
                       to={`/blocks/${item}`}
                     >
                       <Trim text={item} />
-                    </TestnetLink>
+                    </NetworkLink>
                   ))}
                   {createHashItemIfLengthIsOdd(block.notarizedBlocksHashes.length)}
                 </div>
@@ -169,13 +169,13 @@ const BlockData = (props: BlockDataType) => {
             ) : (
               <div className="hash-group">
                 {block.miniBlocksHashes.map((item) => (
-                  <TestnetLink
+                  <NetworkLink
                     className="trim-wrapper hash-item"
                     key={item}
                     to={`/miniblocks/${item}`}
                   >
                     <Trim text={item} />
-                  </TestnetLink>
+                  </NetworkLink>
                 ))}
                 {createHashItemIfLengthIsOdd(block.miniBlocksHashes.length)}
               </div>
@@ -186,9 +186,9 @@ const BlockData = (props: BlockDataType) => {
             {isFirstBlock ? (
               <span className="text-muted">N/A</span>
             ) : (
-              <TestnetLink className="trim-wrapper" to={`/blocks/${block.prevHash}`}>
+              <NetworkLink className="trim-wrapper" to={`/blocks/${block.prevHash}`}>
                 <Trim text={block.prevHash} />
-              </TestnetLink>
+              </NetworkLink>
             )}
           </DetailItem>
 

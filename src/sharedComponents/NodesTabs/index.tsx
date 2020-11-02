@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
-import { TestnetLink } from 'sharedComponents';
+import { NetworkLink } from 'sharedComponents';
 
 const NodesTabs = ({ extraClasses }: { extraClasses?: string }) => {
   const activePath = useLocation().pathname;
@@ -12,20 +12,20 @@ const NodesTabs = ({ extraClasses }: { extraClasses?: string }) => {
     <div className={`pb-3 ${extraClasses}`}>
       <ul className="validators-nav nav nav-tabs">
         <li className="nav-item">
-          <TestnetLink
+          <NetworkLink
             to={'/validators'}
             className={`nav-link text-center ${validatorsPage ? 'active' : ''}`}
           >
             Validators
-          </TestnetLink>
+          </NetworkLink>
         </li>
         <li className="nav-item">
-          <TestnetLink
+          <NetworkLink
             to={'/nodes'}
             className={`nav-link text-center ${nodesPage ? 'active' : ''}`}
           >
             Nodes
-          </TestnetLink>
+          </NetworkLink>
         </li>
       </ul>
     </div>
