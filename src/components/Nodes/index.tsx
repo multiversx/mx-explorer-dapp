@@ -7,6 +7,7 @@ import NodesTable from './NodesTable';
 import Filters from './Filters';
 import { nodesIssues, useGetFilters } from './helpers';
 import { ValidatorType } from 'context/validators';
+import tempNodes from './tempNodes';
 
 export type DirectioinsType = 'none' | 'desc' | 'asc';
 
@@ -80,35 +81,56 @@ const Nodes = () => {
     if (versionNumber) {
       const query = getQueryParams({ issues, peerType, searchValue });
       setDataReady(undefined);
-      getNodes(query)
-        .then((nodesData) => {
-          const nodes = nodesData.data.map((node: ValidatorType) => {
-            return {
-              ...node,
-              ...(node.nodeType !== 'observer'
-                ? {
-                    issue: nodesIssues({
-                      node,
-                      versionNumber,
-                    }),
-                  }
-                : { issue: '' }),
-              nodeDisplayName: node.nodeDisplayName ? node.nodeDisplayName : node.publicKey,
-            };
-          });
-          dispatch({
-            type: 'setNodes',
-            nodes,
-          });
-          if (ref.current !== null) {
-            setDataReady(true);
-          }
-        })
-        .catch((error) => {
-          if (ref.current !== null) {
-            setDataReady(false);
-          }
-        });
+
+      const nodes = tempNodes.map((node: any) => {
+        return {
+          ...node,
+          ...(node.nodeType !== 'observer'
+            ? {
+                issue: nodesIssues({
+                  node,
+                  versionNumber,
+                }),
+              }
+            : { issue: '' }),
+          nodeDisplayName: node.nodeDisplayName ? node.nodeDisplayName : node.publicKey,
+        };
+      });
+      dispatch({
+        type: 'setNodes',
+        nodes,
+      });
+      setDataReady(true);
+
+      // getNodes(query)
+      //   .then(({ data }) => {
+      //     const nodes = data.map((node: ValidatorType) => {
+      //       return {
+      //         ...node,
+      //         ...(node.nodeType !== 'observer'
+      //           ? {
+      //               issue: nodesIssues({
+      //                 node,
+      //                 versionNumber,
+      //               }),
+      //             }
+      //           : { issue: '' }),
+      //         nodeDisplayName: node.nodeDisplayName ? node.nodeDisplayName : node.publicKey,
+      //       };
+      //     });
+      //     dispatch({
+      //       type: 'setNodes',
+      //       nodes,
+      //     });
+      //     if (ref.current !== null) {
+      //       setDataReady(true);
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     if (ref.current !== null) {
+      //       setDataReady(false);
+      //     }
+      //   });
     }
   };
 
@@ -126,66 +148,59 @@ const Nodes = () => {
 
   return (
     <div ref={ref}>
-      <div className="container pt-3 pb-3">
-        <div className="row">
-          <div className="col-12">
-            <h4>
-              <span data-testid="title">Nodes</span>
-            </h4>
+      {(dataReady === undefined || !versionNumber) && <Loader />}
+      {dataReady === true && (
+        <div className="container pt-3 pb-3">
+          <div className="row">
+            <div className="col-12">
+              <h4>
+                <span data-testid="title">Nodes</span>
+              </h4>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <div className="card card-small">
+                <div className="card-body p-0">
+                  <NodesTabs />
+                  <Filters
+                    resultsCount={nodes.length}
+                    setSearchValue={setSearchValue}
+                    setPeerType={setPeerType}
+                    setIssues={setIssues}
+                    searchValue={searchValue}
+                    peerType={peerType}
+                    issues={issues}
+                  />
+                  <div className="table-wrapper fixed-width-sm">
+                    <table className="table m-0" data-testid="nodesTable">
+                      <thead>
+                        <tr>
+                          {/* <th>#</th> */}
+                          {headers.map((header) => (
+                            <th key={header.id}>{header.label}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <NodesTable nodes={nodes} ratingOrder={ratingOrder} />
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        {!versionNumber ? (
-          <Loader />
-        ) : (
-          <>
-            {dataReady === undefined && <Loader />}
-            {dataReady === true && (
-              <div className="row">
-                <div className="col-12">
-                  <div className="card">
-                    <div className="card-body card-list">
-                      {/* <NodesTabs />
-                      <Filters
-                        resultsCount={nodes.length}
-                        setSearchValue={setSearchValue}
-                        setPeerType={setPeerType}
-                        setIssues={setIssues}
-                        searchValue={searchValue}
-                        peerType={peerType}
-                        issues={issues}
-                      /> */}
-                      <div className="table-responsive">
-                        <table className="table mt-3">
-                          <thead>
-                            <tr>
-                              {/* <th>#</th> */}
-                              {headers.map((header) => (
-                                <th key={header.id}>{header.label}</th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <NodesTable nodes={nodes} ratingOrder={ratingOrder} />
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            {dataReady === false && (
-              <div className="card">
-                <div className="card-body card-details" data-testid="errorScreen">
-                  <div className="empty">
-                    <FontAwesomeIcon icon={faCogs} className="empty-icon" />
-                    <span className="h4 empty-heading">Unable to load validators</span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </>
-        )}
-      </div>
+      )}
+      {dataReady === false && (
+        <div className="card">
+          <div className="card-body card-details" data-testid="errorScreen">
+            <div className="empty">
+              <FontAwesomeIcon icon={faCogs} className="empty-icon" />
+              <span className="h4 empty-heading">Unable to load validators</span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
