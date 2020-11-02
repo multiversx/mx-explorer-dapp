@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ValidatorType } from 'context/validators';
 import { truncate, trimHash, urlBuilder } from 'helpers';
-import { ShardSpan, TestnetLink } from 'sharedComponents';
+import { ShardSpan, TestnetLink, Trim } from 'sharedComponents';
 import RowIcon from './RowIcon';
 
 const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrder: string[] }) => {
@@ -11,8 +11,10 @@ const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrde
         <tr key={node.publicKey}>
           {/* <td>{node.nodeType === 'validator' ? ratingOrder.indexOf(node.publicKey) + 1 : ''}</td> */}
           <td>
-            <RowIcon node={node} />
-            <span>{trimHash(node.publicKey)}</span>
+            <div className="d-flex align-items-center">
+              <RowIcon node={node} />
+              <Trim text={node.publicKey} />
+            </div>
           </td>
           <td>
             {node.nodeDisplayName ? (
@@ -22,8 +24,8 @@ const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrde
             )}
           </td>
           <td>
-            <TestnetLink to={urlBuilder.shard(node.shardId)} data-testid={`shardLink${index}`}>
-              <ShardSpan shardId={node.shardId} />
+            <TestnetLink to={urlBuilder.shard(node.shardNumber)} data-testid={`shardLink${index}`}>
+              <ShardSpan shardId={node.shardNumber} />
             </TestnetLink>
           </td>
 
