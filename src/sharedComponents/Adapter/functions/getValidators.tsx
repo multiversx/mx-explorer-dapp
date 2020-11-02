@@ -43,7 +43,7 @@ interface RoundType {
 
 export interface GetRoundsReturnType {
   rounds: RoundType[];
-  roundsFetched: boolean;
+  roundsFetched: boolean | undefined;
 }
 
 export async function getRounds({

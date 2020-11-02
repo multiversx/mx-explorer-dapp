@@ -1,10 +1,8 @@
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams } from 'react-router-dom';
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { BlocksTable, Loader, adapter } from 'sharedComponents';
+import { BlocksTable, Loader, adapter, PageState } from 'sharedComponents';
 import { ValidatorType } from 'context/validators';
 import {
   GetRoundsReturnType,
@@ -19,6 +17,8 @@ import BrandInformation from './BrandInformation';
 import Alert from './Alert';
 import useSetValidatorsData from './../useSetValidatorsData';
 import { metaChainShardId, explorerApi } from 'appConfig';
+import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
+import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 
 export type StateType = NetworkMetricsType &
   NodeInformationType & {
@@ -42,11 +42,11 @@ const ValidatorDetails = () => {
     blocks: [],
     startBlockNr: 0,
     endBlockNr: 0,
-    blocksFetched: true,
+    blocksFetched: undefined,
   });
   const [rounds, setRounds] = React.useState<GetRoundsReturnType>({
     rounds: [],
-    roundsFetched: true,
+    roundsFetched: undefined,
   });
 
   const { timeout, validatorData } = useGlobalState();
@@ -106,112 +106,96 @@ const ValidatorDetails = () => {
   React.useEffect(getData, [metaChainShardId, validator, explorerApi]); // run the operation only once since the parameter does not change
 
   const { publicKey, isValidator } = state;
-
-  const networkMetricsClass = isValidator ? 'col-md-4' : 'col-8';
-
-  const nodeClass = 'col-md-8';
-  const brandClass = 'col-md-4';
-
   const isWaiting = state.instanceType && state.instanceType.includes('waiting');
 
   return (
-    <div ref={ref}>
-      <div className="container pt-3 pb-3">
-        <div className="row">
-          <div className={success ? nodeClass : 'col-12'}>
-            <h4 data-testid="title">Node Information</h4>
-          </div>
-          {publicKey !== '' && (
-            <div className={brandClass}>
-              <h4 className="d-sm-none d-lg-block">&nbsp;</h4>
-            </div>
-          )}
-        </div>
-        {validator !== undefined && <Alert validator={validator} />}
-        {success ? (
-          <>
-            {publicKey !== '' ? (
-              <>
-                <div className="row">
-                  <div className={nodeClass}>
-                    <NodeInformation {...state} />
-                  </div>
-                  <div className={brandClass}>
-                    <BrandInformation publicKey={state.publicKey} />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className={networkMetricsClass}>
-                    <NetworkMetrics {...state} />
-                  </div>
-                  <div className="col-md-4">
-                    <RatingsChart historicRatings={state.historicRatings} />
-                  </div>
-                  {isValidator && (
-                    <div className="col-md-4">
-                      <Rounds {...rounds} isWaiting={Boolean(isWaiting)} />
-                    </div>
-                  )}
-                </div>
-                {isValidator && (
-                  <>
-                    <div className="row">
-                      <div className="col-12 mt-4">
-                        <h4>Proposed Blocks in Current Epoch</h4>
-                      </div>
-                    </div>
-                    {fetchedBlocks.blocksFetched ? (
-                      <>
-                        {fetchedBlocks.blocks.length > 0 ? (
-                          <div className="row">
-                            <div className="col-12">
-                              <div className="card">
-                                <div className="card-body">
-                                  Last {fetchedBlocks.blocks.length} proposed blocks
-                                  <BlocksTable blocks={fetchedBlocks.blocks} shardId={undefined} />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        ) : (
-                          <Loader />
-                        )}
-                      </>
-                    ) : (
-                      <div className="row">
-                        <div className="col-12">
-                          <div className="card">
-                            <div className="card-body card-details" data-testid="errorScreen">
-                              <div className="empty">
-                                <FontAwesomeIcon icon={faCube} className="empty-icon" />
-                                <span className="h4 empty-heading">
-                                  {isWaiting ? 'Validator not in consensus' : 'No blocks found'}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </>
-                )}
-              </>
-            ) : (
-              <Loader />
-            )}
-          </>
-        ) : (
-          <div className="card">
-            <div className="card-body card-details" data-testid="errorScreen">
-              <div className="empty">
-                <FontAwesomeIcon icon={faCogs} className="empty-icon" />
-                <span className="h4 empty-heading">Unable to locate this node</span>
+    <>
+      {publicKey === '' && <Loader />}
+      {success === false && (
+        <PageState
+          icon={faCogs}
+          title="Unable to locate this node"
+          className="py-spacer my-auto"
+          dataTestId="errorScreen"
+        />
+      )}
+      <div ref={ref}>
+        {success && publicKey !== '' && (
+          <div className="container py-spacer">
+            <div className="row page-header mb-spacer">
+              <div className="col-12">
+                <h3 className="page-title" data-testid="title">
+                  Node Information
+                </h3>
               </div>
             </div>
+            <div className="row">
+              <div className="col-12 mb-spacer">
+                {validator !== undefined && <Alert validator={validator} />}
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-8">
+                <NodeInformation {...state} />
+              </div>
+              <div className="col-md-4 mt-spacer mt-md-0">
+                <BrandInformation publicKey={state.publicKey} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className={`d-flex flex-column ${isValidator ? 'col-md-4' : 'col-8'}`}>
+                <NetworkMetrics {...state} />
+              </div>
+              <div className="col-md-4 d-flex flex-column">
+                <RatingsChart historicRatings={state.historicRatings} />
+              </div>
+              {isValidator && (
+                <div className="col-md-4 d-flex flex-column">
+                  <Rounds {...rounds} isWaiting={Boolean(isWaiting)} />
+                </div>
+              )}
+            </div>
+            {isValidator && (
+              <>
+                <div className="row page-header my-spacer">
+                  <div className="col-12">
+                    <h3 className="page-title">Proposed Blocks in Current Epoch</h3>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12">
+                    <div className="card">
+                      {fetchedBlocks.blocksFetched === undefined && <Loader />}
+                      {fetchedBlocks.blocksFetched === false && <FailedBlocks />}
+                      {fetchedBlocks.blocksFetched === true &&
+                        fetchedBlocks.blocks.length === 0 && (
+                          <NoBlocks
+                            title={isWaiting ? 'Validator not in consensus' : 'No blocks'}
+                          />
+                        )}
+                      {fetchedBlocks.blocksFetched === true && fetchedBlocks.blocks.length > 0 && (
+                        <>
+                          <div className="card-header border-0 p-0">
+                            <div className="card-header-item border-bottom p-3">
+                              Last {fetchedBlocks.blocks.length} proposed blocks
+                            </div>
+                          </div>
+                          <div className="card-body p-0">
+                            <BlocksTable blocks={fetchedBlocks.blocks} shardId={undefined} />
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

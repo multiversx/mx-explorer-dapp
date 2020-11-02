@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NetworkLink } from 'sharedComponents';
+import { DetailItem, NetworkLink } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import { validatorsRoutes } from 'routes';
 import { stake, cumulativeStakePercent } from './../ValidatorsBrandTable/BrandRow';
@@ -16,71 +16,41 @@ const BrandInformation = ({ publicKey }: { publicKey: string }) => {
 
   const brand = sortedBrands.find((b) => b.validators.some((v: any) => v.publicKey === publicKey));
 
-  const labelClass = 'col-lg-5 card-label';
-  const dataClass = 'col-lg-7';
-
   return brand !== undefined ? (
-    <div data-testid="brandContainer">
-      <div className="card branded-validators mt-sm-5 mt-md-0">
-        <div className="card-body">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="d-xl-none d-lg-none d-sm-block">&nbsp;</div>
-              <div className="d-flex align-items-center">
-                <div className="mr-3">
-                  <img
-                    className={brand.avatar ? 'avatar' : 'avatar gray'}
-                    src={brand.avatar ? brand.avatar : '/validators/default-avatar.svg'}
-                    alt={brand.name}
-                    height="42"
-                  />
-                </div>
-                {brand.identity ? (
-                  <NetworkLink to={`${validatorsRoutes.index}/${brand.identity}`}>
-                    {brand.name ? brand.name : 'N/A'}
-                  </NetworkLink>
-                ) : (
-                  <>{brand.name ? brand.name : 'N/A'}</>
-                )}
-              </div>
-            </div>
+    <div className="card card-small" data-testid="brandContainer">
+      <div className="card-header border-0 p-0">
+        <div className="card-header-item border-bottom d-flex align-items-center px-3 py-3 py-lg-2">
+          <div className="mr-3">
+            <img
+              className={brand.avatar ? 'avatar' : 'avatar gray'}
+              src={brand.avatar ? brand.avatar : '/validators/default-avatar.svg'}
+              alt={brand.name}
+              height="42"
+            />
           </div>
-          <hr className="hr-space" />
-          <div className="row">
-            <div className={labelClass}>Stake</div>
-            <div className={dataClass}>
-              <div className="d-flex align-items-center">
-                <div className="mr-3">{stake(brand)}</div>
-              </div>
-            </div>
-          </div>
-          <hr className="hr-space" />
-          <div className="row">
-            <div className={labelClass}>Stake percent</div>
-            <div className={dataClass}>
-              <div className="d-flex align-items-center">
-                <div className="mr-3">{cumulativeStakePercent(brand)}</div>
-              </div>
-            </div>
-          </div>
-          <hr className="hr-space" />
-          <div className="row">
-            <div className={labelClass}>Nodes</div>
-            <div className={dataClass}>
-              <div className="d-flex align-items-center">
-                <div className="mr-3">{brand.validators.length}</div>
-              </div>
-            </div>
-          </div>
-          <hr className="hr-space" />
-          <div className="row">
-            <div className={labelClass}>Score</div>
-            <div className={dataClass}>
-              <div className="d-flex align-items-center">
-                <div className="mr-3">{Math.floor(brand.score).toLocaleString()}</div>
-              </div>
-            </div>
-          </div>
+          {brand.identity ? (
+            <NetworkLink to={`${validatorsRoutes.index}/${brand.identity}`}>
+              {brand.name ? brand.name : 'N/A'}
+            </NetworkLink>
+          ) : (
+            <>{brand.name ? brand.name : 'N/A'}</>
+          )}
+        </div>
+      </div>
+      <div className="card-body p-0">
+        <div className="container-fluid">
+          <DetailItem title="Stake" colWidth="6">
+            {stake(brand)}
+          </DetailItem>
+          <DetailItem title="Stake percent" colWidth="6">
+            {cumulativeStakePercent(brand)}
+          </DetailItem>
+          <DetailItem title="Nodes" colWidth="6">
+            {brand.validators.length}
+          </DetailItem>
+          <DetailItem title="Score" colWidth="6">
+            {Math.floor(brand.score).toLocaleString()}
+          </DetailItem>
         </div>
       </div>
     </div>
