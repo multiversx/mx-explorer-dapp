@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { truncate, trimHash, urlBuilder } from 'helpers';
-import { ShardSpan, NetworkLink } from 'sharedComponents';
+import { truncate, urlBuilder } from 'helpers';
+import { ShardSpan, NetworkLink, Trim } from 'sharedComponents';
 import { ValidatorType } from 'context/validators';
 import RowIcon from './../RowIcon';
 import { validatorsRoutes } from 'routes';
@@ -14,13 +14,16 @@ const BrandDetailsRow = ({ validator, rowIndex }: BrandDetailsRowType) => {
   return (
     <tr>
       <td>
-        <RowIcon validator={validator} />
-        <NetworkLink
-          to={`${validatorsRoutes.nodes}/${validator.publicKey}`}
-          data-testid={`hexPublicKeyLink${rowIndex}`}
-        >
-          {trimHash(validator.publicKey)}
-        </NetworkLink>
+        <div className="d-flex align-items-center">
+          <RowIcon validator={validator} />
+          <NetworkLink
+            to={`${validatorsRoutes.nodes}/${validator.publicKey}`}
+            data-testid={`hexPublicKeyLink${rowIndex}`}
+            className="trim-wrapper"
+          >
+            <Trim text={validator.publicKey} />
+          </NetworkLink>
+        </div>
       </td>
       <td>
         {validator.nodeDisplayName ? (
