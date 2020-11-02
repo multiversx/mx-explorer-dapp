@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Card } from 'react-bootstrap';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ValidatorType } from 'context/validators';
@@ -8,10 +7,10 @@ import RowIcon from './../RowIcon';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <div className="row">
-    <div className="col-12 mb-4">
-      <Card>
-        <Card.Body>{children}</Card.Body>
-      </Card>
+    <div className="col-12">
+      <div className="card card-small">
+        <div className="card-body">{children}</div>
+      </div>
     </div>
   </div>
 );

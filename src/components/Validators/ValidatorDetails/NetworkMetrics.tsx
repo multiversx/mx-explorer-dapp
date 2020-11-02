@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { DetailItem } from 'sharedComponents';
 import PercentegeBar from './PercentegeBar';
 
 export interface NetworkMetricsType {
@@ -19,38 +20,28 @@ const NetworkMetrics = ({
   totalDownTimeLabel,
   rating,
 }: NetworkMetricsType & { rating: number }) => {
-  const cardBodyClass = isValidator ? 'card-body mt-1 mb-1' : 'card-body';
-
   return (
     <>
-      <div className="mt-4">
-        <h4>Network Metrics</h4>
+      <div className="page-header my-spacer">
+        <h3 className="page-title">Network Metrics</h3>
       </div>
-      <div className="card" style={{ height: 'auto' }}>
-        <div className={cardBodyClass}>
-          <div className="row">
-            <div className="col-lg-3 card-label">Rating</div>
-            <div className="col-lg-9">
+      <div className="card card-small">
+        <div className="card-body p-0">
+          <div className="container-fluid">
+            <DetailItem title="Rating" colWidth="3">
               {!isNaN(rating) ? rating : <span className="text-muted">N/A</span>}
-            </div>
-          </div>
-          <hr className="hr-space" />
+            </DetailItem>
 
-          <div className="row">
-            <div className="col-lg-3 card-label">Uptime</div>
-            <div className="col-lg-9">
+            <DetailItem title="Uptime" colWidth="3">
               <PercentegeBar
                 totalDownTimeLabel={totalDownTimeLabel}
                 totalUpTimeLabel={totalUpTimeLabel}
                 totalUpTimePercentege={totalUpTimePercentege}
                 totalDownTimePercentege={totalDownTimePercentege}
               />
-            </div>
-          </div>
-          <hr className="hr-space" />
-          <div className="row">
-            <div className="col-lg-3 card-label">Status</div>
-            <div className="col-lg-9">
+            </DetailItem>
+
+            <DetailItem title="Status" colWidth="3">
               {isActive ? (
                 <div>
                   <span className="badge badge-pill badge-success badge-status">&nbsp;</span>
@@ -62,7 +53,7 @@ const NetworkMetrics = ({
                   <span className={isValidator === false ? 'text-muted' : ''}>&nbsp;Offline</span>
                 </div>
               )}
-            </div>
+            </DetailItem>
           </div>
         </div>
       </div>
