@@ -94,11 +94,13 @@ const Nodes = () => {
 
   React.useEffect(getVersionNumber, []);
 
-  console.log('\x1b[42m%s\x1b[0m', 11);
-
   const fetchNodes = () => {
     if (versionNumber) {
-      // const query = getQueryParams({ issues, peerType, searchValue });
+      const query = getQueryParams({ issues, peerType, searchValue });
+      const queryString = new URLSearchParams(query);
+      if (String(queryString).length > 0) {
+        window.history.pushState({}, '', `/nodes?${queryString}`);
+      }
       setDataReady(undefined);
 
       const nodes = tempNodes.map((node: any) => {
