@@ -47,31 +47,35 @@ const TransactionDetails = () => {
   React.useEffect(checkRefetch, [timestamp]);
 
   return (
-    <div ref={ref}>
-      <div className="container py-spacer">
-        <div className="row page-header mb-spacer">
-          <div className="col-12">
-            <h3 className="page-title" data-testid="title">
-              Transaction Details
-            </h3>
+    <>
+      {transactionFetched === undefined && <Loader />}
+      {transactionFetched === false && (
+        <PageState
+          icon={faExchangeAlt}
+          title="Unable to locate this transaction hash"
+          className="py-spacer d-flex h-100 align-items-center justify-content-center"
+          data-testid="errorScreen"
+        />
+      )}
+      <div ref={ref}>
+        {transactionFetched === true && transaction && (
+          <div className="container py-spacer">
+            <div className="row page-header mb-spacer">
+              <div className="col-12">
+                <h3 className="page-title" data-testid="title">
+                  Transaction Details
+                </h3>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-12">
+                <Details transaction={transaction} />
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-12">
-            {transactionFetched === undefined && <Loader />}
-            {transactionFetched === false && (
-              <PageState
-                icon={faExchangeAlt}
-                title="Unable to locate this transaction hash"
-                className="py-spacer d-flex h-100 align-items-center justify-content-center"
-                data-testid="errorScreen"
-              />
-            )}
-            {transactionFetched === true && transaction && <Details transaction={transaction} />}
-          </div>
-        </div>
+        )}
       </div>
-    </div>
+    </>
   );
 };
 
