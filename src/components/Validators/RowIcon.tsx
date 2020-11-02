@@ -9,6 +9,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { ValidatorType } from 'context/validators';
+import { outdatedVersion } from '../../helpers';
 
 interface ValidatorIssuesType {
   validator: ValidatorType;
@@ -28,7 +29,7 @@ export const validatorIssues = ({
   switch (true) {
     case validator.totalUpTimeSec === 0:
       return 'Offline since genesis';
-    case versionNumber !== validator.versionNumber.split('-')[0]:
+    case outdatedVersion(validator.versionNumber, versionNumber):
       return 'Outdated client version';
     case shuffleOut && !validator.isActive:
       return '';
