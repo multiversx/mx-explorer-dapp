@@ -1,54 +1,12 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { adapter, Loader, NodesTabs, PageState } from 'sharedComponents';
+import { adapter, Loader, PageState } from 'sharedComponents';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import NodesTable from './NodesTable';
 import Filters from './Filters';
 import { nodesIssues, useFilters } from './helpers';
 import { ValidatorType } from 'context/validators';
 import tempNodes from './tempNodes';
-
-export type DirectioinsType = 'none' | 'desc' | 'asc';
-
-interface HeadersType {
-  id: string;
-  label: string;
-  dir: DirectioinsType;
-}
-
-const headers: HeadersType[] = [
-  {
-    id: 'publicKey',
-    label: 'Public Key',
-    dir: 'none',
-  },
-  {
-    id: 'nodeDisplayName',
-    label: 'Node Name',
-    dir: 'none',
-  },
-  {
-    id: 'shardId',
-    label: 'Shard',
-    dir: 'none',
-  },
-  {
-    id: 'versionNumber',
-    label: 'Version',
-    dir: 'none',
-  },
-
-  {
-    id: 'totalUpTimeSec',
-    label: 'Uptime',
-    dir: 'none',
-  },
-  {
-    id: 'isActive',
-    label: 'Status',
-    dir: 'none',
-  },
-];
 
 const Nodes = () => {
   const ref = React.useRef(null);
@@ -194,9 +152,6 @@ const Nodes = () => {
                   {nodes.length > 0 ? (
                     <>
                       <div className="card-header border-0 p-0">
-                        <div className="card-header-item border-bottom px-3 pt-3">
-                          <NodesTabs />
-                        </div>
                         <div className="card-header-item border-bottom p-3">
                           <Filters
                             resultsCount={nodes.length}
@@ -210,19 +165,10 @@ const Nodes = () => {
                         </div>
                       </div>
                       <div className="card-body p-0">
-                        <div className="table-wrapper">
-                          <table className="table">
-                            <thead>
-                              <tr>
-                                {/* <th>#</th> */}
-                                {headers.map((header) => (
-                                  <th key={header.id}>{header.label}</th>
-                                ))}
-                              </tr>
-                            </thead>
-                            <NodesTable nodes={nodes} ratingOrder={ratingOrder} />
-                          </table>
-                        </div>
+                        <NodesTable>
+                          <NodesTable.Header />
+                          <NodesTable.Body nodes={nodes} ratingOrder={ratingOrder} />
+                        </NodesTable>
                       </div>
                     </>
                   ) : (
