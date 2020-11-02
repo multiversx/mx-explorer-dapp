@@ -25,6 +25,10 @@ function decodeHex(hex: string) {
   return str;
 }
 
+function createHashItemIfLengthIsOdd(length: number) {
+  return length > 1 && length % 2 ? <div className="hash-item">&nbsp;</div> : null;
+}
+
 const BlockData = (props: BlockDataType) => {
   const { block, proposer, consensusItems, nextHash } = props;
   const isFirstBlock = block.prevHash && block.prevHash.length > 64;
@@ -126,6 +130,7 @@ const BlockData = (props: BlockDataType) => {
                     <Trim text={item} />
                   </TestnetLink>
                 ))}
+                {createHashItemIfLengthIsOdd(consensusItems.length)}
               </div>
             )}
           </DetailItem>
@@ -151,6 +156,7 @@ const BlockData = (props: BlockDataType) => {
                       <Trim text={item} />
                     </TestnetLink>
                   ))}
+                  {createHashItemIfLengthIsOdd(block.notarizedBlocksHashes.length)}
                 </div>
               )}
             </DetailItem>
@@ -171,6 +177,7 @@ const BlockData = (props: BlockDataType) => {
                     <Trim text={item} />
                   </TestnetLink>
                 ))}
+                {createHashItemIfLengthIsOdd(block.miniBlocksHashes.length)}
               </div>
             )}
           </DetailItem>
