@@ -20,8 +20,10 @@ export default function NetworkRouter() {
   function changeNetwork() {
     if (allNetworkIds.includes(networkId) && activeNetworkId !== networkId) {
       // if route contains a network at the beginning replace the network
-      dispatch({ type: 'setBrandData', brandData: [] }); // TODO: remove when ready
-      dispatch({ type: 'changeNetwork', networkId });
+      setTimeout(() => {
+        dispatch({ type: 'setBrandData', brandData: [] }); // TODO: remove when ready
+        dispatch({ type: 'changeNetwork', networkId });
+      });
     } else if (
       (allNetworkIds.includes(networkId) && defaultNetworkId === networkId) ||
       (networkId === '' && activeNetworkId !== '')
@@ -31,7 +33,7 @@ export default function NetworkRouter() {
     }
   }
 
-  React.useEffect(changeNetwork, [networkId]);
+  React.useEffect(changeNetwork, [networkId, activeNetworkId]);
 
   return <></>;
 }
