@@ -34,28 +34,24 @@ const LatestTransactions = () => {
   const fetchTransactions = () => {
     if (ref.current !== null) {
       getLatestTransactions().then(({ data, transactionsFetched }) => {
-        if (ref.current !== null) {
-          if (transactionsFetched) {
-            const sortedTransactions = data;
-            if (transactions.length === 0) {
-              const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
-                ...transaction,
-                isNew: false,
-              }));
+        if (ref.current !== null && transactionsFetched) {
+          const sortedTransactions = data;
+          if (transactions.length === 0) {
+            const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
+              ...transaction,
+              isNew: false,
+            }));
 
-              setTransactions(newTransactions);
-            } else {
-              const existingHashes = transactions.map((b) => b.txHash);
-              const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
-                ...transaction,
-                isNew: !existingHashes.includes(transaction.txHash),
-              }));
-              setTransactions(newTransactions);
-            }
-            setTransactionsFetched(true);
-          } else if (transactions.length === 0) {
-            setTransactionsFetched(false);
+            setTransactions(newTransactions);
+          } else {
+            const existingHashes = transactions.map((b) => b.txHash);
+            const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
+              ...transaction,
+              isNew: !existingHashes.includes(transaction.txHash),
+            }));
+            setTransactions(newTransactions);
           }
+          setTransactionsFetched(transactionsFetched && transactions.length > 0);
         }
       });
     }

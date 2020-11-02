@@ -24,26 +24,30 @@ const LatestBlocks = () => {
   const { getLatestBlocks } = adapter();
 
   const fetchBlocks = () => {
-    getLatestBlocks().then(({ data, blocksFetched }) => {
-      if (ref.current !== null) {
-        const sortedBlocks = data;
-        if (blocks.length === 0) {
-          const newBlocks = sortedBlocks.map((block: BlockType) => ({
-            ...block,
-            isNew: false,
-          }));
-          setBlocks(newBlocks);
-        } else {
-          const existingHashes = blocks.map((b) => b.hash);
-          const newBlocks = sortedBlocks.map((block: BlockType) => ({
-            ...block,
-            isNew: !existingHashes.includes(block.hash),
-          }));
-          setBlocks(newBlocks);
+    getLatestBlocks()
+      .then(({ data, blocksFetched }) => {
+        if (ref.current !== null && blocksFetched) {
+          const sortedBlocks = data;
+          if (blocks.length === 0) {
+            const newBlocks = sortedBlocks.map((block: BlockType) => ({
+              ...block,
+              isNew: false,
+            }));
+            setBlocks(newBlocks);
+          } else {
+            const existingHashes = blocks.map((b) => b.hash);
+            const newBlocks = sortedBlocks.map((block: BlockType) => ({
+              ...block,
+              isNew: !existingHashes.includes(block.hash),
+            }));
+            setBlocks(newBlocks);
+          }
         }
         setBlocksFetched(blocksFetched);
-      }
-    });
+      })
+      .catch(() => {
+        setBlocksFetched(false);
+      });
   };
 
   React.useEffect(fetchBlocks, [activeNetworkId, timestamp]);
