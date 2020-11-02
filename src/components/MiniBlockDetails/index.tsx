@@ -1,7 +1,8 @@
+import * as React from 'react';
 import { useGlobalState } from 'context';
 import { isHash, networkRoute, urlBuilder } from 'helpers';
-import * as React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
+import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import {
   Loader,
   ShardSpan,
@@ -10,11 +11,11 @@ import {
   adapter,
   DetailItem,
   Trim,
+  PageState,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import { initialState } from 'sharedComponents/Adapter/functions/getMiniBlocks';
-import MiniBlockNotFound from './MiniBlockNotFound';
 
 interface MiniBlockType {
   senderShard: number;
@@ -87,21 +88,31 @@ const MiniBlockDetails: React.FC = () => {
   return invalid ? (
     <Redirect to={networkRoute({ to: `/not-found`, activeNetworkId })} />
   ) : (
-    <div ref={ref}>
-      <div className="container py-spacer">
-        <div className="row page-header mb-spacer">
-          <div className="col-12">
-            <h3 className="page-title" data-testid="pageTitle">
-              Miniblock Details
-            </h3>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-12">
-            {miniBlockFetched === undefined && <Loader />}
-            {miniBlockFetched === false && <MiniBlockNotFound miniBlockHash={miniBlockHash} />}
-            {miniBlockFetched && miniBlock.miniBlockHash && (
-              <>
+    <>
+      {miniBlockFetched === undefined && <Loader />}
+
+      {miniBlockFetched === false && (
+        <PageState
+          icon={faCube}
+          title="Unable to locate this miniblock hash"
+          description={miniBlockHash}
+          className="py-spacer my-auto"
+          dataTestId="errorScreen"
+        />
+      )}
+
+      <div ref={ref}>
+        {miniBlockFetched && miniBlock.miniBlockHash && (
+          <div className="container py-spacer">
+            <div className="row page-header mb-spacer">
+              <div className="col-12">
+                <h3 className="page-title" data-testid="pageTitle">
+                  Miniblock Details
+                </h3>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-12">
                 <div className="row">
                   <div className="col-12">
                     <div className="card card-small">
@@ -165,6 +176,7 @@ const MiniBlockDetails: React.FC = () => {
                 <div className="row">
                   <div className="col-12">
                     {transactionsFetched === false && <NoTransactions />}
+
                     {transactionsFetched === true && (
                       <TransactionsTable
                         transactions={transactions}
@@ -175,12 +187,12 @@ const MiniBlockDetails: React.FC = () => {
                     )}
                   </div>
                 </div>
-              </>
-            )}
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
-    </div>
+    </>
   );
 };
 
