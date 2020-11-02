@@ -98,6 +98,7 @@ const Filters = ({
               className={`btn btn-sm btn-outline-light btn-pill ${peerType === '' ? 'active' : ''}`}
               onClick={() => {
                 changePeerType('');
+                window.history.pushState({}, '', '/nodes');
               }}
             >
               All
