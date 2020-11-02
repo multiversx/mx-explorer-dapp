@@ -16,6 +16,7 @@ import {
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import { initialState } from 'sharedComponents/Adapter/functions/getMiniBlocks';
+import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 
 interface MiniBlockType {
   senderShard: number;
@@ -48,7 +49,7 @@ const MiniBlockDetails: React.FC = () => {
   const { miniBlock } = state;
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
-  const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
+  const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
 
   const size = parseInt(page!) ? parseInt(page!) : 1;
@@ -65,10 +66,10 @@ const MiniBlockDetails: React.FC = () => {
           size,
           miniBlockHash,
         }),
-      ]).then(([miniBlockData, miniBlocTransactionsData]) => {
+      ]).then(([miniBlockData, miniBlockTransactionsData]) => {
         if (ref.current !== null) {
-          setTransactions(miniBlocTransactionsData.data);
-          setTransactionsFetched(miniBlocTransactionsData.success);
+          setTransactions(miniBlockTransactionsData.data);
+          setTransactionsFetched(miniBlockTransactionsData.success);
           setState(miniBlockData);
           setMiniBlockFetched(miniBlockData.blockFetched);
         }
@@ -84,6 +85,8 @@ const MiniBlockDetails: React.FC = () => {
   };
 
   React.useEffect(fetchMiniBlockData, [activeNetworkId, size, miniBlockHash, refreshFirstPage]);
+
+  const showTransactions = transactionsFetched === true && transactions.length > 0;
 
   return invalid ? (
     <Redirect to={networkRoute({ to: `/not-found`, activeNetworkId })} />
@@ -175,15 +178,21 @@ const MiniBlockDetails: React.FC = () => {
                 </div>
                 <div className="row">
                   <div className="col-12">
-                    {transactionsFetched === false && <NoTransactions />}
-
-                    {transactionsFetched === true && (
+                    {showTransactions ? (
                       <TransactionsTable
                         transactions={transactions}
                         addressId={undefined}
                         totalTransactions={totalTransactions}
                         size={size}
                       />
+                    ) : (
+                      <div className="card card-small">
+                        {transactionsFetched === undefined && <Loader />}
+                        {transactionsFetched === false && <FailedTransactions />}
+                        {transactionsFetched === true && transactions.length === 0 && (
+                          <NoTransactions />
+                        )}
+                      </div>
                     )}
                   </div>
                 </div>

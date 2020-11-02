@@ -93,15 +93,7 @@ const Blocks: React.FC = () => {
             <div className="row">
               <div className="col-12">
                 <div className="card card-small">
-                  {state.blocks.length === 0 && (
-                    <PageState
-                      icon={faCube}
-                      title="No blocks found"
-                      className="py-spacer my-auto"
-                      data-testid="noBlocks"
-                    />
-                  )}
-                  {state.blocks.length > 0 && (
+                  {state.blocks.length > 0 ? (
                     <>
                       <div className="card-header border-0 p-0">
                         <div className="card-header-item border-bottom p-3">
@@ -125,6 +117,13 @@ const Blocks: React.FC = () => {
                         />
                       </div>
                     </>
+                  ) : (
+                    <PageState
+                      icon={faCube}
+                      title="No blocks found"
+                      className="py-spacer my-auto"
+                      data-testid="noBlocks"
+                    />
                   )}
                 </div>
               </div>
