@@ -50,8 +50,8 @@ const TransactionsTable = ({
         </div>
 
         <div className="card-body p-0">
-          <div className="table-wrapper fixed-width-sm">
-            <table className="table m-0" data-testid="transactionsTable">
+          <div className="table-wrapper">
+            <table className="table" data-testid="transactionsTable">
               <thead>
                 <tr>
                   <th scope="col">Txn Hash</th>
