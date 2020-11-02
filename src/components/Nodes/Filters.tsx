@@ -95,108 +95,105 @@ const Filters = ({
           ? `Showing ${resultsCount.toLocaleString('en')} of ${resultsCount.toLocaleString('en')}`
           : ''} */}
       </div>
-      <div className="mt-1">
-        <ul className="list-inline">
-          <li className="list-inline-item">
-            <button
-              className={`btn btn-sm btn-outline-light btn-pill ${peerType === '' ? 'active' : ''}`}
-              onClick={() => {
-                changePeerType('');
-                window.history.pushState({}, '', '/nodes');
-              }}
-            >
-              All
-            </button>
-          </li>
-          <li className="list-inline-item">
-            <button
-              className={`btn btn-sm btn-outline-light btn-pill ${
-                peerType === 'validator' ? 'active' : ''
-              }`}
-              onClick={() => {
-                changePeerType('validator');
-              }}
-            >
-              Validators
-            </button>
-          </li>
-          <li className="list-inline-item">
-            <button
-              data-testid="filterByObservers"
-              className={`btn btn-sm btn-outline-light btn-pill ${
-                peerType === 'observer' ? 'active' : ''
-              }`}
-              onClick={() => {
-                changePeerType('observer');
-              }}
-            >
-              Observers
-            </button>
-          </li>
-          <li className="list-inline-item">
-            <button
-              className={`btn btn-sm btn-outline-light btn-pill ${issues ? 'active' : ''}`}
-              onClick={() => {
-                setIssues(true);
-                setPeerType(undefined);
-              }}
-            >
-              Issues
-            </button>
-          </li>
-          <li className="list-inline-item">
-            <Dropdown>
-              <Dropdown.Toggle
-                variant="outline-light"
-                size="sm"
-                className={`btn-pill ${
-                  ['eligible', 'waiting', 'new', 'jailed'].includes(String(peerType))
-                    ? 'active'
-                    : ''
-                }`}
-                id="more"
-              >
-                More
-              </Dropdown.Toggle>
 
-              <Dropdown.Menu>
-                <Dropdown.Item
-                  className={`${'eligible' === peerType ? 'active' : ''}`}
-                  data-testid="filterByValidators"
-                  href="#/validators"
-                  onClick={(e: any) => changeValidatorObserver(e, 'eligible')}
-                >
-                  Eligible
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className={`${'waiting' === peerType ? 'active' : ''}`}
-                  data-testid="filterByValidators"
-                  href="#/validators"
-                  onClick={(e: any) => changeValidatorObserver(e, 'waiting')}
-                >
-                  Waiting
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className={`${'new' === peerType ? 'active' : ''}`}
-                  data-testid="filterByValidators"
-                  href="#/validators"
-                  onClick={(e: any) => changeValidatorObserver(e, 'new')}
-                >
-                  New
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className={`${peerType === 'jailed' ? 'active' : ''}`}
-                  data-testid="filterByValidators"
-                  href="#/validators"
-                  onClick={(e: any) => changeValidatorObserver(e, 'jailed')}
-                >
-                  Jailed
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </li>
-        </ul>
-      </div>
+      <ul className="list-inline m-0">
+        <li className="list-inline-item">
+          <button
+            className={`btn btn-sm btn-outline-light btn-pill ${peerType === '' ? 'active' : ''}`}
+            onClick={() => {
+              changePeerType('');
+              window.history.pushState({}, '', '/nodes');
+            }}
+          >
+            All
+          </button>
+        </li>
+        <li className="list-inline-item">
+          <button
+            className={`btn btn-sm btn-outline-light btn-pill ${
+              peerType === 'validator' ? 'active' : ''
+            }`}
+            onClick={() => {
+              changePeerType('validator');
+            }}
+          >
+            Validators
+          </button>
+        </li>
+        <li className="list-inline-item">
+          <button
+            data-testid="filterByObservers"
+            className={`btn btn-sm btn-outline-light btn-pill ${
+              peerType === 'observer' ? 'active' : ''
+            }`}
+            onClick={() => {
+              changePeerType('observer');
+            }}
+          >
+            Observers
+          </button>
+        </li>
+        <li className="list-inline-item">
+          <button
+            className={`btn btn-sm btn-outline-light btn-pill ${issues ? 'active' : ''}`}
+            onClick={() => {
+              setIssues(true);
+              setPeerType(undefined);
+            }}
+          >
+            Issues
+          </button>
+        </li>
+        <li className="list-inline-item">
+          <Dropdown>
+            <Dropdown.Toggle
+              variant="outline-light"
+              size="sm"
+              className={`btn-pill ${
+                ['eligible', 'waiting', 'new', 'jailed'].includes(String(peerType)) ? 'active' : ''
+              }`}
+              id="more"
+            >
+              More
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item
+                className={`${'eligible' === peerType ? 'active' : ''}`}
+                data-testid="filterByValidators"
+                href="#/validators"
+                onClick={(e: any) => changeValidatorObserver(e, 'eligible')}
+              >
+                Eligible
+              </Dropdown.Item>
+              <Dropdown.Item
+                className={`${'waiting' === peerType ? 'active' : ''}`}
+                data-testid="filterByValidators"
+                href="#/validators"
+                onClick={(e: any) => changeValidatorObserver(e, 'waiting')}
+              >
+                Waiting
+              </Dropdown.Item>
+              <Dropdown.Item
+                className={`${'new' === peerType ? 'active' : ''}`}
+                data-testid="filterByValidators"
+                href="#/validators"
+                onClick={(e: any) => changeValidatorObserver(e, 'new')}
+              >
+                New
+              </Dropdown.Item>
+              <Dropdown.Item
+                className={`${peerType === 'jailed' ? 'active' : ''}`}
+                data-testid="filterByValidators"
+                href="#/validators"
+                onClick={(e: any) => changeValidatorObserver(e, 'jailed')}
+              >
+                Jailed
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </li>
+      </ul>
     </>
   );
 };
