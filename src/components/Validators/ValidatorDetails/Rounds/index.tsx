@@ -16,12 +16,12 @@ const Rounds = ({ rounds, roundsFetched, isWaiting }: RoundsType) => {
       </div>
       <div className="card card-small" data-testid="roundsContainer">
         <div className="card-body card-body p-3">
-          {roundsFetched === undefined && <Loader dataTestId="roundsLoading" />}
+          {roundsFetched === undefined && <Loader dataTestId="roundsLoading" small={true} />}
           {roundsFetched === false && (
             <PageState
               icon={faCogs}
               title={isWaiting ? 'Validator not in consensus' : 'Unable to load rounds'}
-              className="py-spacer my-auto"
+              className="page-state-sm d-flex h-100 align-items-center justify-content-center"
               dataTestId="roundsErrorScreen"
             />
           )}
