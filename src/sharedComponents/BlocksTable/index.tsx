@@ -6,7 +6,7 @@ import { ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number | undefined }) => {
   return (
     <div className="table-wrapper">
-      <table className="table m-0">
+      <table className="table">
         <thead>
           <tr>
             <th>Block</th>
