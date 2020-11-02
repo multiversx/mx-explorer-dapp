@@ -22,7 +22,7 @@ export default async function getLatestTransactions({
 
     return {
       data: transactions,
-      transactionsFetched: data.length > 0,
+      transactionsFetched: true,
     };
   } catch (e) {
     return {

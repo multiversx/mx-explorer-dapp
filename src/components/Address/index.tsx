@@ -105,29 +105,17 @@ const Address = () => {
   React.useEffect(fetchData, [activeNetworkId, size, addressId, refreshFirstPage]); // run the operation only once since the parameter does not change
 
   const loading = addressDetailsFetched === undefined && transactionsFetched === undefined;
-
   const failed = addressDetails.detailsFetched === false || !addressIsBech32(addressId);
-
-  const ready = !loading && !failed;
+  const showTransactions = transactionsFetched === true && transactions.length > 0;
 
   return (
-    <div ref={ref}>
-      <div className="container py-spacer">
-        {(loading || failed) && (
-          <>
-            <div className="row page-header mb-spacer">
-              <div className="col-12">
-                <h3 className="page-title" data-testid="title">
-                  Address Details
-                </h3>
-              </div>
-            </div>
-            {loading === true && <Loader />}
-            {loading === false && failed && <FailedAddress addressId={addressId} />}
-          </>
-        )}
-        {ready && (
-          <>
+    <>
+      {loading && <Loader />}
+      {!loading && failed && <FailedAddress addressId={addressId} />}
+
+      <div ref={ref}>
+        {!loading && !failed && (
+          <div className="container py-spacer">
             <div className="row page-header">
               <div
                 className={`d-flex flex-column
@@ -157,9 +145,9 @@ const Address = () => {
                     <h3 className="page-title">Transactions</h3>
                   </div>
                 </div>
-                {transactionsFetched === true && (
-                  <>
-                    {transactions.length > 0 ? (
+                <div className="row">
+                  <div className="col-12">
+                    {showTransactions ? (
                       <TransactionsTable
                         transactions={transactions}
                         addressId={addressId}
@@ -167,17 +155,22 @@ const Address = () => {
                         size={size}
                       />
                     ) : (
-                      <NoTransactions />
+                      <div className="card card-small">
+                        {transactionsFetched === undefined && <Loader />}
+                        {transactionsFetched === false && <FailedTransactions />}
+                        {transactionsFetched === true && transactions.length === 0 && (
+                          <NoTransactions />
+                        )}
+                      </div>
                     )}
-                  </>
-                )}
-                {transactionsFetched === false && <FailedTransactions />}
+                  </div>
+                </div>
               </div>
             </div>
-          </>
+          </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

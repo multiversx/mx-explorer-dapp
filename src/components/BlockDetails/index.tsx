@@ -39,36 +39,38 @@ const BlockDetails = () => {
   return invalid ? (
     <Redirect to={networkRoute({ to: `/not-found`, activeNetworkId })} />
   ) : (
-    <div className="block-details" ref={ref}>
-      <div className="container py-spacer">
-        <div className="row page-header mb-spacer">
-          <div className="col-12">
-            <h3 className="page-title" data-testid="title">
-              Block Details
-            </h3>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-12">
-            {blockFetched === undefined && <Loader />}
-            {blockFetched === false && (
-              <div className="card card-small">
-                <div className="card-body ">
-                  <PageState
-                    icon={faCube}
-                    title="Unable to locate this block hash"
-                    description={blockId}
-                    className="py-spacer d-flex h-100 align-items-center justify-content-center"
-                    dataTestId="errorScreen"
-                  />
-                </div>
+    <>
+      {blockFetched === undefined && <Loader />}
+
+      {blockFetched === false && (
+        <PageState
+          icon={faCube}
+          title="Unable to locate this block hash"
+          description={blockId}
+          className="py-spacer my-auto"
+          dataTestId="errorScreen"
+        />
+      )}
+
+      <div className="block-details" ref={ref}>
+        {blockFetched === true && state.block.hash && (
+          <div className="container py-spacer">
+            <div className="row page-header mb-spacer">
+              <div className="col-12">
+                <h3 className="page-title" data-testid="title">
+                  Block Details
+                </h3>
               </div>
-            )}
-            {blockFetched === true && state.block.hash && <BlockData {...state} />}
+            </div>
+            <div className="row">
+              <div className="col-12">
+                <BlockData {...state} />
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
-    </div>
+    </>
   );
 };
 

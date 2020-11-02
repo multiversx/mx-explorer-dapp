@@ -61,47 +61,53 @@ const Transactions = () => {
   React.useEffect(fetchTransactions, [activeNetworkId, size, refreshFirstPage]); // run the operation only once since the parameter does not change
 
   return (
-    <div ref={ref}>
-      <div className="container py-spacer">
-        <div className="row page-header mb-spacer">
-          <div className="col-12">
-            <h3 className="page-title">
-              <span data-testid="title">Transactions</span>
-              {senderShard !== undefined && (
-                <>
-                  <span>&nbsp;from&nbsp;</span>
-                  <ShardSpan shardId={senderShard} />
-                </>
-              )}
-              &nbsp;
-              {receiverShard !== undefined && (
-                <>
-                  <span>to&nbsp;</span>
-                  <ShardSpan shardId={receiverShard} />
-                </>
-              )}
-            </h3>
-          </div>
-        </div>
-        {transactionsFetched === undefined && <Loader />}
-        {transactionsFetched === false && <FailedTransactions />}
+    <>
+      {transactionsFetched === undefined && <Loader />}
+      {transactionsFetched === false && <FailedTransactions />}
+
+      <div ref={ref}>
         {transactionsFetched === true && (
-          <div className="row">
-            <div className="col-12">
-              {transactions.length > 0 ? (
-                <TransactionsTable
-                  transactions={transactions}
-                  totalTransactions={totalTransactions}
-                  size={size}
-                />
-              ) : (
-                <NoTransactions />
-              )}
+          <div className="container py-spacer">
+            <div className="row page-header mb-spacer">
+              <div className="col-12">
+                <h3 className="page-title">
+                  <span data-testid="title">Transactions</span>
+                  {senderShard !== undefined && (
+                    <>
+                      <span>&nbsp;from&nbsp;</span>
+                      <ShardSpan shardId={senderShard} />
+                    </>
+                  )}
+                  &nbsp;
+                  {receiverShard !== undefined && (
+                    <>
+                      <span>to&nbsp;</span>
+                      <ShardSpan shardId={receiverShard} />
+                    </>
+                  )}
+                </h3>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-12">
+                {transactions.length > 0 ? (
+                  <TransactionsTable
+                    transactions={transactions}
+                    totalTransactions={totalTransactions}
+                    size={size}
+                  />
+                ) : (
+                  <div className="card card-small">
+                    <NoTransactions />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

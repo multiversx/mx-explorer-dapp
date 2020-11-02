@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useGlobalState } from '../../context';
 
-interface TestnetLinkType {
+interface NetworkLinkType {
   className?: string;
   title?: string;
   onClick?: () => void;
@@ -11,7 +11,7 @@ interface TestnetLinkType {
   children: React.ReactNode | string;
 }
 
-const TestnetLink = ({ to, children, ...rest }: TestnetLinkType) => {
+const NetworkLink = ({ to, children, ...rest }: NetworkLinkType) => {
   const { activeNetworkId } = useGlobalState();
 
   if (!to.startsWith('/')) {
@@ -27,4 +27,4 @@ const TestnetLink = ({ to, children, ...rest }: TestnetLinkType) => {
   return <Link {...props}>{children}</Link>;
 };
 
-export default TestnetLink;
+export default NetworkLink;

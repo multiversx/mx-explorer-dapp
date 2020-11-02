@@ -8,16 +8,12 @@ interface MiniBlockNotFoundType {
 
 export default function MiniBlockNotFound({ miniBlockHash }: MiniBlockNotFoundType) {
   return (
-    <div className="card card-small">
-      <div className="card-body">
-        <PageState
-          icon={faCube}
-          title="Unable to locate this miniblock hash"
-          description={miniBlockHash}
-          className="py-spacer d-flex h-100 align-items-center justify-content-center"
-          dataTestId="errorScreen"
-        />
-      </div>
-    </div>
+    <PageState
+      icon={faCube}
+      title="Unable to locate this miniblock hash"
+      description={miniBlockHash}
+      className="py-spacer my-auto"
+      dataTestId="errorScreen"
+    />
   );
 }
