@@ -6,7 +6,7 @@ import * as React from 'react';
 import {
   ScAddressIcon,
   ShardSpan,
-  TestnetLink,
+  NetworkLink,
   TimeAgo,
   adapter,
   Trim,
@@ -74,7 +74,7 @@ const LatestTransactions = () => {
           <>
             <div className="card-header border-bottom d-flex justify-content-between align-items-center">
               <h6 className="m-0">Latest Transactions</h6>
-              <TestnetLink to="/transactions">View All Transactions</TestnetLink>
+              <NetworkLink to="/transactions">View All Transactions</NetworkLink>
             </div>
             <div className="card-body card-scroll py-0">
               <div className="animated-list" data-testid="transactionsList">
@@ -94,13 +94,13 @@ const LatestTransactions = () => {
                             secondInitiator={transaction.receiver}
                           />
 
-                          <TestnetLink
+                          <NetworkLink
                             to={`/transactions/${transaction.txHash}`}
                             data-testid={`transactionLink${i}`}
                             className="trim-wrapper"
                           >
                             <Trim text={transaction.txHash} />
-                          </TestnetLink>
+                          </NetworkLink>
                         </div>
                         <span title={dateFormatted(transaction.timestamp)} className="text-muted">
                           <TimeAgo value={transaction.timestamp} />
@@ -112,12 +112,12 @@ const LatestTransactions = () => {
                         <span className="text-nowrap mr-2">From</span>
 
                         {addressIsBech32(transaction.sender) ? (
-                          <TestnetLink
+                          <NetworkLink
                             to={`/address/${transaction.sender}`}
                             className="trim-wrapper"
                           >
                             <Trim text={transaction.sender} />
-                          </TestnetLink>
+                          </NetworkLink>
                         ) : (
                           <ShardSpan shardId={transaction.sender} />
                         )}
@@ -125,13 +125,13 @@ const LatestTransactions = () => {
                       <div className="d-flex align-items-center">
                         <span className="text-nowrap mr-2">To</span>
 
-                        <TestnetLink
+                        <NetworkLink
                           to={`/address/${transaction.receiver}`}
                           data-testid={`transactionLinkTo${i}`}
                           className="trim-wrapper"
                         >
                           <Trim text={transaction.receiver} />
-                        </TestnetLink>
+                        </NetworkLink>
                       </div>
                     </div>
                   </div>

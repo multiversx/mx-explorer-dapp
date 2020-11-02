@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useGlobalState } from 'context';
 import { dateFormatted } from 'helpers';
-import { ShardSpan, TestnetLink, TimeAgo, adapter, Trim, Loader } from 'sharedComponents';
+import { ShardSpan, NetworkLink, TimeAgo, adapter, Trim, Loader } from 'sharedComponents';
 import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
@@ -59,7 +59,7 @@ const LatestBlocks = () => {
           <>
             <div className="card-header border-bottom d-flex justify-content-between align-items-center">
               <h6 className="m-0">Latest Blocks</h6>
-              <TestnetLink to="/blocks">View All Blocks</TestnetLink>
+              <NetworkLink to="/blocks">View All Blocks</NetworkLink>
             </div>
             <div className="card-body card-scroll py-0">
               <div className="animated-list" data-testid="blocksList">
@@ -75,9 +75,9 @@ const LatestBlocks = () => {
                         </div>
                         <div className="d-flex flex-column list-item-text">
                           <span className="text-secondary">
-                            <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
+                            <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
                               {block.nonce}
-                            </TestnetLink>
+                            </NetworkLink>
                             &nbsp;in&nbsp;
                             <ShardSpan shardId={block.shardId} />
                           </span>
@@ -91,9 +91,9 @@ const LatestBlocks = () => {
                       <div className="d-flex align-items-center">
                         <span className="mr-2">Hash</span>
 
-                        <TestnetLink to={`/blocks/${block.hash}`} className="trim-wrapper">
+                        <NetworkLink to={`/blocks/${block.hash}`} className="trim-wrapper">
                           <Trim dataTestId={`blockHashLink${i}`} text={block.hash} />
-                        </TestnetLink>
+                        </NetworkLink>
                       </div>
                       <div>{block.txCount} txns</div>
                     </div>

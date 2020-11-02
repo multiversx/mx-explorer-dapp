@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ValidatorType } from 'context/validators';
 import { truncate, trimHash, urlBuilder } from 'helpers';
-import { ShardSpan, TestnetLink } from 'sharedComponents';
+import { ShardSpan, NetworkLink } from 'sharedComponents';
 import RowIcon from './RowIcon';
 
 const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrder: string[] }) => {
@@ -22,9 +22,9 @@ const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrde
             )}
           </td>
           <td>
-            <TestnetLink to={urlBuilder.shard(node.shardId)} data-testid={`shardLink${index}`}>
+            <NetworkLink to={urlBuilder.shard(node.shardId)} data-testid={`shardLink${index}`}>
               <ShardSpan shardId={node.shardId} />
-            </TestnetLink>
+            </NetworkLink>
           </td>
 
           <td>

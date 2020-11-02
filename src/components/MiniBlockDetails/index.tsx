@@ -5,7 +5,7 @@ import { Redirect, useParams } from 'react-router-dom';
 import {
   Loader,
   ShardSpan,
-  TestnetLink,
+  NetworkLink,
   TransactionsTable,
   adapter,
   DetailItem,
@@ -115,25 +115,25 @@ const MiniBlockDetails: React.FC = () => {
                             <Trim text={miniBlockHash} />
                           </DetailItem>
                           <DetailItem title="Sender Shard">
-                            <TestnetLink to={urlBuilder.shard(miniBlock.senderShard)}>
+                            <NetworkLink to={urlBuilder.shard(miniBlock.senderShard)}>
                               <ShardSpan shardId={miniBlock.senderShard} />
-                            </TestnetLink>
+                            </NetworkLink>
                           </DetailItem>
 
                           <DetailItem title="Receiver Shard">
-                            <TestnetLink to={urlBuilder.shard(miniBlock.receiverShard)}>
+                            <NetworkLink to={urlBuilder.shard(miniBlock.receiverShard)}>
                               <ShardSpan shardId={miniBlock.receiverShard} />
-                            </TestnetLink>
+                            </NetworkLink>
                           </DetailItem>
 
                           <DetailItem title="Sender Block">
                             {miniBlock.senderBlockHash !== '' ? (
-                              <TestnetLink
+                              <NetworkLink
                                 className="trim-wrapper"
                                 to={`/blocks/${miniBlock.senderBlockHash}`}
                               >
                                 <Trim text={miniBlock.senderBlockHash} />
-                              </TestnetLink>
+                              </NetworkLink>
                             ) : (
                               <span className="text-muted">N/A</span>
                             )}
@@ -141,12 +141,12 @@ const MiniBlockDetails: React.FC = () => {
 
                           <DetailItem title="Receiver Block">
                             {miniBlock.receiverBlockHash !== '' ? (
-                              <TestnetLink
+                              <NetworkLink
                                 className="trim-wrapper"
                                 to={`/blocks/${miniBlock.receiverBlockHash}`}
                               >
                                 <Trim text={miniBlock.receiverBlockHash} />
-                              </TestnetLink>
+                              </NetworkLink>
                             ) : (
                               <span className="text-muted">N/A</span>
                             )}

@@ -5,7 +5,7 @@ import { ValidatorType } from 'context/validators';
 import { BrandType } from 'context/state';
 import carretDown from 'assets/images/carret-down.svg';
 import BrandDetailsRow from './IdenityDetailsRow';
-import { Loader, TestnetLink } from 'sharedComponents';
+import { Loader, NetworkLink } from 'sharedComponents';
 import PercentegeBar from 'components/Validators/ValidatorDetails/PercentegeBar';
 import { validatorsRoutes } from 'routes';
 
@@ -53,7 +53,7 @@ const IdentityRow = ({ brand, rank }: BrandRowType) => {
         <td>
           <div className="d-flex align-items-center">
             <div className="mr-3">
-              <TestnetLink to={`${validatorsRoutes.index}/${brand.identity}`}>
+              <NetworkLink to={`${validatorsRoutes.index}/${brand.identity}`}>
                 {}
                 <img
                   className={brand.avatar ? 'avatar' : 'avatar gray'}
@@ -63,9 +63,9 @@ const IdentityRow = ({ brand, rank }: BrandRowType) => {
                   alt={brand.name}
                   height="42"
                 />
-              </TestnetLink>
+              </NetworkLink>
             </div>
-            <TestnetLink to={link}>{brand.name ? brand.name : 'N/A'}</TestnetLink>
+            <NetworkLink to={link}>{brand.name ? brand.name : 'N/A'}</NetworkLink>
           </div>
         </td>
 
