@@ -6,6 +6,8 @@ import validators from './validators';
 import validatorsdoc from './validatorsdoc';
 import blockValidators from './blockValidators';
 import epoch from './epoch';
+import miniblock from './miniblock';
+import miniblockTransactions from './miniblockTransactions';
 import blocks from './blocks';
 import block from './block';
 import meta from './meta';
@@ -21,6 +23,8 @@ export {
   epoch,
   blocks,
   block,
+  miniblock,
+  miniblockTransactions,
   blockValidators,
   meta,
   address,
