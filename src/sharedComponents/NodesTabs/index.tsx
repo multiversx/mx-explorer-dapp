@@ -2,14 +2,14 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { NetworkLink } from 'sharedComponents';
 
-const NodesTabs = ({ extraClasses }: { extraClasses?: string }) => {
+const NodesTabs = ({ className }: { className?: string }) => {
   const activePath = useLocation().pathname;
   const nodesPage = activePath.endsWith('/nodes') || activePath.endsWith('/nodes/');
 
   const validatorsPage = !nodesPage;
 
   return (
-    <div className={`pb-3 ${extraClasses}`}>
+    <div className={className ? className : ''}>
       <ul className="validators-nav nav nav-tabs">
         <li className="nav-item">
           <NetworkLink
