@@ -68,11 +68,8 @@ const LatestTransactions = () => {
     return (
       <div className="card card-small" ref={ref}>
         {transactionsFetched === undefined && <Loader dataTestId="transactionsLoader" />}
-
         {transactionsFetched === false && <FailedTransactions />}
-
         {transactionsFetched === true && transactions.length === 0 && <NoTransactions />}
-
         {transactionsFetched === true && transactions.length > 0 && (
           <>
             <div className="card-header border-bottom d-flex justify-content-between align-items-center">
