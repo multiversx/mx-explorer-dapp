@@ -1,5 +1,6 @@
 import { ValidatorType } from 'context/validators';
 import useGetFilters from './useGetFilters';
+import { outdatedVersion } from '../../../helpers';
 
 interface NodesIssuesType {
   node: ValidatorType;
@@ -11,7 +12,7 @@ export const nodesIssues = ({ node, versionNumber }: NodesIssuesType): Validator
   switch (true) {
     case node.totalUpTimeSec === 0:
       return 'Offline since genesis';
-    case versionNumber !== node.versionNumber:
+    case outdatedVersion(node.versionNumber, versionNumber):
       return 'Outdated client version';
     case shuffleOut && !node.isActive:
       return '';
