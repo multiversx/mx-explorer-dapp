@@ -58,7 +58,7 @@ export async function getMiniBlockTransactions({
 
     return {
       data,
-      success: data.length > 0,
+      success: true,
     };
   } catch {
     return {
