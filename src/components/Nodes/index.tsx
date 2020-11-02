@@ -5,7 +5,7 @@ import { adapter, Loader, NodesTabs } from 'sharedComponents';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import NodesTable from './NodesTable';
 import Filters from './Filters';
-import { nodesIssues, useGetFilters } from './helpers';
+import { nodesIssues, useFilters } from './helpers';
 import { ValidatorType } from 'context/validators';
 import tempNodes from './tempNodes';
 
@@ -55,7 +55,7 @@ const Nodes = () => {
   const ref = React.useRef(null);
   const dispatch = useGlobalDispatch();
   const { getNetworkConfig, getNodes } = adapter();
-  const { getQueryParams } = useGetFilters();
+  const { getQueryParams, setQueryParams } = useFilters();
   const { nodes, versionNumber } = useGlobalState();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [ratingOrder, setRatingOrder] = React.useState<string[]>([]);
@@ -63,6 +63,12 @@ const Nodes = () => {
   const [searchValue, setSearchValue] = React.useState<string>('');
   const [peerType, setPeerType] = React.useState<string | undefined>();
   const [issues, setIssues] = React.useState<boolean>(false);
+
+  const setParams = () => {
+    setQueryParams({ searchValue, peerType, issues });
+  };
+
+  React.useEffect(setParams, [versionNumber, issues, peerType, searchValue]);
 
   const getVersionNumber = () => {
     if (nodes.length === 0) {
@@ -77,9 +83,11 @@ const Nodes = () => {
 
   React.useEffect(getVersionNumber, []);
 
+  console.log('\x1b[42m%s\x1b[0m', 11);
+
   const fetchNodes = () => {
     if (versionNumber) {
-      const query = getQueryParams({ issues, peerType, searchValue });
+      // const query = getQueryParams({ issues, peerType, searchValue });
       setDataReady(undefined);
 
       const nodes = tempNodes.map((node: any) => {

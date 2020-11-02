@@ -1,5 +1,5 @@
 import { ValidatorType } from 'context/validators';
-import useGetFilters from './useGetFilters';
+import useFilters from './useFilters';
 
 interface NodesIssuesType {
   node: ValidatorType;
@@ -22,4 +22,4 @@ export const nodesIssues = ({ node, versionNumber }: NodesIssuesType): Validator
   }
 };
 
-export { useGetFilters };
+export { useFilters };
