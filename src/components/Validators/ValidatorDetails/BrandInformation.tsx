@@ -22,7 +22,7 @@ const BrandInformation = ({ publicKey }: { publicKey: string }) => {
         <div className="card-header-item border-bottom d-flex align-items-center px-3 py-3 py-lg-2">
           <div className="mr-3">
             <img
-              className={brand.avatar ? 'avatar' : 'avatar gray'}
+              className={`avatar rounded-circle ${brand.avatar ? '' : 'gray'}`}
               src={brand.avatar ? brand.avatar : '/validators/default-avatar.svg'}
               alt={brand.name}
               height="42"
