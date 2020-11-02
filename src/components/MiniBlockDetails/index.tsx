@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useGlobalState } from 'context';
 import { isHash, networkRoute, urlBuilder } from 'helpers';
 import { Redirect, useParams } from 'react-router-dom';
-import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import {
   Loader,
   ShardSpan,
@@ -11,12 +10,12 @@ import {
   adapter,
   DetailItem,
   Trim,
-  PageState,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import { initialState } from 'sharedComponents/Adapter/functions/getMiniBlocks';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
+import MiniBlockNotFound from './MiniBlockNotFound';
 
 interface MiniBlockType {
   senderShard: number;
@@ -93,16 +92,7 @@ const MiniBlockDetails: React.FC = () => {
   ) : (
     <>
       {miniBlockFetched === undefined && <Loader />}
-
-      {miniBlockFetched === false && (
-        <PageState
-          icon={faCube}
-          title="Unable to locate this miniblock hash"
-          description={miniBlockHash}
-          className="py-spacer my-auto"
-          dataTestId="errorScreen"
-        />
-      )}
+      {miniBlockFetched === false && <MiniBlockNotFound miniBlockHash={miniBlockHash} />}
 
       <div ref={ref}>
         {miniBlockFetched && miniBlock.miniBlockHash && (
