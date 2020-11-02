@@ -6,6 +6,7 @@ import sizeFormat from './sizeFormat';
 import networkRoute from './networkRoute';
 import trimHash from './trimHash';
 import truncate from './truncate';
+import outdatedVersion from './outdatedVersion';
 
 export {
   truncate,
@@ -16,4 +17,5 @@ export {
   networkRoute,
   copyToClipboard,
   trimHash,
+  outdatedVersion,
 };
