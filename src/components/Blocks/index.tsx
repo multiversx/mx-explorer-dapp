@@ -1,10 +1,11 @@
-import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { useGlobalState } from 'context';
 import { networkRoute, useURLSearchParams } from 'helpers';
 import * as React from 'react';
 import { Redirect } from 'react-router-dom';
-import { BlocksTable, Loader, Pager, ShardSpan, adapter, PageState } from 'sharedComponents';
+import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'sharedComponents';
 import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
+import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
+import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 
 interface StateType {
   blocks: BlockType[];
@@ -69,15 +70,7 @@ const Blocks: React.FC = () => {
   ) : (
     <>
       {blocksFetched === undefined && <Loader />}
-
-      {blocksFetched === false && (
-        <PageState
-          icon={faCube}
-          title="Unable to load blocks"
-          className="py-spacer my-auto"
-          dataTestId="errorScreen"
-        />
-      )}
+      {blocksFetched === false && <FailedBlocks />}
 
       <div ref={ref}>
         {blocksFetched === true && (
@@ -118,12 +111,7 @@ const Blocks: React.FC = () => {
                       </div>
                     </>
                   ) : (
-                    <PageState
-                      icon={faCube}
-                      title="No blocks found"
-                      className="py-spacer my-auto"
-                      data-testid="noBlocks"
-                    />
+                    <NoBlocks />
                   )}
                 </div>
               </div>
