@@ -1,11 +1,11 @@
+import * as React from 'react';
 import { useGlobalState } from 'context';
 import { isHash, networkRoute, urlBuilder } from 'helpers';
-import * as React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import {
   Loader,
   ShardSpan,
-  TestnetLink,
+  NetworkLink,
   TransactionsTable,
   adapter,
   DetailItem,
@@ -14,6 +14,7 @@ import {
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import { initialState } from 'sharedComponents/Adapter/functions/getMiniBlocks';
+import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import MiniBlockNotFound from './MiniBlockNotFound';
 
 interface MiniBlockType {
@@ -47,7 +48,7 @@ const MiniBlockDetails: React.FC = () => {
   const { miniBlock } = state;
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
-  const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
+  const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
 
   const size = parseInt(page!) ? parseInt(page!) : 1;
@@ -64,10 +65,10 @@ const MiniBlockDetails: React.FC = () => {
           size,
           miniBlockHash,
         }),
-      ]).then(([miniBlockData, miniBlocTransactionsData]) => {
+      ]).then(([miniBlockData, miniBlockTransactionsData]) => {
         if (ref.current !== null) {
-          setTransactions(miniBlocTransactionsData.data);
-          setTransactionsFetched(miniBlocTransactionsData.success);
+          setTransactions(miniBlockTransactionsData.data);
+          setTransactionsFetched(miniBlockTransactionsData.success);
           setState(miniBlockData);
           setMiniBlockFetched(miniBlockData.blockFetched);
         }
@@ -84,24 +85,27 @@ const MiniBlockDetails: React.FC = () => {
 
   React.useEffect(fetchMiniBlockData, [activeNetworkId, size, miniBlockHash, refreshFirstPage]);
 
+  const showTransactions = transactionsFetched === true && transactions.length > 0;
+
   return invalid ? (
     <Redirect to={networkRoute({ to: `/not-found`, activeNetworkId })} />
   ) : (
-    <div ref={ref}>
-      <div className="container py-spacer">
-        <div className="row page-header mb-spacer">
-          <div className="col-12">
-            <h3 className="page-title" data-testid="pageTitle">
-              Miniblock Details
-            </h3>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-12">
-            {miniBlockFetched === undefined && <Loader />}
-            {miniBlockFetched === false && <MiniBlockNotFound miniBlockHash={miniBlockHash} />}
-            {miniBlockFetched && miniBlock.miniBlockHash && (
-              <>
+    <>
+      {miniBlockFetched === undefined && <Loader />}
+      {miniBlockFetched === false && <MiniBlockNotFound miniBlockHash={miniBlockHash} />}
+
+      <div ref={ref}>
+        {miniBlockFetched && miniBlock.miniBlockHash && (
+          <div className="container py-spacer">
+            <div className="row page-header mb-spacer">
+              <div className="col-12">
+                <h3 className="page-title" data-testid="pageTitle">
+                  Miniblock Details
+                </h3>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-12">
                 <div className="row">
                   <div className="col-12">
                     <div className="card card-small">
@@ -111,25 +115,25 @@ const MiniBlockDetails: React.FC = () => {
                             <Trim text={miniBlockHash} />
                           </DetailItem>
                           <DetailItem title="Sender Shard">
-                            <TestnetLink to={urlBuilder.shard(miniBlock.senderShard)}>
+                            <NetworkLink to={urlBuilder.shard(miniBlock.senderShard)}>
                               <ShardSpan shardId={miniBlock.senderShard} />
-                            </TestnetLink>
+                            </NetworkLink>
                           </DetailItem>
 
                           <DetailItem title="Receiver Shard">
-                            <TestnetLink to={urlBuilder.shard(miniBlock.receiverShard)}>
+                            <NetworkLink to={urlBuilder.shard(miniBlock.receiverShard)}>
                               <ShardSpan shardId={miniBlock.receiverShard} />
-                            </TestnetLink>
+                            </NetworkLink>
                           </DetailItem>
 
                           <DetailItem title="Sender Block">
                             {miniBlock.senderBlockHash !== '' ? (
-                              <TestnetLink
+                              <NetworkLink
                                 className="trim-wrapper"
                                 to={`/blocks/${miniBlock.senderBlockHash}`}
                               >
                                 <Trim text={miniBlock.senderBlockHash} />
-                              </TestnetLink>
+                              </NetworkLink>
                             ) : (
                               <span className="text-muted">N/A</span>
                             )}
@@ -137,12 +141,12 @@ const MiniBlockDetails: React.FC = () => {
 
                           <DetailItem title="Receiver Block">
                             {miniBlock.receiverBlockHash !== '' ? (
-                              <TestnetLink
+                              <NetworkLink
                                 className="trim-wrapper"
                                 to={`/blocks/${miniBlock.receiverBlockHash}`}
                               >
                                 <Trim text={miniBlock.receiverBlockHash} />
-                              </TestnetLink>
+                              </NetworkLink>
                             ) : (
                               <span className="text-muted">N/A</span>
                             )}
@@ -164,23 +168,30 @@ const MiniBlockDetails: React.FC = () => {
                 </div>
                 <div className="row">
                   <div className="col-12">
-                    {transactionsFetched === false && <NoTransactions />}
-                    {transactionsFetched === true && (
+                    {showTransactions ? (
                       <TransactionsTable
                         transactions={transactions}
                         addressId={undefined}
                         totalTransactions={totalTransactions}
                         size={size}
                       />
+                    ) : (
+                      <div className="card card-small">
+                        {transactionsFetched === undefined && <Loader />}
+                        {transactionsFetched === false && <FailedTransactions />}
+                        {transactionsFetched === true && transactions.length === 0 && (
+                          <NoTransactions />
+                        )}
+                      </div>
                     )}
                   </div>
                 </div>
-              </>
-            )}
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
-    </div>
+    </>
   );
 };
 

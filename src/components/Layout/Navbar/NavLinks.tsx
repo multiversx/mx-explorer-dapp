@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useGlobalState } from 'context';
-import { TestnetLink } from 'sharedComponents';
+import { NetworkLink } from 'sharedComponents';
 
 interface NavLinksType {
   expanded?: boolean;
@@ -18,7 +18,7 @@ export default function NavLinks({ expanded = false, setExpanded = () => null }:
 
   return (
     <>
-      <TestnetLink
+      <NetworkLink
         className={`nav-link ${
           pathname.toString() === '/' ||
           pathname.toString() === `/${activeNetworkId}` ||
@@ -30,8 +30,8 @@ export default function NavLinks({ expanded = false, setExpanded = () => null }:
         onClick={() => onToggle(false)}
       >
         Dashboard
-      </TestnetLink>
-      <TestnetLink
+      </NetworkLink>
+      <NetworkLink
         className={`nav-link ${
           pathname.toString().includes('blocks') && !pathname.toString().includes('miniblocks')
             ? 'active'
@@ -41,17 +41,17 @@ export default function NavLinks({ expanded = false, setExpanded = () => null }:
         onClick={() => onToggle(false)}
       >
         Blocks
-      </TestnetLink>
+      </NetworkLink>
 
-      <TestnetLink
+      <NetworkLink
         className={`nav-link ${pathname.toString().includes('transactions') ? 'active' : ''}`}
         to="/transactions"
         onClick={() => onToggle(false)}
       >
         Transactions
-      </TestnetLink>
+      </NetworkLink>
 
-      <TestnetLink
+      <NetworkLink
         className={`nav-link ${
           pathname.toString().includes('nodes') || pathname.toString().includes('validators')
             ? 'active'
@@ -61,7 +61,7 @@ export default function NavLinks({ expanded = false, setExpanded = () => null }:
         onClick={() => onToggle(false)}
       >
         Validators
-      </TestnetLink>
+      </NetworkLink>
     </>
   );
 }

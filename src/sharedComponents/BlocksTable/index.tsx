@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
-import { ShardSpan, TestnetLink, TimeAgo, Trim } from 'sharedComponents';
+import { ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 
 const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number | undefined }) => {
   return (
@@ -21,9 +21,9 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
           {blocks.map((block, i) => (
             <tr className="animated fadeIn" key={block.hash}>
               <td>
-                <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
+                <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
                   {block.nonce}
-                </TestnetLink>
+                </NetworkLink>
               </td>
               <td>
                 <span title={dateFormatted(block.timestamp)}>
@@ -35,12 +35,12 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
                 {shardId !== undefined ? (
                   <ShardSpan shardId={block.shardId} />
                 ) : (
-                  <TestnetLink
+                  <NetworkLink
                     to={urlBuilder.shard(block.shardId)}
                     data-testid={`blockShardLink${i}`}
                   >
                     <ShardSpan shardId={block.shardId} />
-                  </TestnetLink>
+                  </NetworkLink>
                 )}
               </td>
               <td>
@@ -49,9 +49,9 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
                   : sizeFormat(block.size)}
               </td>
               <td>
-                <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockHashLink${i}`}>
+                <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockHashLink${i}`}>
                   <Trim text={block.hash} />
-                </TestnetLink>
+                </NetworkLink>
               </td>
             </tr>
           ))}

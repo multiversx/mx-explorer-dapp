@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { truncate, trimHash, urlBuilder } from 'helpers';
-import { ShardSpan, TestnetLink } from 'sharedComponents';
+import { ShardSpan, NetworkLink } from 'sharedComponents';
 import { ValidatorType } from 'context/validators';
 import RowIcon from './../RowIcon';
 import { validatorsRoutes } from 'routes';
@@ -27,12 +27,12 @@ const ValidatorRow = ({
       <td>
         <RowIcon validator={validator} />
         {validator.peerType !== 'observer' && validatorDetails ? (
-          <TestnetLink
+          <NetworkLink
             to={`${validatorsRoutes.nodes}/${validator.publicKey}`}
             data-testid={`publicKeyLink${rowIndex}`}
           >
             {trimHash(validator.publicKey)}
-          </TestnetLink>
+          </NetworkLink>
         ) : (
           <span>{trimHash(validator.publicKey)}</span>
         )}
@@ -45,12 +45,12 @@ const ValidatorRow = ({
         )}
       </td>
       <td>
-        <TestnetLink
+        <NetworkLink
           to={urlBuilder.shard(validator.shardNumber)}
           data-testid={`shardLink${rowIndex}`}
         >
           <ShardSpan shardId={validator.shardNumber} />
-        </TestnetLink>
+        </NetworkLink>
       </td>
       <td>
         {validator.versionNumber ? (

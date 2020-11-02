@@ -9,7 +9,7 @@ import withPageTitle from './PageTitle';
 import ScAddressIcon from './ScAddressIcon';
 import Search from './Search';
 import ShardSpan from './ShardSpan';
-import TestnetLink from './TestnetLink';
+import NetworkLink from './NetworkLink';
 import NetworkReady, { withNetworkReady } from './NetworkReady';
 import TimeAgo from './TimeAgo';
 import TransactionsTable from './TransactionsTable';
@@ -27,7 +27,7 @@ export {
   Highlights,
   Pager,
   ScAddressIcon,
-  TestnetLink,
+  NetworkLink,
   TimeAgo,
   NetworkReady,
   withNetworkReady,

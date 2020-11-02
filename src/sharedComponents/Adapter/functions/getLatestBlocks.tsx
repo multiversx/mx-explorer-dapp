@@ -13,7 +13,7 @@ export default async function getLatestBlocks({ provider, baseUrl, timeout }: Ad
 
     return {
       data,
-      blocksFetched: data.length > 0,
+      blocksFetched: true,
     };
   } catch {
     return {
