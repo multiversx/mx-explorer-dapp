@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ValidatorType } from 'context/validators';
-import { truncate, trimHash, urlBuilder } from 'helpers';
+import { truncate, urlBuilder } from 'helpers';
 import { ShardSpan, TestnetLink, Trim } from 'sharedComponents';
 import RowIcon from './RowIcon';
 
