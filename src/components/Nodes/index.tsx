@@ -55,7 +55,12 @@ const Nodes = () => {
   const ref = React.useRef(null);
   const dispatch = useGlobalDispatch();
   const { getNetworkConfig, getNodes } = adapter();
-  const { getQueryParams, setQueryParams } = useFilters();
+  const {
+    getQueryParams,
+    searchValue: urlSearchValue,
+    peerType: ulrPeerType,
+    issues: ulrIssues,
+  } = useFilters();
   const { nodes, versionNumber } = useGlobalState();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [ratingOrder, setRatingOrder] = React.useState<string[]>([]);
@@ -64,11 +69,17 @@ const Nodes = () => {
   const [peerType, setPeerType] = React.useState<string | undefined>();
   const [issues, setIssues] = React.useState<boolean>(false);
 
-  const setParams = () => {
-    setQueryParams({ searchValue, peerType, issues });
-  };
-
-  React.useEffect(setParams, [versionNumber, issues, peerType, searchValue]);
+  React.useEffect(() => {
+    if (urlSearchValue) {
+      setSearchValue(urlSearchValue);
+    }
+    if (ulrPeerType) {
+      setPeerType(ulrPeerType);
+    }
+    if (ulrIssues) {
+      setIssues(Boolean(ulrIssues));
+    }
+  }, [urlSearchValue, ulrPeerType, ulrIssues]);
 
   const getVersionNumber = () => {
     if (nodes.length === 0) {
