@@ -1,7 +1,6 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { adapter, Loader, NodesTabs } from 'sharedComponents';
+import { adapter, Loader, NodesTabs, PageState } from 'sharedComponents';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import NodesTable from './NodesTable';
 import Filters from './Filters';
@@ -125,26 +124,32 @@ const Nodes = () => {
   React.useEffect(getRatings, [nodes]);
 
   return (
-    <div ref={ref}>
-      <div className="container pt-3 pb-3">
-        <div className="row">
-          <div className="col-12">
-            <h4>
-              <span data-testid="title">Nodes</span>
-            </h4>
-          </div>
-        </div>
+    <>
+      {(!versionNumber || dataReady === undefined) && <Loader />}
+      {dataReady === false && (
+        <PageState
+          icon={faCogs}
+          title="Unable to load validators"
+          className="py-spacer my-auto"
+          dataTestId="errorScreen"
+        />
+      )}
+      <div ref={ref}>
+        {dataReady === true && (
+          <div className="container py-spacer">
+            <div className="row">
+              <div className="col-12">
+                <h4>
+                  <span data-testid="title">Nodes</span>
+                </h4>
+              </div>
+            </div>
 
-        {!versionNumber ? (
-          <Loader />
-        ) : (
-          <>
-            {dataReady === undefined && <Loader />}
-            {dataReady === true && (
-              <div className="row">
-                <div className="col-12">
-                  <div className="card">
-                    <div className="card-body card-list">
+            <div className="row">
+              <div className="col-12">
+                <div className="card">
+                  {nodes.length > 0 ? (
+                    <div className="card-body p-0">
                       {/* <NodesTabs />
                       <Filters
                         resultsCount={nodes.length}
@@ -155,8 +160,8 @@ const Nodes = () => {
                         peerType={peerType}
                         issues={issues}
                       /> */}
-                      <div className="table-responsive">
-                        <table className="table mt-3">
+                      <div className="table-wrapper">
+                        <table className="table">
                           <thead>
                             <tr>
                               {/* <th>#</th> */}
@@ -169,24 +174,21 @@ const Nodes = () => {
                         </table>
                       </div>
                     </div>
-                  </div>
+                  ) : (
+                    <PageState
+                      icon={faCogs}
+                      title="No Validators"
+                      className="py-spacer my-auto"
+                      dataTestId="errorScreen"
+                    />
+                  )}
                 </div>
               </div>
-            )}
-            {dataReady === false && (
-              <div className="card">
-                <div className="card-body card-details" data-testid="errorScreen">
-                  <div className="empty">
-                    <FontAwesomeIcon icon={faCogs} className="empty-icon" />
-                    <span className="h4 empty-heading">Unable to load validators</span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </>
+            </div>
+          </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 
