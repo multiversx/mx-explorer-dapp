@@ -58,6 +58,7 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
     block: () => {
       return Promise.resolve({ data: rawData.block });
     },
+    miniblock: () => Promise.resolve({ data: rawData.miniblock }),
     networkStatus: () => Promise.resolve({ data: { data: rawData.epoch, code: 'successful' } }),
     ratingshistory: () => Promise.resolve({ data: rawData.ratings }),
     address: () => Promise.resolve({ data: { data: rawData.address, code: 'successful' } }),
@@ -88,6 +89,8 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.address();
       case url.includes('/blocks/count'):
         return requests.blocksCount();
+      case url.includes('/miniblocks/'):
+        return requests.miniblock();
       case url.includes('/blocks/'):
         return requests.block();
       case url.includes('/blocks'):
