@@ -91,7 +91,9 @@ const MiniBlockDetails: React.FC = () => {
       <div className="container py-spacer">
         <div className="row page-header mb-spacer">
           <div className="col-12">
-            <h3 className="page-title">Miniblock Details</h3>
+            <h3 className="page-title" data-testid="pageTitle">
+              Miniblock Details
+            </h3>
           </div>
         </div>
         <div className="row">
