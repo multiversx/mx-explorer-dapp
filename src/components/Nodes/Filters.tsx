@@ -19,19 +19,18 @@ const Filters = ({
   setSearchValue,
   setPeerType,
   setIssues,
+  searchValue,
   peerType,
   issues,
 }: FiltersType) => {
-  const [inputValue, setInputValue] = React.useState<string>('');
+  const [inputValue, setInputValue] = React.useState<string>(searchValue);
 
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setInputValue(e.target.value);
-    if (e.target.value.length >= 3) {
-      setSearchValue(e.target.value.toString().toLowerCase());
-    }
-    if (e.target.value.length === 0) {
-      setSearchValue('');
-    }
+  };
+
+  const updateSearchValue = () => {
+    setSearchValue(inputValue);
   };
 
   const resetValidatorValue = () => {
@@ -55,13 +54,18 @@ const Filters = ({
   return (
     <>
       <div className="float-right">
-        {/* <div role="search">
+        <div role="search">
           <div className="input-group input-group-seamless">
             <input
               type="text"
               className="form-control"
               value={inputValue}
               onChange={changeValidatorValue}
+              onKeyDown={(keyEvent: React.KeyboardEvent) => {
+                if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
+                  updateSearchValue();
+                }
+              }}
               placeholder="Search"
               name="validatorSearch"
               data-testid="validatorSearch"
@@ -84,7 +88,7 @@ const Filters = ({
               )}
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
       <div className="float-right mt-2 mr-4">
         {/* {resultsCount
