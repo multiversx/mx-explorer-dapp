@@ -32,16 +32,15 @@ const LatestTransactions = () => {
   const { getLatestTransactions } = adapter();
 
   const fetchTransactions = () => {
-    if (ref.current !== null) {
-      getLatestTransactions().then(({ data, transactionsFetched }) => {
-        if (ref.current !== null && transactionsFetched) {
+    getLatestTransactions().then(({ data, transactionsFetched }) => {
+      if (ref.current !== null) {
+        if (transactionsFetched) {
           const sortedTransactions = data;
           if (transactions.length === 0) {
             const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
               ...transaction,
               isNew: false,
             }));
-
             setTransactions(newTransactions);
           } else {
             const existingHashes = transactions.map((b) => b.txHash);
@@ -51,10 +50,10 @@ const LatestTransactions = () => {
             }));
             setTransactions(newTransactions);
           }
-          setTransactionsFetched(transactionsFetched && transactions.length > 0);
         }
-      });
-    }
+        setTransactionsFetched(transactionsFetched);
+      }
+    });
   };
 
   React.useEffect(fetchTransactions, [activeNetworkId, timestamp]);

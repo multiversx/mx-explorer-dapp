@@ -37,7 +37,7 @@ describe('Latest Transactions Links', () => {
       route: '/',
     });
 
-    const link = render.getByText('View All Transactions');
+    const link = await render.findByText('View All Transactions');
     fireEvent.click(link);
     await wait(async () => {
       expect(document.title).toEqual('Transactions • Elrond Explorer');

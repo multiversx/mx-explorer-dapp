@@ -24,9 +24,9 @@ const LatestBlocks = () => {
   const { getLatestBlocks } = adapter();
 
   const fetchBlocks = () => {
-    getLatestBlocks()
-      .then(({ data, blocksFetched }) => {
-        if (ref.current !== null && blocksFetched) {
+    getLatestBlocks().then(({ data, blocksFetched }) => {
+      if (ref.current !== null) {
+        if (blocksFetched) {
           const sortedBlocks = data;
           if (blocks.length === 0) {
             const newBlocks = sortedBlocks.map((block: BlockType) => ({
@@ -44,10 +44,8 @@ const LatestBlocks = () => {
           }
         }
         setBlocksFetched(blocksFetched);
-      })
-      .catch(() => {
-        setBlocksFetched(false);
-      });
+      }
+    });
   };
 
   React.useEffect(fetchBlocks, [activeNetworkId, timestamp]);
