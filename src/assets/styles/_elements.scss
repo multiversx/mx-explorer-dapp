@@ -103,3 +103,17 @@
 .min-w-0 {
   min-width: 0;
 }
+
+.page-state-sm {
+  .icon-state {
+    font-size: 0.5rem;
+  }
+
+  .my-spacer {
+    margin: 0 !important;
+  }
+
+  .mt-spacer {
+    margin-top: 1rem !important;
+  }
+}
