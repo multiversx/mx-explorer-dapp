@@ -192,31 +192,39 @@ const Nodes = () => {
               <div className="col-12">
                 <div className="card">
                   {nodes.length > 0 ? (
-                    <div className="card-body p-0">
-                      <NodesTabs />
-                      <Filters
-                        resultsCount={nodes.length}
-                        setSearchValue={setSearchValue}
-                        setPeerType={setPeerType}
-                        setIssues={setIssues}
-                        searchValue={searchValue}
-                        peerType={peerType}
-                        issues={issues}
-                      />
-                      <div className="table-wrapper">
-                        <table className="table">
-                          <thead>
-                            <tr>
-                              {/* <th>#</th> */}
-                              {headers.map((header) => (
-                                <th key={header.id}>{header.label}</th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <NodesTable nodes={nodes} ratingOrder={ratingOrder} />
-                        </table>
+                    <>
+                      <div className="card-header border-0 p-0">
+                        <div className="card-header-item border-bottom px-3 pt-3">
+                          <NodesTabs />
+                        </div>
+                        <div className="card-header-item border-bottom p-3">
+                          <Filters
+                            resultsCount={nodes.length}
+                            setSearchValue={setSearchValue}
+                            setPeerType={setPeerType}
+                            setIssues={setIssues}
+                            searchValue={searchValue}
+                            peerType={peerType}
+                            issues={issues}
+                          />
+                        </div>
                       </div>
-                    </div>
+                      <div className="card-body p-0">
+                        <div className="table-wrapper">
+                          <table className="table">
+                            <thead>
+                              <tr>
+                                {/* <th>#</th> */}
+                                {headers.map((header) => (
+                                  <th key={header.id}>{header.label}</th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <NodesTable nodes={nodes} ratingOrder={ratingOrder} />
+                          </table>
+                        </div>
+                      </div>
+                    </>
                   ) : (
                     <PageState
                       icon={faCogs}
