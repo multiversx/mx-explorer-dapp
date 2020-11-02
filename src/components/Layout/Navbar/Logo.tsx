@@ -8,19 +8,16 @@ const Logo = () => {
   const {
     activeNetwork: { id },
   } = useGlobalState();
+
   const title = id === 'mainnet' ? 'Explorer' : 'Testnet Explorer';
 
   return (
     <Link to="/" className="d-flex align-items-center navbar-brand mr-0">
       <ElrondLogo
-        className={`main-logo flex-shrink-0 ${
-          id === 'mainnet' ? 'd-md-none d-xl-block' : 'd-none'
-        }`}
+        className={`main-logo flex-shrink-0 ${id === 'mainnet' ? 'd-none d-md-block' : 'd-none'}`}
       />
       <ElrondSymbol
-        className={`main-symbol flex-shrink-0 ${
-          id === 'mainnet' ? 'd-none d-md-block d-xl-none' : ''
-        }`}
+        className={`main-symbol flex-shrink-0 ${id === 'mainnet' ? 'd-block d-md-none' : ''}`}
       />
       <span className="text-secondary text-truncate">{title}</span>
     </Link>
