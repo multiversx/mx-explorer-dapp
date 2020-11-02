@@ -180,11 +180,11 @@ const Nodes = () => {
       <div ref={ref}>
         {dataReady === true && (
           <div className="container py-spacer">
-            <div className="row">
+            <div className="row page-header mb-spacer">
               <div className="col-12">
-                <h4>
+                <h3 className="page-title">
                   <span data-testid="title">Nodes</span>
-                </h4>
+                </h3>
               </div>
             </div>
 
