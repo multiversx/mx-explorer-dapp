@@ -1,6 +1,7 @@
 import TransactionRow from './TransactionRow';
 import Pager from '../Pager';
 import * as React from 'react';
+import { BooleanLiteral } from 'typescript';
 
 export interface TransactionType {
   blockHash: string;
@@ -30,6 +31,7 @@ interface TransactionsTableType {
   addressId?: string;
   totalTransactions: number | '...';
   size: number;
+  withTitle?: boolean;
 }
 
 const TransactionsTable = ({
@@ -37,11 +39,19 @@ const TransactionsTable = ({
   addressId,
   totalTransactions,
   size,
+  withTitle = false,
 }: TransactionsTableType) => {
   return (
     <div className="transactions-table">
       <div className="card card-small">
         <div className="card-header border-0 p-0">
+          {withTitle && (
+            <div className="card-header-item border-bottom p-3">
+              <h6 className="m-0" data-testid="title">
+                Transactions
+              </h6>
+            </div>
+          )}
           {totalTransactions > 10000 && (
             <div className="card-header-item border-bottom p-3">
               Showing last 10,000 of {totalTransactions.toLocaleString('en')} transactions
