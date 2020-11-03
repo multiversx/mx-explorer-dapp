@@ -1,10 +1,10 @@
 import * as React from 'react';
 import TableBody from './TableBody';
-import TableHeader from './TableHeader';
+import ShardLabel from './ShardLabel';
 
 export default class NodesTable extends React.Component<{ children: React.ReactNode }> {
   static Body = TableBody;
-  static Header = TableHeader;
+  static ShardLabel = ShardLabel;
 
   render() {
     return (
