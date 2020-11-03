@@ -25,6 +25,11 @@
     }
   }
 
+  .card-footer {
+    @extend .border-top;
+    @extend .py-2;
+  }
+
   @include media-breakpoint-up(lg) {
     .card-footer,
     .card-header-item {
