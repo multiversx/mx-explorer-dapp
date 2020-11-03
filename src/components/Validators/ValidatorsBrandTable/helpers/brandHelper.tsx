@@ -1,4 +1,3 @@
-import { trimHash } from 'helpers';
 import { BrandDataType, BrandType } from '../BrandTable';
 import { ValidatorType } from 'context/validators';
 
@@ -42,7 +41,7 @@ export function groupByBrandAndSort({
   // add the rest of the brandless validators
   allValidators.forEach((validator) => {
     const brand = {
-      name: trimHash(validator.publicKey),
+      name: validator.publicKey,
       avatar: '',
       publicKeys: [validator.publicKey],
       identity: '',

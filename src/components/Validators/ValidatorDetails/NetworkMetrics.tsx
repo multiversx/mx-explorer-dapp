@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DetailItem } from 'sharedComponents';
+import { DetailItem, Led } from 'sharedComponents';
 import PercentegeBar from './PercentegeBar';
 
 export interface NetworkMetricsType {
@@ -44,17 +44,10 @@ const NetworkMetrics = ({
           </DetailItem>
 
           <DetailItem title="Status" colWidth="3">
-            {isActive ? (
-              <div>
-                <span className="badge badge-pill badge-success badge-status">&nbsp;</span>
-                <span>&nbsp;Online</span>
-              </div>
-            ) : (
-              <div>
-                <span className="badge badge-pill badge-danger badge-status">&nbsp;</span>
-                <span className={isValidator === false ? 'text-muted' : ''}>&nbsp;Offline</span>
-              </div>
-            )}
+            <div className="d-flex align-items-center">
+              <Led color={isActive ? 'bg-success' : 'bg-danger'} />
+              <span className="ml-2">{isActive ? 'Online' : 'Offline'}</span>
+            </div>
           </DetailItem>
         </div>
       </div>
