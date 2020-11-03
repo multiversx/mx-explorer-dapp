@@ -1,7 +1,7 @@
 import TransactionRow from './TransactionRow';
 import Pager from '../Pager';
 import * as React from 'react';
-import { BooleanLiteral } from 'typescript';
+import { ScResultType } from 'components/TransactionDetails/ScResultsList';
 
 export interface TransactionType {
   blockHash: string;
@@ -21,9 +21,7 @@ export interface TransactionType {
   status: string;
   timestamp: number;
   value: string;
-  scResults?: {
-    returnMessage: string;
-  }[];
+  scResults?: ScResultType[];
 }
 
 interface TransactionsTableType {
