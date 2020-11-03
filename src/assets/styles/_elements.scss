@@ -112,7 +112,9 @@
   }
 
   .my-spacer {
-    margin: 0 !important;
+    @include media-breakpoint-up(md) {
+      margin: 0 !important;
+    }
   }
 
   .mt-spacer {

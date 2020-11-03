@@ -1,7 +1,8 @@
 import * as React from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-//import './chart.scss';
+import { faStarHalfAlt } from '@fortawesome/pro-regular-svg-icons/faStarHalfAlt';
+import { PageState } from 'sharedComponents';
 export interface HistoricRatingType {
   epoch: number;
   rating: number;
@@ -62,16 +63,29 @@ const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType
 
   return (
     <div className="card card-small" data-testid="chartContainer">
-      <div className="card-header border-0 p-0">
-        <div className="card-header-item border-bottom p-3">
-          <h6 className="m-0">Rating History</h6>
-        </div>
-      </div>
-      <div className="card-body p-0 pr-2">
-        {process.env.NODE_ENV !== 'test' && (
-          <Chart options={options} series={series} type="line" width="100%" height="152px" />
-        )}
-      </div>
+      {ratings.length === 0 && (
+        <PageState
+          icon={faStarHalfAlt}
+          title="Historic ratings not found"
+          className="page-state-sm d-flex h-100 align-items-center justify-content-center"
+          dataTestId="roundsErrorScreen"
+        />
+      )}
+
+      {ratings.length > 0 && (
+        <>
+          <div className="card-header border-0 p-0">
+            <div className="card-header-item border-bottom p-3">
+              <h6 className="m-0">Rating History</h6>
+            </div>
+          </div>
+          <div className="card-body p-0 pr-2">
+            {process.env.NODE_ENV !== 'test' && (
+              <Chart options={options} series={series} type="line" width="100%" height="152px" />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
