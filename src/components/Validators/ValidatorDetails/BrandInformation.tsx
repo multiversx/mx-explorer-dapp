@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DetailItem, NetworkLink } from 'sharedComponents';
+import { DetailItem, NetworkLink, Trim } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import { validatorsRoutes } from 'routes';
 import { stake, cumulativeStakePercent } from './../ValidatorsBrandTable/BrandRow';
@@ -33,7 +33,7 @@ const BrandInformation = ({ publicKey }: { publicKey: string }) => {
               {brand.name ? brand.name : 'N/A'}
             </NetworkLink>
           ) : (
-            <>{brand.name ? brand.name : 'N/A'}</>
+            <>{brand.name ? <Trim text={brand.name} /> : 'N/A'}</>
           )}
         </div>
       </div>
