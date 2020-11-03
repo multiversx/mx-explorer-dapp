@@ -78,12 +78,8 @@
   overflow-x: auto;
 
   .table {
-    white-space: nowrap;
     @extend .m-0;
-
-    @include media-breakpoint-up(lg) {
-      table-layout: fixed;
-    }
+    white-space: nowrap;
 
     th {
       border: 0;
