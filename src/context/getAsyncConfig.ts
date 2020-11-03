@@ -46,7 +46,7 @@ async function getAsyncConfig({
         erd_chain_id: '1',
         erd_denomination: 18,
         erd_gas_per_data_byte: 1500,
-        erd_latest_tag_software_version: 'v1.1.0.1',
+        erd_latest_tag_software_version: 'v1.1.6.1',
         erd_meta_consensus_group_size: 400,
         erd_min_gas_limit: 50000,
         erd_min_gas_price: 1000000000,
