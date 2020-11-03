@@ -14,6 +14,26 @@
       border-radius: calc(#{$card-border-radius} - 1px) calc(#{$card-border-radius} - 1px) 0 0;
     }
   }
+
+  @include media-breakpoint-up(lg) {
+    .card-footer,
+    .card-header-item {
+      padding-left: $spacer-val !important;
+      padding-right: $spacer-val !important;
+    }
+
+    .table-wrapper {
+      th:first-child,
+      td:first-child {
+        padding-left: $spacer-val;
+      }
+
+      th:last-child,
+      td:last-child {
+        padding-right: $spacer-val;
+      }
+    }
+  }
 }
 
 .main-content {

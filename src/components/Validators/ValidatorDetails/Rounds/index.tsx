@@ -28,7 +28,7 @@ const Rounds = ({ rounds, roundsFetched, isWaiting }: RoundsType) => {
                 <h6 className="m-0">Last Consensus Rounds</h6>
               </div>
             </div>
-            <div className="card-body card-body p-3">
+            <div className="card-body">
               <div className="squares" data-testid="rounds">
                 {rounds.length &&
                   rounds.map((round: any) => (
