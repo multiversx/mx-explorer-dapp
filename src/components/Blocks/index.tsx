@@ -101,7 +101,7 @@ const Blocks: React.FC = () => {
                         <BlocksTable blocks={state.blocks} shardId={shardId} />
                       </div>
 
-                      <div className="card-footer border-top py-2">
+                      <div className="card-footer">
                         <Pager
                           page={String(page)}
                           total={totalBlocks !== '...' ? Math.min(totalBlocks, 10000) : totalBlocks}

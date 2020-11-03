@@ -85,7 +85,7 @@ const TransactionsTable = ({
           </div>
         </div>
 
-        <div className="card-footer border-top py-2">
+        <div className="card-footer">
           <Pager
             itemsPerPage={50}
             page={String(size)}

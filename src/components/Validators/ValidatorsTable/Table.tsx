@@ -160,7 +160,7 @@ const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
     <div className="row pb-3">
       <div className="col-12">
         <div className="card">
-          <div className="card-body card-list">
+          <div className="card-body">
             <Tabs />
             <ValidatorStats
               validatorsAndObservers={validatorsAndObservers}
@@ -200,7 +200,7 @@ const ValidatorsTable = (props: StateType & ValidatorsTableType) => {
               </table>
               {dataSource.total() === 0 && (
                 <div className="card">
-                  <div className="card-body card-details" data-testid="errorScreen">
+                  <div className="card-body" data-testid="errorScreen">
                     <div className="empty">
                       <FontAwesomeIcon icon={faServer} className="empty-icon" />
                       <span className="h4 empty-heading">No nodes</span>
