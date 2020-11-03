@@ -1,5 +1,5 @@
-import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import * as React from 'react';
+import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Loader, PageState } from 'sharedComponents';
 import { GetRoundsReturnType } from 'sharedComponents/Adapter/functions/getValidators';
