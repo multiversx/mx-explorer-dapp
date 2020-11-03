@@ -117,54 +117,42 @@ const Address = () => {
         {!loading && !failed && (
           <div className="container py-spacer">
             <div className="row page-header">
-              <div
-                className={`d-flex flex-column
-                  ${addressDetails.stake > 0 ? 'col-lg-8' : 'col-12'}
-                `}
-              >
+              <div className="col-12">
                 <h3 className="page-title mb-spacer" data-testid="title">
                   Address Details
                 </h3>
-                <div className="mb-spacer flex-fill">
-                  <AddressDetails {...addressDetails} />
-                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col mb-spacer">
+                <AddressDetails {...addressDetails} />
               </div>
               {addressDetails.stake > 0 && (
-                <div className="col-lg-4 d-flex flex-column">
-                  <h3 className="page-title mb-spacer">Delegation</h3>
-                  <div className="mb-spacer flex-fill">
-                    <DelegationDetails {...addressDetails} />
-                  </div>
+                <div className="col-lg-4 mb-spacer">
+                  <DelegationDetails {...addressDetails} />
                 </div>
               )}
             </div>
+
             <div className="row">
               <div className="col-12">
-                <div className="row page-header mb-spacer">
-                  <div className="col-12">
-                    <h3 className="page-title">Transactions</h3>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-12">
-                    {showTransactions ? (
-                      <TransactionsTable
-                        transactions={transactions}
-                        addressId={addressId}
-                        totalTransactions={totalTransactions}
-                        size={size}
-                      />
-                    ) : (
-                      <div className="card card-small">
-                        {transactionsFetched === undefined && <Loader />}
-                        {transactionsFetched === false && <FailedTransactions />}
-                        {transactionsFetched === true && transactions.length === 0 && (
-                          <NoTransactions />
-                        )}
-                      </div>
+                {showTransactions ? (
+                  <TransactionsTable
+                    transactions={transactions}
+                    addressId={addressId}
+                    totalTransactions={totalTransactions}
+                    size={size}
+                    withTitle={true}
+                  />
+                ) : (
+                  <div className="card card-small">
+                    {transactionsFetched === undefined && <Loader />}
+                    {transactionsFetched === false && <FailedTransactions />}
+                    {transactionsFetched === true && transactions.length === 0 && (
+                      <NoTransactions />
                     )}
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
