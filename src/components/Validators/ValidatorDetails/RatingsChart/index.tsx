@@ -66,7 +66,7 @@ const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType
       {ratings.length === 0 && (
         <PageState
           icon={faStarHalfAlt}
-          title="No historic ratings found"
+          title="Historic ratings not found"
           className="page-state-sm d-flex h-100 align-items-center justify-content-center"
           dataTestId="roundsErrorScreen"
         />
