@@ -11,7 +11,7 @@ type RoundsType = GetRoundsReturnType & {
 const Rounds = ({ rounds, roundsFetched, isWaiting }: RoundsType) => {
   return (
     <>
-      <div className="card card-small" data-testid="roundsContainer">
+      <div className="card" data-testid="roundsContainer">
         {roundsFetched === undefined && <Loader dataTestId="roundsLoading" small={true} />}
         {roundsFetched === false && (
           <PageState

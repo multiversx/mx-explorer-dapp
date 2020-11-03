@@ -145,7 +145,7 @@ const Address = () => {
                     withTitle={true}
                   />
                 ) : (
-                  <div className="card card-small">
+                  <div className="card">
                     {transactionsFetched === undefined && <Loader />}
                     {transactionsFetched === false && <FailedTransactions />}
                     {transactionsFetched === true && transactions.length === 0 && (

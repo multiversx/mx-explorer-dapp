@@ -17,7 +17,7 @@ const BrandInformation = ({ publicKey }: { publicKey: string }) => {
   const brand = sortedBrands.find((b) => b.validators.some((v: any) => v.publicKey === publicKey));
 
   return brand !== undefined ? (
-    <div className="card card-small" data-testid="brandContainer">
+    <div className="card" data-testid="brandContainer">
       <div className="card-header border-0 p-0">
         <div className="card-header-item border-bottom">
           <div className="brand-header-item">

@@ -61,7 +61,7 @@ const LatestTransactions = () => {
   const Component = () => {
     const someNew = transactions.some((transaction) => transaction.isNew);
     return (
-      <div className="card card-small" ref={ref}>
+      <div className="card" ref={ref}>
         {transactionsFetched === undefined && <Loader dataTestId="transactionsLoader" />}
         {transactionsFetched === false && <FailedTransactions />}
         {transactionsFetched === true && transactions.length === 0 && <NoTransactions />}

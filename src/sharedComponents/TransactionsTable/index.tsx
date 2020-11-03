@@ -41,7 +41,7 @@ const TransactionsTable = ({
 }: TransactionsTableType) => {
   return (
     <div className="transactions-table">
-      <div className="card card-small">
+      <div className="card">
         <div className="card-header border-0 p-0">
           {withTitle && (
             <div className="card-header-item border-bottom p-3">

@@ -34,7 +34,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
       : '';
 
   return (
-    <div className="card card-small">
+    <div className="card">
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Hash">
