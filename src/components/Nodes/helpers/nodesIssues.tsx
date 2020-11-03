@@ -1,12 +1,11 @@
 import { ValidatorType } from 'context/validators';
-import useFilters from './useFilters';
 
 interface NodesIssuesType {
   node: ValidatorType;
   versionNumber: string;
 }
 
-export const nodesIssues = ({ node, versionNumber }: NodesIssuesType): ValidatorType['issue'] => {
+const nodesIssues = ({ node, versionNumber }: NodesIssuesType): ValidatorType['issue'] => {
   const shuffleOut = node.receivedShardID !== node.computedShardID && node.peerType === 'eligible';
   switch (true) {
     case node.totalUpTimeSec === 0:
@@ -22,4 +21,4 @@ export const nodesIssues = ({ node, versionNumber }: NodesIssuesType): Validator
   }
 };
 
-export { useFilters };
+export default nodesIssues;
