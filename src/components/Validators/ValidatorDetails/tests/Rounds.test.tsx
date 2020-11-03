@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Rounds from './../Rounds';
+import Rounds from '../Rounds';
 
 describe('Rounds', () => {
   test('Rounds loading state', async () => {
-    const methods = render(<Rounds rounds={[]} roundsFetched={true} isWaiting={false} />);
+    const methods = render(<Rounds rounds={[]} roundsFetched={undefined} isWaiting={false} />);
     expect(methods.getByTestId('roundsLoading')).toBeDefined();
   });
   test('Rounds failed state', async () => {

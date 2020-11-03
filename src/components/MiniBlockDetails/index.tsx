@@ -159,21 +159,15 @@ const MiniBlockDetails: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="row page-header my-spacer">
-                  <div className="col-12">
-                    <h3 className="page-title" data-testid="title">
-                      Transactions
-                    </h3>
-                  </div>
-                </div>
                 <div className="row">
-                  <div className="col-12">
+                  <div className="col-12 mt-spacer">
                     {showTransactions ? (
                       <TransactionsTable
                         transactions={transactions}
                         addressId={undefined}
                         totalTransactions={totalTransactions}
                         size={size}
+                        withTitle={true}
                       />
                     ) : (
                       <div className="card card-small">
