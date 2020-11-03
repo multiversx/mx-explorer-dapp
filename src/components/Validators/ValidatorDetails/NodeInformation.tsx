@@ -20,7 +20,7 @@ const NodeInformation = ({
   publicKeyBlockSign,
 }: NodeInformationType) => {
   return (
-    <div className="card card-small">
+    <div className="card">
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Public Key" colWidth="3">

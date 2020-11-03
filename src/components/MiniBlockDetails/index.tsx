@@ -108,7 +108,7 @@ const MiniBlockDetails: React.FC = () => {
               <div className="col-12">
                 <div className="row">
                   <div className="col-12">
-                    <div className="card card-small">
+                    <div className="card">
                       <div className="card-body p-0">
                         <div className="container-fluid">
                           <DetailItem title="Miniblock Hash">
@@ -170,7 +170,7 @@ const MiniBlockDetails: React.FC = () => {
                         withTitle={true}
                       />
                     ) : (
-                      <div className="card card-small">
+                      <div className="card">
                         {transactionsFetched === undefined && <Loader />}
                         {transactionsFetched === false && <FailedTransactions />}
                         {transactionsFetched === true && transactions.length === 0 && (

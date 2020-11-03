@@ -157,7 +157,7 @@ const ValidatorDetails = () => {
             {isValidator && (
               <div className="row">
                 <div className="col-12 mt-spacer">
-                  <div className="card card-small">
+                  <div className="card">
                     {fetchedBlocks.blocksFetched === undefined && <Loader />}
                     {fetchedBlocks.blocksFetched === false && <FailedBlocks />}
                     {fetchedBlocks.blocksFetched === true && fetchedBlocks.blocks.length === 0 && (

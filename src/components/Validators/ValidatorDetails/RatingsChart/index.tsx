@@ -62,7 +62,7 @@ const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType
   };
 
   return (
-    <div className="card card-small" data-testid="chartContainer">
+    <div className="card" data-testid="chartContainer">
       {ratings.length === 0 && (
         <PageState
           icon={faHeartRate}

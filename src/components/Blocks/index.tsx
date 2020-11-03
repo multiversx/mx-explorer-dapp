@@ -85,7 +85,7 @@ const Blocks: React.FC = () => {
             </div>
             <div className="row">
               <div className="col-12">
-                <div className="card card-small">
+                <div className="card">
                   {state.blocks.length > 0 ? (
                     <>
                       <div className="card-header border-0 p-0">

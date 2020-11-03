@@ -5,6 +5,8 @@
 // }
 
 .card {
+  @extend .card-small;
+
   height: 100%;
   overflow: hidden;
   word-wrap: normal; // fixes Trim bug

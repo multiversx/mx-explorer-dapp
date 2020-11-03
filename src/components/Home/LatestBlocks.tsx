@@ -53,7 +53,7 @@ const LatestBlocks = () => {
   const Component = () => {
     const someNew = blocks.some((block) => block.isNew);
     return (
-      <div className="card card-small" ref={ref}>
+      <div className="card" ref={ref}>
         {blocksFetched === undefined && <Loader dataTestId="blocksLoader" />}
         {blocksFetched === false && <FailedBlocks />}
         {blocksFetched === true && blocks.length === 0 && <NoBlocks />}

@@ -13,7 +13,7 @@ export interface AddressDetailsType {
 
 const AddressDetails = (props: AddressDetailsType) => {
   return props.addressId ? (
-    <div className="card card-small">
+    <div className="card">
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Address">
