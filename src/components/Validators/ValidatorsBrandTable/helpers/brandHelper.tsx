@@ -1,4 +1,3 @@
-import { trimHash } from 'helpers';
 import { BrandDataType, BrandType } from '../BrandTable';
 import { ValidatorType } from 'context/validators';
 
