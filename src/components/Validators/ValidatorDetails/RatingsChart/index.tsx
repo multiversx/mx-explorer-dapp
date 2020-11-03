@@ -61,18 +61,18 @@ const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType
   };
 
   return (
-    <>
-      <div className="page-header my-spacer">
-        <h3 className="page-title">Rating History</h3>
-      </div>
-      <div className="card card-small" data-testid="chartContainer">
-        <div className="card-body p-0 pr-2">
-          {process.env.NODE_ENV !== 'test' && (
-            <Chart options={options} series={series} type="line" width="100%" height="152px" />
-          )}
+    <div className="card card-small" data-testid="chartContainer">
+      <div className="card-header border-0 p-0">
+        <div className="card-header-item border-bottom p-3">
+          <h6 className="m-0">Rating History</h6>
         </div>
       </div>
-    </>
+      <div className="card-body p-0 pr-2">
+        {process.env.NODE_ENV !== 'test' && (
+          <Chart options={options} series={series} type="line" width="100%" height="152px" />
+        )}
+      </div>
+    </div>
   );
 };
 

@@ -126,14 +126,14 @@ const BrandDetails = () => {
                 </div>
               </div>
             </div>
-            <div className="row page-header my-spacer">
-              <div className="col-12">
-                <h3 className="page-title">Nodes</h3>
-              </div>
-            </div>
             <div className="row">
-              <div className="col-12">
+              <div className="col-12 mt-spacer">
                 <div className="card card-small">
+                  <div className="card-header border-0 p-0">
+                    <div className="card-header-item border-bottom p-3">
+                      <h6 className="m-0">Nodes</h6>
+                    </div>
+                  </div>
                   <div className="card-body p-0">
                     <div className="table-wrapper">
                       <table className="table">

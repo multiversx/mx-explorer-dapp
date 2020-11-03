@@ -122,75 +122,67 @@ const ValidatorDetails = () => {
       <div ref={ref}>
         {success && publicKey !== '' && (
           <div className="container py-spacer">
-            <div className="row page-header mb-spacer">
+            <div className="row page-header">
               <div className="col-12">
                 <h3 className="page-title" data-testid="title">
                   Node Information
                 </h3>
               </div>
             </div>
-            <div className="row">
-              <div className="col-12 mb-spacer">
-                {validator !== undefined && <Alert validator={validator} />}
-              </div>
-            </div>
+
+            {validator !== undefined && <Alert validator={validator} />}
 
             <div className="row">
-              <div className="col-md-8">
+              <div className="col-md-8 mt-spacer">
                 <NodeInformation {...state} />
               </div>
-              <div className="col-md-4 mt-spacer mt-md-0">
+              <div className="col-md-4 mt-spacer">
                 <BrandInformation publicKey={state.publicKey} />
               </div>
             </div>
 
             <div className="row">
-              <div className={`d-flex flex-column ${isValidator ? 'col-md-4' : 'col-8'}`}>
+              <div className={`mt-spacer ${isValidator ? 'col-md-4' : 'col-8'}`}>
                 <NetworkMetrics {...state} />
               </div>
-              <div className="col-md-4 d-flex flex-column">
+              <div className="col-md-4 mt-spacer">
                 <RatingsChart historicRatings={state.historicRatings} />
               </div>
               {isValidator && (
-                <div className="col-md-4 d-flex flex-column">
+                <div className="col-md-4 mt-spacer">
                   <Rounds {...rounds} isWaiting={Boolean(isWaiting)} />
                 </div>
               )}
             </div>
             {isValidator && (
-              <>
-                <div className="row page-header my-spacer">
-                  <div className="col-12">
-                    <h3 className="page-title">Proposed Blocks in Current Epoch</h3>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-12">
-                    <div className="card">
-                      {fetchedBlocks.blocksFetched === undefined && <Loader />}
-                      {fetchedBlocks.blocksFetched === false && <FailedBlocks />}
-                      {fetchedBlocks.blocksFetched === true &&
-                        fetchedBlocks.blocks.length === 0 && (
-                          <NoBlocks
-                            title={isWaiting ? 'Validator not in consensus' : 'No blocks'}
-                          />
-                        )}
-                      {fetchedBlocks.blocksFetched === true && fetchedBlocks.blocks.length > 0 && (
-                        <>
+              <div className="row">
+                <div className="col-12 mt-spacer">
+                  <div className="card">
+                    {fetchedBlocks.blocksFetched === undefined && <Loader />}
+                    {fetchedBlocks.blocksFetched === false && <FailedBlocks />}
+                    {fetchedBlocks.blocksFetched === true && fetchedBlocks.blocks.length === 0 && (
+                      <NoBlocks title={isWaiting ? 'Validator not in consensus' : 'No blocks'} />
+                    )}
+                    {fetchedBlocks.blocksFetched === true && fetchedBlocks.blocks.length > 0 && (
+                      <>
+                        <div className="card-header border-0 p-0">
                           <div className="card-header border-0 p-0">
                             <div className="card-header-item border-bottom p-3">
-                              Last {fetchedBlocks.blocks.length} proposed blocks
+                              <h6 className="m-0">Proposed Blocks in Current Epoch</h6>
                             </div>
                           </div>
-                          <div className="card-body p-0">
-                            <BlocksTable blocks={fetchedBlocks.blocks} shardId={undefined} />
+                          <div className="card-header-item border-bottom p-3">
+                            Last {fetchedBlocks.blocks.length} proposed blocks
                           </div>
-                        </>
-                      )}
-                    </div>
+                        </div>
+                        <div className="card-body p-0">
+                          <BlocksTable blocks={fetchedBlocks.blocks} shardId={undefined} />
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
-              </>
+              </div>
             )}
           </div>
         )}
