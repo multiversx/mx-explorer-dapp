@@ -7,7 +7,7 @@ import * as React from 'react';
 interface FiltersType {
   resultsCount: number;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-  setPeerType: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setPeerType: React.Dispatch<React.SetStateAction<string>>;
   setIssues: React.Dispatch<React.SetStateAction<boolean>>;
   searchValue: string;
   peerType: string | undefined;
@@ -137,7 +137,7 @@ const Filters = ({
             className={`btn btn-sm btn-outline-light btn-pill ${issues ? 'active' : ''}`}
             onClick={() => {
               setIssues(true);
-              setPeerType(undefined);
+              setPeerType('');
             }}
           >
             Issues
