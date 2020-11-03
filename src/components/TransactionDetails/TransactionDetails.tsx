@@ -15,6 +15,7 @@ import {
   Trim,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
+import ScResultsList from './ScResultsList';
 
 const getFee = (transaction: TransactionType) => {
   const bNgasPrice = new BigNumber(transaction.gasPrice);
@@ -158,6 +159,11 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
               }
             />
           </DetailItem>
+          {transaction.scResults && transaction.scResults?.length > 0 && (
+            <DetailItem title="Smart&nbsp;Contract Results">
+              <ScResultsList scResults={transaction.scResults} />
+            </DetailItem>
+          )}
         </div>
       </div>
     </div>
