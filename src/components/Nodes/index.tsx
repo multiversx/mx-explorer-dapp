@@ -66,7 +66,11 @@ const Nodes = () => {
 
       const queryString = new URLSearchParams(query);
       const queryIsDefined = String(queryString).length > 0;
-      if ((search || queryIsDefined) && `?${String(queryString)}` !== search) {
+
+      if (
+        (window.location.search || queryIsDefined) &&
+        `?${String(queryString)}` !== window.location.search
+      ) {
         const questionMark = queryIsDefined ? '?' : '';
         window.history.pushState({}, '', `/nodes${questionMark}${queryString}`);
       }
