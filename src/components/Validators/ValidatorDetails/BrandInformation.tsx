@@ -18,7 +18,7 @@ const BrandInformation = ({ publicKey }: { publicKey: string }) => {
 
   return brand !== undefined ? (
     <div className="card" data-testid="brandContainer">
-      <div className="card-header border-0 p-0">
+      <div className="card-header">
         <div className="card-header-item border-bottom">
           <div className="brand-header-item">
             <img
