@@ -19,22 +19,23 @@ const BrandInformation = ({ publicKey }: { publicKey: string }) => {
   return brand !== undefined ? (
     <div className="card card-small" data-testid="brandContainer">
       <div className="card-header border-0 p-0">
-        <div className="card-header-item border-bottom d-flex align-items-center px-3 py-3 py-lg-2">
-          <div className="mr-3">
+        <div className="card-header-item border-bottom">
+          <div className="brand-header-item">
             <img
-              className={`avatar rounded-circle shadow-sm ${brand.avatar ? '' : 'gray'}`}
+              className={`mr-3 avatar rounded-circle shadow-sm ${brand.avatar ? '' : 'gray'}`}
               src={brand.avatar ? brand.avatar : '/validators/default-avatar.svg'}
               alt={brand.name}
               height="42"
             />
+
+            {brand.identity ? (
+              <NetworkLink to={`${validatorsRoutes.index}/${brand.identity}`}>
+                {brand.name ? brand.name : 'N/A'}
+              </NetworkLink>
+            ) : (
+              <>{brand.name ? <Trim text={brand.name} /> : 'N/A'}</>
+            )}
           </div>
-          {brand.identity ? (
-            <NetworkLink to={`${validatorsRoutes.index}/${brand.identity}`}>
-              {brand.name ? brand.name : 'N/A'}
-            </NetworkLink>
-          ) : (
-            <>{brand.name ? <Trim text={brand.name} /> : 'N/A'}</>
-          )}
         </div>
       </div>
       <div className="card-body p-0">
