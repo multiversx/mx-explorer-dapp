@@ -7,7 +7,7 @@ import RowIcon from './../RowIcon';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <div className="row">
-    <div className="col-12">
+    <div className="col-12 mt-spacer">
       <div className="card card-small">
         <div className="card-body">{children}</div>
       </div>
