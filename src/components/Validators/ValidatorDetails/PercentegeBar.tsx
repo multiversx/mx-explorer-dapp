@@ -11,9 +11,9 @@ const PercentegeBar = ({
   totalUpTimeLabel: string;
   totalDownTimeLabel: string;
 }) => (
-  <div>
+  <div className="d-flex h-100 align-items-center">
     {totalUpTimePercentege + totalDownTimePercentege > 0 ? (
-      <div className="progress">
+      <div className="progress progress-sm w-100 m-0">
         <OverlayTrigger
           placement="top"
           delay={{ show: 250, hide: 400 }}
@@ -48,7 +48,7 @@ const PercentegeBar = ({
         </OverlayTrigger>
       </div>
     ) : (
-      <div className="progress">
+      <div className="progress progress-sm w-100 m-0">
         <div className="progress-bar bg-success" />
       </div>
     )}
