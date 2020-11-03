@@ -1,6 +1,5 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { useLocation } from 'react-router-dom';
 import { adapter, Loader, PageState } from 'sharedComponents';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import NodesTable from './NodesTable';
@@ -13,23 +12,24 @@ import tempShards from './tempShards';
 
 const Nodes = () => {
   const ref = React.useRef(null);
-  const { search } = useLocation();
   const dispatch = useGlobalDispatch();
   const { getNetworkConfig, getNodes } = adapter();
   const {
-    getQueryParams,
+    setUrlQueryParams,
     searchValue: urlSearchValue,
     peerType: ulrPeerType,
     issues: ulrIssues,
     shard: ulrShard,
+    status: ulrStatus,
   } = useFilters();
   const { nodes, versionNumber } = useGlobalState();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [ratingOrder, setRatingOrder] = React.useState<string[]>([]);
 
   const [shard, setShard] = React.useState<FiltersType['shard']>('');
+  const [status, setStatus] = React.useState<FiltersType['status']>('');
   const [searchValue, setSearchValue] = React.useState<FiltersType['searchValue']>('');
-  const [peerType, setPeerType] = React.useState<FiltersType['peerType']>();
+  const [peerType, setPeerType] = React.useState<FiltersType['peerType']>('');
   const [issues, setIssues] = React.useState<FiltersType['issues']>(false);
 
   React.useEffect(() => {
@@ -42,10 +42,13 @@ const Nodes = () => {
     if (ulrPeerType) {
       setPeerType(ulrPeerType);
     }
+    if (ulrStatus) {
+      setStatus(ulrStatus);
+    }
     if (ulrIssues) {
       setIssues(Boolean(ulrIssues));
     }
-  }, [urlSearchValue, ulrPeerType, ulrIssues, ulrShard]);
+  }, [urlSearchValue, ulrPeerType, ulrIssues, ulrShard, ulrStatus]);
 
   const getVersionNumber = () => {
     if (nodes.length === 0) {
@@ -62,18 +65,8 @@ const Nodes = () => {
 
   const fetchNodes = () => {
     if (versionNumber) {
-      const query = getQueryParams({ issues, peerType, searchValue, shard });
+      setUrlQueryParams({ issues, peerType, searchValue, shard, status });
 
-      const queryString = new URLSearchParams(query);
-      const queryIsDefined = String(queryString).length > 0;
-
-      if (
-        (window.location.search || queryIsDefined) &&
-        `?${String(queryString)}` !== window.location.search
-      ) {
-        const questionMark = queryIsDefined ? '?' : '';
-        window.history.pushState({}, '', `/nodes${questionMark}${queryString}`);
-      }
       setDataReady(undefined);
 
       const nodes = tempNodes.map((node: any) => {
@@ -128,7 +121,7 @@ const Nodes = () => {
     }
   };
 
-  React.useEffect(fetchNodes, [versionNumber, issues, peerType, searchValue, shard]);
+  React.useEffect(fetchNodes, [versionNumber, issues, peerType, searchValue, shard, status]);
 
   const getRatings = () => {
     const uniqueRatings = nodes
@@ -195,7 +188,9 @@ const Nodes = () => {
                               </th>
                               <th id="versionNumber">Version</th>
                               <th id="totalUpTimeSec">Uptime</th>
-                              <th id="isActive">Status</th>
+                              <th id="isActive">
+                                <NodesTable.StatusLabel setStatus={setStatus} status={status} />
+                              </th>
                             </tr>
                           </thead>
                           <NodesTable.Body nodes={nodes} ratingOrder={ratingOrder} />

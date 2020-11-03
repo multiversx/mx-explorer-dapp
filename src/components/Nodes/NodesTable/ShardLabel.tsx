@@ -43,7 +43,7 @@ const ShardLabel = ({ shardData, shard, setShard }: ShardLabelType) => {
                   <a
                     className={`dropdown-item ${shard === shardNumber.toString() ? 'active' : ''}`}
                     key={shardNumber + i}
-                    href="#/validators"
+                    href="/nodes"
                     onClick={changeShard(shardNumber.toString())}
                   >
                     <ShardSpan shardId={shardNumber} />
