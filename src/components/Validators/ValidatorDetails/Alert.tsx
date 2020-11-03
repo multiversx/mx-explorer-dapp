@@ -9,7 +9,7 @@ const Container = ({ children }: { children: React.ReactNode }) => (
   <div className="row">
     <div className="col-12 mt-spacer">
       <div className="card">
-        <div className="card-body">{children}</div>
+        <div className="card-body px-lg-spacer">{children}</div>
       </div>
     </div>
   </div>
