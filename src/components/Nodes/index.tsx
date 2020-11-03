@@ -1,15 +1,19 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
+import { useLocation } from 'react-router-dom';
 import { adapter, Loader, PageState } from 'sharedComponents';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import NodesTable from './NodesTable';
 import Filters from './Filters';
-import { nodesIssues, useFilters } from './helpers';
+import nodesIssues from './helpers/nodesIssues';
+import useFilters, { FiltersType } from './helpers/useFilters';
 import { ValidatorType } from 'context/validators';
 import tempNodes from './tempNodes';
+import tempShards from './tempShards';
 
 const Nodes = () => {
   const ref = React.useRef(null);
+  const { search } = useLocation();
   const dispatch = useGlobalDispatch();
   const { getNetworkConfig, getNodes } = adapter();
   const {
@@ -17,16 +21,21 @@ const Nodes = () => {
     searchValue: urlSearchValue,
     peerType: ulrPeerType,
     issues: ulrIssues,
+    shard: ulrShard,
   } = useFilters();
   const { nodes, versionNumber } = useGlobalState();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [ratingOrder, setRatingOrder] = React.useState<string[]>([]);
 
-  const [searchValue, setSearchValue] = React.useState<string>('');
-  const [peerType, setPeerType] = React.useState<string | undefined>();
-  const [issues, setIssues] = React.useState<boolean>(false);
+  const [shard, setShard] = React.useState<FiltersType['shard']>('');
+  const [searchValue, setSearchValue] = React.useState<FiltersType['searchValue']>('');
+  const [peerType, setPeerType] = React.useState<FiltersType['peerType']>();
+  const [issues, setIssues] = React.useState<FiltersType['issues']>(false);
 
   React.useEffect(() => {
+    if (ulrShard !== undefined) {
+      setShard(ulrShard);
+    }
     if (urlSearchValue) {
       setSearchValue(urlSearchValue);
     }
@@ -36,7 +45,7 @@ const Nodes = () => {
     if (ulrIssues) {
       setIssues(Boolean(ulrIssues));
     }
-  }, [urlSearchValue, ulrPeerType, ulrIssues]);
+  }, [urlSearchValue, ulrPeerType, ulrIssues, ulrShard]);
 
   const getVersionNumber = () => {
     if (nodes.length === 0) {
@@ -53,10 +62,13 @@ const Nodes = () => {
 
   const fetchNodes = () => {
     if (versionNumber) {
-      const query = getQueryParams({ issues, peerType, searchValue });
+      const query = getQueryParams({ issues, peerType, searchValue, shard });
+
       const queryString = new URLSearchParams(query);
-      if (String(queryString).length > 0) {
-        window.history.pushState({}, '', `/nodes?${queryString}`);
+      const queryIsDefined = String(queryString).length > 0;
+      if ((search || queryIsDefined) && `?${String(queryString)}` !== search) {
+        const questionMark = queryIsDefined ? '?' : '';
+        window.history.pushState({}, '', `/nodes${questionMark}${queryString}`);
       }
       setDataReady(undefined);
 
@@ -112,7 +124,7 @@ const Nodes = () => {
     }
   };
 
-  React.useEffect(fetchNodes, [versionNumber, issues, peerType, searchValue]);
+  React.useEffect(fetchNodes, [versionNumber, issues, peerType, searchValue, shard]);
 
   const getRatings = () => {
     const uniqueRatings = nodes
@@ -166,7 +178,22 @@ const Nodes = () => {
                       </div>
                       <div className="card-body p-0">
                         <NodesTable>
-                          <NodesTable.Header />
+                          <thead>
+                            <tr>
+                              <th id="publickey">Public key</th>
+                              <th id="nodeDisplayName">Node Name</th>
+                              <th id="shardId">
+                                <NodesTable.ShardLabel
+                                  shardData={tempShards}
+                                  setShard={setShard}
+                                  shard={shard}
+                                />
+                              </th>
+                              <th id="versionNumber">Version</th>
+                              <th id="totalUpTimeSec">Uptime</th>
+                              <th id="isActive">Status</th>
+                            </tr>
+                          </thead>
                           <NodesTable.Body nodes={nodes} ratingOrder={ratingOrder} />
                         </NodesTable>
                       </div>
