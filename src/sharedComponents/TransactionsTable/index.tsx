@@ -44,14 +44,14 @@ const TransactionsTable = ({
       <div className="card">
         <div className="card-header">
           {withTitle && (
-            <div className="card-header-item border-bottom p-3">
+            <div className="card-header-item">
               <h6 className="m-0" data-testid="title">
                 Transactions
               </h6>
             </div>
           )}
           {totalTransactions > 10000 && (
-            <div className="card-header-item border-bottom p-3">
+            <div className="card-header-item">
               Showing last 10,000 of {totalTransactions.toLocaleString('en')} transactions
             </div>
           )}

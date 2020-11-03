@@ -89,7 +89,7 @@ const Blocks: React.FC = () => {
                   {state.blocks.length > 0 ? (
                     <>
                       <div className="card-header">
-                        <div className="card-header-item border-bottom p-3">
+                        <div className="card-header-item">
                           Showing last 10,000
                           {totalBlocks !== '...' && (
                             <> of {totalBlocks.toLocaleString('en')}</>

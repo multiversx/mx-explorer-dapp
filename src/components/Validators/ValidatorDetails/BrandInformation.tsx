@@ -19,7 +19,7 @@ const BrandInformation = ({ publicKey }: { publicKey: string }) => {
   return brand !== undefined ? (
     <div className="card" data-testid="brandContainer">
       <div className="card-header">
-        <div className="card-header-item border-bottom">
+        <div className="card-header-item p-0">
           <div className="brand-header-item">
             <img
               className={`mr-3 avatar rounded-circle shadow-sm ${brand.avatar ? '' : 'gray'}`}

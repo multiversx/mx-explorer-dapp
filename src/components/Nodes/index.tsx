@@ -161,7 +161,7 @@ const Nodes = () => {
                   {nodes.length > 0 ? (
                     <>
                       <div className="card-header">
-                        <div className="card-header-item border-bottom p-3">
+                        <div className="card-header-item">
                           <Filters
                             resultsCount={nodes.length}
                             setSearchValue={setSearchValue}
