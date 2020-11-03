@@ -21,6 +21,7 @@ import adapter from './Adapter';
 import TrimHash from './TrimHash';
 import DetailItem from './DetailItem';
 import Trim from './Trim';
+import Led from './Led';
 
 export {
   Denominate,
@@ -47,4 +48,5 @@ export {
   TrimHash,
   DetailItem,
   Trim,
+  Led,
 };
