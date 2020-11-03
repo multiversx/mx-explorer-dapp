@@ -29,11 +29,8 @@ const BrandInformation = ({ publicKey }: { publicKey: string }) => {
             />
           </div>
           {brand.identity ? (
-            <NetworkLink
-              to={`${validatorsRoutes.index}/${brand.identity}`}
-              className="trim-wrapper"
-            >
-              {brand.name ? <Trim text={brand.name} /> : 'N/A'}
+            <NetworkLink to={`${validatorsRoutes.index}/${brand.identity}`}>
+              {brand.name ? brand.name : 'N/A'}
             </NetworkLink>
           ) : (
             <>{brand.name ? <Trim text={brand.name} /> : 'N/A'}</>
