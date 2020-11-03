@@ -75,7 +75,7 @@ const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType
       {ratings.length > 0 && (
         <>
           <div className="card-header">
-            <div className="card-header-item border-bottom p-3">
+            <div className="card-header-item">
               <h6 className="m-0">Rating History</h6>
             </div>
           </div>

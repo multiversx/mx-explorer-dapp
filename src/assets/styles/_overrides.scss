@@ -18,6 +18,11 @@
     &:first-child {
       border-radius: calc(#{$card-border-radius} - 1px) calc(#{$card-border-radius} - 1px) 0 0;
     }
+
+    .card-header-item {
+      @extend .border-bottom;
+      padding: 1rem;
+    }
   }
 
   @include media-breakpoint-up(lg) {
