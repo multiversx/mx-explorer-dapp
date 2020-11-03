@@ -165,7 +165,7 @@ const ValidatorDetails = () => {
                     )}
                     {fetchedBlocks.blocksFetched === true && fetchedBlocks.blocks.length > 0 && (
                       <>
-                        <div className="card-header border-0 p-0">
+                        <div className="card-header">
                           <div className="card-header-item border-bottom p-3">
                             <h6 className="m-0">
                               Last {fetchedBlocks.blocks.length} proposed Blocks in Current Epoch

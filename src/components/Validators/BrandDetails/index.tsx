@@ -58,7 +58,7 @@ const BrandDetails = () => {
             <div className="row" data-testid="brandDetailsContainer">
               <div className="col-12 col-md-6">
                 <div className="card">
-                  <div className="card-header border-0 p-0">
+                  <div className="card-header">
                     <div className="card-header-item border-bottom">
                       <div className="brand-header-item">
                         <img
@@ -130,7 +130,7 @@ const BrandDetails = () => {
             <div className="row">
               <div className="col-12 mt-spacer">
                 <div className="card">
-                  <div className="card-header border-0 p-0">
+                  <div className="card-header">
                     <div className="card-header-item border-bottom p-3">
                       <h6 className="m-0">Nodes</h6>
                     </div>

@@ -160,7 +160,7 @@ const Nodes = () => {
                 <div className="card">
                   {nodes.length > 0 ? (
                     <>
-                      <div className="card-header border-0 p-0">
+                      <div className="card-header">
                         <div className="card-header-item border-bottom p-3">
                           <Filters
                             resultsCount={nodes.length}

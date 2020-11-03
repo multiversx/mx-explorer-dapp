@@ -42,7 +42,7 @@ const TransactionsTable = ({
   return (
     <div className="transactions-table">
       <div className="card">
-        <div className="card-header border-0 p-0">
+        <div className="card-header">
           {withTitle && (
             <div className="card-header-item border-bottom p-3">
               <h6 className="m-0" data-testid="title">
