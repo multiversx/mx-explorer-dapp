@@ -65,8 +65,9 @@ const Nodes = () => {
       const query = getQueryParams({ issues, peerType, searchValue, shard });
 
       const queryString = new URLSearchParams(query);
-      if (String(queryString) !== search) {
-        const questionMark = String(queryString).length > 0 ? '?' : '';
+      const queryIsDefined = String(queryString).length > 0;
+      if ((search || queryIsDefined) && `?${String(queryString)}` !== search) {
+        const questionMark = queryIsDefined ? '?' : '';
         window.history.pushState({}, '', `/nodes${questionMark}${queryString}`);
       }
       setDataReady(undefined);
