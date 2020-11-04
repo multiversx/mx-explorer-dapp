@@ -4,10 +4,8 @@ import { adapter, Loader, Pager, PageState } from 'sharedComponents';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import NodesTable from './NodesTable';
 import Filters from './Filters';
-import nodesIssues from './helpers/nodesIssues';
 import useFilters, { FiltersType } from './helpers/useFilters';
 import { ValidatorType } from 'context/validators';
-import tempNodes from './tempNodes';
 import tempShards from './tempShards';
 import Tabs from 'components/Validators/Tabs';
 
@@ -16,11 +14,12 @@ const Nodes = () => {
   const dispatch = useGlobalDispatch();
   const { getNetworkConfig, getNodes } = adapter();
   const {
-    setUrlQueryParams,
-    searchValue: urlSearchValue,
+    getQueryString,
+    search: urlSearch,
     peerType: ulrPeerType,
+    nodeType: ulrNodeType,
     issues: ulrIssues,
-    shard: ulrShard,
+    shardId: ulrShardId,
     page: ulrPage,
     status: ulrStatus,
   } = useFilters();
@@ -28,22 +27,26 @@ const Nodes = () => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [ratingOrder, setRatingOrder] = React.useState<string[]>([]);
 
-  const [shard, setShard] = React.useState<FiltersType['shard']>('');
+  const [shardId, setShardId] = React.useState<FiltersType['shardId']>('');
   const [page, setPage] = React.useState<FiltersType['page']>('');
   const [status, setStatus] = React.useState<FiltersType['status']>('');
-  const [searchValue, setSearchValue] = React.useState<FiltersType['searchValue']>('');
+  const [search, setSearch] = React.useState<FiltersType['search']>('');
   const [peerType, setPeerType] = React.useState<FiltersType['peerType']>('');
+  const [nodeType, setNodeType] = React.useState<FiltersType['nodeType']>('');
   const [issues, setIssues] = React.useState<FiltersType['issues']>(false);
 
   React.useEffect(() => {
-    if (ulrShard !== undefined) {
-      setShard(ulrShard);
+    if (ulrShardId !== undefined) {
+      setShardId(ulrShardId);
     }
-    if (urlSearchValue) {
-      setSearchValue(urlSearchValue);
+    if (urlSearch) {
+      setSearch(urlSearch);
     }
     if (ulrPeerType) {
       setPeerType(ulrPeerType);
+    }
+    if (ulrNodeType) {
+      setNodeType(ulrNodeType);
     }
     if (ulrPage) {
       setPage(ulrPage);
@@ -54,7 +57,7 @@ const Nodes = () => {
     if (ulrIssues) {
       setIssues(Boolean(ulrIssues));
     }
-  }, [urlSearchValue, ulrPeerType, ulrIssues, ulrShard, ulrStatus, ulrPage]);
+  }, [urlSearch, ulrPeerType, ulrIssues, ulrStatus, ulrPage, ulrNodeType, ulrShardId]);
 
   const getVersionNumber = () => {
     if (nodes.length === 0) {
@@ -71,63 +74,49 @@ const Nodes = () => {
 
   const fetchNodes = () => {
     if (versionNumber) {
-      setUrlQueryParams({ issues, peerType, searchValue, shard, status, page });
+      const { queryObject, query, updatePushState } = getQueryString({
+        issues,
+        peerType,
+        search,
+        nodeType,
+        shardId,
+        status,
+        page,
+      });
+
+      if (updatePushState) {
+        window.history.pushState({}, '', `/nodes${query}`);
+      }
 
       setDataReady(undefined);
-
-      const nodes = tempNodes.map((node: any) => {
-        return {
-          ...node,
-          ...(node.nodeType !== 'observer'
-            ? {
-                issue: nodesIssues({
-                  node,
-                  versionNumber,
-                }),
-              }
-            : { issue: '' }),
-          nodeDisplayName: node.nodeDisplayName ? node.nodeDisplayName : node.publicKey,
-        };
-      });
-      dispatch({
-        type: 'setNodes',
-        nodes,
-      });
-      setDataReady(true);
-
-      // getNodes(query)
-      //   .then(({ data }) => {
-      //     const nodes = data.map((node: ValidatorType) => {
-      //       return {
-      //         ...node,
-      //         ...(node.nodeType !== 'observer'
-      //           ? {
-      //               issue: nodesIssues({
-      //                 node,
-      //                 versionNumber,
-      //               }),
-      //             }
-      //           : { issue: '' }),
-      //         nodeDisplayName: node.nodeDisplayName ? node.nodeDisplayName : node.publicKey,
-      //       };
-      //     });
-      //     dispatch({
-      //       type: 'setNodes',
-      //       nodes,
-      //     });
-      //     if (ref.current !== null) {
-      //       setDataReady(true);
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     if (ref.current !== null) {
-      //       setDataReady(false);
-      //     }
-      //   });
+      getNodes(queryObject)
+        .then(({ data: nodes }) => {
+          dispatch({
+            type: 'setNodes',
+            nodes,
+          });
+          if (ref.current !== null) {
+            setDataReady(true);
+          }
+        })
+        .catch((error) => {
+          if (ref.current !== null) {
+            setDataReady(false);
+          }
+        });
     }
   };
 
-  React.useEffect(fetchNodes, [versionNumber, issues, peerType, searchValue, shard, status, page]);
+  React.useEffect(fetchNodes, [
+    versionNumber,
+    issues,
+    peerType,
+    search,
+    shardId,
+    status,
+    page,
+    nodeType,
+  ]);
 
   const getRatings = () => {
     const uniqueRatings = nodes
@@ -172,11 +161,13 @@ const Nodes = () => {
                       <div className="card-header-item">
                         <Filters
                           resultsCount={nodes.length}
-                          setSearchValue={setSearchValue}
+                          setSearch={setSearch}
                           setPeerType={setPeerType}
-                          setIssues={setIssues}
-                          searchValue={searchValue}
                           peerType={peerType}
+                          setNodeType={setNodeType}
+                          nodeType={nodeType}
+                          setIssues={setIssues}
+                          search={search}
                           issues={issues}
                         />
                       </div>
@@ -193,8 +184,8 @@ const Nodes = () => {
                               <th id="shardId">
                                 <NodesTable.ShardLabel
                                   shardData={tempShards}
-                                  setShard={setShard}
-                                  shard={shard}
+                                  setShardId={setShardId}
+                                  shardId={shardId}
                                 />
                               </th>
                               <th id="versionNumber">Version</th>

@@ -14,17 +14,17 @@ interface ComputedShard {
 
 interface ShardLabelType {
   shardData: ComputedShard[];
-  setShard: React.Dispatch<React.SetStateAction<FiltersType['shard']>>;
-  shard: FiltersType['shard'];
+  setShardId: React.Dispatch<React.SetStateAction<FiltersType['shardId']>>;
+  shardId: FiltersType['shardId'];
 }
 
-const ShardLabel = ({ shardData, shard, setShard }: ShardLabelType) => {
-  const changeShard = (shardID: FiltersType['shard']) => (e: React.MouseEvent) => {
+const ShardLabel = ({ shardData, shardId, setShardId }: ShardLabelType) => {
+  const changeShardId = (shardId: FiltersType['shardId']) => (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
     document.body.click();
-    setShard(shardID);
+    setShardId(shardId);
   };
 
   return (
@@ -41,20 +41,22 @@ const ShardLabel = ({ shardData, shard, setShard }: ShardLabelType) => {
               {shardData.map(({ shardNumber }, i) => {
                 return (
                   <a
-                    className={`dropdown-item ${shard === shardNumber.toString() ? 'active' : ''}`}
+                    className={`dropdown-item ${
+                      shardId === shardNumber.toString() ? 'active' : ''
+                    }`}
                     key={shardNumber + i}
                     href="/nodes"
-                    onClick={changeShard(shardNumber.toString())}
+                    onClick={changeShardId(shardNumber.toString())}
                   >
                     <ShardSpan shardId={shardNumber} />
                   </a>
                 );
               })}
               <a
-                className={`dropdown-item ${shard === '' ? 'active' : ''}`}
+                className={`dropdown-item ${shardId === '' ? 'active' : ''}`}
                 key={-1}
                 href="/nodes"
-                onClick={changeShard('')}
+                onClick={changeShardId('')}
               >
                 Show all
               </a>
@@ -66,7 +68,7 @@ const ShardLabel = ({ shardData, shard, setShard }: ShardLabelType) => {
           className="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block side-action"
           data-testid="shardFilterButton"
         >
-          <FontAwesomeIcon icon={faFilter} className={shard !== '' ? 'text-primary' : ''} />
+          <FontAwesomeIcon icon={faFilter} className={shardId !== '' ? 'text-primary' : ''} />
         </span>
       </OverlayTrigger>
     </>
