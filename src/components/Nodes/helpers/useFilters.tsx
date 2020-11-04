@@ -12,6 +12,7 @@ export interface FiltersType {
   issues: boolean;
   shard: string;
   status: string;
+  page: string;
 }
 
 export default function useGetFilters() {
@@ -21,14 +22,23 @@ export default function useGetFilters() {
   const [issues, setIssues] = React.useState<FiltersType['issues']>(false);
   const [shard, setShard] = React.useState<FiltersType['shard']>();
   const [status, setStatus] = React.useState<FiltersType['status']>('');
+  const [page, setPage] = React.useState<FiltersType['page']>('');
 
-  const setUrlQueryParams = ({ searchValue, peerType, issues, shard, status }: FiltersType) => {
+  const setUrlQueryParams = ({
+    searchValue,
+    peerType,
+    issues,
+    shard,
+    status,
+    page,
+  }: FiltersType) => {
     const queryObject = {
       ...(searchValue === '' ? {} : { searchValue }),
       ...(status === '' ? {} : { status }),
       ...(peerType === '' ? {} : { peerType }),
       ...(!issues ? {} : { issues: 'true' }),
       ...(shard === '' ? {} : { shard }),
+      ...(page === '' ? {} : { page }),
     };
     const queryString = new URLSearchParams(queryObject);
     const queryIsDefined = String(queryString).length > 0;
@@ -47,6 +57,7 @@ export default function useGetFilters() {
     setStatus(query.get('status') ? String(query.get('status')) : '');
     setPeerType(query.get('peerType') ? String(query.get('peerType')) : '');
     setShard(isValidInteger(String(query.get('shard'))) ? String(query.get('shard')) : '');
+    setPage(isValidInteger(String(query.get('page'))) ? String(query.get('page')) : '');
     setIssues(query.get('issues') === 'true');
   }, [query]);
 
@@ -56,6 +67,7 @@ export default function useGetFilters() {
     peerType,
     issues,
     shard,
+    page,
     status,
   };
 }
