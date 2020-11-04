@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { validatorsRoutes } from 'routes';
 import { NetworkLink } from 'sharedComponents';
 
-const Tabs = ({ extraClasses }: { extraClasses?: string }) => {
+const Tabs = ({ extraClasses = '' }: { extraClasses?: string }) => {
   const activePath = useLocation().pathname;
   const nodesPage =
     activePath.endsWith(validatorsRoutes.nodes) ||
@@ -12,7 +12,7 @@ const Tabs = ({ extraClasses }: { extraClasses?: string }) => {
   const validatorsPage = !nodesPage;
 
   return (
-    <div className={`pb-3 ${extraClasses}`}>
+    <div className={extraClasses}>
       <ul className="validators-nav nav nav-tabs">
         <li className="nav-item">
           <NetworkLink
