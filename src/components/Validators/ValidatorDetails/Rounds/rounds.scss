@@ -1,19 +1,17 @@
 .squares {
   margin: -0.15em;
-}
-.square-block {
-  width: 1.1em;
-  height: 1.1em;
-  display: inline-block;
-  margin: 0.15em;
-  float: left;
-  border: 0.1em solid $primary;
-  // -webkit-box-shadow: 1px 1px 3px 0 #a3a3a3;
-  // -moz-box-shadow: 1px 1px 3px 0 #a3a3a3;
-  // box-shadow: 1px 1px 3px 0 #a3a3a3;
-  border-radius: 2px;
 
-  &.full {
-    background-color: $primary;
+  .square-block {
+    width: 1rem;
+    height: 1rem;
+    display: inline-block;
+    margin: 0.15em;
+    float: left;
+    border: 0.1em solid $primary;
+    border-radius: 2px;
+
+    &.full {
+      background-color: $primary;
+    }
   }
 }
