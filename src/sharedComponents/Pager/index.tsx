@@ -19,8 +19,8 @@ const Pager = ({
   itemsPerPage: number;
   show: boolean;
 }) => {
-  const { search, pathname } = useLocation();
-  const urlParams = new URLSearchParams(search);
+  const { pathname } = useLocation();
+  const urlParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlParams);
 
   const { size, start, last, lastPage, end } = pagerHelper({
