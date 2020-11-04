@@ -1,6 +1,6 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { adapter, Loader, PageState } from 'sharedComponents';
+import { adapter, Loader, Pager, PageState } from 'sharedComponents';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import NodesTable from './NodesTable';
 import Filters from './Filters';
@@ -183,29 +183,34 @@ const Nodes = () => {
                     )}
                   </div>
                   {nodes.length > 0 ? (
-                    <div className="card-body p-0">
-                      <NodesTable>
-                        <thead>
-                          <tr>
-                            <th id="publickey">Public key</th>
-                            <th id="nodeDisplayName">Node Name</th>
-                            <th id="shardId">
-                              <NodesTable.ShardLabel
-                                shardData={tempShards}
-                                setShard={setShard}
-                                shard={shard}
-                              />
-                            </th>
-                            <th id="versionNumber">Version</th>
-                            <th id="totalUpTimeSec">Uptime</th>
-                            <th id="isActive">
-                              <NodesTable.StatusLabel setStatus={setStatus} status={status} />
-                            </th>
-                          </tr>
-                        </thead>
-                        <NodesTable.Body nodes={nodes} ratingOrder={ratingOrder} />
-                      </NodesTable>
-                    </div>
+                    <>
+                      <div className="card-body p-0">
+                        <NodesTable>
+                          <thead>
+                            <tr>
+                              <th id="publickey">Public key</th>
+                              <th id="nodeDisplayName">Node Name</th>
+                              <th id="shardId">
+                                <NodesTable.ShardLabel
+                                  shardData={tempShards}
+                                  setShard={setShard}
+                                  shard={shard}
+                                />
+                              </th>
+                              <th id="versionNumber">Version</th>
+                              <th id="totalUpTimeSec">Uptime</th>
+                              <th id="isActive">
+                                <NodesTable.StatusLabel setStatus={setStatus} status={status} />
+                              </th>
+                            </tr>
+                          </thead>
+                          <NodesTable.Body nodes={nodes} ratingOrder={ratingOrder} />
+                        </NodesTable>
+                      </div>
+                      <div className="card-footer">
+                        <Pager itemsPerPage={50} page={'1'} total={1000} show={true} />
+                      </div>
+                    </>
                   ) : (
                     <PageState
                       icon={faCogs}
