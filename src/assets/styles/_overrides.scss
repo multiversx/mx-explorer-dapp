@@ -20,14 +20,15 @@
     }
 
     .card-header-item {
-      @extend .border-bottom;
+      border-bottom: 1px solid $border-color;
       padding: 1rem;
     }
   }
 
   .card-footer {
-    @extend .border-top;
-    @extend .py-2;
+    border-top: 1px solid $border-color;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
   }
 
   @include media-breakpoint-up(lg) {
