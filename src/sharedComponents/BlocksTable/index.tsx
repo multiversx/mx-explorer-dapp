@@ -49,9 +49,15 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
                   : sizeFormat(block.size)}
               </td>
               <td>
-                <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockHashLink${i}`}>
-                  <Trim text={block.hash} />
-                </NetworkLink>
+                <div className="d-flex">
+                  <NetworkLink
+                    to={`/blocks/${block.hash}`}
+                    data-testid={`blockHashLink${i}`}
+                    className="trim-wrapper"
+                  >
+                    <Trim text={block.hash} />
+                  </NetworkLink>
+                </div>
               </td>
             </tr>
           ))}
