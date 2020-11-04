@@ -3,42 +3,46 @@ import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown } from 'react-bootstrap';
 import * as React from 'react';
-
-interface FiltersType {
+import { FiltersType } from './helpers/useFilters';
+interface FiltersInterface {
   resultsCount: number;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-  setPeerType: React.Dispatch<React.SetStateAction<string>>;
-  setIssues: React.Dispatch<React.SetStateAction<boolean>>;
-  searchValue: string;
-  peerType: string | undefined;
-  issues: boolean;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  setPeerType: React.Dispatch<React.SetStateAction<FiltersType['peerType']>>;
+  setIssues: React.Dispatch<React.SetStateAction<FiltersType['issues']>>;
+  setNodeType: React.Dispatch<React.SetStateAction<FiltersType['nodeType']>>;
+  nodeType: FiltersType['nodeType'];
+  search: string;
+  peerType: FiltersType['peerType'];
+  issues: FiltersType['issues'];
 }
 
 const Filters = ({
   resultsCount,
-  setSearchValue,
+  setSearch,
   setPeerType,
-  setIssues,
-  searchValue,
   peerType,
+  setNodeType,
+  nodeType,
+  setIssues,
+  search,
   issues,
-}: FiltersType) => {
-  const [inputValue, setInputValue] = React.useState<string>(searchValue);
+}: FiltersInterface) => {
+  const [inputValue, setInputValue] = React.useState<string>(search);
 
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setInputValue(e.target.value);
   };
 
   const updateSearchValue = () => {
-    setSearchValue(inputValue);
+    setSearch(inputValue);
   };
 
   const resetValidatorValue = () => {
-    setSearchValue('');
+    setSearch('');
     setInputValue('');
   };
 
-  const changeValidatorObserver = (e: any, peerType: string) => {
+  const changeValidatorObserver = (peerType: FiltersType['peerType']) => (e: any) => {
     e.preventDefault();
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
@@ -46,7 +50,12 @@ const Filters = ({
     changePeerType(peerType);
   };
 
-  const changePeerType = (peerType: string) => {
+  const changeNodeType = (nodeType: FiltersType['nodeType']) => () => {
+    changePeerType('');
+    setNodeType(nodeType);
+  };
+
+  const changePeerType = (peerType: FiltersType['peerType']) => {
     setIssues(false);
     setPeerType(peerType);
   };
@@ -100,9 +109,7 @@ const Filters = ({
         <li className="list-inline-item">
           <button
             className={`btn btn-sm btn-outline-light btn-pill ${peerType === '' ? 'active' : ''}`}
-            onClick={() => {
-              changePeerType('');
-            }}
+            onClick={changeNodeType('')}
           >
             All
           </button>
@@ -110,11 +117,9 @@ const Filters = ({
         <li className="list-inline-item">
           <button
             className={`btn btn-sm btn-outline-light btn-pill ${
-              peerType === 'validator' ? 'active' : ''
+              nodeType === 'validator' ? 'active' : ''
             }`}
-            onClick={() => {
-              changePeerType('validator');
-            }}
+            onClick={changeNodeType('validator')}
           >
             Validators
           </button>
@@ -123,11 +128,9 @@ const Filters = ({
           <button
             data-testid="filterByObservers"
             className={`btn btn-sm btn-outline-light btn-pill ${
-              peerType === 'observer' ? 'active' : ''
+              nodeType === 'observer' ? 'active' : ''
             }`}
-            onClick={() => {
-              changePeerType('observer');
-            }}
+            onClick={changeNodeType('observer')}
           >
             Observers
           </button>
@@ -161,7 +164,7 @@ const Filters = ({
                 className={`${'eligible' === peerType ? 'active' : ''}`}
                 data-testid="filterByValidators"
                 href="#/validators"
-                onClick={(e: any) => changeValidatorObserver(e, 'eligible')}
+                onClick={changeValidatorObserver('eligible')}
               >
                 Eligible
               </Dropdown.Item>
@@ -169,7 +172,7 @@ const Filters = ({
                 className={`${'waiting' === peerType ? 'active' : ''}`}
                 data-testid="filterByValidators"
                 href="#/validators"
-                onClick={(e: any) => changeValidatorObserver(e, 'waiting')}
+                onClick={changeValidatorObserver('waiting')}
               >
                 Waiting
               </Dropdown.Item>
@@ -177,7 +180,7 @@ const Filters = ({
                 className={`${'new' === peerType ? 'active' : ''}`}
                 data-testid="filterByValidators"
                 href="#/validators"
-                onClick={(e: any) => changeValidatorObserver(e, 'new')}
+                onClick={changeValidatorObserver('new')}
               >
                 New
               </Dropdown.Item>
@@ -185,7 +188,7 @@ const Filters = ({
                 className={`${peerType === 'jailed' ? 'active' : ''}`}
                 data-testid="filterByValidators"
                 href="#/validators"
-                onClick={(e: any) => changeValidatorObserver(e, 'jailed')}
+                onClick={changeValidatorObserver('jailed')}
               >
                 Jailed
               </Dropdown.Item>

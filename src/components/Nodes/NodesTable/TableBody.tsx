@@ -24,8 +24,8 @@ const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrde
             )}
           </td>
           <td>
-            <NetworkLink to={urlBuilder.shard(node.shardNumber)} data-testid={`shardLink${index}`}>
-              <ShardSpan shardId={node.shardNumber} />
+            <NetworkLink to={urlBuilder.shard(node.shardId)} data-testid={`shardLink${index}`}>
+              <ShardSpan shardId={node.shardId} />
             </NetworkLink>
           </td>
 

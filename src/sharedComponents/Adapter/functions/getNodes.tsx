@@ -4,19 +4,32 @@ export default async function getNodes({
   provider,
   baseUrl,
   timeout,
-  searchValue,
   peerType,
   issues,
-}: AdapterFunctionType & { searchValue?: string; peerType?: string; issues?: string }) {
+  search,
+  nodeType,
+  shard,
+  status,
+}: AdapterFunctionType & {
+  search?: string;
+  issues?: string;
+  peerType?: string;
+  nodeType?: string;
+  shard?: string;
+  status?: string;
+}) {
   try {
     const { data } = await provider({
       baseUrl,
       url: `/nodes`,
       timeout,
       params: {
-        ...(searchValue !== undefined ? { searchValue } : {}),
+        ...(search !== undefined ? { search } : {}),
         ...(peerType !== undefined ? { peerType } : {}),
         ...(issues !== undefined ? { issues } : {}),
+        ...(nodeType !== undefined ? { nodeType } : {}),
+        ...(shard !== undefined ? { shard } : {}),
+        ...(status !== undefined ? { status } : {}),
       },
     });
 

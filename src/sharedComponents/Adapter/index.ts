@@ -101,11 +101,32 @@ export default function useAdapter() {
       searchValue,
       peerType,
       issues,
+      search,
+      nodeType,
+      shard,
+      status,
+      page,
     }: {
       searchValue?: string;
       peerType?: string;
       issues?: string;
-    }) => f.getNodes({ provider, baseUrl, timeout, searchValue, peerType, issues }),
+      search?: string;
+      nodeType?: string;
+      shard?: string;
+      status?: string;
+      page?: string;
+    }) =>
+      f.getNodes({
+        provider,
+        baseUrl,
+        timeout,
+        peerType,
+        issues,
+        search,
+        nodeType,
+        shard,
+        status,
+      }),
 
     getNetworkConfig: () => f.getNetworkConfig({ proxyUrl, timeout }),
 

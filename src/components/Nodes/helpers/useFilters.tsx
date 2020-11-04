@@ -7,66 +7,76 @@ function useQuery() {
 }
 
 export interface FiltersType {
-  searchValue: string;
+  search: string;
   peerType: string;
+  nodeType: string;
   issues: boolean;
-  shard: string;
+  shardId: string;
   status: string;
   page: string;
 }
 
 export default function useGetFilters() {
   const query = useQuery();
-  const [searchValue, setSearchValue] = React.useState<FiltersType['searchValue']>('');
+  const [search, setSearch] = React.useState<FiltersType['search']>('');
   const [peerType, setPeerType] = React.useState<FiltersType['peerType']>('');
+  const [nodeType, setNodeType] = React.useState<FiltersType['nodeType']>('');
   const [issues, setIssues] = React.useState<FiltersType['issues']>(false);
-  const [shard, setShard] = React.useState<FiltersType['shard']>();
+  const [shardId, setShardId] = React.useState<FiltersType['shardId']>();
   const [status, setStatus] = React.useState<FiltersType['status']>('');
   const [page, setPage] = React.useState<FiltersType['page']>('');
 
-  const setUrlQueryParams = ({
-    searchValue,
+  const getQueryString = ({
+    search,
     peerType,
     issues,
-    shard,
+    shardId,
     status,
     page,
+    nodeType,
   }: FiltersType) => {
     const queryObject = {
-      ...(searchValue === '' ? {} : { searchValue }),
+      ...(search === '' ? {} : { search }),
       ...(status === '' ? {} : { status }),
       ...(peerType === '' ? {} : { peerType }),
+      ...(nodeType === '' ? {} : { nodeType }),
       ...(!issues ? {} : { issues: 'true' }),
-      ...(shard === '' ? {} : { shard }),
+      ...(shardId === '' ? {} : { shardId }),
       ...(page === '' ? {} : { page }),
     };
     const queryString = new URLSearchParams(queryObject);
     const queryIsDefined = String(queryString).length > 0;
 
-    if (
+    const updatePushState =
       (window.location.search || queryIsDefined) &&
-      `?${String(queryString)}` !== window.location.search
-    ) {
-      const questionMark = queryIsDefined ? '?' : '';
-      window.history.pushState({}, '', `/nodes${questionMark}${queryString}`);
-    }
+      `?${String(queryString)}` !== window.location.search;
+
+    const questionMark = queryIsDefined ? '?' : '';
+
+    return {
+      queryObject,
+      query: `${questionMark}${queryString}`,
+      updatePushState,
+    };
   };
 
   React.useEffect(() => {
-    setSearchValue(query.get('searchValue') ? String(query.get('searchValue')) : '');
+    setSearch(query.get('search') ? String(query.get('search')) : '');
     setStatus(query.get('status') ? String(query.get('status')) : '');
     setPeerType(query.get('peerType') ? String(query.get('peerType')) : '');
-    setShard(isValidInteger(String(query.get('shard'))) ? String(query.get('shard')) : '');
+    setNodeType(query.get('nodeType') ? String(query.get('nodeType')) : '');
+    setShardId(isValidInteger(String(query.get('shardId'))) ? String(query.get('shardId')) : '');
     setPage(isValidInteger(String(query.get('page'))) ? String(query.get('page')) : '');
     setIssues(query.get('issues') === 'true');
   }, [query]);
 
   return {
-    setUrlQueryParams,
-    searchValue,
+    getQueryString,
+    search,
     peerType,
+    nodeType,
     issues,
-    shard,
+    shardId,
     page,
     status,
   };
