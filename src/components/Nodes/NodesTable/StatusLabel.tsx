@@ -58,7 +58,7 @@ const StatusLabel = ({ status, setStatus }: StatusLabelType) => {
         }
       >
         <span
-          className="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
+          className="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block side-action"
           data-testid="shardFilterButton"
         >
           <FontAwesomeIcon icon={faFilter} className={status !== '' ? 'text-primary' : ''} />
