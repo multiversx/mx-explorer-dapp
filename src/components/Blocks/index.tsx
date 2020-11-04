@@ -85,11 +85,11 @@ const Blocks: React.FC = () => {
             </div>
             <div className="row">
               <div className="col-12">
-                <div className="card card-small">
+                <div className="card">
                   {state.blocks.length > 0 ? (
                     <>
-                      <div className="card-header border-0 p-0">
-                        <div className="card-header-item border-bottom p-3">
+                      <div className="card-header">
+                        <div className="card-header-item">
                           Showing last 10,000
                           {totalBlocks !== '...' && (
                             <> of {totalBlocks.toLocaleString('en')}</>
@@ -101,7 +101,7 @@ const Blocks: React.FC = () => {
                         <BlocksTable blocks={state.blocks} shardId={shardId} />
                       </div>
 
-                      <div className="card-footer border-top py-2">
+                      <div className="card-footer">
                         <Pager
                           page={String(page)}
                           total={totalBlocks !== '...' ? Math.min(totalBlocks, 10000) : totalBlocks}

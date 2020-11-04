@@ -41,17 +41,17 @@ const TransactionsTable = ({
 }: TransactionsTableType) => {
   return (
     <div className="transactions-table">
-      <div className="card card-small">
-        <div className="card-header border-0 p-0">
+      <div className="card">
+        <div className="card-header">
           {withTitle && (
-            <div className="card-header-item border-bottom p-3">
+            <div className="card-header-item">
               <h6 className="m-0" data-testid="title">
                 Transactions
               </h6>
             </div>
           )}
           {totalTransactions > 10000 && (
-            <div className="card-header-item border-bottom p-3">
+            <div className="card-header-item">
               Showing last 10,000 of {totalTransactions.toLocaleString('en')} transactions
             </div>
           )}
@@ -85,7 +85,7 @@ const TransactionsTable = ({
           </div>
         </div>
 
-        <div className="card-footer border-top py-2">
+        <div className="card-footer">
           <Pager
             itemsPerPage={50}
             page={String(size)}

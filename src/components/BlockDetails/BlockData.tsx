@@ -34,7 +34,7 @@ const BlockData = (props: BlockDataType) => {
   const isFirstBlock = block.prevHash && block.prevHash.length > 64;
 
   return (
-    <div className="card card-small">
+    <div className="card">
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Block Height">

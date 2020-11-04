@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-import { faStarHalfAlt } from '@fortawesome/pro-regular-svg-icons/faStarHalfAlt';
+import { faHeartRate } from '@fortawesome/pro-regular-svg-icons/faHeartRate';
 import { PageState } from 'sharedComponents';
 export interface HistoricRatingType {
   epoch: number;
@@ -62,10 +62,10 @@ const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType
   };
 
   return (
-    <div className="card card-small" data-testid="chartContainer">
+    <div className="card" data-testid="chartContainer">
       {ratings.length === 0 && (
         <PageState
-          icon={faStarHalfAlt}
+          icon={faHeartRate}
           title="Historic ratings not found"
           className="page-state-sm d-flex h-100 align-items-center justify-content-center"
           dataTestId="roundsErrorScreen"
@@ -74,8 +74,8 @@ const RatingsChart = ({ historicRatings }: { historicRatings: HistoricRatingType
 
       {ratings.length > 0 && (
         <>
-          <div className="card-header border-0 p-0">
-            <div className="card-header-item border-bottom p-3">
+          <div className="card-header">
+            <div className="card-header-item">
               <h6 className="m-0">Rating History</h6>
             </div>
           </div>

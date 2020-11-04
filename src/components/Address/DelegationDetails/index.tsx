@@ -17,7 +17,7 @@ const DelegationDetails = (props: AddressDetailsType) => {
   return props.addressId ? (
     <>
       {props.stake > 0 && (
-        <div className="card card-small chart">
+        <div className="card chart">
           <div className="card-body bg-primary d-flex align-items-center">
             <div className="chart-container mr-4">
               <div>

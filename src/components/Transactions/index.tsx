@@ -98,7 +98,7 @@ const Transactions = () => {
                     size={size}
                   />
                 ) : (
-                  <div className="card card-small">
+                  <div className="card">
                     <NoTransactions />
                   </div>
                 )}
