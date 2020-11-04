@@ -61,15 +61,17 @@ const LatestTransactions = () => {
   const Component = () => {
     const someNew = transactions.some((transaction) => transaction.isNew);
     return (
-      <div className="card card-small" ref={ref}>
+      <div className="card" ref={ref}>
         {transactionsFetched === undefined && <Loader dataTestId="transactionsLoader" />}
         {transactionsFetched === false && <FailedTransactions />}
         {transactionsFetched === true && transactions.length === 0 && <NoTransactions />}
         {transactionsFetched === true && transactions.length > 0 && (
           <>
-            <div className="card-header border-bottom d-flex justify-content-between align-items-center">
-              <h6 className="m-0">Latest Transactions</h6>
-              <NetworkLink to="/transactions">View All Transactions</NetworkLink>
+            <div className="card-header">
+              <div className="card-header-item d-flex justify-content-between align-items-center">
+                <h6 className="m-0">Latest Transactions</h6>
+                <NetworkLink to="/transactions">View All Transactions</NetworkLink>
+              </div>
             </div>
             <div className="card-body card-scroll py-0">
               <div className="animated-list" data-testid="transactionsList">
@@ -78,7 +80,7 @@ const LatestTransactions = () => {
                     key={transaction.txHash}
                     className={`row animated-row ${transaction.isNew && someNew ? 'new' : ''}`}
                   >
-                    <div className="col-6 d-flex align-items-center">
+                    <div className="col-6 pl-lg-spacer d-flex align-items-center">
                       <div className="list-item-icon mr-3">
                         <FontAwesomeIcon icon={faExchangeAlt} />
                       </div>
@@ -102,7 +104,7 @@ const LatestTransactions = () => {
                         </span>
                       </div>
                     </div>
-                    <div className="col-6 list-item-text text-secondary">
+                    <div className="col-6 pr-lg-spacer list-item-text text-secondary">
                       <div className="d-flex align-items-center">
                         <span className="text-nowrap mr-2">From</span>
 

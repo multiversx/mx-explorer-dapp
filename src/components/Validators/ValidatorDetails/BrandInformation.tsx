@@ -17,9 +17,9 @@ const BrandInformation = ({ publicKey }: { publicKey: string }) => {
   const brand = sortedBrands.find((b) => b.validators.some((v: any) => v.publicKey === publicKey));
 
   return brand !== undefined ? (
-    <div className="card card-small" data-testid="brandContainer">
-      <div className="card-header border-0 p-0">
-        <div className="card-header-item border-bottom">
+    <div className="card" data-testid="brandContainer">
+      <div className="card-header">
+        <div className="card-header-item p-0">
           <div className="brand-header-item">
             <img
               className={`mr-3 avatar rounded-circle shadow-sm ${brand.avatar ? '' : 'gray'}`}

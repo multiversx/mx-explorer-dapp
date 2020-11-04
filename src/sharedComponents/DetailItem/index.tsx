@@ -12,8 +12,8 @@ const DetailItem = ({
   colWidth?: string;
 }) => (
   <div className={`row py-3 border-bottom detail-item ${className}`}>
-    <div className={`col-lg-${colWidth} text-secondary text-lg-right`}>{title}</div>
-    <div className="col">{children}</div>
+    <div className={`col-lg-${colWidth} text-secondary text-lg-right pl-lg-spacer`}>{title}</div>
+    <div className="col pr-lg-spacer">{children}</div>
   </div>
 );
 

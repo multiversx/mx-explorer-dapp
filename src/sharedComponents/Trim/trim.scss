@@ -61,7 +61,5 @@ a > .trim span {
 }
 
 .table .trim {
-  @include media-breakpoint-down(lg) {
-    max-width: 10rem;
-  }
+  max-width: 10rem;
 }

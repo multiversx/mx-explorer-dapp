@@ -21,9 +21,9 @@ const NetworkMetrics = ({
   rating,
 }: NetworkMetricsType & { rating: number }) => {
   return (
-    <div className="card card-small">
-      <div className="card-header border-0 p-0">
-        <div className="card-header-item border-bottom p-3">
+    <div className="card">
+      <div className="card-header">
+        <div className="card-header-item">
           <h6 className="m-0">Network Metrics</h6>
         </div>
       </div>

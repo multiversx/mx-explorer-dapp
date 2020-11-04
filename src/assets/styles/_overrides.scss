@@ -5,13 +5,48 @@
 // }
 
 .card {
+  @extend .card-small;
+
   height: 100%;
   overflow: hidden;
   word-wrap: normal; // fixes Trim bug
 
   .card-header {
+    border: 0;
+    padding: 0;
+
     &:first-child {
       border-radius: calc(#{$card-border-radius} - 1px) calc(#{$card-border-radius} - 1px) 0 0;
+    }
+
+    .card-header-item {
+      @extend .border-bottom;
+      padding: 1rem;
+    }
+  }
+
+  .card-footer {
+    @extend .border-top;
+    @extend .py-2;
+  }
+
+  @include media-breakpoint-up(lg) {
+    .card-footer,
+    .card-header-item {
+      padding-left: $spacer-val !important;
+      padding-right: $spacer-val !important;
+    }
+
+    .table-wrapper {
+      th:first-child,
+      td:first-child {
+        padding-left: $spacer-val;
+      }
+
+      th:last-child,
+      td:last-child {
+        padding-right: $spacer-val;
+      }
     }
   }
 }

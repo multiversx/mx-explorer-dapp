@@ -4,11 +4,12 @@
 @import './../../../node_modules/bootstrap/scss/mixins';
 
 $body-background: $body-bg;
+$spacer-val: $spacer * 2;
 
 // SPACING
 $spacers: (
   spacer: (
-    $spacer * 2,
+    $spacer-val,
   ),
 );
 
@@ -69,3 +70,10 @@ $form-check-input-margin-y: 0.4rem;
 
 // MISC
 $small-stats-min-height: 7.8rem;
+
+// POPOVER
+$popover-body-padding-y: 1rem;
+$popover-body-padding-x: 0;
+$popover-body-color: $card_bg;
+$popover-border-width: 1px;
+$popover-border-color: $border-color;

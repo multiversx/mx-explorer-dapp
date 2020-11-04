@@ -9,6 +9,7 @@ import useFilters, { FiltersType } from './helpers/useFilters';
 import { ValidatorType } from 'context/validators';
 import tempNodes from './tempNodes';
 import tempShards from './tempShards';
+import Tabs from 'components/Validators/Tabs';
 
 const Nodes = () => {
   const ref = React.useRef(null);
@@ -163,22 +164,26 @@ const Nodes = () => {
             <div className="row">
               <div className="col-12">
                 <div className="card">
-                  {nodes.length > 0 ? (
-                    <>
-                      <div className="card-header border-0 p-0">
-                        <div className="card-header-item border-bottom p-3">
-                          <Filters
-                            resultsCount={nodes.length}
-                            setSearchValue={setSearchValue}
-                            setPeerType={setPeerType}
-                            setIssues={setIssues}
-                            searchValue={searchValue}
-                            peerType={peerType}
-                            issues={issues}
-                          />
-                        </div>
+                  <div className="card-header">
+                    <div className="card-header-item pb-0">
+                      <Tabs />
+                    </div>
+                    {nodes.length > 0 && (
+                      <div className="card-header-item">
+                        <Filters
+                          resultsCount={nodes.length}
+                          setSearchValue={setSearchValue}
+                          setPeerType={setPeerType}
+                          setIssues={setIssues}
+                          searchValue={searchValue}
+                          peerType={peerType}
+                          issues={issues}
+                        />
                       </div>
-
+                    )}
+                  </div>
+                  {nodes.length > 0 ? (
+                    <div className="card-body p-0">
                       <NodesTable>
                         <thead>
                           <tr>
@@ -200,7 +205,7 @@ const Nodes = () => {
                         </thead>
                         <NodesTable.Body nodes={nodes} ratingOrder={ratingOrder} />
                       </NodesTable>
-                    </>
+                    </div>
                   ) : (
                     <PageState
                       icon={faCogs}

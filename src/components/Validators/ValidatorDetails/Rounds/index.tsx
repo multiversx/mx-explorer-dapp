@@ -11,7 +11,7 @@ type RoundsType = GetRoundsReturnType & {
 const Rounds = ({ rounds, roundsFetched, isWaiting }: RoundsType) => {
   return (
     <>
-      <div className="card card-small" data-testid="roundsContainer">
+      <div className="card" data-testid="roundsContainer">
         {roundsFetched === undefined && <Loader dataTestId="roundsLoading" small={true} />}
         {roundsFetched === false && (
           <PageState
@@ -23,12 +23,12 @@ const Rounds = ({ rounds, roundsFetched, isWaiting }: RoundsType) => {
         )}
         {roundsFetched === true && (
           <>
-            <div className="card-header border-0 p-0">
-              <div className="card-header-item border-bottom p-3">
+            <div className="card-header">
+              <div className="card-header-item">
                 <h6 className="m-0">Last Consensus Rounds</h6>
               </div>
             </div>
-            <div className="card-body card-body p-3">
+            <div className="card-body">
               <div className="squares" data-testid="rounds">
                 {rounds.length &&
                   rounds.map((round: any) => (

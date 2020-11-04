@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ValidatorType } from 'context/validators';
 import { truncate, urlBuilder } from 'helpers';
-import { ShardSpan, NetworkLink, Trim } from 'sharedComponents';
+import { ShardSpan, NetworkLink, Trim, Led } from 'sharedComponents';
 import RowIcon from './RowIcon';
 
 const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrder: string[] }) => {
@@ -53,19 +53,10 @@ const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrde
               node.status === 'offline' && <span>0%</span>}
           </td>
           <td>
-            {node.status === 'online' ? (
-              <div>
-                <span className="badge badge-pill badge-success badge-status">&nbsp;</span>
-                &nbsp;
-                <span>Online</span>
-              </div>
-            ) : (
-              <div>
-                <span className="badge badge-pill badge-danger badge-status">&nbsp;</span>
-                &nbsp;
-                <span className={node.nodeType === 'observer' ? 'text-muted' : ''}>Offline</span>
-              </div>
-            )}
+            <div className="d-flex align-items-center">
+              <Led color={node.status === 'online' ? 'bg-success' : 'bg-danger'} />
+              <span className="ml-2">{node.status === 'online' ? 'Online' : 'Offline'}</span>
+            </div>
           </td>
         </tr>
       ))}

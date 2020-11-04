@@ -57,9 +57,9 @@ const BrandDetails = () => {
 
             <div className="row" data-testid="brandDetailsContainer">
               <div className="col-12 col-md-6">
-                <div className="card card-small">
-                  <div className="card-header border-0 p-0">
-                    <div className="card-header-item border-bottom">
+                <div className="card">
+                  <div className="card-header">
+                    <div className="card-header-item p-0">
                       <div className="brand-header-item">
                         <img
                           className={`mr-3 avatar rounded-circle shadow-sm ${
@@ -104,7 +104,7 @@ const BrandDetails = () => {
                 </div>
               </div>
               <div className="col-12 col-md-6 mt-spacer mt-md-0">
-                <div className="card card-small">
+                <div className="card">
                   <div className="card-body p-0">
                     <div className="container-fluid">
                       <DetailItem title="Stake" colWidth="4">
@@ -129,9 +129,9 @@ const BrandDetails = () => {
             </div>
             <div className="row">
               <div className="col-12 mt-spacer">
-                <div className="card card-small">
-                  <div className="card-header border-0 p-0">
-                    <div className="card-header-item border-bottom p-3">
+                <div className="card">
+                  <div className="card-header">
+                    <div className="card-header-item">
                       <h6 className="m-0">Nodes</h6>
                     </div>
                   </div>

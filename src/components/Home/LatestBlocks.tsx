@@ -53,15 +53,17 @@ const LatestBlocks = () => {
   const Component = () => {
     const someNew = blocks.some((block) => block.isNew);
     return (
-      <div className="card card-small" ref={ref}>
+      <div className="card" ref={ref}>
         {blocksFetched === undefined && <Loader dataTestId="blocksLoader" />}
         {blocksFetched === false && <FailedBlocks />}
         {blocksFetched === true && blocks.length === 0 && <NoBlocks />}
         {blocksFetched === true && blocks.length > 0 && (
           <>
-            <div className="card-header border-bottom d-flex justify-content-between align-items-center">
-              <h6 className="m-0">Latest Blocks</h6>
-              <NetworkLink to="/blocks">View All Blocks</NetworkLink>
+            <div className="card-header">
+              <div className="card-header-item d-flex justify-content-between align-items-center">
+                <h6 className="m-0">Latest Blocks</h6>
+                <NetworkLink to="/blocks">View All Blocks</NetworkLink>
+              </div>
             </div>
             <div className="card-body card-scroll py-0">
               <div className="animated-list" data-testid="blocksList">
@@ -70,7 +72,7 @@ const LatestBlocks = () => {
                     key={block.hash}
                     className={`row animated-row ${block.isNew && someNew ? 'new' : ''}`}
                   >
-                    <div className="col-6">
+                    <div className="col-6 pl-lg-spacer">
                       <div className="d-flex align-items-center">
                         <div className="list-item-icon mr-3">
                           <FontAwesomeIcon icon={faCube} />
@@ -89,7 +91,7 @@ const LatestBlocks = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-6 list-item-text text-secondary">
+                    <div className="col-6 pr-lg-spacer list-item-text text-secondary">
                       <div className="d-flex align-items-center">
                         <span className="mr-2">Hash</span>
 
