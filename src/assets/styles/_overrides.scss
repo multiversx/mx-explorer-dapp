@@ -33,9 +33,9 @@
 
   @include media-breakpoint-up(lg) {
     .card-footer,
-    .card-header-item {
-      padding-left: $spacer-val !important;
-      padding-right: $spacer-val !important;
+    .card-header .card-header-item {
+      padding-left: $spacer-val;
+      padding-right: $spacer-val;
     }
 
     .table-wrapper {

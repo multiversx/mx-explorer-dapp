@@ -165,7 +165,7 @@ const Nodes = () => {
               <div className="col-12">
                 <div className="card">
                   <div className="card-header">
-                    <div className="card-header-item pb-0">
+                    <div className="card-header-item pb-0 px-0 border-0">
                       <Tabs />
                     </div>
                     {nodes.length > 0 && (
