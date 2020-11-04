@@ -21,6 +21,7 @@ const Nodes = () => {
     peerType: ulrPeerType,
     issues: ulrIssues,
     shard: ulrShard,
+    page: ulrPage,
     status: ulrStatus,
   } = useFilters();
   const { nodes, versionNumber } = useGlobalState();
@@ -28,6 +29,7 @@ const Nodes = () => {
   const [ratingOrder, setRatingOrder] = React.useState<string[]>([]);
 
   const [shard, setShard] = React.useState<FiltersType['shard']>('');
+  const [page, setPage] = React.useState<FiltersType['page']>('');
   const [status, setStatus] = React.useState<FiltersType['status']>('');
   const [searchValue, setSearchValue] = React.useState<FiltersType['searchValue']>('');
   const [peerType, setPeerType] = React.useState<FiltersType['peerType']>('');
@@ -43,13 +45,16 @@ const Nodes = () => {
     if (ulrPeerType) {
       setPeerType(ulrPeerType);
     }
+    if (ulrPage) {
+      setPage(ulrPage);
+    }
     if (ulrStatus) {
       setStatus(ulrStatus);
     }
     if (ulrIssues) {
       setIssues(Boolean(ulrIssues));
     }
-  }, [urlSearchValue, ulrPeerType, ulrIssues, ulrShard, ulrStatus]);
+  }, [urlSearchValue, ulrPeerType, ulrIssues, ulrShard, ulrStatus, ulrPage]);
 
   const getVersionNumber = () => {
     if (nodes.length === 0) {
@@ -66,7 +71,7 @@ const Nodes = () => {
 
   const fetchNodes = () => {
     if (versionNumber) {
-      setUrlQueryParams({ issues, peerType, searchValue, shard, status });
+      setUrlQueryParams({ issues, peerType, searchValue, shard, status, page });
 
       setDataReady(undefined);
 
@@ -122,7 +127,7 @@ const Nodes = () => {
     }
   };
 
-  React.useEffect(fetchNodes, [versionNumber, issues, peerType, searchValue, shard, status]);
+  React.useEffect(fetchNodes, [versionNumber, issues, peerType, searchValue, shard, status, page]);
 
   const getRatings = () => {
     const uniqueRatings = nodes
