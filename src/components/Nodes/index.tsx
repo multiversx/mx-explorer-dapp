@@ -6,8 +6,6 @@ import NodesTable from './NodesTable';
 import Filters from './Filters';
 import useFilters from './helpers/useFilters';
 import { ValidatorType } from 'context/validators';
-import tempShards from './tempShards';
-import Tabs from 'components/Validators/Tabs';
 import NodesLayout from 'sharedComponents/NodesLayout';
 import { useLocation } from 'react-router-dom';
 
@@ -82,14 +80,14 @@ const Nodes = () => {
                   <NodesTable>
                     <thead>
                       <tr>
-                        <th id="publickey">Public key</th>
-                        <th id="nodeDisplayName">Node Name</th>
-                        <th id="shardId">
-                          <NodesTable.ShardLabel shardData={tempShards} />
+                        <th data-testid="publickey">Public key</th>
+                        <th data-testid="nodeDisplayName">Node Name</th>
+                        <th data-testid="shardId">
+                          <NodesTable.ShardLabel />
                         </th>
-                        <th id="versionNumber">Version</th>
-                        <th id="totalUpTimeSec">Uptime</th>
-                        <th id="isActive">
+                        <th data-testid="versionNumber">Version</th>
+                        <th data-testid="totalUpTimeSec">Uptime</th>
+                        <th data-testid="status">
                           <NodesTable.StatusLabel />
                         </th>
                       </tr>
