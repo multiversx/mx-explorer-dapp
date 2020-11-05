@@ -11,6 +11,12 @@ export interface ConfigType {
   networks: NetworkType[];
 }
 
+export interface ShardType {
+  shardId: number;
+  validators: number;
+  activeValidators: number;
+}
+
 export interface BrandType {
   name: string;
   avatar: string;
@@ -40,6 +46,7 @@ export interface StateType {
   theme: string;
   nodes: ValidatorType[];
   brands: BrandType[];
+  shards: ShardType[];
 }
 
 const initialState = (optionalConfig?: ConfigType): StateType => {
@@ -62,6 +69,7 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
     theme: getTheme(),
     nodes: [],
     brands: [],
+    shards: [],
   };
 };
 
