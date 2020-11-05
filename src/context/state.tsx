@@ -40,7 +40,6 @@ export interface StateType {
   theme: string;
   nodes: ValidatorType[];
   brands: BrandType[];
-  versionNumber: string;
 }
 
 const initialState = (optionalConfig?: ConfigType): StateType => {
@@ -63,7 +62,6 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
     theme: getTheme(),
     nodes: [],
     brands: [],
-    versionNumber: '',
   };
 };
 
