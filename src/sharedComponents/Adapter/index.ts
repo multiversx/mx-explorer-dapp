@@ -97,25 +97,7 @@ export default function useAdapter() {
 
     /* Validators */
 
-    getNodes: ({
-      searchValue,
-      peerType,
-      issues,
-      search,
-      nodeType,
-      shard,
-      status,
-      page,
-    }: {
-      searchValue?: string;
-      peerType?: string;
-      issues?: string;
-      search?: string;
-      nodeType?: string;
-      shard?: string;
-      status?: string;
-      page?: string;
-    }) =>
+    getNodes: ({ peerType, issues, search, nodeType, shard, status, size }: f.GetNodesType) =>
       f.getNodes({
         provider,
         baseUrl,
@@ -126,9 +108,22 @@ export default function useAdapter() {
         nodeType,
         shard,
         status,
+        size,
       }),
 
-    getNetworkConfig: () => f.getNetworkConfig({ proxyUrl, timeout }),
+    getNodesCount: ({ peerType, issues, search, nodeType, shard, status }: f.GetNodesType) =>
+      f.getNodes({
+        provider,
+        baseUrl,
+        timeout,
+        peerType,
+        issues,
+        search,
+        nodeType,
+        shard,
+        status,
+        count: true,
+      }),
 
     getRounds: ({ shardNumber, signersIndex, epoch, roundAtEpochStart }: f.GetRoundsType) =>
       f.getRounds({

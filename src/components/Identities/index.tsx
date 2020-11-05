@@ -23,7 +23,7 @@ const initialState = [
 
 const Identities = () => {
   const ref = React.useRef(null);
-  const { getNodes, getNetworkConfig } = adapter();
+  const { getNodes } = adapter();
   const [success, setSuccess] = React.useState<boolean | undefined>(undefined);
   const dispatch = useGlobalDispatch();
   const { brands } = useGlobalState();

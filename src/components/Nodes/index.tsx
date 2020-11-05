@@ -12,7 +12,7 @@ import Tabs from 'components/Validators/Tabs';
 const Nodes = () => {
   const ref = React.useRef(null);
   const dispatch = useGlobalDispatch();
-  const { getNetworkConfig, getNodes } = adapter();
+  const { getNodes, getNodesCount } = adapter();
   const {
     getQueryString,
     search: urlSearch,
@@ -23,7 +23,7 @@ const Nodes = () => {
     page: ulrPage,
     status: ulrStatus,
   } = useFilters();
-  const { nodes, versionNumber } = useGlobalState();
+  const { nodes } = useGlobalState();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [ratingOrder, setRatingOrder] = React.useState<string[]>([]);
 
@@ -34,6 +34,7 @@ const Nodes = () => {
   const [peerType, setPeerType] = React.useState<FiltersType['peerType']>('');
   const [nodeType, setNodeType] = React.useState<FiltersType['nodeType']>('');
   const [issues, setIssues] = React.useState<FiltersType['issues']>(false);
+  const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
 
   React.useEffect(() => {
     if (ulrShardId !== undefined) {
@@ -59,64 +60,40 @@ const Nodes = () => {
     }
   }, [urlSearch, ulrPeerType, ulrIssues, ulrStatus, ulrPage, ulrNodeType, ulrShardId]);
 
-  const getVersionNumber = () => {
-    if (nodes.length === 0) {
-      getNetworkConfig().then((config) => {
-        dispatch({
-          type: 'setVersionNumber',
-          versionNumber: config.erd_latest_tag_software_version,
-        });
-      });
-    }
-  };
-
-  React.useEffect(getVersionNumber, []);
+  const size = page ? parseInt(page) : 1;
 
   const fetchNodes = () => {
-    if (versionNumber) {
-      const { queryObject, query, updatePushState } = getQueryString({
-        issues,
-        peerType,
-        search,
-        nodeType,
-        shardId,
-        status,
-        page,
-      });
+    const { queryObject, query, updatePushState } = getQueryString({
+      issues,
+      peerType,
+      search,
+      nodeType,
+      shardId,
+      status,
+      page,
+    });
 
-      if (updatePushState) {
-        window.history.pushState({}, '', `/nodes${query}`);
-      }
-
-      setDataReady(undefined);
-      getNodes(queryObject)
-        .then(({ data: nodes }) => {
-          dispatch({
-            type: 'setNodes',
-            nodes,
-          });
-          if (ref.current !== null) {
-            setDataReady(true);
-          }
-        })
-        .catch((error) => {
-          if (ref.current !== null) {
-            setDataReady(false);
-          }
-        });
+    if (updatePushState) {
+      // TODO: url simplu
+      window.history.pushState({}, '', `/nodes${query}`);
     }
+
+    setDataReady(undefined);
+    Promise.all([getNodes({ ...queryObject, size }), getNodesCount(queryObject)]).then(
+      ([nodesData, count]) => {
+        dispatch({
+          type: 'setNodes',
+          nodes: nodesData.data,
+        });
+        setTotalNodes(count.data);
+        if (ref.current !== null) {
+          setDataReady(nodesData.success && count.success);
+        }
+      }
+    );
   };
 
-  React.useEffect(fetchNodes, [
-    versionNumber,
-    issues,
-    peerType,
-    search,
-    shardId,
-    status,
-    page,
-    nodeType,
-  ]);
+  React.useEffect(fetchNodes, [issues, peerType, search, shardId, status, page, nodeType]);
 
   const getRatings = () => {
     const uniqueRatings = nodes
@@ -130,7 +107,7 @@ const Nodes = () => {
 
   return (
     <>
-      {(!versionNumber || dataReady === undefined) && <Loader />}
+      {dataReady === undefined && <Loader />}
       {dataReady === false && (
         <PageState
           icon={faCogs}
@@ -160,14 +137,15 @@ const Nodes = () => {
                     {nodes.length > 0 && (
                       <div className="card-header-item">
                         <Filters
+                          // TODO: check results count if needed
                           resultsCount={nodes.length}
                           setSearch={setSearch}
+                          search={search}
                           setPeerType={setPeerType}
                           peerType={peerType}
                           setNodeType={setNodeType}
                           nodeType={nodeType}
                           setIssues={setIssues}
-                          search={search}
                           issues={issues}
                         />
                       </div>
@@ -199,7 +177,7 @@ const Nodes = () => {
                         </NodesTable>
                       </div>
                       <div className="card-footer">
-                        <Pager itemsPerPage={50} page={'1'} total={1000} show={true} />
+                        <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
                       </div>
                     </>
                   ) : (
