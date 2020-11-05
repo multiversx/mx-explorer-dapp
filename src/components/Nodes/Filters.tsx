@@ -1,63 +1,59 @@
+import * as React from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import { Dropdown } from 'react-bootstrap';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dropdown } from 'react-bootstrap';
-import * as React from 'react';
-import { FiltersType } from './helpers/useFilters';
+import { NetworkLink } from 'sharedComponents';
 interface FiltersInterface {
   resultsCount: number;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-  setPeerType: React.Dispatch<React.SetStateAction<FiltersType['peerType']>>;
-  setIssues: React.Dispatch<React.SetStateAction<FiltersType['issues']>>;
-  setNodeType: React.Dispatch<React.SetStateAction<FiltersType['nodeType']>>;
-  nodeType: FiltersType['nodeType'];
-  search: string;
-  peerType: FiltersType['peerType'];
-  issues: FiltersType['issues'];
 }
 
-const Filters = ({
-  resultsCount,
-  setSearch,
-  setPeerType,
-  peerType,
-  setNodeType,
-  nodeType,
-  setIssues,
-  search,
-  issues,
-}: FiltersInterface) => {
+const Filters = ({ resultsCount }: FiltersInterface) => {
+  const { pathname, search: locationSearch } = useLocation();
+  const history = useHistory();
+  const urlParams = new URLSearchParams(locationSearch);
+  const { search, peerType, issues, nodeType } = Object.fromEntries(urlParams);
   const [inputValue, setInputValue] = React.useState<string>(search);
 
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setInputValue(e.target.value);
   };
 
-  const updateSearchValue = () => {
-    setSearch(inputValue);
+  const updateSearchValue = (searchValue: string) => {
+    const { search, ...rest } = Object.fromEntries(urlParams);
+    const nextUrlParams = new URLSearchParams({
+      ...rest,
+      ...(searchValue ? { search: searchValue } : {}),
+    }).toString();
+    history.push(`${pathname}?${nextUrlParams}`);
   };
 
-  const resetValidatorValue = () => {
-    setSearch('');
-    setInputValue('');
+  const peerTypeLink = (peerTypeValue: string) => {
+    const { peerType, nodeType, issues, ...rest } = Object.fromEntries(urlParams);
+    const nextUrlParams = new URLSearchParams({
+      ...rest,
+      ...(peerTypeValue ? { peerType: peerTypeValue } : {}),
+    }).toString();
+    return `${pathname}?${nextUrlParams}`;
   };
 
-  const changeValidatorObserver = (peerType: FiltersType['peerType']) => (e: any) => {
-    e.preventDefault();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-    document.body.click();
-    changePeerType(peerType);
+  const nodeTypeLink = (nodeTypeValue: string) => {
+    const { nodeType, peerType, issues, ...rest } = Object.fromEntries(urlParams);
+    const nextUrlParams = new URLSearchParams({
+      ...rest,
+      ...(nodeTypeValue ? { nodeType: nodeTypeValue } : {}),
+    }).toString();
+    return `${pathname}?${nextUrlParams}`;
   };
 
-  const changeNodeType = (nodeType: FiltersType['nodeType']) => () => {
-    changePeerType('');
-    setNodeType(nodeType);
-  };
-
-  const changePeerType = (peerType: FiltersType['peerType']) => {
-    setIssues(false);
-    setPeerType(peerType);
+  const issuesLink = (issuesValue: string) => {
+    const { nodeType, peerType, issues, ...rest } = Object.fromEntries(urlParams);
+    const nextUrlParams = new URLSearchParams({
+      ...rest,
+      ...(issuesValue ? { issues: issuesValue } : {}),
+    }).toString();
+    return `${pathname}?${nextUrlParams}`;
   };
 
   return (
@@ -72,7 +68,7 @@ const Filters = ({
               onChange={changeValidatorValue}
               onKeyDown={(keyEvent: React.KeyboardEvent) => {
                 if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
-                  updateSearchValue();
+                  updateSearchValue(inputValue);
                 }
               }}
               placeholder="Search"
@@ -89,7 +85,9 @@ const Filters = ({
                 <button
                   type="reset"
                   className="input-group-text"
-                  onClick={resetValidatorValue}
+                  onClick={() => {
+                    updateSearchValue('');
+                  }}
                   data-testid="resetSearch"
                 >
                   <FontAwesomeIcon icon={faTimes} />
@@ -107,44 +105,43 @@ const Filters = ({
 
       <ul className="list-inline m-0">
         <li className="list-inline-item">
-          <button
-            className={`btn btn-sm btn-outline-light btn-pill ${peerType === '' ? 'active' : ''}`}
-            onClick={changeNodeType('')}
+          <NetworkLink
+            to="/nodes"
+            className={`btn btn-sm btn-outline-light btn-pill ${
+              [search, peerType, issues, nodeType].every((el) => el === undefined) ? 'active' : ''
+            }`}
           >
             All
-          </button>
+          </NetworkLink>
         </li>
         <li className="list-inline-item">
-          <button
+          <NetworkLink
+            to={nodeTypeLink('validator')}
             className={`btn btn-sm btn-outline-light btn-pill ${
               nodeType === 'validator' ? 'active' : ''
             }`}
-            onClick={changeNodeType('validator')}
           >
             Validators
-          </button>
+          </NetworkLink>
         </li>
         <li className="list-inline-item">
-          <button
+          <NetworkLink
+            to={nodeTypeLink('observer')}
             data-testid="filterByObservers"
             className={`btn btn-sm btn-outline-light btn-pill ${
               nodeType === 'observer' ? 'active' : ''
             }`}
-            onClick={changeNodeType('observer')}
           >
             Observers
-          </button>
+          </NetworkLink>
         </li>
         <li className="list-inline-item">
-          <button
-            className={`btn btn-sm btn-outline-light btn-pill ${issues ? 'active' : ''}`}
-            onClick={() => {
-              setIssues(true);
-              setPeerType('');
-            }}
+          <NetworkLink
+            to={issuesLink('true')}
+            className={`btn btn-sm btn-outline-light btn-pill ${issues === 'true' ? 'active' : ''}`}
           >
             Issues
-          </button>
+          </NetworkLink>
         </li>
         <li className="list-inline-item">
           <Dropdown>
@@ -152,7 +149,7 @@ const Filters = ({
               variant="outline-light"
               size="sm"
               className={`btn-pill ${
-                ['eligible', 'waiting', 'new', 'jailed'].includes(String(peerType)) ? 'active' : ''
+                ['eligible', 'waiting', 'new', 'jailed'].includes(peerType) ? 'active' : ''
               }`}
               id="more"
             >
@@ -160,38 +157,34 @@ const Filters = ({
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item
-                className={`${'eligible' === peerType ? 'active' : ''}`}
+              <NetworkLink
+                className={`dropdown-item ${peerType === 'eligible' ? 'active' : ''}`}
                 data-testid="filterByValidators"
-                href="#/validators"
-                onClick={changeValidatorObserver('eligible')}
+                to={peerTypeLink('eligible')}
               >
                 Eligible
-              </Dropdown.Item>
-              <Dropdown.Item
-                className={`${'waiting' === peerType ? 'active' : ''}`}
+              </NetworkLink>
+              <NetworkLink
+                className={`dropdown-item ${peerType === 'waiting' ? 'active' : ''}`}
                 data-testid="filterByValidators"
-                href="#/validators"
-                onClick={changeValidatorObserver('waiting')}
+                to={peerTypeLink('waiting')}
               >
                 Waiting
-              </Dropdown.Item>
-              <Dropdown.Item
-                className={`${'new' === peerType ? 'active' : ''}`}
+              </NetworkLink>
+              <NetworkLink
+                className={`dropdown-item ${peerType === 'new' ? 'active' : ''}`}
                 data-testid="filterByValidators"
-                href="#/validators"
-                onClick={changeValidatorObserver('new')}
+                to={peerTypeLink('new')}
               >
                 New
-              </Dropdown.Item>
-              <Dropdown.Item
-                className={`${peerType === 'jailed' ? 'active' : ''}`}
+              </NetworkLink>
+              <NetworkLink
+                className={`dropdown-item ${peerType === 'jailed' ? 'active' : ''}`}
                 data-testid="filterByValidators"
-                href="#/validators"
-                onClick={changeValidatorObserver('jailed')}
+                to={peerTypeLink('jailed')}
               >
                 Jailed
-              </Dropdown.Item>
+              </NetworkLink>
             </Dropdown.Menu>
           </Dropdown>
         </li>
