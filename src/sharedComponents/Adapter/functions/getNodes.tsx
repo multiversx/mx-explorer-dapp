@@ -1,5 +1,16 @@
 import { AdapterFunctionType } from './index';
 
+export interface GetNodesType {
+  search?: string;
+  issues?: string;
+  peerType?: string;
+  nodeType?: string;
+  shard?: string;
+  status?: string;
+  count?: boolean;
+  size?: number;
+}
+
 export default async function getNodes({
   provider,
   baseUrl,
@@ -10,18 +21,13 @@ export default async function getNodes({
   nodeType,
   shard,
   status,
-}: AdapterFunctionType & {
-  search?: string;
-  issues?: string;
-  peerType?: string;
-  nodeType?: string;
-  shard?: string;
-  status?: string;
-}) {
+  size,
+  count = false,
+}: AdapterFunctionType & GetNodesType) {
   try {
     const { data } = await provider({
       baseUrl,
-      url: `/nodes`,
+      url: `/nodes${count ? '/count' : ''}`,
       timeout,
       params: {
         ...(search !== undefined ? { search } : {}),
@@ -30,12 +36,13 @@ export default async function getNodes({
         ...(nodeType !== undefined ? { nodeType } : {}),
         ...(shard !== undefined ? { shard } : {}),
         ...(status !== undefined ? { status } : {}),
+        ...(size !== undefined ? { from: (size - 1) * 50, size: 50 } : {}),
       },
     });
 
     return {
       data,
-      success: data.length > 0,
+      success: data !== undefined,
     };
   } catch {
     return {
