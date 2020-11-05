@@ -13,6 +13,7 @@ export type ActionType =
   | { type: 'setBrandData'; brandData: StateType['brandData'] } // TODO: remove
   | { type: 'setNodes'; nodes: StateType['nodes'] }
   | { type: 'setBrands'; brands: StateType['brands'] }
+  | { type: 'setShards'; shards: StateType['shards'] }
   | { type: 'triggerNewRound' }
   | { type: 'cancelAllRequests' }
   | {
@@ -64,6 +65,12 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
       return {
         ...state,
         brands: action.brands,
+      };
+    }
+    case 'setShards': {
+      return {
+        ...state,
+        shards: action.shards,
       };
     }
     case 'setBrandData': {

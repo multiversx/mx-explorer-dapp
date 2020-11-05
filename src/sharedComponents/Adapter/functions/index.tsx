@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import getHighlights from './getHighlights';
 import getLatestBlocks from './getLatestBlocks';
+import getShards from './getShards';
 import getNodes, { GetNodesType as GetNodesInterface } from './getNodes';
 import getLatestTransactions from './getLatestTransactions';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
@@ -92,4 +93,5 @@ export {
   searchBlocks,
   getValidator,
   getNodes,
+  getShards,
 };

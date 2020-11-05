@@ -97,6 +97,13 @@ export default function useAdapter() {
 
     /* Validators */
 
+    getShards: () =>
+      f.getShards({
+        provider,
+        baseUrl,
+        timeout,
+      }),
+
     getNodes: ({ peerType, issues, search, nodeType, shard, status, size }: f.GetNodesType) =>
       f.getNodes({
         provider,

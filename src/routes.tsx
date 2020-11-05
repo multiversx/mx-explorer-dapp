@@ -45,20 +45,20 @@ const routes: RouteType[] = [
     component: Transactions,
   },
   {
-    path: '/nodes',
+    path: validatorsRoutes.nodes,
     title: 'Nodes',
     component: Nodes,
   },
-  // {
-  //   path: '/validators',
-  //   title: 'Validators',
-  //   component: Identities,
-  // },
   {
     path: validatorsRoutes.index,
     title: 'Validators',
-    component: ValidatorsBrandTable,
+    component: Identities,
   },
+  // {
+  //   path: validatorsRoutes.index,
+  //   title: 'Validators',
+  //   component: ValidatorsBrandTable,
+  // },
   // {
   //   path: validatorsRoutes.nodes,
   //   title: 'Validators Nodes',
