@@ -2,7 +2,7 @@ export interface ValidatorType {
   computedShardID: number;
   publicKey: string;
   isActive: boolean; // TODO: remove
-  isValidator: boolean;
+  isValidator: boolean; // TODO: remove
   peerType: 'waiting' | 'eligible' | 'observer' | 'new' | 'jailed';
   nodeType: 'observer' | 'validator';
   status: 'online' | 'offline';
