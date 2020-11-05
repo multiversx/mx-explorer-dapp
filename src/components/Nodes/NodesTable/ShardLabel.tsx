@@ -2,8 +2,8 @@ import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { ShardSpan } from 'sharedComponents';
-import { FiltersType } from './../helpers/useFilters';
+import { useLocation } from 'react-router-dom';
+import { ShardSpan, NetworkLink } from 'sharedComponents';
 
 interface ComputedShard {
   status: string;
@@ -14,17 +14,19 @@ interface ComputedShard {
 
 interface ShardLabelType {
   shardData: ComputedShard[];
-  setShardId: React.Dispatch<React.SetStateAction<FiltersType['shardId']>>;
-  shardId: FiltersType['shardId'];
 }
 
-const ShardLabel = ({ shardData, shardId, setShardId }: ShardLabelType) => {
-  const changeShardId = (shardId: FiltersType['shardId']) => (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-    document.body.click();
-    setShardId(shardId);
+const ShardLabel = ({ shardData }: ShardLabelType) => {
+  const { search, pathname } = useLocation();
+  const urlParams = new URLSearchParams(search);
+  const { shardId, ...rest } = Object.fromEntries(urlParams);
+
+  const shardLink = (shardId: string) => {
+    const nextUrlParams = new URLSearchParams({
+      ...rest,
+      ...(shardId ? { shardId } : {}),
+    }).toString();
+    return `${pathname}?${nextUrlParams}`;
   };
 
   return (
@@ -40,26 +42,24 @@ const ShardLabel = ({ shardData, shardId, setShardId }: ShardLabelType) => {
             <Popover.Content>
               {shardData.map(({ shardNumber }, i) => {
                 return (
-                  <a
+                  <NetworkLink
+                    to={shardLink(shardNumber.toString())}
                     className={`dropdown-item ${
                       shardId === shardNumber.toString() ? 'active' : ''
                     }`}
                     key={shardNumber + i}
-                    href="/nodes"
-                    onClick={changeShardId(shardNumber.toString())}
                   >
                     <ShardSpan shardId={shardNumber} />
-                  </a>
+                  </NetworkLink>
                 );
               })}
-              <a
-                className={`dropdown-item ${shardId === '' ? 'active' : ''}`}
+              <NetworkLink
+                className={`dropdown-item ${shardId === undefined ? 'active' : ''}`}
                 key={-1}
-                href="/nodes"
-                onClick={changeShardId('')}
+                to={shardLink('')}
               >
                 Show all
-              </a>
+              </NetworkLink>
             </Popover.Content>
           </Popover>
         }
@@ -68,7 +68,10 @@ const ShardLabel = ({ shardData, shardId, setShardId }: ShardLabelType) => {
           className="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block side-action"
           data-testid="shardFilterButton"
         >
-          <FontAwesomeIcon icon={faFilter} className={shardId !== '' ? 'text-primary' : ''} />
+          <FontAwesomeIcon
+            icon={faFilter}
+            className={shardId !== undefined ? 'text-primary' : ''}
+          />
         </span>
       </OverlayTrigger>
     </>

@@ -2,20 +2,20 @@ import * as React from 'react';
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { FiltersType } from './../helpers/useFilters';
+import { useLocation } from 'react-router-dom';
+import { NetworkLink } from 'sharedComponents';
 
-interface StatusLabelType {
-  setStatus: React.Dispatch<React.SetStateAction<FiltersType['status']>>;
-  status: FiltersType['status'];
-}
+const StatusLabel = () => {
+  const { search, pathname } = useLocation();
+  const urlParams = new URLSearchParams(search);
+  const { status, ...rest } = Object.fromEntries(urlParams);
 
-const StatusLabel = ({ status, setStatus }: StatusLabelType) => {
-  const changeStatus = (newStatus: FiltersType['status']) => (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-    document.body.click();
-    setStatus(newStatus);
+  const statusLink = (status: string) => {
+    const nextUrlParams = new URLSearchParams({
+      ...rest,
+      ...(status ? { status } : {}),
+    }).toString();
+    return `${pathname}?${nextUrlParams}`;
   };
 
   return (
@@ -29,30 +29,27 @@ const StatusLabel = ({ status, setStatus }: StatusLabelType) => {
         overlay={
           <Popover id="popover-positioned-bottom">
             <Popover.Content>
-              <a
+              <NetworkLink
                 className={`dropdown-item ${status === 'online' ? 'active' : ''}`}
-                href="/nodes"
-                onClick={changeStatus('online')}
+                to={statusLink('online')}
                 data-testid="filterByStatusOnline"
               >
                 Online
-              </a>
-              <a
+              </NetworkLink>
+              <NetworkLink
                 className={`dropdown-item ${status === 'offline' ? 'active' : ''}`}
-                href="/nodes"
-                onClick={changeStatus('offline')}
+                to={statusLink('offline')}
                 data-testid="filterByStatusOffline"
               >
                 Offiline
-              </a>
-              <a
-                className={`dropdown-item ${status === '' ? 'active' : ''}`}
-                href="/nodes"
-                onClick={changeStatus('')}
+              </NetworkLink>
+              <NetworkLink
+                className={`dropdown-item ${status === undefined ? 'active' : ''}`}
+                to={statusLink('')}
                 data-testid="filterByStatusAll"
               >
                 Show all
-              </a>
+              </NetworkLink>
             </Popover.Content>
           </Popover>
         }
@@ -61,7 +58,7 @@ const StatusLabel = ({ status, setStatus }: StatusLabelType) => {
           className="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block side-action"
           data-testid="shardFilterButton"
         >
-          <FontAwesomeIcon icon={faFilter} className={status !== '' ? 'text-primary' : ''} />
+          <FontAwesomeIcon icon={faFilter} className={status !== undefined ? 'text-primary' : ''} />
         </span>
       </OverlayTrigger>
     </>

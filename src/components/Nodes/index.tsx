@@ -4,79 +4,26 @@ import { adapter, Loader, Pager, PageState } from 'sharedComponents';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import NodesTable from './NodesTable';
 import Filters from './Filters';
-import useFilters, { FiltersType } from './helpers/useFilters';
+import useFilters from './helpers/useFilters';
 import { ValidatorType } from 'context/validators';
 import tempShards from './tempShards';
 import Tabs from 'components/Validators/Tabs';
+import { useLocation } from 'react-router-dom';
 
 const Nodes = () => {
   const ref = React.useRef(null);
+  const { search } = useLocation();
   const dispatch = useGlobalDispatch();
   const { getNodes, getNodesCount } = adapter();
-  const {
-    getQueryString,
-    search: urlSearch,
-    peerType: ulrPeerType,
-    nodeType: ulrNodeType,
-    issues: ulrIssues,
-    shardId: ulrShardId,
-    page: ulrPage,
-    status: ulrStatus,
-  } = useFilters();
+  const { getQueryObject, size } = useFilters();
   const { nodes } = useGlobalState();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [ratingOrder, setRatingOrder] = React.useState<string[]>([]);
 
-  const [shardId, setShardId] = React.useState<FiltersType['shardId']>('');
-  const [page, setPage] = React.useState<FiltersType['page']>('');
-  const [status, setStatus] = React.useState<FiltersType['status']>('');
-  const [search, setSearch] = React.useState<FiltersType['search']>('');
-  const [peerType, setPeerType] = React.useState<FiltersType['peerType']>('');
-  const [nodeType, setNodeType] = React.useState<FiltersType['nodeType']>('');
-  const [issues, setIssues] = React.useState<FiltersType['issues']>(false);
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
 
-  React.useEffect(() => {
-    if (ulrShardId !== undefined) {
-      setShardId(ulrShardId);
-    }
-    if (urlSearch) {
-      setSearch(urlSearch);
-    }
-    if (ulrPeerType) {
-      setPeerType(ulrPeerType);
-    }
-    if (ulrNodeType) {
-      setNodeType(ulrNodeType);
-    }
-    if (ulrPage) {
-      setPage(ulrPage);
-    }
-    if (ulrStatus) {
-      setStatus(ulrStatus);
-    }
-    if (ulrIssues) {
-      setIssues(Boolean(ulrIssues));
-    }
-  }, [urlSearch, ulrPeerType, ulrIssues, ulrStatus, ulrPage, ulrNodeType, ulrShardId]);
-
-  const size = page ? parseInt(page) : 1;
-
   const fetchNodes = () => {
-    const { queryObject, query, updatePushState } = getQueryString({
-      issues,
-      peerType,
-      search,
-      nodeType,
-      shardId,
-      status,
-      page,
-    });
-
-    if (updatePushState) {
-      // TODO: url simplu
-      window.history.pushState({}, '', `/nodes${query}`);
-    }
+    const queryObject = getQueryObject();
 
     setDataReady(undefined);
     Promise.all([getNodes({ ...queryObject, size }), getNodesCount(queryObject)]).then(
@@ -93,7 +40,7 @@ const Nodes = () => {
     );
   };
 
-  React.useEffect(fetchNodes, [issues, peerType, search, shardId, status, page, nodeType]);
+  React.useEffect(fetchNodes, [search]);
 
   const getRatings = () => {
     const uniqueRatings = nodes
@@ -139,14 +86,6 @@ const Nodes = () => {
                         <Filters
                           // TODO: check results count if needed
                           resultsCount={nodes.length}
-                          setSearch={setSearch}
-                          search={search}
-                          setPeerType={setPeerType}
-                          peerType={peerType}
-                          setNodeType={setNodeType}
-                          nodeType={nodeType}
-                          setIssues={setIssues}
-                          issues={issues}
                         />
                       </div>
                     )}
@@ -160,16 +99,12 @@ const Nodes = () => {
                               <th id="publickey">Public key</th>
                               <th id="nodeDisplayName">Node Name</th>
                               <th id="shardId">
-                                <NodesTable.ShardLabel
-                                  shardData={tempShards}
-                                  setShardId={setShardId}
-                                  shardId={shardId}
-                                />
+                                <NodesTable.ShardLabel shardData={tempShards} />
                               </th>
                               <th id="versionNumber">Version</th>
                               <th id="totalUpTimeSec">Uptime</th>
                               <th id="isActive">
-                                <NodesTable.StatusLabel setStatus={setStatus} status={status} />
+                                <NodesTable.StatusLabel />
                               </th>
                             </tr>
                           </thead>
