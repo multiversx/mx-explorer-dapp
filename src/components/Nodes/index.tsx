@@ -8,6 +8,7 @@ import useFilters from './helpers/useFilters';
 import { ValidatorType } from 'context/validators';
 import tempShards from './tempShards';
 import Tabs from 'components/Validators/Tabs';
+import NodesLayout from 'sharedComponents/NodesLayout';
 import { useLocation } from 'react-router-dom';
 
 const Nodes = () => {
@@ -53,7 +54,16 @@ const Nodes = () => {
   React.useEffect(getRatings, [nodes]);
 
   return (
-    <>
+    <NodesLayout
+      headerItem={
+        <div className="card-header-item">
+          <Filters
+            // TODO: check results count if needed
+            resultsCount={nodes.length}
+          />
+        </div>
+      }
+    >
       {dataReady === undefined && <Loader />}
       {dataReady === false && (
         <PageState
@@ -65,71 +75,44 @@ const Nodes = () => {
       )}
       <div ref={ref}>
         {dataReady === true && (
-          <div className="container py-spacer">
-            <div className="row page-header mb-spacer">
-              <div className="col-12">
-                <h3 className="page-title">
-                  <span data-testid="title">Nodes</span>
-                </h3>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-12">
-                <div className="card">
-                  <div className="card-header">
-                    <div className="card-header-item pb-0 px-0 border-0">
-                      <Tabs />
-                    </div>
-                    {nodes.length > 0 && (
-                      <div className="card-header-item">
-                        <Filters
-                          // TODO: check results count if needed
-                          resultsCount={nodes.length}
-                        />
-                      </div>
-                    )}
-                  </div>
-                  {nodes.length > 0 ? (
-                    <>
-                      <div className="card-body p-0">
-                        <NodesTable>
-                          <thead>
-                            <tr>
-                              <th id="publickey">Public key</th>
-                              <th id="nodeDisplayName">Node Name</th>
-                              <th id="shardId">
-                                <NodesTable.ShardLabel shardData={tempShards} />
-                              </th>
-                              <th id="versionNumber">Version</th>
-                              <th id="totalUpTimeSec">Uptime</th>
-                              <th id="isActive">
-                                <NodesTable.StatusLabel />
-                              </th>
-                            </tr>
-                          </thead>
-                          <NodesTable.Body nodes={nodes} ratingOrder={ratingOrder} />
-                        </NodesTable>
-                      </div>
-                      <div className="card-footer">
-                        <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
-                      </div>
-                    </>
-                  ) : (
-                    <PageState
-                      icon={faCogs}
-                      title="No Validators"
-                      className="py-spacer my-auto"
-                      dataTestId="errorScreen"
-                    />
-                  )}
+          <>
+            {nodes.length > 0 ? (
+              <>
+                <div className="card-body p-0">
+                  <NodesTable>
+                    <thead>
+                      <tr>
+                        <th id="publickey">Public key</th>
+                        <th id="nodeDisplayName">Node Name</th>
+                        <th id="shardId">
+                          <NodesTable.ShardLabel shardData={tempShards} />
+                        </th>
+                        <th id="versionNumber">Version</th>
+                        <th id="totalUpTimeSec">Uptime</th>
+                        <th id="isActive">
+                          <NodesTable.StatusLabel />
+                        </th>
+                      </tr>
+                    </thead>
+                    <NodesTable.Body nodes={nodes} ratingOrder={ratingOrder} />
+                  </NodesTable>
                 </div>
-              </div>
-            </div>
-          </div>
+                <div className="card-footer">
+                  <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+                </div>
+              </>
+            ) : (
+              <PageState
+                icon={faCogs}
+                title="No Validators"
+                className="py-spacer my-auto"
+                dataTestId="errorScreen"
+              />
+            )}
+          </>
         )}
       </div>
-    </>
+    </NodesLayout>
   );
 };
 

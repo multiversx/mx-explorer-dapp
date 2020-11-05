@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { NetworkLink } from 'sharedComponents';
+import { validatorsRoutes } from 'routes';
 
 interface NavLinksType {
   expanded?: boolean;
@@ -53,11 +54,12 @@ export default function NavLinks({ expanded = false, setExpanded = () => null }:
 
       <NetworkLink
         className={`nav-link ${
-          pathname.toString().includes('nodes') || pathname.toString().includes('validators')
+          pathname.toString().includes(validatorsRoutes.nodes) ||
+          pathname.toString().includes(validatorsRoutes.index)
             ? 'active'
             : ''
         }`}
-        to="/validators"
+        to={validatorsRoutes.index}
         onClick={() => onToggle(false)}
       >
         Validators

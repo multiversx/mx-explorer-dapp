@@ -25,9 +25,11 @@ interface RouteType {
 // component: React.lazy(() => import('./components/Validators')),
 
 export const validatorsRoutes = {
-  index: '/validators',
+  // index: '/validators',
+  index: '/identities',
   brandDetails: `/validators/:identity`,
-  nodes: '/validators/nodes',
+  // nodes: '/validators/nodes',
+  nodes: '/nodes',
   validatorDetails: '/validators/nodes/:hash',
 };
 
@@ -57,11 +59,11 @@ const routes: RouteType[] = [
     title: 'Validators',
     component: ValidatorsBrandTable,
   },
-  {
-    path: validatorsRoutes.nodes,
-    title: 'Validators Nodes',
-    component: ValidatorsTable,
-  },
+  // {
+  //   path: validatorsRoutes.nodes,
+  //   title: 'Validators Nodes',
+  //   component: ValidatorsTable,
+  // },
   {
     path: validatorsRoutes.brandDetails,
     title: 'Validator Details',
