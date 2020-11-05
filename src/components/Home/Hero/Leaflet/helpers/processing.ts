@@ -1,43 +1,32 @@
-// @ts-ignore
-import kendo from 'kendo-ui-core/js/kendo.data';
-import { MarkerType } from './asyncRequests';
+import { CityType } from './asyncRequests';
 
 export interface MarkerPoint {
   name: string;
   country: string;
   lat: number;
   lon: number;
-  markerOffset: number;
-  publicKey: string;
   shard?: number;
   offset?: number;
 }
 
 export interface MapDisplayType {
-  markers: MarkerPoint[];
+  cities: CityType[];
   leaders: MarkerPoint[];
   metaChainShardId: number;
   shardsArray: number[];
 }
 
-const getGroupedCities = (markers: MarkerPoint[]) => {
-  const dataSource = new kendo.data.DataSource({
-    data: markers,
-  });
-  dataSource.group({ field: 'name' });
-  return dataSource.view();
-};
-
 const maxLineLength = 20;
 const min = 10;
 const lineLen = (x: number, max: number) =>
   (maxLineLength * Math.log(x + min)) / Math.log(max + min);
-const getRadius = (groupedCities: { items: number[] }[]) => {
-  const totalNodesArray = groupedCities.map((city: any) => city.items.length);
+
+const getRadius = (groupedCities: CityType[]) => {
+  const totalNodesArray = groupedCities.map((city) => city.validators.length);
   const uniqueTotalNodes = [...new (Set as any)(totalNodesArray)];
 
   const max = Math.max.apply(null, uniqueTotalNodes);
-  const radiuses = uniqueTotalNodes.reduce((y: any, x) => {
+  const radiuses = uniqueTotalNodes.reduce((y, x) => {
     y.push(lineLen(x, max) as any);
     return y;
   }, []);
@@ -47,9 +36,9 @@ const getRadius = (groupedCities: { items: number[] }[]) => {
   } = {};
 
   uniqueTotalNodes.map((node, i) => {
-    const cities = groupedCities.filter((item) => item.items.length === node) || [];
-    cities.map((city: any) => {
-      mapping[city.value] = Math.round(radiuses[i]);
+    const newCities = groupedCities.filter((city) => city.validators.length === node) || [];
+    newCities.map((city) => {
+      mapping[city.city] = Math.round(radiuses[i]);
       return null;
     });
     return null;
@@ -57,30 +46,4 @@ const getRadius = (groupedCities: { items: number[] }[]) => {
   return mapping;
 };
 
-export const processMarkers = (data: any) => {
-  const locationsArray: MarkerType[] = Object.keys(data).map((id) => ({
-    ...data[id],
-    publicKey: id,
-  }));
-
-  const markersArray = locationsArray
-    .map((loc) => {
-      const lat = parseFloat(loc.loc.split(',')[0]);
-      const lon = parseFloat(loc.loc.split(',')[1]);
-      if (!isNaN(lat) && !isNaN(lon)) {
-        return {
-          name: loc.city,
-          lat,
-          lon,
-          markerOffset: 0,
-          publicKey: loc.publicKey,
-          country: loc.country,
-        };
-      }
-      return null;
-    })
-    .filter(Boolean);
-  return markersArray;
-};
-
-export { getRadius, getGroupedCities };
+export { getRadius };
