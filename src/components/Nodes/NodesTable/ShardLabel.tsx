@@ -1,25 +1,16 @@
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useGlobalState } from 'context';
 import * as React from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { ShardSpan, NetworkLink } from 'sharedComponents';
 
-interface ComputedShard {
-  status: string;
-  allValidators: number;
-  allActiveValidators: number;
-  shardNumber: number;
-}
-
-interface ShardLabelType {
-  shardData: ComputedShard[];
-}
-
-const ShardLabel = ({ shardData }: ShardLabelType) => {
+const ShardLabel = () => {
   const { search, pathname } = useLocation();
   const urlParams = new URLSearchParams(search);
   const { shardId, ...rest } = Object.fromEntries(urlParams);
+  const { shards } = useGlobalState();
 
   const shardLink = (shardId: string) => {
     const nextUrlParams = new URLSearchParams({
@@ -40,16 +31,16 @@ const ShardLabel = ({ shardData }: ShardLabelType) => {
         overlay={
           <Popover id="popover-positioned-bottom">
             <Popover.Content>
-              {shardData.map(({ shardNumber }, i) => {
+              {shards.map((shard, i) => {
                 return (
                   <NetworkLink
-                    to={shardLink(shardNumber.toString())}
+                    to={shardLink(shard.shardId.toString())}
                     className={`dropdown-item ${
-                      shardId === shardNumber.toString() ? 'active' : ''
+                      shardId === shard.shardId.toString() ? 'active' : ''
                     }`}
-                    key={shardNumber + i}
+                    key={shard.shardId + i}
                   >
-                    <ShardSpan shardId={shardNumber} />
+                    <ShardSpan shardId={shard.shardId} />
                   </NetworkLink>
                 );
               })}

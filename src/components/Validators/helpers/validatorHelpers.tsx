@@ -83,6 +83,7 @@ export const buildValidator = ({
     rating,
     ratingModifier,
     issue: '',
+    issues: [],
   };
 
   if (validator.isValidator) {

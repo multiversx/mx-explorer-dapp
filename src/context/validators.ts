@@ -1,7 +1,7 @@
 export interface ValidatorType {
   computedShardID: number;
   publicKey: string;
-  isActive: boolean; // remove
+  isActive: boolean; // TODO: remove
   isValidator: boolean;
   peerType: 'waiting' | 'eligible' | 'observer' | 'new' | 'jailed';
   nodeType: 'observer' | 'validator';
@@ -13,16 +13,12 @@ export interface ValidatorType {
   totalDownTimeSec: number;
   totalUpTimeSec: number;
   versionNumber: string;
-  shardId: string; // remove
+  shardId: string; // TODO: remove
   shardNumber: number;
   rating: number;
   ratingModifier: number;
-  issue:
-    | 'Outdated client version'
-    | 'Outdated client configuration'
-    | 'Shuffle out restart failed'
-    | 'Offline since genesis'
-    | '';
+  issues: string[];
+  issue: any; // TODO: remove
 }
 
 interface ComputedShard {
