@@ -13,7 +13,7 @@ const Tabs = ({ extraClasses = '' }: { extraClasses?: string }) => {
 
   return (
     <div className={extraClasses}>
-      <ul className="validators-nav nav nav-tabs px-4">
+      <ul className="validators-nav nav nav-tabs px-3 px-lg-spacer">
         <li className="nav-item">
           <NetworkLink
             to={validatorsRoutes.index}
