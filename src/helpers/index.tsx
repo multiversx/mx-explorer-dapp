@@ -7,6 +7,7 @@ import urlBuilder from './urlBuilder';
 import sizeFormat from './sizeFormat';
 import networkRoute from './networkRoute';
 import trimHash from './trimHash';
+import useFilters from './useFilters';
 import truncate from './truncate';
 import storage from './storage';
 import useURLSearchParams from './useURLSearchParams';
@@ -22,6 +23,7 @@ export {
   networkRoute,
   copyToClipboard,
   trimHash,
+  useFilters,
   storage,
   useURLSearchParams,
 };
