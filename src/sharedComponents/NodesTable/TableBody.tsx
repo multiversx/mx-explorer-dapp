@@ -8,11 +8,11 @@ const getRatings = (nodes: ValidatorType[]) => {
   return nodes
     .filter((node: ValidatorType) => node.nodeType === 'validator')
     .sort((a: any, b: any) => a.rating - b.rating)
-    .map((v: any) => v.publicKey);
+    .map((v: any) => v);
 };
 
 const NodesTable = ({ nodes }: { nodes: ValidatorType[] }) => {
-  const ratingOrder = getRatings(nodes);
+  const orderedByRating = getRatings(nodes);
 
   // const getRatingsEffect = () => {
   //   const uniqueRatings = getRatings(nodes);
@@ -23,7 +23,7 @@ const NodesTable = ({ nodes }: { nodes: ValidatorType[] }) => {
 
   return (
     <tbody>
-      {nodes.map((node, index) => (
+      {orderedByRating.map((node, index) => (
         <tr key={node.publicKey}>
           {/* <td>{node.nodeType === 'validator' ? ratingOrder.indexOf(node.publicKey) + 1 : ''}</td> */}
           <td>
@@ -58,7 +58,7 @@ const NodesTable = ({ nodes }: { nodes: ValidatorType[] }) => {
               <span className="text-muted">N/A</span>
             )}
           </td>
-          <td>
+          <td className="text-right">
             {(node.totalUpTimeSec !== 0 || node.totalDownTimeSec !== 0) && (
               <span>
                 {Math.floor(
@@ -75,11 +75,12 @@ const NodesTable = ({ nodes }: { nodes: ValidatorType[] }) => {
               node.status === 'offline' && <span>0%</span>}
           </td>
           <td>
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center justify-content-end">
               <Led color={node.status === 'online' ? 'bg-success' : 'bg-danger'} />
               <span className="ml-2">{node.status === 'online' ? 'Online' : 'Offline'}</span>
             </div>
           </td>
+          <td className="text-right">{node.rating}</td>
         </tr>
       ))}
     </tbody>

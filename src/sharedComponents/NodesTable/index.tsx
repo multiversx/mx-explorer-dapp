@@ -21,9 +21,14 @@ export default class NodesTable extends React.Component<{
                 {this.props.hideFilters === true ? 'Shard' : <ShardLabel />}
               </th>
               <th data-testid="versionNumber">Version</th>
-              <th data-testid="totalUpTimeSec">Uptime</th>
-              <th data-testid="status">
+              <th className="text-right" data-testid="totalUpTimeSec">
+                Uptime
+              </th>
+              <th className="text-right" data-testid="status">
                 {this.props.hideFilters === true ? 'Status' : <StatusLabel />}
+              </th>
+              <th className="text-right" data-testid="rating">
+                Rating
               </th>
             </tr>
           </thead>
