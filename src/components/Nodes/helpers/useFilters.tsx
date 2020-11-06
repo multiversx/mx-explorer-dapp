@@ -18,13 +18,13 @@ export default function useGetFilters() {
   const size = page && isValidInteger(page) ? parseInt(page) : 1;
 
   const getQueryObject = () => ({
-    ...(search ? {} : { search }),
-    ...(status ? {} : { status }),
-    ...(peerType ? {} : { peerType }),
-    ...(nodeType ? {} : { nodeType }),
-    ...(identity ? {} : { identity }),
-    ...(issues ? {} : { issues: 'true' }),
-    ...(shardId && isValidInteger(shardId) ? {} : { shardId }),
+    ...(search ? { search } : {}),
+    ...(status ? { status } : {}),
+    ...(peerType ? { peerType } : {}),
+    ...(nodeType ? { nodeType } : {}),
+    ...(identity ? { identity } : {}),
+    ...(issues ? { issues: 'true' } : {}),
+    ...(shardId && isValidInteger(shardId) ? { shardId } : {}),
   });
 
   return {
