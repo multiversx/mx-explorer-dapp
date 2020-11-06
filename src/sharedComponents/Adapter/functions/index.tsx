@@ -51,7 +51,6 @@ export interface ProviderPropsType {
     issues?: string;
     peerType?: string;
     nodeType?: string;
-    shard?: string;
     status?: string;
   };
   timeout: number;

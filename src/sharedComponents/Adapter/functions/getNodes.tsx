@@ -5,7 +5,7 @@ export interface GetNodesType {
   issues?: string;
   peerType?: string;
   nodeType?: string;
-  shard?: string;
+  shardId?: string;
   status?: string;
   count?: boolean;
   size?: number;
@@ -20,7 +20,7 @@ export default async function getNodes({
   issues,
   search,
   nodeType,
-  shard,
+  shardId,
   status,
   size,
   identity,
@@ -36,7 +36,7 @@ export default async function getNodes({
         ...(peerType !== undefined ? { peerType } : {}),
         ...(issues !== undefined ? { issues } : {}),
         ...(nodeType !== undefined ? { nodeType } : {}),
-        ...(shard !== undefined ? { shard } : {}),
+        ...(shardId !== undefined ? { shardId: parseInt(shardId) } : {}),
         ...(status !== undefined ? { status } : {}),
         ...(identity !== undefined ? { identity } : {}),
         ...(size !== undefined ? { from: (size - 1) * 50, size: 50 } : {}),

@@ -26,6 +26,7 @@ const Nodes = () => {
     const queryObject = getQueryObject();
 
     setDataReady(undefined);
+
     Promise.all([getNodes({ ...queryObject, size }), getNodesCount(queryObject)]).then(
       ([nodesData, count]) => {
         dispatch({
@@ -54,65 +55,67 @@ const Nodes = () => {
   React.useEffect(getRatings, [nodes]);
 
   return (
-    <NodesLayout>
-      <div className="card" ref={ref}>
-        <div className="card-header">
-          <NodeTabs />
+    <div ref={ref}>
+      <NodesLayout>
+        <div className="card">
+          <div className="card-header">
+            <NodeTabs />
 
-          <div className="card-header-item">
-            <Filters
-              // TODO: check results count if needed
-              resultsCount={nodes.length}
-            />
+            <div className="card-header-item">
+              <Filters
+                // TODO: check results count if needed
+                resultsCount={nodes.length}
+              />
+            </div>
           </div>
+
+          {dataReady === undefined && <Loader />}
+          {dataReady === false && (
+            <PageState
+              icon={faCogs}
+              title="Unable to load nodes"
+              className="py-spacer my-auto"
+              dataTestId="errorScreen"
+            />
+          )}
+          {dataReady === true && nodes.length === 0 && (
+            <PageState
+              icon={faCogs}
+              title="No Nodes"
+              className="py-spacer my-auto"
+              dataTestId="errorScreen"
+            />
+          )}
+
+          {dataReady === true && nodes.length > 0 && (
+            <>
+              <div className="card-body p-0">
+                <NodesTable>
+                  <thead>
+                    <tr>
+                      <th data-testid="publickey">Public key</th>
+                      <th data-testid="nodeDisplayName">Node Name</th>
+                      <th data-testid="shardId">
+                        <NodesTable.ShardLabel />
+                      </th>
+                      <th data-testid="versionNumber">Version</th>
+                      <th data-testid="totalUpTimeSec">Uptime</th>
+                      <th data-testid="status">
+                        <NodesTable.StatusLabel />
+                      </th>
+                    </tr>
+                  </thead>
+                  <NodesTable.Body nodes={nodes} ratingOrder={ratingOrder} />
+                </NodesTable>
+              </div>
+              <div className="card-footer">
+                <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+              </div>
+            </>
+          )}
         </div>
-
-        {dataReady === undefined && <Loader />}
-        {dataReady === false && (
-          <PageState
-            icon={faCogs}
-            title="Unable to load nodes"
-            className="py-spacer my-auto"
-            dataTestId="errorScreen"
-          />
-        )}
-        {dataReady === true && nodes.length === 0 && (
-          <PageState
-            icon={faCogs}
-            title="No Nodes"
-            className="py-spacer my-auto"
-            dataTestId="errorScreen"
-          />
-        )}
-
-        {dataReady === true && nodes.length > 0 && (
-          <>
-            <div className="card-body p-0">
-              <NodesTable>
-                <thead>
-                  <tr>
-                    <th data-testid="publickey">Public key</th>
-                    <th data-testid="nodeDisplayName">Node Name</th>
-                    <th data-testid="shardId">
-                      <NodesTable.ShardLabel />
-                    </th>
-                    <th data-testid="versionNumber">Version</th>
-                    <th data-testid="totalUpTimeSec">Uptime</th>
-                    <th data-testid="status">
-                      <NodesTable.StatusLabel />
-                    </th>
-                  </tr>
-                </thead>
-                <NodesTable.Body nodes={nodes} ratingOrder={ratingOrder} />
-              </NodesTable>
-            </div>
-            <div className="card-footer">
-              <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
-            </div>
-          </>
-        )}
-      </div>
-    </NodesLayout>
+      </NodesLayout>
+    </div>
   );
 };
 

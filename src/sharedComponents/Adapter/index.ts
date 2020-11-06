@@ -104,7 +104,16 @@ export default function useAdapter() {
         timeout,
       }),
 
-    getNodes: ({ peerType, issues, search, nodeType, shard, status, size }: f.GetNodesType) =>
+    getNodes: ({
+      peerType,
+      issues,
+      search,
+      nodeType,
+      shardId,
+      status,
+      size,
+      identity,
+    }: f.GetNodesType) =>
       f.getNodes({
         provider,
         baseUrl,
@@ -113,12 +122,21 @@ export default function useAdapter() {
         issues,
         search,
         nodeType,
-        shard,
+        shardId,
         status,
         size,
+        identity,
       }),
 
-    getNodesCount: ({ peerType, issues, search, nodeType, shard, status }: f.GetNodesType) =>
+    getNodesCount: ({
+      peerType,
+      issues,
+      search,
+      nodeType,
+      shardId,
+      status,
+      identity,
+    }: f.GetNodesType) =>
       f.getNodes({
         provider,
         baseUrl,
@@ -127,8 +145,9 @@ export default function useAdapter() {
         issues,
         search,
         nodeType,
-        shard,
+        shardId,
         status,
+        identity,
         count: true,
       }),
 
