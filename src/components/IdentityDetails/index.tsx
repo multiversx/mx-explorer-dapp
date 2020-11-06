@@ -1,11 +1,10 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IdentityType } from 'context/state';
 import { adapter, Loader, DetailItem, Pager, PageState } from 'sharedComponents';
 import { useParams } from 'react-router-dom';
-import NodesTable from 'components/Nodes/NodesTable';
-import useFilters from 'components/Nodes/helpers/useFilters';
+import { NodesTable } from 'sharedComponents';
+import { useFilters } from 'helpers';
 import { ValidatorType } from 'context/validators';
 
 const IdentityDetails = () => {
@@ -20,10 +19,12 @@ const IdentityDetails = () => {
   const { getQueryObject, size } = useFilters();
 
   const fetchData = () => {
+    const queryObject = getQueryObject();
+
     Promise.all([
       getIdentity(id),
-      getNodes({ ...getQueryObject, identity: id, size }),
-      getNodesCount({ ...getQueryObject, identity: id }),
+      getNodes({ ...queryObject, identity: id, size }),
+      getNodesCount({ ...queryObject, identity: id }),
     ]).then(([identityData, nodesData, nodesCount]) => {
       setIdenity(identityData.data);
       setNodes(nodesData.data);
@@ -57,8 +58,8 @@ const IdentityDetails = () => {
               </h3>
             </div>
           </div>
-          <div className="row" data-testid="identityDetailsContainer">
-            <div className="col-12 col-md-6">
+          <div className="row " data-testid="identityDetailsContainer">
+            <div className="col-12 col-md-6 mb-spacer">
               <div className="card">
                 <div className="card-header">
                   <div className="card-header-item p-0">
@@ -109,7 +110,7 @@ const IdentityDetails = () => {
                 </div>
               </div>
             </div>
-            <div className="col-12 col-md-6 mt-spacer mt-md-0">
+            <div className="col-12 col-md-6 mt-spacer mt-md-0 mb-spacer">
               <div className="card">
                 <div className="card-body p-0">
                   <div className="container-fluid">
@@ -138,27 +139,22 @@ const IdentityDetails = () => {
               <>
                 {nodes.length > 0 ? (
                   <>
-                    <div className="card-body p-0">
-                      <NodesTable>
-                        <thead>
-                          <tr>
-                            <th data-testid="publickey">Public key</th>
-                            <th data-testid="nodeDisplayName">Node Name</th>
-                            <th data-testid="shardId">
-                              <NodesTable.ShardLabel />
-                            </th>
-                            <th data-testid="versionNumber">Version</th>
-                            <th data-testid="totalUpTimeSec">Uptime</th>
-                            <th data-testid="status">
-                              <NodesTable.StatusLabel />
-                            </th>
-                          </tr>
-                        </thead>
-                        <NodesTable.Body nodes={nodes} ratingOrder={ratingOrder} />
-                      </NodesTable>
-                    </div>
-                    <div className="card-footer">
-                      <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+                    <div className="card">
+                      <div className="card-header">
+                        <div className="card-header-item">
+                          <h6 className="m-0" data-testid="title">
+                            Nodes
+                          </h6>
+                        </div>
+                        <div className="card-body p-0">
+                          <NodesTable>
+                            <NodesTable.Body nodes={nodes} ratingOrder={ratingOrder} />
+                          </NodesTable>
+                        </div>
+                        <div className="card-footer">
+                          <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+                        </div>
+                      </div>
                     </div>
                   </>
                 ) : (
@@ -175,12 +171,12 @@ const IdentityDetails = () => {
         </div>
       )}
       {dataReady === false && (
-        <div className="card-body" data-testid="errorScreen">
-          <div className="empty">
-            <FontAwesomeIcon icon={faCogs} className="empty-icon" />
-            <span className="h4 empty-heading">Unable to load validators</span>
-          </div>
-        </div>
+        <PageState
+          icon={faCogs}
+          title="Unable to load validators"
+          className="py-spacer my-auto"
+          dataTestId="errorScreen"
+        />
       )}
     </div>
   );
