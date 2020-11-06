@@ -3,7 +3,10 @@ import TableBody from './TableBody';
 import ShardLabel from './ShardLabel';
 import StatusLabel from './StatusLabel';
 
-export default class NodesTable extends React.Component<{ children: React.ReactNode }> {
+export default class NodesTable extends React.Component<{
+  children: React.ReactNode;
+  hideFilters?: boolean;
+}> {
   static Body = TableBody;
 
   render() {
@@ -15,12 +18,12 @@ export default class NodesTable extends React.Component<{ children: React.ReactN
               <th data-testid="publickey">Public key</th>
               <th data-testid="nodeDisplayName">Node Name</th>
               <th data-testid="shardId">
-                <ShardLabel />
+                {this.props.hideFilters === true ? 'Shard' : <ShardLabel />}
               </th>
               <th data-testid="versionNumber">Version</th>
               <th data-testid="totalUpTimeSec">Uptime</th>
               <th data-testid="status">
-                <StatusLabel />
+                {this.props.hideFilters === true ? 'Status' : <StatusLabel />}
               </th>
             </tr>
           </thead>

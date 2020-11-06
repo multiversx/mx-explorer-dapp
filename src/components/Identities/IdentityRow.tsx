@@ -119,7 +119,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
               )}
               {dataReady === true && (
                 <div className="nodes-table-wrapper py-2 px-4">
-                  <NodesTable>
+                  <NodesTable hideFilters={true}>
                     <NodesTable.Body nodes={identityNodes} />
                   </NodesTable>
                 </div>
