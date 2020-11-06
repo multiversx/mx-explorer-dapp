@@ -55,9 +55,11 @@
       background-color: $detailsTableBgColor;
     }
 
-    .table-wrapper {
+    .nodes-table-wrapper {
       box-shadow: inset 0 2px 4px rgba($standard-box-shadow, 0.1);
+    }
 
+    .table-wrapper {
       th {
         background: none;
         text-transform: uppercase;
