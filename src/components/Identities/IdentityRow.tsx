@@ -61,7 +61,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
               <NetworkLink to={`${validatorsRoutes.index}/${identity.identity}`}>
                 {}
                 <img
-                  className={identity.avatar ? 'avatar' : 'avatar gray'}
+                  className={`avatar ${!identity.avatar ? 'gray' : ''}`}
                   src={
                     identity.avatar
                       ? identity.avatar
@@ -108,7 +108,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
         <tr className={`identity-details-row ${collapsed ? 'collapsed' : ''}`}>
           <td colSpan={7} className="p-0">
             <div className="content">
-              <div className="table-wrapper p-2">
+              <div className="table-wrapper py-2 px-4">
                 <table className="table">
                   <thead>
                     <tr>

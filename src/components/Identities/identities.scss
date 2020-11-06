@@ -35,6 +35,15 @@
         background-color: $primary !important;
       }
     }
+
+    .avatar {
+      box-shadow: rgba($standard-box-shadow, 0.4) 0px 0.1rem 0.4rem;
+      border-radius: 50%;
+
+      &.gray {
+        opacity: 0.4;
+      }
+    }
   }
 
   $detailsTableBgColor: $light;
