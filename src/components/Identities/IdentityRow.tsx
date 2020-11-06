@@ -53,7 +53,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
     setCollapsed(!collapsed);
   };
 
-  const link = `${validatorsRoutes.index}/${identity.identity}`;
+  const link = identity.identity ? `validators/${identity.identity}` : `nodes/${identity.name}`;
 
   return (
     <>
@@ -62,7 +62,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
         <td>
           <div className="d-flex align-items-center">
             <div className="mr-3">
-              <NetworkLink to={`${validatorsRoutes.index}/${identity.identity}`}>
+              <NetworkLink to={link}>
                 {}
                 <img
                   className={`avatar ${!identity.avatar ? 'gray' : ''}`}
