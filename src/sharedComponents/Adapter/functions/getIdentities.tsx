@@ -8,7 +8,7 @@ const schema = object({
   location: string(),
   avatar: string(),
   identity: string().required(),
-  nodes: number().required(),
+  validators: number().required(),
   score: number().required(),
 }).required();
 
