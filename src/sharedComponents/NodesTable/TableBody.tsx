@@ -4,7 +4,23 @@ import { truncate, urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, Trim, Led } from 'sharedComponents';
 import RowIcon from './RowIcon';
 
-const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrder: string[] }) => {
+const getRatings = (nodes: ValidatorType[]) => {
+  return nodes
+    .filter((node: ValidatorType) => node.nodeType === 'validator')
+    .sort((a: any, b: any) => a.rating - b.rating)
+    .map((v: any) => v.publicKey);
+};
+
+const NodesTable = ({ nodes }: { nodes: ValidatorType[] }) => {
+  const ratingOrder = getRatings(nodes);
+
+  // const getRatingsEffect = () => {
+  //   const uniqueRatings = getRatings(nodes);
+  //   setRatingOrder(uniqueRatings);
+  // };
+
+  // React.useEffect(getRatingsEffect, [nodes]);
+
   return (
     <tbody>
       {nodes.map((node, index) => (

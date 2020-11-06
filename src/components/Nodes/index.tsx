@@ -5,7 +5,6 @@ import { useGlobalDispatch, useGlobalState } from 'context';
 import { NodesTable } from 'sharedComponents';
 import Filters from './Filters';
 import { useFilters } from 'helpers';
-import { ValidatorType } from 'context/validators';
 import NodesLayout from 'sharedComponents/NodesLayout';
 import { useLocation } from 'react-router-dom';
 import NodeTabs from 'sharedComponents/NodesLayout/NodeTabs';
@@ -18,8 +17,6 @@ const Nodes = () => {
   const { getQueryObject, size } = useFilters();
   const { nodes } = useGlobalState();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [ratingOrder, setRatingOrder] = React.useState<string[]>([]);
-
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
 
   const fetchNodes = () => {
@@ -43,16 +40,6 @@ const Nodes = () => {
   };
 
   React.useEffect(fetchNodes, [search]);
-
-  const getRatings = () => {
-    const uniqueRatings = nodes
-      .filter((node: ValidatorType) => node.nodeType === 'validator')
-      .sort((a: any, b: any) => a.rating - b.rating)
-      .map((v: any) => v.publicKey);
-    setRatingOrder(uniqueRatings);
-  };
-
-  React.useEffect(getRatings, [nodes]);
 
   return (
     <div ref={ref}>
@@ -91,7 +78,7 @@ const Nodes = () => {
             <>
               <div className="card-body p-0">
                 <NodesTable>
-                  <NodesTable.Body nodes={nodes} ratingOrder={ratingOrder} />
+                  <NodesTable.Body nodes={nodes} />
                 </NodesTable>
               </div>
               <div className="card-footer">

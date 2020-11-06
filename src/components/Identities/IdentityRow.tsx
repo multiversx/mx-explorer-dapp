@@ -4,10 +4,10 @@ import { useGlobalState } from 'context';
 import { ValidatorType } from 'context/validators';
 import { IdentityType } from 'context/state';
 import carretDown from 'assets/images/carret-down.svg';
-import BrandDetailsRow from './IdenityDetailsRow';
-import { Loader, NetworkLink, Trim } from 'sharedComponents';
+import { Loader, NetworkLink, Trim, adapter, PageState, NodesTable } from 'sharedComponents';
 import PercentegeBar from 'components/Validators/ValidatorDetails/PercentegeBar';
 import { validatorsRoutes } from 'routes';
+import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 
 export interface IdentityRowType {
   identity: IdentityType;
@@ -26,21 +26,21 @@ export const cumulativeStakePercent = (identity: IdentityType, blockchainTotalSt
 const IdentityRow = ({ identity, rank }: IdentityRowType) => {
   const [collapsed, setCollapsed] = React.useState(true);
   const [showDetails, setShowDetails] = React.useState(false);
-  const [brandNodes, setBrandNodes] = React.useState<ValidatorType[]>([]);
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [identityNodes, setIdentityNodes] = React.useState<ValidatorType[]>([]);
   const { blockchainTotalStake } = useGlobalState();
+  const { getNodes } = adapter();
 
   const {
     activeNetwork: { erdLabel },
-    nodes,
   } = useGlobalState();
 
   const expand = (identity: string) => () => {
-    // TODO async call
-    if (brandNodes.length === 0) {
-      setTimeout(() => {
-        const validators = nodes.filter((brand) => brand.identity === identity);
-        setBrandNodes(validators);
-      }, 3000);
+    if (dataReady === undefined) {
+      getNodes({ identity }).then((nodes) => {
+        setDataReady(nodes.success);
+        setIdentityNodes(nodes.data);
+      });
     }
     setShowDetails(true);
     setCollapsed(!collapsed);
@@ -108,34 +108,22 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
         <tr className={`identity-details-row ${collapsed ? 'collapsed' : ''}`}>
           <td colSpan={7} className="p-0">
             <div className="content">
-              <div className="table-wrapper py-2 px-4">
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th>Public Key</th>
-                      <th>Node Name</th>
-                      <th>Shard</th>
-                      <th>Version</th>
-                      <th className="text-right">Uptime</th>
-                      <th className="text-right">Status</th>
-                      <th className="text-right">Rating</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {brandNodes.length > 0 ? (
-                      brandNodes.map((node, i) => (
-                        <BrandDetailsRow key={node.publicKey} rowIndex={i} node={node} />
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan={7} className="text-center">
-                          <Loader />
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
+              {dataReady === undefined && <Loader />}
+              {dataReady === false && (
+                <PageState
+                  icon={faCogs}
+                  title="Unable to load validators"
+                  className="py-spacer my-auto"
+                  dataTestId="errorScreen"
+                />
+              )}
+              {dataReady === true && (
+                <div className="nodes-table-wrapper py-2 px-4">
+                  <NodesTable>
+                    <NodesTable.Body nodes={identityNodes} />
+                  </NodesTable>
+                </div>
+              )}
             </div>
           </td>
         </tr>
