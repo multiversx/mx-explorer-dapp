@@ -9,5 +9,5 @@ interface BrandServerResponseType {
   twitter?: string;
   web?: string;
   location?: string;
-  nodesCount: number;
+  validators: number;
 }
