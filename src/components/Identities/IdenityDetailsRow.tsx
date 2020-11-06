@@ -2,7 +2,7 @@ import * as React from 'react';
 import { truncate, trimHash, urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink } from 'sharedComponents';
 import { ValidatorType } from 'context/validators';
-import RowIcon from 'components/Nodes/NodesTable/RowIcon';
+import RowIcon from 'sharedComponents/NodesTable/RowIcon';
 import { validatorsRoutes } from 'routes';
 
 interface IdenityDetailsRowType {

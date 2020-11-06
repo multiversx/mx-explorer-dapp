@@ -10,6 +10,7 @@ import ScAddressIcon from './ScAddressIcon';
 import Search from './Search';
 import ShardSpan from './ShardSpan';
 import NetworkLink from './NetworkLink';
+import NodesTable from './NodesTable';
 import NetworkReady, { withNetworkReady } from './NetworkReady';
 import TimeAgo from './TimeAgo';
 import TransactionsTable from './TransactionsTable';
@@ -35,6 +36,7 @@ export {
   ShardSpan,
   Search,
   BlocksTable,
+  NodesTable,
   Loader,
   TransactionsTable,
   TransactionStatus,
