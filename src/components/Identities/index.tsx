@@ -1,6 +1,5 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import { IdentityType } from 'context/state';
 import { adapter, Loader, PageState } from 'sharedComponents';
