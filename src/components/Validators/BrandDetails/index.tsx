@@ -12,7 +12,7 @@ import PageNotFound from 'components/PageNotFoud';
 const BrandDetails = () => {
   const ref = React.useRef(null);
   const { brandData, validatorData } = useGlobalState();
-  const { identity } = useParams();
+  const { identity } = useParams() as any;
   const [brand, setBrand] = React.useState<BrandType>();
   const [notFound, setNotFound] = React.useState(false);
   const success = useSetValidatorsData(ref);
