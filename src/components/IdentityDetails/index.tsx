@@ -12,7 +12,7 @@ const IdentityDetails = () => {
   const { id } = useParams() as any;
   const { getIdentity, getNodes, getNodesCount } = adapter();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
-  const [identity, setIdenity] = React.useState<IdentityType>();
+  const [identity, setIdentity] = React.useState<IdentityType>();
   const [nodes, setNodes] = React.useState<any>();
   const [ratingOrder, setRatingOrder] = React.useState<string[]>([]);
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
@@ -26,7 +26,7 @@ const IdentityDetails = () => {
       getNodes({ ...queryObject, identity: id, size }),
       getNodesCount({ ...queryObject, identity: id }),
     ]).then(([identityData, nodesData, nodesCount]) => {
-      setIdenity(identityData.data);
+      setIdentity(identityData.data);
       setNodes(nodesData.data);
       setTotalNodes(nodesCount.data);
       setDataReady(identityData.success && nodesData.success);
