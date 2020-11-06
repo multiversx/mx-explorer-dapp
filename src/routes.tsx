@@ -9,6 +9,7 @@ import Transactions from './components/Transactions';
 import Address from './components/Address';
 import Nodes from './components/Nodes';
 import Identities from './components/Identities';
+import IdentityDetails from './components/IdentityDetails';
 import ValidatorsTable from './components/Validators/ValidatorsTable';
 import BrandDetails from './components/Validators/BrandDetails';
 import ValidatorDetails from './components/Validators/ValidatorDetails';
@@ -27,10 +28,11 @@ interface RouteType {
 export const validatorsRoutes = {
   // index: '/validators',
   index: '/identities',
-  brandDetails: `/validators/:identity`,
+  // brandDetails: `/validators/:identity`,
   // nodes: '/validators/nodes',
   nodes: '/nodes',
   validatorDetails: '/validators/nodes/:hash',
+  identityDetails: '/validators/:id',
 };
 
 const routes: RouteType[] = [
@@ -54,6 +56,11 @@ const routes: RouteType[] = [
     title: 'Validators',
     component: Identities,
   },
+  {
+    path: validatorsRoutes.identityDetails,
+    title: 'Validators',
+    component: IdentityDetails,
+  },
   // {
   //   path: validatorsRoutes.index,
   //   title: 'Validators',
@@ -64,11 +71,11 @@ const routes: RouteType[] = [
   //   title: 'Validators Nodes',
   //   component: ValidatorsTable,
   // },
-  {
-    path: validatorsRoutes.brandDetails,
-    title: 'Validator Details',
-    component: BrandDetails,
-  },
+  // {
+  //   path: validatorsRoutes.brandDetails,
+  //   title: 'Validator Details',
+  //   component: BrandDetails,
+  // },
   {
     path: validatorsRoutes.validatorDetails,
     title: 'Node Details',
