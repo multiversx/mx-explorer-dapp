@@ -90,7 +90,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
             {cumulativeStakePercent(identity, blockchainTotalStake)}
           </div>
         </td>
-        <td className="text-right">{identity.nodes}</td>
+        <td className="text-right">{identity.validators}</td>
         <td className="text-right">{Math.round(identity.score).toLocaleString()}</td>
         <td className="text-right">
           <img src={carretDown} className="details-arrow" alt="details-arrow" height="8" />
