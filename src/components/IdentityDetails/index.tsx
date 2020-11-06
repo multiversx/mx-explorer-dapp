@@ -63,7 +63,7 @@ const IdentityDetails = () => {
               <div className="card">
                 <div className="card-header">
                   <div className="card-header-item p-0">
-                    <div className="brand-header-item">
+                    <div className="brand-header-item px-lg-spacer">
                       <img
                         className={`mr-3 avatar rounded-circle shadow-sm ${
                           identity.avatar ? '' : 'gray'
@@ -146,14 +146,14 @@ const IdentityDetails = () => {
                             Nodes
                           </h6>
                         </div>
-                        <div className="card-body p-0">
-                          <NodesTable>
-                            <NodesTable.Body nodes={nodes} />
-                          </NodesTable>
-                        </div>
-                        <div className="card-footer">
-                          <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
-                        </div>
+                      </div>
+                      <div className="card-body p-0">
+                        <NodesTable>
+                          <NodesTable.Body nodes={nodes} />
+                        </NodesTable>
+                      </div>
+                      <div className="card-footer">
+                        <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
                       </div>
                     </div>
                   </>
