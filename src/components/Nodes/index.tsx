@@ -2,9 +2,9 @@ import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { adapter, Loader, Pager, PageState } from 'sharedComponents';
 import { useGlobalDispatch, useGlobalState } from 'context';
-import NodesTable from './NodesTable';
+import { NodesTable } from 'sharedComponents';
 import Filters from './Filters';
-import useFilters from './helpers/useFilters';
+import { useFilters } from 'helpers';
 import { ValidatorType } from 'context/validators';
 import NodesLayout from 'sharedComponents/NodesLayout';
 import { useLocation } from 'react-router-dom';
@@ -91,20 +91,6 @@ const Nodes = () => {
             <>
               <div className="card-body p-0">
                 <NodesTable>
-                  <thead>
-                    <tr>
-                      <th data-testid="publickey">Public key</th>
-                      <th data-testid="nodeDisplayName">Node Name</th>
-                      <th data-testid="shardId">
-                        <NodesTable.ShardLabel />
-                      </th>
-                      <th data-testid="versionNumber">Version</th>
-                      <th data-testid="totalUpTimeSec">Uptime</th>
-                      <th data-testid="status">
-                        <NodesTable.StatusLabel />
-                      </th>
-                    </tr>
-                  </thead>
                   <NodesTable.Body nodes={nodes} ratingOrder={ratingOrder} />
                 </NodesTable>
               </div>

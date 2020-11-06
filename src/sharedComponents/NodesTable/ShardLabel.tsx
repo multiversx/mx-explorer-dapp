@@ -1,16 +1,33 @@
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGlobalState } from 'context';
+import { useGlobalDispatch, useGlobalState } from 'context';
 import * as React from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
-import { ShardSpan, NetworkLink } from 'sharedComponents';
+import { ShardSpan, NetworkLink, adapter } from 'sharedComponents';
 
 const ShardLabel = () => {
   const { search, pathname } = useLocation();
+  const dispatch = useGlobalDispatch();
   const urlParams = new URLSearchParams(search);
   const { shardId, ...rest } = Object.fromEntries(urlParams);
+  const { getShards } = adapter();
   const { shards } = useGlobalState();
+
+  const fetchShards = () => {
+    if (shards.length === 0) {
+      getShards().then((shards) => {
+        if (shards.success) {
+          dispatch({
+            type: 'setShards',
+            shards: shards.data,
+          });
+        }
+      });
+    }
+  };
+
+  React.useEffect(fetchShards, []);
 
   const shardLink = (shardId: string) => {
     const nextUrlParams = new URLSearchParams({
