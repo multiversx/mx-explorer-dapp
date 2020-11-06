@@ -12,7 +12,7 @@ interface IdenityDetailsRowType {
 
 const IdenityDetailsRow = ({ node, rowIndex }: IdenityDetailsRowType) => {
   return (
-    <tr>
+    <tr className="identity-details-row">
       <td>
         <RowIcon node={node} />
         <NetworkLink
