@@ -46,6 +46,7 @@ export interface GetRoundsReturnType {
   roundsFetched: boolean | undefined;
 }
 
+// TODO: remove
 export async function getRounds({
   provider,
   baseUrl,

@@ -10,6 +10,7 @@ import trimHash from './trimHash';
 import useFilters from './useFilters';
 import truncate from './truncate';
 import storage from './storage';
+import nodeIssue from './nodeIssue';
 import useURLSearchParams from './useURLSearchParams';
 
 export {
@@ -25,5 +26,6 @@ export {
   trimHash,
   useFilters,
   storage,
+  nodeIssue,
   useURLSearchParams,
 };
