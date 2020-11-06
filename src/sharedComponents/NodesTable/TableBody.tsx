@@ -14,13 +14,6 @@ const getRatings = (nodes: ValidatorType[]) => {
 const NodesTable = ({ nodes }: { nodes: ValidatorType[] }) => {
   const orderedByRating = getRatings(nodes);
 
-  // const getRatingsEffect = () => {
-  //   const uniqueRatings = getRatings(nodes);
-  //   setRatingOrder(uniqueRatings);
-  // };
-
-  // React.useEffect(getRatingsEffect, [nodes]);
-
   return (
     <tbody>
       {orderedByRating.map((node, index) => (

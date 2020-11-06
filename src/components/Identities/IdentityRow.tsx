@@ -29,36 +29,40 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [identityNodes, setIdentityNodes] = React.useState<ValidatorType[]>([]);
   const { blockchainTotalStake } = useGlobalState();
-  const { getNodes } = adapter();
+  const { getNodes, getNode } = adapter();
 
   const {
     activeNetwork: { erdLabel },
   } = useGlobalState();
 
-  const expand = (identity: string) => () => {
+  const expand = (node: IdentityType) => () => {
     if (dataReady === undefined) {
-      getNodes({ identity }).then((nodes) => {
-        setDataReady(nodes.success);
-        setIdentityNodes(nodes.data);
-      });
+      if (node.identity) {
+        getNodes({ identity: node.identity }).then((nodes) => {
+          setDataReady(nodes.success);
+          setIdentityNodes(nodes.data);
+        });
+      } else {
+        getNode(node.name).then((node) => {
+          setDataReady(node.success);
+          setIdentityNodes([node.data]);
+        });
+      }
     }
     setShowDetails(true);
     setCollapsed(!collapsed);
   };
 
-  const link = `${validatorsRoutes.index}/${identity.identity}`;
+  const link = identity.identity ? `validators/${identity.identity}` : `nodes/${identity.name}`;
 
   return (
     <>
-      <tr
-        onClick={expand(identity.identity)}
-        className={`identity-row ${collapsed ? 'collapsed' : ''}`}
-      >
+      <tr onClick={expand(identity)} className={`identity-row ${collapsed ? 'collapsed' : ''}`}>
         <td>{rank}</td>
         <td>
           <div className="d-flex align-items-center">
             <div className="mr-3">
-              <NetworkLink to={`${validatorsRoutes.index}/${identity.identity}`}>
+              <NetworkLink to={link}>
                 {}
                 <img
                   className={`avatar ${!identity.avatar ? 'gray' : ''}`}
