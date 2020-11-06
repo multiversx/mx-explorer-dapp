@@ -29,18 +29,25 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [identityNodes, setIdentityNodes] = React.useState<ValidatorType[]>([]);
   const { blockchainTotalStake } = useGlobalState();
-  const { getNodes } = adapter();
+  const { getNodes, getNode } = adapter();
 
   const {
     activeNetwork: { erdLabel },
   } = useGlobalState();
 
-  const expand = (identity: string) => () => {
+  const expand = (node: IdentityType) => () => {
     if (dataReady === undefined) {
-      getNodes({ identity }).then((nodes) => {
-        setDataReady(nodes.success);
-        setIdentityNodes(nodes.data);
-      });
+      if (node.identity) {
+        getNodes({ identity: node.identity }).then((nodes) => {
+          setDataReady(nodes.success);
+          setIdentityNodes(nodes.data);
+        });
+      } else {
+        getNode(node.name).then((node) => {
+          setDataReady(node.success);
+          setIdentityNodes([node.data]);
+        });
+      }
     }
     setShowDetails(true);
     setCollapsed(!collapsed);
@@ -50,10 +57,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
 
   return (
     <>
-      <tr
-        onClick={expand(identity.identity)}
-        className={`identity-row ${collapsed ? 'collapsed' : ''}`}
-      >
+      <tr onClick={expand(identity)} className={`identity-row ${collapsed ? 'collapsed' : ''}`}>
         <td>{rank}</td>
         <td>
           <div className="d-flex align-items-center">
