@@ -1,7 +1,7 @@
 import { InferType } from 'yup';
+import { CancelTokenSource } from 'axios';
 import config, { defaultNetwork, schema, adapterSchema } from './config';
 import { validatorData, brandData, ValidatorType } from './validators';
-import { CancelTokenSource } from 'axios';
 import { storage } from 'helpers';
 
 export type NetworkType = InferType<typeof schema>;
@@ -30,6 +30,19 @@ export interface BrandType {
   overallStakePercent: number;
   nodesCount: number;
 }
+export interface IdentityType {
+  name: string;
+  twitter?: string;
+  website?: string;
+  location?: string;
+  avatar?: string;
+  identity: string;
+  nodes: number;
+  score: number;
+  stake: number;
+  stakePercent: number;
+  overallStakePercent: number;
+}
 
 export interface StateType {
   config: ConfigType;
@@ -41,11 +54,13 @@ export interface StateType {
   refresh: {
     timestamp: number;
   };
-  validatorData: typeof validatorData; // todo: remove
-  brandData: typeof brandData;
+  validatorData: typeof validatorData; // TODO: remove
+  brandData: typeof brandData; // TODO: remove
   theme: string;
   nodes: ValidatorType[];
-  brands: BrandType[];
+  brands: BrandType[]; // TODO: remove
+  identities: IdentityType[];
+  blockchainTotalStake: number;
   shards: ShardType[];
 }
 
@@ -69,6 +84,8 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
     theme: getTheme(),
     nodes: [],
     brands: [],
+    identities: [],
+    blockchainTotalStake: 0,
     shards: [],
   };
 };

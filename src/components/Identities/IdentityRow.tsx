@@ -2,28 +2,32 @@ import React from 'react';
 import BigNumber from 'bignumber.js';
 import { useGlobalState } from 'context';
 import { ValidatorType } from 'context/validators';
-import { BrandType } from 'context/state';
+import { IdentityType } from 'context/state';
 import carretDown from 'assets/images/carret-down.svg';
 import BrandDetailsRow from './IdenityDetailsRow';
 import { Loader, NetworkLink } from 'sharedComponents';
 import PercentegeBar from 'components/Validators/ValidatorDetails/PercentegeBar';
 import { validatorsRoutes } from 'routes';
 
-export interface BrandRowType {
-  brand: BrandType;
+export interface IdentityRowType {
+  identity: IdentityType;
   rank: number;
 }
 
-export const stake = (brand: BrandType) =>
-  parseFloat(new BigNumber(brand.stake).dividedBy(1000).valueOf()).toLocaleString('en');
+export const stake = ({ stake }: IdentityType) => {
+  return parseFloat(new BigNumber(stake).dividedBy(1000).valueOf()).toLocaleString('en');
+};
 
-export const cumulativeStakePercent = (brand: BrandType) =>
-  `${Math.round(brand.stakePercent) > 0 ? Math.round(brand.stakePercent) : '< 1'}%`;
+export const cumulativeStakePercent = (identity: IdentityType, blockchainTotalStake: number) => {
+  const stakePercent = (identity.stake / blockchainTotalStake) * 100;
+  return `${Math.round(stakePercent) > 0 ? Math.round(stakePercent) : '< 1'}%`;
+};
 
-const IdentityRow = ({ brand, rank }: BrandRowType) => {
+const IdentityRow = ({ identity, rank }: IdentityRowType) => {
   const [collapsed, setCollapsed] = React.useState(true);
   const [showDetails, setShowDetails] = React.useState(false);
   const [brandNodes, setBrandNodes] = React.useState<ValidatorType[]>([]);
+  const { blockchainTotalStake } = useGlobalState();
 
   const {
     activeNetwork: { erdLabel },
@@ -31,6 +35,7 @@ const IdentityRow = ({ brand, rank }: BrandRowType) => {
   } = useGlobalState();
 
   const expand = (identity: string) => () => {
+    // TODO async call
     if (brandNodes.length === 0) {
       setTimeout(() => {
         const validators = nodes.filter((brand) => brand.identity === identity);
@@ -41,48 +46,52 @@ const IdentityRow = ({ brand, rank }: BrandRowType) => {
     setCollapsed(!collapsed);
   };
 
-  const link = `${validatorsRoutes.index}/${brand.identity}`;
+  const link = `${validatorsRoutes.index}/${identity.identity}`;
 
   return (
     <>
       <tr
-        onClick={expand(brand.identity)}
+        onClick={expand(identity.identity)}
         className={collapsed ? 'brand-tr collapsed' : 'brand-tr'}
       >
         <td>{rank}</td>
         <td>
           <div className="d-flex align-items-center">
             <div className="mr-3">
-              <NetworkLink to={`${validatorsRoutes.index}/${brand.identity}`}>
+              <NetworkLink to={`${validatorsRoutes.index}/${identity.identity}`}>
                 {}
                 <img
-                  className={brand.avatar ? 'avatar' : 'avatar gray'}
+                  className={identity.avatar ? 'avatar' : 'avatar gray'}
                   src={
-                    brand.avatar ? brand.avatar : require('../../assets/images/default-avatar.svg')
+                    identity.avatar
+                      ? identity.avatar
+                      : require('../../assets/images/default-avatar.svg')
                   }
-                  alt={brand.name}
+                  alt={identity.name}
                   height="42"
                 />
               </NetworkLink>
             </div>
-            <NetworkLink to={link}>{brand.name ? brand.name : 'N/A'}</NetworkLink>
+            <NetworkLink to={link}>{identity.name ? identity.name : 'N/A'}</NetworkLink>
           </div>
         </td>
 
         <td>
-          {stake(brand)} {erdLabel}
+          {stake(identity)} {erdLabel}
         </td>
         <td className="stake-bar-col">
           <PercentegeBar
-            totalUpTimeLabel={Math.round(brand.overallStakePercent) + '%'}
-            totalUpTimePercentege={brand.overallStakePercent}
-            totalDownTimeLabel={Math.round(brand.stakePercent) + '%'}
-            totalDownTimePercentege={brand.stakePercent}
+            totalUpTimeLabel={Math.round(identity.overallStakePercent) + '%'}
+            totalUpTimePercentege={identity.overallStakePercent}
+            totalDownTimeLabel={Math.round(identity.stakePercent) + '%'}
+            totalDownTimePercentege={identity.stakePercent}
           />
-          <div className="stake-percent">{cumulativeStakePercent(brand)}</div>
+          <div className="stake-percent">
+            {cumulativeStakePercent(identity, blockchainTotalStake)}
+          </div>
         </td>
-        <td className="text-right">{brand.nodesCount}</td>
-        <td className="text-right">{Math.round(brand.score).toLocaleString()}</td>
+        <td className="text-right">{identity.nodes}</td>
+        <td className="text-right">{Math.round(identity.score).toLocaleString()}</td>
         <td className="text-right">
           <img src={carretDown} className="details-arrow" alt="details-arrow" height="8" />
         </td>

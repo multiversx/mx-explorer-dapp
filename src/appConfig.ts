@@ -38,3 +38,4 @@ export const versionNumber = 'v1.1.0.0';
 export const denomination = 18;
 export const decimals = 4;
 export const numInitCharactersForScAddress = 13;
+export const stakePerValidator = 2500000;
