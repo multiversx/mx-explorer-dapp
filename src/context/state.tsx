@@ -37,7 +37,7 @@ export interface IdentityType {
   location?: string;
   avatar?: string;
   identity: string;
-  nodes: number;
+  validators: number;
   score: number;
   stake: number;
   stakePercent: number;

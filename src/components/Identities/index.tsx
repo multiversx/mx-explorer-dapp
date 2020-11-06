@@ -18,22 +18,22 @@ const Identities = () => {
 
   const fetchIdentities = () => {
     getIdentities().then(({ data, success }) => {
-      let totalNodes = 0;
+      let totalValidators = 0;
       const identities: IdentityType[] = [];
       data.forEach((identity) => {
-        const stake = identity.nodes * stakePerValidator;
+        const stake = identity.validators * stakePerValidator;
         identities.push({
           ...identity,
           stake,
           overallStakePercent: 0,
           stakePercent: 0,
         });
-        totalNodes = totalNodes + identity.nodes;
+        totalValidators = totalValidators + identity.validators;
       });
       dispatch({
         type: 'setIdentities',
         identities,
-        blockchainTotalStake: totalNodes * stakePerValidator,
+        blockchainTotalStake: totalValidators * stakePerValidator,
       });
       setDataReady(success);
     });
@@ -58,7 +58,7 @@ const Identities = () => {
           />
         )}
         {dataReady === true && (
-          <div className="card-body">
+          <div className="card-body p-0">
             <div className="table-wrapper">
               <table className="table">
                 <thead>
