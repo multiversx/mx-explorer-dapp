@@ -148,7 +148,7 @@ const IdentityDetails = () => {
                         </div>
                         <div className="card-body p-0">
                           <NodesTable>
-                            <NodesTable.Body nodes={nodes} ratingOrder={ratingOrder} />
+                            <NodesTable.Body nodes={nodes} />
                           </NodesTable>
                         </div>
                         <div className="card-footer">
