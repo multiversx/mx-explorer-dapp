@@ -3,6 +3,7 @@ import getHighlights from './getHighlights';
 import getLatestBlocks from './getLatestBlocks';
 import getShards from './getShards';
 import getIdentities from './getIdentities';
+import getIdentity from './getIdentity';
 import getNodes, { GetNodesType as GetNodesInterface } from './getNodes';
 import getLatestTransactions from './getLatestTransactions';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
@@ -96,4 +97,5 @@ export {
   getNodes,
   getShards,
   getIdentities,
+  getIdentity,
 };
