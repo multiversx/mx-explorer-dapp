@@ -166,6 +166,21 @@ export default function useAdapter() {
         identity,
       }),
 
+    getNode: (key: string) =>
+      f.getNode({
+        provider,
+        baseUrl,
+        timeout,
+        key,
+      }),
+
+    getNewRounds: (key: string) =>
+      f.getNewRounds({
+        provider,
+        baseUrl,
+        key,
+        timeout,
+      }),
     getRounds: ({ shardNumber, signersIndex, epoch, roundAtEpochStart }: f.GetRoundsType) =>
       f.getRounds({
         provider,
@@ -175,6 +190,14 @@ export default function useAdapter() {
         epoch,
         timeout: Math.max(timeout, 10000),
         roundAtEpochStart,
+      }),
+
+    getHisoricRatings: (key: string) =>
+      f.getHisoricRatings({
+        provider,
+        baseUrl,
+        key,
+        timeout,
       }),
 
     getValidator: ({ currentValidator, explorerApi, publicKey }: f.GetValidatorType) =>

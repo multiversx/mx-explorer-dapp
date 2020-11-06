@@ -13,6 +13,7 @@ import IdentityDetails from './components/IdentityDetails';
 import ValidatorsTable from './components/Validators/ValidatorsTable';
 import BrandDetails from './components/Validators/BrandDetails';
 import ValidatorDetails from './components/Validators/ValidatorDetails';
+import NodeDetails from './components/NodeDetails';
 import ValidatorsBrandTable from './components/Validators/ValidatorsBrandTable';
 import { withPageTitle, withNetworkReady } from './sharedComponents';
 
@@ -31,7 +32,8 @@ export const validatorsRoutes = {
   // brandDetails: `/validators/:identity`,
   // nodes: '/validators/nodes',
   nodes: '/nodes',
-  validatorDetails: '/validators/nodes/:hash',
+  nodeDetails: '/nodes/:publicKey',
+  // validatorDetails: '/validators/nodes/:hash',
   identityDetails: '/validators/:id',
 };
 
@@ -77,10 +79,15 @@ const routes: RouteType[] = [
   //   component: BrandDetails,
   // },
   {
-    path: validatorsRoutes.validatorDetails,
+    path: validatorsRoutes.nodeDetails,
     title: 'Node Details',
-    component: ValidatorDetails,
+    component: NodeDetails,
   },
+  // {
+  //   path: validatorsRoutes.validatorDetails,
+  //   title: 'Node Details',
+  //   component: ValidatorDetails,
+  // },
   {
     path: '/address/:hash',
     title: 'Address Details',

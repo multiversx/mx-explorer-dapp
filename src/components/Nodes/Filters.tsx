@@ -51,7 +51,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
     const { nodeType, peerType, issues, ...rest } = Object.fromEntries(urlParams);
     const nextUrlParams = new URLSearchParams({
       ...rest,
-      ...(issuesValue ? { issues: issuesValue } : {}),
+      ...(issuesValue ? { issues: issuesValue, nodeType: 'validator' } : {}),
     }).toString();
     return `${pathname}?${nextUrlParams}`;
   };
@@ -118,7 +118,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
           <NetworkLink
             to={nodeTypeLink('validator')}
             className={`btn btn-sm btn-outline-light btn-pill ${
-              nodeType === 'validator' ? 'active' : ''
+              nodeType === 'validator' && issues !== 'true' ? 'active' : ''
             }`}
           >
             Validators
