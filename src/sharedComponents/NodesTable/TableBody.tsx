@@ -4,16 +4,38 @@ import { truncate, urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, Trim, Led } from 'sharedComponents';
 import RowIcon from './RowIcon';
 
-const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrder: string[] }) => {
+const getRatings = (nodes: ValidatorType[]) => {
+  return nodes
+    .filter((node: ValidatorType) => node.nodeType === 'validator')
+    .sort((a: any, b: any) => a.rating - b.rating)
+    .map((v: any) => v);
+};
+
+const NodesTable = ({ nodes }: { nodes: ValidatorType[] }) => {
+  const orderedByRating = getRatings(nodes);
+
+  // const getRatingsEffect = () => {
+  //   const uniqueRatings = getRatings(nodes);
+  //   setRatingOrder(uniqueRatings);
+  // };
+
+  // React.useEffect(getRatingsEffect, [nodes]);
+
   return (
     <tbody>
-      {nodes.map((node, index) => (
+      {orderedByRating.map((node, index) => (
         <tr key={node.publicKey}>
           {/* <td>{node.nodeType === 'validator' ? ratingOrder.indexOf(node.publicKey) + 1 : ''}</td> */}
           <td>
             <div className="d-flex align-items-center">
               <RowIcon node={node} />
-              <Trim text={node.publicKey} />
+              {node.nodeType === 'validator' ? (
+                <NetworkLink to={urlBuilder.nodeDetails(node.publicKey)}>
+                  <Trim text={node.publicKey} />
+                </NetworkLink>
+              ) : (
+                <Trim text={node.publicKey} />
+              )}
             </div>
           </td>
           <td>
@@ -36,7 +58,7 @@ const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrde
               <span className="text-muted">N/A</span>
             )}
           </td>
-          <td>
+          <td className="text-right">
             {(node.totalUpTimeSec !== 0 || node.totalDownTimeSec !== 0) && (
               <span>
                 {Math.floor(
@@ -53,11 +75,12 @@ const NodesTable = ({ nodes, ratingOrder }: { nodes: ValidatorType[]; ratingOrde
               node.status === 'offline' && <span>0%</span>}
           </td>
           <td>
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center justify-content-end">
               <Led color={node.status === 'online' ? 'bg-success' : 'bg-danger'} />
               <span className="ml-2">{node.status === 'online' ? 'Online' : 'Offline'}</span>
             </div>
           </td>
+          <td className="text-right">{node.rating}</td>
         </tr>
       ))}
     </tbody>
