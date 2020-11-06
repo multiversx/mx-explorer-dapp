@@ -1,16 +1,9 @@
 import React from 'react';
-import NodeTabs from './NodeTabs';
 import ShardsList from './ShardsList';
 import { adapter, Loader } from 'sharedComponents';
 import { useGlobalDispatch, useGlobalState } from 'context';
 
-const NodesLayout = ({
-  children,
-  headerItem,
-}: {
-  children: React.ReactNode;
-  headerItem?: React.ReactNode;
-}) => {
+const NodesLayout = ({ children }: { children: React.ReactNode }) => {
   const { getShards } = adapter();
   const dispatch = useGlobalDispatch();
   const { shards } = useGlobalState();
@@ -52,17 +45,7 @@ const NodesLayout = ({
           <ShardsList />
 
           <div className="row">
-            <div className="col-12">
-              <div className="card">
-                <div className="card-header">
-                  <div className="card-header-item pb-0 px-0 border-0">
-                    <NodeTabs />
-                  </div>
-                  {headerItem}
-                </div>
-                {children}
-              </div>
-            </div>
+            <div className="col-12">{children}</div>
           </div>
         </div>
       )}

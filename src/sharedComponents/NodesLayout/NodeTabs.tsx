@@ -3,15 +3,15 @@ import { useLocation } from 'react-router-dom';
 import { validatorsRoutes } from 'routes';
 import { NetworkLink } from 'sharedComponents';
 
-const NodesTabs = ({ className }: { className?: string }) => {
+const NodesTabs = () => {
   const activePath = useLocation().pathname;
   const nodesPage = activePath.includes(validatorsRoutes.nodes);
 
   const validatorsPage = !nodesPage;
 
   return (
-    <div className={className ? className : ''}>
-      <ul className="validators-nav nav nav-tabs px-3 px-lg-spacer">
+    <div className="nodes-tabs card-header-item pb-0 px-0 border-0">
+      <ul className="nav nav-tabs px-3 px-lg-spacer">
         <li className="nav-item">
           <NetworkLink
             to={validatorsRoutes.index}
