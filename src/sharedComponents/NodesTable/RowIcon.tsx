@@ -35,14 +35,14 @@ const RowIcon = ({ node }: { node: ValidatorType }) => {
     case node.nodeType === 'observer':
       return (
         <Overlay title="Observer">
-          <FontAwesomeIcon icon={faEye} className="w300 mr-1" />
+          <FontAwesomeIcon icon={faEye} className="text-muted w300 mr-1" />
         </Overlay>
       );
 
     case node.peerType === 'new':
       return (
         <Overlay title="New">
-          <FontAwesomeIcon icon={faLeaf} className="w300 mr-1" />
+          <FontAwesomeIcon icon={faLeaf} className="text-muted w300 mr-1" />
         </Overlay>
       );
 
@@ -69,14 +69,14 @@ const RowIcon = ({ node }: { node: ValidatorType }) => {
     case node.receivedShardID !== node.computedShardID:
       return (
         <Overlay title="Changing shard">
-          <FontAwesomeIcon icon={faSync} className="w300 mr-1" />
+          <FontAwesomeIcon icon={faSync} className="text-muted w300 mr-1" />
         </Overlay>
       );
 
     case node.peerType === 'waiting':
       return (
         <Overlay title="Waiting">
-          <FontAwesomeIcon icon={faClock} className="w300 mr-1" />
+          <FontAwesomeIcon icon={faClock} className="text-muted w300 mr-1" />
         </Overlay>
       );
 
