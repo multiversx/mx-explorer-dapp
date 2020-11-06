@@ -13,6 +13,11 @@ export type ActionType =
   | { type: 'setBrandData'; brandData: StateType['brandData'] } // TODO: remove
   | { type: 'setNodes'; nodes: StateType['nodes'] }
   | { type: 'setBrands'; brands: StateType['brands'] }
+  | {
+      type: 'setIdentities';
+      identities: StateType['identities'];
+      blockchainTotalStake: StateType['blockchainTotalStake'];
+    }
   | { type: 'setShards'; shards: StateType['shards'] }
   | { type: 'triggerNewRound' }
   | { type: 'cancelAllRequests' }
@@ -62,9 +67,17 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
       };
     }
     case 'setBrands': {
+      // TODO: remove
       return {
         ...state,
         brands: action.brands,
+      };
+    }
+    case 'setIdentities': {
+      return {
+        ...state,
+        identities: action.identities,
+        blockchainTotalStake: action.blockchainTotalStake,
       };
     }
     case 'setShards': {

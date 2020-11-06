@@ -2,50 +2,49 @@ import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalDispatch, useGlobalState } from 'context';
+import { IdentityType } from 'context/state';
 import { adapter, Loader } from 'sharedComponents';
 import NodesLayout from 'sharedComponents/NodesLayout';
 import IdentityRow from './IdentityRow';
-
-const initialState = [
-  {
-    name: 'Viastake',
-    avatar: '',
-    identity: 'viastake',
-    score: 1,
-    stake: 1900,
-    twitter: 'Sample',
-    web: 'Sample',
-    location: 'Sample',
-    stakePercent: 15,
-    overallStakePercent: 20,
-    nodesCount: 1,
-  },
-];
+import { stakePerValidator } from 'appConfig';
 
 const Identities = () => {
   const ref = React.useRef(null);
-  const { getNodes } = adapter();
-  const [success, setSuccess] = React.useState<boolean | undefined>(undefined);
+  const { getIdentities } = adapter();
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
   const dispatch = useGlobalDispatch();
-  const { brands } = useGlobalState();
+  const { identities } = useGlobalState();
 
-  const fetchBrands = () => {
-    setTimeout(() => {
-      dispatch({
-        type: 'setBrands',
-        brands: initialState,
+  const fetchIdentities = () => {
+    getIdentities().then(({ data, success }) => {
+      let totalNodes = 0;
+      const identities: IdentityType[] = [];
+      data.forEach((identity) => {
+        const stake = identity.nodes * stakePerValidator;
+        identities.push({
+          ...identity,
+          stake,
+          overallStakePercent: 0,
+          stakePercent: 0,
+        });
+        totalNodes = totalNodes + identity.nodes;
       });
-      setSuccess(true);
-    }, 500);
+      dispatch({
+        type: 'setIdentities',
+        identities,
+        blockchainTotalStake: totalNodes * stakePerValidator,
+      });
+      setDataReady(success);
+    });
   };
 
-  React.useEffect(fetchBrands, []);
+  React.useEffect(fetchIdentities, []);
 
   return (
     <NodesLayout>
       <div ref={ref}>
-        {success === undefined && <Loader />}
-        {success === true && (
+        {dataReady === undefined && <Loader />}
+        {dataReady === true && (
           <div className="branded-validators card-body card-list">
             <div className="table-responsive" style={{ minHeight: '50px' }}>
               <table className="table table-hover">
@@ -61,15 +60,15 @@ const Identities = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {brands.map((brand, i) => {
-                    return <IdentityRow key={i} rank={i + 1} brand={brand} />;
-                  })}
+                  {identities.map((identity, i) => (
+                    <IdentityRow key={i} rank={i + 1} identity={identity} />
+                  ))}
                 </tbody>
               </table>
             </div>
           </div>
         )}
-        {success === false && (
+        {dataReady === false && (
           <div className="card-body" data-testid="errorScreen">
             <div className="empty">
               <FontAwesomeIcon icon={faCogs} className="empty-icon" />

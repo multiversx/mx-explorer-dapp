@@ -132,6 +132,13 @@ export default function useAdapter() {
         count: true,
       }),
 
+    getIdentities: () =>
+      f.getIdentities({
+        provider,
+        baseUrl,
+        timeout,
+      }),
+
     getRounds: ({ shardNumber, signersIndex, epoch, roundAtEpochStart }: f.GetRoundsType) =>
       f.getRounds({
         provider,
