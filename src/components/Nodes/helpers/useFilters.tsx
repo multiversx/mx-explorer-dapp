@@ -4,9 +4,16 @@ import { isValidInteger } from 'helpers';
 export default function useGetFilters() {
   const { search: urlSearch } = useLocation();
   const urlParams = new URLSearchParams(urlSearch);
-  const { status, search, peerType, nodeType, issues, shardId, page } = Object.fromEntries(
-    urlParams
-  );
+  const {
+    status,
+    search,
+    peerType,
+    nodeType,
+    issues,
+    shardId,
+    identity,
+    page,
+  } = Object.fromEntries(urlParams);
 
   const size = page && isValidInteger(page) ? parseInt(page) : 1;
 
@@ -15,6 +22,7 @@ export default function useGetFilters() {
     ...(status ? {} : { status }),
     ...(peerType ? {} : { peerType }),
     ...(nodeType ? {} : { nodeType }),
+    ...(identity ? {} : { identity }),
     ...(issues ? {} : { issues: 'true' }),
     ...(shardId && isValidInteger(shardId) ? {} : { shardId }),
   });

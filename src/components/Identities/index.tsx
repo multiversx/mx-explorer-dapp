@@ -20,14 +20,14 @@ const Identities = () => {
       let totalNodes = 0;
       const identities: IdentityType[] = [];
       data.forEach((identity) => {
-        const stake = identity.nodes * stakePerValidator;
+        const stake = identity.validators * stakePerValidator;
         identities.push({
           ...identity,
           stake,
           overallStakePercent: 0,
           stakePercent: 0,
         });
-        totalNodes = totalNodes + identity.nodes;
+        totalNodes = totalNodes + identity.validators;
       });
       dispatch({
         type: 'setIdentities',

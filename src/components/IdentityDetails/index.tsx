@@ -2,25 +2,48 @@ import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IdentityType } from 'context/state';
-import { adapter, Loader, DetailItem } from 'sharedComponents';
+import { adapter, Loader, DetailItem, Pager, PageState } from 'sharedComponents';
 import { useParams } from 'react-router-dom';
-import { stake } from 'components/Identities/IdentityRow';
+import NodesTable from 'components/Nodes/NodesTable';
+import useFilters from 'components/Nodes/helpers/useFilters';
+import { ValidatorType } from 'context/validators';
 
 const IdentityDetails = () => {
   const ref = React.useRef(null);
   const { id } = useParams() as any;
-  const { getIdentity } = adapter();
+  const { getIdentity, getNodes, getNodesCount } = adapter();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
   const [identity, setIdenity] = React.useState<IdentityType>();
+  const [nodes, setNodes] = React.useState<any>();
+  const [ratingOrder, setRatingOrder] = React.useState<string[]>([]);
+  const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
+  const { getQueryObject, size } = useFilters();
 
-  const fetchIdentities = () => {
-    getIdentity(id).then(({ data, success }) => {
-      setIdenity(data);
-      setDataReady(success);
+  const fetchData = () => {
+    Promise.all([
+      getIdentity(id),
+      getNodes({ ...getQueryObject, identity: id, size }),
+      getNodesCount({ ...getQueryObject, identity: id }),
+    ]).then(([identityData, nodesData, nodesCount]) => {
+      setIdenity(identityData.data);
+      setNodes(nodesData.data);
+      setTotalNodes(nodesCount.data);
+      setDataReady(identityData.success && nodesData.success);
     });
   };
 
-  React.useEffect(fetchIdentities, []);
+  React.useEffect(fetchData, []);
+
+  const getRatings = () => {
+    if (nodes) {
+      const uniqueRatings = nodes
+        .filter((node: ValidatorType) => node.nodeType === 'validator')
+        .sort((a: any, b: any) => a.rating - b.rating)
+        .map((v: any) => v.publicKey);
+      setRatingOrder(uniqueRatings);
+    }
+  };
+  React.useEffect(getRatings, [nodes]);
 
   return (
     <div ref={ref}>
@@ -34,7 +57,7 @@ const IdentityDetails = () => {
               </h3>
             </div>
           </div>
-          <div className="row" data-testid="brandDetailsContainer">
+          <div className="row" data-testid="identityDetailsContainer">
             <div className="col-12 col-md-6">
               <div className="card">
                 <div className="card-header">
@@ -99,7 +122,7 @@ const IdentityDetails = () => {
                     </DetailItem>
 
                     <DetailItem title="Nodes" colWidth="4">
-                      {identity.nodes.toLocaleString('en')}
+                      {identity.validators.toLocaleString('en')}
                     </DetailItem>
 
                     <DetailItem title="Score" colWidth="4">
@@ -108,6 +131,45 @@ const IdentityDetails = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <>
+                {nodes.length > 0 ? (
+                  <>
+                    <div className="card-body p-0">
+                      <NodesTable>
+                        <thead>
+                          <tr>
+                            <th data-testid="publickey">Public key</th>
+                            <th data-testid="nodeDisplayName">Node Name</th>
+                            <th data-testid="shardId">
+                              <NodesTable.ShardLabel />
+                            </th>
+                            <th data-testid="versionNumber">Version</th>
+                            <th data-testid="totalUpTimeSec">Uptime</th>
+                            <th data-testid="status">
+                              <NodesTable.StatusLabel />
+                            </th>
+                          </tr>
+                        </thead>
+                        <NodesTable.Body nodes={nodes} ratingOrder={ratingOrder} />
+                      </NodesTable>
+                    </div>
+                    <div className="card-footer">
+                      <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+                    </div>
+                  </>
+                ) : (
+                  <PageState
+                    icon={faCogs}
+                    title="No Validators"
+                    className="py-spacer my-auto"
+                    dataTestId="errorScreen"
+                  />
+                )}
+              </>
             </div>
           </div>
         </div>
