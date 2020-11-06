@@ -3,10 +3,11 @@ import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import { IdentityType } from 'context/state';
-import { adapter, Loader } from 'sharedComponents';
+import { adapter, Loader, PageState } from 'sharedComponents';
 import NodesLayout from 'sharedComponents/NodesLayout';
 import IdentityRow from './IdentityRow';
 import { stakePerValidator } from 'appConfig';
+import NodeTabs from 'sharedComponents/NodesLayout/NodeTabs';
 
 const Identities = () => {
   const ref = React.useRef(null);
@@ -17,7 +18,7 @@ const Identities = () => {
 
   const fetchIdentities = () => {
     getIdentities().then(({ data, success }) => {
-      let totalNodes = 0;
+      let totalValidators = 0;
       const identities: IdentityType[] = [];
       data.forEach((identity) => {
         const stake = identity.validators * stakePerValidator;
@@ -27,12 +28,12 @@ const Identities = () => {
           overallStakePercent: 0,
           stakePercent: 0,
         });
-        totalNodes = totalNodes + identity.validators;
+        totalValidators = totalValidators + identity.validators;
       });
       dispatch({
         type: 'setIdentities',
         identities,
-        blockchainTotalStake: totalNodes * stakePerValidator,
+        blockchainTotalStake: totalValidators * stakePerValidator,
       });
       setDataReady(success);
     });
@@ -42,12 +43,24 @@ const Identities = () => {
 
   return (
     <NodesLayout>
-      <div ref={ref}>
+      <div className="card" ref={ref}>
+        <div className="card-header">
+          <NodeTabs />
+        </div>
+
         {dataReady === undefined && <Loader />}
+        {dataReady === false && (
+          <PageState
+            icon={faCogs}
+            title="Unable to load validators"
+            className="py-spacer my-auto"
+            dataTestId="errorScreen"
+          />
+        )}
         {dataReady === true && (
-          <div className="branded-validators card-body card-list">
-            <div className="table-responsive" style={{ minHeight: '50px' }}>
-              <table className="table table-hover">
+          <div className="card-body p-0">
+            <div className="table-wrapper">
+              <table className="table">
                 <thead>
                   <tr>
                     <th className="th-rank">#</th>
@@ -65,14 +78,6 @@ const Identities = () => {
                   ))}
                 </tbody>
               </table>
-            </div>
-          </div>
-        )}
-        {dataReady === false && (
-          <div className="card-body" data-testid="errorScreen">
-            <div className="empty">
-              <FontAwesomeIcon icon={faCogs} className="empty-icon" />
-              <span className="h4 empty-heading">Unable to load validators</span>
             </div>
           </div>
         )}
