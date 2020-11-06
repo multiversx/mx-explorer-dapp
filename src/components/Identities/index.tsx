@@ -42,7 +42,7 @@ const Identities = () => {
 
   return (
     <NodesLayout>
-      <div className="card" ref={ref}>
+      <div className="card identities" ref={ref}>
         <div className="card-header">
           <NodeTabs />
         </div>

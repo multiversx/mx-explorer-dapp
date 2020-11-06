@@ -5,7 +5,7 @@ import { ValidatorType } from 'context/validators';
 import { IdentityType } from 'context/state';
 import carretDown from 'assets/images/carret-down.svg';
 import BrandDetailsRow from './IdenityDetailsRow';
-import { Loader, NetworkLink } from 'sharedComponents';
+import { Loader, NetworkLink, Trim } from 'sharedComponents';
 import PercentegeBar from 'components/Validators/ValidatorDetails/PercentegeBar';
 import { validatorsRoutes } from 'routes';
 
@@ -52,7 +52,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
     <>
       <tr
         onClick={expand(identity.identity)}
-        className={collapsed ? 'brand-tr collapsed' : 'brand-tr'}
+        className={`identity-row ${collapsed ? 'collapsed' : ''}`}
       >
         <td>{rank}</td>
         <td>
@@ -72,7 +72,13 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
                 />
               </NetworkLink>
             </div>
-            <NetworkLink to={link}>{identity.name ? identity.name : 'N/A'}</NetworkLink>
+            {identity.name && identity.name.length > 70 ? (
+              <NetworkLink to={link} className="trim-wrapper">
+                <Trim text={identity.name} />
+              </NetworkLink>
+            ) : (
+              <NetworkLink to={link}>{identity.name ? identity.name : 'N/A'}</NetworkLink>
+            )}
           </div>
         </td>
 
@@ -80,14 +86,16 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
           {stake(identity)} {erdLabel}
         </td>
         <td className="stake-bar-col">
-          <PercentegeBar
-            totalUpTimeLabel={Math.round(identity.overallStakePercent) + '%'}
-            totalUpTimePercentege={identity.overallStakePercent}
-            totalDownTimeLabel={Math.round(identity.stakePercent) + '%'}
-            totalDownTimePercentege={identity.stakePercent}
-          />
-          <div className="stake-percent">
-            {cumulativeStakePercent(identity, blockchainTotalStake)}
+          <div className="d-flex align-items-center">
+            <div className="flex-fill">
+              <PercentegeBar
+                totalUpTimeLabel={Math.round(identity.overallStakePercent) + '%'}
+                totalUpTimePercentege={identity.overallStakePercent}
+                totalDownTimeLabel={Math.round(identity.stakePercent) + '%'}
+                totalDownTimePercentege={identity.stakePercent}
+              />
+            </div>
+            <div className="ml-3">{cumulativeStakePercent(identity, blockchainTotalStake)}</div>
           </div>
         </td>
         <td className="text-right">{identity.validators}</td>
@@ -97,11 +105,11 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
         </td>
       </tr>
       {showDetails && (
-        <tr className={collapsed ? 'details-tr collapsed' : 'details-tr'}>
+        <tr className={`identity-details-row ${collapsed ? 'collapsed' : ''}`}>
           <td colSpan={7} className="p-0">
             <div className="content">
-              <div className="table-responsive px-4 pt-2" style={{ minHeight: '50px' }}>
-                <table className="table mb-2">
+              <div className="table-wrapper p-2">
+                <table className="table">
                   <thead>
                     <tr>
                       <th>Public Key</th>
