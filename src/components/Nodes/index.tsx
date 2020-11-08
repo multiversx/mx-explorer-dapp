@@ -65,16 +65,8 @@ const Nodes = () => {
               dataTestId="errorScreen"
             />
           )}
-          {dataReady === true && nodes.length === 0 && (
-            <PageState
-              icon={faCogs}
-              title="No Nodes"
-              className="py-spacer my-auto"
-              dataTestId="errorScreen"
-            />
-          )}
 
-          {dataReady === true && nodes.length > 0 && (
+          {dataReady === true && (
             <>
               <div className="card-body p-0">
                 <NodesTable>
