@@ -6,10 +6,7 @@ import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import RowIcon from './RowIcon';
 
 const getRatings = (nodes: ValidatorType[]) => {
-  return nodes
-    .filter((node: ValidatorType) => node.nodeType === 'validator')
-    .sort((a: any, b: any) => a.rating - b.rating)
-    .map((v: any) => v);
+  return nodes.sort((a: any, b: any) => a.rating - b.rating).map((v: any) => v);
 };
 
 const NodesTable = ({ nodes }: { nodes: ValidatorType[] }) => {
@@ -19,7 +16,6 @@ const NodesTable = ({ nodes }: { nodes: ValidatorType[] }) => {
     <tbody>
       {orderedByRating.map((node, index) => (
         <tr key={node.publicKey}>
-          {/* <td>{node.nodeType === 'validator' ? ratingOrder.indexOf(node.publicKey) + 1 : ''}</td> */}
           <td>
             <div className="d-flex align-items-center">
               <RowIcon node={node} />
