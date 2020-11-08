@@ -2,7 +2,11 @@
   .hash-group-row {
     .col {
       padding-left: 0;
-      padding-right: 1px; // mobile fix
+      padding-right: 1px !important; // mobile fix
+
+      @include media-breakpoint-up(lg) {
+        padding-right: 1rem !important;
+      }
     }
 
     .hash-group {
