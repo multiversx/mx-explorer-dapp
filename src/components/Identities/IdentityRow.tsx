@@ -1,12 +1,10 @@
 import React from 'react';
-import BigNumber from 'bignumber.js';
 import { useGlobalState } from 'context';
 import { ValidatorType } from 'context/validators';
 import { IdentityType } from 'context/state';
 import carretDown from 'assets/images/carret-down.svg';
 import { Loader, NetworkLink, Trim, adapter, PageState, NodesTable } from 'sharedComponents';
 import PercentegeBar from 'components/Validators/ValidatorDetails/PercentegeBar';
-import { validatorsRoutes } from 'routes';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 
 export interface IdentityRowType {
@@ -14,21 +12,11 @@ export interface IdentityRowType {
   rank: number;
 }
 
-export const stake = ({ stake }: IdentityType) => {
-  return parseFloat(new BigNumber(stake).dividedBy(1000).valueOf()).toLocaleString('en');
-};
-
-export const cumulativeStakePercent = (identity: IdentityType, blockchainTotalStake: number) => {
-  const stakePercent = (identity.stake / blockchainTotalStake) * 100;
-  return `${Math.round(stakePercent) > 0 ? Math.round(stakePercent) : '< 1'}%`;
-};
-
 const IdentityRow = ({ identity, rank }: IdentityRowType) => {
   const [collapsed, setCollapsed] = React.useState(true);
   const [showDetails, setShowDetails] = React.useState(false);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [identityNodes, setIdentityNodes] = React.useState<ValidatorType[]>([]);
-  const { blockchainTotalStake } = useGlobalState();
   const { getNodes, getNode } = adapter();
 
   const {
@@ -53,7 +41,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
     setCollapsed(!collapsed);
   };
 
-  const link = identity.identity ? `validators/${identity.identity}` : `nodes/${identity.name}`;
+  const link = identity.identity ? `/validators/${identity.identity}` : `/nodes/${identity.name}`;
 
   return (
     <>
@@ -87,11 +75,11 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
         </td>
 
         <td>
-          {stake(identity)} {erdLabel}
+          {identity.stake.toLocaleString('en')} {erdLabel}
         </td>
         <td className="stake-bar-col">
           <div className="d-flex align-items-center">
-            <div className="flex-fill">
+            <div className="bar">
               <PercentegeBar
                 totalUpTimeLabel={Math.round(identity.overallStakePercent) + '%'}
                 totalUpTimePercentege={identity.overallStakePercent}
@@ -99,10 +87,12 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
                 totalDownTimePercentege={identity.stakePercent}
               />
             </div>
-            <div className="ml-3">{cumulativeStakePercent(identity, blockchainTotalStake)}</div>
+            <div className="ml-3">
+              {Math.round(identity.stakePercent) > 0 ? Math.round(identity.stakePercent) : '< 1'}%
+            </div>
           </div>
         </td>
-        <td className="text-right">{identity.validators}</td>
+        <td className="text-right">{identity.validators.toLocaleString()}</td>
         <td className="text-right">{Math.round(identity.score).toLocaleString()}</td>
         <td className="text-right">
           <img src={carretDown} className="details-arrow" alt="details-arrow" height="8" />
@@ -112,7 +102,17 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
         <tr className={`identity-details-row ${collapsed ? 'collapsed' : ''}`}>
           <td colSpan={7} className="p-0">
             <div className="content">
-              {dataReady === undefined && <Loader />}
+              {dataReady === undefined && (
+                <>
+                  {identity.validators >= 5 ? (
+                    <Loader />
+                  ) : (
+                    <div className="py-4">
+                      <Loader small={true} />
+                    </div>
+                  )}
+                </>
+              )}
               {dataReady === false && (
                 <PageState
                   icon={faCogs}
