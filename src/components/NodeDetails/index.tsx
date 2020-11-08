@@ -1,6 +1,6 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { adapter, Loader, PageState } from 'sharedComponents';
+import { adapter, BlocksTable, Loader, PageState } from 'sharedComponents';
 import { ValidatorType } from 'context/validators';
 import { useLocation, useParams } from 'react-router-dom';
 import { IdentityType } from 'context/state';
@@ -10,17 +10,25 @@ import Identity from './Identity';
 import NetworkMetrics from './NetworkMetrics';
 import Rounds, { RoundType } from './Rounds';
 import RatingsChart, { RatingType } from './RatingsChart';
+import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
+import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 
 const NodeDetails = () => {
   const ref = React.useRef(null);
   const { publicKey } = useParams() as any;
   const { search } = useLocation();
-  const { getNode, getIdentity, getNewRounds, getHisoricRatings } = adapter();
+  const { getNode, getIdentity, getNewRounds, getHistoricRatings } = adapter();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
   const [node, setNode] = React.useState<ValidatorType>();
   const [identity, setIdentity] = React.useState<IdentityType>();
   const [rounds, setRounds] = React.useState<RoundType[]>();
   const [ratings, setRatings] = React.useState<RatingType[]>();
+  const [fetchedBlocks, setFetchedBlocks] = React.useState({
+    blocks: [],
+    startBlockNr: 0,
+    endBlockNr: 0,
+    blocksFetched: undefined,
+  });
 
   const fetchNodes = () => {
     setDataReady(undefined);
@@ -31,7 +39,7 @@ const NodeDetails = () => {
         Promise.all([
           getIdentity(newNode.identity),
           getNewRounds(publicKey),
-          getHisoricRatings(publicKey),
+          getHistoricRatings(publicKey),
         ]).then(([identityData, roundsData, historicRatingsData]) => {
           setNode(newNode);
           setIdentity(identityData.data);
@@ -56,6 +64,14 @@ const NodeDetails = () => {
   return (
     <div ref={ref}>
       {dataReady === undefined && <Loader />}
+      {dataReady === false && (
+        <PageState
+          icon={faCogs}
+          title="Unable to locate this node"
+          className="py-spacer my-auto"
+          dataTestId="errorScreen"
+        />
+      )}
       {dataReady === true && node && (
         <>
           <div className="container py-spacer">
@@ -85,16 +101,39 @@ const NodeDetails = () => {
               </div>
               <div className="col-md-4 mt-spacer">{rounds && <Rounds rounds={rounds} />}</div>
             </div>
+            {node.nodeType === 'validator' && (
+              <div className="row">
+                <div className="col-12 mt-spacer">
+                  <div className="card">
+                    {fetchedBlocks.blocksFetched === undefined && <Loader />}
+                    {fetchedBlocks.blocksFetched === false && <FailedBlocks />}
+                    {fetchedBlocks.blocksFetched === true && fetchedBlocks.blocks.length === 0 && (
+                      <NoBlocks
+                        title={
+                          node.peerType === 'waiting' ? 'Validator not in consensus' : 'No blocks'
+                        }
+                      />
+                    )}
+                    {fetchedBlocks.blocksFetched === true && fetchedBlocks.blocks.length > 0 && (
+                      <>
+                        <div className="card-header">
+                          <div className="card-header-item">
+                            <h6 className="m-0">
+                              Last {fetchedBlocks.blocks.length} proposed Blocks in Current Epoch
+                            </h6>
+                          </div>
+                        </div>
+                        <div className="card-body p-0">
+                          <BlocksTable blocks={fetchedBlocks.blocks} shardId={undefined} />
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </>
-      )}
-      {dataReady === false && (
-        <PageState
-          icon={faCogs}
-          title="Unable to locate this node"
-          className="py-spacer my-auto"
-          dataTestId="errorScreen"
-        />
       )}
     </div>
   );
