@@ -27,12 +27,16 @@
     }
 
     .stake-bar-col {
+      .bar {
+        width: 10.32rem;
+      }
+
       .bg-success {
-        background-color: $link-hover-color !important;
+        background-color: $primary !important;
       }
 
       .bg-danger {
-        background-color: $primary !important;
+        background-color: $success !important;
       }
     }
 

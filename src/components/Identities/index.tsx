@@ -5,7 +5,6 @@ import { IdentityType } from 'context/state';
 import { adapter, Loader, PageState } from 'sharedComponents';
 import NodesLayout from 'sharedComponents/NodesLayout';
 import IdentityRow from './IdentityRow';
-import { stakePerValidator } from 'appConfig';
 import NodeTabs from 'sharedComponents/NodesLayout/NodeTabs';
 
 const Identities = () => {
@@ -17,22 +16,24 @@ const Identities = () => {
 
   const fetchIdentities = () => {
     getIdentities().then(({ data, success }) => {
-      let totalValidators = 0;
-      const identities: IdentityType[] = [];
+      const identitiesList: IdentityType[] = [];
+      let blockchainTotalStake = 0;
+      let overallStakePercent = 0;
+
       data.forEach((identity) => {
-        const stake = identity.validators * stakePerValidator;
-        identities.push({
-          ...identity,
-          stake,
-          overallStakePercent: 0,
-          stakePercent: 0,
-        });
-        totalValidators = totalValidators + identity.validators;
+        if (!identity.stake || !identity.validators) {
+          console.log('missing stake or validators', identity);
+          return;
+        }
+
+        identitiesList.push({ ...identity, overallStakePercent });
+        blockchainTotalStake = blockchainTotalStake + identity.stake;
+        overallStakePercent = overallStakePercent + identity.stakePercent;
       });
       dispatch({
         type: 'setIdentities',
-        identities,
-        blockchainTotalStake: totalValidators * stakePerValidator,
+        identities: identitiesList,
+        blockchainTotalStake,
       });
       setDataReady(success);
     });

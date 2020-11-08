@@ -32,16 +32,16 @@ export interface BrandType {
 }
 export interface IdentityType {
   name: string;
-  twitter?: string;
-  website?: string;
-  location?: string;
-  avatar?: string;
-  identity: string;
-  validators: number;
   score: number;
   stake: number;
   stakePercent: number;
   overallStakePercent: number;
+  validators: number;
+  twitter?: string;
+  website?: string;
+  location?: string;
+  avatar?: string;
+  identity?: string;
 }
 
 export interface StateType {

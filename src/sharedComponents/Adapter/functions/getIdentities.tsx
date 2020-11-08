@@ -3,13 +3,15 @@ import { object, number, string, InferType } from 'yup';
 
 const schema = object({
   name: string().required(),
+  score: number().required(),
+  stake: number().required(),
+  stakePercent: number().required(),
+  validators: number().required(),
+  identity: string(),
   twitter: string(),
   website: string(),
   location: string(),
   avatar: string(),
-  identity: string().required(),
-  validators: number().required(),
-  score: number().required(),
 }).required();
 
 export type IdentityDataType = InferType<typeof schema>;
