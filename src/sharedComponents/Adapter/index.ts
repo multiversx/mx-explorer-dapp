@@ -192,8 +192,8 @@ export default function useAdapter() {
         roundAtEpochStart,
       }),
 
-    getHisoricRatings: (key: string) =>
-      f.getHisoricRatings({
+    getHistoricRatings: (key: string) =>
+      f.getHistoricRatings({
         provider,
         baseUrl,
         key,
