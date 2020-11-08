@@ -9,7 +9,11 @@ const PageNotFound = () => {
     <PageState
       icon={faTimes}
       title="Page not found"
-      description={pathname}
+      description={
+        <div className="px-spacer">
+          <span className="text-break-all">{pathname}</span>
+        </div>
+      }
       className="py-spacer m-auto"
       dataTestId="errorScreen"
     />
