@@ -8,7 +8,7 @@ const Identity = ({ identity }: { identity: IdentityType }) => {
     <div className="card" data-testid="brandContainer">
       <div className="card-header">
         <div className="card-header-item p-0">
-          <div className="brand-header-item">
+          <div className="brand-header-item px-lg-3">
             <img
               className={`mr-3 avatar rounded-circle shadow-sm ${identity.avatar ? '' : 'gray'}`}
               src={identity.avatar ? identity.avatar : '/validators/default-avatar.svg'}
@@ -29,16 +29,16 @@ const Identity = ({ identity }: { identity: IdentityType }) => {
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Stake" colWidth="6">
-            {identity.stake}
+            {identity.stake.toLocaleString('en')}
           </DetailItem>
           <DetailItem title="Stake percent" colWidth="6">
-            {identity.stakePercent}
+            {Math.round(identity.stakePercent) > 0 ? Math.round(identity.stakePercent) : '< 1'}%
           </DetailItem>
           <DetailItem title="Nodes" colWidth="6">
-            {identity.validators}
+            {identity.validators.toLocaleString('en')}
           </DetailItem>
           <DetailItem title="Score" colWidth="6">
-            {Math.floor(identity.score).toLocaleString()}
+            {Math.round(identity.score).toLocaleString('en')}
           </DetailItem>
         </div>
       </div>
