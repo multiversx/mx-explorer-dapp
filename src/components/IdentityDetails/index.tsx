@@ -5,7 +5,6 @@ import { adapter, Loader, DetailItem, Pager, PageState } from 'sharedComponents'
 import { useParams } from 'react-router-dom';
 import { NodesTable } from 'sharedComponents';
 import { useFilters } from 'helpers';
-import { ValidatorType } from 'context/validators';
 
 const IdentityDetails = () => {
   const ref = React.useRef(null);
@@ -14,7 +13,6 @@ const IdentityDetails = () => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
   const [identity, setIdentity] = React.useState<IdentityType>();
   const [nodes, setNodes] = React.useState<any>();
-  const [ratingOrder, setRatingOrder] = React.useState<string[]>([]);
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
   const { getQueryObject, size } = useFilters();
 
@@ -35,20 +33,17 @@ const IdentityDetails = () => {
 
   React.useEffect(fetchData, []);
 
-  const getRatings = () => {
-    if (nodes) {
-      const uniqueRatings = nodes
-        .filter((node: ValidatorType) => node.nodeType === 'validator')
-        .sort((a: any, b: any) => a.rating - b.rating)
-        .map((v: any) => v.publicKey);
-      setRatingOrder(uniqueRatings);
-    }
-  };
-  React.useEffect(getRatings, [nodes]);
-
   return (
     <div ref={ref}>
       {dataReady === undefined && <Loader />}
+      {dataReady === false && (
+        <PageState
+          icon={faCogs}
+          title="Unable to load identity details"
+          className="py-spacer my-auto"
+          dataTestId="errorScreen"
+        />
+      )}
       {dataReady === true && identity && (
         <div className="container py-spacer">
           <div className="row page-header mb-spacer">
@@ -119,7 +114,10 @@ const IdentityDetails = () => {
                     </DetailItem>
 
                     <DetailItem title="Stake percent" colWidth="4">
-                      {identity.stakePercent}
+                      {Math.round(identity.stakePercent) > 0
+                        ? Math.round(identity.stakePercent)
+                        : '< 1'}
+                      %
                     </DetailItem>
 
                     <DetailItem title="Nodes" colWidth="4">
@@ -127,7 +125,7 @@ const IdentityDetails = () => {
                     </DetailItem>
 
                     <DetailItem title="Score" colWidth="4">
-                      {Math.floor(identity.score).toLocaleString()}
+                      {Math.floor(identity.score).toLocaleString('en')}
                     </DetailItem>
                   </div>
                 </div>
@@ -136,47 +134,27 @@ const IdentityDetails = () => {
           </div>
           <div className="row">
             <div className="col-12">
-              <>
-                {nodes.length > 0 ? (
-                  <>
-                    <div className="card">
-                      <div className="card-header">
-                        <div className="card-header-item">
-                          <h6 className="m-0" data-testid="title">
-                            Nodes
-                          </h6>
-                        </div>
-                      </div>
-                      <div className="card-body p-0">
-                        <NodesTable>
-                          <NodesTable.Body nodes={nodes} />
-                        </NodesTable>
-                      </div>
-                      <div className="card-footer">
-                        <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <PageState
-                    icon={faCogs}
-                    title="No Validators"
-                    className="py-spacer my-auto"
-                    dataTestId="errorScreen"
-                  />
-                )}
-              </>
+              <div className="card">
+                <div className="card-header">
+                  <div className="card-header-item">
+                    <h6 className="m-0" data-testid="title">
+                      Nodes
+                    </h6>
+                  </div>
+                </div>
+
+                <div className="card-body p-0">
+                  <NodesTable>
+                    <NodesTable.Body nodes={nodes} />
+                  </NodesTable>
+                </div>
+                <div className="card-footer">
+                  <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      )}
-      {dataReady === false && (
-        <PageState
-          icon={faCogs}
-          title="Unable to load validators"
-          className="py-spacer my-auto"
-          dataTestId="errorScreen"
-        />
       )}
     </div>
   );
