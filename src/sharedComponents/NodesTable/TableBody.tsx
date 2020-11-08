@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { ValidatorType } from 'context/validators';
 import { truncate, urlBuilder } from 'helpers';
-import { ShardSpan, NetworkLink, Trim, Led } from 'sharedComponents';
+import { ShardSpan, NetworkLink, Trim, Led, PageState } from 'sharedComponents';
+import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import RowIcon from './RowIcon';
 
 const getRatings = (nodes: ValidatorType[]) => {
@@ -76,6 +77,18 @@ const NodesTable = ({ nodes }: { nodes: ValidatorType[] }) => {
           <td className="text-right">{node.rating}</td>
         </tr>
       ))}
+      {orderedByRating.length === 0 && (
+        <tr>
+          <td colSpan={7}>
+            <PageState
+              icon={faCogs}
+              title="No Nodes"
+              className="py-spacer my-auto"
+              dataTestId="errorScreen"
+            />
+          </td>
+        </tr>
+      )}
     </tbody>
   );
 };
