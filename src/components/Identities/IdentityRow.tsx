@@ -92,8 +92,8 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
             </div>
           </div>
         </td>
-        <td className="text-right">{identity.validators.toLocaleString()}</td>
-        <td className="text-right">{Math.round(identity.score).toLocaleString()}</td>
+        <td className="text-right">{identity.validators.toLocaleString('en')}</td>
+        <td className="text-right">{Math.round(identity.score).toLocaleString('en')}</td>
         <td className="text-right">
           <img src={carretDown} className="details-arrow" alt="details-arrow" height="8" />
         </td>
