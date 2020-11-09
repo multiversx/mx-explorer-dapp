@@ -8,12 +8,6 @@ export interface RoundType {
   value: boolean;
 }
 
-interface RoundsType {
-  data: RoundType[];
-  success: boolean | undefined;
-  peerType: string;
-}
-
 const Rounds = ({
   data,
   success,
