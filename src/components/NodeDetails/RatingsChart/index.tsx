@@ -1,12 +1,18 @@
 import React from 'react';
 import Chart, { ChartConfiguration } from 'chart.js';
 import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
+import { faHeartRate } from '@fortawesome/pro-light-svg-icons/faHeartRate';
 import { useGlobalState } from 'context';
 import { PageState } from 'sharedComponents';
 
 export interface RatingType {
   epoch: number;
   rating: number;
+}
+
+interface RatingsChartType {
+  data: RatingType[];
+  success: boolean | undefined;
 }
 
 interface ChartConfigType {
@@ -99,7 +105,7 @@ const chartConfig = ({
   };
 };
 
-const RatingsChart = ({ ratings }: { ratings: RatingType[] }) => {
+const RatingsChart = ({ ratings }: { ratings: RatingsChartType }) => {
   const ref = React.useRef(null);
   const chartRef = React.useRef(null);
   const { theme } = useGlobalState();
@@ -116,8 +122,8 @@ const RatingsChart = ({ ratings }: { ratings: RatingType[] }) => {
       const backgroundColor = docStyle.getPropertyValue('--chart-faded-bg');
 
       const config = chartConfig({
-        labels: ratings.map(({ epoch }) => String(epoch)),
-        data: ratings.map(({ rating }) => rating),
+        labels: ratings.data.map(({ epoch }) => String(epoch)),
+        data: ratings.data.map(({ rating }) => rating),
         stepSize: 1,
         gridLinesColor,
         gridLabelsColor,
@@ -163,7 +169,23 @@ const RatingsChart = ({ ratings }: { ratings: RatingType[] }) => {
 
   return (
     <div ref={ref} className="card" data-testid="chartContainer">
-      {1 === 1 ? (
+      {ratings.success === false && (
+        <PageState
+          icon={faHeartRate}
+          title="Failed to load rating"
+          className="page-state-sm d-flex h-100 align-items-center justify-content-center"
+        />
+      )}
+
+      {ratings.success === true && ratings.data.length === 0 && (
+        <PageState
+          icon={faHeartRate}
+          title="No rating"
+          className="page-state-sm d-flex h-100 align-items-center justify-content-center"
+        />
+      )}
+
+      {ratings.success === true && ratings.data.length > 0 && (
         <>
           <div className="card-header">
             <div className="card-header-item">
@@ -171,17 +193,11 @@ const RatingsChart = ({ ratings }: { ratings: RatingType[] }) => {
             </div>
           </div>
           <div className="card-body p-0 pr-2">
-            <div className="d-flex align-items-center justify-content-center flex-fill">
+            <div className="d-flex align-items-center justify-content-center flex-fill mt-2">
               <canvas ref={chartRef} />
             </div>
           </div>
         </>
-      ) : (
-        <PageState
-          icon={faBan}
-          title={'Failed to load price data.'}
-          className="py-spacer minimize"
-        />
       )}
     </div>
   );
