@@ -17,7 +17,6 @@ const optionalConfig: ConfigType = {
       name: 'DigitalOcean TOR Testnet',
       apiUrl: 'https://api.elrond.com',
       adapter: 'api',
-      validatorDetails: true,
       erdLabel: 'EGLD',
     },
   ],
