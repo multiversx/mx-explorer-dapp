@@ -4,7 +4,7 @@ import { ValidatorType } from 'context/validators';
 import { IdentityType } from 'context/state';
 import carretDown from 'assets/images/carret-down.svg';
 import { Loader, NetworkLink, Trim, adapter, PageState, NodesTable } from 'sharedComponents';
-import PercentegeBar from 'components/Validators/ValidatorDetails/PercentegeBar';
+import PercentegeBar from './PercentegeBar';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 
 export interface IdentityRowType {
