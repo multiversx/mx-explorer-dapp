@@ -58,7 +58,7 @@ const IdentityDetails = () => {
               <div className="card">
                 <div className="card-header">
                   <div className="card-header-item p-0">
-                    <div className="brand-header-item px-lg-spacer">
+                    <div className="identity-header-item px-lg-spacer">
                       <img
                         className={`mr-3 avatar rounded-circle shadow-sm ${
                           identity.avatar ? '' : 'gray'
