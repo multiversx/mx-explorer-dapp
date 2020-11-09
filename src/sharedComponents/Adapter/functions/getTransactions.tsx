@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { addressIsBech32 } from 'helpers';
 import { AdapterFunctionType } from './index';
 
 const getAddressParams = (addressId: string | undefined) =>
