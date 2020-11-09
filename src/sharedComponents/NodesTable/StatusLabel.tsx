@@ -27,7 +27,7 @@ const StatusLabel = () => {
         placement="bottom"
         rootClose
         overlay={
-          <Popover id="popover-positioned-bottom">
+          <Popover id="popover-positioned-bottom" className="border">
             <Popover.Content>
               <NetworkLink
                 className={`dropdown-item ${status === 'online' ? 'active' : ''}`}
