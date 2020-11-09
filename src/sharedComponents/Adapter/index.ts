@@ -208,5 +208,7 @@ export default function useAdapter() {
 
     isTransaction: ({ hash }: { hash: string }) =>
       f.isTransaction({ provider, baseUrl, proxyUrl, hash, timeout }),
+
+    isNode: ({ hash }: { hash: string }) => f.getNode({ provider, baseUrl, key: hash, timeout }),
   };
 }
