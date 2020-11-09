@@ -19,6 +19,7 @@ export default async function getHistoricRatings({
     };
   } catch {
     return {
+      // TODO: remove
       data: [
         { epoch: 0, shard: 2, rating: 50.00001 },
         { epoch: 1, shard: 2, rating: 69.43801 },

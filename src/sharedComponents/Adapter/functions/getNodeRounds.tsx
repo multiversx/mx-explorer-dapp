@@ -19,6 +19,7 @@ export default async function getRounds({
     };
   } catch {
     return {
+      // TODO: remove
       data: [
         {
           id: '4294967295_1427134',
