@@ -17,7 +17,7 @@ const PercentegeBar = ({
       <div className="progress progress-sm w-100 my-2">
         <OverlayTrigger
           placement="top"
-          delay={{ show: 250, hide: 400 }}
+          delay={{ show: 0, hide: 400 }}
           overlay={(props: any) => (
             <Tooltip id={totalUpTimeLabel} {...props} show={props.show.toString()}>
               {totalUpTimeLabel}
@@ -33,7 +33,7 @@ const PercentegeBar = ({
         </OverlayTrigger>
         <OverlayTrigger
           placement="top"
-          delay={{ show: 250, hide: 400 }}
+          delay={{ show: 0, hide: 400 }}
           overlay={(props: any) => (
             <Tooltip id={totalDownTimeLabel} {...props} show={props.show.toString()}>
               {totalDownTimeLabel}

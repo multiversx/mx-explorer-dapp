@@ -89,7 +89,7 @@ const BlockData = (props: BlockDataType) => {
           <DetailItem title="Size">
             <OverlayTrigger
               placement="top"
-              delay={{ show: 250, hide: 400 }}
+              delay={{ show: 0, hide: 400 }}
               overlay={(props: any) => (
                 <Tooltip id="size" {...props} show={props.show.toString()}>
                   {sizeFormat(block.size)} (size)

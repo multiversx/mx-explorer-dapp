@@ -13,7 +13,7 @@ import { nodeIssue } from 'helpers';
 const Overlay = ({ children, title }: { children: React.ReactNode; title: string }) => (
   <OverlayTrigger
     placement="top"
-    delay={{ show: 250, hide: 400 }}
+    delay={{ show: 0, hide: 400 }}
     overlay={(props) => (
       <Tooltip id="button-tooltip" {...props}>
         {title}
