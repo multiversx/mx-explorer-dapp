@@ -9,7 +9,7 @@ interface CopyButtonType {
   className?: string;
 }
 
-const CopyButton = ({ text, className }: CopyButtonType) => {
+const CopyButton = ({ text, className = '' }: CopyButtonType) => {
   const [copyResult, setCopyResut] = React.useState({
     default: true,
     success: false,
@@ -34,7 +34,7 @@ const CopyButton = ({ text, className }: CopyButtonType) => {
   };
 
   return (
-    <a href="/#" onClick={handleCopyToClipboard} className={className}>
+    <a href="/#" onClick={handleCopyToClipboard} className={`side-action ${className}`}>
       {copyResult.default || !copyResult.success ? (
         <FontAwesomeIcon icon={faClone} />
       ) : (
