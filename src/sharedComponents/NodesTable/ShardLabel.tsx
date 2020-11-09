@@ -72,15 +72,19 @@ const ShardLabel = () => {
           </Popover>
         }
       >
-        <span
+        <a
           className="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block side-action"
           data-testid="shardFilterButton"
+          href={`${pathname}/${search}`}
+          onClick={(e) => {
+            e.preventDefault();
+          }}
         >
           <FontAwesomeIcon
             icon={faFilter}
             className={shardId !== undefined ? 'text-primary' : ''}
           />
-        </span>
+        </a>
       </OverlayTrigger>
     </>
   );
