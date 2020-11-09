@@ -38,7 +38,13 @@ const NodeDetails = () => {
     data: [],
     success: undefined,
   });
-  const [ratings, setRatings] = React.useState<RatingType[]>();
+  const [ratings, setRatings] = React.useState<{
+    data: RatingType[];
+    success: boolean | undefined;
+  }>({
+    data: [],
+    success: undefined,
+  });
   const [blocks, setBlocks] = React.useState<{
     data: BlockType[];
     success: boolean | undefined;
@@ -74,7 +80,11 @@ const NodeDetails = () => {
               })),
               success: true, // roundsData.success,
             });
-            setRatings(historicRatingsData.data);
+            // setRatings(historicRatingsData);
+            setRatings({
+              data: historicRatingsData.data,
+              success: true,
+            });
             setDataReady(nodeData.success);
           }
         });
@@ -120,12 +130,8 @@ const NodeDetails = () => {
               <div className="mt-spacer col-md-4">
                 <NetworkMetrics node={node.data} />
               </div>
-              {/* 
               <div className="col-md-4 mt-spacer">
-                {ratings && <RatingsChart ratings={ratings} />}
-              </div> */}
-              <div className="col-md-4 mt-spacer">
-                {ratings && <RatingsChart ratings={ratings} />}
+                <RatingsChart ratings={ratings} />
               </div>
               <div className="col-md-4 mt-spacer">
                 <Rounds data={rounds.data} success={rounds.success} peerType={node.data.peerType} />
