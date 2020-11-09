@@ -39,7 +39,7 @@ export default async function getNodes({
         ...(shardId !== undefined ? { shardId: parseInt(shardId) } : {}),
         ...(status !== undefined ? { status } : {}),
         ...(identity !== undefined ? { identity } : {}),
-        ...(size !== undefined ? { from: (size - 1) * 50, size: 50 } : {}),
+        ...(size !== undefined ? { from: (size - 1) * 25, size: 25 } : {}),
       },
     });
 
