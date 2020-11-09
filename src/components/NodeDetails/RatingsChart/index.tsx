@@ -1,6 +1,5 @@
 import React from 'react';
 import Chart, { ChartConfiguration } from 'chart.js';
-import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
 import { faHeartRate } from '@fortawesome/pro-light-svg-icons/faHeartRate';
 import { useGlobalState } from 'context';
 import { PageState } from 'sharedComponents';
@@ -29,7 +28,7 @@ interface ChartConfigType {
 const chartConfig = ({
   labels,
   data = [],
-  stepSize = 2,
+  stepSize = 5,
   gridLinesColor,
   gridLabelsColor,
   borderColor,
@@ -42,7 +41,7 @@ const chartConfig = ({
       labels,
       datasets: [
         {
-          label: 'USD',
+          label: 'Rating',
           fill: 'start',
           data,
           backgroundColor,
@@ -98,6 +97,16 @@ const chartConfig = ({
         custom: (tooltip) => {
           if (!tooltip) return;
           tooltip.displayColors = false;
+        },
+        callbacks: {
+          title: function title(tooltipItem) {
+            const [item] = tooltipItem;
+
+            return `Rating ${item.value}`;
+          },
+          label: function title(tooltipItem) {
+            return `Epoch ${tooltipItem.label}`;
+          },
         },
       },
       maintainAspectRatio: false,
@@ -176,27 +185,29 @@ const RatingsChart = ({ ratings }: { ratings: RatingsChartType }) => {
           className="page-state-sm d-flex h-100 align-items-center justify-content-center"
         />
       )}
-
-      {ratings.success === true && ratings.data.length === 0 && (
-        <PageState
-          icon={faHeartRate}
-          title="No rating"
-          className="page-state-sm d-flex h-100 align-items-center justify-content-center"
-        />
-      )}
-
-      {ratings.success === true && ratings.data.length > 0 && (
+      {ratings.success && (
         <>
-          <div className="card-header">
-            <div className="card-header-item">
-              <h6 className="m-0">Rating History</h6>
-            </div>
-          </div>
-          <div className="card-body p-0 pr-2">
-            <div className="d-flex align-items-center justify-content-center flex-fill mt-2">
-              <canvas ref={chartRef} />
-            </div>
-          </div>
+          {ratings.data.length === 0 && (
+            <PageState
+              icon={faHeartRate}
+              title="No rating"
+              className="page-state-sm d-flex h-100 align-items-center justify-content-center"
+            />
+          )}
+          {ratings.data.length > 0 && (
+            <>
+              <div className="card-header">
+                <div className="card-header-item">
+                  <h6 className="m-0">Rating History</h6>
+                </div>
+              </div>
+              <div className="card-body p-0 pr-2">
+                <div className="d-flex align-items-center justify-content-center flex-fill mt-2">
+                  <canvas ref={chartRef} />
+                </div>
+              </div>
+            </>
+          )}
         </>
       )}
     </div>
