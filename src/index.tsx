@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
 import { StateInspector } from 'reinspect';
 import ReactDOM from 'react-dom';
