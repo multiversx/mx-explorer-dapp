@@ -1,9 +1,27 @@
 import axios from 'axios';
 import { AdapterFunctionType } from './index';
-import { BlockType } from './getBlock';
 import { ValidatorType } from 'context/validators';
 import moment from 'moment';
 import { object, number, InferType } from 'yup';
+
+interface BlockType {
+  hash: string;
+  nonce: number;
+  epoch: number;
+  prevHash: string;
+  proposer: number;
+  pubKeyBitmap: string;
+  round: number;
+  shardId: number;
+  size: number;
+  sizeTxs: number;
+  stateRootHash: string;
+  timestamp: number;
+  txCount: number;
+  validators: number[];
+  miniBlocksHashes: string[];
+  notarizedBlocksHashes: string[];
+}
 
 export const initialState = {
   shardId: '0',
