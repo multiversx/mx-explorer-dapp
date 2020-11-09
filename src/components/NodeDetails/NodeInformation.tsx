@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, Trim, DetailItem } from 'sharedComponents';
-import { ValidatorType } from 'context/validators';
+import { NodeType } from 'context/state';
 
-const NodeInformation = ({ node }: { node: ValidatorType }) => {
+const NodeInformation = ({ node }: { node: NodeType }) => {
   const { publicKey, peerType, shardNumber, versionNumber, nodeDisplayName } = node;
   return (
     <div className="card">

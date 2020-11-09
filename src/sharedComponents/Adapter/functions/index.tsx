@@ -25,13 +25,6 @@ import {
   getMiniBlockTransactions,
   getMiniBlockTransactionsCount,
 } from './getMiniBlocks';
-import {
-  GetRoundsType as RoundsType,
-  searchBlocks,
-  getRounds,
-  getValidator,
-  GetValidatorType as GetValidatorInterface,
-} from './getValidators';
 import { isBlock, isAddress, isTransaction } from './getSearch';
 
 export interface ProviderPropsType {
@@ -68,10 +61,6 @@ export type GetBlocksType = GetBlocksParamsType;
 
 export type TransactionsType = TransactionsInterface;
 
-export type GetRoundsType = RoundsType;
-
-export type GetValidatorType = GetValidatorInterface;
-
 export type GetNodesType = GetNodesInterface;
 
 export {
@@ -92,10 +81,7 @@ export {
   isBlock,
   isAddress,
   isTransaction,
-  getRounds,
   getNodeRounds,
-  searchBlocks,
-  getValidator,
   getNodes,
   getShards,
   getIdentities,

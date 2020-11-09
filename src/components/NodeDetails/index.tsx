@@ -1,9 +1,8 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { adapter, BlocksTable, Loader, PageState } from 'sharedComponents';
-import { ValidatorType } from 'context/validators';
 import { useLocation, useParams } from 'react-router-dom';
-import { IdentityType } from 'context/state';
+import { IdentityType, NodeType } from 'context/state';
 import Alert from './Alert';
 import NodeInformation from './NodeInformation';
 import Identity from './Identity';
@@ -21,7 +20,7 @@ const NodeDetails = () => {
   const { getNode, getIdentity, getNodeRounds, getNodeBlocks, getHistoricRatings } = adapter();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
   const [node, setNode] = React.useState<{
-    data?: ValidatorType;
+    data?: NodeType;
     success: boolean | undefined;
   }>({
     data: undefined,

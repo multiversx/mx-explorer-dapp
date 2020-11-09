@@ -1,7 +1,6 @@
 import { InferType } from 'yup';
 import { CancelTokenSource } from 'axios';
 import config, { defaultNetwork, schema, adapterSchema } from './config';
-import { validatorData, brandData, ValidatorType } from './validators';
 import { storage } from 'helpers';
 
 export type NetworkType = InferType<typeof schema>;
@@ -44,6 +43,25 @@ export interface IdentityType {
   identity?: string;
 }
 
+export interface NodeType {
+  computedShardID: number;
+  publicKey: string;
+  peerType: 'waiting' | 'eligible' | 'observer' | 'new' | 'jailed';
+  nodeType: 'observer' | 'validator';
+  status: 'online' | 'offline';
+  nodeDisplayName: string;
+  identity: string;
+  receivedShardID: number;
+  timeStamp: string;
+  totalDownTimeSec: number;
+  totalUpTimeSec: number;
+  versionNumber: string;
+  shardNumber: number;
+  rating: number;
+  ratingModifier: number;
+  issues: string[];
+}
+
 export interface StateType {
   config: ConfigType;
   defaultNetwork: NetworkType;
@@ -54,11 +72,8 @@ export interface StateType {
   refresh: {
     timestamp: number;
   };
-  validatorData: typeof validatorData; // TODO: remove
-  brandData: typeof brandData; // TODO: remove
   theme: string;
-  nodes: ValidatorType[];
-  brands: BrandType[]; // TODO: remove
+  nodes: NodeType[];
   identities: IdentityType[];
   blockchainTotalStake: number;
   shards: ShardType[];
@@ -79,11 +94,8 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
     refresh: {
       timestamp: Date.now(),
     },
-    validatorData,
-    brandData,
     theme: getTheme(),
     nodes: [],
-    brands: [],
     identities: [],
     blockchainTotalStake: 0,
     shards: [],

@@ -1,7 +1,7 @@
 import moment from 'moment';
-import { ValidatorType } from 'context/validators';
+import { NodeType } from 'context/state';
 
-export default function getUptimeDowntime(node: ValidatorType) {
+export default function getUptimeDowntime(node: NodeType) {
   const totalTime = node.totalDownTimeSec + node.totalUpTimeSec;
   const totalDownTimePercentege = (node.totalDownTimeSec * 100) / totalTime;
   const totalUpTimePercentege = (node.totalUpTimeSec * 100) / totalTime;
