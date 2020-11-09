@@ -7,7 +7,6 @@ const networkBaseSchema = object({
   id: string().defined().required(),
   erdLabel: string().defined().required(),
   name: string().defined().required(),
-  validatorDetails: boolean(),
   theme: string(),
   walletAddress: string(),
   explorerAddress: string(),
@@ -42,7 +41,6 @@ export const defaultNetwork: NetworkType = {
   adapter: 'api',
   erdLabel: '',
   apiUrl: 'https://api.elrond.com',
-  validatorDetails: false,
   theme: 'default',
 };
 
