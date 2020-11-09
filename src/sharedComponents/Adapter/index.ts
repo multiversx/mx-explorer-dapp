@@ -192,46 +192,12 @@ export default function useAdapter() {
         timeout,
       }),
 
-    // TODO: remove
-    getRounds: ({ shardNumber, signersIndex, epoch, roundAtEpochStart }: f.GetRoundsType) =>
-      f.getRounds({
-        provider,
-        baseUrl,
-        shardNumber,
-        signersIndex,
-        epoch,
-        timeout: Math.max(timeout, 10000),
-        roundAtEpochStart,
-      }),
-
     getHistoricRatings: (key: string) =>
       f.getHistoricRatings({
         provider,
         baseUrl,
         key,
         timeout,
-      }),
-
-    getValidator: ({ currentValidator, explorerApi, publicKey }: f.GetValidatorType) =>
-      f.getValidator({
-        provider,
-        currentValidator,
-        proxyUrl,
-        baseUrl,
-        timeout: Math.max(timeout, 10000),
-        explorerApi,
-        publicKey,
-      }),
-
-    searchBlocks: ({ shardNumber, signersIndex, epoch, roundAtEpochStart }: f.GetRoundsType) =>
-      f.searchBlocks({
-        provider,
-        baseUrl,
-        shardNumber,
-        signersIndex,
-        epoch,
-        timeout: Math.max(timeout, 10000),
-        roundAtEpochStart,
       }),
 
     /* Search */

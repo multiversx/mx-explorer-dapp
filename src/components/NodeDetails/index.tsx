@@ -1,9 +1,8 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { adapter, BlocksTable, Loader, PageState } from 'sharedComponents';
-import { ValidatorType } from 'context/validators';
 import { useLocation, useParams } from 'react-router-dom';
-import { IdentityType } from 'context/state';
+import { IdentityType, NodeType } from 'context/state';
 import Alert from './Alert';
 import NodeInformation from './NodeInformation';
 import Identity from './Identity';
@@ -20,7 +19,7 @@ const NodeDetails = () => {
   const { search } = useLocation();
   const { getNode, getIdentity, getNodeRounds, getNodeBlocks, getHistoricRatings } = adapter();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
-  const [node, setNode] = React.useState<ValidatorType>();
+  const [node, setNode] = React.useState<NodeType>();
   const [identity, setIdentity] = React.useState<IdentityType>();
   const [rounds, setRounds] = React.useState<RoundType[]>();
   const [ratings, setRatings] = React.useState<RatingType[]>();
@@ -35,7 +34,7 @@ const NodeDetails = () => {
   const fetchNodes = () => {
     setDataReady(undefined);
     Promise.all([getNode(publicKey)]).then(([nodeData]) => {
-      const newNode: ValidatorType = nodeData.data;
+      const newNode: NodeType = nodeData.data;
       if (newNode) {
         Promise.all([
           getIdentity(newNode.identity),

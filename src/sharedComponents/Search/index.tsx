@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { adapter } from 'sharedComponents';
 
 const Search = () => {
-  const { activeNetworkId, brandData, validatorData } = useGlobalState();
+  const { activeNetworkId } = useGlobalState();
 
   const { isAddress, isBlock, isTransaction } = adapter();
 
@@ -22,29 +22,11 @@ const Search = () => {
   };
 
   const onClick = async () => {
-    const isValidator =
-      hash &&
-      validatorData.validators.length &&
-      validatorData.validators.some((validator) => validator.publicKey === hash);
-    const brand =
-      hash &&
-      validatorData.validators.length &&
-      brandData.some(
-        (brand) =>
-          brand.identity === hash || brand.name.toLowerCase().includes(hash.trim().toLowerCase())
-      )
-        ? brandData.find(
-            (brand) =>
-              brand.identity === hash ||
-              brand.name.toLowerCase().includes(hash.trim().toLowerCase())
-          )!.identity
-        : '';
-
-    if (isValidator) {
-      history.push(networkRoute({ to: `/validators/nodes/${hash}`, activeNetworkId }));
-    } else if (brand) {
-      history.push(networkRoute({ to: `/validators/${brand}`, activeNetworkId }));
-    } else if (await isBlock({ hash })) {
+    // TODO: search validator
+    // if (isValidator) {
+    //   history.push(networkRoute({ to: `/validators/nodes/${hash}`, activeNetworkId }));
+    // } else
+    if (await isBlock({ hash })) {
       history.push(networkRoute({ to: `/blocks/${hash}`, activeNetworkId }));
     } else if (await isTransaction({ hash })) {
       history.push(networkRoute({ to: `/transactions/${hash}`, activeNetworkId }));
