@@ -31,7 +31,13 @@ const NodeDetails = () => {
   }>({
     success: undefined,
   });
-  const [rounds, setRounds] = React.useState<RoundType[]>();
+  const [rounds, setRounds] = React.useState<{
+    data: RoundType[];
+    success: boolean | undefined;
+  }>({
+    data: [],
+    success: undefined,
+  });
   const [ratings, setRatings] = React.useState<RatingType[]>();
   const [blocks, setBlocks] = React.useState<{
     data: BlockType[];
@@ -61,12 +67,13 @@ const NodeDetails = () => {
               success: true,
             });
             // TODO: redo
-            setRounds(
-              roundsData.data.map((round: any) => ({
+            setRounds({
+              data: roundsData.data.map((round: any) => ({
                 key: round.id,
                 value: round.blockWasProposed,
-              }))
-            );
+              })),
+              success: true, // roundsData.success,
+            });
             setRatings(historicRatingsData.data);
             setDataReady(nodeData.success);
           }
@@ -117,7 +124,9 @@ const NodeDetails = () => {
               <div className="col-md-4 mt-spacer">
                 {ratings && <RatingsChart ratings={ratings} />}
               </div>
-              <div className="col-md-4 mt-spacer">{rounds && <Rounds rounds={rounds} />}</div>
+              <div className="col-md-4 mt-spacer">
+                <Rounds data={rounds.data} success={rounds.success} peerType={node.data.peerType} />
+              </div>
             </div>
             {node.data.nodeType === 'validator' && (
               <div className="row">
