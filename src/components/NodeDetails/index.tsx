@@ -70,7 +70,7 @@ const NodeDetails = () => {
             // setBlocks(blocksData);
             setBlocks({
               data: blocksData.data,
-              success: true,
+              success: false,
             });
             // TODO: redo
             setRounds({
@@ -78,12 +78,12 @@ const NodeDetails = () => {
                 key: round.id,
                 value: round.blockWasProposed,
               })),
-              success: true, // roundsData.success,
+              success: false, // roundsData.success,
             });
             // setRatings(historicRatingsData);
             setRatings({
               data: historicRatingsData.data,
-              success: true,
+              success: false,
             });
             setDataReady(nodeData.success);
           }
@@ -95,7 +95,7 @@ const NodeDetails = () => {
   React.useEffect(fetchNodes, [search]);
 
   return (
-    <div ref={ref}>
+    <>
       {dataReady === undefined && <Loader />}
       {dataReady === false && (
         <PageState
@@ -105,78 +105,80 @@ const NodeDetails = () => {
           dataTestId="errorScreen"
         />
       )}
-      {dataReady === true && node.data !== undefined && (
-        <>
-          <div className="container py-spacer">
-            <div className="row page-header">
-              <div className="col-12">
-                <h3 className="page-title" data-testid="title">
-                  Node Information
-                </h3>
+      <div ref={ref}>
+        {dataReady === true && node.data !== undefined && (
+          <>
+            <div className="container py-spacer">
+              <div className="row page-header">
+                <div className="col-12">
+                  <h3 className="page-title" data-testid="title">
+                    Node Information
+                  </h3>
+                </div>
               </div>
-            </div>
-            <Alert node={node.data} />
-            <div className="row">
-              <div className={`mt-spacer ${identity.success ? 'col-md-8' : 'col-12'}`}>
-                <NodeInformation node={node.data} colWidth={identity.success ? '3' : '2'} />
+              <Alert node={node.data} />
+              <div className="row">
+                <div className={`mt-spacer ${identity.success ? 'col-md-8' : 'col-12'}`}>
+                  <NodeInformation node={node.data} colWidth={identity.success ? '3' : '2'} />
+                </div>
+                {identity.success && identity.data !== undefined && (
+                  <div className="col-md-4 mt-spacer">
+                    <Identity identity={identity.data} />
+                  </div>
+                )}
               </div>
-              {identity.success && identity.data !== undefined && (
+              <div className="row">
+                <div className="mt-spacer col-md-4">
+                  <NetworkMetrics node={node.data} />
+                </div>
                 <div className="col-md-4 mt-spacer">
-                  <Identity identity={identity.data} />
+                  <RatingsChart ratings={ratings} />
+                </div>
+                <div className="col-md-4 mt-spacer">
+                  <Rounds rounds={{ ...rounds, peerType: node.data.peerType }} />
+                </div>
+              </div>
+              {node.data.nodeType === 'validator' && (
+                <div className="row">
+                  <div className="col-12 mt-spacer">
+                    <div className="card">
+                      {blocks.success === false && <FailedBlocks />}
+                      {blocks.success && (
+                        <>
+                          {blocks.data.length === 0 && (
+                            <NoBlocks
+                              title={
+                                node.data.peerType === 'waiting'
+                                  ? 'Validator not in consensus'
+                                  : 'No blocks'
+                              }
+                            />
+                          )}
+                          {blocks.data.length > 0 && (
+                            <>
+                              <div className="card-header">
+                                <div className="card-header-item">
+                                  <h6 className="m-0">
+                                    Last {blocks.data.length} proposed Blocks in Current Epoch
+                                  </h6>
+                                </div>
+                              </div>
+                              <div className="card-body p-0">
+                                <BlocksTable blocks={blocks.data} shardId={undefined} />
+                              </div>
+                            </>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
-            <div className="row">
-              <div className="mt-spacer col-md-4">
-                <NetworkMetrics node={node.data} />
-              </div>
-              <div className="col-md-4 mt-spacer">
-                <RatingsChart ratings={ratings} />
-              </div>
-              <div className="col-md-4 mt-spacer">
-                <Rounds rounds={{ ...rounds, peerType: node.data.peerType }} />
-              </div>
-            </div>
-            {node.data.nodeType === 'validator' && (
-              <div className="row">
-                <div className="col-12 mt-spacer">
-                  <div className="card">
-                    {blocks.success === false && <FailedBlocks />}
-                    {blocks.success && (
-                      <>
-                        {blocks.data.length === 0 && (
-                          <NoBlocks
-                            title={
-                              node.data.peerType === 'waiting'
-                                ? 'Validator not in consensus'
-                                : 'No blocks'
-                            }
-                          />
-                        )}
-                        {blocks.data.length > 0 && (
-                          <>
-                            <div className="card-header">
-                              <div className="card-header-item">
-                                <h6 className="m-0">
-                                  Last {blocks.data.length} proposed Blocks in Current Epoch
-                                </h6>
-                              </div>
-                            </div>
-                            <div className="card-body p-0">
-                              <BlocksTable blocks={blocks.data} shardId={undefined} />
-                            </div>
-                          </>
-                        )}
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 
