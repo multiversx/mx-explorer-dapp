@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useGlobalState } from 'context';
 import { dateFormatted } from 'helpers';
 import { ShardSpan, NetworkLink, TimeAgo, adapter, Trim, Loader } from 'sharedComponents';
-import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
+import { BlockType } from 'sharedComponents/BlocksTable';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 

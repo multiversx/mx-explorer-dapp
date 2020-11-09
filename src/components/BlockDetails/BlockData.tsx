@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, TimeAgo, Trim, DetailItem } from 'sharedComponents';
-import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
+import { BlockType } from 'sharedComponents/BlocksTable';
 import { validatorsRoutes } from 'routes';
 import { metaChainShardId } from 'appConfig';
 
@@ -15,7 +15,6 @@ export interface BlockDataType {
   proposer: string;
   consensusItems: string[];
   nextHash: string;
-  blockFetched: boolean;
 }
 
 function decodeHex(hex: string) {

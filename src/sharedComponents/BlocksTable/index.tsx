@@ -1,7 +1,25 @@
 import * as React from 'react';
-import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
 import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
+
+export interface BlockType {
+  hash: string;
+  nonce: number;
+  epoch: number;
+  prevHash: string;
+  proposer: number;
+  pubKeyBitmap: string;
+  round: number;
+  shardId: number;
+  size: number;
+  sizeTxs: number;
+  stateRootHash: string;
+  timestamp: number;
+  txCount: number;
+  validators: number[];
+  miniBlocksHashes: string[];
+  notarizedBlocksHashes: string[];
+}
 
 const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number | undefined }) => {
   return (
