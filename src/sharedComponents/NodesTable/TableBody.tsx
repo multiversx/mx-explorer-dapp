@@ -6,7 +6,7 @@ import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import RowIcon from './RowIcon';
 
 const getRatings = (nodes: NodeType[]) => {
-  return nodes.sort((a: any, b: any) => a.rating - b.rating).map((v: any) => v);
+  return nodes.sort((a: any, b: any) => b.rating - a.rating).map((v: any) => v);
 };
 
 const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
@@ -70,7 +70,7 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
               <span className="ml-2">{node.status === 'online' ? 'Online' : 'Offline'}</span>
             </div>
           </td>
-          <td className="text-right">{node.rating}</td>
+          <td className="text-right">{node.rating ? Math.floor(node.rating) : node.rating}</td>
         </tr>
       ))}
       {orderedByRating.length === 0 && (
