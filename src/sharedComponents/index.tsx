@@ -18,7 +18,6 @@ import TransactionStatus from './TransactionStatus';
 import TooltipWithCopy from './TooltipWithCopy';
 import CopyButton from './CopyButton';
 import adapter from './Adapter';
-import TrimHash from './TrimHash';
 import DetailItem from './DetailItem';
 import Trim from './Trim';
 import Led from './Led';
@@ -45,7 +44,6 @@ export {
   PageState,
   IconState,
   adapter,
-  TrimHash,
   DetailItem,
   Trim,
   Led,
