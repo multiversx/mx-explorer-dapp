@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { urlBuilder } from 'helpers';
-import { ShardSpan, NetworkLink, Trim, DetailItem } from 'sharedComponents';
+import { ShardSpan, NetworkLink, Trim, DetailItem, CopyButton } from 'sharedComponents';
 import { NodeType } from 'context/state';
 
 const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string }) => {
@@ -10,7 +10,10 @@ const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string 
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Public Key" colWidth={colWidth}>
-            <Trim text={publicKey} />
+            <div className="d-flex align-items-center">
+              <Trim text={publicKey} />
+              <CopyButton text={publicKey} className="ml-2" />
+            </div>
           </DetailItem>
           <DetailItem title="Shard" colWidth={colWidth}>
             {shardNumber !== undefined ? (
