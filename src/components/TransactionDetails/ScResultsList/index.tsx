@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchange } from '@fortawesome/pro-regular-svg-icons/faExchange';
-import { Denominate, CopyButton, TrimHash } from 'sharedComponents';
+import { Denominate, CopyButton, Trim } from 'sharedComponents';
 import decodePart from './decodePart';
 
 export interface ScResultType {
@@ -33,7 +33,7 @@ const ScResultsList = ({ scResults }: { scResults: ScResultType[] }) => {
   };
 
   return (
-    <div className="sc-results-list d-flex flex-column">
+    <div className="sc-results-list d-flex flex-column mt-1">
       {scResults.map((result: ScResultType, i) => {
         return (
           <div key={i} className="result-item d-flex border-left border-bottom ml-3 py-3">
@@ -41,15 +41,15 @@ const ScResultsList = ({ scResults }: { scResults: ScResultType[] }) => {
               <FontAwesomeIcon icon={faExchange} />
             </div>
 
-            <div className="result-item-content content-fill">
+            <div className="result-item-content">
               <div className="row mb-3">
                 <div className="col-12 col-lg-2 col-xl-1 pr-xl-0 text-secondary text-lg-right">
                   From
                 </div>
-                <div className="col-12 col-lg-10 col-xl-11 pl-xl-2 d-flex">
-                  <div className="pl-xl-4 content-fill d-flex flex-row">
-                    <TrimHash text={result.sender} />
-                    <CopyButton text={result.sender} className="side-action" />
+                <div className="col-12 col-lg-10 col-xl-11 pl-xl-2">
+                  <div className="pl-xl-4 d-flex align-items-center">
+                    <Trim text={result.sender} />
+                    <CopyButton text={result.sender} className="side-action ml-2" />
                   </div>
                 </div>
               </div>
@@ -58,10 +58,10 @@ const ScResultsList = ({ scResults }: { scResults: ScResultType[] }) => {
                 <div className="col-12 col-lg-2 col-xl-1 pr-xl-0 text-secondary text-lg-right">
                   To
                 </div>
-                <div className="col-12 col-lg-10 col-xl-11 pl-xl-2 d-flex">
-                  <div className="pl-xl-4 content-fill d-flex flex-row">
-                    <TrimHash text={result.receiver} />
-                    <CopyButton text={result.receiver} className="side-action" />
+                <div className="col-12 col-lg-10 col-xl-11 pl-xl-2">
+                  <div className="pl-xl-4 d-flex align-items-center">
+                    <Trim text={result.receiver} />
+                    <CopyButton text={result.receiver} className="side-action ml-2" />
                   </div>
                 </div>
               </div>
@@ -71,7 +71,7 @@ const ScResultsList = ({ scResults }: { scResults: ScResultType[] }) => {
                   Value
                 </div>
                 <div className="col-12 col-lg-10 col-xl-11 pl-xl-2">
-                  <div className="pl-xl-4 content-fill d-flex flex-row">
+                  <div className="pl-xl-4 d-flex text-wrap">
                     <Denominate value={result.value} showLastNonZeroDecimal />
                   </div>
                 </div>
@@ -82,7 +82,7 @@ const ScResultsList = ({ scResults }: { scResults: ScResultType[] }) => {
                   Data
                 </div>
                 <div className="col-12 col-lg-10 col-xl-11 pl-xl-2">
-                  <div className="pl-xl-4 content-fill d-flex flex-row">
+                  <div className="pl-xl-4 d-flex mt-1">
                     <textarea
                       readOnly
                       className="form-control cursor-text"
