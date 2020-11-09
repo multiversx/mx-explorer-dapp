@@ -56,6 +56,8 @@ $dropdown-link-color: $secondary;
 $dropdown-link-hover-bg: $light;
 $dropdown-link-hover-color: $link-color;
 $dropdown-border-color: $border-color;
+$dropdown-link-active-color: $link-color;
+$dropdown-link-active-bg: $card-bg;
 
 // RANGE SLIDER
 $custom-range-thumb-bg: $primary;
@@ -74,6 +76,6 @@ $small-stats-min-height: 7.8rem;
 // POPOVER
 $popover-body-padding-y: 1rem;
 $popover-body-padding-x: 0;
-$popover-body-color: $card_bg;
-$popover-border-width: 1px;
-$popover-border-color: $border-color;
+$popover-bg: $card_bg;
+$popover-arrow-color: $card_bg;
+$popover-arrow-outer-color: $border-color;
