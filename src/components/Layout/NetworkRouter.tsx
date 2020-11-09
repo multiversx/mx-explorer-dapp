@@ -21,7 +21,6 @@ export default function NetworkRouter() {
     if (allNetworkIds.includes(networkId) && activeNetworkId !== networkId) {
       // if route contains a network at the beginning replace the network
       setTimeout(() => {
-        dispatch({ type: 'setBrandData', brandData: [] }); // TODO: remove when ready
         dispatch({ type: 'changeNetwork', networkId });
       });
     } else if (

@@ -7,7 +7,7 @@ import { faLock } from '@fortawesome/pro-regular-svg-icons/faLock';
 import { faSync } from '@fortawesome/pro-regular-svg-icons/faSync';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ValidatorType } from 'context/validators';
+import { NodeType } from 'context/state';
 import { nodeIssue } from 'helpers';
 
 const Overlay = ({ children, title }: { children: React.ReactNode; title: string }) => (
@@ -24,7 +24,7 @@ const Overlay = ({ children, title }: { children: React.ReactNode; title: string
   </OverlayTrigger>
 );
 
-export default class RowIcon extends React.Component<{ node: ValidatorType }> {
+export default class RowIcon extends React.Component<{ node: NodeType }> {
   render() {
     const { node } = this.props;
     switch (true) {

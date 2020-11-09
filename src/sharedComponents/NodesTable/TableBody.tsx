@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { ValidatorType } from 'context/validators';
+import { NodeType } from 'context/state';
 import { truncate, urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, Trim, Led, PageState } from 'sharedComponents';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import RowIcon from './RowIcon';
 
-const getRatings = (nodes: ValidatorType[]) => {
+const getRatings = (nodes: NodeType[]) => {
   return nodes.sort((a: any, b: any) => a.rating - b.rating).map((v: any) => v);
 };
 
-const NodesTable = ({ nodes }: { nodes: ValidatorType[] }) => {
+const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
   const orderedByRating = getRatings(nodes);
 
   return (

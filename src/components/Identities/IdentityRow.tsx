@@ -1,7 +1,6 @@
 import React from 'react';
 import { useGlobalState } from 'context';
-import { ValidatorType } from 'context/validators';
-import { IdentityType } from 'context/state';
+import { IdentityType, NodeType } from 'context/state';
 import carretDown from 'assets/images/carret-down.svg';
 import { Loader, NetworkLink, Trim, adapter, PageState, NodesTable } from 'sharedComponents';
 import PercentegeBar from './PercentegeBar';
@@ -16,7 +15,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
   const [collapsed, setCollapsed] = React.useState(true);
   const [showDetails, setShowDetails] = React.useState(false);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [identityNodes, setIdentityNodes] = React.useState<ValidatorType[]>([]);
+  const [identityNodes, setIdentityNodes] = React.useState<NodeType[]>([]);
   const { getNodes, getNode } = adapter();
 
   const {

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { object, number, InferType } from 'yup';
-import { NetworkStatusType } from 'sharedComponents/Adapter/functions/getValidators';
 import { AdapterFunctionType } from './index';
 
 const schema = object({
@@ -19,6 +18,21 @@ const schema = object({
   shardID: number().required(),
   totalProcessedTxCount: number().required(),
 }).required();
+
+const networkSchema = object({
+  status: object({
+    erd_current_round: number().required(),
+    erd_epoch_number: number().required(),
+    erd_nonce: number().required(),
+    erd_nonce_at_epoch_start: number().required(),
+    erd_nonces_passed_in_current_epoch: number().required(),
+    erd_round_at_epoch_start: number().required(),
+    erd_rounds_passed_in_current_epoch: number().required(),
+    erd_rounds_per_epoch: number().required(),
+  }).required(),
+}).defined();
+
+type NetworkStatusType = InferType<typeof networkSchema>;
 
 export default async function getHighlights({
   provider,
