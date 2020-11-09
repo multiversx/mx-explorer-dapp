@@ -12,22 +12,24 @@ import Rounds, { RoundType } from './Rounds';
 import RatingsChart, { RatingType } from './RatingsChart';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
+import { BlockType } from 'sharedComponents/BlocksTable';
 
 const NodeDetails = () => {
   const ref = React.useRef(null);
   const { publicKey } = useParams() as any;
   const { search } = useLocation();
-  const { getNode, getIdentity, getNewRounds, getHistoricRatings } = adapter();
+  const { getNode, getIdentity, getNodeRounds, getNodeBlocks, getHistoricRatings } = adapter();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
   const [node, setNode] = React.useState<ValidatorType>();
   const [identity, setIdentity] = React.useState<IdentityType>();
   const [rounds, setRounds] = React.useState<RoundType[]>();
   const [ratings, setRatings] = React.useState<RatingType[]>();
-  const [fetchedBlocks, setFetchedBlocks] = React.useState({
-    blocks: [],
-    startBlockNr: 0,
-    endBlockNr: 0,
-    blocksFetched: undefined,
+  const [blocks, setBlocks] = React.useState<{
+    data: BlockType[];
+    success: boolean | undefined;
+  }>({
+    data: [],
+    success: undefined,
   });
 
   const fetchNodes = () => {
@@ -38,11 +40,18 @@ const NodeDetails = () => {
       if (newNode) {
         Promise.all([
           getIdentity(newNode.identity),
-          getNewRounds(publicKey),
+          getNodeRounds(publicKey),
+          getNodeBlocks(publicKey),
           getHistoricRatings(publicKey),
-        ]).then(([identityData, roundsData, historicRatingsData]) => {
+        ]).then(([identityData, roundsData, blocksData, historicRatingsData]) => {
           setNode(newNode);
           setIdentity(identityData.data);
+          // TODO: undo
+          // setBlocks(blocksData);
+          setBlocks({
+            data: blocksData.data,
+            success: true,
+          });
           // TODO: redo
           setRounds(
             roundsData.data.map((round: any) => ({
@@ -51,10 +60,10 @@ const NodeDetails = () => {
             }))
           );
           setRatings(historicRatingsData.data);
+          setDataReady(nodeData.success);
         });
       }
 
-      setDataReady(nodeData.success);
       // }
     });
   };
@@ -105,27 +114,32 @@ const NodeDetails = () => {
               <div className="row">
                 <div className="col-12 mt-spacer">
                   <div className="card">
-                    {fetchedBlocks.blocksFetched === undefined && <Loader />}
-                    {fetchedBlocks.blocksFetched === false && <FailedBlocks />}
-                    {fetchedBlocks.blocksFetched === true && fetchedBlocks.blocks.length === 0 && (
-                      <NoBlocks
-                        title={
-                          node.peerType === 'waiting' ? 'Validator not in consensus' : 'No blocks'
-                        }
-                      />
-                    )}
-                    {fetchedBlocks.blocksFetched === true && fetchedBlocks.blocks.length > 0 && (
+                    {blocks.success === false && <FailedBlocks />}
+                    {blocks.success && (
                       <>
-                        <div className="card-header">
-                          <div className="card-header-item">
-                            <h6 className="m-0">
-                              Last {fetchedBlocks.blocks.length} proposed Blocks in Current Epoch
-                            </h6>
-                          </div>
-                        </div>
-                        <div className="card-body p-0">
-                          <BlocksTable blocks={fetchedBlocks.blocks} shardId={undefined} />
-                        </div>
+                        {blocks.data.length === 0 && (
+                          <NoBlocks
+                            title={
+                              node.peerType === 'waiting'
+                                ? 'Validator not in consensus'
+                                : 'No blocks'
+                            }
+                          />
+                        )}
+                        {blocks.data.length > 0 && (
+                          <>
+                            <div className="card-header">
+                              <div className="card-header-item">
+                                <h6 className="m-0">
+                                  Last {blocks.data.length} proposed Blocks in Current Epoch
+                                </h6>
+                              </div>
+                            </div>
+                            <div className="card-body p-0">
+                              <BlocksTable blocks={blocks.data} shardId={undefined} />
+                            </div>
+                          </>
+                        )}
                       </>
                     )}
                   </div>

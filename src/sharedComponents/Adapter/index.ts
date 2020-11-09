@@ -176,13 +176,23 @@ export default function useAdapter() {
         key,
       }),
 
-    getNewRounds: (key: string) =>
-      f.getNewRounds({
+    getNodeRounds: (key: string) =>
+      f.getNodeRounds({
         provider,
         baseUrl,
         key,
         timeout,
       }),
+
+    getNodeBlocks: (key: string) =>
+      f.getNodeBlocks({
+        provider,
+        baseUrl,
+        key,
+        timeout,
+      }),
+
+    // TODO: remove
     getRounds: ({ shardNumber, signersIndex, epoch, roundAtEpochStart }: f.GetRoundsType) =>
       f.getRounds({
         provider,

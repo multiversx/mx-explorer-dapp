@@ -5,12 +5,13 @@ import getShards from './getShards';
 import getIdentities from './getIdentities';
 import getIdentity from './getIdentity';
 import getNode from './getNode';
-import getNewRounds from './getRounds';
+import getNodeRounds from './getNodeRounds';
+import getNodeBlocks from './getNodeBlocks';
 import getHistoricRatings from './getHistoricRatings';
 import getNodes, { GetNodesType as GetNodesInterface } from './getNodes';
 import getLatestTransactions from './getLatestTransactions';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
-import getBlock, { BlockType as BlockInterface } from './getBlock';
+import getBlock from './getBlock';
 import {
   getTransactions,
   getTransactionsCount,
@@ -69,8 +70,6 @@ export type TransactionsType = TransactionsInterface;
 
 export type GetRoundsType = RoundsType;
 
-export type BlockType = BlockInterface;
-
 export type GetValidatorType = GetValidatorInterface;
 
 export type GetNodesType = GetNodesInterface;
@@ -94,7 +93,7 @@ export {
   isAddress,
   isTransaction,
   getRounds,
-  getNewRounds,
+  getNodeRounds,
   searchBlocks,
   getValidator,
   getNodes,
@@ -102,5 +101,6 @@ export {
   getIdentities,
   getIdentity,
   getNode,
+  getNodeBlocks,
   getHistoricRatings,
 };
