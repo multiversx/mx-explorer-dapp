@@ -19,6 +19,8 @@ const ShardsList = () => {
     ),
   };
 
+  shards.sort((a, b) => (a.shardId > b.shardId ? 1 : -1));
+
   return (
     <div className="row d-flex pl-3">
       <ShardCard shard={blockchainStatus} isOverall />
