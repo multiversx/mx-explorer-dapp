@@ -26,7 +26,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             require('assets/styles/testnet.scss');
             break;
           default:
-            require('assets/styles/default.scss');
+            require('assets/styles/light.scss');
             break;
         }
       } else {
