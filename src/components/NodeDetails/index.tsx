@@ -23,11 +23,21 @@ const NodeDetails = () => {
     data?: NodeType;
     success: boolean | undefined;
   }>({
-    data: undefined,
     success: undefined,
   });
-  const [identity, setIdentity] = React.useState<IdentityType>();
-  const [rounds, setRounds] = React.useState<RoundType[]>();
+  const [identity, setIdentity] = React.useState<{
+    data?: IdentityType;
+    success: boolean | undefined;
+  }>({
+    success: undefined,
+  });
+  const [rounds, setRounds] = React.useState<{
+    data: RoundType[];
+    success: boolean | undefined;
+  }>({
+    data: [],
+    success: undefined,
+  });
   const [ratings, setRatings] = React.useState<RatingType[]>();
   const [blocks, setBlocks] = React.useState<{
     data: BlockType[];
@@ -49,7 +59,7 @@ const NodeDetails = () => {
         ]).then(([identityData, roundsData, blocksData, historicRatingsData]) => {
           if (ref.current !== null) {
             setNode(nodeData);
-            setIdentity(identityData.data);
+            setIdentity(identityData);
             // TODO: undo
             // setBlocks(blocksData);
             setBlocks({
@@ -57,12 +67,13 @@ const NodeDetails = () => {
               success: true,
             });
             // TODO: redo
-            setRounds(
-              roundsData.data.map((round: any) => ({
+            setRounds({
+              data: roundsData.data.map((round: any) => ({
                 key: round.id,
                 value: round.blockWasProposed,
-              }))
-            );
+              })),
+              success: true, // roundsData.success,
+            });
             setRatings(historicRatingsData.data);
             setDataReady(nodeData.success);
           }
@@ -96,12 +107,14 @@ const NodeDetails = () => {
             </div>
             <Alert node={node.data} />
             <div className="row">
-              <div className="col-md-8 mt-spacer">
-                <NodeInformation node={node.data} />
+              <div className={`mt-spacer ${identity.success ? 'col-md-8' : 'col-12'}`}>
+                <NodeInformation node={node.data} colWidth={identity.success ? '3' : '2'} />
               </div>
-              <div className="col-md-4 mt-spacer">
-                {identity && <Identity identity={identity} />}
-              </div>
+              {identity.success && identity.data !== undefined && (
+                <div className="col-md-4 mt-spacer">
+                  <Identity identity={identity.data} />
+                </div>
+              )}
             </div>
             <div className="row">
               <div className="mt-spacer col-md-4">
@@ -114,7 +127,9 @@ const NodeDetails = () => {
               <div className="col-md-4 mt-spacer">
                 {ratings && <RatingsChart ratings={ratings} />}
               </div>
-              <div className="col-md-4 mt-spacer">{rounds && <Rounds rounds={rounds} />}</div>
+              <div className="col-md-4 mt-spacer">
+                <Rounds data={rounds.data} success={rounds.success} peerType={node.data.peerType} />
+              </div>
             </div>
             {node.data.nodeType === 'validator' && (
               <div className="row">

@@ -19,7 +19,6 @@ export default async function getIdentity({
     };
   } catch {
     return {
-      data: [],
       success: false,
     };
   }
