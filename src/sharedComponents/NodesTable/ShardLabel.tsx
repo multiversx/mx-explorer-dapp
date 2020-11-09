@@ -46,7 +46,7 @@ const ShardLabel = () => {
         placement="bottom"
         rootClose
         overlay={
-          <Popover id="popover-positioned-bottom">
+          <Popover id="popover-positioned-bottom" className="border">
             <Popover.Content>
               {shards.map((shard, i) => {
                 return (
