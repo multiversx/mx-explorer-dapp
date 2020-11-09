@@ -58,14 +58,11 @@ export async function getBlocks({
       blocks,
       startBlockNr,
       endBlockNr,
-      blocksFetched: true,
+      success: true,
     };
   } catch (err) {
     return {
-      blocks: [],
-      startBlockNr: 0,
-      endBlockNr: 0,
-      blocksFetched: false,
+      success: false,
     };
   }
 }

@@ -4,7 +4,6 @@ import { Redirect, useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { isHash, networkRoute } from 'helpers';
 import { Loader, adapter, PageState } from 'sharedComponents';
-import { initialState } from 'sharedComponents/Adapter/functions/getBlock';
 import BlockData, { BlockDataType } from './BlockData';
 
 const BlockDetails = () => {
@@ -18,17 +17,17 @@ const BlockDetails = () => {
 
   const { getBlock } = adapter();
 
-  const [state, setState] = React.useState<BlockDataType>(initialState);
-  const [blockFetched, setBlockFetched] = React.useState<boolean | undefined>();
+  const [state, setState] = React.useState<BlockDataType>();
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const invalid = blockId && !isHash(blockId);
 
   const fetchBlock = () => {
     if (!invalid) {
-      getBlock({ blockId }).then((data) => {
+      getBlock({ blockId }).then(({ success, block, consensusItems, nextHash, proposer }) => {
         if (ref.current !== null) {
-          setState(data);
-          setBlockFetched(data.blockFetched);
+          setState({ block, consensusItems, nextHash, proposer });
+          setDataReady(success);
         }
       });
     }
@@ -40,9 +39,9 @@ const BlockDetails = () => {
     <Redirect to={networkRoute({ to: `/not-found`, activeNetworkId })} />
   ) : (
     <>
-      {blockFetched === undefined && <Loader />}
+      {dataReady === undefined && <Loader />}
 
-      {blockFetched === false && (
+      {dataReady === false && (
         <PageState
           icon={faCube}
           title="Unable to locate this block hash"
@@ -53,7 +52,7 @@ const BlockDetails = () => {
       )}
 
       <div className="block-details" ref={ref}>
-        {blockFetched === true && state.block.hash && (
+        {dataReady === true && state && state.block.hash && (
           <div className="container py-spacer">
             <div className="row page-header mb-spacer">
               <div className="col-12">
