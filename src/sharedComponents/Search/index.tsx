@@ -1,17 +1,17 @@
+import * as React from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { networkRoute } from 'helpers';
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { adapter } from 'sharedComponents';
 
 const Search = () => {
   const { activeNetworkId } = useGlobalState();
 
-  const { isAddress, isBlock, isTransaction } = adapter();
+  const { isAddress, isBlock, isTransaction, isNode } = adapter();
+  const [route, setRoute] = React.useState('');
 
-  const history = useHistory();
   const [hash, setHash] = React.useState<string>('');
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -22,18 +22,17 @@ const Search = () => {
   };
 
   const onClick = async () => {
-    // TODO: search validator
-    // if (isValidator) {
-    //   history.push(networkRoute({ to: `/validators/nodes/${hash}`, activeNetworkId }));
-    // } else
-    if (await isBlock({ hash })) {
-      history.push(networkRoute({ to: `/blocks/${hash}`, activeNetworkId }));
+    const { success: hashIsNode } = await isNode({ hash });
+    if (hashIsNode) {
+      setRoute(networkRoute({ to: `/nodes/${hash}`, activeNetworkId }));
+    } else if (await isBlock({ hash })) {
+      setRoute(networkRoute({ to: `/blocks/${hash}`, activeNetworkId }));
     } else if (await isTransaction({ hash })) {
-      history.push(networkRoute({ to: `/transactions/${hash}`, activeNetworkId }));
+      setRoute(networkRoute({ to: `/transactions/${hash}`, activeNetworkId }));
     } else if (await isAddress({ hash })) {
-      history.push(networkRoute({ to: `/address/${hash}`, activeNetworkId }));
+      setRoute(networkRoute({ to: `/address/${hash}`, activeNetworkId }));
     } else {
-      history.push(networkRoute({ to: `/search/${hash}`, activeNetworkId }));
+      setRoute(networkRoute({ to: `/search/${hash}`, activeNetworkId }));
     }
   };
 
@@ -41,7 +40,9 @@ const Search = () => {
     setHash(e.target.value);
   };
 
-  return (
+  return route ? (
+    <Redirect to={route} />
+  ) : (
     <>
       <input
         type="text"
