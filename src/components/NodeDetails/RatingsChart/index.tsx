@@ -163,6 +163,7 @@ const RatingsChart = ({ ratings }: { ratings: RatingType[] }) => {
 
   return (
     <div ref={ref} className="card" data-testid="chartContainer">
+      {/* TODO: remove */}
       {1 === 1 ? (
         <>
           <div className="card-header">
