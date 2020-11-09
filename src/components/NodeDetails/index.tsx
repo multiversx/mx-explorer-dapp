@@ -120,7 +120,10 @@ const NodeDetails = () => {
               <div className="mt-spacer col-md-4">
                 <NetworkMetrics node={node.data} />
               </div>
-
+              {/* 
+              <div className="col-md-4 mt-spacer">
+                {ratings && <RatingsChart ratings={ratings} />}
+              </div> */}
               <div className="col-md-4 mt-spacer">
                 {ratings && <RatingsChart ratings={ratings} />}
               </div>
