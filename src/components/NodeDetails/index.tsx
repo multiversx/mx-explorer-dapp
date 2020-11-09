@@ -23,10 +23,14 @@ const NodeDetails = () => {
     data?: NodeType;
     success: boolean | undefined;
   }>({
-    data: undefined,
     success: undefined,
   });
-  const [identity, setIdentity] = React.useState<IdentityType>();
+  const [identity, setIdentity] = React.useState<{
+    data?: IdentityType;
+    success: boolean | undefined;
+  }>({
+    success: undefined,
+  });
   const [rounds, setRounds] = React.useState<RoundType[]>();
   const [ratings, setRatings] = React.useState<RatingType[]>();
   const [blocks, setBlocks] = React.useState<{
@@ -49,7 +53,7 @@ const NodeDetails = () => {
         ]).then(([identityData, roundsData, blocksData, historicRatingsData]) => {
           if (ref.current !== null) {
             setNode(nodeData);
-            setIdentity(identityData.data);
+            setIdentity(identityData);
             // TODO: undo
             // setBlocks(blocksData);
             setBlocks({
@@ -96,12 +100,14 @@ const NodeDetails = () => {
             </div>
             <Alert node={node.data} />
             <div className="row">
-              <div className="col-md-8 mt-spacer">
-                <NodeInformation node={node.data} />
+              <div className={`mt-spacer ${identity.success ? 'col-md-8' : 'col-12'}`}>
+                <NodeInformation node={node.data} colWidth={identity.success ? '3' : '2'} />
               </div>
-              <div className="col-md-4 mt-spacer">
-                {identity && <Identity identity={identity} />}
-              </div>
+              {identity.success && identity.data !== undefined && (
+                <div className="col-md-4 mt-spacer">
+                  <Identity identity={identity.data} />
+                </div>
+              )}
             </div>
             <div className="row">
               <div className="mt-spacer col-md-4">
