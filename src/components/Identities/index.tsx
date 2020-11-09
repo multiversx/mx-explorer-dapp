@@ -22,7 +22,6 @@ const Identities = () => {
 
       data.forEach((identity) => {
         if (!identity.stake || !identity.validators) {
-          console.log('missing stake or validators', identity);
           return;
         }
 
