@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ValidatorType } from 'context/validators';
+import { NodeType } from 'context/state';
 import RowIcon from 'sharedComponents/NodesTable/RowIcon';
 import { nodeIssue } from 'helpers';
 
@@ -15,7 +15,7 @@ const Container = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
-const Alert = ({ node }: { node: ValidatorType }) => {
+const Alert = ({ node }: { node: NodeType }) => {
   switch (true) {
     case node.peerType === 'jailed':
       return (

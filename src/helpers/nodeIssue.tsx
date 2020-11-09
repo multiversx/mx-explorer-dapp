@@ -1,6 +1,6 @@
-import { ValidatorType } from 'context/validators';
+import { NodeType } from 'context/state';
 
-export default function nodeIssue(node: ValidatorType) {
+export default function nodeIssue(node: NodeType) {
   switch (true) {
     case node.issues.includes('outdatedVersion'):
       return 'Outdated client version';

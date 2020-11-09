@@ -2,13 +2,9 @@ import * as React from 'react';
 import { DetailItem, Led } from 'sharedComponents';
 import PercentegeBar from './PercentegeBar';
 import getUptimeDowntime from './getUptimeDowntime';
-import { ValidatorType } from 'context/validators';
+import { NodeType } from 'context/state';
 
-export interface NetworkMetricsType {
-  node: ValidatorType;
-}
-
-const NetworkMetrics = ({ node }: NetworkMetricsType) => {
+const NetworkMetrics = ({ node }: { node: NodeType }) => {
   const {
     totalUpTimePercentege,
     totalDownTimePercentege,

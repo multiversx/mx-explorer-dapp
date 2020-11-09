@@ -10,11 +10,7 @@ import Address from './components/Address';
 import Nodes from './components/Nodes';
 import Identities from './components/Identities';
 import IdentityDetails from './components/IdentityDetails';
-import ValidatorsTable from './components/Validators/ValidatorsTable';
-import BrandDetails from './components/Validators/BrandDetails';
-import ValidatorDetails from './components/Validators/ValidatorDetails';
 import NodeDetails from './components/NodeDetails';
-import ValidatorsBrandTable from './components/Validators/ValidatorsBrandTable';
 import { withPageTitle, withNetworkReady } from './sharedComponents';
 
 interface RouteType {
@@ -27,13 +23,9 @@ interface RouteType {
 // component: React.lazy(() => import('./components/Validators')),
 
 export const validatorsRoutes = {
-  // index: '/validators',
   index: '/identities',
-  // brandDetails: `/validators/:identity`,
-  // nodes: '/validators/nodes',
   nodes: '/nodes',
   nodeDetails: '/nodes/:publicKey',
-  // validatorDetails: '/validators/nodes/:hash',
   identityDetails: '/validators/:id',
 };
 
@@ -63,31 +55,11 @@ const routes: RouteType[] = [
     title: 'Validators',
     component: IdentityDetails,
   },
-  // {
-  //   path: validatorsRoutes.index,
-  //   title: 'Validators',
-  //   component: ValidatorsBrandTable,
-  // },
-  // {
-  //   path: validatorsRoutes.nodes,
-  //   title: 'Validators Nodes',
-  //   component: ValidatorsTable,
-  // },
-  // {
-  //   path: validatorsRoutes.brandDetails,
-  //   title: 'Validator Details',
-  //   component: BrandDetails,
-  // },
   {
     path: validatorsRoutes.nodeDetails,
     title: 'Node Details',
     component: NodeDetails,
   },
-  // {
-  //   path: validatorsRoutes.validatorDetails,
-  //   title: 'Node Details',
-  //   component: ValidatorDetails,
-  // },
   {
     path: '/address/:hash',
     title: 'Address Details',
