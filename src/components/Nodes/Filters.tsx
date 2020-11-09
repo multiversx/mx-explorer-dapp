@@ -57,54 +57,9 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
   };
 
   return (
-    <>
-      <div className="float-right">
-        <div role="search">
-          <div className="input-group input-group-seamless">
-            <input
-              type="text"
-              className="form-control"
-              value={inputValue}
-              onChange={changeValidatorValue}
-              onKeyDown={(keyEvent: React.KeyboardEvent) => {
-                if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
-                  updateSearchValue(inputValue);
-                }
-              }}
-              placeholder="Search"
-              name="validatorSearch"
-              data-testid="validatorSearch"
-              style={{ borderRadius: '2rem' }}
-            />
-            <div className="input-group-append">
-              {inputValue === '' ? (
-                <button type="submit" className="input-group-text">
-                  <FontAwesomeIcon icon={faSearch} />
-                </button>
-              ) : (
-                <button
-                  type="reset"
-                  className="input-group-text"
-                  onClick={() => {
-                    updateSearchValue('');
-                  }}
-                  data-testid="resetSearch"
-                >
-                  <FontAwesomeIcon icon={faTimes} />
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="float-right mt-2 mr-4">
-        {/* {resultsCount
-          ? `Showing ${resultsCount.toLocaleString('en')} of ${resultsCount.toLocaleString('en')}`
-          : ''} */}
-      </div>
-
+    <div className="d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
       <ul className="list-inline m-0">
-        <li className="list-inline-item">
+        <li className="list-inline-item my-1 my-md-0">
           <NetworkLink
             to="/nodes"
             className={`btn btn-sm btn-outline-light btn-pill ${
@@ -114,7 +69,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
             All
           </NetworkLink>
         </li>
-        <li className="list-inline-item">
+        <li className="list-inline-item my-1 my-md-0">
           <NetworkLink
             to={nodeTypeLink('validator')}
             className={`btn btn-sm btn-outline-light btn-pill ${
@@ -124,7 +79,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
             Validators
           </NetworkLink>
         </li>
-        <li className="list-inline-item">
+        <li className="list-inline-item my-1 my-md-0">
           <NetworkLink
             to={nodeTypeLink('observer')}
             data-testid="filterByObservers"
@@ -135,7 +90,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
             Observers
           </NetworkLink>
         </li>
-        <li className="list-inline-item">
+        <li className="list-inline-item my-1 my-md-0">
           <NetworkLink
             to={issuesLink('true')}
             className={`btn btn-sm btn-outline-light btn-pill ${issues === 'true' ? 'active' : ''}`}
@@ -143,7 +98,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
             Issues
           </NetworkLink>
         </li>
-        <li className="list-inline-item">
+        <li className="list-inline-item my-1 my-md-0">
           <Dropdown>
             <Dropdown.Toggle
               variant="outline-light"
@@ -189,7 +144,51 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
           </Dropdown>
         </li>
       </ul>
-    </>
+
+      <div className="my-1 my-md-0">
+        <div role="search">
+          <div className="input-group input-group-seamless">
+            <input
+              type="text"
+              className="form-control"
+              value={inputValue}
+              onChange={changeValidatorValue}
+              onKeyDown={(keyEvent: React.KeyboardEvent) => {
+                if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
+                  updateSearchValue(inputValue);
+                }
+              }}
+              placeholder="Search"
+              name="validatorSearch"
+              data-testid="validatorSearch"
+              style={{ borderRadius: '2rem' }}
+            />
+            <div className="input-group-append">
+              {inputValue === '' ? (
+                <button type="submit" className="input-group-text">
+                  <FontAwesomeIcon icon={faSearch} />
+                </button>
+              ) : (
+                <button
+                  type="reset"
+                  className="input-group-text"
+                  onClick={() => {
+                    updateSearchValue('');
+                  }}
+                  data-testid="resetSearch"
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* {resultsCount
+          ? `Showing ${resultsCount.toLocaleString('en')} of ${resultsCount.toLocaleString('en')}`
+          : ''} */}
+      </div>
+    </div>
   );
 };
 
