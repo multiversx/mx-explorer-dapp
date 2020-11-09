@@ -1,5 +1,4 @@
 import { InferType } from 'yup';
-import { CancelTokenSource } from 'axios';
 import config, { defaultNetwork, schema, adapterSchema } from './config';
 import { storage } from 'helpers';
 
@@ -68,7 +67,6 @@ export interface StateType {
   activeNetwork: NetworkType;
   activeNetworkId: string;
   timeout: number; // axios
-  cancelToken: CancelTokenSource | undefined;
   refresh: {
     timestamp: number;
   };
@@ -90,7 +88,6 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
       configObject.networks.filter((network) => network.default).pop() || defaultNetwork,
     activeNetworkId: '',
     timeout: 10 * 1000,
-    cancelToken: undefined,
     refresh: {
       timestamp: Date.now(),
     },

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { StateType, ConfigType } from './state';
 import moment from 'moment';
 import { storage } from 'helpers';
@@ -17,7 +16,6 @@ export type ActionType =
     }
   | { type: 'setShards'; shards: StateType['shards'] }
   | { type: 'triggerNewRound' }
-  | { type: 'cancelAllRequests' }
   | {
       type: 'changeTheme';
       theme: StateType['theme'];
@@ -67,14 +65,6 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
       return {
         ...state,
         shards: action.shards,
-      };
-    }
-    case 'cancelAllRequests': {
-      const cancelToken = axios.CancelToken.source();
-      cancelToken.cancel();
-      return {
-        ...state,
-        cancelToken,
       };
     }
     case 'changeTheme': {
