@@ -65,7 +65,7 @@ export const App = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
   React.useEffect(() => {
     if (process.env.REACT_APP_CACHE_BUST) {
       // tslint:disable-next-line
-      console.log('Elrond Web wallet version: ', process.env.REACT_APP_CACHE_BUST);
+      console.log('Elrond Explorer version: ', process.env.REACT_APP_CACHE_BUST);
     }
   }, []);
 
