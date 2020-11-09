@@ -118,3 +118,18 @@
     margin-top: 1rem !important;
   }
 }
+
+.identity-header-item {
+  @extend .px-3;
+  @extend .px-lg-0;
+
+  display: flex;
+  align-items: center;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+
+  @include media-breakpoint-up(lg) {
+    padding-top: 0.45rem;
+    padding-bottom: 0.45rem;
+  }
+}

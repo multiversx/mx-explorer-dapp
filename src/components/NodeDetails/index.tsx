@@ -19,7 +19,13 @@ const NodeDetails = () => {
   const { search } = useLocation();
   const { getNode, getIdentity, getNodeRounds, getNodeBlocks, getHistoricRatings } = adapter();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
-  const [node, setNode] = React.useState<NodeType>();
+  const [node, setNode] = React.useState<{
+    data?: NodeType;
+    success: boolean | undefined;
+  }>({
+    data: undefined,
+    success: undefined,
+  });
   const [identity, setIdentity] = React.useState<IdentityType>();
   const [rounds, setRounds] = React.useState<RoundType[]>();
   const [ratings, setRatings] = React.useState<RatingType[]>();
@@ -34,16 +40,15 @@ const NodeDetails = () => {
   const fetchNodes = () => {
     setDataReady(undefined);
     Promise.all([getNode(publicKey)]).then(([nodeData]) => {
-      const newNode: NodeType = nodeData.data;
-      if (newNode) {
+      if (nodeData.success) {
         Promise.all([
-          getIdentity(newNode.identity),
+          getIdentity(nodeData.data.identity),
           getNodeRounds(publicKey),
           getNodeBlocks(publicKey),
           getHistoricRatings(publicKey),
         ]).then(([identityData, roundsData, blocksData, historicRatingsData]) => {
           if (ref.current !== null) {
-            setNode(newNode);
+            setNode(nodeData);
             setIdentity(identityData.data);
             // TODO: undo
             // setBlocks(blocksData);
@@ -79,7 +84,7 @@ const NodeDetails = () => {
           dataTestId="errorScreen"
         />
       )}
-      {dataReady === true && node && (
+      {dataReady === true && node.data !== undefined && (
         <>
           <div className="container py-spacer">
             <div className="row page-header">
@@ -89,10 +94,10 @@ const NodeDetails = () => {
                 </h3>
               </div>
             </div>
-            <Alert node={node} />
+            <Alert node={node.data} />
             <div className="row">
               <div className="col-md-8 mt-spacer">
-                <NodeInformation node={node} />
+                <NodeInformation node={node.data} />
               </div>
               <div className="col-md-4 mt-spacer">
                 {identity && <Identity identity={identity} />}
@@ -100,7 +105,7 @@ const NodeDetails = () => {
             </div>
             <div className="row">
               <div className="mt-spacer col-md-4">
-                <NetworkMetrics node={node} />
+                <NetworkMetrics node={node.data} />
               </div>
 
               <div className="col-md-4 mt-spacer">
@@ -108,7 +113,7 @@ const NodeDetails = () => {
               </div>
               <div className="col-md-4 mt-spacer">{rounds && <Rounds rounds={rounds} />}</div>
             </div>
-            {node.nodeType === 'validator' && (
+            {node.data.nodeType === 'validator' && (
               <div className="row">
                 <div className="col-12 mt-spacer">
                   <div className="card">
@@ -118,7 +123,7 @@ const NodeDetails = () => {
                         {blocks.data.length === 0 && (
                           <NoBlocks
                             title={
-                              node.peerType === 'waiting'
+                              node.data.peerType === 'waiting'
                                 ? 'Validator not in consensus'
                                 : 'No blocks'
                             }
