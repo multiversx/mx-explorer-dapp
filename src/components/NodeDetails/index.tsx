@@ -70,7 +70,7 @@ const NodeDetails = () => {
             // setBlocks(blocksData);
             setBlocks({
               data: blocksData.data,
-              success: true,
+              success: false,
             });
             // TODO: redo
             setRounds({
@@ -78,12 +78,12 @@ const NodeDetails = () => {
                 key: round.id,
                 value: round.blockWasProposed,
               })),
-              success: true, // roundsData.success,
+              success: false, // roundsData.success,
             });
             // setRatings(historicRatingsData);
             setRatings({
               data: historicRatingsData.data,
-              success: true,
+              success: false,
             });
             setDataReady(nodeData.success);
           }

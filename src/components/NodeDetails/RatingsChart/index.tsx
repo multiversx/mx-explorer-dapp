@@ -181,7 +181,7 @@ const RatingsChart = ({ ratings }: { ratings: RatingsChartType }) => {
       {ratings.success === false && (
         <PageState
           icon={faHeartRate}
-          title="Failed to load rating"
+          title="Unable to load rating"
           className="page-state-sm d-flex h-100 align-items-center justify-content-center"
         />
       )}
