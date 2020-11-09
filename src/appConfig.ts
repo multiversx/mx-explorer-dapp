@@ -1,4 +1,3 @@
-export const explorerApi = 'https://explorer-api.elrond.com';
 export const metaChainShardId = 4294967295;
 
 export const elrondApps = [
