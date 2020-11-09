@@ -52,7 +52,7 @@ const Rounds = ({ rounds }: { rounds: RoundsType }) => {
                     <OverlayTrigger
                       key={round.key}
                       placement="top"
-                      delay={{ show: 250, hide: 400 }}
+                      delay={{ show: 0, hide: 400 }}
                       overlay={(props: any) => (
                         <Tooltip id={round.key} {...props}>
                           Block {round.value ? ' ' : ' not '} proposed{' '}
