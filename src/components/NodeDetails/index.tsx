@@ -111,36 +111,36 @@ const NodeDetails = () => {
             <div className="container py-spacer">
               <div className="row page-header">
                 <div className="col-12">
-                  <h3 className="page-title" data-testid="title">
+                  <h3 className="page-title mb-4" data-testid="title">
                     Node Information
                   </h3>
                 </div>
               </div>
               <Alert node={node.data} />
               <div className="row">
-                <div className={`mt-spacer ${identity.success ? 'col-md-8' : 'col-12'}`}>
+                <div className={`mb-spacer ${identity.success ? 'col-md-8' : 'col-12'}`}>
                   <NodeInformation node={node.data} colWidth={identity.success ? '3' : '2'} />
                 </div>
                 {identity.success && identity.data !== undefined && (
-                  <div className="col-md-4 mt-spacer">
+                  <div className="col-md-4 mb-spacer">
                     <Identity identity={identity.data} />
                   </div>
                 )}
               </div>
               <div className="row">
-                <div className="mt-spacer col-md-4">
+                <div className="mb-spacer col-md-4">
                   <NetworkMetrics node={node.data} />
                 </div>
-                <div className="col-md-4 mt-spacer">
+                <div className="col-md-4 mb-spacer">
                   <RatingsChart ratings={ratings} />
                 </div>
-                <div className="col-md-4 mt-spacer">
+                <div className="col-md-4 mb-spacer">
                   <Rounds rounds={{ ...rounds, peerType: node.data.peerType }} />
                 </div>
               </div>
               {node.data.nodeType === 'validator' && (
                 <div className="row">
-                  <div className="col-12 mt-spacer">
+                  <div className="col-12">
                     <div className="card">
                       {blocks.success === false && <FailedBlocks />}
                       {blocks.success && (

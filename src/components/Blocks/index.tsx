@@ -69,9 +69,9 @@ const Blocks: React.FC = () => {
       <div ref={ref}>
         {dataReady === true && (
           <div className="container py-spacer">
-            <div className="row page-header mb-spacer">
+            <div className="row page-header">
               <div className="col-12">
-                <h3 className="page-title">
+                <h3 className="page-title mb-4">
                   <span data-testid="title">Blocks</span>&nbsp;
                   {shardId !== undefined && shardId >= 0 && <ShardSpan shardId={shardId} />}
                 </h3>
