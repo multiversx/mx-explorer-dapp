@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { DetailItem, NetworkLink, Trim } from 'sharedComponents';
-import { validatorsRoutes } from 'routes';
 import { IdentityType } from 'context/state';
 
 const Identity = ({ identity }: { identity: IdentityType }) => {
@@ -17,7 +16,7 @@ const Identity = ({ identity }: { identity: IdentityType }) => {
             />
 
             {identity.identity ? (
-              <NetworkLink to={`${validatorsRoutes.index}/${identity.identity}`}>
+              <NetworkLink to={`/validators/${identity.identity}`}>
                 {identity.name ? identity.name : 'N/A'}
               </NetworkLink>
             ) : (
