@@ -8,19 +8,17 @@ export interface RoundType {
   value: boolean;
 }
 
-const Rounds = ({
-  data,
-  success,
-  peerType,
-}: {
+interface RoundsType {
   data: RoundType[];
   success: boolean | undefined;
   peerType: string;
-}) => {
+}
+
+const Rounds = ({ rounds }: { rounds: RoundsType }) => {
   return (
     <>
       <div className="card" data-testid="roundsContainer">
-        {success === false && (
+        {rounds.success === false && (
           <PageState
             icon={faCogs}
             title="Unable to load rounds"
@@ -29,18 +27,18 @@ const Rounds = ({
           />
         )}
 
-        {success === true && data.length === 0 && (
+        {rounds.success === true && rounds.data.length === 0 && (
           <PageState
             icon={faCogs}
             title={`${
-              peerType === 'waiting' ? 'Validator not in consensus' : 'Unable to load rounds'
+              rounds.peerType === 'waiting' ? 'Validator not in consensus' : 'Unable to load rounds'
             }`}
             className="page-state-sm d-flex h-100 align-items-center justify-content-center"
             dataTestId="roundsErrorScreen"
           />
         )}
 
-        {success === true && data.length > 0 && (
+        {rounds.success === true && rounds.data.length > 0 && (
           <>
             <div className="card-header">
               <div className="card-header-item">
@@ -49,8 +47,8 @@ const Rounds = ({
             </div>
             <div className="card-body">
               <div className="squares" data-testid="rounds">
-                {data.length &&
-                  data.map((round: any) => (
+                {rounds.data.length &&
+                  rounds.data.map((round: any) => (
                     <OverlayTrigger
                       key={round.key}
                       placement="top"
