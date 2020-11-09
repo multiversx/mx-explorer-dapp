@@ -134,7 +134,7 @@ const NodeDetails = () => {
                 <RatingsChart ratings={ratings} />
               </div>
               <div className="col-md-4 mt-spacer">
-                <Rounds data={rounds.data} success={rounds.success} peerType={node.data.peerType} />
+                <Rounds rounds={{ ...rounds, peerType: node.data.peerType }} />
               </div>
             </div>
             {node.data.nodeType === 'validator' && (
