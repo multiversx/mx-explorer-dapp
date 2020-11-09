@@ -35,7 +35,6 @@ const NodeDetails = () => {
   const fetchNodes = () => {
     setDataReady(undefined);
     Promise.all([getNode(publicKey)]).then(([nodeData]) => {
-      // if (ref.current !== null) {
       const newNode: ValidatorType = nodeData.data;
       if (newNode) {
         Promise.all([
@@ -44,27 +43,27 @@ const NodeDetails = () => {
           getNodeBlocks(publicKey),
           getHistoricRatings(publicKey),
         ]).then(([identityData, roundsData, blocksData, historicRatingsData]) => {
-          setNode(newNode);
-          setIdentity(identityData.data);
-          // TODO: undo
-          // setBlocks(blocksData);
-          setBlocks({
-            data: blocksData.data,
-            success: true,
-          });
-          // TODO: redo
-          setRounds(
-            roundsData.data.map((round: any) => ({
-              key: round.id,
-              value: round.blockWasProposed,
-            }))
-          );
-          setRatings(historicRatingsData.data);
-          setDataReady(nodeData.success);
+          if (ref.current !== null) {
+            setNode(newNode);
+            setIdentity(identityData.data);
+            // TODO: undo
+            // setBlocks(blocksData);
+            setBlocks({
+              data: blocksData.data,
+              success: true,
+            });
+            // TODO: redo
+            setRounds(
+              roundsData.data.map((round: any) => ({
+                key: round.id,
+                value: round.blockWasProposed,
+              }))
+            );
+            setRatings(historicRatingsData.data);
+            setDataReady(nodeData.success);
+          }
         });
       }
-
-      // }
     });
   };
 
