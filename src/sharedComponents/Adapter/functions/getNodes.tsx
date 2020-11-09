@@ -28,8 +28,6 @@ export default async function getNodes({
   count = false,
   pagination = true,
 }: AdapterFunctionType & GetNodesType) {
-  console.log(pagination);
-
   try {
     const { data } = await provider({
       baseUrl,
