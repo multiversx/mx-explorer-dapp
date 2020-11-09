@@ -10,6 +10,7 @@ export interface GetNodesType {
   count?: boolean;
   size?: number;
   identity?: string;
+  pagination?: boolean;
 }
 
 export default async function getNodes({
@@ -25,7 +26,10 @@ export default async function getNodes({
   size,
   identity,
   count = false,
+  pagination = true,
 }: AdapterFunctionType & GetNodesType) {
+  console.log(pagination);
+
   try {
     const { data } = await provider({
       baseUrl,
@@ -39,7 +43,11 @@ export default async function getNodes({
         ...(shardId !== undefined ? { shardId: parseInt(shardId) } : {}),
         ...(status !== undefined ? { status } : {}),
         ...(identity !== undefined ? { identity } : {}),
-        ...(size !== undefined ? { from: (size - 1) * 25, size: 25 } : {}),
+        ...(size !== undefined
+          ? pagination
+            ? { from: (size - 1) * 25, size: 25 }
+            : { size }
+          : {}),
       },
     });
 

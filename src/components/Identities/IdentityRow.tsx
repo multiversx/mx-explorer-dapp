@@ -26,10 +26,12 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
   const expand = (node: IdentityType) => () => {
     if (dataReady === undefined) {
       if (node.identity) {
-        getNodes({ identity: node.identity }).then((nodes) => {
-          setDataReady(nodes.success);
-          setIdentityNodes(nodes.data);
-        });
+        getNodes({ identity: node.identity, size: node.validators, pagination: false }).then(
+          (nodes) => {
+            setDataReady(nodes.success);
+            setIdentityNodes(nodes.data);
+          }
+        );
       } else {
         getNode(node.name).then((node) => {
           setDataReady(node.success);
