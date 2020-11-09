@@ -68,9 +68,9 @@ const Transactions = () => {
       <div ref={ref}>
         {transactionsFetched === true && (
           <div className="container py-spacer">
-            <div className="row page-header mb-spacer">
+            <div className="row page-header">
               <div className="col-12">
-                <h3 className="page-title">
+                <h3 className="page-title mb-4">
                   <span data-testid="title">Transactions</span>
                   {senderShard !== undefined && (
                     <>

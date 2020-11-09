@@ -46,9 +46,9 @@ const IdentityDetails = () => {
       )}
       {dataReady === true && identity && (
         <div className="container py-spacer">
-          <div className="row page-header mb-spacer">
+          <div className="row page-header">
             <div className="col-12">
-              <h3 className="page-title">
+              <h3 className="page-title mb-4">
                 <span data-testid="title">Validator Details</span>
               </h3>
             </div>
@@ -105,7 +105,7 @@ const IdentityDetails = () => {
                 </div>
               </div>
             </div>
-            <div className="col-12 col-md-6 mt-spacer mt-md-0 mb-spacer">
+            <div className="col-12 col-md-6 mb-spacer">
               <div className="card">
                 <div className="card-body p-0">
                   <div className="container-fluid">
