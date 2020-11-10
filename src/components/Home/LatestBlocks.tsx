@@ -62,7 +62,9 @@ const LatestBlocks = () => {
             <div className="card-header">
               <div className="card-header-item d-flex justify-content-between align-items-center">
                 <h6 className="m-0">Latest Blocks</h6>
-                <NetworkLink to="/blocks">View All Blocks</NetworkLink>
+                <NetworkLink to="/blocks" className="mr-1 pr-1">
+                  View All Blocks
+                </NetworkLink>
               </div>
             </div>
             <div className="card-body card-scroll py-0">
@@ -77,7 +79,7 @@ const LatestBlocks = () => {
                         <div className="list-item-icon mr-3">
                           <FontAwesomeIcon icon={faCube} />
                         </div>
-                        <div className="d-flex flex-column list-item-text">
+                        <div className="d-flex flex-column">
                           <span className="text-secondary">
                             <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
                               {block.nonce}
@@ -91,7 +93,7 @@ const LatestBlocks = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-6 pr-lg-spacer list-item-text text-secondary">
+                    <div className="col-6 pr-lg-spacer text-secondary">
                       <div className="d-flex align-items-center">
                         <span className="mr-2">Hash</span>
 
