@@ -49,10 +49,7 @@ const Nodes = () => {
             <NodeTabs />
 
             <div className="card-header-item">
-              <Filters
-                // TODO: check results count if needed
-                resultsCount={nodes.length}
-              />
+              <Filters resultsCount={nodes.length} />
             </div>
           </div>
 
