@@ -56,7 +56,7 @@ export default function useAdapter() {
 
     /* Miniblocks */
 
-    getMiniBlock: ({ miniBlockHash }: { miniBlockHash: string }) =>
+    getMiniBlock: (miniBlockHash: string) =>
       f.getMiniBlock({ provider, baseUrl, miniBlockHash, timeout }),
 
     getMiniBlockTransactions: ({ miniBlockHash, size }: { miniBlockHash: string; size: number }) =>
@@ -210,5 +210,8 @@ export default function useAdapter() {
       f.isTransaction({ provider, baseUrl, proxyUrl, hash, timeout }),
 
     isNode: ({ hash }: { hash: string }) => f.getNode({ provider, baseUrl, key: hash, timeout }),
+
+    isMiniBlock: ({ hash }: { hash: string }) =>
+      f.getMiniBlock({ provider, baseUrl, miniBlockHash: hash, timeout }),
   };
 }
