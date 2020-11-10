@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNetworkRoute } from 'helpers';
 import { Redirect, useLocation } from 'react-router-dom';
 import { adapter } from 'sharedComponents';
-import { miniblock } from 'utils/rawData';
 
 const Search = () => {
   const { pathname } = useLocation();
