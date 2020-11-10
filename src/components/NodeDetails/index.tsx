@@ -121,11 +121,7 @@ const NodeDetails = () => {
                           {node.data.peerType === 'waiting' ? (
                             <PageState
                               icon={faCube}
-                              title={`${
-                                node.data.peerType === 'waiting'
-                                  ? 'Validator not in consensus'
-                                  : 'Unable to load rounds'
-                              }`}
+                              title="Validator not in consensus"
                               className="py-spacer my-auto"
                               dataTestId="notInConsensusErrorScreen"
                             />
