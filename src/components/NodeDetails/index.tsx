@@ -25,7 +25,7 @@ const NodeDetails = () => {
   const ref = React.useRef(null);
   const { publicKey } = useParams() as any;
   const { search } = useLocation();
-  const { getNode, getIdentity, getNodeRounds, getBlocks } = adapter();
+  const { getNode, getIdentity, getRounds, getBlocks } = adapter();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
   const [node, setNode] = React.useState<NodeDetailType<NodeType>>(initialState);
@@ -39,7 +39,7 @@ const NodeDetails = () => {
       if (nodeData.success) {
         Promise.all([
           getIdentity(nodeData.data.identity),
-          getNodeRounds(publicKey),
+          getRounds(publicKey),
           getBlocks({ proposer: publicKey }),
         ]).then(([identityData, roundsData, blocksData]) => {
           if (ref.current !== null) {
@@ -49,13 +49,12 @@ const NodeDetails = () => {
               data: blocksData.blocks,
               success: blocksData.success,
             });
-            // TODO: redo
             setRounds({
               data: roundsData.data.map((round: any) => ({
-                key: round.id,
+                key: round.round,
                 value: round.blockWasProposed,
               })),
-              success: false, // roundsData.success,
+              success: roundsData.success,
             });
             setDataReady(nodeData.success);
           }
