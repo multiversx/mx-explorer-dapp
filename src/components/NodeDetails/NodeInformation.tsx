@@ -4,7 +4,7 @@ import { ShardSpan, NetworkLink, Trim, DetailItem, CopyButton } from 'sharedComp
 import { NodeType } from 'context/state';
 
 const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string }) => {
-  const { publicKey, peerType, shardNumber, versionNumber, nodeDisplayName } = node;
+  const { publicKey, peerType, shardId, versionNumber, nodeDisplayName } = node;
   return (
     <div className="card">
       <div className="card-body p-0">
@@ -16,9 +16,9 @@ const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string 
             </div>
           </DetailItem>
           <DetailItem title="Shard" colWidth={colWidth}>
-            {shardNumber !== undefined ? (
-              <NetworkLink to={urlBuilder.shard(shardNumber)} data-testid="shardLink">
-                <ShardSpan shardId={shardNumber} />
+            {shardId !== undefined ? (
+              <NetworkLink to={urlBuilder.shard(shardId)} data-testid="shardLink">
+                <ShardSpan shardId={shardId} />
               </NetworkLink>
             ) : (
               <span className="text-muted">N/A</span>

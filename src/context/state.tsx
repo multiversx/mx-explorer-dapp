@@ -15,19 +15,6 @@ export interface ShardType {
   activeValidators: number;
 }
 
-export interface BrandType {
-  name: string;
-  avatar: string;
-  identity: string;
-  score: number;
-  stake: number;
-  twitter: string;
-  web: string;
-  location: string;
-  stakePercent: number;
-  overallStakePercent: number;
-  nodesCount: number;
-}
 export interface IdentityType {
   name: string;
   score: number;
@@ -55,7 +42,7 @@ export interface NodeType {
   totalDownTimeSec: number;
   totalUpTimeSec: number;
   versionNumber: string;
-  shardNumber: number;
+  shardId: number;
   rating: number;
   ratingModifier: number;
   issues: string[];
