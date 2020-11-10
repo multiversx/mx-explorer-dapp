@@ -13,6 +13,7 @@ import {
   TransactionStatus,
   DetailItem,
   Trim,
+  CopyButton,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import ScResultsList from './ScResultsList';
@@ -44,6 +45,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                 secondInitiator={transaction.receiver}
               />
               {transaction.txHash}
+              <CopyButton text={transaction.txHash} />
             </div>
           </DetailItem>
 
