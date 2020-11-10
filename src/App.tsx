@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { AxiosErrorHandler } from 'sharedComponents';
 import Layout from './components/Layout';
 import PageNotFoud from './components/PageNotFoud';
 import { GlobalProvider, useGlobalState } from './context';
@@ -66,9 +67,11 @@ export const App = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
 
   return (
     <GlobalProvider optionalConfig={optionalConfig}>
-      <Layout>
-        <Routes routes={routes} />
-      </Layout>
+      <AxiosErrorHandler>
+        <Layout>
+          <Routes routes={routes} />
+        </Layout>
+      </AxiosErrorHandler>
     </GlobalProvider>
   );
 };

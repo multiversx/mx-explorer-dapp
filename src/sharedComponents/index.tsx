@@ -21,6 +21,7 @@ import adapter from './Adapter';
 import DetailItem from './DetailItem';
 import Trim from './Trim';
 import Led from './Led';
+import AxiosErrorHandler from './AxiosErrorHandler';
 
 export {
   Denominate,
@@ -47,4 +48,5 @@ export {
   DetailItem,
   Trim,
   Led,
+  AxiosErrorHandler,
 };
