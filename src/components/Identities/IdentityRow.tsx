@@ -104,15 +104,9 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
           <td colSpan={7} className="p-0">
             <div className="content">
               {dataReady === undefined && (
-                <>
-                  {identity.validators >= 5 ? (
-                    <Loader />
-                  ) : (
-                    <div className="py-4">
-                      <Loader small={true} />
-                    </div>
-                  )}
-                </>
+                <div className="py-4">
+                  <Loader small={true} />
+                </div>
               )}
               {dataReady === false && (
                 <PageState
