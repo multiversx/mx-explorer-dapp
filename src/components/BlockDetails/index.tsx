@@ -1,19 +1,16 @@
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import * as React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
-import { useGlobalState } from 'context';
-import { isHash, networkRoute } from 'helpers';
+import { isHash, useNetworkRoute } from 'helpers';
 import { Loader, adapter, PageState } from 'sharedComponents';
 import BlockData, { BlockDataType } from './BlockData';
 
 const BlockDetails = () => {
   const params: any = useParams();
-
+  const networkRoute = useNetworkRoute();
   const { hash: blockId } = params;
 
   const ref = React.useRef(null);
-
-  const { activeNetworkId } = useGlobalState();
 
   const { getBlock } = adapter();
 
@@ -36,7 +33,7 @@ const BlockDetails = () => {
   React.useEffect(fetchBlock, [blockId]); // run the operation only once since the parameter does not change
 
   return invalid ? (
-    <Redirect to={networkRoute({ to: `/not-found`, activeNetworkId })} />
+    <Redirect to={networkRoute(`/not-found`)} />
   ) : (
     <>
       {dataReady === undefined && <Loader />}

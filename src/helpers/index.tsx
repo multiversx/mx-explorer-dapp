@@ -5,7 +5,7 @@ import copyToClipboard from './copyToClipboard';
 import dateFormatted from './dateFormatted';
 import urlBuilder from './urlBuilder';
 import sizeFormat from './sizeFormat';
-import networkRoute from './networkRoute';
+import useNetworkRoute from './useNetworkRoute';
 import trimHash from './trimHash';
 import useFilters from './useFilters';
 import truncate from './truncate';
@@ -21,7 +21,7 @@ export {
   urlBuilder,
   isValidInteger,
   addressIsBech32,
-  networkRoute,
+  useNetworkRoute,
   copyToClipboard,
   trimHash,
   useFilters,

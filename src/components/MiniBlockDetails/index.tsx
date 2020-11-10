@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { isHash, networkRoute, urlBuilder } from 'helpers';
+import { isHash, useNetworkRoute, urlBuilder } from 'helpers';
 import { Redirect, useParams } from 'react-router-dom';
 import {
   Loader,
@@ -35,6 +35,7 @@ export interface StateType {
 const MiniBlockDetails: React.FC = () => {
   const { page, hash: miniBlockHash } = useParams() as any;
   const ref = React.useRef(null);
+  const networkRoute = useNetworkRoute();
 
   const { getMiniBlockTransactions, getMiniBlockTransactionsCount, getMiniBlock } = adapter();
 
@@ -89,7 +90,7 @@ const MiniBlockDetails: React.FC = () => {
   const showTransactions = transactionsFetched === true && transactions.length > 0;
 
   return invalid ? (
-    <Redirect to={networkRoute({ to: `/not-found`, activeNetworkId })} />
+    <Redirect to={networkRoute(`/not-found`)} />
   ) : (
     <>
       {miniBlockFetched === undefined && <Loader />}
