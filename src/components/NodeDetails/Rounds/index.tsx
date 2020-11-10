@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
+import { faRepeat } from '@fortawesome/pro-regular-svg-icons/faRepeat';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { PageState } from 'sharedComponents';
+import { NodeType } from 'context/state';
 
 export interface RoundType {
   key: string;
@@ -11,15 +12,14 @@ export interface RoundType {
 interface RoundsType {
   data?: RoundType[];
   success: boolean | undefined;
-  peerType: string;
 }
 
-const Rounds = ({ rounds }: { rounds: RoundsType }) => {
+const Rounds = ({ rounds, node }: { rounds: RoundsType; node: NodeType }) => {
   return (
     <div className="card" data-testid="roundsContainer">
       {rounds.success === false && (
         <PageState
-          icon={faCogs}
+          icon={faRepeat}
           title="Unable to load rounds"
           className="page-state-sm d-flex h-100 align-items-center justify-content-center"
           dataTestId="roundsErrorScreen"
@@ -28,9 +28,9 @@ const Rounds = ({ rounds }: { rounds: RoundsType }) => {
 
       {rounds.success === true && rounds.data && rounds.data.length === 0 && (
         <PageState
-          icon={faCogs}
+          icon={faRepeat}
           title={`${
-            rounds.peerType === 'waiting' ? 'Validator not in consensus' : 'Unable to load rounds'
+            node.peerType === 'waiting' ? 'Validator not in consensus' : 'Unable to load rounds'
           }`}
           className="page-state-sm d-flex h-100 align-items-center justify-content-center"
           dataTestId="roundsErrorScreen"

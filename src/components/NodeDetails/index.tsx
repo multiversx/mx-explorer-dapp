@@ -1,5 +1,6 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
+import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { adapter, BlocksTable, Loader, PageState } from 'sharedComponents';
 import { useLocation, useParams } from 'react-router-dom';
 import { IdentityType, NodeType } from 'context/state';
@@ -108,14 +109,32 @@ const NodeDetails = () => {
                   <NetworkMetrics node={node.data} />
                 </div>
                 <div className="col-md-6 mb-spacer">
-                  <Rounds rounds={{ ...rounds, peerType: node.data.peerType }} />
+                  <Rounds rounds={rounds} node={node.data} />
                 </div>
               </div>
               {node.data.nodeType === 'validator' && (
                 <div className="row">
                   <div className="col-12">
                     <div className="card">
-                      {blocks.success === false && <FailedBlocks />}
+                      {blocks.success === false && (
+                        <>
+                          {node.data.peerType === 'waiting' ? (
+                            <PageState
+                              icon={faCube}
+                              title={`${
+                                node.data.peerType === 'waiting'
+                                  ? 'Validator not in consensus'
+                                  : 'Unable to load rounds'
+                              }`}
+                              className="py-spacer my-auto"
+                              dataTestId="notInConsensusErrorScreen"
+                            />
+                          ) : (
+                            <FailedBlocks />
+                          )}
+                        </>
+                      )}
+
                       {blocks.success && blocks.data && (
                         <>
                           {blocks.data.length === 0 && (
