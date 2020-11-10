@@ -29,7 +29,6 @@ const NetworkMetrics = ({ node }: { node: NodeType }) => {
                 <RatingArrow node={node} />
               </div>
             </div>
-            {/* {!isNaN(node.rating) ? node.rating : <span className="text-muted">N/A</span>} */}
           </DetailItem>
 
           <DetailItem title="Uptime" colWidth="3">
