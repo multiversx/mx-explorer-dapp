@@ -37,7 +37,7 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
         </thead>
         <tbody data-testid="blocksTable">
           {blocks.map((block, i) => (
-            <tr className="animated fadeIn" key={block.hash}>
+            <tr key={block.hash}>
               <td>
                 <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
                   {block.nonce}
