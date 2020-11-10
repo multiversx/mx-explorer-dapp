@@ -21,9 +21,23 @@ $input-disabled-bg: #e9ecef;
 $input-hover-border-color: darken($border-color, 15%);
 
 .detail-item, .table  {
-    a {
+    a:not(.trim-wrapper) { 
         text-decoration: underline;
-        text-decoration-color: rgba(0, 0, 0, 0.3);
+        &:hover{
+          text-decoration: underline;
+        }
+    }
+    a.trim-wrapper {
+        position: relative;
+        &::after{
+            content:'';
+            position:absolute;
+            width: 100%;
+            height: 0;    
+            left:0;
+            bottom: 0.3rem;                 
+            border-bottom: 2px solid $primary;  
+        }
     }
     .pager {
         a {
