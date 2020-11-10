@@ -32,21 +32,17 @@
       }
 
       .bg-success {
-        background-color: $primary !important;
+        background-color: $primary-accent !important;
       }
 
       .bg-danger {
-        background-color: $success !important;
+        background-color: $primary !important;
       }
     }
 
     .avatar {
       box-shadow: rgba($standard-box-shadow, 0.4) 0px 0.1rem 0.4rem;
       border-radius: 50%;
-
-      &.gray {
-        opacity: 0.4;
-      }
     }
   }
 
