@@ -17,7 +17,7 @@ export default async function getRounds({
       baseUrl,
       url: `/rounds`,
       params: {
-        size: 100,
+        size: 138,
         from: 0,
         validator,
         shardId,
