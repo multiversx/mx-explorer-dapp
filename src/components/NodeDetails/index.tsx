@@ -75,6 +75,8 @@ const NodeDetails = () => {
             setDataReady(nodeData.success);
           }
         });
+      } else {
+        setDataReady(false);
       }
     });
   };
