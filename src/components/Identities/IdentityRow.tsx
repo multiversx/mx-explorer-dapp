@@ -54,7 +54,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
               <NetworkLink to={link}>
                 {}
                 <img
-                  className={`avatar ${!identity.avatar ? 'gray' : ''}`}
+                  className={`avatar ${!identity.avatar ? 'p-1 bg-light' : ''}`}
                   src={
                     identity.avatar
                       ? identity.avatar
