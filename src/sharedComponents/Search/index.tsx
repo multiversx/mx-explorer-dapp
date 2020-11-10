@@ -1,15 +1,13 @@
 import * as React from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGlobalState } from 'context';
-import { networkRoute } from 'helpers';
+import { useNetworkRoute } from 'helpers';
 import { Redirect, useLocation } from 'react-router-dom';
 import { adapter } from 'sharedComponents';
 
 const Search = () => {
-  const { activeNetworkId } = useGlobalState();
   const { pathname } = useLocation();
-
+  const networkRoute = useNetworkRoute();
   const { isAddress, isBlock, isTransaction, getNode, getMiniBlock } = adapter();
   const [route, setRoute] = React.useState('');
 
@@ -24,17 +22,17 @@ const Search = () => {
 
   const onClick = async () => {
     if ((await getNode(hash)).success) {
-      setRoute(networkRoute({ to: `/nodes/${hash}`, activeNetworkId }));
+      setRoute(networkRoute(`/nodes/${hash}`));
     } else if (await isBlock({ hash })) {
-      setRoute(networkRoute({ to: `/blocks/${hash}`, activeNetworkId }));
+      setRoute(networkRoute(`/blocks/${hash}`));
     } else if (await isTransaction({ hash })) {
-      setRoute(networkRoute({ to: `/transactions/${hash}`, activeNetworkId }));
+      setRoute(networkRoute(`/transactions/${hash}`));
     } else if (await isAddress({ hash })) {
-      setRoute(networkRoute({ to: `/address/${hash}`, activeNetworkId }));
+      setRoute(networkRoute(`/address/${hash}`));
     } else if ((await getMiniBlock(hash)).blockFetched) {
-      setRoute(networkRoute({ to: `/miniblocks/${hash}`, activeNetworkId }));
+      setRoute(networkRoute(`/miniblocks/${hash}`));
     } else {
-      setRoute(networkRoute({ to: `/search/${hash}`, activeNetworkId }));
+      setRoute(networkRoute(`/search/${hash}`));
     }
   };
 
