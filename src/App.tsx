@@ -1,17 +1,13 @@
-import * as Sentry from '@sentry/browser';
 import React, { useMemo } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import ErrorBoundary from './components/ErrorBoundary';
+import { AxiosErrorHandler } from 'sharedComponents';
 import Layout from './components/Layout';
 import PageNotFoud from './components/PageNotFoud';
 import { GlobalProvider, useGlobalState } from './context';
 import { ConfigType, NetworkType } from './context/state';
 import routes from './routes';
 
-if (process.env.NODE_ENV === 'production') {
-  Sentry.init({ dsn: 'https://8ed464acd35d44a6a582ff624dd3c38d@sentry.io/485879' });
-}
 export const Routes = ({
   routes,
 }: {
@@ -71,23 +67,20 @@ export const App = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
 
   return (
     <GlobalProvider optionalConfig={optionalConfig}>
-      <Layout>
-        <Routes routes={routes} />
-      </Layout>
+      <AxiosErrorHandler>
+        <Layout>
+          <Routes routes={routes} />
+        </Layout>
+      </AxiosErrorHandler>
     </GlobalProvider>
   );
 };
 
 const RoutedApp = () => {
-  const DevWrapper = ({ children }: any) => <>{children}</>;
-  const ProdErrorBoundary = process.env.NODE_ENV === 'production' ? ErrorBoundary : DevWrapper;
-
   return (
-    <ProdErrorBoundary>
-      <Router>
-        <App />
-      </Router>
-    </ProdErrorBoundary>
+    <Router>
+      <App />
+    </Router>
   );
 };
 

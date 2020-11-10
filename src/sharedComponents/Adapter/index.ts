@@ -176,11 +176,11 @@ export default function useAdapter() {
         key,
       }),
 
-    getNodeRounds: (key: string) =>
-      f.getNodeRounds({
+    getRounds: (validator: string) =>
+      f.getRounds({
         provider,
         baseUrl,
-        key,
+        validator,
         timeout,
       }),
 

@@ -5,7 +5,7 @@ import getShards from './getShards';
 import getIdentities from './getIdentities';
 import getIdentity from './getIdentity';
 import getNode from './getNode';
-import getNodeRounds from './getNodeRounds';
+import getRounds from './getRounds';
 import getNodes, { GetNodesType as GetNodesInterface } from './getNodes';
 import getLatestTransactions from './getLatestTransactions';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
@@ -47,6 +47,7 @@ export interface ProviderPropsType {
     peerType?: string;
     nodeType?: string;
     status?: string;
+    validator?: string;
   };
   timeout: number;
 }
@@ -79,7 +80,7 @@ export {
   isBlock,
   isAddress,
   isTransaction,
-  getNodeRounds,
+  getRounds,
   getNodes,
   getShards,
   getIdentities,
