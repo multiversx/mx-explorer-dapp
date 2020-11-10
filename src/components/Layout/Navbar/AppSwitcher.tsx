@@ -1,4 +1,5 @@
 import { faTh } from '@fortawesome/pro-solid-svg-icons/faTh';
+import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import React from 'react';
@@ -27,6 +28,7 @@ export default function AppSwitcher({ onToggle }: { onToggle?: () => void }) {
             </span>
           </i>
           <span className="d-lg-none">Switch to</span>
+          <FontAwesomeIcon className="d-inline-block d-lg-none ml-1" icon={faAngleDown} />
         </div>
       }
       id="app-switcher-dropdown"

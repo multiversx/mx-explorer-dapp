@@ -95,6 +95,12 @@
     }
   }
 
+  .dropdown-toggle {
+    &:after {
+      content: none !important;
+    }
+  }
+
   .dropdown-menu {
     padding-top: 0;
   }
