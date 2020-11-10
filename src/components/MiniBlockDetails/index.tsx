@@ -61,7 +61,7 @@ const MiniBlockDetails: React.FC = () => {
   const fetchMiniBlockData = () => {
     if (!invalid) {
       Promise.all([
-        getMiniBlock({ miniBlockHash }),
+        getMiniBlock(miniBlockHash),
         getMiniBlockTransactions({
           size,
           miniBlockHash,

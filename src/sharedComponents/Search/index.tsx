@@ -9,7 +9,7 @@ import { adapter } from 'sharedComponents';
 const Search = () => {
   const { activeNetworkId } = useGlobalState();
 
-  const { isAddress, isBlock, isTransaction, isNode } = adapter();
+  const { isAddress, isBlock, isTransaction, getNode, getMiniBlock } = adapter();
   const [route, setRoute] = React.useState('');
 
   const [hash, setHash] = React.useState<string>('');
@@ -22,8 +22,7 @@ const Search = () => {
   };
 
   const onClick = async () => {
-    const { success: hashIsNode } = await isNode({ hash });
-    if (hashIsNode) {
+    if ((await getNode(hash)).success) {
       setRoute(networkRoute({ to: `/nodes/${hash}`, activeNetworkId }));
     } else if (await isBlock({ hash })) {
       setRoute(networkRoute({ to: `/blocks/${hash}`, activeNetworkId }));
@@ -31,6 +30,8 @@ const Search = () => {
       setRoute(networkRoute({ to: `/transactions/${hash}`, activeNetworkId }));
     } else if (await isAddress({ hash })) {
       setRoute(networkRoute({ to: `/address/${hash}`, activeNetworkId }));
+    } else if ((await getMiniBlock(hash)).blockFetched) {
+      setRoute(networkRoute({ to: `/miniblocks/${hash}`, activeNetworkId }));
     } else {
       setRoute(networkRoute({ to: `/search/${hash}`, activeNetworkId }));
     }
