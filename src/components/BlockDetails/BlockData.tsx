@@ -12,8 +12,6 @@ import { metaChainShardId } from 'appConfig';
 
 export interface BlockDataType {
   block: BlockType;
-  proposer: string;
-  consensusItems: string[];
   nextHash: string;
 }
 
@@ -29,7 +27,7 @@ function createHashItemIfLengthIsOdd(length: number) {
 }
 
 const BlockData = (props: BlockDataType) => {
-  const { block, proposer, consensusItems, nextHash } = props;
+  const { block, nextHash } = props;
   const isFirstBlock = block.prevHash && block.prevHash.length > 64;
 
   return (
@@ -109,32 +107,27 @@ const BlockData = (props: BlockDataType) => {
           </DetailItem>
 
           <DetailItem title="Proposer">
-            {proposer === '' ? (
-              <span className="text-muted">N/A</span>
-            ) : (
-              <NetworkLink to={`${validatorsRoutes.nodes}/${proposer}`} className="trim-wrapper">
-                <Trim text={proposer} />
-              </NetworkLink>
-            )}
+            <NetworkLink
+              to={`${validatorsRoutes.nodes}/${block.proposer}`}
+              className="trim-wrapper"
+            >
+              <Trim text={block.proposer} />
+            </NetworkLink>
           </DetailItem>
 
           <DetailItem title="Consensus Group" className="hash-group-row">
-            {consensusItems.length === 0 ? (
-              <span className="text-muted">N/A</span>
-            ) : (
-              <div className="hash-group">
-                {consensusItems.map((item, i) => (
-                  <NetworkLink
-                    className="trim-wrapper hash-item"
-                    key={`${item}/${i}`}
-                    to={`${validatorsRoutes.nodes}/${item}`}
-                  >
-                    <Trim text={item} />
-                  </NetworkLink>
-                ))}
-                {createHashItemIfLengthIsOdd(consensusItems.length)}
-              </div>
-            )}
+            <div className="hash-group">
+              {block.validators.map((item, i) => (
+                <NetworkLink
+                  className="trim-wrapper hash-item"
+                  key={`${item}/${i}`}
+                  to={`${validatorsRoutes.nodes}/${item}`}
+                >
+                  <Trim text={item} />
+                </NetworkLink>
+              ))}
+              {createHashItemIfLengthIsOdd(block.validators.length)}
+            </div>
           </DetailItem>
 
           <DetailItem title="State Root Hash">

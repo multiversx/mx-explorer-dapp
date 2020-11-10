@@ -21,9 +21,9 @@ const BlockDetails = () => {
 
   const fetchBlock = () => {
     if (!invalid) {
-      getBlock({ blockId }).then(({ success, block, consensusItems, nextHash, proposer }) => {
+      getBlock({ blockId }).then(({ success, block, nextHash }) => {
         if (ref.current !== null) {
-          setState({ block, consensusItems, nextHash, proposer });
+          setState({ block, nextHash });
           setDataReady(success);
         }
       });
