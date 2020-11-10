@@ -1,8 +1,8 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { useGlobalState } from 'context';
 import { NetworkLink } from 'sharedComponents';
 import { validatorsRoutes } from 'routes';
+import useMatchPath from './useMatchPath';
+import { useNetworkRoute } from 'helpers';
 
 interface NavLinksType {
   expanded?: boolean;
@@ -10,9 +10,8 @@ interface NavLinksType {
 }
 
 export default function NavLinks({ expanded = false, setExpanded = () => null }: NavLinksType) {
-  const { activeNetworkId } = useGlobalState();
-  const { pathname } = useLocation();
-
+  const networkRoute = useNetworkRoute();
+  const matchPath = useMatchPath();
   const onToggle = (isExpanded: boolean) => {
     setExpanded(isExpanded);
   };
@@ -20,24 +19,14 @@ export default function NavLinks({ expanded = false, setExpanded = () => null }:
   return (
     <>
       <NetworkLink
-        className={`nav-link ${
-          pathname.toString() === '/' ||
-          pathname.toString() === `/${activeNetworkId}` ||
-          pathname.toString() === `/${activeNetworkId}/`
-            ? 'active'
-            : ''
-        }`}
+        className={`nav-link ${matchPath(networkRoute('/')) !== null ? 'active' : ''}`}
         to="/"
         onClick={() => onToggle(false)}
       >
         Dashboard
       </NetworkLink>
       <NetworkLink
-        className={`nav-link ${
-          pathname.toString().includes('blocks') && !pathname.toString().includes('miniblocks')
-            ? 'active'
-            : ''
-        }`}
+        className={`nav-link ${matchPath(networkRoute('/blocks')) !== null ? 'active' : ''}`}
         to="/blocks"
         onClick={() => onToggle(false)}
       >
@@ -45,7 +34,7 @@ export default function NavLinks({ expanded = false, setExpanded = () => null }:
       </NetworkLink>
 
       <NetworkLink
-        className={`nav-link ${pathname.toString().includes('transactions') ? 'active' : ''}`}
+        className={`nav-link ${matchPath(networkRoute('/transactions')) !== null ? 'active' : ''}`}
         to="/transactions"
         onClick={() => onToggle(false)}
       >
@@ -54,8 +43,8 @@ export default function NavLinks({ expanded = false, setExpanded = () => null }:
 
       <NetworkLink
         className={`nav-link ${
-          pathname.toString().includes(validatorsRoutes.nodes) ||
-          pathname.toString().includes(validatorsRoutes.index)
+          matchPath(networkRoute(validatorsRoutes.nodes)) !== null ||
+          matchPath(networkRoute(validatorsRoutes.index)) !== null
             ? 'active'
             : ''
         }`}
