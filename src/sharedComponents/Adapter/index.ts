@@ -10,9 +10,6 @@ export default function useAdapter() {
     timeout,
   } = useGlobalState();
 
-  // TODO: ramane apiUrl un singur url ptr api
-  // la elastic ramane proprietatea proxyUrl si elasticUrl
-
   const providers = {
     api: {
       provider: api,

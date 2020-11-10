@@ -52,7 +52,7 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
     validators: () => Promise.resolve({ data: rawData.validators }),
     transactionsCount: () => Promise.resolve({ data: 14253408 }),
     transactions: () => Promise.resolve({ data: rawData.transactionsSearch }),
-    transaction: () => Promise.resolve({ data: rawData.transactions }), // TODO check
+    transaction: () => Promise.resolve({ data: rawData.transactions }),
     blocksCount: () => Promise.resolve({ data: 239890 }),
     blocks: () => Promise.resolve({ data: rawData.blocks }),
     block: () => {
