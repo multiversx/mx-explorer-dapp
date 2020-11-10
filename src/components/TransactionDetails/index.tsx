@@ -53,7 +53,7 @@ const TransactionDetails = () => {
         <PageState
           icon={faExchangeAlt}
           title="Unable to locate this transaction hash"
-          className="py-spacer d-flex h-100 align-items-center justify-content-center"
+          className="py-spacer my-auto"
           data-testid="errorScreen"
         />
       )}
