@@ -12,38 +12,26 @@ import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 import { BlockType } from 'sharedComponents/BlocksTable';
 
+interface NodeDetailType<T> {
+  data?: T;
+  success: boolean | undefined;
+}
+
+const initialState = {
+  success: undefined,
+};
+
 const NodeDetails = () => {
   const ref = React.useRef(null);
   const { publicKey } = useParams() as any;
   const { search } = useLocation();
-  const { getNode, getIdentity, getNodeRounds, getNodeBlocks } = adapter();
+  const { getNode, getIdentity, getNodeRounds, getBlocks } = adapter();
+
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
-  const [node, setNode] = React.useState<{
-    data?: NodeType;
-    success: boolean | undefined;
-  }>({
-    success: undefined,
-  });
-  const [identity, setIdentity] = React.useState<{
-    data?: IdentityType;
-    success: boolean | undefined;
-  }>({
-    success: undefined,
-  });
-  const [rounds, setRounds] = React.useState<{
-    data: RoundType[];
-    success: boolean | undefined;
-  }>({
-    data: [],
-    success: undefined,
-  });
-  const [blocks, setBlocks] = React.useState<{
-    data: BlockType[];
-    success: boolean | undefined;
-  }>({
-    data: [],
-    success: undefined,
-  });
+  const [node, setNode] = React.useState<NodeDetailType<NodeType>>(initialState);
+  const [identity, setIdentity] = React.useState<NodeDetailType<IdentityType>>(initialState);
+  const [rounds, setRounds] = React.useState<NodeDetailType<RoundType[]>>(initialState);
+  const [blocks, setBlocks] = React.useState<NodeDetailType<BlockType[]>>(initialState);
 
   const fetchNodes = () => {
     setDataReady(undefined);
@@ -52,16 +40,14 @@ const NodeDetails = () => {
         Promise.all([
           getIdentity(nodeData.data.identity),
           getNodeRounds(publicKey),
-          getNodeBlocks(publicKey),
+          getBlocks({ proposer: publicKey }),
         ]).then(([identityData, roundsData, blocksData]) => {
           if (ref.current !== null) {
             setNode(nodeData);
             setIdentity(identityData);
-            // TODO: undo
-            // setBlocks(blocksData);
             setBlocks({
-              data: blocksData.data,
-              success: false,
+              data: blocksData.blocks,
+              success: blocksData.success,
             });
             // TODO: redo
             setRounds({
@@ -128,7 +114,7 @@ const NodeDetails = () => {
                   <div className="col-12">
                     <div className="card">
                       {blocks.success === false && <FailedBlocks />}
-                      {blocks.success && (
+                      {blocks.success && blocks.data && (
                         <>
                           {blocks.data.length === 0 && (
                             <NoBlocks
