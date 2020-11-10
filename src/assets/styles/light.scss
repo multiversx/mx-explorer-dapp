@@ -9,6 +9,8 @@ $muted: #cacbcc;
 $light: #f5f5f5;
 $success: #28a745;
 
+$primary-accent: lighten($primary, 20%);
+
 $standard-box-shadow: $primary;
 $link-hover-color: darken($primary, 7%);
 
