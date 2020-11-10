@@ -192,14 +192,6 @@ export default function useAdapter() {
         timeout,
       }),
 
-    getHistoricRatings: (key: string) =>
-      f.getHistoricRatings({
-        provider,
-        baseUrl,
-        key,
-        timeout,
-      }),
-
     /* Search */
 
     isBlock: (hash: string) => f.isBlock({ provider, baseUrl, hash, timeout }),

@@ -10,7 +10,11 @@ const EmptySearch = () => {
     <PageState
       icon={faSearch}
       title="Your search does not match anything we've got"
-      description={query}
+      description={
+        <div className="px-spacer">
+          <span className="text-break-all">{query}</span>
+        </div>
+      }
       className="py-spacer m-auto"
       dataTestId="errorScreen"
     />

@@ -16,7 +16,7 @@ const NodeDetails = () => {
   const ref = React.useRef(null);
   const { publicKey } = useParams() as any;
   const { search } = useLocation();
-  const { getNode, getIdentity, getNodeRounds, getNodeBlocks, getHistoricRatings } = adapter();
+  const { getNode, getIdentity, getNodeRounds, getNodeBlocks } = adapter();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
   const [node, setNode] = React.useState<{
     data?: NodeType;
@@ -53,8 +53,7 @@ const NodeDetails = () => {
           getIdentity(nodeData.data.identity),
           getNodeRounds(publicKey),
           getNodeBlocks(publicKey),
-          getHistoricRatings(publicKey),
-        ]).then(([identityData, roundsData, blocksData, historicRatingsData]) => {
+        ]).then(([identityData, roundsData, blocksData]) => {
           if (ref.current !== null) {
             setNode(nodeData);
             setIdentity(identityData);

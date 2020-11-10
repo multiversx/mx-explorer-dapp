@@ -178,13 +178,15 @@ const BlockData = (props: BlockDataType) => {
           </DetailItem>
 
           <DetailItem title="Previous Hash">
-            {isFirstBlock ? (
-              <span className="text-muted">N/A</span>
-            ) : (
-              <NetworkLink className="trim-wrapper" to={`/blocks/${block.prevHash}`}>
-                <Trim text={block.prevHash} />
-              </NetworkLink>
-            )}
+            <div className="d-flex align-items-center">
+              {isFirstBlock ? (
+                <span className="text-muted">N/A</span>
+              ) : (
+                <NetworkLink className="trim-wrapper" to={`/blocks/${block.prevHash}`}>
+                  <Trim text={block.prevHash} />
+                </NetworkLink>
+              )}
+            </div>
           </DetailItem>
 
           <DetailItem title="Public Keys Bitmap">

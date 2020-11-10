@@ -11,7 +11,11 @@ export default function MiniBlockNotFound({ miniBlockHash }: MiniBlockNotFoundTy
     <PageState
       icon={faCube}
       title="Unable to locate this miniblock hash"
-      description={miniBlockHash}
+      description={
+        <div className="px-spacer">
+          <span className="text-break-all">{miniBlockHash}</span>
+        </div>
+      }
       className="py-spacer my-auto"
       dataTestId="errorScreen"
     />
