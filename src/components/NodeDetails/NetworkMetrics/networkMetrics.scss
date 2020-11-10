@@ -1,6 +1,15 @@
 .network-metrics {
   .gradient-bar {
-    background: linear-gradient(to right, $danger, $warning, $success);
+    // background: linear-gradient(to right, $danger, $warning, $success);
+    background: linear-gradient(
+      to right,
+      $danger 0%,
+      #e8832c 30%,
+      $warning 36%,
+      $warning 66%,
+      #79d674 72%,
+      $success 100%
+    );
     position: relative;
     overflow: visible;
 
@@ -29,25 +38,5 @@
         border-top: 0.5rem solid $body;
       }
     }
-
-    // background: linear-gradient(
-    //   to right,
-    //   $danger 0%,
-    //   #e8832c 30%,
-    //   #f6fc88 36%,
-    //   $warning 66%,
-    //   #82e87d 72%,
-    //   $success 100%
-    // );
-
-    // background: linear-gradient(
-    //   to right,
-    //   $danger 0,
-    //   $danger 33%,
-    //   $warning 33%,
-    //   $warning 66%,
-    //   $success 66%,
-    //   $success 100%
-    // );
   }
 }
