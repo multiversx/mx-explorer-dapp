@@ -3,11 +3,12 @@ import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { networkRoute } from 'helpers';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 import { adapter } from 'sharedComponents';
 
 const Search = () => {
   const { activeNetworkId } = useGlobalState();
+  const { pathname } = useLocation();
 
   const { isAddress, isBlock, isTransaction, getNode, getMiniBlock } = adapter();
   const [route, setRoute] = React.useState('');
@@ -40,6 +41,17 @@ const Search = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHash(e.target.value);
   };
+
+  const reset = () => {
+    if (route) {
+      setRoute('');
+    }
+    if (hash) {
+      setHash('');
+    }
+  };
+
+  React.useEffect(reset, [route, pathname]);
 
   return route ? (
     <Redirect to={route} />
