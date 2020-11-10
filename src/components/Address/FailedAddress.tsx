@@ -13,7 +13,11 @@ export default function FailedAddress({ addressId }: { addressId: string | undef
     <PageState
       icon={showIcon ? faCode : faWallet}
       title="Unable to locate this address hash"
-      description={addressId}
+      description={
+        <div className="px-spacer">
+          <span className="text-break-all">{addressId}</span>
+        </div>
+      }
       className="py-spacer my-auto"
       dataTestId="errorScreen"
     />
