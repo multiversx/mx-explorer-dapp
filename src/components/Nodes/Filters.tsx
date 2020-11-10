@@ -164,11 +164,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
               style={{ borderRadius: '2rem' }}
             />
             <div className="input-group-append">
-              {inputValue === '' ? (
-                <button type="submit" className="input-group-text">
-                  <FontAwesomeIcon icon={faSearch} />
-                </button>
-              ) : (
+              {inputValue ? (
                 <button
                   type="reset"
                   className="input-group-text"
@@ -178,6 +174,10 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
                   data-testid="resetSearch"
                 >
                   <FontAwesomeIcon icon={faTimes} />
+                </button>
+              ) : (
+                <button type="submit" className="input-group-text">
+                  <FontAwesomeIcon icon={faSearch} />
                 </button>
               )}
             </div>
