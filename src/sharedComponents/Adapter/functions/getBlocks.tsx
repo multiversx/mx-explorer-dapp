@@ -13,8 +13,9 @@ const getShardOrEpochParam = (shardId: number | undefined, epoch: number | undef
 
 export interface GetBlocksParamsType {
   size?: number;
-  shardId: number | undefined;
+  shardId?: number;
   epochId?: number;
+  proposer?: string;
 }
 
 export async function getBlocks({
@@ -24,11 +25,13 @@ export async function getBlocks({
   shardId,
   timeout,
   epochId,
+  proposer,
 }: AdapterFunctionType & GetBlocksParamsType) {
   try {
     const params = {
       from: (size - 1) * 25,
       size: 25,
+      ...(proposer ? { proposer } : {}),
       ...getShardOrEpochParam(shardId, epochId),
     };
 
