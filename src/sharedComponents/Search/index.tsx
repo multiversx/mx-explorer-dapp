@@ -75,36 +75,38 @@ const Search = () => {
   return route ? (
     <Redirect to={route} />
   ) : (
-    <>
-      <input
-        type="text"
-        className="form-control ml-3 pr-3"
-        placeholder="Address / Txn Hash / Block Hash"
-        name="requestType"
-        data-testid="search"
-        required
-        value={hash}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-      />
-      <div className="input-group-prepend">
-        <button
-          type="submit"
-          className="input-group-text"
-          onClick={(e) => {
-            e.preventDefault();
-            onClick();
-          }}
-          data-testid="searchButton"
-        >
-          {searching ? (
-            <FontAwesomeIcon icon={faCircleNotch} spin />
-          ) : (
-            <FontAwesomeIcon icon={faSearch} />
-          )}
-        </button>
+    <form className="w-100 d-flex">
+      <div className="input-group input-group-seamless py-2">
+        <input
+          type="text"
+          className="form-control rounded-pill mx-2 my-1"
+          placeholder="Address / Tx Hash / Block Hash"
+          name="requestType"
+          data-testid="search"
+          required
+          value={hash}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+        />
+        <div className="input-group-append pr-2">
+          <button
+            type="submit"
+            className="input-group-text side-action outline-0"
+            onClick={(e) => {
+              e.preventDefault();
+              onClick();
+            }}
+            data-testid="searchButton"
+          >
+            {searching ? (
+              <FontAwesomeIcon icon={faCircleNotch} spin />
+            ) : (
+              <FontAwesomeIcon icon={faSearch} />
+            )}
+          </button>
+        </div>
       </div>
-    </>
+    </form>
   );
 };
 
