@@ -1,5 +1,5 @@
 import { useGlobalState } from 'context';
-import { networkRoute, useURLSearchParams } from 'helpers';
+import { useNetworkRoute, useURLSearchParams } from 'helpers';
 import * as React from 'react';
 import { Redirect } from 'react-router-dom';
 import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'sharedComponents';
@@ -16,6 +16,7 @@ interface StateType {
 const Blocks: React.FC = () => {
   const { page, shard } = useURLSearchParams();
   const shardId = shard;
+  const networkRoute = useNetworkRoute();
 
   React.useEffect(() => {
     if (shardId !== undefined) {
@@ -60,7 +61,7 @@ const Blocks: React.FC = () => {
   React.useEffect(fetchBlocks, [activeNetworkId, size, shardId, refreshFirstPage]);
 
   return shard && shard < 0 ? (
-    <Redirect to={networkRoute({ to: `/not-found`, activeNetworkId })} />
+    <Redirect to={networkRoute(`/not-found`)} />
   ) : (
     <>
       {dataReady === undefined && <Loader />}
