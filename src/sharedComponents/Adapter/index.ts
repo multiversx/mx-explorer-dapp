@@ -202,14 +202,14 @@ export default function useAdapter() {
 
     /* Search */
 
-    isBlock: ({ hash }: { hash: string }) => f.isBlock({ provider, baseUrl, hash, timeout }),
+    isBlock: (hash: string) => f.isBlock({ provider, baseUrl, hash, timeout }),
 
-    isAddress: ({ hash }: { hash: string }) => f.isAddress({ proxyUrl, hash, timeout }),
+    isAddress: (hash: string) => f.isAddress({ proxyUrl, hash, timeout }),
 
-    isTransaction: ({ hash }: { hash: string }) =>
+    isTransaction: (hash: string) =>
       f.isTransaction({ provider, baseUrl, proxyUrl, hash, timeout }),
 
-    isNode: ({ hash }: { hash: string }) => f.getNode({ provider, baseUrl, key: hash, timeout }),
+    isNode: (hash: string) => f.getNode({ provider, baseUrl, key: hash, timeout }),
 
     isMiniBlock: ({ hash }: { hash: string }) =>
       f.getMiniBlock({ provider, baseUrl, miniBlockHash: hash, timeout }),
