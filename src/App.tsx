@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/browser';
 import React, { useMemo } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -9,9 +8,6 @@ import { GlobalProvider, useGlobalState } from './context';
 import { ConfigType, NetworkType } from './context/state';
 import routes from './routes';
 
-if (process.env.NODE_ENV === 'production') {
-  Sentry.init({ dsn: 'https://8ed464acd35d44a6a582ff624dd3c38d@sentry.io/485879' });
-}
 export const Routes = ({
   routes,
 }: {
