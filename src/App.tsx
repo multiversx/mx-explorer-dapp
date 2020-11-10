@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import ErrorBoundary from './components/ErrorBoundary';
 import Layout from './components/Layout';
 import PageNotFoud from './components/PageNotFoud';
 import { GlobalProvider, useGlobalState } from './context';
@@ -75,15 +74,10 @@ export const App = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
 };
 
 const RoutedApp = () => {
-  const DevWrapper = ({ children }: any) => <>{children}</>;
-  const ProdErrorBoundary = process.env.NODE_ENV === 'production' ? ErrorBoundary : DevWrapper;
-
   return (
-    <ProdErrorBoundary>
-      <Router>
-        <App />
-      </Router>
-    </ProdErrorBoundary>
+    <Router>
+      <App />
+    </Router>
   );
 };
 
