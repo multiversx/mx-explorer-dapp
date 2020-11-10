@@ -7,7 +7,7 @@ export interface BlockType {
   nonce: number;
   epoch: number;
   prevHash: string;
-  proposer: number;
+  proposer: string;
   pubKeyBitmap: string;
   round: number;
   shardId: number;
@@ -16,7 +16,7 @@ export interface BlockType {
   stateRootHash: string;
   timestamp: number;
   txCount: number;
-  validators: number[];
+  validators: string[];
   miniBlocksHashes: string[];
   notarizedBlocksHashes: string[];
 }

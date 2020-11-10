@@ -1,31 +1,5 @@
 import { AdapterFunctionType } from './index';
 
-interface SearchCallType {
-  shardId: number;
-  epoch: number;
-  blockId?: string;
-}
-
-async function searchCall({
-  provider,
-  baseUrl,
-  timeout,
-  shardId,
-  epoch,
-}: AdapterFunctionType & SearchCallType) {
-  try {
-    const { data } = await provider({
-      baseUrl,
-      url: `/validators/${shardId}_${epoch}`,
-      timeout,
-    });
-
-    return data;
-  } catch {
-    return [];
-  }
-}
-
 interface GetNextBlockType {
   currentBlockId: number;
   currentShardId: number;
@@ -69,20 +43,6 @@ export default async function getBlock({
       timeout,
     });
 
-    const hit = await searchCall({
-      provider,
-      baseUrl,
-      timeout,
-      shardId: block.shardId,
-      epoch: block.epoch,
-    });
-
-    const consensusArray = Object.keys(hit).length ? hit.publicKeys : [];
-
-    const consensusItems = consensusArray.length
-      ? block.validators.map((id: any) => consensusArray[id])
-      : [];
-
     const nextHash = await getNextBlock({
       provider,
       baseUrl,
@@ -93,8 +53,6 @@ export default async function getBlock({
 
     return {
       block,
-      proposer: consensusItems.length ? [...consensusItems].shift() : '',
-      consensusItems,
       nextHash,
       success: true,
     };
