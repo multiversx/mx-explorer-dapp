@@ -132,29 +132,33 @@ const MiniBlockDetails: React.FC = () => {
                           </DetailItem>
 
                           <DetailItem title="Sender Block">
-                            {miniBlock.senderBlockHash !== '' ? (
-                              <NetworkLink
-                                className="trim-wrapper"
-                                to={`/blocks/${miniBlock.senderBlockHash}`}
-                              >
-                                <Trim text={miniBlock.senderBlockHash} />
-                              </NetworkLink>
-                            ) : (
-                              <span className="text-muted">N/A</span>
-                            )}
+                            <div className="d-flex align-items-center">
+                              {miniBlock.senderBlockHash !== '' ? (
+                                <NetworkLink
+                                  className="trim-wrapper"
+                                  to={`/blocks/${miniBlock.senderBlockHash}`}
+                                >
+                                  <Trim text={miniBlock.senderBlockHash} />
+                                </NetworkLink>
+                              ) : (
+                                <span className="text-muted">N/A</span>
+                              )}
+                            </div>
                           </DetailItem>
 
                           <DetailItem title="Receiver Block">
-                            {miniBlock.receiverBlockHash !== '' ? (
-                              <NetworkLink
-                                className="trim-wrapper"
-                                to={`/blocks/${miniBlock.receiverBlockHash}`}
-                              >
-                                <Trim text={miniBlock.receiverBlockHash} />
-                              </NetworkLink>
-                            ) : (
-                              <span className="text-muted">N/A</span>
-                            )}
+                            <div className="d-flex align-items-center">
+                              {miniBlock.receiverBlockHash !== '' ? (
+                                <NetworkLink
+                                  className="trim-wrapper"
+                                  to={`/blocks/${miniBlock.receiverBlockHash}`}
+                                >
+                                  <Trim text={miniBlock.receiverBlockHash} />
+                                </NetworkLink>
+                              ) : (
+                                <span className="text-muted">N/A</span>
+                              )}
+                            </div>
                           </DetailItem>
 
                           <DetailItem title="Type">{miniBlock.type}</DetailItem>
