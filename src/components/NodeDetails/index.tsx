@@ -8,7 +8,6 @@ import NodeInformation from './NodeInformation';
 import Identity from './Identity';
 import NetworkMetrics from './NetworkMetrics';
 import Rounds, { RoundType } from './Rounds';
-import RatingsChart, { RatingType } from './RatingsChart';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 import { BlockType } from 'sharedComponents/BlocksTable';
@@ -33,13 +32,6 @@ const NodeDetails = () => {
   });
   const [rounds, setRounds] = React.useState<{
     data: RoundType[];
-    success: boolean | undefined;
-  }>({
-    data: [],
-    success: undefined,
-  });
-  const [ratings, setRatings] = React.useState<{
-    data: RatingType[];
     success: boolean | undefined;
   }>({
     data: [],
@@ -79,11 +71,6 @@ const NodeDetails = () => {
                 value: round.blockWasProposed,
               })),
               success: false, // roundsData.success,
-            });
-            // setRatings(historicRatingsData);
-            setRatings({
-              data: historicRatingsData.data,
-              success: false,
             });
             setDataReady(nodeData.success);
           }
@@ -128,13 +115,10 @@ const NodeDetails = () => {
                 )}
               </div>
               <div className="row">
-                <div className="mb-spacer col-md-4">
+                <div className="mb-spacer col-md-6">
                   <NetworkMetrics node={node.data} />
                 </div>
-                <div className="col-md-4 mb-spacer">
-                  <RatingsChart ratings={ratings} />
-                </div>
-                <div className="col-md-4 mb-spacer">
+                <div className="col-md-6 mb-spacer">
                   <Rounds rounds={{ ...rounds, peerType: node.data.peerType }} />
                 </div>
               </div>
