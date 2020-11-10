@@ -5,7 +5,7 @@ import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
-import { ShardSpan, NetworkLink, TimeAgo, Trim, DetailItem } from 'sharedComponents';
+import { ShardSpan, NetworkLink, TimeAgo, Trim, DetailItem, CopyButton } from 'sharedComponents';
 import { BlockType } from 'sharedComponents/BlocksTable';
 import { validatorsRoutes } from 'routes';
 import { metaChainShardId } from 'appConfig';
@@ -65,7 +65,10 @@ const BlockData = (props: BlockDataType) => {
           </DetailItem>
 
           <DetailItem title="Block Hash">
-            <Trim text={block.hash} />
+            <div className="d-flex align-items-center">
+              <Trim text={block.hash} />
+              <CopyButton text={block.hash} />
+            </div>
           </DetailItem>
 
           <DetailItem title="Epoch">{block.epoch}</DetailItem>
