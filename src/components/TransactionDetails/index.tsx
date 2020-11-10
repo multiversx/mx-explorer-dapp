@@ -26,7 +26,7 @@ const TransactionDetails = () => {
       getTransaction({ transactionId }).then(({ data, transactionFetched }) => {
         if (ref.current !== null) {
           setTransaction(data);
-          setTransactionFetched(false);
+          setTransactionFetched(transactionFetched);
         }
       });
     }
