@@ -1,0 +1,53 @@
+.network-metrics {
+  .gradient-bar {
+    background: linear-gradient(to right, $danger, $warning, $success);
+    position: relative;
+    overflow: visible;
+
+    .rating {
+      position: absolute;
+      top: 0.37rem;
+
+      .arrow-down {
+        width: 0;
+        height: 0;
+        border-left: 0.5rem solid transparent;
+        border-right: 0.5rem solid transparent;
+        border-bottom: 0.5rem solid $body;
+      }
+    }
+
+    .temp-rating {
+      position: absolute;
+      top: -0.56rem;
+
+      .arrow-up {
+        width: 0;
+        height: 0;
+        border-left: 0.5rem solid transparent;
+        border-right: 0.5rem solid transparent;
+        border-top: 0.5rem solid $body;
+      }
+    }
+
+    // background: linear-gradient(
+    //   to right,
+    //   $danger 0%,
+    //   #e8832c 30%,
+    //   #f6fc88 36%,
+    //   $warning 66%,
+    //   #82e87d 72%,
+    //   $success 100%
+    // );
+
+    // background: linear-gradient(
+    //   to right,
+    //   $danger 0,
+    //   $danger 33%,
+    //   $warning 33%,
+    //   $warning 66%,
+    //   $success 66%,
+    //   $success 100%
+    // );
+  }
+}
