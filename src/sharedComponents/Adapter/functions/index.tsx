@@ -5,7 +5,7 @@ import getShards from './getShards';
 import getIdentities from './getIdentities';
 import getIdentity from './getIdentity';
 import getNode from './getNode';
-import getRounds from './getRounds';
+import getRounds, { GetRoundsType as GetRoundsInterface } from './getRounds';
 import getNodes, { GetNodesType as GetNodesInterface } from './getNodes';
 import getLatestTransactions from './getLatestTransactions';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
@@ -61,6 +61,8 @@ export type GetBlocksType = GetBlocksParamsType;
 export type TransactionsType = TransactionsInterface;
 
 export type GetNodesType = GetNodesInterface;
+
+export type GetRoundsType = GetRoundsInterface;
 
 export {
   getHighlights,

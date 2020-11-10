@@ -35,11 +35,14 @@ const NodeDetails = () => {
 
   const fetchNodes = () => {
     setDataReady(undefined);
-    Promise.all([getNode(publicKey)]).then(([nodeData]) => {
+    getNode(publicKey).then((nodeData) => {
       if (nodeData.success) {
         Promise.all([
           getIdentity(nodeData.data.identity),
-          getRounds(publicKey),
+          getRounds({
+            validator: publicKey,
+            shardId: nodeData.data.shardId,
+          }),
           getBlocks({ proposer: publicKey }),
         ]).then(([identityData, roundsData, blocksData]) => {
           if (ref.current !== null) {
