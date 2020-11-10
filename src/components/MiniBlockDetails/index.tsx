@@ -10,6 +10,7 @@ import {
   adapter,
   DetailItem,
   Trim,
+  CopyButton,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
@@ -112,7 +113,10 @@ const MiniBlockDetails: React.FC = () => {
                       <div className="card-body p-0">
                         <div className="container-fluid">
                           <DetailItem title="Miniblock Hash">
-                            <Trim text={miniBlockHash} />
+                            <div className="d-flex align-items-center">
+                              <Trim text={miniBlockHash} />
+                              <CopyButton text={miniBlockHash} />
+                            </div>
                           </DetailItem>
                           <DetailItem title="Sender Shard">
                             <NetworkLink to={urlBuilder.shard(miniBlock.senderShard)}>
