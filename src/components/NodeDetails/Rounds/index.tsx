@@ -9,7 +9,7 @@ export interface RoundType {
 }
 
 interface RoundsType {
-  data: RoundType[];
+  data?: RoundType[];
   success: boolean | undefined;
   peerType: string;
 }
@@ -27,7 +27,7 @@ const Rounds = ({ rounds }: { rounds: RoundsType }) => {
           />
         )}
 
-        {rounds.success === true && rounds.data.length === 0 && (
+        {rounds.success === true && rounds.data && rounds.data.length === 0 && (
           <PageState
             icon={faCogs}
             title={`${
@@ -38,7 +38,7 @@ const Rounds = ({ rounds }: { rounds: RoundsType }) => {
           />
         )}
 
-        {rounds.success === true && rounds.data.length > 0 && (
+        {rounds.success === true && rounds.data && rounds.data.length > 0 && (
           <>
             <div className="card-header">
               <div className="card-header-item">
