@@ -1,11 +1,17 @@
 import { AdapterFunctionType } from './index';
 
+export interface GetRoundsType {
+  validator: string;
+  shardId: number;
+}
+
 export default async function getRounds({
   baseUrl,
   timeout,
   validator = '',
+  shardId,
   provider,
-}: AdapterFunctionType & { validator: string }) {
+}: AdapterFunctionType & GetRoundsType) {
   try {
     const { data } = await provider({
       baseUrl,
@@ -14,6 +20,7 @@ export default async function getRounds({
         size: 100,
         from: 0,
         validator,
+        shardId,
       },
       timeout,
     });

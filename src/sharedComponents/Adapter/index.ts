@@ -176,11 +176,12 @@ export default function useAdapter() {
         key,
       }),
 
-    getRounds: (validator: string) =>
+    getRounds: ({ validator, shardId }: f.GetRoundsType) =>
       f.getRounds({
         provider,
         baseUrl,
         validator,
+        shardId,
         timeout,
       }),
 
