@@ -42,7 +42,11 @@ const BlockDetails = () => {
         <PageState
           icon={faCube}
           title="Unable to locate this block hash"
-          description={blockId}
+          description={
+            <div className="px-spacer">
+              <span className="text-break-all">{blockId}</span>
+            </div>
+          }
           className="py-spacer my-auto"
           dataTestId="errorScreen"
         />

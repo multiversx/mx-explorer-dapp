@@ -7,7 +7,6 @@ import getIdentity from './getIdentity';
 import getNode from './getNode';
 import getNodeRounds from './getNodeRounds';
 import getNodeBlocks from './getNodeBlocks';
-import getHistoricRatings from './getHistoricRatings';
 import getNodes, { GetNodesType as GetNodesInterface } from './getNodes';
 import getLatestTransactions from './getLatestTransactions';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
@@ -88,5 +87,4 @@ export {
   getIdentity,
   getNode,
   getNodeBlocks,
-  getHistoricRatings,
 };

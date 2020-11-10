@@ -70,7 +70,13 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
               <span className="ml-2">{node.status === 'online' ? 'Online' : 'Offline'}</span>
             </div>
           </td>
-          <td className="text-right">{node.rating ? Math.floor(node.rating) : node.rating}</td>
+          <td className="text-right">
+            {!isNaN(node.rating) ? (
+              Math.floor(node.rating)
+            ) : (
+              <span className="text-muted">N/A</span>
+            )}
+          </td>
         </tr>
       ))}
       {orderedByRating.length === 0 && (

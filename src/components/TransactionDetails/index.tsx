@@ -26,7 +26,7 @@ const TransactionDetails = () => {
       getTransaction({ transactionId }).then(({ data, transactionFetched }) => {
         if (ref.current !== null) {
           setTransaction(data);
-          setTransactionFetched(transactionFetched);
+          setTransactionFetched(false);
         }
       });
     }
@@ -53,7 +53,12 @@ const TransactionDetails = () => {
         <PageState
           icon={faExchangeAlt}
           title="Unable to locate this transaction hash"
-          className="py-spacer d-flex h-100 align-items-center justify-content-center"
+          description={
+            <div className="px-spacer">
+              <span className="text-break-all">{transactionId}</span>
+            </div>
+          }
+          className="py-spacer my-auto"
           data-testid="errorScreen"
         />
       )}
