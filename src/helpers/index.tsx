@@ -12,6 +12,7 @@ import truncate from './truncate';
 import storage from './storage';
 import nodeIssue from './nodeIssue';
 import useURLSearchParams from './useURLSearchParams';
+import outdatedVersion from './outdatedVersion';
 
 export {
   truncate,
@@ -28,4 +29,5 @@ export {
   storage,
   nodeIssue,
   useURLSearchParams,
+  outdatedVersion,
 };
