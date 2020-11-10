@@ -48,15 +48,17 @@ const Rounds = ({ rounds }: { rounds: RoundsType }) => {
             <div className="card-body">
               <div className="squares" data-testid="rounds">
                 {rounds.data.length &&
-                  rounds.data.map((round: any) => (
+                  rounds.data.map((round) => (
                     <OverlayTrigger
                       key={round.key}
                       placement="top"
-                      delay={{ show: 0, hide: 400 }}
+                      delay={{ show: 0, hide: 50 }}
                       overlay={(props: any) => (
                         <Tooltip id={round.key} {...props}>
                           Block {round.value ? ' ' : ' not '} proposed{' '}
-                          {round.key.indexOf('_') > 0 ? round.key.split('_').pop() : round.key}
+                          {String(round.key).indexOf('_') > 0
+                            ? String(round.key).split('_').pop()
+                            : round.key}
                         </Tooltip>
                       )}
                     >
