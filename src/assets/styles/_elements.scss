@@ -48,21 +48,6 @@
   }
 }
 
-.navbar-brand {
-  svg {
-    height: 1.5rem;
-    width: auto;
-    margin-right: 0.8rem;
-  }
-
-  span {
-    font-size: 1.2rem;
-    font-weight: 300;
-    border-left: 1px solid $border-color;
-    padding-left: 0.7rem;
-  }
-}
-
 .page-container {
   @extend .d-flex;
   @extend .flex-fill;
@@ -94,6 +79,21 @@
       color: $body;
       vertical-align: middle;
     }
+  }
+}
+
+.navbar-brand {
+  svg {
+    height: 1.5rem;
+    width: auto;
+    margin-right: 0.8rem;
+  }
+
+  span {
+    font-size: 1.2rem;
+    font-weight: 300;
+    border-left: 1px solid $border-color;
+    padding-left: 0.7rem;
   }
 }
 
@@ -132,4 +132,17 @@
     padding-top: 0.45rem;
     padding-bottom: 0.45rem;
   }
+}
+
+// scrollbars overrides
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 0.375rem;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0.187rem;
+  background-color: $muted;
+  box-shadow: 0 0 1px rgba($white, 0.5);
+  -webkit-box-shadow: 0 0 1px rgba($white, 0.5);
 }

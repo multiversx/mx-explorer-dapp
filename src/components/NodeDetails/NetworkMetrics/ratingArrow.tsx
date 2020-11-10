@@ -14,7 +14,7 @@ const RatingArrow = ({ node, showTemp = false }: { node: NodeType; showTemp?: bo
       }}
     >
       <OverlayTrigger
-        placement={showTemp ? 'top' : 'bottom'}
+        placement={showTemp ? 'bottom' : 'top'}
         delay={{ show: 0, hide: 400 }}
         overlay={(props: any) => (
           <Tooltip {...props} show={props.show.toString()}>
@@ -22,7 +22,7 @@ const RatingArrow = ({ node, showTemp = false }: { node: NodeType; showTemp?: bo
           </Tooltip>
         )}
       >
-        <div className={`arrow-${showTemp ? 'up' : 'down'}`} />
+        <div className={`arrow-${showTemp ? 'down' : 'up'}`} />
       </OverlayTrigger>
     </div>
   );

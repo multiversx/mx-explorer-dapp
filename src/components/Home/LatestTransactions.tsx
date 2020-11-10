@@ -70,7 +70,9 @@ const LatestTransactions = () => {
             <div className="card-header">
               <div className="card-header-item d-flex justify-content-between align-items-center">
                 <h6 className="m-0">Latest Transactions</h6>
-                <NetworkLink to="/transactions">View All Transactions</NetworkLink>
+                <NetworkLink to="/transactions" className="mr-1 pr-1">
+                  View All Transactions
+                </NetworkLink>
               </div>
             </div>
             <div className="card-body card-scroll py-0">
@@ -84,7 +86,7 @@ const LatestTransactions = () => {
                       <div className="list-item-icon mr-3">
                         <FontAwesomeIcon icon={faExchangeAlt} />
                       </div>
-                      <div className="list-item-text min-w-0">
+                      <div className="min-w-0">
                         <div className="d-flex align-items-center">
                           <ScAddressIcon
                             initiator={transaction.sender}
@@ -104,7 +106,7 @@ const LatestTransactions = () => {
                         </span>
                       </div>
                     </div>
-                    <div className="col-6 pr-lg-spacer list-item-text text-secondary">
+                    <div className="col-6 pr-lg-spacer text-secondary">
                       <div className="d-flex align-items-center">
                         <span className="text-nowrap mr-2">From</span>
 
