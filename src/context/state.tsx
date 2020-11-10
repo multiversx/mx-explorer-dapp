@@ -43,6 +43,7 @@ export interface NodeType {
   totalUpTimeSec: number;
   versionNumber: string;
   shardId: number;
+  tempRating: number;
   rating: number;
   ratingModifier: number;
   issues: string[];

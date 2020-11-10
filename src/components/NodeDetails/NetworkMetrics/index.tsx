@@ -3,6 +3,7 @@ import { DetailItem, Led } from 'sharedComponents';
 import PercentegeBar from './PercentegeBar';
 import getUptimeDowntime from './getUptimeDowntime';
 import { NodeType } from 'context/state';
+import RatingArrow from './ratingArrow';
 
 const NetworkMetrics = ({ node }: { node: NodeType }) => {
   const {
@@ -12,7 +13,7 @@ const NetworkMetrics = ({ node }: { node: NodeType }) => {
     totalDownTimeLabel,
   } = getUptimeDowntime(node);
   return (
-    <div className="card">
+    <div className="card network-metrics">
       <div className="card-header">
         <div className="card-header-item">
           <h6 className="m-0">Network Metrics</h6>
@@ -22,7 +23,13 @@ const NetworkMetrics = ({ node }: { node: NodeType }) => {
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Rating" colWidth="3">
-            {!isNaN(node.rating) ? node.rating : <span className="text-muted">N/A</span>}
+            <div className="d-flex align-items-center h-100">
+              <div className="gradient-bar progress progress-sm w-100 my-2">
+                <RatingArrow node={node} showTemp={true} />
+                <RatingArrow node={node} />
+              </div>
+            </div>
+            {/* {!isNaN(node.rating) ? node.rating : <span className="text-muted">N/A</span>} */}
           </DetailItem>
 
           <DetailItem title="Uptime" colWidth="3">
