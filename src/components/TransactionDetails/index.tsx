@@ -19,14 +19,14 @@ const TransactionDetails = () => {
   const { getTransaction } = adapter();
 
   const [transaction, setTransaction] = React.useState<TransactionType | undefined>();
-  const [transactionFetched, setTransactionFetched] = React.useState<boolean | undefined>();
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchTransaction = () => {
     if (transactionId) {
-      getTransaction({ transactionId }).then(({ data, transactionFetched }) => {
+      getTransaction({ transactionId }).then(({ data, success }) => {
         if (ref.current !== null) {
           setTransaction(data);
-          setTransactionFetched(transactionFetched);
+          setDataReady(success);
         }
       });
     }
@@ -38,7 +38,7 @@ const TransactionDetails = () => {
     if (
       transaction &&
       transaction.status.toLowerCase() === txStatus.pending.toLowerCase() &&
-      transactionFetched
+      dataReady
     ) {
       fetchTransaction();
     }
@@ -48,8 +48,8 @@ const TransactionDetails = () => {
 
   return (
     <>
-      {transactionFetched === undefined && <Loader />}
-      {transactionFetched === false && (
+      {dataReady === undefined && <Loader />}
+      {dataReady === false && (
         <PageState
           icon={faExchangeAlt}
           title="Unable to locate this transaction hash"
@@ -63,7 +63,7 @@ const TransactionDetails = () => {
         />
       )}
       <div ref={ref}>
-        {transactionFetched === true && transaction && (
+        {dataReady === true && transaction && (
           <div className="container py-spacer">
             <div className="row page-header">
               <div className="col-12">
