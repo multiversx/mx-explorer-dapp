@@ -6,7 +6,6 @@ import getIdentities from './getIdentities';
 import getIdentity from './getIdentity';
 import getNode from './getNode';
 import getNodeRounds from './getNodeRounds';
-import getNodeBlocks from './getNodeBlocks';
 import getNodes, { GetNodesType as GetNodesInterface } from './getNodes';
 import getLatestTransactions from './getLatestTransactions';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
@@ -32,7 +31,7 @@ export interface ProviderPropsType {
     nonce?: number;
     shardId?: number;
     epoch?: number;
-    proposer?: number;
+    proposer?: string;
     miniBlockHash?: string;
     sender?: string;
     receiver?: string;
@@ -86,5 +85,4 @@ export {
   getIdentities,
   getIdentity,
   getNode,
-  getNodeBlocks,
 };

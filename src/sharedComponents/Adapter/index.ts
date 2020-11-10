@@ -43,8 +43,8 @@ export default function useAdapter() {
     getBlock: ({ blockId }: { blockId: string }) =>
       f.getBlock({ provider, baseUrl, blockId, timeout }),
 
-    getBlocks: ({ size, shardId, epochId }: f.GetBlocksType) =>
-      f.getBlocks({ provider, baseUrl, size, shardId, epochId, timeout }),
+    getBlocks: ({ size, shardId, epochId, proposer }: f.GetBlocksType) =>
+      f.getBlocks({ provider, baseUrl, size, shardId, epochId, proposer, timeout }),
 
     getBlocksCount: ({ size, shardId, epochId }: f.GetBlocksType) =>
       f.getBlocksCount({ provider, baseUrl, size, shardId, epochId, timeout }),
@@ -178,14 +178,6 @@ export default function useAdapter() {
 
     getNodeRounds: (key: string) =>
       f.getNodeRounds({
-        provider,
-        baseUrl,
-        key,
-        timeout,
-      }),
-
-    getNodeBlocks: (key: string) =>
-      f.getNodeBlocks({
         provider,
         baseUrl,
         key,
