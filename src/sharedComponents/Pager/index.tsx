@@ -45,7 +45,7 @@ const Pager = ({
 
   const prevPageUrl = size === 2 ? `${pathname}?${firstUrlParams}` : `${pathname}?${prevUrlParams}`;
 
-  const startEnd = end === 1 ? 1 : `${start.toLocaleString('en')}-${last.toLocaleString('en')}`;
+  const startEnd = end <= 1 ? end : `${start.toLocaleString('en')}-${last.toLocaleString('en')}`;
 
   const lastUrlParams = new URLSearchParams({
     ...params,
