@@ -80,7 +80,7 @@ const Search = () => {
         <input
           type="text"
           className="form-control rounded-pill mx-2 my-1"
-          placeholder="Address / Tx Hash / Block Hash"
+          placeholder="Address / Tx Hash / Block Hash / Validator Key"
           name="requestType"
           data-testid="search"
           required
@@ -91,7 +91,7 @@ const Search = () => {
         <div className="input-group-append pr-2">
           <button
             type="submit"
-            className="input-group-text side-action outline-0"
+            className="input-group-text side-action outline-0 m-0"
             onClick={(e) => {
               e.preventDefault();
               onClick();
@@ -99,9 +99,9 @@ const Search = () => {
             data-testid="searchButton"
           >
             {searching ? (
-              <FontAwesomeIcon icon={faCircleNotch} spin />
+              <FontAwesomeIcon icon={faCircleNotch} spin className="mr-1" />
             ) : (
-              <FontAwesomeIcon icon={faSearch} />
+              <FontAwesomeIcon icon={faSearch} className="mr-1" />
             )}
           </button>
         </div>
