@@ -12,11 +12,11 @@ import {
   Trim,
   Loader,
 } from 'sharedComponents';
-import { TransactionType } from 'sharedComponents/TransactionsTable';
+import { TransactionRowType } from 'sharedComponents/TransactionsTable/TransactionRow';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 
-type LatestTransactionType = TransactionType & {
+type LatestTransactionType = TransactionRowType & {
   isNew: boolean;
 };
 
@@ -37,14 +37,14 @@ const LatestTransactions = () => {
         if (transactionsFetched) {
           const sortedTransactions = data;
           if (transactions.length === 0) {
-            const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
+            const newTransactions = sortedTransactions.map((transaction: TransactionRowType) => ({
               ...transaction,
               isNew: false,
             }));
             setTransactions(newTransactions);
           } else {
             const existingHashes = transactions.map((b) => b.txHash);
-            const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
+            const newTransactions = sortedTransactions.map((transaction: TransactionRowType) => ({
               ...transaction,
               isNew: !existingHashes.includes(transaction.txHash),
             }));
@@ -101,7 +101,10 @@ const LatestTransactions = () => {
                             <Trim text={transaction.txHash} />
                           </NetworkLink>
                         </div>
-                        <span title={dateFormatted(transaction.timestamp)} className="text-muted">
+                        <span
+                          title={dateFormatted(transaction.timestamp)}
+                          className="text-secondary"
+                        >
                           <TimeAgo value={transaction.timestamp} />
                         </span>
                       </div>

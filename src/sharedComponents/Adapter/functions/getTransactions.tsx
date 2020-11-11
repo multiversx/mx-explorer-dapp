@@ -31,6 +31,18 @@ export async function getTransactions({
     ...getAddressParams(addressId),
     ...(senderShard !== undefined ? { senderShard } : {}),
     ...(receiverShard !== undefined ? { receiverShard } : {}),
+    ...{
+      fields: [
+        'txHash',
+        'receiver',
+        'receiverShard',
+        'sender',
+        'senderShard',
+        'status',
+        'timestamp',
+        'value',
+      ].join(','),
+    },
   };
 
   try {
