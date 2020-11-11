@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { Loader, TransactionsTable, adapter } from 'sharedComponents';
 import denominate from 'sharedComponents/Denominate/denominate';
-import { TransactionType } from 'sharedComponents/TransactionsTable';
+import { TransactionRowType } from 'sharedComponents/TransactionsTable/TransactionRow';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import AddressDetails, { AddressDetailsType } from './AddressDetails';
@@ -39,7 +39,7 @@ const Address = () => {
 
   const { getAddressDetails, getTransactionsCount, getTransactions, getRewards } = adapter();
 
-  const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
+  const [transactions, setTransactions] = React.useState<TransactionRowType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
   const size = page !== undefined ? page : 1;

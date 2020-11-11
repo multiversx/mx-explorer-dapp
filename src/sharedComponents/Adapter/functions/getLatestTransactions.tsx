@@ -11,6 +11,18 @@ export default async function getLatestTransactions({
       url: `/transactions`,
       params: {
         size: 20,
+        ...{
+          fields: [
+            'txHash',
+            'receiver',
+            'receiverShard',
+            'sender',
+            'senderShard',
+            'status',
+            'timestamp',
+            'value',
+          ].join(','),
+        },
       },
       timeout,
     });

@@ -1,31 +1,9 @@
-import TransactionRow from './TransactionRow';
+import TransactionRow, { TransactionRowType } from './TransactionRow';
 import Pager from '../Pager';
 import * as React from 'react';
-import { ScResultType } from 'components/TransactionDetails/ScResultsList';
-
-export interface TransactionType {
-  blockHash: string;
-  data: string;
-  gasLimit: number;
-  gasPrice: number;
-  gasUsed: number;
-  txHash: string;
-  miniBlockHash: string;
-  nonce: number;
-  receiver: string;
-  receiverShard: number;
-  round: number;
-  sender: string;
-  senderShard: number;
-  signature: string;
-  status: string;
-  timestamp: number;
-  value: string;
-  scResults?: ScResultType[];
-}
 
 interface TransactionsTableType {
-  transactions: TransactionType[];
+  transactions: TransactionRowType[];
   addressId?: string;
   totalTransactions: number | '...';
   size: number;

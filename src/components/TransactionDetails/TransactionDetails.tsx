@@ -15,8 +15,28 @@ import {
   Trim,
   CopyButton,
 } from 'sharedComponents';
-import { TransactionType } from 'sharedComponents/TransactionsTable';
-import ScResultsList from './ScResultsList';
+import ScResultsList, { ScResultType } from './ScResultsList';
+
+export interface TransactionType {
+  blockHash: string;
+  data: string;
+  gasLimit: number;
+  gasPrice: number;
+  gasUsed: number;
+  txHash: string;
+  miniBlockHash: string;
+  nonce: number;
+  receiver: string;
+  receiverShard: number;
+  round: number;
+  sender: string;
+  senderShard: number;
+  signature: string;
+  status: string;
+  timestamp: number;
+  value: string;
+  scResults?: ScResultType[];
+}
 
 const getFee = (transaction: TransactionType) => {
   const bNgasPrice = new BigNumber(transaction.gasPrice);
