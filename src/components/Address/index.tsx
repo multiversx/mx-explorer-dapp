@@ -5,6 +5,7 @@ import { useGlobalState } from 'context';
 import { Loader, TransactionsTable, adapter } from 'sharedComponents';
 import denominate from 'sharedComponents/Denominate/denominate';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
+import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import AddressDetails, { AddressDetailsType } from './AddressDetails';
@@ -31,6 +32,7 @@ const Address = () => {
     initialAddressDetails
   );
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
 
   const { activeNetworkId } = useGlobalState();
   const { hash: addressId } = useParams() as any;
@@ -54,6 +56,10 @@ const Address = () => {
       const { data: addressDetails } = addressDetailsData;
       if (success && ref.current !== null) {
         setTransactions(data);
+        const pending = data.some(
+          (tx: TransactionType) => tx.status.toLowerCase() === txStatus.pending.toLowerCase()
+        );
+        setHasPendingTransaction(pending);
         setTransactionsFetched(true);
       } else if (transactions.length === 0) {
         setTransactionsFetched(false);
@@ -110,6 +116,9 @@ const Address = () => {
   React.useEffect(() => {
     if (!loading) {
       fetchTransactionsCount();
+      if (hasPendingTransaction) {
+        fetchData();
+      }
     }
   }, [firstPageTicker]);
 
