@@ -65,7 +65,7 @@ describe('Latest Blocks Links', () => {
       expect(document.title).toEqual('Block Details • Elrond Explorer');
     });
   });
-  test('Block Hash Link', async () => {
+  test('Latest Blocks Hash Link', async () => {
     const render = beforeAll({
       route: '/',
     });
@@ -74,7 +74,7 @@ describe('Latest Blocks Links', () => {
     expect(blockHashLink).toBeInTheDocument();
 
     expect(blockHashLink.textContent).toBe(
-      '7d6df53015199a0991bc03cb8c60c808...4dce5ead1a60c7eadafa4dfcf9990698'
+      'f2b1bc5b74c6d0bc7730e18a7f6a4a89...0820cba85aef4562f11b8100d618004a'
     );
     fireEvent.click(blockHashLink);
     await wait(async () => {

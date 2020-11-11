@@ -3,7 +3,7 @@ import moment from 'moment';
 import { useGlobalState, useGlobalDispatch } from 'context';
 import { refreshRate } from 'appConfig';
 
-export default function RoundManager() {
+export default function LoopManager() {
   const {
     refresh: { timestamp },
   } = useGlobalState();
@@ -13,9 +13,9 @@ export default function RoundManager() {
 
   const setRounds = () => {
     const intervalId = setInterval(() => {
-      if (!withinInterval) {
+      if (!withinInterval && !document.hidden) {
         dispatch({
-          type: 'triggerNewRound',
+          type: 'triggerTick',
         });
       }
     }, refreshRate);
