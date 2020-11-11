@@ -30,11 +30,6 @@ const TransactionsTable = ({
               </h6>
             </div>
           )}
-          {totalTransactions > 10000 && (
-            <div className="card-header-item">
-              Showing last 10,000 of {totalTransactions.toLocaleString('en')} transactions
-            </div>
-          )}
         </div>
 
         <div className="card-body p-0">
