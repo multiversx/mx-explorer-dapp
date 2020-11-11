@@ -16,9 +16,8 @@ interface TransactionRowType {
 const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
   const statusIs = (compareTo: string) =>
     transaction.status.toLowerCase() === compareTo.toLowerCase();
-
   return (
-    <tr className="animated fadeIn">
+    <tr className={`animated-row ${transaction.isNew ? 'new' : ''}`}>
       <td>
         <div className="d-flex align-items-center">
           {(statusIs(txStatus.failed) || statusIs(txStatus.fail)) && (

@@ -24,6 +24,7 @@ const Transactions = () => {
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
+  const [transactionsCount, setTransactionsCount] = React.useState();
 
   const fetchTransactions = () => {
     getTransactions({
@@ -33,9 +34,14 @@ const Transactions = () => {
     }).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
-          setTransactions(data);
+          const existingHashes = transactions.map((b) => b.txHash);
+          const newTransactions = data.map((transaction: TransactionType) => ({
+            ...transaction,
+            isNew: !existingHashes.includes(transaction.txHash),
+          }));
+          setTransactions(newTransactions);
         }
-        setDataReady(success && transactions.length === 0);
+        setDataReady(success);
       }
     });
   };
@@ -47,6 +53,7 @@ const Transactions = () => {
     }).then(({ count, success }) => {
       if (ref.current !== null && success) {
         setTotalTransactions(Math.min(count, 10000));
+        setTransactionsCount(count);
       }
     });
   };
@@ -66,7 +73,7 @@ const Transactions = () => {
     if (dataReady !== undefined) {
       fetchTransactions();
     }
-  }, [totalTransactions]);
+  }, [transactionsCount]);
 
   return (
     <>

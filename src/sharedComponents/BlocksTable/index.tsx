@@ -19,11 +19,12 @@ export interface BlockType {
   validators: string[];
   miniBlocksHashes: string[];
   notarizedBlocksHashes: string[];
+  isNew?: boolean; // UI flag
 }
 
 const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number | undefined }) => {
   return (
-    <div className="table-wrapper">
+    <div className="table-wrapper animated-list">
       <table className="table">
         <thead>
           <tr>
@@ -37,7 +38,7 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
         </thead>
         <tbody data-testid="blocksTable">
           {blocks.map((block, i) => (
-            <tr key={block.hash}>
+            <tr key={block.hash} className={`animated-row ${block.isNew ? 'new' : ''}`}>
               <td>
                 <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
                   {block.nonce}
