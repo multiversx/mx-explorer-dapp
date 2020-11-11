@@ -35,7 +35,7 @@ const Transactions = () => {
       if (ref.current !== null) {
         if (success) {
           const existingHashes = transactions.map((b) => b.txHash);
-          const newTransactions = data.map((transaction: TransactionType) => ({
+          const newTransactions = data.map((transaction: TransactionRowType) => ({
             ...transaction,
             isNew: !existingHashes.includes(transaction.txHash),
           }));
