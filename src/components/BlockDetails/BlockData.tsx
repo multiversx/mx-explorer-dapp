@@ -71,10 +71,10 @@ const BlockData = (props: BlockDataType) => {
 
           <DetailItem title="Epoch">{block.epoch}</DetailItem>
 
-          <DetailItem title="Timestamp">
+          <DetailItem title="Age">
             <FontAwesomeIcon icon={faClock} className="mr-2 text-muted" />
             <TimeAgo value={block.timestamp} />
-            &nbsp;({dateFormatted(block.timestamp)})
+            &nbsp;<span className="text-secondary">({dateFormatted(block.timestamp)})</span>
           </DetailItem>
 
           <DetailItem title="Transactions">
