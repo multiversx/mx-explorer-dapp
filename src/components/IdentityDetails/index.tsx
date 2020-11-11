@@ -61,10 +61,14 @@ const IdentityDetails = () => {
                     <div className="card-header-item p-0">
                       <div className="identity-header-item px-lg-spacer justify-content-center">
                         <img
-                          className={`mr-3 avatar rounded-circle shadow-sm ${
-                            identity.avatar ? '' : 'gray'
+                          className={`identity-avatar rounded-circle mr-2 ${
+                            !identity.avatar ? 'p-1 bg-light' : ''
                           }`}
-                          src={identity.avatar ? identity.avatar : '/validators/default-avatar.svg'}
+                          src={
+                            identity.avatar
+                              ? identity.avatar
+                              : require('../../assets/images/default-avatar.svg')
+                          }
                           alt={identity.name}
                           height="42"
                         />
