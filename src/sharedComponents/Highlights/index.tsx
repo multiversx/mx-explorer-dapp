@@ -1,14 +1,12 @@
-import React from 'react';
-import moment from 'moment';
+import * as React from 'react';
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
-import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
 import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
 import { faStopwatch } from '@fortawesome/pro-regular-svg-icons/faStopwatch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { adapter } from 'sharedComponents';
-import { refreshRate } from 'appConfig';
+import Epoch from './Epoch';
 
 export interface StateType {
   blockNumber: string;
@@ -18,11 +16,6 @@ export interface StateType {
   liveTPS: string;
   peakTPS: string;
   totalProcessedTxCount: string;
-  epochPercentage: number;
-  epochTotalTime: string;
-  epochTimeElapsed: string;
-  epochTimeRemaining: string;
-  epoch: string;
 }
 
 interface ItemType {
@@ -54,11 +47,6 @@ const initialState = {
   liveTPS: '...',
   peakTPS: '...',
   totalProcessedTxCount: '...',
-  epochPercentage: 0,
-  epoch: '...',
-  epochTotalTime: '...',
-  epochTimeElapsed: '...',
-  epochTimeRemaining: '',
 };
 
 const Hightlights = () => {
@@ -82,7 +70,6 @@ const Hightlights = () => {
   const getData = () => {
     if (ref.current !== null) {
       getHighlights().then(({ data, success }) => {
-        const check = data.roundsPerEpoch >= data.roundsPassed;
         const newState = success
           ? {
               blockNumber: data.blockCount
@@ -94,19 +81,6 @@ const Hightlights = () => {
               liveTPS: parseInt(data.liveTPS).toLocaleString('en'),
               peakTPS: parseInt(data.peakTPS).toLocaleString('en'),
               totalProcessedTxCount: parseInt(data.totalProcessedTxCount).toLocaleString('en'),
-              epoch: data.epoch.toLocaleString('en'),
-              epochPercentage: check ? (100 * data.roundsPassed) / data.roundsPerEpoch : 0,
-              epochTotalTime: check
-                ? moment.utc(refreshRate * data.roundsPerEpoch).format('HH:mm')
-                : '...',
-              epochTimeElapsed: check
-                ? moment.utc(refreshRate * data.roundsPassed).format('HH:mm')
-                : '...',
-              epochTimeRemaining: check
-                ? moment
-                    .utc(refreshRate * (data.roundsPerEpoch - data.roundsPassed))
-                    .format('HH:mm')
-                : '...',
             }
           : initialState;
 
@@ -125,15 +99,8 @@ const Hightlights = () => {
 
   React.useEffect(getData, [timestamp, activeNetworkId]);
 
-  const {
-    blockNumber,
-    epochTimeRemaining,
-    epochPercentage,
-    nrOfShards,
-    peakTPS,
-    totalProcessedTxCount,
-    epoch,
-  } = activeNetworkId in state ? state[activeNetworkId] : initialState;
+  const { blockNumber, nrOfShards, peakTPS, totalProcessedTxCount } =
+    activeNetworkId in state ? state[activeNetworkId] : initialState;
 
   return (
     <div ref={ref}>
@@ -142,32 +109,7 @@ const Hightlights = () => {
           <div className="row">
             <div className="col my-4">
               <ul className="list-unstyled d-flex flex-wrap justify-content-between m-0 p-0">
-                <li className="my-3 px-2">
-                  <div className="highlight-item d-flex align-items-center">
-                    <FontAwesomeIcon className="fa-2x" icon={faClock} />
-                    <div className="d-flex flex-column ml-3">
-                      <small className="mb-1 epoch-label">EPOCH</small>
-                      <span className="d-flex">
-                        <span className="h5 mb-0 current-epoch">{epoch}</span>
-                        {epochTimeRemaining !== '...' && (
-                          <div className="px-2">
-                            <div className="epoch-time d-flex flex-column">
-                              <div className="epoch-progress">
-                                <div className="fill" style={{ width: `${epochPercentage}%` }}>
-                                  &nbsp;
-                                </div>
-                              </div>
-                              <small data-testid="metaEpochTimeRemaining">
-                                {epochTimeRemaining} remaining
-                              </small>
-                            </div>
-                          </div>
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                </li>
-
+                <Epoch />
                 <Item icon={faCube} title="Blocks" dataTestId="metaBlocks" value={blockNumber} />
                 <Item
                   icon={faLayerGroup}
