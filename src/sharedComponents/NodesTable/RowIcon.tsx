@@ -49,7 +49,7 @@ export default class RowIcon extends React.Component<{ node: NodeType }> {
           </Overlay>
         );
 
-      case node.issues.length > 0: {
+      case node.issues && node.issues.length > 0: {
         return (
           <Overlay title={nodeIssue(node)}>
             <FontAwesomeIcon icon={faExclamationTriangle} className="w300 mr-1 text-warning" />
