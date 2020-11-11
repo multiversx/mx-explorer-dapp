@@ -5,6 +5,7 @@ import { adapter, Loader, DetailItem, Pager, PageState } from 'sharedComponents'
 import { useParams } from 'react-router-dom';
 import { NodesTable } from 'sharedComponents';
 import { useFilters } from 'helpers';
+import { useGlobalState } from 'context';
 
 const IdentityDetails = () => {
   const ref = React.useRef(null);
@@ -15,6 +16,9 @@ const IdentityDetails = () => {
   const [nodes, setNodes] = React.useState<any>();
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
   const { getQueryObject, size } = useFilters();
+  const {
+    activeNetwork: { erdLabel },
+  } = useGlobalState();
 
   const fetchData = () => {
     const queryObject = getQueryObject();
@@ -115,7 +119,7 @@ const IdentityDetails = () => {
                   <div className="card-body p-0">
                     <div className="container-fluid">
                       <DetailItem title="Stake" colWidth="4">
-                        {identity.stake.toLocaleString('en')}
+                        {identity.stake.toLocaleString('en')} {erdLabel}
                       </DetailItem>
 
                       <DetailItem title="Stake percent" colWidth="4">
