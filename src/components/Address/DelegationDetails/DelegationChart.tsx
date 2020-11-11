@@ -1,6 +1,7 @@
 import React from 'react';
 import Chart from 'chart.js';
 import { useGlobalState } from 'context';
+import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
 
 const labels = ['Elapsed', 'Remaining'];
 const colors = ['rgba(255, 255, 255, 0.9)', 'rgba(255, 255, 255, 0.5)'];
@@ -121,10 +122,11 @@ const DelegationChart = ({
   return (
     <div
       ref={ref}
-      className="rewards text-secondary text-center d-flex flex-column justify-content-around h-100"
+      className="chart-container text-secondary text-center d-flex flex-column justify-content-around h-100"
     >
-      <div className="wrapper">
+      <div className="wrapper position-relative overflow-hidden">
         <canvas ref={chartRef} height={100} />
+        <ElrondSymbol className="chart-symbol" />
       </div>
     </div>
   );
