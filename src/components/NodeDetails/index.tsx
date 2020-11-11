@@ -53,11 +53,14 @@ const NodeDetails = () => {
               data: blocksData.blocks,
               success: blocksData.success,
             });
+
             setRounds({
-              data: roundsData.data.map((round: any) => ({
-                key: round.round,
-                value: round.blockWasProposed,
-              })),
+              data: roundsData.success
+                ? roundsData.data.map((round: any) => ({
+                    key: round.round,
+                    value: round.blockWasProposed,
+                  }))
+                : [],
               success: roundsData.success,
             });
             setDataReady(nodeData.success);
