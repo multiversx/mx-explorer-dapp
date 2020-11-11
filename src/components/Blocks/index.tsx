@@ -3,12 +3,12 @@ import { useNetworkRoute, useURLSearchParams } from 'helpers';
 import * as React from 'react';
 import { Redirect } from 'react-router-dom';
 import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'sharedComponents';
-import { BlockType } from 'sharedComponents/BlocksTable';
+import { BlockRowType } from 'sharedComponents/BlocksTable';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 
 interface StateType {
-  blocks: BlockType[];
+  blocks: BlockRowType[];
   startBlockNr: number;
   endBlockNr: number;
 }
@@ -83,15 +83,6 @@ const Blocks: React.FC = () => {
                 <div className="card">
                   {state && state.blocks.length > 0 ? (
                     <>
-                      <div className="card-header">
-                        <div className="card-header-item">
-                          Showing last 10,000
-                          {totalBlocks !== '...' && (
-                            <> of {totalBlocks.toLocaleString('en')}</>
-                          )}{' '}
-                          blocks
-                        </div>
-                      </div>
                       <div className="card-body border-0 p-0">
                         <BlocksTable blocks={state.blocks} shardId={shardId} />
                       </div>

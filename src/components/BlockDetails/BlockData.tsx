@@ -6,9 +6,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, TimeAgo, Trim, DetailItem, CopyButton } from 'sharedComponents';
-import { BlockType } from 'sharedComponents/BlocksTable';
 import { validatorsRoutes } from 'routes';
 import { metaChainShardId } from 'appConfig';
+
+export interface BlockType {
+  hash: string;
+  nonce: number;
+  epoch: number;
+  prevHash: string;
+  proposer: string;
+  pubKeyBitmap: string;
+  round: number;
+  shardId: number;
+  size: number;
+  sizeTxs: number;
+  stateRootHash: string;
+  timestamp: number;
+  txCount: number;
+  validators: string[];
+  miniBlocksHashes: string[];
+  notarizedBlocksHashes: string[];
+}
 
 export interface BlockDataType {
   block: BlockType;
