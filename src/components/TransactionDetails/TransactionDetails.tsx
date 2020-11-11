@@ -53,12 +53,13 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
             <TransactionStatus status={transaction.status} />
           </DetailItem>
 
-          <DetailItem title="Timestamp">
+          <DetailItem title="Age">
             {transaction.timestamp !== undefined ? (
               <>
                 <FontAwesomeIcon icon={faClock} className="mr-2 text-muted" />
                 <TimeAgo value={transaction.timestamp} />
-                &nbsp;({dateFormatted(transaction.timestamp)})
+                &nbsp;
+                <span className="text-secondary">({dateFormatted(transaction.timestamp)})</span>
               </>
             ) : (
               <span className="text-muted">N/A</span>
