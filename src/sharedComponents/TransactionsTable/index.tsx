@@ -1,6 +1,6 @@
-import TransactionRow from './TransactionRow';
-import Pager from '../Pager';
 import * as React from 'react';
+import TransactionRow, { TransactionRowType } from './TransactionRow';
+import Pager from '../Pager';
 import { ScResultType } from 'components/TransactionDetails/ScResultsList';
 
 export interface TransactionType {
@@ -26,7 +26,7 @@ export interface TransactionType {
 }
 
 interface TransactionsTableType {
-  transactions: TransactionType[];
+  transactions: TransactionRowType[];
   addressId?: string;
   totalTransactions: number | '...';
   size: number;

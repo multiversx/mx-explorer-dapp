@@ -6,9 +6,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, TimeAgo, Trim, DetailItem, CopyButton } from 'sharedComponents';
-import { BlockType } from 'sharedComponents/BlocksTable';
 import { validatorsRoutes } from 'routes';
 import { metaChainShardId } from 'appConfig';
+
+export interface BlockType {
+  hash: string;
+  nonce: number;
+  epoch: number;
+  prevHash: string;
+  proposer: string;
+  pubKeyBitmap: string;
+  round: number;
+  shardId: number;
+  size: number;
+  sizeTxs: number;
+  stateRootHash: string;
+  timestamp: number;
+  txCount: number;
+  validators: string[];
+  miniBlocksHashes: string[];
+  notarizedBlocksHashes: string[];
+}
 
 export interface BlockDataType {
   block: BlockType;
@@ -136,7 +154,7 @@ const BlockData = (props: BlockDataType) => {
 
           {block.shardId === metaChainShardId && (
             <DetailItem title="Notarized Blocks" className="hash-group-row">
-              {block.notarizedBlocksHashes === null ||
+              {block.notarizedBlocksHashes === undefined ||
               (Array.isArray(block.notarizedBlocksHashes) &&
                 block.notarizedBlocksHashes.length === 0) ? (
                 <span className="text-muted">N/A</span>
@@ -158,7 +176,7 @@ const BlockData = (props: BlockDataType) => {
           )}
 
           <DetailItem title="Miniblocks" className="hash-group-row">
-            {block.miniBlocksHashes === null ||
+            {block.miniBlocksHashes === undefined ||
             (Array.isArray(block.miniBlocksHashes) && block.miniBlocksHashes.length === 0) ? (
               <span className="text-muted">N/A</span>
             ) : (

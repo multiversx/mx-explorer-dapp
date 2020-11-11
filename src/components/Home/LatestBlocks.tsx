@@ -4,11 +4,11 @@ import * as React from 'react';
 import { useGlobalState } from 'context';
 import { dateFormatted } from 'helpers';
 import { ShardSpan, NetworkLink, TimeAgo, adapter, Trim, Loader } from 'sharedComponents';
-import { BlockType } from 'sharedComponents/BlocksTable';
+import { BlockRowType } from 'sharedComponents/BlocksTable';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 
-type LatestBlockType = BlockType & {
+type LatestBlockType = BlockRowType & {
   isNew: boolean;
 };
 
@@ -29,14 +29,14 @@ const LatestBlocks = () => {
         if (blocksFetched) {
           const sortedBlocks = data;
           if (blocks.length === 0) {
-            const newBlocks = sortedBlocks.map((block: BlockType) => ({
+            const newBlocks = sortedBlocks.map((block: BlockRowType) => ({
               ...block,
               isNew: false,
             }));
             setBlocks(newBlocks);
           } else {
             const existingHashes = blocks.map((b) => b.hash);
-            const newBlocks = sortedBlocks.map((block: BlockType) => ({
+            const newBlocks = sortedBlocks.map((block: BlockRowType) => ({
               ...block,
               isNew: !existingHashes.includes(block.hash),
             }));
@@ -87,7 +87,7 @@ const LatestBlocks = () => {
                             &nbsp;in&nbsp;
                             <ShardSpan shardId={block.shardId} />
                           </span>
-                          <span title={dateFormatted(block.timestamp)} className="text-muted">
+                          <span title={dateFormatted(block.timestamp)} className="text-secondary">
                             <TimeAgo value={block.timestamp} />
                           </span>
                         </div>

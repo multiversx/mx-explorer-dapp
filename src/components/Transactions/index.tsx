@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
 import { Loader, ShardSpan, TransactionsTable, adapter } from 'sharedComponents';
-import { TransactionType } from 'sharedComponents/TransactionsTable';
+import { TransactionRowType } from 'sharedComponents/TransactionsTable/TransactionRow';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import { useSize, useURLSearchParams } from 'helpers';
@@ -21,7 +21,7 @@ const Transactions = () => {
 
   const { getTransactionsCount, getTransactions } = adapter();
 
-  const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
+  const [transactions, setTransactions] = React.useState<TransactionRowType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
   const [transactionsCount, setTransactionsCount] = React.useState();
