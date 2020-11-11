@@ -2,6 +2,7 @@ import * as React from 'react';
 import { DetailItem, NetworkLink, Trim } from 'sharedComponents';
 import { IdentityType } from 'context/state';
 import { useGlobalState } from 'context';
+import IdentityIcon from 'components/IdentityDetails/IdentityIcon';
 
 const Identity = ({ identity }: { identity: IdentityType }) => {
   const {
@@ -13,18 +14,7 @@ const Identity = ({ identity }: { identity: IdentityType }) => {
       <div className="card-header">
         <div className="card-header-item p-0">
           <div className="identity-header-item px-lg-3 justify-content-center">
-            <img
-              className={`identity-avatar rounded-circle mr-2 ${
-                !identity.avatar ? 'p-1 bg-light' : ''
-              }`}
-              src={
-                identity.avatar
-                  ? identity.avatar
-                  : require('../../assets/images/default-avatar.svg')
-              }
-              alt={identity.name}
-              height="42"
-            />
+            <IdentityIcon identity={identity} />
 
             {identity.identity ? (
               <NetworkLink to={`/validators/${identity.identity}`}>

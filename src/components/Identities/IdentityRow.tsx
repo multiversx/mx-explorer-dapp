@@ -5,6 +5,7 @@ import carretDown from 'assets/images/carret-down.svg';
 import { Loader, NetworkLink, Trim, adapter, PageState, NodesTable } from 'sharedComponents';
 import PercentegeBar from './PercentegeBar';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
+import IdentityIcon from 'components/IdentityDetails/IdentityIcon';
 
 export interface IdentityRowType {
   identity: IdentityType;
@@ -53,18 +54,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
             <div className="mr-3">
               <NetworkLink to={link}>
                 {}
-                <img
-                  className={`identity-avatar rounded-circle ${
-                    !identity.avatar ? 'p-1 bg-light' : ''
-                  }`}
-                  src={
-                    identity.avatar
-                      ? identity.avatar
-                      : require('../../assets/images/default-avatar.svg')
-                  }
-                  alt={identity.name}
-                  height="42"
-                />
+                <IdentityIcon identity={identity} />
               </NetworkLink>
             </div>
             {identity.name && identity.name.length > 70 ? (

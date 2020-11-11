@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { NodesTable } from 'sharedComponents';
 import { useFilters } from 'helpers';
 import { useGlobalState } from 'context';
+import IdentityIcon from './IdentityIcon';
 
 const IdentityDetails = () => {
   const ref = React.useRef(null);
@@ -64,19 +65,7 @@ const IdentityDetails = () => {
                   <div className="card-header">
                     <div className="card-header-item p-0">
                       <div className="identity-header-item px-lg-spacer justify-content-center">
-                        <img
-                          className={`identity-avatar rounded-circle mr-2 ${
-                            !identity.avatar ? 'p-1 bg-light' : ''
-                          }`}
-                          src={
-                            identity.avatar
-                              ? identity.avatar
-                              : require('../../assets/images/default-avatar.svg')
-                          }
-                          alt={identity.name}
-                          height="42"
-                        />
-
+                        <IdentityIcon identity={identity} />
                         {identity.name ? identity.name : 'N/A'}
                       </div>
                     </div>
