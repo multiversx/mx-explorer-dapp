@@ -29,7 +29,7 @@ describe('Network Router', () => {
       optionalConfig,
     });
     const networkSwitch = render.getAllByTestId('networkSwitch');
-    expect(networkSwitch[0].textContent).toBe('Zero to One ');
+    expect(networkSwitch[0].textContent).toBe('Zero to One');
     fireEvent.click(networkSwitch[0]);
     const digitalOcean = render.getByText('DigitalOcean TOR Testnet');
     fireEvent.click(digitalOcean);
