@@ -89,10 +89,9 @@
 
 .header-navbar {
   .nav-link,
+  .nav-link:hover,
   .nav-link.active {
-    @include media-breakpoint-down(md) {
-      border-bottom: 1px solid transparent !important;
-    }
+    border-bottom: 1px solid transparent !important;
   }
 
   .dropdown-toggle {
