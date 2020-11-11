@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { Loader, TransactionsTable, adapter } from 'sharedComponents';
 import denominate from 'sharedComponents/Denominate/denominate';
-import { TransactionRowType } from 'sharedComponents/TransactionsTable/TransactionRow';
+import { TransactionType } from 'sharedComponents/TransactionsTable';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
@@ -39,7 +39,7 @@ const Address = () => {
 
   const { getAddressDetails, getTransactionsCount, getTransactions, getRewards } = adapter();
 
-  const [transactions, setTransactions] = React.useState<TransactionRowType[]>([]);
+  const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
 
@@ -55,9 +55,14 @@ const Address = () => {
       const { data, success } = transactionsData;
       const { data: addressDetails } = addressDetailsData;
       if (success && ref.current !== null) {
-        setTransactions(data);
+        const existingHashes = transactions.map((b) => b.txHash);
+        const newTransactions = data.map((transaction: TransactionType) => ({
+          ...transaction,
+          isNew: !existingHashes.includes(transaction.txHash),
+        }));
+        setTransactions(newTransactions);
         const pending = data.some(
-          (tx: TransactionRowType) => tx.status.toLowerCase() === txStatus.pending.toLowerCase()
+          (tx: TransactionType) => tx.status.toLowerCase() === txStatus.pending.toLowerCase()
         );
         setHasPendingTransaction(pending);
         setTransactionsFetched(true);

@@ -12,7 +12,7 @@ import {
   Trim,
   CopyButton,
 } from 'sharedComponents';
-import { TransactionRowType } from 'sharedComponents/TransactionsTable/TransactionRow';
+import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import { initialState } from 'sharedComponents/Adapter/functions/getMiniBlocks';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
@@ -46,7 +46,7 @@ const MiniBlockDetails: React.FC = () => {
 
   const { miniBlock } = state;
 
-  const [transactions, setTransactions] = React.useState<TransactionRowType[]>([]);
+  const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
 
