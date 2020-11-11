@@ -75,7 +75,7 @@ const Transactions = () => {
 
       <div ref={ref}>
         {dataReady === true && (
-          <div className="container py-spacer">
+          <div className="container pt-spacer">
             <div className="row page-header">
               <div className="col-12">
                 <h3 className="page-title mb-4">

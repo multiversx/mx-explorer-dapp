@@ -9,10 +9,10 @@ const Home = () => {
       <Hero />
       <div className="container">
         <div className="row">
-          <div className="col-lg-6 my-spacer">
+          <div className="col-lg-6 mt-spacer">
             <LatestBlocks />
           </div>
-          <div className="col-lg-6 my-spacer">
+          <div className="col-lg-6 mt-spacer">
             <LatestTransactions />
           </div>
         </div>

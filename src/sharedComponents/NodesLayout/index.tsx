@@ -34,7 +34,7 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
     <>
       {dataReady === undefined && <Loader />}
       {dataReady !== undefined && (
-        <div className="container py-spacer">
+        <div className="container pt-spacer">
           <div className="row page-header ">
             <div className="col-12">
               <h3 className="page-title mb-4">
