@@ -53,11 +53,7 @@ export default function Navbar() {
             </div>
 
             <div className="d-flex flex-fill">
-              <form className="main-navbar__search w-100 d-flex">
-                <div className="input-group input-group-seamless">
-                  <Search />
-                </div>
-              </form>
+              <Search />
             </div>
 
             <ul className="flex-row navbar-nav">
