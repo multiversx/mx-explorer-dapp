@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Redirect } from 'react-router-dom';
 import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'sharedComponents';
 import { BlockRowType } from 'sharedComponents/BlocksTable';
+import { BlockType } from 'components/BlockDetails/BlockData';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 
@@ -38,7 +39,7 @@ const Blocks = () => {
     getBlocks({ size, shardId, epochId: undefined }).then(
       ({ success, blocks, endBlockNr, startBlockNr }) => {
         if (ref.current !== null) {
-          const existingHashes = state ? state.blocks.map((block: BlockType) => block.hash) : [];
+          const existingHashes = state ? state.blocks.map((block: BlockRowType) => block.hash) : [];
           const newBlocks = blocks.map((block: BlockType) => ({
             ...block,
             isNew: !existingHashes.includes(block.hash),

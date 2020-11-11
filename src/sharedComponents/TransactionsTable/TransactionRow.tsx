@@ -16,6 +16,7 @@ export interface TransactionRowType {
   status: string;
   timestamp: number;
   value: string;
+  isNew?: boolean; // UI flag
 }
 
 interface TransactionRowInnerType {
