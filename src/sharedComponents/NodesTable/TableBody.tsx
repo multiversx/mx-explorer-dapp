@@ -6,7 +6,7 @@ import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import RowIcon from './RowIcon';
 
 const getRatings = (nodes: NodeType[]) => {
-  return nodes.sort((a: any, b: any) => b.rating - a.rating).map((v: any) => v);
+  return nodes.sort((a: any, b: any) => b.tempRating - a.tempRating).map((v: any) => v);
 };
 
 const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
@@ -71,8 +71,8 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
             </div>
           </td>
           <td className="text-right">
-            {!isNaN(node.rating) ? (
-              Math.floor(node.rating)
+            {!isNaN(node.tempRating) ? (
+              Math.floor(node.tempRating)
             ) : (
               <span className="text-muted">N/A</span>
             )}
