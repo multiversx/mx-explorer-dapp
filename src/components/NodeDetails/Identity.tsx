@@ -1,8 +1,13 @@
 import * as React from 'react';
 import { DetailItem, NetworkLink, Trim } from 'sharedComponents';
 import { IdentityType } from 'context/state';
+import { useGlobalState } from 'context';
 
 const Identity = ({ identity }: { identity: IdentityType }) => {
+  const {
+    activeNetwork: { erdLabel },
+  } = useGlobalState();
+
   return (
     <div className="card" data-testid="brandContainer">
       <div className="card-header">
@@ -34,7 +39,7 @@ const Identity = ({ identity }: { identity: IdentityType }) => {
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Stake" colWidth="6">
-            {identity.stake.toLocaleString('en')}
+            {identity.stake.toLocaleString('en')} {erdLabel}
           </DetailItem>
           <DetailItem title="Stake percent" colWidth="6">
             {Math.round(identity.stakePercent) > 0 ? Math.round(identity.stakePercent) : '< 1'}%
