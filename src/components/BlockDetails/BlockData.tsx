@@ -119,7 +119,7 @@ const BlockData = (props: BlockDataType) => {
             <div className="hash-group">
               {block.validators.map((item, i) => (
                 <NetworkLink
-                  className="trim-wrapper hash-item"
+                  className="trim-wrapper hash-item mb-1"
                   key={`${item}/${i}`}
                   to={`${validatorsRoutes.nodes}/${item}`}
                 >
