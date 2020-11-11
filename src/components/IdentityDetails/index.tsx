@@ -59,7 +59,7 @@ const IdentityDetails = () => {
                 <div className="card">
                   <div className="card-header">
                     <div className="card-header-item p-0">
-                      <div className="identity-header-item px-lg-spacer">
+                      <div className="identity-header-item px-lg-spacer justify-content-center">
                         <img
                           className={`mr-3 avatar rounded-circle shadow-sm ${
                             identity.avatar ? '' : 'gray'
@@ -85,7 +85,7 @@ const IdentityDetails = () => {
 
                       <DetailItem title="Twitter" colWidth="3">
                         {identity.twitter ? (
-                          <a target={`_blank`} href={identity.twitter}>
+                          <a target={`_blank`} rel={`noreferrer nofollow`} href={identity.twitter}>
                             {identity.twitter.split('/').pop()}
                           </a>
                         ) : (
@@ -95,7 +95,7 @@ const IdentityDetails = () => {
 
                       <DetailItem title="Web" colWidth="3">
                         {identity.website ? (
-                          <a target={`_blank`} href={identity.website}>
+                          <a target={`_blank`} rel={`noreferrer nofollow`} href={identity.website}>
                             {identity.website}
                           </a>
                         ) : (
