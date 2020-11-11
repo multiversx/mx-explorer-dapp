@@ -5,7 +5,7 @@ import { ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 export interface BlockType {
   hash: string;
   nonce: number;
-  shardId: number;
+  shard: number;
   size: number;
   sizeTxs: number;
   timestamp: number;
@@ -22,7 +22,7 @@ export interface BlockType {
   isNew?: boolean; // UI flag
 }
 
-const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number | undefined }) => {
+const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | undefined }) => {
   return (
     <div className="table-wrapper animated-list">
       <table className="table">
@@ -51,14 +51,14 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
               </td>
               <td>{block.txCount}</td>
               <td>
-                {shardId !== undefined ? (
-                  <ShardSpan shardId={block.shardId} />
+                {shard !== undefined ? (
+                  <ShardSpan shard={block.shard} />
                 ) : (
                   <NetworkLink
-                    to={urlBuilder.shard(block.shardId)}
+                    to={urlBuilder.shard(block.shard)}
                     data-testid={`blockShardLink${i}`}
                   >
-                    <ShardSpan shardId={block.shardId} />
+                    <ShardSpan shard={block.shard} />
                   </NetworkLink>
                 )}
               </td>

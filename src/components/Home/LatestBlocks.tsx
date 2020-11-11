@@ -81,7 +81,7 @@ const LatestBlocks = () => {
                               {block.nonce}
                             </NetworkLink>
                             &nbsp;in&nbsp;
-                            <ShardSpan shardId={block.shardId} />
+                            <ShardSpan shard={block.shard} />
                           </span>
                           <span title={dateFormatted(block.timestamp)} className="text-secondary">
                             <TimeAgo value={block.timestamp} />

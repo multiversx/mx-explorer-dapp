@@ -42,7 +42,7 @@ const NodeDetails = () => {
           getIdentity(nodeData.data.identity),
           getRounds({
             validator: publicKey,
-            shardId: nodeData.data.shardId,
+            shard: nodeData.data.shard,
           }),
           getBlocks({ proposer: publicKey }),
         ]).then(([identityData, roundsData, blocksData]) => {
@@ -153,7 +153,7 @@ const NodeDetails = () => {
                                 </div>
                               </div>
                               <div className="card-body p-0">
-                                <BlocksTable blocks={blocks.data} shardId={undefined} />
+                                <BlocksTable blocks={blocks.data} shard={undefined} />
                               </div>
                             </>
                           )}

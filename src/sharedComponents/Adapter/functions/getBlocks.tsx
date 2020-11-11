@@ -1,9 +1,9 @@
 import { AdapterFunctionType } from './index';
 
-const getShardOrEpochParam = (shardId: number | undefined, epoch: number | undefined) => {
+const getShardOrEpochParam = (shard: number | undefined, epoch: number | undefined) => {
   switch (true) {
-    case shardId !== undefined:
-      return { shardId };
+    case shard !== undefined:
+      return { shard };
     case epoch !== undefined:
       return { epoch };
     default:
@@ -13,7 +13,7 @@ const getShardOrEpochParam = (shardId: number | undefined, epoch: number | undef
 
 export interface GetBlocksParamsType {
   size?: number;
-  shardId?: number;
+  shard?: number;
   epochId?: number;
   proposer?: string;
 }
@@ -22,7 +22,7 @@ export async function getBlocks({
   provider,
   baseUrl,
   size = 1,
-  shardId,
+  shard,
   timeout,
   epochId,
   proposer,
@@ -32,7 +32,7 @@ export async function getBlocks({
       from: (size - 1) * 25,
       size: 25,
       ...(proposer ? { proposer } : {}),
-      ...getShardOrEpochParam(shardId, epochId),
+      ...getShardOrEpochParam(shard, epochId),
       fields: ['hash', 'nonce', 'shardId', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
     };
 
@@ -74,13 +74,13 @@ export async function getBlocks({
 export async function getBlocksCount({
   provider,
   baseUrl,
-  shardId,
+  shard,
   timeout,
   epochId,
 }: AdapterFunctionType & GetBlocksParamsType) {
   try {
     const params: AdapterFunctionType['params'] = {
-      ...getShardOrEpochParam(shardId, epochId),
+      ...getShardOrEpochParam(shard, epochId),
     };
 
     const { data } = await provider({

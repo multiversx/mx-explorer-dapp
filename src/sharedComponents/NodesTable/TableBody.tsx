@@ -37,7 +37,7 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
           </td>
           <td>
             <NetworkLink to={urlBuilder.shard(node.shardId)} data-testid={`shardLink${index}`}>
-              <ShardSpan shardId={node.shardId} />
+              <ShardSpan shard={node.shardId} />
             </NetworkLink>
           </td>
 

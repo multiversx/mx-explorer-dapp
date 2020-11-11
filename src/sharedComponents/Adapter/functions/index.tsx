@@ -30,7 +30,7 @@ export interface ProviderPropsType {
   baseUrl: string;
   params?: {
     nonce?: number;
-    shardId?: number;
+    shard?: number;
     epoch?: number;
     proposer?: string;
     miniBlockHash?: string;

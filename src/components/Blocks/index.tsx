@@ -14,16 +14,16 @@ interface StateType {
 }
 
 const Blocks = () => {
-  const { page, shard: shardId } = useURLSearchParams();
+  const { page, shard } = useURLSearchParams();
   const { size, firstPageTicker } = useSize();
 
   const networkRoute = useNetworkRoute();
 
   React.useEffect(() => {
-    if (shardId !== undefined) {
+    if (shard !== undefined) {
       document.title = document.title.replace('Blocks', 'Shard Details');
     }
-  }, [shardId]);
+  }, [shard]);
 
   const ref = React.useRef(null);
   const [state, setState] = React.useState<StateType>();
@@ -35,7 +35,7 @@ const Blocks = () => {
   const { getBlocks, getBlocksCount } = adapter();
 
   React.useEffect(() => {
-    getBlocks({ size, shardId, epochId: undefined }).then(
+    getBlocks({ size, shard, epochId: undefined }).then(
       ({ success, blocks, endBlockNr, startBlockNr }) => {
         if (ref.current !== null) {
           const existingHashes = state ? state.blocks.map((block: BlockType) => block.hash) : [];
@@ -48,16 +48,16 @@ const Blocks = () => {
         }
       }
     );
-    getBlocksCount({ size, shardId }).then(({ count, success }) => {
+    getBlocksCount({ size, shard }).then(({ count, success }) => {
       if (success) {
         if (ref.current !== null) {
           setTotalBlocks(count);
         }
       }
     });
-  }, [activeNetworkId, size, shardId, firstPageTicker]);
+  }, [activeNetworkId, size, shard, firstPageTicker]);
 
-  return shardId && shardId < 0 ? (
+  return shard && shard < 0 ? (
     <Redirect to={networkRoute(`/not-found`)} />
   ) : (
     <>
@@ -71,7 +71,7 @@ const Blocks = () => {
               <div className="col-12">
                 <h3 className="page-title mb-4">
                   <span data-testid="title">Blocks</span>&nbsp;
-                  {shardId !== undefined && shardId >= 0 && <ShardSpan shardId={shardId} />}
+                  {shard !== undefined && shard >= 0 && <ShardSpan shard={shard} />}
                 </h3>
               </div>
             </div>
@@ -81,7 +81,7 @@ const Blocks = () => {
                   {state && state.blocks.length > 0 ? (
                     <>
                       <div className="card-body border-0 p-0">
-                        <BlocksTable blocks={state.blocks} shardId={shardId} />
+                        <BlocksTable blocks={state.blocks} shard={shard} />
                       </div>
 
                       <div className="card-footer">
