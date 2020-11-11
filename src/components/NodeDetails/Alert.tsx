@@ -24,7 +24,7 @@ const Alert = ({ node }: { node: NodeType }) => {
           Jailed
         </Container>
       );
-    case node.issues.length > 0:
+    case node.issues && node.issues.length > 0:
       return (
         <Container>
           <RowIcon node={node} />
