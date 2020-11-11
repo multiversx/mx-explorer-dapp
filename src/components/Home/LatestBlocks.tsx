@@ -4,13 +4,9 @@ import * as React from 'react';
 import { useGlobalState } from 'context';
 import { dateFormatted } from 'helpers';
 import { ShardSpan, NetworkLink, TimeAgo, adapter, Trim, Loader } from 'sharedComponents';
-import { BlockRowType } from 'sharedComponents/BlocksTable';
+import { BlockType } from 'sharedComponents/BlocksTable';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
-
-type LatestBlockType = BlockRowType & {
-  isNew: boolean;
-};
 
 const LatestBlocks = () => {
   const ref = React.useRef(null);
@@ -18,7 +14,7 @@ const LatestBlocks = () => {
     activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
-  const [blocks, setBlocks] = React.useState<LatestBlockType[]>([]);
+  const [blocks, setBlocks] = React.useState<BlockType[]>([]);
   const [blocksFetched, setBlocksFetched] = React.useState<boolean | undefined>();
 
   const { getLatestBlocks } = adapter();
@@ -29,14 +25,14 @@ const LatestBlocks = () => {
         if (blocksFetched) {
           const sortedBlocks = data;
           if (blocks.length === 0) {
-            const newBlocks = sortedBlocks.map((block: BlockRowType) => ({
+            const newBlocks = sortedBlocks.map((block: BlockType) => ({
               ...block,
               isNew: false,
             }));
             setBlocks(newBlocks);
           } else {
             const existingHashes = blocks.map((b) => b.hash);
-            const newBlocks = sortedBlocks.map((block: BlockRowType) => ({
+            const newBlocks = sortedBlocks.map((block: BlockType) => ({
               ...block,
               isNew: !existingHashes.includes(block.hash),
             }));
