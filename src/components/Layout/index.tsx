@@ -3,7 +3,7 @@ import Navbar from './Navbar/index';
 import Footer from './Footer/index';
 import NetworkRouter from './NetworkRouter';
 import { useGlobalState } from 'context';
-import RoundManager from './RoundManager';
+import LoopManager from './LoopManager';
 import { Highlights } from 'sharedComponents';
 import Unavailable from './Unavailable';
 
@@ -44,7 +44,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div className="flex-fill vh-100">
         <main className="main-content d-flex flex-column flex-grow-1">
           <NetworkRouter />
-          <RoundManager />
+          <LoopManager />
           <Navbar />
           <div className="main-content-container container-fluid p-0 d-flex flex-column">
             {offline ? (

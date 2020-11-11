@@ -36,11 +36,11 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
   return (
     <span className={`trim ${overflow ? 'overflow' : ''}`} data-testid={dataTestId}>
       <span className="left" ref={wrapperRef}>
-        <span ref={childRef}>{text.substring(0, Math.floor(text.length / 2))}</span>
+        <span ref={childRef}>{String(text).substring(0, Math.floor(text.length / 2))}</span>
       </span>
       <span className="ellipsis">...</span>
       <span className="right">
-        <span>{text.substring(Math.ceil(text.length / 2))}</span>
+        <span>{String(text).substring(Math.ceil(text.length / 2))}</span>
       </span>
     </span>
   );
