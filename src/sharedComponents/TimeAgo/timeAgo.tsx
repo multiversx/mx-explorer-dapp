@@ -22,7 +22,10 @@ export function dhms(ms: number) {
   if (days > 1) daysString = days + ' days';
 
   if (days >= 1) return daysString + ' ' + hrsString + diff;
-  if (hrs >= 1) return hrsString + ' ' + minsString + diff;
+  if (hrs >= 1) {
+    const minutesString = mins === 0 ? '' : ' ' + minsString + diff;
+    return hrsString + minutesString;
+  }
   if (mins >= 1) {
     const secString = secs === 0 ? '' : ' ' + secsString + diff;
     return minsString + secString;

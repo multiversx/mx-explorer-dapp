@@ -9,4 +9,11 @@ describe('TimeAgo tests', () => {
 
     expect(dhms(diffInMs)).toBe('5 mins');
   });
+  test('Display only hours when minutes are zero', async () => {
+    const txTime = moment();
+    const time = moment().add(5, 'hours');
+    const diffInMs = time.diff(txTime);
+
+    expect(dhms(diffInMs)).toBe('5 hrs');
+  });
 });
