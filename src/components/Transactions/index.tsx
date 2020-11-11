@@ -4,17 +4,14 @@ import { Loader, ShardSpan, TransactionsTable, adapter } from 'sharedComponents'
 import { TransactionRowType } from 'sharedComponents/TransactionsTable/TransactionRow';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
-import { useURLSearchParams } from 'helpers';
+import { useSize, useURLSearchParams } from 'helpers';
 
 const Transactions = () => {
   const ref = React.useRef(null);
+  const { activeNetworkId } = useGlobalState();
 
-  const {
-    activeNetworkId,
-    refresh: { timestamp },
-  } = useGlobalState();
-
-  const { page, senderShard, receiverShard } = useURLSearchParams();
+  const { senderShard, receiverShard } = useURLSearchParams();
+  const { size, firstPageTicker } = useSize();
 
   React.useEffect(() => {
     if (senderShard !== undefined || receiverShard !== undefined) {
@@ -25,48 +22,59 @@ const Transactions = () => {
   const { getTransactionsCount, getTransactions } = adapter();
 
   const [transactions, setTransactions] = React.useState<TransactionRowType[]>([]);
-  const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
-  const size = page !== undefined ? page : 1;
-
-  const refreshFirstPage = size === 1 ? timestamp : 0;
 
   const fetchTransactions = () => {
-    if (ref.current !== null) {
-      getTransactions({
-        size,
-        senderShard,
-        receiverShard,
-      }).then(({ data, success }) => {
-        if (ref.current !== null) {
-          if (success) {
-            setTransactions(data);
-            setTransactionsFetched(true);
-          } else if (transactions.length === 0) {
-            setTransactionsFetched(false);
-          }
+    getTransactions({
+      size,
+      senderShard,
+      receiverShard,
+    }).then(({ data, success }) => {
+      if (ref.current !== null) {
+        if (success) {
+          setTransactions(data);
         }
-      });
-      getTransactionsCount({
-        senderShard,
-        receiverShard,
-      }).then(({ count, success }) => {
-        if (ref.current !== null && success) {
-          setTotalTransactions(Math.min(count, 10000));
-        }
-      });
-    }
+        setDataReady(success && transactions.length === 0);
+      }
+    });
   };
 
-  React.useEffect(fetchTransactions, [activeNetworkId, size, refreshFirstPage]); // run the operation only once since the parameter does not change
+  const fetchTransactionsCount = () => {
+    getTransactionsCount({
+      senderShard,
+      receiverShard,
+    }).then(({ count, success }) => {
+      if (ref.current !== null && success) {
+        setTotalTransactions(Math.min(count, 10000));
+      }
+    });
+  };
+
+  React.useEffect(() => {
+    fetchTransactions();
+    fetchTransactionsCount();
+  }, [activeNetworkId, size]);
+
+  React.useEffect(() => {
+    if (dataReady !== undefined) {
+      fetchTransactionsCount();
+    }
+  }, [firstPageTicker]);
+
+  React.useEffect(() => {
+    if (dataReady !== undefined) {
+      fetchTransactions();
+    }
+  }, [totalTransactions]);
 
   return (
     <>
-      {transactionsFetched === undefined && <Loader />}
-      {transactionsFetched === false && <FailedTransactions />}
+      {dataReady === undefined && <Loader />}
+      {dataReady === false && <FailedTransactions />}
 
       <div ref={ref}>
-        {transactionsFetched === true && (
+        {dataReady === true && (
           <div className="container py-spacer">
             <div className="row page-header">
               <div className="col-12">

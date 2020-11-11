@@ -5,16 +5,17 @@ import { useGlobalState } from 'context';
 import { Loader, TransactionsTable, adapter } from 'sharedComponents';
 import denominate from 'sharedComponents/Denominate/denominate';
 import { TransactionRowType } from 'sharedComponents/TransactionsTable/TransactionRow';
+import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import AddressDetails, { AddressDetailsType } from './AddressDetails';
 import FailedAddress from './FailedAddress';
 import DelegationDetails from './DelegationDetails';
-import { addressIsBech32, useURLSearchParams } from 'helpers';
+import { addressIsBech32, useSize } from 'helpers';
 import { denomination, decimals } from 'appConfig';
 
 const initialAddressDetails: AddressDetailsType = {
-  addressId: '',
+  address: '',
   code: '',
   balance: '...',
   nonce: 0,
@@ -25,26 +26,22 @@ const initialAddressDetails: AddressDetailsType = {
 
 const Address = () => {
   const ref = React.useRef(null);
+  const { size, firstPageTicker } = useSize();
+
   const [addressDetails, setAddressDetails] = React.useState<AddressDetailsType>(
     initialAddressDetails
   );
-  const [addressDetailsFetched, setAddressDetailsFetched] = React.useState<boolean | undefined>();
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
 
-  const {
-    activeNetworkId,
-    refresh: { timestamp },
-  } = useGlobalState();
+  const { activeNetworkId } = useGlobalState();
   const { hash: addressId } = useParams() as any;
-  const { page } = useURLSearchParams();
 
   const { getAddressDetails, getTransactionsCount, getTransactions, getRewards } = adapter();
 
   const [transactions, setTransactions] = React.useState<TransactionRowType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
-  const size = page !== undefined ? page : 1;
-
-  const refreshFirstPage = size === 1 ? timestamp : 0;
 
   const fetchData = () => {
     Promise.all([
@@ -56,14 +53,20 @@ const Address = () => {
       getRewards({ addressId }),
     ]).then(([transactionsData, addressDetailsData, rewardsData]) => {
       const { data, success } = transactionsData;
+      const { data: addressDetails } = addressDetailsData;
       if (success && ref.current !== null) {
         setTransactions(data);
+        const pending = data.some(
+          (tx: TransactionRowType) => tx.status.toLowerCase() === txStatus.pending.toLowerCase()
+        );
+        setHasPendingTransaction(pending);
         setTransactionsFetched(true);
       } else if (transactions.length === 0) {
         setTransactionsFetched(false);
       }
       setAddressDetails(({ stake, claimableRewards }) => ({
-        ...addressDetailsData,
+        ...addressDetails,
+        detailsFetched: addressDetailsData.success,
         stake,
         claimableRewards,
       }));
@@ -91,8 +94,11 @@ const Address = () => {
         );
         setAddressDetails((details) => ({ ...details, claimableRewards: rewards, stake }));
       }
-      setAddressDetailsFetched(true);
+      setDataReady(addressDetailsData.success);
     });
+  };
+
+  const fetchTransactionsCount = () => {
     getTransactionsCount({
       addressId,
     }).then(({ count, success }) => {
@@ -102,9 +108,27 @@ const Address = () => {
     });
   };
 
-  React.useEffect(fetchData, [activeNetworkId, size, addressId, refreshFirstPage]); // run the operation only once since the parameter does not change
+  React.useEffect(() => {
+    fetchData();
+    fetchTransactionsCount();
+  }, [activeNetworkId, size, addressId]);
 
-  const loading = addressDetailsFetched === undefined && transactionsFetched === undefined;
+  React.useEffect(() => {
+    if (!loading) {
+      fetchTransactionsCount();
+      if (hasPendingTransaction) {
+        fetchData();
+      }
+    }
+  }, [firstPageTicker]);
+
+  React.useEffect(() => {
+    if (!loading) {
+      fetchData();
+    }
+  }, [totalTransactions]);
+
+  const loading = dataReady === undefined && transactionsFetched === undefined;
   const failed = addressDetails.detailsFetched === false || !addressIsBech32(addressId);
   const showTransactions = transactionsFetched === true && transactions.length > 0;
 

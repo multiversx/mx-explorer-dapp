@@ -1,5 +1,5 @@
 import { useGlobalState } from 'context';
-import { useNetworkRoute, useURLSearchParams } from 'helpers';
+import { useNetworkRoute, useURLSearchParams, useSize } from 'helpers';
 import * as React from 'react';
 import { Redirect } from 'react-router-dom';
 import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'sharedComponents';
@@ -13,9 +13,10 @@ interface StateType {
   endBlockNr: number;
 }
 
-const Blocks: React.FC = () => {
-  const { page, shard } = useURLSearchParams();
-  const shardId = shard;
+const Blocks = () => {
+  const { page, shard: shardId } = useURLSearchParams();
+  const { size, firstPageTicker } = useSize();
+
   const networkRoute = useNetworkRoute();
 
   React.useEffect(() => {
@@ -25,42 +26,33 @@ const Blocks: React.FC = () => {
   }, [shardId]);
 
   const ref = React.useRef(null);
-  const size = page;
   const [state, setState] = React.useState<StateType>();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [totalBlocks, setTotalBlocks] = React.useState<number | '...'>('...');
 
-  const {
-    refresh: { timestamp },
-    activeNetworkId,
-  } = useGlobalState();
+  const { activeNetworkId } = useGlobalState();
 
   const { getBlocks, getBlocksCount } = adapter();
 
-  const refreshFirstPage = size === 1 ? timestamp : 0;
-
-  const fetchBlocks = () => {
-    if (ref.current !== null) {
-      getBlocks({ size, shardId, epochId: undefined }).then(
-        ({ success, blocks, endBlockNr, startBlockNr }) => {
-          if (ref.current !== null) {
-            setState({ blocks, endBlockNr, startBlockNr });
-            setDataReady(success);
-          }
+  React.useEffect(() => {
+    getBlocks({ size, shardId, epochId: undefined }).then(
+      ({ success, blocks, endBlockNr, startBlockNr }) => {
+        if (ref.current !== null) {
+          setState({ blocks, endBlockNr, startBlockNr });
+          setDataReady(success);
         }
-      );
-
-      getBlocksCount({ size, shardId }).then(({ count, success }) => {
-        if (ref.current !== null && success) {
+      }
+    );
+    getBlocksCount({ size, shardId }).then(({ count, success }) => {
+      if (success) {
+        if (ref.current !== null) {
           setTotalBlocks(count);
         }
-      });
-    }
-  };
+      }
+    });
+  }, [activeNetworkId, size, shardId, firstPageTicker]);
 
-  React.useEffect(fetchBlocks, [activeNetworkId, size, shardId, refreshFirstPage]);
-
-  return shard && shard < 0 ? (
+  return shardId && shardId < 0 ? (
     <Redirect to={networkRoute(`/not-found`)} />
   ) : (
     <>
