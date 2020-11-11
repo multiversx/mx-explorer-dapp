@@ -8,25 +8,7 @@ import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, TimeAgo, Trim, DetailItem, CopyButton } from 'sharedComponents';
 import { validatorsRoutes } from 'routes';
 import { metaChainShardId } from 'appConfig';
-
-export interface BlockType {
-  hash: string;
-  nonce: number;
-  epoch: number;
-  prevHash: string;
-  proposer: string;
-  pubKeyBitmap: string;
-  round: number;
-  shardId: number;
-  size: number;
-  sizeTxs: number;
-  stateRootHash: string;
-  timestamp: number;
-  txCount: number;
-  validators: string[];
-  miniBlocksHashes: string[];
-  notarizedBlocksHashes: string[];
-}
+import { BlockType } from 'sharedComponents/BlocksTable';
 
 export interface BlockDataType {
   block: BlockType;
@@ -129,7 +111,11 @@ const BlockData = (props: BlockDataType) => {
               to={`${validatorsRoutes.nodes}/${block.proposer}`}
               className="trim-wrapper"
             >
-              <Trim text={block.proposer} />
+              {block.proposer ? (
+                <Trim text={block.proposer} />
+              ) : (
+                <span className="text-muted">N/A</span>
+              )}
             </NetworkLink>
           </DetailItem>
 
@@ -149,7 +135,11 @@ const BlockData = (props: BlockDataType) => {
           </DetailItem>
 
           <DetailItem title="State Root Hash">
-            <Trim text={block.stateRootHash} />
+            {block.stateRootHash ? (
+              <Trim text={block.stateRootHash} />
+            ) : (
+              <span className="text-muted">N/A</span>
+            )}
           </DetailItem>
 
           {block.shardId === metaChainShardId && (
@@ -201,17 +191,25 @@ const BlockData = (props: BlockDataType) => {
                 <span className="text-muted">N/A</span>
               ) : (
                 <NetworkLink className="trim-wrapper" to={`/blocks/${block.prevHash}`}>
-                  <Trim text={block.prevHash} />
+                  {block.prevHash ? (
+                    <Trim text={block.prevHash} />
+                  ) : (
+                    <span className="text-muted">N/A</span>
+                  )}
                 </NetworkLink>
               )}
             </div>
           </DetailItem>
 
           <DetailItem title="Public Keys Bitmap">
-            <Trim text={block.pubKeyBitmap} />
+            {block.pubKeyBitmap ? (
+              <Trim text={block.pubKeyBitmap} />
+            ) : (
+              <span className="text-muted">N/A</span>
+            )}
           </DetailItem>
 
-          {isFirstBlock && (
+          {isFirstBlock && block.prevHash && (
             <>
               <DetailItem title="">
                 <pre className="genesis px-3 pt-2 pb-4 m-0 rounded border">

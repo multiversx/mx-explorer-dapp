@@ -12,13 +12,9 @@ import {
   Trim,
   Loader,
 } from 'sharedComponents';
-import { TransactionRowType } from 'sharedComponents/TransactionsTable/TransactionRow';
+import { TransactionType } from 'sharedComponents/TransactionsTable';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
-
-type LatestTransactionType = TransactionRowType & {
-  isNew: boolean;
-};
 
 const LatestTransactions = () => {
   const ref = React.useRef(null);
@@ -26,7 +22,7 @@ const LatestTransactions = () => {
     activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
-  const [transactions, setTransactions] = React.useState<LatestTransactionType[]>([]);
+  const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
 
   const { getLatestTransactions } = adapter();
@@ -37,14 +33,14 @@ const LatestTransactions = () => {
         if (transactionsFetched) {
           const sortedTransactions = data;
           if (transactions.length === 0) {
-            const newTransactions = sortedTransactions.map((transaction: TransactionRowType) => ({
+            const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
               ...transaction,
               isNew: false,
             }));
             setTransactions(newTransactions);
           } else {
             const existingHashes = transactions.map((b) => b.txHash);
-            const newTransactions = sortedTransactions.map((transaction: TransactionRowType) => ({
+            const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
               ...transaction,
               isNew: !existingHashes.includes(transaction.txHash),
             }));
