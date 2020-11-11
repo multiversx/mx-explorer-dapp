@@ -87,7 +87,7 @@ const IdentityDetails = () => {
                         {identity.location ? (
                           identity.location
                         ) : (
-                          <span className="text-muted">N/A</span>
+                          <span className="text-secondary">N/A</span>
                         )}
                       </DetailItem>
 
@@ -97,7 +97,7 @@ const IdentityDetails = () => {
                             {identity.twitter.split('/').pop()}
                           </a>
                         ) : (
-                          <span className="text-muted">N/A</span>
+                          <span className="text-secondary">N/A</span>
                         )}
                       </DetailItem>
 
@@ -107,7 +107,7 @@ const IdentityDetails = () => {
                             {identity.website}
                           </a>
                         ) : (
-                          <span className="text-muted">N/A</span>
+                          <span className="text-secondary">N/A</span>
                         )}
                       </DetailItem>
                     </div>

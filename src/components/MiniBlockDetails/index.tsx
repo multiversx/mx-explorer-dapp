@@ -136,7 +136,7 @@ const MiniBlockDetails: React.FC = () => {
                                   <Trim text={miniBlock.senderBlockHash} />
                                 </NetworkLink>
                               ) : (
-                                <span className="text-muted">N/A</span>
+                                <span className="text-secondary">N/A</span>
                               )}
                             </div>
                           </DetailItem>
@@ -151,7 +151,7 @@ const MiniBlockDetails: React.FC = () => {
                                   <Trim text={miniBlock.receiverBlockHash} />
                                 </NetworkLink>
                               ) : (
-                                <span className="text-muted">N/A</span>
+                                <span className="text-secondary">N/A</span>
                               )}
                             </div>
                           </DetailItem>

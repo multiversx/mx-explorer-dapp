@@ -21,12 +21,12 @@ const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string 
                 <ShardSpan shard={shardId} />
               </NetworkLink>
             ) : (
-              <span className="text-muted">N/A</span>
+              <span className="text-secondary">N/A</span>
             )}
           </DetailItem>
 
           <DetailItem title="Name" colWidth={colWidth}>
-            {nodeDisplayName ? nodeDisplayName : <span className="text-muted">N/A</span>}
+            {nodeDisplayName ? nodeDisplayName : <span className="text-secondary">N/A</span>}
           </DetailItem>
 
           <DetailItem title="Type" colWidth={colWidth}>
@@ -35,7 +35,7 @@ const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string 
 
           <DetailItem title="Version" colWidth={colWidth}>
             <span data-testid="versionNumber">
-              {versionNumber ? versionNumber : <span className="text-muted">N/A</span>}
+              {versionNumber ? versionNumber : <span className="text-secondary">N/A</span>}
             </span>
           </DetailItem>
         </div>
