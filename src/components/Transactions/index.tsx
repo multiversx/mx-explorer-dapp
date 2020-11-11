@@ -61,18 +61,21 @@ const Transactions = () => {
   React.useEffect(() => {
     fetchTransactions();
     fetchTransactionsCount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, size]);
 
   React.useEffect(() => {
     if (dataReady !== undefined) {
       fetchTransactionsCount();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstPageTicker]);
 
   React.useEffect(() => {
     if (dataReady !== undefined) {
       fetchTransactions();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transactionsCount]);
 
   return (

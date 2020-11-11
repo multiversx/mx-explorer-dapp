@@ -55,6 +55,7 @@ const Blocks = () => {
         }
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, size, shard, firstPageTicker]);
 
   return shard && shard < 0 ? (
