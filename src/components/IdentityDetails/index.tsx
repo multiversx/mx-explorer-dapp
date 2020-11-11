@@ -1,12 +1,11 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { IdentityType } from 'context/state';
-import { adapter, Loader, DetailItem, Pager, PageState } from 'sharedComponents';
+import { adapter, Loader, DetailItem, Pager, PageState, IdentityAvatar } from 'sharedComponents';
 import { useParams } from 'react-router-dom';
 import { NodesTable } from 'sharedComponents';
 import { useFilters } from 'helpers';
 import { useGlobalState } from 'context';
-import IdentityIcon from './IdentityIcon';
 
 const IdentityDetails = () => {
   const ref = React.useRef(null);
@@ -65,7 +64,7 @@ const IdentityDetails = () => {
                   <div className="card-header">
                     <div className="card-header-item p-0">
                       <div className="identity-header-item px-lg-spacer justify-content-center">
-                        <IdentityIcon identity={identity} />
+                        <IdentityAvatar identity={identity} />
                         {identity.name ? identity.name : 'N/A'}
                       </div>
                     </div>

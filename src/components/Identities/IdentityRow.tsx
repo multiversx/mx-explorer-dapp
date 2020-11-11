@@ -2,10 +2,17 @@ import React from 'react';
 import { useGlobalState } from 'context';
 import { IdentityType, NodeType } from 'context/state';
 import carretDown from 'assets/images/carret-down.svg';
-import { Loader, NetworkLink, Trim, adapter, PageState, NodesTable } from 'sharedComponents';
+import {
+  Loader,
+  NetworkLink,
+  Trim,
+  adapter,
+  PageState,
+  NodesTable,
+  IdentityAvatar,
+} from 'sharedComponents';
 import PercentegeBar from './PercentegeBar';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import IdentityIcon from 'components/IdentityDetails/IdentityIcon';
 
 export interface IdentityRowType {
   identity: IdentityType;
@@ -54,7 +61,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
             <div className="mr-3">
               <NetworkLink to={link}>
                 {}
-                <IdentityIcon identity={identity} />
+                <IdentityAvatar identity={identity} />
               </NetworkLink>
             </div>
             {identity.name && identity.name.length > 70 ? (
