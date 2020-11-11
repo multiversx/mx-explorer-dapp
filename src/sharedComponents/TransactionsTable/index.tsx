@@ -1,9 +1,11 @@
-import TransactionRow, { TransactionRowType } from './TransactionRow';
-import Pager from '../Pager';
 import * as React from 'react';
+import TransactionRow, { TransactionType as TransacionInterface } from './TransactionRow';
+import Pager from '../Pager';
+
+export type TransactionType = TransacionInterface;
 
 interface TransactionsTableType {
-  transactions: TransactionRowType[];
+  transactions: TransactionType[];
   addressId?: string;
   totalTransactions: number | '...';
   size: number;
@@ -31,7 +33,7 @@ const TransactionsTable = ({
         </div>
 
         <div className="card-body p-0">
-          <div className="table-wrapper">
+          <div className="table-wrapper animated-list">
             <table className="table" data-testid="transactionsTable">
               <thead>
                 <tr>

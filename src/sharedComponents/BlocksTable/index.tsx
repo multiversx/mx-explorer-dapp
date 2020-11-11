@@ -2,7 +2,7 @@ import * as React from 'react';
 import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 
-export interface BlockRowType {
+export interface BlockType {
   hash: string;
   nonce: number;
   shardId: number;
@@ -10,17 +10,21 @@ export interface BlockRowType {
   sizeTxs: number;
   timestamp: number;
   txCount: number;
+  validators: string[];
+  miniBlocksHashes: string[];
+  notarizedBlocksHashes: string[];
+  epoch?: number;
+  prevHash?: string;
+  proposer?: string;
+  pubKeyBitmap?: string;
+  round?: number;
+  stateRootHash?: string;
+  isNew?: boolean; // UI flag
 }
 
-const BlocksTable = ({
-  blocks,
-  shardId,
-}: {
-  blocks: BlockRowType[];
-  shardId: number | undefined;
-}) => {
+const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number | undefined }) => {
   return (
-    <div className="table-wrapper">
+    <div className="table-wrapper animated-list">
       <table className="table">
         <thead>
           <tr>
@@ -34,7 +38,7 @@ const BlocksTable = ({
         </thead>
         <tbody data-testid="blocksTable">
           {blocks.map((block, i) => (
-            <tr key={block.hash}>
+            <tr key={block.hash} className={`animated-row ${block.isNew ? 'new' : ''}`}>
               <td>
                 <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
                   {block.nonce}

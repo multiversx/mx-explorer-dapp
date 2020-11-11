@@ -6,8 +6,9 @@ import React from 'react';
 import { addressIsBech32, dateFormatted, urlBuilder } from 'helpers';
 import { Denominate, ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
+import { ScResultType } from 'components/TransactionDetails/ScResultsList';
 
-export interface TransactionRowType {
+export interface TransactionType {
   txHash: string;
   receiver: string;
   receiverShard: number;
@@ -16,19 +17,29 @@ export interface TransactionRowType {
   status: string;
   timestamp: number;
   value: string;
+  blockHash?: string;
+  data?: string;
+  gasLimit?: number;
+  gasPrice?: number;
+  gasUsed?: number;
+  miniBlockHash?: string;
+  nonce?: number;
+  round?: number;
+  signature?: string;
+  scResults?: ScResultType[];
+  isNew?: boolean; // UI flag
 }
 
-interface TransactionRowInnerType {
-  transaction: TransactionRowType;
+interface TransactionRowType {
+  transaction: TransactionType;
   addressId?: string;
 }
 
-const TransactionRow = ({ transaction, addressId }: TransactionRowInnerType) => {
+const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
   const statusIs = (compareTo: string) =>
     transaction.status.toLowerCase() === compareTo.toLowerCase();
-
   return (
-    <tr className="animated fadeIn">
+    <tr className={`animated-row ${transaction.isNew ? 'new' : ''}`}>
       <td>
         <div className="d-flex align-items-center">
           {(statusIs(txStatus.failed) || statusIs(txStatus.fail)) && (
