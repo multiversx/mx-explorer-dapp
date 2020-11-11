@@ -10,6 +10,7 @@ import getNodes, { GetNodesType as GetNodesInterface } from './getNodes';
 import getLatestTransactions from './getLatestTransactions';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
 import getBlock from './getBlock';
+import getNetworkStatus from './getNetworkStatus';
 import {
   getTransactions,
   getTransactionsCount,
@@ -88,4 +89,5 @@ export {
   getIdentities,
   getIdentity,
   getNode,
+  getNetworkStatus,
 };

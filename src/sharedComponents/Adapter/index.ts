@@ -31,6 +31,8 @@ export default function useAdapter() {
     getHighlights: () =>
       f.getHighlights({ provider, proxyUrl, baseUrl, timeout, metaChainShardId }),
 
+    getNetworkStatus: () => f.getNetworkStatus({ proxyUrl, timeout, metaChainShardId }),
+
     getLatestBlocks: () => f.getLatestBlocks({ provider, baseUrl, timeout }),
 
     getLatestTransactions: () => f.getLatestTransactions({ provider, baseUrl, timeout }),
