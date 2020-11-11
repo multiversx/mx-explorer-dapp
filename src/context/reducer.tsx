@@ -15,7 +15,7 @@ export type ActionType =
       blockchainTotalStake: StateType['blockchainTotalStake'];
     }
   | { type: 'setShards'; shards: StateType['shards'] }
-  | { type: 'triggerNewRound' }
+  | { type: 'triggerTick' }
   | {
       type: 'changeTheme';
       theme: StateType['theme'];
@@ -40,7 +40,7 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
     case 'updateNetworks': {
       return { ...state, config: action.config };
     }
-    case 'triggerNewRound': {
+    case 'triggerTick': {
       return {
         ...state,
         refresh: {
