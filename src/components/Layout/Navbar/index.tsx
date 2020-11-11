@@ -48,7 +48,7 @@ export default function Navbar() {
       <div className="main-navbar sticky-top">
         <div className="container">
           <Nav className="align-items-stretch flex-nowrap p-0 navbar">
-            <div className="d-flex align-items-center navbar-brand">
+            <div className="d-flex align-items-center">
               <Logo />
             </div>
 
