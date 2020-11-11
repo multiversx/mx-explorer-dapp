@@ -36,7 +36,7 @@ const wrapper = ({ baseUrl, url, params = {}, timeout }: ProviderPropsType & { u
 
   const {
     nonce,
-    shardId,
+    shard,
     epoch,
     proposer,
     miniBlockHash,
@@ -50,7 +50,7 @@ const wrapper = ({ baseUrl, url, params = {}, timeout }: ProviderPropsType & { u
   } = params;
 
   boolQuery = createMustQuery({ nonce }, boolQuery);
-  boolQuery = createMustQuery({ shardId }, boolQuery);
+  boolQuery = createMustQuery({ shard }, boolQuery);
   boolQuery = createMustQuery({ epoch }, boolQuery);
   boolQuery = createMustQuery({ proposer }, boolQuery);
   boolQuery = createMustQuery({ signersIndexes }, boolQuery);

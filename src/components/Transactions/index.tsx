@@ -90,14 +90,14 @@ const Transactions = () => {
                   {senderShard !== undefined && (
                     <>
                       <span>&nbsp;from&nbsp;</span>
-                      <ShardSpan shardId={senderShard} />
+                      <ShardSpan shard={senderShard} />
                     </>
                   )}
                   &nbsp;
                   {receiverShard !== undefined && (
                     <>
                       <span>to&nbsp;</span>
-                      <ShardSpan shardId={receiverShard} />
+                      <ShardSpan shard={receiverShard} />
                     </>
                   )}
                 </h3>

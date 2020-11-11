@@ -19,7 +19,7 @@ async function getNextBlock({
       url: `/blocks`,
       params: {
         nonce: nextBlockId,
-        shardId: currentShardId,
+        shard: currentShardId,
       },
       timeout,
     });

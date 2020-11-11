@@ -114,11 +114,11 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                     className="flex-shrink-0"
                   >
                     &nbsp;(
-                    <ShardSpan shardId={transaction.senderShard} />)
+                    <ShardSpan shard={transaction.senderShard} />)
                   </NetworkLink>
                 </>
               ) : (
-                <ShardSpan shardId={transaction.sender} />
+                <ShardSpan shard={transaction.sender} />
               )}
             </div>
           </DetailItem>
@@ -135,7 +135,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                   to={urlBuilder.receiverShard(transaction.receiverShard)}
                   className="flex-shrink-0"
                 >
-                  (<ShardSpan shardId={transaction.receiverShard} />)
+                  (<ShardSpan shard={transaction.receiverShard} />)
                 </NetworkLink>
               )}
             </div>

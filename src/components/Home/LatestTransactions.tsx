@@ -117,7 +117,7 @@ const LatestTransactions = () => {
                             <Trim text={transaction.sender} />
                           </NetworkLink>
                         ) : (
-                          <ShardSpan shardId={transaction.sender} />
+                          <ShardSpan shard={transaction.sender} />
                         )}
                       </div>
                       <div className="d-flex align-items-center">

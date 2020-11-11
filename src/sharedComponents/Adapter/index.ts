@@ -42,11 +42,11 @@ export default function useAdapter() {
     getBlock: ({ blockId }: { blockId: string }) =>
       f.getBlock({ provider, baseUrl, blockId, timeout }),
 
-    getBlocks: ({ size, shardId, epochId, proposer }: f.GetBlocksType) =>
-      f.getBlocks({ provider, baseUrl, size, shardId, epochId, proposer, timeout }),
+    getBlocks: ({ size, shard, epochId, proposer }: f.GetBlocksType) =>
+      f.getBlocks({ provider, baseUrl, size, shard, epochId, proposer, timeout }),
 
-    getBlocksCount: ({ size, shardId, epochId }: f.GetBlocksType) =>
-      f.getBlocksCount({ provider, baseUrl, size, shardId, epochId, timeout }),
+    getBlocksCount: ({ size, shard, epochId }: f.GetBlocksType) =>
+      f.getBlocksCount({ provider, baseUrl, size, shard, epochId, timeout }),
 
     /* Transaction */
 
@@ -108,7 +108,7 @@ export default function useAdapter() {
       issues,
       search,
       nodeType,
-      shardId,
+      shard,
       status,
       size,
       identity,
@@ -122,7 +122,7 @@ export default function useAdapter() {
         issues,
         search,
         nodeType,
-        shardId,
+        shard,
         status,
         size,
         identity,
@@ -134,7 +134,7 @@ export default function useAdapter() {
       issues,
       search,
       nodeType,
-      shardId,
+      shard,
       status,
       identity,
     }: f.GetNodesType) =>
@@ -146,7 +146,7 @@ export default function useAdapter() {
         issues,
         search,
         nodeType,
-        shardId,
+        shard,
         status,
         identity,
         count: true,
@@ -175,12 +175,12 @@ export default function useAdapter() {
         key,
       }),
 
-    getRounds: ({ validator, shardId }: f.GetRoundsType) =>
+    getRounds: ({ validator, shard }: f.GetRoundsType) =>
       f.getRounds({
         provider,
         baseUrl,
         validator,
-        shardId,
+        shard,
         timeout,
       }),
 

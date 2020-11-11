@@ -18,7 +18,7 @@ const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string 
           <DetailItem title="Shard" colWidth={colWidth}>
             {shardId !== undefined ? (
               <NetworkLink to={urlBuilder.shard(shardId)} data-testid="shardLink">
-                <ShardSpan shardId={shardId} />
+                <ShardSpan shard={shardId} />
               </NetworkLink>
             ) : (
               <span className="text-muted">N/A</span>

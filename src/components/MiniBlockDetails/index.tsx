@@ -116,13 +116,13 @@ const MiniBlockDetails: React.FC = () => {
                           </DetailItem>
                           <DetailItem title="Sender Shard">
                             <NetworkLink to={urlBuilder.shard(miniBlock.senderShard)}>
-                              <ShardSpan shardId={miniBlock.senderShard} />
+                              <ShardSpan shard={miniBlock.senderShard} />
                             </NetworkLink>
                           </DetailItem>
 
                           <DetailItem title="Receiver Shard">
                             <NetworkLink to={urlBuilder.shard(miniBlock.receiverShard)}>
-                              <ShardSpan shardId={miniBlock.receiverShard} />
+                              <ShardSpan shard={miniBlock.receiverShard} />
                             </NetworkLink>
                           </DetailItem>
 

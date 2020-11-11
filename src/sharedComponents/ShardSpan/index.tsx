@@ -2,17 +2,17 @@ import React from 'react';
 import { metaChainShardId } from 'appConfig';
 
 interface ShardSpanType {
-  shardId: number | string;
+  shard: number | string;
 }
 
-const ShardSpan = ({ shardId }: ShardSpanType) => {
-  if (typeof shardId === 'string' && shardId.includes('Shard')) {
-    shardId = shardId.replace('Shard', '');
+const ShardSpan = ({ shard }: ShardSpanType) => {
+  if (typeof shard === 'string' && shard.includes('Shard')) {
+    shard = shard.replace('Shard', '');
   }
 
-  const isMetachain = metaChainShardId.toString() === String(shardId).toString();
+  const isMetachain = metaChainShardId.toString() === String(shard).toString();
 
-  return isMetachain ? <span>Metachain</span> : <span>Shard {shardId}</span>;
+  return isMetachain ? <span>Metachain</span> : <span>Shard {shard}</span>;
 };
 
 export default ShardSpan;

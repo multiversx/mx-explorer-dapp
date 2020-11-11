@@ -82,8 +82,8 @@ const BlockData = (props: BlockDataType) => {
           </DetailItem>
 
           <DetailItem title="Shard">
-            <NetworkLink to={urlBuilder.shard(block.shardId)}>
-              <ShardSpan shardId={block.shardId} />
+            <NetworkLink to={urlBuilder.shard(block.shard)}>
+              <ShardSpan shard={block.shard} />
             </NetworkLink>
           </DetailItem>
 
@@ -142,7 +142,7 @@ const BlockData = (props: BlockDataType) => {
             )}
           </DetailItem>
 
-          {block.shardId === metaChainShardId && (
+          {block.shard === metaChainShardId && (
             <DetailItem title="Notarized Blocks" className="hash-group-row">
               {block.notarizedBlocksHashes === undefined ||
               (Array.isArray(block.notarizedBlocksHashes) &&

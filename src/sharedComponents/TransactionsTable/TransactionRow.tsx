@@ -69,14 +69,14 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
             to={urlBuilder.senderShard(transaction.senderShard)}
             data-testid="shardFromLink"
           >
-            <ShardSpan shardId={transaction.senderShard} />
+            <ShardSpan shard={transaction.senderShard} />
           </NetworkLink>
           <FontAwesomeIcon icon={faChevronRight} className="text-secondary mx-2" />
           <NetworkLink
             to={urlBuilder.receiverShard(transaction.receiverShard)}
             data-testid="shardToLink"
           >
-            <ShardSpan shardId={transaction.receiverShard} />
+            <ShardSpan shard={transaction.receiverShard} />
           </NetworkLink>
         </div>
       </td>
@@ -96,7 +96,7 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
                   <Trim text={transaction.sender} />
                 </NetworkLink>
               ) : (
-                <ShardSpan shardId={transaction.sender} />
+                <ShardSpan shard={transaction.sender} />
               )}
             </>
           )}

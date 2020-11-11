@@ -57,7 +57,7 @@ const ShardLabel = () => {
                     }`}
                     key={shard.shardId + i}
                   >
-                    <ShardSpan shardId={shard.shardId} />
+                    <ShardSpan shard={shard.shardId} />
                   </NetworkLink>
                 );
               })}
