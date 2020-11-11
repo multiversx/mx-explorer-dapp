@@ -11,7 +11,7 @@ import NetworkMetrics from './NetworkMetrics';
 import Rounds, { RoundType } from './Rounds';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
-import { BlockType } from 'sharedComponents/BlocksTable';
+import { BlockRowType } from 'sharedComponents/BlocksTable';
 
 interface NodeDetailType<T> {
   data?: T;
@@ -32,7 +32,7 @@ const NodeDetails = () => {
   const [node, setNode] = React.useState<NodeDetailType<NodeType>>(initialState);
   const [identity, setIdentity] = React.useState<NodeDetailType<IdentityType>>(initialState);
   const [rounds, setRounds] = React.useState<NodeDetailType<RoundType[]>>(initialState);
-  const [blocks, setBlocks] = React.useState<NodeDetailType<BlockType[]>>(initialState);
+  const [blocks, setBlocks] = React.useState<NodeDetailType<BlockRowType[]>>(initialState);
 
   const fetchNodes = () => {
     setDataReady(undefined);
@@ -53,11 +53,14 @@ const NodeDetails = () => {
               data: blocksData.blocks,
               success: blocksData.success,
             });
+
             setRounds({
-              data: roundsData.data.map((round: any) => ({
-                key: round.round,
-                value: round.blockWasProposed,
-              })),
+              data: roundsData.success
+                ? roundsData.data.map((round: any) => ({
+                    key: round.round,
+                    value: round.blockWasProposed,
+                  }))
+                : [],
               success: roundsData.success,
             });
             setDataReady(nodeData.success);

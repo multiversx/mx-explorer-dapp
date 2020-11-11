@@ -32,7 +32,7 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
             {node.nodeDisplayName ? (
               truncate(node.nodeDisplayName, 20)
             ) : (
-              <span className="text-muted">N/A</span>
+              <span className="text-secondary">N/A</span>
             )}
           </td>
           <td>
@@ -45,7 +45,7 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
             {node.versionNumber ? (
               truncate(node.versionNumber.split('-')[0], 20)
             ) : (
-              <span className="text-muted">N/A</span>
+              <span className="text-secondary">N/A</span>
             )}
           </td>
           <td className="text-right">
@@ -74,7 +74,7 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
             {!isNaN(node.tempRating) ? (
               Math.floor(node.tempRating)
             ) : (
-              <span className="text-muted">N/A</span>
+              <span className="text-secondary">N/A</span>
             )}
           </td>
         </tr>

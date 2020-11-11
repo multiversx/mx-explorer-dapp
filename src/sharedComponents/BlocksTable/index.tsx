@@ -2,18 +2,12 @@ import * as React from 'react';
 import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 
-export interface BlockType {
+export interface BlockRowType {
   hash: string;
   nonce: number;
-  epoch: number;
-  prevHash: string;
-  proposer: string;
-  pubKeyBitmap: string;
-  round: number;
   shardId: number;
   size: number;
   sizeTxs: number;
-  stateRootHash: string;
   timestamp: number;
   txCount: number;
   validators: string[];
@@ -22,7 +16,13 @@ export interface BlockType {
   isNew?: boolean; // UI flag
 }
 
-const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number | undefined }) => {
+const BlocksTable = ({
+  blocks,
+  shardId,
+}: {
+  blocks: BlockRowType[];
+  shardId: number | undefined;
+}) => {
   return (
     <div className="table-wrapper animated-list">
       <table className="table">

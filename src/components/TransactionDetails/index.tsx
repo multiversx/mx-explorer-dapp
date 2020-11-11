@@ -3,7 +3,7 @@ import { useGlobalState } from 'context';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader, adapter, PageState } from 'sharedComponents';
-import { TransactionType } from 'sharedComponents/TransactionsTable';
+import { TransactionType } from './TransactionDetails';
 import Details from './TransactionDetails';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 

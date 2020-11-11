@@ -26,7 +26,7 @@ export default async function getRounds({
     });
 
     return {
-      data,
+      data: Boolean(data) ? data : [],
       success: true,
     };
   } catch {
