@@ -55,7 +55,12 @@ const Address = () => {
       const { data, success } = transactionsData;
       const { data: addressDetails } = addressDetailsData;
       if (success && ref.current !== null) {
-        setTransactions(data);
+        const existingHashes = transactions.map((b) => b.txHash);
+        const newTransactions = data.map((transaction: TransactionType) => ({
+          ...transaction,
+          isNew: !existingHashes.includes(transaction.txHash),
+        }));
+        setTransactions(newTransactions);
         const pending = data.some(
           (tx: TransactionType) => tx.status.toLowerCase() === txStatus.pending.toLowerCase()
         );
