@@ -149,9 +149,7 @@ const NodeDetails = () => {
                             <>
                               <div className="card-header">
                                 <div className="card-header-item">
-                                  <h6 className="m-0">
-                                    Last {blocks.data.length} proposed Blocks in Current Epoch
-                                  </h6>
+                                  <h6 className="m-0">Last proposed Blocks</h6>
                                 </div>
                               </div>
                               <div className="card-body p-0">
