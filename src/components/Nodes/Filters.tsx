@@ -150,7 +150,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
           <div className="input-group input-group-seamless">
             <input
               type="text"
-              className="form-control"
+              className="form-control rounded-pill"
               value={inputValue}
               onChange={changeValidatorValue}
               onKeyDown={(keyEvent: React.KeyboardEvent) => {
@@ -161,13 +161,12 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
               placeholder="Search"
               name="validatorSearch"
               data-testid="validatorSearch"
-              style={{ borderRadius: '2rem' }}
             />
             <div className="input-group-append">
               {inputValue ? (
                 <button
                   type="reset"
-                  className="input-group-text"
+                  className="input-group-text side-action"
                   onClick={() => {
                     updateSearchValue('');
                   }}
@@ -176,7 +175,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
                   <FontAwesomeIcon icon={faTimes} />
                 </button>
               ) : (
-                <button type="submit" className="input-group-text">
+                <button type="submit" className="input-group-text side-action outline-0">
                   <FontAwesomeIcon icon={faSearch} />
                 </button>
               )}
