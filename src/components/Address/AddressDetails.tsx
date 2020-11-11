@@ -27,11 +27,11 @@ const AddressDetails = (props: AddressDetailsType) => {
           </DetailItem>
 
           {props.code && (
-            <DetailItem title="Code">
+            <DetailItem title="Contract Code">
               <textarea
                 readOnly
                 className="form-control col cursor-text mt-2"
-                rows={2}
+                rows={4}
                 defaultValue={props.code}
               />
             </DetailItem>
