@@ -95,34 +95,14 @@ interface DetailsType {
 
 export async function getAddressDetails({ proxyUrl, addressId, timeout }: DetailsType) {
   try {
-    const {
-      data: {
-        data: {
-          account: { balance, code, nonce },
-        },
-        code: responseCode,
-        error,
-      },
-    } = await axios.get(`${proxyUrl}/address/${addressId}`, { timeout });
-
-    if (responseCode === 'successful') {
-      return {
-        addressId,
-        balance,
-        nonce,
-        code,
-        detailsFetched: true,
-      };
-    } else {
-      throw new Error(error);
-    }
+    const { data } = await axios.get(`${proxyUrl}/addresses/${addressId}`, { timeout });
+    return {
+      data,
+      success: true,
+    };
   } catch (err) {
     return {
-      addressId: '',
-      balance: '0',
-      nonce: 0,
-      code: '',
-      detailsFetched: false, // addressIsBech32(addressId),
+      success: false,
     };
   }
 }

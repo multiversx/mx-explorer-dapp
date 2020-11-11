@@ -2,7 +2,7 @@ import React from 'react';
 import { CopyButton, Denominate, DetailItem, Trim } from 'sharedComponents';
 
 export interface AddressDetailsType {
-  addressId: string;
+  address: string;
   code: string;
   balance: string;
   nonce: number;
@@ -12,14 +12,14 @@ export interface AddressDetailsType {
 }
 
 const AddressDetails = (props: AddressDetailsType) => {
-  return props.addressId ? (
+  return props.address ? (
     <div className="card">
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Address">
             <div className="d-flex align-items-center">
-              <Trim text={props.addressId} />
-              <CopyButton text={props.addressId} />
+              <Trim text={props.address} />
+              <CopyButton text={props.address} />
             </div>
           </DetailItem>
           <DetailItem title="Balance">

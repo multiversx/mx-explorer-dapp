@@ -39,10 +39,7 @@ const MiniBlockDetails: React.FC = () => {
 
   const { getMiniBlockTransactions, getMiniBlockTransactionsCount, getMiniBlock } = adapter();
 
-  const {
-    activeNetworkId,
-    refresh: { timestamp },
-  } = useGlobalState();
+  const { activeNetworkId } = useGlobalState();
 
   const [state, setState] = React.useState<StateType>(initialState);
   const [miniBlockFetched, setMiniBlockFetched] = React.useState<boolean | undefined>();
@@ -54,8 +51,6 @@ const MiniBlockDetails: React.FC = () => {
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
 
   const size = parseInt(page!) ? parseInt(page!) : 1;
-
-  const refreshFirstPage = size === 1 ? timestamp : 0;
 
   const invalid = miniBlockHash && !isHash(miniBlockHash);
 
@@ -85,7 +80,7 @@ const MiniBlockDetails: React.FC = () => {
     }
   };
 
-  React.useEffect(fetchMiniBlockData, [activeNetworkId, size, miniBlockHash, refreshFirstPage]);
+  React.useEffect(fetchMiniBlockData, [activeNetworkId, size, miniBlockHash]);
 
   const showTransactions = transactionsFetched === true && transactions.length > 0;
 

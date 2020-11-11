@@ -14,7 +14,7 @@ const DelegationDetails = (props: AddressDetailsType) => {
   const stake = props.stake.toLocaleString('en', { minimumFractionDigits: 4 });
   const rewards = props.claimableRewards.toLocaleString('en', { minimumFractionDigits: 4 });
 
-  return props.addressId && props.stake > 0 ? (
+  return props.address && props.stake > 0 ? (
     <div className="card chart">
       <div className="card-body bg-primary d-flex align-items-center">
         <div className="mr-4">
