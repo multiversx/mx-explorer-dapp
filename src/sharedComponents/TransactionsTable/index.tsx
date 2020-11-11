@@ -22,6 +22,7 @@ export interface TransactionType {
   timestamp: number;
   value: string;
   scResults?: ScResultType[];
+  isNew?: boolean; // UI flag
 }
 
 interface TransactionsTableType {
@@ -58,7 +59,7 @@ const TransactionsTable = ({
         </div>
 
         <div className="card-body p-0">
-          <div className="table-wrapper">
+          <div className="table-wrapper animated-list">
             <table className="table" data-testid="transactionsTable">
               <thead>
                 <tr>

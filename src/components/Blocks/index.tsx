@@ -38,7 +38,12 @@ const Blocks = () => {
     getBlocks({ size, shardId, epochId: undefined }).then(
       ({ success, blocks, endBlockNr, startBlockNr }) => {
         if (ref.current !== null) {
-          setState({ blocks, endBlockNr, startBlockNr });
+          const existingHashes = state ? state.blocks.map((block: BlockType) => block.hash) : [];
+          const newBlocks = blocks.map((block: BlockType) => ({
+            ...block,
+            isNew: !existingHashes.includes(block.hash),
+          }));
+          setState({ blocks: newBlocks, endBlockNr, startBlockNr });
           setDataReady(success);
         }
       }
