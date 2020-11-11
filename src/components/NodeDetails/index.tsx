@@ -42,7 +42,6 @@ const NodeDetails = () => {
           getIdentity(nodeData.data.identity),
           getRounds({
             validator: publicKey,
-            shard: nodeData.data.shard,
           }),
           getBlocks({ proposer: publicKey }),
         ]).then(([identityData, roundsData, blocksData]) => {
