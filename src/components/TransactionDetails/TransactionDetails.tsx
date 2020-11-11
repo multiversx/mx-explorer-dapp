@@ -161,9 +161,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
               className="form-control col cursor-text mt-1"
               rows={2}
               defaultValue={
-                transaction.data
-                  ? Buffer.from(transaction.data, 'base64').toString()
-                  : transaction.data
+                transaction.data ? Buffer.from(transaction.data, 'base64').toString() : 'N/A'
               }
             />
           </DetailItem>
