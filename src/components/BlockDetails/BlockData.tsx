@@ -154,7 +154,7 @@ const BlockData = (props: BlockDataType) => {
 
           {block.shardId === metaChainShardId && (
             <DetailItem title="Notarized Blocks" className="hash-group-row">
-              {block.notarizedBlocksHashes === null ||
+              {block.notarizedBlocksHashes === undefined ||
               (Array.isArray(block.notarizedBlocksHashes) &&
                 block.notarizedBlocksHashes.length === 0) ? (
                 <span className="text-muted">N/A</span>
@@ -176,7 +176,7 @@ const BlockData = (props: BlockDataType) => {
           )}
 
           <DetailItem title="Miniblocks" className="hash-group-row">
-            {block.miniBlocksHashes === null ||
+            {block.miniBlocksHashes === undefined ||
             (Array.isArray(block.miniBlocksHashes) && block.miniBlocksHashes.length === 0) ? (
               <span className="text-muted">N/A</span>
             ) : (
