@@ -7,7 +7,7 @@ const Identity = ({ identity }: { identity: IdentityType }) => {
     <div className="card" data-testid="brandContainer">
       <div className="card-header">
         <div className="card-header-item p-0">
-          <div className="identity-header-item px-lg-3">
+          <div className="identity-header-item px-lg-3 justify-content-center">
             <img
               className={`mr-3 avatar rounded-circle shadow-sm ${identity.avatar ? '' : 'gray'}`}
               src={identity.avatar ? identity.avatar : '/validators/default-avatar.svg'}
