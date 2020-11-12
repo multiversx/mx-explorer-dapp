@@ -41,8 +41,8 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build-mainnet": "npm run copy-mainnet-config & REACT_APP_GA_ID=UA-140910543-1 npm run build",
-    "build-testnet": "npm run copy-testnet-config & REACT_APP_GA_ID=UA-129278450-2 npm run build",
+    "build-mainnet": "npm run copy-mainnet-config & REACT_APP_SHARE_IMG=share REACT_APP_GA_ID=UA-140910543-1 npm run build",
+    "build-testnet": "npm run copy-testnet-config & REACT_APP_SHARE_IMG=testnet-share REACT_APP_GA_ID=UA-129278450-2 npm run build",
     "build": "REACT_APP_CACHE_BUST=$(git describe --always) react-scripts build",
     "copy-mainnet-config": "cp ./public/config.mainnet.js ./public/config.js",
     "copy-testnet-config": "cp ./public/config.testnet.js ./public/config.js",
@@ -63,7 +63,7 @@
   "eslintConfig": {
     "extends": "react-app",
     "rules": {
-      "react-hooks/exhaustive-deps": "off" 
+      "react-hooks/exhaustive-deps": "off"
     }
   },
   "browserslist": {
