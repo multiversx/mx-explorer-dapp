@@ -42,7 +42,7 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
               </h3>
             </div>
           </div>
-          <ShardsList />
+          <ShardsList shardsFetched={dataReady} />
 
           <div className="row">
             <div className="col-12">{children}</div>
