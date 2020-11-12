@@ -10,7 +10,7 @@ const ShardLabel = () => {
   const { search, pathname } = useLocation();
   const dispatch = useGlobalDispatch();
   const urlParams = new URLSearchParams(search);
-  const { shardId, ...rest } = Object.fromEntries(urlParams);
+  const { shard, page, ...rest } = Object.fromEntries(urlParams);
   const { getShards } = adapter();
   const { shards } = useGlobalState();
 
@@ -29,10 +29,10 @@ const ShardLabel = () => {
 
   React.useEffect(fetchShards, []);
 
-  const shardLink = (shardId: string) => {
+  const shardLink = (shard: string) => {
     const nextUrlParams = new URLSearchParams({
       ...rest,
-      ...(shardId ? { shardId } : {}),
+      ...(shard ? { shard } : {}),
     }).toString();
     return `${pathname}?${nextUrlParams}`;
   };
@@ -48,21 +48,21 @@ const ShardLabel = () => {
         overlay={
           <Popover id="popover-positioned-bottom" className="border">
             <Popover.Content>
-              {shards.map((shard, i) => {
+              {shards.map((entry, i) => {
                 return (
                   <NetworkLink
-                    to={shardLink(shard.shardId.toString())}
+                    to={shardLink(entry.shardId.toString())}
                     className={`dropdown-item ${
-                      shardId === shard.shardId.toString() ? 'active' : ''
+                      shard === entry.shardId.toString() ? 'active' : ''
                     }`}
-                    key={shard.shardId + i}
+                    key={entry.shardId + i}
                   >
-                    <ShardSpan shard={shard.shardId} />
+                    <ShardSpan shard={entry.shardId} />
                   </NetworkLink>
                 );
               })}
               <NetworkLink
-                className={`dropdown-item ${shardId === undefined ? 'active' : ''}`}
+                className={`dropdown-item ${shard === undefined ? 'active' : ''}`}
                 key={-1}
                 to={shardLink('')}
               >
@@ -80,10 +80,7 @@ const ShardLabel = () => {
             e.preventDefault();
           }}
         >
-          <FontAwesomeIcon
-            icon={faFilter}
-            className={shardId !== undefined ? 'text-primary' : ''}
-          />
+          <FontAwesomeIcon icon={faFilter} className={shard !== undefined ? 'text-primary' : ''} />
         </a>
       </OverlayTrigger>
     </>
