@@ -20,6 +20,7 @@ export interface IdentityRowType {
 }
 
 const IdentityRow = ({ identity, rank }: IdentityRowType) => {
+  const ref = React.useRef(null);
   const [collapsed, setCollapsed] = React.useState(true);
   const [showDetails, setShowDetails] = React.useState(false);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -35,14 +36,18 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
       if (node.identity) {
         getNodes({ identity: node.identity, size: node.validators, pagination: false }).then(
           (nodes) => {
-            setDataReady(nodes.success);
-            setIdentityNodes(nodes.data);
+            if (ref.current !== null) {
+              setDataReady(nodes.success);
+              setIdentityNodes(nodes.data);
+            }
           }
         );
       } else {
         getNode(node.name).then((node) => {
-          setDataReady(node.success);
-          setIdentityNodes([node.data]);
+          if (ref.current !== null) {
+            setDataReady(node.success);
+            setIdentityNodes([node.data]);
+          }
         });
       }
     }
@@ -54,7 +59,11 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
 
   return (
     <>
-      <tr onClick={expand(identity)} className={`identity-row ${collapsed ? 'collapsed' : ''}`}>
+      <tr
+        onClick={expand(identity)}
+        className={`identity-row ${collapsed ? 'collapsed' : ''}`}
+        ref={ref}
+      >
         <td>{rank}</td>
         <td>
           <div className="d-flex align-items-center">
