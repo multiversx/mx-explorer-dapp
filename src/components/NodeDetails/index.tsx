@@ -59,7 +59,7 @@ const NodeDetails = () => {
 
             setRounds({
               data: roundsData.success
-                ? roundsData.data.map((round: any) => ({
+                ? (roundsData as any).data.map((round: any) => ({
                     key: round.round,
                     value: round.blockWasProposed,
                   }))
