@@ -17,7 +17,7 @@ export default class NodesTable extends React.Component<{
             <tr>
               <th data-testid="publickey">Public key</th>
               <th data-testid="nodeDisplayName">Node Name</th>
-              <th data-testid="shardId">
+              <th data-testid="shard">
                 {this.props.hideFilters === true ? 'Shard' : <ShardLabel />}
               </th>
               <th data-testid="versionNumber">Version</th>

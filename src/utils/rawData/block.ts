@@ -77,6 +77,6 @@ export default {
   timestamp: 1591882248,
   stateRootHash: 'da51c3257883e3f84cdc08a2a3145a6da98fc87f4a57f2ebce6d39107c3d3b0f',
   prevHash: '72f9b72f9ce272ea1addb9e4abe725a61517fa1ca7ea4e744d327f63a82c5aeb',
-  shardId: 0,
+  shard: 0,
   txCount: 0,
 };

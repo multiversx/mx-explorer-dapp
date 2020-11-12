@@ -9,7 +9,7 @@ const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
   const { shards } = useGlobalState();
 
   const blockchainStatus: ShardType = {
-    shardId: -1,
+    shard: -1,
     validators: shards.reduce(
       (totalValidators, shardEntry) => totalValidators + shardEntry.validators,
       0
@@ -21,7 +21,7 @@ const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
     ),
   };
 
-  shards.sort((a, b) => (a.shardId > b.shardId ? 1 : -1));
+  shards.sort((a, b) => (a.shard > b.shard ? 1 : -1));
 
   return (
     <>
@@ -43,7 +43,7 @@ const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
         <div className="row d-flex pl-3">
           <ShardCard shard={blockchainStatus} isOverall />
           {shards.map((shard, i) => (
-            <React.Fragment key={shard.shardId + i}>
+            <React.Fragment key={shard.shard + i}>
               {i === shards.length - 3 && (
                 <div className="d-none d-lg-block d-xl-none" style={{ flexBasis: '100%' }} />
               )}

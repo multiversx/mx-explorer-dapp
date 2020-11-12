@@ -33,7 +33,7 @@ export async function getBlocks({
       size: 25,
       ...(proposer ? { proposer } : {}),
       ...getShardOrEpochParam(shard, epochId),
-      fields: ['hash', 'nonce', 'shardId', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
+      fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
     };
 
     const { data: blocks } = await provider({

@@ -80,7 +80,7 @@ export async function getMiniBlockTransactionsCount({
       params: {
         miniBlockHash,
       },
-      url: `/transactions-alt/count`,
+      url: `/transactions/count`,
       timeout,
     });
 

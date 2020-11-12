@@ -47,7 +47,7 @@ export default async function getBlock({
       provider,
       baseUrl,
       currentBlockId: block.nonce,
-      currentShardId: block.shardId,
+      currentShardId: block.shard,
       timeout,
     });
 

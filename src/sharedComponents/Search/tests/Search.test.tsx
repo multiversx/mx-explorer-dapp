@@ -4,7 +4,12 @@ import addressResponse from './rawData/address';
 
 describe('Search', () => {
   test('Search finds block', async () => {
-    const render = beforeAll({ route: '/search' });
+    const render = beforeAll({
+      route: '/search',
+      networkRequests: {
+        address: () => Promise.resolve(new Error('error')),
+      },
+    });
 
     const search = render.getByTestId('search');
     const data = {

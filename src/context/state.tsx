@@ -10,7 +10,7 @@ export interface ConfigType {
 }
 
 export interface ShardType {
-  shardId: number;
+  shard: number;
   validators: number;
   activeValidators: number;
 }
@@ -42,7 +42,7 @@ export interface NodeType {
   totalDownTimeSec: number;
   totalUpTimeSec: number;
   versionNumber: string;
-  shardId: number;
+  shard: number;
   tempRating: number;
   rating: number;
   ratingModifier: number;

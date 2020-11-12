@@ -81,7 +81,7 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.networkStatus();
       case url.includes('/validators'):
         return requests.validators();
-      case url.includes('/transactions-alt/count'):
+      case url.includes('/transactions/count'):
         return requests.transactionsCount();
       case url.includes('/transactions/'):
         return requests.transaction();
