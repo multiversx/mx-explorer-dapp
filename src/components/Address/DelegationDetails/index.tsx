@@ -23,7 +23,8 @@ const DelegationDetails = (props: AddressDetailsType) => {
           <PageState
             icon={faCoins}
             title="Unable to load delegation"
-            className="delegation-page-state page-state-sm"
+            titleClassName="mt-0"
+            className="page-state-sm"
             dataTestId="delegationErrorScreen"
           />
         </div>

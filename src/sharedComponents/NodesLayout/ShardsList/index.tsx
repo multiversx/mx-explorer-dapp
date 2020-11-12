@@ -2,8 +2,10 @@ import * as React from 'react';
 import { useGlobalState } from 'context';
 import ShardCard from './ShardCard';
 import { ShardType } from 'context/state';
+import { PageState } from 'sharedComponents';
+import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
 
-const ShardsList = () => {
+const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
   const { shards } = useGlobalState();
 
   const blockchainStatus: ShardType = {
@@ -22,17 +24,35 @@ const ShardsList = () => {
   shards.sort((a, b) => (a.shardId > b.shardId ? 1 : -1));
 
   return (
-    <div className="row d-flex pl-3">
-      <ShardCard shard={blockchainStatus} isOverall />
-      {shards.map((shard, i) => (
-        <React.Fragment key={shard.shardId + i}>
-          {i === shards.length - 3 && (
-            <div className="d-none d-lg-block d-xl-none" style={{ flexBasis: '100%' }} />
-          )}
-          <ShardCard shard={shard} />
-        </React.Fragment>
-      ))}
-    </div>
+    <>
+      {shardsFetched === false ? (
+        <div className="row">
+          <div className="col mb-spacer">
+            <div className="card py-4">
+              <PageState
+                icon={faLayerGroup}
+                title="Unable to load shards"
+                titleClassName="mt-0"
+                className="page-state-sm"
+                dataTestId="errorScreen"
+              />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="row d-flex pl-3">
+          <ShardCard shard={blockchainStatus} isOverall />
+          {shards.map((shard, i) => (
+            <React.Fragment key={shard.shardId + i}>
+              {i === shards.length - 3 && (
+                <div className="d-none d-lg-block d-xl-none" style={{ flexBasis: '100%' }} />
+              )}
+              <ShardCard shard={shard} />
+            </React.Fragment>
+          ))}
+        </div>
+      )}
+    </>
   );
 };
 

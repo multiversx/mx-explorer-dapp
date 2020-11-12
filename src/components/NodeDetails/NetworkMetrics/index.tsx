@@ -37,6 +37,7 @@ const NetworkMetrics = ({ node }: { node: NodeType }) => {
               totalUpTimeLabel={totalUpTimeLabel}
               totalUpTimePercentege={totalUpTimePercentege}
               totalDownTimePercentege={totalDownTimePercentege}
+              tooltipPlacementUp={false}
             />
           </DetailItem>
 
