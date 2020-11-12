@@ -116,6 +116,7 @@ const Address = () => {
   React.useEffect(() => {
     fetchData();
     fetchTransactionsCount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, size, addressId]);
 
   React.useEffect(() => {
@@ -125,16 +126,18 @@ const Address = () => {
         fetchData();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstPageTicker]);
 
   React.useEffect(() => {
     if (!loading) {
       fetchData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalTransactions]);
 
   const loading = dataReady === undefined && transactionsFetched === undefined;
-  const failed = addressDetails.detailsFetched === false || !addressIsBech32(addressId);
+  const failed = dataReady === false || !addressIsBech32(addressId);
   const showTransactions = transactionsFetched === true && transactions.length > 0;
 
   return (
