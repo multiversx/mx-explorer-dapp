@@ -21,14 +21,14 @@ export default function AppSwitcher({ onToggle }: { onToggle?: () => void }) {
   return (
     <NavDropdown
       title={
-        <div className="nav-link-icon flex-fill text-lg-center">
-          <i className="material-icons icon-sm m-0 d-none d-lg-block">
+        <div className="nav-link-icon flex-fill text-md-center">
+          <i className="material-icons icon-sm m-0 d-none d-md-block">
             <span className="px-1 my-0 mx-2">
               <FontAwesomeIcon icon={faTh} />
             </span>
           </i>
-          <span className="d-lg-none">Switch to</span>
-          <FontAwesomeIcon className="d-inline-block d-lg-none ml-1" icon={faAngleDown} />
+          <span className="d-md-none">Switch to</span>
+          <FontAwesomeIcon className="d-inline-block d-md-none ml-1" icon={faAngleDown} />
         </div>
       }
       id="app-switcher-dropdown"

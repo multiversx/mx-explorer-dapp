@@ -19,7 +19,7 @@ const Logo = () => {
       <ElrondSymbol
         className={`main-symbol flex-shrink-0 ${id === 'mainnet' ? 'd-none' : 'd-block d-md-none'}`}
       />
-      <span className="text-secondary text-truncate logo-title">{title}</span>
+      <span className="text-secondary text-truncate">{title}</span>
     </Link>
   );
 };
