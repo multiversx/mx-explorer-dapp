@@ -22,26 +22,29 @@ $input-bg: $card-bg;
 $input-disabled-bg: #e9ecef;
 $input-hover-border-color: darken($border-color, 15%);
 
-.detail-item,
-.table {
+@import './main';
+
+.main-content-container {
   a:not(.trim-wrapper) {
     text-decoration: underline;
-    &:hover {
-      text-decoration: underline;
-    }
   }
+
   a.trim-wrapper {
     position: relative;
+
     &::after {
       content: '';
       position: absolute;
       width: 100%;
       height: 0;
       left: 0;
-      bottom: 0.3rem;
-      border-bottom: 2px solid $primary;
+      bottom: 0.25rem;
+      border-bottom: 1px solid $primary;
     }
   }
+
+  .nodes-filters,
+  .nodes-tabs,
   .pager {
     a {
       text-decoration: initial;
@@ -49,5 +52,3 @@ $input-hover-border-color: darken($border-color, 15%);
     }
   }
 }
-
-@import './main';
