@@ -10,6 +10,7 @@ interface BasicPageStateType {
   action?: React.ReactNode;
   iconClassName?: string;
   dataTestId?: string;
+  titleClassName?: string;
 }
 
 interface PageStateWithIcon extends BasicPageStateType {
@@ -32,6 +33,7 @@ const PageState = ({
   className = '',
   iconClassName,
   dataTestId,
+  titleClassName,
 }: PageStateType) => (
   <div className={`text-center ${className}`} data-testid={dataTestId}>
     <div className="my-spacer">
@@ -40,7 +42,7 @@ const PageState = ({
       ) : (
         <IconState className={iconClassName} icon={icon ? icon : faInfoCircle} />
       )}
-      <div className="mt-spacer">
+      <div className={titleClassName ? titleClassName : 'mt-spacer'}>
         {title && <p className="h4">{title}</p>}
         {description && <>{description}</>}
       </div>
