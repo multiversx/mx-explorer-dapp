@@ -11,6 +11,7 @@ import miniblockTransactions from './miniblockTransactions';
 import blocks from './blocks';
 import block from './block';
 import meta from './meta';
+import delegation from './delegation';
 import address from './address';
 import ratings from './ratings';
 export {
@@ -29,4 +30,5 @@ export {
   meta,
   address,
   ratings,
+  delegation,
 };

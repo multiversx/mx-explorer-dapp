@@ -1,10 +1,5 @@
 export default {
-  account: {
-    address: 'erd1s5zs68g3j463rgqjskueh9288qhv3w2l7xac4g78vn9jue88ddds6alj03',
-    nonce: 0,
-    balance: '74200000000000000000000',
-    code: '',
-    codeHash: null,
-    rootHash: null,
-  },
+  address: 'erd1gcych4shda2nrfxulflhrxm8k8qhv6vz9ygwdply646vu97hqulsvnfl88',
+  nonce: 15,
+  balance: '62803693501081701872',
 };
