@@ -52,7 +52,7 @@ const BlockData = (props: BlockDataType) => {
                         Next <FontAwesomeIcon icon={faChevronRight} />
                       </NetworkLink>
                     ) : (
-                      <span className="text-muted">
+                      <span className="text-secondary">
                         Next <FontAwesomeIcon icon={faChevronRight} />
                       </span>
                     )}
@@ -72,7 +72,7 @@ const BlockData = (props: BlockDataType) => {
           <DetailItem title="Epoch">{block.epoch}</DetailItem>
 
           <DetailItem title="Age">
-            <FontAwesomeIcon icon={faClock} className="mr-2 text-muted" />
+            <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
             <TimeAgo value={block.timestamp} />
             &nbsp;<span className="text-secondary">({dateFormatted(block.timestamp)})</span>
           </DetailItem>
@@ -114,7 +114,7 @@ const BlockData = (props: BlockDataType) => {
               {block.proposer ? (
                 <Trim text={block.proposer} />
               ) : (
-                <span className="text-muted">N/A</span>
+                <span className="text-secondary">N/A</span>
               )}
             </NetworkLink>
           </DetailItem>
@@ -138,7 +138,7 @@ const BlockData = (props: BlockDataType) => {
             {block.stateRootHash ? (
               <Trim text={block.stateRootHash} />
             ) : (
-              <span className="text-muted">N/A</span>
+              <span className="text-secondary">N/A</span>
             )}
           </DetailItem>
 
@@ -147,7 +147,7 @@ const BlockData = (props: BlockDataType) => {
               {block.notarizedBlocksHashes === undefined ||
               (Array.isArray(block.notarizedBlocksHashes) &&
                 block.notarizedBlocksHashes.length === 0) ? (
-                <span className="text-muted">N/A</span>
+                <span className="text-secondary na-item">N/A</span>
               ) : (
                 <div className="hash-group">
                   {block.notarizedBlocksHashes.map((item, i) => (
@@ -168,7 +168,7 @@ const BlockData = (props: BlockDataType) => {
           <DetailItem title="Miniblocks" className="hash-group-row">
             {block.miniBlocksHashes === undefined ||
             (Array.isArray(block.miniBlocksHashes) && block.miniBlocksHashes.length === 0) ? (
-              <span className="text-muted">N/A</span>
+              <span className="text-secondary na-item">N/A</span>
             ) : (
               <div className="hash-group">
                 {block.miniBlocksHashes.map((item) => (
@@ -188,13 +188,13 @@ const BlockData = (props: BlockDataType) => {
           <DetailItem title="Previous Hash">
             <div className="d-flex align-items-center">
               {isFirstBlock ? (
-                <span className="text-muted">N/A</span>
+                <span className="text-secondary">N/A</span>
               ) : (
                 <NetworkLink className="trim-wrapper" to={`/blocks/${block.prevHash}`}>
                   {block.prevHash ? (
                     <Trim text={block.prevHash} />
                   ) : (
-                    <span className="text-muted">N/A</span>
+                    <span className="text-secondary">N/A</span>
                   )}
                 </NetworkLink>
               )}
@@ -205,7 +205,7 @@ const BlockData = (props: BlockDataType) => {
             {block.pubKeyBitmap ? (
               <Trim text={block.pubKeyBitmap} />
             ) : (
-              <span className="text-muted">N/A</span>
+              <span className="text-secondary">N/A</span>
             )}
           </DetailItem>
 

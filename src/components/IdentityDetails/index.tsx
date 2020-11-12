@@ -1,10 +1,11 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { IdentityType } from 'context/state';
-import { adapter, Loader, DetailItem, Pager, PageState } from 'sharedComponents';
+import { adapter, Loader, DetailItem, Pager, PageState, IdentityAvatar } from 'sharedComponents';
 import { useParams } from 'react-router-dom';
 import { NodesTable } from 'sharedComponents';
 import { useFilters } from 'helpers';
+import { useGlobalState } from 'context';
 
 const IdentityDetails = () => {
   const ref = React.useRef(null);
@@ -15,6 +16,9 @@ const IdentityDetails = () => {
   const [nodes, setNodes] = React.useState<any>();
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
   const { getQueryObject, size } = useFilters();
+  const {
+    activeNetwork: { erdLabel },
+  } = useGlobalState();
 
   const fetchData = () => {
     const queryObject = getQueryObject();
@@ -59,16 +63,8 @@ const IdentityDetails = () => {
                 <div className="card">
                   <div className="card-header">
                     <div className="card-header-item p-0">
-                      <div className="identity-header-item px-lg-spacer">
-                        <img
-                          className={`mr-3 avatar rounded-circle shadow-sm ${
-                            identity.avatar ? '' : 'gray'
-                          }`}
-                          src={identity.avatar ? identity.avatar : '/validators/default-avatar.svg'}
-                          alt={identity.name}
-                          height="42"
-                        />
-
+                      <div className="identity-header-item px-lg-spacer justify-content-center">
+                        <IdentityAvatar identity={identity} />
                         {identity.name ? identity.name : 'N/A'}
                       </div>
                     </div>
@@ -79,27 +75,27 @@ const IdentityDetails = () => {
                         {identity.location ? (
                           identity.location
                         ) : (
-                          <span className="text-muted">N/A</span>
+                          <span className="text-secondary">N/A</span>
                         )}
                       </DetailItem>
 
                       <DetailItem title="Twitter" colWidth="3">
                         {identity.twitter ? (
-                          <a target={`_blank`} href={identity.twitter}>
+                          <a target={`_blank`} rel={`noreferrer nofollow`} href={identity.twitter}>
                             {identity.twitter.split('/').pop()}
                           </a>
                         ) : (
-                          <span className="text-muted">N/A</span>
+                          <span className="text-secondary">N/A</span>
                         )}
                       </DetailItem>
 
                       <DetailItem title="Web" colWidth="3">
                         {identity.website ? (
-                          <a target={`_blank`} href={identity.website}>
+                          <a target={`_blank`} rel={`noreferrer nofollow`} href={identity.website}>
                             {identity.website}
                           </a>
                         ) : (
-                          <span className="text-muted">N/A</span>
+                          <span className="text-secondary">N/A</span>
                         )}
                       </DetailItem>
                     </div>
@@ -111,7 +107,7 @@ const IdentityDetails = () => {
                   <div className="card-body p-0">
                     <div className="container-fluid">
                       <DetailItem title="Stake" colWidth="4">
-                        {identity.stake.toLocaleString('en')}
+                        {identity.stake.toLocaleString('en')} {erdLabel}
                       </DetailItem>
 
                       <DetailItem title="Stake percent" colWidth="4">

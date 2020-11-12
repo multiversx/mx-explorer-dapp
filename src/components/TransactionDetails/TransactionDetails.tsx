@@ -76,13 +76,13 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
           <DetailItem title="Age">
             {transaction.timestamp !== undefined ? (
               <>
-                <FontAwesomeIcon icon={faClock} className="mr-2 text-muted" />
+                <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
                 <TimeAgo value={transaction.timestamp} />
                 &nbsp;
                 <span className="text-secondary">({dateFormatted(transaction.timestamp)})</span>
               </>
             ) : (
-              <span className="text-muted">N/A</span>
+              <span className="text-secondary">N/A</span>
             )}
           </DetailItem>
 
@@ -96,7 +96,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                   <Trim text={transaction.miniBlockHash} />
                 </NetworkLink>
               ) : (
-                <span className="text-muted">N/A</span>
+                <span className="text-secondary">N/A</span>
               )}
             </div>
           </DetailItem>
@@ -155,7 +155,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
             {transaction.gasUsed !== undefined ? (
               <Denominate value={getFee(transaction)} showLastNonZeroDecimal />
             ) : (
-              <span className="text-muted">N/A</span>
+              <span className="text-secondary">N/A</span>
             )}
           </DetailItem>
 
@@ -165,7 +165,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
             {transaction.gasUsed ? (
               <>{transaction.gasUsed.toLocaleString('en')}</>
             ) : (
-              <span className="text-muted">N/A</span>
+              <span className="text-secondary">N/A</span>
             )}
           </DetailItem>
 

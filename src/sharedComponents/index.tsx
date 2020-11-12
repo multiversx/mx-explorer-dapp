@@ -22,6 +22,7 @@ import DetailItem from './DetailItem';
 import Trim from './Trim';
 import Led from './Led';
 import AxiosErrorHandler from './AxiosErrorHandler';
+import IdentityAvatar from './IdentityAvatar';
 
 export {
   Denominate,
@@ -49,4 +50,5 @@ export {
   Trim,
   Led,
   AxiosErrorHandler,
+  IdentityAvatar,
 };
