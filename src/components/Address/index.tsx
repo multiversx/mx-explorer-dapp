@@ -20,6 +20,7 @@ const initialAddressDetails: AddressDetailsType = {
   balance: '...',
   nonce: 0,
   detailsFetched: true,
+  rewardsFetched: true,
   claimableRewards: 0,
   stake: 0,
 };
@@ -72,6 +73,7 @@ const Address = () => {
       setAddressDetails(({ stake, claimableRewards }) => ({
         ...addressDetails,
         detailsFetched: addressDetailsData.success,
+        rewardsFetched: rewardsData.success,
         stake,
         claimableRewards,
       }));
