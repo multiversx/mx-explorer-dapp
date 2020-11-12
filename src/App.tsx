@@ -1,3 +1,4 @@
+import { useIsMainnet } from 'helpers';
 import React, { useMemo } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -6,7 +7,7 @@ import Layout from './components/Layout';
 import PageNotFoud from './components/PageNotFoud';
 import { GlobalProvider, useGlobalState } from './context';
 import { ConfigType, NetworkType } from './context/state';
-import routes from './routes';
+import routes, { validatorsRoutes } from './routes';
 
 export const Routes = ({
   routes,
@@ -17,12 +18,20 @@ export const Routes = ({
     config: { networks },
     activeNetwork,
   } = useGlobalState();
+  const isMainnet = useIsMainnet();
+
+  const restrictedRoutes = routes.filter(({ path }) => {
+    if (!isMainnet && [validatorsRoutes.index, validatorsRoutes.identityDetails].includes(path)) {
+      return false;
+    }
+    return true;
+  });
 
   return useMemo(
     () => (
       <Switch>
         {networks.map((network: NetworkType, i: number) => {
-          return routes.map((route, i) => {
+          return restrictedRoutes.map((route, i) => {
             return (
               <Route
                 path={`/${network.id}${route.path}`}
@@ -40,7 +49,7 @@ export const Routes = ({
           component={PageNotFoud}
         />
         ,
-        {routes.map((route, i) => {
+        {restrictedRoutes.map((route, i) => {
           return (
             <Route
               path={route.path}
@@ -53,7 +62,8 @@ export const Routes = ({
         <Route component={PageNotFoud} />
       </Switch>
     ),
-    [networks, activeNetwork, routes]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [networks, activeNetwork.id]
   );
 };
 

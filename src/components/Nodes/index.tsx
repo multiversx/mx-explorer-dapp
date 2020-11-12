@@ -4,7 +4,7 @@ import { adapter, Loader, Pager, PageState } from 'sharedComponents';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import { NodesTable } from 'sharedComponents';
 import Filters from './Filters';
-import { useFilters } from 'helpers';
+import { useFilters, useIsMainnet } from 'helpers';
 import NodesLayout from 'sharedComponents/NodesLayout';
 import { useLocation } from 'react-router-dom';
 import NodeTabs from 'sharedComponents/NodesLayout/NodeTabs';
@@ -18,6 +18,7 @@ const Nodes = () => {
   const { nodes } = useGlobalState();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
+  const isMainnet = useIsMainnet();
 
   const fetchNodes = () => {
     const queryObject = getQueryObject();
@@ -46,7 +47,7 @@ const Nodes = () => {
       <NodesLayout>
         <div className="card" ref={ref}>
           <div className="card-header">
-            <NodeTabs />
+            {isMainnet && <NodeTabs />}
 
             <div className="card-header-item">
               <Filters resultsCount={nodes.length} />
