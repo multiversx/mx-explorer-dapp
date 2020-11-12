@@ -82,6 +82,7 @@
     "@testing-library/react": "9.3.0",
     "@welldone-software/why-did-you-render": "4.2.5",
     "husky": "4.2.5",
+    "jest-canvas-mock": "2.3.0",
     "prettier": "2.0.5",
     "react-app-rewire-hot-loader": "2.0.1",
     "react-app-rewired": "2.1.6",
