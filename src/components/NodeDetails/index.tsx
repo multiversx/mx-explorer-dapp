@@ -81,6 +81,9 @@ const NodeDetails = () => {
 
   React.useEffect(fetchNodes, [search]);
 
+  const showIdentityCard =
+    identity.success === false || (identity.success && identity.data !== undefined);
+
   return (
     <>
       {dataReady === undefined && <Loader />}
@@ -105,10 +108,10 @@ const NodeDetails = () => {
               </div>
               <Alert node={node.data} />
               <div className="row">
-                <div className={`mb-spacer ${identity.success ? 'col-md-8' : 'col-12'}`}>
-                  <NodeInformation node={node.data} colWidth={identity.success ? '3' : '2'} />
+                <div className={`mb-spacer ${showIdentityCard ? 'col-md-8' : 'col-12'}`}>
+                  <NodeInformation node={node.data} colWidth={showIdentityCard ? '3' : '2'} />
                 </div>
-                {identity.success && identity.data !== undefined && (
+                {showIdentityCard && (
                   <div className="col-md-4 mb-spacer">
                     <Identity identity={identity.data} />
                   </div>
