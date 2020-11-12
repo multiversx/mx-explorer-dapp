@@ -57,7 +57,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
   };
 
   return (
-    <div className="d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
+    <div className="nodes-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
       <ul className="list-inline m-0">
         <li className="list-inline-item my-1 my-md-0">
           <NetworkLink
