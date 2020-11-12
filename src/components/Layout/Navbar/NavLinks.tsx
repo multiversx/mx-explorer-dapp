@@ -1,8 +1,7 @@
 import React from 'react';
 import { NetworkLink } from 'sharedComponents';
 import { validatorsRoutes } from 'routes';
-import useMatchPath from './useMatchPath';
-import { useNetworkRoute } from 'helpers';
+import { useNetworkRoute, useMatchPath, useIsMainnet } from 'helpers';
 
 interface NavLinksType {
   setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,7 +13,7 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
   const onToggle = (isExpanded: boolean) => {
     setExpanded(isExpanded);
   };
-
+  const isMainnet = useIsMainnet();
   return (
     <>
       <NetworkLink
@@ -47,7 +46,7 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
             ? 'active'
             : ''
         }`}
-        to={validatorsRoutes.index}
+        to={isMainnet ? validatorsRoutes.index : validatorsRoutes.nodes}
         onClick={() => onToggle(false)}
       >
         Validators
