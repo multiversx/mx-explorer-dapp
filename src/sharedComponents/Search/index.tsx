@@ -6,7 +6,11 @@ import { useNetworkRoute } from 'helpers';
 import { Redirect, useLocation } from 'react-router-dom';
 import { adapter } from 'sharedComponents';
 
-const Search = () => {
+interface SearchType {
+  setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Search = ({ setExpanded = () => null }: SearchType) => {
   const { pathname } = useLocation();
   const networkRoute = useNetworkRoute();
   const { isAddress, isBlock, isTransaction, getNode, getMiniBlock } = adapter();
@@ -33,6 +37,7 @@ const Search = () => {
         isAddress(hash),
         getMiniBlock(hash),
       ]).then(([node, block, transaction, address, miniblock]) => {
+        setExpanded(false);
         switch (true) {
           case node.success:
             setRoute(networkRoute(`/nodes/${hash}`));
@@ -78,11 +83,11 @@ const Search = () => {
   return route ? (
     <Redirect to={route} />
   ) : (
-    <form className="w-100 d-flex">
-      <div className="input-group input-group-seamless py-2">
+    <form className="w-100 d-flex mx-lg-2">
+      <div className="input-group input-group-seamless py-lg-2">
         <input
           type="text"
-          className="form-control rounded-pill mx-2 my-1"
+          className="form-control rounded-pill my-1"
           placeholder="Address / Tx Hash / Block Hash / Validator Key"
           name="requestType"
           data-testid="search"
@@ -91,7 +96,7 @@ const Search = () => {
           onChange={handleChange}
           onKeyDown={handleKeyDown}
         />
-        <div className="input-group-append pr-2">
+        <div className="input-group-append">
           <button
             type="submit"
             className="input-group-text side-action outline-0 m-0"

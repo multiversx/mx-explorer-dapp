@@ -5,11 +5,10 @@ import useMatchPath from './useMatchPath';
 import { useNetworkRoute } from 'helpers';
 
 interface NavLinksType {
-  expanded?: boolean;
   setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function NavLinks({ expanded = false, setExpanded = () => null }: NavLinksType) {
+export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
   const networkRoute = useNetworkRoute();
   const matchPath = useMatchPath();
   const onToggle = (isExpanded: boolean) => {
