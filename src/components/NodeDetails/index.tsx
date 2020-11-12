@@ -45,7 +45,9 @@ const NodeDetails = () => {
             validator: publicKey,
           }),
           getBlocks({ proposer: publicKey }),
-          ...(isMainnet ? [getIdentity(nodeData.data.identity)] : []),
+          ...(isMainnet && nodeData.data.identity !== undefined
+            ? [getIdentity(nodeData.data.identity)]
+            : []),
         ];
         Promise.all(promises).then((response) => {
           const [roundsData, blocksData, identityData] = response;
@@ -66,7 +68,7 @@ const NodeDetails = () => {
                 : [],
               success: roundsData.success,
             });
-            if (isMainnet) {
+            if (isMainnet && identityData) {
               setIdentity(identityData);
             }
 
