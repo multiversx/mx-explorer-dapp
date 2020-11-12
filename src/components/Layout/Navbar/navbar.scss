@@ -81,6 +81,16 @@
     }
   }
 
+  .nav-link:hover {
+    .nav-link-icon {
+      color: $primary;
+
+      .material-icons {
+        color: $primary;
+      }
+    }
+  }
+
   .dropdown-menu {
     .dropdown-item {
       &.active {
@@ -96,6 +106,16 @@
   .nav-link:hover,
   .nav-link.active {
     border-bottom: 1px solid transparent !important;
+  }
+
+  .nav-link:hover {
+    .nav-link-icon {
+      color: $primary;
+    }
+  }
+
+  .nav-link-icon {
+    color: $secondary;
   }
 
   .dropdown-toggle {
