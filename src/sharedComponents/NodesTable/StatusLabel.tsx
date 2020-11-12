@@ -8,7 +8,7 @@ import { NetworkLink } from 'sharedComponents';
 const StatusLabel = () => {
   const { search, pathname } = useLocation();
   const urlParams = new URLSearchParams(search);
-  const { status, ...rest } = Object.fromEntries(urlParams);
+  const { status, page, ...rest } = Object.fromEntries(urlParams);
 
   const statusLink = (status: string) => {
     const nextUrlParams = new URLSearchParams({
