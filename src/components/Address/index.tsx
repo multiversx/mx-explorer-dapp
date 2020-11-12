@@ -137,7 +137,7 @@ const Address = () => {
   }, [totalTransactions]);
 
   const loading = dataReady === undefined && transactionsFetched === undefined;
-  const failed = addressDetails.detailsFetched === false || !addressIsBech32(addressId);
+  const failed = dataReady === false || !addressIsBech32(addressId);
   const showTransactions = transactionsFetched === true && transactions.length > 0;
 
   return (
