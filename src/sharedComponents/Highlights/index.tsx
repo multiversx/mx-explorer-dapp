@@ -2,20 +2,17 @@ import * as React from 'react';
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
 import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
-import { faStopwatch } from '@fortawesome/pro-regular-svg-icons/faStopwatch';
+import { faWallet } from '@fortawesome/pro-regular-svg-icons/faWallet';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { adapter } from 'sharedComponents';
 import Epoch from './Epoch';
 
 export interface StateType {
-  blockNumber: string;
-  nrOfNodes: string;
-  nrOfShards: string;
-  roundNumber: string;
-  liveTPS: string;
-  peakTPS: string;
-  totalProcessedTxCount: string;
+  shards: string;
+  blocks: string;
+  addresses: string;
+  transactions: string;
 }
 
 interface ItemType {
@@ -40,13 +37,10 @@ const Item = ({ title, value, icon, dataTestId = '' }: ItemType) => (
 );
 
 const initialState = {
-  blockNumber: '...',
-  nrOfNodes: '...',
-  nrOfShards: '...',
-  roundNumber: '...',
-  liveTPS: '...',
-  peakTPS: '...',
-  totalProcessedTxCount: '...',
+  shards: '...',
+  blocks: '...',
+  addresses: '...',
+  transactions: '...',
 };
 
 const Hightlights = () => {
@@ -72,15 +66,10 @@ const Hightlights = () => {
       getHighlights().then(({ data, success }) => {
         const newState = success
           ? {
-              blockNumber: data.blockCount
-                ? parseInt(data.blockCount).toLocaleString('en')
-                : parseInt(data.blockNumber).toLocaleString('en'),
-              nrOfNodes: parseInt(data.nrOfNodes).toLocaleString('en'),
-              nrOfShards: parseInt(data.nrOfShards).toLocaleString('en'),
-              roundNumber: parseInt(data.roundNumber).toLocaleString('en'),
-              liveTPS: parseInt(data.liveTPS).toLocaleString('en'),
-              peakTPS: parseInt(data.peakTPS).toLocaleString('en'),
-              totalProcessedTxCount: parseInt(data.totalProcessedTxCount).toLocaleString('en'),
+              shards: parseInt(data.shards).toLocaleString('en'),
+              blocks: parseInt(data.blocks).toLocaleString('en'),
+              addresses: parseInt(data.addresses).toLocaleString('en'),
+              transactions: parseInt(data.transactions).toLocaleString('en'),
             }
           : initialState;
 
@@ -99,7 +88,7 @@ const Hightlights = () => {
 
   React.useEffect(getData, [timestamp, activeNetworkId]);
 
-  const { blockNumber, nrOfShards, peakTPS, totalProcessedTxCount } =
+  const { shards, blocks, addresses, transactions } =
     activeNetworkId in state ? state[activeNetworkId] : initialState;
 
   return (
@@ -110,24 +99,14 @@ const Hightlights = () => {
             <div className="col my-4">
               <ul className="list-unstyled d-flex flex-wrap justify-content-between m-0 p-0">
                 <Epoch />
-                <Item icon={faCube} title="Blocks" dataTestId="metaBlocks" value={blockNumber} />
-                <Item
-                  icon={faLayerGroup}
-                  title="Shards"
-                  dataTestId="metaShards"
-                  value={nrOfShards}
-                />
-                <Item
-                  icon={faStopwatch}
-                  title="Peak Tps"
-                  dataTestId="metaPeakTps"
-                  value={peakTPS}
-                />
+                <Item icon={faLayerGroup} title="Shards" dataTestId="metaShards" value={shards} />
+                <Item icon={faCube} title="Blocks" dataTestId="metaBlocks" value={blocks} />
+                <Item icon={faWallet} title="Wallets" dataTestId="metaWallets" value={addresses} />
                 <Item
                   icon={faExchangeAlt}
                   title="Transactions"
                   dataTestId="metaTransactions"
-                  value={totalProcessedTxCount}
+                  value={transactions}
                 />
               </ul>
             </div>

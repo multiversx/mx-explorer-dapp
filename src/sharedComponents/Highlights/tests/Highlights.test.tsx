@@ -9,15 +9,15 @@ describe('Highlights tests', () => {
     expect(metaEpochTimeRemaining.innerHTML).toBe('0:43 remaining');
 
     const metaBlocks = await render.findByTestId('metaBlocks');
-    expect(metaBlocks.innerHTML).toBe('9,480');
+    expect(metaBlocks.innerHTML).toBe('6,032,053');
 
     const metaShards = await render.findByTestId('metaShards');
-    expect(metaShards.innerHTML).toBe('5');
+    expect(metaShards.innerHTML).toBe('3');
 
-    const metaPeakTps = await render.findByTestId('metaPeakTps');
-    expect(metaPeakTps.innerHTML).toBe('858');
+    const metaWallets = await render.findByTestId('metaWallets');
+    expect(metaWallets.innerHTML).toBe('59,707');
 
     const metaTransactions = await render.findByTestId('metaTransactions');
-    expect(metaTransactions.innerHTML).toBe('3,332,899');
+    expect(metaTransactions.innerHTML).toBe('234,191');
   });
 });
