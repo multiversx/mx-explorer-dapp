@@ -12,14 +12,14 @@ const Logo = () => {
   const title = id === 'mainnet' ? 'Explorer' : 'Testnet Explorer';
 
   return (
-    <Link to="/" className="d-flex align-items-center navbar-brand mr-0">
+    <Link to="/" className="d-flex align-items-center navbar-brand mr-2 pr-1">
       <ElrondLogo
         className={`main-logo flex-shrink-0 ${id === 'mainnet' ? 'd-none d-md-block' : 'd-none'}`}
       />
       <ElrondSymbol
         className={`main-symbol flex-shrink-0 ${id === 'mainnet' ? 'd-block d-md-none' : ''}`}
       />
-      <span className="text-secondary text-truncate">{title}</span>
+      <span className="text-secondary text-truncate logo-title">{title}</span>
     </Link>
   );
 };

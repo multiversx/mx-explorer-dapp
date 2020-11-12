@@ -1,19 +1,19 @@
 import * as React from 'react';
-import { DetailItem, NetworkLink, Trim } from 'sharedComponents';
+import { DetailItem, NetworkLink, Trim, IdentityAvatar } from 'sharedComponents';
 import { IdentityType } from 'context/state';
+import { useGlobalState } from 'context';
 
 const Identity = ({ identity }: { identity: IdentityType }) => {
+  const {
+    activeNetwork: { erdLabel },
+  } = useGlobalState();
+
   return (
     <div className="card" data-testid="brandContainer">
       <div className="card-header">
         <div className="card-header-item p-0">
           <div className="identity-header-item px-lg-3 justify-content-center">
-            <img
-              className={`mr-3 avatar rounded-circle shadow-sm ${identity.avatar ? '' : 'gray'}`}
-              src={identity.avatar ? identity.avatar : '/validators/default-avatar.svg'}
-              alt={identity.name}
-              height="42"
-            />
+            <IdentityAvatar identity={identity} />
 
             {identity.identity ? (
               <NetworkLink to={`/validators/${identity.identity}`}>
@@ -28,7 +28,7 @@ const Identity = ({ identity }: { identity: IdentityType }) => {
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Stake" colWidth="6">
-            {identity.stake.toLocaleString('en')}
+            {identity.stake.toLocaleString('en')} {erdLabel}
           </DetailItem>
           <DetailItem title="Stake percent" colWidth="6">
             {Math.round(identity.stakePercent) > 0 ? Math.round(identity.stakePercent) : '< 1'}%

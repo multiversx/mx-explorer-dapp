@@ -175,12 +175,11 @@ export default function useAdapter() {
         key,
       }),
 
-    getRounds: ({ validator, shard }: f.GetRoundsType) =>
+    getRounds: ({ validator }: f.GetRoundsType) =>
       f.getRounds({
         provider,
         baseUrl,
         validator,
-        shard,
         timeout,
       }),
 

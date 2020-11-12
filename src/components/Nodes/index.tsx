@@ -42,40 +42,42 @@ const Nodes = () => {
   React.useEffect(fetchNodes, [search]);
 
   return (
-    <NodesLayout>
-      <div className="card" ref={ref}>
-        <div className="card-header">
-          <NodeTabs />
+    <div className="d-flex flex-column flex-fill" ref={ref}>
+      <NodesLayout>
+        <div className="card" ref={ref}>
+          <div className="card-header">
+            <NodeTabs />
 
-          <div className="card-header-item">
-            <Filters resultsCount={nodes.length} />
+            <div className="card-header-item">
+              <Filters resultsCount={nodes.length} />
+            </div>
           </div>
+
+          {dataReady === undefined && <Loader />}
+          {dataReady === false && (
+            <PageState
+              icon={faCogs}
+              title="Unable to load nodes"
+              className="py-spacer my-auto"
+              dataTestId="errorScreen"
+            />
+          )}
+
+          {dataReady === true && (
+            <>
+              <div className="card-body p-0">
+                <NodesTable>
+                  <NodesTable.Body nodes={nodes} />
+                </NodesTable>
+              </div>
+              <div className="card-footer">
+                <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+              </div>
+            </>
+          )}
         </div>
-
-        {dataReady === undefined && <Loader />}
-        {dataReady === false && (
-          <PageState
-            icon={faCogs}
-            title="Unable to load nodes"
-            className="py-spacer my-auto"
-            dataTestId="errorScreen"
-          />
-        )}
-
-        {dataReady === true && (
-          <>
-            <div className="card-body p-0">
-              <NodesTable>
-                <NodesTable.Body nodes={nodes} />
-              </NodesTable>
-            </div>
-            <div className="card-footer">
-              <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
-            </div>
-          </>
-        )}
-      </div>
-    </NodesLayout>
+      </NodesLayout>
+    </div>
   );
 };
 

@@ -6,6 +6,16 @@
     }
   }
 
+  @media (max-width: 360px) {
+    .logo-title {
+      display: none;
+    }
+
+    .main-symbol {
+      margin-right: 0 !important;
+    }
+  }
+
   .dropdown-toggle {
     padding: 0;
     height: 100%;
@@ -39,12 +49,6 @@
       path {
         fill: $primary;
       }
-    }
-  }
-
-  .main-navbar__search {
-    .input-group {
-      min-width: 1rem;
     }
   }
 }
