@@ -110,7 +110,7 @@ export async function getAddressDetails({ proxyUrl, addressId, timeout }: Detail
     const { data } = await axios.get(`${proxyUrl}/addresses/${addressId}`, { timeout });
     return {
       data,
-      success: true,
+      success: data !== undefined,
     };
   } catch (err) {
     return {

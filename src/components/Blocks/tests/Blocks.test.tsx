@@ -44,7 +44,7 @@ describe('Blocks Page Links', () => {
     });
 
     const link = await render.findByTestId('blockLink0');
-    expect(link.innerHTML).toBe('82768');
+    expect(link.innerHTML).toBe('1490414');
 
     fireEvent.click(link);
     await wait(async () => {
@@ -58,7 +58,7 @@ describe('Blocks Page Links', () => {
     });
 
     const link = await render.findByTestId('blockShardLink0');
-    expect(link.textContent).toBe('Shard 0');
+    expect(link.textContent).toBe('Metachain');
 
     fireEvent.click(link);
     await wait(async () => {
@@ -73,7 +73,7 @@ describe('Blocks Page Links', () => {
 
     const link = await render.findByTestId('blockHashLink0');
     expect(link.textContent).toBe(
-      '7d6df53015199a0991bc03cb8c60c808...4dce5ead1a60c7eadafa4dfcf9990698'
+      'f2b1bc5b74c6d0bc7730e18a7f6a4a89...0820cba85aef4562f11b8100d618004a'
     );
 
     fireEvent.click(link);

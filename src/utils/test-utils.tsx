@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
+import 'jest-canvas-mock';
 import { render } from '@testing-library/react';
 import { GlobalProvider } from 'context';
 import { ConfigType } from 'context/state';
@@ -61,7 +62,8 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
     miniblock: () => Promise.resolve({ data: rawData.miniblock }),
     networkStatus: () => Promise.resolve({ data: { data: rawData.epoch, code: 'successful' } }),
     ratingshistory: () => Promise.resolve({ data: rawData.ratings }),
-    address: () => Promise.resolve({ data: { data: rawData.address, code: 'successful' } }),
+    address: () => Promise.resolve({ data: rawData.address }),
+    delegation: () => Promise.resolve({ data: rawData.delegation }),
     ...networkRequests,
   };
 
@@ -85,7 +87,9 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.transaction();
       case url.includes('/transactions'):
         return requests.transactions();
-      case url.includes('/address/'):
+      case url.includes('/delegation'):
+        return requests.delegation();
+      case url.includes('/addresses/'):
         return requests.address();
       case url.includes('/blocks/count'):
         return requests.blocksCount();

@@ -5,8 +5,7 @@ import { address } from 'utils/rawData';
 describe('Address Page', () => {
   test('Address page is displaying', async () => {
     const render = beforeAll({
-      route: `/address/${address.account.address}`,
-      networkRequests: {},
+      route: `/address/${address.address}`,
     });
 
     expect(document.title).toEqual('Address Details • Elrond Explorer');
@@ -18,16 +17,15 @@ describe('Address Page', () => {
   });
   test('Address page loading state', async () => {
     const render = beforeAll({
-      route: `/address/${address.account.address}`,
-      networkRequests: {},
+      route: `/address/${address.address}`,
     });
     const loader = await render.findByTestId('loader');
     expect(loader).toBeDefined();
   });
 
-  test('Address transactions errorScreen', async () => {
+  test('Address page errorScreen', async () => {
     const render = beforeAll({
-      route: `/address/${address.account.address}`,
+      route: `/address/${address.address}`,
       networkRequests: {
         address: () => Promise.resolve(new Error('error')),
       },
