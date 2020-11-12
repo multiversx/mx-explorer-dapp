@@ -12,6 +12,7 @@ import Rounds, { RoundType } from './Rounds';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 import { BlockType } from 'sharedComponents/BlocksTable';
+import { useIsMainnet } from 'helpers';
 
 interface NodeDetailType<T> {
   data?: T;
@@ -27,6 +28,7 @@ const NodeDetails = () => {
   const { publicKey } = useParams() as any;
   const { search } = useLocation();
   const { getNode, getIdentity, getRounds, getBlocks } = adapter();
+  const isMainnet = useIsMainnet();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
   const [node, setNode] = React.useState<NodeDetailType<NodeType>>(initialState);
@@ -38,18 +40,20 @@ const NodeDetails = () => {
     setDataReady(undefined);
     getNode(publicKey).then((nodeData) => {
       if (nodeData.success) {
-        Promise.all([
-          getIdentity(nodeData.data.identity),
+        const promises = [
           getRounds({
             validator: publicKey,
           }),
           getBlocks({ proposer: publicKey }),
-        ]).then(([identityData, roundsData, blocksData]) => {
+          ...(isMainnet ? [getIdentity(nodeData.data.identity)] : []),
+        ];
+        Promise.all(promises).then((response) => {
+          const [roundsData, blocksData, identityData] = response;
           if (ref.current !== null) {
             setNode(nodeData);
-            setIdentity(identityData);
+
             setBlocks({
-              data: blocksData.blocks,
+              data: (blocksData as any).blocks,
               success: blocksData.success,
             });
 
@@ -62,6 +66,10 @@ const NodeDetails = () => {
                 : [],
               success: roundsData.success,
             });
+            if (isMainnet) {
+              setIdentity(identityData);
+            }
+
             setDataReady(nodeData.success);
           }
         });
