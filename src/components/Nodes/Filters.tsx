@@ -21,7 +21,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
   };
 
   const updateSearchValue = (searchValue: string) => {
-    const { search, ...rest } = Object.fromEntries(urlParams);
+    const { search, page, ...rest } = Object.fromEntries(urlParams);
     const nextUrlParams = new URLSearchParams({
       ...rest,
       ...(searchValue ? { search: searchValue } : {}),
@@ -30,7 +30,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
   };
 
   const peerTypeLink = (peerTypeValue: string) => {
-    const { peerType, nodeType, issues, ...rest } = Object.fromEntries(urlParams);
+    const { peerType, nodeType, issues, page, ...rest } = Object.fromEntries(urlParams);
     const nextUrlParams = new URLSearchParams({
       ...rest,
       ...(peerTypeValue ? { peerType: peerTypeValue } : {}),
@@ -39,7 +39,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
   };
 
   const nodeTypeLink = (nodeTypeValue: string) => {
-    const { nodeType, peerType, issues, ...rest } = Object.fromEntries(urlParams);
+    const { nodeType, peerType, issues, page, ...rest } = Object.fromEntries(urlParams);
     const nextUrlParams = new URLSearchParams({
       ...rest,
       ...(nodeTypeValue ? { nodeType: nodeTypeValue } : {}),
@@ -48,7 +48,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
   };
 
   const issuesLink = (issuesValue: string) => {
-    const { nodeType, peerType, issues, ...rest } = Object.fromEntries(urlParams);
+    const { nodeType, peerType, issues, page, ...rest } = Object.fromEntries(urlParams);
     const nextUrlParams = new URLSearchParams({
       ...rest,
       ...(issuesValue ? { issues: issuesValue, nodeType: 'validator' } : {}),
@@ -151,7 +151,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
             <input
               type="text"
               className="form-control rounded-pill"
-              value={inputValue}
+              value={inputValue || ''}
               onChange={changeValidatorValue}
               onKeyDown={(keyEvent: React.KeyboardEvent) => {
                 if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
@@ -182,10 +182,6 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
             </div>
           </div>
         </div>
-
-        {/* {resultsCount
-          ? `Showing ${resultsCount.toLocaleString('en')} of ${resultsCount.toLocaleString('en')}`
-          : ''} */}
       </div>
     </div>
   );
