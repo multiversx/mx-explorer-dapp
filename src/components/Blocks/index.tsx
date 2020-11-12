@@ -38,21 +38,21 @@ const Blocks = () => {
     getBlocks({ size, shard, epochId: undefined }).then(
       ({ success, blocks, endBlockNr, startBlockNr }) => {
         if (ref.current !== null) {
-          const existingHashes = state ? state.blocks.map((block: BlockType) => block.hash) : [];
-          const newBlocks = blocks.map((block: BlockType) => ({
-            ...block,
-            isNew: !existingHashes.includes(block.hash),
-          }));
-          setState({ blocks: newBlocks, endBlockNr, startBlockNr });
+          if (success) {
+            const existingHashes = state ? state.blocks.map((block: BlockType) => block.hash) : [];
+            const newBlocks = blocks.map((block: BlockType) => ({
+              ...block,
+              isNew: !existingHashes.includes(block.hash),
+            }));
+            setState({ blocks: newBlocks, endBlockNr, startBlockNr });
+          }
           setDataReady(success);
         }
       }
     );
     getBlocksCount({ size, shard }).then(({ count, success }) => {
-      if (success) {
-        if (ref.current !== null) {
-          setTotalBlocks(count);
-        }
+      if (ref.current !== null && success) {
+        setTotalBlocks(count);
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
