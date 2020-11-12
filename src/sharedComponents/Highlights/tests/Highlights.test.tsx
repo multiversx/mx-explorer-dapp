@@ -6,7 +6,7 @@ describe('Highlights tests', () => {
       route: `/`,
     });
     const metaEpochTimeRemaining = await render.findByTestId('metaEpochTimeRemaining');
-    expect(metaEpochTimeRemaining.innerHTML).toBe('00:43 remaining');
+    expect(metaEpochTimeRemaining.innerHTML).toBe('0:43 remaining');
 
     const metaBlocks = await render.findByTestId('metaBlocks');
     expect(metaBlocks.innerHTML).toBe('9,480');
