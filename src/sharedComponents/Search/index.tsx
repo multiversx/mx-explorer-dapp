@@ -18,40 +18,43 @@ const Search = () => {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      setSearching(true);
       onClick();
     }
   };
 
   const onClick = async () => {
-    Promise.all([
-      getNode(hash),
-      isBlock(hash),
-      isTransaction(hash),
-      isAddress(hash),
-      getMiniBlock(hash),
-    ]).then(([node, block, transaction, address, miniblock]) => {
-      switch (true) {
-        case node.success:
-          setRoute(networkRoute(`/nodes/${hash}`));
-          break;
-        case block:
-          setRoute(networkRoute(`/blocks/${hash}`));
-          break;
-        case transaction:
-          setRoute(networkRoute(`/transactions/${hash}`));
-          break;
-        case address:
-          setRoute(networkRoute(`/address/${hash}`));
-          break;
-        case miniblock.blockFetched:
-          setRoute(networkRoute(`/miniblocks/${hash}`));
-          break;
-        default:
-          setRoute(networkRoute(`/search/${hash}`));
-          break;
-      }
-    });
+    if (Boolean(hash)) {
+      setSearching(true);
+
+      Promise.all([
+        getNode(hash),
+        isBlock(hash),
+        isTransaction(hash),
+        isAddress(hash),
+        getMiniBlock(hash),
+      ]).then(([node, block, transaction, address, miniblock]) => {
+        switch (true) {
+          case node.success:
+            setRoute(networkRoute(`/nodes/${hash}`));
+            break;
+          case block:
+            setRoute(networkRoute(`/blocks/${hash}`));
+            break;
+          case transaction:
+            setRoute(networkRoute(`/transactions/${hash}`));
+            break;
+          case address:
+            setRoute(networkRoute(`/address/${hash}`));
+            break;
+          case miniblock.blockFetched:
+            setRoute(networkRoute(`/miniblocks/${hash}`));
+            break;
+          default:
+            setRoute(networkRoute(`/search/${hash}`));
+            break;
+        }
+      });
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +102,7 @@ const Search = () => {
             data-testid="searchButton"
           >
             {searching ? (
-              <FontAwesomeIcon icon={faCircleNotch} spin className="mr-1" />
+              <FontAwesomeIcon icon={faCircleNotch} spin className="mr-1 text-primary" />
             ) : (
               <FontAwesomeIcon icon={faSearch} className="mr-1" />
             )}
