@@ -92,15 +92,14 @@
 }
 
 .header-navbar {
-  .nav-link,
-  .nav-link:hover,
-  .nav-link.active {
+  .nav-link {
     border-bottom: 1px solid transparent !important;
-  }
+    margin-right: $header-navbar-nav-link-margin-right !important;
 
-  .nav-link:hover {
-    .nav-link-icon {
-      color: $primary;
+    &:hover {
+      .nav-link-icon {
+        color: $primary;
+      }
     }
   }
 

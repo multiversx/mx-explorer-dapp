@@ -83,8 +83,8 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
   return route ? (
     <Redirect to={route} />
   ) : (
-    <form className="w-100 d-flex mx-lg-2">
-      <div className="input-group input-group-seamless py-lg-2">
+    <form className="w-100 d-flex mx-md-2">
+      <div className="input-group input-group-seamless py-md-2">
         <input
           type="text"
           className="form-control rounded-pill my-1"

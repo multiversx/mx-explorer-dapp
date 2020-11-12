@@ -52,7 +52,7 @@ export default function Navbar() {
               <Logo />
             </div>
 
-            <div className="d-none d-lg-flex flex-fill">
+            <div className="d-none d-md-flex flex-fill">
               <Search />
             </div>
 
@@ -75,16 +75,16 @@ export default function Navbar() {
                     </a>
                   </li>
                 )}
-                <li className="nav-item d-none d-lg-flex">
+                <li className="nav-item d-none d-md-flex">
                   <AppSwitcher />
                 </li>
 
-                <li className="nav-item d-none d-lg-flex align-items-strech">
+                <li className="nav-item d-none d-md-flex align-items-strech">
                   <NetworkSwitcher />
                 </li>
               </ul>
 
-              <div className="nav d-lg-none">
+              <div className="nav d-md-none">
                 <a
                   className="nav-link nav-link-icon text-center d-flex align-items-center justify-content-center pr-0"
                   href="/"
@@ -100,20 +100,22 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="header-navbar d-lg-flex p-0 border-top">
+      <div className="header-navbar d-md-flex p-0 border-top">
         <Collapse in={headerNavCollapsed}>
-          <div className="container d-lg-flex">
+          <div className="container d-md-flex">
             <div className="row">
-              <div className="col d-flex flex-column flex-lg-row py-3 py-lg-0">
-                <div className="d-lg-none">
+              <div className="col d-flex flex-column flex-md-row py-3 py-md-0">
+                <div className="d-md-none">
                   <Search setExpanded={setHeaderNavCollapsed} />
                 </div>
+
                 <NavLinks setExpanded={setHeaderNavCollapsed} />
-                <div className="d-lg-none">
+
+                <div className="d-md-none">
                   <AppSwitcher onToggle={toggleState} />
                 </div>
 
-                <div className="d-lg-none">
+                <div className="d-md-none">
                   <NetworkSwitcher onToggle={toggleState} />
                 </div>
               </div>
