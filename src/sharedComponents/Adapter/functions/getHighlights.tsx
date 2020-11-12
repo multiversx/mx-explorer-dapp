@@ -2,20 +2,10 @@ import { object, number, InferType } from 'yup';
 import { AdapterFunctionType } from './index';
 
 const schema = object({
-  averageBlockTxCount: number().nullable(true),
-  averageTPS: number().nullable(true),
-  blockNumber: number().required(),
-  blockCount: number(),
-  currentBlockNonce: number().required(),
-  lastBlockTxCount: number().required(),
-  liveTPS: number().required(),
-  nrOfNodes: number().required(),
-  nrOfShards: number().required(),
-  peakTPS: number().required(),
-  roundNumber: number().required(),
-  roundTime: number().required(),
-  shardID: number().required(),
-  totalProcessedTxCount: number().required(),
+  shards: number().required(),
+  blocks: number().required(),
+  addresses: number().required(),
+  transactions: number().required(),
 }).required();
 
 export default async function getHighlights({
@@ -29,7 +19,7 @@ export default async function getHighlights({
   try {
     const { data } = await provider({
       baseUrl,
-      url: `/tps/meta`,
+      url: `/stats`,
       timeout,
     });
 

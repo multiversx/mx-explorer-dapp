@@ -10,7 +10,7 @@ import miniblock from './miniblock';
 import miniblockTransactions from './miniblockTransactions';
 import blocks from './blocks';
 import block from './block';
-import meta from './meta';
+import stats from './stats';
 import delegation from './delegation';
 import address from './address';
 import ratings from './ratings';
@@ -27,7 +27,7 @@ export {
   miniblock,
   miniblockTransactions,
   blockValidators,
-  meta,
+  stats,
   address,
   ratings,
   delegation,

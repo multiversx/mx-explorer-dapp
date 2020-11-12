@@ -45,7 +45,7 @@ interface MockImplementationType {
 
 const mockImplementation = ({ networkRequests }: MockImplementationType) => {
   const requests = {
-    meta: () => Promise.resolve({ data: rawData.meta }),
+    stats: () => Promise.resolve({ data: rawData.stats }),
     heartbeatstatus: () =>
       Promise.resolve({ data: { data: rawData.heartbeatstatus, code: 'successful' } }),
     validatorStatistics: () =>
@@ -70,8 +70,8 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
   return (url: string): any => {
     switch (true) {
       // --- page load ---
-      case url.includes('/tps/meta'):
-        return requests.meta();
+      case url.includes('/stats'):
+        return requests.stats();
       case url.includes('/node/heartbeatstatus'):
         return requests.heartbeatstatus();
       case url.includes('/validator/statistics'):
