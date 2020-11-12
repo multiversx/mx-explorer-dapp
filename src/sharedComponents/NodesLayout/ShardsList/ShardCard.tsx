@@ -17,7 +17,7 @@ const ShardCard = ({ shard, isOverall = false }: ShardCardType) => {
       <div className="card">
         <div className={`card-body px-3 ${isOverall ? 'overall-card bg-primary text-white' : ''}`}>
           <small className={isOverall ? 'text-white' : 'text-light'}>
-            {isOverall ? 'Active Validators' : <ShardSpan shard={shard.shardId} />}
+            {isOverall ? 'Active Validators' : <ShardSpan shard={shard.shard} />}
           </small>
           <span className="metric-value d-flex align-items-center">
             {!isOverall && <Led color={`mr-2 bg-${status}`} />}

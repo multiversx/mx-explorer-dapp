@@ -8,7 +8,7 @@ export default async function getLatestBlocks({ provider, baseUrl, timeout }: Ad
       params: {
         size: 25,
         ...{
-          fields: ['hash', 'nonce', 'shardId', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
+          fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
         },
       },
       timeout,

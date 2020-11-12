@@ -51,13 +51,11 @@ const ShardLabel = () => {
               {shards.map((entry, i) => {
                 return (
                   <NetworkLink
-                    to={shardLink(entry.shardId.toString())}
-                    className={`dropdown-item ${
-                      shard === entry.shardId.toString() ? 'active' : ''
-                    }`}
-                    key={entry.shardId + i}
+                    to={shardLink(entry.shard.toString())}
+                    className={`dropdown-item ${shard === entry.shard.toString() ? 'active' : ''}`}
+                    key={entry.shard + i}
                   >
-                    <ShardSpan shard={entry.shardId} />
+                    <ShardSpan shard={entry.shard} />
                   </NetworkLink>
                 );
               })}

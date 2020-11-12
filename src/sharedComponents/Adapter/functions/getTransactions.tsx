@@ -82,7 +82,7 @@ export async function getTransactionsCount({
 
     const { data } = await provider({
       baseUrl,
-      url: `/transactions-alt/count`,
+      url: `/transactions/count`,
       params,
       timeout,
     });
