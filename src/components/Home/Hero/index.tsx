@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { useGlobalState } from 'context';
 import Leaflet from './Leaflet';
+import { useIsMainnet } from 'helpers';
 
 const Hero = () => {
-  const { activeNetwork } = useGlobalState();
-  const isMainnet = activeNetwork.name.toLowerCase() === 'mainnet';
+  const isMainnet = useIsMainnet();
   return isMainnet ? (
     <div className="bg-black">
       <div className="container-fluid">

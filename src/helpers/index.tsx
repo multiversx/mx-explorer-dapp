@@ -13,6 +13,8 @@ import storage from './storage';
 import nodeIssue from './nodeIssue';
 import useURLSearchParams from './useURLSearchParams';
 import useSize from './useSize';
+import useMatchPath from './useMatchPath';
+import useIsMainnet from './useIsMainnet';
 
 export {
   truncate,
@@ -30,4 +32,6 @@ export {
   nodeIssue,
   useURLSearchParams,
   useSize,
+  useMatchPath,
+  useIsMainnet,
 };
