@@ -87,7 +87,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
       <div className="input-group input-group-seamless py-md-2">
         <input
           type="text"
-          className="form-control rounded-pill my-1"
+          className="form-control rounded-pill my-1 text-truncate"
           placeholder="Address / Tx Hash / Block Hash / Validator Key"
           name="requestType"
           data-testid="search"
