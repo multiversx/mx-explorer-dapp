@@ -29,11 +29,11 @@ const PageState = ({
   icon,
   action,
   symbol,
-  className,
+  className = '',
   iconClassName,
   dataTestId,
 }: PageStateType) => (
-  <div className={`text-center ${className ? className : ''}`} data-testid={dataTestId}>
+  <div className={`text-center ${className}`} data-testid={dataTestId}>
     <div className="my-spacer">
       {symbol ? (
         <>{symbol}</>

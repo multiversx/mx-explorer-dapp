@@ -7,6 +7,7 @@ export interface AddressDetailsType {
   balance: string;
   nonce: number;
   detailsFetched: boolean;
+  rewardsFetched: boolean;
   claimableRewards: number;
   stake: number;
 }
