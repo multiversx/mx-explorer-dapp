@@ -161,7 +161,7 @@ const NodeDetails = () => {
                             <>
                               <div className="card-header">
                                 <div className="card-header-item">
-                                  <h6 className="m-0">Last proposed Blocks</h6>
+                                  <h6 className="m-0">Latest proposed Blocks</h6>
                                 </div>
                               </div>
                               <div className="card-body p-0">

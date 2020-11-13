@@ -14,8 +14,8 @@ describe('Highlights tests', () => {
     const metaShards = await render.findByTestId('metaShards');
     expect(metaShards.innerHTML).toBe('3');
 
-    const metaWallets = await render.findByTestId('metaWallets');
-    expect(metaWallets.innerHTML).toBe('59,707');
+    const metaAddresses = await render.findByTestId('metaAddresses');
+    expect(metaAddresses.innerHTML).toBe('59,707');
 
     const metaTransactions = await render.findByTestId('metaTransactions');
     expect(metaTransactions.innerHTML).toBe('234,191');
