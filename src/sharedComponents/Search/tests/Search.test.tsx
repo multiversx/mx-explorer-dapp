@@ -11,13 +11,13 @@ describe('Search', () => {
       },
     });
 
-    const search = render.getByTestId('search');
+    const search = render.getAllByTestId('search')[0];
     const data = {
       target: { value: 'c51471d4b6a439af44c51bff7372c4f02a8c98ba3bf81e7e080fe461c074d1c1' },
     };
     fireEvent.change(search, data);
 
-    const searchButton = render.getByTestId('searchButton');
+    const searchButton = render.getAllByTestId('searchButton')[0];
     await wait(async () => {
       expect(searchButton).toBeEnabled();
     });
@@ -35,13 +35,13 @@ describe('Search', () => {
       },
     });
 
-    const search = await render.findByTestId('search');
+    const search = render.getAllByTestId('search')[0];
     const data = {
       target: { value: '41fa1461ac134ee095dbee60c3cc2848255181aaa2bdd6f5aae386d58e0d4a80' },
     };
     fireEvent.change(search, data);
 
-    const searchButton = render.getByTestId('searchButton');
+    const searchButton = render.getAllByTestId('searchButton')[0];
     fireEvent.click(searchButton);
 
     await wait(async () => {
@@ -57,13 +57,13 @@ describe('Search', () => {
       },
     });
 
-    const search = await render.findByTestId('search');
+    const search = render.getAllByTestId('search')[0];
     const data = {
       target: { value: addressResponse.account.address },
     };
     fireEvent.change(search, data);
 
-    const searchButton = render.getByTestId('searchButton');
+    const searchButton = render.getAllByTestId('searchButton')[0];
     fireEvent.click(searchButton);
 
     await wait(async () => {
@@ -80,13 +80,13 @@ describe('Search', () => {
       },
     });
 
-    const search = render.getByTestId('search');
+    const search = render.getAllByTestId('search')[0];
     const data = {
       target: { value: 'random1234' },
     };
     fireEvent.change(search, data);
 
-    const searchButton = await render.findByTestId('searchButton');
+    const searchButton = render.getAllByTestId('searchButton')[0];
     fireEvent.click(searchButton);
 
     await wait(async () => {
