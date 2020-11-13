@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
 import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
-import { faWallet } from '@fortawesome/pro-regular-svg-icons/faWallet';
+import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { adapter } from 'sharedComponents';
@@ -101,7 +101,7 @@ const Hightlights = () => {
                 <Epoch />
                 <Item icon={faLayerGroup} title="Shards" dataTestId="metaShards" value={shards} />
                 <Item icon={faCube} title="Blocks" dataTestId="metaBlocks" value={blocks} />
-                <Item icon={faWallet} title="Wallets" dataTestId="metaWallets" value={addresses} />
+                <Item icon={faUser} title="Accounts" dataTestId="metaAddresses" value={addresses} />
                 <Item
                   icon={faExchangeAlt}
                   title="Transactions"
