@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DetailItem, NetworkLink, Trim, IdentityAvatar, PageState } from 'sharedComponents';
 import { IdentityType } from 'context/state';
 import { useGlobalState } from 'context';
-import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
+import { faBuilding } from '@fortawesome/pro-regular-svg-icons/faBuilding';
 
 const Identity = ({ identity }: { identity: IdentityType | undefined }) => {
   const {
@@ -14,7 +14,7 @@ const Identity = ({ identity }: { identity: IdentityType | undefined }) => {
       <div className="card" data-testid="brandContainer">
         {identity === undefined ? (
           <PageState
-            icon={faUser}
+            icon={faBuilding}
             title="Unable to load Identity"
             className="page-state-sm m-auto"
             dataTestId="identityCardErrorScreen"
