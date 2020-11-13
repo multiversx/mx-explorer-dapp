@@ -2,6 +2,7 @@ import * as React from 'react';
 import { urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, Trim, DetailItem, CopyButton } from 'sharedComponents';
 import { NodeType } from 'context/state';
+import Alert from './Alert';
 
 const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string }) => {
   const { publicKey, peerType, shard, versionNumber, nodeDisplayName } = node;
@@ -10,9 +11,13 @@ const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string 
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Public Key" colWidth={colWidth}>
-            <div className="d-flex align-items-center">
-              <Trim text={publicKey} />
-              <CopyButton text={publicKey} className="ml-2" />
+            <div className="d-flex flex-column">
+              <div className="d-flex align-items-center">
+                <Trim text={publicKey} />
+                <CopyButton text={publicKey} className="ml-2" />
+              </div>
+
+              <Alert node={node} />
             </div>
           </DetailItem>
           <DetailItem title="Shard" colWidth={colWidth}>

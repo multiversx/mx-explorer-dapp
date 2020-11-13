@@ -4,7 +4,6 @@ import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { adapter, BlocksTable, Loader, PageState } from 'sharedComponents';
 import { useLocation, useParams } from 'react-router-dom';
 import { IdentityType, NodeType } from 'context/state';
-import Alert from './Alert';
 import NodeInformation from './NodeInformation';
 import Identity from './Identity';
 import NetworkMetrics from './NetworkMetrics';
@@ -108,7 +107,6 @@ const NodeDetails = () => {
                   </h3>
                 </div>
               </div>
-              <Alert node={node.data} />
               <div className="row">
                 <div className={`mb-spacer ${showIdentityCard ? 'col-md-8' : 'col-12'}`}>
                   <NodeInformation node={node.data} colWidth={showIdentityCard ? '3' : '2'} />

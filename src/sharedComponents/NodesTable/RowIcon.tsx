@@ -24,35 +24,52 @@ const Overlay = ({ children, title }: { children: React.ReactNode; title: string
   </OverlayTrigger>
 );
 
-export default class RowIcon extends React.Component<{ node: NodeType }> {
+export default class RowIcon extends React.Component<{ node: NodeType; small?: boolean }> {
   render() {
-    const { node } = this.props;
+    const { node, small } = this.props;
+
     switch (true) {
       case node.peerType === 'jailed':
         return (
           <Overlay title="Jailed">
-            <FontAwesomeIcon icon={faLock} className="text-danger w300 mr-1" />
+            <FontAwesomeIcon
+              icon={faLock}
+              className="text-danger mr-1"
+              size={small ? 'xs' : '1x'}
+            />
           </Overlay>
         );
 
       case node.nodeType === 'observer':
         return (
           <Overlay title="Observer">
-            <FontAwesomeIcon icon={faEye} className="text-secondary w300 mr-1" />
+            <FontAwesomeIcon
+              icon={faEye}
+              className="text-secondary mr-1"
+              size={small ? 'xs' : '1x'}
+            />
           </Overlay>
         );
 
       case node.peerType === 'new':
         return (
           <Overlay title="New">
-            <FontAwesomeIcon icon={faLeaf} className="text-secondary w300 mr-1" />
+            <FontAwesomeIcon
+              icon={faLeaf}
+              className="text-secondary mr-1"
+              size={small ? 'xs' : '1x'}
+            />
           </Overlay>
         );
 
       case node.issues && node.issues.length > 0: {
         return (
           <Overlay title={nodeIssue(node)}>
-            <FontAwesomeIcon icon={faExclamationTriangle} className="w300 mr-1 text-warning" />
+            <FontAwesomeIcon
+              icon={faExclamationTriangle}
+              className="mr-1 text-warning"
+              size={small ? 'xs' : '1x'}
+            />
           </Overlay>
         );
       }
@@ -60,14 +77,22 @@ export default class RowIcon extends React.Component<{ node: NodeType }> {
       case node.receivedShardID !== node.computedShardID:
         return (
           <Overlay title="Changing shard">
-            <FontAwesomeIcon icon={faSync} className="text-secondary w300 mr-1" />
+            <FontAwesomeIcon
+              icon={faSync}
+              className="text-secondary mr-1"
+              size={small ? 'xs' : '1x'}
+            />
           </Overlay>
         );
 
       case node.peerType === 'waiting':
         return (
           <Overlay title="Waiting">
-            <FontAwesomeIcon icon={faClock} className="text-secondary w300 mr-1" />
+            <FontAwesomeIcon
+              icon={faClock}
+              className="text-secondary mr-1"
+              size={small ? 'xs' : '1x'}
+            />
           </Overlay>
         );
 
