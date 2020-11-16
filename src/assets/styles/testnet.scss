@@ -42,6 +42,7 @@ $input-hover-border-color: darken($border-color, 15%);
 
   .nodes-filters a,
   .nodes-tabs a,
+  .nodes-table thead a,
   .pager a,
   .side-action {
     &::after {
