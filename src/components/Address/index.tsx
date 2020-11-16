@@ -161,7 +161,7 @@ const Address = () => {
               <div className="col mb-spacer">
                 <AddressDetails {...addressDetails} />
               </div>
-              {addressDetails.stake > 0 && (
+              {addressDetails.stake !== undefined && addressDetails.stake > 0 && (
                 <div className="col-lg-4 mb-spacer">
                   <DelegationDetails {...addressDetails} />
                 </div>
