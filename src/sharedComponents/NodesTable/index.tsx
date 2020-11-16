@@ -1,7 +1,8 @@
 import * as React from 'react';
 import TableBody from './TableBody';
-import ShardLabel from './ShardLabel';
-import StatusLabel from './StatusLabel';
+import ShardFilter from './ShardFilter';
+import StatusFilter from './StatusFilter';
+import Sort from './Sort';
 
 export default class NodesTable extends React.Component<{
   children: React.ReactNode;
@@ -18,17 +19,21 @@ export default class NodesTable extends React.Component<{
               <th data-testid="publickey">Public key</th>
               <th data-testid="nodeDisplayName">Node Name</th>
               <th data-testid="shard">
-                {this.props.hideFilters === true ? 'Shard' : <ShardLabel />}
+                <Sort id="shard" field="Shard" />
+                {this.props.hideFilters === true ? '' : <ShardFilter />}
               </th>
-              <th data-testid="versionNumber">Version</th>
+              <th data-testid="versionNumber">
+                <Sort id="version" field="Version" />
+              </th>
               <th className="text-right" data-testid="totalUpTimeSec">
-                Uptime
+                <Sort id="uptime" field="Uptime" />
               </th>
               <th className="text-right" data-testid="status">
-                {this.props.hideFilters === true ? 'Status' : <StatusLabel />}
+                <Sort id="status" field="Status" />
+                {this.props.hideFilters === true ? '' : <StatusFilter />}
               </th>
               <th className="text-right" data-testid="rating">
-                Rating
+                <Sort id="rating" field="Rating" />
               </th>
             </tr>
           </thead>
