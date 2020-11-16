@@ -5,7 +5,7 @@ import { NodeType } from 'context/state';
 import Alert from './Alert';
 
 const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string }) => {
-  const { publicKey, peerType, shard, versionNumber, nodeDisplayName } = node;
+  const { publicKey, peerType, shard, versionNumber, nodeName } = node;
   return (
     <div className="card">
       <div className="card-body p-0">
@@ -16,7 +16,6 @@ const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string 
                 <Trim text={publicKey} />
                 <CopyButton text={publicKey} className="ml-2" />
               </div>
-
               <Alert node={node} />
             </div>
           </DetailItem>
@@ -31,7 +30,7 @@ const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string 
           </DetailItem>
 
           <DetailItem title="Name" colWidth={colWidth}>
-            {nodeDisplayName ? nodeDisplayName : <span className="text-secondary">N/A</span>}
+            {nodeName ? nodeName : <span className="text-secondary">N/A</span>}
           </DetailItem>
 
           <DetailItem title="Type" colWidth={colWidth}>
