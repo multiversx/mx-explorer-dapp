@@ -27,7 +27,7 @@ export default class NodesTable extends React.Component<{
                 <Sort id="versionNumber" field="Version" />
               </th>
               <th className="text-right" data-testid="totalUptime">
-                <Sort id="totalUptime" field="Uptime" />
+                <Sort id="totalUpTime" field="Uptime" />
               </th>
               <th className="text-right" data-testid="status">
                 <Sort id="status" field="Status" />

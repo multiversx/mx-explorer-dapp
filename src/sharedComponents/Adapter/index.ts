@@ -110,6 +110,8 @@ export default function useAdapter() {
       size,
       identity,
       pagination,
+      sort,
+      order,
     }: f.GetNodesType) =>
       f.getNodes({
         provider,
@@ -124,6 +126,8 @@ export default function useAdapter() {
         size,
         identity,
         pagination,
+        sort,
+        order,
       }),
 
     getNodesCount: ({
