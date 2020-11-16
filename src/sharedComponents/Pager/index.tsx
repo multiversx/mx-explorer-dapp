@@ -34,9 +34,10 @@ const Pager = ({
     page: `${size + 1}`,
   }).toString();
 
+  const { page: urlPage, ...rest } = params;
+
   const firstUrlParams = new URLSearchParams({
-    ...params,
-    page: '1',
+    ...rest,
   }).toString();
   const prevUrlParams = new URLSearchParams({
     ...params,
