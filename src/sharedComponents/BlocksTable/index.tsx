@@ -40,9 +40,11 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
           {blocks.map((block, i) => (
             <tr key={block.hash} className={`animated-row ${block.isNew ? 'new' : ''}`}>
               <td>
-                <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
-                  {block.nonce}
-                </NetworkLink>
+                <div className="d-flex">
+                  <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
+                    {block.nonce}
+                  </NetworkLink>
+                </div>
               </td>
               <td>
                 <span title={dateFormatted(block.timestamp)}>
@@ -51,16 +53,18 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
               </td>
               <td>{block.txCount}</td>
               <td>
-                {shard !== undefined ? (
-                  <ShardSpan shard={block.shard} />
-                ) : (
-                  <NetworkLink
-                    to={urlBuilder.shard(block.shard)}
-                    data-testid={`blockShardLink${i}`}
-                  >
+                <div className="d-flex">
+                  {shard !== undefined ? (
                     <ShardSpan shard={block.shard} />
-                  </NetworkLink>
-                )}
+                  ) : (
+                    <NetworkLink
+                      to={urlBuilder.shard(block.shard)}
+                      data-testid={`blockShardLink${i}`}
+                    >
+                      <ShardSpan shard={block.shard} />
+                    </NetworkLink>
+                  )}
+                </div>
               </td>
               <td>
                 {block.sizeTxs !== undefined

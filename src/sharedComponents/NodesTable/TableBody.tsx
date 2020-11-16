@@ -36,9 +36,11 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
             )}
           </td>
           <td>
-            <NetworkLink to={urlBuilder.shard(node.shard)} data-testid={`shardLink${index}`}>
-              <ShardSpan shard={node.shard} />
-            </NetworkLink>
+            <div className="d-flex">
+              <NetworkLink to={urlBuilder.shard(node.shard)} data-testid={`shardLink${index}`}>
+                <ShardSpan shard={node.shard} />
+              </NetworkLink>
+            </div>
           </td>
 
           <td>

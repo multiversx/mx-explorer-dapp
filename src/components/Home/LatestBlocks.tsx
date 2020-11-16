@@ -76,7 +76,7 @@ const LatestBlocks = () => {
                           <FontAwesomeIcon icon={faCube} />
                         </div>
                         <div className="d-flex flex-column">
-                          <span className="text-secondary">
+                          <span className="d-flex flex-row text-secondary">
                             <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
                               {block.nonce}
                             </NetworkLink>
