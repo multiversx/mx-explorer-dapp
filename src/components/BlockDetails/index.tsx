@@ -21,7 +21,7 @@ const BlockDetails = () => {
 
   const fetchBlock = () => {
     if (!invalid) {
-      getBlock({ blockId }).then(({ success, block, nextHash }) => {
+      getBlock(blockId).then(({ success, block, nextHash }) => {
         if (ref.current !== null) {
           setState({ block, nextHash });
           setDataReady(success);

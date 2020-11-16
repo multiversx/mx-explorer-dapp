@@ -39,8 +39,7 @@ export default function useAdapter() {
 
     /* Blocks */
 
-    getBlock: ({ blockId }: { blockId: string }) =>
-      f.getBlock({ provider, baseUrl, blockId, timeout }),
+    getBlock: (blockId: string) => f.getBlock({ provider, baseUrl, blockId, timeout }),
 
     getBlocks: ({ size, shard, epochId, proposer }: f.GetBlocksType) =>
       f.getBlocks({ provider, baseUrl, size, shard, epochId, proposer, timeout }),
@@ -50,7 +49,7 @@ export default function useAdapter() {
 
     /* Transaction */
 
-    getTransaction: ({ transactionId }: { transactionId: string }) =>
+    getTransaction: (transactionId: string) =>
       f.getTransaction({ provider, baseUrl, transactionId, timeout }),
 
     /* Miniblocks */
@@ -88,11 +87,9 @@ export default function useAdapter() {
         receiverShard,
       }),
 
-    getAddressDetails: ({ addressId }: { addressId: string }) =>
-      f.getAddressDetails({ proxyUrl, timeout, addressId }),
+    getAddressDetails: (addressId: string) => f.getAddressDetails({ proxyUrl, timeout, addressId }),
 
-    getRewards: ({ addressId }: { addressId: string }) =>
-      f.getRewards({ proxyUrl, timeout, addressId }),
+    getRewards: (addressId: string) => f.getRewards({ proxyUrl, timeout, addressId }),
 
     /* Validators */
 
@@ -182,19 +179,5 @@ export default function useAdapter() {
         validator,
         timeout,
       }),
-
-    /* Search */
-
-    isBlock: (hash: string) => f.isBlock({ provider, baseUrl, hash, timeout }),
-
-    isAddress: (hash: string) => f.isAddress({ proxyUrl, hash, timeout }),
-
-    isTransaction: (hash: string) =>
-      f.isTransaction({ provider, baseUrl, proxyUrl, hash, timeout }),
-
-    isNode: (hash: string) => f.getNode({ provider, baseUrl, key: hash, timeout }),
-
-    isMiniBlock: ({ hash }: { hash: string }) =>
-      f.getMiniBlock({ provider, baseUrl, miniBlockHash: hash, timeout }),
   };
 }

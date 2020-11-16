@@ -15,7 +15,7 @@ export default async function getNode({
 
     return {
       data,
-      success: true,
+      success: data !== undefined,
     };
   } catch {
     return { success: false };
