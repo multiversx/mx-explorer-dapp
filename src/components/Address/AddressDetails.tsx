@@ -3,13 +3,13 @@ import { CopyButton, Denominate, DetailItem, Trim } from 'sharedComponents';
 
 export interface AddressDetailsType {
   address: string;
-  code: string;
   balance: string;
   nonce: number;
-  detailsFetched: boolean;
-  rewardsFetched: boolean;
-  claimableRewards: number;
-  stake: number;
+  code?: string;
+  detailsFetched?: boolean;
+  rewardsFetched?: boolean;
+  claimableRewards?: number;
+  stake?: number;
 }
 
 const AddressDetails = (props: AddressDetailsType) => {

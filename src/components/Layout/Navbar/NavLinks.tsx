@@ -51,6 +51,14 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
       >
         Validators
       </NetworkLink>
+
+      <NetworkLink
+        className={`nav-link ${matchPath(networkRoute('/addresses')) !== null ? 'active' : ''}`}
+        to="/addresses"
+        onClick={() => onToggle(false)}
+      >
+        Addresses
+      </NetworkLink>
     </>
   );
 }

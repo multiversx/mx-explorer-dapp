@@ -9,6 +9,7 @@ import getRounds, { GetRoundsType as GetRoundsInterface } from './getRounds';
 import getNodes, { GetNodesType as GetNodesInterface } from './getNodes';
 import getLatestTransactions from './getLatestTransactions';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
+import { getAddresses, getAddressesCount, GetAddressesParamsType } from './getAddresses';
 import getBlock from './getBlock';
 import getNetworkStatus from './getNetworkStatus';
 import {
@@ -64,6 +65,8 @@ export type GetNodesType = GetNodesInterface;
 
 export type GetRoundsType = GetRoundsInterface;
 
+export type GetAddressesType = GetAddressesParamsType;
+
 export {
   getHighlights,
   getLatestBlocks,
@@ -86,4 +89,6 @@ export {
   getIdentity,
   getNode,
   getNetworkStatus,
+  getAddresses,
+  getAddressesCount,
 };

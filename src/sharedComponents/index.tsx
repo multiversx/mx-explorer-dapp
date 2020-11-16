@@ -23,6 +23,9 @@ import Trim from './Trim';
 import Led from './Led';
 import AxiosErrorHandler from './AxiosErrorHandler';
 import IdentityAvatar from './IdentityAvatar';
+import AddressesTable from './AddressesTable/index';
+import NoAddresses from './AddressesTable/NoAddresses';
+import FailedAddresses from './AddressesTable/FailedAddresses';
 
 export {
   Denominate,
@@ -51,4 +54,7 @@ export {
   Led,
   AxiosErrorHandler,
   IdentityAvatar,
+  AddressesTable,
+  NoAddresses,
+  FailedAddresses,
 };

@@ -7,6 +7,7 @@ import MiniBlockDetails from './components/MiniBlockDetails';
 import TransactionDetails from './components/TransactionDetails';
 import Transactions from './components/Transactions';
 import Address from './components/Address';
+import Addresses from './components/Addresses';
 import Nodes from './components/Nodes';
 import Identities from './components/Identities';
 import IdentityDetails from './components/IdentityDetails';
@@ -59,6 +60,11 @@ const routes: RouteType[] = [
     path: validatorsRoutes.nodeDetails,
     title: 'Node Details',
     component: NodeDetails,
+  },
+  {
+    path: '/addresses',
+    title: 'Addresses',
+    component: Addresses,
   },
   {
     path: '/address/:hash',
