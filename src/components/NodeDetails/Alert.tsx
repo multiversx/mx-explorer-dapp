@@ -5,41 +5,31 @@ import { NodeType } from 'context/state';
 import RowIcon from 'sharedComponents/NodesTable/RowIcon';
 import { nodeIssue } from 'helpers';
 
-const Container = ({ children }: { children: React.ReactNode }) => (
-  <div className="row">
-    <div className="col-12 mt-spacer">
-      <div className="card">
-        <div className="card-body px-lg-spacer">{children}</div>
-      </div>
-    </div>
-  </div>
-);
+const Container = ({ children }: { children: React.ReactNode }) => <div>{children}</div>;
 
 const Alert = ({ node }: { node: NodeType }) => {
   switch (true) {
     case node.peerType === 'jailed':
       return (
         <Container>
-          <RowIcon node={node} />
-          Jailed
+          <RowIcon node={node} small={true} />
+          <small className="text-danger mt-1">Jailed</small>
         </Container>
       );
     case node.issues && node.issues.length > 0:
       return (
         <Container>
-          <RowIcon node={node} />
-          {nodeIssue(node)}
+          <RowIcon node={node} small={true} />
+          <small className="text-warning mt-1">{nodeIssue(node)}</small>
         </Container>
       );
     case node.status === 'offline':
       return (
         <Container>
-          <FontAwesomeIcon
-            title="Offline"
-            icon={faExclamationTriangle}
-            className="text-warning w300 mr-1"
-          />
-          <span className={node.nodeType === 'observer' ? 'text-muted' : ''}>&nbsp;Offline</span>
+          <FontAwesomeIcon icon={faExclamationTriangle} size="xs" className="text-warning mr-1" />
+          <small className={`mt-1 ${node.nodeType === 'observer' ? 'text-muted' : ''}`}>
+            &nbsp;Offline
+          </small>
         </Container>
       );
 
