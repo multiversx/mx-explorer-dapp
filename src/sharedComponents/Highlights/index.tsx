@@ -1,4 +1,5 @@
 import * as React from 'react';
+import moment from 'moment';
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
 import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
@@ -41,6 +42,11 @@ const initialState = {
   blocks: '...',
   addresses: '...',
   transactions: '...',
+  epoch: '...',
+  epochPercentage: 0,
+  epochTotalTime: '...',
+  epochTimeElapsed: '...',
+  epochTimeRemaining: '...',
 };
 
 const Hightlights = () => {
@@ -64,12 +70,26 @@ const Hightlights = () => {
   const getData = () => {
     if (ref.current !== null) {
       getHighlights().then(({ data, success }) => {
+        const check = data.roundsPerEpoch >= data.roundsPassed;
         const newState = success
           ? {
               shards: parseInt(data.shards).toLocaleString('en'),
               blocks: parseInt(data.blocks).toLocaleString('en'),
               addresses: parseInt(data.addresses).toLocaleString('en'),
               transactions: parseInt(data.transactions).toLocaleString('en'),
+              epoch: data.epoch.toLocaleString('en'),
+              epochPercentage: check ? (100 * data.roundsPassed) / data.roundsPerEpoch : 0,
+              epochTotalTime: check
+                ? moment.utc(data.refreshRate * data.roundsPerEpoch).format('HH:mm')
+                : '...',
+              epochTimeElapsed: check
+                ? moment.utc(data.refreshRate * data.roundsPassed).format('HH:mm')
+                : '...',
+              epochTimeRemaining: check
+                ? moment
+                    .utc(data.refreshRate * (data.roundsPerEpoch - data.roundsPassed))
+                    .format('HH:mm')
+                : '...',
             }
           : initialState;
 
@@ -88,7 +108,7 @@ const Hightlights = () => {
 
   React.useEffect(getData, [timestamp, activeNetworkId]);
 
-  const { shards, blocks, addresses, transactions } =
+  const { shards, blocks, addresses, transactions, epoch, epochPercentage, epochTimeRemaining } =
     activeNetworkId in state ? state[activeNetworkId] : initialState;
 
   return (
@@ -98,7 +118,11 @@ const Hightlights = () => {
           <div className="row">
             <div className="col my-4">
               <ul className="list-unstyled d-flex flex-wrap justify-content-between m-0 p-0">
-                <Epoch />
+                <Epoch
+                  epoch={epoch}
+                  epochPercentage={epochPercentage}
+                  epochTimeRemaining={epochTimeRemaining}
+                />
                 <Item icon={faLayerGroup} title="Shards" dataTestId="metaShards" value={shards} />
                 <Item icon={faCube} title="Blocks" dataTestId="metaBlocks" value={blocks} />
                 <Item icon={faUser} title="Accounts" dataTestId="metaAddresses" value={addresses} />
