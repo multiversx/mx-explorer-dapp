@@ -50,8 +50,8 @@ const Address = () => {
         size,
         addressId,
       }),
-      getAddressDetails({ addressId }),
-      getRewards({ addressId }),
+      getAddressDetails(addressId),
+      getRewards(addressId),
     ]).then(([transactionsData, addressDetailsData, rewardsData]) => {
       const { data, success } = transactionsData;
       const { data: addressDetails } = addressDetailsData;

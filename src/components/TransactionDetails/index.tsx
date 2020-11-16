@@ -23,7 +23,7 @@ const TransactionDetails = () => {
 
   const fetchTransaction = () => {
     if (transactionId) {
-      getTransaction({ transactionId }).then(({ data, success }) => {
+      getTransaction(transactionId).then(({ data, success }) => {
         if (ref.current !== null) {
           setTransaction(data);
           setDataReady(success);

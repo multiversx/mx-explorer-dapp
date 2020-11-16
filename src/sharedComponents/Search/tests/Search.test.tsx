@@ -1,14 +1,10 @@
 import { fireEvent, wait, beforeAll } from 'utils/test-utils';
+import { miniblock, address } from 'utils/rawData';
 
-import addressResponse from './rawData/address';
-
-describe('Search', () => {
+describe('Search input', () => {
   test('Search finds block', async () => {
     const render = beforeAll({
       route: '/search',
-      networkRequests: {
-        address: () => Promise.resolve(new Error('error')),
-      },
     });
 
     const search = render.getAllByTestId('search')[0];
@@ -48,7 +44,7 @@ describe('Search', () => {
       expect(document.title).toEqual('Transaction Details • Elrond Explorer');
     });
   });
-  test('Seach finds address', async () => {
+  test('Search finds miniblock', async () => {
     const render = beforeAll({
       route: '/search',
       networkRequests: {
@@ -59,7 +55,30 @@ describe('Search', () => {
 
     const search = render.getAllByTestId('search')[0];
     const data = {
-      target: { value: addressResponse.account.address },
+      target: { value: miniblock.miniBlockHash },
+    };
+    fireEvent.change(search, data);
+
+    const searchButton = render.getAllByTestId('searchButton')[0];
+    fireEvent.click(searchButton);
+
+    await wait(async () => {
+      expect(document.title).toEqual('Miniblock Details • Elrond Explorer');
+    });
+  });
+  test('Seach finds address', async () => {
+    const render = beforeAll({
+      route: '/search',
+      networkRequests: {
+        block: () => Promise.resolve(new Error('error')),
+        transaction: () => Promise.resolve(new Error('error')),
+        miniblock: () => Promise.resolve(new Error('error')),
+      },
+    });
+
+    const search = render.getAllByTestId('search')[0];
+    const data = {
+      target: { value: address.address },
     };
     fireEvent.change(search, data);
 
@@ -70,13 +89,39 @@ describe('Search', () => {
       expect(document.title).toEqual('Address Details • Elrond Explorer');
     });
   });
+  test('Seach finds node', async () => {
+    const render = beforeAll({
+      route: '/search',
+      networkRequests: {
+        block: () => Promise.resolve(new Error('error')),
+        transaction: () => Promise.resolve(new Error('error')),
+        miniblock: () => Promise.resolve(new Error('error')),
+        address: () => Promise.resolve(new Error('error')),
+      },
+    });
+
+    const search = render.getAllByTestId('search')[0];
+    const data = {
+      target: { value: address.address },
+    };
+    fireEvent.change(search, data);
+
+    const searchButton = render.getAllByTestId('searchButton')[0];
+    fireEvent.click(searchButton);
+
+    await wait(async () => {
+      expect(document.title).toEqual('Node Details • Elrond Explorer');
+    });
+  });
   test('Seach does not find anything', async () => {
     const render = beforeAll({
       route: '/search',
       networkRequests: {
         block: () => Promise.resolve(new Error('error')),
         transaction: () => Promise.resolve(new Error('error')),
+        miniblock: () => Promise.resolve(new Error('error')),
         address: () => Promise.resolve(new Error('error')),
+        node: () => Promise.resolve(new Error('error')),
       },
     });
 

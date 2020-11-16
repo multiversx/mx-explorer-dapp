@@ -64,6 +64,8 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
     ratingshistory: () => Promise.resolve({ data: rawData.ratings }),
     address: () => Promise.resolve({ data: rawData.address }),
     delegation: () => Promise.resolve({ data: rawData.delegation }),
+    node: () => Promise.resolve({ data: rawData.node }),
+    identity: () => Promise.resolve({ data: rawData.identity }),
     ...networkRequests,
   };
 
@@ -99,6 +101,10 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.block();
       case url.includes('/blocks'):
         return requests.blocks();
+      case url.includes('/nodes/'):
+        return requests.node();
+      case url.includes('/identities/'):
+        return requests.identity();
       case url.includes('/ratingshistory/'):
         return requests.ratingshistory();
     }
