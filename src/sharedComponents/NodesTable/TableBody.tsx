@@ -47,10 +47,10 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
             {node.versionNumber ? node.versionNumber : <span className="text-secondary">N/A</span>}
           </td>
           <td className="text-right">
-            {node.totalUpTimeSec !== 0 && <span>{node.totalUpTime}%</span>}
-            {node.totalUpTime === 0 && node.status === 'online' && <span>100%</span>}
-            {node.totalUpTime === 0 && node.totalDownTime === 0 && node.status === 'offline' && (
-              <span>0%</span>
+            {node.totalUpTimeSec !== 0 ? (
+              <span>{node.totalUpTime}%</span>
+            ) : (
+              <span className="text-secondary">N/A</span>
             )}
           </td>
           <td>
