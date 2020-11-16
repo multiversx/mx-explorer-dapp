@@ -10,6 +10,8 @@ export interface GetNodesType {
   count?: boolean;
   size?: number;
   identity?: string;
+  sort?: string;
+  order?: string;
   pagination?: boolean;
 }
 
@@ -25,6 +27,8 @@ export default async function getNodes({
   status,
   size,
   identity,
+  sort,
+  order,
   count = false,
   pagination = true,
 }: AdapterFunctionType & GetNodesType) {
@@ -41,6 +45,8 @@ export default async function getNodes({
         ...(shard !== undefined ? { shard: parseInt(shard) } : {}),
         ...(status !== undefined ? { status } : {}),
         ...(identity !== undefined ? { identity } : {}),
+        ...(sort !== undefined ? { sort } : {}),
+        ...(order !== undefined ? { order } : {}),
         ...(size !== undefined
           ? pagination
             ? { from: (size - 1) * 25, size: 25 }
