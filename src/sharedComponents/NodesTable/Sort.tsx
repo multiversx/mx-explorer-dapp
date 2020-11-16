@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { faArrowUp } from '@fortawesome/pro-regular-svg-icons/faArrowUp';
-import { faArrowDown } from '@fortawesome/pro-regular-svg-icons/faArrowDown';
+import { faSort } from '@fortawesome/pro-regular-svg-icons/faSort';
+import { faSortUp } from '@fortawesome/pro-solid-svg-icons/faSortUp';
+import { faSortDown } from '@fortawesome/pro-solid-svg-icons/faSortDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation, Link } from 'react-router-dom';
 
@@ -33,11 +34,12 @@ const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {
     <Link to={`${pathname}?${nextUrlParams}`} className="text-dark">
       {field}
       {order === 'asc' && sort === id && (
-        <FontAwesomeIcon icon={faArrowUp} className="side-action" />
+        <FontAwesomeIcon icon={faSortUp} className="text-primary side-action" />
       )}
       {order === 'desc' && sort === id && (
-        <FontAwesomeIcon icon={faArrowDown} className="side-action" />
+        <FontAwesomeIcon icon={faSortDown} className="text-primary side-action" />
       )}
+      {!order && <FontAwesomeIcon icon={faSort} className="side-action" />}
     </Link>
   );
 };

@@ -1,4 +1,5 @@
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
+import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import * as React from 'react';
@@ -45,26 +46,28 @@ const ShardFilter = () => {
       rootClose
       overlay={
         <Popover id="popover-positioned-bottom" className="border">
-          <Popover.Content>
-            {shards.map((entry, i) => {
-              return (
-                <NetworkLink
-                  to={shardLink(entry.shard.toString())}
-                  className={`dropdown-item ${shard === entry.shard.toString() ? 'active' : ''}`}
-                  key={entry.shard + i}
-                >
-                  <ShardSpan shard={entry.shard} />
-                </NetworkLink>
-              );
-            })}
-            <NetworkLink
-              className={`dropdown-item ${shard === undefined ? 'active' : ''}`}
-              key={-1}
-              to={shardLink('')}
-            >
-              Show all
-            </NetworkLink>
-          </Popover.Content>
+          {shards.length > 0 && (
+            <Popover.Content>
+              {shards.map((entry, i) => {
+                return (
+                  <NetworkLink
+                    to={shardLink(entry.shard.toString())}
+                    className={`dropdown-item ${shard === entry.shard.toString() ? 'active' : ''}`}
+                    key={entry.shard + i}
+                  >
+                    <ShardSpan shard={entry.shard} />
+                  </NetworkLink>
+                );
+              })}
+              <NetworkLink
+                className={`dropdown-item ${shard === undefined ? 'active' : ''}`}
+                key={-1}
+                to={shardLink('')}
+              >
+                Show all
+              </NetworkLink>
+            </Popover.Content>
+          )}
         </Popover>
       }
     >
@@ -76,7 +79,10 @@ const ShardFilter = () => {
           e.preventDefault();
         }}
       >
-        <FontAwesomeIcon icon={faFilter} className={shard !== undefined ? 'text-primary' : ''} />
+        <FontAwesomeIcon
+          icon={shard !== undefined ? faFilterSolid : faFilter}
+          className={shard !== undefined ? 'text-primary' : ''}
+        />
       </a>
     </OverlayTrigger>
   );

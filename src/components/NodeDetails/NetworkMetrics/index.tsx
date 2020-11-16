@@ -6,12 +6,7 @@ import { NodeType } from 'context/state';
 import RatingArrow from './ratingArrow';
 
 const NetworkMetrics = ({ node }: { node: NodeType }) => {
-  const {
-    totalUpTimePercentege,
-    totalDownTimePercentege,
-    totalUpTimeLabel,
-    totalDownTimeLabel,
-  } = getUptimeDowntime(node);
+  const { totalUpTimeLabel, totalDownTimeLabel } = getUptimeDowntime(node);
   return (
     <div className="card network-metrics">
       <div className="card-header">
@@ -35,8 +30,8 @@ const NetworkMetrics = ({ node }: { node: NodeType }) => {
             <PercentegeBar
               totalDownTimeLabel={totalDownTimeLabel}
               totalUpTimeLabel={totalUpTimeLabel}
-              totalUpTimePercentege={totalUpTimePercentege}
-              totalDownTimePercentege={totalDownTimePercentege}
+              totalUpTimePercentege={node.totalUpTime ? node.totalUpTime : 0}
+              totalDownTimePercentege={node.totalDownTime ? node.totalDownTime : 0}
               tooltipPlacementUp={false}
             />
           </DetailItem>
