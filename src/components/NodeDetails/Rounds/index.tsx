@@ -41,7 +41,7 @@ const Rounds = ({ rounds, node }: { rounds: RoundsType; node: NodeType }) => {
         <>
           <div className="card-header">
             <div className="card-header-item">
-              <h6 className="m-0">Last Consensus Rounds</h6>
+              <h6 className="m-0">Latest Consensus Rounds</h6>
             </div>
           </div>
           <div className="card-body px-lg-spacer">
