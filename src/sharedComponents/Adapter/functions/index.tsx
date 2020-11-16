@@ -24,7 +24,6 @@ import {
   getMiniBlockTransactions,
   getMiniBlockTransactionsCount,
 } from './getMiniBlocks';
-import { isBlock, isAddress, isTransaction } from './getSearch';
 
 export interface ProviderPropsType {
   baseUrl: string;
@@ -80,9 +79,6 @@ export {
   getTransactionsCount,
   getAddressDetails,
   getRewards,
-  isBlock,
-  isAddress,
-  isTransaction,
   getRounds,
   getNodes,
   getShards,

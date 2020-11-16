@@ -14,6 +14,8 @@ import stats from './stats';
 import delegation from './delegation';
 import address from './address';
 import ratings from './ratings';
+import node from './node';
+import identity from './identity';
 export {
   transactions,
   transactionsSearch,
@@ -31,4 +33,6 @@ export {
   address,
   ratings,
   delegation,
+  node,
+  identity,
 };
