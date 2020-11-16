@@ -30,15 +30,12 @@ export interface IdentityType {
 }
 
 export interface NodeType {
-  computedShardID: number;
   publicKey: string;
   peerType: 'waiting' | 'eligible' | 'observer' | 'new' | 'jailed';
   nodeType: 'observer' | 'validator';
   status: 'online' | 'offline';
   nodeDisplayName: string;
   identity: string;
-  receivedShardID: number;
-  timeStamp: string;
   totalDownTimeSec: number;
   totalUpTimeSec: number;
   versionNumber: string;
@@ -46,7 +43,10 @@ export interface NodeType {
   tempRating: number;
   rating: number;
   ratingModifier: number;
-  issues: string[];
+  receivedShardID?: number;
+  timeStamp?: string;
+  computedShardID?: number;
+  issues?: string[];
 }
 
 export interface StateType {
