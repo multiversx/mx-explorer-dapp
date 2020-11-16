@@ -12,7 +12,7 @@ export default class NodesTable extends React.Component<{
 
   render() {
     return (
-      <div className="table-wrapper">
+      <div className="nodes-table table-wrapper">
         <table className="table">
           <thead>
             <tr>
@@ -30,7 +30,7 @@ export default class NodesTable extends React.Component<{
                 <Sort id="totalUpTime" field="Uptime" />
               </th>
               <th className="text-right" data-testid="status">
-                <Sort id="status" field="Status" />
+                Status
                 {this.props.hideFilters === true ? '' : <StatusFilter />}
               </th>
               <th className="text-right" data-testid="tempRating">
