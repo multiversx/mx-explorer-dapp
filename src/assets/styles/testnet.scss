@@ -25,11 +25,8 @@ $input-hover-border-color: darken($border-color, 15%);
 @import './main';
 
 .main-content-container {
-  a:not(.trim-wrapper) {
-    text-decoration: underline;
-  }
-
-  a.trim-wrapper {
+  a {
+    text-decoration: none !important;
     position: relative;
 
     &::after {
@@ -38,17 +35,17 @@ $input-hover-border-color: darken($border-color, 15%);
       width: 100%;
       height: 0;
       left: 0;
-      bottom: 0.25rem;
+      bottom: 4px;
       border-bottom: 1px solid $primary;
     }
   }
 
-  .nodes-filters,
-  .nodes-tabs,
-  .pager {
-    a {
-      text-decoration: initial;
-      text-decoration-color: initial;
+  .nodes-filters a,
+  .nodes-tabs a,
+  .pager a,
+  .side-action {
+    &::after {
+      content: none !important;
     }
   }
 }
