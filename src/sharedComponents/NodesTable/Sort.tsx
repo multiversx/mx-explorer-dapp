@@ -10,14 +10,15 @@ const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {
   const { order, sort, ...rest } = Object.fromEntries(urlParams);
 
   const nextOrder = () => {
-    switch (order) {
-      case 'asc':
-        return 'desc';
-      case 'desc':
-        return undefined;
-      default:
-        return 'asc';
+    if (sort === id) {
+      switch (order) {
+        case 'asc':
+          return 'desc';
+        case 'desc':
+          return undefined;
+      }
     }
+    return 'asc';
   };
 
   const newOrder = nextOrder();
