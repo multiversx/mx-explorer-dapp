@@ -109,12 +109,12 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                   <NetworkLink to={`/address/${transaction.sender}`} className="trim-wrapper">
                     <Trim text={transaction.sender} />
                   </NetworkLink>
+                  &nbsp;
                   <NetworkLink
                     to={urlBuilder.senderShard(transaction.senderShard)}
                     className="flex-shrink-0"
                   >
-                    &nbsp;(
-                    <ShardSpan shard={transaction.senderShard} />)
+                    (<ShardSpan shard={transaction.senderShard} />)
                   </NetworkLink>
                 </>
               ) : (
