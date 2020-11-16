@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NodeType } from 'context/state';
-import { truncate, urlBuilder } from 'helpers';
+import { urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, Trim, Led, PageState } from 'sharedComponents';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import RowIcon from './RowIcon';
@@ -29,8 +29,8 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
             </div>
           </td>
           <td>
-            {node.nodeDisplayName ? (
-              truncate(node.nodeDisplayName, 20)
+            {node.nodeName ? (
+              <Trim text={node.nodeName} />
             ) : (
               <span className="text-secondary">N/A</span>
             )}
@@ -44,27 +44,16 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
           </td>
 
           <td>
-            {node.versionNumber ? (
-              truncate(node.versionNumber.split('-')[0], 20)
-            ) : (
-              <span className="text-secondary">N/A</span>
-            )}
+            {node.versionNumber ? node.versionNumber : <span className="text-secondary">N/A</span>}
           </td>
           <td className="text-right">
             {(node.totalUpTimeSec !== 0 || node.totalDownTimeSec !== 0) && (
-              <span>
-                {Math.floor(
-                  (node.totalUpTimeSec * 100) / (node.totalUpTimeSec + node.totalDownTimeSec)
-                )}
-                %
-              </span>
+              <span>{node.totalUpTime}%</span>
             )}
-            {node.totalUpTimeSec === 0 &&
-              node.totalDownTimeSec === 0 &&
-              node.status === 'online' && <span>100%</span>}
-            {node.totalUpTimeSec === 0 &&
-              node.totalDownTimeSec === 0 &&
-              node.status === 'offline' && <span>0%</span>}
+            {node.totalUpTime === 0 && node.status === 'online' && <span>100%</span>}
+            {node.totalUpTime === 0 && node.totalDownTime === 0 && node.status === 'offline' && (
+              <span>0%</span>
+            )}
           </td>
           <td>
             <div className="d-flex align-items-center justify-content-end">
