@@ -6,6 +6,10 @@ const schema = object({
   blocks: number().required(),
   addresses: number().required(),
   transactions: number().required(),
+  epoch: number().required(),
+  refreshRate: number().required(),
+  roundsPassed: number().required(),
+  roundsPerEpoch: number().required(),
 }).required();
 
 export default async function getHighlights({
