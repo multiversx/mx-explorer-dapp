@@ -13,7 +13,7 @@ interface SearchType {
 const Search = ({ setExpanded = () => null }: SearchType) => {
   const { pathname } = useLocation();
   const networkRoute = useNetworkRoute();
-  const { isAddress, isBlock, isTransaction, getNode, getMiniBlock } = adapter();
+  const { getAddressDetails, getBlock, getTransaction, getNode, getMiniBlock } = adapter();
   const [route, setRoute] = React.useState('');
   const [searching, setSearching] = React.useState(false);
 
@@ -32,27 +32,27 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
 
       Promise.all([
         getNode(hash),
-        isBlock(hash),
-        isTransaction(hash),
-        isAddress(hash),
+        getBlock(hash),
+        getTransaction(hash),
+        getAddressDetails(hash),
         getMiniBlock(hash),
       ]).then(([node, block, transaction, address, miniblock]) => {
         setExpanded(false);
         switch (true) {
-          case node.success:
-            setRoute(networkRoute(`/nodes/${hash}`));
-            break;
-          case block:
+          case block.success:
             setRoute(networkRoute(`/blocks/${hash}`));
             break;
-          case transaction:
+          case transaction.success:
             setRoute(networkRoute(`/transactions/${hash}`));
-            break;
-          case address:
-            setRoute(networkRoute(`/address/${hash}`));
             break;
           case miniblock.blockFetched:
             setRoute(networkRoute(`/miniblocks/${hash}`));
+            break;
+          case address.success:
+            setRoute(networkRoute(`/address/${hash}`));
+            break;
+          case node.success:
+            setRoute(networkRoute(`/nodes/${hash}`));
             break;
           default:
             setRoute(networkRoute(`/search/${hash}`));
