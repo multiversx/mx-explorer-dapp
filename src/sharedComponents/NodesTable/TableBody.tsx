@@ -30,7 +30,9 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
           </td>
           <td>
             {node.nodeName ? (
-              <Trim text={node.nodeName} />
+              <div className="trim-lg">
+                <Trim text={node.nodeName} />
+              </div>
             ) : (
               <span className="text-secondary">N/A</span>
             )}
@@ -47,7 +49,7 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
             {node.versionNumber ? node.versionNumber : <span className="text-secondary">N/A</span>}
           </td>
           <td className="text-right">
-            {node.totalUpTimeSec !== 0 ? (
+            {node.totalUpTimeSec !== undefined && node.totalUpTimeSec !== 0 ? (
               <span>{node.totalUpTime}%</span>
             ) : (
               <span className="text-secondary">N/A</span>

@@ -82,9 +82,11 @@ const BlockData = (props: BlockDataType) => {
           </DetailItem>
 
           <DetailItem title="Shard">
-            <NetworkLink to={urlBuilder.shard(block.shard)}>
-              <ShardSpan shard={block.shard} />
-            </NetworkLink>
+            <div className="d-flex">
+              <NetworkLink to={urlBuilder.shard(block.shard)}>
+                <ShardSpan shard={block.shard} />
+              </NetworkLink>
+            </div>
           </DetailItem>
 
           <DetailItem title="Size">

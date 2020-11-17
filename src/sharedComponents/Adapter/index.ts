@@ -183,5 +183,11 @@ export default function useAdapter() {
         validator,
         timeout,
       }),
+
+    getAddresses: ({ size }: f.GetAddressesType) =>
+      f.getAddresses({ provider, baseUrl, size, timeout }),
+
+    getAddressesCount: ({ size }: f.GetAddressesType) =>
+      f.getAddressesCount({ provider, baseUrl, size, timeout }),
   };
 }

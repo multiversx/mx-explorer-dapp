@@ -8,11 +8,19 @@ import { TransactionType } from 'sharedComponents/TransactionsTable';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
-import AddressDetails, { AddressDetailsType } from './AddressDetails';
+import AddressDetailsCard from './AddressDetailsCard';
 import FailedAddress from './FailedAddress';
 import DelegationDetails from './DelegationDetails';
 import { addressIsBech32, useSize } from 'helpers';
 import { denomination, decimals } from 'appConfig';
+import { types } from 'helpers';
+
+export interface AddressDetailsType extends types.AddressType {
+  detailsFetched?: boolean;
+  rewardsFetched?: boolean;
+  claimableRewards?: number;
+  stake?: number;
+}
 
 const initialAddressDetails: AddressDetailsType = {
   address: '',
@@ -159,9 +167,9 @@ const Address = () => {
             </div>
             <div className="row">
               <div className="col mb-spacer">
-                <AddressDetails {...addressDetails} />
+                <AddressDetailsCard {...addressDetails} />
               </div>
-              {addressDetails.stake > 0 && (
+              {addressDetails.stake !== undefined && addressDetails.stake > 0 && (
                 <div className="col-lg-4 mb-spacer">
                   <DelegationDetails {...addressDetails} />
                 </div>
@@ -176,7 +184,8 @@ const Address = () => {
                     addressId={addressId}
                     totalTransactions={totalTransactions}
                     size={size}
-                    withTitle={true}
+                    title={true}
+                    directionCol={false}
                   />
                 ) : (
                   <div className="card">

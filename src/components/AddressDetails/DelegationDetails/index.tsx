@@ -1,7 +1,7 @@
 import React from 'react';
 import DelegationChart from './DelegationChart';
 import { useGlobalState } from 'context';
-import { AddressDetailsType } from './../AddressDetails';
+import { AddressDetailsType } from '../index';
 import { PageState } from 'sharedComponents';
 import { faCoins } from '@fortawesome/pro-regular-svg-icons/faCoins';
 
@@ -10,11 +10,14 @@ const DelegationDetails = (props: AddressDetailsType) => {
     activeNetwork: { erdLabel },
   } = useGlobalState();
 
-  const total = (props.stake + props.claimableRewards).toLocaleString('en', {
+  const propStake = props.stake !== undefined ? props.stake : 0;
+  const propClaimableRewards = props.claimableRewards !== undefined ? props.claimableRewards : 0;
+
+  const total = (propStake + propClaimableRewards).toLocaleString('en', {
     minimumFractionDigits: 4,
   });
-  const stake = props.stake.toLocaleString('en', { minimumFractionDigits: 4 });
-  const rewards = props.claimableRewards.toLocaleString('en', { minimumFractionDigits: 4 });
+  const stake = propStake.toLocaleString('en', { minimumFractionDigits: 4 });
+  const rewards = propClaimableRewards.toLocaleString('en', { minimumFractionDigits: 4 });
 
   return (
     <>
@@ -30,11 +33,11 @@ const DelegationDetails = (props: AddressDetailsType) => {
         </div>
       )}
 
-      {props.address && props.rewardsFetched && props.stake > 0 && (
+      {props.address && props.rewardsFetched && propStake > 0 && (
         <div className="card chart">
           <div className="card-body bg-primary d-flex align-items-center">
             <div className="mr-4">
-              <DelegationChart stake={props.stake} claimableRewards={props.claimableRewards} />
+              <DelegationChart stake={propStake} claimableRewards={propClaimableRewards} />
             </div>
             <div className="text-white ml-1">
               <p className="font-weight-bold mb-1">

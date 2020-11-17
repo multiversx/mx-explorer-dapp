@@ -1,7 +1,7 @@
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { addressIsBech32, dateFormatted } from 'helpers';
+import { addressIsBech32, dateFormatted, urlBuilder } from 'helpers';
 import * as React from 'react';
 import {
   ScAddressIcon,
@@ -66,7 +66,7 @@ const LatestTransactions = () => {
             <div className="card-header">
               <div className="card-header-item d-flex justify-content-between align-items-center">
                 <h6 className="m-0">Latest Transactions</h6>
-                <NetworkLink to="/transactions" className="mr-1 pr-1">
+                <NetworkLink to="/transactions" className="mr-2">
                   View All Transactions
                 </NetworkLink>
               </div>
@@ -111,7 +111,7 @@ const LatestTransactions = () => {
 
                         {addressIsBech32(transaction.sender) ? (
                           <NetworkLink
-                            to={`/address/${transaction.sender}`}
+                            to={urlBuilder.addressDetails(transaction.sender)}
                             className="trim-wrapper"
                           >
                             <Trim text={transaction.sender} />
@@ -124,7 +124,7 @@ const LatestTransactions = () => {
                         <span className="text-nowrap mr-2">To</span>
 
                         <NetworkLink
-                          to={`/address/${transaction.receiver}`}
+                          to={urlBuilder.addressDetails(transaction.receiver)}
                           data-testid={`transactionLinkTo${i}`}
                           className="trim-wrapper"
                         >
