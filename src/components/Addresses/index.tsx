@@ -3,19 +3,17 @@ import { useGlobalState } from 'context';
 import { Loader, adapter, AddressesTable, Pager } from 'sharedComponents';
 import NoAddresses from 'sharedComponents/AddressesTable/NoAddresses';
 import FailedAddresses from 'sharedComponents/AddressesTable/FailedAddresses';
-import { AddressDetailsType } from '../Address/AddressDetails';
+import { AddressType } from 'sharedComponents/AddressesTable';
 import { useSize, useURLSearchParams } from 'helpers';
 
 const Transactions = () => {
   const ref = React.useRef(null);
   const { activeNetworkId } = useGlobalState();
   const { page } = useURLSearchParams();
-
   const { size } = useSize();
-
   const { getAddresses, getAddressesCount } = adapter();
 
-  const [addresses, setAddresses] = React.useState<AddressDetailsType[]>([]);
+  const [addresses, setAddresses] = React.useState<AddressType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [totalAddresses, setTotalAddresses] = React.useState<number | '...'>('...');
 
