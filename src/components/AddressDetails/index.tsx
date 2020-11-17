@@ -184,7 +184,8 @@ const Address = () => {
                     addressId={addressId}
                     totalTransactions={totalTransactions}
                     size={size}
-                    withTitle={true}
+                    title={true}
+                    directionCol={false}
                   />
                 ) : (
                   <div className="card">
