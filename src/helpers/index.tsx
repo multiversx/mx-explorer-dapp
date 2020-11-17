@@ -15,6 +15,7 @@ import useURLSearchParams from './useURLSearchParams';
 import useSize from './useSize';
 import useMatchPath from './useMatchPath';
 import useIsMainnet from './useIsMainnet';
+import * as types from './types';
 
 export {
   truncate,
@@ -34,4 +35,5 @@ export {
   useSize,
   useMatchPath,
   useIsMainnet,
+  types,
 };
