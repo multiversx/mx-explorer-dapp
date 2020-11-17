@@ -42,56 +42,49 @@ const ScResultsList = ({ scResults }: { scResults: ScResultType[] }) => {
             </div>
 
             <div className="result-item-content">
-              <div className="row mb-3">
-                <div className="col-12 col-lg-2 col-xl-1 pr-xl-0 text-secondary text-lg-right">
-                  From
-                </div>
-                <div className="col-12 col-lg-10 col-xl-11 pl-xl-2">
-                  <div className="pl-xl-4 d-flex align-items-center">
-                    <Trim text={result.sender} />
-                    <CopyButton text={result.sender} className="side-action ml-2" />
-                  </div>
+              <div className="row mb-3 d-flex flex-column flex-sm-row">
+                <div className="col col-left">From</div>
+                <div className="col d-flex align-items-center">
+                  <Trim text={result.sender} />
+                  <CopyButton text={result.sender} className="side-action ml-2" />
                 </div>
               </div>
 
-              <div className="row mb-3">
-                <div className="col-12 col-lg-2 col-xl-1 pr-xl-0 text-secondary text-lg-right">
-                  To
-                </div>
-                <div className="col-12 col-lg-10 col-xl-11 pl-xl-2">
-                  <div className="pl-xl-4 d-flex align-items-center">
-                    <Trim text={result.receiver} />
-                    <CopyButton text={result.receiver} className="side-action ml-2" />
-                  </div>
+              <div className="row mb-3 d-flex flex-column flex-sm-row">
+                <div className="col col-left">To</div>
+                <div className="col d-flex align-items-center">
+                  <Trim text={result.receiver} />
+                  <CopyButton text={result.receiver} className="side-action ml-2" />
                 </div>
               </div>
 
-              <div className="row mb-3">
-                <div className="col-12 col-lg-2 col-xl-1 pr-xl-0 text-secondary text-lg-right">
-                  Value
-                </div>
-                <div className="col-12 col-lg-10 col-xl-11 pl-xl-2">
-                  <div className="pl-xl-4 d-flex text-wrap">
-                    <Denominate value={result.value} showLastNonZeroDecimal />
-                  </div>
+              <div className="row mb-3 d-flex flex-column flex-sm-row">
+                <div className="col col-left">Value</div>
+                <div className="col text-wrap">
+                  <Denominate value={result.value} showLastNonZeroDecimal />
                 </div>
               </div>
 
-              <div className="row">
-                <div className="col-12 col-lg-2 col-xl-1 pr-xl-0 text-secondary text-lg-right">
-                  Data
-                </div>
-                <div className="col-12 col-lg-10 col-xl-11 pl-xl-2">
-                  <div className="pl-xl-4 d-flex mt-1">
+              {result.data && (
+                <div className="row d-flex flex-column flex-sm-row">
+                  <div className="col col-left">Data</div>
+                  <div className="col">
                     <textarea
                       readOnly
-                      className="form-control cursor-text"
+                      className="form-control cursor-text mt-1"
                       rows={2}
                       defaultValue={result.data ? decodeData(result.data) : 'N/A'}
                     />
                   </div>
                 </div>
-              </div>
+              )}
+
+              {result.returnMessage && (
+                <div className="row mt-3 d-flex flex-column flex-sm-row">
+                  <div className="col col-left">Response</div>
+                  <div className="col text-break-all">{result.returnMessage}</div>
+                </div>
+              )}
             </div>
           </div>
         );
