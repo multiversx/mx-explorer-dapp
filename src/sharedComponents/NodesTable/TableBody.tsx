@@ -30,7 +30,9 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
           </td>
           <td>
             {node.nodeName ? (
-              <Trim text={node.nodeName} />
+              <div className="trim-lg">
+                <Trim text={node.nodeName} />
+              </div>
             ) : (
               <span className="text-secondary">N/A</span>
             )}
