@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Denominate, NetworkLink } from 'sharedComponents';
+import { Denominate, NetworkLink, Trim } from 'sharedComponents';
 import { types, urlBuilder } from 'helpers';
 
 const AddressesTable = ({ addresses }: { addresses: types.AddressType[] }) => {
@@ -20,8 +20,9 @@ const AddressesTable = ({ addresses }: { addresses: types.AddressType[] }) => {
                   <NetworkLink
                     to={urlBuilder.addressDetails(address.address)}
                     data-testid={`addressLink${i}`}
+                    className="trim-only-sm"
                   >
-                    {address.address}
+                    <Trim text={address.address} />
                   </NetworkLink>
                 </div>
               </td>
