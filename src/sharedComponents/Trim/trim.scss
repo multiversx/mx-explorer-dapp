@@ -67,3 +67,11 @@ a > .trim span {
 .table .trim-lg .trim {
   max-width: 13rem;
 }
+
+.table .trim-only-sm .trim {
+  max-width: none;
+
+  @include media-breakpoint-down(sm) {
+    max-width: 10rem;
+  }
+}
