@@ -89,7 +89,7 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
             <>
               {addressIsBech32(transaction.sender) ? (
                 <NetworkLink
-                  to={`/address/${transaction.sender}`}
+                  to={urlBuilder.addressDetails(transaction.sender)}
                   data-testid="senderLink"
                   className="trim-wrapper"
                 >
@@ -109,7 +109,7 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
             <Trim text={transaction.receiver} />
           ) : (
             <NetworkLink
-              to={`/address/${transaction.receiver}`}
+              to={urlBuilder.addressDetails(transaction.receiver)}
               data-testid="receiverLink"
               className="trim-wrapper"
             >
