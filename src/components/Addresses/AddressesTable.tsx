@@ -9,7 +9,7 @@ const AddressesTable = ({ addresses }: { addresses: types.AddressType[] }) => {
         <thead>
           <tr>
             <th>Address</th>
-            <th className="text-right">Balance</th>
+            <th>Balance</th>
           </tr>
         </thead>
         <tbody data-testid="addressesTable">
@@ -26,7 +26,7 @@ const AddressesTable = ({ addresses }: { addresses: types.AddressType[] }) => {
                   </NetworkLink>
                 </div>
               </td>
-              <td className="text-right">
+              <td>
                 <Denominate value={address.balance} />
               </td>
             </tr>

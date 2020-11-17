@@ -141,7 +141,7 @@ const TransactionRow = ({ transaction, addressId, directionCol }: TransactionRow
           )}
         </div>
       </td>
-      <td className="text-right">
+      <td>
         <Denominate value={transaction.value} />
       </td>
     </tr>
