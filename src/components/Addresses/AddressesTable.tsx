@@ -1,14 +1,8 @@
 import * as React from 'react';
 import { Denominate, NetworkLink } from 'sharedComponents';
+import { types } from 'helpers';
 
-export interface AddressType {
-  address: string;
-  balance: string;
-  nonce: number;
-  code?: string;
-}
-
-const AddressesTable = ({ addresses }: { addresses: AddressType[] }) => {
+const AddressesTable = ({ addresses }: { addresses: types.AddressType[] }) => {
   return (
     <div className="table-wrapper animated-list">
       <table className="table">

@@ -13,9 +13,9 @@ import FailedAddress from './FailedAddress';
 import DelegationDetails from './DelegationDetails';
 import { addressIsBech32, useSize } from 'helpers';
 import { denomination, decimals } from 'appConfig';
-import { AddressType } from 'sharedComponents/AddressesTable';
+import { types } from 'helpers';
 
-export interface AddressDetailsType extends AddressType {
+export interface AddressDetailsType extends types.AddressType {
   detailsFetched?: boolean;
   rewardsFetched?: boolean;
   claimableRewards?: number;

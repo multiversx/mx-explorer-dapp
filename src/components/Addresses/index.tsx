@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { Loader, adapter, AddressesTable, Pager } from 'sharedComponents';
-import NoAddresses from 'sharedComponents/AddressesTable/NoAddresses';
-import FailedAddresses from 'sharedComponents/AddressesTable/FailedAddresses';
-import { AddressType } from 'sharedComponents/AddressesTable';
+import { Loader, adapter, Pager } from 'sharedComponents';
+import AddressesTable from './AddressesTable';
+import NoAddresses from './NoAddresses';
+import FailedAddresses from './FailedAddresses';
+import { types } from 'helpers';
 import { useSize, useURLSearchParams } from 'helpers';
 
 const Transactions = () => {
@@ -13,7 +14,7 @@ const Transactions = () => {
   const { size } = useSize();
   const { getAddresses, getAddressesCount } = adapter();
 
-  const [addresses, setAddresses] = React.useState<AddressType[]>([]);
+  const [addresses, setAddresses] = React.useState<types.AddressType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [totalAddresses, setTotalAddresses] = React.useState<number | '...'>('...');
 

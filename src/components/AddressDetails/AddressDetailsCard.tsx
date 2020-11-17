@@ -1,8 +1,8 @@
 import React from 'react';
 import { CopyButton, Denominate, DetailItem, Trim } from 'sharedComponents';
-import { AddressType } from 'sharedComponents/AddressesTable';
+import { types } from 'helpers';
 
-const AddressDetailsCard = (props: AddressType) => {
+const AddressDetailsCard = (props: types.AddressType) => {
   return props.address ? (
     <div className="card">
       <div className="card-body p-0">
