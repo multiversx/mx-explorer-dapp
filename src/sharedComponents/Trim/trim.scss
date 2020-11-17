@@ -72,6 +72,6 @@ a > .trim span {
   max-width: none;
 
   @include media-breakpoint-down(sm) {
-    max-width: 10rem;
+    max-width: 13rem;
   }
 }

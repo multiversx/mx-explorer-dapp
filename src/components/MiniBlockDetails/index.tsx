@@ -171,7 +171,7 @@ const MiniBlockDetails: React.FC = () => {
                         addressId={undefined}
                         totalTransactions={totalTransactions}
                         size={size}
-                        withTitle={true}
+                        title={true}
                       />
                     ) : (
                       <div className="card">
