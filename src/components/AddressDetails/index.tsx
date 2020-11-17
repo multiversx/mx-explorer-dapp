@@ -185,7 +185,7 @@ const Address = () => {
                     totalTransactions={totalTransactions}
                     size={size}
                     title={true}
-                    directionCol={false}
+                    directionCol={true}
                   />
                 ) : (
                   <div className="card">

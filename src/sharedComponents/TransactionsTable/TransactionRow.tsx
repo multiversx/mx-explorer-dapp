@@ -111,13 +111,15 @@ const TransactionRow = ({ transaction, addressId, directionCol }: TransactionRow
       {directionCol === true && (
         <td>
           <div className="d-flex">
-            <span className="badge badge-pill text-uppercase border flex-fill">
+            <span
+              className={`direction-badge ${directionSelf ? 'self' : directionOut ? 'out' : 'in'}`}
+            >
               {directionSelf ? (
-                <span className="text-secondary">SELF</span>
+                <>SELF</>
               ) : (
                 <>
-                  {directionOut && <span className="text-warning">OUT</span>}
-                  {directionIn && <span className="text-success">IN</span>}
+                  {directionOut && <>OUT</>}
+                  {directionIn && <>IN</>}
                 </>
               )}
             </span>
