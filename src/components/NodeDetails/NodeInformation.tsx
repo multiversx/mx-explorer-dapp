@@ -20,13 +20,15 @@ const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string 
             </div>
           </DetailItem>
           <DetailItem title="Shard" colWidth={colWidth}>
-            {shard !== undefined ? (
-              <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
-                <ShardSpan shard={shard} />
-              </NetworkLink>
-            ) : (
-              <span className="text-secondary">N/A</span>
-            )}
+            <div className="d-flex">
+              {shard !== undefined ? (
+                <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
+                  <ShardSpan shard={shard} />
+                </NetworkLink>
+              ) : (
+                <span className="text-secondary">N/A</span>
+              )}
+            </div>
           </DetailItem>
 
           <DetailItem title="Name" colWidth={colWidth}>
