@@ -45,9 +45,7 @@ const TransactionsTable = ({
                   <th scope="col">From</th>
                   {directionCol && <th scope="col" />}
                   <th scope="col">To</th>
-                  <th scope="col" className="text-right">
-                    Value
-                  </th>
+                  <th scope="col">Value</th>
                 </tr>
               </thead>
               <tbody>
