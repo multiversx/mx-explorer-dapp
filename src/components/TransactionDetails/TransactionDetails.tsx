@@ -46,14 +46,6 @@ const getFee = (transaction: TransactionType) => {
 };
 
 const Details = ({ transaction }: { transaction: TransactionType }) => {
-  const errorMessage =
-    transaction &&
-    transaction.scResults !== null &&
-    transaction.scResults !== undefined &&
-    transaction.scResults[0].returnMessage
-      ? transaction.scResults[0].returnMessage
-      : '';
-
   return (
     <div className="card">
       <div className="card-body p-0">
@@ -145,12 +137,6 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                 </NetworkLink>
               )}
             </div>
-            {errorMessage && (
-              <div>
-                <FontAwesomeIcon icon={faExclamationTriangle} className="text-danger" size="xs" />
-                <small className="text-danger"> {errorMessage}</small>
-              </div>
-            )}
           </DetailItem>
 
           <DetailItem title="Value">
