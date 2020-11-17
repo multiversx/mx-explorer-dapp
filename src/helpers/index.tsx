@@ -6,7 +6,6 @@ import dateFormatted from './dateFormatted';
 import urlBuilder from './urlBuilder';
 import sizeFormat from './sizeFormat';
 import useNetworkRoute from './useNetworkRoute';
-import trimHash from './trimHash';
 import useFilters from './useFilters';
 import truncate from './truncate';
 import storage from './storage';
@@ -27,7 +26,6 @@ export {
   addressIsBech32,
   useNetworkRoute,
   copyToClipboard,
-  trimHash,
   useFilters,
   storage,
   nodeIssue,
