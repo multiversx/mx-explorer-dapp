@@ -46,10 +46,6 @@ interface MockImplementationType {
 const mockImplementation = ({ networkRequests }: MockImplementationType) => {
   const requests = {
     stats: () => Promise.resolve({ data: rawData.stats }),
-    heartbeatstatus: () =>
-      Promise.resolve({ data: { data: rawData.heartbeatstatus, code: 'successful' } }),
-    validatorStatistics: () =>
-      Promise.resolve({ data: { data: rawData.statistics, code: 'successful' } }),
     validators: () => Promise.resolve({ data: rawData.validators }),
     transactionsCount: () => Promise.resolve({ data: 14253408 }),
     transactions: () => Promise.resolve({ data: rawData.transactionsSearch }),
@@ -61,7 +57,8 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
     },
     miniblock: () => Promise.resolve({ data: rawData.miniblock }),
     networkStatus: () => Promise.resolve({ data: { data: rawData.epoch, code: 'successful' } }),
-    ratingshistory: () => Promise.resolve({ data: rawData.ratings }),
+    addressesCount: () => Promise.resolve({ data: 1933 }),
+    addresses: () => Promise.resolve({ data: rawData.addresses }),
     address: () => Promise.resolve({ data: rawData.address }),
     delegation: () => Promise.resolve({ data: rawData.delegation }),
     node: () => Promise.resolve({ data: rawData.node }),
@@ -74,10 +71,6 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
       // --- page load ---
       case url.includes('/stats'):
         return requests.stats();
-      case url.includes('/node/heartbeatstatus'):
-        return requests.heartbeatstatus();
-      case url.includes('/validator/statistics'):
-        return requests.validatorStatistics();
       // --- page load ---
       case url.includes('network/status'):
         return requests.networkStatus();
@@ -91,22 +84,24 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.transactions();
       case url.includes('/delegation'):
         return requests.delegation();
+      case url.includes('/addresses/count'):
+        return requests.addressesCount();
       case url.includes('/addresses/'):
         return requests.address();
+      case url.includes('/addresses'):
+        return requests.addresses();
       case url.includes('/blocks/count'):
         return requests.blocksCount();
-      case url.includes('/miniblocks/'):
-        return requests.miniblock();
       case url.includes('/blocks/'):
         return requests.block();
       case url.includes('/blocks'):
         return requests.blocks();
+      case url.includes('/miniblocks/'):
+        return requests.miniblock();
       case url.includes('/nodes/'):
         return requests.node();
       case url.includes('/identities/'):
         return requests.identity();
-      case url.includes('/ratingshistory/'):
-        return requests.ratingshistory();
     }
   };
 };
