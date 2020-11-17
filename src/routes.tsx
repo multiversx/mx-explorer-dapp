@@ -6,7 +6,8 @@ import Home from './components/Home';
 import MiniBlockDetails from './components/MiniBlockDetails';
 import TransactionDetails from './components/TransactionDetails';
 import Transactions from './components/Transactions';
-import Address from './components/Address';
+import AddressDetails from './components/AddressDetails';
+import Addresses from './components/Addresses';
 import Nodes from './components/Nodes';
 import Identities from './components/Identities';
 import IdentityDetails from './components/IdentityDetails';
@@ -31,81 +32,6 @@ export const validatorsRoutes = {
 
 const routes: RouteType[] = [
   {
-    path: '/transactions/page/:page',
-    title: 'Transactions',
-    component: Transactions,
-  },
-  {
-    path: '/transactions',
-    title: 'Transactions',
-    component: Transactions,
-  },
-  {
-    path: validatorsRoutes.nodes,
-    title: 'Nodes',
-    component: Nodes,
-  },
-  {
-    path: validatorsRoutes.index,
-    title: 'Validators',
-    component: Identities,
-  },
-  {
-    path: validatorsRoutes.identityDetails,
-    title: 'Validators',
-    component: IdentityDetails,
-  },
-  {
-    path: validatorsRoutes.nodeDetails,
-    title: 'Node Details',
-    component: NodeDetails,
-  },
-  {
-    path: '/address/:hash',
-    title: 'Address Details',
-    component: Address,
-  },
-  {
-    path: '/address/:hash/page/:page',
-    title: 'Address Details',
-    component: Address,
-  },
-  {
-    path: '/transactions/:hash',
-    title: 'Transaction Details',
-    component: TransactionDetails,
-  },
-  {
-    path: '/blocks',
-    title: 'Blocks',
-    component: Blocks,
-  },
-  {
-    path: '/blocks/:hash',
-    title: 'Block Details',
-    component: BlockDetails,
-  },
-  {
-    path: '/miniblocks/:hash',
-    title: 'Miniblock Details',
-    component: MiniBlockDetails,
-  },
-  {
-    path: '/miniblocks/:hash/page/:page',
-    title: 'Miniblock Details',
-    component: MiniBlockDetails,
-  },
-  {
-    path: '/blocks/epoch/:epoch/page/:page',
-    title: 'Epoch Details',
-    component: Blocks,
-  },
-  {
-    path: '/blocks/epoch/:epoch',
-    title: 'Epoch Details',
-    component: Blocks,
-  },
-  {
     path: '/search/:query',
     title: 'Search',
     component: EmptySearch,
@@ -119,6 +45,61 @@ const routes: RouteType[] = [
     path: '/',
     title: '',
     component: Home,
+  },
+  {
+    path: '/blocks',
+    title: 'Blocks',
+    component: Blocks,
+  },
+  {
+    path: '/blocks/:hash',
+    title: 'Block Details',
+    component: BlockDetails,
+  },
+  {
+    path: '/transactions',
+    title: 'Transactions',
+    component: Transactions,
+  },
+  {
+    path: '/transactions/:hash',
+    title: 'Transaction Details',
+    component: TransactionDetails,
+  },
+  {
+    path: validatorsRoutes.index,
+    title: 'Validators',
+    component: Identities,
+  },
+  {
+    path: validatorsRoutes.identityDetails,
+    title: 'Validator Details',
+    component: IdentityDetails,
+  },
+  {
+    path: validatorsRoutes.nodes,
+    title: 'Nodes',
+    component: Nodes,
+  },
+  {
+    path: validatorsRoutes.nodeDetails,
+    title: 'Node Details',
+    component: NodeDetails,
+  },
+  {
+    path: '/addresses',
+    title: 'Addresses',
+    component: Addresses,
+  },
+  {
+    path: '/addresses/:hash',
+    title: 'Address Details',
+    component: AddressDetails,
+  },
+  {
+    path: '/miniblocks/:hash',
+    title: 'Miniblock Details',
+    component: MiniBlockDetails,
   },
 ];
 

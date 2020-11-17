@@ -40,6 +40,14 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
       </NetworkLink>
 
       <NetworkLink
+        className={`nav-link ${matchPath(networkRoute('/addresses')) !== null ? 'active' : ''}`}
+        to="/addresses"
+        onClick={() => onToggle(false)}
+      >
+        Addresses
+      </NetworkLink>
+
+      <NetworkLink
         className={`nav-link ${
           matchPath(networkRoute(validatorsRoutes.nodes)) !== null ||
           matchPath(networkRoute(validatorsRoutes.index)) !== null

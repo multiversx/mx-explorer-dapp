@@ -55,7 +55,7 @@ export async function getTransactions({
 
     return {
       data,
-      success: data.length > 0,
+      success: data !== undefined,
     };
   } catch {
     return {

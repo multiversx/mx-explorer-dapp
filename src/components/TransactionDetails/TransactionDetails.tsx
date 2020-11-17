@@ -46,14 +46,6 @@ const getFee = (transaction: TransactionType) => {
 };
 
 const Details = ({ transaction }: { transaction: TransactionType }) => {
-  const errorMessage =
-    transaction &&
-    transaction.scResults !== null &&
-    transaction.scResults !== undefined &&
-    transaction.scResults[0].returnMessage
-      ? transaction.scResults[0].returnMessage
-      : '';
-
   return (
     <div className="card">
       <div className="card-body p-0">
@@ -106,7 +98,10 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
               <ScAddressIcon initiator={transaction.sender} />
               {addressIsBech32(transaction.sender) ? (
                 <>
-                  <NetworkLink to={`/address/${transaction.sender}`} className="trim-wrapper">
+                  <NetworkLink
+                    to={urlBuilder.addressDetails(transaction.sender)}
+                    className="trim-wrapper"
+                  >
                     <Trim text={transaction.sender} />
                   </NetworkLink>
                   &nbsp;
@@ -126,7 +121,10 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
           <DetailItem title="To">
             <div className="d-flex align-items-center">
               <ScAddressIcon initiator={transaction.receiver} />
-              <NetworkLink to={`/address/${transaction.receiver}`} className="trim-wrapper">
+              <NetworkLink
+                to={urlBuilder.addressDetails(transaction.receiver)}
+                className="trim-wrapper"
+              >
                 <Trim text={transaction.receiver} />
               </NetworkLink>
               &nbsp;
@@ -139,12 +137,6 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                 </NetworkLink>
               )}
             </div>
-            {errorMessage && (
-              <div>
-                <FontAwesomeIcon icon={faExclamationTriangle} className="text-danger" size="xs" />
-                <small className="text-danger"> {errorMessage}</small>
-              </div>
-            )}
           </DetailItem>
 
           <DetailItem title="Value">

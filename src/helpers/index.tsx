@@ -6,7 +6,6 @@ import dateFormatted from './dateFormatted';
 import urlBuilder from './urlBuilder';
 import sizeFormat from './sizeFormat';
 import useNetworkRoute from './useNetworkRoute';
-import trimHash from './trimHash';
 import useFilters from './useFilters';
 import truncate from './truncate';
 import storage from './storage';
@@ -15,6 +14,7 @@ import useURLSearchParams from './useURLSearchParams';
 import useSize from './useSize';
 import useMatchPath from './useMatchPath';
 import useIsMainnet from './useIsMainnet';
+import * as types from './types';
 
 export {
   truncate,
@@ -26,7 +26,6 @@ export {
   addressIsBech32,
   useNetworkRoute,
   copyToClipboard,
-  trimHash,
   useFilters,
   storage,
   nodeIssue,
@@ -34,4 +33,5 @@ export {
   useSize,
   useMatchPath,
   useIsMainnet,
+  types,
 };

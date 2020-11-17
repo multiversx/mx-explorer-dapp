@@ -58,7 +58,7 @@ const LatestBlocks = () => {
             <div className="card-header">
               <div className="card-header-item d-flex justify-content-between align-items-center">
                 <h6 className="m-0">Latest Blocks</h6>
-                <NetworkLink to="/blocks" className="mr-1 pr-1">
+                <NetworkLink to="/blocks" className="mr-2">
                   View All Blocks
                 </NetworkLink>
               </div>

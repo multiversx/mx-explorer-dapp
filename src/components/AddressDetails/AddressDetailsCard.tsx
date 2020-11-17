@@ -1,18 +1,8 @@
 import React from 'react';
 import { CopyButton, Denominate, DetailItem, Trim } from 'sharedComponents';
+import { types } from 'helpers';
 
-export interface AddressDetailsType {
-  address: string;
-  code: string;
-  balance: string;
-  nonce: number;
-  detailsFetched: boolean;
-  rewardsFetched: boolean;
-  claimableRewards: number;
-  stake: number;
-}
-
-const AddressDetails = (props: AddressDetailsType) => {
+const AddressDetailsCard = (props: types.AddressType) => {
   return props.address ? (
     <div className="card">
       <div className="card-body p-0">
@@ -43,4 +33,4 @@ const AddressDetails = (props: AddressDetailsType) => {
   ) : null;
 };
 
-export default AddressDetails;
+export default AddressDetailsCard;
