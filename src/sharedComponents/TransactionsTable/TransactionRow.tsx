@@ -66,7 +66,7 @@ const TransactionRow = ({ transaction, addressId, directionCol }: TransactionRow
       </td>
       <td>
         <span title={dateFormatted(transaction.timestamp)}>
-          <TimeAgo value={transaction.timestamp} />
+          <TimeAgo value={transaction.timestamp} short={true} />
         </span>
       </td>
       <td>
