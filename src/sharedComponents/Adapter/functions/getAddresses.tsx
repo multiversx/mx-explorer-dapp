@@ -16,8 +16,6 @@ export async function getAddresses({
       size: 25,
     };
 
-    // fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
-
     const { data } = await provider({
       baseUrl,
       url: `/addresses`,
