@@ -6,7 +6,7 @@ import Home from './components/Home';
 import MiniBlockDetails from './components/MiniBlockDetails';
 import TransactionDetails from './components/TransactionDetails';
 import Transactions from './components/Transactions';
-import Address from './components/Address';
+import AddressDetails from './components/AddressDetails';
 import Addresses from './components/Addresses';
 import Nodes from './components/Nodes';
 import Identities from './components/Identities';
@@ -69,12 +69,12 @@ const routes: RouteType[] = [
   {
     path: '/address/:hash',
     title: 'Address Details',
-    component: Address,
+    component: AddressDetails,
   },
   {
     path: '/address/:hash/page/:page',
     title: 'Address Details',
-    component: Address,
+    component: AddressDetails,
   },
   {
     path: '/transactions/:hash',

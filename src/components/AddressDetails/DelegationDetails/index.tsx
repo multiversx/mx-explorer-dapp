@@ -1,7 +1,7 @@
 import React from 'react';
 import DelegationChart from './DelegationChart';
 import { useGlobalState } from 'context';
-import { AddressDetailsType } from './../AddressDetails';
+import { AddressDetailsType } from '../index';
 import { PageState } from 'sharedComponents';
 import { faCoins } from '@fortawesome/pro-regular-svg-icons/faCoins';
 

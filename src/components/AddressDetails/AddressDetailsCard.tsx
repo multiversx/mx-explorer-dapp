@@ -1,18 +1,8 @@
 import React from 'react';
 import { CopyButton, Denominate, DetailItem, Trim } from 'sharedComponents';
+import { AddressType } from 'sharedComponents/AddressesTable';
 
-export interface AddressDetailsType {
-  address: string;
-  balance: string;
-  nonce: number;
-  code?: string;
-  detailsFetched?: boolean;
-  rewardsFetched?: boolean;
-  claimableRewards?: number;
-  stake?: number;
-}
-
-const AddressDetails = (props: AddressDetailsType) => {
+const AddressDetailsCard = (props: AddressType) => {
   return props.address ? (
     <div className="card">
       <div className="card-body p-0">
@@ -43,4 +33,4 @@ const AddressDetails = (props: AddressDetailsType) => {
   ) : null;
 };
 
-export default AddressDetails;
+export default AddressDetailsCard;
