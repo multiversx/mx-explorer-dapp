@@ -21,10 +21,10 @@ const Transactions = () => {
   const fetchAddresses = () => {
     getAddresses({
       size,
-    }).then(({ addresses, success }) => {
+    }).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
-          setAddresses(addresses);
+          setAddresses(data);
         }
         setDataReady(success);
       }

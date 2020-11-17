@@ -18,7 +18,7 @@ export async function getAddresses({
 
     // fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
 
-    const { data: addresses } = await provider({
+    const { data } = await provider({
       baseUrl,
       url: `/addresses`,
       params,
@@ -26,8 +26,8 @@ export async function getAddresses({
     });
 
     return {
-      addresses,
-      success: true,
+      data,
+      success: data !== undefined,
     };
   } catch (err) {
     return {
