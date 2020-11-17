@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Denominate, NetworkLink } from 'sharedComponents';
-import { types } from 'helpers';
+import { types, urlBuilder } from 'helpers';
 
 const AddressesTable = ({ addresses }: { addresses: types.AddressType[] }) => {
   return (
@@ -17,7 +17,10 @@ const AddressesTable = ({ addresses }: { addresses: types.AddressType[] }) => {
             <tr key={address.address}>
               <td>
                 <div className="d-flex">
-                  <NetworkLink to={`/addresses/${address.address}`} data-testid={`addressLink${i}`}>
+                  <NetworkLink
+                    to={urlBuilder.addressDetails(address.address)}
+                    data-testid={`addressLink${i}`}
+                  >
                     {address.address}
                   </NetworkLink>
                 </div>

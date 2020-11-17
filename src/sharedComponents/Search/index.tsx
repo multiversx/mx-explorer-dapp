@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { faCircleNotch } from '@fortawesome/pro-regular-svg-icons/faCircleNotch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNetworkRoute } from 'helpers';
+import { useNetworkRoute, urlBuilder } from 'helpers';
 import { Redirect, useLocation } from 'react-router-dom';
 import { adapter } from 'sharedComponents';
 
@@ -49,10 +49,10 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
             setRoute(networkRoute(`/miniblocks/${hash}`));
             break;
           case address.success:
-            setRoute(networkRoute(`/address/${hash}`));
+            setRoute(networkRoute(urlBuilder.addressDetails(hash)));
             break;
           case node.success:
-            setRoute(networkRoute(`/nodes/${hash}`));
+            setRoute(networkRoute(urlBuilder.nodeDetails(hash)));
             break;
           default:
             setRoute(networkRoute(`/search/${hash}`));

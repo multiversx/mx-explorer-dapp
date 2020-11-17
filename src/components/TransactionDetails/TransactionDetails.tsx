@@ -106,7 +106,10 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
               <ScAddressIcon initiator={transaction.sender} />
               {addressIsBech32(transaction.sender) ? (
                 <>
-                  <NetworkLink to={`/address/${transaction.sender}`} className="trim-wrapper">
+                  <NetworkLink
+                    to={urlBuilder.addressDetails(transaction.sender)}
+                    className="trim-wrapper"
+                  >
                     <Trim text={transaction.sender} />
                   </NetworkLink>
                   &nbsp;
@@ -126,7 +129,10 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
           <DetailItem title="To">
             <div className="d-flex align-items-center">
               <ScAddressIcon initiator={transaction.receiver} />
-              <NetworkLink to={`/address/${transaction.receiver}`} className="trim-wrapper">
+              <NetworkLink
+                to={urlBuilder.addressDetails(transaction.receiver)}
+                className="trim-wrapper"
+              >
                 <Trim text={transaction.receiver} />
               </NetworkLink>
               &nbsp;
