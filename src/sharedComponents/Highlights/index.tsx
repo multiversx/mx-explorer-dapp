@@ -70,7 +70,7 @@ const Hightlights = () => {
   const getData = () => {
     if (ref.current !== null) {
       getHighlights().then(({ data, success }) => {
-        const check = data.roundsPerEpoch >= data.roundsPassed;
+        const check = success ? data.roundsPerEpoch >= data.roundsPassed : false;
         const newState = success
           ? {
               shards: parseInt(data.shards).toLocaleString('en'),
