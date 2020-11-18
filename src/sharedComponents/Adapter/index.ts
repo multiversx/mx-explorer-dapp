@@ -87,8 +87,6 @@ export default function useAdapter() {
         receiverShard,
       }),
 
-    getAccountDetails: (address: string) => f.getAccountDetails({ proxyUrl, timeout, address }),
-
     getRewards: (address: string) => f.getRewards({ proxyUrl, timeout, address }),
 
     /* Validators */
@@ -183,6 +181,8 @@ export default function useAdapter() {
         validator,
         timeout,
       }),
+
+    getAccount: (address: string) => f.getAccount({ proxyUrl, timeout, address }),
 
     getAccounts: ({ size }: f.GetAccountsType) =>
       f.getAccounts({ provider, baseUrl, size, timeout }),

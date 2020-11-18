@@ -105,7 +105,7 @@ interface AccountType {
   timeout: number;
 }
 
-export async function getAccountDetails({ proxyUrl, address, timeout }: AccountType) {
+export async function getAccount({ proxyUrl, address, timeout }: AccountType) {
   try {
     const { data } = await axios.get(`${proxyUrl}/accounts/${address}`, { timeout });
     return {

@@ -46,7 +46,7 @@ const AccountDetails = () => {
   const { activeNetworkId } = useGlobalState();
   const { hash: address } = useParams() as any;
 
-  const { getAccountDetails, getTransactionsCount, getTransactions, getRewards } = adapter();
+  const { getAccount, getTransactionsCount, getTransactions, getRewards } = adapter();
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
@@ -58,7 +58,7 @@ const AccountDetails = () => {
         size,
         address,
       }),
-      getAccountDetails(address),
+      getAccount(address),
       getRewards(address),
     ]).then(([transactionsData, accountDetailsData, rewardsData]) => {
       const { data, success } = transactionsData;
