@@ -115,15 +115,19 @@ const MiniBlockDetails: React.FC = () => {
                             </div>
                           </DetailItem>
                           <DetailItem title="Sender Shard">
-                            <NetworkLink to={urlBuilder.shard(miniBlock.senderShard)}>
-                              <ShardSpan shard={miniBlock.senderShard} />
-                            </NetworkLink>
+                            <div className="d-flex">
+                              <NetworkLink to={urlBuilder.shard(miniBlock.senderShard)}>
+                                <ShardSpan shard={miniBlock.senderShard} />
+                              </NetworkLink>
+                            </div>
                           </DetailItem>
 
                           <DetailItem title="Receiver Shard">
-                            <NetworkLink to={urlBuilder.shard(miniBlock.receiverShard)}>
-                              <ShardSpan shard={miniBlock.receiverShard} />
-                            </NetworkLink>
+                            <div className="d-flex">
+                              <NetworkLink to={urlBuilder.shard(miniBlock.receiverShard)}>
+                                <ShardSpan shard={miniBlock.receiverShard} />
+                              </NetworkLink>
+                            </div>
                           </DetailItem>
 
                           <DetailItem title="Sender Block">
