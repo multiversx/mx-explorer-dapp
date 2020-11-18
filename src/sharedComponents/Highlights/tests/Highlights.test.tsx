@@ -15,9 +15,9 @@ describe('Highlights tests', () => {
     expect(shards.innerHTML).toBe('3');
 
     const accounts = await render.findByTestId('accounts');
-    expect(accounts.innerHTML).toBe('59,707');
+    expect(accounts.innerHTML).toBe('60,655');
 
     const transactions = await render.findByTestId('transactions');
-    expect(transactions.innerHTML).toBe('234,191');
+    expect(transactions.innerHTML).toBe('247,378');
   });
 });
