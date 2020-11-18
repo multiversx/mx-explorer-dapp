@@ -12,7 +12,7 @@ import Epoch from './Epoch';
 export interface StateType {
   shards: string;
   blocks: string;
-  addresses: string;
+  accounts: string;
   transactions: string;
 }
 
@@ -40,7 +40,7 @@ const Item = ({ title, value, icon, dataTestId = '' }: ItemType) => (
 const initialState = {
   shards: '...',
   blocks: '...',
-  addresses: '...',
+  accounts: '...',
   transactions: '...',
   epoch: '...',
   epochPercentage: 0,
@@ -75,7 +75,7 @@ const Hightlights = () => {
           ? {
               shards: parseInt(data.shards).toLocaleString('en'),
               blocks: parseInt(data.blocks).toLocaleString('en'),
-              addresses: parseInt(data.addresses).toLocaleString('en'),
+              accounts: parseInt(data.accounts).toLocaleString('en'),
               transactions: parseInt(data.transactions).toLocaleString('en'),
               epoch: data.epoch.toLocaleString('en'),
               epochPercentage: check ? (100 * data.roundsPassed) / data.roundsPerEpoch : 0,
@@ -108,7 +108,7 @@ const Hightlights = () => {
 
   React.useEffect(getData, [timestamp, activeNetworkId]);
 
-  const { shards, blocks, addresses, transactions, epoch, epochPercentage, epochTimeRemaining } =
+  const { shards, blocks, accounts, transactions, epoch, epochPercentage, epochTimeRemaining } =
     activeNetworkId in state ? state[activeNetworkId] : initialState;
 
   return (
@@ -125,7 +125,7 @@ const Hightlights = () => {
                 />
                 <Item icon={faLayerGroup} title="Shards" dataTestId="shards" value={shards} />
                 <Item icon={faCube} title="Blocks" dataTestId="blocks" value={blocks} />
-                <Item icon={faUser} title="Accounts" dataTestId="accounts" value={addresses} />
+                <Item icon={faUser} title="Accounts" dataTestId="accounts" value={accounts} />
                 <Item
                   icon={faExchangeAlt}
                   title="Transactions"

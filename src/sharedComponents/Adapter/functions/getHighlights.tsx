@@ -4,7 +4,7 @@ import { AdapterFunctionType } from './index';
 const schema = object({
   shards: number().required(),
   blocks: number().required(),
-  addresses: number().required(),
+  accounts: number().required(),
   transactions: number().required(),
   epoch: number().required(),
   refreshRate: number().required(),
