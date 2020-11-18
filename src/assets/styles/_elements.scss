@@ -122,3 +122,8 @@
 .outline-0 {
   outline: 0 !important;
 }
+
+.truncate-item-lg {
+  @extend .text-truncate;
+  max-width: 13rem;
+}
