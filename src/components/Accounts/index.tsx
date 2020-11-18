@@ -1,6 +1,14 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { Loader, adapter, Pager, Denominate, NetworkLink, Trim } from 'sharedComponents';
+import {
+  Loader,
+  adapter,
+  Pager,
+  Denominate,
+  NetworkLink,
+  Trim,
+  ScAddressIcon,
+} from 'sharedComponents';
 import NoAccounts from './NoAccounts';
 import FailedAccounts from './FailedAccounts';
 import { types, urlBuilder, useSize, useURLSearchParams } from 'helpers';
@@ -77,7 +85,8 @@ const Transactions = () => {
                               {accounts.map((account, i) => (
                                 <tr key={account.address}>
                                   <td>
-                                    <div className="d-flex">
+                                    <div className="d-flex align-items-center">
+                                      <ScAddressIcon initiator={account.address} />
                                       <NetworkLink
                                         to={urlBuilder.accountDetails(account.address)}
                                         className="trim-only-sm"
