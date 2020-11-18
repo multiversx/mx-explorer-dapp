@@ -64,7 +64,7 @@ const TransactionsTable = ({
 
         <div className="card-footer">
           <Pager
-            itemsPerPage={50}
+            itemsPerPage={25}
             page={String(size)}
             total={
               totalTransactions !== '...' ? Math.min(totalTransactions, 10000) : totalTransactions
