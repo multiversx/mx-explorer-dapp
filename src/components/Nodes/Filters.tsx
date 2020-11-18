@@ -140,6 +140,13 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
               >
                 Jailed
               </NetworkLink>
+              <NetworkLink
+                className={`dropdown-item ${peerType === 'leaving' ? 'active' : ''}`}
+                data-testid="filterByValidators"
+                to={peerTypeLink('leaving')}
+              >
+                Leaving
+              </NetworkLink>
             </Dropdown.Menu>
           </Dropdown>
         </li>
