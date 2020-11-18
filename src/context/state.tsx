@@ -31,7 +31,7 @@ export interface IdentityType {
 
 export interface NodeType {
   publicKey: string;
-  peerType: 'waiting' | 'eligible' | 'observer' | 'new' | 'jailed';
+  peerType: 'waiting' | 'eligible' | 'new' | 'jailed' | 'leaving';
   nodeType: 'observer' | 'validator';
   status: 'online' | 'offline';
   identity: string;
