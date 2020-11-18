@@ -27,7 +27,7 @@ const DelegationDetails = (props: AccountDetailsType) => {
             icon={faCoins}
             title="Unable to load delegation"
             titleClassName="mt-0"
-            className="page-state-sm"
+            className="page-state-sm m-auto"
             dataTestId="delegationErrorScreen"
           />
         </div>
