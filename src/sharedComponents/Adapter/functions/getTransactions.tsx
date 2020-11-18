@@ -1,17 +1,17 @@
 import axios from 'axios';
 import { AdapterFunctionType } from './index';
 
-const getAddressParams = (addressId: string | undefined) =>
-  addressId
+const getAccountParams = (address: string | undefined) =>
+  address
     ? {
-        sender: addressId,
-        receiver: addressId,
+        sender: address,
+        receiver: address,
       }
     : {};
 
 export interface TransactionsType {
   size?: number;
-  addressId?: string;
+  address?: string;
   senderShard?: number;
   receiverShard?: number;
 }
@@ -20,15 +20,15 @@ export async function getTransactions({
   provider,
   baseUrl,
   timeout,
-  addressId = '',
+  address = '',
   size = 1,
   senderShard,
   receiverShard,
 }: AdapterFunctionType & TransactionsType) {
   const params: AdapterFunctionType['params'] = {
-    from: (size - 1) * 50,
-    size: 50,
-    ...getAddressParams(addressId),
+    from: (size - 1) * 25,
+    size: 25,
+    ...getAccountParams(address),
     ...(senderShard !== undefined ? { senderShard } : {}),
     ...(receiverShard !== undefined ? { receiverShard } : {}),
     ...{
@@ -68,14 +68,14 @@ export async function getTransactions({
 export async function getTransactionsCount({
   provider,
   baseUrl,
-  addressId = '',
+  address = '',
   senderShard,
   receiverShard,
   timeout,
 }: AdapterFunctionType & TransactionsType) {
   try {
     const params: AdapterFunctionType['params'] = {
-      ...getAddressParams(addressId),
+      ...getAccountParams(address),
       ...(senderShard !== undefined ? { senderShard } : {}),
       ...(receiverShard !== undefined ? { receiverShard } : {}),
     };
@@ -99,15 +99,15 @@ export async function getTransactionsCount({
   }
 }
 
-interface DetailsType {
+interface AccountType {
   proxyUrl: string;
-  addressId: string;
+  address: string;
   timeout: number;
 }
 
-export async function getAddressDetails({ proxyUrl, addressId, timeout }: DetailsType) {
+export async function getAccountDetails({ proxyUrl, address, timeout }: AccountType) {
   try {
-    const { data } = await axios.get(`${proxyUrl}/addresses/${addressId}`, { timeout });
+    const { data } = await axios.get(`${proxyUrl}/accounts/${address}`, { timeout });
     return {
       data,
       success: data !== undefined,
@@ -119,7 +119,7 @@ export async function getAddressDetails({ proxyUrl, addressId, timeout }: Detail
   }
 }
 
-export async function getRewards({ proxyUrl, addressId, timeout }: DetailsType) {
+export async function getRewards({ proxyUrl, address, timeout }: AccountType) {
   try {
     const {
       data: {
@@ -130,7 +130,7 @@ export async function getRewards({ proxyUrl, addressId, timeout }: DetailsType) 
         userWaitingStake,
         userWithdrawOnlyStake,
       },
-    } = await axios.get(`${proxyUrl}/addresses/${addressId}/delegation`, { timeout });
+    } = await axios.get(`${proxyUrl}/accounts/${address}/delegation`, { timeout });
 
     return {
       claimableRewards,

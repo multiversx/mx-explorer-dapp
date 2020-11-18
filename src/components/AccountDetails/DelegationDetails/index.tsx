@@ -1,11 +1,11 @@
 import React from 'react';
 import DelegationChart from './DelegationChart';
 import { useGlobalState } from 'context';
-import { AddressDetailsType } from '../index';
+import { AccountDetailsType } from '../index';
 import { PageState } from 'sharedComponents';
 import { faCoins } from '@fortawesome/pro-regular-svg-icons/faCoins';
 
-const DelegationDetails = (props: AddressDetailsType) => {
+const DelegationDetails = (props: AccountDetailsType) => {
   const {
     activeNetwork: { erdLabel },
   } = useGlobalState();

@@ -111,7 +111,7 @@ const LatestTransactions = () => {
 
                         {addressIsBech32(transaction.sender) ? (
                           <NetworkLink
-                            to={urlBuilder.addressDetails(transaction.sender)}
+                            to={urlBuilder.accountDetails(transaction.sender)}
                             className="trim-wrapper"
                           >
                             <Trim text={transaction.sender} />
@@ -124,7 +124,7 @@ const LatestTransactions = () => {
                         <span className="text-nowrap mr-2">To</span>
 
                         <NetworkLink
-                          to={urlBuilder.addressDetails(transaction.receiver)}
+                          to={urlBuilder.accountDetails(transaction.receiver)}
                           data-testid={`transactionLinkTo${i}`}
                           className="trim-wrapper"
                         >

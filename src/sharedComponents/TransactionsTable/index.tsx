@@ -6,7 +6,7 @@ export type TransactionType = TransacionInterface;
 
 interface TransactionsTableType {
   transactions: TransactionType[];
-  addressId?: string;
+  address?: string;
   totalTransactions: number | '...';
   size: number;
   title?: boolean;
@@ -15,7 +15,7 @@ interface TransactionsTableType {
 
 const TransactionsTable = ({
   transactions,
-  addressId,
+  address,
   totalTransactions,
   size,
   title = false,
@@ -53,7 +53,7 @@ const TransactionsTable = ({
                   <TransactionRow
                     transaction={transaction}
                     key={transaction.txHash}
-                    addressId={addressId}
+                    address={address}
                     directionCol={directionCol}
                   />
                 ))}

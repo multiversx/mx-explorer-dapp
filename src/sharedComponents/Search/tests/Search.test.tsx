@@ -1,5 +1,5 @@
 import { fireEvent, wait, beforeAll } from 'utils/test-utils';
-import { miniblock, address } from 'utils/rawData';
+import { miniblock, account } from 'utils/rawData';
 
 describe('Search input', () => {
   test('Search finds block', async () => {
@@ -66,7 +66,7 @@ describe('Search input', () => {
       expect(document.title).toEqual('Miniblock Details • Elrond Explorer');
     });
   });
-  test('Seach finds address', async () => {
+  test('Seach finds account', async () => {
     const render = beforeAll({
       route: '/search',
       networkRequests: {
@@ -78,7 +78,7 @@ describe('Search input', () => {
 
     const search = render.getAllByTestId('search')[0];
     const data = {
-      target: { value: address.address },
+      target: { value: account.address },
     };
     fireEvent.change(search, data);
 
@@ -86,7 +86,7 @@ describe('Search input', () => {
     fireEvent.click(searchButton);
 
     await wait(async () => {
-      expect(document.title).toEqual('Address Details • Elrond Explorer');
+      expect(document.title).toEqual('Account Details • Elrond Explorer');
     });
   });
   test('Seach finds node', async () => {
@@ -96,13 +96,13 @@ describe('Search input', () => {
         block: () => Promise.resolve(new Error('error')),
         transaction: () => Promise.resolve(new Error('error')),
         miniblock: () => Promise.resolve(new Error('error')),
-        address: () => Promise.resolve(new Error('error')),
+        account: () => Promise.resolve(new Error('error')),
       },
     });
 
     const search = render.getAllByTestId('search')[0];
     const data = {
-      target: { value: address.address },
+      target: { value: account.address },
     };
     fireEvent.change(search, data);
 
@@ -120,7 +120,7 @@ describe('Search input', () => {
         block: () => Promise.resolve(new Error('error')),
         transaction: () => Promise.resolve(new Error('error')),
         miniblock: () => Promise.resolve(new Error('error')),
-        address: () => Promise.resolve(new Error('error')),
+        account: () => Promise.resolve(new Error('error')),
         node: () => Promise.resolve(new Error('error')),
       },
     });

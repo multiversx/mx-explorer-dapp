@@ -65,31 +65,31 @@ export default function useAdapter() {
 
     /* Transactions */
 
-    getTransactions: ({ size, addressId, senderShard, receiverShard }: f.TransactionsType) =>
+    getTransactions: ({ size, address, senderShard, receiverShard }: f.TransactionsType) =>
       f.getTransactions({
         provider,
         baseUrl,
         timeout,
-        addressId,
+        address,
         size,
         senderShard,
         receiverShard,
       }),
 
-    getTransactionsCount: ({ size, addressId, senderShard, receiverShard }: f.TransactionsType) =>
+    getTransactionsCount: ({ size, address, senderShard, receiverShard }: f.TransactionsType) =>
       f.getTransactionsCount({
         provider,
         baseUrl,
         timeout,
-        addressId,
+        address,
         size,
         senderShard,
         receiverShard,
       }),
 
-    getAddressDetails: (addressId: string) => f.getAddressDetails({ proxyUrl, timeout, addressId }),
+    getAccountDetails: (address: string) => f.getAccountDetails({ proxyUrl, timeout, address }),
 
-    getRewards: (addressId: string) => f.getRewards({ proxyUrl, timeout, addressId }),
+    getRewards: (address: string) => f.getRewards({ proxyUrl, timeout, address }),
 
     /* Validators */
 
@@ -184,10 +184,10 @@ export default function useAdapter() {
         timeout,
       }),
 
-    getAddresses: ({ size }: f.GetAddressesType) =>
-      f.getAddresses({ provider, baseUrl, size, timeout }),
+    getAccounts: ({ size }: f.GetAccountsType) =>
+      f.getAccounts({ provider, baseUrl, size, timeout }),
 
-    getAddressesCount: ({ size }: f.GetAddressesType) =>
-      f.getAddressesCount({ provider, baseUrl, size, timeout }),
+    getAccountsCount: ({ size }: f.GetAccountsType) =>
+      f.getAccountsCount({ provider, baseUrl, size, timeout }),
   };
 }

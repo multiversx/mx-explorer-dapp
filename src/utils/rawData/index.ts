@@ -10,10 +10,11 @@ import blocks from './blocks';
 import block from './block';
 import stats from './stats';
 import delegation from './delegation';
-import address from './address';
+import account from './account';
+import accounts from './accounts';
 import node from './node';
 import identity from './identity';
-import addresses from './addresses';
+
 export {
   transactions,
   transactionsSearch,
@@ -26,9 +27,9 @@ export {
   miniblockTransactions,
   blockValidators,
   stats,
-  address,
+  account,
   delegation,
   node,
   identity,
-  addresses,
+  accounts,
 };

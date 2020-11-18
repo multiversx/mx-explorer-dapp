@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
-import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { addressIsBech32, dateFormatted, urlBuilder } from 'helpers';
@@ -99,7 +98,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
               {addressIsBech32(transaction.sender) ? (
                 <>
                   <NetworkLink
-                    to={urlBuilder.addressDetails(transaction.sender)}
+                    to={urlBuilder.accountDetails(transaction.sender)}
                     className="trim-wrapper"
                   >
                     <Trim text={transaction.sender} />
@@ -122,7 +121,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
             <div className="d-flex align-items-center">
               <ScAddressIcon initiator={transaction.receiver} />
               <NetworkLink
-                to={urlBuilder.addressDetails(transaction.receiver)}
+                to={urlBuilder.accountDetails(transaction.receiver)}
                 className="trim-wrapper"
               >
                 <Trim text={transaction.receiver} />

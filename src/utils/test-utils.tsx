@@ -57,9 +57,9 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
     },
     miniblock: () => Promise.resolve({ data: rawData.miniblock }),
     networkStatus: () => Promise.resolve({ data: { data: rawData.epoch, code: 'successful' } }),
-    addressesCount: () => Promise.resolve({ data: 1933 }),
-    addresses: () => Promise.resolve({ data: rawData.addresses }),
-    address: () => Promise.resolve({ data: rawData.address }),
+    accountsCount: () => Promise.resolve({ data: 1933 }),
+    accounts: () => Promise.resolve({ data: rawData.accounts }),
+    account: () => Promise.resolve({ data: rawData.account }),
     delegation: () => Promise.resolve({ data: rawData.delegation }),
     node: () => Promise.resolve({ data: rawData.node }),
     identity: () => Promise.resolve({ data: rawData.identity }),
@@ -84,12 +84,12 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.transactions();
       case url.includes('/delegation'):
         return requests.delegation();
-      case url.includes('/addresses/count'):
-        return requests.addressesCount();
-      case url.includes('/addresses/'):
-        return requests.address();
-      case url.includes('/addresses'):
-        return requests.addresses();
+      case url.includes('/accounts/count'):
+        return requests.accountsCount();
+      case url.includes('/accounts/'):
+        return requests.account();
+      case url.includes('/accounts'):
+        return requests.accounts();
       case url.includes('/blocks/count'):
         return requests.blocksCount();
       case url.includes('/blocks/'):
