@@ -149,6 +149,11 @@ const AccountDetails = () => {
   const loading = dataReady === undefined && transactionsFetched === undefined;
   const failed = dataReady === false || !addressIsBech32(address);
   const showTransactions = transactionsFetched === true && transactions.length > 0;
+  const showDelegation =
+    accountDetails.rewardsFetched === false ||
+    (accountDetails.rewardsFetched === true &&
+      accountDetails.stake !== undefined &&
+      accountDetails.stake > 0);
 
   return (
     <>
@@ -169,7 +174,7 @@ const AccountDetails = () => {
               <div className="col mb-spacer">
                 <AccountDetailsCard {...accountDetails} />
               </div>
-              {accountDetails.stake !== undefined && accountDetails.stake > 0 && (
+              {showDelegation && (
                 <div className="col-lg-4 mb-spacer">
                   <DelegationDetails {...accountDetails} />
                 </div>
