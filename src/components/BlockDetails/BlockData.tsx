@@ -63,8 +63,8 @@ const BlockData = (props: BlockDataType) => {
           </DetailItem>
 
           <DetailItem title="Block Hash">
-            <div className="d-flex align-items-center">
-              <Trim text={block.hash} />
+            <div className="d-flex align-items-center text-break-all">
+              {block.hash}
               <CopyButton text={block.hash} />
             </div>
           </DetailItem>
