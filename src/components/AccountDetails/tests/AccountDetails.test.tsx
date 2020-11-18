@@ -27,7 +27,7 @@ describe('Account Details Page', () => {
     const render = beforeAll({
       route: `/accounts/${account.address}`,
       networkRequests: {
-        address: () => Promise.resolve(new Error('error')),
+        account: () => Promise.resolve(new Error('error')),
       },
     });
 
