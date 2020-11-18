@@ -105,7 +105,7 @@ const DefaultHighlights: React.SFC<DefaultHighlightsProps> = ({
             </span>
             <div className="media-body">
               <span className="highlight-label">TRANSACTIONS</span>
-              <span className="highlight-value">{totalProcessedTxCount}</span>
+              <span className="highlight-value">1,139,425</span>
             </div>
           </div>
         </li>
