@@ -155,7 +155,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                 )}
               </div>
               {scResultsMessages.map((msg, i) => (
-                <div key={i} className="d-flex ml-1">
+                <div key={i} className="d-flex ml-1 text-break-all">
                   <FontAwesomeIcon
                     icon={faAngleDown}
                     className="text-secondary"
