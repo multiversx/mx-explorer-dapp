@@ -89,7 +89,7 @@ describe('Transactions Page Links', () => {
 
     fireEvent.click(links[0]);
     await wait(async () => {
-      expect(document.title).toEqual('Address Details • Elrond Explorer');
+      expect(document.title).toEqual('Account Details • Elrond Explorer');
     });
   });
 });

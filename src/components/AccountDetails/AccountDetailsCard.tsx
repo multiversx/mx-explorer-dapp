@@ -2,7 +2,7 @@ import React from 'react';
 import { CopyButton, Denominate, DetailItem, Trim } from 'sharedComponents';
 import { types } from 'helpers';
 
-const AddressDetailsCard = (props: types.AddressType) => {
+const AccountDetailsCard = (props: types.AccountType) => {
   return props.address ? (
     <div className="card">
       <div className="card-body p-0">
@@ -33,4 +33,4 @@ const AddressDetailsCard = (props: types.AddressType) => {
   ) : null;
 };
 
-export default AddressDetailsCard;
+export default AccountDetailsCard;

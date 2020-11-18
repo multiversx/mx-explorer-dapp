@@ -30,7 +30,7 @@ export default async function getHighlights({
     const source: InferType<typeof schema> = data;
 
     schema.validate(source, { strict: true }).catch(({ errors }) => {
-      console.error('Meta _source format errors: ', errors);
+      console.error('Stats _source format errors: ', errors);
     });
     return {
       data,

@@ -123,13 +123,13 @@ const Hightlights = () => {
                   epochPercentage={epochPercentage}
                   epochTimeRemaining={epochTimeRemaining}
                 />
-                <Item icon={faLayerGroup} title="Shards" dataTestId="metaShards" value={shards} />
-                <Item icon={faCube} title="Blocks" dataTestId="metaBlocks" value={blocks} />
-                <Item icon={faUser} title="Accounts" dataTestId="metaAddresses" value={addresses} />
+                <Item icon={faLayerGroup} title="Shards" dataTestId="shards" value={shards} />
+                <Item icon={faCube} title="Blocks" dataTestId="blocks" value={blocks} />
+                <Item icon={faUser} title="Accounts" dataTestId="accounts" value={addresses} />
                 <Item
                   icon={faExchangeAlt}
                   title="Transactions"
-                  dataTestId="metaTransactions"
+                  dataTestId="transactions"
                   value={transactions}
                 />
               </ul>

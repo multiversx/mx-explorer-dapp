@@ -1,4 +1,4 @@
-export interface AddressType {
+export interface AccountType {
   address: string;
   balance: string;
   nonce: number;

@@ -64,7 +64,7 @@ describe('Latest Transactions Links', () => {
 
     fireEvent.click(link);
     await wait(async () => {
-      expect(document.title).toEqual('Address Details • Elrond Explorer');
+      expect(document.title).toEqual('Account Details • Elrond Explorer');
     });
   });
 });

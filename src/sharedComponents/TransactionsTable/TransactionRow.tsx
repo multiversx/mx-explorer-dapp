@@ -33,15 +33,15 @@ export interface TransactionType {
 interface TransactionRowType {
   transaction: TransactionType;
   directionCol?: boolean;
-  addressId?: string;
+  address?: string;
 }
 
-const TransactionRow = ({ transaction, addressId, directionCol }: TransactionRowType) => {
+const TransactionRow = ({ transaction, address, directionCol }: TransactionRowType) => {
   const statusIs = (compareTo: string) =>
     transaction.status.toLowerCase() === compareTo.toLowerCase();
 
-  const directionOut = addressId === transaction.sender;
-  const directionIn = addressId === transaction.receiver;
+  const directionOut = address === transaction.sender;
+  const directionIn = address === transaction.receiver;
   const directionSelf = directionOut && directionIn;
 
   return (
@@ -95,7 +95,7 @@ const TransactionRow = ({ transaction, addressId, directionCol }: TransactionRow
             <>
               {addressIsBech32(transaction.sender) ? (
                 <NetworkLink
-                  to={urlBuilder.addressDetails(transaction.sender)}
+                  to={urlBuilder.accountDetails(transaction.sender)}
                   data-testid="senderLink"
                   className="trim-wrapper"
                 >
@@ -134,7 +134,7 @@ const TransactionRow = ({ transaction, addressId, directionCol }: TransactionRow
             <Trim text={transaction.receiver} />
           ) : (
             <NetworkLink
-              to={urlBuilder.addressDetails(transaction.receiver)}
+              to={urlBuilder.accountDetails(transaction.receiver)}
               data-testid="receiverLink"
               className="trim-wrapper"
             >

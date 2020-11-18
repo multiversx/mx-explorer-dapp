@@ -40,11 +40,11 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
       </NetworkLink>
 
       <NetworkLink
-        className={`nav-link ${matchPath(networkRoute('/addresses')) !== null ? 'active' : ''}`}
-        to="/addresses"
+        className={`nav-link ${matchPath(networkRoute('/accounts')) !== null ? 'active' : ''}`}
+        to="/accounts"
         onClick={() => onToggle(false)}
       >
-        Addresses
+        Accounts
       </NetworkLink>
 
       <NetworkLink

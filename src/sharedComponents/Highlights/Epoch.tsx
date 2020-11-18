@@ -25,7 +25,7 @@ const Epoch = ({ epoch, epochTimeRemaining, epochPercentage }: EpochType) => {
                       &nbsp;
                     </div>
                   </div>
-                  <small data-testid="metaEpochTimeRemaining">{epochTimeRemaining} remaining</small>
+                  <small data-testid="epochTimeRemaining">{epochTimeRemaining} remaining</small>
                 </div>
               </div>
             )}

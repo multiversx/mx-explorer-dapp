@@ -1,15 +1,15 @@
 import { AdapterFunctionType } from './index';
 
-export interface GetAddressesParamsType {
+export interface GetAccountsParamsType {
   size?: number;
 }
 
-export async function getAddresses({
+export async function getAccounts({
   provider,
   baseUrl,
   size = 1,
   timeout,
-}: AdapterFunctionType & GetAddressesParamsType) {
+}: AdapterFunctionType & GetAccountsParamsType) {
   try {
     const params = {
       from: (size - 1) * 25,
@@ -18,7 +18,7 @@ export async function getAddresses({
 
     const { data } = await provider({
       baseUrl,
-      url: `/addresses`,
+      url: `/accounts`,
       params,
       timeout,
     });
@@ -34,15 +34,15 @@ export async function getAddresses({
   }
 }
 
-export async function getAddressesCount({
+export async function getAccountsCount({
   provider,
   baseUrl,
   timeout,
-}: AdapterFunctionType & GetAddressesParamsType) {
+}: AdapterFunctionType & GetAccountsParamsType) {
   try {
     const { data } = await provider({
       baseUrl,
-      url: `/addresses/count`,
+      url: `/accounts/count`,
       timeout,
     });
 

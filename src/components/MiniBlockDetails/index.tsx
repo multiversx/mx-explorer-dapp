@@ -168,7 +168,7 @@ const MiniBlockDetails: React.FC = () => {
                     {showTransactions ? (
                       <TransactionsTable
                         transactions={transactions}
-                        addressId={undefined}
+                        address={undefined}
                         totalTransactions={totalTransactions}
                         size={size}
                         title={true}

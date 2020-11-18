@@ -10,7 +10,7 @@ export default async function getLatestTransactions({
       baseUrl,
       url: `/transactions`,
       params: {
-        size: 20,
+        size: 25,
         ...{
           fields: [
             'txHash',

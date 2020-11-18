@@ -6,8 +6,8 @@ import Home from './components/Home';
 import MiniBlockDetails from './components/MiniBlockDetails';
 import TransactionDetails from './components/TransactionDetails';
 import Transactions from './components/Transactions';
-import AddressDetails from './components/AddressDetails';
-import Addresses from './components/Addresses';
+import AccountDetails from './components/AccountDetails';
+import Accounts from './components/Accounts';
 import Nodes from './components/Nodes';
 import Identities from './components/Identities';
 import IdentityDetails from './components/IdentityDetails';
@@ -87,14 +87,14 @@ const routes: RouteType[] = [
     component: NodeDetails,
   },
   {
-    path: '/addresses',
-    title: 'Addresses',
-    component: Addresses,
+    path: '/accounts',
+    title: 'Accounts',
+    component: Accounts,
   },
   {
-    path: '/addresses/:hash',
-    title: 'Address Details',
-    component: AddressDetails,
+    path: '/accounts/:hash',
+    title: 'Account Details',
+    component: AccountDetails,
   },
   {
     path: '/miniblocks/:hash',
