@@ -1,5 +1,5 @@
 import React from 'react';
-import { CopyButton, Denominate, DetailItem, Trim } from 'sharedComponents';
+import { CopyButton, Denominate, DetailItem } from 'sharedComponents';
 import { types } from 'helpers';
 
 const AccountDetailsCard = (props: types.AccountType) => {
@@ -8,8 +8,8 @@ const AccountDetailsCard = (props: types.AccountType) => {
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Address">
-            <div className="d-flex align-items-center">
-              <Trim text={props.address} />
+            <div className="d-flex align-items-center text-break-all">
+              {props.address}
               <CopyButton text={props.address} />
             </div>
           </DetailItem>
