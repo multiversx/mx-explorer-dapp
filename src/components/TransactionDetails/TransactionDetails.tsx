@@ -97,12 +97,15 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
           <DetailItem title="Miniblock">
             <div className="d-flex align-items-center">
               {transaction.miniBlockHash ? (
-                <NetworkLink
-                  to={`/miniblocks/${transaction.miniBlockHash}`}
-                  className="trim-wrapper"
-                >
-                  <Trim text={transaction.miniBlockHash} />
-                </NetworkLink>
+                <>
+                  <NetworkLink
+                    to={`/miniblocks/${transaction.miniBlockHash}`}
+                    className="trim-wrapper"
+                  >
+                    <Trim text={transaction.miniBlockHash} />
+                  </NetworkLink>
+                  <CopyButton text={transaction.miniBlockHash} />
+                </>
               ) : (
                 <span className="text-secondary">N/A</span>
               )}

@@ -109,8 +109,8 @@ const MiniBlockDetails: React.FC = () => {
                       <div className="card-body p-0">
                         <div className="container-fluid">
                           <DetailItem title="Miniblock Hash">
-                            <div className="d-flex align-items-center">
-                              <Trim text={miniBlockHash} />
+                            <div className="d-flex align-items-center text-break-all">
+                              {miniBlockHash}
                               <CopyButton text={miniBlockHash} />
                             </div>
                           </DetailItem>
