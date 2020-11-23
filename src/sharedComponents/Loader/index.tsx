@@ -6,13 +6,15 @@ import { PageState } from 'sharedComponents';
 const Loader = ({
   dataTestId = 'loader',
   small = false,
+  noText = false,
 }: {
   dataTestId?: string;
   small?: boolean;
+  noText?: boolean;
 }) => {
   return (
     <PageState
-      title="Loading..."
+      title={noText ? '' : 'Loading...'}
       symbol={
         <FontAwesomeIcon
           icon={faSpinnerThird}
@@ -21,6 +23,7 @@ const Loader = ({
         />
       }
       dataTestId={dataTestId}
+      titleClassName={noText ? 'mt-0' : ''}
       className={`d-flex h-100 align-items-center justify-content-center ${
         small ? 'page-state-sm' : 'py-spacer my-auto'
       }`}
