@@ -32,12 +32,18 @@ export interface TransactionType {
 
 interface TransactionRowType {
   transaction: TransactionType;
-  addressId?: string;
+  directionCol?: boolean;
+  address?: string;
 }
 
-const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
+const TransactionRow = ({ transaction, address, directionCol }: TransactionRowType) => {
   const statusIs = (compareTo: string) =>
     transaction.status.toLowerCase() === compareTo.toLowerCase();
+
+  const directionOut = address === transaction.sender;
+  const directionIn = address === transaction.receiver;
+  const directionSelf = directionOut && directionIn;
+
   return (
     <tr className={`animated-row ${transaction.isNew ? 'new' : ''}`}>
       <td>
@@ -46,7 +52,7 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
             <FontAwesomeIcon icon={faTimes} className="mr-1 text-secondary" />
           )}
           {(statusIs(txStatus.notExecuted) || statusIs(txStatus.invalid)) && (
-            <FontAwesomeIcon icon={faBan} className="mr-1 text-secondary" />
+            <FontAwesomeIcon icon={faBan} size="sm" className="mr-1 text-secondary" />
           )}
 
           <NetworkLink
@@ -60,7 +66,7 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
       </td>
       <td>
         <span title={dateFormatted(transaction.timestamp)}>
-          <TimeAgo value={transaction.timestamp} />
+          <TimeAgo value={transaction.timestamp} short={true} />
         </span>
       </td>
       <td>
@@ -83,13 +89,13 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
       <td>
         <div className="d-flex align-items-center">
           <ScAddressIcon initiator={transaction.sender} />
-          {addressId === transaction.sender ? (
+          {directionOut ? (
             <Trim text={transaction.sender} />
           ) : (
             <>
               {addressIsBech32(transaction.sender) ? (
                 <NetworkLink
-                  to={`/address/${transaction.sender}`}
+                  to={urlBuilder.accountDetails(transaction.sender)}
                   data-testid="senderLink"
                   className="trim-wrapper"
                 >
@@ -102,14 +108,33 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
           )}
         </div>
       </td>
+      {directionCol === true && (
+        <td>
+          <div className="d-flex">
+            <span
+              className={`direction-badge ${directionSelf ? 'self' : directionOut ? 'out' : 'in'}`}
+            >
+              {directionSelf ? (
+                <>SELF</>
+              ) : (
+                <>
+                  {directionOut && <>OUT</>}
+                  {directionIn && <>IN</>}
+                </>
+              )}
+            </span>
+          </div>
+        </td>
+      )}
+
       <td>
         <div className="d-flex align-items-center">
           <ScAddressIcon initiator={transaction.receiver} />
-          {addressId === transaction.receiver ? (
+          {directionIn ? (
             <Trim text={transaction.receiver} />
           ) : (
             <NetworkLink
-              to={`/address/${transaction.receiver}`}
+              to={urlBuilder.accountDetails(transaction.receiver)}
               data-testid="receiverLink"
               className="trim-wrapper"
             >
@@ -118,7 +143,7 @@ const TransactionRow = ({ transaction, addressId }: TransactionRowType) => {
           )}
         </div>
       </td>
-      <td className="text-right">
+      <td>
         <Denominate value={transaction.value} />
       </td>
     </tr>

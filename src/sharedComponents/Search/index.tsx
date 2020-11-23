@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { faCircleNotch } from '@fortawesome/pro-regular-svg-icons/faCircleNotch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNetworkRoute } from 'helpers';
+import { useNetworkRoute, urlBuilder } from 'helpers';
 import { Redirect, useLocation } from 'react-router-dom';
 import { adapter } from 'sharedComponents';
 
@@ -13,7 +13,7 @@ interface SearchType {
 const Search = ({ setExpanded = () => null }: SearchType) => {
   const { pathname } = useLocation();
   const networkRoute = useNetworkRoute();
-  const { getAddressDetails, getBlock, getTransaction, getNode, getMiniBlock } = adapter();
+  const { getAccount, getBlock, getTransaction, getNode, getMiniBlock } = adapter();
   const [route, setRoute] = React.useState('');
   const [searching, setSearching] = React.useState(false);
 
@@ -34,9 +34,9 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
         getNode(hash),
         getBlock(hash),
         getTransaction(hash),
-        getAddressDetails(hash),
+        getAccount(hash),
         getMiniBlock(hash),
-      ]).then(([node, block, transaction, address, miniblock]) => {
+      ]).then(([node, block, transaction, account, miniblock]) => {
         setExpanded(false);
         switch (true) {
           case block.success:
@@ -48,11 +48,11 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
           case miniblock.blockFetched:
             setRoute(networkRoute(`/miniblocks/${hash}`));
             break;
-          case address.success:
-            setRoute(networkRoute(`/address/${hash}`));
+          case account.success:
+            setRoute(networkRoute(urlBuilder.accountDetails(hash)));
             break;
           case node.success:
-            setRoute(networkRoute(`/nodes/${hash}`));
+            setRoute(networkRoute(urlBuilder.nodeDetails(hash)));
             break;
           default:
             setRoute(networkRoute(`/search/${hash}`));

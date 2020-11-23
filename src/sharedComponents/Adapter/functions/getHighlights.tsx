@@ -4,7 +4,7 @@ import { AdapterFunctionType } from './index';
 const schema = object({
   shards: number().required(),
   blocks: number().required(),
-  addresses: number().required(),
+  accounts: number().required(),
   transactions: number().required(),
   epoch: number().required(),
   refreshRate: number().required(),
@@ -30,7 +30,7 @@ export default async function getHighlights({
     const source: InferType<typeof schema> = data;
 
     schema.validate(source, { strict: true }).catch(({ errors }) => {
-      console.error('Meta _source format errors: ', errors);
+      console.error('Stats _source format errors: ', errors);
     });
     return {
       data,

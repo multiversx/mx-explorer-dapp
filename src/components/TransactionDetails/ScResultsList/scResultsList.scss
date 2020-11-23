@@ -10,6 +10,15 @@
       @extend .mb-1;
     }
 
+    .col-left {
+      color: $secondary;
+
+      @include media-breakpoint-up(sm) {
+        max-width: 6.5rem;
+        text-align: right;
+      }
+    }
+
     .result-item-content {
       margin-top: 0.4rem;
       max-width: 100%;
@@ -19,7 +28,7 @@
 
     .transaction-icon {
       margin-left: -1.1rem;
-      margin-right: 1.1rem;
+      margin-right: 0.5rem;
 
       border-radius: 50%;
       font-size: 0.9375rem;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
-import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
+import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { addressIsBech32, dateFormatted, urlBuilder } from 'helpers';
@@ -45,14 +45,22 @@ const getFee = (transaction: TransactionType) => {
   return output;
 };
 
+const getScResultsMessages = (transaction: TransactionType) => {
+  const messages: string[] = [];
+
+  if (transaction.scResults) {
+    transaction.scResults.forEach((result) => {
+      if (result.returnMessage) {
+        messages.push(result.returnMessage);
+      }
+    });
+  }
+
+  return messages;
+};
+
 const Details = ({ transaction }: { transaction: TransactionType }) => {
-  const errorMessage =
-    transaction &&
-    transaction.scResults !== null &&
-    transaction.scResults !== undefined &&
-    transaction.scResults[0].returnMessage
-      ? transaction.scResults[0].returnMessage
-      : '';
+  const scResultsMessages = getScResultsMessages(transaction);
 
   return (
     <div className="card">
@@ -89,12 +97,15 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
           <DetailItem title="Miniblock">
             <div className="d-flex align-items-center">
               {transaction.miniBlockHash ? (
-                <NetworkLink
-                  to={`/miniblocks/${transaction.miniBlockHash}`}
-                  className="trim-wrapper"
-                >
-                  <Trim text={transaction.miniBlockHash} />
-                </NetworkLink>
+                <>
+                  <NetworkLink
+                    to={`/miniblocks/${transaction.miniBlockHash}`}
+                    className="trim-wrapper"
+                  >
+                    <Trim text={transaction.miniBlockHash} />
+                  </NetworkLink>
+                  <CopyButton text={transaction.miniBlockHash} />
+                </>
               ) : (
                 <span className="text-secondary">N/A</span>
               )}
@@ -106,7 +117,10 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
               <ScAddressIcon initiator={transaction.sender} />
               {addressIsBech32(transaction.sender) ? (
                 <>
-                  <NetworkLink to={`/address/${transaction.sender}`} className="trim-wrapper">
+                  <NetworkLink
+                    to={urlBuilder.accountDetails(transaction.sender)}
+                    className="trim-wrapper"
+                  >
                     <Trim text={transaction.sender} />
                   </NetworkLink>
                   &nbsp;
@@ -124,27 +138,38 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
           </DetailItem>
 
           <DetailItem title="To">
-            <div className="d-flex align-items-center">
-              <ScAddressIcon initiator={transaction.receiver} />
-              <NetworkLink to={`/address/${transaction.receiver}`} className="trim-wrapper">
-                <Trim text={transaction.receiver} />
-              </NetworkLink>
-              &nbsp;
-              {!isNaN(transaction.receiverShard) && (
+            <div className="d-flex flex-column">
+              <div className="d-flex align-items-center">
+                <ScAddressIcon initiator={transaction.receiver} />
                 <NetworkLink
-                  to={urlBuilder.receiverShard(transaction.receiverShard)}
-                  className="flex-shrink-0"
+                  to={urlBuilder.accountDetails(transaction.receiver)}
+                  className="trim-wrapper"
                 >
-                  (<ShardSpan shard={transaction.receiverShard} />)
+                  <Trim text={transaction.receiver} />
                 </NetworkLink>
-              )}
-            </div>
-            {errorMessage && (
-              <div>
-                <FontAwesomeIcon icon={faExclamationTriangle} className="text-danger" size="xs" />
-                <small className="text-danger"> {errorMessage}</small>
+                &nbsp;
+                {!isNaN(transaction.receiverShard) && (
+                  <NetworkLink
+                    to={urlBuilder.receiverShard(transaction.receiverShard)}
+                    className="flex-shrink-0"
+                  >
+                    (<ShardSpan shard={transaction.receiverShard} />)
+                  </NetworkLink>
+                )}
               </div>
-            )}
+              {scResultsMessages.map((msg, i) => (
+                <div key={i} className="d-flex ml-1 text-break-all">
+                  <FontAwesomeIcon
+                    icon={faAngleDown}
+                    className="text-secondary"
+                    style={{ marginTop: '2px' }}
+                    transform={{ rotate: 45 }}
+                  />
+                  &nbsp;
+                  <small className="text-danger ml-1"> {msg}</small>
+                </div>
+              ))}
+            </div>
           </DetailItem>
 
           <DetailItem title="Value">

@@ -1,25 +1,15 @@
 import React from 'react';
-import { CopyButton, Denominate, DetailItem, Trim } from 'sharedComponents';
+import { CopyButton, Denominate, DetailItem } from 'sharedComponents';
+import { types } from 'helpers';
 
-export interface AddressDetailsType {
-  address: string;
-  code: string;
-  balance: string;
-  nonce: number;
-  detailsFetched: boolean;
-  rewardsFetched: boolean;
-  claimableRewards: number;
-  stake: number;
-}
-
-const AddressDetails = (props: AddressDetailsType) => {
+const AccountDetailsCard = (props: types.AccountType) => {
   return props.address ? (
     <div className="card">
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Address">
-            <div className="d-flex align-items-center">
-              <Trim text={props.address} />
+            <div className="d-flex align-items-center text-break-all">
+              {props.address}
               <CopyButton text={props.address} />
             </div>
           </DetailItem>
@@ -43,4 +33,4 @@ const AddressDetails = (props: AddressDetailsType) => {
   ) : null;
 };
 
-export default AddressDetails;
+export default AccountDetailsCard;
