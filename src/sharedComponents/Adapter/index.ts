@@ -1,6 +1,6 @@
 import { useGlobalState } from 'context';
-import elastic from './elastic';
-import api from './api';
+import elasticAdapter from './elastic';
+import apiAdapter from './api';
 import * as f from './functions';
 import { metaChainShardId } from 'appConfig';
 
@@ -12,56 +12,67 @@ export default function useAdapter() {
 
   const providers = {
     api: {
-      provider: api,
       baseUrl: apiUrl || '',
       proxyUrl: apiUrl || '',
+      ...apiAdapter,
     },
     elastic: {
-      provider: elastic,
       baseUrl: elasticUrl || '',
       proxyUrl: nodeUrl || '',
+      ...elasticAdapter,
     },
   };
 
-  const { provider, proxyUrl, baseUrl } = providers[adapter];
+  const { provider, proxyUrl, baseUrl, getStats } = providers[adapter];
 
   return {
     /* Homepage */
 
-    getHighlights: () =>
-      f.getHighlights({ provider, proxyUrl, baseUrl, timeout, metaChainShardId }),
+    getStats: () => {
+      const asyncRequest = () =>
+        getStats({
+          proxyUrl,
+          baseUrl,
+          metaChainShardId,
+          timeout,
+        });
+      return f.getStats(asyncRequest);
+    },
+
+    // getHighlights: () =>
+    //   f.getStats({ provider: getStats, proxyUrl, baseUrl, timeout, metaChainShardId }),
 
     getNetworkStatus: () => f.getNetworkStatus({ proxyUrl, timeout, metaChainShardId }),
 
-    getLatestBlocks: () => f.getLatestBlocks({ provider, baseUrl, timeout }),
+    getLatestBlocks: () => f.getLatestBlocks({ provider, baseUrl, timeout, proxyUrl }),
 
-    getLatestTransactions: () => f.getLatestTransactions({ provider, baseUrl, timeout }),
+    getLatestTransactions: () => f.getLatestTransactions({ provider, baseUrl, timeout, proxyUrl }),
 
     /* Blocks */
 
-    getBlock: (blockId: string) => f.getBlock({ provider, baseUrl, blockId, timeout }),
+    getBlock: (blockId: string) => f.getBlock({ provider, baseUrl, blockId, proxyUrl, timeout }),
 
     getBlocks: ({ size, shard, epochId, proposer }: f.GetBlocksType) =>
-      f.getBlocks({ provider, baseUrl, size, shard, epochId, proposer, timeout }),
+      f.getBlocks({ provider, baseUrl, size, shard, epochId, proposer, timeout, proxyUrl }),
 
     getBlocksCount: ({ size, shard, epochId }: f.GetBlocksType) =>
-      f.getBlocksCount({ provider, baseUrl, size, shard, epochId, timeout }),
+      f.getBlocksCount({ provider, baseUrl, size, shard, epochId, proxyUrl, timeout }),
 
     /* Transaction */
 
     getTransaction: (transactionId: string) =>
-      f.getTransaction({ provider, baseUrl, transactionId, timeout }),
+      f.getTransaction({ provider, baseUrl, transactionId, proxyUrl, timeout }),
 
     /* Miniblocks */
 
     getMiniBlock: (miniBlockHash: string) =>
-      f.getMiniBlock({ provider, baseUrl, miniBlockHash, timeout }),
+      f.getMiniBlock({ provider, baseUrl, miniBlockHash, proxyUrl, timeout }),
 
     getMiniBlockTransactions: ({ miniBlockHash, size }: { miniBlockHash: string; size: number }) =>
-      f.getMiniBlockTransactions({ provider, baseUrl, miniBlockHash, timeout, size }),
+      f.getMiniBlockTransactions({ provider, baseUrl, miniBlockHash, timeout, proxyUrl, size }),
 
     getMiniBlockTransactionsCount: ({ miniBlockHash }: { miniBlockHash: string }) =>
-      f.getMiniBlockTransactionsCount({ provider, miniBlockHash, timeout, baseUrl }),
+      f.getMiniBlockTransactionsCount({ provider, miniBlockHash, timeout, proxyUrl, baseUrl }),
 
     /* Transactions */
 

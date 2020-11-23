@@ -1,5 +1,4 @@
-import { AxiosResponse } from 'axios';
-import getHighlights from './getHighlights';
+import getStats from './getStats';
 import getLatestBlocks from './getLatestBlocks';
 import getShards from './getShards';
 import getIdentities from './getIdentities';
@@ -28,6 +27,8 @@ import {
 
 export interface ProviderPropsType {
   baseUrl: string;
+  proxyUrl?: string;
+  metaChainShardId?: number;
   params?: {
     nonce?: number;
     shard?: number;
@@ -49,11 +50,13 @@ export interface ProviderPropsType {
     nodeType?: string;
     status?: string;
     validator?: string;
+    fields?: any;
   };
   timeout: number;
 }
 
-export type ProviderType = (props: ProviderPropsType & { url: string }) => Promise<AxiosResponse>;
+// export type ProviderType = (props: ProviderPropsType & { url: string }) => Promise<AxiosResponse>;
+export type ProviderType = (props: ProviderPropsType & { url: string }) => Promise<any>; // TODO: back
 
 export type AdapterFunctionType = ProviderPropsType & { provider: ProviderType };
 
@@ -68,7 +71,6 @@ export type GetRoundsType = GetRoundsInterface;
 export type GetAccountsType = GetAccountsParamsType;
 
 export {
-  getHighlights,
   getLatestBlocks,
   getLatestTransactions,
   getBlock,
@@ -91,4 +93,5 @@ export {
   getAccount,
   getAccounts,
   getAccountsCount,
+  getStats,
 };
