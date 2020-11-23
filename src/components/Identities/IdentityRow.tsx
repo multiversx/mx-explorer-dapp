@@ -113,7 +113,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
             <div className="content">
               {dataReady === undefined && (
                 <div className="py-4">
-                  <Loader small={true} />
+                  <Loader small={true} noText={true} />
                 </div>
               )}
               {dataReady === false && (
