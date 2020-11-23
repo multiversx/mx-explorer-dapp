@@ -63,7 +63,7 @@ export async function getBlocks({
       blocks,
       startBlockNr,
       endBlockNr,
-      success: true,
+      success: blocks !== undefined,
     };
   } catch (err) {
     return {
