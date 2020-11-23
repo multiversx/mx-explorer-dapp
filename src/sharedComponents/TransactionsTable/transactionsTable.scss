@@ -24,6 +24,7 @@
       position: relative;
       top: 0.2rem;
       background-color: $light;
+      min-width: 2.5rem;
 
       &.out {
         color: $warning;
