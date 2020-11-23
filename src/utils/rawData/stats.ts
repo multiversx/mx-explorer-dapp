@@ -1,1 +1,10 @@
-export default { shards: 3, blocks: 6032053, addresses: 59707, transactions: 234191 };
+export default {
+  shards: 3,
+  blocks: 416115,
+  accounts: 37954,
+  transactions: 1112735,
+  refreshRate: 6000,
+  epoch: 44,
+  roundsPassed: 419,
+  roundsPerEpoch: 2400,
+};
