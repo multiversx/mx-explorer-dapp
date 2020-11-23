@@ -14,26 +14,24 @@ interface RoundsType {
   success: boolean | undefined;
 }
 
+const RoundsPageState = ({ message }: { message: string }) => {
+  return (
+    <PageState
+      icon={faRepeat}
+      title={message}
+      className="page-state-sm d-flex h-100 align-items-center justify-content-center"
+      dataTestId="roundsErrorScreen"
+    />
+  );
+};
+
 const Rounds = ({ rounds, node }: { rounds: RoundsType; node: NodeType }) => {
   return (
     <div className="card" data-testid="roundsContainer">
-      {rounds.success === false && (
-        <PageState
-          icon={faRepeat}
-          title="Unable to load rounds"
-          className="page-state-sm d-flex h-100 align-items-center justify-content-center"
-          dataTestId="roundsErrorScreen"
-        />
-      )}
-
+      {rounds.success === false && <RoundsPageState message={'Unable to load rounds'} />}
       {rounds.success === true && rounds.data && rounds.data.length === 0 && (
-        <PageState
-          icon={faRepeat}
-          title={`${
-            node.peerType === 'waiting' ? 'Validator not in consensus' : 'Unable to load rounds'
-          }`}
-          className="page-state-sm d-flex h-100 align-items-center justify-content-center"
-          dataTestId="roundsErrorScreen"
+        <RoundsPageState
+          message={`${node.peerType === 'eligible' ? 'No rounds' : 'Validator not in consensus'}`}
         />
       )}
 

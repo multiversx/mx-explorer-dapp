@@ -16,7 +16,7 @@ describe('Transactions Page', () => {
       route: '/transactions',
     });
     const pageInterval = await waitForElement(() => render.queryByTestId('pageInterval'));
-    expect(pageInterval!.innerHTML).toBe('1-50');
+    expect(pageInterval!.innerHTML).toBe('1-25');
 
     const table = render.queryByTestId('transactionsTable');
     const numberOfRows = table!.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
@@ -29,7 +29,7 @@ describe('Transactions Page', () => {
     });
 
     const pageInterval = await waitForElement(() => render.queryByTestId('pageInterval'));
-    expect(pageInterval!.innerHTML).toBe('1-50');
+    expect(pageInterval!.innerHTML).toBe('1-25');
   });
 });
 
@@ -89,7 +89,7 @@ describe('Transactions Page Links', () => {
 
     fireEvent.click(links[0]);
     await wait(async () => {
-      expect(document.title).toEqual('Address Details • Elrond Explorer');
+      expect(document.title).toEqual('Account Details • Elrond Explorer');
     });
   });
 });

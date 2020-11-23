@@ -43,7 +43,7 @@ export async function getBlocks({
       timeout,
     });
 
-    let min = blocks[0].nonce;
+    let min = blocks && blocks.length > 0 ? blocks[0].nonce : 0;
     let max = min;
     for (const block in blocks) {
       // tslint:disable-line
@@ -58,6 +58,7 @@ export async function getBlocks({
 
     const startBlockNr = min;
     const endBlockNr = max;
+
     return {
       blocks,
       startBlockNr,

@@ -6,24 +6,26 @@ export type TransactionType = TransacionInterface;
 
 interface TransactionsTableType {
   transactions: TransactionType[];
-  addressId?: string;
+  address?: string;
   totalTransactions: number | '...';
   size: number;
-  withTitle?: boolean;
+  title?: boolean;
+  directionCol?: boolean;
 }
 
 const TransactionsTable = ({
   transactions,
-  addressId,
+  address,
   totalTransactions,
   size,
-  withTitle = false,
+  title = false,
+  directionCol = false,
 }: TransactionsTableType) => {
   return (
     <div className="transactions-table">
       <div className="card">
         <div className="card-header">
-          {withTitle && (
+          {title && (
             <div className="card-header-item">
               <h6 className="m-0" data-testid="title">
                 Transactions
@@ -41,10 +43,9 @@ const TransactionsTable = ({
                   <th scope="col">Age</th>
                   <th scope="col">Shard</th>
                   <th scope="col">From</th>
+                  {directionCol && <th scope="col" />}
                   <th scope="col">To</th>
-                  <th scope="col" className="text-right">
-                    Value
-                  </th>
+                  <th scope="col">Value</th>
                 </tr>
               </thead>
               <tbody>
@@ -52,7 +53,8 @@ const TransactionsTable = ({
                   <TransactionRow
                     transaction={transaction}
                     key={transaction.txHash}
-                    addressId={addressId}
+                    address={address}
+                    directionCol={directionCol}
                   />
                 ))}
               </tbody>
@@ -62,7 +64,7 @@ const TransactionsTable = ({
 
         <div className="card-footer">
           <Pager
-            itemsPerPage={50}
+            itemsPerPage={25}
             page={String(size)}
             total={
               totalTransactions !== '...' ? Math.min(totalTransactions, 10000) : totalTransactions

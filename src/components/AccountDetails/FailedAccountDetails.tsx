@@ -1,21 +1,21 @@
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
-import { faWallet } from '@fortawesome/pro-regular-svg-icons/faWallet';
+import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import React from 'react';
 import { numInitCharactersForScAddress } from 'appConfig';
 import { PageState } from 'sharedComponents';
 
-export default function FailedAddress({ addressId }: { addressId: string | undefined }) {
+export default function FailedAccounts({ address }: { address: string | undefined }) {
   const showIcon =
     numInitCharactersForScAddress > 0 &&
-    String(addressId).startsWith('0'.repeat(numInitCharactersForScAddress));
+    String(address).startsWith('0'.repeat(numInitCharactersForScAddress));
 
   return (
     <PageState
-      icon={showIcon ? faCode : faWallet}
-      title="Unable to locate this address hash"
+      icon={showIcon ? faCode : faUser}
+      title="Unable to locate this account"
       description={
         <div className="px-spacer">
-          <span className="text-break-all">{addressId}</span>
+          <span className="text-break-all">{address}</span>
         </div>
       }
       className="py-spacer my-auto"

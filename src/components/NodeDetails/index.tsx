@@ -1,6 +1,5 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { adapter, BlocksTable, Loader, PageState } from 'sharedComponents';
 import { useLocation, useParams } from 'react-router-dom';
 import { IdentityType, NodeType } from 'context/state';
@@ -129,30 +128,16 @@ const NodeDetails = () => {
                 <div className="row">
                   <div className="col-12">
                     <div className="card">
-                      {blocks.success === false && (
-                        <>
-                          {node.data.peerType === 'waiting' ? (
-                            <PageState
-                              icon={faCube}
-                              title="Validator not in consensus"
-                              className="py-spacer my-auto"
-                              dataTestId="notInConsensusErrorScreen"
-                            />
-                          ) : (
-                            <FailedBlocks />
-                          )}
-                        </>
-                      )}
-
+                      {blocks.success === false && <FailedBlocks />}
                       {blocks.success && blocks.data && (
                         <>
                           {blocks.data.length === 0 && (
                             <NoBlocks
-                              title={
-                                node.data.peerType === 'waiting'
-                                  ? 'Validator not in consensus'
-                                  : 'No blocks'
-                              }
+                              title={`${
+                                node.data.peerType === 'eligible'
+                                  ? 'No blocks'
+                                  : 'Validator not in consensus'
+                              }`}
                             />
                           )}
                           {blocks.data.length > 0 && (

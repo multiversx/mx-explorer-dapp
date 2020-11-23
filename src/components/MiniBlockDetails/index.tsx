@@ -109,21 +109,25 @@ const MiniBlockDetails: React.FC = () => {
                       <div className="card-body p-0">
                         <div className="container-fluid">
                           <DetailItem title="Miniblock Hash">
-                            <div className="d-flex align-items-center">
-                              <Trim text={miniBlockHash} />
+                            <div className="d-flex align-items-center text-break-all">
+                              {miniBlockHash}
                               <CopyButton text={miniBlockHash} />
                             </div>
                           </DetailItem>
                           <DetailItem title="Sender Shard">
-                            <NetworkLink to={urlBuilder.shard(miniBlock.senderShard)}>
-                              <ShardSpan shard={miniBlock.senderShard} />
-                            </NetworkLink>
+                            <div className="d-flex">
+                              <NetworkLink to={urlBuilder.shard(miniBlock.senderShard)}>
+                                <ShardSpan shard={miniBlock.senderShard} />
+                              </NetworkLink>
+                            </div>
                           </DetailItem>
 
                           <DetailItem title="Receiver Shard">
-                            <NetworkLink to={urlBuilder.shard(miniBlock.receiverShard)}>
-                              <ShardSpan shard={miniBlock.receiverShard} />
-                            </NetworkLink>
+                            <div className="d-flex">
+                              <NetworkLink to={urlBuilder.shard(miniBlock.receiverShard)}>
+                                <ShardSpan shard={miniBlock.receiverShard} />
+                              </NetworkLink>
+                            </div>
                           </DetailItem>
 
                           <DetailItem title="Sender Block">
@@ -168,10 +172,10 @@ const MiniBlockDetails: React.FC = () => {
                     {showTransactions ? (
                       <TransactionsTable
                         transactions={transactions}
-                        addressId={undefined}
+                        address={undefined}
                         totalTransactions={totalTransactions}
                         size={size}
-                        withTitle={true}
+                        title={true}
                       />
                     ) : (
                       <div className="card">

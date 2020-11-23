@@ -5,19 +5,19 @@ describe('Highlights tests', () => {
     const render = beforeAll({
       route: `/`,
     });
-    const metaEpochTimeRemaining = await render.findByTestId('metaEpochTimeRemaining');
-    expect(metaEpochTimeRemaining.innerHTML).toBe('03:18 remaining');
+    const epochTimeRemaining = await render.findByTestId('epochTimeRemaining');
+    expect(epochTimeRemaining.innerHTML).toBe('04:10 remaining');
 
-    const metaBlocks = await render.findByTestId('metaBlocks');
-    expect(metaBlocks.innerHTML).toBe('416,115');
+    const blocks = await render.findByTestId('blocks');
+    expect(blocks.innerHTML).toBe('6,379,407');
 
-    const metaShards = await render.findByTestId('metaShards');
-    expect(metaShards.innerHTML).toBe('3');
+    const shards = await render.findByTestId('shards');
+    expect(shards.innerHTML).toBe('3');
 
-    const metaAddresses = await render.findByTestId('metaAddresses');
-    expect(metaAddresses.innerHTML).toBe('59,707');
+    const accounts = await render.findByTestId('accounts');
+    expect(accounts.innerHTML).toBe('60,655');
 
-    const metaTransactions = await render.findByTestId('metaTransactions');
-    expect(metaTransactions.innerHTML).toBe('234,191');
+    const transactions = await render.findByTestId('transactions');
+    expect(transactions.innerHTML).toBe('247,378');
   });
 });

@@ -48,8 +48,8 @@ export async function getMiniBlockTransactions({
     const { data } = await provider({
       baseUrl,
       params: {
-        from: (size - 1) * 50,
-        size: 50,
+        from: (size - 1) * 25,
+        size: 25,
         miniBlockHash,
       },
       url: `/transactions`,

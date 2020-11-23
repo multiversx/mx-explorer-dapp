@@ -1,10 +1,10 @@
 export default {
   shards: 3,
-  blocks: 416115,
-  accounts: 37954,
-  transactions: 1112735,
+  blocks: 6379407,
+  accounts: 60655,
+  transactions: 247378,
   refreshRate: 6000,
-  epoch: 44,
-  roundsPassed: 419,
-  roundsPerEpoch: 2400,
+  epoch: 110,
+  roundsPassed: 11896,
+  roundsPerEpoch: 14400,
 };

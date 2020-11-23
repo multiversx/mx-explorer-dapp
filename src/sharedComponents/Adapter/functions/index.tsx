@@ -9,12 +9,13 @@ import getRounds, { GetRoundsType as GetRoundsInterface } from './getRounds';
 import getNodes, { GetNodesType as GetNodesInterface } from './getNodes';
 import getLatestTransactions from './getLatestTransactions';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
+import { getAccounts, getAccountsCount, GetAccountsParamsType } from './getAccounts';
 import getBlock from './getBlock';
 import getNetworkStatus from './getNetworkStatus';
 import {
   getTransactions,
   getTransactionsCount,
-  getAddressDetails,
+  getAccount,
   getRewards,
   TransactionsType as TransactionsInterface,
 } from './getTransactions';
@@ -64,6 +65,8 @@ export type GetNodesType = GetNodesInterface;
 
 export type GetRoundsType = GetRoundsInterface;
 
+export type GetAccountsType = GetAccountsParamsType;
+
 export {
   getHighlights,
   getLatestBlocks,
@@ -72,18 +75,20 @@ export {
   getBlocks,
   getBlocksCount,
   getTransaction,
+  getTransactions,
+  getTransactionsCount,
   getMiniBlock,
   getMiniBlockTransactions,
   getMiniBlockTransactionsCount,
-  getTransactions,
-  getTransactionsCount,
-  getAddressDetails,
   getRewards,
   getRounds,
+  getNode,
   getNodes,
   getShards,
-  getIdentities,
   getIdentity,
-  getNode,
+  getIdentities,
   getNetworkStatus,
+  getAccount,
+  getAccounts,
+  getAccountsCount,
 };

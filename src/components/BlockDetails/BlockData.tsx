@@ -63,8 +63,8 @@ const BlockData = (props: BlockDataType) => {
           </DetailItem>
 
           <DetailItem title="Block Hash">
-            <div className="d-flex align-items-center">
-              <Trim text={block.hash} />
+            <div className="d-flex align-items-center text-break-all">
+              {block.hash}
               <CopyButton text={block.hash} />
             </div>
           </DetailItem>
@@ -82,9 +82,11 @@ const BlockData = (props: BlockDataType) => {
           </DetailItem>
 
           <DetailItem title="Shard">
-            <NetworkLink to={urlBuilder.shard(block.shard)}>
-              <ShardSpan shard={block.shard} />
-            </NetworkLink>
+            <div className="d-flex">
+              <NetworkLink to={urlBuilder.shard(block.shard)}>
+                <ShardSpan shard={block.shard} />
+              </NetworkLink>
+            </div>
           </DetailItem>
 
           <DetailItem title="Size">

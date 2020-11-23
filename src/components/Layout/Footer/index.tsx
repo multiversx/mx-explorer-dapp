@@ -1,15 +1,14 @@
-import { useGlobalState } from 'context';
-import { useLocation } from 'react-router-dom';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/pro-solid-svg-icons/faHeart';
 
 const Footer = () => {
-  const { activeNetwork } = useGlobalState();
-  const { pathname } = useLocation();
-
   return (
-    <footer className="footer d-flex flex-column align-items-center justify-content-center text-muted">
+    <footer
+      className={`footer d-flex flex-column align-items-center justify-content-center text-muted ${
+        process.env.REACT_APP_CACHE_BUST ? 'pt-2' : ''
+      }`}
+    >
       <div className="footer-inner">
         <a
           {...{
@@ -21,13 +20,10 @@ const Footer = () => {
           Made with <FontAwesomeIcon icon={faHeart} className="text-danger mx-1" />
           by the Elrond team.
         </a>
-        {pathname === '/erd' && !activeNetwork.default && (
-          <span>
-            {' '}
-            • <span data-testid="footerCurrentTestnet">{activeNetwork.name}</span>
-          </span>
-        )}
       </div>
+      {process.env.REACT_APP_CACHE_BUST && (
+        <small className="text-light version mt-1">Build {process.env.REACT_APP_CACHE_BUST}</small>
+      )}
     </footer>
   );
 };
