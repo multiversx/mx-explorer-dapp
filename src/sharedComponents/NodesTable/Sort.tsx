@@ -30,7 +30,7 @@ const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {
   }).toString();
 
   return (
-    <Link to={`${pathname}?${nextUrlParams}`} className="text-dark">
+    <Link to={`${pathname}?${nextUrlParams}`} className="text-body">
       {field}
       {order === 'asc' && sort === id && (
         <FontAwesomeIcon icon={faArrowUp} className="text-primary side-action" />
