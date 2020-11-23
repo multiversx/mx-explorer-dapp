@@ -27,15 +27,16 @@ export default async function getLatestTransactions({
       timeout,
     });
 
-    const transactions = data.map((transaction: any) => ({
-      hash: transaction.id,
-      ...transaction,
-    }));
-
-    return {
-      data: transactions,
-      transactionsFetched: true,
-    };
+    return Promise.resolve(data).then(function res(data) {
+      const transactions = data.map((transaction: any) => ({
+        hash: transaction.id,
+        ...transaction,
+      }));
+      return {
+        data: transactions,
+        transactionsFetched: true,
+      };
+    });
   } catch (e) {
     return {
       data: [],

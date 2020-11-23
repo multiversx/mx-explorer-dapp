@@ -14,10 +14,12 @@ export default async function getLatestBlocks({ provider, baseUrl, timeout }: Ad
       timeout,
     });
 
-    return {
-      data,
-      blocksFetched: data !== undefined,
-    };
+    return Promise.resolve(data).then(function res(data) {
+      return {
+        data,
+        blocksFetched: data !== undefined,
+      };
+    });
   } catch {
     return {
       data: [],

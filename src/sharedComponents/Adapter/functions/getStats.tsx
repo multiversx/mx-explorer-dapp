@@ -1,5 +1,4 @@
 import { object, number, InferType } from 'yup';
-import { AdapterFunctionType } from './index';
 
 const schema = object({
   shards: number().required(),
@@ -12,20 +11,9 @@ const schema = object({
   roundsPerEpoch: number().required(),
 }).required();
 
-export default async function getHighlights({
-  provider,
-  baseUrl,
-  timeout,
-}: AdapterFunctionType & {
-  metaChainShardId: number;
-  proxyUrl: string;
-}) {
+export default async function getStats(asyncRequest: () => Promise<any>) {
   try {
-    const { data } = await provider({
-      baseUrl,
-      url: `/stats`,
-      timeout,
-    });
+    const { data } = await asyncRequest();
 
     const source: InferType<typeof schema> = data;
 
@@ -36,8 +24,9 @@ export default async function getHighlights({
       data,
       success: true,
     };
-  } catch {
+  } catch (err) {
     return {
+      data: {},
       success: false,
     };
   }
