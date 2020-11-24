@@ -147,37 +147,10 @@ export default function useAdapter() {
 
     getShards: () => getShards(),
 
-    getNodes: ({
-      peerType,
-      issues,
-      search,
-      nodeType,
-      shard,
-      status,
-      size,
-      identity,
-      pagination = true,
-      sort,
-      order,
-    }: f.GetNodesType) =>
+    getNodes: (props: f.GetNodesType) =>
       getNodes({
         url: `/nodes`,
-        params: {
-          ...(search !== undefined ? { search } : {}),
-          ...(peerType !== undefined ? { peerType } : {}),
-          ...(issues !== undefined ? { issues } : {}),
-          ...(nodeType !== undefined ? { nodeType } : {}),
-          ...(shard !== undefined ? { shard: parseInt(shard) } : {}),
-          ...(status !== undefined ? { status } : {}),
-          ...(identity !== undefined ? { identity } : {}),
-          ...(sort !== undefined ? { sort } : {}),
-          ...(order !== undefined ? { order } : {}),
-          ...(size !== undefined
-            ? pagination
-              ? { from: (size - 1) * 25, size: 25 }
-              : { size }
-            : {}),
-        },
+        params: f.getNodeParams(props),
       }),
 
     getNodesCount: ({
@@ -191,15 +164,15 @@ export default function useAdapter() {
     }: f.GetNodesType) =>
       getNodes({
         url: `/nodes/count`,
-        params: {
-          ...(search !== undefined ? { search } : {}),
-          ...(peerType !== undefined ? { peerType } : {}),
-          ...(issues !== undefined ? { issues } : {}),
-          ...(nodeType !== undefined ? { nodeType } : {}),
-          ...(shard !== undefined ? { shard: parseInt(shard) } : {}),
-          ...(status !== undefined ? { status } : {}),
-          ...(identity !== undefined ? { identity } : {}),
-        },
+        params: f.getNodeParams({
+          peerType,
+          issues,
+          search,
+          nodeType,
+          shard,
+          status,
+          identity,
+        }),
       }),
 
     getIdentities: () => provider({ url: `/identities` }),
