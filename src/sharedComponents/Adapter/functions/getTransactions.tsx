@@ -1,46 +1,48 @@
 import axios from 'axios';
-import { addressIsBech32 } from 'helpers';
 import { AdapterFunctionType } from './index';
 
-const getAddressParams = (addressId: string | undefined) =>
-  addressId
+const getAccountParams = (address: string | undefined) =>
+  address
     ? {
-        sender: addressId,
-        receiver: addressId,
-      }
-    : {};
-
-const getShardTypeParams = (
-  shardId: number | undefined,
-  shardType: 'senderShard' | 'receiverShard' | undefined
-) =>
-  shardId !== undefined && shardType
-    ? {
-        [shardType]: shardId,
+        sender: address,
+        receiver: address,
       }
     : {};
 
 export interface TransactionsType {
   size?: number;
-  addressId?: string;
-  shardType: 'senderShard' | 'receiverShard' | undefined;
-  shardId: number | undefined;
+  address?: string;
+  senderShard?: number;
+  receiverShard?: number;
 }
 
 export async function getTransactions({
   provider,
   baseUrl,
   timeout,
-  addressId = '',
+  address = '',
   size = 1,
-  shardId,
-  shardType,
+  senderShard,
+  receiverShard,
 }: AdapterFunctionType & TransactionsType) {
   const params: AdapterFunctionType['params'] = {
-    from: (size - 1) * 50,
-    size: 50,
-    ...getAddressParams(addressId),
-    ...getShardTypeParams(shardId, shardType),
+    from: (size - 1) * 25,
+    size: 25,
+    ...getAccountParams(address),
+    ...(senderShard !== undefined ? { senderShard } : {}),
+    ...(receiverShard !== undefined ? { receiverShard } : {}),
+    ...{
+      fields: [
+        'txHash',
+        'receiver',
+        'receiverShard',
+        'sender',
+        'senderShard',
+        'status',
+        'timestamp',
+        'value',
+      ].join(','),
+    },
   };
 
   try {
@@ -53,7 +55,7 @@ export async function getTransactions({
 
     return {
       data,
-      success: data.length > 0,
+      success: data !== undefined,
     };
   } catch {
     return {
@@ -66,20 +68,21 @@ export async function getTransactions({
 export async function getTransactionsCount({
   provider,
   baseUrl,
-  addressId = '',
-  shardId,
-  shardType,
+  address = '',
+  senderShard,
+  receiverShard,
   timeout,
 }: AdapterFunctionType & TransactionsType) {
   try {
     const params: AdapterFunctionType['params'] = {
-      ...getAddressParams(addressId),
-      ...getShardTypeParams(shardId, shardType),
+      ...getAccountParams(address),
+      ...(senderShard !== undefined ? { senderShard } : {}),
+      ...(receiverShard !== undefined ? { receiverShard } : {}),
     };
 
     const { data } = await provider({
       baseUrl,
-      url: `/transactions-alt/count`,
+      url: `/transactions/count`,
       params,
       timeout,
     });
@@ -96,47 +99,27 @@ export async function getTransactionsCount({
   }
 }
 
-interface DetailsType {
+interface AccountType {
   proxyUrl: string;
-  addressId: string;
+  address: string;
   timeout: number;
 }
 
-export async function getAddressDetails({ proxyUrl, addressId, timeout }: DetailsType) {
+export async function getAccount({ proxyUrl, address, timeout }: AccountType) {
   try {
-    const {
-      data: {
-        data: {
-          account: { balance, code, nonce },
-        },
-        code: responseCode,
-        error,
-      },
-    } = await axios.get(`${proxyUrl}/address/${addressId}`, { timeout });
-
-    if (responseCode === 'successful') {
-      return {
-        addressId,
-        balance,
-        nonce,
-        code,
-        detailsFetched: true,
-      };
-    } else {
-      throw new Error(error);
-    }
+    const { data } = await axios.get(`${proxyUrl}/accounts/${address}`, { timeout });
+    return {
+      data,
+      success: data !== undefined,
+    };
   } catch (err) {
     return {
-      addressId: '',
-      balance: '0',
-      nonce: 0,
-      code: '',
-      detailsFetched: addressIsBech32(addressId),
+      success: false,
     };
   }
 }
 
-export async function getRewards({ proxyUrl, addressId, timeout }: DetailsType) {
+export async function getRewards({ proxyUrl, address, timeout }: AccountType) {
   try {
     const {
       data: {
@@ -147,7 +130,7 @@ export async function getRewards({ proxyUrl, addressId, timeout }: DetailsType) 
         userWaitingStake,
         userWithdrawOnlyStake,
       },
-    } = await axios.get(`${proxyUrl}/addresses/${addressId}/delegation`, { timeout });
+    } = await axios.get(`${proxyUrl}/accounts/${address}/delegation`, { timeout });
 
     return {
       claimableRewards,

@@ -1,18 +1,7 @@
-import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import * as React from 'react';
+import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
+import { PageState } from 'sharedComponents';
 
-export default function FailedTransaction() {
-  return (
-    <div>
-      <div className="card">
-        <div className="card-body card-details" data-testid="errorScreen">
-          <div className="empty">
-            <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
-            <span className="h4 empty-heading">No transactions</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+export default function NoTransactions() {
+  return <PageState icon={faExchangeAlt} title="No transactions" className="py-spacer my-auto" />;
 }

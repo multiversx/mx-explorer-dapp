@@ -1,122 +1,136 @@
 import React from 'react';
-import BigNumber from 'bignumber.js';
 import { useGlobalState } from 'context';
-import { ValidatorType } from 'context/validators';
-import { BrandType } from 'context/state';
-import carretDown from 'assets/img/carret-down.svg';
-import BrandDetailsRow from './IdenityDetailsRow';
-import { Loader, TestnetLink } from 'sharedComponents';
-import PercentegeBar from 'components/Validators/ValidatorDetails/PercentegeBar';
-import { validatorsRoutes } from 'routes';
+import { IdentityType, NodeType } from 'context/state';
+import carretDown from 'assets/images/carret-down.svg';
+import {
+  Loader,
+  NetworkLink,
+  Trim,
+  adapter,
+  PageState,
+  NodesTable,
+  IdentityAvatar,
+} from 'sharedComponents';
+import PercentegeBar from './PercentegeBar';
+import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 
-export interface BrandRowType {
-  brand: BrandType;
+export interface IdentityRowType {
+  identity: IdentityType;
   rank: number;
 }
 
-export const stake = (brand: BrandType) =>
-  parseFloat(new BigNumber(brand.stake).dividedBy(1000).valueOf()).toLocaleString('en');
-
-export const cumulativeStakePercent = (brand: BrandType) =>
-  `${Math.round(brand.stakePercent) > 0 ? Math.round(brand.stakePercent) : '< 1'}%`;
-
-const IdentityRow = ({ brand, rank }: BrandRowType) => {
+const IdentityRow = ({ identity, rank }: IdentityRowType) => {
+  const ref = React.useRef(null);
   const [collapsed, setCollapsed] = React.useState(true);
   const [showDetails, setShowDetails] = React.useState(false);
-  const [brandNodes, setBrandNodes] = React.useState<ValidatorType[]>([]);
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [identityNodes, setIdentityNodes] = React.useState<NodeType[]>([]);
+  const { getNodes, getNode } = adapter();
 
   const {
-    config: { erdLabel },
-    nodes,
+    activeNetwork: { erdLabel },
   } = useGlobalState();
 
-  const expand = (identity: string) => () => {
-    if (brandNodes.length === 0) {
-      setTimeout(() => {
-        const validators = nodes.filter((brand) => brand.identity === identity);
-        setBrandNodes(validators);
-      }, 3000);
+  const expand = (node: IdentityType) => () => {
+    if (dataReady === undefined) {
+      if (node.identity) {
+        getNodes({ identity: node.identity, size: node.validators, pagination: false }).then(
+          (nodes) => {
+            if (ref.current !== null) {
+              setDataReady(nodes.success);
+              setIdentityNodes(nodes.data);
+            }
+          }
+        );
+      } else {
+        getNode(node.name).then((node) => {
+          if (ref.current !== null) {
+            setDataReady(node.success);
+            setIdentityNodes([node.data]);
+          }
+        });
+      }
     }
     setShowDetails(true);
     setCollapsed(!collapsed);
   };
 
-  const link = `${validatorsRoutes.index}/${brand.identity}`;
+  const link = identity.identity ? `/validators/${identity.identity}` : `/nodes/${identity.name}`;
 
   return (
     <>
       <tr
-        onClick={expand(brand.identity)}
-        className={collapsed ? 'brand-tr collapsed' : 'brand-tr'}
+        onClick={expand(identity)}
+        className={`identity-row ${collapsed ? 'collapsed' : ''}`}
+        ref={ref}
       >
         <td>{rank}</td>
         <td>
           <div className="d-flex align-items-center">
             <div className="mr-3">
-              <TestnetLink to={`${validatorsRoutes.index}/${brand.identity}`}>
+              <NetworkLink to={link}>
                 {}
-                <img
-                  className={brand.avatar ? 'avatar' : 'avatar gray'}
-                  src={brand.avatar ? brand.avatar : require('../../assets/img/default-avatar.svg')}
-                  alt={brand.name}
-                  height="42"
-                />
-              </TestnetLink>
+                <IdentityAvatar identity={identity} />
+              </NetworkLink>
             </div>
-            <TestnetLink to={link}>{brand.name ? brand.name : 'N/A'}</TestnetLink>
+            {identity.name && identity.name.length > 70 ? (
+              <NetworkLink to={link} className="trim-wrapper">
+                <Trim text={identity.name} />
+              </NetworkLink>
+            ) : (
+              <NetworkLink to={link}>{identity.name ? identity.name : 'N/A'}</NetworkLink>
+            )}
           </div>
         </td>
 
         <td>
-          {stake(brand)} {erdLabel}
+          {identity.stake.toLocaleString('en')} {erdLabel}
         </td>
         <td className="stake-bar-col">
-          <PercentegeBar
-            totalUpTimeLabel={Math.round(brand.overallStakePercent) + '%'}
-            totalUpTimePercentege={brand.overallStakePercent}
-            totalDownTimeLabel={Math.round(brand.stakePercent) + '%'}
-            totalDownTimePercentege={brand.stakePercent}
-          />
-          <div className="stake-percent">{cumulativeStakePercent(brand)}</div>
+          <div className="d-flex align-items-center">
+            <div className="bar">
+              <PercentegeBar
+                totalUpTimeLabel={Math.round(identity.overallStakePercent) + '%'}
+                totalUpTimePercentege={identity.overallStakePercent}
+                totalDownTimeLabel={Math.round(identity.stakePercent) + '%'}
+                totalDownTimePercentege={identity.stakePercent}
+              />
+            </div>
+            <div className="ml-3">
+              {Math.round(identity.stakePercent) > 0 ? Math.round(identity.stakePercent) : '< 1'}%
+            </div>
+          </div>
         </td>
-        <td className="text-right">{brand.nodesCount}</td>
-        <td className="text-right">{Math.round(brand.score).toLocaleString()}</td>
+        <td className="text-right">{identity.validators.toLocaleString('en')}</td>
+        <td className="text-right">{Math.round(identity.score).toLocaleString('en')}</td>
         <td className="text-right">
           <img src={carretDown} className="details-arrow" alt="details-arrow" height="8" />
         </td>
       </tr>
       {showDetails && (
-        <tr className={collapsed ? 'details-tr collapsed' : 'details-tr'}>
+        <tr className={`identity-details-row ${collapsed ? 'collapsed' : ''}`}>
           <td colSpan={7} className="p-0">
             <div className="content">
-              <div className="table-responsive px-4 pt-2" style={{ minHeight: '50px' }}>
-                <table className="table mb-2">
-                  <thead>
-                    <tr>
-                      <th>Public Key</th>
-                      <th>Node Name</th>
-                      <th>Shard</th>
-                      <th>Version</th>
-                      <th className="text-right">Uptime</th>
-                      <th className="text-right">Status</th>
-                      <th className="text-right">Rating</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {brandNodes.length > 0 ? (
-                      brandNodes.map((node, i) => (
-                        <BrandDetailsRow key={node.publicKey} rowIndex={i} node={node} />
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan={7} className="text-center">
-                          <Loader.Dots />
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
+              {dataReady === undefined && (
+                <div className="py-4">
+                  <Loader small={true} noText={true} />
+                </div>
+              )}
+              {dataReady === false && (
+                <PageState
+                  icon={faCogs}
+                  title="Unable to load validators"
+                  className="py-spacer my-auto"
+                  dataTestId="errorScreen"
+                />
+              )}
+              {dataReady === true && (
+                <div className="nodes-table-wrapper py-2 px-4">
+                  <NodesTable hideFilters={true}>
+                    <NodesTable.Body nodes={identityNodes} />
+                  </NodesTable>
+                </div>
+              )}
             </div>
           </td>
         </tr>

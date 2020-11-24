@@ -1,83 +1,67 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { faBan } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Navbar from './Navbar/index';
-import Footer from './Footer';
+import Footer from './Footer/index';
 import NetworkRouter from './NetworkRouter';
 import { useGlobalState } from 'context';
-import RoundManager from './RoundManager';
+import LoopManager from './LoopManager';
 import { Highlights } from 'sharedComponents';
+import Unavailable from './Unavailable';
 
-function addStylesheet(secondary: boolean) {
-  const stylesheet = document.getElementById('stylesheet');
-  if (stylesheet) {
-    const href: string = (stylesheet as any).href.replace(
-      '__stylesheet__.css',
-      secondary ? 'secondary.css' : 'primary.css'
-    );
-    (stylesheet as any).href = href;
-  }
-}
-
-const Layout = ({ children, navbar }: { children: React.ReactNode; navbar?: React.ReactNode }) => {
-  const {
-    activeNetwork,
-    config: { secondary },
-  } = useGlobalState();
-  const { pathname } = useLocation();
-  const validators = pathname.includes('/validators');
+const Layout = ({ children }: { children: React.ReactNode }) => {
+  const { theme } = useGlobalState();
 
   React.useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      if (secondary) {
-        require('assets/sass/secondary.scss');
+    const stylesheet = document.getElementById('stylesheet');
+
+    if (stylesheet) {
+      const href: string = (stylesheet as any).href;
+
+      if (process.env.NODE_ENV === 'development') {
+        (stylesheet as any).href = '';
+        switch (theme) {
+          case 'dark':
+            require('assets/styles/dark.scss');
+            break;
+          case 'testnet':
+            require('assets/styles/testnet.scss');
+            break;
+          default:
+            require('assets/styles/light.scss');
+            break;
+        }
       } else {
-        require('assets/sass/primary.scss');
+        const secondHrefPart = href.slice(href.lastIndexOf('/') + 1);
+        const currentTheme = secondHrefPart.slice(0, secondHrefPart.indexOf('.css'));
+        (stylesheet as any).href = href.replace(currentTheme, theme);
       }
-    } else {
-      addStylesheet(secondary);
     }
-  }, [secondary]);
+  }, [theme]);
+
+  const offline = !window.navigator.onLine;
 
   return (
-    <>
-      <NetworkRouter />
-      <RoundManager />
-      {navbar ? navbar : <Navbar />}
-      <main role="main">
-        {activeNetwork.fetchedFromNetworkConfig === false && !validators ? (
-          <div className="container pt-3 pb-3">
-            <div className="row">
-              <div className="offset-lg-3 col-lg-6 mt-4 mb-4">
-                <div className="card">
-                  <div className="card-body card-details" data-testid="errorScreen">
-                    <div className="empty">
-                      <FontAwesomeIcon icon={faBan} className="empty-icon" />
-                      <span className="h4 empty-heading">
-                        There was an internal website error. Please try again later.
-                        {!activeNetwork.default && (
-                          <>
-                            <br />
-                            {`${activeNetwork.name} network`}
-                          </>
-                        )}
-                      </span>
-                    </div>
-                  </div>
+    <div className="d-flex">
+      <div className="flex-fill vh-100">
+        <main className="main-content d-flex flex-column flex-grow-1">
+          <NetworkRouter />
+          <LoopManager />
+          <Navbar />
+          <div className="main-content-container container-fluid p-0 d-flex flex-column">
+            {offline ? (
+              <Unavailable />
+            ) : (
+              <>
+                <Highlights />
+                <div className="page-container" data-testid="mainPageContent">
+                  {children}
                 </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
-        ) : (
-          <>
-            <Highlights />
-            {children}
-          </>
-        )}
-      </main>
-      <Footer />
-    </>
+          <Footer />
+        </main>
+      </div>
+    </div>
   );
 };
 

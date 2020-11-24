@@ -2,15 +2,14 @@ import React from 'react';
 import L from 'leaflet';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { faMapMarker } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarker } from '@fortawesome/pro-regular-svg-icons/faMapMarker';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MapDisplayType, getRadius, getGroupedCities } from './helpers/processing';
+import { MapDisplayType, getRadius } from './helpers/processing';
 import Icon from './Icon';
 import Control from 'react-leaflet-control';
-import './leaflet.scss';
 
 export default function MapDisplay({
-  markers,
+  cities,
   leaders,
   metaChainShardId,
   shardsArray,
@@ -33,9 +32,7 @@ export default function MapDisplay({
 
   React.useEffect(handleScroll, [ref.current]);
 
-  const groupedCities = getGroupedCities(markers);
-
-  const radiusByCity = getRadius(groupedCities);
+  const radiusByCity = getRadius(cities);
 
   const tiles = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
   const attribution =
@@ -45,13 +42,13 @@ export default function MapDisplay({
   // const attribution =
   //   '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
 
-  const style = (publicKey: string, offset = 0) => ({
-    dangerouslySetInnerHTML: {
-      __html: `.leader-marker-${publicKey} {
-        z-index: ${markers.length + offset + 1000} !important;
-      }`,
-    },
-  });
+  // const style = (publicKey: string, offset = 0) => ({
+  //   dangerouslySetInnerHTML: {
+  //     __html: `.leader-marker-${publicKey} {
+  //       z-index: ${markers.length + offset + 1000} !important;
+  //     }`,
+  //   },
+  // });
 
   const tileProps = {
     attribution,
@@ -89,13 +86,12 @@ export default function MapDisplay({
     >
       <TileLayer {...tileProps} />
 
-      {groupedCities.map(({ items, value }: any, i: number) => {
-        const { lat, lon } = items[0];
+      {cities.map(({ validators, latitude: lat, longitude: lon, city }, i: number) => {
         return (
           <Marker
-            key={value + i}
+            key={city + i}
             position={new L.LatLng(lat, lon)}
-            icon={Icon(radiusByCity[value])}
+            icon={Icon(radiusByCity[city])}
             onMouseOver={(e: any) => {
               e.target.openPopup();
             }}
@@ -104,15 +100,15 @@ export default function MapDisplay({
             }}
           >
             <Popup>
-              {value}: {`${items.length} node${items.length === 1 ? '' : 's'}`}
+              {city}: {`${validators.length} node${validators.length === 1 ? '' : 's'}`}
             </Popup>
           </Marker>
         );
       })}
-      {leaders.map((leader, i) => (
+      {/* {leaders.map((leader, i) => (
         <style {...style(leader.publicKey, leader.offset)} key={leader.name + i} />
-      ))}
-      {leaders.map((leader, i) => {
+      ))} */}
+      {/* {leaders.map((leader, i) => {
         let iconName =
           leader.shard === metaChainShardId ? 'shard-metachain.svg' : `shard-${leader.shard}.svg`;
         if (leaders.length > 6) {
@@ -123,7 +119,7 @@ export default function MapDisplay({
             key={leader.name + i}
             position={new L.LatLng(leader.lat, leader.lon)}
             icon={L.icon({
-              iconUrl: require(`assets/img/markers/${iconName}`),
+              iconUrl: require(`assets/images/markers/${iconName}`),
               iconSize: [20, 24],
               iconAnchor: [10 + leader.offset!, 24],
               className: `leader-marker-${leader.publicKey}`,
@@ -136,7 +132,7 @@ export default function MapDisplay({
             }}
           />
         );
-      })}
+      })} */}
       {shardLeaders.length > 0 && (
         <Control position="bottomleft">
           <p className="text-white mb-0">

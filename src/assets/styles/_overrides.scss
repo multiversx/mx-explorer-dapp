@@ -1,0 +1,78 @@
+// Uncomment in case of reeboot override not working
+// html,
+// body {
+//   font-weight: 400;
+// }
+
+.card {
+  @extend .card-small;
+
+  height: 100%;
+  overflow: hidden;
+  word-wrap: normal; // fixes Trim bug
+
+  .card-header {
+    border: 0;
+    padding: 0;
+
+    &:first-child {
+      border-radius: calc(#{$card-border-radius} - 1px) calc(#{$card-border-radius} - 1px) 0 0;
+    }
+
+    .card-header-item {
+      border-bottom: 1px solid $border-color;
+      padding: 1rem;
+    }
+
+    .identity-header-item {
+      @extend .px-3;
+      @extend .px-lg-0;
+
+      display: flex;
+      align-items: center;
+      padding-top: 1.2rem;
+      padding-bottom: 1.2rem;
+
+      @include media-breakpoint-up(lg) {
+        padding-top: 0.45rem;
+        padding-bottom: 0.45rem;
+      }
+    }
+  }
+
+  .card-footer {
+    border-top: 1px solid $border-color;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    .card-footer,
+    .card-header .card-header-item {
+      padding-left: $spacer-val;
+      padding-right: $spacer-val;
+    }
+
+    .table-wrapper {
+      th:first-child,
+      td:first-child {
+        padding-left: $spacer-val;
+      }
+
+      th:last-child,
+      td:last-child {
+        padding-right: $spacer-val;
+      }
+    }
+  }
+}
+
+.main-content {
+  > .main-content-container {
+    &.container-fluid {
+      min-height: calc(
+        100vh - 9rem
+      ); // fixes content min height taking into account navbar and footer heights
+    }
+  }
+}

@@ -1,21 +1,19 @@
 import * as React from 'react';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ReactComponent as CopyIcon } from './../../assets/img/copy-icon.svg';
+import { faClone } from '@fortawesome/pro-regular-svg-icons/faClone';
+import { faCheck } from '@fortawesome/pro-regular-svg-icons/faCheck';
 import copyTextToClipboard from './helpers/copyToClipboard';
-import './copyButton.scss';
 
 interface CopyButtonType {
   text: string;
-  extraClasses?: string;
+  className?: string;
 }
 
-const CopyButton = ({ text, extraClasses }: CopyButtonType) => {
+const CopyButton = ({ text, className = '' }: CopyButtonType) => {
   const [copyResult, setCopyResut] = React.useState({
     default: true,
     success: false,
   });
-  const ref = React.useRef(null);
 
   const handleCopyToClipboard = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -28,27 +26,21 @@ const CopyButton = ({ text, extraClasses }: CopyButtonType) => {
     });
 
     setTimeout(() => {
-      if (ref !== null) {
-        setCopyResut({
-          default: true,
-          success: false,
-        });
-      }
+      setCopyResut({
+        default: true,
+        success: false,
+      });
     }, 1000);
   };
 
   return (
-    <button
-      className={`btn copy-btn text-primary p-0 pl-2 ${extraClasses ? extraClasses : ''}`}
-      onClick={handleCopyToClipboard}
-      ref={ref}
-    >
+    <a href="/#" onClick={handleCopyToClipboard} className={`side-action ${className}`}>
       {copyResult.default || !copyResult.success ? (
-        <CopyIcon className="copy-icon" />
+        <FontAwesomeIcon icon={faClone} />
       ) : (
-        <FontAwesomeIcon icon={faCheck} className="check-icon" />
+        <FontAwesomeIcon icon={faCheck} className="text-primary" />
       )}
-    </button>
+    </a>
   );
 };
 

@@ -1,191 +1,83 @@
 import React from 'react';
-import { faCogs } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { adapter, Loader, NodesTabs } from 'sharedComponents';
+import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
+import { adapter, Loader, Pager, PageState } from 'sharedComponents';
 import { useGlobalDispatch, useGlobalState } from 'context';
-import NodesTable from './NodesTable';
+import { NodesTable } from 'sharedComponents';
 import Filters from './Filters';
-import { nodesIssues, useGetFilters } from './helpers';
-import { ValidatorType } from 'context/validators';
-
-export type DirectioinsType = 'none' | 'desc' | 'asc';
-
-interface HeadersType {
-  id: string;
-  label: string;
-  dir: DirectioinsType;
-}
-
-const headers: HeadersType[] = [
-  {
-    id: 'publicKey',
-    label: 'Public Key',
-    dir: 'none',
-  },
-  {
-    id: 'nodeDisplayName',
-    label: 'Node Name',
-    dir: 'none',
-  },
-  {
-    id: 'shardId',
-    label: 'Shard',
-    dir: 'none',
-  },
-  {
-    id: 'versionNumber',
-    label: 'Version',
-    dir: 'none',
-  },
-
-  {
-    id: 'totalUpTimeSec',
-    label: 'Uptime',
-    dir: 'none',
-  },
-  {
-    id: 'isActive',
-    label: 'Status',
-    dir: 'none',
-  },
-];
+import { useFilters, useIsMainnet } from 'helpers';
+import NodesLayout from 'sharedComponents/NodesLayout';
+import { useLocation } from 'react-router-dom';
+import NodeTabs from 'sharedComponents/NodesLayout/NodeTabs';
 
 const Nodes = () => {
   const ref = React.useRef(null);
+  const { search } = useLocation();
   const dispatch = useGlobalDispatch();
-  const { getNetworkConfig, getNodes } = adapter();
-  const { getQueryParams } = useGetFilters();
-  const { nodes, versionNumber } = useGlobalState();
+  const { getNodes, getNodesCount } = adapter();
+  const { getQueryObject, size } = useFilters();
+  const { nodes } = useGlobalState();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [ratingOrder, setRatingOrder] = React.useState<string[]>([]);
-
-  const [searchValue, setSearchValue] = React.useState<string>('');
-  const [peerType, setPeerType] = React.useState<string | undefined>();
-  const [issues, setIssues] = React.useState<boolean>(false);
-
-  const getVersionNumber = () => {
-    if (nodes.length === 0) {
-      getNetworkConfig().then((config) => {
-        dispatch({
-          type: 'setVersionNumber',
-          versionNumber: config.erd_latest_tag_software_version,
-        });
-      });
-    }
-  };
-
-  React.useEffect(getVersionNumber, []);
+  const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
+  const isMainnet = useIsMainnet();
 
   const fetchNodes = () => {
-    if (versionNumber) {
-      const query = getQueryParams({ issues, peerType, searchValue });
-      setDataReady(undefined);
-      getNodes(query)
-        .then((nodesData) => {
-          const nodes = nodesData.data.map((node: ValidatorType) => {
-            return {
-              ...node,
-              ...(node.nodeType !== 'observer'
-                ? {
-                    issue: nodesIssues({
-                      node,
-                      versionNumber,
-                    }),
-                  }
-                : { issue: '' }),
-              nodeDisplayName: node.nodeDisplayName ? node.nodeDisplayName : node.publicKey,
-            };
-          });
-          dispatch({
-            type: 'setNodes',
-            nodes,
-          });
-          if (ref.current !== null) {
-            setDataReady(true);
-          }
-        })
-        .catch((error) => {
-          if (ref.current !== null) {
-            setDataReady(false);
-          }
+    const queryObject = getQueryObject();
+
+    setDataReady(undefined);
+
+    Promise.all([getNodes({ ...queryObject, size }), getNodesCount(queryObject)]).then(
+      ([nodesData, count]) => {
+        dispatch({
+          type: 'setNodes',
+          nodes: nodesData.data,
         });
-    }
+        setTotalNodes(count.data);
+
+        if (ref.current !== null) {
+          setDataReady(nodesData.success && count.success);
+        }
+      }
+    );
   };
 
-  React.useEffect(fetchNodes, [versionNumber, issues, peerType, searchValue]);
-
-  const getRatings = () => {
-    const uniqueRatings = nodes
-      .filter((node: ValidatorType) => node.nodeType === 'validator')
-      .sort((a: any, b: any) => a.rating - b.rating)
-      .map((v: any) => v.publicKey);
-    setRatingOrder(uniqueRatings);
-  };
-
-  React.useEffect(getRatings, [nodes]);
+  React.useEffect(fetchNodes, [search]);
 
   return (
-    <div ref={ref}>
-      <div className="container pt-3 pb-3">
-        <div className="row">
-          <div className="col-12">
-            <h4>
-              <span data-testid="title">Nodes</span>
-            </h4>
-          </div>
-        </div>
+    <div className="d-flex flex-column flex-fill" ref={ref}>
+      <NodesLayout>
+        <div className="card" ref={ref}>
+          <div className="card-header">
+            {isMainnet && <NodeTabs />}
 
-        {!versionNumber ? (
-          <Loader />
-        ) : (
-          <>
-            {dataReady === undefined && <Loader />}
-            {dataReady === true && (
-              <div className="row">
-                <div className="col-12">
-                  <div className="card">
-                    <div className="card-body card-list">
-                      {/* <NodesTabs />
-                      <Filters
-                        resultsCount={nodes.length}
-                        setSearchValue={setSearchValue}
-                        setPeerType={setPeerType}
-                        setIssues={setIssues}
-                        searchValue={searchValue}
-                        peerType={peerType}
-                        issues={issues}
-                      /> */}
-                      <div className="table-responsive">
-                        <table className="table mt-3">
-                          <thead>
-                            <tr>
-                              {/* <th>#</th> */}
-                              {headers.map((header) => (
-                                <th key={header.id}>{header.label}</th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <NodesTable nodes={nodes} ratingOrder={ratingOrder} />
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <div className="card-header-item">
+              <Filters resultsCount={nodes.length} />
+            </div>
+          </div>
+
+          {dataReady === undefined && <Loader />}
+          {dataReady === false && (
+            <PageState
+              icon={faCogs}
+              title="Unable to load nodes"
+              className="py-spacer my-auto"
+              dataTestId="errorScreen"
+            />
+          )}
+
+          {dataReady === true && (
+            <>
+              <div className="card-body p-0">
+                <NodesTable>
+                  <NodesTable.Body nodes={nodes} />
+                </NodesTable>
               </div>
-            )}
-            {dataReady === false && (
-              <div className="card">
-                <div className="card-body card-details" data-testid="errorScreen">
-                  <div className="empty">
-                    <FontAwesomeIcon icon={faCogs} className="empty-icon" />
-                    <span className="h4 empty-heading">Unable to load validators</span>
-                  </div>
-                </div>
+              <div className="card-footer">
+                <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
               </div>
-            )}
-          </>
-        )}
-      </div>
+            </>
+          )}
+        </div>
+      </NodesLayout>
     </div>
   );
 };

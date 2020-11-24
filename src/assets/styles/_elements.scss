@@ -1,0 +1,133 @@
+.form-control {
+  &.is-invalid {
+    background-image: none;
+    padding-right: 0.75rem;
+  }
+}
+
+.btn {
+  &.btn-white {
+    border: 1px solid $border-color;
+    color: $secondary;
+    background-color: $card-bg;
+
+    &:hover {
+      box-shadow: none;
+      border-color: $input-hover-border-color;
+    }
+  }
+}
+
+.side-action {
+  color: $muted;
+  margin-left: 0.5rem;
+  transition: color 200ms ease;
+
+  &:hover {
+    color: $primary !important;
+  }
+}
+
+.cursor-text {
+  cursor: text !important;
+}
+
+.text-break-all {
+  word-break: break-all;
+}
+
+.modal-open {
+  .modal {
+    .modal-dialog {
+      @extend .modal-lg;
+
+      .modal-content {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.page-container {
+  @extend .d-flex;
+  @extend .flex-fill;
+  @extend .flex-column;
+
+  @include media-breakpoint-down(sm) {
+    width: 100vw;
+    max-width: 100%;
+  }
+}
+
+.table-wrapper {
+  overflow-x: auto;
+
+  .table {
+    @extend .m-0;
+    white-space: nowrap;
+
+    th {
+      border: 0;
+      color: $body;
+
+      @extend .border-bottom;
+      @extend .text-semibold;
+      @extend .bg-light;
+    }
+
+    td {
+      color: $body;
+      vertical-align: middle;
+    }
+  }
+}
+
+.navbar-brand {
+  svg {
+    height: 1.5rem;
+    width: auto;
+    margin-right: 0.8rem;
+  }
+
+  span {
+    font-size: 1.2rem;
+    font-weight: 300;
+    border-left: 1px solid $border-color;
+    padding-left: 0.7rem;
+  }
+}
+
+.min-w-0 {
+  min-width: 0;
+}
+
+.page-state-sm {
+  .icon-state {
+    font-size: 0.5rem;
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .my-spacer {
+    @include media-breakpoint-up(md) {
+      margin: 0 !important;
+    }
+  }
+
+  .mt-spacer {
+    margin-top: 1rem !important;
+  }
+}
+
+.outline-0 {
+  outline: 0 !important;
+}
+
+.truncate-item-lg {
+  @extend .text-truncate;
+  max-width: 13rem;
+}
+
+.text-body {
+  color: $body;
+}

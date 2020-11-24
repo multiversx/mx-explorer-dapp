@@ -7,13 +7,16 @@ export default async function getLatestBlocks({ provider, baseUrl, timeout }: Ad
       url: `/blocks`,
       params: {
         size: 25,
+        ...{
+          fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
+        },
       },
       timeout,
     });
 
     return {
       data,
-      blocksFetched: data.length > 0,
+      blocksFetched: data !== undefined,
     };
   } catch {
     return {

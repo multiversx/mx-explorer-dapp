@@ -9,7 +9,6 @@ const localTestnets = [
           proxyUrl: 'https://api.elrond.com',
           elasticUrl: 'https://elastic-aws.elrond.com',
           numInitCharactersForScAddress: 14,
-          validatorDetails: true,
         },
         {
           id: 'testnet-do-amsterdam',
@@ -18,7 +17,6 @@ const localTestnets = [
           elasticUrl: 'http://206.189.240.135',
           adapter: 'elastic',
           numInitCharactersForScAddress: 14,
-          validatorDetails: true,
         },
         {
           id: 'testnet-do-london',
@@ -27,7 +25,6 @@ const localTestnets = [
           elasticUrl: 'http://134.209.27.15',
           numInitCharactersForScAddress: 14,
           adapter: 'elastic',
-          validatorDetails: true,
         },
         {
           id: 'testnet-do-toronto',
@@ -36,7 +33,6 @@ const localTestnets = [
           elasticUrl: '***REMOVED***',
           numInitCharactersForScAddress: 14,
           adapter: 'elastic',
-          validatorDetails: true,
         },
         {
           id: 'testnet-azure-eus2',
@@ -45,7 +41,6 @@ const localTestnets = [
           elasticUrl: '***REMOVED***',
           numInitCharactersForScAddress: 14,
           adapter: 'elastic',
-          validatorDetails: true,
         },
         {
           id: 'testnet-azure-weu',
@@ -54,7 +49,6 @@ const localTestnets = [
           elasticUrl: 'http://13.81.247.54',
           numInitCharactersForScAddress: 14,
           adapter: 'elastic',
-          validatorDetails: true,
         },
         {
           id: 'testnet-azure-uks',
@@ -63,7 +57,6 @@ const localTestnets = [
           elasticUrl: 'http://51.11.131.187',
           numInitCharactersForScAddress: 14,
           adapter: 'elastic',
-          validatorDetails: true,
         },
         {
           id: 'testnet-azure-all-in-one',
@@ -72,7 +65,6 @@ const localTestnets = [
           elasticUrl: 'http://137.116.230.165:9200',
           numInitCharactersForScAddress: 14,
           adapter: 'elastic',
-          validatorDetails: true,
         },
         {
           id: 'testnet-azure-all-in-one-maiar',
@@ -81,7 +73,6 @@ const localTestnets = [
           elasticUrl: '***REMOVED***',
           numInitCharactersForScAddress: 14,
           adapter: 'elastic',
-          validatorDetails: true,
         },
       ]
     : []),

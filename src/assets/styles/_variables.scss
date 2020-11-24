@@ -1,0 +1,84 @@
+@import './themeVariables';
+@import './../../../node_modules/bootstrap/scss/functions';
+@import './../../../node_modules/bootstrap/scss/variables';
+@import './../../../node_modules/bootstrap/scss/mixins';
+
+$body-background: $body-bg;
+$spacer-val: $spacer * 2;
+
+// SPACING
+$spacers: (
+  spacer: (
+    $spacer-val,
+  ),
+);
+
+// TEXT
+$body-color: $body;
+$headings-color: $body;
+$text-muted: $muted;
+$link-color: $primary;
+
+// NAVBAR
+$main-navbar-box-shadow: 0 0.125rem 0.625rem rgba($standard-box-shadow, 0.12);
+
+// HEADER NAVBAR
+$header-navbar-nav-link-color: $secondary;
+$header-navbar-nav-item-ahs-color: $primary;
+
+// SIDEBAR
+$page-subtitle-color: $secondary;
+
+$main-sidebar-background: $card-bg;
+$main-sidebar-nav-title-color: $muted;
+$main-sidebar-nav-link-color: $secondary;
+$main-sidebar-nav-link-icon-color: $muted;
+$main-sidebar-nav-link-active-color: $primary;
+$main-sidebar-nav-link-active-box-shadow: inset 0.1875rem 0 0 $primary;
+$main-sidebar-nav-link-active-icon-color: $primary;
+$main-sidebar-nav-link-active-background-color: $light;
+$main-sidebar-dropdown-item-color: $secondary;
+$main-sidebar-dropdown-item-background-hover: $light;
+$side-shadow: $main-navbar-box-shadow;
+
+// CARDS
+$card-border-radius: 0.65rem;
+$card-small-box-shadow: 0 0.3125rem 0.3125rem 0 rgba($standard-box-shadow, 0.1);
+$card-cap-bg: $card-bg;
+
+// INPUT
+$input-border-color: $border-color;
+$input-focus-border-color: $primary;
+
+// DROPDOWN
+$dropdown-bg: $card-bg;
+$dropdown-link-color: $secondary;
+$dropdown-link-hover-bg: $light;
+$dropdown-link-hover-color: $link-color;
+$dropdown-border-color: $border-color;
+$dropdown-link-active-color: $link-color;
+$dropdown-link-active-bg: $card-bg;
+
+// RANGE SLIDER
+$custom-range-thumb-bg: $primary;
+$custom-range-track-bg: $light;
+
+// LIST GROUP
+$list-group-bg: $card_bg;
+$list-group-border-color: $border-color;
+
+// FORM CHECKBOX
+$form-check-input-margin-y: 0.4rem;
+
+// MISC
+$small-stats-min-height: 7.8rem;
+
+// POPOVER
+$popover-body-padding-y: 0.6rem;
+$popover-body-padding-x: 0;
+$popover-bg: $card_bg;
+$popover-arrow-color: $card_bg;
+$popover-arrow-outer-color: $border-color;
+
+// PROGRESSBAR
+$progress-bg: $muted;

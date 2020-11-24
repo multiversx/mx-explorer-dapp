@@ -48,8 +48,8 @@ export async function getMiniBlockTransactions({
     const { data } = await provider({
       baseUrl,
       params: {
-        from: (size - 1) * 50,
-        size: 50,
+        from: (size - 1) * 25,
+        size: 25,
         miniBlockHash,
       },
       url: `/transactions`,
@@ -58,7 +58,7 @@ export async function getMiniBlockTransactions({
 
     return {
       data,
-      success: data.length > 0,
+      success: true,
     };
   } catch {
     return {
@@ -80,7 +80,7 @@ export async function getMiniBlockTransactionsCount({
       params: {
         miniBlockHash,
       },
-      url: `/transactions-alt/count`,
+      url: `/transactions/count`,
       timeout,
     });
 
