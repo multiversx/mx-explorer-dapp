@@ -1,16 +1,34 @@
-import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
-import { dateFormatted, sizeFormat, trimHash } from 'helpers';
-import React from 'react';
-import { ShardSpan, TestnetLink, TimeAgo } from './../index';
+import * as React from 'react';
+import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
+import { ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 
-const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number | undefined }) => {
+export interface BlockType {
+  hash: string;
+  nonce: number;
+  shard: number;
+  size: number;
+  sizeTxs: number;
+  timestamp: number;
+  txCount: number;
+  validators: string[];
+  miniBlocksHashes: string[];
+  notarizedBlocksHashes: string[];
+  epoch?: number;
+  prevHash?: string;
+  proposer?: string;
+  pubKeyBitmap?: string;
+  round?: number;
+  stateRootHash?: string;
+  isNew?: boolean; // UI flag
+}
+
+const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | undefined }) => {
   return (
-    <div className="table-responsive">
-      <table className="table mt-3">
+    <div className="table-wrapper animated-list">
+      <table className="table">
         <thead>
           <tr>
             <th>Block</th>
-            {/* <th>Epoch</th> */}
             <th>Age</th>
             <th>Txns</th>
             <th>Shard</th>
@@ -20,24 +38,14 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
         </thead>
         <tbody data-testid="blocksTable">
           {blocks.map((block, i) => (
-            <tr className="animated fadeIn" key={block.hash}>
+            <tr key={block.hash} className={`animated-row ${block.isNew ? 'new' : ''}`}>
               <td>
-                <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
-                  {block.nonce}
-                </TestnetLink>
+                <div className="d-flex">
+                  <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
+                    {block.nonce}
+                  </NetworkLink>
+                </div>
               </td>
-              {/* <td>
-                {epochId !== undefined ? (
-                  epochId
-                ) : (
-                  <TestnetLink
-                    to={`/blocks/epoch/${block.epoch}`}
-                    data-testid={`blockShardLink${i}`}
-                  >
-                    {block.epoch}
-                  </TestnetLink>
-                )}
-              </td> */}
               <td>
                 <span title={dateFormatted(block.timestamp)}>
                   <TimeAgo value={block.timestamp} />
@@ -45,16 +53,18 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
               </td>
               <td>{block.txCount}</td>
               <td>
-                {shardId !== undefined ? (
-                  <ShardSpan shardId={block.shardId} />
-                ) : (
-                  <TestnetLink
-                    to={`/blocks/shards/${block.shardId}`}
-                    data-testid={`blockShardLink${i}`}
-                  >
-                    <ShardSpan shardId={block.shardId} />
-                  </TestnetLink>
-                )}
+                <div className="d-flex">
+                  {shard !== undefined ? (
+                    <ShardSpan shard={block.shard} />
+                  ) : (
+                    <NetworkLink
+                      to={urlBuilder.shard(block.shard)}
+                      data-testid={`blockShardLink${i}`}
+                    >
+                      <ShardSpan shard={block.shard} />
+                    </NetworkLink>
+                  )}
+                </div>
               </td>
               <td>
                 {block.sizeTxs !== undefined
@@ -62,9 +72,15 @@ const BlocksTable = ({ blocks, shardId }: { blocks: BlockType[]; shardId: number
                   : sizeFormat(block.size)}
               </td>
               <td>
-                <TestnetLink to={`/blocks/${block.hash}`} data-testid={`blockHashLink${i}`}>
-                  {trimHash(block.hash)}
-                </TestnetLink>
+                <div className="d-flex">
+                  <NetworkLink
+                    to={`/blocks/${block.hash}`}
+                    data-testid={`blockHashLink${i}`}
+                    className="trim-wrapper"
+                  >
+                    <Trim text={block.hash} />
+                  </NetworkLink>
+                </div>
               </td>
             </tr>
           ))}

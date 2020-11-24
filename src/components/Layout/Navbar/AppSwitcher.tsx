@@ -1,55 +1,60 @@
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faTh } from '@fortawesome/pro-solid-svg-icons/faTh';
+import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import elrondLogo from 'assets/img/elrond-symbol.svg';
 import { useGlobalState } from 'context';
 import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
+import { elrondApps as apps } from 'appConfig';
 
-export default function AppSwitcher() {
+export default function AppSwitcher({ onToggle }: { onToggle?: () => void }) {
   const {
-    config: { elrondApps: apps },
+    activeNetwork: { explorerAddress, walletAddress },
   } = useGlobalState();
 
   const hidePopover = () => {
     document.body.click();
+    if (onToggle) {
+      onToggle();
+    }
   };
-
-  const onClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-  };
-
-  const appId = apps.filter(app => app.id === window.location.hostname.split('.')[0]).pop();
-  const devApp = process.env.REACT_APP_WALLET ? 'wallet' : 'explorer';
-
-  const activeAppId = appId ? appId.id : devApp;
 
   return (
     <NavDropdown
       title={
-        <span className="appSwitcherButton" onClick={onClick}>
-          <img src={elrondLogo} alt="Elrond Logo" className="mr-2" height="30" />
-          <span className="activeApp">
-            {(apps.filter(app => app.id === activeAppId).pop() as any).name}{' '}
-            <small>
-              <FontAwesomeIcon icon={faAngleDown} />
-            </small>
-          </span>
-        </span>
+        <div className="nav-link-icon flex-fill text-md-center">
+          <i className="material-icons icon-sm m-0 d-none d-md-block">
+            <span className="px-1 my-0 mx-2">
+              <FontAwesomeIcon icon={faTh} />
+            </span>
+          </i>
+          <span className="d-md-none">Switch to</span>
+          <FontAwesomeIcon className="d-inline-block d-md-none ml-1" icon={faAngleDown} />
+        </div>
       }
-      id="basic-nav-dropdown"
-      className="brandDropdown"
+      id="app-switcher-dropdown"
+      alignRight
     >
-      {apps.map(app => {
+      {apps.map((app) => {
+        let { name, to } = app;
+        if (app.id === 'wallet') {
+          to = walletAddress || to;
+          name = walletAddress && walletAddress.includes('testnet') ? 'Testnet ' + name : name;
+        }
+        const isExplorer = app.id === 'explorer';
+        if (isExplorer) {
+          to = explorerAddress || '';
+          name = explorerAddress && explorerAddress.includes('testnet') ? 'Testnet ' + name : name;
+        }
         return (
           <NavDropdown.Item
             key={app.id}
             onClick={hidePopover}
-            href={app.to}
-            target={`${activeAppId === app.id ? '' : '_blank'}`}
+            href={to}
+            target={`${isExplorer ? '' : '_blank'}`}
             rel="noopener noreferrer"
-            className={`${activeAppId === app.id ? 'active' : ''}`}
+            className={`${isExplorer ? 'active' : ''}`}
           >
-            {app.name}
+            {name}
           </NavDropdown.Item>
         );
       })}

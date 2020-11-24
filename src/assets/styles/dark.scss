@@ -1,0 +1,25 @@
+// override themeVariables below
+
+$body: #e4e6eb;
+$body-bg: #18191a;
+
+$primary: #1b4cd9;
+$secondary: #b0b3b8;
+$muted: #4e5052;
+$light: #2a2a2b;
+$success: #28a745;
+
+$primary-accent: darken($primary, 20%);
+
+$standard-box-shadow: #000;
+$link-hover-color: lighten($primary, 7%);
+
+$card-bg: #242526;
+$border-color: $muted;
+
+$input-color: $secondary;
+$input-bg: $card-bg;
+$input-disabled-bg: $muted;
+$input-hover-border-color: lighten($border-color, 15%);
+
+@import './main';

@@ -86,3 +86,27 @@ describe('denomination 4,8,true', () => {
     });
   }
 });
+
+describe('denomination negative', () => {
+  const numbers: { [key: string]: string } = {
+    '-922506751086064008': '-0.922506751086064008',
+    '-578345000000000000000': '-578.3450',
+    '-1578345000000000000000': '-1,578.3450',
+    '-3456000000000000000': '-3.4560',
+  };
+  const denomination = 18;
+  const decimals = 4;
+  for (let i = 0; i < Object.keys(numbers).length; i++) {
+    const input = Object.keys(numbers)[i];
+    const output = numbers[input];
+    it(`denominate ${input} -> ${output}`, () => {
+      const withCommas = denominate({
+        input,
+        denomination,
+        decimals,
+        showLastNonZeroDecimal: true,
+      });
+      expect(withCommas).toBe(output);
+    });
+  }
+});

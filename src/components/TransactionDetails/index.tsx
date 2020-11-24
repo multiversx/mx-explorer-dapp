@@ -1,14 +1,13 @@
-import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
 import { useGlobalState } from 'context';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { Loader, adapter } from 'sharedComponents';
-import { TransactionType } from 'sharedComponents/TransactionsTable';
+import { Loader, adapter, PageState } from 'sharedComponents';
+import { TransactionType } from './TransactionDetails';
 import Details from './TransactionDetails';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 
-const TransactionDetails: React.FC = () => {
+const TransactionDetails = () => {
   const params: any = useParams();
   const { hash: transactionId } = params;
   const ref = React.useRef(null);
@@ -20,20 +19,18 @@ const TransactionDetails: React.FC = () => {
   const { getTransaction } = adapter();
 
   const [transaction, setTransaction] = React.useState<TransactionType | undefined>();
-  const [transactionFetched, setTransactionFetched] = React.useState<boolean | undefined>();
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
-  const fetchTransaction = React.useCallback(() => {
-    if (transactionId && ref.current !== null) {
-      getTransaction({ transactionId }).then(({ data, transactionFetched }) => {
-        if (transactionFetched) {
+  const fetchTransaction = () => {
+    if (transactionId) {
+      getTransaction(transactionId).then(({ data, success }) => {
+        if (ref.current !== null) {
           setTransaction(data);
-          setTransactionFetched(true);
-        } else {
-          setTransactionFetched(false);
+          setDataReady(success);
         }
       });
     }
-  }, [getTransaction, transactionId]);
+  };
 
   React.useEffect(fetchTransaction, []);
 
@@ -41,7 +38,7 @@ const TransactionDetails: React.FC = () => {
     if (
       transaction &&
       transaction.status.toLowerCase() === txStatus.pending.toLowerCase() &&
-      transactionFetched
+      dataReady
     ) {
       fetchTransaction();
     }
@@ -50,39 +47,40 @@ const TransactionDetails: React.FC = () => {
   React.useEffect(checkRefetch, [timestamp]);
 
   return (
-    <div ref={ref}>
-      <div className="container pt-3 pb-3">
-        <div className="row">
-          <div className="col-12">
-            <h4 data-testid="title">Transaction Details</h4>
+    <>
+      {dataReady === undefined && <Loader />}
+      {dataReady === false && (
+        <PageState
+          icon={faExchangeAlt}
+          title="Unable to locate this transaction hash"
+          description={
+            <div className="px-spacer">
+              <span className="text-break-all">{transactionId}</span>
+            </div>
+          }
+          className="py-spacer my-auto"
+          data-testid="errorScreen"
+        />
+      )}
+      <div ref={ref}>
+        {dataReady === true && transaction && (
+          <div className="container pt-spacer">
+            <div className="row page-header">
+              <div className="col-12">
+                <h3 className="page-title mb-4" data-testid="title">
+                  Transaction Details
+                </h3>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-12">
+                <Details transaction={transaction} />
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-12">
-            {transactionFetched === undefined ? (
-              <Loader />
-            ) : (
-              <>
-                {transactionFetched === false ? (
-                  <div className="card" data-testid="errorScreen">
-                    <div className="card-body card-details">
-                      <div className="empty">
-                        <FontAwesomeIcon icon={faExchangeAlt} className="empty-icon" />
-                        <span className="h4 empty-heading">
-                          Unable to locate this transaction hash
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <>{transaction && <Details transaction={transaction} />}</>
-                )}
-              </>
-            )}
-          </div>
-        </div>
+        )}
       </div>
-    </div>
+    </>
   );
 };
 

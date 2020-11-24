@@ -11,7 +11,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Elrond Explorer</title>
-    <meta name="description" content="An Elrond Block Explorer" />
+    <meta
+      name="description"
+      content="A highly scalable, fast and secure blockchain platform for distributed apps, enterprise use cases and the new internet economy."
+    />
+
 
     <!-- CSS Dependencies -->
     <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon.png" />
@@ -34,34 +38,39 @@
     <meta name="twitter:title" content="Elrond | Explorer" />
     <meta
       name="twitter:description"
-      content="Elrond is a highly scalable, next generation blockchain platform via Secure Proof of Stake and Adaptive State Sharding."
+      content="A highly scalable, fast and secure blockchain platform for distributed apps, enterprise use cases and the new internet economy."
     />
-    <meta name="twitter:image" content="https://explorer.elrond.com/share.jpg" />
+    <meta name="twitter:image" content="https://%REACT_APP_SHARE_PREFIX%explorer.elrond.com/%REACT_APP_SHARE_PREFIX%share.jpg" />
 
     <!-- Other Cards -->
-    <meta property="og:url" content="https://explorer.elrond.com" />
+    <meta property="og:url" content="https://%REACT_APP_SHARE_PREFIX%explorer.elrond.com" />
     <meta property="og:title" content="Elrond | Explorer" />
     <meta
       property="og:description"
-      content="Elrond is a highly scalable, next generation blockchain platform via Secure Proof of Stake and Adaptive State Sharding"
+      content="A highly scalable, fast and secure blockchain platform for distributed apps, enterprise use cases and the new internet economy."
     />
-    <meta property="og:image" content="https://explorer.elrond.com/share.jpg" />
+    <meta property="og:image" content="https://%REACT_APP_SHARE_PREFIX%explorer.elrond.com/%REACT_APP_SHARE_PREFIX%share.jpg" />
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=%REACT_APP_GA_ID%"></script>
+    <link rel="stylesheet" type="text/css" href="%PUBLIC_URL%/light.css?cachebust=%REACT_APP_CACHE_BUST%"></link>
+    <link id="stylesheet" rel="stylesheet" type="text/css" href="%PUBLIC_URL%/light.css?cachebust=%REACT_APP_CACHE_BUST%"></link>
+    <link rel="stylesheet" href="%PUBLIC_URL%/dark.css?cachebust=%REACT_APP_CACHE_BUST%" media="print">
+    <link rel="stylesheet" href="%PUBLIC_URL%/testnet.css?cachebust=%REACT_APP_CACHE_BUST%" media="print">
+
+    <!-- Google Analytics -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', '%REACT_APP_GA_ID%');
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', '%REACT_APP_GA_ID%', 'auto');
+      ga('send', 'pageview');
     </script>
+    <!-- End Google Analytics -->
     <!-- Website configuration file -->
     <script src="%PUBLIC_URL%/config.js?cachebust=%REACT_APP_CACHE_BUST%"></script>
   </head>
   <body>
-    <link id="stylesheet" rel="stylesheet" type="text/css" href="%PUBLIC_URL%/__stylesheet__.css?cachebust=%REACT_APP_CACHE_BUST%"></link>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--

@@ -10,7 +10,19 @@ export default async function getLatestTransactions({
       baseUrl,
       url: `/transactions`,
       params: {
-        size: 20,
+        size: 25,
+        ...{
+          fields: [
+            'txHash',
+            'receiver',
+            'receiverShard',
+            'sender',
+            'senderShard',
+            'status',
+            'timestamp',
+            'value',
+          ].join(','),
+        },
       },
       timeout,
     });
@@ -22,7 +34,7 @@ export default async function getLatestTransactions({
 
     return {
       data: transactions,
-      transactionsFetched: data.length > 0,
+      transactionsFetched: true,
     };
   } catch (e) {
     return {

@@ -1,11 +1,21 @@
-import { useGlobalState } from 'context';
-import { isHash, networkRoute } from 'helpers';
 import * as React from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import { Loader, ShardSpan, TestnetLink, TransactionsTable, adapter } from 'sharedComponents';
+import { useGlobalState } from 'context';
+import { isHash, useNetworkRoute, urlBuilder } from 'helpers';
+import { Redirect, useParams } from 'react-router-dom';
+import {
+  Loader,
+  ShardSpan,
+  NetworkLink,
+  TransactionsTable,
+  adapter,
+  DetailItem,
+  Trim,
+  CopyButton,
+} from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import { initialState } from 'sharedComponents/Adapter/functions/getMiniBlocks';
+import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import MiniBlockNotFound from './MiniBlockNotFound';
 
 interface MiniBlockType {
@@ -24,202 +34,166 @@ export interface StateType {
 
 const MiniBlockDetails: React.FC = () => {
   const { page, hash: miniBlockHash } = useParams() as any;
-  const history = useHistory();
-
   const ref = React.useRef(null);
+  const networkRoute = useNetworkRoute();
 
-  const provider = adapter();
+  const { getMiniBlockTransactions, getMiniBlockTransactionsCount, getMiniBlock } = adapter();
 
-  const {
-    activeNetworkId,
-    refresh: { timestamp },
-    timeout,
-  } = useGlobalState();
+  const { activeNetworkId } = useGlobalState();
 
   const [state, setState] = React.useState<StateType>(initialState);
+  const [miniBlockFetched, setMiniBlockFetched] = React.useState<boolean | undefined>();
 
-  if (miniBlockHash && !isHash(miniBlockHash)) {
-    history.push(networkRoute({ to: `/not-found`, activeNetworkId }));
-  }
-
-  const { miniBlock, blockFetched } = state;
+  const { miniBlock } = state;
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
-  const [transactionsFetched, setTransactionsFetched] = React.useState<boolean>(true);
-  const [totalTransactions, setTotalTransactions] = React.useState<number | string>('...');
+  const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
+  const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
 
   const size = parseInt(page!) ? parseInt(page!) : 1;
-  const slug = `miniblocks/${miniBlockHash}`;
-  const refreshFirstPage = size === 1 ? timestamp : 0;
 
-  const fetchTransactions = () => {
-    if (ref.current !== null) {
-      provider
-        .getMiniBlockTransactions({
+  const invalid = miniBlockHash && !isHash(miniBlockHash);
+
+  const fetchMiniBlockData = () => {
+    if (!invalid) {
+      Promise.all([
+        getMiniBlock(miniBlockHash),
+        getMiniBlockTransactions({
           size,
           miniBlockHash,
-        })
-        .then(({ data, success }) => {
-          if (ref.current !== null) {
-            if (success) {
-              setTransactions(data);
-              setTransactionsFetched(true);
-            } else if (transactions.length === 0) {
-              setTransactionsFetched(false);
-            }
-          }
-        });
-      provider
-        .getMiniBlockTransactionsCount({
-          miniBlockHash,
-        })
-        .then(({ count, success }) => {
-          if (ref.current !== null && success) {
-            setTotalTransactions(count);
-          }
-        });
+        }),
+      ]).then(([miniBlockData, miniBlockTransactionsData]) => {
+        if (ref.current !== null) {
+          setTransactions(miniBlockTransactionsData.data);
+          setTransactionsFetched(miniBlockTransactionsData.success);
+          setState(miniBlockData);
+          setMiniBlockFetched(miniBlockData.blockFetched);
+        }
+      });
+      getMiniBlockTransactionsCount({
+        miniBlockHash,
+      }).then(({ count, success }) => {
+        if (ref.current !== null && success) {
+          setTotalTransactions(count);
+        }
+      });
     }
   };
 
-  const getMiniBlock = () => {
-    if (miniBlockHash) {
-      provider
-        .getMiniBlock({ miniBlockHash })
-        .then((data: any) => ref.current !== null && setState(data));
-    }
-  };
+  React.useEffect(fetchMiniBlockData, [activeNetworkId, size, miniBlockHash]);
 
-  React.useEffect(getMiniBlock, [activeNetworkId, miniBlockHash, timeout]); // run the operation only once since the parameter does not change
+  const showTransactions = transactionsFetched === true && transactions.length > 0;
 
-  React.useEffect(fetchTransactions, [
-    activeNetworkId,
-    size,
-    miniBlockHash,
-    timeout,
-    refreshFirstPage,
-  ]); // run the operation only once since the parameter does not change
+  return invalid ? (
+    <Redirect to={networkRoute(`/not-found`)} />
+  ) : (
+    <>
+      {miniBlockFetched === undefined && <Loader />}
+      {miniBlockFetched === false && <MiniBlockNotFound miniBlockHash={miniBlockHash} />}
 
-  return (
-    <div ref={ref}>
-      <div className="container pt-3 pb-3">
-        <div className="row">
-          <div className="col-12">
-            <h4 data-testid="title">Miniblock Details</h4>
-          </div>
-        </div>
-
-        {!blockFetched ? (
-          <div className="row">
-            <div className="col-12">
-              <MiniBlockNotFound miniBlockHash={miniBlockHash} />
+      <div ref={ref}>
+        {miniBlockFetched && miniBlock.miniBlockHash && (
+          <div className="container pt-spacer">
+            <div className="row page-header">
+              <div className="col-12">
+                <h3 className="page-title mb-4" data-testid="pageTitle">
+                  Miniblock Details
+                </h3>
+              </div>
             </div>
-          </div>
-        ) : (
-          <>
-            {miniBlock.miniBlockHash ? (
-              <>
+            <div className="row">
+              <div className="col-12">
                 <div className="row">
                   <div className="col-12">
                     <div className="card">
-                      <div className="card-body card-details">
-                        <div className="row">
-                          <div className="col-lg-2 card-label">Miniblock Hash</div>
-                          <div className="col-lg-10">{miniBlockHash}</div>
-                        </div>
-                        <hr className="hr-space" />
-                        <div className="row">
-                          <div className="col-lg-2 card-label">Sender Shard</div>
-                          <div className="col-lg-10">
-                            <TestnetLink to={`/blocks/shards/${miniBlock.senderShard}`}>
-                              <ShardSpan shardId={miniBlock.senderShard} />
-                            </TestnetLink>
-                          </div>
-                        </div>
-                        <hr className="hr-space" />
-                        <div className="row">
-                          <div className="col-lg-2 card-label">Receiver Shard</div>
-                          <div className="col-lg-10">
-                            <TestnetLink to={`/blocks/shards/${miniBlock.receiverShard}`}>
-                              <ShardSpan shardId={miniBlock.receiverShard} />
-                            </TestnetLink>
-                          </div>
-                        </div>
-                        <hr className="hr-space" />
-                        <div className="row">
-                          <div className="col-lg-2 card-label">Sender Block</div>
-                          <div className="col-lg-10">
-                            {miniBlock.senderBlockHash !== '' ? (
-                              <TestnetLink
-                                className="hash"
-                                to={`/blocks/${miniBlock.senderBlockHash}`}
-                              >
-                                {miniBlock.senderBlockHash}
-                              </TestnetLink>
-                            ) : (
-                              <span className="text-muted">N/A</span>
-                            )}
-                          </div>
-                        </div>
-                        <hr className="hr-space" />
-                        <div className="row">
-                          <div className="col-lg-2 card-label">Receiver Block</div>
-                          <div className="col-lg-10">
-                            {miniBlock.receiverBlockHash !== '' ? (
-                              <TestnetLink
-                                className="hash"
-                                to={`/blocks/${miniBlock.receiverBlockHash}`}
-                              >
-                                {miniBlock.receiverBlockHash}
-                              </TestnetLink>
-                            ) : (
-                              <span className="text-muted">N/A</span>
-                            )}
-                          </div>
-                        </div>
-                        <hr className="hr-space" />
-                        <div className="row">
-                          <div className="col-lg-2 card-label">Type</div>
-                          <div className="col-lg-10">{miniBlock.type}</div>
+                      <div className="card-body p-0">
+                        <div className="container-fluid">
+                          <DetailItem title="Miniblock Hash">
+                            <div className="d-flex align-items-center text-break-all">
+                              {miniBlockHash}
+                              <CopyButton text={miniBlockHash} />
+                            </div>
+                          </DetailItem>
+                          <DetailItem title="Sender Shard">
+                            <div className="d-flex">
+                              <NetworkLink to={urlBuilder.shard(miniBlock.senderShard)}>
+                                <ShardSpan shard={miniBlock.senderShard} />
+                              </NetworkLink>
+                            </div>
+                          </DetailItem>
+
+                          <DetailItem title="Receiver Shard">
+                            <div className="d-flex">
+                              <NetworkLink to={urlBuilder.shard(miniBlock.receiverShard)}>
+                                <ShardSpan shard={miniBlock.receiverShard} />
+                              </NetworkLink>
+                            </div>
+                          </DetailItem>
+
+                          <DetailItem title="Sender Block">
+                            <div className="d-flex align-items-center">
+                              {miniBlock.senderBlockHash !== '' ? (
+                                <NetworkLink
+                                  className="trim-wrapper"
+                                  to={`/blocks/${miniBlock.senderBlockHash}`}
+                                >
+                                  <Trim text={miniBlock.senderBlockHash} />
+                                </NetworkLink>
+                              ) : (
+                                <span className="text-secondary">N/A</span>
+                              )}
+                            </div>
+                          </DetailItem>
+
+                          <DetailItem title="Receiver Block">
+                            <div className="d-flex align-items-center">
+                              {miniBlock.receiverBlockHash !== '' ? (
+                                <NetworkLink
+                                  className="trim-wrapper"
+                                  to={`/blocks/${miniBlock.receiverBlockHash}`}
+                                >
+                                  <Trim text={miniBlock.receiverBlockHash} />
+                                </NetworkLink>
+                              ) : (
+                                <span className="text-secondary">N/A</span>
+                              )}
+                            </div>
+                          </DetailItem>
+
+                          <DetailItem title="Type">{miniBlock.type}</DetailItem>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="row pt-3">
-                  <div className="col-12">
-                    <h4 data-testid="title">Transactions</h4>
-                  </div>
-                </div>
                 <div className="row">
-                  <div className="col-12">
-                    {!transactionsFetched ? (
-                      <NoTransactions />
+                  <div className="col-12 mt-spacer">
+                    {showTransactions ? (
+                      <TransactionsTable
+                        transactions={transactions}
+                        address={undefined}
+                        totalTransactions={totalTransactions}
+                        size={size}
+                        title={true}
+                      />
                     ) : (
-                      <>
-                        {transactions.length > 0 ? (
-                          <TransactionsTable
-                            transactions={transactions}
-                            addressId={undefined}
-                            totalTransactions={totalTransactions}
-                            slug={slug}
-                            size={size}
-                          />
-                        ) : (
-                          <Loader />
+                      <div className="card">
+                        {transactionsFetched === undefined && <Loader />}
+                        {transactionsFetched === false && <FailedTransactions />}
+                        {transactionsFetched === true && transactions.length === 0 && (
+                          <NoTransactions />
                         )}
-                      </>
+                      </div>
                     )}
                   </div>
                 </div>
-              </>
-            ) : (
-              <Loader />
-            )}
-          </>
+              </div>
+            </div>
+          </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

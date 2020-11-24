@@ -1,15 +1,15 @@
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
+import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { defaultNetwork } from 'context/config';
-import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export default function NetworkSwitcher({ onToggle }: { onToggle: (prop: boolean) => void }) {
+export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void }) {
   const globalState = useGlobalState();
 
-  const liksArray = globalState.config.networks.map((network) => ({
+  const linksArray = globalState.config.networks.map((network) => ({
     name: network.name,
     to: network.id === globalState.defaultNetwork.id ? '' : network.id,
     key: network.id,
@@ -17,7 +17,9 @@ export default function NetworkSwitcher({ onToggle }: { onToggle: (prop: boolean
 
   const hidePopover = () => {
     document.body.click();
-    onToggle(false);
+    if (onToggle) {
+      onToggle();
+    }
   };
 
   const changeNetwork = (networkId: string) => (e: React.MouseEvent) => {
@@ -51,14 +53,15 @@ export default function NetworkSwitcher({ onToggle }: { onToggle: (prop: boolean
     <>
       <NavDropdown
         title={
-          <span id="switch" data-testid="networkSwitch" className="switch">
-            {globalState.activeNetwork.name}&nbsp;
-            <FontAwesomeIcon icon={faAngleDown} />
-          </span>
+          <div className="nav-link-icon flex-fill pr-0 pl-md-1 ml-md-2" data-testid="networkSwitch">
+            {globalState.activeNetwork.name}
+            <FontAwesomeIcon className="d-inline-block ml-1" icon={faAngleDown} />
+          </div>
         }
-        id="basic-nav-dropdown"
+        id="network-switcher-dropdown"
+        alignRight
       >
-        {liksArray.map((link) => {
+        {linksArray.map((link) => {
           return (
             <Link
               className={`dropdown-item ${globalState.activeNetworkId === link.to ? 'active' : ''}`}

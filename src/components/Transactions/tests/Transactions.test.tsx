@@ -1,69 +1,22 @@
-import '@testing-library/jest-dom/extend-expect';
-import axios from 'axios';
-import {
-  renderWithRouter,
-  wait,
-  meta,
-  config as optionalConfig,
-  waitForElement,
-  fireEvent,
-  act,
-} from '../../../utils/test-utils';
-import {
-  heartbeatstatus,
-  validators,
-  transactions,
-  transactionsSearch,
-  statistics,
-} from 'utils/rawData';
-
-export const beforeAll = (route = '', transactionsError = false) => {
-  const mockGet = jest.spyOn(axios, 'get');
-
-  mockGet.mockImplementation((url: string): any => {
-    switch (true) {
-      // --- page load ---
-      case url.includes('/tps/meta'):
-        return Promise.resolve({ data: meta });
-      case url.includes(`/node/heartbeatstatus`):
-        return Promise.resolve({ data: { data: heartbeatstatus, code: 'successful' } });
-      case url.includes('/validator/statistics'):
-        return Promise.resolve({ data: { data: statistics, code: 'successful' } });
-      // --- page load ---
-      case url.endsWith('/validators'):
-        return Promise.resolve({ data: validators });
-      case url.includes('/transactions-alt/count'):
-        return Promise.resolve({ data: 14253408 });
-      case url.endsWith('/transactions'):
-        if (transactionsError) {
-          return Promise.resolve(new Error('transaction error'));
-        }
-        return Promise.resolve({ data: transactionsSearch });
-      case url.includes('/transactions'):
-        if (transactionsError) {
-          return Promise.resolve(new Error('transaction error'));
-        }
-        return Promise.resolve({ data: transactions });
-    }
-  });
-
-  return renderWithRouter({
-    route,
-    optionalConfig,
-  });
-};
+import { wait, waitForElement, fireEvent, act, beforeAll } from 'utils/test-utils';
 
 describe('Transactions Page', () => {
-  test('Transactions page is displaying', async () => {
-    const render = beforeAll('/transactions');
+  test('Transactions page loading state', async () => {
+    const render = beforeAll({
+      route: '/transactions',
+    });
+    const loader = await render.findByTestId('loader');
+    expect(loader.innerHTML).toBeDefined();
     const title = await waitForElement(() => render.queryByTestId('title')!.innerHTML);
     expect(title).toBe('Transactions');
   });
 
   test('Transactions data is displayed correctly', async () => {
-    const render = beforeAll('/transactions');
+    const render = beforeAll({
+      route: '/transactions',
+    });
     const pageInterval = await waitForElement(() => render.queryByTestId('pageInterval'));
-    expect(pageInterval!.innerHTML).toBe('1-50');
+    expect(pageInterval!.innerHTML).toBe('1-25');
 
     const table = render.queryByTestId('transactionsTable');
     const numberOfRows = table!.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
@@ -71,22 +24,25 @@ describe('Transactions Page', () => {
   });
 
   test('Transactions pager working', async () => {
-    const render = beforeAll('/transactions/page/1');
-
-    const nextButton = await waitForElement(() => render.queryByTestId('disabledNextPageButton'));
-    expect(nextButton).toBeInTheDocument();
+    const render = beforeAll({
+      route: '/transactions?page=1',
+    });
 
     const pageInterval = await waitForElement(() => render.queryByTestId('pageInterval'));
-    expect(pageInterval!.innerHTML).toBe('1-50');
+    expect(pageInterval!.innerHTML).toBe('1-25');
   });
 });
 
 describe('Transactions Page Links', () => {
   test('Transaction link', async () => {
-    const render = beforeAll('/transactions');
+    const render = beforeAll({
+      route: '/transactions',
+    });
 
     const links = await render.findAllByTestId('transactionLink');
-    expect(links[0].textContent).toBe('72d26fd09e...5f600a9a91');
+    expect(links[0].textContent).toBe(
+      '72d26fd09ed2d2bb649a401428eca1a0...a7b5a11242daf5500990305f600a9a91'
+    );
 
     fireEvent.click(links[0]);
     await act(async () => {
@@ -96,7 +52,9 @@ describe('Transactions Page Links', () => {
     });
   });
   test('Shard from link', async () => {
-    const render = beforeAll('/transactions');
+    const render = beforeAll({
+      route: '/transactions',
+    });
 
     const links = await render.findAllByTestId('shardFromLink');
     expect(links[0].textContent).toBe('Shard 1');
@@ -107,7 +65,9 @@ describe('Transactions Page Links', () => {
     });
   });
   test('Shard to link', async () => {
-    const render = beforeAll('/transactions');
+    const render = beforeAll({
+      route: '/transactions',
+    });
 
     const links = await render.findAllByTestId('shardToLink');
     expect(links[0].textContent).toBe('Shard 0');
@@ -118,14 +78,18 @@ describe('Transactions Page Links', () => {
     });
   });
   test('Receiver link', async () => {
-    const render = beforeAll('/transactions');
+    const render = beforeAll({
+      route: '/transactions',
+    });
 
     const links = await render.findAllByTestId('receiverLink');
-    expect(links[0].textContent).toBe('erd1hqplna...r6fq40f044');
+    expect(links[0].textContent).toBe(
+      'erd1hqplnafrhnd4zv846wumat2462j...y9jkmwxtp3nwmw8ye9eclr6fq40f044'
+    );
 
     fireEvent.click(links[0]);
     await wait(async () => {
-      expect(document.title).toEqual('Address Details • Elrond Explorer');
+      expect(document.title).toEqual('Account Details • Elrond Explorer');
     });
   });
 });

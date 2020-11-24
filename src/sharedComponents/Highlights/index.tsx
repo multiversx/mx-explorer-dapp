@@ -1,51 +1,56 @@
-import React from 'react';
+import * as React from 'react';
 import moment from 'moment';
+import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
+import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
+import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
+import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { adapter } from 'sharedComponents';
-import DefaultHighlights from './DefaultHighlights';
-import HeroHighlights from './HeroHighlights';
+import Epoch from './Epoch';
 
 export interface StateType {
-  blockNumber: string;
-  nrOfNodes: string;
-  nrOfShards: string;
-  roundNumber: string;
-  liveTPS: string;
-  peakTPS: string;
-  totalProcessedTxCount: string;
-  epochPercentage: number;
-  epochTotalTime: string;
-  epochTimeElapsed: string;
-  epochTimeRemaining: string;
-  epoch: string;
+  shards: string;
+  blocks: string;
+  accounts: string;
+  transactions: string;
 }
 
+interface ItemType {
+  title: string;
+  value: string;
+  dataTestId?: string;
+  icon: typeof faCube;
+}
+
+const Item = ({ title, value, icon, dataTestId = '' }: ItemType) => (
+  <li className="my-3 px-2">
+    <div className="highlight-item d-flex align-items-center">
+      <FontAwesomeIcon className="fa-2x" icon={icon} />
+      <div className="d-flex flex-column ml-3">
+        <small className="mb-1 text-uppercase">{title}</small>
+        <span className="h5 mb-0 font-weight-normal" data-testid={dataTestId}>
+          {value}
+        </span>
+      </div>
+    </div>
+  </li>
+);
+
 const initialState = {
-  blockNumber: '...',
-  nrOfNodes: '...',
-  nrOfShards: '...',
-  roundNumber: '...',
-  liveTPS: '...',
-  peakTPS: '...',
-  totalProcessedTxCount: '...',
-  epochPercentage: 0,
+  shards: '...',
+  blocks: '...',
+  accounts: '...',
+  transactions: '...',
   epoch: '...',
+  epochPercentage: 0,
   epochTotalTime: '...',
   epochTimeElapsed: '...',
-  epochTimeRemaining: '',
+  epochTimeRemaining: '...',
 };
 
-const Hightlights = ({
-  hero = false,
-  setLiveTps = () => {
-    return;
-  },
-}: {
-  hero?: boolean;
-  setLiveTps?: React.Dispatch<React.SetStateAction<any>>;
-}) => {
+const Hightlights = () => {
   const {
-    activeNetwork: { refreshRate },
     activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
@@ -55,7 +60,7 @@ const Hightlights = ({
   const [state, setState] = React.useState({
     [activeNetworkId]: initialState,
   });
-  const [oldTestnetId, setOldTestnetId] = React.useState<string>('');
+  const [oldTestnetId, setOldTestnetId] = React.useState('');
   const ref = React.useRef(null);
 
   React.useEffect(() => {
@@ -65,29 +70,24 @@ const Hightlights = ({
   const getData = () => {
     if (ref.current !== null) {
       getHighlights().then(({ data, success }) => {
-        const check = data.roundsPerEpoch >= data.roundsPassed;
+        const check = success ? data.roundsPerEpoch >= data.roundsPassed : false;
         const newState = success
           ? {
-              blockNumber: data.blockCount
-                ? parseInt(data.blockCount).toLocaleString('en')
-                : parseInt(data.blockNumber).toLocaleString('en'),
-              nrOfNodes: parseInt(data.nrOfNodes).toLocaleString('en'),
-              nrOfShards: parseInt(data.nrOfShards).toLocaleString('en'),
-              roundNumber: parseInt(data.roundNumber).toLocaleString('en'),
-              liveTPS: parseInt(data.liveTPS).toLocaleString('en'),
-              peakTPS: parseInt(data.peakTPS).toLocaleString('en'),
-              totalProcessedTxCount: parseInt(data.totalProcessedTxCount).toLocaleString('en'),
+              shards: parseInt(data.shards).toLocaleString('en'),
+              blocks: parseInt(data.blocks).toLocaleString('en'),
+              accounts: parseInt(data.accounts).toLocaleString('en'),
+              transactions: parseInt(data.transactions).toLocaleString('en'),
               epoch: data.epoch.toLocaleString('en'),
               epochPercentage: check ? (100 * data.roundsPassed) / data.roundsPerEpoch : 0,
               epochTotalTime: check
-                ? moment.utc(refreshRate * data.roundsPerEpoch).format('HH:mm')
+                ? moment.utc(data.refreshRate * data.roundsPerEpoch).format('HH:mm')
                 : '...',
               epochTimeElapsed: check
-                ? moment.utc(refreshRate * data.roundsPassed).format('HH:mm')
+                ? moment.utc(data.refreshRate * data.roundsPassed).format('HH:mm')
                 : '...',
               epochTimeRemaining: check
                 ? moment
-                    .utc(refreshRate * (data.roundsPerEpoch - data.roundsPassed))
+                    .utc(data.refreshRate * (data.roundsPerEpoch - data.roundsPassed))
                     .format('HH:mm')
                 : '...',
             }
@@ -96,7 +96,6 @@ const Hightlights = ({
         if (ref.current !== null) {
           const sameTestnet = oldTestnetId === activeNetworkId;
           if (success || (!success && !sameTestnet)) {
-            setLiveTps(data.liveTPS);
             setState((state) => ({
               ...state,
               [activeNetworkId]: newState,
@@ -107,12 +106,38 @@ const Hightlights = ({
     }
   };
 
-  React.useEffect(getData, [timestamp, activeNetworkId]); // run the operation only once since the parameter does not change
+  React.useEffect(getData, [timestamp, activeNetworkId]);
 
-  const props = activeNetworkId in state ? state[activeNetworkId] : initialState;
+  const { shards, blocks, accounts, transactions, epoch, epochPercentage, epochTimeRemaining } =
+    activeNetworkId in state ? state[activeNetworkId] : initialState;
 
   return (
-    <div ref={ref}>{!hero ? <DefaultHighlights {...props} /> : <HeroHighlights {...props} />}</div>
+    <div ref={ref}>
+      <div className="highligths bg-primary">
+        <div className="container">
+          <div className="row">
+            <div className="col my-4">
+              <ul className="list-unstyled d-flex flex-wrap justify-content-between m-0 p-0">
+                <Epoch
+                  epoch={epoch}
+                  epochPercentage={epochPercentage}
+                  epochTimeRemaining={epochTimeRemaining}
+                />
+                <Item icon={faLayerGroup} title="Shards" dataTestId="shards" value={shards} />
+                <Item icon={faCube} title="Blocks" dataTestId="blocks" value={blocks} />
+                <Item icon={faUser} title="Accounts" dataTestId="accounts" value={accounts} />
+                <Item
+                  icon={faExchangeAlt}
+                  title="Transactions"
+                  dataTestId="transactions"
+                  value={transactions}
+                />
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

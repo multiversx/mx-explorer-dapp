@@ -1,0 +1,24 @@
+// Variables override
+@import './variables';
+
+// Bootstrap
+@import './../../../node_modules/bootstrap/scss/bootstrap.scss';
+
+// Main Shards Dashboard
+@import './shards-dashboard/shards-dashboards';
+
+// Fixes shards hardcoded values
+@import './../../../node_modules/bootstrap/scss/reboot';
+
+// Plugins
+@import './plugins/dropzone';
+
+// Elements
+@import './elements';
+
+// Components
+@import './components';
+@import './sharedComponents';
+
+// Final overrides
+@import './overrides';

@@ -1,18 +1,42 @@
-import { faClock, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import * as React from 'react';
+import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
+import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
-import { addressIsBech32, dateFormatted } from 'helpers';
-import * as React from 'react';
+import { addressIsBech32, dateFormatted, urlBuilder } from 'helpers';
 import {
   Denominate,
   ScAddressIcon,
   ShardSpan,
-  TestnetLink,
+  NetworkLink,
   TimeAgo,
   TransactionStatus,
+  DetailItem,
+  Trim,
+  CopyButton,
 } from 'sharedComponents';
-import { TransactionType } from 'sharedComponents/TransactionsTable';
-import TransactionDetail from './TransactionDetail';
+import ScResultsList, { ScResultType } from './ScResultsList';
+
+export interface TransactionType {
+  blockHash: string;
+  data: string;
+  gasLimit: number;
+  gasPrice: number;
+  gasUsed: number;
+  txHash: string;
+  miniBlockHash: string;
+  nonce: number;
+  receiver: string;
+  receiverShard: number;
+  round: number;
+  sender: string;
+  senderShard: number;
+  signature: string;
+  status: string;
+  timestamp: number;
+  value: string;
+  scResults?: ScResultType[];
+}
 
 const getFee = (transaction: TransactionType) => {
   const bNgasPrice = new BigNumber(transaction.gasPrice);
@@ -21,127 +45,177 @@ const getFee = (transaction: TransactionType) => {
   return output;
 };
 
+const getScResultsMessages = (transaction: TransactionType) => {
+  const messages: string[] = [];
+
+  if (transaction.scResults) {
+    transaction.scResults.forEach((result) => {
+      if (result.returnMessage) {
+        messages.push(result.returnMessage);
+      }
+    });
+  }
+
+  return messages;
+};
+
 const Details = ({ transaction }: { transaction: TransactionType }) => {
-  const errorMessage =
-    transaction &&
-    transaction.scResults !== null &&
-    transaction.scResults !== undefined &&
-    transaction.scResults[0].returnMessage
-      ? transaction.scResults[0].returnMessage
-      : '';
+  const scResultsMessages = getScResultsMessages(transaction);
 
   return (
     <div className="card">
-      <div className="card-body card-details">
-        <TransactionDetail label="Hash">
-          <ScAddressIcon initiator={transaction.sender} secondInitiator={transaction.receiver} />
-          {transaction.txHash}
-        </TransactionDetail>
+      <div className="card-body p-0">
+        <div className="container-fluid">
+          <DetailItem title="Hash">
+            <div className="d-flex align-items-center text-break-all">
+              <ScAddressIcon
+                initiator={transaction.sender}
+                secondInitiator={transaction.receiver}
+              />
+              {transaction.txHash}
+              <CopyButton text={transaction.txHash} />
+            </div>
+          </DetailItem>
 
-        <TransactionDetail label="Status">
-          <TransactionStatus status={transaction.status} />
-        </TransactionDetail>
+          <DetailItem title="Status">
+            <TransactionStatus status={transaction.status} />
+          </DetailItem>
 
-        <TransactionDetail label="Timestamp">
-          {transaction.timestamp !== undefined ? (
-            <>
-              <FontAwesomeIcon icon={faClock} className="mr-2" />
-              <TimeAgo value={transaction.timestamp} />
-              &nbsp;({dateFormatted(transaction.timestamp)})
-            </>
-          ) : (
-            <span className="text-muted">N/A</span>
+          <DetailItem title="Age">
+            {transaction.timestamp !== undefined ? (
+              <>
+                <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
+                <TimeAgo value={transaction.timestamp} />
+                &nbsp;
+                <span className="text-secondary">({dateFormatted(transaction.timestamp)})</span>
+              </>
+            ) : (
+              <span className="text-secondary">N/A</span>
+            )}
+          </DetailItem>
+
+          <DetailItem title="Miniblock">
+            <div className="d-flex align-items-center">
+              {transaction.miniBlockHash ? (
+                <>
+                  <NetworkLink
+                    to={`/miniblocks/${transaction.miniBlockHash}`}
+                    className="trim-wrapper"
+                  >
+                    <Trim text={transaction.miniBlockHash} />
+                  </NetworkLink>
+                  <CopyButton text={transaction.miniBlockHash} />
+                </>
+              ) : (
+                <span className="text-secondary">N/A</span>
+              )}
+            </div>
+          </DetailItem>
+
+          <DetailItem title="From">
+            <div className="d-flex align-items-center">
+              <ScAddressIcon initiator={transaction.sender} />
+              {addressIsBech32(transaction.sender) ? (
+                <>
+                  <NetworkLink
+                    to={urlBuilder.accountDetails(transaction.sender)}
+                    className="trim-wrapper"
+                  >
+                    <Trim text={transaction.sender} />
+                  </NetworkLink>
+                  &nbsp;
+                  <NetworkLink
+                    to={urlBuilder.senderShard(transaction.senderShard)}
+                    className="flex-shrink-0"
+                  >
+                    (<ShardSpan shard={transaction.senderShard} />)
+                  </NetworkLink>
+                </>
+              ) : (
+                <ShardSpan shard={transaction.sender} />
+              )}
+            </div>
+          </DetailItem>
+
+          <DetailItem title="To">
+            <div className="d-flex flex-column">
+              <div className="d-flex align-items-center">
+                <ScAddressIcon initiator={transaction.receiver} />
+                <NetworkLink
+                  to={urlBuilder.accountDetails(transaction.receiver)}
+                  className="trim-wrapper"
+                >
+                  <Trim text={transaction.receiver} />
+                </NetworkLink>
+                &nbsp;
+                {!isNaN(transaction.receiverShard) && (
+                  <NetworkLink
+                    to={urlBuilder.receiverShard(transaction.receiverShard)}
+                    className="flex-shrink-0"
+                  >
+                    (<ShardSpan shard={transaction.receiverShard} />)
+                  </NetworkLink>
+                )}
+              </div>
+              {scResultsMessages.map((msg, i) => (
+                <div key={i} className="d-flex ml-1 text-break-all">
+                  <FontAwesomeIcon
+                    icon={faAngleDown}
+                    className="text-secondary"
+                    style={{ marginTop: '2px' }}
+                    transform={{ rotate: 45 }}
+                  />
+                  &nbsp;
+                  <small className="text-danger ml-1"> {msg}</small>
+                </div>
+              ))}
+            </div>
+          </DetailItem>
+
+          <DetailItem title="Value">
+            <Denominate value={transaction.value} showLastNonZeroDecimal />
+          </DetailItem>
+
+          <DetailItem title="Transaction Fee">
+            {transaction.gasUsed !== undefined ? (
+              <Denominate value={getFee(transaction)} showLastNonZeroDecimal />
+            ) : (
+              <span className="text-secondary">N/A</span>
+            )}
+          </DetailItem>
+
+          <DetailItem title="Gas Limit">{transaction.gasLimit.toLocaleString('en')}</DetailItem>
+
+          <DetailItem title="Gas Used">
+            {transaction.gasUsed ? (
+              <>{transaction.gasUsed.toLocaleString('en')}</>
+            ) : (
+              <span className="text-secondary">N/A</span>
+            )}
+          </DetailItem>
+
+          <DetailItem title="Gas Price">
+            <Denominate value={transaction.gasPrice.toString()} showLastNonZeroDecimal />
+          </DetailItem>
+
+          <DetailItem title="Nonce">{transaction.nonce}</DetailItem>
+
+          <DetailItem title="Input Data">
+            <textarea
+              readOnly
+              className="form-control col cursor-text mt-1"
+              rows={2}
+              defaultValue={
+                transaction.data ? Buffer.from(transaction.data, 'base64').toString() : 'N/A'
+              }
+            />
+          </DetailItem>
+          {transaction.scResults && transaction.scResults?.length > 0 && (
+            <DetailItem title="Smart&nbsp;Contract Results">
+              <ScResultsList scResults={transaction.scResults} />
+            </DetailItem>
           )}
-        </TransactionDetail>
-
-        <TransactionDetail label="Miniblock">
-          {transaction.miniBlockHash ? (
-            <TestnetLink to={`/miniblocks/${transaction.miniBlockHash}`}>
-              {transaction.miniBlockHash}
-            </TestnetLink>
-          ) : (
-            <span className="text-muted">N/A</span>
-          )}
-        </TransactionDetail>
-
-        <TransactionDetail label="From">
-          <ScAddressIcon initiator={transaction.sender} />
-          {addressIsBech32(transaction.sender) ? (
-            <>
-              <TestnetLink to={`/address/${transaction.sender}`}>{transaction.sender}</TestnetLink>
-              <TestnetLink
-                to={`/transactions/shard-from/${transaction.senderShard}`}
-                className="small-link"
-              >
-                &nbsp;(
-                <ShardSpan shardId={transaction.senderShard} />)
-              </TestnetLink>
-            </>
-          ) : (
-            <ShardSpan shardId={transaction.sender} />
-          )}
-          &nbsp;
-        </TransactionDetail>
-
-        <TransactionDetail label="To">
-          <ScAddressIcon initiator={transaction.receiver} />
-          <TestnetLink to={`/address/${transaction.receiver}`}>{transaction.receiver}</TestnetLink>
-          &nbsp;
-          {!isNaN(transaction.receiverShard) && (
-            <TestnetLink
-              to={`/transactions/shard-to/${transaction.receiverShard}`}
-              className="small-link"
-            >
-              (<ShardSpan shardId={transaction.receiverShard} />)
-            </TestnetLink>
-          )}
-          {errorMessage && (
-            <>
-              <br />
-              <FontAwesomeIcon icon={faExclamationTriangle} className="text-danger" size="xs" />
-              <small className="text-danger"> {errorMessage}</small>
-            </>
-          )}
-        </TransactionDetail>
-
-        <TransactionDetail label="Value">
-          <Denominate value={transaction.value} showLastNonZeroDecimal />
-        </TransactionDetail>
-
-        <TransactionDetail label="Transaction Fee">
-          {transaction.gasUsed !== undefined ? (
-            <Denominate value={getFee(transaction)} showLastNonZeroDecimal />
-          ) : (
-            <span className="text-muted">N/A</span>
-          )}
-        </TransactionDetail>
-
-        <TransactionDetail label="Gas Limit">
-          {transaction.gasLimit.toLocaleString('en')}
-        </TransactionDetail>
-
-        <TransactionDetail label="Gas Used" disabled={!transaction.gasUsed}>
-          {transaction.gasUsed ? transaction.gasUsed.toLocaleString('en') : ''}
-        </TransactionDetail>
-
-        <TransactionDetail label="Gas Price">
-          <Denominate value={transaction.gasPrice.toString()} showLastNonZeroDecimal />
-        </TransactionDetail>
-
-        <TransactionDetail label="Nonce">{transaction.nonce}</TransactionDetail>
-
-        <TransactionDetail label="Input Data">
-          <textarea
-            readOnly
-            className="form-control col-lg-12 cursor-text"
-            rows={2}
-            defaultValue={
-              transaction.data
-                ? Buffer.from(transaction.data, 'base64').toString()
-                : transaction.data
-            }
-          />
-        </TransactionDetail>
+        </div>
       </div>
     </div>
   );

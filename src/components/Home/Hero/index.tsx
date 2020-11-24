@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { useGlobalState } from 'context';
 import Leaflet from './Leaflet';
+import { useIsMainnet } from 'helpers';
 
-const HeroHighlights = () => {
-  const { activeNetwork } = useGlobalState();
-  const isMain = activeNetwork.name.toLocaleLowerCase() === 'mainnet';
-  return isMain ? (
+const Hero = () => {
+  const isMainnet = useIsMainnet();
+  return isMainnet ? (
     <div className="bg-black">
       <div className="container-fluid">
         <div className="row">
@@ -20,4 +19,4 @@ const HeroHighlights = () => {
   ) : null;
 };
 
-export default HeroHighlights;
+export default Hero;
