@@ -1,5 +1,6 @@
 import stats from './stats';
 import nodes from './nodes';
+import shards from './shards';
 import elastic from './helpers';
 import { ProviderPropsType } from './../functions';
 
@@ -20,6 +21,10 @@ export default {
       url,
       params,
     });
+  },
+  getShards: (props: ProviderPropsType & { proxyUrl: string }) => {
+    const { proxyUrl } = props;
+    return shards({ proxyUrl });
   },
   getRewards: () => {
     throw new Error('not defined');

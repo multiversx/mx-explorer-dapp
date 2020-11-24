@@ -70,7 +70,7 @@ export default function useAdapterConfig() {
     },
   };
 
-  const { provider, getStats, getNodes, getRewards } = providers[adapter];
+  const { provider, getStats, getNodes, getRewards, getShards } = providers[adapter];
 
   const providerProps = { ...providers[adapter], metaChainShardId, timeout };
 
@@ -80,6 +80,7 @@ export default function useAdapterConfig() {
     provider: (props = basicProps) => wrap(() => provider({ ...providerProps, ...props })),
     getStats: (props = basicProps) => wrap(() => getStats({ ...providerProps, ...props })),
     getNodes: (props = basicProps) => wrap(() => getNodes({ ...providerProps, ...props })),
+    getShards: (props = basicProps) => wrap(() => getShards({ ...providerProps, ...props })),
     getRewards: (address: string) =>
       wrap(() => getRewards({ ...providerProps, ...basicProps, address })),
   };

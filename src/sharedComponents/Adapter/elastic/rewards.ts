@@ -30,7 +30,6 @@ export default async function rewards({
       userWithdrawOnlyStake,
     };
   } catch (error) {
-    console.log('\x1b[42m%s\x1b[0m', 'here');
     console.error('rewards error', error);
     throw new Error(error);
   }

@@ -15,6 +15,13 @@ export default {
     });
   },
   getNodes: api,
+  getShards: ({ baseUrl, timeout }: ProviderPropsType) => {
+    return api({
+      baseUrl,
+      url: `/shards`,
+      timeout,
+    });
+  },
   getRewards: (props: ProviderPropsType & { proxyUrl: string; address: string }) => {
     const { proxyUrl, address, timeout } = props;
     return axios.get(`${proxyUrl}/accounts/${address}/delegation`, { timeout });

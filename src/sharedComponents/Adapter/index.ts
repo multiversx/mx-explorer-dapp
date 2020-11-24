@@ -25,7 +25,7 @@ export default function useAdapter() {
   };
 
   const { proxyUrl, baseUrl } = providers[adapter];
-  const { provider, getStats, getNodes, getRewards } = useAdapterConfig();
+  const { provider, getStats, getNodes, getRewards, getShards } = useAdapterConfig();
 
   return {
     /* Homepage */
@@ -187,17 +187,11 @@ export default function useAdapter() {
         timeout,
       }),
 
-    // getRewards: (address: string) => f.getRewards({ proxyUrl, timeout, address }),
     getRewards: (address: string) => getRewards(address),
 
     /* Validators */
 
-    getShards: () =>
-      f.getShards({
-        provider,
-        baseUrl,
-        timeout,
-      }),
+    getShards: () => getShards(),
 
     getNodes: ({
       peerType,
@@ -303,7 +297,6 @@ export default function useAdapter() {
       provider({
         url: `/accounts/${address}`,
       }),
-    // getAccount: (address: string) => f.getAccount({ proxyUrl, timeout, address }),
 
     getAccounts: ({ size }: f.GetAccountsType) =>
       f.getAccounts({ provider, baseUrl, size, timeout }),
