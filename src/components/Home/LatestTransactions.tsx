@@ -28,9 +28,9 @@ const LatestTransactions = () => {
   const { getLatestTransactions } = adapter();
 
   const fetchTransactions = () => {
-    getLatestTransactions().then(({ data, transactionsFetched }) => {
+    getLatestTransactions().then(({ data, success }) => {
       if (ref.current !== null) {
-        if (transactionsFetched) {
+        if (success) {
           const sortedTransactions = data;
           if (transactions.length === 0) {
             const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
@@ -47,7 +47,7 @@ const LatestTransactions = () => {
             setTransactions(newTransactions);
           }
         }
-        setTransactionsFetched(transactionsFetched);
+        setTransactionsFetched(success);
       }
     });
   };

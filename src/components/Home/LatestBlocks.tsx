@@ -20,9 +20,9 @@ const LatestBlocks = () => {
   const { getLatestBlocks } = adapter();
 
   const fetchBlocks = () => {
-    getLatestBlocks().then(({ data, blocksFetched }) => {
+    getLatestBlocks().then(({ data, success }) => {
       if (ref.current !== null) {
-        if (blocksFetched) {
+        if (success) {
           const sortedBlocks = data;
           if (blocks.length === 0) {
             const newBlocks = sortedBlocks.map((block: BlockType) => ({
@@ -39,7 +39,7 @@ const LatestBlocks = () => {
             setBlocks(newBlocks);
           }
         }
-        setBlocksFetched(blocksFetched);
+        setBlocksFetched(success);
       }
     });
   };

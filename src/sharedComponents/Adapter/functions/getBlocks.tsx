@@ -1,6 +1,6 @@
 import { AdapterFunctionType } from './index';
 
-const getShardOrEpochParam = (shard: number | undefined, epoch: number | undefined) => {
+export const getShardOrEpochParam = (shard: number | undefined, epoch: number | undefined) => {
   switch (true) {
     case shard !== undefined:
       return { shard };
@@ -18,58 +18,28 @@ export interface GetBlocksParamsType {
   proposer?: string;
 }
 
-export async function getBlocks({
-  provider,
-  baseUrl,
-  size = 1,
-  shard,
-  timeout,
-  epochId,
-  proposer,
-}: AdapterFunctionType & GetBlocksParamsType) {
-  try {
-    const params = {
-      from: (size - 1) * 25,
-      size: 25,
-      ...(proposer ? { proposer } : {}),
-      ...getShardOrEpochParam(shard, epochId),
-      fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
-    };
-
-    const { data: blocks } = await provider({
-      baseUrl,
-      url: `/blocks`,
-      params,
-      timeout,
-    });
-
-    let min = blocks && blocks.length > 0 ? blocks[0].nonce : 0;
-    let max = min;
-    for (const block in blocks) {
-      // tslint:disable-line
-      if (blocks[block].nonce < min) {
-        min = blocks[block].nonce;
-      }
-
-      if (blocks[block].nonce > max) {
-        max = blocks[block].nonce;
-      }
+export function processBlocks(blocks: any[]) {
+  let min = blocks && blocks.length > 0 ? blocks[0].nonce : 0;
+  let max = min;
+  for (const block in blocks) {
+    // tslint:disable-line
+    if (blocks[block].nonce < min) {
+      min = blocks[block].nonce;
     }
 
-    const startBlockNr = min;
-    const endBlockNr = max;
-
-    return {
-      blocks,
-      startBlockNr,
-      endBlockNr,
-      success: blocks !== undefined,
-    };
-  } catch (err) {
-    return {
-      success: false,
-    };
+    if (blocks[block].nonce > max) {
+      max = blocks[block].nonce;
+    }
   }
+
+  const startBlockNr = min;
+  const endBlockNr = max;
+
+  return {
+    blocks,
+    startBlockNr,
+    endBlockNr,
+  };
 }
 
 export async function getBlocksCount({
