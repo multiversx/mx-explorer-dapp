@@ -1,12 +1,10 @@
 import getStats from './getStats';
-import getLatestBlocks from './getLatestBlocks';
 import getShards from './getShards';
 import getIdentities from './getIdentities';
 import getIdentity from './getIdentity';
 import getNode from './getNode';
 import getRounds, { GetRoundsType as GetRoundsInterface } from './getRounds';
 import getNodes, { GetNodesType as GetNodesInterface } from './getNodes';
-import getLatestTransactions from './getLatestTransactions';
 import {
   processBlocks,
   GetBlocksParamsType,
@@ -14,21 +12,14 @@ import {
   getShardOrEpochParam,
 } from './getBlocks';
 import { getAccounts, getAccountsCount, GetAccountsParamsType } from './getAccounts';
-import getBlock from './getBlock';
 import getNetworkStatus from './getNetworkStatus';
 import {
-  getTransactions,
-  getTransactionsCount,
+  getTransactionsParams,
   getAccount,
   getRewards,
-  TransactionsType as TransactionsInterface,
+  getAccountParams,
+  TransactionsParamsType as TransactionsInterface,
 } from './getTransactions';
-import { getTransaction } from './getTransaction';
-import {
-  getMiniBlock,
-  getMiniBlockTransactions,
-  getMiniBlockTransactionsCount,
-} from './getMiniBlocks';
 
 export interface ProviderPropsType {
   baseUrl: string;
@@ -71,7 +62,7 @@ export type AdapterFunctionType = ProviderPropsType & { provider: ProviderType }
 
 export type GetBlocksType = GetBlocksParamsType;
 
-export type TransactionsType = TransactionsInterface;
+export type TransactionsParamsType = TransactionsInterface;
 
 export type GetNodesType = GetNodesInterface;
 
@@ -80,18 +71,11 @@ export type GetRoundsType = GetRoundsInterface;
 export type GetAccountsType = GetAccountsParamsType;
 
 export {
-  getLatestBlocks,
-  getLatestTransactions,
-  getBlock,
   processBlocks,
   getShardOrEpochParam,
   getBlocksCount,
-  getTransaction,
-  getTransactions,
-  getTransactionsCount,
-  getMiniBlock,
-  getMiniBlockTransactions,
-  getMiniBlockTransactionsCount,
+  getTransactionsParams,
+  getAccountParams,
   getRewards,
   getRounds,
   getNode,

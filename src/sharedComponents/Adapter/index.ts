@@ -25,10 +25,7 @@ export default function useAdapter() {
   };
 
   const { proxyUrl, baseUrl } = providers[adapter];
-  const { provider, getStats, getNodes } = useAdapterConfig();
-
-  // TODO: adaptorul isi ia singur datele si nu e mix intre ele
-  // TODO: dispare folderul functions {data, success} | {success: false}
+  const { provider, getStats, getNodes, getRewards } = useAdapterConfig();
 
   return {
     /* Homepage */
@@ -70,7 +67,6 @@ export default function useAdapter() {
 
     /* Blocks */
 
-    // getBlock: (blockId: string) => f.getBlock({ provider, baseUrl, blockId, proxyUrl, timeout }),
     getBlock: async (blockId: string) => {
       try {
         const { data: block, success } = await provider({
@@ -140,44 +136,59 @@ export default function useAdapter() {
     /* Transaction */
 
     getTransaction: (transactionId: string) =>
-      f.getTransaction({ provider, baseUrl, transactionId, proxyUrl, timeout }),
+      provider({
+        url: `/transactions/${transactionId}`,
+      }),
 
     /* Miniblocks */
 
     getMiniBlock: (miniBlockHash: string) =>
-      f.getMiniBlock({ provider, baseUrl, miniBlockHash, proxyUrl, timeout }),
+      provider({
+        baseUrl,
+        url: `/miniblocks/${miniBlockHash}`,
+        timeout,
+      }),
 
     getMiniBlockTransactions: ({ miniBlockHash, size }: { miniBlockHash: string; size: number }) =>
-      f.getMiniBlockTransactions({ provider, baseUrl, miniBlockHash, timeout, proxyUrl, size }),
+      provider({
+        url: `/transactions`,
+        params: {
+          from: (size - 1) * 25,
+          size: 25,
+          miniBlockHash,
+        },
+      }),
 
     getMiniBlockTransactionsCount: ({ miniBlockHash }: { miniBlockHash: string }) =>
-      f.getMiniBlockTransactionsCount({ provider, miniBlockHash, timeout, proxyUrl, baseUrl }),
+      provider({
+        url: `/transactions/count`,
+        params: {
+          miniBlockHash,
+        },
+      }),
 
     /* Transactions */
 
-    getTransactions: ({ size, address, senderShard, receiverShard }: f.TransactionsType) =>
-      f.getTransactions({
-        provider,
-        baseUrl,
+    getTransactions: ({ size, address, senderShard, receiverShard }: f.TransactionsParamsType) =>
+      provider({
+        url: `/transactions`,
+        params: f.getTransactionsParams({ size, address, senderShard, receiverShard }),
         timeout,
-        address,
-        size,
-        senderShard,
-        receiverShard,
       }),
 
-    getTransactionsCount: ({ size, address, senderShard, receiverShard }: f.TransactionsType) =>
-      f.getTransactionsCount({
-        provider,
-        baseUrl,
+    getTransactionsCount: ({ address, senderShard, receiverShard }: f.TransactionsParamsType) =>
+      provider({
+        url: `/transactions/count`,
+        params: {
+          ...f.getAccountParams(address),
+          ...(senderShard !== undefined ? { senderShard } : {}),
+          ...(receiverShard !== undefined ? { receiverShard } : {}),
+        },
         timeout,
-        address,
-        size,
-        senderShard,
-        receiverShard,
       }),
 
-    getRewards: (address: string) => f.getRewards({ proxyUrl, timeout, address }),
+    // getRewards: (address: string) => f.getRewards({ proxyUrl, timeout, address }),
+    getRewards: (address: string) => getRewards(address),
 
     /* Validators */
 
@@ -227,35 +238,6 @@ export default function useAdapter() {
         });
       return f.getNodes(asyncRequest);
     },
-    // getNodes: ({
-    //   peerType,
-    //   issues,
-    //   search,
-    //   nodeType,
-    //   shard,
-    //   status,
-    //   size,
-    //   identity,
-    //   pagination,
-    //   sort,
-    //   order,
-    // }: f.GetNodesType) =>
-    //   f.getNodes({
-    //     provider,
-    //     baseUrl,
-    //     timeout,
-    //     peerType,
-    //     issues,
-    //     search,
-    //     nodeType,
-    //     shard,
-    //     status,
-    //     size,
-    //     identity,
-    //     pagination,
-    //     sort,
-    //     order,
-    //   }),
 
     getNodesCount: ({
       peerType,
@@ -285,29 +267,6 @@ export default function useAdapter() {
         });
       return f.getNodes(asyncRequest);
     },
-
-    // getNodesCount: ({
-    //   peerType,
-    //   issues,
-    //   search,
-    //   nodeType,
-    //   shard,
-    //   status,
-    //   identity,
-    // }: f.GetNodesType) =>
-    //   f.getNodes({
-    //     provider,
-    //     baseUrl,
-    //     timeout,
-    //     peerType,
-    //     issues,
-    //     search,
-    //     nodeType,
-    //     shard,
-    //     status,
-    //     identity,
-    //     count: true,
-    //   }),
 
     getIdentities: () =>
       f.getIdentities({
@@ -340,7 +299,11 @@ export default function useAdapter() {
         timeout,
       }),
 
-    getAccount: (address: string) => f.getAccount({ proxyUrl, timeout, address }),
+    getAccount: (address: string) =>
+      provider({
+        url: `/accounts/${address}`,
+      }),
+    // getAccount: (address: string) => f.getAccount({ proxyUrl, timeout, address }),
 
     getAccounts: ({ size }: f.GetAccountsType) =>
       f.getAccounts({ provider, baseUrl, size, timeout }),

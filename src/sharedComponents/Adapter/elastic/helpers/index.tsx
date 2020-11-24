@@ -87,10 +87,10 @@ const getValidatorIndex = async ({
 
 const wrapper = async ({
   baseUrl,
-  nodeUrl = '',
+  proxyUrl: nodeUrl = '',
   url,
   params = {},
-}: ProviderPropsType & { url: string; nodeUrl?: string }) => {
+}: ProviderPropsType & { url: string }) => {
   const elasticUrl = () => baseUrl;
   const proxyUrl = () => nodeUrl;
   const [, collection, hash] = url.split('/');
