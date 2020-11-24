@@ -15,4 +15,8 @@ export default {
     });
   },
   getNodes: api,
+  getRewards: (props: ProviderPropsType & { proxyUrl: string; address: string }) => {
+    const { proxyUrl, address, timeout } = props;
+    return axios.get(`${proxyUrl}/accounts/${address}/delegation`, { timeout });
+  },
 };

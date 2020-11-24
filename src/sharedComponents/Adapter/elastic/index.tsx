@@ -21,4 +21,7 @@ export default {
       params,
     });
   },
+  getRewards: () => {
+    throw new Error('not defined');
+  },
 };

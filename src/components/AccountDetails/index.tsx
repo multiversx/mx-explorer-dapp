@@ -14,6 +14,7 @@ import DelegationDetails from './DelegationDetails';
 import { addressIsBech32, useSize } from 'helpers';
 import { denomination, decimals } from 'appConfig';
 import { types } from 'helpers';
+import { useIsMainnet } from 'helpers';
 
 export interface AccountDetailsType extends types.AccountType {
   detailsFetched?: boolean;
@@ -36,6 +37,7 @@ const initialAccountDetails: AccountDetailsType = {
 const AccountDetails = () => {
   const ref = React.useRef(null);
   const { size, firstPageTicker } = useSize();
+  const isMainnet = useIsMainnet();
 
   const [accountDetails, setAccountDetails] = React.useState<AccountDetailsType>(
     initialAccountDetails
@@ -88,15 +90,15 @@ const AccountDetails = () => {
       if (rewardsData.success) {
         const rewards = parseFloat(
           denominate({
-            input: rewardsData.claimableRewards,
+            input: rewardsData.data.claimableRewards,
             decimals,
             denomination,
             showLastNonZeroDecimal: false,
             addCommas: false,
           })
         );
-        const bNuserActiveStake = new BigNumber(rewardsData.userActiveStake);
-        const bNuserWaitingStake = new BigNumber(rewardsData.userWaitingStake);
+        const bNuserActiveStake = new BigNumber(rewardsData.data.userActiveStake);
+        const bNuserWaitingStake = new BigNumber(rewardsData.data.userWaitingStake);
         const bNstake = bNuserActiveStake.plus(bNuserWaitingStake);
         const stake = parseFloat(
           denominate({
@@ -116,7 +118,7 @@ const AccountDetails = () => {
   const fetchTransactionsCount = () => {
     getTransactionsCount({
       address,
-    }).then(({ count, success }) => {
+    }).then(({ data: count, success }) => {
       if (ref.current !== null && success) {
         setTotalTransactions(Math.min(count, 10000));
       }
@@ -174,7 +176,7 @@ const AccountDetails = () => {
               <div className="col mb-spacer">
                 <AccountDetailsCard {...accountDetails} />
               </div>
-              {showDelegation && (
+              {showDelegation && isMainnet && (
                 <div className="col-lg-4 mb-spacer">
                   <DelegationDetails {...accountDetails} />
                 </div>
