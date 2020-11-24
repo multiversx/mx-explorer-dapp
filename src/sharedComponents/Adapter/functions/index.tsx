@@ -1,13 +1,5 @@
-import getNode from './getNode';
-import getRounds, { GetRoundsType as GetRoundsInterface } from './getRounds';
 import { GetNodesType as GetNodesInterface } from './getNodes';
-import {
-  processBlocks,
-  GetBlocksParamsType,
-  getBlocksCount,
-  getShardOrEpochParam,
-} from './getBlocks';
-import getNetworkStatus from './getNetworkStatus';
+import { processBlocks, GetBlocksParamsType, getShardOrEpochParam } from './getBlocks';
 import {
   getTransactionsParams,
   getAccountParams,
@@ -59,15 +51,4 @@ export type TransactionsParamsType = TransactionsInterface;
 
 export type GetNodesType = GetNodesInterface;
 
-export type GetRoundsType = GetRoundsInterface;
-
-export {
-  processBlocks,
-  getShardOrEpochParam,
-  getBlocksCount,
-  getTransactionsParams,
-  getAccountParams,
-  getRounds,
-  getNode,
-  getNetworkStatus,
-};
+export { processBlocks, getShardOrEpochParam, getTransactionsParams, getAccountParams };

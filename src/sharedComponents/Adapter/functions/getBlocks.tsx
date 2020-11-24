@@ -1,5 +1,3 @@
-import { AdapterFunctionType } from './index';
-
 export const getShardOrEpochParam = (shard: number | undefined, epoch: number | undefined) => {
   switch (true) {
     case shard !== undefined:
@@ -40,35 +38,4 @@ export function processBlocks(blocks: any[]) {
     startBlockNr,
     endBlockNr,
   };
-}
-
-export async function getBlocksCount({
-  provider,
-  baseUrl,
-  shard,
-  timeout,
-  epochId,
-}: AdapterFunctionType & GetBlocksParamsType) {
-  try {
-    const params: AdapterFunctionType['params'] = {
-      ...getShardOrEpochParam(shard, epochId),
-    };
-
-    const { data } = await provider({
-      baseUrl,
-      url: `/blocks/count`,
-      params,
-      timeout,
-    });
-
-    return {
-      count: data,
-      success: true,
-    };
-  } catch {
-    return {
-      count: 0,
-      success: false,
-    };
-  }
 }

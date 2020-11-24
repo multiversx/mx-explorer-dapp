@@ -1,39 +1,13 @@
-import { useGlobalState } from 'context';
-import elasticAdapter from './elastic';
-import apiAdapter from './api';
 import * as f from './functions';
-import { metaChainShardId } from 'appConfig';
 import useAdapterConfig from './useAdapterConfig';
 
 export default function useAdapter() {
-  const {
-    activeNetwork: { elasticUrl, adapter, proxyUrl: nodeUrl, apiUrl },
-    timeout,
-  } = useGlobalState();
-
-  const providers = {
-    api: {
-      baseUrl: apiUrl || '',
-      proxyUrl: apiUrl || '',
-      ...apiAdapter,
-    },
-    elastic: {
-      baseUrl: elasticUrl || '',
-      proxyUrl: nodeUrl || '',
-      ...elasticAdapter,
-    },
-  };
-
-  const { proxyUrl, baseUrl } = providers[adapter];
   const { provider, getStats, getNodes, getRewards, getShards } = useAdapterConfig();
 
   return {
     /* Homepage */
 
     getStats: () => getStats(),
-
-    // TODO: remove?
-    getNetworkStatus: () => f.getNetworkStatus({ proxyUrl, timeout, metaChainShardId }),
 
     getLatestBlocks: () =>
       provider({
@@ -101,7 +75,6 @@ export default function useAdapter() {
     getBlocks: async ({ size = 1, shard, epochId, proposer }: f.GetBlocksType) => {
       try {
         const { data: blocks, success } = await provider({
-          baseUrl,
           url: `/blocks`,
           params: {
             from: (size - 1) * 25,
@@ -110,7 +83,6 @@ export default function useAdapter() {
             ...f.getShardOrEpochParam(shard, epochId),
             fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
           },
-          timeout,
         });
         if (success) {
           return {
@@ -136,12 +108,7 @@ export default function useAdapter() {
 
     /* Miniblocks */
 
-    getMiniBlock: (miniBlockHash: string) =>
-      provider({
-        baseUrl,
-        url: `/miniblocks/${miniBlockHash}`,
-        timeout,
-      }),
+    getMiniBlock: (miniBlockHash: string) => provider({ url: `/miniblocks/${miniBlockHash}` }),
 
     getMiniBlockTransactions: ({ miniBlockHash, size }: { miniBlockHash: string; size: number }) =>
       provider({
@@ -162,7 +129,6 @@ export default function useAdapter() {
       provider({
         url: `/transactions`,
         params: f.getTransactionsParams({ size, address, senderShard, receiverShard }),
-        timeout,
       }),
 
     getTransactionsCount: ({ address, senderShard, receiverShard }: f.TransactionsParamsType) =>
@@ -173,7 +139,6 @@ export default function useAdapter() {
           ...(senderShard !== undefined ? { senderShard } : {}),
           ...(receiverShard !== undefined ? { receiverShard } : {}),
         },
-        timeout,
       }),
 
     getRewards: (address: string) => getRewards(address),
@@ -243,7 +208,7 @@ export default function useAdapter() {
 
     getNode: (key: string) => getNodes({ url: `/nodes/${key}` }),
 
-    getRounds: ({ validator }: f.GetRoundsType) =>
+    getRounds: (validator: string) =>
       provider({
         url: `/rounds`,
         params: {

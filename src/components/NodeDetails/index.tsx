@@ -39,9 +39,7 @@ const NodeDetails = () => {
     getNode(publicKey).then((nodeData) => {
       if (nodeData.success) {
         const promises = [
-          getRounds({
-            validator: publicKey,
-          }),
+          getRounds(publicKey),
           getBlocks({ proposer: publicKey }),
           ...(isMainnet && nodeData.data.identity !== undefined
             ? [getIdentity(nodeData.data.identity)]
