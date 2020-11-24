@@ -1,6 +1,6 @@
-import { faCube } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import React from 'react';
+import { PageState } from 'sharedComponents';
 
 interface MiniBlockNotFoundType {
   miniBlockHash: string | undefined;
@@ -8,14 +8,16 @@ interface MiniBlockNotFoundType {
 
 export default function MiniBlockNotFound({ miniBlockHash }: MiniBlockNotFoundType) {
   return (
-    <div className="card">
-      <div className="card-body card-details">
-        <div className="empty">
-          <FontAwesomeIcon icon={faCube} className="empty-icon" />
-          <span className="h4 empty-heading">Unable to locate this miniblock hash</span>
-          <span className="empty-details">{miniBlockHash}</span>
+    <PageState
+      icon={faCube}
+      title="Unable to locate this miniblock hash"
+      description={
+        <div className="px-spacer">
+          <span className="text-break-all">{miniBlockHash}</span>
         </div>
-      </div>
-    </div>
+      }
+      className="py-spacer my-auto"
+      dataTestId="errorScreen"
+    />
   );
 }

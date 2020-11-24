@@ -1,5 +1,8 @@
 import React from 'react';
-import { faCheckCircle, faBan, faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle } from '@fortawesome/pro-regular-svg-icons/faCheckCircle';
+import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
+import { faHourglass } from '@fortawesome/pro-regular-svg-icons/faHourglass';
+import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import txStatus from './txStatus';
 

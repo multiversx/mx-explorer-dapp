@@ -1,9 +1,9 @@
 import { AdapterFunctionType } from './index';
 
-const getShardOrEpochParam = (shardId: number | undefined, epoch: number | undefined) => {
+const getShardOrEpochParam = (shard: number | undefined, epoch: number | undefined) => {
   switch (true) {
-    case shardId !== undefined:
-      return { shardId };
+    case shard !== undefined:
+      return { shard };
     case epoch !== undefined:
       return { epoch };
     default:
@@ -13,23 +13,27 @@ const getShardOrEpochParam = (shardId: number | undefined, epoch: number | undef
 
 export interface GetBlocksParamsType {
   size?: number;
-  shardId: number | undefined;
-  epochId: number | undefined;
+  shard?: number;
+  epochId?: number;
+  proposer?: string;
 }
 
 export async function getBlocks({
   provider,
   baseUrl,
   size = 1,
-  shardId,
+  shard,
   timeout,
   epochId,
+  proposer,
 }: AdapterFunctionType & GetBlocksParamsType) {
   try {
     const params = {
       from: (size - 1) * 25,
       size: 25,
-      ...getShardOrEpochParam(shardId, epochId),
+      ...(proposer ? { proposer } : {}),
+      ...getShardOrEpochParam(shard, epochId),
+      fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
     };
 
     const { data: blocks } = await provider({
@@ -39,7 +43,7 @@ export async function getBlocks({
       timeout,
     });
 
-    let min = blocks[0].nonce;
+    let min = blocks && blocks.length > 0 ? blocks[0].nonce : 0;
     let max = min;
     for (const block in blocks) {
       // tslint:disable-line
@@ -54,18 +58,16 @@ export async function getBlocks({
 
     const startBlockNr = min;
     const endBlockNr = max;
+
     return {
       blocks,
       startBlockNr,
       endBlockNr,
-      blocksFetched: true,
+      success: blocks !== undefined,
     };
   } catch (err) {
     return {
-      blocks: [],
-      startBlockNr: 0,
-      endBlockNr: 0,
-      blocksFetched: false,
+      success: false,
     };
   }
 }
@@ -73,13 +75,13 @@ export async function getBlocks({
 export async function getBlocksCount({
   provider,
   baseUrl,
-  shardId,
+  shard,
   timeout,
   epochId,
 }: AdapterFunctionType & GetBlocksParamsType) {
   try {
     const params: AdapterFunctionType['params'] = {
-      ...getShardOrEpochParam(shardId, epochId),
+      ...getShardOrEpochParam(shard, epochId),
     };
 
     const { data } = await provider({

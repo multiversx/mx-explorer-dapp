@@ -1,161 +1,110 @@
-import { faCube } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
+import { useNetworkRoute, useURLSearchParams, useSize } from 'helpers';
 import * as React from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'sharedComponents';
-import { BlockType } from 'sharedComponents/Adapter/functions/getBlock';
+import { BlockType } from 'sharedComponents/BlocksTable';
+import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
+import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 
 interface StateType {
   blocks: BlockType[];
   startBlockNr: number;
   endBlockNr: number;
-  blocksFetched: boolean;
 }
 
-const initialState = {
-  blocks: [],
-  startBlockNr: 0,
-  endBlockNr: 0,
-  blocksFetched: true,
-};
+const Blocks = () => {
+  const { page, shard } = useURLSearchParams();
+  const { size, firstPageTicker } = useSize();
 
-function isValidInt(number: number) {
-  return !(
-    isNaN(number) ||
-    isNaN(parseInt(number.toString())) ||
-    !/^\+?(0|[1-9]\d*)$/.test(number.toString())
-  );
-}
+  const networkRoute = useNetworkRoute();
 
-const Blocks: React.FC = () => {
-  const { page, shard, epoch } = useParams();
-  const shardId = parseInt(shard!) >= 0 ? parseInt(shard!) : undefined;
-  const epochId = parseInt(epoch!) >= 0 ? parseInt(epoch!) : undefined;
+  React.useEffect(() => {
+    if (shard !== undefined) {
+      document.title = document.title.replace('Blocks', 'Shard Details');
+    }
+  }, [shard]);
 
   const ref = React.useRef(null);
-  const size = !isNaN(page as any) ? parseInt(page as any) : 1;
-  const [state, setState] = React.useState<StateType>(initialState);
-  const [totalBlocks, setTotalBlocks] = React.useState<number | string>('...');
+  const [state, setState] = React.useState<StateType>();
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [totalBlocks, setTotalBlocks] = React.useState<number | '...'>('...');
 
-  const {
-    refresh: { timestamp },
-    activeNetworkId,
-  } = useGlobalState();
+  const { activeNetworkId } = useGlobalState();
 
   const { getBlocks, getBlocksCount } = adapter();
 
-  const refreshFirstPage = size === 1 ? timestamp : 0;
-
-  const fetchBlocks = () => {
-    if (ref.current !== null) {
-      getBlocks({ size, shardId, epochId }).then((data) => {
+  React.useEffect(() => {
+    getBlocks({ size, shard, epochId: undefined }).then(
+      ({ success, blocks, endBlockNr, startBlockNr }) => {
         if (ref.current !== null) {
-          if (data.blocksFetched) {
-            setState(data);
-          } else if (state.blocks.length === 0) {
-            setState({ ...initialState, blocksFetched: false });
+          if (success) {
+            const existingHashes = state ? state.blocks.map((block: BlockType) => block.hash) : [];
+            const newBlocks = blocks.map((block: BlockType) => ({
+              ...block,
+              isNew: !existingHashes.includes(block.hash),
+            }));
+            setState({ blocks: newBlocks, endBlockNr, startBlockNr });
           }
+          setDataReady(success);
         }
-      });
+      }
+    );
+    getBlocksCount({ size, shard }).then(({ count, success }) => {
+      if (ref.current !== null && success) {
+        setTotalBlocks(count);
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeNetworkId, size, shard, firstPageTicker]);
 
-      getBlocksCount({ size, shardId, epochId }).then(({ count, success }) => {
-        if (ref.current !== null && success) {
-          setTotalBlocks(count);
-        }
-      });
-    }
-  };
+  return shard && shard < 0 ? (
+    <Redirect to={networkRoute(`/not-found`)} />
+  ) : (
+    <>
+      {dataReady === undefined && <Loader />}
+      {dataReady === false && <FailedBlocks />}
 
-  React.useEffect(fetchBlocks, [activeNetworkId, size, shardId, refreshFirstPage]); // run the operation only once since the parameter does not change
-
-  let slug = 'blocks';
-  switch (true) {
-    case !isNaN(shardId!):
-      slug = `blocks/shards/${shardId}`;
-      break;
-    case !isNaN(epochId!):
-      slug = `blocks/epoch/${epochId}`;
-      break;
-  }
-
-  const Component = () => {
-    return (
       <div ref={ref}>
-        <div className="container pt-3 pb-3">
-          <div className="row">
-            <div className="col-12">
-              <h4>
-                <span data-testid="title">Blocks</span>&nbsp;
-                {shardId !== undefined && shardId >= 0 && (
-                  <>
-                    <ShardSpan shardId={shardId} />
-                  </>
-                )}
-              </h4>
+        {dataReady === true && (
+          <div className="container pt-spacer">
+            <div className="row page-header">
+              <div className="col-12">
+                <h3 className="page-title mb-4">
+                  <span data-testid="title">Blocks</span>&nbsp;
+                  {shard !== undefined && shard >= 0 && <ShardSpan shard={shard} />}
+                </h3>
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-12">
-              {!state.blocksFetched ? (
-                <div className="card" data-testid="errorScreen">
-                  <div className="card-body card-details">
-                    <div className="empty">
-                      <FontAwesomeIcon icon={faCube} className="empty-icon" />
-                      <span className="h4 empty-heading">No blocks found</span>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  {state.blocks.length > 0 ? (
-                    <div className="card">
-                      <div className="card-body card-list">
-                        <p className="mb-0">
-                          Showing last 10,000
-                          {totalBlocks !== '...' && (
-                            <> of {totalBlocks.toLocaleString('en')}</>
-                          )}{' '}
-                          blocks
-                        </p>
-                        <BlocksTable blocks={state.blocks} shardId={shardId} />
+            <div className="row">
+              <div className="col-12">
+                <div className="card">
+                  {state && state.blocks.length > 0 ? (
+                    <>
+                      <div className="card-body border-0 p-0">
+                        <BlocksTable blocks={state.blocks} shard={shard} />
+                      </div>
+
+                      <div className="card-footer">
                         <Pager
-                          slug={slug}
-                          total={10000}
-                          start={(size - 1) * 25 + (size === 1 ? 1 : 0)}
-                          end={
-                            (size - 1) * 25 +
-                            (parseInt(totalBlocks.toString()) < 25
-                              ? parseInt(totalBlocks.toString())
-                              : 25)
-                          }
+                          page={String(page)}
+                          total={totalBlocks !== '...' ? Math.min(totalBlocks, 10000) : totalBlocks}
+                          itemsPerPage={25}
                           show={state.blocks.length > 0}
                         />
                       </div>
-                    </div>
+                    </>
                   ) : (
-                    <Loader />
+                    <NoBlocks />
                   )}
-                </>
-              )}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
-    );
-  };
-
-  const memoBlocks = React.useMemo(Component, [
-    timestamp,
-    state.blocksFetched,
-    state.blocks.length,
-  ]);
-
-  if (shard && !isValidInt(parseInt(shard!))) {
-    return <Redirect to={activeNetworkId ? `/${activeNetworkId}/not-found` : '/not-found'} />;
-  }
-
-  return memoBlocks;
+    </>
+  );
 };
 
 export default Blocks;

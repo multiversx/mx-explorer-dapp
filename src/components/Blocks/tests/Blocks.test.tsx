@@ -1,48 +1,10 @@
-import axios from 'axios';
-import {
-  fireEvent,
-  renderWithRouter,
-  wait,
-  meta,
-  config as optionalConfig,
-} from 'utils/test-utils';
-import { blocks } from '../../../utils/rawData';
-import { heartbeatstatus, validators, statistics } from 'utils/rawData';
+import { fireEvent, wait, beforeAll } from 'utils/test-utils';
 
-export const beforeAll = (blocksError = false) => {
-  const mockGet = jest.spyOn(axios, 'get');
-
-  mockGet.mockImplementation((url: string): any => {
-    switch (true) {
-      // --- page load ---
-      case url.includes('/tps/meta'):
-        return Promise.resolve({ data: meta });
-      case url.includes(`/node/heartbeatstatus`):
-        return Promise.resolve({ data: { data: heartbeatstatus, code: 'successful' } });
-      case url.includes('/validator/statistics'):
-        return Promise.resolve({ data: { data: statistics, code: 'successful' } });
-      case url.endsWith('/validators'):
-        return Promise.resolve({ data: validators });
-      case url.includes('/blokcs/count'):
-        return Promise.resolve({ data: 239890 });
-      case url.includes('/blocks'):
-        if (blocksError) {
-          return Promise.resolve(new Error('blocks error'));
-        }
-        return Promise.resolve({ data: blocks });
-      // --- page load ---
-    }
-  });
-
-  return renderWithRouter({
-    route: '/blocks',
-    optionalConfig,
-  });
-};
-
-describe('Blocks', () => {
+describe('Blocks Page', () => {
   test('Blocks page is displaying', async () => {
-    const render = beforeAll();
+    const render = beforeAll({
+      route: '/blocks',
+    });
 
     expect(document.title).toEqual('Blocks • Elrond Explorer');
 
@@ -54,26 +16,35 @@ describe('Blocks', () => {
   });
 
   test('Blocks page loading state', async () => {
-    const render = beforeAll();
+    const render = beforeAll({
+      route: '/blocks',
+    });
 
     const loader = await render.findByTestId('loader');
     expect(loader.innerHTML).toBeDefined();
   });
 
   test('Blocks page failed state', async () => {
-    const render = beforeAll(true);
+    const render = beforeAll({
+      route: '/blocks',
+      networkRequests: {
+        blocks: () => Promise.resolve(new Error('error')),
+      },
+    });
 
-    const failedState = await render.findByText('No blocks found');
+    const failedState = await render.findByTestId('errorScreen');
     expect(failedState.innerHTML).toBeDefined();
   });
 });
 
 describe('Blocks Page Links', () => {
-  test('Block link', async () => {
-    const render = beforeAll();
+  test('Block page link', async () => {
+    const render = beforeAll({
+      route: '/blocks',
+    });
 
     const link = await render.findByTestId('blockLink0');
-    expect(link.innerHTML).toBe('82768');
+    expect(link.innerHTML).toBe('1490414');
 
     fireEvent.click(link);
     await wait(async () => {
@@ -82,10 +53,12 @@ describe('Blocks Page Links', () => {
   });
 
   test('Block shard link', async () => {
-    const render = beforeAll();
+    const render = beforeAll({
+      route: '/blocks',
+    });
 
     const link = await render.findByTestId('blockShardLink0');
-    expect(link.textContent).toBe('Shard 0');
+    expect(link.textContent).toBe('Metachain');
 
     fireEvent.click(link);
     await wait(async () => {
@@ -94,10 +67,14 @@ describe('Blocks Page Links', () => {
   });
 
   test('Block Hash link', async () => {
-    const render = beforeAll();
+    const render = beforeAll({
+      route: '/blocks',
+    });
 
     const link = await render.findByTestId('blockHashLink0');
-    expect(link.textContent).toBe('7d6df53015...fcf9990698');
+    expect(link.textContent).toBe(
+      'f2b1bc5b74c6d0bc7730e18a7f6a4a89...0820cba85aef4562f11b8100d618004a'
+    );
 
     fireEvent.click(link);
     await wait(async () => {

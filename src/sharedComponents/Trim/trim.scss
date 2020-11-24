@@ -1,0 +1,73 @@
+.trim {
+  display: flex;
+  max-width: 100%;
+  overflow: hidden;
+
+  &.overflow {
+    .ellipsis {
+      display: block;
+    }
+  }
+
+  .left {
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: transparent;
+    font-size: 1px;
+  }
+
+  .right {
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    direction: rtl;
+    text-align: left;
+    color: transparent;
+    font-size: 1px;
+  }
+
+  .left span,
+  .right span {
+    color: $body;
+    font-size: 1rem;
+  }
+
+  .ellipsis {
+    flex-shrink: 0;
+    display: none;
+  }
+
+  /* fix ie */
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .right {
+      text-overflow: clip;
+    }
+  }
+}
+
+.trim-wrapper {
+  display: flex;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+a:hover > .trim span {
+  color: $link-hover-color !important;
+}
+
+a > .trim span {
+  color: $primary !important;
+}
+
+.table .trim {
+  max-width: 10rem;
+}
+
+.table .trim-only-sm .trim {
+  max-width: none;
+
+  @include media-breakpoint-down(sm) {
+    max-width: 13rem;
+  }
+}

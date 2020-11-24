@@ -7,25 +7,17 @@ type DispatchType = (action: ActionType) => void;
 export interface GlobalContextProviderType {
   children: React.ReactNode;
   optionalConfig?: ConfigType;
-  config: ConfigType;
 }
 
 const GlobalStateContext = React.createContext<StateType | undefined>(undefined);
 const GlobalDispatchContext = React.createContext<DispatchType | undefined>(undefined);
 
-function GlobalProvider({ children, optionalConfig, config }: GlobalContextProviderType) {
+function GlobalProvider({ children, optionalConfig }: GlobalContextProviderType) {
   // const [state, dispatch] = React.useReducer(globalReducer, initialState(config, optionalConfig));
 
-  const [prodState, prodDispatch] = React.useReducer(
-    globalReducer,
-    initialState(config, optionalConfig)
-  );
+  const [prodState, prodDispatch] = React.useReducer(globalReducer, initialState(optionalConfig));
 
-  const [devState, devDispatch] = useReducer(
-    globalReducer,
-    initialState(config, optionalConfig),
-    'global'
-  );
+  const [devState, devDispatch] = useReducer(globalReducer, initialState(optionalConfig), 'global');
 
   const state = process.env.NODE_ENV === 'development' ? devState : prodState;
   const dispatch = process.env.NODE_ENV === 'development' ? devDispatch : prodDispatch;

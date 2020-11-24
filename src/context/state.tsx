@@ -1,55 +1,54 @@
 import { InferType } from 'yup';
-import { defaultNetwork, schema, adapterSchema } from './config';
-import { validatorData, brandData, ValidatorType } from './validators';
-import { CancelTokenSource } from 'axios';
+import config, { defaultNetwork, schema, adapterSchema } from './config';
+import { storage } from 'helpers';
 
-export type PublicConfigType = InferType<typeof schema>;
+export type NetworkType = InferType<typeof schema>;
 export type AdapterType = InferType<typeof adapterSchema>;
 
-interface BasicNetworkType {
-  refreshRate: number;
-  decimals: number;
-  validators?: boolean;
-  denomination: number;
-  gasPrice: number;
-  gasLimit: number;
-  gasPerDataByte: number;
-  nrOfShards: number;
-  versionNumber: string;
-  fetchedFromNetworkConfig?: boolean;
-}
-
-export type NetworkType = BasicNetworkType & PublicConfigType;
-
-type AppIdType = 'wallet' | 'explorer' | 'studio' | 'docs' | string;
-
-interface AppsType {
-  id: AppIdType;
-  name: string;
-  to: string;
-}
-
 export interface ConfigType {
-  metaChainShardId: number;
-  erdLabel: string;
-  elrondApps: AppsType[];
-  explorerApi: string;
   networks: NetworkType[];
-  secondary: boolean;
 }
 
-export interface BrandType {
+export interface ShardType {
+  shard: number;
+  validators: number;
+  activeValidators: number;
+}
+
+export interface IdentityType {
   name: string;
-  avatar: string;
-  identity: string;
   score: number;
   stake: number;
-  twitter: string;
-  web: string;
-  location: string;
   stakePercent: number;
   overallStakePercent: number;
-  nodesCount: number;
+  validators: number;
+  twitter?: string;
+  website?: string;
+  location?: string;
+  avatar?: string;
+  identity?: string;
+}
+
+export interface NodeType {
+  publicKey: string;
+  peerType: 'waiting' | 'eligible' | 'new' | 'jailed' | 'leaving';
+  nodeType: 'observer' | 'validator';
+  status: 'online' | 'offline';
+  identity: string;
+  versionNumber: string;
+  shard: number;
+  tempRating: number;
+  rating: number;
+  ratingModifier: number;
+  totalUpTime?: number;
+  totalDownTime?: number;
+  totalUpTimeSec?: number;
+  totalDownTimeSec?: number;
+  nodeName?: string;
+  receivedShardID?: number;
+  timeStamp?: string;
+  computedShardID?: number;
+  issues?: string[];
 }
 
 export interface StateType {
@@ -58,36 +57,56 @@ export interface StateType {
   activeNetwork: NetworkType;
   activeNetworkId: string;
   timeout: number; // axios
-  cancelToken: CancelTokenSource | undefined;
   refresh: {
     timestamp: number;
   };
-  validatorData: typeof validatorData; // todo: remove
-  brandData: typeof brandData;
-  nodes: ValidatorType[];
-  brands: BrandType[];
-  versionNumber: string;
+  theme: string;
+  nodes: NodeType[];
+  identities: IdentityType[];
+  blockchainTotalStake: number;
+  shards: ShardType[];
 }
 
-const initialState = (config: ConfigType, optionalConfig?: ConfigType): StateType => {
+const initialState = (optionalConfig?: ConfigType): StateType => {
   const configObject = optionalConfig !== undefined ? optionalConfig : config;
 
   return {
     config: configObject,
-    defaultNetwork: config.networks.filter((network) => network.default).pop() || defaultNetwork,
-    activeNetwork: config.networks.filter((network) => network.default).pop() || defaultNetwork,
+    defaultNetwork:
+      configObject.networks.filter((network) => network.default).pop() || defaultNetwork,
+    activeNetwork:
+      configObject.networks.filter((network) => network.default).pop() || defaultNetwork,
     activeNetworkId: '',
     timeout: 10 * 1000,
-    cancelToken: undefined,
     refresh: {
       timestamp: Date.now(),
     },
-    validatorData,
-    brandData,
+    theme: getTheme(),
     nodes: [],
-    brands: [],
-    versionNumber: '',
+    identities: [],
+    blockchainTotalStake: 0,
+    shards: [],
   };
+};
+
+const getTheme = (): StateType['theme'] => {
+  const isMainnet =
+    config.networks.find((network) => network.id === 'mainnet' && network.default === true) !==
+    undefined;
+  const defaultNetwork = config.networks.find((network) => network.default);
+  let theme = defaultNetwork ? defaultNetwork.theme : '';
+
+  if (isMainnet) {
+    const savedTheme = storage.getFromLocal('theme');
+    const systemDarkThemeOn = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (!savedTheme && systemDarkThemeOn) {
+      theme = 'dark';
+    } else {
+      theme = savedTheme === 'dark' ? 'dark' : theme;
+    }
+  }
+  return theme ? theme : 'default';
 };
 
 export default initialState;

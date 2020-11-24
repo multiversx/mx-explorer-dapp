@@ -3,26 +3,33 @@ import Denominate from './Denominate';
 import Highlights from './Highlights';
 import Loader from './Loader';
 import Pager from './Pager';
+import PageState from './PageState';
+import IconState from './IconState';
 import withPageTitle from './PageTitle';
 import ScAddressIcon from './ScAddressIcon';
 import Search from './Search';
 import ShardSpan from './ShardSpan';
-import TestnetLink from './TestnetLink';
+import NetworkLink from './NetworkLink';
+import NodesTable from './NodesTable';
 import NetworkReady, { withNetworkReady } from './NetworkReady';
 import TimeAgo from './TimeAgo';
 import TransactionsTable from './TransactionsTable';
 import TransactionStatus from './TransactionStatus';
 import TooltipWithCopy from './TooltipWithCopy';
 import CopyButton from './CopyButton';
-import NodesTabs from './NodesTabs';
 import adapter from './Adapter';
+import DetailItem from './DetailItem';
+import Trim from './Trim';
+import Led from './Led';
+import AxiosErrorHandler from './AxiosErrorHandler';
+import IdentityAvatar from './IdentityAvatar';
 
 export {
   Denominate,
   Highlights,
   Pager,
   ScAddressIcon,
-  TestnetLink,
+  NetworkLink,
   TimeAgo,
   NetworkReady,
   withNetworkReady,
@@ -30,11 +37,18 @@ export {
   ShardSpan,
   Search,
   BlocksTable,
+  NodesTable,
   Loader,
-  NodesTabs,
   TransactionsTable,
   TransactionStatus,
   TooltipWithCopy,
   CopyButton,
+  PageState,
+  IconState,
   adapter,
+  DetailItem,
+  Trim,
+  Led,
+  AxiosErrorHandler,
+  IdentityAvatar,
 };

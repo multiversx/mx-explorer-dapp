@@ -7,14 +7,24 @@ function format(
 ) {
   showLastNonZeroDecimal =
     typeof showLastNonZeroDecimal !== 'undefined' ? showLastNonZeroDecimal : false;
+
   let array = big.toString().split('');
+
+  let negative = false;
+  if(array[0] === '-') {
+    array.shift();
+    negative = true;
+  }
+
   if (denomination !== 0) {
     // make sure we have enough characters
     while (array.length < denomination + 1) {
       array.unshift('0');
     }
+
     // add our dot
     array.splice(array.length - denomination, 0, '.');
+    
     // make sure there are enough decimals after the dot
     while (array.length - array.indexOf('.') <= decimals) {
       array.push('0');
@@ -36,6 +46,7 @@ function format(
       array = array.slice(0, array.indexOf('.') + decimals + 1);
     }
   }
+
   if (addCommas) {
     // add comas every 3 characters
     array = array.reverse();
@@ -52,15 +63,22 @@ function format(
 
   const allDecimalsZero = array
     .slice(array.indexOf('.') + 1)
-    .every((digit) => digit.toString() === '0');
+    .every(digit => digit.toString() === '0');
 
   const string = array.join('');
 
+  let output;
   if (allDecimalsZero) {
-    return string.split('.')[0];
+    output = string.split('.')[0];
+  } else {
+    output = decimals === 0 ? string.split('.').join('') : string;
   }
 
-  return decimals === 0 ? string.split('.').join('') : string;
+  if (negative) {
+    output = '-' + output;
+  }
+
+  return output;
 }
 
 interface DenominateType {

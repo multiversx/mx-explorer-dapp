@@ -5,14 +5,14 @@ import LatestTransactions from './LatestTransactions';
 
 const Home = () => {
   return (
-    <div>
+    <div className="home">
       <Hero />
-      <div className="container pt-3 pb-3">
+      <div className="container">
         <div className="row">
-          <div className="col-lg-6 mt-4 mb-4">
+          <div className="col-lg-6 mt-spacer">
             <LatestBlocks />
           </div>
-          <div className="col-lg-6 mt-4 mb-4">
+          <div className="col-lg-6 mt-spacer">
             <LatestTransactions />
           </div>
         </div>

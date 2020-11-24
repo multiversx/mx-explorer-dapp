@@ -1,0 +1,31 @@
+.footer {
+  height: 5.14rem; // py-spacer height
+
+  .footer-inner {
+    margin: 0;
+    font-size: 0.925rem;
+    line-height: 1.155rem;
+    padding: 0 0.155rem;
+
+    a {
+      color: $body;
+
+      &:hover {
+        color: $body;
+      }
+
+      #heart {
+        height: 1rem;
+        width: 1rem;
+
+        path {
+          fill: #c00;
+        }
+      }
+    }
+  }
+
+  .version {
+    font-size: 50%;
+  }
+}

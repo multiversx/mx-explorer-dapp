@@ -1,56 +1,64 @@
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import * as React from 'react';
+import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
+import { faCircleNotch } from '@fortawesome/pro-regular-svg-icons/faCircleNotch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGlobalState } from 'context';
-import { networkRoute } from 'helpers';
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNetworkRoute, urlBuilder } from 'helpers';
+import { Redirect, useLocation } from 'react-router-dom';
 import { adapter } from 'sharedComponents';
 
-const Search = () => {
-  const { activeNetworkId, brandData, validatorData } = useGlobalState();
+interface SearchType {
+  setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-  const { isAddress, isBlock, isTransaction } = adapter();
+const Search = ({ setExpanded = () => null }: SearchType) => {
+  const { pathname } = useLocation();
+  const networkRoute = useNetworkRoute();
+  const { getAccount, getBlock, getTransaction, getNode, getMiniBlock } = adapter();
+  const [route, setRoute] = React.useState('');
+  const [searching, setSearching] = React.useState(false);
 
-  const history = useHistory();
   const [hash, setHash] = React.useState<string>('');
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
       onClick();
     }
   };
 
   const onClick = async () => {
-    const isValidator =
-      hash &&
-      validatorData.validators.length &&
-      validatorData.validators.some((validator) => validator.publicKey === hash);
-    const brand =
-      hash &&
-      validatorData.validators.length &&
-      brandData.some(
-        (brand) =>
-          brand.identity === hash || brand.name.toLowerCase().includes(hash.trim().toLowerCase())
-      )
-        ? brandData.find(
-            (brand) =>
-              brand.identity === hash ||
-              brand.name.toLowerCase().includes(hash.trim().toLowerCase())
-          )!.identity
-        : '';
+    if (Boolean(hash)) {
+      setSearching(true);
 
-    if (isValidator) {
-      history.push(networkRoute({ to: `/validators/nodes/${hash}`, activeNetworkId }));
-    } else if (brand) {
-      history.push(networkRoute({ to: `/validators/${brand}`, activeNetworkId }));
-    } else if (await isBlock({ hash })) {
-      history.push(networkRoute({ to: `/blocks/${hash}`, activeNetworkId }));
-    } else if (await isTransaction({ hash })) {
-      history.push(networkRoute({ to: `/transactions/${hash}`, activeNetworkId }));
-    } else if (await isAddress({ hash })) {
-      history.push(networkRoute({ to: `/address/${hash}`, activeNetworkId }));
-    } else {
-      history.push(networkRoute({ to: `/search/${hash}`, activeNetworkId }));
+      Promise.all([
+        getNode(hash),
+        getBlock(hash),
+        getTransaction(hash),
+        getAccount(hash),
+        getMiniBlock(hash),
+      ]).then(([node, block, transaction, account, miniblock]) => {
+        setExpanded(false);
+        switch (true) {
+          case block.success:
+            setRoute(networkRoute(`/blocks/${hash}`));
+            break;
+          case transaction.success:
+            setRoute(networkRoute(`/transactions/${hash}`));
+            break;
+          case miniblock.blockFetched:
+            setRoute(networkRoute(`/miniblocks/${hash}`));
+            break;
+          case account.success:
+            setRoute(networkRoute(urlBuilder.accountDetails(hash)));
+            break;
+          case node.success:
+            setRoute(networkRoute(urlBuilder.nodeDetails(hash)));
+            break;
+          default:
+            setRoute(networkRoute(`/search/${hash}`));
+            break;
+        }
+      });
     }
   };
 
@@ -58,30 +66,55 @@ const Search = () => {
     setHash(e.target.value);
   };
 
-  return (
-    <>
-      <input
-        type="text"
-        className="form-control mr-sm-2 pl-3"
-        placeholder="Address / Txn Hash / Block Hash"
-        name="requestType"
-        data-testid="search"
-        required
-        value={hash}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-      />
-      <div className="input-group-append">
-        <button
-          type="submit"
-          className="input-group-text"
-          onClick={onClick}
-          data-testid="searchButton"
-        >
-          <FontAwesomeIcon icon={faSearch} />
-        </button>
+  const reset = () => {
+    if (route) {
+      setRoute('');
+    }
+    if (hash) {
+      setHash('');
+    }
+    if (searching) {
+      setSearching(false);
+    }
+  };
+
+  React.useEffect(reset, [route, pathname]);
+
+  return route ? (
+    <Redirect to={route} />
+  ) : (
+    <form className="w-100 d-flex mx-md-2">
+      <div className="input-group input-group-seamless py-md-2">
+        <input
+          type="text"
+          className="form-control rounded-pill my-1 text-truncate"
+          placeholder="Address / Tx Hash / Block Hash / Validator Key"
+          name="requestType"
+          data-testid="search"
+          required
+          value={hash}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+        />
+        <div className="input-group-append">
+          <button
+            type="submit"
+            className="input-group-text side-action outline-0 m-0"
+            onClick={(e) => {
+              e.preventDefault();
+              onClick();
+            }}
+            data-testid="searchButton"
+          >
+            {searching ? (
+              <FontAwesomeIcon icon={faCircleNotch} spin className="mr-1 text-primary" />
+            ) : (
+              <FontAwesomeIcon icon={faSearch} className="mr-1" />
+            )}
+          </button>
+        </div>
       </div>
-    </>
+    </form>
   );
 };
 

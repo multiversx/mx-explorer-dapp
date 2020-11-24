@@ -2,16 +2,13 @@ import { useGlobalState } from 'context';
 import elastic from './elastic';
 import api from './api';
 import * as f from './functions';
+import { metaChainShardId } from 'appConfig';
 
 export default function useAdapter() {
   const {
     activeNetwork: { elasticUrl, adapter, proxyUrl: nodeUrl, apiUrl },
-    config: { metaChainShardId },
     timeout,
   } = useGlobalState();
-
-  // TODO: ramane apiUrl un singur url ptr api
-  // la elastic ramane proprietatea proxyUrl si elasticUrl
 
   const providers = {
     api: {
@@ -34,29 +31,30 @@ export default function useAdapter() {
     getHighlights: () =>
       f.getHighlights({ provider, proxyUrl, baseUrl, timeout, metaChainShardId }),
 
+    getNetworkStatus: () => f.getNetworkStatus({ proxyUrl, timeout, metaChainShardId }),
+
     getLatestBlocks: () => f.getLatestBlocks({ provider, baseUrl, timeout }),
 
     getLatestTransactions: () => f.getLatestTransactions({ provider, baseUrl, timeout }),
 
     /* Blocks */
 
-    getBlock: ({ blockId }: { blockId: string }) =>
-      f.getBlock({ provider, baseUrl, blockId, timeout }),
+    getBlock: (blockId: string) => f.getBlock({ provider, baseUrl, blockId, timeout }),
 
-    getBlocks: ({ size, shardId, epochId }: f.GetBlocksType) =>
-      f.getBlocks({ provider, baseUrl, size, shardId, epochId, timeout }),
+    getBlocks: ({ size, shard, epochId, proposer }: f.GetBlocksType) =>
+      f.getBlocks({ provider, baseUrl, size, shard, epochId, proposer, timeout }),
 
-    getBlocksCount: ({ size, shardId, epochId }: f.GetBlocksType) =>
-      f.getBlocksCount({ provider, baseUrl, size, shardId, epochId, timeout }),
+    getBlocksCount: ({ size, shard, epochId }: f.GetBlocksType) =>
+      f.getBlocksCount({ provider, baseUrl, size, shard, epochId, timeout }),
 
     /* Transaction */
 
-    getTransaction: ({ transactionId }: { transactionId: string }) =>
+    getTransaction: (transactionId: string) =>
       f.getTransaction({ provider, baseUrl, transactionId, timeout }),
 
     /* Miniblocks */
 
-    getMiniBlock: ({ miniBlockHash }: { miniBlockHash: string }) =>
+    getMiniBlock: (miniBlockHash: string) =>
       f.getMiniBlock({ provider, baseUrl, miniBlockHash, timeout }),
 
     getMiniBlockTransactions: ({ miniBlockHash, size }: { miniBlockHash: string; size: number }) =>
@@ -67,80 +65,129 @@ export default function useAdapter() {
 
     /* Transactions */
 
-    getTransactions: ({ size, addressId, shardId, shardType }: f.TransactionsType) =>
-      f.getTransactions({ provider, baseUrl, timeout, addressId, size, shardId, shardType }),
+    getTransactions: ({ size, address, senderShard, receiverShard }: f.TransactionsType) =>
+      f.getTransactions({
+        provider,
+        baseUrl,
+        timeout,
+        address,
+        size,
+        senderShard,
+        receiverShard,
+      }),
 
-    getTransactionsCount: ({ size, addressId, shardId, shardType }: f.TransactionsType) =>
+    getTransactionsCount: ({ size, address, senderShard, receiverShard }: f.TransactionsType) =>
       f.getTransactionsCount({
         provider,
         baseUrl,
         timeout,
-        addressId,
+        address,
         size,
-        shardId,
-        shardType,
+        senderShard,
+        receiverShard,
       }),
 
-    getAddressDetails: ({ addressId }: { addressId: string }) =>
-      f.getAddressDetails({ proxyUrl, timeout, addressId }),
-
-    getRewards: ({ addressId }: { addressId: string }) =>
-      f.getRewards({ proxyUrl, timeout, addressId }),
+    getRewards: (address: string) => f.getRewards({ proxyUrl, timeout, address }),
 
     /* Validators */
 
+    getShards: () =>
+      f.getShards({
+        provider,
+        baseUrl,
+        timeout,
+      }),
+
     getNodes: ({
-      searchValue,
       peerType,
       issues,
-    }: {
-      searchValue?: string;
-      peerType?: string;
-      issues?: string;
-    }) => f.getNodes({ provider, baseUrl, timeout, searchValue, peerType, issues }),
+      search,
+      nodeType,
+      shard,
+      status,
+      size,
+      identity,
+      pagination,
+      sort,
+      order,
+    }: f.GetNodesType) =>
+      f.getNodes({
+        provider,
+        baseUrl,
+        timeout,
+        peerType,
+        issues,
+        search,
+        nodeType,
+        shard,
+        status,
+        size,
+        identity,
+        pagination,
+        sort,
+        order,
+      }),
 
-    getNetworkConfig: () => f.getNetworkConfig({ proxyUrl, timeout }),
+    getNodesCount: ({
+      peerType,
+      issues,
+      search,
+      nodeType,
+      shard,
+      status,
+      identity,
+    }: f.GetNodesType) =>
+      f.getNodes({
+        provider,
+        baseUrl,
+        timeout,
+        peerType,
+        issues,
+        search,
+        nodeType,
+        shard,
+        status,
+        identity,
+        count: true,
+      }),
 
-    getRounds: ({ shardNumber, signersIndex, epoch, roundAtEpochStart }: f.GetRoundsType) =>
+    getIdentities: () =>
+      f.getIdentities({
+        provider,
+        baseUrl,
+        timeout,
+      }),
+
+    getIdentity: (identity: string) =>
+      f.getIdentity({
+        provider,
+        baseUrl,
+        timeout,
+        identity,
+      }),
+
+    getNode: (key: string) =>
+      f.getNode({
+        provider,
+        baseUrl,
+        timeout,
+        key,
+      }),
+
+    getRounds: ({ validator }: f.GetRoundsType) =>
       f.getRounds({
         provider,
         baseUrl,
-        shardNumber,
-        signersIndex,
-        epoch,
-        timeout: Math.max(timeout, 10000),
-        roundAtEpochStart,
+        validator,
+        timeout,
       }),
 
-    getValidator: ({ currentValidator, explorerApi, publicKey }: f.GetValidatorType) =>
-      f.getValidator({
-        provider,
-        currentValidator,
-        proxyUrl,
-        baseUrl,
-        timeout: Math.max(timeout, 10000),
-        explorerApi,
-        publicKey,
-      }),
+    getAccount: (address: string) => f.getAccount({ proxyUrl, timeout, address }),
 
-    searchBlocks: ({ shardNumber, signersIndex, epoch, roundAtEpochStart }: f.GetRoundsType) =>
-      f.searchBlocks({
-        provider,
-        baseUrl,
-        shardNumber,
-        signersIndex,
-        epoch,
-        timeout: Math.max(timeout, 10000),
-        roundAtEpochStart,
-      }),
+    getAccounts: ({ size }: f.GetAccountsType) =>
+      f.getAccounts({ provider, baseUrl, size, timeout }),
 
-    /* Search */
-
-    isBlock: ({ hash }: { hash: string }) => f.isBlock({ provider, baseUrl, hash, timeout }),
-
-    isAddress: ({ hash }: { hash: string }) => f.isAddress({ proxyUrl, hash, timeout }),
-
-    isTransaction: ({ hash }: { hash: string }) =>
-      f.isTransaction({ provider, baseUrl, proxyUrl, hash, timeout }),
+    getAccountsCount: ({ size }: f.GetAccountsType) =>
+      f.getAccountsCount({ provider, baseUrl, size, timeout }),
   };
 }
