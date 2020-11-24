@@ -15,11 +15,11 @@ export async function getTransaction({
 
     return {
       data,
-      transactionFetched: Boolean(data),
+      success: Boolean(data),
     };
   } catch (err) {
     return {
-      transactionFetched: false,
+      success: false,
     };
   }
 }

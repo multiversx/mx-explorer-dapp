@@ -36,7 +36,7 @@ const wrapper = ({ baseUrl, url, params = {}, timeout }: ProviderPropsType & { u
 
   const {
     nonce,
-    shardId,
+    shard,
     epoch,
     proposer,
     miniBlockHash,
@@ -46,19 +46,30 @@ const wrapper = ({ baseUrl, url, params = {}, timeout }: ProviderPropsType & { u
     receiverShard,
     signersIndexes,
     round,
+    condition,
   } = params;
 
   boolQuery = createMustQuery({ nonce }, boolQuery);
-  boolQuery = createMustQuery({ shardId }, boolQuery);
+  boolQuery = createMustQuery({ shard }, boolQuery);
   boolQuery = createMustQuery({ epoch }, boolQuery);
   boolQuery = createMustQuery({ proposer }, boolQuery);
   boolQuery = createMustQuery({ signersIndexes }, boolQuery);
 
   boolQuery = createShouldQuery({ miniBlockHash }, boolQuery);
-  boolQuery = createShouldQuery({ sender }, boolQuery);
-  boolQuery = createShouldQuery({ receiver }, boolQuery);
   boolQuery = createShouldQuery({ senderShard }, boolQuery);
   boolQuery = createShouldQuery({ receiverShard }, boolQuery);
+
+  switch (condition) {
+    case 'must':
+      boolQuery = createMustQuery({ sender }, boolQuery);
+      boolQuery = createMustQuery({ receiver }, boolQuery);
+      break;
+
+    default:
+      boolQuery = createShouldQuery({ sender }, boolQuery);
+      boolQuery = createShouldQuery({ receiver }, boolQuery);
+      break;
+  }
 
   //#region EXCEPTIONS
   if (round) {

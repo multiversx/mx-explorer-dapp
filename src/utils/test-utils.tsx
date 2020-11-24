@@ -1,4 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
+import axios from 'axios';
+import 'jest-canvas-mock';
 import { render } from '@testing-library/react';
 import { GlobalProvider } from 'context';
 import { ConfigType } from 'context/state';
@@ -7,8 +9,7 @@ import React from 'react';
 import { Router } from 'react-router-dom';
 import { App } from '../App';
 import defaultConfig from './config';
-
-export const config = defaultConfig;
+import * as rawData from './rawData';
 
 const customRender = (ui: any, options: any = {}) => render(ui, { wrapper: App, ...options });
 
@@ -22,11 +23,12 @@ const renderWithRouter = ({
   optionalConfig?: ConfigType;
 }) => {
   history = createMemoryHistory({ initialEntries: [route] });
+
   return {
     ...render(
-      <GlobalProvider config={config}>
+      <GlobalProvider optionalConfig={optionalConfig}>
         <Router history={history}>
-          <App optionalConfig={optionalConfig || config} />
+          <App optionalConfig={optionalConfig || defaultConfig} />
         </Router>
       </GlobalProvider>
     ),
@@ -37,24 +39,93 @@ const renderWithRouter = ({
   };
 };
 
-const meta = {
-  id: 'meta',
-  liveTPS: 125,
-  peakTPS: 858,
-  nrOfShards: 5,
-  nrOfNodes: 100,
-  blockNumber: 9480,
-  roundNumber: 11502,
-  roundTime: 6,
-  averageBlockTxCount: 351,
-  lastBlockTxCount: 755,
-  totalProcessedTxCount: 3332899,
-  shardID: 0,
-  averageTPS: null,
-  currentBlockNonce: 0,
+interface MockImplementationType {
+  networkRequests?: { [key: string]: () => Promise<any> };
+}
+
+const mockImplementation = ({ networkRequests }: MockImplementationType) => {
+  const requests = {
+    stats: () => Promise.resolve({ data: rawData.stats }),
+    validators: () => Promise.resolve({ data: rawData.validators }),
+    transactionsCount: () => Promise.resolve({ data: 14253408 }),
+    transactions: () => Promise.resolve({ data: rawData.transactionsSearch }),
+    transaction: () => Promise.resolve({ data: rawData.transactions }),
+    blocksCount: () => Promise.resolve({ data: 239890 }),
+    blocks: () => Promise.resolve({ data: rawData.blocks }),
+    block: () => {
+      return Promise.resolve({ data: rawData.block });
+    },
+    miniblock: () => Promise.resolve({ data: rawData.miniblock }),
+    networkStatus: () => Promise.resolve({ data: { data: rawData.epoch, code: 'successful' } }),
+    accountsCount: () => Promise.resolve({ data: 1933 }),
+    accounts: () => Promise.resolve({ data: rawData.accounts }),
+    account: () => Promise.resolve({ data: rawData.account }),
+    delegation: () => Promise.resolve({ data: rawData.delegation }),
+    node: () => Promise.resolve({ data: rawData.node }),
+    identity: () => Promise.resolve({ data: rawData.identity }),
+    ...networkRequests,
+  };
+
+  return (url: string): any => {
+    switch (true) {
+      // --- page load ---
+      case url.includes('/stats'):
+        return requests.stats();
+      // --- page load ---
+      case url.includes('network/status'):
+        return requests.networkStatus();
+      case url.includes('/validators'):
+        return requests.validators();
+      case url.includes('/transactions/count'):
+        return requests.transactionsCount();
+      case url.includes('/transactions/'):
+        return requests.transaction();
+      case url.includes('/transactions'):
+        return requests.transactions();
+      case url.includes('/delegation'):
+        return requests.delegation();
+      case url.includes('/accounts/count'):
+        return requests.accountsCount();
+      case url.includes('/accounts/'):
+        return requests.account();
+      case url.includes('/accounts'):
+        return requests.accounts();
+      case url.includes('/blocks/count'):
+        return requests.blocksCount();
+      case url.includes('/blocks/'):
+        return requests.block();
+      case url.includes('/blocks'):
+        return requests.blocks();
+      case url.includes('/miniblocks/'):
+        return requests.miniblock();
+      case url.includes('/nodes/'):
+        return requests.node();
+      case url.includes('/identities/'):
+        return requests.identity();
+    }
+  };
+};
+
+const beforeAll = ({
+  route,
+  networkRequests,
+  optionalConfig = defaultConfig,
+}: {
+  route: string;
+  networkRequests?: MockImplementationType['networkRequests'];
+  optionalConfig?: ConfigType;
+}) => {
+  const mockGet = jest.spyOn(axios, 'get');
+
+  mockGet.mockImplementation(mockImplementation({ networkRequests }));
+
+  return renderWithRouter({
+    route,
+    optionalConfig,
+  });
 };
 
 // re-export everything
 export * from '@testing-library/react';
 // override render method
-export { customRender as render, renderWithRouter, meta };
+export { customRender as render, renderWithRouter, beforeAll };

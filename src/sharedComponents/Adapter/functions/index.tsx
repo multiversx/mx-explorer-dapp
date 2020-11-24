@@ -1,15 +1,21 @@
 import { AxiosResponse } from 'axios';
 import getHighlights from './getHighlights';
 import getLatestBlocks from './getLatestBlocks';
-import getNodes from './getNodes';
+import getShards from './getShards';
+import getIdentities from './getIdentities';
+import getIdentity from './getIdentity';
+import getNode from './getNode';
+import getRounds, { GetRoundsType as GetRoundsInterface } from './getRounds';
+import getNodes, { GetNodesType as GetNodesInterface } from './getNodes';
 import getLatestTransactions from './getLatestTransactions';
-import getNetworkConfig from './getNetworkConfig';
 import { getBlocks, GetBlocksParamsType, getBlocksCount } from './getBlocks';
-import getBlock, { BlockType as BlockInterface } from './getBlock';
+import { getAccounts, getAccountsCount, GetAccountsParamsType } from './getAccounts';
+import getBlock from './getBlock';
+import getNetworkStatus from './getNetworkStatus';
 import {
   getTransactions,
   getTransactionsCount,
-  getAddressDetails,
+  getAccount,
   getRewards,
   TransactionsType as TransactionsInterface,
 } from './getTransactions';
@@ -19,34 +25,30 @@ import {
   getMiniBlockTransactions,
   getMiniBlockTransactionsCount,
 } from './getMiniBlocks';
-import {
-  getRounds,
-  GetRoundsType as RoundsType,
-  searchBlocks,
-  getValidator,
-  GetValidatorType as GetValidatorInterface,
-} from './getValidators';
-import { isBlock, isAddress, isTransaction } from './getSearch';
 
 export interface ProviderPropsType {
   baseUrl: string;
   params?: {
     nonce?: number;
-    shardId?: number;
+    shard?: number;
     epoch?: number;
-    proposer?: number;
+    proposer?: string;
     miniBlockHash?: string;
     sender?: string;
     receiver?: string;
+    condition?: 'should' | 'must';
     senderShard?: number;
     receiverShard?: number;
     signersIndexes?: number;
     round?: number;
     from?: number;
     size?: number;
-    searchValue?: string;
-    peerType?: string;
+    search?: string;
     issues?: string;
+    peerType?: string;
+    nodeType?: string;
+    status?: string;
+    validator?: string;
   };
   timeout: number;
 }
@@ -59,11 +61,11 @@ export type GetBlocksType = GetBlocksParamsType;
 
 export type TransactionsType = TransactionsInterface;
 
-export type GetRoundsType = RoundsType;
+export type GetNodesType = GetNodesInterface;
 
-export type BlockType = BlockInterface;
+export type GetRoundsType = GetRoundsInterface;
 
-export type GetValidatorType = GetValidatorInterface;
+export type GetAccountsType = GetAccountsParamsType;
 
 export {
   getHighlights,
@@ -73,19 +75,20 @@ export {
   getBlocks,
   getBlocksCount,
   getTransaction,
+  getTransactions,
+  getTransactionsCount,
   getMiniBlock,
   getMiniBlockTransactions,
   getMiniBlockTransactionsCount,
-  getTransactions,
-  getTransactionsCount,
-  getAddressDetails,
   getRewards,
-  isBlock,
-  isAddress,
-  isTransaction,
   getRounds,
-  searchBlocks,
-  getValidator,
+  getNode,
   getNodes,
-  getNetworkConfig,
+  getShards,
+  getIdentity,
+  getIdentities,
+  getNetworkStatus,
+  getAccount,
+  getAccounts,
+  getAccountsCount,
 };

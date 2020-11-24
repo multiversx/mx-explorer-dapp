@@ -1,197 +1,196 @@
-import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dropdown } from 'react-bootstrap';
 import * as React from 'react';
-
-interface FiltersType {
+import { useHistory, useLocation } from 'react-router-dom';
+import { Dropdown } from 'react-bootstrap';
+import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
+import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { NetworkLink } from 'sharedComponents';
+interface FiltersInterface {
   resultsCount: number;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-  setPeerType: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setIssues: React.Dispatch<React.SetStateAction<boolean>>;
-  searchValue: string;
-  peerType: string | undefined;
-  issues: boolean;
 }
 
-const Filters = ({
-  resultsCount,
-  setSearchValue,
-  setPeerType,
-  setIssues,
-  peerType,
-  issues,
-}: FiltersType) => {
-  const [inputValue, setInputValue] = React.useState<string>('');
+const Filters = ({ resultsCount }: FiltersInterface) => {
+  const { pathname, search: locationSearch } = useLocation();
+  const history = useHistory();
+  const urlParams = new URLSearchParams(locationSearch);
+  const { search, peerType, issues, nodeType } = Object.fromEntries(urlParams);
+  const [inputValue, setInputValue] = React.useState<string>(search);
 
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setInputValue(e.target.value);
-    if (e.target.value.length >= 3) {
-      setSearchValue(e.target.value.toString().toLowerCase());
-    }
-    if (e.target.value.length === 0) {
-      setSearchValue('');
-    }
   };
 
-  const resetValidatorValue = () => {
-    setSearchValue('');
-    setInputValue('');
+  const updateSearchValue = (searchValue: string) => {
+    const { search, page, ...rest } = Object.fromEntries(urlParams);
+    const nextUrlParams = new URLSearchParams({
+      ...rest,
+      ...(searchValue ? { search: searchValue } : {}),
+    }).toString();
+    history.push(`${pathname}?${nextUrlParams}`);
   };
 
-  const changeValidatorObserver = (e: any, peerType: string) => {
-    e.preventDefault();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-    document.body.click();
-    changePeerType(peerType);
+  const peerTypeLink = (peerTypeValue: string) => {
+    const { peerType, nodeType, issues, page, ...rest } = Object.fromEntries(urlParams);
+    const nextUrlParams = new URLSearchParams({
+      ...rest,
+      ...(peerTypeValue ? { peerType: peerTypeValue } : {}),
+    }).toString();
+    return `${pathname}?${nextUrlParams}`;
   };
 
-  const changePeerType = (peerType: string) => {
-    setIssues(false);
-    setPeerType(peerType);
+  const nodeTypeLink = (nodeTypeValue: string) => {
+    const { nodeType, peerType, issues, page, ...rest } = Object.fromEntries(urlParams);
+    const nextUrlParams = new URLSearchParams({
+      ...rest,
+      ...(nodeTypeValue ? { nodeType: nodeTypeValue } : {}),
+    }).toString();
+    return `${pathname}?${nextUrlParams}`;
+  };
+
+  const issuesLink = (issuesValue: string) => {
+    const { nodeType, peerType, issues, page, ...rest } = Object.fromEntries(urlParams);
+    const nextUrlParams = new URLSearchParams({
+      ...rest,
+      ...(issuesValue ? { issues: issuesValue, nodeType: 'validator' } : {}),
+    }).toString();
+    return `${pathname}?${nextUrlParams}`;
   };
 
   return (
-    <>
-      <div className="float-right">
-        {/* <div role="search">
+    <div className="nodes-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
+      <ul className="list-inline m-0">
+        <li className="list-inline-item my-1 my-md-0">
+          <NetworkLink
+            to="/nodes"
+            className={`btn btn-sm btn-outline-light btn-pill ${
+              [search, peerType, issues, nodeType].every((el) => el === undefined) ? 'active' : ''
+            }`}
+          >
+            All
+          </NetworkLink>
+        </li>
+        <li className="list-inline-item my-1 my-md-0">
+          <NetworkLink
+            to={nodeTypeLink('validator')}
+            className={`btn btn-sm btn-outline-light btn-pill ${
+              nodeType === 'validator' && issues !== 'true' ? 'active' : ''
+            }`}
+          >
+            Validators
+          </NetworkLink>
+        </li>
+        <li className="list-inline-item my-1 my-md-0">
+          <NetworkLink
+            to={nodeTypeLink('observer')}
+            data-testid="filterByObservers"
+            className={`btn btn-sm btn-outline-light btn-pill ${
+              nodeType === 'observer' ? 'active' : ''
+            }`}
+          >
+            Observers
+          </NetworkLink>
+        </li>
+        <li className="list-inline-item my-1 my-md-0">
+          <NetworkLink
+            to={issuesLink('true')}
+            className={`btn btn-sm btn-outline-light btn-pill ${issues === 'true' ? 'active' : ''}`}
+          >
+            Issues
+          </NetworkLink>
+        </li>
+        <li className="list-inline-item my-1 my-md-0">
+          <Dropdown>
+            <Dropdown.Toggle
+              variant="outline-light"
+              size="sm"
+              className={`btn-pill ${
+                ['eligible', 'waiting', 'new', 'jailed'].includes(peerType) ? 'active' : ''
+              }`}
+              id="more"
+            >
+              More
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <NetworkLink
+                className={`dropdown-item ${peerType === 'eligible' ? 'active' : ''}`}
+                data-testid="filterByValidators"
+                to={peerTypeLink('eligible')}
+              >
+                Eligible
+              </NetworkLink>
+              <NetworkLink
+                className={`dropdown-item ${peerType === 'waiting' ? 'active' : ''}`}
+                data-testid="filterByValidators"
+                to={peerTypeLink('waiting')}
+              >
+                Waiting
+              </NetworkLink>
+              <NetworkLink
+                className={`dropdown-item ${peerType === 'new' ? 'active' : ''}`}
+                data-testid="filterByValidators"
+                to={peerTypeLink('new')}
+              >
+                New
+              </NetworkLink>
+              <NetworkLink
+                className={`dropdown-item ${peerType === 'jailed' ? 'active' : ''}`}
+                data-testid="filterByValidators"
+                to={peerTypeLink('jailed')}
+              >
+                Jailed
+              </NetworkLink>
+              <NetworkLink
+                className={`dropdown-item ${peerType === 'leaving' ? 'active' : ''}`}
+                data-testid="filterByValidators"
+                to={peerTypeLink('leaving')}
+              >
+                Leaving
+              </NetworkLink>
+            </Dropdown.Menu>
+          </Dropdown>
+        </li>
+      </ul>
+
+      <div className="my-1 my-md-0">
+        <div role="search">
           <div className="input-group input-group-seamless">
             <input
               type="text"
-              className="form-control"
-              value={inputValue}
+              className="form-control rounded-pill"
+              value={inputValue || ''}
               onChange={changeValidatorValue}
+              onKeyDown={(keyEvent: React.KeyboardEvent) => {
+                if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
+                  updateSearchValue(inputValue);
+                }
+              }}
               placeholder="Search"
               name="validatorSearch"
               data-testid="validatorSearch"
-              style={{ borderRadius: '2rem' }}
             />
             <div className="input-group-append">
-              {inputValue === '' ? (
-                <button type="submit" className="input-group-text">
-                  <FontAwesomeIcon icon={faSearch} />
-                </button>
-              ) : (
+              {inputValue ? (
                 <button
                   type="reset"
-                  className="input-group-text"
-                  onClick={resetValidatorValue}
+                  className="input-group-text side-action"
+                  onClick={() => {
+                    updateSearchValue('');
+                  }}
                   data-testid="resetSearch"
                 >
                   <FontAwesomeIcon icon={faTimes} />
                 </button>
+              ) : (
+                <button type="submit" className="input-group-text side-action outline-0">
+                  <FontAwesomeIcon icon={faSearch} />
+                </button>
               )}
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
-      <div className="float-right mt-2 mr-4">
-        {/* {resultsCount
-          ? `Showing ${resultsCount.toLocaleString('en')} of ${resultsCount.toLocaleString('en')}`
-          : ''} */}
-      </div>
-      <div className="mt-1">
-        <ul className="list-inline">
-          <li className="list-inline-item">
-            <button
-              className={`btn btn-sm btn-outline-light btn-pill ${peerType === '' ? 'active' : ''}`}
-              onClick={() => {
-                changePeerType('');
-              }}
-            >
-              All
-            </button>
-          </li>
-          <li className="list-inline-item">
-            <button
-              className={`btn btn-sm btn-outline-light btn-pill ${
-                peerType === 'validator' ? 'active' : ''
-              }`}
-              onClick={() => {
-                changePeerType('validator');
-              }}
-            >
-              Validators
-            </button>
-          </li>
-          <li className="list-inline-item">
-            <button
-              data-testid="filterByObservers"
-              className={`btn btn-sm btn-outline-light btn-pill ${
-                peerType === 'observer' ? 'active' : ''
-              }`}
-              onClick={() => {
-                changePeerType('observer');
-              }}
-            >
-              Observers
-            </button>
-          </li>
-          <li className="list-inline-item">
-            <button
-              className={`btn btn-sm btn-outline-light btn-pill ${issues ? 'active' : ''}`}
-              onClick={() => {
-                setIssues(true);
-                setPeerType(undefined);
-              }}
-            >
-              Issues
-            </button>
-          </li>
-          <li className="list-inline-item">
-            <Dropdown>
-              <Dropdown.Toggle
-                variant="outline-light"
-                size="sm"
-                className={`btn-pill ${
-                  ['eligible', 'waiting', 'new', 'jailed'].includes(String(peerType))
-                    ? 'active'
-                    : ''
-                }`}
-                id="more"
-              >
-                More
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                <Dropdown.Item
-                  className={`${'eligible' === peerType ? 'active' : ''}`}
-                  data-testid="filterByValidators"
-                  href="#/validators"
-                  onClick={(e: any) => changeValidatorObserver(e, 'eligible')}
-                >
-                  Eligible
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className={`${'waiting' === peerType ? 'active' : ''}`}
-                  data-testid="filterByValidators"
-                  href="#/validators"
-                  onClick={(e: any) => changeValidatorObserver(e, 'waiting')}
-                >
-                  Waiting
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className={`${'new' === peerType ? 'active' : ''}`}
-                  data-testid="filterByValidators"
-                  href="#/validators"
-                  onClick={(e: any) => changeValidatorObserver(e, 'new')}
-                >
-                  New
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className={`${peerType === 'jailed' ? 'active' : ''}`}
-                  data-testid="filterByValidators"
-                  href="#/validators"
-                  onClick={(e: any) => changeValidatorObserver(e, 'jailed')}
-                >
-                  Jailed
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </li>
-        </ul>
-      </div>
-    </>
+    </div>
   );
 };
 
