@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ProviderType, ProviderPropsType } from './../../functions';
+import { ProviderType, ProviderPropsType } from '../../helpers';
 import getNodes from './getNodes';
 import * as bech32 from './bech32';
 import computeShard from './computeShard';

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ProviderType, ProviderPropsType } from './../functions';
+import { ProviderType, ProviderPropsType } from '../helpers';
 
 const api: ProviderType = ({ baseUrl, url, params, timeout }) => {
   return axios.get(`${baseUrl}${url}`, { params, timeout });

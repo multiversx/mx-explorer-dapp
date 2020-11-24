@@ -1,4 +1,4 @@
-import * as f from './functions';
+import * as f from './helpers';
 import useAdapterConfig from './useAdapterConfig';
 
 export default function useAdapter() {

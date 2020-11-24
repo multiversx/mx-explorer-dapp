@@ -2,39 +2,15 @@ import { useGlobalState } from 'context';
 import elasticAdapter from './elastic';
 import apiAdapter from './api';
 import { metaChainShardId } from 'appConfig';
+import { ProviderPropsType } from './helpers';
 
 interface PropsType {
-  baseUrl?: string;
-  proxyUrl?: string;
+  baseUrl?: ProviderPropsType['baseUrl'];
+  proxyUrl?: ProviderPropsType['proxyUrl'];
   metaChainShardId?: number;
   url?: string;
-  params?: {
-    nonce?: number;
-    shard?: number;
-    epoch?: number;
-    proposer?: string;
-    miniBlockHash?: string;
-    sender?: string;
-    receiver?: string;
-    condition?: 'should' | 'must';
-    senderShard?: number;
-    receiverShard?: number;
-    signersIndexes?: number;
-    round?: number;
-    from?: number;
-    size?: number;
-    search?: string;
-    issues?: string;
-    peerType?: string;
-    nodeType?: string;
-    status?: string;
-    validator?: string;
-    fields?: any;
-    identity?: string;
-    sort?: string;
-    order?: string;
-  };
-  timeout?: number;
+  params?: ProviderPropsType['params'];
+  timeout?: ProviderPropsType['timeout'];
 }
 
 async function wrap(asyncRequest: () => Promise<any>) {
