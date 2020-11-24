@@ -3,6 +3,7 @@ import elasticAdapter from './elastic';
 import apiAdapter from './api';
 import * as f from './functions';
 import { metaChainShardId } from 'appConfig';
+import useAdapterConfig from './useAdapterConfig';
 
 export default function useAdapter() {
   const {
@@ -23,7 +24,8 @@ export default function useAdapter() {
     },
   };
 
-  const { provider, proxyUrl, baseUrl, getStats, getNodes } = providers[adapter];
+  const { proxyUrl, baseUrl } = providers[adapter];
+  const { provider, getStats, getNodes } = useAdapterConfig();
 
   // TODO: adaptorul isi ia singur datele si nu e mix intre ele
   // TODO: dispare folderul functions {data, success} | {success: false}
@@ -31,35 +33,109 @@ export default function useAdapter() {
   return {
     /* Homepage */
 
-    getStats: () => {
-      const asyncRequest = () =>
-        getStats({
-          proxyUrl,
-          baseUrl,
-          metaChainShardId,
-          timeout,
-        });
-      return f.getStats(asyncRequest);
-    },
+    getStats: () => getStats(),
 
-    // getHighlights: () =>
-    //   f.getStats({ provider: getStats, proxyUrl, baseUrl, timeout, metaChainShardId }),
-
+    // TODO: remove?
     getNetworkStatus: () => f.getNetworkStatus({ proxyUrl, timeout, metaChainShardId }),
 
-    getLatestBlocks: () => f.getLatestBlocks({ provider, baseUrl, timeout, proxyUrl }),
-
-    getLatestTransactions: () => f.getLatestTransactions({ provider, baseUrl, timeout, proxyUrl }),
+    getLatestBlocks: () =>
+      provider({
+        url: `/blocks`,
+        params: {
+          size: 25,
+          ...{
+            fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
+          },
+        },
+      }),
+    getLatestTransactions: () =>
+      provider({
+        url: `/transactions`,
+        params: {
+          size: 25,
+          ...{
+            fields: [
+              'txHash',
+              'receiver',
+              'receiverShard',
+              'sender',
+              'senderShard',
+              'status',
+              'timestamp',
+              'value',
+            ].join(','),
+          },
+        },
+      }),
 
     /* Blocks */
 
-    getBlock: (blockId: string) => f.getBlock({ provider, baseUrl, blockId, proxyUrl, timeout }),
+    // getBlock: (blockId: string) => f.getBlock({ provider, baseUrl, blockId, proxyUrl, timeout }),
+    getBlock: async (blockId: string) => {
+      try {
+        const { data: block, success } = await provider({
+          url: `/blocks/${blockId}`,
+        });
 
-    getBlocks: ({ size, shard, epochId, proposer }: f.GetBlocksType) =>
-      f.getBlocks({ provider, baseUrl, size, shard, epochId, proposer, timeout, proxyUrl }),
+        let nextHash;
+        try {
+          const { data } = await provider({
+            url: `/blocks`,
+            params: {
+              nonce: block.nonce + 1,
+              shard: block.shard,
+            },
+          });
 
-    getBlocksCount: ({ size, shard, epochId }: f.GetBlocksType) =>
-      f.getBlocksCount({ provider, baseUrl, size, shard, epochId, proxyUrl, timeout }),
+          nextHash = data[0] ? data[0].hash : '';
+        } catch {
+          nextHash = '';
+        }
+
+        return {
+          block,
+          nextHash,
+          success,
+        };
+      } catch {
+        return { success: false };
+      }
+    },
+
+    getBlocks: async ({ size = 1, shard, epochId, proposer }: f.GetBlocksType) => {
+      try {
+        const { data: blocks, success } = await provider({
+          baseUrl,
+          url: `/blocks`,
+          params: {
+            from: (size - 1) * 25,
+            size: 25,
+            ...(proposer ? { proposer } : {}),
+            ...f.getShardOrEpochParam(shard, epochId),
+            fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
+          },
+          timeout,
+        });
+        if (success) {
+          return {
+            data: f.processBlocks(blocks),
+            success,
+          };
+        } else {
+          return { success: false };
+        }
+      } catch (err) {
+        return {
+          success: false,
+        };
+      }
+    },
+
+    getBlocksCount: ({ shard, epochId }: f.GetBlocksType) =>
+      provider({
+        url: `/blocks/count`,
+        params: f.getShardOrEpochParam(shard, epochId),
+      }),
 
     /* Transaction */
 
