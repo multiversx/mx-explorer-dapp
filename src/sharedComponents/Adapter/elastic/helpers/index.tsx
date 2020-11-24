@@ -99,6 +99,7 @@ const wrapper = async ({
 
   let query: any = {};
   let boolQuery: any = {};
+  let results;
 
   const {
     nonce,
@@ -125,11 +126,7 @@ const wrapper = async ({
   }
 
   if (proposer && collection === 'blocks') {
-    [proposer, shard] = await getValidatorIndex({
-      validator: proposer,
-      proxyUrl,
-      elasticUrl,
-    });
+    [proposer, shard] = await getValidatorIndex({ validator: proposer, proxyUrl, elasticUrl });
   }
 
   if (validator && collection === 'rounds') {
@@ -200,20 +197,15 @@ const wrapper = async ({
 
   switch (hash) {
     case 'count': {
-      const url = `${elasticUrl}/${collection}/_count`;
+      const url = `${elasticUrl()}/${collection}/_count`;
       const params = { query };
 
-      return axios({
-        method: 'POST',
-        url,
-        data: { ...params },
-        transformResponse: [
-          function transform(resp) {
-            const { count } = JSON.parse(resp);
-            return { data: count };
-          },
-        ],
-      });
+      const {
+        data: { count },
+      } = await axios.post(url, params);
+
+      results = { data: count };
+      break;
     }
 
     case 'last': {
@@ -225,151 +217,146 @@ const wrapper = async ({
         size: 25,
       };
 
-      return axios({
-        method: 'POST',
-        url,
-        data: { ...params },
-        transformResponse: [
-          function transform(resp) {
-            const {
-              hits: { hits },
-            } = JSON.parse(resp);
-            const data: any = [];
-            hits.map(({ _id, _source }: any) => {
-              data.unshift({ id: _id, ..._source });
-            });
+      const {
+        data: {
+          hits: { hits },
+        },
+      } = await axios.post(url, params);
 
-            return { data };
-          },
-        ],
+      const data: any = [];
+      hits.map(({ _id, _source }: any) => {
+        data.unshift({ id: _id, ..._source });
       });
+
+      results = { data };
+      break;
     }
 
     default:
       if (hash) {
         if (collection === 'accounts') {
-          return axios({
-            method: 'GET',
-            url: `${proxyUrl()}/address/${hash}`,
-            transformResponse: [
-              function transform(resp) {
-                const {
-                  data: {
-                    account: { address, nonce, balance, code, codeHash, rootHash },
-                  },
-                } = JSON.parse(resp);
-                const data = { address, nonce, balance, code, codeHash, rootHash };
-                return { data };
+          try {
+            const {
+              data: {
+                data: {
+                  account: { address, nonce, balance, code, codeHash, rootHash },
+                },
               },
-            ],
-          });
+            } = await axios({
+              method: 'get',
+              url: `${proxyUrl()}/address/${hash}`,
+            });
+
+            const data = { address, nonce, balance, code, codeHash, rootHash };
+
+            results = { data };
+          } catch (error) {
+            throw new Error(error);
+          }
         } else {
           const url = `${elasticUrl()}/${collection}/_doc/${hash}`;
+
           try {
-            return axios({
-              method: 'GET',
-              url,
-              validateStatus: (status) => {
-                return status >= 200 && status < 300;
-              },
-              transformResponse: [
-                async function transform(resp) {
-                  let { _id, _source }: any = JSON.parse(resp);
-                  const hash: any = {};
-                  if (key) {
-                    hash[key] = _id;
-                  }
+            let {
+              data: { _id, _source },
+            } = await axios.get(url);
 
-                  if (
-                    collection === 'blocks' &&
-                    (!fields || fields.includes('proposer') || fields.includes('validators'))
-                  ) {
-                    const { shardId: shard, epoch } = _source;
+            const hash: any = {};
+            if (key) {
+              hash[key] = _id;
+            }
 
-                    const publicKeys = await getPublicKeys({ shard, epoch, elasticUrl });
+            if (
+              collection === 'blocks' &&
+              (!fields || fields.includes('proposer') || fields.includes('validators'))
+            ) {
+              const { shardId: shard, epoch } = _source;
 
-                    _source.proposer = publicKeys[_source.proposer];
-                    _source.validators = _source.validators.map((index: any) => publicKeys[index]);
-                  }
+              const publicKeys = await getPublicKeys({ shard, epoch, elasticUrl });
 
-                  if (collection === 'rounds') {
-                    delete _source.signersIndexes;
-                  }
+              _source.proposer = publicKeys[_source.proposer];
+              _source.validators = _source.validators.map((index: any) => publicKeys[index]);
+            }
 
-                  if (fields) {
-                    Object.keys(_source).forEach((key) => {
-                      if (!fields.includes(key)) {
-                        delete _source[key];
-                      }
-                    });
-                  }
+            if (collection === 'rounds') {
+              delete _source.signersIndexes;
+            }
 
-                  if (_source.shardId !== undefined) {
-                    _source.shard = _source.shardId;
-                    delete _source.shardId;
-                  }
+            if (fields) {
+              Object.keys(_source).forEach((key) => {
+                if (!fields.includes(key)) {
+                  delete _source[key];
+                }
+              });
+            }
 
-                  if (_source.searchOrder !== undefined) {
-                    delete _source.searchOrder;
-                  }
+            if (_source.shardId !== undefined) {
+              _source.shard = _source.shardId;
+              delete _source.shardId;
+            }
 
-                  _source = Object.keys(_source)
-                    .sort()
-                    .reduce((result: any, key) => {
-                      result[key] = _source[key];
-                      return result;
-                    }, {});
+            if (_source.searchOrder !== undefined) {
+              delete _source.searchOrder;
+            }
 
-                  return { data: { ...hash, ..._source } };
-                },
-              ],
-            });
+            _source = Object.keys(_source)
+              .sort()
+              .reduce((result: any, key) => {
+                result[key] = _source[key];
+                return result;
+              }, {});
+
+            results = { data: { ...hash, ..._source } };
           } catch (error) {
             // if transaction not found in elastic
             if (collection === 'transactions' && error.response) {
-              return axios({
-                method: 'GET',
-                url: `${proxyUrl()}/transaction/${hash}`,
-                transformResponse: [
-                  function transform(resp) {
-                    const {
-                      data: { transaction },
-                    } = JSON.parse(resp);
-                    const {
-                      gasLimit,
-                      gasPrice,
-                      miniblockHash: miniBlockHash,
-                      nonce,
-                      receiver,
-                      sender,
-                      signature,
-                      status,
-                      value,
-                    } = transaction;
-
-                    // TODO: pending alignment
-                    const receiverShard = computeShard(bech32.decode(receiver));
-                    const senderShard = computeShard(bech32.decode(sender));
-
-                    return {
-                      data: {
-                        txHash: hash,
-                        gasLimit,
-                        gasPrice,
-                        miniBlockHash,
-                        nonce,
-                        receiver,
-                        receiverShard,
-                        sender,
-                        senderShard,
-                        signature,
-                        status,
-                        value,
-                      },
-                    };
+              try {
+                const {
+                  data: {
+                    data: { transaction },
                   },
-                ],
-              });
+                } = await axios({
+                  method: 'get',
+                  url: `${proxyUrl()}/transaction/${hash}`,
+                });
+
+                const {
+                  gasLimit,
+                  gasPrice,
+                  miniblockHash: miniBlockHash,
+                  nonce,
+                  receiver,
+                  sender,
+                  signature,
+                  status,
+                  value,
+                } = transaction;
+
+                // TODO: pending alignment
+                const receiverShard = computeShard(bech32.decode(receiver));
+                const senderShard = computeShard(bech32.decode(sender));
+
+                results = {
+                  data: {
+                    txHash: hash,
+                    gasLimit,
+                    gasPrice,
+                    miniBlockHash,
+                    nonce,
+                    receiver,
+                    receiverShard,
+                    sender,
+                    senderShard,
+                    signature,
+                    status,
+                    value,
+                  },
+                };
+              } catch (error) {
+                throw new Error(error);
+              }
+            } else {
+              throw new Error(error);
             }
           }
         }
@@ -392,83 +379,75 @@ const wrapper = async ({
           params.sort = [{ balanceNum: { order: 'desc' } }];
         }
 
-        return axios({
-          method: 'POST',
-          url,
-          data: { ...params },
-          transformResponse: [
-            async function transform(resp) {
-              try {
-                const {
-                  hits: { hits },
-                } = JSON.parse(resp);
+        const {
+          data: {
+            hits: { hits },
+          },
+        } = await axios.post(url, params);
 
-                const data: any = [];
+        const data = [];
 
-                // tslint:disable-next-line
-                for (const index in hits) {
-                  let { _id, _source } = hits[index];
-                  const hash: any = {};
-                  if (key) {
-                    hash[key] = _id;
-                  }
+        // tslint:disable-next-line
+        for (const index in hits) {
+          let { _id, _source } = hits[index];
+          const hash: any = {};
+          if (key) {
+            hash[key] = _id;
+          }
 
-                  if (
-                    collection === 'blocks' &&
-                    (!fields || fields.includes('proposer') || fields.includes('validators'))
-                  ) {
-                    const { shardId: shard, epoch } = _source;
+          if (
+            collection === 'blocks' &&
+            (!fields || fields.includes('proposer') || fields.includes('validators'))
+          ) {
+            const { shardId: shard, epoch } = _source;
 
-                    const publicKeys = await getPublicKeys({ shard, epoch, elasticUrl });
+            const publicKeys = await getPublicKeys({ shard, epoch, elasticUrl });
 
-                    _source.proposer = publicKeys[_source.proposer];
-                    _source.validators = _source.validators.map((index: any) => publicKeys[index]);
-                  }
+            _source.proposer = publicKeys[_source.proposer];
+            _source.validators = _source.validators.map((index: any) => publicKeys[index]);
+          }
 
-                  if (collection === 'rounds') {
-                    delete _source.signersIndexes;
-                  }
+          if (collection === 'rounds') {
+            delete _source.signersIndexes;
+          }
 
-                  if (collection === 'accounts') {
-                    delete _source.balanceNum;
-                  }
+          if (collection === 'accounts') {
+            delete _source.balanceNum;
+          }
 
-                  if (fields) {
-                    Object.keys(_source).forEach((key) => {
-                      if (!fields.includes(key)) {
-                        delete _source[key];
-                      }
-                    });
-                  }
-
-                  if (_source.shardId !== undefined) {
-                    _source.shard = _source.shardId;
-                    delete _source.shardId;
-                  }
-
-                  if (_source.searchOrder !== undefined) {
-                    delete _source.searchOrder;
-                  }
-
-                  _source = Object.keys(_source)
-                    .sort()
-                    .reduce((result: any, key) => {
-                      result[key] = _source[key];
-                      return result;
-                    }, {});
-
-                  data.push({ ...hash, ..._source });
-                }
-
-                return data;
-              } catch (err) {
-                return 112; // TODO: undo
+          if (fields) {
+            Object.keys(_source).forEach((key) => {
+              if (!fields.includes(key)) {
+                delete _source[key];
               }
-            },
-          ],
-        });
+            });
+          }
+
+          if (_source.shardId !== undefined) {
+            _source.shard = _source.shardId;
+            delete _source.shardId;
+          }
+
+          if (_source.searchOrder !== undefined) {
+            delete _source.searchOrder;
+          }
+
+          _source = Object.keys(_source)
+            .sort()
+            .reduce((result: any, key) => {
+              result[key] = _source[key];
+              return result;
+            }, {});
+
+          data.push({ ...hash, ..._source });
+        }
+
+        results = { data };
       }
+      break;
   }
+
+  return results;
 };
 
 const elastic: ProviderType = async ({ baseUrl, url, params, timeout, proxyUrl = '' }) => {

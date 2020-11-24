@@ -23,7 +23,10 @@ export default function useAdapter() {
     },
   };
 
-  const { provider, proxyUrl, baseUrl, getStats } = providers[adapter];
+  const { provider, proxyUrl, baseUrl, getStats, getNodes } = providers[adapter];
+
+  // TODO: adaptorul isi ia singur datele si nu e mix intre ele
+  // TODO: dispare folderul functions {data, success} | {success: false}
 
   return {
     /* Homepage */
@@ -118,26 +121,65 @@ export default function useAdapter() {
       status,
       size,
       identity,
-      pagination,
+      pagination = true,
       sort,
       order,
-    }: f.GetNodesType) =>
-      f.getNodes({
-        provider,
-        baseUrl,
-        timeout,
-        peerType,
-        issues,
-        search,
-        nodeType,
-        shard,
-        status,
-        size,
-        identity,
-        pagination,
-        sort,
-        order,
-      }),
+      count = false,
+    }: f.GetNodesType) => {
+      const asyncRequest = () =>
+        getNodes({
+          baseUrl,
+          proxyUrl,
+          url: `/nodes${count ? '/count' : ''}`,
+          timeout,
+          params: {
+            ...(search !== undefined ? { search } : {}),
+            ...(peerType !== undefined ? { peerType } : {}),
+            ...(issues !== undefined ? { issues } : {}),
+            ...(nodeType !== undefined ? { nodeType } : {}),
+            ...(shard !== undefined ? { shard: parseInt(shard) } : {}),
+            ...(status !== undefined ? { status } : {}),
+            ...(identity !== undefined ? { identity } : {}),
+            ...(sort !== undefined ? { sort } : {}),
+            ...(order !== undefined ? { order } : {}),
+            ...(size !== undefined
+              ? pagination
+                ? { from: (size - 1) * 25, size: 25 }
+                : { size }
+              : {}),
+          },
+        });
+      return f.getNodes(asyncRequest);
+    },
+    // getNodes: ({
+    //   peerType,
+    //   issues,
+    //   search,
+    //   nodeType,
+    //   shard,
+    //   status,
+    //   size,
+    //   identity,
+    //   pagination,
+    //   sort,
+    //   order,
+    // }: f.GetNodesType) =>
+    //   f.getNodes({
+    //     provider,
+    //     baseUrl,
+    //     timeout,
+    //     peerType,
+    //     issues,
+    //     search,
+    //     nodeType,
+    //     shard,
+    //     status,
+    //     size,
+    //     identity,
+    //     pagination,
+    //     sort,
+    //     order,
+    //   }),
 
     getNodesCount: ({
       peerType,
@@ -147,20 +189,49 @@ export default function useAdapter() {
       shard,
       status,
       identity,
-    }: f.GetNodesType) =>
-      f.getNodes({
-        provider,
-        baseUrl,
-        timeout,
-        peerType,
-        issues,
-        search,
-        nodeType,
-        shard,
-        status,
-        identity,
-        count: true,
-      }),
+      count = true,
+    }: f.GetNodesType) => {
+      const asyncRequest = () =>
+        getNodes({
+          baseUrl,
+          proxyUrl,
+          url: `/nodes${count ? '/count' : ''}`,
+          timeout,
+          params: {
+            ...(search !== undefined ? { search } : {}),
+            ...(peerType !== undefined ? { peerType } : {}),
+            ...(issues !== undefined ? { issues } : {}),
+            ...(nodeType !== undefined ? { nodeType } : {}),
+            ...(shard !== undefined ? { shard: parseInt(shard) } : {}),
+            ...(status !== undefined ? { status } : {}),
+            ...(identity !== undefined ? { identity } : {}),
+          },
+        });
+      return f.getNodes(asyncRequest);
+    },
+
+    // getNodesCount: ({
+    //   peerType,
+    //   issues,
+    //   search,
+    //   nodeType,
+    //   shard,
+    //   status,
+    //   identity,
+    // }: f.GetNodesType) =>
+    //   f.getNodes({
+    //     provider,
+    //     baseUrl,
+    //     timeout,
+    //     peerType,
+    //     issues,
+    //     search,
+    //     nodeType,
+    //     shard,
+    //     status,
+    //     identity,
+    //     count: true,
+    //   }),
 
     getIdentities: () =>
       f.getIdentities({
