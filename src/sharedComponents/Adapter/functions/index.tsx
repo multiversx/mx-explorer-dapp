@@ -29,6 +29,7 @@ export interface ProviderPropsType {
   baseUrl: string;
   proxyUrl?: string;
   metaChainShardId?: number;
+  url?: string;
   params?: {
     nonce?: number;
     shard?: number;
@@ -51,6 +52,9 @@ export interface ProviderPropsType {
     status?: string;
     validator?: string;
     fields?: any;
+    identity?: string;
+    sort?: string;
+    order?: string;
   };
   timeout: number;
 }
