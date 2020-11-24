@@ -1,5 +1,3 @@
-import { AdapterFunctionType } from './index';
-
 export interface GetNodesType {
   search?: string;
   issues?: string;
@@ -13,20 +11,4 @@ export interface GetNodesType {
   sort?: string;
   order?: string;
   pagination?: boolean;
-}
-
-export default async function getNodes(asyncRequest: () => Promise<any>) {
-  try {
-    const { data } = await asyncRequest();
-
-    return {
-      data,
-      success: data !== undefined,
-    };
-  } catch {
-    return {
-      data: [],
-      success: false,
-    };
-  }
 }

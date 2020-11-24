@@ -53,7 +53,7 @@ const NodeDetails = () => {
             setNode(nodeData);
 
             setBlocks({
-              data: (blocksData as any).blocks,
+              data: blocksData.data.blocks,
               success: blocksData.success,
             });
 

@@ -128,17 +128,11 @@ export default function useAdapter() {
     },
 
     getBlocksCount: ({ shard, epochId }: f.GetBlocksType) =>
-      provider({
-        url: `/blocks/count`,
-        params: f.getShardOrEpochParam(shard, epochId),
-      }),
+      provider({ url: `/blocks/count`, params: f.getShardOrEpochParam(shard, epochId) }),
 
     /* Transaction */
 
-    getTransaction: (transactionId: string) =>
-      provider({
-        url: `/transactions/${transactionId}`,
-      }),
+    getTransaction: (transactionId: string) => provider({ url: `/transactions/${transactionId}` }),
 
     /* Miniblocks */
 
@@ -160,12 +154,7 @@ export default function useAdapter() {
       }),
 
     getMiniBlockTransactionsCount: ({ miniBlockHash }: { miniBlockHash: string }) =>
-      provider({
-        url: `/transactions/count`,
-        params: {
-          miniBlockHash,
-        },
-      }),
+      provider({ url: `/transactions/count`, params: { miniBlockHash } }),
 
     /* Transactions */
 
@@ -205,33 +194,26 @@ export default function useAdapter() {
       pagination = true,
       sort,
       order,
-      count = false,
-    }: f.GetNodesType) => {
-      const asyncRequest = () =>
-        getNodes({
-          baseUrl,
-          proxyUrl,
-          url: `/nodes${count ? '/count' : ''}`,
-          timeout,
-          params: {
-            ...(search !== undefined ? { search } : {}),
-            ...(peerType !== undefined ? { peerType } : {}),
-            ...(issues !== undefined ? { issues } : {}),
-            ...(nodeType !== undefined ? { nodeType } : {}),
-            ...(shard !== undefined ? { shard: parseInt(shard) } : {}),
-            ...(status !== undefined ? { status } : {}),
-            ...(identity !== undefined ? { identity } : {}),
-            ...(sort !== undefined ? { sort } : {}),
-            ...(order !== undefined ? { order } : {}),
-            ...(size !== undefined
-              ? pagination
-                ? { from: (size - 1) * 25, size: 25 }
-                : { size }
-              : {}),
-          },
-        });
-      return f.getNodes(asyncRequest);
-    },
+    }: f.GetNodesType) =>
+      getNodes({
+        url: `/nodes`,
+        params: {
+          ...(search !== undefined ? { search } : {}),
+          ...(peerType !== undefined ? { peerType } : {}),
+          ...(issues !== undefined ? { issues } : {}),
+          ...(nodeType !== undefined ? { nodeType } : {}),
+          ...(shard !== undefined ? { shard: parseInt(shard) } : {}),
+          ...(status !== undefined ? { status } : {}),
+          ...(identity !== undefined ? { identity } : {}),
+          ...(sort !== undefined ? { sort } : {}),
+          ...(order !== undefined ? { order } : {}),
+          ...(size !== undefined
+            ? pagination
+              ? { from: (size - 1) * 25, size: 25 }
+              : { size }
+            : {}),
+        },
+      }),
 
     getNodesCount: ({
       peerType,
@@ -241,67 +223,47 @@ export default function useAdapter() {
       shard,
       status,
       identity,
-      count = true,
-    }: f.GetNodesType) => {
-      const asyncRequest = () =>
-        getNodes({
-          baseUrl,
-          proxyUrl,
-          url: `/nodes${count ? '/count' : ''}`,
-          timeout,
-          params: {
-            ...(search !== undefined ? { search } : {}),
-            ...(peerType !== undefined ? { peerType } : {}),
-            ...(issues !== undefined ? { issues } : {}),
-            ...(nodeType !== undefined ? { nodeType } : {}),
-            ...(shard !== undefined ? { shard: parseInt(shard) } : {}),
-            ...(status !== undefined ? { status } : {}),
-            ...(identity !== undefined ? { identity } : {}),
-          },
-        });
-      return f.getNodes(asyncRequest);
-    },
-
-    getIdentities: () =>
-      f.getIdentities({
-        provider,
-        baseUrl,
-        timeout,
+    }: f.GetNodesType) =>
+      getNodes({
+        url: `/nodes/count`,
+        params: {
+          ...(search !== undefined ? { search } : {}),
+          ...(peerType !== undefined ? { peerType } : {}),
+          ...(issues !== undefined ? { issues } : {}),
+          ...(nodeType !== undefined ? { nodeType } : {}),
+          ...(shard !== undefined ? { shard: parseInt(shard) } : {}),
+          ...(status !== undefined ? { status } : {}),
+          ...(identity !== undefined ? { identity } : {}),
+        },
       }),
 
-    getIdentity: (identity: string) =>
-      f.getIdentity({
-        provider,
-        baseUrl,
-        timeout,
-        identity,
-      }),
+    getIdentities: () => provider({ url: `/identities` }),
 
-    getNode: (key: string) =>
-      f.getNode({
-        provider,
-        baseUrl,
-        timeout,
-        key,
-      }),
+    getIdentity: (identity: string) => provider({ url: `/identities/${identity}` }),
+
+    getNode: (key: string) => getNodes({ url: `/nodes/${key}` }),
 
     getRounds: ({ validator }: f.GetRoundsType) =>
-      f.getRounds({
-        provider,
-        baseUrl,
-        validator,
-        timeout,
-      }),
-
-    getAccount: (address: string) =>
       provider({
-        url: `/accounts/${address}`,
+        url: `/rounds`,
+        params: {
+          size: 138,
+          from: 0,
+          validator,
+        },
       }),
 
-    getAccounts: ({ size }: f.GetAccountsType) =>
-      f.getAccounts({ provider, baseUrl, size, timeout }),
+    getAccount: (address: string) => provider({ url: `/accounts/${address}` }),
 
-    getAccountsCount: ({ size }: f.GetAccountsType) =>
-      f.getAccountsCount({ provider, baseUrl, size, timeout }),
+    getAccounts: (size = 1) =>
+      provider({
+        url: `/accounts`,
+        params: {
+          from: (size - 1) * 25,
+          size: 25,
+        },
+      }),
+
+    getAccountsCount: () => provider({ url: `/accounts/count` }),
   };
 }

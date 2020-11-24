@@ -78,7 +78,7 @@ const getValidatorIndex = async ({
         status: { erd_epoch_number: epoch },
       },
     },
-  } = await axios.get(`${proxyUrl}/network/status/${shard}`);
+  } = await axios.get(`${proxyUrl()}/network/status/${shard}`);
 
   const publicKeys = await getPublicKeys({ shard, epoch, elasticUrl });
 
