@@ -1,5 +1,3 @@
-import getStats from './getStats';
-import getShards from './getShards';
 import getIdentities from './getIdentities';
 import getIdentity from './getIdentity';
 import getNode from './getNode';
@@ -15,8 +13,6 @@ import { getAccounts, getAccountsCount, GetAccountsParamsType } from './getAccou
 import getNetworkStatus from './getNetworkStatus';
 import {
   getTransactionsParams,
-  getAccount,
-  getRewards,
   getAccountParams,
   TransactionsParamsType as TransactionsInterface,
 } from './getTransactions';
@@ -76,16 +72,12 @@ export {
   getBlocksCount,
   getTransactionsParams,
   getAccountParams,
-  getRewards,
   getRounds,
   getNode,
   getNodes,
-  getShards,
   getIdentity,
   getIdentities,
   getNetworkStatus,
-  getAccount,
   getAccounts,
   getAccountsCount,
-  getStats,
 };
