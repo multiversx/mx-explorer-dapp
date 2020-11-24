@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '12.x'
       - run: npm install
-      - run: npm run build:production
+      - run: npm run build-mainnet
         env:
           CI: false
       - name: copy file
