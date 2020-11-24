@@ -2,7 +2,7 @@ import stats from './stats';
 import nodes from './nodes';
 import shards from './shards';
 import elastic from './helpers';
-import { ProviderPropsType } from './../functions';
+import { ProviderPropsType } from '../helpers';
 
 export default {
   provider: elastic,

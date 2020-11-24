@@ -1,4 +1,4 @@
-import { ProviderPropsType } from '../functions';
+import { ProviderPropsType } from '../helpers';
 import getNodes from './helpers/getNodes';
 
 const nodes = async ({
