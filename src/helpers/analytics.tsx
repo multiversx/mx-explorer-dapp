@@ -1,5 +1,5 @@
 const analytics = {
-  send: ({ action, label }: { action: string; label: string }) => {
+  sendEvent: ({ action, label }: { action: string; label: string }) => {
     try {
       const erdAddressRegex = new RegExp(/erd1\w+/, 'g');
       const hashRegex = new RegExp(/([a-z0-9]){64}/, 'g');

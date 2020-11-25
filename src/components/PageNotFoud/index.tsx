@@ -7,7 +7,7 @@ import { analytics } from 'helpers';
 const PageNotFound = () => {
   const { pathname } = useLocation();
 
-  analytics.send({ action: 'page-not-found', label: pathname });
+  analytics.sendEvent({ action: 'page-not-found', label: pathname });
 
   return (
     <PageState
