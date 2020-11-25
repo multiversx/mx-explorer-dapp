@@ -1,6 +1,6 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
-import { useParams } from 'react-router-dom';
+import { Redirect, useLocation, useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { Loader, TransactionsTable, adapter } from 'sharedComponents';
 import denominate from 'sharedComponents/Denominate/denominate';
@@ -11,7 +11,7 @@ import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransac
 import AccountDetailsCard from './AccountDetailsCard';
 import FailedAccountDetails from './FailedAccountDetails';
 import DelegationDetails from './DelegationDetails';
-import { addressIsBech32, useSize } from 'helpers';
+import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
 import { denomination, decimals } from 'appConfig';
 import { types } from 'helpers';
 
@@ -35,7 +35,9 @@ const initialAccountDetails: AccountDetailsType = {
 
 const AccountDetails = () => {
   const ref = React.useRef(null);
+  const { pathname } = useLocation();
   const { size, firstPageTicker } = useSize();
+  const networkRoute = useNetworkRoute();
 
   const [accountDetails, setAccountDetails] = React.useState<AccountDetailsType>(
     initialAccountDetails
@@ -63,20 +65,24 @@ const AccountDetails = () => {
     ]).then(([transactionsData, accountDetailsData, rewardsData]) => {
       const { data, success } = transactionsData;
       const { data: accountDetails } = accountDetailsData;
-      if (success && ref.current !== null) {
+      if (success) {
         const existingHashes = transactions.map((b) => b.txHash);
         const newTransactions = data.map((transaction: TransactionType) => ({
           ...transaction,
           isNew: !existingHashes.includes(transaction.txHash),
         }));
-        setTransactions(newTransactions);
-        const pending = data.some(
-          (tx: TransactionType) => tx.status.toLowerCase() === txStatus.pending.toLowerCase()
-        );
-        setHasPendingTransaction(pending);
-        setTransactionsFetched(true);
+        if (ref.current !== null) {
+          setTransactions(newTransactions);
+          const pending = data.some(
+            (tx: TransactionType) => tx.status.toLowerCase() === txStatus.pending.toLowerCase()
+          );
+          setHasPendingTransaction(pending);
+          setTransactionsFetched(true);
+        }
       } else if (transactions.length === 0) {
-        setTransactionsFetched(false);
+        if (ref.current !== null) {
+          setTransactionsFetched(false);
+        }
       }
       setAccountDetails(({ stake, claimableRewards }) => ({
         ...accountDetails,
@@ -107,9 +113,13 @@ const AccountDetails = () => {
             addCommas: false,
           })
         );
-        setAccountDetails((details) => ({ ...details, claimableRewards: rewards, stake }));
+        if (ref.current !== null) {
+          setAccountDetails((details) => ({ ...details, claimableRewards: rewards, stake }));
+        }
       }
-      setDataReady(accountDetailsData.success);
+      if (ref.current !== null) {
+        setDataReady(accountDetailsData.success);
+      }
     });
   };
 
@@ -155,7 +165,9 @@ const AccountDetails = () => {
       accountDetails.stake !== undefined &&
       accountDetails.stake > 0);
 
-  return (
+  return pathname.includes('/address/') ? (
+    <Redirect to={networkRoute(`/accounts/${address}`)} />
+  ) : (
     <>
       {loading && <Loader />}
       {!loading && failed && <FailedAccountDetails address={address} />}

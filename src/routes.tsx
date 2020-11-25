@@ -99,7 +99,7 @@ const routes: RouteType[] = [
   {
     path: '/address/:hash',
     title: 'Account Details',
-    component: AccountDetails,
+    component: AccountDetails, // redirect
   },
   {
     path: '/miniblocks/:hash',
