@@ -1,5 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
+import { analytics } from 'helpers';
 
 const AxiosErrorHandler = ({ children }: { children: React.ReactNode }) => {
   const [initialize, setInitialize] = React.useState(false);
@@ -15,16 +16,7 @@ const AxiosErrorHandler = ({ children }: { children: React.ReactNode }) => {
         const logError = reqUrl && !ignoreList.some((url) => reqUrl.indexOf(url) > -1);
 
         if (logError) {
-          try {
-            const erdAddressRegex = new RegExp(/erd1\w+/, 'g');
-            const request = reqUrl.replace(erdAddressRegex, 'erd1...');
-
-            if ((window as any).ga) {
-              (window as any).ga('send', 'event', 'failed-request', request);
-            }
-          } catch (err) {
-            console.error(err);
-          }
+          analytics.sendEvent({ action: 'failed-request', label: reqUrl });
         }
         return Promise.reject(error);
       }
