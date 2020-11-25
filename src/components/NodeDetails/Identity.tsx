@@ -1,14 +1,9 @@
 import * as React from 'react';
-import { DetailItem, NetworkLink, Trim, IdentityAvatar, PageState } from 'sharedComponents';
+import { NetworkLink, Trim, SharedIdentity, PageState } from 'sharedComponents';
 import { IdentityType } from 'context/state';
-import { useGlobalState } from 'context';
 import { faBuilding } from '@fortawesome/pro-regular-svg-icons/faBuilding';
 
 const Identity = ({ identity }: { identity: IdentityType | undefined }) => {
-  const {
-    activeNetwork: { erdLabel },
-  } = useGlobalState();
-
   return (
     <>
       <div className="card" data-testid="brandContainer">
@@ -24,7 +19,7 @@ const Identity = ({ identity }: { identity: IdentityType | undefined }) => {
             <div className="card-header">
               <div className="card-header-item p-0">
                 <div className="identity-header-item px-lg-3 justify-content-center">
-                  <IdentityAvatar identity={identity} />
+                  <SharedIdentity.Avatar identity={identity} />
 
                   {identity.identity ? (
                     <NetworkLink to={`/validators/${identity.identity}`}>
@@ -38,21 +33,14 @@ const Identity = ({ identity }: { identity: IdentityType | undefined }) => {
             </div>
             <div className="card-body p-0">
               <div className="container-fluid">
-                <DetailItem title="Stake" colWidth="6">
-                  {identity.stake.toLocaleString('en')} {erdLabel}
-                </DetailItem>
-                <DetailItem title="Stake percent" colWidth="6">
-                  {Math.round(identity.stakePercent) > 0
-                    ? Math.round(identity.stakePercent)
-                    : '< 1'}
-                  %
-                </DetailItem>
-                <DetailItem title="Nodes" colWidth="6">
-                  {identity.validators.toLocaleString('en')}
-                </DetailItem>
-                <DetailItem title="Score" colWidth="6">
-                  {Math.round(identity.score).toLocaleString('en')}
-                </DetailItem>
+                <SharedIdentity.Detail identity={identity} field="stake" title="Stake" />
+                <SharedIdentity.Detail
+                  identity={identity}
+                  field="stakePercent"
+                  title="Stake percent"
+                />
+                <SharedIdentity.Detail identity={identity} field="validators" title="Nodes" />
+                <SharedIdentity.Detail identity={identity} field="score" title="Score" />
               </div>
             </div>
           </>
