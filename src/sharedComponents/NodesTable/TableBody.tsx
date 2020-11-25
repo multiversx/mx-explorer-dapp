@@ -19,13 +19,9 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
           <td>
             <div className="d-flex align-items-center">
               <RowIcon node={node} />
-              {node.nodeType === 'validator' ? (
-                <NetworkLink to={urlBuilder.nodeDetails(node.publicKey)} className="trim-wrapper">
-                  <Trim text={node.publicKey} />
-                </NetworkLink>
-              ) : (
+              <NetworkLink to={urlBuilder.nodeDetails(node.publicKey)} className="trim-wrapper">
                 <Trim text={node.publicKey} />
-              )}
+              </NetworkLink>
             </div>
           </td>
           <td>

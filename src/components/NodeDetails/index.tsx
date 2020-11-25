@@ -38,41 +38,46 @@ const NodeDetails = () => {
     setDataReady(undefined);
     getNode(publicKey).then((nodeData) => {
       if (nodeData.success) {
-        const promises = [
-          getRounds({
-            validator: publicKey,
-          }),
-          getBlocks({ proposer: publicKey }),
-          ...(isMainnet && nodeData.data.identity !== undefined
-            ? [getIdentity(nodeData.data.identity)]
-            : []),
-        ];
-        Promise.all(promises).then((response) => {
-          const [roundsData, blocksData, identityData] = response;
-          if (ref.current !== null) {
-            setNode(nodeData);
+        if (nodeData.data.nodeType !== 'observer') {
+          const promises = [
+            getRounds({
+              validator: publicKey,
+            }),
+            getBlocks({ proposer: publicKey }),
+            ...(isMainnet && nodeData.data.identity !== undefined
+              ? [getIdentity(nodeData.data.identity)]
+              : []),
+          ];
+          Promise.all(promises).then((response) => {
+            const [roundsData, blocksData, identityData] = response;
+            if (ref.current !== null) {
+              setNode(nodeData);
 
-            setBlocks({
-              data: (blocksData as any).blocks,
-              success: blocksData.success,
-            });
+              setBlocks({
+                data: (blocksData as any).blocks,
+                success: blocksData.success,
+              });
 
-            setRounds({
-              data: roundsData.success
-                ? (roundsData as any).data.map((round: any) => ({
-                    key: round.round,
-                    value: round.blockWasProposed,
-                  }))
-                : [],
-              success: roundsData.success,
-            });
-            if (isMainnet && identityData) {
-              setIdentity(identityData);
+              setRounds({
+                data: roundsData.success
+                  ? (roundsData as any).data.map((round: any) => ({
+                      key: round.round,
+                      value: round.blockWasProposed,
+                    }))
+                  : [],
+                success: roundsData.success,
+              });
+              if (isMainnet && identityData) {
+                setIdentity(identityData);
+              }
+
+              setDataReady(nodeData.success);
             }
-
-            setDataReady(nodeData.success);
-          }
-        });
+          });
+        } else {
+          setNode(nodeData);
+          setDataReady(true);
+        }
       } else {
         setDataReady(false);
       }
@@ -116,14 +121,17 @@ const NodeDetails = () => {
                   </div>
                 )}
               </div>
-              <div className="row">
-                <div className="mb-spacer col-md-6">
-                  <NetworkMetrics node={node.data} />
+              {node.data.nodeType !== 'observer' && (
+                <div className="row">
+                  <div className="mb-spacer col-md-6">
+                    <NetworkMetrics node={node.data} />
+                  </div>
+                  <div className="col-md-6 mb-spacer">
+                    <Rounds rounds={rounds} node={node.data} />
+                  </div>
                 </div>
-                <div className="col-md-6 mb-spacer">
-                  <Rounds rounds={rounds} node={node.data} />
-                </div>
-              </div>
+              )}
+
               {node.data.nodeType === 'validator' && (
                 <div className="row">
                   <div className="col-12">
