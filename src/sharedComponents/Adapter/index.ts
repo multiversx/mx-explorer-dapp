@@ -7,7 +7,7 @@ export default function useAdapter() {
   return {
     /* Homepage */
 
-    getStats: () => getStats(),
+    getStats,
 
     getLatestBlocks: () =>
       provider({
@@ -145,7 +145,7 @@ export default function useAdapter() {
 
     /* Validators */
 
-    getShards: () => getShards(),
+    getShards,
 
     getNodes: (props: f.GetNodesType) =>
       getNodes({
