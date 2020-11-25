@@ -2,9 +2,13 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { PageState } from 'sharedComponents';
+import { analytics } from 'helpers';
 
 const PageNotFound = () => {
   const { pathname } = useLocation();
+
+  analytics.send({ action: 'page-not-found', label: pathname });
+
   return (
     <PageState
       icon={faTimes}
