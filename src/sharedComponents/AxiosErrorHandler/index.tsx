@@ -16,7 +16,7 @@ const AxiosErrorHandler = ({ children }: { children: React.ReactNode }) => {
         const logError = reqUrl && !ignoreList.some((url) => reqUrl.indexOf(url) > -1);
 
         if (logError) {
-          analytics.send({ action: 'failed-request', label: reqUrl });
+          analytics.sendEvent({ action: 'failed-request', label: reqUrl });
         }
         return Promise.reject(error);
       }
