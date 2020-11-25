@@ -36,6 +36,7 @@ const initialAccountDetails: AccountDetailsType = {
 const AccountDetails = () => {
   const ref = React.useRef(null);
   const { pathname } = useLocation();
+  const isOldAddressRoute = pathname.includes('/address/');
   const { size, firstPageTicker } = useSize();
   const networkRoute = useNetworkRoute();
 
@@ -134,8 +135,10 @@ const AccountDetails = () => {
   };
 
   React.useEffect(() => {
-    fetchData();
-    fetchTransactionsCount();
+    if (!isOldAddressRoute) {
+      fetchData();
+      fetchTransactionsCount();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, size, address]);
 
@@ -165,7 +168,7 @@ const AccountDetails = () => {
       accountDetails.stake !== undefined &&
       accountDetails.stake > 0);
 
-  return pathname.includes('/address/') ? (
+  return isOldAddressRoute ? (
     <Redirect to={networkRoute(`/accounts/${address}`)} />
   ) : (
     <>
