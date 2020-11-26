@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, Trim, DetailItem, CopyButton } from 'sharedComponents';
+import RowIcon from 'sharedComponents/NodesTable/RowIcon';
 import { NodeType } from 'context/state';
 import Alert from './Alert';
 
 const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string }) => {
-  const { publicKey, peerType, shard, versionNumber, nodeName } = node;
+  const { publicKey, peerType, shard, versionNumber, nodeName, nodeType } = node;
   return (
     <div className="card">
       <div className="card-body p-0">
@@ -13,6 +14,7 @@ const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string 
           <DetailItem title="Public Key" colWidth={colWidth}>
             <div className="d-flex flex-column">
               <div className="d-flex align-items-center">
+                {nodeType === 'observer' && <RowIcon node={node} />}
                 <Trim text={publicKey} />
                 <CopyButton text={publicKey} className="ml-2" />
               </div>
@@ -36,7 +38,7 @@ const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string 
           </DetailItem>
 
           <DetailItem title="Type" colWidth={colWidth}>
-            Validator ({peerType})
+            {nodeType === 'observer' ? 'Observer' : `Validator(${peerType})`}
           </DetailItem>
 
           <DetailItem title="Version" colWidth={colWidth}>

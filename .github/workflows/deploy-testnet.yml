@@ -20,14 +20,9 @@ jobs:
         with:
           node-version: '12.x'
       - run: npm install
-      - run: npm run build:testnet
+      - run: npm run build-testnet
         env:
           CI: false
-      - name: copy file
-        uses: canastro/copy-file-action@master
-        with:
-          source: 'public/config.testnet.js'
-          target: 'build/config.js'
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --follow-symlinks --delete

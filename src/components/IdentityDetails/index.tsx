@@ -1,11 +1,10 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { IdentityType } from 'context/state';
-import { adapter, Loader, DetailItem, Pager, PageState, IdentityAvatar } from 'sharedComponents';
+import { adapter, Loader, DetailItem, Pager, PageState, SharedIdentity } from 'sharedComponents';
 import { useParams } from 'react-router-dom';
 import { NodesTable } from 'sharedComponents';
 import { useFilters } from 'helpers';
-import { useGlobalState } from 'context';
 
 const IdentityDetails = () => {
   const ref = React.useRef(null);
@@ -16,10 +15,6 @@ const IdentityDetails = () => {
   const [nodes, setNodes] = React.useState<any>();
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
   const { getQueryObject, size } = useFilters();
-  const {
-    activeNetwork: { erdLabel },
-  } = useGlobalState();
-
   const fetchData = () => {
     const queryObject = getQueryObject();
 
@@ -64,7 +59,7 @@ const IdentityDetails = () => {
                   <div className="card-header">
                     <div className="card-header-item p-0">
                       <div className="identity-header-item px-lg-spacer justify-content-center">
-                        <IdentityAvatar identity={identity} />
+                        <SharedIdentity.Avatar identity={identity} />
                         {identity.name ? identity.name : 'N/A'}
                       </div>
                     </div>
@@ -106,24 +101,30 @@ const IdentityDetails = () => {
                 <div className="card">
                   <div className="card-body p-0">
                     <div className="container-fluid">
-                      <DetailItem title="Stake" colWidth="4">
-                        {identity.stake.toLocaleString('en')} {erdLabel}
-                      </DetailItem>
-
-                      <DetailItem title="Stake percent" colWidth="4">
-                        {Math.round(identity.stakePercent) > 0
-                          ? Math.round(identity.stakePercent)
-                          : '< 1'}
-                        %
-                      </DetailItem>
-
-                      <DetailItem title="Nodes" colWidth="4">
-                        {identity.validators.toLocaleString('en')}
-                      </DetailItem>
-
-                      <DetailItem title="Score" colWidth="4">
-                        {Math.floor(identity.score).toLocaleString('en')}
-                      </DetailItem>
+                      <SharedIdentity.Detail
+                        title="Stake"
+                        colWidth="4"
+                        field="stake"
+                        identity={identity}
+                      />
+                      <SharedIdentity.Detail
+                        title="Stake percent"
+                        colWidth="4"
+                        field="stakePercent"
+                        identity={identity}
+                      />
+                      <SharedIdentity.Detail
+                        title="Nodes"
+                        colWidth="4"
+                        field="validators"
+                        identity={identity}
+                      />
+                      <SharedIdentity.Detail
+                        title="Score"
+                        colWidth="4"
+                        field="score"
+                        identity={identity}
+                      />
                     </div>
                   </div>
                 </div>
