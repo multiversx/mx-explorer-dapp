@@ -68,7 +68,7 @@ const AccountDetails = () => {
               detailsFetched: accountDetailsData.success,
             }));
             if (countData.success) {
-              setTotalTransactions(Math.min(countData.data.count, 10000));
+              setTotalTransactions(Math.min(countData.data, 10000));
             }
             if (dataReady === undefined) {
               setDataReady(accountDetailsData.success);
