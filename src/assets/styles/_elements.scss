@@ -127,3 +127,7 @@
   @extend .text-truncate;
   max-width: 13rem;
 }
+
+.text-body {
+  color: $body;
+}
