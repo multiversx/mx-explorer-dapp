@@ -226,6 +226,7 @@ const wrapper = async ({
       const data: any = [];
       hits.map(({ _id, _source }: any) => {
         data.unshift({ id: _id, ..._source });
+        return null;
       });
 
       results = { data };
