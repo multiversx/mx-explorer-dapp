@@ -15,6 +15,7 @@ import useSize from './useSize';
 import useMatchPath from './useMatchPath';
 import useIsMainnet from './useIsMainnet';
 import * as types from './types';
+import analytics from './analytics';
 
 export {
   truncate,
@@ -34,4 +35,5 @@ export {
   useMatchPath,
   useIsMainnet,
   types,
+  analytics,
 };
