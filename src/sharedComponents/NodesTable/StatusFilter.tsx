@@ -54,7 +54,7 @@ const StatusFilter = () => {
       }
     >
       <a
-        className="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block side-action"
+        className="d-inline-block side-action"
         data-testid="shardFilterButton"
         href={`${pathname}/${search}`}
         onClick={(e) => {
