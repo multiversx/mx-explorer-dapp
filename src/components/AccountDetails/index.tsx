@@ -59,7 +59,7 @@ const AccountDetails = () => {
 
   const fetchBalanceAndCount = () => {
     if (!document.hidden) {
-      Promise.all([getAccount(address), getTransactionsCount(address)]).then(
+      Promise.all([getAccount(address), getTransactionsCount({ address })]).then(
         ([accountDetailsData, countData]) => {
           if (ref.current !== null) {
             setAccountDetails((existing) => ({
