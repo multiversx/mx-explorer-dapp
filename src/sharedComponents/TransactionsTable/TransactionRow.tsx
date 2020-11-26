@@ -1,12 +1,10 @@
-import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
-import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { addressIsBech32, dateFormatted, urlBuilder } from 'helpers';
 import { Denominate, ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
-import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import { ScResultType } from 'components/TransactionDetails/ScResultsList';
+import TransactionIcon from '../TransactionsTable/TransactionIcon';
 
 export interface TransactionType {
   txHash: string;
@@ -37,9 +35,6 @@ interface TransactionRowType {
 }
 
 const TransactionRow = ({ transaction, address, directionCol }: TransactionRowType) => {
-  const statusIs = (compareTo: string) =>
-    transaction.status.toLowerCase() === compareTo.toLowerCase();
-
   const directionOut = address === transaction.sender;
   const directionIn = address === transaction.receiver;
   const directionSelf = directionOut && directionIn;
@@ -48,13 +43,7 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
     <tr className={`animated-row ${transaction.isNew ? 'new' : ''}`}>
       <td>
         <div className="d-flex align-items-center">
-          {(statusIs(txStatus.failed) || statusIs(txStatus.fail)) && (
-            <FontAwesomeIcon icon={faTimes} className="mr-1 text-secondary" />
-          )}
-          {(statusIs(txStatus.notExecuted) || statusIs(txStatus.invalid)) && (
-            <FontAwesomeIcon icon={faBan} size="sm" className="mr-1 text-secondary" />
-          )}
-
+          <TransactionIcon transaction={transaction} />
           <NetworkLink
             to={`/transactions/${transaction.txHash}`}
             data-testid="transactionLink"
