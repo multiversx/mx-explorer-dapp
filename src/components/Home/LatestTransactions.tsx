@@ -76,7 +76,9 @@ const LatestTransactions = () => {
                 {transactions.map((transaction, i) => (
                   <div
                     key={transaction.txHash}
-                    className={`row animated-row ${transaction.isNew && someNew ? 'new' : ''}`}
+                    className={`row animated-row border-bottom ${
+                      transaction.isNew && someNew ? 'new' : ''
+                    }`}
                   >
                     <div className="col-6 pl-lg-spacer d-flex align-items-center">
                       <div className="list-item-icon mr-3">
