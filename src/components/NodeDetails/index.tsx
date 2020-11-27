@@ -75,13 +75,18 @@ const NodeDetails = () => {
             }
           });
         } else {
-          getIdentity(nodeData.data.identity).then((identityData) => {
-            if (isMainnet && identityData) {
-              setIdentity(identityData);
-              setNode(nodeData);
-              setDataReady(true);
-            }
-          });
+          if (node.data?.identity) {
+            getIdentity(nodeData.data.identity).then((identityData) => {
+              if (isMainnet && identityData) {
+                setIdentity(identityData);
+                setNode(nodeData);
+                setDataReady(true);
+              }
+            });
+          } else {
+            setNode(nodeData);
+            setDataReady(true);
+          }
         }
       } else {
         setDataReady(false);
