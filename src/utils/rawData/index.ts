@@ -1,6 +1,6 @@
 import transactions from './transactions';
 import transactionsSearch from './transactionsSearch';
-import validators from './validators';
+import validators from './validators'; // TODO: check
 import validatorsdoc from './validatorsdoc';
 import blockValidators from './blockValidators';
 import epoch from './epoch';

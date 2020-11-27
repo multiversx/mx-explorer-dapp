@@ -2,6 +2,7 @@ import * as React from 'react';
 import { NetworkLink, Trim, SharedIdentity, PageState } from 'sharedComponents';
 import { IdentityType } from 'context/state';
 import { faBuilding } from '@fortawesome/pro-regular-svg-icons/faBuilding';
+import { urlBuilder } from 'helpers';
 
 const Identity = ({ identity }: { identity: IdentityType | undefined }) => {
   return (
@@ -22,7 +23,7 @@ const Identity = ({ identity }: { identity: IdentityType | undefined }) => {
                   <SharedIdentity.Avatar identity={identity} />
 
                   {identity.identity ? (
-                    <NetworkLink to={`/validators/${identity.identity}`}>
+                    <NetworkLink to={urlBuilder.identityDetails(identity.identity)}>
                       {identity.name ? identity.name : 'N/A'}
                     </NetworkLink>
                   ) : (
