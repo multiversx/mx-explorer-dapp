@@ -27,7 +27,7 @@ export const validatorsRoutes = {
   index: '/identities',
   nodes: '/nodes',
   nodeDetails: '/nodes/:publicKey',
-  identityDetails: '/validators/:id',
+  identityDetails: '/identities/:id',
 };
 
 const routes: RouteType[] = [

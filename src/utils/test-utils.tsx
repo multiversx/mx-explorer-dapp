@@ -74,7 +74,7 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
       // --- page load ---
       case url.includes('network/status'):
         return requests.networkStatus();
-      case url.includes('/validators'):
+      case url.includes('/validators'): // TODO: check
         return requests.validators();
       case url.includes('/transactions/count'):
         return requests.transactionsCount();
