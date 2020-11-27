@@ -75,7 +75,7 @@ const NodeDetails = () => {
             }
           });
         } else {
-          if (isMainnet && node.data?.identity !== undefined) {
+          if (isMainnet && nodeData.data.identity !== undefined) {
             getIdentity(nodeData.data.identity).then((identityData) => {
               if (isMainnet && identityData) {
                 setIdentity(identityData);
