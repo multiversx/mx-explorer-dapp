@@ -14,6 +14,7 @@ import DelegationDetails from './DelegationDetails';
 import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
 import { denomination, decimals } from 'appConfig';
 import { types } from 'helpers';
+import { useIsMainnet } from 'helpers';
 
 export interface AccountDetailsType extends types.AccountType {
   detailsFetched?: boolean;
@@ -38,6 +39,7 @@ const AccountDetails = () => {
   const { pathname } = useLocation();
   const isOldAddressRoute = pathname.includes('/address/');
   const { size, firstPageTicker } = useSize();
+  const isMainnet = useIsMainnet();
   const networkRoute = useNetworkRoute();
 
   const [accountDetails, setAccountDetails] = React.useState<AccountDetailsType>(
@@ -55,17 +57,37 @@ const AccountDetails = () => {
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
 
-  const fetchData = () => {
+  const fetchBalanceAndCount = () => {
+    if (!document.hidden) {
+      Promise.all([getAccount(address), getTransactionsCount({ address })]).then(
+        ([accountDetailsData, countData]) => {
+          if (ref.current !== null) {
+            setAccountDetails((existing) => ({
+              ...existing,
+              ...(accountDetailsData.success ? { ...accountDetailsData.data } : {}),
+              detailsFetched: accountDetailsData.success,
+            }));
+            if (countData.success) {
+              setTotalTransactions(Math.min(countData.count, 10000));
+            }
+            if (dataReady === undefined) {
+              setDataReady(accountDetailsData.success);
+            }
+          }
+        }
+      );
+    }
+  };
+
+  const fetchTransactionsAndRewards = () => {
     Promise.all([
       getTransactions({
         size,
         address,
       }),
-      getAccount(address),
       getRewards(address),
-    ]).then(([transactionsData, accountDetailsData, rewardsData]) => {
+    ]).then(([transactionsData, rewardsData]) => {
       const { data, success } = transactionsData;
-      const { data: accountDetails } = accountDetailsData;
       if (success) {
         const existingHashes = transactions.map((b) => b.txHash);
         const newTransactions = data.map((transaction: TransactionType) => ({
@@ -85,13 +107,6 @@ const AccountDetails = () => {
           setTransactionsFetched(false);
         }
       }
-      setAccountDetails(({ stake, claimableRewards }) => ({
-        ...accountDetails,
-        detailsFetched: accountDetailsData.success,
-        rewardsFetched: rewardsData.success,
-        stake,
-        claimableRewards,
-      }));
       if (rewardsData.success) {
         const rewards = parseFloat(
           denominate({
@@ -115,38 +130,30 @@ const AccountDetails = () => {
           })
         );
         if (ref.current !== null) {
-          setAccountDetails((details) => ({ ...details, claimableRewards: rewards, stake }));
+          setAccountDetails((existing) => ({
+            ...existing,
+            rewardsFetched: rewardsData.success,
+            claimableRewards: rewards,
+            stake,
+          }));
         }
-      }
-      if (ref.current !== null) {
-        setDataReady(accountDetailsData.success);
-      }
-    });
-  };
-
-  const fetchTransactionsCount = () => {
-    getTransactionsCount({
-      address,
-    }).then(({ count, success }) => {
-      if (ref.current !== null && success) {
-        setTotalTransactions(Math.min(count, 10000));
       }
     });
   };
 
   React.useEffect(() => {
     if (!isOldAddressRoute) {
-      fetchData();
-      fetchTransactionsCount();
+      fetchTransactionsAndRewards();
+      fetchBalanceAndCount();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, size, address]);
 
   React.useEffect(() => {
     if (!loading) {
-      fetchTransactionsCount();
+      fetchBalanceAndCount();
       if (hasPendingTransaction) {
-        fetchData();
+        fetchTransactionsAndRewards();
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -154,10 +161,10 @@ const AccountDetails = () => {
 
   React.useEffect(() => {
     if (!loading) {
-      fetchData();
+      fetchTransactionsAndRewards();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totalTransactions]);
+  }, [totalTransactions, accountDetails.balance]);
 
   const loading = dataReady === undefined && transactionsFetched === undefined;
   const failed = dataReady === false || !addressIsBech32(address);
@@ -189,7 +196,7 @@ const AccountDetails = () => {
               <div className="col mb-spacer">
                 <AccountDetailsCard {...accountDetails} />
               </div>
-              {showDelegation && (
+              {showDelegation && isMainnet && (
                 <div className="col-lg-4 mb-spacer">
                   <DelegationDetails {...accountDetails} />
                 </div>
