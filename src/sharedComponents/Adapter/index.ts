@@ -189,5 +189,7 @@ export default function useAdapter() {
 
     getAccountsCount: ({ size }: f.GetAccountsType) =>
       f.getAccountsCount({ provider, baseUrl, size, timeout }),
+
+    getGlobalStake: () => f.getGlobalStake({ proxyUrl, timeout }),
   };
 }
