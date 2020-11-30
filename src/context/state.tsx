@@ -15,6 +15,13 @@ export interface ShardType {
   activeValidators: number;
 }
 
+export interface GlobalStakeType {
+  activeValidators: number;
+  queueSize: number;
+  totalStaked: string;
+  totalValidators: number;
+}
+
 export interface IdentityType {
   name: string;
   score: number;
@@ -65,6 +72,7 @@ export interface StateType {
   identities: IdentityType[];
   blockchainTotalStake: number;
   shards: ShardType[];
+  globalStake: GlobalStakeType | undefined;
 }
 
 const initialState = (optionalConfig?: ConfigType): StateType => {
@@ -86,6 +94,7 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
     identities: [],
     blockchainTotalStake: 0,
     shards: [],
+    globalStake: undefined,
   };
 };
 

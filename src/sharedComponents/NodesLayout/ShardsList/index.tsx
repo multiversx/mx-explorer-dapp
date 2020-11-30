@@ -1,18 +1,23 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
 import ShardCard from './ShardCard';
-import { ShardType } from 'context/state';
+import { GlobalStakeType, ShardType } from 'context/state';
 import { PageState } from 'sharedComponents';
 import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faServer } from '@fortawesome/pro-regular-svg-icons/faServer';
 
-const StakingQueueCard = ({ stakingQueue }: { stakingQueue: number | undefined }) => {
+const StakingQueueCard = ({ globalStake }: { globalStake: GlobalStakeType | undefined }) => {
   return (
-    <div className="flex-grow-1 mr-3 mb-3 pb-3">
+    <div className="flex-grow-1 flex-basis-0 mr-3 mb-3 pb-3">
       <div className="card">
         <div className="card-body px-3">
           <small className="text-light">Queue</small>
           <span className="metric-value d-flex align-items-center">
-            {stakingQueue !== undefined ? stakingQueue : 'N/A'}
+            <span>{globalStake !== undefined ? globalStake.queueSize : 'N/A'}</span>
+            <span className="text-muted d-flex align-items-center justify-content-center ml-2">
+              <FontAwesomeIcon icon={faServer} className="shard-icon" />
+            </span>
           </span>
         </div>
       </div>
@@ -20,14 +25,8 @@ const StakingQueueCard = ({ stakingQueue }: { stakingQueue: number | undefined }
   );
 };
 
-const ShardsList = ({
-  shardsFetched,
-  stakingQueue,
-}: {
-  shardsFetched: boolean;
-  stakingQueue: number | undefined;
-}) => {
-  const { shards } = useGlobalState();
+const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
+  const { shards, globalStake } = useGlobalState();
 
   const overallCard: ShardType = {
     shard: -1,
@@ -71,7 +70,7 @@ const ShardsList = ({
               <ShardCard shard={shard} />
             </React.Fragment>
           ))}
-          <StakingQueueCard stakingQueue={stakingQueue} />
+          <StakingQueueCard globalStake={globalStake} />
         </div>
       )}
     </>
