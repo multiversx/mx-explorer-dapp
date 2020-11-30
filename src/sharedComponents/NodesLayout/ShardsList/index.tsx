@@ -5,10 +5,31 @@ import { ShardType } from 'context/state';
 import { PageState } from 'sharedComponents';
 import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
 
-const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
+const StakingQueueCard = ({ stakingQueue }: { stakingQueue: number | undefined }) => {
+  return (
+    <div className="flex-grow-1 mr-3 mb-3 pb-3">
+      <div className="card">
+        <div className="card-body px-3">
+          <small className="text-light">Queue</small>
+          <span className="metric-value d-flex align-items-center">
+            {stakingQueue !== undefined ? stakingQueue : 'N/A'}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ShardsList = ({
+  shardsFetched,
+  stakingQueue,
+}: {
+  shardsFetched: boolean;
+  stakingQueue: number | undefined;
+}) => {
   const { shards } = useGlobalState();
 
-  const blockchainStatus: ShardType = {
+  const overallCard: ShardType = {
     shard: -1,
     validators: shards.reduce(
       (totalValidators, shardEntry) => totalValidators + shardEntry.validators,
@@ -41,7 +62,7 @@ const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
         </div>
       ) : (
         <div className="row d-flex pl-3">
-          <ShardCard shard={blockchainStatus} isOverall />
+          <ShardCard shard={overallCard} isOverall />
           {shards.map((shard, i) => (
             <React.Fragment key={shard.shard + i}>
               {i === shards.length - 3 && (
@@ -50,6 +71,7 @@ const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
               <ShardCard shard={shard} />
             </React.Fragment>
           ))}
+          <StakingQueueCard stakingQueue={stakingQueue} />
         </div>
       )}
     </>
