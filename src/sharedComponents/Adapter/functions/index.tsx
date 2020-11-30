@@ -25,6 +25,7 @@ import {
   getMiniBlockTransactions,
   getMiniBlockTransactionsCount,
 } from './getMiniBlocks';
+import getGlobalStake from './getGlobalStake';
 
 export interface ProviderPropsType {
   baseUrl: string;
@@ -91,4 +92,5 @@ export {
   getAccount,
   getAccounts,
   getAccountsCount,
+  getGlobalStake,
 };
