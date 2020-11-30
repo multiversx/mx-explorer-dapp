@@ -12,8 +12,6 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
     shards.length === 0 ? undefined : true
   );
 
-  const [stakingQueue, setStakingQueue] = React.useState<number | undefined>(undefined);
-
   const fetchShardsAndGlobalStaking = () => {
     if (dataReady === undefined) {
       Promise.all([getShards(), getGlobalStake()]).then(([shards, globalStake]) => {
@@ -25,7 +23,10 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
         }
 
         if (globalStake.success) {
-          setStakingQueue(globalStake.queueSize);
+          dispatch({
+            type: 'setGlobalStake',
+            globalStake: globalStake.data,
+          });
         }
 
         setDataReady(shards.success);
@@ -47,7 +48,7 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
               </h3>
             </div>
           </div>
-          <ShardsList shardsFetched={dataReady} stakingQueue={stakingQueue} />
+          <ShardsList shardsFetched={dataReady} />
 
           <div className="row">
             <div className="col-12">{children}</div>

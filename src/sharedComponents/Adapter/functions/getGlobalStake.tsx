@@ -9,7 +9,7 @@ export default async function getGlobalStake({ proxyUrl, timeout }: GlobalStakeT
   try {
     const { data } = await axios.get(`${proxyUrl}/stake`, { timeout });
     return {
-      ...data,
+      data,
       success: true,
     };
   } catch (err) {
