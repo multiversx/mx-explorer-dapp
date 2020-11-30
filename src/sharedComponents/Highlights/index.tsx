@@ -52,6 +52,7 @@ const initialState = {
 const Hightlights = () => {
   const {
     activeNetworkId,
+    activeNetwork,
     refresh: { timestamp },
   } = useGlobalState();
 
@@ -130,7 +131,7 @@ const Hightlights = () => {
                   icon={faExchangeAlt}
                   title="Transactions"
                   dataTestId="transactions"
-                  value={transactions}
+                  value={activeNetwork.id === 'mainnet' ? '1,178,110' : transactions}
                 />
               </ul>
             </div>
