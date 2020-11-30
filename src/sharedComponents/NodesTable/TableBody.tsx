@@ -33,9 +33,13 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
           </td>
           <td>
             <div className="d-flex">
-              <NetworkLink to={urlBuilder.shard(node.shard)} data-testid={`shardLink${index}`}>
-                <ShardSpan shard={node.shard} />
-              </NetworkLink>
+              {node.shard !== undefined ? (
+                <NetworkLink to={urlBuilder.shard(node.shard)} data-testid={`shardLink${index}`}>
+                  <ShardSpan shard={node.shard} />
+                </NetworkLink>
+              ) : (
+                <span className="text-secondary">N/A</span>
+              )}
             </div>
           </td>
 
