@@ -3,6 +3,7 @@ import { TransactionType } from './TransactionRow';
 import txStatus from '../TransactionStatus/txStatus';
 import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
+import { faHourglass } from '@fortawesome/pro-regular-svg-icons/faHourglass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
@@ -20,9 +21,14 @@ const TransactionIcon = ({ transaction }: TransactionIconType) => {
 
   const failed = statusIs(txStatus.failed) || statusIs(txStatus.fail);
   const invalid = statusIs(txStatus.notExecuted) || statusIs(txStatus.invalid);
-  const icon = failed ? faTimes : faBan;
+  const pending = statusIs(txStatus.pending);
 
-  return !failed && !invalid ? null : (
+  let icon;
+  if (failed) icon = faTimes;
+  if (invalid) icon = faBan;
+  if (pending) icon = faHourglass;
+
+  return icon === undefined ? null : (
     <>
       <OverlayTrigger
         placement="top"
@@ -35,7 +41,7 @@ const TransactionIcon = ({ transaction }: TransactionIconType) => {
       >
         <FontAwesomeIcon
           icon={icon}
-          size={icon === faBan ? 'sm' : '1x'}
+          size={icon === faTimes ? '1x' : 'sm'}
           className="mr-1 text-secondary"
         />
       </OverlayTrigger>
