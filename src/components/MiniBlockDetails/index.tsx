@@ -66,9 +66,7 @@ const MiniBlockDetails = () => {
           setMiniBlockFetched(miniBlockData.success);
         }
       });
-      getMiniBlockTransactionsCount({
-        miniBlockHash,
-      }).then(({ data: count, success }) => {
+      getMiniBlockTransactionsCount(miniBlockHash).then(({ data: count, success }) => {
         if (ref.current !== null && success) {
           setTotalTransactions(count);
         }
