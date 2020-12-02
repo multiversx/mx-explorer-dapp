@@ -2,6 +2,20 @@ const localTestnets = [
   ...(process.env.NODE_ENV === 'development'
     ? [
         {
+          // default: true,
+          id: 'mainnet-gateway',
+          name: 'Mainnet Gateway',
+          adapter: 'elastic',
+          proxyUrl: 'https://gateway.elrond.com',
+          elasticUrl: 'https://index.elrond.com',
+          data: true,
+          validatorDetails: true,
+          erdLabel: 'EGLD',
+          walletAddress: 'https://wallet.elrond.com/',
+          explorerAddress: 'https://explorer.elrond.com/',
+          theme: 'light',
+        },
+        {
           default: false,
           id: 'mainnet-elastic',
           name: 'Elastic',
