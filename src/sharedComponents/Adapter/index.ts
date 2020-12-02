@@ -1,5 +1,14 @@
-import * as helpers from './helpers';
 import useAdapterConfig from './useAdapterConfig';
+import {
+  GetBlocksType,
+  processBlocks,
+  getShardOrEpochParam,
+  getTransactionsParams,
+  TransactionsParamsType,
+  getAccountParams,
+  GetNodesType,
+  getNodeParams,
+} from './helpers';
 
 export default function useAdapter() {
   const { provider, getStats, getNodes, getRewards, getShards } = useAdapterConfig();
@@ -72,7 +81,7 @@ export default function useAdapter() {
       }
     },
 
-    getBlocks: async ({ size = 1, shard, epochId, proposer }: helpers.GetBlocksType) => {
+    getBlocks: async ({ size = 1, shard, epochId, proposer }: GetBlocksType) => {
       try {
         const { data: blocks, success } = await provider({
           url: `/blocks`,
@@ -80,13 +89,13 @@ export default function useAdapter() {
             from: (size - 1) * 25,
             size: 25,
             ...(proposer ? { proposer } : {}),
-            ...helpers.getShardOrEpochParam(shard, epochId),
+            ...getShardOrEpochParam(shard, epochId),
             fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
           },
         });
         if (success) {
           return {
-            data: helpers.processBlocks(blocks),
+            data: processBlocks(blocks),
             success,
           };
         } else {
@@ -99,8 +108,8 @@ export default function useAdapter() {
       }
     },
 
-    getBlocksCount: ({ shard, epochId }: helpers.GetBlocksType) =>
-      provider({ url: `/blocks/count`, params: helpers.getShardOrEpochParam(shard, epochId) }),
+    getBlocksCount: ({ shard, epochId }: GetBlocksType) =>
+      provider({ url: `/blocks/count`, params: getShardOrEpochParam(shard, epochId) }),
 
     /* Transaction */
 
@@ -125,26 +134,17 @@ export default function useAdapter() {
 
     /* Transactions */
 
-    getTransactions: ({
-      size,
-      address,
-      senderShard,
-      receiverShard,
-    }: helpers.TransactionsParamsType) =>
+    getTransactions: ({ size, address, senderShard, receiverShard }: TransactionsParamsType) =>
       provider({
         url: `/transactions`,
-        params: helpers.getTransactionsParams({ size, address, senderShard, receiverShard }),
+        params: getTransactionsParams({ size, address, senderShard, receiverShard }),
       }),
 
-    getTransactionsCount: ({
-      address,
-      senderShard,
-      receiverShard,
-    }: helpers.TransactionsParamsType) =>
+    getTransactionsCount: ({ address, senderShard, receiverShard }: TransactionsParamsType) =>
       provider({
         url: `/transactions/count`,
         params: {
-          ...helpers.getAccountParams(address),
+          ...getAccountParams(address),
           ...(senderShard !== undefined ? { senderShard } : {}),
           ...(receiverShard !== undefined ? { receiverShard } : {}),
         },
@@ -156,10 +156,10 @@ export default function useAdapter() {
 
     getShards,
 
-    getNodes: (props: helpers.GetNodesType) =>
+    getNodes: (props: GetNodesType) =>
       getNodes({
         url: `/nodes`,
-        params: helpers.getNodeParams(props),
+        params: getNodeParams(props),
       }),
 
     getNodesCount: ({
@@ -170,10 +170,10 @@ export default function useAdapter() {
       shard,
       status,
       identity,
-    }: helpers.GetNodesType) =>
+    }: GetNodesType) =>
       getNodes({
         url: `/nodes/count`,
-        params: helpers.getNodeParams({
+        params: getNodeParams({
           peerType,
           issues,
           search,
