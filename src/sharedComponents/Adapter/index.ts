@@ -129,7 +129,7 @@ export default function useAdapter() {
         },
       }),
 
-    getMiniBlockTransactionsCount: ({ miniBlockHash }: { miniBlockHash: string }) =>
+    getMiniBlockTransactionsCount: (miniBlockHash: string) =>
       provider({ url: `/transactions/count`, params: { miniBlockHash } }),
 
     /* Transactions */
