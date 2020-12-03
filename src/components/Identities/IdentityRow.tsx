@@ -13,6 +13,7 @@ import {
 } from 'sharedComponents';
 import PercentegeBar from './PercentegeBar';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
+import { urlBuilder } from 'helpers';
 
 export interface IdentityRowType {
   identity: IdentityType;
@@ -55,7 +56,9 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
     setCollapsed(!collapsed);
   };
 
-  const link = identity.identity ? `/validators/${identity.identity}` : `/nodes/${identity.name}`;
+  const link = identity.identity
+    ? urlBuilder.identityDetails(identity.identity)
+    : urlBuilder.nodeDetails(identity.name);
 
   return (
     <>
