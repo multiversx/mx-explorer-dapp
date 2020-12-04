@@ -68,7 +68,9 @@ const LatestBlocks = () => {
                 {blocks.map((block, i) => (
                   <div
                     key={block.hash}
-                    className={`row animated-row ${block.isNew && someNew ? 'new' : ''}`}
+                    className={`row animated-row border-bottom ${
+                      block.isNew && someNew ? 'new' : ''
+                    }`}
                   >
                     <div className="col-6 pl-lg-spacer">
                       <div className="d-flex align-items-center">

@@ -27,7 +27,7 @@ export const validatorsRoutes = {
   index: '/identities',
   nodes: '/nodes',
   nodeDetails: '/nodes/:publicKey',
-  identityDetails: '/validators/:id',
+  identityDetails: '/identities/:id',
 };
 
 const routes: RouteType[] = [
@@ -95,6 +95,11 @@ const routes: RouteType[] = [
     path: '/accounts/:hash',
     title: 'Account Details',
     component: AccountDetails,
+  },
+  {
+    path: '/address/:hash',
+    title: 'Account Details',
+    component: AccountDetails, // redirect
   },
   {
     path: '/miniblocks/:hash',

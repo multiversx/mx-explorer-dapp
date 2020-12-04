@@ -1,6 +1,6 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
-import { useParams } from 'react-router-dom';
+import { Redirect, useLocation, useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { Loader, TransactionsTable, adapter } from 'sharedComponents';
 import denominate from 'sharedComponents/Denominate/denominate';
@@ -11,9 +11,10 @@ import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransac
 import AccountDetailsCard from './AccountDetailsCard';
 import FailedAccountDetails from './FailedAccountDetails';
 import DelegationDetails from './DelegationDetails';
-import { addressIsBech32, useSize } from 'helpers';
+import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
 import { denomination, decimals } from 'appConfig';
 import { types } from 'helpers';
+import { useIsMainnet } from 'helpers';
 
 export interface AccountDetailsType extends types.AccountType {
   detailsFetched?: boolean;
@@ -35,7 +36,11 @@ const initialAccountDetails: AccountDetailsType = {
 
 const AccountDetails = () => {
   const ref = React.useRef(null);
+  const { pathname } = useLocation();
+  const isOldAddressRoute = pathname.includes('/address/');
   const { size, firstPageTicker } = useSize();
+  const isMainnet = useIsMainnet();
+  const networkRoute = useNetworkRoute();
 
   const [accountDetails, setAccountDetails] = React.useState<AccountDetailsType>(
     initialAccountDetails
@@ -52,39 +57,56 @@ const AccountDetails = () => {
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
 
-  const fetchData = () => {
+  const fetchBalanceAndCount = () => {
+    if (!document.hidden) {
+      Promise.all([getAccount(address), getTransactionsCount({ address })]).then(
+        ([accountDetailsData, countData]) => {
+          if (ref.current !== null) {
+            setAccountDetails((existing) => ({
+              ...existing,
+              ...(accountDetailsData.success ? { ...accountDetailsData.data } : {}),
+              detailsFetched: accountDetailsData.success,
+            }));
+            if (countData.success) {
+              setTotalTransactions(Math.min(countData.count, 10000));
+            }
+            if (dataReady === undefined) {
+              setDataReady(accountDetailsData.success);
+            }
+          }
+        }
+      );
+    }
+  };
+
+  const fetchTransactionsAndRewards = () => {
     Promise.all([
       getTransactions({
         size,
         address,
       }),
-      getAccount(address),
       getRewards(address),
-    ]).then(([transactionsData, accountDetailsData, rewardsData]) => {
+    ]).then(([transactionsData, rewardsData]) => {
       const { data, success } = transactionsData;
-      const { data: accountDetails } = accountDetailsData;
-      if (success && ref.current !== null) {
+      if (success) {
         const existingHashes = transactions.map((b) => b.txHash);
         const newTransactions = data.map((transaction: TransactionType) => ({
           ...transaction,
           isNew: !existingHashes.includes(transaction.txHash),
         }));
-        setTransactions(newTransactions);
-        const pending = data.some(
-          (tx: TransactionType) => tx.status.toLowerCase() === txStatus.pending.toLowerCase()
-        );
-        setHasPendingTransaction(pending);
-        setTransactionsFetched(true);
+        if (ref.current !== null) {
+          setTransactions(newTransactions);
+          const pending = data.some(
+            (tx: TransactionType) => tx.status.toLowerCase() === txStatus.pending.toLowerCase()
+          );
+          setHasPendingTransaction(pending);
+          setTransactionsFetched(true);
+        }
       } else if (transactions.length === 0) {
-        setTransactionsFetched(false);
+        if (ref.current !== null) {
+          setTransactionsFetched(false);
+        }
       }
-      setAccountDetails(({ stake, claimableRewards }) => ({
-        ...accountDetails,
-        detailsFetched: accountDetailsData.success,
-        rewardsFetched: rewardsData.success,
-        stake,
-        claimableRewards,
-      }));
       if (rewardsData.success) {
         const rewards = parseFloat(
           denominate({
@@ -107,33 +129,31 @@ const AccountDetails = () => {
             addCommas: false,
           })
         );
-        setAccountDetails((details) => ({ ...details, claimableRewards: rewards, stake }));
-      }
-      setDataReady(accountDetailsData.success);
-    });
-  };
-
-  const fetchTransactionsCount = () => {
-    getTransactionsCount({
-      address,
-    }).then(({ count, success }) => {
-      if (ref.current !== null && success) {
-        setTotalTransactions(Math.min(count, 10000));
+        if (ref.current !== null) {
+          setAccountDetails((existing) => ({
+            ...existing,
+            rewardsFetched: rewardsData.success,
+            claimableRewards: rewards,
+            stake,
+          }));
+        }
       }
     });
   };
 
   React.useEffect(() => {
-    fetchData();
-    fetchTransactionsCount();
+    if (!isOldAddressRoute) {
+      fetchTransactionsAndRewards();
+      fetchBalanceAndCount();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, size, address]);
 
   React.useEffect(() => {
     if (!loading) {
-      fetchTransactionsCount();
+      fetchBalanceAndCount();
       if (hasPendingTransaction) {
-        fetchData();
+        fetchTransactionsAndRewards();
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -141,10 +161,10 @@ const AccountDetails = () => {
 
   React.useEffect(() => {
     if (!loading) {
-      fetchData();
+      fetchTransactionsAndRewards();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totalTransactions]);
+  }, [totalTransactions, accountDetails.balance]);
 
   const loading = dataReady === undefined && transactionsFetched === undefined;
   const failed = dataReady === false || !addressIsBech32(address);
@@ -155,7 +175,9 @@ const AccountDetails = () => {
       accountDetails.stake !== undefined &&
       accountDetails.stake > 0);
 
-  return (
+  return isOldAddressRoute ? (
+    <Redirect to={networkRoute(`/accounts/${address}`)} />
+  ) : (
     <>
       {loading && <Loader />}
       {!loading && failed && <FailedAccountDetails address={address} />}
@@ -174,7 +196,7 @@ const AccountDetails = () => {
               <div className="col mb-spacer">
                 <AccountDetailsCard {...accountDetails} />
               </div>
-              {showDelegation && (
+              {showDelegation && isMainnet && (
                 <div className="col-lg-4 mb-spacer">
                   <DelegationDetails {...accountDetails} />
                 </div>

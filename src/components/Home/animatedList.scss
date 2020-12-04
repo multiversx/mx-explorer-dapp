@@ -2,7 +2,10 @@
   .animated-row {
     padding-top: 0.93rem;
     padding-bottom: 0.93rem;
-    border-bottom: 1px solid $border-color;
+
+    &.border-bottom:last-child {
+      border-bottom: 0 !important;
+    }
   }
 
   .new {
