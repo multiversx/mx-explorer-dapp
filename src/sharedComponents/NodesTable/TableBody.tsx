@@ -19,13 +19,9 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
           <td>
             <div className="d-flex align-items-center">
               <RowIcon node={node} />
-              {node.nodeType === 'validator' ? (
-                <NetworkLink to={urlBuilder.nodeDetails(node.publicKey)} className="trim-wrapper">
-                  <Trim text={node.publicKey} />
-                </NetworkLink>
-              ) : (
+              <NetworkLink to={urlBuilder.nodeDetails(node.publicKey)} className="trim-wrapper">
                 <Trim text={node.publicKey} />
-              )}
+              </NetworkLink>
             </div>
           </td>
           <td>
@@ -37,9 +33,13 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
           </td>
           <td>
             <div className="d-flex">
-              <NetworkLink to={urlBuilder.shard(node.shard)} data-testid={`shardLink${index}`}>
-                <ShardSpan shard={node.shard} />
-              </NetworkLink>
+              {node.shard !== undefined ? (
+                <NetworkLink to={urlBuilder.shard(node.shard)} data-testid={`shardLink${index}`}>
+                  <ShardSpan shard={node.shard} />
+                </NetworkLink>
+              ) : (
+                <span className="text-secondary">N/A</span>
+              )}
             </div>
           </td>
 

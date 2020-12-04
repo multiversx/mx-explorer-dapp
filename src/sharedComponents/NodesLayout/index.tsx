@@ -4,7 +4,7 @@ import { adapter, Loader } from 'sharedComponents';
 import { useGlobalDispatch, useGlobalState } from 'context';
 
 const NodesLayout = ({ children }: { children: React.ReactNode }) => {
-  const { getShards } = adapter();
+  const { getShards, getGlobalStake } = adapter();
   const dispatch = useGlobalDispatch();
   const { shards } = useGlobalState();
 
@@ -12,23 +12,29 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
     shards.length === 0 ? undefined : true
   );
 
-  const fetchShards = () => {
-    if (shards.length === 0) {
-      getShards().then((shards) => {
+  const fetchShardsAndGlobalStaking = () => {
+    if (dataReady === undefined) {
+      Promise.all([getShards(), getGlobalStake()]).then(([shards, globalStake]) => {
         if (shards.success) {
           dispatch({
             type: 'setShards',
             shards: shards.data,
           });
-          setDataReady(true);
-        } else {
-          setDataReady(false);
         }
+
+        if (globalStake.success) {
+          dispatch({
+            type: 'setGlobalStake',
+            globalStake: globalStake.data,
+          });
+        }
+
+        setDataReady(shards.success);
       });
     }
   };
 
-  React.useEffect(fetchShards, []);
+  React.useEffect(fetchShardsAndGlobalStaking, []);
 
   return (
     <>

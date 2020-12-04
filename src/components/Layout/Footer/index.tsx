@@ -22,7 +22,7 @@ const Footer = () => {
         </a>
       </div>
       {process.env.REACT_APP_CACHE_BUST && (
-        <small className="text-light version mt-1">Build {process.env.REACT_APP_CACHE_BUST}</small>
+        <small className="text-muted version mt-1">Build {process.env.REACT_APP_CACHE_BUST}</small>
       )}
     </footer>
   );

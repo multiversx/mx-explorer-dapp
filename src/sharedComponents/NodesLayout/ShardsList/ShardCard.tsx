@@ -13,10 +13,10 @@ interface ShardCardType {
 const ShardCard = ({ shard, isOverall = false }: ShardCardType) => {
   const status = computeShardStatus(shard);
   return (
-    <div className="flex-grow-1 mr-3 mb-3 pb-3">
+    <div className="flex-grow-1 flex-basis-0 mr-3 mb-3 pb-3">
       <div className="card">
         <div className={`card-body px-3 ${isOverall ? 'overall-card bg-primary text-white' : ''}`}>
-          <small className={isOverall ? 'text-white' : 'text-light'}>
+          <small className={`text-nowrap ${isOverall ? 'text-white' : 'text-light'}`}>
             {isOverall ? 'Active Validators' : <ShardSpan shard={shard.shard} />}
           </small>
           <span className="metric-value d-flex align-items-center">
