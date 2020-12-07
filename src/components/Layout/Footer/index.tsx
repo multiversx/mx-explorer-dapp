@@ -3,10 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/pro-solid-svg-icons/faHeart';
 
 const Footer = () => {
+  const explorerVersion = process.env.REACT_APP_CACHE_BUST;
+
   return (
     <footer
       className={`footer d-flex flex-column align-items-center justify-content-center text-muted ${
-        process.env.REACT_APP_CACHE_BUST ? 'pt-2' : ''
+        explorerVersion ? 'pt-2' : ''
       }`}
     >
       <div className="footer-inner">
@@ -21,8 +23,8 @@ const Footer = () => {
           by the Elrond team.
         </a>
       </div>
-      {process.env.REACT_APP_CACHE_BUST && (
-        <small className="text-muted version mt-1">Build {process.env.REACT_APP_CACHE_BUST}</small>
+      {explorerVersion && (
+        <small className="text-muted version mt-1">Build {explorerVersion}</small>
       )}
     </footer>
   );
