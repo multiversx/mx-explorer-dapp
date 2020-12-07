@@ -1,5 +1,5 @@
 .main-content > .main-content-container.container-fluid {
-  @include media-breakpoint-up(lg) {
+  @include media-breakpoint-up(md) {
     $header-navbar-height: 3.3rem;
     $footer-height: 5rem;
 
