@@ -1,5 +1,13 @@
 const analytics = {
-  sendEvent: ({ action, label }: { action: string; label: string }) => {
+  sendEvent: ({
+    action,
+    label,
+    explorerVersion,
+  }: {
+    action: string;
+    label: string;
+    explorerVersion: string;
+  }) => {
     try {
       const erdAddressRegex = new RegExp(/erd1\w+/, 'g');
       const hashRegex = new RegExp(/([a-z0-9]){64}/, 'g');
@@ -8,7 +16,7 @@ const analytics = {
       cleanLabel = cleanLabel.replace(hashRegex, 'hash...');
 
       if ((window as any).ga) {
-        (window as any).ga('send', 'event', action, cleanLabel);
+        (window as any).ga('send', 'event', action, cleanLabel, explorerVersion);
       }
     } catch (err) {
       console.error(err);
