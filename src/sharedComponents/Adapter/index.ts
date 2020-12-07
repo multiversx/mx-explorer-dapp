@@ -211,8 +211,7 @@ export default function useAdapter() {
         },
       }),
 
-    // TODO: review
-    getAccountsCount: (size: number) => provider({ url: `/accounts/count` }),
+    getAccountsCount: () => provider({ url: `/accounts/count` }),
 
     getGlobalStake: () => provider({ url: `/stake` }),
   };
