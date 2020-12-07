@@ -6,6 +6,7 @@ import NetworkSwitcher from './NetworkSwitcher';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars';
 import { faMoon } from '@fortawesome/pro-regular-svg-icons/faMoon';
+import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import NavLinks from './NavLinks';
 import Logo from './Logo';
 import { ReactComponent as Sun } from 'assets/images/sun.svg';
@@ -90,8 +91,12 @@ export default function Navbar() {
                   href="/"
                   onClick={toggleHeaderNav}
                 >
-                  <i className="material-icons">
-                    <FontAwesomeIcon icon={faBars} />
+                  <i className="material-icons" style={{ width: '1.375rem' }}>
+                    {headerNavCollapsed ? (
+                      <FontAwesomeIcon icon={faTimes} />
+                    ) : (
+                      <FontAwesomeIcon icon={faBars} />
+                    )}
                   </i>
                 </a>
               </div>
