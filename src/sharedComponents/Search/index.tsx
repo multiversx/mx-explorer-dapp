@@ -45,7 +45,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
           case transaction.success:
             setRoute(networkRoute(`/transactions/${hash}`));
             break;
-          case miniblock.blockFetched:
+          case miniblock.success:
             setRoute(networkRoute(`/miniblocks/${hash}`));
             break;
           case account.success:
