@@ -211,6 +211,9 @@ export default function useAdapter() {
         },
       }),
 
-    getAccountsCount: () => provider({ url: `/accounts/count` }),
+    // TODO: review
+    getAccountsCount: (size: number) => provider({ url: `/accounts/count` }),
+
+    // getGlobalStake: () => f.getGlobalStake({ proxyUrl, timeout }),
   };
 }

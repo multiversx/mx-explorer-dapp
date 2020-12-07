@@ -19,7 +19,8 @@ export type ActionType =
   | {
       type: 'changeTheme';
       theme: StateType['theme'];
-    };
+    }
+  | { type: 'setGlobalStake'; globalStake: StateType['globalStake'] };
 
 export function globalReducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
@@ -65,6 +66,12 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
       return {
         ...state,
         shards: action.shards,
+      };
+    }
+    case 'setGlobalStake': {
+      return {
+        ...state,
+        globalStake: action.globalStake,
       };
     }
     case 'changeTheme': {
