@@ -68,13 +68,6 @@ export const Routes = ({
 };
 
 export const App = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
-  React.useEffect(() => {
-    if (process.env.REACT_APP_CACHE_BUST) {
-      // tslint:disable-next-line
-      console.log('Elrond Explorer version: ', process.env.REACT_APP_CACHE_BUST);
-    }
-  }, []);
-
   return (
     <GlobalProvider optionalConfig={optionalConfig}>
       <AxiosErrorHandler>
