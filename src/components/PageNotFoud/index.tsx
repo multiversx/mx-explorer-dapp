@@ -6,8 +6,11 @@ import { analytics } from 'helpers';
 
 const PageNotFound = () => {
   const { pathname } = useLocation();
+  const explorerVersion = process.env.REACT_APP_CACHE_BUST;
 
-  analytics.sendEvent({ action: 'page-not-found', label: pathname });
+  if (explorerVersion !== undefined) {
+    analytics.sendEvent({ action: 'page-not-found', label: pathname, explorerVersion });
+  }
 
   return (
     <PageState
