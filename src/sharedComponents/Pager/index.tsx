@@ -7,6 +7,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { NetworkLink } from 'sharedComponents';
 import pagerHelper from './pagerHelper';
+import { useGlobalState } from 'context';
 
 const Pager = ({
   total,
@@ -19,7 +20,13 @@ const Pager = ({
   itemsPerPage: number;
   show: boolean;
 }) => {
-  const { pathname } = useLocation();
+  const { activeNetworkId } = useGlobalState();
+
+  const { pathname: originalPathname } = useLocation();
+  const pathname = activeNetworkId
+    ? originalPathname.replace(`/${activeNetworkId}`, '')
+    : originalPathname;
+
   const urlParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlParams);
 
