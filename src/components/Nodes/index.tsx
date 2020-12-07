@@ -50,7 +50,7 @@ const Nodes = () => {
             {isMainnet && <NodeTabs />}
 
             <div className="card-header-item">
-              <Filters resultsCount={nodes.length} />
+              <Filters />
             </div>
           </div>
 

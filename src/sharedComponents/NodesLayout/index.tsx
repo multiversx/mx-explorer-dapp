@@ -6,40 +6,46 @@ import { useGlobalDispatch, useGlobalState } from 'context';
 const NodesLayout = ({ children }: { children: React.ReactNode }) => {
   const { getShards, getGlobalStake } = adapter();
   const dispatch = useGlobalDispatch();
-  const { shards } = useGlobalState();
+  const { activeNetworkId } = useGlobalState();
 
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>(
-    shards.length === 0 ? undefined : true
-  );
+  const [dataReadyForNetwork, setDataReadyForNetwork] = React.useState<
+    string | undefined | false
+  >();
 
   const fetchShardsAndGlobalStaking = () => {
-    if (dataReady === undefined) {
+    if (dataReadyForNetwork !== activeNetworkId) {
       Promise.all([getShards(), getGlobalStake()]).then(([shards, globalStake]) => {
-        if (shards.success) {
-          dispatch({
-            type: 'setShards',
-            shards: shards.data,
-          });
-        }
-
         if (globalStake.success) {
           dispatch({
             type: 'setGlobalStake',
             globalStake: globalStake.data,
           });
+        } else {
+          dispatch({
+            type: 'setGlobalStake',
+            globalStake: undefined,
+          });
         }
 
-        setDataReady(shards.success);
+        if (shards.success) {
+          dispatch({
+            type: 'setShards',
+            shards: shards.data,
+          });
+          setDataReadyForNetwork(activeNetworkId);
+        } else {
+          setDataReadyForNetwork(false);
+        }
       });
     }
   };
 
-  React.useEffect(fetchShardsAndGlobalStaking, []);
+  React.useEffect(fetchShardsAndGlobalStaking, [activeNetworkId]);
 
   return (
     <>
-      {dataReady === undefined && <Loader />}
-      {dataReady !== undefined && (
+      {dataReadyForNetwork === undefined && <Loader />}
+      {dataReadyForNetwork !== undefined && (
         <div className="container pt-spacer">
           <div className="row page-header ">
             <div className="col-12">
@@ -48,7 +54,7 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
               </h3>
             </div>
           </div>
-          <ShardsList shardsFetched={dataReady} />
+          <ShardsList shardsFetched={dataReadyForNetwork === activeNetworkId} />
 
           <div className="row">
             <div className="col-12">{children}</div>
