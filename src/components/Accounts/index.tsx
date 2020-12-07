@@ -25,9 +25,7 @@ const Transactions = () => {
   const [totalAccounts, setTotalAccounts] = React.useState<number | '...'>('...');
 
   const fetchAccounts = () => {
-    getAccounts({
-      size,
-    }).then(({ data, success }) => {
+    getAccounts(size).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
           setAccounts(data);
@@ -38,7 +36,7 @@ const Transactions = () => {
   };
 
   const fetchAccountsCount = () => {
-    getAccountsCount({}).then(({ count, success }) => {
+    getAccountsCount().then(({ data: count, success }) => {
       if (ref.current !== null && success) {
         setTotalAccounts(Math.min(count, 10000));
       }

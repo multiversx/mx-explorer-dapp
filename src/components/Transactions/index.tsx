@@ -50,7 +50,7 @@ const Transactions = () => {
     getTransactionsCount({
       senderShard,
       receiverShard,
-    }).then(({ count, success }) => {
+    }).then(({ data: count, success }) => {
       if (ref.current !== null && success) {
         setTotalTransactions(Math.min(count, 10000));
         setTransactionsCount(count);

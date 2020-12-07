@@ -14,7 +14,6 @@ import {
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
-import { initialState } from 'sharedComponents/Adapter/functions/getMiniBlocks';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import MiniBlockNotFound from './MiniBlockNotFound';
 
@@ -27,12 +26,7 @@ interface MiniBlockType {
   miniBlockHash: string;
 }
 
-export interface StateType {
-  miniBlock: MiniBlockType;
-  blockFetched: boolean;
-}
-
-const MiniBlockDetails: React.FC = () => {
+const MiniBlockDetails = () => {
   const { page, hash: miniBlockHash } = useParams() as any;
   const ref = React.useRef(null);
   const networkRoute = useNetworkRoute();
@@ -41,10 +35,8 @@ const MiniBlockDetails: React.FC = () => {
 
   const { activeNetworkId } = useGlobalState();
 
-  const [state, setState] = React.useState<StateType>(initialState);
+  const [miniBlock, setMiniBlock] = React.useState<MiniBlockType>();
   const [miniBlockFetched, setMiniBlockFetched] = React.useState<boolean | undefined>();
-
-  const { miniBlock } = state;
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
@@ -64,15 +56,17 @@ const MiniBlockDetails: React.FC = () => {
         }),
       ]).then(([miniBlockData, miniBlockTransactionsData]) => {
         if (ref.current !== null) {
-          setTransactions(miniBlockTransactionsData.data);
+          if (miniBlockTransactionsData.success) {
+            setTransactions(miniBlockTransactionsData.data);
+          }
           setTransactionsFetched(miniBlockTransactionsData.success);
-          setState(miniBlockData);
-          setMiniBlockFetched(miniBlockData.blockFetched);
+          if (miniBlockData.success) {
+            setMiniBlock(miniBlockData.data);
+          }
+          setMiniBlockFetched(miniBlockData.success);
         }
       });
-      getMiniBlockTransactionsCount({
-        miniBlockHash,
-      }).then(({ count, success }) => {
+      getMiniBlockTransactionsCount(miniBlockHash).then(({ data: count, success }) => {
         if (ref.current !== null && success) {
           setTotalTransactions(count);
         }
@@ -92,7 +86,7 @@ const MiniBlockDetails: React.FC = () => {
       {miniBlockFetched === false && <MiniBlockNotFound miniBlockHash={miniBlockHash} />}
 
       <div ref={ref}>
-        {miniBlockFetched && miniBlock.miniBlockHash && (
+        {miniBlockFetched && miniBlock && (
           <div className="container pt-spacer">
             <div className="row page-header">
               <div className="col-12">

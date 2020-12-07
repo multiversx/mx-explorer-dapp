@@ -35,22 +35,21 @@ const Blocks = () => {
   const { getBlocks, getBlocksCount } = adapter();
 
   React.useEffect(() => {
-    getBlocks({ size, shard, epochId: undefined }).then(
-      ({ success, blocks, endBlockNr, startBlockNr }) => {
-        if (ref.current !== null) {
-          if (success) {
-            const existingHashes = state ? state.blocks.map((block: BlockType) => block.hash) : [];
-            const newBlocks = blocks.map((block: BlockType) => ({
-              ...block,
-              isNew: !existingHashes.includes(block.hash),
-            }));
-            setState({ blocks: newBlocks, endBlockNr, startBlockNr });
-          }
-          setDataReady(success);
+    getBlocks({ size, shard, epochId: undefined }).then(({ success, data }) => {
+      if (ref.current !== null) {
+        if (success && data) {
+          const { blocks, endBlockNr, startBlockNr } = data;
+          const existingHashes = state ? state.blocks.map((block: BlockType) => block.hash) : [];
+          const newBlocks = blocks.map((block: BlockType) => ({
+            ...block,
+            isNew: !existingHashes.includes(block.hash),
+          }));
+          setState({ blocks: newBlocks, endBlockNr, startBlockNr });
         }
+        setDataReady(success);
       }
-    );
-    getBlocksCount({ size, shard }).then(({ count, success }) => {
+    });
+    getBlocksCount({ size, shard }).then(({ data: count, success }) => {
       if (ref.current !== null && success) {
         setTotalBlocks(count);
       }

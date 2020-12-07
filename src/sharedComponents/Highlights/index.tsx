@@ -55,7 +55,7 @@ const Hightlights = () => {
     refresh: { timestamp },
   } = useGlobalState();
 
-  const { getHighlights } = adapter();
+  const { getStats } = adapter();
 
   const [state, setState] = React.useState({
     [activeNetworkId]: initialState,
@@ -69,7 +69,8 @@ const Hightlights = () => {
 
   const getData = () => {
     if (ref.current !== null) {
-      getHighlights().then(({ data, success }) => {
+      getStats().then((statsData) => {
+        const { data, success } = statsData;
         const check = success ? data.roundsPerEpoch >= data.roundsPassed : false;
         const newState = success
           ? {
