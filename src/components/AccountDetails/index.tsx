@@ -68,7 +68,7 @@ const AccountDetails = () => {
               detailsFetched: accountDetailsData.success,
             }));
             if (countData.success) {
-              setTotalTransactions(Math.min(countData.count, 10000));
+              setTotalTransactions(Math.min(countData.data, 10000));
             }
             if (dataReady === undefined) {
               setDataReady(accountDetailsData.success);
@@ -110,15 +110,15 @@ const AccountDetails = () => {
       if (rewardsData.success) {
         const rewards = parseFloat(
           denominate({
-            input: rewardsData.claimableRewards,
+            input: rewardsData.data.claimableRewards,
             decimals,
             denomination,
             showLastNonZeroDecimal: false,
             addCommas: false,
           })
         );
-        const bNuserActiveStake = new BigNumber(rewardsData.userActiveStake);
-        const bNuserWaitingStake = new BigNumber(rewardsData.userWaitingStake);
+        const bNuserActiveStake = new BigNumber(rewardsData.data.userActiveStake);
+        const bNuserWaitingStake = new BigNumber(rewardsData.data.userWaitingStake);
         const bNstake = bNuserActiveStake.plus(bNuserWaitingStake);
         const stake = parseFloat(
           denominate({

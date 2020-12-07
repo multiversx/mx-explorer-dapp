@@ -20,7 +20,7 @@ const Identities = () => {
       let blockchainTotalStake = 0;
       let overallStakePercent = 0;
 
-      data.forEach((identity) => {
+      data.forEach((identity: IdentityType) => {
         if (!identity.stake || !identity.validators) {
           return;
         }
