@@ -40,9 +40,7 @@ const NodeDetails = () => {
       if (nodeData.success) {
         if (nodeData.data.nodeType !== 'observer') {
           const promises = [
-            getRounds({
-              validator: publicKey,
-            }),
+            getRounds(publicKey),
             getBlocks({ proposer: publicKey }),
             ...(isMainnet && nodeData.data.identity !== undefined
               ? [getIdentity(nodeData.data.identity)]
@@ -54,7 +52,7 @@ const NodeDetails = () => {
               setNode(nodeData);
 
               setBlocks({
-                data: (blocksData as any).blocks,
+                data: blocksData.data.blocks,
                 success: blocksData.success,
               });
 
