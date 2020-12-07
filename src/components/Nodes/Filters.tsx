@@ -5,12 +5,11 @@ import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NetworkLink } from 'sharedComponents';
-interface FiltersInterface {
-  resultsCount: number;
-}
+import { validatorsRoutes } from 'routes';
 
-const Filters = ({ resultsCount }: FiltersInterface) => {
-  const { pathname, search: locationSearch } = useLocation();
+const Filters = () => {
+  const { search: locationSearch } = useLocation();
+
   const history = useHistory();
   const urlParams = new URLSearchParams(locationSearch);
   const { search, peerType, issues, nodeType } = Object.fromEntries(urlParams);
@@ -26,7 +25,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
       ...rest,
       ...(searchValue ? { search: searchValue } : {}),
     }).toString();
-    history.push(`${pathname}?${nextUrlParams}`);
+    history.push(`${validatorsRoutes.nodes}?${nextUrlParams}`);
   };
 
   const peerTypeLink = (peerTypeValue: string) => {
@@ -35,7 +34,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
       ...rest,
       ...(peerTypeValue ? { peerType: peerTypeValue } : {}),
     }).toString();
-    return `${pathname}?${nextUrlParams}`;
+    return `${validatorsRoutes.nodes}?${nextUrlParams}`;
   };
 
   const nodeTypeLink = (nodeTypeValue: string) => {
@@ -44,7 +43,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
       ...rest,
       ...(nodeTypeValue ? { nodeType: nodeTypeValue } : {}),
     }).toString();
-    return `${pathname}?${nextUrlParams}`;
+    return `${validatorsRoutes.nodes}?${nextUrlParams}`;
   };
 
   const issuesLink = (issuesValue: string) => {
@@ -53,7 +52,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
       ...rest,
       ...(issuesValue ? { issues: issuesValue, nodeType: 'validator' } : {}),
     }).toString();
-    return `${pathname}?${nextUrlParams}`;
+    return `${validatorsRoutes.nodes}?${nextUrlParams}`;
   };
 
   return (
@@ -61,7 +60,7 @@ const Filters = ({ resultsCount }: FiltersInterface) => {
       <ul className="list-inline m-0">
         <li className="list-inline-item my-1 my-md-0">
           <NetworkLink
-            to="/nodes"
+            to={validatorsRoutes.nodes}
             className={`btn btn-sm btn-outline-light btn-pill ${
               [search, peerType, issues, nodeType].every((el) => el === undefined) ? 'active' : ''
             }`}
