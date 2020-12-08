@@ -11,20 +11,22 @@
 
   .left {
     flex-shrink: 1;
+    font-size: 1px;
+    color: transparent;
+
     overflow: hidden;
     text-overflow: ellipsis;
-    color: transparent;
-    font-size: 1px;
   }
 
   .right {
     flex-shrink: 1;
+    font-size: 1px;
+    color: transparent;
+
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
     direction: rtl;
-    text-align: left;
-    color: transparent;
-    font-size: 1px;
   }
 
   .left span,
@@ -38,10 +40,19 @@
     display: none;
   }
 
-  /* fix ie */
+  /* IE fix */
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     .right {
       text-overflow: clip;
+    }
+  }
+
+  /* SAFARI 10.1+ fix */
+  @media not all and (min-resolution: 0.001dpcm) {
+    @supports (-webkit-appearance: none) {
+      .right {
+        text-overflow: unset;
+      }
     }
   }
 }
@@ -69,5 +80,13 @@ a > .trim span {
 
   @include media-breakpoint-down(sm) {
     max-width: 13rem;
+  }
+}
+
+.trim-fs-sm .trim {
+  .left span,
+  .right span,
+  .ellipsis {
+    font-size: 0.8125rem;
   }
 }
