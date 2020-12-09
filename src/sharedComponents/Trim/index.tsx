@@ -29,7 +29,8 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
 
   React.useEffect(() => {
     if (childRef.current && wrapperRef.current) {
-      setOverflow(childRef.current.offsetWidth > wrapperRef.current.offsetWidth);
+      const diff = childRef.current.offsetWidth - wrapperRef.current.offsetWidth;
+      setOverflow(diff > 1);
     }
   }, [debounceTracker]);
 
