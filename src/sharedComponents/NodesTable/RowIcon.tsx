@@ -6,6 +6,7 @@ import { faLeaf } from '@fortawesome/pro-regular-svg-icons/faLeaf';
 import { faLock } from '@fortawesome/pro-regular-svg-icons/faLock';
 import { faSync } from '@fortawesome/pro-regular-svg-icons/faSync';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
+import { faSnooze } from '@fortawesome/pro-regular-svg-icons/faSnooze';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NodeType } from 'context/state';
 import { nodeIssue } from 'helpers';
@@ -56,6 +57,17 @@ export default class RowIcon extends React.Component<{ node: NodeType; small?: b
           <Overlay title="New">
             <FontAwesomeIcon
               icon={faLeaf}
+              className="text-secondary mr-1"
+              size={small ? 'xs' : '1x'}
+            />
+          </Overlay>
+        );
+
+      case node.peerType === 'inactive':
+        return (
+          <Overlay title="Inactive">
+            <FontAwesomeIcon
+              icon={faSnooze}
               className="text-secondary mr-1"
               size={small ? 'xs' : '1x'}
             />
