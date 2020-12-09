@@ -14,6 +14,7 @@ import useURLSearchParams from './useURLSearchParams';
 import useSize from './useSize';
 import useMatchPath from './useMatchPath';
 import useIsMainnet from './useIsMainnet';
+import useNetworkPathname from './useNetworkPathname';
 import * as types from './types';
 import analytics from './analytics';
 
@@ -34,6 +35,7 @@ export {
   useSize,
   useMatchPath,
   useIsMainnet,
+  useNetworkPathname,
   types,
   analytics,
 };

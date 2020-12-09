@@ -2,18 +2,20 @@ import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalDispatch, useGlobalState } from 'context';
+import { useNetworkPathname } from 'helpers';
 import * as React from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { ShardSpan, NetworkLink, adapter } from 'sharedComponents';
 
 const ShardFilter = () => {
-  const { search, pathname } = useLocation();
+  const { search } = useLocation();
   const dispatch = useGlobalDispatch();
   const urlParams = new URLSearchParams(search);
   const { shard, page, ...rest } = Object.fromEntries(urlParams);
   const { getShards } = adapter();
   const { shards } = useGlobalState();
+  const networkPathname = useNetworkPathname();
 
   const fetchShards = () => {
     if (shards.length === 0) {
@@ -35,7 +37,7 @@ const ShardFilter = () => {
       ...rest,
       ...(shard ? { shard } : {}),
     }).toString();
-    return `${pathname}?${nextUrlParams}`;
+    return `${networkPathname}?${nextUrlParams}`;
   };
 
   return (
@@ -74,7 +76,7 @@ const ShardFilter = () => {
       <a
         className="d-inline-block side-action"
         data-testid="shardFilterButton"
-        href={`${pathname}/${search}`}
+        href={`${networkPathname}/${search}`}
         onClick={(e) => {
           e.preventDefault();
         }}

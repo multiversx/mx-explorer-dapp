@@ -5,18 +5,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { NetworkLink } from 'sharedComponents';
+import { useNetworkPathname } from 'helpers';
 
 const StatusFilter = () => {
-  const { search, pathname } = useLocation();
+  const { search } = useLocation();
   const urlParams = new URLSearchParams(search);
   const { status, page, ...rest } = Object.fromEntries(urlParams);
+
+  const networkPathname = useNetworkPathname();
 
   const statusLink = (status: string) => {
     const nextUrlParams = new URLSearchParams({
       ...rest,
       ...(status ? { status } : {}),
     }).toString();
-    return `${pathname}?${nextUrlParams}`;
+    return `${networkPathname}?${nextUrlParams}`;
   };
 
   return (
@@ -56,7 +59,7 @@ const StatusFilter = () => {
       <a
         className="d-inline-block side-action"
         data-testid="shardFilterButton"
-        href={`${pathname}/${search}`}
+        href={`${networkPathname}/${search}`}
         onClick={(e) => {
           e.preventDefault();
         }}
