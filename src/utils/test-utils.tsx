@@ -63,8 +63,8 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
     delegation: () => Promise.resolve({ data: rawData.delegation }),
     node: () => Promise.resolve({ data: rawData.node }),
     identity: () => Promise.resolve({ data: rawData.identity }),
-    esdt: () => Promise.resolve({ data: rawData.esdt }),
-    esdtDetails: () => Promise.resolve({ data: rawData.esdtDetails }),
+    tokens: () => Promise.resolve({ data: rawData.tokens }),
+    tokenDetails: () => Promise.resolve({ data: rawData.tokenDetails }),
     ...networkRequests,
   };
 
@@ -104,10 +104,10 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.node();
       case url.includes('/identities/'):
         return requests.identity();
-      case url.includes('/esdt'):
-        return requests.esdt();
-      case url.includes('/esdt/'):
-        return requests.esdtDetails();
+      case url.includes('/tokens'):
+        return requests.tokens();
+      case url.includes('/tokens/'):
+        return requests.tokenDetails();
     }
   };
 };

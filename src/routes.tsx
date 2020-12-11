@@ -12,8 +12,8 @@ import Nodes from './components/Nodes';
 import Identities from './components/Identities';
 import IdentityDetails from './components/IdentityDetails';
 import NodeDetails from './components/NodeDetails';
-import Esdt from './components/Esdt';
-import EsdtDetails from './components/EsdtDetails';
+import Tokens from './components/Tokens';
+import TokenDetails from './components/TokenDetails';
 import { withPageTitle, withNetworkReady } from './sharedComponents';
 
 interface RouteType {
@@ -109,14 +109,14 @@ const routes: RouteType[] = [
     component: MiniBlockDetails,
   },
   {
-    path: '/esdt',
-    title: 'ESDT',
-    component: Esdt,
+    path: '/tokens',
+    title: 'Tokens',
+    component: Tokens,
   },
   {
-    path: '/esdt/:hash',
-    title: 'ESDT Details',
-    component: EsdtDetails,
+    path: '/tokens/:hash',
+    title: 'Token Details',
+    component: TokenDetails,
   },
 ];
 

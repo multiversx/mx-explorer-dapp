@@ -1,55 +1,54 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
 import { Loader, adapter, Pager, NetworkLink } from 'sharedComponents';
-import NoEsdt from './NoEsdt';
-import FailedEsdt from './FailedEsdt';
+import NoTokens from './NoTokens';
+import FailedTokens from './FailedTokens';
 import { types, urlBuilder, useSize, useURLSearchParams } from 'helpers';
 
-const Transactions = () => {
+const Tokens = () => {
   const ref = React.useRef(null);
   const { activeNetworkId } = useGlobalState();
   const { page } = useURLSearchParams();
   const { size } = useSize();
-  const { getEsdt, getEsdtCount } = adapter();
+  const { getTokens, getTokensCount } = adapter();
 
-  const [esdt, setEsdt] = React.useState<types.EsdtType[]>([]);
+  const [tokens, setTokens] = React.useState<types.TokenType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [totalEsdt, setTotalEsdt] = React.useState<number | '...'>('...');
+  const [totalTokens, setTotalTokens] = React.useState<number | '...'>('...');
 
-  const fetchEsdt = () => {
-    getEsdt(size).then(({ data, success }) => {
+  const fetchTokens = () => {
+    getTokens(size).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
-          setEsdt(data);
+          setTokens(data);
         }
         setDataReady(success);
-
-        // setEsdt([{ name: 'test' }]);
+        // setTokens([{ name: 'test' }]);
         // setDataReady(true);
       }
     });
   };
 
-  const fetchEsdtCount = () => {
-    getEsdtCount().then(({ data: count, success }) => {
+  const fetchTokensCount = () => {
+    getTokensCount().then(({ data: count, success }) => {
       if (ref.current !== null && success) {
-        setTotalEsdt(Math.min(count, 10000));
+        setTotalTokens(Math.min(count, 10000));
       }
 
-      //setTotalEsdt(1);
+      // setTotalTokens(1);
     });
   };
 
   React.useEffect(() => {
-    fetchEsdt();
-    fetchEsdtCount();
+    fetchTokens();
+    fetchTokensCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, size]);
 
   return (
     <>
       {dataReady === undefined && <Loader />}
-      {dataReady === false && <FailedEsdt />}
+      {dataReady === false && <FailedTokens />}
 
       <div ref={ref}>
         {dataReady === true && (
@@ -57,7 +56,7 @@ const Transactions = () => {
             <div className="row page-header">
               <div className="col-12">
                 <h3 className="page-title mb-4">
-                  <span data-testid="title">ESDT</span>
+                  <span data-testid="title">Tokens</span>
                 </h3>
               </div>
             </div>
@@ -65,7 +64,7 @@ const Transactions = () => {
             <div className="row">
               <div className="col-12">
                 <div className="card">
-                  {esdt && esdt.length > 0 ? (
+                  {tokens && tokens.length > 0 ? (
                     <>
                       <div className="card-body border-0 p-0">
                         <div className="table-wrapper">
@@ -75,16 +74,16 @@ const Transactions = () => {
                                 <th>Name</th>
                               </tr>
                             </thead>
-                            <tbody data-testid="esdtTable">
-                              {esdt.map((coin, i) => (
+                            <tbody data-testid="tokensTable">
+                              {tokens.map((token, i) => (
                                 <tr key={i}>
                                   <td>
                                     <div className="d-flex align-items-center">
                                       <NetworkLink
-                                        to={urlBuilder.esdtDetails(coin.name)}
-                                        data-testid={`esdtLink${i}`}
+                                        to={urlBuilder.tokenDetails(token.name)}
+                                        data-testid={`tokensLink${i}`}
                                       >
-                                        {coin.name}
+                                        {token.name}
                                       </NetworkLink>
                                     </div>
                                   </td>
@@ -98,14 +97,14 @@ const Transactions = () => {
                       <div className="card-footer">
                         <Pager
                           page={String(page)}
-                          total={totalEsdt !== '...' ? Math.min(totalEsdt, 10000) : totalEsdt}
+                          total={totalTokens !== '...' ? Math.min(totalTokens, 10000) : totalTokens}
                           itemsPerPage={25}
-                          show={esdt.length > 0}
+                          show={tokens.length > 0}
                         />
                       </div>
                     </>
                   ) : (
-                    <NoEsdt />
+                    <NoTokens />
                   )}
                 </div>
               </div>
@@ -117,4 +116,4 @@ const Transactions = () => {
   );
 };
 
-export default Transactions;
+export default Tokens;
