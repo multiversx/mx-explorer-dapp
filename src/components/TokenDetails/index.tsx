@@ -1,8 +1,19 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { types } from 'helpers';
-import { Loader, adapter, DetailItem } from 'sharedComponents';
+import { types, urlBuilder } from 'helpers';
+import { Loader, adapter, DetailItem, Trim, Denominate, NetworkLink } from 'sharedComponents';
 import FailedTokenDetails from './FailedTokenDetails';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
+import { faCheck } from '@fortawesome/pro-light-svg-icons/faCheck';
+
+const CreatePill = ({ name, active }: { name: string; active: boolean }) => {
+  return (
+    <span className={`direction-badge mr-1 ${active ? 'in' : 'out'}`}>
+      <FontAwesomeIcon className="mr-1" icon={active ? faCheck : faTimes} /> {name}
+    </span>
+  );
+};
 
 const TokenDetails = () => {
   const params: any = useParams();
@@ -20,9 +31,6 @@ const TokenDetails = () => {
       if (ref.current !== null) {
         setTokenDetails(data);
         setDataReady(success);
-
-        // setTokenDetails({ name: 'test' });
-        // setDataReady(true);
       }
     });
   };
@@ -49,7 +57,45 @@ const TokenDetails = () => {
                 <div className="card">
                   <div className="card-body p-0">
                     <div className="container-fluid">
-                      <DetailItem title="Name">{tokenDetails.name}</DetailItem>
+                      <DetailItem title="Name">{tokenDetails.tokenName}</DetailItem>
+                      <DetailItem title="Identifier">{tokenDetails.tokenIdentifier}</DetailItem>
+                      <DetailItem title="Owner">
+                        <NetworkLink
+                          to={urlBuilder.accountDetails(tokenDetails.ownerAddress)}
+                          className="trim-wrapper"
+                        >
+                          <Trim text={tokenDetails.ownerAddress} />
+                        </NetworkLink>
+                      </DetailItem>
+                      <DetailItem title="Minted">
+                        <Denominate
+                          value={tokenDetails.mintedValue}
+                          showLastNonZeroDecimal={true}
+                          showLabel={false}
+                        />
+                      </DetailItem>
+                      <DetailItem title="Burnt">
+                        <Denominate
+                          value={tokenDetails.burntValue}
+                          showLastNonZeroDecimal={true}
+                          showLabel={false}
+                        />
+                      </DetailItem>
+                      <DetailItem title="Paused">{tokenDetails.isPaused ? 'Yes' : 'No'}</DetailItem>
+                      <DetailItem title="Properties">
+                        <div className="d-flex alig-items-center">
+                          <CreatePill name={'Can Upgrade'} active={tokenDetails.canUpgrade} />
+                          <CreatePill name={'Can Mint'} active={tokenDetails.canMint} />
+                          <CreatePill name={'Can Burn'} active={tokenDetails.canBurn} />
+                          <CreatePill
+                            name={'Can Change Owner'}
+                            active={tokenDetails.canChangeOwner}
+                          />
+                          <CreatePill name={'Can Pause'} active={tokenDetails.canPause} />
+                          <CreatePill name={'Can Freeze'} active={tokenDetails.canFreeze} />
+                          <CreatePill name={'Can Wipe'} active={tokenDetails.canWipe} />
+                        </div>
+                      </DetailItem>
                     </div>
                   </div>
                 </div>

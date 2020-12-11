@@ -6,7 +6,8 @@ import { denomination, decimals as configDecimals } from 'appConfig';
 interface DenominateType {
   value: string;
   showLastNonZeroDecimal?: boolean;
-  showErd?: boolean;
+  showLabel?: boolean;
+  token?: string;
   decimals?: number;
   'data-testid'?: string;
 }
@@ -20,7 +21,7 @@ const denominateInvalid = (props: DenominateType) => {
 };
 
 const denominateValid = (props: DenominateType, erdLabel: string) => {
-  const { value, showLastNonZeroDecimal = false, showErd = true } = props;
+  const { value, showLastNonZeroDecimal = false, showLabel = true } = props;
   const decimals = props.decimals !== undefined ? props.decimals : configDecimals;
 
   const denominatedValue = denominate({
@@ -48,7 +49,11 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
     <span data-testid={props['data-testid'] ? props['data-testid'] : 'denominateComponent'}>
       <span className="int-amount">{valueParts[0]}</span>
       {valueParts.length > 1 && <span className="decimals">.{valueParts[1]}</span>}
-      {showErd && <span className="symbol">&nbsp;{erdLabel}</span>}
+      {showLabel && (
+        <span className={`symbol ${props.token ? 'text-muted' : ''}`}>
+          &nbsp;{props.token ? props.token : erdLabel}
+        </span>
+      )}
     </span>
   );
 };

@@ -229,7 +229,7 @@ const AccountDetails = () => {
 
             {accountTokensFetched !== undefined && (
               <>
-                {accountTokensFetched === false && (
+                {/* {accountTokensFetched === false && (
                   <div className="row">
                     <div className="col-12 mb-spacer">
                       <div className="card">
@@ -239,7 +239,7 @@ const AccountDetails = () => {
                       </div>
                     </div>
                   </div>
-                )}
+                )} */}
 
                 {accountTokensFetched === true && accountTokens.length > 0 && (
                   <div className="row">
