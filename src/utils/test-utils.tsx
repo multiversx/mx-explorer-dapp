@@ -63,6 +63,7 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
     delegation: () => Promise.resolve({ data: rawData.delegation }),
     node: () => Promise.resolve({ data: rawData.node }),
     identity: () => Promise.resolve({ data: rawData.identity }),
+    esdt: () => Promise.resolve({ data: rawData.esdt }),
     ...networkRequests,
   };
 
@@ -102,6 +103,8 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.node();
       case url.includes('/identities/'):
         return requests.identity();
+      case url.includes('/esdt'):
+        return requests.esdt();
     }
   };
 };

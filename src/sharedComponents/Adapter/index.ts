@@ -214,5 +214,20 @@ export default function useAdapter() {
     getAccountsCount: () => provider({ url: `/accounts/count` }),
 
     getGlobalStake: () => provider({ url: `/stake` }),
+
+    // ESDT
+
+    getAccountEsdt: (address: string) => provider({ url: `/${address}/esdt` }),
+
+    getEsdt: (size = 1) =>
+      provider({
+        url: `/esdt`,
+        params: {
+          from: (size - 1) * 25,
+          size: 25,
+        },
+      }),
+
+    getEsdtCount: () => provider({ url: `/esdt/count` }),
   };
 }
