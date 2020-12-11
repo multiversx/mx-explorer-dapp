@@ -13,7 +13,7 @@ const AccountTokens = ({ tokens }: { tokens: types.TokenType[] }) => {
       <div className="card-body p-0">
         <div className="container-fluid">
           {tokens.map(({ tokenIdentifier, tokenName, balance }) => (
-            <DetailItem title={tokenName}>
+            <DetailItem title={tokenName} key={tokenIdentifier}>
               <Denominate
                 value={balance ? balance : '0'}
                 showLastNonZeroDecimal={true}

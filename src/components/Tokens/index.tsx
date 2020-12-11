@@ -76,7 +76,7 @@ const Tokens = () => {
                             </thead>
                             <tbody data-testid="tokensTable">
                               {tokens.map((token, i) => (
-                                <tr key={i}>
+                                <tr key={token.tokenIdentifier}>
                                   <td>
                                     <div className="d-flex align-items-center">
                                       <NetworkLink

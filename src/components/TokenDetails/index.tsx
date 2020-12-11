@@ -9,7 +9,7 @@ import { faCheck } from '@fortawesome/pro-light-svg-icons/faCheck';
 
 const CreatePill = ({ name, active }: { name: string; active: boolean }) => {
   return (
-    <span className={`direction-badge mr-1 ${active ? 'in' : 'out'}`}>
+    <span className={`direction-badge m-1 ${active ? 'in' : 'out'}`}>
       <FontAwesomeIcon className="mr-1" icon={active ? faCheck : faTimes} /> {name}
     </span>
   );
@@ -85,7 +85,7 @@ const TokenDetails = () => {
                       </DetailItem>
                       <DetailItem title="Paused">{tokenDetails.isPaused ? 'Yes' : 'No'}</DetailItem>
                       <DetailItem title="Properties">
-                        <div className="d-flex alig-items-center">
+                        <div className="d-flex alig-items-center flex-wrap">
                           <CreatePill name={'Can Upgrade'} active={tokenDetails.canUpgrade} />
                           <CreatePill name={'Can Mint'} active={tokenDetails.canMint} />
                           <CreatePill name={'Can Burn'} active={tokenDetails.canBurn} />
