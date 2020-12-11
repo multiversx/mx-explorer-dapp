@@ -37,20 +37,18 @@ describe('Esdt Page', () => {
   });
 });
 
-// describe('Esdt Page Links', () => {
-//   test('Esdt page link', async () => {
-//     const render = beforeAll({
-//       route: '/esdt',
-//     });
+describe('Esdt Page Links', () => {
+  test('Esdt page link', async () => {
+    const render = beforeAll({
+      route: '/esdt',
+    });
 
-//     const link = await render.findByTestId('esdtLink0');
-//     expect(link.textContent).toBe(
-//       'erd1sea63y47u569ns3x5mqjf4vnygn...9whkk7p6ry4rfpqyd6rd5addqyd9lf2'
-//     );
+    const link = await render.findByTestId('esdtLink0');
+    expect(link.textContent).toBe('test');
 
-//     fireEvent.click(link);
-//     await wait(async () => {
-//       expect(document.title).toEqual('Esdt Details • Elrond Explorer');
-//     });
-//   });
-// });
+    fireEvent.click(link);
+    await wait(async () => {
+      expect(document.title).toEqual('ESDT Details • Elrond Explorer');
+    });
+  });
+});

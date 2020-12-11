@@ -64,6 +64,7 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
     node: () => Promise.resolve({ data: rawData.node }),
     identity: () => Promise.resolve({ data: rawData.identity }),
     esdt: () => Promise.resolve({ data: rawData.esdt }),
+    esdtDetails: () => Promise.resolve({ data: rawData.esdtDetails }),
     ...networkRequests,
   };
 
@@ -105,6 +106,8 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.identity();
       case url.includes('/esdt'):
         return requests.esdt();
+      case url.includes('/esdt/'):
+        return requests.esdtDetails();
     }
   };
 };

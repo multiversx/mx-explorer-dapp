@@ -228,6 +228,8 @@ export default function useAdapter() {
         },
       }),
 
+    getEsdtDetails: (esdtId: string) => provider({ url: `/accounts/${esdtId}` }),
+
     getEsdtCount: () => provider({ url: `/esdt/count` }),
   };
 }

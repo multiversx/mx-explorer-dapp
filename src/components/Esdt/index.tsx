@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { Loader, adapter, Pager, Denominate, NetworkLink } from 'sharedComponents';
+import { Loader, adapter, Pager, NetworkLink } from 'sharedComponents';
 import NoEsdt from './NoEsdt';
 import FailedEsdt from './FailedEsdt';
 import { types, urlBuilder, useSize, useURLSearchParams } from 'helpers';
@@ -23,6 +23,9 @@ const Transactions = () => {
           setEsdt(data);
         }
         setDataReady(success);
+
+        // setEsdt([{ name: 'test' }]);
+        // setDataReady(true);
       }
     });
   };
@@ -32,6 +35,8 @@ const Transactions = () => {
       if (ref.current !== null && success) {
         setTotalEsdt(Math.min(count, 10000));
       }
+
+      //setTotalEsdt(1);
     });
   };
 
