@@ -15,6 +15,7 @@ import accounts from './accounts';
 import node from './node';
 import identity from './identity';
 import esdt from './esdt';
+import esdtDetails from './esdtDetails';
 
 export {
   transactions,
@@ -34,4 +35,5 @@ export {
   identity,
   accounts,
   esdt,
+  esdtDetails,
 };

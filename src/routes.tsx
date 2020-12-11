@@ -13,6 +13,7 @@ import Identities from './components/Identities';
 import IdentityDetails from './components/IdentityDetails';
 import NodeDetails from './components/NodeDetails';
 import Esdt from './components/Esdt';
+import EsdtDetails from './components/EsdtDetails';
 import { withPageTitle, withNetworkReady } from './sharedComponents';
 
 interface RouteType {
@@ -114,8 +115,8 @@ const routes: RouteType[] = [
   },
   {
     path: '/esdt/:hash',
-    title: 'Esdt Details',
-    component: AccountDetails,
+    title: 'ESDT Details',
+    component: EsdtDetails,
   },
 ];
 
