@@ -5,6 +5,7 @@ const urlBuilder = {
   nodeDetails: (publicKey: string) => `/nodes/${publicKey}`,
   accountDetails: (address: string) => `/accounts/${address}`,
   identityDetails: (id: string) => `/identities/${id}`,
+  esdtDetails: (esdtId: string) => `/esdt/${esdtId}`,
 };
 
 export default urlBuilder;

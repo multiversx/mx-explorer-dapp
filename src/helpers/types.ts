@@ -4,3 +4,7 @@ export interface AccountType {
   nonce: number;
   code?: string;
 }
+
+export interface EsdtType {
+  name: string;
+}
