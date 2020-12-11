@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { Loader, adapter, Pager, NetworkLink } from 'sharedComponents';
+import { Loader, adapter, Pager, NetworkLink, Trim } from 'sharedComponents';
 import NoTokens from './NoTokens';
 import FailedTokens from './FailedTokens';
 import { types, urlBuilder, useSize, useURLSearchParams } from 'helpers';
@@ -14,7 +14,7 @@ const Tokens = () => {
 
   const [tokens, setTokens] = React.useState<types.TokenType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [totalTokens, setTotalTokens] = React.useState<number | '...'>('...');
+  // const [totalTokens, setTotalTokens] = React.useState<number | '...'>('...');
 
   const fetchTokens = () => {
     getTokens(size).then(({ data, success }) => {
@@ -23,25 +23,21 @@ const Tokens = () => {
           setTokens(data);
         }
         setDataReady(success);
-        // setTokens([{ name: 'test' }]);
-        // setDataReady(true);
       }
     });
   };
 
-  const fetchTokensCount = () => {
-    getTokensCount().then(({ data: count, success }) => {
-      if (ref.current !== null && success) {
-        setTotalTokens(Math.min(count, 10000));
-      }
-
-      // setTotalTokens(1);
-    });
-  };
+  // const fetchTokensCount = () => {
+  //   getTokensCount().then(({ data: count, success }) => {
+  //     if (ref.current !== null && success) {
+  //       setTotalTokens(Math.min(count, 10000));
+  //     }
+  //   });
+  // };
 
   React.useEffect(() => {
     fetchTokens();
-    fetchTokensCount();
+    // fetchTokensCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, size]);
 
@@ -72,6 +68,10 @@ const Tokens = () => {
                             <thead>
                               <tr>
                                 <th>Name</th>
+                                <th>Identifier</th>
+                                <th>Owner Account</th>
+                                {/* <th>Minted</th>
+                                <th>Status</th> */}
                               </tr>
                             </thead>
                             <tbody data-testid="tokensTable">
@@ -80,13 +80,29 @@ const Tokens = () => {
                                   <td>
                                     <div className="d-flex align-items-center">
                                       <NetworkLink
-                                        to={urlBuilder.tokenDetails(token.name)}
+                                        to={urlBuilder.tokenDetails(token.tokenIdentifier)}
                                         data-testid={`tokensLink${i}`}
                                       >
-                                        {token.name}
+                                        {token.tokenName}
                                       </NetworkLink>
                                     </div>
                                   </td>
+                                  <td>{token.tokenIdentifier}</td>
+                                  <td>
+                                    <div className="d-flex">
+                                      <NetworkLink
+                                        to={urlBuilder.accountDetails(token.ownerAddress)}
+                                        className="trim-wrapper"
+                                      >
+                                        <Trim
+                                          text={token.ownerAddress}
+                                          dataTestId={`accountLink${i}`}
+                                        />
+                                      </NetworkLink>
+                                    </div>
+                                  </td>
+                                  {/* <td>{token.mintedValue}</td>
+                                  <td>{token.isPaused ? 'Paused' : 'Active'}</td> */}
                                 </tr>
                               ))}
                             </tbody>
@@ -94,14 +110,14 @@ const Tokens = () => {
                         </div>
                       </div>
 
-                      <div className="card-footer">
+                      {/* <div className="card-footer">
                         <Pager
                           page={String(page)}
                           total={totalTokens !== '...' ? Math.min(totalTokens, 10000) : totalTokens}
                           itemsPerPage={25}
                           show={tokens.length > 0}
                         />
-                      </div>
+                      </div> */}
                     </>
                   ) : (
                     <NoTokens />

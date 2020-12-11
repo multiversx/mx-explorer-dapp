@@ -1,5 +1,5 @@
 import React from 'react';
-import { DetailItem, NetworkLink } from 'sharedComponents';
+import { Denominate, DetailItem, NetworkLink } from 'sharedComponents';
 import { types, urlBuilder } from 'helpers';
 
 const AccountTokens = ({ tokens }: { tokens: types.TokenType[] }) => {
@@ -12,9 +12,13 @@ const AccountTokens = ({ tokens }: { tokens: types.TokenType[] }) => {
       </div>
       <div className="card-body p-0">
         <div className="container-fluid">
-          {tokens.map(({ name }) => (
-            <DetailItem title="Name">
-              <NetworkLink to={urlBuilder.tokenDetails(name)}>{name}</NetworkLink>
+          {tokens.map(({ tokenIdentifier, tokenName, balance }) => (
+            <DetailItem title={tokenName}>
+              <Denominate
+                value={balance ? balance : '0'}
+                showLastNonZeroDecimal={true}
+                token={tokenIdentifier}
+              />
             </DetailItem>
           ))}
         </div>

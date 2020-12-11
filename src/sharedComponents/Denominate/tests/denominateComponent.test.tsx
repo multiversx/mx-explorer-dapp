@@ -19,7 +19,7 @@ describe('Denominate component when decimals = 2', () => {
     const props = {
       value: '9999979999800000000000000',
       showLastNonZeroDecimal: false,
-      showErd: true,
+      showLabel: true,
       decimals: 2,
     };
 
@@ -31,7 +31,7 @@ describe('Denominate component when decimals = 2', () => {
     const props = {
       value: '9000000000000000000000000',
       showLastNonZeroDecimal: false,
-      showErd: true,
+      showLabel: true,
       decimals: 2,
     };
 
@@ -43,7 +43,7 @@ describe('Denominate component when decimals = 2', () => {
     const props = {
       value: '100000000000000',
       showLastNonZeroDecimal: true,
-      showErd: false,
+      showLabel: false,
       decimals: 2,
     };
 
@@ -55,7 +55,7 @@ describe('Denominate component when decimals = 2', () => {
     const props = {
       value: '100000000000000',
       showLastNonZeroDecimal: false,
-      showErd: true,
+      showLabel: true,
       decimals: 2,
     };
 
@@ -67,7 +67,7 @@ describe('Denominate component when decimals = 2', () => {
     const props = {
       value: '9000000000000000000000000',
       showLastNonZeroDecimal: false,
-      showErd: true,
+      showLabel: true,
       decimals: 2,
     };
 
@@ -79,7 +79,7 @@ describe('Denominate component when decimals = 2', () => {
     const props = {
       value: '9000000000000000000000000',
       showLastNonZeroDecimal: false,
-      showErd: false,
+      showLabel: false,
       decimals: 2,
     };
 

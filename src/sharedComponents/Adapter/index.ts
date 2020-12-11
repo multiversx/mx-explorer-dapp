@@ -217,14 +217,18 @@ export default function useAdapter() {
 
     // Tokens
 
-    getAccountTokens: (address: string) => provider({ url: `/${address}/tokens` }),
+    getAccountTokens: (address: string) => provider({ url: `/accounts/${address}/tokens` }),
 
     getTokens: (size = 1) =>
       provider({
         url: `/tokens`,
+        // params: {
+        //   from: (size - 1) * 25,
+        //   size: 25,
+        // },
         params: {
-          from: (size - 1) * 25,
-          size: 25,
+          from: 0,
+          size: 10000,
         },
       }),
 

@@ -6,5 +6,18 @@ export interface AccountType {
 }
 
 export interface TokenType {
-  name: string;
+  tokenIdentifier: string;
+  tokenName: string;
+  balance?: string;
+  ownerAddress: string;
+  mintedValue: string;
+  burntValue: string;
+  canBurn: boolean;
+  canChangeOwner: boolean;
+  canFreeze: boolean;
+  canMint: boolean;
+  canPause: boolean;
+  canUpgrade: boolean;
+  canWipe: boolean;
+  isPaused: boolean;
 }
