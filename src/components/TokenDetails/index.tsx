@@ -60,12 +60,14 @@ const TokenDetails = () => {
                       <DetailItem title="Name">{tokenDetails.tokenName}</DetailItem>
                       <DetailItem title="Identifier">{tokenDetails.tokenIdentifier}</DetailItem>
                       <DetailItem title="Owner">
-                        <NetworkLink
-                          to={urlBuilder.accountDetails(tokenDetails.ownerAddress)}
-                          className="trim-wrapper"
-                        >
-                          <Trim text={tokenDetails.ownerAddress} />
-                        </NetworkLink>
+                        <div className="d-flex">
+                          <NetworkLink
+                            to={urlBuilder.accountDetails(tokenDetails.ownerAddress)}
+                            className="trim-wrapper"
+                          >
+                            <Trim text={tokenDetails.ownerAddress} />
+                          </NetworkLink>
+                        </div>
                       </DetailItem>
                       <DetailItem title="Minted">
                         <Denominate
