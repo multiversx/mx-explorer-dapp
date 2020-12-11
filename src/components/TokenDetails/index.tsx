@@ -2,45 +2,45 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { types } from 'helpers';
 import { Loader, adapter, DetailItem } from 'sharedComponents';
-import FailedEsdtDetails from './FailedEsdtDetails';
+import FailedTokenDetails from './FailedTokenDetails';
 
-const EsdtDetails = () => {
+const TokenDetails = () => {
   const params: any = useParams();
-  const { hash: esdtId } = params;
+  const { hash: tokenId } = params;
 
   const ref = React.useRef(null);
 
-  const { getEsdtDetails } = adapter();
+  const { getTokenDetails } = adapter();
 
-  const [esdtDetails, setEsdtDetails] = React.useState<types.EsdtType>();
+  const [tokenDetails, setTokenDetails] = React.useState<types.TokenType>();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
-  const fetchEsdtDetails = () => {
-    getEsdtDetails(esdtId).then(({ success, data }) => {
+  const fetchTokenDetails = () => {
+    getTokenDetails(tokenId).then(({ success, data }) => {
       if (ref.current !== null) {
-        setEsdtDetails(data);
+        setTokenDetails(data);
         setDataReady(success);
 
-        // setEsdtDetails({ name: 'test' });
+        // setTokenDetails({ name: 'test' });
         // setDataReady(true);
       }
     });
   };
 
-  React.useEffect(fetchEsdtDetails, [esdtId]); // run the operation only once since the parameter does not change
+  React.useEffect(fetchTokenDetails, [tokenId]); // run the operation only once since the parameter does not change
 
   return (
     <>
       {dataReady === undefined && <Loader />}
-      {dataReady === false && <FailedEsdtDetails esdtId={esdtId} />}
+      {dataReady === false && <FailedTokenDetails tokenId={tokenId} />}
 
       <div ref={ref}>
-        {dataReady === true && esdtDetails && (
+        {dataReady === true && tokenDetails && (
           <div className="container pt-spacer">
             <div className="row page-header">
               <div className="col-12">
                 <h3 className="page-title mb-4" data-testid="title">
-                  ESDT Details
+                  Token Details
                 </h3>
               </div>
             </div>
@@ -49,7 +49,7 @@ const EsdtDetails = () => {
                 <div className="card">
                   <div className="card-body p-0">
                     <div className="container-fluid">
-                      <DetailItem title="Name">{esdtDetails.name}</DetailItem>
+                      <DetailItem title="Name">{tokenDetails.name}</DetailItem>
                     </div>
                   </div>
                 </div>
@@ -62,4 +62,4 @@ const EsdtDetails = () => {
   );
 };
 
-export default EsdtDetails;
+export default TokenDetails;

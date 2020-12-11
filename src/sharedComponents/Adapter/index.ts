@@ -215,21 +215,21 @@ export default function useAdapter() {
 
     getGlobalStake: () => provider({ url: `/stake` }),
 
-    // ESDT
+    // Tokens
 
-    getAccountEsdt: (address: string) => provider({ url: `/${address}/esdt` }),
+    getAccountTokens: (address: string) => provider({ url: `/${address}/tokens` }),
 
-    getEsdt: (size = 1) =>
+    getTokens: (size = 1) =>
       provider({
-        url: `/esdt`,
+        url: `/tokens`,
         params: {
           from: (size - 1) * 25,
           size: 25,
         },
       }),
 
-    getEsdtDetails: (esdtId: string) => provider({ url: `/accounts/${esdtId}` }),
+    getTokenDetails: (tokenId: string) => provider({ url: `/tokens/${tokenId}` }),
 
-    getEsdtCount: () => provider({ url: `/esdt/count` }),
+    getTokensCount: () => provider({ url: `/tokens/count` }),
   };
 }

@@ -5,6 +5,6 @@ export interface AccountType {
   code?: string;
 }
 
-export interface EsdtType {
+export interface TokenType {
   name: string;
 }

@@ -61,11 +61,11 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
       </NetworkLink>
 
       <NetworkLink
-        className={`nav-link ${matchPath(networkRoute('/esdt')) !== null ? 'active' : ''}`}
-        to="/esdt"
+        className={`nav-link ${matchPath(networkRoute('/tokens')) !== null ? 'active' : ''}`}
+        to="/tokens"
         onClick={() => onToggle(false)}
       >
-        ESDT
+        Tokens
       </NetworkLink>
     </>
   );

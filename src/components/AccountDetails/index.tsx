@@ -15,8 +15,8 @@ import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
 import { denomination, decimals } from 'appConfig';
 import { types } from 'helpers';
 import { useIsMainnet } from 'helpers';
-import FailedEsdt from 'components/Esdt/FailedEsdt';
-import AccountEsdt from './AccountEsdt';
+import AccountTokens from './AccountTokens';
+import FailedTokens from 'components/Tokens/FailedTokens';
 
 export interface AccountDetailsType extends types.AccountType {
   detailsFetched?: boolean;
@@ -58,7 +58,7 @@ const AccountDetails = () => {
     getTransactionsCount,
     getTransactions,
     getRewards,
-    getAccountEsdt,
+    getAccountTokens,
   } = adapter();
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
@@ -149,16 +149,16 @@ const AccountDetails = () => {
     });
   };
 
-  const [esdt, setEsdt] = React.useState<types.EsdtType[]>([]);
-  const [esdtFetched, setEsdtFetched] = React.useState<boolean | undefined>();
-  const fetchAccountEsdt = () => {
-    getAccountEsdt(address).then(({ success, data }) => {
+  const [accountTokens, setAccountTokens] = React.useState<types.TokenType[]>([]);
+  const [accountTokensFetched, setAccountTokensFetched] = React.useState<boolean | undefined>();
+  const fetchAccountTokens = () => {
+    getAccountTokens(address).then(({ success, data }) => {
       if (ref.current !== null) {
-        setEsdt(data);
-        setEsdtFetched(success);
+        setAccountTokens(data);
+        setAccountTokensFetched(success);
 
-        // setEsdt([{ name: 'test' }]);
-        // setEsdtFetched(true);
+        // setAccountTokens([{ name: 'test' }]);
+        // setAccountTokensFetched(true);
       }
     });
   };
@@ -167,7 +167,7 @@ const AccountDetails = () => {
     if (!isOldAddressRoute) {
       fetchTransactionsAndRewards();
       fetchBalanceAndCount();
-      fetchAccountEsdt();
+      fetchAccountTokens();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, size, address]);
@@ -175,7 +175,7 @@ const AccountDetails = () => {
   React.useEffect(() => {
     if (!loading) {
       fetchBalanceAndCount();
-      fetchAccountEsdt();
+      fetchAccountTokens();
       if (hasPendingTransaction) {
         fetchTransactionsAndRewards();
       }
@@ -227,24 +227,24 @@ const AccountDetails = () => {
               )}
             </div>
 
-            {esdtFetched !== undefined && (
+            {accountTokensFetched !== undefined && (
               <>
-                {esdtFetched === false && (
+                {accountTokensFetched === false && (
                   <div className="row">
                     <div className="col-12 mb-spacer">
                       <div className="card">
                         <div className="card-body p-0">
-                          <FailedEsdt />
+                          <FailedTokens />
                         </div>
                       </div>
                     </div>
                   </div>
                 )}
 
-                {esdtFetched === true && esdt.length > 0 && (
+                {accountTokensFetched === true && accountTokens.length > 0 && (
                   <div className="row">
                     <div className="col-12 mb-spacer">
-                      <AccountEsdt esdt={esdt} />
+                      <AccountTokens tokens={accountTokens} />
                     </div>
                   </div>
                 )}

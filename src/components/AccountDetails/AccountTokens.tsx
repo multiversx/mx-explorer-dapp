@@ -2,19 +2,19 @@ import React from 'react';
 import { DetailItem, NetworkLink } from 'sharedComponents';
 import { types, urlBuilder } from 'helpers';
 
-const AccountEsdt = ({ esdt }: { esdt: types.EsdtType[] }) => {
+const AccountTokens = ({ tokens }: { tokens: types.TokenType[] }) => {
   return (
     <div className="card">
       <div className="card-header">
         <div className="card-header-item d-flex justify-content-between align-items-center">
-          <h6 className="m-0">ESDT</h6>
+          <h6 className="m-0">Tokens</h6>
         </div>
       </div>
       <div className="card-body p-0">
         <div className="container-fluid">
-          {esdt.map((coin) => (
+          {tokens.map(({ name }) => (
             <DetailItem title="Name">
-              <NetworkLink to={urlBuilder.esdtDetails(coin.name)}>{coin.name}</NetworkLink>
+              <NetworkLink to={urlBuilder.tokenDetails(name)}>{name}</NetworkLink>
             </DetailItem>
           ))}
         </div>
@@ -23,4 +23,4 @@ const AccountEsdt = ({ esdt }: { esdt: types.EsdtType[] }) => {
   );
 };
 
-export default AccountEsdt;
+export default AccountTokens;
