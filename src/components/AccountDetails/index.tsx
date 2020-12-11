@@ -15,6 +15,8 @@ import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
 import { denomination, decimals } from 'appConfig';
 import { types } from 'helpers';
 import { useIsMainnet } from 'helpers';
+import FailedEsdt from 'components/Esdt/FailedEsdt';
+import AccountEsdt from './AccountEsdt';
 
 export interface AccountDetailsType extends types.AccountType {
   detailsFetched?: boolean;
@@ -51,7 +53,13 @@ const AccountDetails = () => {
   const { activeNetworkId } = useGlobalState();
   const { hash: address } = useParams() as any;
 
-  const { getAccount, getTransactionsCount, getTransactions, getRewards } = adapter();
+  const {
+    getAccount,
+    getTransactionsCount,
+    getTransactions,
+    getRewards,
+    getAccountEsdt,
+  } = adapter();
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
@@ -141,10 +149,25 @@ const AccountDetails = () => {
     });
   };
 
+  const [esdt, setEsdt] = React.useState<types.EsdtType[]>([]);
+  const [esdtFetched, setEsdtFetched] = React.useState<boolean | undefined>();
+  const fetchAccountEsdt = () => {
+    getAccountEsdt(address).then(({ success, data }) => {
+      if (ref.current !== null) {
+        setEsdt(data);
+        setEsdtFetched(success);
+
+        // setEsdt([{ name: 'test' }]);
+        // setEsdtFetched(true);
+      }
+    });
+  };
+
   React.useEffect(() => {
     if (!isOldAddressRoute) {
       fetchTransactionsAndRewards();
       fetchBalanceAndCount();
+      fetchAccountEsdt();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, size, address]);
@@ -152,6 +175,7 @@ const AccountDetails = () => {
   React.useEffect(() => {
     if (!loading) {
       fetchBalanceAndCount();
+      fetchAccountEsdt();
       if (hasPendingTransaction) {
         fetchTransactionsAndRewards();
       }
@@ -202,6 +226,30 @@ const AccountDetails = () => {
                 </div>
               )}
             </div>
+
+            {esdtFetched !== undefined && (
+              <>
+                {esdtFetched === false && (
+                  <div className="row">
+                    <div className="col-12 mb-spacer">
+                      <div className="card">
+                        <div className="card-body p-0">
+                          <FailedEsdt />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {esdtFetched === true && esdt.length > 0 && (
+                  <div className="row">
+                    <div className="col-12 mb-spacer">
+                      <AccountEsdt esdt={esdt} />
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
 
             <div className="row">
               <div className="col-12">

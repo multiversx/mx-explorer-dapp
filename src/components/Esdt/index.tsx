@@ -82,7 +82,6 @@ const Transactions = () => {
                                     <div className="d-flex align-items-center">
                                       <NetworkLink
                                         to={urlBuilder.esdtDetails(coin.name)}
-                                        className="trim-only-sm"
                                         data-testid={`esdtLink${i}`}
                                       >
                                         {coin.name}
