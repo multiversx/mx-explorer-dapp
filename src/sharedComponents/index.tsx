@@ -21,7 +21,7 @@ import adapter from './Adapter';
 import DetailItem from './DetailItem';
 import Trim from './Trim';
 import Led from './Led';
-import AxiosErrorHandler from './AxiosErrorHandler';
+import AxiosInterceptor from './AxiosInterceptor';
 import SharedIdentity from './SharedIdentity';
 
 export {
@@ -49,6 +49,6 @@ export {
   DetailItem,
   Trim,
   Led,
-  AxiosErrorHandler,
+  AxiosInterceptor,
   SharedIdentity,
 };
