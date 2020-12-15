@@ -10,6 +10,7 @@ const networkBaseSchema = object({
   theme: string(),
   walletAddress: string(),
   explorerAddress: string(),
+  accessToken: boolean(),
 }).required();
 
 export const adapterSchema = object({
@@ -42,6 +43,7 @@ export const defaultNetwork: NetworkType = {
   erdLabel: '',
   apiUrl: 'https://api.elrond.com',
   theme: 'default',
+  accessToken: false,
 };
 
 type ImportedConfigType = InferType<typeof configSchema>;
