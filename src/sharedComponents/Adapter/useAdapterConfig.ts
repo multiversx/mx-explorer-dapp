@@ -29,7 +29,7 @@ async function wrap(asyncRequest: () => Promise<any>) {
 
 export default function useAdapterConfig() {
   const {
-    activeNetwork: { elasticUrl, adapter, proxyUrl: nodeUrl, apiUrl },
+    activeNetwork: { elasticUrl, adapter: networkAdapter, proxyUrl: nodeUrl, apiUrl },
     timeout,
   } = useGlobalState();
 
@@ -45,6 +45,8 @@ export default function useAdapterConfig() {
       ...elasticAdapter,
     },
   };
+
+  const adapter: 'api' | 'elastic' = networkAdapter as any;
 
   const { provider, getStats, getNodes, getRewards, getShards } = providers[adapter];
 
