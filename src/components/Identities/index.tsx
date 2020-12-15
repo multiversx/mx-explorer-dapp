@@ -20,20 +20,23 @@ const Identities = () => {
       let blockchainTotalStake = 0;
       let overallStakePercent = 0;
 
-      data.forEach((identity: IdentityType) => {
-        if (!identity.stake || !identity.validators) {
-          return;
-        }
+      if (success) {
+        data.forEach((identity: IdentityType) => {
+          if (!identity.stake || !identity.validators) {
+            return;
+          }
 
-        identitiesList.push({ ...identity, overallStakePercent });
-        blockchainTotalStake = blockchainTotalStake + identity.stake;
-        overallStakePercent = overallStakePercent + identity.stakePercent;
-      });
-      dispatch({
-        type: 'setIdentities',
-        identities: identitiesList,
-        blockchainTotalStake,
-      });
+          identitiesList.push({ ...identity, overallStakePercent });
+          blockchainTotalStake = blockchainTotalStake + identity.stake;
+          overallStakePercent = overallStakePercent + identity.stakePercent;
+        });
+        dispatch({
+          type: 'setIdentities',
+          identities: identitiesList,
+          blockchainTotalStake,
+        });
+      }
+
       setDataReady(success);
     });
   };
