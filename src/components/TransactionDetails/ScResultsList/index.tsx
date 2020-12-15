@@ -10,7 +10,7 @@ export interface ScResultType {
   gasPrice: number;
   nonce: number;
   prevTxHash: string;
-  receiver: string;
+  receiver?: string;
   sender: string;
   value: string;
   data?: string;
