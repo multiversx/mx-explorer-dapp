@@ -10,7 +10,7 @@ export interface ScResultType {
   gasPrice: number;
   nonce: number;
   prevTxHash: string;
-  receiver: string;
+  receiver?: string;
   sender: string;
   value: string;
   data?: string;
@@ -42,28 +42,34 @@ const ScResultsList = ({ scResults }: { scResults: ScResultType[] }) => {
             </div>
 
             <div className="result-item-content">
-              <div className="row mb-3 d-flex flex-column flex-sm-row">
-                <div className="col col-left">From</div>
-                <div className="col d-flex align-items-center">
-                  <Trim text={result.sender} />
-                  <CopyButton text={result.sender} className="side-action ml-2" />
+              {result.sender && (
+                <div className="row mb-3 d-flex flex-column flex-sm-row">
+                  <div className="col col-left">From</div>
+                  <div className="col d-flex align-items-center">
+                    <Trim text={result.sender} />
+                    <CopyButton text={result.sender} className="side-action ml-2" />
+                  </div>
                 </div>
-              </div>
+              )}
 
-              <div className="row mb-3 d-flex flex-column flex-sm-row">
-                <div className="col col-left">To</div>
-                <div className="col d-flex align-items-center">
-                  <Trim text={result.receiver} />
-                  <CopyButton text={result.receiver} className="side-action ml-2" />
+              {result.receiver && (
+                <div className="row mb-3 d-flex flex-column flex-sm-row">
+                  <div className="col col-left">To</div>
+                  <div className="col d-flex align-items-center">
+                    <Trim text={result.receiver} />
+                    <CopyButton text={result.receiver} className="side-action ml-2" />
+                  </div>
                 </div>
-              </div>
+              )}
 
-              <div className="row mb-3 d-flex flex-column flex-sm-row">
-                <div className="col col-left">Value</div>
-                <div className="col text-wrap">
-                  <Denominate value={result.value} showLastNonZeroDecimal />
+              {result.value !== undefined && (
+                <div className="row mb-3 d-flex flex-column flex-sm-row">
+                  <div className="col col-left">Value</div>
+                  <div className="col text-wrap">
+                    <Denominate value={result.value} showLastNonZeroDecimal />
+                  </div>
                 </div>
-              </div>
+              )}
 
               {result.data && (
                 <div className="row d-flex flex-column flex-sm-row">
