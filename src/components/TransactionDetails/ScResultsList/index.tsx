@@ -62,12 +62,14 @@ const ScResultsList = ({ scResults }: { scResults: ScResultType[] }) => {
                 </div>
               )}
 
-              <div className="row mb-3 d-flex flex-column flex-sm-row">
-                <div className="col col-left">Value</div>
-                <div className="col text-wrap">
-                  <Denominate value={result.value} showLastNonZeroDecimal />
+              {result.value !== undefined && (
+                <div className="row mb-3 d-flex flex-column flex-sm-row">
+                  <div className="col col-left">Value</div>
+                  <div className="col text-wrap">
+                    <Denominate value={result.value} showLastNonZeroDecimal />
+                  </div>
                 </div>
-              </div>
+              )}
 
               {result.data && (
                 <div className="row d-flex flex-column flex-sm-row">
