@@ -5,6 +5,7 @@ const urlBuilder = {
   nodeDetails: (publicKey: string) => `/nodes/${publicKey}`,
   accountDetails: (address: string) => `/accounts/${address}`,
   identityDetails: (id: string) => `/identities/${id}`,
+  tokenDetails: (tokenId: string) => `/tokens/${tokenId}`,
 };
 
 export default urlBuilder;

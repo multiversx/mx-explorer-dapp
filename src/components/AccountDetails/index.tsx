@@ -15,6 +15,8 @@ import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
 import { denomination, decimals } from 'appConfig';
 import { types } from 'helpers';
 import { useIsMainnet } from 'helpers';
+import AccountTokens from './AccountTokens';
+// import FailedTokens from 'components/Tokens/FailedTokens';
 
 export interface AccountDetailsType extends types.AccountType {
   detailsFetched?: boolean;
@@ -48,10 +50,16 @@ const AccountDetails = () => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
 
-  const { activeNetworkId } = useGlobalState();
+  const { activeNetworkId, activeNetwork } = useGlobalState();
   const { hash: address } = useParams() as any;
 
-  const { getAccount, getTransactionsCount, getTransactions, getRewards } = adapter();
+  const {
+    getAccount,
+    getTransactionsCount,
+    getTransactions,
+    getRewards,
+    getAccountTokens,
+  } = adapter();
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
@@ -141,10 +149,24 @@ const AccountDetails = () => {
     });
   };
 
+  const [accountTokens, setAccountTokens] = React.useState<types.TokenType[]>([]);
+  const [accountTokensFetched, setAccountTokensFetched] = React.useState<boolean | undefined>();
+  const fetchAccountTokens = () => {
+    if (activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api') {
+      getAccountTokens(address).then(({ success, data }) => {
+        if (ref.current !== null) {
+          setAccountTokens(data);
+          setAccountTokensFetched(success);
+        }
+      });
+    }
+  };
+
   React.useEffect(() => {
     if (!isOldAddressRoute) {
       fetchTransactionsAndRewards();
       fetchBalanceAndCount();
+      fetchAccountTokens();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, size, address]);
@@ -152,6 +174,7 @@ const AccountDetails = () => {
   React.useEffect(() => {
     if (!loading) {
       fetchBalanceAndCount();
+      fetchAccountTokens();
       if (hasPendingTransaction) {
         fetchTransactionsAndRewards();
       }
@@ -202,6 +225,26 @@ const AccountDetails = () => {
                 </div>
               )}
             </div>
+
+            {/* {accountTokensFetched === false && (
+                  <div className="row">
+                    <div className="col-12 mb-spacer">
+                      <div className="card">
+                        <div className="card-body p-0">
+                          <FailedTokens />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )} */}
+
+            {accountTokensFetched === true && accountTokens.length > 0 && (
+              <div className="row">
+                <div className="col-12 mb-spacer">
+                  <AccountTokens tokens={accountTokens} />
+                </div>
+              </div>
+            )}
 
             <div className="row">
               <div className="col-12">
