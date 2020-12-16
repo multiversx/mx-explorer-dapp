@@ -1,6 +1,6 @@
 import React from 'react';
-import { Denominate, DetailItem, NetworkLink } from 'sharedComponents';
-import { types, urlBuilder } from 'helpers';
+import { Denominate, DetailItem } from 'sharedComponents';
+import { types } from 'helpers';
 
 const AccountTokens = ({ tokens }: { tokens: types.TokenType[] }) => {
   return (
