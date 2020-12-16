@@ -30,13 +30,12 @@ const Identities = () => {
           blockchainTotalStake = blockchainTotalStake + identity.stake;
           overallStakePercent = overallStakePercent + identity.stakePercent;
         });
+        dispatch({
+          type: 'setIdentities',
+          identities: identitiesList,
+          blockchainTotalStake,
+        });
       }
-
-      dispatch({
-        type: 'setIdentities',
-        identities: identitiesList,
-        blockchainTotalStake,
-      });
 
       setDataReady(success);
     });
