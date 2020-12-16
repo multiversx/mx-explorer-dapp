@@ -50,7 +50,7 @@ const AccountDetails = () => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
 
-  const { activeNetworkId } = useGlobalState();
+  const { activeNetworkId, activeNetwork } = useGlobalState();
   const { hash: address } = useParams() as any;
 
   const {
@@ -152,15 +152,14 @@ const AccountDetails = () => {
   const [accountTokens, setAccountTokens] = React.useState<types.TokenType[]>([]);
   const [accountTokensFetched, setAccountTokensFetched] = React.useState<boolean | undefined>();
   const fetchAccountTokens = () => {
-    getAccountTokens(address).then(({ success, data }) => {
-      if (ref.current !== null) {
-        setAccountTokens(data);
-        setAccountTokensFetched(success);
-
-        // setAccountTokens([{ name: 'test' }]);
-        // setAccountTokensFetched(true);
-      }
-    });
+    if (activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api') {
+      getAccountTokens(address).then(({ success, data }) => {
+        if (ref.current !== null) {
+          setAccountTokens(data);
+          setAccountTokensFetched(success);
+        }
+      });
+    }
   };
 
   React.useEffect(() => {
@@ -227,9 +226,7 @@ const AccountDetails = () => {
               )}
             </div>
 
-            {accountTokensFetched !== undefined && (
-              <>
-                {/* {accountTokensFetched === false && (
+            {/* {accountTokensFetched === false && (
                   <div className="row">
                     <div className="col-12 mb-spacer">
                       <div className="card">
@@ -241,14 +238,12 @@ const AccountDetails = () => {
                   </div>
                 )} */}
 
-                {accountTokensFetched === true && accountTokens.length > 0 && (
-                  <div className="row">
-                    <div className="col-12 mb-spacer">
-                      <AccountTokens tokens={accountTokens} />
-                    </div>
-                  </div>
-                )}
-              </>
+            {accountTokensFetched === true && accountTokens.length > 0 && (
+              <div className="row">
+                <div className="col-12 mb-spacer">
+                  <AccountTokens tokens={accountTokens} />
+                </div>
+              </div>
             )}
 
             <div className="row">
