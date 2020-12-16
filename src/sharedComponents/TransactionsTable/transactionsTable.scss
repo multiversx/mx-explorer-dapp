@@ -11,35 +11,5 @@
         max-width: 10rem;
       }
     }
-
-    .direction-badge {
-      @extend .badge;
-      @extend .badge-pill;
-      @extend .text-uppercase;
-      @extend .flex-fill;
-
-      font-weight: normal;
-      font-size: 65%;
-      height: 1.1rem;
-      position: relative;
-      top: 0.2rem;
-      background-color: $light;
-      min-width: 2.5rem;
-
-      &.out {
-        color: $warning;
-        border: 1px solid rgba($warning, 0.2);
-      }
-
-      &.in {
-        color: $success;
-        border: 1px solid rgba($success, 0.2);
-      }
-
-      &.self {
-        color: $secondary;
-        border: 1px solid rgba($secondary, 0.2);
-      }
-    }
   }
 }
