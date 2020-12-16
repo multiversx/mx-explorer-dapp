@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { Loader, adapter, Pager, NetworkLink, Trim } from 'sharedComponents';
+import { Loader, adapter, NetworkLink, Trim } from 'sharedComponents';
 import NoTokens from './NoTokens';
 import FailedTokens from './FailedTokens';
-import { types, urlBuilder, useSize, useURLSearchParams } from 'helpers';
+import { types, urlBuilder, useSize } from 'helpers';
 
 const Tokens = () => {
   const ref = React.useRef(null);
   const { activeNetworkId } = useGlobalState();
-  const { page } = useURLSearchParams();
+  // const { page } = useURLSearchParams();
   const { size } = useSize();
-  const { getTokens, getTokensCount } = adapter();
+  const { getTokens } = adapter();
 
   const [tokens, setTokens] = React.useState<types.TokenType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();

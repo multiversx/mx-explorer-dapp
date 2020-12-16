@@ -16,7 +16,7 @@ import { denomination, decimals } from 'appConfig';
 import { types } from 'helpers';
 import { useIsMainnet } from 'helpers';
 import AccountTokens from './AccountTokens';
-import FailedTokens from 'components/Tokens/FailedTokens';
+// import FailedTokens from 'components/Tokens/FailedTokens';
 
 export interface AccountDetailsType extends types.AccountType {
   detailsFetched?: boolean;
