@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { PageState } from 'sharedComponents';
-import { faCoin } from '@fortawesome/pro-regular-svg-icons/faCoin';
+import { faCoins } from '@fortawesome/pro-regular-svg-icons/faCoins';
 
 export default function FailedTokenDetails({ tokenId }: { tokenId: string | undefined }) {
   return (
     <PageState
-      icon={faCoin}
+      icon={faCoins}
       title="Unable to locate this token"
       description={
         <div className="px-spacer">
