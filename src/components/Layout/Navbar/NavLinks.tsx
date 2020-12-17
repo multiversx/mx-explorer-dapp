@@ -47,7 +47,7 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
         to="/accounts"
         onClick={() => onToggle(false)}
       >
-        Rich List
+        Top Holders
       </NetworkLink>
 
       <NetworkLink
