@@ -214,5 +214,26 @@ export default function useAdapter() {
     getAccountsCount: () => provider({ url: `/accounts/count` }),
 
     getGlobalStake: () => provider({ url: `/stake` }),
+
+    // Tokens
+
+    getAccountTokens: (address: string) => provider({ url: `/accounts/${address}/tokens` }),
+
+    getTokens: (size = 1) =>
+      provider({
+        url: `/tokens`,
+        // params: {
+        //   from: (size - 1) * 25,
+        //   size: 25,
+        // },
+        params: {
+          from: 0,
+          size: 10000,
+        },
+      }),
+
+    getTokenDetails: (tokenId: string) => provider({ url: `/tokens/${tokenId}` }),
+
+    getTokensCount: () => provider({ url: `/tokens/count` }),
   };
 }
