@@ -1,6 +1,6 @@
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
-import React from 'react';
+import * as React from 'react';
 import { numInitCharactersForScAddress } from 'appConfig';
 import { PageState } from 'sharedComponents';
 

@@ -12,6 +12,8 @@ import Nodes from './components/Nodes';
 import Identities from './components/Identities';
 import IdentityDetails from './components/IdentityDetails';
 import NodeDetails from './components/NodeDetails';
+import Tokens from './components/Tokens';
+import TokenDetails from './components/TokenDetails';
 import { withPageTitle, withNetworkReady } from './sharedComponents';
 
 interface RouteType {
@@ -105,6 +107,16 @@ const routes: RouteType[] = [
     path: '/miniblocks/:hash',
     title: 'Miniblock Details',
     component: MiniBlockDetails,
+  },
+  {
+    path: '/tokens',
+    title: 'Tokens',
+    component: Tokens,
+  },
+  {
+    path: '/tokens/:hash',
+    title: 'Token Details',
+    component: TokenDetails,
   },
 ];
 
