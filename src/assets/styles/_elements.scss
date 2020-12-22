@@ -165,3 +165,9 @@
     border: 1px solid rgba($secondary, 0.2);
   }
 }
+
+.mr-lg-n1rem {
+  @include media-breakpoint-up(lg) {
+    margin-right: -1rem;
+  }
+}
