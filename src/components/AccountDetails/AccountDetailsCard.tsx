@@ -8,7 +8,7 @@ const AccountDetailsCard = (props: types.AccountType) => {
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Address">
-            <div className="d-flex align-items-center text-break-all">
+            <div className="d-flex align-items-center text-break-all mr-lg-n1rem">
               {props.address}
               <CopyButton text={props.address} />
             </div>
