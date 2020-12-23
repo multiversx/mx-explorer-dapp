@@ -52,7 +52,7 @@ const NodeDetails = () => {
               setNode(nodeData);
 
               setBlocks({
-                data: blocksData.data.blocks,
+                data: blocksData.success ? blocksData.data.blocks : [],
                 success: blocksData.success,
               });
 
