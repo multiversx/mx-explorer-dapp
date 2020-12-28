@@ -61,7 +61,10 @@ const nodes = async ({
           return false;
         }
 
-        if (shard && node.shard.toString() !== shard) {
+        if (
+          shard !== undefined &&
+          (typeof node.shard === 'undefined' || node.shard.toString() !== shard.toString())
+        ) {
           return false;
         }
 

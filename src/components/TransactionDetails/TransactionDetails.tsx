@@ -130,6 +130,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                   >
                     (<ShardSpan shard={transaction.senderShard} />)
                   </NetworkLink>
+                  <CopyButton text={transaction.sender} />
                 </>
               ) : (
                 <ShardSpan shard={transaction.sender} />
@@ -156,6 +157,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                     (<ShardSpan shard={transaction.receiverShard} />)
                   </NetworkLink>
                 )}
+                <CopyButton text={transaction.receiver} />
               </div>
               {scResultsMessages.map((msg, i) => (
                 <div key={i} className="d-flex ml-1 text-break-all">
