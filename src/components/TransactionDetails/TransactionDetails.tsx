@@ -123,14 +123,13 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                   >
                     <Trim text={transaction.sender} />
                   </NetworkLink>
-                  &nbsp;
+                  <CopyButton className="mr-2" text={transaction.sender} />
                   <NetworkLink
                     to={urlBuilder.senderShard(transaction.senderShard)}
                     className="flex-shrink-0"
                   >
                     (<ShardSpan shard={transaction.senderShard} />)
                   </NetworkLink>
-                  <CopyButton text={transaction.sender} />
                 </>
               ) : (
                 <ShardSpan shard={transaction.sender} />
@@ -148,7 +147,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                 >
                   <Trim text={transaction.receiver} />
                 </NetworkLink>
-                &nbsp;
+                <CopyButton className="mr-2" text={transaction.receiver} />
                 {!isNaN(transaction.receiverShard) && (
                   <NetworkLink
                     to={urlBuilder.receiverShard(transaction.receiverShard)}
@@ -157,7 +156,6 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                     (<ShardSpan shard={transaction.receiverShard} />)
                   </NetworkLink>
                 )}
-                <CopyButton text={transaction.receiver} />
               </div>
               {scResultsMessages.map((msg, i) => (
                 <div key={i} className="d-flex ml-1 text-break-all">
