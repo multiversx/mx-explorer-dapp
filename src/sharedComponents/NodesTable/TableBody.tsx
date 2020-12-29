@@ -5,16 +5,10 @@ import { ShardSpan, NetworkLink, Trim, Led, PageState } from 'sharedComponents';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import RowIcon from './RowIcon';
 
-const getRatings = (nodes: NodeType[]) => {
-  return nodes.sort((a: any, b: any) => b.tempRating - a.tempRating).map((v: any) => v);
-};
-
 const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
-  const orderedByRating = getRatings(nodes);
-
   return (
     <tbody>
-      {orderedByRating.map((node, index) => (
+      {nodes.map((node, index) => (
         <tr key={node.publicKey}>
           <td>
             <div className="d-flex align-items-center">
@@ -68,7 +62,7 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
           </td>
         </tr>
       ))}
-      {orderedByRating.length === 0 && (
+      {nodes.length === 0 && (
         <tr>
           <td colSpan={7}>
             <PageState
