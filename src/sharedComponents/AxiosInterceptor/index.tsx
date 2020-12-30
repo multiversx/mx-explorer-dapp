@@ -21,7 +21,12 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
         return response;
       },
       (error) => {
-        const reqUrl = error.config.url;
+        let reqUrl = error.config.url;
+        if (error.config.params) {
+          const queryString = new URLSearchParams(error.config.params);
+          reqUrl += `?${queryString.toString()}`;
+        }
+
         const logError = reqUrl && !ignoreList.some((url) => reqUrl.indexOf(url) > -1);
 
         if (explorerVersion !== undefined && logError) {
