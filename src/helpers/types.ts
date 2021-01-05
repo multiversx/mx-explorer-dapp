@@ -9,6 +9,7 @@ export interface TokenType {
   tokenIdentifier: string;
   tokenName: string;
   balance?: string;
+  numDecimals?: number;
   ownerAddress: string;
   mintedValue: string;
   burntValue: string;
