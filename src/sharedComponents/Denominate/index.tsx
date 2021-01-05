@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGlobalState } from '../../context';
 import denominate from './denominate';
-import { denomination, decimals as configDecimals } from 'appConfig';
+import { denomination as configDenomination, decimals as configDecimals } from 'appConfig';
 
 interface DenominateType {
   value: string;
@@ -9,6 +9,7 @@ interface DenominateType {
   showLabel?: boolean;
   token?: string;
   decimals?: number;
+  denomination?: number;
   'data-testid'?: string;
 }
 
@@ -23,6 +24,7 @@ const denominateInvalid = (props: DenominateType) => {
 const denominateValid = (props: DenominateType, erdLabel: string) => {
   const { value, showLastNonZeroDecimal = false, showLabel = true } = props;
   const decimals = props.decimals !== undefined ? props.decimals : configDecimals;
+  const denomination = props.denomination !== undefined ? props.denomination : configDenomination;
 
   const denominatedValue = denominate({
     input: value,
