@@ -74,8 +74,10 @@ const TokenDetails = () => {
                           value={tokenDetails.mintedValue}
                           showLastNonZeroDecimal={true}
                           showLabel={false}
+                          denomination={tokenDetails.numDecimals}
                         />
                       </DetailItem>
+                      <DetailItem title="Num Decimals">{tokenDetails.numDecimals}</DetailItem>
                       <DetailItem title="Burnt">
                         <Denominate
                           value={tokenDetails.burntValue}
