@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { Loader, adapter, NetworkLink, Trim } from 'sharedComponents';
+import { Loader, adapter, NetworkLink, Trim, Pager } from 'sharedComponents';
 import NoTokens from './NoTokens';
 import FailedTokens from './FailedTokens';
-import { types, urlBuilder, useSize } from 'helpers';
+import { types, urlBuilder, useSize, useURLSearchParams } from 'helpers';
 
 const Tokens = () => {
   const ref = React.useRef(null);
   const { activeNetworkId } = useGlobalState();
-  // const { page } = useURLSearchParams();
+  const { page } = useURLSearchParams();
   const { size } = useSize();
-  const { getTokens } = adapter();
+  const { getTokens, getTokensCount } = adapter();
 
   const [tokens, setTokens] = React.useState<types.TokenType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  // const [totalTokens, setTotalTokens] = React.useState<number | '...'>('...');
+  const [totalTokens, setTotalTokens] = React.useState<number | '...'>('...');
 
   const fetchTokens = () => {
     getTokens(size).then(({ data, success }) => {
@@ -27,17 +27,17 @@ const Tokens = () => {
     });
   };
 
-  // const fetchTokensCount = () => {
-  //   getTokensCount().then(({ data: count, success }) => {
-  //     if (ref.current !== null && success) {
-  //       setTotalTokens(Math.min(count, 10000));
-  //     }
-  //   });
-  // };
+  const fetchTokensCount = () => {
+    getTokensCount().then(({ data: count, success }) => {
+      if (ref.current !== null && success) {
+        setTotalTokens(Math.min(count, 10000));
+      }
+    });
+  };
 
   React.useEffect(() => {
     fetchTokens();
-    // fetchTokensCount();
+    fetchTokensCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, size]);
 
@@ -110,14 +110,14 @@ const Tokens = () => {
                         </div>
                       </div>
 
-                      {/* <div className="card-footer">
+                      <div className="card-footer">
                         <Pager
                           page={String(page)}
                           total={totalTokens !== '...' ? Math.min(totalTokens, 10000) : totalTokens}
                           itemsPerPage={25}
                           show={tokens.length > 0}
                         />
-                      </div> */}
+                      </div>
                     </>
                   ) : (
                     <NoTokens />
