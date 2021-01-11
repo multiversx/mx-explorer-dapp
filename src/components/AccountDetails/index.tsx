@@ -137,6 +137,7 @@ const AccountDetails = () => {
             addCommas: false,
           })
         );
+
         if (ref.current !== null) {
           setAccountDetails((existing) => ({
             ...existing,
@@ -219,7 +220,7 @@ const AccountDetails = () => {
               <div className="col mb-spacer">
                 <AccountDetailsCard {...accountDetails} />
               </div>
-              {showDelegation && isMainnet && (
+              {showDelegation && (
                 <div className="col-lg-4 mb-spacer">
                   <DelegationDetails {...accountDetails} />
                 </div>
