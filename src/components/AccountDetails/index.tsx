@@ -50,13 +50,7 @@ const AccountDetails = () => {
   const { activeNetworkId, activeNetwork } = useGlobalState();
   const { hash: address } = useParams() as any;
 
-  const {
-    getAccount,
-    getTransactionsCount,
-    getTransactions,
-    getRewards,
-    getAccountTokens,
-  } = adapter();
+  const { getAccount, getTransactions, getRewards, getAccountTokens } = adapter();
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
@@ -64,23 +58,21 @@ const AccountDetails = () => {
 
   const fetchBalanceAndCount = () => {
     if (!document.hidden) {
-      Promise.all([getAccount(address), getTransactionsCount({ address })]).then(
-        ([accountDetailsData, countData]) => {
-          if (ref.current !== null) {
-            setAccountDetails((existing) => ({
-              ...existing,
-              ...(accountDetailsData.success ? { ...accountDetailsData.data } : {}),
-              detailsFetched: accountDetailsData.success,
-            }));
-            if (countData.success) {
-              setTotalTransactions(Math.min(countData.data, 10000));
-            }
-            if (dataReady === undefined) {
-              setDataReady(accountDetailsData.success);
-            }
+      getAccount(address).then((accountDetailsData) => {
+        if (ref.current !== null) {
+          setAccountDetails((existing) => ({
+            ...existing,
+            ...(accountDetailsData.success ? { ...accountDetailsData.data } : {}),
+            detailsFetched: accountDetailsData.success,
+          }));
+          if (accountDetailsData.success) {
+            setTotalTransactions(Math.min(accountDetailsData.data.txCount, 10000));
+          }
+          if (dataReady === undefined) {
+            setDataReady(accountDetailsData.success);
           }
         }
-      );
+      });
     }
   };
 
