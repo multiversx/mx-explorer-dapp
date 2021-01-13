@@ -37,7 +37,7 @@ export function dhms(ms: number) {
 export default function timeAgo(timestamp: number) {
   const dateNow = moment.utc();
   const txtTime = moment.utc(timestamp);
-  const diffInMs = dateNow.diff(txtTime);
+  const diffInMs = Math.max(dateNow.diff(txtTime), 0);
 
   return dhms(diffInMs);
 }

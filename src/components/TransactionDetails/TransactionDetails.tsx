@@ -123,7 +123,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                   >
                     <Trim text={transaction.sender} />
                   </NetworkLink>
-                  &nbsp;
+                  <CopyButton className="mr-2" text={transaction.sender} />
                   <NetworkLink
                     to={urlBuilder.senderShard(transaction.senderShard)}
                     className="flex-shrink-0"
@@ -147,7 +147,7 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
                 >
                   <Trim text={transaction.receiver} />
                 </NetworkLink>
-                &nbsp;
+                <CopyButton className="mr-2" text={transaction.receiver} />
                 {!isNaN(transaction.receiverShard) && (
                   <NetworkLink
                     to={urlBuilder.receiverShard(transaction.receiverShard)}

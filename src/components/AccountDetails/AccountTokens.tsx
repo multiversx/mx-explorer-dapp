@@ -12,12 +12,13 @@ const AccountTokens = ({ tokens }: { tokens: types.TokenType[] }) => {
       </div>
       <div className="card-body p-0">
         <div className="container-fluid">
-          {tokens.map(({ tokenIdentifier, tokenName, balance }) => (
+          {tokens.map(({ tokenIdentifier, tokenName, balance, numDecimals }) => (
             <DetailItem title={tokenName} key={tokenIdentifier}>
               <Denominate
                 value={balance ? balance : '0'}
                 showLastNonZeroDecimal={true}
                 token={tokenIdentifier}
+                denomination={numDecimals}
               />
             </DetailItem>
           ))}
