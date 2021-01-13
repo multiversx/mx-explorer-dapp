@@ -90,6 +90,7 @@ const wrapper = async ({
   proxyUrl: nodeUrl = '',
   url,
   params = {},
+  timeout,
 }: ProviderPropsType & { url: string }) => {
   const elasticUrl = () => baseUrl;
   const proxyUrl = () => nodeUrl;
@@ -202,7 +203,7 @@ const wrapper = async ({
 
       const {
         data: { count },
-      } = await axios.post(url, params);
+      } = await axios.post(url, params, { timeout });
 
       results = { data: count };
       break;
@@ -221,7 +222,7 @@ const wrapper = async ({
         data: {
           hits: { hits },
         },
-      } = await axios.post(url, params);
+      } = await axios.post(url, params, { timeout });
 
       const data: any = [];
       hits.map(({ _id, _source }: any) => {
@@ -237,18 +238,30 @@ const wrapper = async ({
       if (hash) {
         if (collection === 'accounts') {
           try {
-            const {
-              data: {
+            const [
+              {
+                data: { count: txCount },
+              },
+              {
                 data: {
-                  account: { address, nonce, balance, code, codeHash, rootHash },
+                  data: {
+                    account: { address, nonce, balance, code, codeHash, rootHash },
+                  },
                 },
               },
-            } = await axios({
-              method: 'get',
-              url: `${proxyUrl()}/address/${hash}`,
-            });
+            ] = await Promise.all([
+              axios.post(`${elasticUrl()}/transactions/_count`, {
+                query: {
+                  bool: { should: [{ match: { sender: hash } }, { match: { receiver: hash } }] },
+                },
+              }),
+              axios({
+                method: 'get',
+                url: `${proxyUrl()}/address/${hash}`,
+              }),
+            ]);
 
-            const data = { address, nonce, balance, code, codeHash, rootHash };
+            const data = { address, nonce, balance, code, codeHash, rootHash, txCount };
 
             results = { data };
           } catch (error) {
@@ -260,7 +273,7 @@ const wrapper = async ({
           try {
             let {
               data: { _id, _source },
-            } = await axios.get(url);
+            } = await axios.get(url, { timeout });
 
             const hash: any = {};
             if (key) {
@@ -319,6 +332,7 @@ const wrapper = async ({
                 } = await axios({
                   method: 'get',
                   url: `${proxyUrl()}/transaction/${hash}`,
+                  timeout,
                 });
 
                 const {
