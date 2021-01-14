@@ -20,6 +20,17 @@ const CONFIG = {
       accessToken: true,
     },
     {
+      id: 'testnet',
+      name: 'Testnet',
+      adapter: 'api',
+      apiUrl: 'https://testnet-api.elrond.com',
+      validatorDetails: true,
+      erdLabel: 'XeGLD',
+      walletAddress: 'https://testnet-wallet.elrond.com/',
+      explorerAddress: 'https://testnet-explorer.elrond.com/',
+      theme: 'testnet',
+    },
+    {
       default: true,
       id: 'devnet',
       name: 'Devnet',

@@ -9,7 +9,20 @@ const Logo = () => {
     activeNetwork: { id },
   } = useGlobalState();
 
-  const title = id === 'mainnet' ? 'Explorer' : 'Testnet Explorer';
+  let networkLabel;
+  switch (id) {
+    case 'testnet':
+      networkLabel = 'Testnet';
+      break;
+    case 'devnet':
+      networkLabel = 'Devnet';
+      break;
+    default:
+      networkLabel = '';
+      break;
+  }
+
+  const title = `${networkLabel} Explorer`;
 
   return (
     <Link to="/" className="d-flex align-items-center navbar-brand mr-2 pr-1">
