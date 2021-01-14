@@ -42,6 +42,10 @@ export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void })
             e.preventDefault();
             window.location.href = 'https://testnet-explorer.elrond.com/';
             break;
+          case 'devnet':
+            e.preventDefault();
+            window.location.href = 'https://devnet-explorer.elrond.com/';
+            break;
           default:
             break;
         }
