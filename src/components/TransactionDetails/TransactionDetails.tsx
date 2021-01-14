@@ -18,6 +18,7 @@ import {
 import ScResultsList, { ScResultType } from './ScResultsList';
 
 export interface TransactionType {
+  fee?: string;
   blockHash: string;
   data: string;
   gasLimit: number;
@@ -178,7 +179,10 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
 
           <DetailItem title="Transaction Fee">
             {transaction.gasUsed !== undefined ? (
-              <Denominate value={getFee(transaction)} showLastNonZeroDecimal />
+              <Denominate
+                value={transaction.fee ? transaction.fee : getFee(transaction)}
+                showLastNonZeroDecimal
+              />
             ) : (
               <span className="text-secondary">N/A</span>
             )}

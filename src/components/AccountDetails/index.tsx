@@ -14,9 +14,7 @@ import DelegationDetails from './DelegationDetails';
 import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
 import { denomination, decimals } from 'appConfig';
 import { types } from 'helpers';
-import { useIsMainnet } from 'helpers';
 import AccountTokens from './AccountTokens';
-// import FailedTokens from 'components/Tokens/FailedTokens';
 
 export interface AccountDetailsType extends types.AccountType {
   detailsFetched?: boolean;
@@ -41,7 +39,6 @@ const AccountDetails = () => {
   const { pathname } = useLocation();
   const isOldAddressRoute = pathname.includes('/address/');
   const { size, firstPageTicker } = useSize();
-  const isMainnet = useIsMainnet();
   const networkRoute = useNetworkRoute();
 
   const [accountDetails, setAccountDetails] = React.useState<AccountDetailsType>(
@@ -53,13 +50,7 @@ const AccountDetails = () => {
   const { activeNetworkId, activeNetwork } = useGlobalState();
   const { hash: address } = useParams() as any;
 
-  const {
-    getAccount,
-    getTransactionsCount,
-    getTransactions,
-    getRewards,
-    getAccountTokens,
-  } = adapter();
+  const { getAccount, getTransactions, getRewards, getAccountTokens } = adapter();
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
@@ -67,23 +58,21 @@ const AccountDetails = () => {
 
   const fetchBalanceAndCount = () => {
     if (!document.hidden) {
-      Promise.all([getAccount(address), getTransactionsCount({ address })]).then(
-        ([accountDetailsData, countData]) => {
-          if (ref.current !== null) {
-            setAccountDetails((existing) => ({
-              ...existing,
-              ...(accountDetailsData.success ? { ...accountDetailsData.data } : {}),
-              detailsFetched: accountDetailsData.success,
-            }));
-            if (countData.success) {
-              setTotalTransactions(Math.min(countData.data, 10000));
-            }
-            if (dataReady === undefined) {
-              setDataReady(accountDetailsData.success);
-            }
+      getAccount(address).then((accountDetailsData) => {
+        if (ref.current !== null) {
+          setAccountDetails((existing) => ({
+            ...existing,
+            ...(accountDetailsData.success ? { ...accountDetailsData.data } : {}),
+            detailsFetched: accountDetailsData.success,
+          }));
+          if (accountDetailsData.success) {
+            setTotalTransactions(Math.min(accountDetailsData.data.txCount, 10000));
+          }
+          if (dataReady === undefined) {
+            setDataReady(accountDetailsData.success);
           }
         }
-      );
+      });
     }
   };
 
