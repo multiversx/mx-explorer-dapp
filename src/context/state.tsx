@@ -9,6 +9,7 @@ export type AdapterType = InferType<typeof adapterSchema>;
 export interface ConfigType {
   networks: NetworkType[];
   links: NetworkLinkType[];
+  elrondApps: NetworkLinkType[];
 }
 
 export interface ShardType {
