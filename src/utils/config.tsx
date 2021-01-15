@@ -1,6 +1,7 @@
 import { ConfigType } from 'context/state';
 
 const config: ConfigType = {
+  links: [],
   networks: [
     {
       default: true,

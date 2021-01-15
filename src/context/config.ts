@@ -2,6 +2,12 @@ import { object, string, array, boolean, InferType } from 'yup';
 import { ConfigType, NetworkType } from './state';
 import localTestnets from './localTestnets';
 
+export const networkLink = object({
+  id: string().defined().required(),
+  name: string().defined().required(),
+  url: string().required(),
+}).required();
+
 const networkBaseSchema = object({
   default: boolean(),
   id: string().defined().required(),
@@ -32,6 +38,7 @@ export const adapterSchema = object({
 export const schema = networkBaseSchema.concat(adapterSchema);
 
 export const configSchema = object({
+  links: array().of(networkLink),
   networks: array().of(schema).required(),
 }).required();
 
@@ -54,6 +61,7 @@ export const buildInitialConfig = (config: ImportedConfigType): ConfigType => {
   });
 
   return {
+    links: config.links || [],
     networks: config.networks.map((network: any) => ({ ...defaultNetwork, ...network })),
   };
 };
