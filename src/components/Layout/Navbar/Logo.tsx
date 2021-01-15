@@ -7,22 +7,21 @@ import { ReactComponent as ElrondSymbol } from 'assets/images/symbol.svg';
 const Logo = () => {
   const {
     activeNetwork: { id },
+    config: { links },
   } = useGlobalState();
 
-  let networkLabel;
-  switch (id) {
-    case 'testnet':
+  let networkLabel = '';
+  switch (true) {
+    case id === 'testnet':
       networkLabel = 'Testnet';
       break;
-    case 'devnet':
+    case id === 'devnet':
       networkLabel = 'Devnet';
       break;
-    default:
-      networkLabel = '';
+    case links.length === 0:
+      networkLabel = 'Internal';
       break;
   }
-
-  const title = `${networkLabel} Explorer`;
 
   return (
     <Link to="/" className="d-flex align-items-center navbar-brand mr-2 pr-1">
@@ -32,7 +31,7 @@ const Logo = () => {
       <ElrondSymbol
         className={`main-symbol flex-shrink-0 ${id === 'mainnet' ? 'd-none' : 'd-block d-md-none'}`}
       />
-      <span className="text-secondary text-truncate">{title}</span>
+      <span className="text-secondary text-truncate">{networkLabel} Explorer</span>
     </Link>
   );
 };

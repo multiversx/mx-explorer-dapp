@@ -1,11 +1,12 @@
 const CONFIG = {
   /*
-      Possbile flags:
-        validators: (default) true
-        economics: (default) false
-        data: (default) false
-        accessToken: (default) false
-  */
+        Possible flags:
+          links: (default) []
+        Possbile network flags:
+          validators: (default) true
+          economics: (default) false
+          data: (default) false
+    */
   links: [
     {
       id: 'mainnet',
