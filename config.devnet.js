@@ -6,30 +6,24 @@ const CONFIG = {
         data: (default) false
         accessToken: (default) false
   */
-  networks: [
+  links: [
     {
       id: 'mainnet',
       name: 'Mainnet',
-      adapter: 'api',
-      apiUrl: 'https://api.elrond.com',
-      validatorDetails: true,
-      erdLabel: 'EGLD',
-      walletAddress: 'https://wallet.elrond.com/',
-      explorerAddress: 'https://explorer.elrond.com/',
-      theme: 'light',
-      accessToken: true,
+      url: 'https://explorer.elrond.com/',
     },
     {
       id: 'testnet',
       name: 'Testnet',
-      adapter: 'api',
-      apiUrl: 'https://testnet-api.elrond.com',
-      validatorDetails: true,
-      erdLabel: 'XeGLD',
-      walletAddress: 'https://testnet-wallet.elrond.com/',
-      explorerAddress: 'https://testnet-explorer.elrond.com/',
-      theme: 'testnet',
+      url: 'https://testnet-explorer.elrond.com/',
     },
+    {
+      id: 'devnet',
+      name: 'Devnet',
+      url: 'https://devnet-explorer.elrond.com/',
+    },
+  ],
+  networks: [
     {
       default: true,
       id: 'devnet',

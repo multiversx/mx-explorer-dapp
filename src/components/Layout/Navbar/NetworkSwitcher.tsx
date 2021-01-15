@@ -2,17 +2,35 @@ import React from 'react';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { defaultNetwork } from 'context/config';
+import { NetworkLinkType } from 'context/state';
 import { NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void }) {
-  const globalState = useGlobalState();
+const NetworkUrl = ({ link, onClick }: { link: NetworkLinkType; onClick: () => void }) => {
+  const { activeNetworkId } = useGlobalState();
 
-  const linksArray = globalState.config.networks.map((network) => ({
-    name: network.name,
-    to: network.id === globalState.defaultNetwork.id ? '' : network.id,
-    key: network.id,
+  return (
+    <Link
+      className={`dropdown-item ${activeNetworkId === link.id ? 'active' : ''}`}
+      to={link.url}
+      onClick={onClick}
+    >
+      {link.name}
+    </Link>
+  );
+};
+
+export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void }) {
+  const {
+    config: { links, networks },
+    defaultNetwork,
+    activeNetwork,
+  } = useGlobalState();
+
+  const internalLinks = networks.map(({ name, id }) => ({
+    name,
+    url: id === defaultNetwork.id ? '' : id,
+    id,
   }));
 
   const hidePopover = () => {
@@ -22,61 +40,32 @@ export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void })
     }
   };
 
-  const changeNetwork = (networkId: string) => (e: React.MouseEvent) => {
-    hidePopover();
-    if (globalState.activeNetworkId !== networkId) {
-      const network =
-        globalState.config.networks.find((t) => {
-          if (networkId) {
-            return t.id === networkId;
-          } else return t.default;
-        }) || defaultNetwork;
-
-      if (!network.default) {
-        switch (network.name.toLocaleLowerCase()) {
-          case 'mainnet':
-            e.preventDefault();
-            window.location.href = 'https://explorer.elrond.com/';
-            break;
-          case 'testnet':
-            e.preventDefault();
-            window.location.href = 'https://testnet-explorer.elrond.com/';
-            break;
-          case 'devnet':
-            e.preventDefault();
-            window.location.href = 'https://devnet-explorer.elrond.com/';
-            break;
-          default:
-            break;
-        }
-      }
-    }
-  };
-
   return (
     <>
       <NavDropdown
         title={
           <div className="nav-link-icon flex-fill pr-0 pl-md-1 ml-md-2" data-testid="networkSwitch">
-            {globalState.activeNetwork.name}
+            {activeNetwork.name}
             <FontAwesomeIcon className="d-inline-block ml-1" icon={faAngleDown} />
           </div>
         }
         id="network-switcher-dropdown"
         alignRight
       >
-        {linksArray.map((link) => {
-          return (
-            <Link
-              className={`dropdown-item ${globalState.activeNetworkId === link.to ? 'active' : ''}`}
-              key={link.key}
-              to={`/${link.to}`}
-              onClick={changeNetwork(link.to)}
-            >
-              {link.name}
-            </Link>
-          );
-        })}
+        {links.length > 0
+          ? links.map((link) => (
+              <a
+                className={`dropdown-item ${activeNetwork.id === link.id ? 'active' : ''}`}
+                href={link.url}
+                key={link.id}
+                onClick={hidePopover}
+              >
+                {link.name}
+              </a>
+            ))
+          : internalLinks.map((link) => (
+              <NetworkUrl link={link} onClick={hidePopover} key={link.id} />
+            ))}
       </NavDropdown>
     </>
   );
