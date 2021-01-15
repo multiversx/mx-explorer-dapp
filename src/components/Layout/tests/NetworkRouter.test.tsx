@@ -2,6 +2,7 @@ import { fireEvent, beforeAll, wait } from 'utils/test-utils';
 import { ConfigType } from 'context/state';
 
 const optionalConfig: ConfigType = {
+  links: [],
   networks: [
     {
       default: true,
