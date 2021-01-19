@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
+import { sizeFormat, urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 
 export interface BlockType {
@@ -47,9 +47,7 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
                 </div>
               </td>
               <td>
-                <span title={dateFormatted(block.timestamp)}>
-                  <TimeAgo value={block.timestamp} />
-                </span>
+                <TimeAgo value={block.timestamp} tooltip={true} />
               </td>
               <td>{block.txCount}</td>
               <td>

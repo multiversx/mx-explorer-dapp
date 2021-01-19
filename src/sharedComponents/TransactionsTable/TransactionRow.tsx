@@ -1,7 +1,7 @@
 import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { addressIsBech32, dateFormatted, urlBuilder } from 'helpers';
+import { addressIsBech32, urlBuilder } from 'helpers';
 import { Denominate, ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 import { ScResultType } from 'components/TransactionDetails/ScResultsList';
 import TransactionIcon from '../TransactionsTable/TransactionIcon';
@@ -54,9 +54,7 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
         </div>
       </td>
       <td>
-        <span title={dateFormatted(transaction.timestamp)}>
-          <TimeAgo value={transaction.timestamp} short={true} />
-        </span>
+        <TimeAgo value={transaction.timestamp} short={true} tooltip={true} />
       </td>
       <td>
         <div className="d-flex align-items-center">
