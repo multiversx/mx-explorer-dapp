@@ -15,6 +15,9 @@
       align-items: center;
 
       > .hash-item {
+        display: flex;
+        max-width: 100%;
+        overflow: hidden;
         flex: 1 1 40%;
         margin: 0 1rem;
       }
