@@ -50,6 +50,8 @@ export interface NodeType {
   tempRating: number;
   rating: number;
   ratingModifier: number;
+  nonce: number;
+  numInstances: number;
   totalUpTime?: number;
   totalDownTime?: number;
   totalUpTimeSec?: number;
