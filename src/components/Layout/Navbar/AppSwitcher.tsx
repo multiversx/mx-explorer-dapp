@@ -4,11 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
-import { elrondApps as apps } from 'appConfig';
 
 export default function AppSwitcher({ onToggle }: { onToggle?: () => void }) {
   const {
-    activeNetwork: { explorerAddress, walletAddress },
+    config: { elrondApps },
   } = useGlobalState();
 
   const hidePopover = () => {
@@ -34,25 +33,15 @@ export default function AppSwitcher({ onToggle }: { onToggle?: () => void }) {
       id="app-switcher-dropdown"
       alignRight
     >
-      {apps.map((app) => {
-        let { name, to } = app;
-        if (app.id === 'wallet') {
-          to = walletAddress || to;
-          name = walletAddress && walletAddress.includes('testnet') ? 'Testnet ' + name : name;
-        }
-        const isExplorer = app.id === 'explorer';
-        if (isExplorer) {
-          to = explorerAddress || '';
-          name = explorerAddress && explorerAddress.includes('testnet') ? 'Testnet ' + name : name;
-        }
+      {elrondApps.map(({ name, url, id }) => {
         return (
           <NavDropdown.Item
-            key={app.id}
+            key={id}
             onClick={hidePopover}
-            href={to}
-            target={`${isExplorer ? '' : '_blank'}`}
+            href={url}
+            target={`${id === 'explorer' ? '' : '_blank'}`}
             rel="noopener noreferrer"
-            className={`${isExplorer ? 'active' : ''}`}
+            className={`${id === 'explorer' ? 'active' : ''}`}
           >
             {name}
           </NavDropdown.Item>

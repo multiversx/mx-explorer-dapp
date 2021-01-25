@@ -1,7 +1,17 @@
 import React from 'react';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import timeAgo from './timeAgo';
+import { dateFormatted } from 'helpers';
 
-const TimeAgo = ({ value, short = false }: { value: number; short?: boolean }) => {
+const TimeAgo = ({
+  value,
+  short = false,
+  tooltip = false,
+}: {
+  value: number;
+  short?: boolean;
+  tooltip?: boolean;
+}) => {
   const ms = value * 1000;
   let result = timeAgo(ms);
 
@@ -12,7 +22,21 @@ const TimeAgo = ({ value, short = false }: { value: number; short?: boolean }) =
     }
   }
 
-  return <>{result}</>;
+  return tooltip ? (
+    <OverlayTrigger
+      placement="top"
+      delay={{ show: 0, hide: 400 }}
+      overlay={(props) => (
+        <Tooltip id="button-tooltip" {...props}>
+          {dateFormatted(value)}
+        </Tooltip>
+      )}
+    >
+      <span>{result}</span>
+    </OverlayTrigger>
+  ) : (
+    <>{result}</>
+  );
 };
 
 export default TimeAgo;

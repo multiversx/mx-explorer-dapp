@@ -124,13 +124,15 @@ const BlockData = (props: BlockDataType) => {
           <DetailItem title="Consensus Group" className="hash-group-row">
             <div className="hash-group">
               {block.validators.map((item, i) => (
-                <NetworkLink
-                  className="trim-wrapper hash-item mb-1"
-                  key={`${item}/${i}`}
-                  to={`${validatorsRoutes.nodes}/${item}`}
-                >
-                  <Trim text={item} />
-                </NetworkLink>
+                <div className="hash-item mb-1">
+                  <NetworkLink
+                    className="trim-wrapper"
+                    key={`${item}/${i}`}
+                    to={`${validatorsRoutes.nodes}/${item}`}
+                  >
+                    <Trim text={item} />
+                  </NetworkLink>
+                </div>
               ))}
               {createHashItemIfLengthIsOdd(block.validators.length)}
             </div>
@@ -153,13 +155,11 @@ const BlockData = (props: BlockDataType) => {
               ) : (
                 <div className="hash-group">
                   {block.notarizedBlocksHashes.map((item, i) => (
-                    <NetworkLink
-                      className="trim-wrapper hash-item"
-                      key={item + i}
-                      to={`/blocks/${item}`}
-                    >
-                      <Trim text={item} />
-                    </NetworkLink>
+                    <div className="hash-item">
+                      <NetworkLink className="trim-wrapper" key={item + i} to={`/blocks/${item}`}>
+                        <Trim text={item} />
+                      </NetworkLink>
+                    </div>
                   ))}
                   {createHashItemIfLengthIsOdd(block.notarizedBlocksHashes.length)}
                 </div>
@@ -174,13 +174,11 @@ const BlockData = (props: BlockDataType) => {
             ) : (
               <div className="hash-group">
                 {block.miniBlocksHashes.map((item) => (
-                  <NetworkLink
-                    className="trim-wrapper hash-item"
-                    key={item}
-                    to={`/miniblocks/${item}`}
-                  >
-                    <Trim text={item} />
-                  </NetworkLink>
+                  <div className="hash-item">
+                    <NetworkLink className="trim-wrapper" key={item} to={`/miniblocks/${item}`}>
+                      <Trim text={item} />
+                    </NetworkLink>
+                  </div>
                 ))}
                 {createHashItemIfLengthIsOdd(block.miniBlocksHashes.length)}
               </div>
