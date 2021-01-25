@@ -1,7 +1,7 @@
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { addressIsBech32, dateFormatted, urlBuilder } from 'helpers';
+import { addressIsBech32, urlBuilder } from 'helpers';
 import * as React from 'react';
 import {
   ScAddressIcon,
@@ -99,11 +99,8 @@ const LatestTransactions = () => {
                             <Trim text={transaction.txHash} />
                           </NetworkLink>
                         </div>
-                        <span
-                          title={dateFormatted(transaction.timestamp)}
-                          className="text-secondary"
-                        >
-                          <TimeAgo value={transaction.timestamp} />
+                        <span className="text-secondary">
+                          <TimeAgo value={transaction.timestamp} tooltip={true} />
                         </span>
                       </div>
                     </div>

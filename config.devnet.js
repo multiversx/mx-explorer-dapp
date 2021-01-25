@@ -1,35 +1,30 @@
 const CONFIG = {
   /*
-      Possbile flags:
-        validators: (default) true
-        economics: (default) false
-        data: (default) false
-        accessToken: (default) false
-  */
-  networks: [
+        Possible flags:
+          links: (default) []
+        Possbile network flags:
+          validators: (default) true
+          economics: (default) false
+          data: (default) false
+    */
+  links: [
     {
       id: 'mainnet',
       name: 'Mainnet',
-      adapter: 'api',
-      apiUrl: 'https://api.elrond.com',
-      validatorDetails: true,
-      erdLabel: 'EGLD',
-      walletAddress: 'https://wallet.elrond.com/',
-      explorerAddress: 'https://explorer.elrond.com/',
-      theme: 'light',
-      accessToken: true,
+      url: 'https://explorer.elrond.com/',
     },
     {
       id: 'testnet',
       name: 'Testnet',
-      adapter: 'api',
-      apiUrl: 'https://testnet-api.elrond.com',
-      validatorDetails: true,
-      erdLabel: 'XeGLD',
-      walletAddress: 'https://testnet-wallet.elrond.com/',
-      explorerAddress: 'https://testnet-explorer.elrond.com/',
-      theme: 'testnet',
+      url: 'https://testnet-explorer.elrond.com/',
     },
+    {
+      id: 'devnet',
+      name: 'Devnet',
+      url: 'https://devnet-explorer.elrond.com/',
+    },
+  ],
+  networks: [
     {
       default: true,
       id: 'devnet',
@@ -41,6 +36,33 @@ const CONFIG = {
       walletAddress: 'https://devnet-wallet.elrond.com/',
       explorerAddress: 'https://devnet-explorer.elrond.com/',
       theme: 'testnet',
+    },
+  ],
+  elrondApps: [
+    {
+      id: 'main-site',
+      name: 'Main site',
+      url: 'https://elrond.com/',
+    },
+    {
+      id: 'wallet',
+      name: 'Devnet Wallet',
+      url: 'https://devnet-wallet.elrond.com',
+    },
+    {
+      id: 'explorer',
+      name: 'Devnet Explorer', // navbar title
+      url: 'http://devnet-explorer.elrond.com',
+    },
+    {
+      id: 'bridge',
+      name: 'Bridge',
+      url: 'https://bridge.elrond.com/',
+    },
+    {
+      id: 'docs',
+      name: 'Docs',
+      url: 'https://docs.elrond.com/',
     },
   ],
 };

@@ -2,6 +2,14 @@ import { fireEvent, beforeAll, wait } from 'utils/test-utils';
 import { ConfigType } from 'context/state';
 
 const optionalConfig: ConfigType = {
+  links: [],
+  elrondApps: [
+    {
+      id: 'explorer',
+      name: 'Explorer', // navbar title
+      url: 'https://explorer.elrond.com/',
+    },
+  ],
   networks: [
     {
       default: true,

@@ -2,7 +2,6 @@ import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { dateFormatted } from 'helpers';
 import { ShardSpan, NetworkLink, TimeAgo, adapter, Trim, Loader } from 'sharedComponents';
 import { BlockType } from 'sharedComponents/BlocksTable';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
@@ -85,8 +84,8 @@ const LatestBlocks = () => {
                             &nbsp;in&nbsp;
                             <ShardSpan shard={block.shard} />
                           </span>
-                          <span title={dateFormatted(block.timestamp)} className="text-secondary">
-                            <TimeAgo value={block.timestamp} />
+                          <span className="text-secondary">
+                            <TimeAgo value={block.timestamp} tooltip={true} />
                           </span>
                         </div>
                       </div>

@@ -19,7 +19,7 @@ const Identity = ({ identity }: { identity: IdentityType | undefined }) => {
           <>
             <div className="card-header">
               <div className="card-header-item p-0">
-                <div className="identity-header-item px-lg-3 justify-content-center">
+                <div className="identity-header-item px-lg-3 justify-content-center py-3">
                   <SharedIdentity.Avatar identity={identity} />
 
                   {identity.identity ? (

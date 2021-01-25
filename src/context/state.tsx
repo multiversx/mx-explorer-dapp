@@ -1,12 +1,15 @@
 import { InferType } from 'yup';
-import config, { defaultNetwork, schema, adapterSchema } from './config';
+import config, { defaultNetwork, schema, adapterSchema, networkLink } from './config';
 import { storage } from 'helpers';
 
+export type NetworkLinkType = InferType<typeof networkLink>;
 export type NetworkType = InferType<typeof schema>;
 export type AdapterType = InferType<typeof adapterSchema>;
 
 export interface ConfigType {
   networks: NetworkType[];
+  links: NetworkLinkType[];
+  elrondApps: NetworkLinkType[];
 }
 
 export interface ShardType {
@@ -47,6 +50,8 @@ export interface NodeType {
   tempRating: number;
   rating: number;
   ratingModifier: number;
+  nonce: number;
+  numInstances: number;
   totalUpTime?: number;
   totalDownTime?: number;
   totalUpTimeSec?: number;
