@@ -47,7 +47,7 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
                 </div>
               </td>
               <td>
-                <TimeAgo value={block.timestamp} tooltip={true} />
+                <TimeAgo value={block.timestamp} tooltip />
               </td>
               <td>{block.txCount}</td>
               <td>
