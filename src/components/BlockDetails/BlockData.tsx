@@ -3,7 +3,7 @@ import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons/faChevronLeft'
 import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Accordion, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, TimeAgo, Trim, DetailItem, CopyButton } from 'sharedComponents';
 import { validatorsRoutes } from 'routes';
@@ -29,6 +29,7 @@ function createHashItemIfLengthIsOdd(length: number) {
 const BlockData = (props: BlockDataType) => {
   const { block, nextHash } = props;
   const isFirstBlock = block.prevHash && block.prevHash.length > 64;
+  const [consensusExpanded, setConsensusExpanded] = React.useState(false);
 
   return (
     <div className="card">
@@ -122,20 +123,38 @@ const BlockData = (props: BlockDataType) => {
           </DetailItem>
 
           <DetailItem title="Consensus Group" className="hash-group-row">
-            <div className="hash-group">
-              {block.validators.map((item, i) => (
-                <div className="hash-item mb-1">
-                  <NetworkLink
-                    className="trim-wrapper"
-                    key={`${item}/${i}`}
-                    to={`${validatorsRoutes.nodes}/${item}`}
-                  >
-                    <Trim text={item} />
-                  </NetworkLink>
+            <Accordion>
+              {consensusExpanded === false && (
+                <Accordion.Toggle
+                  className="ml-3 my-0 mr-0 p-0 text-break-all"
+                  style={{ fontSize: '1rem', textDecoration: 'none' }}
+                  as={Button}
+                  variant="link"
+                  eventKey="consensusGroup"
+                  onClick={() => {
+                    setConsensusExpanded(true);
+                  }}
+                >
+                  {block.validators.length} validators (See all)
+                </Accordion.Toggle>
+              )}
+              <Accordion.Collapse eventKey="consensusGroup">
+                <div className="hash-group">
+                  {block.validators.map((item, i) => (
+                    <div className="hash-item mb-1">
+                      <NetworkLink
+                        className="trim-wrapper"
+                        key={`${item}/${i}`}
+                        to={`${validatorsRoutes.nodes}/${item}`}
+                      >
+                        <Trim text={item} />
+                      </NetworkLink>
+                    </div>
+                  ))}
+                  {createHashItemIfLengthIsOdd(block.validators.length)}
                 </div>
-              ))}
-              {createHashItemIfLengthIsOdd(block.validators.length)}
-            </div>
+              </Accordion.Collapse>
+            </Accordion>
           </DetailItem>
 
           <DetailItem title="State Root Hash">
