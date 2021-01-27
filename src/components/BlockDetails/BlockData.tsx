@@ -36,6 +36,13 @@ const BlockData = (props: BlockDataType) => {
     setExpanded(true);
   };
 
+  // Fixes Trim re-render bug
+  React.useEffect(() => {
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 0);
+  }, [expanded]);
+
   return (
     <div className="card">
       <div className="card-body p-0">
