@@ -54,7 +54,7 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
         </div>
       </td>
       <td>
-        <TimeAgo value={transaction.timestamp} short={true} tooltip={true} />
+        <TimeAgo value={transaction.timestamp} short tooltip />
       </td>
       <td>
         <div className="d-flex align-items-center">

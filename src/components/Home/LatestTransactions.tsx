@@ -100,7 +100,7 @@ const LatestTransactions = () => {
                           </NetworkLink>
                         </div>
                         <span className="text-secondary">
-                          <TimeAgo value={transaction.timestamp} tooltip={true} />
+                          <TimeAgo value={transaction.timestamp} tooltip />
                         </span>
                       </div>
                     </div>

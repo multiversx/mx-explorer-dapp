@@ -3,7 +3,7 @@ import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons/faChevronLeft'
 import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Collapse, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, TimeAgo, Trim, DetailItem, CopyButton } from 'sharedComponents';
 import { validatorsRoutes } from 'routes';
@@ -29,6 +29,19 @@ function createHashItemIfLengthIsOdd(length: number) {
 const BlockData = (props: BlockDataType) => {
   const { block, nextHash } = props;
   const isFirstBlock = block.prevHash && block.prevHash.length > 64;
+  const [expanded, setExpanded] = React.useState(false);
+
+  const toggleCollapseClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setExpanded(true);
+  };
+
+  // Fixes Trim re-render bug
+  React.useEffect(() => {
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 0);
+  }, [expanded]);
 
   return (
     <div className="card">
@@ -122,20 +135,32 @@ const BlockData = (props: BlockDataType) => {
           </DetailItem>
 
           <DetailItem title="Consensus Group" className="hash-group-row">
-            <div className="hash-group">
-              {block.validators.map((item, i) => (
-                <div className="hash-item mb-1">
-                  <NetworkLink
-                    className="trim-wrapper"
-                    key={`${item}/${i}`}
-                    to={`${validatorsRoutes.nodes}/${item}`}
-                  >
-                    <Trim text={item} />
-                  </NetworkLink>
+            <>
+              {expanded === false && (
+                <div className="d-flex ml-3 text-break-all">
+                  <a href="/#" onClick={toggleCollapseClick}>
+                    {block.validators.length} validators (See all)
+                  </a>
                 </div>
-              ))}
-              {createHashItemIfLengthIsOdd(block.validators.length)}
-            </div>
+              )}
+              <Collapse in={expanded}>
+                <div>
+                  <div className="hash-group">
+                    {block.validators.map((item, i) => (
+                      <div className="hash-item mb-1" key={`${item}/${i}`}>
+                        <NetworkLink
+                          className="trim-wrapper"
+                          to={`${validatorsRoutes.nodes}/${item}`}
+                        >
+                          <Trim text={item} />
+                        </NetworkLink>
+                      </div>
+                    ))}
+                    {createHashItemIfLengthIsOdd(block.validators.length)}
+                  </div>
+                </div>
+              </Collapse>
+            </>
           </DetailItem>
 
           <DetailItem title="State Root Hash">
