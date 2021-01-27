@@ -16,7 +16,7 @@ const AccountDetailsCard = (props: types.AccountType) => {
           <DetailItem title="Balance">
             {props.balance !== '...' ? <Denominate value={props.balance} /> : props.balance}
           </DetailItem>
-
+          {props.username && <DetailItem title="Herotag">{props.username}</DetailItem>}
           {props.code && (
             <DetailItem title="Contract Code">
               <textarea
