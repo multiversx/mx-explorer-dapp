@@ -85,7 +85,7 @@ const LatestBlocks = () => {
                             <ShardSpan shard={block.shard} />
                           </span>
                           <span className="text-secondary">
-                            <TimeAgo value={block.timestamp} tooltip={true} />
+                            <TimeAgo value={block.timestamp} tooltip />
                           </span>
                         </div>
                       </div>
