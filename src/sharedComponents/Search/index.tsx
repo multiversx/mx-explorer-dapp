@@ -13,7 +13,7 @@ interface SearchType {
 const Search = ({ setExpanded = () => null }: SearchType) => {
   const { pathname } = useLocation();
   const networkRoute = useNetworkRoute();
-  const { getAccount, getBlock, getTransaction, getNode, getMiniBlock } = adapter();
+  const { getAccount, getBlock, getTransaction, getNode, getMiniBlock, getUser } = adapter();
   const [route, setRoute] = React.useState('');
   const [searching, setSearching] = React.useState(false);
 
@@ -35,8 +35,9 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
         getBlock(hash),
         getTransaction(hash),
         getAccount(hash),
+        getUser(hash),
         getMiniBlock(hash),
-      ]).then(([node, block, transaction, account, miniblock]) => {
+      ]).then(([node, block, transaction, account, userData, miniblock]) => {
         setExpanded(false);
         switch (true) {
           case block.success:
@@ -50,6 +51,9 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
             break;
           case account.success:
             setRoute(networkRoute(urlBuilder.accountDetails(hash)));
+            break;
+          case userData.success:
+            setRoute(networkRoute(urlBuilder.accountDetails(userData.data.address)));
             break;
           case node.success:
             setRoute(networkRoute(urlBuilder.nodeDetails(hash)));
