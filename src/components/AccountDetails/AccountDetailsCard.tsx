@@ -9,14 +9,18 @@ const AccountDetailsCard = (props: types.AccountType) => {
         <div className="container-fluid">
           <DetailItem title="Address">
             <div className="d-flex align-items-center text-break-all mr-lg-n1rem">
-              {props.address}
+              <span data-testid="address">{props.address}</span>
               <CopyButton text={props.address} />
             </div>
           </DetailItem>
           <DetailItem title="Balance">
             {props.balance !== '...' ? <Denominate value={props.balance} /> : props.balance}
           </DetailItem>
-          {props.username && <DetailItem title="Herotag">{props.username}</DetailItem>}
+          {props.username && (
+            <DetailItem title="Herotag">
+              <span data-testid="username">{props.username}</span>
+            </DetailItem>
+          )}
           {props.code && (
             <DetailItem title="Contract Code">
               <textarea
