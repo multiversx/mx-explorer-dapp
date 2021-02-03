@@ -14,6 +14,15 @@ describe('Account Details Page', () => {
       const pageInterval = render.getByTestId('pageInterval');
       expect(pageInterval!.innerHTML).toBe('1-25');
     });
+
+    const address = await render.findByTestId('address');
+    expect(address.textContent).toBe(account.address);
+
+    const username = await render.findByTestId('username');
+    expect(username.textContent).toBe(account.username);
+
+    const transactionsTable = await render.findByTestId('transactionsTable');
+    expect(transactionsTable).toBeDefined();
   });
   test('Account Details page loading state', async () => {
     const render = beforeAll({
