@@ -89,6 +89,30 @@ describe('Search input', () => {
       expect(document.title).toEqual('Account Details • Elrond Explorer');
     });
   });
+  test('Seach finds username', async () => {
+    const render = beforeAll({
+      route: '/search',
+      networkRequests: {
+        block: () => Promise.resolve(new Error('error')),
+        transaction: () => Promise.resolve(new Error('error')),
+        miniblock: () => Promise.resolve(new Error('error')),
+        account: () => Promise.resolve(new Error('error')),
+      },
+    });
+
+    const search = render.getAllByTestId('search')[0];
+    const data = {
+      target: { value: account.username },
+    };
+    fireEvent.change(search, data);
+
+    const searchButton = render.getAllByTestId('searchButton')[0];
+    fireEvent.click(searchButton);
+
+    await wait(async () => {
+      expect(document.title).toEqual('Account Details • Elrond Explorer');
+    });
+  });
   test('Seach finds node', async () => {
     const render = beforeAll({
       route: '/search',
@@ -97,6 +121,7 @@ describe('Search input', () => {
         transaction: () => Promise.resolve(new Error('error')),
         miniblock: () => Promise.resolve(new Error('error')),
         account: () => Promise.resolve(new Error('error')),
+        username: () => Promise.resolve(new Error('error')),
       },
     });
 
@@ -121,6 +146,7 @@ describe('Search input', () => {
         transaction: () => Promise.resolve(new Error('error')),
         miniblock: () => Promise.resolve(new Error('error')),
         account: () => Promise.resolve(new Error('error')),
+        username: () => Promise.resolve(new Error('error')),
         node: () => Promise.resolve(new Error('error')),
       },
     });
