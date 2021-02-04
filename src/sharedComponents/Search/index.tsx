@@ -92,7 +92,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
         <input
           type="text"
           className="form-control rounded-pill my-1 text-truncate"
-          placeholder="Address / Tx Hash / Block Hash / Validator Key"
+          placeholder="Address / Tx Hash / Block Hash / Validator Key / Herotag"
           name="requestType"
           data-testid="search"
           required
