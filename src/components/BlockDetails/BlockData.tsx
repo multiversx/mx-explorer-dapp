@@ -199,8 +199,8 @@ const BlockData = (props: BlockDataType) => {
             ) : (
               <div className="hash-group">
                 {block.miniBlocksHashes.map((item) => (
-                  <div className="hash-item">
-                    <NetworkLink className="trim-wrapper" key={item} to={`/miniblocks/${item}`}>
+                  <div className="hash-item" key={item}>
+                    <NetworkLink className="trim-wrapper" to={`/miniblocks/${item}`}>
                       <Trim text={item} />
                     </NetworkLink>
                   </div>
