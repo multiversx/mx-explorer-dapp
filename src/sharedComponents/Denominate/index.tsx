@@ -1,5 +1,6 @@
 import React from 'react';
-import { useGlobalState } from '../../context';
+import { useGlobalState } from 'context';
+import { stringIsInteger } from 'helpers';
 import denominate from './denominate';
 import { denomination as configDenomination, decimals as configDecimals } from 'appConfig';
 
@@ -66,7 +67,7 @@ const Denominate = (props: DenominateType) => {
   } = useGlobalState();
   const { value } = props;
 
-  return isNaN(parseFloat(value)) ? denominateInvalid(props) : denominateValid(props, erdLabel);
+  return !stringIsInteger(value) ? denominateInvalid(props) : denominateValid(props, erdLabel);
 };
 
 export default Denominate;
