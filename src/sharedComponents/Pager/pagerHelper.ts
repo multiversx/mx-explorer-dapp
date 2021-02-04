@@ -1,4 +1,4 @@
-import { isValidInteger } from 'helpers';
+import { stringIsInteger } from 'helpers';
 
 interface PagerHelperType {
   total: number | '...';
@@ -8,7 +8,7 @@ interface PagerHelperType {
 
 export default function pagerHelper({ total, itemsPerPage, page }: PagerHelperType) {
   const numericTotal = total === '...' ? 0 : total;
-  const size = isValidInteger(page) ? parseInt(page) : 1;
+  const size = stringIsInteger(page) ? parseInt(page) : 1;
   const start = (size - 1) * itemsPerPage + (size === 1 ? 1 : 0);
   const end =
     (size - 1) * itemsPerPage +

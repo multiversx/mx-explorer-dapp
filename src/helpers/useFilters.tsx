@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { isValidInteger } from 'helpers';
+import { stringIsInteger } from 'helpers';
 
 export default function useGetFilters() {
   const { search: urlSearch } = useLocation();
@@ -17,7 +17,7 @@ export default function useGetFilters() {
     sort,
   } = Object.fromEntries(urlParams);
 
-  const size = page && isValidInteger(page) ? parseInt(page) : 1;
+  const size = page && stringIsInteger(page) ? parseInt(page) : 1;
 
   const getQueryObject = () => ({
     ...(search ? { search } : {}),
@@ -28,7 +28,7 @@ export default function useGetFilters() {
     ...(sort ? { sort } : {}),
     ...(order ? { order } : {}),
     ...(issues ? { issues: 'true' } : {}),
-    ...(shard && isValidInteger(shard) ? { shard } : {}),
+    ...(shard && stringIsInteger(shard) ? { shard } : {}),
   });
 
   return {
