@@ -1,5 +1,5 @@
 import { fireEvent, wait, beforeAll } from 'utils/test-utils';
-import { miniblock, account } from 'utils/rawData';
+import { miniblock, account, node } from 'utils/rawData';
 
 describe('Search input', () => {
   test('Search finds block', async () => {
@@ -69,11 +69,6 @@ describe('Search input', () => {
   test('Seach finds account', async () => {
     const render = beforeAll({
       route: '/search',
-      networkRequests: {
-        block: () => Promise.resolve(new Error('error')),
-        transaction: () => Promise.resolve(new Error('error')),
-        miniblock: () => Promise.resolve(new Error('error')),
-      },
     });
 
     const search = render.getAllByTestId('search')[0];
@@ -92,12 +87,6 @@ describe('Search input', () => {
   test('Seach finds username', async () => {
     const render = beforeAll({
       route: '/search',
-      networkRequests: {
-        block: () => Promise.resolve(new Error('error')),
-        transaction: () => Promise.resolve(new Error('error')),
-        miniblock: () => Promise.resolve(new Error('error')),
-        account: () => Promise.resolve(new Error('error')),
-      },
     });
 
     const search = render.getAllByTestId('search')[0];
@@ -113,21 +102,14 @@ describe('Search input', () => {
       expect(document.title).toEqual('Account Details • Elrond Explorer');
     });
   });
-  test('Seach finds node', async () => {
+  test('Search finds node', async () => {
     const render = beforeAll({
       route: '/search',
-      networkRequests: {
-        block: () => Promise.resolve(new Error('error')),
-        transaction: () => Promise.resolve(new Error('error')),
-        miniblock: () => Promise.resolve(new Error('error')),
-        account: () => Promise.resolve(new Error('error')),
-        username: () => Promise.resolve(new Error('error')),
-      },
     });
 
     const search = render.getAllByTestId('search')[0];
     const data = {
-      target: { value: account.address },
+      target: { value: node.publicKey },
     };
     fireEvent.change(search, data);
 
@@ -142,12 +124,7 @@ describe('Search input', () => {
     const render = beforeAll({
       route: '/search',
       networkRequests: {
-        block: () => Promise.resolve(new Error('error')),
-        transaction: () => Promise.resolve(new Error('error')),
-        miniblock: () => Promise.resolve(new Error('error')),
-        account: () => Promise.resolve(new Error('error')),
         username: () => Promise.resolve(new Error('error')),
-        node: () => Promise.resolve(new Error('error')),
       },
     });
 
