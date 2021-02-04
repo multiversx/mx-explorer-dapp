@@ -36,7 +36,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
 
       const isAccount = hash.startsWith('erd1');
       const isValidHash = hash.match(/([a-z0-9])/) !== null && hash.length === 64;
-      const isValidatorKey = hash.length === 192;
+      const isValidatorKey = hash.match(/([a-z0-9])/) !== null && hash.length === 192;
 
       if (isAccount) {
         getAccount(hash).then((account) => {
