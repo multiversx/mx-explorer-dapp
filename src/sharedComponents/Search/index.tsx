@@ -26,43 +26,75 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
     }
   };
 
+  const notFound = () => {
+    setRoute(networkRoute(`/search/${hash}`));
+  };
+
   const onClick = async () => {
     if (Boolean(hash)) {
       setSearching(true);
 
-      Promise.all([
-        getNode(hash),
-        getBlock(hash),
-        getTransaction(hash),
-        getAccount(hash),
-        getUser(hash),
-        getMiniBlock(hash),
-      ]).then(([node, block, transaction, account, userData, miniblock]) => {
-        setExpanded(false);
-        switch (true) {
-          case block.success:
-            setRoute(networkRoute(`/blocks/${hash}`));
-            break;
-          case transaction.success:
-            setRoute(networkRoute(`/transactions/${hash}`));
-            break;
-          case miniblock.success:
-            setRoute(networkRoute(`/miniblocks/${hash}`));
-            break;
-          case account.success:
+      const isAccount = hash.startsWith('erd1');
+      const isValidHash = hash.match(/([a-z0-9])/) !== null && hash.length === 64;
+      const isValidatorKey = hash.length === 192;
+
+      if (isAccount) {
+        getAccount(hash).then((account) => {
+          setExpanded(false);
+          if (account.success) {
             setRoute(networkRoute(urlBuilder.accountDetails(hash)));
-            break;
-          case userData.success:
-            setRoute(networkRoute(urlBuilder.accountDetails(userData.data.address)));
-            break;
-          case node.success:
+          } else {
+            notFound();
+          }
+        });
+      }
+
+      if (isValidatorKey) {
+        getNode(hash).then((node) => {
+          setExpanded(false);
+          if (node.success) {
             setRoute(networkRoute(urlBuilder.nodeDetails(hash)));
-            break;
-          default:
-            setRoute(networkRoute(`/search/${hash}`));
-            break;
-        }
-      });
+          } else {
+            notFound();
+          }
+        });
+      }
+
+      if (isValidHash) {
+        Promise.all([getBlock(hash), getTransaction(hash), getMiniBlock(hash)]).then(
+          ([block, transaction, miniblock]) => {
+            setExpanded(false);
+            switch (true) {
+              case block.success:
+                setRoute(networkRoute(`/blocks/${hash}`));
+                break;
+              case transaction.success:
+                setRoute(networkRoute(`/transactions/${hash}`));
+                break;
+              case miniblock.success:
+                setRoute(networkRoute(`/miniblocks/${hash}`));
+                break;
+              default:
+                notFound();
+                break;
+            }
+          }
+        );
+      }
+
+      if (!isAccount && !isValidatorKey && !isValidHash) {
+        Promise.all([getUser(hash)]).then(([userData]) => {
+          setExpanded(false);
+          switch (true) {
+            case userData.success:
+              setRoute(networkRoute(urlBuilder.accountDetails(userData.data.address)));
+              break;
+            default:
+              notFound();
+              break;
+          }
+        });
+      }
     }
   };
 
