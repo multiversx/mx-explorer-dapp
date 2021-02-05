@@ -1,5 +1,5 @@
 import { fireEvent, wait, beforeAll } from 'utils/test-utils';
-import { miniblock, account, node, tokenDetails } from 'utils/rawData';
+import { miniblock, account, node } from 'utils/rawData';
 
 describe('Search input', () => {
   test('Search finds block', async () => {
