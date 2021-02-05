@@ -1,5 +1,5 @@
 import isHash from './isHash';
-import isValidInteger from './isValidInteger';
+import stringIsInteger from './stringIsInteger';
 import addressIsBech32 from './addressIsBech32';
 import copyToClipboard from './copyToClipboard';
 import dateFormatted from './dateFormatted';
@@ -24,7 +24,7 @@ export {
   dateFormatted,
   isHash,
   urlBuilder,
-  isValidInteger,
+  stringIsInteger,
   addressIsBech32,
   useNetworkRoute,
   copyToClipboard,

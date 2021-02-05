@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
-import { isValidInteger } from 'helpers';
+import { stringIsInteger } from 'helpers';
 
-const checkValue = (value: string) => (isValidInteger(value) ? parseInt(value) : undefined);
+const checkValue = (value: string) => (stringIsInteger(value) ? parseInt(value) : undefined);
 
 export default function useURLSearchParams() {
   const query = new URLSearchParams(useLocation().search);
