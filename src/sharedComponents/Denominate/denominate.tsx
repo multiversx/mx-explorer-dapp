@@ -1,3 +1,5 @@
+import { stringIsInteger } from 'helpers';
+
 function format(
   big: string,
   denomination: number,
@@ -11,7 +13,7 @@ function format(
   let array = big.toString().split('');
 
   let negative = false;
-  if(array[0] === '-') {
+  if (array[0] === '-') {
     array.shift();
     negative = true;
   }
@@ -24,7 +26,7 @@ function format(
 
     // add our dot
     array.splice(array.length - denomination, 0, '.');
-    
+
     // make sure there are enough decimals after the dot
     while (array.length - array.indexOf('.') <= decimals) {
       array.push('0');
@@ -63,7 +65,7 @@ function format(
 
   const allDecimalsZero = array
     .slice(array.indexOf('.') + 1)
-    .every(digit => digit.toString() === '0');
+    .every((digit) => digit.toString() === '0');
 
   const string = array.join('');
 
@@ -71,7 +73,7 @@ function format(
   if (allDecimalsZero) {
     output = string.split('.')[0];
   } else {
-    output = decimals === 0 ? string.split('.').join('') : string;
+    output = decimals === 0 && !showLastNonZeroDecimal ? string.split('.').join('') : string;
   }
 
   if (negative) {
@@ -96,11 +98,9 @@ export default function denominate({
   showLastNonZeroDecimal = false,
   addCommas = true,
 }: DenominateType): string {
-  if (input === '...') {
-    return input;
+  if (!stringIsInteger(input, false)) {
+    throw new Error('Invalid input');
   }
-  if (input === '' || input === '0' || input === undefined) {
-    input = '0';
-  }
+
   return format(input, denomination, decimals, showLastNonZeroDecimal, addCommas);
 }
