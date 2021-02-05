@@ -34,9 +34,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
     }
   };
 
-  const notFound = () => {
-    setRoute(networkRoute(`/search/${hash}`));
-  };
+  const notFoundRoute = networkRoute(`/search/${hash}`);
 
   const onClick = async () => {
     if (Boolean(hash)) {
@@ -55,36 +53,33 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
         case isAccount:
           getAccount(hash).then((account) => {
             setExpanded(false);
-            if (account.success) {
-              setRoute(networkRoute(urlBuilder.accountDetails(hash)));
-            } else {
-              notFound();
-            }
+            const newRoute = account.success
+              ? networkRoute(urlBuilder.accountDetails(hash))
+              : notFoundRoute;
+            setRoute(newRoute);
           });
           break;
 
         case isNode:
           getNode(hash).then((node) => {
             setExpanded(false);
-            if (node.success) {
-              setRoute(networkRoute(urlBuilder.nodeDetails(hash)));
-            } else {
-              notFound();
-            }
+            const newRoute = node.success
+              ? networkRoute(urlBuilder.nodeDetails(hash))
+              : notFoundRoute;
+            setRoute(newRoute);
           });
           break;
 
         case isToken:
           if (isMainnet) {
-            notFound();
+            setRoute(notFoundRoute);
           } else {
             getTokenDetails(hash).then((token) => {
               setExpanded(false);
-              if (token.success) {
-                setRoute(networkRoute(urlBuilder.tokenDetails(hash)));
-              } else {
-                notFound();
-              }
+              const newRoute = token.success
+                ? networkRoute(urlBuilder.tokenDetails(hash))
+                : notFoundRoute;
+              setRoute(newRoute);
             });
           }
           break;
@@ -104,7 +99,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
                   setRoute(networkRoute(`/miniblocks/${hash}`));
                   break;
                 default:
-                  notFound();
+                  setRoute(notFoundRoute);
                   break;
               }
             }
@@ -114,11 +109,10 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
         default:
           getUser(hash).then((user) => {
             setExpanded(false);
-            if (user.success) {
-              setRoute(networkRoute(urlBuilder.accountDetails(user.data.address)));
-            } else {
-              notFound();
-            }
+            const newRoute = user.success
+              ? networkRoute(urlBuilder.accountDetails(user.data.address))
+              : notFoundRoute;
+            setRoute(newRoute);
           });
           break;
       }
