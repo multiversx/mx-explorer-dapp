@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { faCircleNotch } from '@fortawesome/pro-regular-svg-icons/faCircleNotch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNetworkRoute, urlBuilder, useIsMainnet, isHash } from 'helpers';
+import { useNetworkRoute, urlBuilder, useIsMainnet, isHash, addressIsBech32 } from 'helpers';
 import { Redirect, useLocation } from 'react-router-dom';
 import { adapter } from 'sharedComponents';
 
@@ -41,7 +41,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
       setSearching(true);
       const validHashChars = /^[0-9A-Fa-f]+$/i;
 
-      const isAccount = isHash(hash) && hash.startsWith('erd1');
+      const isAccount = addressIsBech32(hash);
       const isValidHash = isHash(hash) && !hash.startsWith('erd1');
       const isNode = validHashChars.test(hash) === true && hash.length === 192;
       const isToken =
