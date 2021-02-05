@@ -2,10 +2,9 @@ import * as React from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { faCircleNotch } from '@fortawesome/pro-regular-svg-icons/faCircleNotch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNetworkRoute, urlBuilder, useIsMainnet } from 'helpers';
+import { useNetworkRoute, urlBuilder, useIsMainnet, isHash } from 'helpers';
 import { Redirect, useLocation } from 'react-router-dom';
 import { adapter } from 'sharedComponents';
-import { isHash } from 'helpers';
 
 interface SearchType {
   setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
