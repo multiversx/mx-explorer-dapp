@@ -2,9 +2,10 @@ import * as React from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { faCircleNotch } from '@fortawesome/pro-regular-svg-icons/faCircleNotch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNetworkRoute, urlBuilder } from 'helpers';
+import { useNetworkRoute, urlBuilder, useIsMainnet } from 'helpers';
 import { Redirect, useLocation } from 'react-router-dom';
 import { adapter } from 'sharedComponents';
+import { isHash } from 'helpers';
 
 interface SearchType {
   setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,10 +14,18 @@ interface SearchType {
 const Search = ({ setExpanded = () => null }: SearchType) => {
   const { pathname } = useLocation();
   const networkRoute = useNetworkRoute();
-  const { getAccount, getBlock, getTransaction, getNode, getMiniBlock, getUser } = adapter();
+  const isMainnet = useIsMainnet();
+  const {
+    getAccount,
+    getBlock,
+    getTransaction,
+    getNode,
+    getMiniBlock,
+    getUser,
+    getTokenDetails,
+  } = adapter();
   const [route, setRoute] = React.useState('');
   const [searching, setSearching] = React.useState(false);
-
   const [hash, setHash] = React.useState<string>('');
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -33,67 +42,86 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
   const onClick = async () => {
     if (Boolean(hash)) {
       setSearching(true);
+      const validHashChars = /^[0-9A-Fa-f]+$/i;
 
-      const isAccount = hash.startsWith('erd1');
-      const isValidHash = hash.match(/([a-z0-9])/) !== null && hash.length === 64;
-      const isValidatorKey = hash.match(/([a-z0-9])/) !== null && hash.length === 192;
+      const isAccount = isHash(hash) && hash.startsWith('erd1');
+      const isValidHash = isHash(hash) && !hash.startsWith('erd1');
+      const isNode = validHashChars.test(hash) === true && hash.length === 192;
+      const isToken =
+        hash.includes('-') &&
+        hash.split('-')[1].length === 6 &&
+        validHashChars.test(hash.split('-')[1]) === true;
 
-      if (isAccount) {
-        getAccount(hash).then((account) => {
-          setExpanded(false);
-          if (account.success) {
-            setRoute(networkRoute(urlBuilder.accountDetails(hash)));
-          } else {
-            notFound();
-          }
-        });
-      }
-
-      if (isValidatorKey) {
-        getNode(hash).then((node) => {
-          setExpanded(false);
-          if (node.success) {
-            setRoute(networkRoute(urlBuilder.nodeDetails(hash)));
-          } else {
-            notFound();
-          }
-        });
-      }
-
-      if (isValidHash) {
-        Promise.all([getBlock(hash), getTransaction(hash), getMiniBlock(hash)]).then(
-          ([block, transaction, miniblock]) => {
+      switch (true) {
+        case isAccount:
+          getAccount(hash).then((account) => {
             setExpanded(false);
-            switch (true) {
-              case block.success:
-                setRoute(networkRoute(`/blocks/${hash}`));
-                break;
-              case transaction.success:
-                setRoute(networkRoute(`/transactions/${hash}`));
-                break;
-              case miniblock.success:
-                setRoute(networkRoute(`/miniblocks/${hash}`));
-                break;
-              default:
-                notFound();
-                break;
-            }
-          }
-        );
-      }
-
-      if (!isAccount && !isValidatorKey && !isValidHash) {
-        Promise.all([getUser(hash)]).then(([userData]) => {
-          setExpanded(false);
-          switch (true) {
-            case userData.success:
-              setRoute(networkRoute(urlBuilder.accountDetails(userData.data.address)));
-              break;
-            default:
+            if (account.success) {
+              setRoute(networkRoute(urlBuilder.accountDetails(hash)));
+            } else {
               notFound();
-              break;
+            }
+          });
+          break;
+
+        case isNode:
+          getNode(hash).then((node) => {
+            setExpanded(false);
+            if (node.success) {
+              setRoute(networkRoute(urlBuilder.nodeDetails(hash)));
+            } else {
+              notFound();
+            }
+          });
+          break;
+
+        case isToken:
+          if (isMainnet) {
+            notFound();
+          } else {
+            getTokenDetails(hash).then((token) => {
+              setExpanded(false);
+              if (token.success) {
+                setRoute(networkRoute(urlBuilder.tokenDetails(hash)));
+              } else {
+                notFound();
+              }
+            });
           }
-        });
+          break;
+
+        case isValidHash:
+          Promise.all([getBlock(hash), getTransaction(hash), getMiniBlock(hash)]).then(
+            ([block, transaction, miniblock]) => {
+              setExpanded(false);
+              switch (true) {
+                case block.success:
+                  setRoute(networkRoute(`/blocks/${hash}`));
+                  break;
+                case transaction.success:
+                  setRoute(networkRoute(`/transactions/${hash}`));
+                  break;
+                case miniblock.success:
+                  setRoute(networkRoute(`/miniblocks/${hash}`));
+                  break;
+                default:
+                  notFound();
+                  break;
+              }
+            }
+          );
+          break;
+
+        default:
+          getUser(hash).then((user) => {
+            setExpanded(false);
+            if (user.success) {
+              setRoute(networkRoute(urlBuilder.accountDetails(user.data.address)));
+            } else {
+              notFound();
+            }
+          });
+          break;
       }
     }
   };
@@ -124,7 +152,9 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
         <input
           type="text"
           className="form-control rounded-pill my-1 text-truncate"
-          placeholder="Address / Tx Hash / Block Hash / Validator Key / Herotag"
+          placeholder={`Address / Tx Hash / Block Hash / Validator Key / Herotag ${
+            isMainnet ? '' : '/ TokenID'
+          }`} // TODO remove condition when Tokens go live
           name="requestType"
           data-testid="search"
           required
