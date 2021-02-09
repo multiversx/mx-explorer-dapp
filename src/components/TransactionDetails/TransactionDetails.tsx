@@ -188,7 +188,13 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
             )}
           </DetailItem>
 
-          <DetailItem title="Gas Limit">{transaction.gasLimit.toLocaleString('en')}</DetailItem>
+          <DetailItem title="Gas Limit">
+            {transaction.gasLimit !== undefined ? (
+              <>{transaction.gasLimit.toLocaleString('en')}</>
+            ) : (
+              <span className="text-secondary">N/A</span>
+            )}
+          </DetailItem>
 
           <DetailItem title="Gas Used">
             {transaction.gasUsed ? (
