@@ -42,7 +42,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
       const validHashChars = /^[0-9A-Fa-f]+$/i;
 
       const isAccount = addressIsBech32(hash);
-      const isValidHash = isHash(hash) && !hash.startsWith('erd1');
+      const isValidHash = isHash(hash);
       const isNode = validHashChars.test(hash) === true && hash.length === 192;
       const isToken =
         hash.includes('-') &&
