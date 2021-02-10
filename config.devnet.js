@@ -64,6 +64,11 @@ const CONFIG = {
       name: 'Docs',
       url: 'https://docs.elrond.com/',
     },
+    {
+      id: 'growth',
+      name: 'Growth',
+      url: 'https://growth.elrond.com/',
+    },
   ],
 };
 
