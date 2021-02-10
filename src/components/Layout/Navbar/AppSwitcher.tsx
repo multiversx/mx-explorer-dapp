@@ -34,17 +34,18 @@ export default function AppSwitcher({ onToggle }: { onToggle?: () => void }) {
       alignRight
     >
       {elrondApps.map(({ name, url, id }) => {
+        const active = id === 'explorer';
         return (
-          <NavDropdown.Item
+          <a
             key={id}
             onClick={hidePopover}
             href={url}
-            target={`${id === 'explorer' ? '' : '_blank'}`}
+            target={`${active ? '' : '_blank'}`}
             rel="noopener noreferrer"
-            className={`${id === 'explorer' ? 'active' : ''}`}
+            className={`dropdown-item ${active ? 'text-primary' : ''}`}
           >
             {name}
-          </NavDropdown.Item>
+          </a>
         );
       })}
     </NavDropdown>
