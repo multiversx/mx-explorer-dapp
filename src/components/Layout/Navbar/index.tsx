@@ -52,11 +52,9 @@ export default function Navbar() {
             <div className="d-flex align-items-center">
               <Logo />
             </div>
-
-            <div className="d-none d-md-flex flex-fill">
-              <Search />
+            <div className="nav-links d-none d-lg-flex flex-fill justify-content-around">
+              <NavLinks />
             </div>
-
             <div>
               <ul className="flex-row navbar-nav">
                 {activeNetwork.id === 'mainnet' && (
@@ -105,15 +103,11 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="header-navbar d-md-flex p-0 border-top">
+      <div className="header-navbar d-sm-none p-0">
         <Collapse in={headerNavCollapsed}>
           <div className="container d-md-flex">
             <div className="row">
               <div className="col d-flex flex-column flex-md-row py-3 py-md-0">
-                <div className="d-md-none">
-                  <Search setExpanded={setHeaderNavCollapsed} />
-                </div>
-
                 <NavLinks setExpanded={setHeaderNavCollapsed} />
 
                 <div className="d-md-none">
