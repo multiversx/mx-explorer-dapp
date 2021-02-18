@@ -43,6 +43,8 @@ export default function useAdapter() {
               'status',
               'timestamp',
               'value',
+              'miniBlockHash',
+              'round',
             ].join(','),
           },
         },

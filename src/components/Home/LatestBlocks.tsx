@@ -6,6 +6,7 @@ import { ShardSpan, NetworkLink, TimeAgo, adapter, Trim, Loader } from 'sharedCo
 import { BlockType } from 'sharedComponents/BlocksTable';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
+import { urlBuilder } from 'helpers';
 
 const LatestBlocks = () => {
   const ref = React.useRef(null);
@@ -56,52 +57,50 @@ const LatestBlocks = () => {
           <>
             <div className="card-header">
               <div className="card-header-item d-flex justify-content-between align-items-center">
-                <h6 className="m-0">Latest Blocks</h6>
-                <NetworkLink to="/blocks" className="mr-2">
+                <h6 className="m-0">Blocks</h6>
+                <NetworkLink to="/blocks" className="btn btn-primary-light">
                   View All Blocks
                 </NetworkLink>
               </div>
             </div>
-            <div className="card-body card-scroll py-0">
-              <div className="animated-list" data-testid="blocksList">
-                {blocks.map((block, i) => (
-                  <div
-                    key={block.hash}
-                    className={`row animated-row border-bottom ${
-                      block.isNew && someNew ? 'new' : ''
-                    }`}
-                  >
-                    <div className="col-6 pl-lg-spacer">
-                      <div className="d-flex align-items-center">
-                        <div className="list-item-icon mr-3">
-                          <FontAwesomeIcon icon={faCube} />
+            <div className="card-body" data-testid="blocksList">
+              <div className="p-lg-2">
+                <div className="block-card-container d-flex flex-row">
+                  {blocks.map((block, i) => (
+                    <div
+                      key={block.hash}
+                      className={`block-card p-3 ${block.isNew && someNew ? 'new' : ''}`}
+                    >
+                      <div className="d-flex align-items-center justify-content-between mb-3">
+                        <div className="d-flex align-items-center">
+                          <div className="list-item-icon mr-2">
+                            <FontAwesomeIcon icon={faCube} />
+                          </div>
+                          <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
+                            {block.nonce}
+                          </NetworkLink>
                         </div>
-                        <div className="d-flex flex-column">
-                          <span className="d-flex flex-row text-secondary">
-                            <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
-                              {block.nonce}
-                            </NetworkLink>
-                            &nbsp;in&nbsp;
-                            <ShardSpan shard={block.shard} />
-                          </span>
-                          <span className="text-secondary">
-                            <TimeAgo value={block.timestamp} tooltip />
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-6 pr-lg-spacer text-secondary">
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">Hash</span>
 
+                        <span className="text-secondary">
+                          <TimeAgo value={block.timestamp} tooltip />
+                        </span>
+                      </div>
+                      <div className="mb-1">
+                        <span className="text-secondary">Transactions:</span> {block.txCount}
+                        <span className="mx-2 text-secondary">|</span>
+                        <NetworkLink to={urlBuilder.shard(block.shard)} className="flex-shrink-0">
+                          <ShardSpan shard={block.shard} />
+                        </NetworkLink>
+                      </div>
+                      <div className="d-flex flex-row">
+                        <span className="mr-2 text-secondary">Hash:</span>
                         <NetworkLink to={`/blocks/${block.hash}`} className="trim-wrapper">
                           <Trim dataTestId={`blockHashLink${i}`} text={block.hash} />
                         </NetworkLink>
                       </div>
-                      <div>{block.txCount} txns</div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </>

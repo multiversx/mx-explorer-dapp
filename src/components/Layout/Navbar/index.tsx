@@ -1,7 +1,6 @@
 import React from 'react';
 import { Nav, Collapse } from 'react-bootstrap';
 import AppSwitcher from './AppSwitcher';
-import { Search } from 'sharedComponents';
 import NetworkSwitcher from './NetworkSwitcher';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars';
@@ -74,16 +73,16 @@ export default function Navbar() {
                     </a>
                   </li>
                 )}
-                <li className="nav-item d-none d-md-flex">
+                <li className="nav-item d-none d-lg-flex">
                   <AppSwitcher />
                 </li>
 
-                <li className="nav-item d-none d-md-flex align-items-strech">
+                <li className="nav-item d-none d-lg-flex align-items-strech">
                   <NetworkSwitcher />
                 </li>
               </ul>
 
-              <div className="nav d-md-none">
+              <div className="nav d-lg-none">
                 <a
                   className="nav-link nav-link-icon text-center d-flex align-items-center justify-content-center pr-0"
                   href="/"

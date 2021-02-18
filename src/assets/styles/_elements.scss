@@ -171,3 +171,13 @@
     margin-right: -1rem;
   }
 }
+
+.btn-primary-light {
+  color: $primary;
+  background-color: lighten($primary, 52%);
+
+  &:hover {
+    color: $primary !important;
+    background-color: lighten($primary, 45%);
+  }
+}

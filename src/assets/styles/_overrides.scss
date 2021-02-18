@@ -22,6 +22,11 @@
     .card-header-item {
       border-bottom: 1px solid $border-color;
       padding: 1rem;
+      line-height: 2.37rem;
+
+      h6 {
+        line-height: 2.37rem;
+      }
     }
 
     .identity-header-item {
