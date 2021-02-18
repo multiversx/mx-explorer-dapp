@@ -4,7 +4,7 @@ import Footer from './Footer/index';
 import NetworkRouter from './NetworkRouter';
 import { useGlobalState } from 'context';
 import LoopManager from './LoopManager';
-import { Highlights, Search } from 'sharedComponents';
+import { Search } from 'sharedComponents';
 import Unavailable from './Unavailable';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -53,7 +53,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               <>
                 <div className="container">
                   <div className="row">
-                    <div className="col-12 col-lg-10 my-3 mx-auto">
+                    <div className="col-12 col-lg-10 pt-spacer mx-auto">
                       <Search />
                     </div>
                   </div>

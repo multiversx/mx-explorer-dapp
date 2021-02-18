@@ -1,18 +1,32 @@
 import * as React from 'react';
-import Hero from './Hero';
+import ValidatorsStatus from './ValidatorsStatus';
+import NetworkHealth from './NetworkHealth';
 import LatestBlocks from './LatestBlocks';
 import LatestTransactions from './LatestTransactions';
+import { useIsMainnet } from 'helpers';
 
 const Home = () => {
+  const isMainnet = useIsMainnet();
+
   return (
     <div className="home">
-      <Hero />
       <div className="container">
         <div className="row">
-          <div className="col-lg-6 mt-spacer">
+          <div className={`col-12  mt-spacer ${isMainnet ? 'col-lg-6' : ''}`}>
+            <NetworkHealth />
+          </div>
+          {isMainnet && (
+            <div className="col-12 col-lg-6 mt-spacer">
+              <ValidatorsStatus />
+            </div>
+          )}
+        </div>
+
+        <div className="row">
+          <div className="col-12 mt-spacer">
             <LatestBlocks />
           </div>
-          <div className="col-lg-6 mt-spacer">
+          <div className="col-12 mt-spacer">
             <LatestTransactions />
           </div>
         </div>

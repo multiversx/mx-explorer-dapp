@@ -8,35 +8,45 @@ import txStatus from './txStatus';
 
 interface TransactionStatusType {
   status: string;
+  onlyText?: boolean;
 }
 
 const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-const TransactionStatus = ({ status }: TransactionStatusType) => {
+const TransactionStatus = ({ status, onlyText }: TransactionStatusType) => {
   const statusIs = (compareTo: string) => status.toLowerCase() === compareTo.toLowerCase();
 
   let Icon = () => <></>;
+  let color = '';
+
   switch (true) {
     case statusIs(txStatus.notExecuted):
-      Icon = () => <FontAwesomeIcon icon={faBan} className="mr-2 text-danger" />;
+      color = 'text-danger';
+      Icon = () => <FontAwesomeIcon icon={faBan} className={`mr-2 ${color}`} />;
       break;
     case statusIs(txStatus.fail):
     case statusIs(txStatus.failed):
-      Icon = () => <FontAwesomeIcon icon={faTimes} className="mr-2 text-danger" />;
+      color = 'text-danger';
+      Icon = () => <FontAwesomeIcon icon={faTimes} className={`mr-2 ${color}`} />;
       break;
     case statusIs(txStatus.success):
-      Icon = () => <FontAwesomeIcon icon={faCheckCircle} className="mr-2 text-success" />;
+      color = 'text-success';
+      Icon = () => <FontAwesomeIcon icon={faCheckCircle} className={`mr-2 ${color}`} />;
       break;
     case statusIs(txStatus.invalid):
-      Icon = () => <FontAwesomeIcon icon={faBan} className="mr-2 text-danger" />;
+      color = 'text-danger';
+      Icon = () => <FontAwesomeIcon icon={faBan} className={`mr-2 ${color}`} />;
       break;
     default:
-      Icon = () => <FontAwesomeIcon icon={faHourglass} className="mr-2 text-warning" />;
+      color = 'text-warning';
+      Icon = () => <FontAwesomeIcon icon={faHourglass} className={`mr-2 ${color}`} />;
   }
 
-  return (
+  return onlyText ? (
+    <span className={color}>{capitalizeFirstLetter(status)}</span>
+  ) : (
     <>
       <Icon />
       {capitalizeFirstLetter(status)}

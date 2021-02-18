@@ -140,11 +140,11 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
   return route ? (
     <Redirect to={route} />
   ) : (
-    <form className="w-100 d-flex mx-md-2">
-      <div className="input-group input-group-seamless py-md-2">
+    <form className="w-100 d-flex">
+      <div className="input-group input-group-seamless">
         <input
           type="text"
-          className="form-control rounded-pill my-1 text-truncate"
+          className="form-control rounded-pill text-truncate"
           placeholder={`Address / Tx Hash / Block Hash / Validator Key / Herotag ${
             isMainnet ? '' : '/ TokenID'
           }`} // TODO remove condition when Tokens go live
