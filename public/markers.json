@@ -1,0 +1,122 @@
+[
+  {
+    "continent": "North America",
+    "country":"US",
+    "city":"New York City",
+    "latitude":40.7143,
+    "longitude":-74.006,
+    "validators":120
+  },
+  {
+    "continent": "North America",
+    "country":"US",
+    "city":"San Francisco",
+    "latitude":37.7749,
+    "longitude":-122.4194,
+    "validators":10
+  },
+  {
+    "continent": "Europe",
+    "country":"PL",
+    "city":"Warsaw",
+    "latitude":52.2298,
+    "longitude":21.0118,
+    "validators":30
+  },
+  {
+    "continent": "Europe",
+    "country":"DE",
+    "city":"Nürnberg",
+    "latitude":49.4542,
+    "longitude":11.0775,
+    "validators":60
+  },
+  {
+    "continent": "Europe",
+    "country":"RO",
+    "city":"Sibiu",
+    "latitude":44.3167,
+    "longitude":23.8,
+    "validators":40
+  },
+  {
+    "continent": "Asia",
+    "country":"SG",
+    "city":"Singapore",
+    "latitude":1.3215,
+    "longitude":103.6957,
+    "validators":80
+  },
+  {
+    "continent": "Europe",
+    "country":"GB",
+    "city":"London",
+    "latitude":51.5085,
+    "longitude":-0.1257,
+    "validators":20
+  },
+  {
+    "continent": "Europe",
+    "country":"IT",
+    "city":"La Costa",
+    "latitude":43.4586,
+    "longitude":11.7981,
+    "validators":5
+  },
+  {
+    "continent": "Asia",
+    "country":"KR",
+    "city":"Seoul",
+    "latitude":37.566,
+    "longitude":126.9784,
+    "validators":95
+  },
+  {
+    "continent": "Europe",
+    "country":"RU",
+    "city":"Moscow",
+    "latitude":55.7522,
+    "longitude":37.6156,
+    "validators":150
+  },
+  {
+    "continent": "Asia",
+    "country":"JP",
+    "city":"Tokyo",
+    "latitude":35.5826,
+    "longitude":139.7459,
+    "validators":9
+  },
+  {
+    "continent": "Australia",
+    "country":"AU",
+    "city":"Sydney",
+    "latitude":-33.8678,
+    "longitude":151.2073,
+    "validators":67
+  },
+  {
+    "continent": "Europe",
+    "country":"UA",
+    "city":"Kharkiv",
+    "latitude":49.9808,
+    "longitude":36.2527,
+    "validators":37
+  },
+  {
+    "continent": "Africa",
+    "country":"ZA",
+    "city":"Cape Town",
+    "latitude":-33.9258,
+    "longitude":18.4232,
+    "validators":17
+  },
+  {
+    "continent": "Asia",
+    "country":"BH",
+    "city":"Manama",
+    "latitude":26.2279,
+    "longitude":50.5857,
+    "validators":54
+  }
+]

@@ -144,7 +144,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
       <div className="input-group input-group-seamless">
         <input
           type="text"
-          className="form-control rounded-pill text-truncate"
+          className="form-control rounded-pill text-truncate p-3"
           placeholder={`Address / Tx Hash / Block Hash / Validator Key / Herotag ${
             isMainnet ? '' : '/ TokenID'
           }`} // TODO remove condition when Tokens go live
