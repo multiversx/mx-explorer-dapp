@@ -85,16 +85,16 @@
       }
 
       .rp1 {
-        @include rings(4s, 0s);
+        @include rings(3s, 0s);
       }
 
       .rp2 {
-        @include rings(4s, 0.7s);
+        @include rings(3s, 0.7s);
       }
 
-      .rp3 {
-        @include rings(4s, 1.4s);
-      }
+      // .rp3 {
+      //   @include rings(3s, 1.4s);
+      // }
     }
   }
 }
