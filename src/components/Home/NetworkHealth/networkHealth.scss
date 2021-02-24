@@ -1,2 +1,108 @@
+.position-absolute-center {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+
 .network-health {
+  .layout-gear {
+    width: 100%;
+    height: 100%;
+  }
+
+  .gear-content {
+    @extend .position-absolute-center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .gear-container {
+    position: absolute;
+    width: 35%;
+    height: 35%;
+
+    &.top-left {
+      top: 0;
+      left: 0;
+    }
+
+    &.top-right {
+      top: 0;
+      right: 0;
+    }
+
+    &.center {
+      @extend .position-absolute-center;
+
+      .gear {
+        animation: rotating-counter-clockwise 16s linear infinite;
+        @keyframes rotating-counter-clockwise {
+          from {
+            transform: rotate(360deg);
+          }
+          to {
+            transform: rotate(0deg);
+          }
+        }
+      }
+
+      .gear-content {
+        width: 72%;
+        height: 72%;
+        border-radius: 50%;
+      }
+    }
+
+    &.bottom-left {
+      bottom: 0;
+      left: 0;
+    }
+
+    &.bottom-right {
+      bottom: 0;
+      right: 0;
+
+      .gear-content {
+        width: 67%;
+        height: 67%;
+        border-radius: 50%;
+      }
+    }
+
+    .gear {
+      width: 100%;
+      height: 100%;
+
+      &.rotate {
+        animation: rotating 16s linear infinite;
+
+        @keyframes rotating {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      }
+    }
+  }
+
+  .progress-ring {
+    @extend .position-absolute-center;
+
+    circle {
+      stroke: $primary;
+      transition: stroke-dashoffset 0.35s;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+
+    .dotted-circle {
+      stroke: $white;
+    }
+  }
 }
