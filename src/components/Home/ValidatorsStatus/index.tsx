@@ -6,10 +6,33 @@ import calcContinentRank, { RankType } from './helpers/calcContinentRank';
 
 import axios from 'axios';
 
+const placeHolderRank = [
+  {
+    continent: '...',
+    nodes: 0,
+    percentage: 0,
+  },
+  {
+    continent: '...',
+    nodes: 0,
+    percentage: 0,
+  },
+  {
+    continent: '...',
+    nodes: 0,
+    percentage: 0,
+  },
+  {
+    continent: '...',
+    nodes: 0,
+    percentage: 0,
+  },
+];
+
 const ValidatorsStatus = () => {
   const [markers, setMarkers] = React.useState<MarkerType[]>([]);
   const [leaders, setLeaders] = React.useState<LeaderType[]>([]);
-  const [continentsRank, setContinentsRank] = React.useState<RankType[]>([]);
+  const [continentsRank, setContinentsRank] = React.useState<RankType[]>(placeHolderRank);
   const [totalNodes, setTotalNodes] = React.useState<string | number>('...');
 
   const {
@@ -42,7 +65,6 @@ const ValidatorsStatus = () => {
     // getLeaders({ timeout, apiUrl: apiUrl || '' }).then((data) => {
     //   setLeaders(data);
     // });
-
     axios
       .get(`leaders.json`, {
         timeout,
@@ -80,10 +102,10 @@ const ValidatorsStatus = () => {
               {i + 1}. {continent}
             </div>
             <div className="col d-flex align-items-center text-secondary justify-content-end">
-              {`${nodes} node${nodes === 1 ? '' : 's'}`}
+              {nodes > 0 ? `${nodes} node${nodes === 1 ? '' : 's'}` : '...'}
             </div>
             <div className="col d-flex align-items-center text-secondary justify-content-end">
-              {percentage}%
+              {percentage > 0 ? `${percentage}%` : '...'}
             </div>
           </div>
         ))}
