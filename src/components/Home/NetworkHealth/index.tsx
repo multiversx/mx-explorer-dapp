@@ -2,10 +2,12 @@ import * as React from 'react';
 import { useGlobalState } from 'context';
 import { adapter } from 'sharedComponents';
 import { ReactComponent as Gear } from 'assets/images/network-health/gear.svg';
+import { ReactComponent as BigGear } from 'assets/images/network-health/big-gear.svg';
 import { ReactComponent as CenterGear } from 'assets/images/network-health/center-gear.svg';
 import { ReactComponent as LayoutGear } from 'assets/images/network-health/layout-gear.svg';
 import ProgressRing from './ProgressRing';
 import moment from 'moment';
+import { number } from 'yup';
 
 export interface StateType {
   shards: string;
@@ -80,29 +82,33 @@ const NetworkHealth = () => {
             }));
           }
         }
+        setBlockTimeProgress(0);
       });
     }
   };
 
   React.useEffect(getData, [timestamp, activeNetworkId]);
 
-  const { shards, blocks, accounts, transactions, epoch, epochPercentage, epochTimeRemaining } =
+  const { blocks, accounts, transactions, epoch, epochPercentage, epochTimeRemaining } =
     activeNetworkId in state ? state[activeNetworkId] : initialState;
 
-  const [blockTimeProgress, setBlockTimeProgress] = React.useState(0);
-  const progressStep = 10;
+  const [blockTimeProgress, setBlockTimeProgress] = React.useState<number | undefined>();
+  const intervalInSec = 6;
 
-  React.useEffect(() => {
+  const blockTimeInterval = () => {
     const intervalBlockTime = setInterval(() => {
-      setBlockTimeProgress((blockTimeProgress) => {
-        if (blockTimeProgress >= 100) {
-          setBlockTimeProgress(0);
-        }
-        return blockTimeProgress + progressStep;
-      });
-    }, 2000);
+      if (ref.current !== null) {
+        setBlockTimeProgress((blockTimeProgress) => {
+          return blockTimeProgress != undefined && blockTimeProgress < intervalInSec
+            ? blockTimeProgress + 1
+            : blockTimeProgress;
+        });
+      }
+    }, 1000);
     return () => clearInterval(intervalBlockTime);
-  }, []);
+  };
+
+  React.useEffect(blockTimeInterval, [activeNetworkId]);
 
   return (
     <div ref={ref} className="card network-health">
@@ -114,50 +120,51 @@ const NetworkHealth = () => {
       <div className="card-body d-flex justify-content-center align-items-center">
         <div className="position-relative flex-fill">
           <LayoutGear className="layout-gear" />
+          <BigGear className="big-gear" />
 
           <div className="gear-container top-left">
-            <Gear className="gear rotate" />
+            <Gear className="gear" />
             <div className="gear-content">
               {accounts}
-              <small className="text-secondary">Accounts</small>
+              <small>Accounts</small>
             </div>
           </div>
 
           <div className="gear-container top-right">
-            <Gear className="gear rotate" />
+            <Gear className="gear" />
             <div className="gear-content">
               {transactions}
-              <small className="text-secondary">Transactions</small>
+              <small>Transactions</small>
             </div>
           </div>
 
           <div className="gear-container center">
             <CenterGear className="gear" />
             <div className="gear-content">
-              <ProgressRing radius={60} stroke={3} progress={epochPercentage} />
+              <ProgressRing progress={epochPercentage} />
               {epochTimeRemaining}
-              <small className="text-secondary">Epoch {epoch}</small>
+              <small>Epoch {epoch}</small>
             </div>
           </div>
 
           <div className="gear-container bottom-left">
-            <Gear className="gear rotate" />
+            <Gear className="gear" />
             <div className="gear-content">
               {blocks}
-              <small className="text-secondary">Block Height</small>
+              <small>Block Height</small>
             </div>
           </div>
 
           <div className="gear-container bottom-right">
-            <Gear className="gear rotate" />
+            <Gear className="gear" />
             <div className="gear-content">
               <ProgressRing
-                radius={60}
-                stroke={3}
-                progress={blockTimeProgress}
-                dotted={progressStep}
+                progress={
+                  blockTimeProgress !== undefined ? (blockTimeProgress * 100) / intervalInSec : 0
+                }
               />
-              <small className="text-secondary">Block Time</small>
+              {blockTimeProgress}
+              <small>Block Time</small>
             </div>
           </div>
         </div>

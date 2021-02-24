@@ -1,18 +1,15 @@
 import * as React from 'react';
 
 export interface ProgressRingType {
-  radius: number;
-  stroke: number;
   progress: number;
-  dotted?: number;
+  radius?: number;
+  stroke?: number;
 }
 
-const ProgressRing = (props: ProgressRingType) => {
-  const { radius, stroke, progress, dotted } = props;
-
+const ProgressRing = ({ radius = 60, stroke = 3, progress }: ProgressRingType) => {
   const normalizedRadius = radius - stroke * 2;
   const circumference = normalizedRadius * 2 * Math.PI;
-  const strokeDashoffset = `-${circumference - (progress / 100) * circumference}`;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
     <div className="progress-ring w-100 h-100">
@@ -26,18 +23,6 @@ const ProgressRing = (props: ProgressRingType) => {
           cx={radius}
           cy={radius}
         />
-        {dotted && (
-          <circle
-            className="dotted-circle"
-            fill="transparent"
-            strokeWidth={stroke + 0.5}
-            strokeDasharray={dotted + ' ' + dotted * 5}
-            style={{ strokeDashoffset: 0 }}
-            r={normalizedRadius}
-            cx={radius}
-            cy={radius}
-          />
-        )}
       </svg>
     </div>
   );
