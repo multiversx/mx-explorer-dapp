@@ -80,7 +80,7 @@ const SimpleMap = ({ markers, leaders }: SimpleMapType) => {
                   <g id={`anims${i}`}>
                     <circle className="rp1" r={calcRadius(validators)} />
                     <circle className="rp2" r={calcRadius(validators)} />
-                    <circle className="rp3" r={calcRadius(validators)} />
+                    {/* <circle className="rp3" r={calcRadius(validators)} /> */}
                   </g>
                 </defs>
                 <use xlinkHref={`#anims${i}`} />
