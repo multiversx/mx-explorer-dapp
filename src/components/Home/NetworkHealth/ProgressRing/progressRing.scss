@@ -1,0 +1,17 @@
+.progress-ring {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+
+  circle {
+    stroke: $primary;
+    transition: stroke-dashoffset 0.35s;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+  }
+
+  .dotted-circle {
+    stroke: $white;
+  }
+}
