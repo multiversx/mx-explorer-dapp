@@ -1,25 +1,31 @@
 @mixin rotate-clockwise($duration) {
-  animation: rotating $duration linear infinite;
+  @supports not (-moz-appearance: none) {
+    animation: rotating $duration linear infinite;
+    transform: rotateZ(360deg);
 
-  @keyframes rotating {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
+    @keyframes rotating {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
     }
   }
 }
 
 @mixin rotate-counter-clockwise($duration) {
-  animation: rotate $duration linear infinite;
+  @supports not (-moz-appearance: none) {
+    animation: rotate $duration linear infinite;
+    transform: rotateZ(360deg);
 
-  @keyframes rotate {
-    from {
-      transform: rotate(360deg);
-    }
-    to {
-      transform: rotate(0deg);
+    @keyframes rotate {
+      from {
+        transform: rotate(360deg);
+      }
+      to {
+        transform: rotate(0deg);
+      }
     }
   }
 }
