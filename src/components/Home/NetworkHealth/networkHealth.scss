@@ -24,6 +24,41 @@
   }
 }
 
+@mixin blink($duration, $delay) {
+  fill: $primary;
+  // stroke: $primary;
+  // stroke-width: 0;
+
+  animation-name: blink-anim;
+  animation-duration: $duration;
+  animation-delay: $delay;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+
+  // enable GPU processing
+
+  // transform: translate3d(0, 0, 0);
+  // will-change: fill, opacity;
+  // backface-visibility: hidden;
+  // perspective: 1000;
+}
+
+@keyframes blink-anim {
+  0%,
+  100% {
+    fill: #dbe1e9;
+    //opacity: 0.6;
+    // stroke-width: 0;
+    // stroke-opacity: 0;
+  }
+  50% {
+    fill: $primary;
+    //opacity: 1;
+    // stroke-width: 4px;
+    // stroke-opacity: 0.2;
+  }
+}
+
 .position-absolute-center {
   position: absolute;
   transform: translate(-50%, -50%);
@@ -35,6 +70,30 @@
   .layout-gear {
     width: 100%;
     height: 100%;
+
+    // .br-1 {
+    //   @include blink(4s, 0s);
+    // }
+
+    // .br-2 {
+    //   @include blink(4s, 1s);
+    // }
+
+    // .br-3 {
+    //   @include blink(4s, 1.4s);
+    // }
+
+    // .br-4 {
+    //   @include blink(4s, 1.6s);
+    // }
+
+    // .br-5 {
+    //   @include blink(4s, 2s);
+    // }
+
+    // .br-6 {
+    //   @include blink(4s, 2.4s);
+    // }
   }
 
   .big-gear {
@@ -50,41 +109,10 @@
     @include rotate-counter-clockwise(220s);
   }
 
-  .gear-content {
-    @extend .position-absolute-center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    flex-direction: column;
-    font-size: 0.45rem;
-
-    @media (min-width: 350px) {
-      font-size: 0.55rem;
-    }
-
-    @media (min-width: 390px) {
-      font-size: 0.65rem;
-    }
-
-    @media (min-width: 450px) {
-      font-size: 0.8rem;
-    }
-
-    @media (min-width: 1050px) {
-      font-size: 0.9rem;
-    }
-
-    small {
-      @extend .text-secondary;
-    }
-  }
-
   .gear-container {
     position: absolute;
     width: 30%;
     height: 30%;
-
     $gearPos: 2.1%;
 
     &.top-left {
@@ -109,8 +137,8 @@
       @extend .position-absolute-center;
 
       .gear-content {
-        width: 84%;
-        height: 84%;
+        width: 85%;
+        height: 85%;
         border-radius: 50%;
       }
 
@@ -146,6 +174,36 @@
     .gear {
       width: 100%;
       height: 100%;
+    }
+
+    .gear-content {
+      @extend .position-absolute-center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-direction: column;
+      font-size: 7px;
+
+      @media (min-width: 350px) {
+        font-size: 9px;
+      }
+
+      @media (min-width: 390px) {
+        font-size: 10px;
+      }
+
+      @media (min-width: 450px) {
+        font-size: 13px;
+      }
+
+      @media (min-width: 1050px) {
+        font-size: 14px;
+      }
+
+      small {
+        @extend .text-secondary;
+      }
     }
   }
 }

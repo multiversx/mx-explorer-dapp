@@ -1,7 +1,8 @@
 .simple-map {
   .rsm-svg {
-    fill: #eaeffc; // background color
-    stroke: #dddede; // border color
+    fill: #eef1f5; // background color
+    stroke: #8388a3; // border color
+    stroke-width: 0.017rem;
 
     .rsm-geography {
       &:focus {
@@ -19,7 +20,6 @@
         opacity: 1;
       }
 
-      // rings
       @mixin rings($duration, $delay) {
         opacity: 0;
         stroke: $primary;
@@ -29,23 +29,30 @@
         animation-delay: $delay;
         animation-iteration-count: infinite;
         animation-timing-function: cubic-bezier(0.65, 0, 0.34, 1);
+
+        // enable GPU processing
+
+        // transform: translate3d(0, 0, 0);
+        // will-change: transform, opacity;
+        // backface-visibility: hidden;
+        // perspective: 1000;
       }
 
       @keyframes ripple {
         0% {
-          opacity: 1;
           transform: scale3d(1, 1, 1);
+          opacity: 1;
         }
 
         50% {
-          opacity: 0;
           transform: scale3d(4, 4, 1);
+          opacity: 0;
         }
       }
 
-      .rp1 {
-        @include rings(3s, 0s);
-      }
+      // .rp1 {
+      //   @include rings(3s, 0s);
+      // }
     }
   }
 }
