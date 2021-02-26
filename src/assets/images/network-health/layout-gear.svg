@@ -2,17 +2,6 @@
 	xmlns="http://www.w3.org/2000/svg"
 	xmlns:xlink="http://www.w3.org/1999/xlink" width="636" height="636" viewBox="0 0 636 636">
 	<defs>
-		<filter id="layout-gear-a" x="-42.372" y="-42.373" width="720.745" height="720.745" filterUnits="userSpaceOnUse">
-			<feOffset input="SourceAlpha"/>
-			<feGaussianBlur stdDeviation="10" result="b"/>
-			<feFlood flood-color="#d5dce6" flood-opacity="0.4"/>
-			<feComposite operator="in" in2="b"/>
-			<feComposite in="SourceGraphic"/>
-		</filter>
-		<linearGradient id="layout-gear-c" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
-			<stop offset="0" stop-color="#dbe1e9"/>
-			<stop offset="1" stop-color="#dbe1e9"/>
-		</linearGradient>
 		<clipPath id="layout-gear-e">
 			<rect width="636" height="636"/>
 		</clipPath>
@@ -58,36 +47,36 @@
 			<line y2="405" transform="translate(767.5 341.5) rotate(90)" fill="none" stroke="#e2e2e2" stroke-width="0.5"/>
 			<line y2="405" transform="translate(767.5 976.5) rotate(90)" fill="none" stroke="#e2e2e2" stroke-width="0.5"/>
 		</g>
-		<g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#layout-gear-a)">
+		<g transform="matrix(1, 0, 0, 1, 0, 0)">
 			<path d="M732.921,225.895C667.8,114.723,524.884,77.4,413.713,142.519s-148.5,208.039-83.376,319.208,208.039,148.5,319.208,83.376S798.046,337.064,732.921,225.895ZM388.514,402.029a58.217,58.217,0,1,1,58.216-58.218A58.217,58.217,0,0,1,388.514,402.029ZM531.629,545.144a58.217,58.217,0,1,1,58.217-58.218A58.217,58.217,0,0,1,531.629,545.144Zm-23.4-238.067a41.938,41.938,0,1,1-14.989,57.384A41.936,41.936,0,0,1,508.231,307.076Zm23.4-48.165A58.217,58.217,0,1,1,589.846,200.7,58.216,58.216,0,0,1,531.629,258.911ZM674.746,402.029a58.217,58.217,0,1,1,58.216-58.218A58.217,58.217,0,0,1,674.746,402.029Z" transform="translate(-301.03 450.81) rotate(-45)" fill="#fff" stroke="#818ea3" stroke-miterlimit="10" stroke-width="0.5"/>
 		</g>
 		<g transform="translate(-247 -341)">
 			<g transform="translate(-40.077 -40.151)">
 				<g transform="translate(298 391)">
-					<circle class="br-1" cx="3" cy="3" r="3" transform="translate(380.077 381.151)" fill="#dbe1e9"/>
-					<circle class="br-2" cx="3" cy="3" r="3" transform="translate(391.077 392.151)" fill="#dbe1e9"/>
-					<circle class="br-3" cx="3" cy="3" r="3" transform="translate(402.077 403.151)" fill="#dbe1e9"/>
-					<circle class="br-4" cx="3" cy="3" r="3" transform="translate(414.077 415.151)" fill="#dbe1e9"/>
-					<circle class="br-5" cx="3" cy="3" r="3" transform="translate(425.077 426.151)" fill="#dbe1e9"/>
-					<circle class="br-6" cx="3" cy="3" r="3" transform="translate(436.077 437.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(381.077 229.151)" fill="url(#layout-gear-c)"/>
-					<circle cx="3" cy="3" r="3" transform="translate(392.077 218.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(403.077 207.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(414.077 195.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(436.077 173.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(425.077 184.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(229.077 381.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(218.077 392.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(206.077 403.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(195.077 415.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(183.077 426.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(172.077 437.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(229.077 229.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(218.077 218.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(206.077 207.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(172.077 173.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(195.077 195.151)" fill="#dbe1e9"/>
-					<circle cx="3" cy="3" r="3" transform="translate(183.077 184.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot br-1" cx="3" cy="3" r="3" transform="translate(380.077 381.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot br-2" cx="3" cy="3" r="3" transform="translate(391.077 392.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot br-3" cx="3" cy="3" r="3" transform="translate(402.077 403.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot br-4" cx="3" cy="3" r="3" transform="translate(414.077 415.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot br-5" cx="3" cy="3" r="3" transform="translate(425.077 426.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot br-6" cx="3" cy="3" r="3" transform="translate(436.077 437.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot tr-1" cx="3" cy="3" r="3" transform="translate(381.077 229.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot tr-2" cx="3" cy="3" r="3" transform="translate(392.077 218.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot tr-3" cx="3" cy="3" r="3" transform="translate(403.077 207.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot tr-4" cx="3" cy="3" r="3" transform="translate(414.077 195.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot tr-5" cx="3" cy="3" r="3" transform="translate(425.077 184.151)" fill="#dbe1e9"/>
+          <circle class="blinking-dot tr-6" cx="3" cy="3" r="3" transform="translate(436.077 173.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot bl-1" cx="3" cy="3" r="3" transform="translate(229.077 381.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot bl-2" cx="3" cy="3" r="3" transform="translate(218.077 392.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot bl-3" cx="3" cy="3" r="3" transform="translate(206.077 403.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot bl-4" cx="3" cy="3" r="3" transform="translate(195.077 415.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot bl-5" cx="3" cy="3" r="3" transform="translate(183.077 426.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot bl-6" cx="3" cy="3" r="3" transform="translate(172.077 437.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot tl-1" cx="3" cy="3" r="3" transform="translate(229.077 229.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot tl-2" cx="3" cy="3" r="3" transform="translate(218.077 218.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot tl-3" cx="3" cy="3" r="3" transform="translate(206.077 207.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot tl-4" cx="3" cy="3" r="3" transform="translate(195.077 195.151)" fill="#dbe1e9"/>
+					<circle class="blinking-dot tl-5" cx="3" cy="3" r="3" transform="translate(183.077 184.151)" fill="#dbe1e9"/>
+          <circle class="blinking-dot tl-6" cx="3" cy="3" r="3" transform="translate(172.077 173.151)" fill="#dbe1e9"/>
 				</g>
 			</g>
 		</g>

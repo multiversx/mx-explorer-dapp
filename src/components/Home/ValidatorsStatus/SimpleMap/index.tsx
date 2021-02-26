@@ -3,6 +3,7 @@ import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { MarkerType, LeaderType } from '../helpers/asyncRequests';
 import countries from './countries100m.json';
+import { useGlobalState } from 'context';
 
 interface SimpleMapType {
   markers: MarkerType[];
@@ -55,9 +56,21 @@ const MarkerToolTip = ({
 );
 
 const SimpleMap = ({ markers, leaders }: SimpleMapType) => {
+  const {
+    refresh: { timestamp },
+  } = useGlobalState();
+
   const isLeader = (city: string) => {
     return leaders.filter((leader) => leader.city === city).length === 1;
   };
+
+  const [blink, setBlink] = React.useState(false);
+  React.useEffect(() => {
+    setBlink(true);
+    setTimeout(() => {
+      setBlink(false);
+    }, 1000);
+  }, [timestamp]);
 
   return (
     <div className="simple-map">
@@ -75,17 +88,12 @@ const SimpleMap = ({ markers, leaders }: SimpleMapType) => {
         {markers.map(({ city, longitude, latitude, validators }, i) => (
           <Marker key={city} coordinates={[longitude, latitude]}>
             {isLeader(city) ? (
-              <g className="pulsing-map-marker">
-                <defs>
-                  <g id={`anims${i}`}>
-                    <circle className="rp1" r={calcRadius(validators)} />
-                  </g>
-                </defs>
-                <use xlinkHref={`#anims${i}`} />
-                <MarkerToolTip city={city} validators={validators}>
-                  <circle r={calcRadius(validators)} className="base-circle" />
-                </MarkerToolTip>
-              </g>
+              <MarkerToolTip city={city} validators={validators}>
+                <circle
+                  r={calcRadius(validators)}
+                  className={`simple-map-marker ${blink ? 'blink' : ''}`}
+                />
+              </MarkerToolTip>
             ) : (
               <MarkerToolTip city={city} validators={validators}>
                 <circle r={calcRadius(validators)} className="simple-map-marker" />
