@@ -62,7 +62,8 @@ const NetworkHealth = () => {
   const { getStats } = adapter();
 
   const ref = React.useRef(null);
-  const pageHidden = document.hidden;
+
+  const [animationActive, setAnimationActive] = React.useState(true);
   const [stateBuffer, setStateBuffer] = React.useState<typeof initialState | undefined>();
   const [state, setState] = React.useState(initialState);
 
@@ -100,7 +101,7 @@ const NetworkHealth = () => {
 
   const blockTimeInterval = () => {
     const intervalBlockTime = setInterval(() => {
-      if (ref.current !== null && !pageHidden) {
+      if (ref.current !== null && !document.hidden) {
         setBlockTimeProgress((blockTimeProgress) =>
           blockTimeProgress === intervalInSec ? 0 : blockTimeProgress + 1
         );
@@ -123,18 +124,39 @@ const NetworkHealth = () => {
       <div className="card-header">
         <div className="card-header-item d-flex justify-content-between align-items-center">
           <h6 className="m-0">Network Health</h6>
+          <div className="d-flex align-items-center">
+            <span className={`nav-link p-0 mr-2 ${!animationActive ? 'text-primary' : ''}`}>
+              Stop
+            </span>
+            <div className="custom-control custom-toggle custom-toggle-sm">
+              <input
+                defaultChecked={animationActive}
+                type="checkbox"
+                id="animation-toggle"
+                name="animation-toggle"
+                className="custom-control-input"
+                onChange={() => {
+                  setAnimationActive((animationActive) => !animationActive);
+                }}
+              />
+              <label className="custom-control-label" htmlFor="animation-toggle" />
+            </div>
+            <span className={`nav-link p-0 ml-2 ${animationActive ? 'text-primary' : ''}`}>
+              Play
+            </span>
+          </div>
         </div>
       </div>
       <div className="card-body d-flex justify-content-center align-items-center">
         <div className="gears-layout-container position-relative flex-fill">
-          <LayoutGear className={`layout-gear blink-${blockTimeProgress}`} />
+          <LayoutGear className={`layout-gear blink-${animationActive ? blockTimeProgress : 0}`} />
 
           <div className="big-gear-container">
-            <BigGear className={`big-gear ${pageHidden ? '' : 'animate'}`} />
+            <BigGear className={`big-gear ${animationActive ? 'animate' : ''}`} />
           </div>
 
           <div className="gear-container top-left">
-            <Gear className={`gear ${pageHidden ? '' : 'animate'}`} />
+            <Gear className={`gear ${animationActive ? 'animate' : ''}`} />
             <div className="gear-content">
               {accounts}
               <small>Accounts</small>
@@ -142,7 +164,7 @@ const NetworkHealth = () => {
           </div>
 
           <div className="gear-container top-right">
-            <Gear className={`gear ${pageHidden ? '' : 'animate'}`} />
+            <Gear className={`gear ${animationActive ? 'animate' : ''}`} />
             <div className="gear-content">
               {transactions}
               <small>Transactions</small>
@@ -150,7 +172,7 @@ const NetworkHealth = () => {
           </div>
 
           <div className="gear-container center">
-            <CenterGear className={`gear ${pageHidden ? '' : 'animate'}`} />
+            <CenterGear className={`gear ${animationActive ? 'animate' : ''}`} />
             <div className="gear-content">
               <ProgressRing progress={epochPercentage} />
               {epochTimeRemaining}
@@ -159,7 +181,7 @@ const NetworkHealth = () => {
           </div>
 
           <div className="gear-container bottom-left">
-            <Gear className={`gear ${pageHidden ? '' : 'animate'}`} />
+            <Gear className={`gear ${animationActive ? 'animate' : ''}`} />
             <div className="gear-content">
               {blocks}
               <small>Block Height</small>
@@ -167,7 +189,7 @@ const NetworkHealth = () => {
           </div>
 
           <div className="gear-container bottom-right">
-            <Gear className={`gear ${pageHidden ? '' : 'animate'}`} />
+            <Gear className={`gear ${animationActive ? 'animate' : ''}`} />
             <div className="gear-content">
               <ProgressRing progress={(blockTimeProgress * 100) / intervalInSec} />
               {stateBuffer !== undefined ? blockTimeProgress : '...'}
