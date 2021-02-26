@@ -120,7 +120,7 @@
         width: 100%;
         height: 100%;
 
-        .animate {
+        &.animate {
           @include rotate-counter-clockwise(220s);
         }
       }
