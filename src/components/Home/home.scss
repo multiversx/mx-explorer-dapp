@@ -59,9 +59,10 @@
 
   .transactions-card-container {
     overflow: scroll;
-    max-height: 18.2rem;
+    max-height: 36.8rem;
 
     .transactions-card {
+      flex: 0 0 auto;
       border-radius: 0.3rem;
       border: 1px solid $border-color;
       border-left: 0.5rem solid $primary;
