@@ -1,67 +1,50 @@
 @mixin rotate-clockwise($duration) {
-  @supports not (-moz-appearance: none) {
-    animation: rotating $duration linear infinite;
-    transform: rotateZ(360deg);
+  animation: rotating $duration linear infinite;
 
-    @keyframes rotating {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
+  @keyframes rotating {
+    from {
+      transform: rotate(0deg) rotateZ(360deg);
+    }
+    to {
+      transform: rotate(360deg) rotateZ(360deg);
     }
   }
 }
 
 @mixin rotate-counter-clockwise($duration) {
-  @supports not (-moz-appearance: none) {
-    animation: rotate $duration linear infinite;
-    transform: rotateZ(360deg);
+  animation: rotate $duration linear infinite;
 
-    @keyframes rotate {
-      from {
-        transform: rotate(360deg);
-      }
-      to {
-        transform: rotate(0deg);
-      }
+  @keyframes rotate {
+    from {
+      transform: rotate(360deg) rotateZ(360deg);
+    }
+    to {
+      transform: rotate(0deg) rotateZ(360deg);
     }
   }
 }
 
-@mixin blink($duration, $delay) {
-  fill: $primary;
-  // stroke: $primary;
-  // stroke-width: 0;
+@mixin blink($index) {
+  .tl-#{$index - 1},
+  .bl-#{$index - 1},
+  .tr-#{$index - 1} {
+    fill: lighten($primary, 25%);
+  }
 
-  animation-name: blink-anim;
-  animation-duration: $duration;
-  animation-delay: $delay;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-
-  // enable GPU processing
-
-  // transform: translate3d(0, 0, 0);
-  // will-change: fill, opacity;
-  // backface-visibility: hidden;
-  // perspective: 1000;
+  .tl-#{$index},
+  .bl-#{$index},
+  .tr-#{$index} {
+    fill: lighten($primary, 15%);
+  }
 }
 
-@keyframes blink-anim {
-  0%,
-  100% {
-    fill: #dbe1e9;
-    //opacity: 0.6;
-    // stroke-width: 0;
-    // stroke-opacity: 0;
+@mixin blink-reverse($index) {
+  .br-#{$index + 1} {
+    fill: lighten($primary, 25%);
   }
-  50% {
-    fill: $primary;
-    //opacity: 1;
-    // stroke-width: 4px;
-    // stroke-opacity: 0.2;
+
+  .br-#{$index} {
+    fill: lighten($primary, 15%);
   }
 }
 
@@ -73,142 +56,172 @@
 }
 
 .network-health {
-  .layout-gear {
-    width: 100%;
-    height: 100%;
+  .gears-layout-container {
+    will-change: transform;
+    background-repeat: no-repeat;
+    background: radial-gradient(circle, rgba(213, 220, 230, 0.2) 60%, rgba(255, 255, 255, 0.1) 40%);
 
-    // .br-1 {
-    //   @include blink(4s, 0s);
-    // }
-
-    // .br-2 {
-    //   @include blink(4s, 1s);
-    // }
-
-    // .br-3 {
-    //   @include blink(4s, 1.4s);
-    // }
-
-    // .br-4 {
-    //   @include blink(4s, 1.6s);
-    // }
-
-    // .br-5 {
-    //   @include blink(4s, 2s);
-    // }
-
-    // .br-6 {
-    //   @include blink(4s, 2.4s);
-    // }
-  }
-
-  .big-gear {
-    position: absolute;
-    width: 97%;
-    height: 97%;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-
-    @include rotate-counter-clockwise(220s);
-  }
-
-  .gear-container {
-    position: absolute;
-    width: 30%;
-    height: 30%;
-    $gearPos: 2.1%;
-
-    &.top-left {
-      top: $gearPos;
-      left: $gearPos;
-
-      .gear {
-        @include rotate-clockwise(140s);
-      }
-    }
-
-    &.top-right {
-      top: $gearPos;
-      right: $gearPos;
-
-      .gear {
-        @include rotate-counter-clockwise(60s);
-      }
-    }
-
-    &.center {
-      @extend .position-absolute-center;
-
-      .gear-content {
-        width: 85%;
-        height: 85%;
-        border-radius: 50%;
-      }
-
-      .gear {
-        @include rotate-clockwise(80s);
-      }
-    }
-
-    &.bottom-left {
-      bottom: $gearPos;
-      left: $gearPos;
-
-      .gear {
-        @include rotate-counter-clockwise(60s);
-      }
-    }
-
-    &.bottom-right {
-      bottom: $gearPos;
-      right: $gearPos;
-
-      .gear-content {
-        width: 76%;
-        height: 76%;
-        border-radius: 50%;
-      }
-
-      .gear {
-        @include rotate-clockwise(45s);
-      }
-    }
-
-    .gear {
+    .layout-gear {
       width: 100%;
       height: 100%;
+
+      .blinking-dot {
+        transition: fill 0.35s;
+      }
+
+      &.blink-1 {
+        .bl-1,
+        .tl-1,
+        .tr-1,
+        .br-6 {
+          fill: lighten($primary, 15%);
+        }
+      }
+
+      &.blink-2 {
+        @include blink(2);
+        @include blink-reverse(5);
+      }
+
+      &.blink-3 {
+        @include blink(3);
+        @include blink-reverse(4);
+      }
+
+      &.blink-4 {
+        @include blink(4);
+        @include blink-reverse(3);
+      }
+
+      &.blink-5 {
+        @include blink(5);
+        @include blink-reverse(2);
+      }
+
+      &.blink-6 {
+        .bl-6,
+        .tl-6,
+        .tr-6,
+        .br-1 {
+          fill: lighten($primary, 25%);
+        }
+      }
     }
 
-    .gear-content {
-      @extend .position-absolute-center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      flex-direction: column;
-      font-size: 7px;
+    .big-gear {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      width: 97%;
+      height: 97%;
 
-      @media (min-width: 350px) {
-        font-size: 9px;
+      @include rotate-counter-clockwise(220s);
+    }
+
+    .gear-container {
+      position: absolute;
+      width: 30%;
+      height: 30%;
+      $gearPos: 2.1%;
+      background-repeat: no-repeat;
+      background: radial-gradient(
+        circle,
+        rgba(213, 220, 230, 0.55) 45%,
+        rgba(255, 255, 255, 0.1) 60%
+      );
+
+      &.top-left {
+        top: $gearPos;
+        left: $gearPos;
+
+        .gear {
+          @include rotate-clockwise(140s);
+        }
       }
 
-      @media (min-width: 390px) {
-        font-size: 10px;
+      &.top-right {
+        top: $gearPos;
+        right: $gearPos;
+
+        .gear {
+          @include rotate-counter-clockwise(60s);
+        }
       }
 
-      @media (min-width: 450px) {
-        font-size: 13px;
+      &.center {
+        @extend .position-absolute-center;
+
+        .gear-content {
+          width: 84%;
+          height: 84%;
+          border-radius: 50%;
+        }
+
+        .gear {
+          @include rotate-clockwise(80s);
+        }
       }
 
-      @media (min-width: 1050px) {
-        font-size: 14px;
+      &.bottom-left {
+        bottom: $gearPos;
+        left: $gearPos;
+
+        .gear {
+          @include rotate-counter-clockwise(60s);
+        }
       }
 
-      small {
-        @extend .text-secondary;
+      &.bottom-right {
+        bottom: $gearPos;
+        right: $gearPos;
+
+        .gear-content {
+          width: 76%;
+          height: 76%;
+          border-radius: 50%;
+        }
+
+        .gear {
+          @include rotate-clockwise(45s);
+        }
+      }
+
+      .gear {
+        width: 100%;
+        height: 100%;
+      }
+
+      .gear-content {
+        @extend .position-absolute-center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        font-size: 7px;
+
+        @media (min-width: 350px) {
+          font-size: 9px;
+        }
+
+        @media (min-width: 390px) {
+          font-size: 10px;
+        }
+
+        @media (min-width: 450px) {
+          font-size: 12px;
+        }
+
+        @media (min-width: 1050px) {
+          font-size: 13px;
+        }
+
+        small {
+          @extend .text-secondary;
+        }
       }
     }
   }

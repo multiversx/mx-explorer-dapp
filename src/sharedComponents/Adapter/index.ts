@@ -22,7 +22,7 @@ export default function useAdapter() {
       provider({
         url: `/blocks`,
         params: {
-          size: 25,
+          size: 8,
           ...{
             fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
           },
@@ -32,7 +32,7 @@ export default function useAdapter() {
       provider({
         url: `/transactions`,
         params: {
-          size: 25,
+          size: 8,
           ...{
             fields: [
               'txHash',

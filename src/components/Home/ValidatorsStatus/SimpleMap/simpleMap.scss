@@ -62,21 +62,11 @@
 
     .simple-map-marker {
       fill: $primary;
-    }
+      transition: fill 0.3s ease-in-out;
 
-    .pulsing-map-marker {
-      .base-circle {
-        fill: $primary;
-        opacity: 1;
+      &.blink {
+        fill: lighten($primary, 25%);
       }
-
-      .base-circle {
-        // @include blink(2s, 1s);
-      }
-
-      // .rp1 {
-      //   @include rings(3s, 2s);
-      // }
     }
   }
 }

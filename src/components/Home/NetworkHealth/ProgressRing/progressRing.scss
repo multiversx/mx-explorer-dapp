@@ -5,12 +5,10 @@
   left: 50%;
 
   circle {
+    will-change: transform, transition;
     stroke: $primary;
     transform: rotate(-90deg);
     transform-origin: 50% 50%;
-
-    @supports not (-moz-appearance: none) {
-      transition: stroke-dashoffset 0.35s;
-    }
+    transition: stroke-dashoffset 0.35s;
   }
 }

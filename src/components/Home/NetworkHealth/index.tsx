@@ -125,8 +125,8 @@ const NetworkHealth = () => {
         </div>
       </div>
       <div className="card-body d-flex justify-content-center align-items-center">
-        <div className="position-relative flex-fill">
-          <LayoutGear className="layout-gear" />
+        <div className="gears-layout-container position-relative flex-fill">
+          <LayoutGear className={`layout-gear blink-${blockTimeProgress}`} />
           <BigGear className="big-gear" />
 
           <div className="gear-container top-left">
