@@ -3,10 +3,12 @@
 
   @keyframes rotating {
     from {
-      transform: rotate(0deg) rotateZ(360deg);
+      will-change: transform;
+      transform: rotate(0deg);
     }
     to {
-      transform: rotate(360deg) rotateZ(360deg);
+      will-change: unset;
+      transform: rotate(360deg);
     }
   }
 }
@@ -16,10 +18,12 @@
 
   @keyframes rotate {
     from {
-      transform: rotate(360deg) rotateZ(360deg);
+      will-change: transform;
+      transform: rotate(360deg);
     }
     to {
-      transform: rotate(0deg) rotateZ(360deg);
+      will-change: unset;
+      transform: rotate(0deg);
     }
   }
 }
@@ -57,7 +61,6 @@
 
 .network-health {
   .gears-layout-container {
-    will-change: transform;
     background-repeat: no-repeat;
     background: radial-gradient(circle, rgba(213, 220, 230, 0.2) 60%, rgba(255, 255, 255, 0.1) 40%);
 
@@ -108,17 +111,19 @@
       }
     }
 
-    .big-gear {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      margin: auto;
+    .big-gear-container {
+      @extend .position-absolute-center;
       width: 97%;
       height: 97%;
 
-      @include rotate-counter-clockwise(220s);
+      .big-gear {
+        width: 100%;
+        height: 100%;
+
+        .animate {
+          @include rotate-counter-clockwise(220s);
+        }
+      }
     }
 
     .gear-container {
@@ -137,7 +142,7 @@
         top: $gearPos;
         left: $gearPos;
 
-        .gear {
+        .animate {
           @include rotate-clockwise(140s);
         }
       }
@@ -146,7 +151,7 @@
         top: $gearPos;
         right: $gearPos;
 
-        .gear {
+        .animate {
           @include rotate-counter-clockwise(60s);
         }
       }
@@ -160,7 +165,7 @@
           border-radius: 50%;
         }
 
-        .gear {
+        .animate {
           @include rotate-clockwise(80s);
         }
       }
@@ -169,7 +174,7 @@
         bottom: $gearPos;
         left: $gearPos;
 
-        .gear {
+        .animate {
           @include rotate-counter-clockwise(60s);
         }
       }
@@ -184,7 +189,7 @@
           border-radius: 50%;
         }
 
-        .gear {
+        .animate {
           @include rotate-clockwise(45s);
         }
       }
