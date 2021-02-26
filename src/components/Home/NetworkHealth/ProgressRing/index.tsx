@@ -15,7 +15,7 @@ const ProgressRing = ({ radius = 60, stroke = 3, progress }: ProgressRingType) =
     <div className="progress-ring w-100 h-100">
       <svg viewBox={`0 0 ${radius * 2} ${radius * 2}`}>
         <circle
-          fill="transparent"
+          fill="none"
           strokeWidth={stroke}
           strokeDasharray={circumference + ' ' + circumference}
           style={{ strokeDashoffset }}
