@@ -5,7 +5,6 @@
   left: 50%;
 
   circle {
-    will-change: transform, transition;
     stroke: $primary;
     transform: rotate(-90deg);
     transform-origin: 50% 50%;
