@@ -4,11 +4,11 @@
   @keyframes rotating {
     from {
       will-change: transform;
-      transform: rotate(0deg);
+      transform: translate3d(0, 0, 0) rotate(0deg);
     }
     to {
       will-change: unset;
-      transform: rotate(360deg);
+      transform: translate3d(0, 0, 0) rotate(360deg);
     }
   }
 }
@@ -19,11 +19,11 @@
   @keyframes rotate {
     from {
       will-change: transform;
-      transform: rotate(360deg);
+      transform: translate3d(0, 0, 0) rotate(360deg);
     }
     to {
       will-change: unset;
-      transform: rotate(0deg);
+      transform: translate3d(0, 0, 0) rotate(0deg);
     }
   }
 }
@@ -136,13 +136,8 @@
       width: 97%;
       height: 97%;
 
-      .big-gear {
-        width: 100%;
-        height: 100%;
-
-        &.animate {
-          @include rotate-counter-clockwise(220s);
-        }
+      .animate {
+        @include rotate-counter-clockwise(220s);
       }
     }
 
@@ -151,6 +146,7 @@
       width: 30%;
       height: 30%;
       $gearPos: 2.1%;
+
       background-repeat: no-repeat;
       background: radial-gradient(
         circle,
@@ -212,11 +208,6 @@
         .animate {
           @include rotate-clockwise(45s);
         }
-      }
-
-      .gear {
-        width: 100%;
-        height: 100%;
       }
 
       .gear-content {

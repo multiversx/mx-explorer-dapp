@@ -155,11 +155,15 @@ const NetworkHealth = () => {
           <LayoutGear className={`layout-gear blink-${animateGears ? blockTimeProgress : 0}`} />
 
           <div className="big-gear-container">
-            <BigGear className={`big-gear ${animateGears ? 'animate' : ''}`} />
+            <div className={animateGears ? 'animate' : ''}>
+              <BigGear className="w-100 h-100" />
+            </div>
           </div>
 
           <div className="gear-container top-left">
-            <Gear className={`gear ${animateGears ? 'animate' : ''}`} />
+            <div className={animateGears ? 'animate' : ''}>
+              <Gear className="w-100 h-100" />
+            </div>
             <div className="gear-content">
               {accounts}
               <small>Accounts</small>
@@ -167,7 +171,9 @@ const NetworkHealth = () => {
           </div>
 
           <div className="gear-container top-right">
-            <Gear className={`gear ${animateGears ? 'animate' : ''}`} />
+            <div className={animateGears ? 'animate' : ''}>
+              <Gear className="w-100 h-100" />
+            </div>
             <div className="gear-content">
               {transactions}
               <small>Transactions</small>
@@ -175,7 +181,9 @@ const NetworkHealth = () => {
           </div>
 
           <div className="gear-container center">
-            <CenterGear className={`gear ${animateGears ? 'animate' : ''}`} />
+            <div className={animateGears ? 'animate' : ''}>
+              <CenterGear className="w-100 h-100" />
+            </div>
             <div className="gear-content">
               <ProgressRing progress={epochPercentage} />
               {epochTimeRemaining}
@@ -184,7 +192,9 @@ const NetworkHealth = () => {
           </div>
 
           <div className="gear-container bottom-left">
-            <Gear className={`gear ${animateGears ? 'animate' : ''}`} />
+            <div className={animateGears ? 'animate' : ''}>
+              <Gear className="w-100 h-100" />
+            </div>
             <div className="gear-content">
               {blocks}
               <small>Block Height</small>
@@ -192,7 +202,9 @@ const NetworkHealth = () => {
           </div>
 
           <div className="gear-container bottom-right">
-            <Gear className={`gear ${animateGears ? 'animate' : ''}`} />
+            <div className={animateGears ? 'animate' : ''}>
+              <Gear className="w-100 h-100" />
+            </div>
             <div className="gear-content">
               <ProgressRing progress={(blockTimeProgress * 100) / intervalInSec} />
               {stateBuffer !== undefined ? blockTimeProgress : '...'}
