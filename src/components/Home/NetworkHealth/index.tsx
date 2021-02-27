@@ -120,7 +120,7 @@ const NetworkHealth = () => {
 
   const { blocks, accounts, transactions, epoch, epochPercentage, epochTimeRemaining } = state;
 
-  const animateGears = animationActive && !pageHidden;
+  const play = animationActive && !pageHidden;
 
   return (
     <div ref={ref} className="card network-health">
@@ -152,16 +152,16 @@ const NetworkHealth = () => {
       </div>
       <div className="card-body d-flex justify-content-center align-items-center">
         <div className="gears-layout-container position-relative flex-fill">
-          <LayoutGear className={`layout-gear blink-${animateGears ? blockTimeProgress : 0}`} />
+          <LayoutGear className={`layout-gear blink-${play ? blockTimeProgress : 0}`} />
 
           <div className="big-gear-container">
-            <div className={animateGears ? 'animate' : ''}>
+            <div className={`animate ${play ? '' : 'paused'}`}>
               <BigGear className="w-100 h-100" />
             </div>
           </div>
 
           <div className="gear-container top-left">
-            <div className={animateGears ? 'animate' : ''}>
+            <div className={`animate ${play ? '' : 'paused'}`}>
               <Gear className="w-100 h-100" />
             </div>
             <div className="gear-content">
@@ -171,7 +171,7 @@ const NetworkHealth = () => {
           </div>
 
           <div className="gear-container top-right">
-            <div className={animateGears ? 'animate' : ''}>
+            <div className={`animate ${play ? '' : 'paused'}`}>
               <Gear className="w-100 h-100" />
             </div>
             <div className="gear-content">
@@ -181,7 +181,7 @@ const NetworkHealth = () => {
           </div>
 
           <div className="gear-container center">
-            <div className={animateGears ? 'animate' : ''}>
+            <div className={`animate ${play ? '' : 'paused'}`}>
               <CenterGear className="w-100 h-100" />
             </div>
             <div className="gear-content">
@@ -192,7 +192,7 @@ const NetworkHealth = () => {
           </div>
 
           <div className="gear-container bottom-left">
-            <div className={animateGears ? 'animate' : ''}>
+            <div className={`animate ${play ? '' : 'paused'}`}>
               <Gear className="w-100 h-100" />
             </div>
             <div className="gear-content">
@@ -202,7 +202,7 @@ const NetworkHealth = () => {
           </div>
 
           <div className="gear-container bottom-right">
-            <div className={animateGears ? 'animate' : ''}>
+            <div className={`animate ${play ? '' : 'paused'}`}>
               <Gear className="w-100 h-100" />
             </div>
             <div className="gear-content">
