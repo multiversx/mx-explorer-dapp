@@ -204,8 +204,6 @@ export default function useAdapter() {
 
     getAccount: (address: string) => provider({ url: `/accounts/${address}` }),
 
-    getUser: (username: string) => provider({ url: `/usernames/${username}` }),
-
     getAccounts: (size = 1) =>
       provider({
         url: `/accounts`,
