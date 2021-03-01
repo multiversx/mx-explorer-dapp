@@ -20,7 +20,6 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
     getTransaction,
     getNode,
     getMiniBlock,
-    getUser,
     getTokenDetails,
   } = adapter();
   const [route, setRoute] = React.useState('');
@@ -107,13 +106,8 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
           break;
 
         default:
-          getUser(hash).then((user) => {
-            setExpanded(false);
-            const newRoute = user.success
-              ? networkRoute(urlBuilder.accountDetails(user.data.address))
-              : notFoundRoute;
-            setRoute(newRoute);
-          });
+          setExpanded(false);
+          setRoute(notFoundRoute);
           break;
       }
     }
@@ -145,7 +139,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
         <input
           type="text"
           className="form-control rounded-pill my-1 text-truncate"
-          placeholder={`Address / Tx Hash / Block Hash / Validator Key / Herotag ${
+          placeholder={`Address / Tx Hash / Block Hash / Validator Key ${
             isMainnet ? '' : '/ TokenID'
           }`} // TODO remove condition when Tokens go live
           name="requestType"
