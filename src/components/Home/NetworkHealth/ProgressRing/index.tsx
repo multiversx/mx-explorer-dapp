@@ -6,7 +6,7 @@ export interface ProgressRingType {
   stroke?: number;
 }
 
-const ProgressRing = ({ radius = 60, stroke = 3, progress }: ProgressRingType) => {
+const ProgressRing = ({ radius = 60, stroke = 2, progress }: ProgressRingType) => {
   const normalizedRadius = radius - stroke * 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (progress / 100) * circumference;
