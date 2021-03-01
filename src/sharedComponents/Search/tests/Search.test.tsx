@@ -84,24 +84,6 @@ describe('Search input', () => {
       expect(document.title).toEqual('Account Details • Elrond Explorer');
     });
   });
-  test('Search finds username', async () => {
-    const render = beforeAll({
-      route: '/search',
-    });
-
-    const search = render.getAllByTestId('search')[0];
-    const data = {
-      target: { value: account.username },
-    };
-    fireEvent.change(search, data);
-
-    const searchButton = render.getAllByTestId('searchButton')[0];
-    fireEvent.click(searchButton);
-
-    await wait(async () => {
-      expect(document.title).toEqual('Account Details • Elrond Explorer');
-    });
-  });
   test('Search finds node', async () => {
     const render = beforeAll({
       route: '/search',
@@ -142,9 +124,6 @@ describe('Search input', () => {
   test('Search does not find anything', async () => {
     const render = beforeAll({
       route: '/search',
-      networkRequests: {
-        username: () => Promise.resolve(new Error('error')),
-      },
     });
 
     const search = render.getAllByTestId('search')[0];
