@@ -18,9 +18,6 @@ describe('Account Details Page', () => {
     const address = await render.findByTestId('address');
     expect(address.textContent).toBe(account.address);
 
-    const username = await render.findByTestId('username');
-    expect(username.textContent).toBe(account.username);
-
     const transactionsTable = await render.findByTestId('transactionsTable');
     expect(transactionsTable).toBeDefined();
   });
