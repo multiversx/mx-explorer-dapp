@@ -1,0 +1,23 @@
+.identity-card {
+  .identity-avatar {
+    width: 7rem;
+    height: 7rem;
+    margin-right: 0 !important;
+    box-shadow: none;
+  }
+
+  .social-logo {
+    width: 1.2rem;
+    height: 1.2rem;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .flex-1 {
+    flex: 1;
+  }
+}

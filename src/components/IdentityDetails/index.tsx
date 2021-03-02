@@ -5,6 +5,7 @@ import { adapter, Loader, DetailItem, Pager, PageState, SharedIdentity } from 's
 import { useParams } from 'react-router-dom';
 import { NodesTable } from 'sharedComponents';
 import { useFilters } from 'helpers';
+import IdentityCard from './IdentityCard/index';
 
 const IdentityDetails = () => {
   const ref = React.useRef(null);
@@ -53,6 +54,13 @@ const IdentityDetails = () => {
                 </h3>
               </div>
             </div>
+
+            <div className="row">
+              <div className="col-12 mb-spacer">
+                <IdentityCard identity={identity} />
+              </div>
+            </div>
+
             <div className="row " data-testid="identityDetailsContainer">
               <div className="col-12 col-md-6 mb-spacer">
                 <div className="card">
