@@ -63,15 +63,15 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
         Validators
       </NetworkLink>
 
-      {/* {activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api' && ( */}
-      <NetworkLink
-        className={`nav-link ${matchPath(networkRoute('/tokens')) !== null ? 'active' : ''}`}
-        to="/tokens"
-        onClick={() => onToggle(false)}
-      >
-        Tokens
-      </NetworkLink>
-      {/* )} */}
+      {activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api' && (
+        <NetworkLink
+          className={`nav-link ${matchPath(networkRoute('/tokens')) !== null ? 'active' : ''}`}
+          to="/tokens"
+          onClick={() => onToggle(false)}
+        >
+          Tokens
+        </NetworkLink>
+      )}
     </>
   );
 }
