@@ -8,47 +8,47 @@
 	</defs>
 	<g id="layout-gear-d" clip-path="url(#layout-gear-e)">
 		<g transform="translate(-247 -341)">
-			<g transform="translate(431 525)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
+			<g class="gear-circle-border light" transform="translate(431 525)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
 				<rect width="269" height="269" stroke="none"/>
 				<rect x="0.25" y="0.25" width="268.5" height="268.5" fill="none"/>
 			</g>
-			<g transform="translate(321 415)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
+			<g class="gear-circle-border light" transform="translate(321 415)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
 				<circle cx="244.5" cy="244.5" r="244.5" stroke="none"/>
 				<circle cx="244.5" cy="244.5" r="244.25" fill="none"/>
 			</g>
-			<g transform="translate(248 342)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
+			<g class="gear-circle-border light" transform="translate(248 342)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
 				<circle cx="317" cy="317" r="317" stroke="none"/>
 				<circle cx="317" cy="317" r="316.75" fill="none"/>
 			</g>
-			<g transform="translate(247 341)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
+			<g class="gear-circle-border light" transform="translate(247 341)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
 				<circle cx="108" cy="108" r="108" stroke="none"/>
 				<circle cx="108" cy="108" r="107.75" fill="none"/>
 			</g>
-			<g transform="translate(247 761)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
+			<g class="gear-circle-border light" transform="translate(247 761)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
 				<circle cx="108" cy="108" r="108" stroke="none"/>
 				<circle cx="108" cy="108" r="107.75" fill="none"/>
 			</g>
-			<g transform="translate(667 341)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
+			<g class="gear-circle-border light" transform="translate(667 341)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
 				<circle cx="108" cy="108" r="108" stroke="none"/>
 				<circle cx="108" cy="108" r="107.75" fill="none"/>
 			</g>
-			<g transform="translate(667 761)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
+			<g class="gear-circle-border light" transform="translate(667 761)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
 				<circle cx="108" cy="108" r="108" stroke="none"/>
 				<circle cx="108" cy="108" r="107.75" fill="none"/>
 			</g>
-			<g transform="translate(458 551)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
+			<g class="gear-circle-border light" transform="translate(458 551)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
 				<circle cx="108" cy="108" r="108" stroke="none"/>
 				<circle cx="108" cy="108" r="107.75" fill="none"/>
 			</g>
-			<line x1="573" y1="573" transform="translate(278.5 372.5)" fill="none" stroke="#e2e2e2" stroke-width="0.5"/>
-			<line y1="572" x2="572" transform="translate(279.5 373.5)" fill="none" stroke="#e2e2e2" stroke-width="0.5"/>
-			<line y2="405" transform="translate(247.5 456.5)" fill="none" stroke="#e2e2e2" stroke-width="0.5"/>
-			<line y2="405" transform="translate(882.5 456.5)" fill="none" stroke="#e2e2e2" stroke-width="0.5"/>
-			<line y2="405" transform="translate(767.5 341.5) rotate(90)" fill="none" stroke="#e2e2e2" stroke-width="0.5"/>
-			<line y2="405" transform="translate(767.5 976.5) rotate(90)" fill="none" stroke="#e2e2e2" stroke-width="0.5"/>
+			<line class="gear-circle-border light" x1="573" y1="573" transform="translate(278.5 372.5)" fill="none" stroke="#e2e2e2" stroke-width="0.5"/>
+			<line class="gear-circle-border light" y1="572" x2="572" transform="translate(279.5 373.5)" fill="none" stroke="#e2e2e2" stroke-width="0.5"/>
+			<line class="gear-circle-border light" y2="405" transform="translate(247.5 456.5)" fill="none" stroke="#e2e2e2" stroke-width="0.5"/>
+			<line class="gear-circle-border light" y2="405" transform="translate(882.5 456.5)" fill="none" stroke="#e2e2e2" stroke-width="0.5"/>
+			<line class="gear-circle-border light" y2="405" transform="translate(767.5 341.5) rotate(90)" fill="none" stroke="#e2e2e2" stroke-width="0.5"/>
+			<line class="gear-circle-border light" y2="405" transform="translate(767.5 976.5) rotate(90)" fill="none" stroke="#e2e2e2" stroke-width="0.5"/>
 		</g>
 		<g transform="matrix(1, 0, 0, 1, 0, 0)">
-			<path d="M732.921,225.895C667.8,114.723,524.884,77.4,413.713,142.519s-148.5,208.039-83.376,319.208,208.039,148.5,319.208,83.376S798.046,337.064,732.921,225.895ZM388.514,402.029a58.217,58.217,0,1,1,58.216-58.218A58.217,58.217,0,0,1,388.514,402.029ZM531.629,545.144a58.217,58.217,0,1,1,58.217-58.218A58.217,58.217,0,0,1,531.629,545.144Zm-23.4-238.067a41.938,41.938,0,1,1-14.989,57.384A41.936,41.936,0,0,1,508.231,307.076Zm23.4-48.165A58.217,58.217,0,1,1,589.846,200.7,58.216,58.216,0,0,1,531.629,258.911ZM674.746,402.029a58.217,58.217,0,1,1,58.216-58.218A58.217,58.217,0,0,1,674.746,402.029Z" transform="translate(-301.03 450.81) rotate(-45)" fill="#fff" stroke="#818ea3" stroke-miterlimit="10" stroke-width="0.5"/>
+			<path class="gear-circle gear-circle-border" d="M732.921,225.895C667.8,114.723,524.884,77.4,413.713,142.519s-148.5,208.039-83.376,319.208,208.039,148.5,319.208,83.376S798.046,337.064,732.921,225.895ZM388.514,402.029a58.217,58.217,0,1,1,58.216-58.218A58.217,58.217,0,0,1,388.514,402.029ZM531.629,545.144a58.217,58.217,0,1,1,58.217-58.218A58.217,58.217,0,0,1,531.629,545.144Zm-23.4-238.067a41.938,41.938,0,1,1-14.989,57.384A41.936,41.936,0,0,1,508.231,307.076Zm23.4-48.165A58.217,58.217,0,1,1,589.846,200.7,58.216,58.216,0,0,1,531.629,258.911ZM674.746,402.029a58.217,58.217,0,1,1,58.216-58.218A58.217,58.217,0,0,1,674.746,402.029Z" transform="translate(-301.03 450.81) rotate(-45)" fill="#fff" stroke="#818ea3" stroke-miterlimit="10" stroke-width="0.5"/>
 		</g>
 		<g transform="translate(-247 -341)">
 			<g transform="translate(-40.077 -40.151)">
