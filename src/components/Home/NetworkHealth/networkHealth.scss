@@ -87,8 +87,7 @@
   }
 
   .gears-layout-container {
-    background: radial-gradient(circle, rgba(213, 220, 230, 0.2) 60%, rgba(0, 0, 0, 0) 40%)
-      no-repeat;
+    background: radial-gradient(circle, rgba($muted, 0.15) 60%, rgba(0, 0, 0, 0) 40%) no-repeat;
 
     .layout-gear {
       width: 100%;
@@ -96,6 +95,7 @@
 
       .blinking-dot {
         transition: fill 0.35s;
+        fill: $muted;
       }
 
       &.blink-1 {
@@ -152,8 +152,7 @@
       width: 30%;
       height: 30%;
       $gearPos: 2.1%;
-      background: radial-gradient(circle, rgba(213, 220, 230, 0.55) 45%, rgba(0, 0, 0, 0) 60%)
-        no-repeat;
+      background: radial-gradient(circle, rgba($muted, 0.45) 45%, rgba(0, 0, 0, 0) 60%) no-repeat;
 
       &.top-left {
         top: $gearPos;
@@ -175,8 +174,7 @@
 
       &.center {
         @extend .position-absolute-center;
-        background: radial-gradient(circle, rgba(213, 220, 230, 0.35) 62%, rgba(0, 0, 0, 0) 38%),
-          no-repeat;
+        background: radial-gradient(circle, rgba($muted, 0.25) 62%, rgba(0, 0, 0, 0) 38%), no-repeat;
 
         .gear-content {
           width: 81%;
@@ -241,6 +239,23 @@
         small {
           @extend .text-secondary;
         }
+      }
+    }
+
+    .gear-teeth {
+      fill: $card-bg;
+      stroke: $secondary;
+    }
+
+    .gear-circle {
+      fill: $card-bg;
+    }
+
+    .gear-circle-border {
+      stroke: $secondary;
+
+      &.light {
+        stroke: $muted;
       }
     }
   }
