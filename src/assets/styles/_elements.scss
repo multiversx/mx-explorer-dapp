@@ -181,3 +181,29 @@
     background-color: lighten($primary, 45%);
   }
 }
+
+.right-angle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1rem;
+  background-color: $light;
+  border-radius: 0.5rem;
+
+  svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    fill: $secondary;
+    color: $secondary;
+  }
+
+  &.lg {
+    padding: 1.65rem;
+
+    svg {
+      width: 2.2rem;
+      height: 2.2rem;
+    }
+  }
+}
