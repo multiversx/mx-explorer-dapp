@@ -14,11 +14,13 @@ const Pager = ({
   show,
   page,
   itemsPerPage,
+  className = '',
 }: {
   page: string;
   total: number | '...';
   itemsPerPage: number;
   show: boolean;
+  className?: string;
 }) => {
   const { activeNetworkId } = useGlobalState();
 
@@ -61,8 +63,8 @@ const Pager = ({
   }).toString();
 
   return show ? (
-    <div className="float-right mt-3">
-      <ul className="list-inline">
+    <div className={className}>
+      <ul className="list-inline m-0">
         <li className="list-inline-item">
           {size === 1 ? (
             <div className="pager btn btn-primary-light text-muted">

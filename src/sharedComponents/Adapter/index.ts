@@ -8,6 +8,8 @@ import {
   getAccountParams,
   GetNodesType,
   getNodeParams,
+  GetProvidersType,
+  getProviderParams,
 } from './helpers';
 
 export default function useAdapter() {
@@ -233,5 +235,17 @@ export default function useAdapter() {
     getTokenDetails: (tokenId: string) => provider({ url: `/tokens/${tokenId}` }),
 
     getTokensCount: () => provider({ url: `/tokens/count` }),
+
+    // Providers
+
+    getGlobalStakeNodes: () => provider({ url: `/stake/nodes` }),
+
+    getProviders: (props: GetProvidersType) =>
+      provider({
+        url: `/providers`,
+        params: getProviderParams(props),
+      }),
+
+    getProvider: (address: string) => provider({ url: `/providers/${address}` }),
   };
 }

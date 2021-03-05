@@ -92,8 +92,8 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
           <div className="d-flex align-items-center">
             <div className="bar">
               <PercentegeBar
-                totalUpTimeLabel={Math.round(identity.overallStakePercent) + '%'}
-                totalUpTimePercentege={identity.overallStakePercent}
+                totalUpTimeLabel={Math.round(identity.overallStakePercent || 0) + '%'}
+                totalUpTimePercentege={identity.overallStakePercent || 0}
                 totalDownTimeLabel={Math.round(identity.stakePercent) + '%'}
                 totalDownTimePercentege={identity.stakePercent}
               />

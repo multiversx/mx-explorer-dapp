@@ -5,7 +5,7 @@ import RowIcon from 'sharedComponents/NodesTable/RowIcon';
 import { NodeType } from 'context/state';
 import Alert from './Alert';
 
-const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string }) => {
+const NodeInformation = ({ node }: { node: NodeType }) => {
   const {
     publicKey,
     peerType,
@@ -16,65 +16,74 @@ const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string 
     nonce,
     numInstances,
   } = node;
+
+  const leftColWith = '3';
+  const rightColWith = '4';
+
   return (
-    <div className="card">
-      <div className="card-body p-0">
-        <div className="container-fluid">
-          <DetailItem title="Public Key" colWidth={colWidth}>
-            <div className="d-flex flex-column">
-              <div className="d-flex align-items-center">
-                {nodeType === 'observer' && <RowIcon node={node} />}
-                <Trim text={publicKey} />
-                <CopyButton text={publicKey} className="ml-2" />
-              </div>
-              <Alert node={node} />
+    <div className="row">
+      <div className="col-12 col-lg-8 mb-spacer mb-lg-0">
+        <div className="card">
+          <div className="card-body p-0">
+            <div className="container-fluid">
+              <DetailItem title="Public Key" colWidth={leftColWith}>
+                <div className="d-flex flex-column">
+                  <div className="d-flex align-items-center">
+                    {nodeType === 'observer' && <RowIcon node={node} />}
+                    <Trim text={publicKey} />
+                    <CopyButton text={publicKey} className="ml-2" />
+                  </div>
+                  <Alert node={node} />
+                </div>
+              </DetailItem>
+
+              <DetailItem title="Shard" colWidth={leftColWith}>
+                <div className="d-flex">
+                  {shard !== undefined ? (
+                    <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
+                      <ShardSpan shard={shard} />
+                    </NetworkLink>
+                  ) : (
+                    <span className="text-secondary">N/A</span>
+                  )}
+                </div>
+              </DetailItem>
+
+              <DetailItem title="Name" colWidth={leftColWith}>
+                {nodeName ? nodeName : <span className="text-secondary">N/A</span>}
+              </DetailItem>
+
+              <DetailItem title="Type" colWidth={leftColWith}>
+                {nodeType === 'observer' && <>Observer</>}
+                {nodeType !== 'observer' && (
+                  <>
+                    Validator <span className="text-secondary">({peerType})</span>
+                  </>
+                )}
+              </DetailItem>
             </div>
-          </DetailItem>
-          <DetailItem title="Shard" colWidth={colWidth}>
-            <div className="d-flex">
-              {shard !== undefined ? (
-                <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
-                  <ShardSpan shard={shard} />
-                </NetworkLink>
-              ) : (
-                <span className="text-secondary">N/A</span>
-              )}
-            </div>
-          </DetailItem>
-
-          <DetailItem title="Name" colWidth={colWidth}>
-            {nodeName ? nodeName : <span className="text-secondary">N/A</span>}
-          </DetailItem>
-
-          <DetailItem title="Type" colWidth={colWidth}>
-            {nodeType === 'observer' && <>Observer</>}
-            {nodeType !== 'observer' && (
-              <>
-                Validator <span className="text-secondary">({peerType})</span>
-              </>
-            )}
-          </DetailItem>
-
-          <DetailItem title="" colWidth={colWidth}>
-            <div className="d-flex flex-wrap justify-content-between justify-content-lg-start">
-              <div className="d-flex flex-column mr-2 mr-sm-4">
-                <span className="text-secondary mr-2">Version</span>
+          </div>
+        </div>
+      </div>
+      <div className="col-12 col-lg-4">
+        <div className="card" data-testid="brandContainer">
+          <div className="card-body p-0">
+            <div className="container-fluid">
+              <DetailItem title="Version" colWidth={rightColWith}>
                 <span data-testid="versionNumber">
                   {versionNumber ? versionNumber : <span className="text-secondary">N/A</span>}
                 </span>
-              </div>
-              <div className="d-flex flex-column ml-2 mr-2 mr-sm-4">
-                <span className="text-secondary mr-2">Nonce</span>
+              </DetailItem>
+
+              <DetailItem title="Nonce" colWidth={rightColWith}>
                 <span>{nonce ? nonce : <span className="text-secondary">N/A</span>}</span>
-              </div>
-              <div className="d-flex flex-column ml-2">
-                <span className="text-secondary mr-2">Instances</span>
-                <span>
-                  {numInstances ? numInstances : <span className="text-secondary">N/A</span>}
-                </span>
-              </div>
+              </DetailItem>
+
+              <DetailItem title="Instances" colWidth={rightColWith}>
+                {numInstances ? numInstances : <span className="text-secondary">N/A</span>}
+              </DetailItem>
             </div>
-          </DetailItem>
+          </div>
         </div>
       </div>
     </div>

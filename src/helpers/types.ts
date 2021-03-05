@@ -1,3 +1,5 @@
+import { IdentityType } from 'context/state';
+
 export interface AccountType {
   address: string;
   balance: string;
@@ -21,4 +23,29 @@ export interface TokenType {
   canUpgrade: boolean;
   canWipe: boolean;
   isPaused: boolean;
+}
+
+export interface ProviderType {
+  identity?: IdentityType;
+  contract: string;
+  serviceFee: string;
+  maxDelegationCap: string;
+  apr: string;
+  totalActiveStake: string;
+  numUsers: number;
+  numNodes: number;
+
+  initialOwnerFunds?: string;
+  automaticActivation?: boolean;
+  withDelegationCap?: boolean;
+  changeableServiceFee?: boolean;
+  checkCapOnRedelegate?: boolean;
+  createdNonce?: number;
+  unBondPeriod?: number;
+  totalUnStaked?: string;
+  totalCumulatedRewards?: string;
+  totalUnStakedFromNodes?: string;
+  totalUnBondedFromNodes?: string;
+  maxDelegateAmountAllowed?: string;
+  maxRedelegateAmountAllowed?: string;
 }

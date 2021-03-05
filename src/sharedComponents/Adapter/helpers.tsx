@@ -11,6 +11,12 @@ export interface GetNodesType {
   sort?: string;
   order?: string;
   pagination?: boolean;
+  provider?: string;
+}
+
+export interface GetProvidersType {
+  identity?: string;
+  fields?: string;
 }
 
 export interface ProviderPropsType {
@@ -41,6 +47,7 @@ export interface ProviderPropsType {
     validator?: string;
     fields?: any;
     identity?: string;
+    provider?: string;
     sort?: string;
     order?: string;
   };
@@ -103,6 +110,7 @@ export function getNodeParams({
   pagination = true,
   sort,
   order,
+  provider,
 }: GetNodesType) {
   const params: ProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
@@ -112,9 +120,18 @@ export function getNodeParams({
     ...(shard !== undefined ? { shard: parseInt(shard) } : {}),
     ...(status !== undefined ? { status } : {}),
     ...(identity !== undefined ? { identity } : {}),
+    ...(provider !== undefined ? { provider } : {}),
     ...(sort !== undefined ? { sort } : {}),
     ...(order !== undefined ? { order } : {}),
     ...(size !== undefined ? (pagination ? { from: (size - 1) * 25, size: 25 } : { size }) : {}),
+  };
+
+  return params;
+}
+
+export function getProviderParams({ identity }: GetProvidersType) {
+  const params: ProviderPropsType['params'] = {
+    ...(identity !== undefined ? { identity } : {}),
   };
 
   return params;

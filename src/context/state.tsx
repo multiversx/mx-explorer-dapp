@@ -18,11 +18,20 @@ export interface ShardType {
   activeValidators: number;
 }
 
+export interface NodesVersionsType {
+  name: string;
+  percent: number;
+}
+
 export interface GlobalStakeType {
   activeValidators: number;
   queueSize: number;
   totalStaked: string;
   totalValidators: number;
+  apr?: number;
+  waitingList?: number;
+  deliquentStake?: number;
+  nodesVerions?: NodesVersionsType[];
 }
 
 export interface IdentityType {
@@ -30,7 +39,7 @@ export interface IdentityType {
   score: number;
   stake: number;
   stakePercent: number;
-  overallStakePercent: number;
+  overallStakePercent?: number;
   validators: number;
   twitter?: string;
   website?: string;
@@ -61,6 +70,7 @@ export interface NodeType {
   timeStamp?: string;
   computedShardID?: number;
   issues?: string[];
+  owner?: string;
 }
 
 export interface StateType {

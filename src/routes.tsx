@@ -15,6 +15,8 @@ import NodeDetails from './components/NodeDetails';
 import Tokens from './components/Tokens';
 import TokenDetails from './components/TokenDetails';
 import { withPageTitle, withNetworkReady } from './sharedComponents';
+import Providers from 'components/Providers';
+import ProviderDetails from 'components/ProviderDetails';
 
 interface RouteType {
   path: string;
@@ -26,10 +28,12 @@ interface RouteType {
 // component: React.lazy(() => import('./components/Validators')),
 
 export const validatorsRoutes = {
-  index: '/identities',
+  index: '/validators',
   nodes: '/nodes',
+  providers: '/providers',
   nodeDetails: '/nodes/:publicKey',
   identityDetails: '/identities/:id',
+  providerDetails: '/providers/:hash',
 };
 
 const routes: RouteType[] = [
@@ -117,6 +121,16 @@ const routes: RouteType[] = [
     path: '/tokens/:hash',
     title: 'Token Details',
     component: TokenDetails,
+  },
+  {
+    path: '/providers',
+    title: 'Providers',
+    component: Providers,
+  },
+  {
+    path: '/providers/:hash',
+    title: 'Provider Details',
+    component: ProviderDetails,
   },
 ];
 

@@ -1,30 +1,84 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
+import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { IdentityType } from 'context/state';
-import { adapter, Loader, DetailItem, Pager, PageState, SharedIdentity } from 'sharedComponents';
+import { adapter, Loader, Pager, PageState, ProvidersTable } from 'sharedComponents';
 import { useParams } from 'react-router-dom';
 import { NodesTable } from 'sharedComponents';
-import { useFilters } from 'helpers';
+import { useFilters, types } from 'helpers';
 import IdentityCard from './IdentityCard/index';
 
 const IdentityDetails = () => {
   const ref = React.useRef(null);
   const { id } = useParams() as any;
-  const { getIdentity, getNodes, getNodesCount } = adapter();
+  const { getIdentity, getNodes, getNodesCount, getProviders } = adapter();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
   const [identity, setIdentity] = React.useState<IdentityType>();
+  const [providers, setProviders] = React.useState<types.ProviderType[]>();
+  const [providersFetched, setProvidersFetched] = React.useState<boolean | undefined>(undefined);
   const [nodes, setNodes] = React.useState<any>();
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
   const { getQueryObject, size } = useFilters();
+
   const fetchData = () => {
     const queryObject = getQueryObject();
 
     Promise.all([
       getIdentity(id),
+      getProviders({
+        identity: id,
+      }),
       getNodes({ ...queryObject, identity: id, size }),
       getNodesCount({ ...queryObject, identity: id }),
-    ]).then(([identityData, nodesData, nodesCount]) => {
+    ]).then(([identityData, providersData, nodesData, nodesCount]) => {
       setIdentity(identityData.data);
+
+      // setProvidersFetched(providersData.success);
+      // setProviders(providersData.data);
+
+      setProviders([
+        {
+          contract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l',
+          serviceFee: '12',
+          maxDelegationCap: '12321',
+          apr: '29',
+          totalActiveStake: '2250000000000000000000000',
+          numUsers: 4,
+          numNodes: 20,
+          identity: {
+            name: 'Just Mining',
+            avatar:
+              'https://s3.amazonaws.com/keybase_processed_uploads/b011b27c59f42344b38b476da9d85105_360_360.jpg',
+            identity: 'thomasjustmining',
+            website: 'https://elrond.com',
+            validators: 1454,
+            score: 174480,
+            stake: 3635000,
+            stakePercent: 67.04,
+          },
+        },
+        {
+          contract: 'erd195fe57d7fm5h33585sc7wl8trqhrmy85z3dg6f6mqd0724ymljxq3zjemc',
+          serviceFee: '5',
+          maxDelegationCap: '12321',
+          apr: '34',
+          totalActiveStake: '1250000000000000000000000',
+          numUsers: 1,
+          numNodes: 1,
+          identity: {
+            avatar:
+              'https://s3.amazonaws.com/keybase_processed_uploads/b011b27c59f42344b38b476da9d85105_360_360.jpg',
+            identity: 'thomasjustmining',
+            website: 'https://elrond.com',
+            name: 'Just Mining',
+            validators: 1454,
+            score: 174480,
+            stake: 3635000,
+            stakePercent: 67.04,
+          },
+        },
+      ]);
+      setProvidersFetched(true);
       setNodes(nodesData.data);
       setTotalNodes(nodesCount.data);
       setDataReady(identityData.success && nodesData.success);
@@ -32,6 +86,8 @@ const IdentityDetails = () => {
   };
 
   React.useEffect(fetchData, []);
+
+  const showProviders = providersFetched === false || (providersFetched && providers);
 
   return (
     <>
@@ -47,105 +103,71 @@ const IdentityDetails = () => {
       <div ref={ref}>
         {dataReady === true && identity && (
           <div className="container pt-spacer">
-            <div className="row page-header">
-              <div className="col-12">
-                <h3 className="page-title mb-4">
-                  <span data-testid="title">Validator Details</span>
-                </h3>
-              </div>
-            </div>
-
-            <div className="row">
+            <div className="row" data-testid="identityDetailsContainer">
               <div className="col-12 mb-spacer">
                 <IdentityCard identity={identity} />
               </div>
             </div>
 
-            <div className="row " data-testid="identityDetailsContainer">
-              <div className="col-12 col-md-6 mb-spacer">
-                <div className="card">
-                  <div className="card-header">
-                    <div className="card-header-item p-0">
-                      <div className="identity-header-item px-lg-spacer justify-content-center">
-                        <SharedIdentity.Avatar identity={identity} />
-                        {identity.name ? identity.name : 'N/A'}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="card-body p-0">
-                    <div className="container-fluid">
-                      <DetailItem title="Location" colWidth="3">
-                        {identity.location ? (
-                          identity.location
-                        ) : (
-                          <span className="text-secondary">N/A</span>
-                        )}
-                      </DetailItem>
+            {showProviders && (
+              <div className="row">
+                <div className="col-12 mb-spacer">
+                  <div className="card">
+                    {providersFetched === false ? (
+                      <PageState
+                        icon={faCode}
+                        title="Unable to load providers"
+                        className="py-spacer my-auto"
+                        dataTestId="errorScreen"
+                      />
+                    ) : (
+                      <>
+                        <div className="card-header">
+                          <div className="card-header-item d-flex align-items-center">
+                            <h6 className="m-0">Delegation Contracts</h6>
+                            {identity.website ? (
+                              <div className="ml-auto">
+                                <a
+                                  className="btn btn-primary"
+                                  target={`_blank`}
+                                  rel={`noreferrer nofollow`}
+                                  href={identity.website}
+                                >
+                                  Stake now
+                                </a>
+                              </div>
+                            ) : null}
+                          </div>
+                        </div>
 
-                      <DetailItem title="Twitter" colWidth="3">
-                        {identity.twitter ? (
-                          <a target={`_blank`} rel={`noreferrer nofollow`} href={identity.twitter}>
-                            {identity.twitter.split('/').pop()}
-                          </a>
-                        ) : (
-                          <span className="text-secondary">N/A</span>
-                        )}
-                      </DetailItem>
-
-                      <DetailItem title="Web" colWidth="3">
-                        {identity.website ? (
-                          <a target={`_blank`} rel={`noreferrer nofollow`} href={identity.website}>
-                            {identity.website}
-                          </a>
-                        ) : (
-                          <span className="text-secondary">N/A</span>
-                        )}
-                      </DetailItem>
-                    </div>
+                        <div className="card-body p-0">
+                          {providers && (
+                            <ProvidersTable providers={providers} showIdentity={false} />
+                          )}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
-              <div className="col-12 col-md-6 mb-spacer">
-                <div className="card">
-                  <div className="card-body p-0">
-                    <div className="container-fluid">
-                      <SharedIdentity.Detail
-                        title="Stake"
-                        colWidth="4"
-                        field="stake"
-                        identity={identity}
-                      />
-                      <SharedIdentity.Detail
-                        title="Stake percent"
-                        colWidth="4"
-                        field="stakePercent"
-                        identity={identity}
-                      />
-                      <SharedIdentity.Detail
-                        title="Nodes"
-                        colWidth="4"
-                        field="validators"
-                        identity={identity}
-                      />
-                      <SharedIdentity.Detail
-                        title="Score"
-                        colWidth="4"
-                        field="score"
-                        identity={identity}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            )}
+
             <div className="row">
               <div className="col-12">
                 <div className="card">
                   <div className="card-header">
-                    <div className="card-header-item">
+                    <div className="card-header-item d-flex align-items-center">
                       <h6 className="m-0" data-testid="title">
                         Nodes
                       </h6>
+
+                      <Pager
+                        className="ml-auto"
+                        itemsPerPage={25}
+                        page={String(size)}
+                        total={totalNodes}
+                        show
+                      />
                     </div>
                   </div>
 
@@ -154,8 +176,14 @@ const IdentityDetails = () => {
                       <NodesTable.Body nodes={nodes} />
                     </NodesTable>
                   </div>
-                  <div className="card-footer">
-                    <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+                  <div className="card-footer d-flex justify-content-end">
+                    <Pager
+                      className="my-3"
+                      itemsPerPage={25}
+                      page={String(size)}
+                      total={totalNodes}
+                      show
+                    />
                   </div>
                 </div>
               </div>

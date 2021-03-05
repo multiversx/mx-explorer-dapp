@@ -47,7 +47,11 @@ const Nodes = () => {
       <NodesLayout>
         <div className="card" ref={ref}>
           <div className="card-header">
-            {isMainnet && <NodeTabs />}
+            {isMainnet && (
+              <NodeTabs>
+                <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+              </NodeTabs>
+            )}
 
             <div className="card-header-item">
               <Filters />
@@ -71,8 +75,14 @@ const Nodes = () => {
                   <NodesTable.Body nodes={nodes} />
                 </NodesTable>
               </div>
-              <div className="card-footer">
-                <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+              <div className="card-footer d-flex justify-content-end">
+                <Pager
+                  className="my-3"
+                  itemsPerPage={25}
+                  page={String(size)}
+                  total={totalNodes}
+                  show
+                />
               </div>
             </>
           )}

@@ -84,8 +84,9 @@ const Blocks = () => {
                         <BlocksTable blocks={state.blocks} shard={shard} />
                       </div>
 
-                      <div className="card-footer">
+                      <div className="card-footer d-flex justify-content-end">
                         <Pager
+                          className="my-3"
                           page={String(page)}
                           total={totalBlocks !== '...' ? Math.min(totalBlocks, 10000) : totalBlocks}
                           itemsPerPage={25}

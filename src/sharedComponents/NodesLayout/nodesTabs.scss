@@ -1,19 +1,14 @@
 .nodes-tabs {
-  .nav {
-    border-bottom: 1px solid $border-color;
+  .tab-link {
+    color: $secondary;
 
-    .nav-link {
-      &.active:hover,
-      &.active {
-        color: $body;
-        background-color: $card_bg;
-        border-color: $border-color $border-color $border-color;
-        border-bottom-color: $card_bg;
-      }
+    &:hover {
+      color: $secondary;
+    }
 
-      &:hover {
-        border-color: $card_bg $card_bg $border-color;
-      }
+    &.active:hover,
+    &.active {
+      color: $primary;
     }
   }
 }
