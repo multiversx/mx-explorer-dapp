@@ -1,7 +1,12 @@
 import * as React from 'react';
-import { IdentityType } from 'context/state';
 
-const IdentityAvatar = ({ identity }: { identity: IdentityType }) => {
+interface IdentityAvatarType {
+  name?: string;
+  avatar?: string;
+  identity?: string;
+}
+
+const IdentityAvatar = ({ identity }: { identity: IdentityAvatarType }) => {
   return (
     <img
       className={`identity-avatar rounded-circle mr-2 ${!identity.avatar ? 'p-1 bg-light' : ''}`}

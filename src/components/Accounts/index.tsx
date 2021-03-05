@@ -106,8 +106,9 @@ const Transactions = () => {
                         </div>
                       </div>
 
-                      <div className="card-footer">
+                      <div className="card-footer d-flex justify-content-end">
                         <Pager
+                          className="my-3"
                           page={String(page)}
                           total={
                             totalAccounts !== '...' ? Math.min(totalAccounts, 10000) : totalAccounts

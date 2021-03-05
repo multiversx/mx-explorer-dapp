@@ -23,6 +23,9 @@ import Trim from './Trim';
 import Led from './Led';
 import AxiosInterceptor from './AxiosInterceptor';
 import SharedIdentity from './SharedIdentity';
+import ProvidersTable from './ProvidersTable';
+import MultilayerPercentageBar from './MultilayerPercentageBar';
+import CardItem from './CardItem';
 
 export {
   Denominate,
@@ -51,4 +54,7 @@ export {
   Led,
   AxiosInterceptor,
   SharedIdentity,
+  ProvidersTable,
+  MultilayerPercentageBar,
+  CardItem,
 };

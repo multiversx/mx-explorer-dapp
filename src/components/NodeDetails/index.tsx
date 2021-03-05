@@ -4,13 +4,14 @@ import { adapter, BlocksTable, Loader, PageState } from 'sharedComponents';
 import { useLocation, useParams } from 'react-router-dom';
 import { IdentityType, NodeType } from 'context/state';
 import NodeInformation from './NodeInformation';
-import Identity from './Identity';
 import NetworkMetrics from './NetworkMetrics';
 import Rounds, { RoundType } from './Rounds';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 import { BlockType } from 'sharedComponents/BlocksTable';
-import { useIsMainnet } from 'helpers';
+import { useIsMainnet, types } from 'helpers';
+import IdentityCard from 'components/IdentityDetails/IdentityCard';
+import ProviderStats from 'components/ProviderDetails/ProviderStats';
 
 interface NodeDetailType<T> {
   data?: T;
@@ -25,12 +26,13 @@ const NodeDetails = () => {
   const ref = React.useRef(null);
   const { publicKey } = useParams() as any;
   const { search } = useLocation();
-  const { getNode, getIdentity, getRounds, getBlocks } = adapter();
+  const { getNode, getIdentity, getRounds, getBlocks, getProvider } = adapter();
   const isMainnet = useIsMainnet();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
   const [node, setNode] = React.useState<NodeDetailType<NodeType>>(initialState);
   const [identity, setIdentity] = React.useState<NodeDetailType<IdentityType>>(initialState);
+  const [provider, setProvider] = React.useState<NodeDetailType<types.ProviderType>>(initialState);
   const [rounds, setRounds] = React.useState<NodeDetailType<RoundType[]>>(initialState);
   const [blocks, setBlocks] = React.useState<NodeDetailType<BlockType[]>>(initialState);
 
@@ -38,16 +40,18 @@ const NodeDetails = () => {
     setDataReady(undefined);
     getNode(publicKey).then((nodeData) => {
       if (nodeData.success) {
+        const fetchIdentity = isMainnet && nodeData.data.identity !== undefined;
+        const fetchProvider = nodeData.data.owner !== undefined;
+
         if (nodeData.data.nodeType !== 'observer') {
           const promises = [
             getRounds(publicKey),
             getBlocks({ proposer: publicKey }),
-            ...(isMainnet && nodeData.data.identity !== undefined
-              ? [getIdentity(nodeData.data.identity)]
-              : []),
+            ...(fetchIdentity ? [getIdentity(nodeData.data.identity)] : []),
+            ...(fetchProvider ? [getProvider(nodeData.data.owner)] : []),
           ];
           Promise.all(promises).then((response) => {
-            const [roundsData, blocksData, identityData] = response;
+            const [roundsData, blocksData, identityData, providerData] = response;
             if (ref.current !== null) {
               setNode(nodeData);
 
@@ -65,18 +69,55 @@ const NodeDetails = () => {
                   : [],
                 success: roundsData.success,
               });
+
               if (isMainnet && identityData) {
                 setIdentity(identityData);
               }
+
+              // if (providerData) {
+              //   setProvider(providerData);
+              // }
+
+              setProvider({
+                data: {
+                  contract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l',
+                  serviceFee: '12',
+                  withDelegationCap: true,
+                  maxDelegationCap: '100',
+                  apr: '29',
+                  totalActiveStake: '2250000000000000000000000',
+                  numUsers: 4,
+                  numNodes: 20,
+                  identity: {
+                    name: 'Just Mining',
+                    avatar:
+                      'https://s3.amazonaws.com/keybase_processed_uploads/b011b27c59f42344b38b476da9d85105_360_360.jpg',
+                    identity: 'thomasjustmining',
+                    website: 'https://elrond.com',
+                    validators: 1454,
+                    score: 174480,
+                    stake: 3635000,
+                    stakePercent: 67.04,
+                  },
+                },
+                success: true,
+              });
 
               setDataReady(nodeData.success);
             }
           });
         } else {
-          if (isMainnet && nodeData.data.identity !== undefined) {
-            getIdentity(nodeData.data.identity).then((identityData) => {
-              if (isMainnet && identityData) {
+          const promises = [
+            ...(fetchIdentity ? [getIdentity(nodeData.data.identity)] : []),
+            ...(fetchProvider ? [getProvider(nodeData.data.owner)] : []),
+          ];
+
+          if (promises.length > 0) {
+            Promise.all(promises).then((response) => {
+              const [identityData, providerData] = response;
+              if (ref.current !== null) {
                 setIdentity(identityData);
+                setProvider(providerData);
                 setNode(nodeData);
                 setDataReady(true);
               }
@@ -94,8 +135,11 @@ const NodeDetails = () => {
 
   React.useEffect(fetchNodes, [search]);
 
-  const showIdentityCard =
+  const showIdentity =
     identity.success === false || (identity.success && identity.data !== undefined);
+
+  const showProviderStats =
+    provider.success === false || (provider.success && provider.data !== undefined);
 
   return (
     <>
@@ -112,23 +156,28 @@ const NodeDetails = () => {
         {dataReady === true && node.data !== undefined && (
           <>
             <div className="container pt-spacer">
-              <div className="row page-header">
-                <div className="col-12">
-                  <h3 className="page-title mb-4" data-testid="title">
-                    Node Information
-                  </h3>
-                </div>
-              </div>
-              <div className="row">
-                <div className={`mb-spacer ${showIdentityCard ? 'col-md-8' : 'col-12'}`}>
-                  <NodeInformation node={node.data} colWidth={showIdentityCard ? '3' : '2'} />
-                </div>
-                {showIdentityCard && (
-                  <div className="col-md-4 mb-spacer">
-                    <Identity identity={identity.data} />
+              {showIdentity && (
+                <div className="row">
+                  <div className="col mb-spacer">
+                    <IdentityCard identity={identity.data} summary={true} />
                   </div>
-                )}
+                </div>
+              )}
+
+              {showProviderStats && (
+                <div className="row">
+                  <div className="col mb-spacer">
+                    <ProviderStats provider={provider.data} />
+                  </div>
+                </div>
+              )}
+
+              <div className="row">
+                <div className="mb-spacer col">
+                  <NodeInformation node={node.data} />
+                </div>
               </div>
+
               {node.data.nodeType !== 'observer' && (
                 <div className="row">
                   <div className="mb-spacer col-md-6">

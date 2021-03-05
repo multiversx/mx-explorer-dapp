@@ -1,0 +1,18 @@
+.multilayer-percentage-bar {
+  .progress,
+  .progress-bar {
+    height: 1.5rem !important;
+  }
+
+  .step-1 {
+    background-color: $primary;
+  }
+
+  .step-2 {
+    background-color: $primary-accent;
+  }
+
+  .step-3 {
+    background-color: lighten($primary-accent, 10%);
+  }
+}

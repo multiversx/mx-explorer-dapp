@@ -1,4 +1,11 @@
 .identity-card {
+  &.summary {
+    .identity-avatar {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+
   .identity-avatar {
     width: 7rem;
     height: 7rem;
@@ -19,5 +26,20 @@
 
   .flex-1 {
     flex: 1;
+  }
+
+  .multilayer-percentage-bar {
+    .legend-dot-container {
+      @extend .mt-0;
+      flex-direction: column;
+    }
+
+    .legend-dot {
+      @extend .mt-3;
+
+      small {
+        font-size: 1rem;
+      }
+    }
   }
 }

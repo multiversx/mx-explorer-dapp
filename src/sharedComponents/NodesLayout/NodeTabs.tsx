@@ -3,32 +3,44 @@ import { useLocation } from 'react-router-dom';
 import { validatorsRoutes } from 'routes';
 import { NetworkLink } from 'sharedComponents';
 
-const NodesTabs = () => {
+const NodesTabs = ({ children }: { children?: React.ReactNode }) => {
   const activePath = useLocation().pathname;
-  const nodesPage = activePath.includes(validatorsRoutes.nodes);
-
-  const validatorsPage = !nodesPage;
 
   return (
-    <div className="nodes-tabs card-header-item pb-0 px-0 border-0">
-      <ul className="nav nav-tabs px-3 px-lg-spacer">
-        <li className="nav-item">
+    <div className="nodes-tabs card-header-item">
+      <div className="d-flex flex-column flex-md-row align-items-md-center">
+        <div>
           <NetworkLink
             to={validatorsRoutes.index}
-            className={`nav-link text-center ${validatorsPage ? 'active' : ''}`}
+            className={`tab-link mr-3 ${
+              activePath.includes(validatorsRoutes.index) ? 'active' : ''
+            }`}
           >
             Validators
           </NetworkLink>
-        </li>
-        <li className="nav-item">
+        </div>
+        <div>
+          <NetworkLink
+            to={validatorsRoutes.providers}
+            className={`tab-link mx-3 ${
+              activePath.includes(validatorsRoutes.providers) ? 'active' : ''
+            }`}
+          >
+            Delegation Contracts
+          </NetworkLink>
+        </div>
+        <div>
           <NetworkLink
             to={validatorsRoutes.nodes}
-            className={`nav-link text-center ${nodesPage ? 'active' : ''}`}
+            className={`tab-link ml-3 ${
+              activePath.includes(validatorsRoutes.nodes) ? 'active' : ''
+            }`}
           >
             Nodes
           </NetworkLink>
-        </li>
-      </ul>
+        </div>
+        {children && <div className="ml-auto">{children}</div>}
+      </div>
     </div>
   );
 };
