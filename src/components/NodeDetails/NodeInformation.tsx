@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { urlBuilder } from 'helpers';
-import { ShardSpan, NetworkLink, Trim, DetailItem, CopyButton } from 'sharedComponents';
+import { ShardSpan, NetworkLink, Trim, CopyButton, CardItem } from 'sharedComponents';
 import RowIcon from 'sharedComponents/NodesTable/RowIcon';
 import { NodeType } from 'context/state';
+import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
+import { faCogs } from '@fortawesome/pro-light-svg-icons/faCogs';
+
 import Alert from './Alert';
 
 const NodeInformation = ({ node }: { node: NodeType }) => {
@@ -17,17 +20,17 @@ const NodeInformation = ({ node }: { node: NodeType }) => {
     numInstances,
   } = node;
 
-  const leftColWith = '3';
-  const rightColWith = '4';
-
   return (
-    <div className="row">
-      <div className="col-12 col-lg-8 mb-spacer mb-lg-0">
-        <div className="card">
-          <div className="card-body p-0">
-            <div className="container-fluid">
-              <DetailItem title="Public Key" colWidth={leftColWith}>
-                <div className="d-flex flex-column">
+    <div className="card">
+      <div className="card-body p-lg-spacer">
+        <div className="row">
+          <div className="col d-flex flex-row">
+            <div className="flex-shrink-0">
+              <h5>Node Details</h5>
+            </div>
+            <div className="d-flex flex-wrap flex-fill">
+              <CardItem title="Public Key" customIcon={<ElrondSymbol />}>
+                <div className="d-flex flex-column min-w-0">
                   <div className="d-flex align-items-center">
                     {nodeType === 'observer' && <RowIcon node={node} />}
                     <Trim text={publicKey} />
@@ -35,53 +38,46 @@ const NodeInformation = ({ node }: { node: NodeType }) => {
                   </div>
                   <Alert node={node} />
                 </div>
-              </DetailItem>
+              </CardItem>
 
-              <DetailItem title="Shard" colWidth={leftColWith}>
-                <div className="d-flex">
-                  {shard !== undefined ? (
-                    <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
-                      <ShardSpan shard={shard} />
-                    </NetworkLink>
-                  ) : (
-                    <span className="text-secondary">N/A</span>
-                  )}
-                </div>
-              </DetailItem>
-
-              <DetailItem title="Name" colWidth={leftColWith}>
-                {nodeName ? nodeName : <span className="text-secondary">N/A</span>}
-              </DetailItem>
-
-              <DetailItem title="Type" colWidth={leftColWith}>
-                {nodeType === 'observer' && <>Observer</>}
-                {nodeType !== 'observer' && (
-                  <>
-                    Validator <span className="text-secondary">({peerType})</span>
-                  </>
+              <CardItem title="Shard" icon={faCogs}>
+                {shard !== undefined ? (
+                  <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
+                    <ShardSpan shard={shard} />
+                  </NetworkLink>
+                ) : (
+                  <span className="text-secondary">N/A</span>
                 )}
-              </DetailItem>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-12 col-lg-4">
-        <div className="card" data-testid="brandContainer">
-          <div className="card-body p-0">
-            <div className="container-fluid">
-              <DetailItem title="Version" colWidth={rightColWith}>
-                <span data-testid="versionNumber">
-                  {versionNumber ? versionNumber : <span className="text-secondary">N/A</span>}
+              </CardItem>
+
+              <CardItem title="Name" icon={faCogs}>
+                <span className="text-secondary">{nodeName ? nodeName : <>N/A</>}</span>
+              </CardItem>
+
+              <CardItem title="Type" icon={faCogs}>
+                <span className="text-secondary">
+                  {nodeType === 'observer' && <>Observer</>}
+                  {nodeType !== 'observer' && (
+                    <>
+                      Validator <span className="text-secondary">({peerType})</span>
+                    </>
+                  )}
                 </span>
-              </DetailItem>
+              </CardItem>
 
-              <DetailItem title="Nonce" colWidth={rightColWith}>
-                <span>{nonce ? nonce : <span className="text-secondary">N/A</span>}</span>
-              </DetailItem>
+              <CardItem title="Version" icon={faCogs}>
+                <span className="text-secondary" data-testid="versionNumber">
+                  {versionNumber ? versionNumber : <>N/A</>}
+                </span>
+              </CardItem>
 
-              <DetailItem title="Instances" colWidth={rightColWith}>
-                {numInstances ? numInstances : <span className="text-secondary">N/A</span>}
-              </DetailItem>
+              <CardItem title="Nonce" icon={faCogs}>
+                <span className="text-secondary">{nonce ? nonce : <>N/A</>}</span>
+              </CardItem>
+
+              <CardItem title="Instances" icon={faCogs}>
+                <span className="text-secondary">{numInstances ? numInstances : <>N/A</>}</span>
+              </CardItem>
             </div>
           </div>
         </div>
