@@ -2,9 +2,8 @@ import React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { adapter, Loader, Pager, PageState } from 'sharedComponents';
 import { useParams } from 'react-router-dom';
-import { NodesTable } from 'sharedComponents';
+import { NodesTable, SharedIdentity } from 'sharedComponents';
 import { types, useFilters } from 'helpers';
-import IdentityCard from 'components/IdentityDetails/IdentityCard';
 import ProviderStats from './ProviderStats';
 
 const ProviderDetails = () => {
@@ -77,7 +76,7 @@ const ProviderDetails = () => {
             {provider && provider.identity !== undefined && (
               <div className="row">
                 <div className="col-12 mb-spacer">
-                  <IdentityCard identity={provider.identity} summary={true} />
+                  <SharedIdentity.Summary identity={provider.identity} />
                 </div>
               </div>
             )}

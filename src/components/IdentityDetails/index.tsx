@@ -4,9 +4,8 @@ import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { IdentityType } from 'context/state';
 import { adapter, Loader, Pager, PageState, ProvidersTable } from 'sharedComponents';
 import { useParams } from 'react-router-dom';
-import { NodesTable } from 'sharedComponents';
+import { NodesTable, SharedIdentity } from 'sharedComponents';
 import { useFilters, types } from 'helpers';
-import IdentityCard from './IdentityCard/index';
 
 const IdentityDetails = () => {
   const ref = React.useRef(null);
@@ -105,7 +104,7 @@ const IdentityDetails = () => {
           <div className="container pt-spacer">
             <div className="row" data-testid="identityDetailsContainer">
               <div className="col-12 mb-spacer">
-                <IdentityCard identity={identity} />
+                <SharedIdentity.Card identity={identity} />
               </div>
             </div>
 
