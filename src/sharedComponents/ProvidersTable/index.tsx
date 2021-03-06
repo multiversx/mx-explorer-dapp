@@ -42,7 +42,7 @@ const ProvidersTable = ({
                     {provider.identity ? (
                       <NetworkLink
                         to={urlBuilder.identityDetails(provider.identity.identity || '')}
-                        className="trim-wrapper"
+                        className="trim-wrapper ml-2"
                       >
                         {provider.identity.name}
                       </NetworkLink>

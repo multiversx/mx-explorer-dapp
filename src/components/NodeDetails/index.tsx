@@ -1,6 +1,6 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { adapter, BlocksTable, Loader, PageState } from 'sharedComponents';
+import { adapter, BlocksTable, Loader, PageState, SharedIdentity } from 'sharedComponents';
 import { useLocation, useParams } from 'react-router-dom';
 import { IdentityType, NodeType } from 'context/state';
 import NodeInformation from './NodeInformation';
@@ -10,7 +10,6 @@ import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 import { BlockType } from 'sharedComponents/BlocksTable';
 import { useIsMainnet, types } from 'helpers';
-import IdentityCard from 'components/IdentityDetails/IdentityCard';
 import ProviderStats from 'components/ProviderDetails/ProviderStats';
 
 interface NodeDetailType<T> {
@@ -159,7 +158,7 @@ const NodeDetails = () => {
               {showIdentity && (
                 <div className="row">
                   <div className="col mb-spacer">
-                    <IdentityCard identity={identity.data} summary={true} />
+                    <SharedIdentity.Summary identity={identity.data} />
                   </div>
                 </div>
               )}
