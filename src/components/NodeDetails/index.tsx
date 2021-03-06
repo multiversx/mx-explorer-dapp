@@ -1,6 +1,13 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { adapter, BlocksTable, Loader, PageState, SharedIdentity } from 'sharedComponents';
+import {
+  adapter,
+  BlocksTable,
+  Loader,
+  PageState,
+  SharedIdentity,
+  ProviderStats,
+} from 'sharedComponents';
 import { useLocation, useParams } from 'react-router-dom';
 import { IdentityType, NodeType } from 'context/state';
 import NodeInformation from './NodeInformation';
@@ -10,7 +17,6 @@ import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 import { BlockType } from 'sharedComponents/BlocksTable';
 import { useIsMainnet, types } from 'helpers';
-import ProviderStats from 'components/ProviderDetails/ProviderStats';
 
 interface NodeDetailType<T> {
   data?: T;
