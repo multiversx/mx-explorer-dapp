@@ -12,7 +12,7 @@ describe('Account Details Page', () => {
 
     await wait(async () => {
       const pageInterval = render.getByTestId('pageInterval');
-      expect(pageInterval!.innerHTML).toBe('1-25');
+      expect(pageInterval!.innerHTML).toBe('1');
     });
 
     const address = await render.findByTestId('address');

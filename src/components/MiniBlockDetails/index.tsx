@@ -95,7 +95,7 @@ const MiniBlockDetails = () => {
                     <div className="card">
                       <div className="card-header">
                         <div className="card-header-item">
-                          <h6 data-testid="title">Miniblock Details</h6>
+                          <h6 data-testid="pageTitle">Miniblock Details</h6>
                         </div>
                       </div>
 

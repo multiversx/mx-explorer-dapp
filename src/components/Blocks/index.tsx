@@ -75,8 +75,13 @@ const Blocks = () => {
                       <div className="card-header">
                         <div className="card-header-item">
                           <h6 className="m-0" data-testid="title">
-                            Blocks{' '}
-                            {shard !== undefined && shard >= 0 && <ShardSpan shard={shard} />}
+                            Blocks
+                            {shard !== undefined && shard >= 0 && (
+                              <>
+                                {' '}
+                                <ShardSpan shard={shard} />
+                              </>
+                            )}
                           </h6>
                         </div>
                       </div>
