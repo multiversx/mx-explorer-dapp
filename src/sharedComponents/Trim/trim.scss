@@ -2,6 +2,8 @@
   display: flex;
   max-width: 100%;
   overflow: hidden;
+  position: relative;
+  white-space: nowrap;
 
   &.overflow {
     .ellipsis {
@@ -55,6 +57,12 @@
       }
     }
   }
+
+  .hidden-text-ref {
+    position: absolute;
+    display: block;
+    visibility: hidden;
+  }
 }
 
 .trim-wrapper {
@@ -88,5 +96,11 @@ a > .trim span {
   .right span,
   .ellipsis {
     font-size: 0.8125rem;
+  }
+}
+
+.table .trim-size-xl .trim {
+  @include media-breakpoint-up(md) {
+    max-width: 13rem;
   }
 }
