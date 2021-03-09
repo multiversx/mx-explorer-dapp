@@ -55,13 +55,6 @@ const BlockDetails = () => {
       <div className="block-details" ref={ref}>
         {dataReady === true && state && state.block.hash && (
           <div className="container pt-spacer">
-            <div className="row page-header">
-              <div className="col-12">
-                <h3 className="page-title mb-4" data-testid="title">
-                  Block Details
-                </h3>
-              </div>
-            </div>
             <div className="row">
               <div className="col-12">
                 <BlockData {...state} />

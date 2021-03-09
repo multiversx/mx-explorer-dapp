@@ -50,7 +50,9 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
           <td>
             <div className="d-flex align-items-center justify-content-end">
               <Led color={node.status === 'online' ? 'bg-success' : 'bg-danger'} />
-              <span className="ml-2">{node.status === 'online' ? 'Online' : 'Offline'}</span>
+              <span className={`ml-2 ${node.status === 'online' ? 'text-success' : 'text-danger'}`}>
+                {node.status === 'online' ? 'online' : 'offline'}
+              </span>
             </div>
           </td>
           <td className="text-right">

@@ -88,18 +88,17 @@ const MiniBlockDetails = () => {
       <div ref={ref}>
         {miniBlockFetched && miniBlock && (
           <div className="container pt-spacer">
-            <div className="row page-header">
-              <div className="col-12">
-                <h3 className="page-title mb-4" data-testid="pageTitle">
-                  Miniblock Details
-                </h3>
-              </div>
-            </div>
             <div className="row">
               <div className="col-12">
                 <div className="row">
                   <div className="col-12">
                     <div className="card">
+                      <div className="card-header">
+                        <div className="card-header-item">
+                          <h6 data-testid="title">Miniblock Details</h6>
+                        </div>
+                      </div>
+
                       <div className="card-body p-0">
                         <div className="container-fluid">
                           <DetailItem title="Miniblock Hash">
@@ -169,7 +168,6 @@ const MiniBlockDetails = () => {
                         address={undefined}
                         totalTransactions={totalTransactions}
                         size={size}
-                        title={true}
                       />
                     ) : (
                       <div className="card">

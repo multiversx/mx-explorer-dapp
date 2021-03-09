@@ -1,6 +1,5 @@
 import BlocksTable from './BlocksTable';
 import Denominate from './Denominate';
-import Highlights from './Highlights';
 import Loader from './Loader';
 import Pager from './Pager';
 import PageState from './PageState';
@@ -30,7 +29,6 @@ import ProviderStats from './ProviderStats';
 
 export {
   Denominate,
-  Highlights,
   Pager,
   ScAddressIcon,
   NetworkLink,

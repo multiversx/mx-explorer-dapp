@@ -92,7 +92,7 @@ const ValidatorsStatus = () => {
           </div>
         </div>
       </div>
-      <div className="card-footer">
+      <div className="card-footer py-0">
         {continentsRank.map(({ continent, nodes, percentage }, i) => (
           <div
             key={i}

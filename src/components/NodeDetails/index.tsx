@@ -161,6 +161,12 @@ const NodeDetails = () => {
         {dataReady === true && node.data !== undefined && (
           <>
             <div className="container pt-spacer">
+              <div className="row">
+                <div className="mb-spacer col">
+                  <NodeInformation node={node.data} />
+                </div>
+              </div>
+
               {showIdentity && (
                 <div className="row">
                   <div className="col mb-spacer">
@@ -176,12 +182,6 @@ const NodeDetails = () => {
                   </div>
                 </div>
               )}
-
-              <div className="row">
-                <div className="mb-spacer col">
-                  <NodeInformation node={node.data} />
-                </div>
-              </div>
 
               {node.data.nodeType !== 'observer' && (
                 <div className="row">

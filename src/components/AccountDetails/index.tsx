@@ -198,13 +198,6 @@ const AccountDetails = () => {
       <div ref={ref}>
         {!loading && !failed && (
           <div className="container pt-spacer">
-            <div className="row page-header">
-              <div className="col-12">
-                <h3 className="page-title mb-4" data-testid="title">
-                  Account Details
-                </h3>
-              </div>
-            </div>
             <div className="row">
               <div className="col mb-spacer">
                 <AccountDetailsCard {...accountDetails} />
@@ -244,7 +237,6 @@ const AccountDetails = () => {
                     address={address}
                     totalTransactions={totalTransactions}
                     size={size}
-                    title={true}
                     directionCol={true}
                   />
                 ) : (

@@ -72,6 +72,12 @@ const ProviderDetails = () => {
       <div ref={ref}>
         {dataReady === true && (
           <div className="container pt-spacer">
+            <div className="row">
+              <div className="col-12 mb-spacer">
+                <ProviderStats provider={provider} />
+              </div>
+            </div>
+
             {provider && provider.identity !== undefined && (
               <div className="row">
                 <div className="col-12 mb-spacer">
@@ -81,27 +87,13 @@ const ProviderDetails = () => {
             )}
 
             <div className="row">
-              <div className="col-12 mb-spacer">
-                <ProviderStats provider={provider} />
-              </div>
-            </div>
-
-            <div className="row">
               <div className="col-12">
                 <div className="card">
                   <div className="card-header">
-                    <div className="card-header-item d-flex align-items-center">
+                    <div className="card-header-item">
                       <h6 className="m-0" data-testid="title">
                         Nodes
                       </h6>
-
-                      <Pager
-                        className="ml-auto"
-                        itemsPerPage={25}
-                        page={String(size)}
-                        total={totalNodes}
-                        show
-                      />
                     </div>
                   </div>
 
@@ -111,13 +103,7 @@ const ProviderDetails = () => {
                     </NodesTable>
                   </div>
                   <div className="card-footer d-flex justify-content-end">
-                    <Pager
-                      className="my-3"
-                      itemsPerPage={25}
-                      page={String(size)}
-                      total={totalNodes}
-                      show
-                    />
+                    <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
                   </div>
                 </div>
               </div>

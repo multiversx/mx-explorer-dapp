@@ -67,26 +67,26 @@ const Blocks = () => {
       <div ref={ref}>
         {dataReady === true && (
           <div className="container pt-spacer">
-            <div className="row page-header">
-              <div className="col-12">
-                <h3 className="page-title mb-4">
-                  <span data-testid="title">Blocks</span>&nbsp;
-                  {shard !== undefined && shard >= 0 && <ShardSpan shard={shard} />}
-                </h3>
-              </div>
-            </div>
             <div className="row">
               <div className="col-12">
                 <div className="card">
                   {state && state.blocks.length > 0 ? (
                     <>
+                      <div className="card-header">
+                        <div className="card-header-item">
+                          <h6 className="m-0" data-testid="title">
+                            Blocks{' '}
+                            {shard !== undefined && shard >= 0 && <ShardSpan shard={shard} />}
+                          </h6>
+                        </div>
+                      </div>
+
                       <div className="card-body border-0 p-0">
                         <BlocksTable blocks={state.blocks} shard={shard} />
                       </div>
 
                       <div className="card-footer d-flex justify-content-end">
                         <Pager
-                          className="my-3"
                           page={String(page)}
                           total={totalBlocks !== '...' ? Math.min(totalBlocks, 10000) : totalBlocks}
                           itemsPerPage={25}

@@ -112,7 +112,6 @@ const Tokens = () => {
 
                       <div className="card-footer d-flex justify-content-end">
                         <Pager
-                          className="my-3"
                           page={String(page)}
                           total={totalTokens !== '...' ? Math.min(totalTokens, 10000) : totalTokens}
                           itemsPerPage={25}

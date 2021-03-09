@@ -9,7 +9,7 @@ interface TransactionsTableType {
   address?: string;
   totalTransactions: number | '...';
   size: number;
-  title?: boolean;
+  title?: React.ReactNode;
   directionCol?: boolean;
 }
 
@@ -18,20 +18,18 @@ const TransactionsTable = ({
   address,
   totalTransactions,
   size,
-  title = false,
+  title = (
+    <>
+      <h6 data-testid="title">Transactions</h6>
+    </>
+  ),
   directionCol = false,
 }: TransactionsTableType) => {
   return (
     <div className="transactions-table">
       <div className="card">
         <div className="card-header">
-          {title && (
-            <div className="card-header-item">
-              <h6 className="m-0" data-testid="title">
-                Transactions
-              </h6>
-            </div>
-          )}
+          <div className="card-header-item d-flex align-items-center">{title}</div>
         </div>
 
         <div className="card-body p-0">
@@ -64,7 +62,6 @@ const TransactionsTable = ({
 
         <div className="card-footer d-flex justify-content-end">
           <Pager
-            className="my-3"
             itemsPerPage={25}
             page={String(size)}
             total={

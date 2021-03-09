@@ -9,10 +9,10 @@
   }
 
   .step-2 {
-    background-color: $primary-accent;
+    background-color: $primary-light;
   }
 
   .step-3 {
-    background-color: lighten($primary-accent, 10%);
+    background-color: lighten($primary-light, 10%);
   }
 }

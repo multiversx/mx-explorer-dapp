@@ -57,19 +57,17 @@ const Transactions = () => {
       <div ref={ref}>
         {dataReady === true && (
           <div className="container pt-spacer">
-            <div className="row page-header">
-              <div className="col-12">
-                <h3 className="page-title mb-4">
-                  <span data-testid="title">Accounts</span>
-                </h3>
-              </div>
-            </div>
-
             <div className="row">
               <div className="col-12">
                 <div className="card">
                   {accounts && accounts.length > 0 ? (
                     <>
+                      <div className="card-header">
+                        <div className="card-header-item">
+                          <h6 data-testid="title">Accounts</h6>
+                        </div>
+                      </div>
+
                       <div className="card-body border-0 p-0">
                         <div className="table-wrapper">
                           <table className="table">
@@ -108,7 +106,6 @@ const Transactions = () => {
 
                       <div className="card-footer d-flex justify-content-end">
                         <Pager
-                          className="my-3"
                           page={String(page)}
                           total={
                             totalAccounts !== '...' ? Math.min(totalAccounts, 10000) : totalAccounts

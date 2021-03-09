@@ -32,11 +32,6 @@ const IdentitySummary = ({ identity }: { identity: IdentityType | undefined }) =
                 <FontAwesomeIcon icon={faAngleRight} className="text-muted" size="2x" />
               </div>
 
-              <div className="text-secondary mr-3">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices mi et velit
-                rutrum feugiat.
-              </div>
-
               <div className="d-flex text-secondary mr-3" style={{ maxWidth: '22rem' }}>
                 <span className="mr-2 d-flex flex-shrink-0">Public address:</span>
                 <NetworkLink
