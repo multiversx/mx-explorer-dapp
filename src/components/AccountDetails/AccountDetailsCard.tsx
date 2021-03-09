@@ -5,6 +5,12 @@ import { types } from 'helpers';
 const AccountDetailsCard = (props: types.AccountType) => {
   return props.address ? (
     <div className="card">
+      <div className="card-header">
+        <div className="card-header-item">
+          <h6 data-testid="title">Account Details</h6>
+        </div>
+      </div>
+
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Address">

@@ -134,13 +134,13 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
   return route ? (
     <Redirect to={route} />
   ) : (
-    <form className="w-100 d-flex">
+    <form className="main-search w-100 d-flex">
       <div className="input-group input-group-seamless">
         <input
           type="text"
-          className="form-control rounded-pill my-1 text-truncate"
-          placeholder={`Address / Tx Hash / Block Hash / Validator Key ${
-            isMainnet ? '' : '/ TokenID'
+          className="form-control border-0 rounded-pill py-3 pl-3 pl-lg-4 text-truncate"
+          placeholder={`Search for an address, transaction/block hash ${
+            isMainnet ? 'or validator key' : ',validator key or token id'
           }`} // TODO remove condition when Tokens go live
           name="requestType"
           data-testid="search"
@@ -152,18 +152,20 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
         <div className="input-group-append">
           <button
             type="submit"
-            className="input-group-text side-action outline-0 m-0"
+            className="input-group-text outline-0 m-0 p-0"
             onClick={(e) => {
               e.preventDefault();
               onClick();
             }}
             data-testid="searchButton"
           >
-            {searching ? (
-              <FontAwesomeIcon icon={faCircleNotch} spin className="mr-1 text-primary" />
-            ) : (
-              <FontAwesomeIcon icon={faSearch} className="mr-1" />
-            )}
+            <div className="my-1 py-1 px-3 px-lg-4 border-left">
+              {searching ? (
+                <FontAwesomeIcon icon={faCircleNotch} spin className="mr-1 text-primary" />
+              ) : (
+                <FontAwesomeIcon icon={faSearch} className="mr-1 text-" />
+              )}
+            </div>
           </button>
         </div>
       </div>

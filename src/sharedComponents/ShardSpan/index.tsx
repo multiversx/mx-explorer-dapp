@@ -5,14 +5,18 @@ interface ShardSpanType {
   shard: number | string;
 }
 
-const ShardSpan = ({ shard }: ShardSpanType) => {
+export const shardSpanText = (shard: number | string) => {
   if (typeof shard === 'string' && shard.includes('Shard')) {
     shard = shard.replace('Shard', '');
   }
 
   const isMetachain = metaChainShardId.toString() === String(shard).toString();
 
-  return isMetachain ? <span>Metachain</span> : <span>Shard {shard}</span>;
+  return isMetachain ? 'Metachain' : `Shard ${shard}`;
+};
+
+const ShardSpan = ({ shard }: ShardSpanType) => {
+  return <span>{shardSpanText(shard)}</span>;
 };
 
 export default ShardSpan;

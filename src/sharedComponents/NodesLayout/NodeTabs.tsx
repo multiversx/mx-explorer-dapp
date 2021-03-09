@@ -16,7 +16,7 @@ const NodesTabs = ({ children }: { children?: React.ReactNode }) => {
               activePath.includes(validatorsRoutes.index) ? 'active' : ''
             }`}
           >
-            Validators
+            <h6>Validators</h6>
           </NetworkLink>
         </div>
         <div>
@@ -26,7 +26,7 @@ const NodesTabs = ({ children }: { children?: React.ReactNode }) => {
               activePath.includes(validatorsRoutes.providers) ? 'active' : ''
             }`}
           >
-            Delegation Contracts
+            <h6>Contracts</h6>
           </NetworkLink>
         </div>
         <div>
@@ -36,7 +36,7 @@ const NodesTabs = ({ children }: { children?: React.ReactNode }) => {
               activePath.includes(validatorsRoutes.nodes) ? 'active' : ''
             }`}
           >
-            Nodes
+            <h6>Nodes</h6>
           </NetworkLink>
         </div>
         {children && <div className="ml-auto">{children}</div>}

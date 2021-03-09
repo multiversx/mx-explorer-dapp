@@ -1,14 +1,20 @@
 .nodes-tabs {
   .tab-link {
-    color: $secondary;
+    display: flex;
 
-    &:hover {
-      color: $secondary;
+    h6 {
+      color: $primary;
+
+      &:hover {
+        color: $link-hover-color;
+      }
     }
 
     &.active:hover,
     &.active {
-      color: $primary;
+      h6 {
+        color: $body;
+      }
     }
   }
 }

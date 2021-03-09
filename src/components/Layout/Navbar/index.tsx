@@ -102,18 +102,18 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="header-navbar d-sm-none p-0">
+      <div className="header-navbar d-lg-none p-0">
         <Collapse in={headerNavCollapsed}>
-          <div className="container d-md-flex">
+          <div className="container d-lg-flex">
             <div className="row">
-              <div className="col d-flex flex-column flex-md-row py-3 py-md-0">
+              <div className="col d-flex flex-column flex-lg-row py-3 py-md-0">
                 <NavLinks setExpanded={setHeaderNavCollapsed} />
 
-                <div className="d-md-none">
+                <div className="d-lg-none">
                   <AppSwitcher onToggle={toggleState} />
                 </div>
 
-                <div className="d-md-none">
+                <div className="d-lg-none">
                   <NetworkSwitcher onToggle={toggleState} />
                 </div>
               </div>

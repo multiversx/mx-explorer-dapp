@@ -55,92 +55,89 @@ const Pager = ({
 
   const prevPageUrl = size === 2 ? `${pathname}?${firstUrlParams}` : `${pathname}?${prevUrlParams}`;
 
-  const startEnd = end <= 1 ? end : `${start.toLocaleString('en')}-${last.toLocaleString('en')}`;
+  // const startEnd = end <= 1 ? end : `${start.toLocaleString('en')}-${last.toLocaleString('en')}`;
+
+  const startEnd = size;
 
   const lastUrlParams = new URLSearchParams({
     ...params,
     page: `${lastPage}`,
   }).toString();
 
+  const leftBtnActive = size !== 1;
+  const rightBtnsActive = end < total;
+
   return show ? (
-    <div className={className}>
-      <ul className="list-inline m-0">
-        <li className="list-inline-item">
+    <div className={`pager ${className}`}>
+      <div className="m-0 d-flex align-items-strech">
+        <div className={`btns-contrainer left border ${leftBtnActive ? '' : 'inactive'}`}>
           {size === 1 ? (
-            <div className="pager btn btn-primary-light text-muted">
+            <div className="btn btn-primary-light">
               <FontAwesomeIcon icon={faBackward} />
             </div>
           ) : (
             <NetworkLink
-              className="pager btn btn-primary-light"
+              className="btn btn-primary-light"
               data-testid="nextPageButton"
               to={`${pathname}?${firstUrlParams}`}
             >
               <FontAwesomeIcon icon={faBackward} />
             </NetworkLink>
           )}
-        </li>
 
-        <li className="list-inline-item">
           {size === 1 ? (
-            <div
-              className="pager btn btn-primary-light text-muted"
-              data-testid="disabledPreviousPageButton"
-            >
+            <div className="btn btn-primary-light" data-testid="disabledPreviousPageButton">
               <FontAwesomeIcon icon={faCaretLeft} size="lg" />
             </div>
           ) : (
             <NetworkLink
-              className="pager btn btn-primary-light"
+              className="btn btn-primary-light"
               to={prevPageUrl}
               data-testid="previousPageButton"
             >
               <FontAwesomeIcon icon={faCaretLeft} size="lg" />
             </NetworkLink>
           )}
-        </li>
-        <li className="list-inline-item mx-2">
+        </div>
+
+        <div className="d-flex align-items-center current-page border px-2">
           <span>
             <span data-testid="pageInterval">{startEnd}</span>
-            &nbsp;of&nbsp;
-            <span data-testid="totalPages">{total.toLocaleString('en')}</span>
+            &nbsp;/&nbsp;
+            <span data-testid="totalPages">{lastPage.toLocaleString('en')}</span>
           </span>
-        </li>
-        <li className="list-inline-item ml-2">
+        </div>
+
+        <div className={`btns-contrainer right border ${rightBtnsActive ? '' : 'inactive'}`}>
           {total === '...' || end < total ? (
             <NetworkLink
-              className="pager btn btn-primary-light"
+              className="btn btn-primary-light"
               data-testid="nextPageButton"
               to={`${pathname}?${nextUrlParams}`}
             >
               <FontAwesomeIcon icon={faCaretRight} size="lg" />
             </NetworkLink>
           ) : (
-            <div
-              className="pager btn btn-primary-light text-muted"
-              data-testid="disabledNextPageButton"
-            >
+            <div className="btn btn-primary-light" data-testid="disabledNextPageButton">
               <FontAwesomeIcon icon={faCaretRight} size="lg" />
             </div>
           )}
-        </li>
 
-        <li className="list-inline-item">
           {!isNaN(lastPage) && end < total ? (
             <NetworkLink
-              className="pager btn btn-primary-light"
+              className="btn btn-primary-light"
               data-testid="nextPageButton"
               to={`${pathname}?${lastUrlParams}`}
             >
               <FontAwesomeIcon icon={faForward} />
             </NetworkLink>
           ) : (
-            <span className="pager btn btn-primary-light text-muted">
+            <span className="btn btn-primary-light">
               <FontAwesomeIcon icon={faForward} />
             </span>
           )}
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   ) : null;
 };

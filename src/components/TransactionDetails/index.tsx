@@ -65,13 +65,6 @@ const TransactionDetails = () => {
       <div ref={ref}>
         {dataReady === true && transaction && (
           <div className="container pt-spacer">
-            <div className="row page-header">
-              <div className="col-12">
-                <h3 className="page-title mb-4" data-testid="title">
-                  Transaction Details
-                </h3>
-              </div>
-            </div>
             <div className="row">
               <div className="col-12">
                 <Details transaction={transaction} />

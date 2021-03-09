@@ -87,7 +87,8 @@
   }
 
   .gears-layout-container {
-    background: radial-gradient(circle, rgba($muted, 0.15) 60%, rgba(0, 0, 0, 0) 40%) no-repeat;
+    background: radial-gradient(circle, rgba($primary-light, 0.15) 60%, rgba(0, 0, 0, 0) 40%)
+      no-repeat;
 
     .layout-gear {
       width: 100%;
@@ -152,7 +153,8 @@
       width: 30%;
       height: 30%;
       $gearPos: 2.1%;
-      background: radial-gradient(circle, rgba($muted, 0.45) 45%, rgba(0, 0, 0, 0) 60%) no-repeat;
+      background: radial-gradient(circle, rgba($primary-light, 0.45) 45%, rgba(0, 0, 0, 0) 60%)
+        no-repeat;
 
       &.top-left {
         top: $gearPos;
@@ -174,7 +176,8 @@
 
       &.center {
         @extend .position-absolute-center;
-        background: radial-gradient(circle, rgba($muted, 0.25) 62%, rgba(0, 0, 0, 0) 38%), no-repeat;
+        background: radial-gradient(circle, rgba($primary-light, 0.25) 62%, rgba(0, 0, 0, 0) 38%),
+          no-repeat;
 
         .gear-content {
           width: 81%;
@@ -218,26 +221,27 @@
         justify-content: center;
         text-align: center;
         flex-direction: column;
-        font-size: 7px;
+        font-size: 8px;
 
         @media (min-width: 350px) {
-          font-size: 9px;
-        }
-
-        @media (min-width: 390px) {
           font-size: 10px;
         }
 
+        @media (min-width: 390px) {
+          font-size: 11px;
+        }
+
         @media (min-width: 450px) {
-          font-size: 12px;
+          font-size: 13px;
         }
 
         @media (min-width: 1050px) {
-          font-size: 13px;
+          font-size: 14px;
         }
 
         small {
           @extend .text-secondary;
+          font-size: 85%;
         }
       }
     }

@@ -1,9 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 @import './themeVariables';
 @import './../../../node_modules/bootstrap/scss/functions';
 @import './../../../node_modules/bootstrap/scss/variables';
 @import './../../../node_modules/bootstrap/scss/mixins';
 
-// $font-size-base: 14;
+$font-family-base: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+  'Helvetica Neue', Arial, sans-serif;
+
+$font-family-poppins-first: $font-family-base;
+$font-family-system-first: $font-family-base;
+
 $body-background: $body-bg;
 $spacer-val: $spacer * 2;
 
@@ -21,7 +27,7 @@ $text-muted: $muted;
 $link-color: $primary;
 
 // NAVBAR
-$main-navbar-box-shadow: 0 0.125rem 0.625rem rgba($standard-box-shadow, 0.12);
+$main-navbar-box-shadow: 0 0.75rem 1.875rem 0 rgba($standard-box-shadow, 0.1);
 
 // HEADER NAVBAR
 $header-navbar-nav-link-color: $secondary;
@@ -43,9 +49,10 @@ $main-sidebar-dropdown-item-background-hover: $light;
 $side-shadow: $main-navbar-box-shadow;
 
 // CARDS
-$card-border-radius: 0.65rem;
-$card-small-box-shadow: 0 0.3125rem 0.3125rem 0 rgba($standard-box-shadow, 0.1);
+$card-border-radius: 0.75rem;
+$card-small-box-shadow: $main-navbar-box-shadow;
 $card-cap-bg: $card-bg;
+$card-headings-font-weight: 400;
 
 // INPUT
 $input-border-color: $border-color;

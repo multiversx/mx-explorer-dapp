@@ -1,7 +1,11 @@
 .simple-map {
+  @include media-breakpoint-up(lg) {
+    max-height: 25rem;
+  }
+
   .rsm-svg {
-    fill: $body-bg; // background color
-    stroke: #8388a3; // border color
+    fill: $primary-light; // background color
+    stroke: darken($primary-light, 30%); // border color
     stroke-width: 0.017rem;
 
     .rsm-geography {

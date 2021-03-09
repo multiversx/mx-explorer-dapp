@@ -7,9 +7,10 @@ $primary: #000;
 $secondary: #6c757d;
 $muted: #cacbcc;
 $light: #f5f5f5;
-$success: #28a745;
+$success: #17c671;
 
-$primary-accent: lighten($primary, 40%);
+$primary-light: #eaeffc;
+$primary-light-hover: darken($primary-light, 5%);
 
 $standard-box-shadow: $primary;
 $link-hover-color: darken($primary, 7%);

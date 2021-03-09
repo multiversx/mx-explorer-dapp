@@ -75,7 +75,7 @@ const LatestTransactions = () => {
             <div className="card-header">
               <div className="card-header-item d-flex justify-content-between align-items-center">
                 <h6 className="m-0">Transactions</h6>
-                <NetworkLink to="/transactions" className="btn btn-primary-light">
+                <NetworkLink to="/transactions" className="btn btn-sm btn-primary-light">
                   View All Transactions
                 </NetworkLink>
               </div>

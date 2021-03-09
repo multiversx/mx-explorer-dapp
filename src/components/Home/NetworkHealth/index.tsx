@@ -127,6 +127,7 @@ const NetworkHealth = () => {
       <div className="card-header">
         <div className="card-header-item d-flex justify-content-between align-items-center">
           <h6 className="m-0">Network Health</h6>
+          {/* 
           <div className="d-flex align-items-center">
             <span className={`nav-link p-0 mr-2 ${!animationActive ? 'text-primary' : ''}`}>
               Stop
@@ -148,6 +149,7 @@ const NetworkHealth = () => {
               Play
             </span>
           </div>
+          */}
         </div>
       </div>
       <div className="card-body d-flex justify-content-center align-items-center">
