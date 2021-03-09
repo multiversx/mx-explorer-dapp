@@ -60,6 +60,11 @@
   }
 }
 
+@mixin radial-bg() {
+  background: radial-gradient(circle, rgba($primary-light, 0.15) 60%, rgba(0, 0, 0, 0) 40%)
+    no-repeat;
+}
+
 .position-absolute-center {
   position: absolute;
   transform: translate(-50%, -50%);
@@ -87,8 +92,7 @@
   }
 
   .gears-layout-container {
-    background: radial-gradient(circle, rgba($primary-light, 0.15) 60%, rgba(0, 0, 0, 0) 40%)
-      no-repeat;
+    @include radial-bg();
 
     .layout-gear {
       width: 100%;
@@ -149,12 +153,12 @@
     }
 
     .gear-container {
+      @include radial-bg();
+
       position: absolute;
       width: 30%;
       height: 30%;
       $gearPos: 2.1%;
-      background: radial-gradient(circle, rgba($primary-light, 0.45) 45%, rgba(0, 0, 0, 0) 60%)
-        no-repeat;
 
       &.top-left {
         top: $gearPos;
@@ -176,9 +180,6 @@
 
       &.center {
         @extend .position-absolute-center;
-        background: radial-gradient(circle, rgba($primary-light, 0.25) 62%, rgba(0, 0, 0, 0) 38%),
-          no-repeat;
-
         .gear-content {
           width: 81%;
           height: 81%;
