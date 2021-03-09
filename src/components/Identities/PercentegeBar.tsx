@@ -15,22 +15,13 @@ const PercentegeBar = ({
   <div className="d-flex h-100 align-items-center">
     {totalUpTimePercentege + totalDownTimePercentege > 0 ? (
       <div className="progress progress-sm w-100 my-2">
-        <OverlayTrigger
-          placement="top"
-          delay={{ show: 0, hide: 400 }}
-          overlay={(props: any) => (
-            <Tooltip id={totalUpTimeLabel} {...props} show={props.show.toString()}>
-              {totalUpTimeLabel}
-            </Tooltip>
-          )}
-        >
-          <div
-            className="progress-bar bg-success"
-            data-testid="progresUpTimeBar"
-            id={totalUpTimeLabel + totalUpTimePercentege.toString()}
-            style={{ width: totalUpTimePercentege + '%' }}
-          />
-        </OverlayTrigger>
+        <div
+          className="progress-bar bg-success"
+          data-testid="progresUpTimeBar"
+          id={totalUpTimeLabel + totalUpTimePercentege.toString()}
+          style={{ width: totalUpTimePercentege + '%' }}
+        />
+
         <OverlayTrigger
           placement="top"
           delay={{ show: 0, hide: 400 }}
