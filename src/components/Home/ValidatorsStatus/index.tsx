@@ -93,22 +93,24 @@ const ValidatorsStatus = () => {
         </div>
       </div>
       <div className="card-footer py-0">
-        {continentsRank.map(({ continent, nodes, percentage }, i) => (
-          <div
-            key={i}
-            className={`row py-2 ${i + 1 < continentsRank.length ? 'border-bottom' : ''}`}
-          >
-            <div className="col d-flex align-items-center">
-              {i + 1}. {continent}
+        <div className="container">
+          {continentsRank.map(({ continent, nodes, percentage }, i) => (
+            <div
+              key={i}
+              className={`row py-2 ${i + 1 < continentsRank.length ? 'border-bottom' : ''}`}
+            >
+              <div className="col pl-0 d-flex align-items-center">
+                {i + 1}. {continent}
+              </div>
+              <div className="col d-flex align-items-center text-secondary justify-content-end">
+                {nodes > 0 ? `${nodes} node${nodes === 1 ? '' : 's'}` : '...'}
+              </div>
+              <div className="col pr-0 d-flex align-items-center text-secondary justify-content-end">
+                {percentage > 0 ? `${percentage}%` : '...'}
+              </div>
             </div>
-            <div className="col d-flex align-items-center text-secondary justify-content-end">
-              {nodes > 0 ? `${nodes} node${nodes === 1 ? '' : 's'}` : '...'}
-            </div>
-            <div className="col d-flex align-items-center text-secondary justify-content-end">
-              {percentage > 0 ? `${percentage}%` : '...'}
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
