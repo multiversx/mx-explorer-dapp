@@ -65,8 +65,8 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
       {dataReadyForNetwork === undefined && <Loader />}
       {dataReadyForNetwork !== undefined && (
         <div className="container pt-spacer">
-          <ShardsList shardsFetched={dataReadyForNetwork === activeNetworkId} />
           <GlobalStakeCard stakeFetched={dataReadyForNetwork === activeNetworkId} />
+          <ShardsList shardsFetched={dataReadyForNetwork === activeNetworkId} />
 
           <div className="row">
             <div className="col-12">{children}</div>
