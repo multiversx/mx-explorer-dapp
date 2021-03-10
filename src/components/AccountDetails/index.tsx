@@ -8,13 +8,12 @@ import { TransactionType } from 'sharedComponents/TransactionsTable';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
-import AccountDetailsCard from './AccountDetailsCard';
 import FailedAccountDetails from './FailedAccountDetails';
-import DelegationDetails from './DelegationDetails';
 import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
 import { denomination, decimals } from 'appConfig';
 import { types } from 'helpers';
 import AccountTokens from './AccountTokens';
+import BalanceAndBasicInfo from './BalanceAndBasicInfo';
 
 export interface AccountDetailsType extends types.AccountType {
   detailsFetched?: boolean;
@@ -182,11 +181,6 @@ const AccountDetails = () => {
   const loading = dataReady === undefined && transactionsFetched === undefined;
   const failed = dataReady === false || !addressIsBech32(address);
   const showTransactions = transactionsFetched === true && transactions.length > 0;
-  const showDelegation =
-    accountDetails.rewardsFetched === false ||
-    (accountDetails.rewardsFetched === true &&
-      accountDetails.stake !== undefined &&
-      accountDetails.stake > 0);
 
   return isOldAddressRoute ? (
     <Redirect to={networkRoute(`/accounts/${address}`)} />
@@ -198,16 +192,7 @@ const AccountDetails = () => {
       <div ref={ref}>
         {!loading && !failed && (
           <div className="container pt-spacer">
-            <div className="row">
-              <div className="col mb-spacer">
-                <AccountDetailsCard {...accountDetails} />
-              </div>
-              {showDelegation && (
-                <div className="col-lg-4 mb-spacer">
-                  <DelegationDetails {...accountDetails} />
-                </div>
-              )}
-            </div>
+            <BalanceAndBasicInfo {...accountDetails} />
 
             {/* {accountTokensFetched === false && (
                   <div className="row">

@@ -61,7 +61,7 @@
 }
 
 @mixin radial-bg() {
-  background: radial-gradient(circle, rgba($primary-light, 0.15) 60%, rgba(0, 0, 0, 0) 40%)
+  background: radial-gradient(circle, rgba($primary-light, 0.25) 60%, rgba(0, 0, 0, 0) 40%)
     no-repeat;
 }
 

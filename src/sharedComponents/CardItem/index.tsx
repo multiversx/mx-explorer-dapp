@@ -12,10 +12,7 @@ const CardItem = ({
   icon?: any;
   customIcon?: React.ReactNode;
 }) => (
-  <div
-    className="card-item flex-fill p-2 d-flex align-items-center"
-    style={{ maxWidth: '15rem', minWidth: '10rem' }}
-  >
+  <div className="card-item px-2 py-3 d-flex align-items-center">
     <div className="right-angle-icon mr-2">
       {icon && <FontAwesomeIcon icon={icon} />}
       {customIcon && <>{customIcon}</>}
