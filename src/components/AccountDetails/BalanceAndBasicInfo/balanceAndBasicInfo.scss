@@ -1,0 +1,28 @@
+.balance-and-basic-info {
+  .balance-card {
+    overflow: visible !important;
+
+    #locked-amount-details {
+      @extend .p-0;
+
+      &:after {
+        content: none;
+      }
+    }
+
+    .dropdown-menu {
+      @extend .p-3;
+      width: auto !important;
+      white-space: nowrap;
+
+      .locked-item {
+        @extend .d-flex;
+        @extend .mb-2;
+
+        .locked-item-label {
+          min-width: 6rem;
+        }
+      }
+    }
+  }
+}

@@ -244,3 +244,20 @@
     flex-shrink: 0;
   }
 }
+
+.card-item {
+  overflow: hidden;
+  flex: 0 0 100%;
+
+  @include media-breakpoint-up(sm) {
+    flex: 0 0 50%;
+  }
+
+  @include media-breakpoint-up(md) {
+    flex: 0 0 33.333%;
+  }
+
+  @include media-breakpoint-up(lg) {
+    flex: 0 0 25%;
+  }
+}
