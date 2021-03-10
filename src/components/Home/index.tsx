@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ValidatorsStatus from './ValidatorsStatus';
 import NetworkHealth from './NetworkHealth';
-import LatestBlocks from './LatestBlocks';
+import { LatestBlocks } from 'sharedComponents';
 import LatestTransactions from './LatestTransactions';
 import { useIsMainnet } from 'helpers';
 

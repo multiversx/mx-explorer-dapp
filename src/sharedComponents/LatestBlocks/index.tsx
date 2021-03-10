@@ -8,19 +8,21 @@ import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 import { urlBuilder } from 'helpers';
 
-const LatestBlocks = () => {
+const LatestBlocks = ({ proposer }: { proposer?: string }) => {
   const ref = React.useRef(null);
   const {
     activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
-  const [blocks, setBlocks] = React.useState<BlockType[]>([]);
-  const [blocksFetched, setBlocksFetched] = React.useState<boolean | undefined>();
 
   const { getLatestBlocks } = adapter();
 
+  const [blocks, setBlocks] = React.useState<BlockType[]>([]);
+  const [blocksFetched, setBlocksFetched] = React.useState<boolean | undefined>();
+  const params = proposer ? { proposer } : {};
+
   const fetchBlocks = () => {
-    getLatestBlocks().then(({ data, success }) => {
+    getLatestBlocks(params).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
           const sortedBlocks = data;
@@ -49,7 +51,7 @@ const LatestBlocks = () => {
   const Component = () => {
     const someNew = blocks.some((block) => block.isNew);
     return (
-      <div className="card" ref={ref}>
+      <div className="card latest-blocks" ref={ref}>
         {blocksFetched === undefined && <Loader dataTestId="blocksLoader" />}
         {blocksFetched === false && <FailedBlocks />}
         {blocksFetched === true && blocks.length === 0 && <NoBlocks />}
@@ -57,10 +59,16 @@ const LatestBlocks = () => {
           <>
             <div className="card-header">
               <div className="card-header-item d-flex justify-content-between align-items-center">
-                <h6 className="m-0">Blocks</h6>
-                <NetworkLink to="/blocks" className="btn btn-sm btn-primary-light">
-                  View All Blocks
-                </NetworkLink>
+                {proposer ? (
+                  <h6 className="m-0">Latest proposed Blocks</h6>
+                ) : (
+                  <>
+                    <h6 className="m-0">Blocks</h6>
+                    <NetworkLink to="/blocks" className="btn btn-sm btn-primary-light">
+                      View All Blocks
+                    </NetworkLink>
+                  </>
+                )}
               </div>
             </div>
             <div className="card-body" data-testid="blocksList">

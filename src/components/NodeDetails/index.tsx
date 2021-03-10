@@ -2,7 +2,7 @@ import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import {
   adapter,
-  BlocksTable,
+  LatestBlocks,
   Loader,
   PageState,
   SharedIdentity,
@@ -197,34 +197,26 @@ const NodeDetails = () => {
               {node.data.nodeType === 'validator' && (
                 <div className="row">
                   <div className="col-12">
-                    <div className="card">
-                      {blocks.success === false && <FailedBlocks />}
-                      {blocks.success && blocks.data && (
-                        <>
-                          {blocks.data.length === 0 && (
-                            <NoBlocks
-                              title={`${
-                                node.data.peerType === 'eligible'
-                                  ? 'No blocks'
-                                  : 'Validator not in consensus'
-                              }`}
-                            />
-                          )}
-                          {blocks.data.length > 0 && (
-                            <>
-                              <div className="card-header">
-                                <div className="card-header-item">
-                                  <h6 className="m-0">Latest proposed Blocks</h6>
-                                </div>
-                              </div>
-                              <div className="card-body p-0">
-                                <BlocksTable blocks={blocks.data} shard={undefined} />
-                              </div>
-                            </>
-                          )}
-                        </>
-                      )}
-                    </div>
+                    {blocks.success && blocks.data && blocks.data.length > 0 ? (
+                      <LatestBlocks proposer={publicKey} />
+                    ) : (
+                      <div className="card">
+                        {blocks.success === false && <FailedBlocks />}
+                        {blocks.success && blocks.data && (
+                          <>
+                            {blocks.data.length === 0 && (
+                              <NoBlocks
+                                title={`${
+                                  node.data.peerType === 'eligible'
+                                    ? 'No blocks'
+                                    : 'Validator not in consensus'
+                                }`}
+                              />
+                            )}
+                          </>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
