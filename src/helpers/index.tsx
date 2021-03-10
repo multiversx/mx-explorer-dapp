@@ -17,6 +17,7 @@ import useIsMainnet from './useIsMainnet';
 import useNetworkPathname from './useNetworkPathname';
 import * as types from './types';
 import analytics from './analytics';
+import isContract from './isContract';
 
 export {
   truncate,
@@ -38,4 +39,5 @@ export {
   useNetworkPathname,
   types,
   analytics,
+  isContract,
 };
