@@ -1,8 +1,17 @@
 import * as React from 'react';
 import { types, urlBuilder } from 'helpers';
-import { faCogs } from '@fortawesome/pro-light-svg-icons/faCogs';
 import { CardItem, CopyButton, Denominate, NetworkLink, Trim } from 'sharedComponents';
 import { useGlobalState } from 'context';
+import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
+import {
+  faServer,
+  faChartBar,
+  faPercent,
+  faLock,
+  faArrowToTop,
+  faUser,
+  faCoins,
+} from '@fortawesome/pro-solid-svg-icons';
 
 const ProviderStats = ({ provider }: { provider: types.ProviderType | undefined }) => {
   const {
@@ -36,7 +45,7 @@ const ProviderStats = ({ provider }: { provider: types.ProviderType | undefined 
             </div>
           </div>
           <div className="col-12 col-lg-10 pr-0 my-n2 d-flex flex-wrap">
-            <CardItem title="Public Address" icon={faCogs}>
+            <CardItem title="Public Address:" customIcon={<ElrondSymbol />}>
               <NetworkLink
                 to={urlBuilder.accountDetails(provider.contract)}
                 className="trim-wrapper"
@@ -46,19 +55,27 @@ const ProviderStats = ({ provider }: { provider: types.ProviderType | undefined 
               <CopyButton text={provider.contract} />
             </CardItem>
 
-            <CardItem title="Contract Stake:" icon={faCogs}>
-              <span className="text-secondary">
-                <Denominate value={provider.totalActiveStake} decimals={0} />
-              </span>
-            </CardItem>
-
-            <CardItem title="Number of nodes:" icon={faCogs}>
+            <CardItem title="Number of nodes:" icon={faServer}>
               <span className="text-secondary">
                 {provider.numNodes} node{provider.numNodes !== 1 ? 's' : ''}
               </span>
             </CardItem>
 
-            <CardItem title="Delegation Cap:" icon={faCogs}>
+            <CardItem title="Computed APR:" icon={faChartBar}>
+              <span className="text-secondary">{provider.apr}%</span>
+            </CardItem>
+
+            <CardItem title="Service fee:" icon={faPercent}>
+              <span className="text-secondary">{provider.serviceFee}%</span>
+            </CardItem>
+
+            <CardItem title="Contract Stake:" icon={faLock}>
+              <span className="text-secondary">
+                <Denominate value={provider.totalActiveStake} decimals={0} />
+              </span>
+            </CardItem>
+
+            <CardItem title="Delegation Cap:" icon={faArrowToTop}>
               <span className="text-secondary">
                 {provider.withDelegationCap
                   ? `${provider.maxDelegationCap} ${erdLabel}`
@@ -66,19 +83,11 @@ const ProviderStats = ({ provider }: { provider: types.ProviderType | undefined 
               </span>
             </CardItem>
 
-            <CardItem title="Computed APR:" icon={faCogs}>
-              <span className="text-secondary">{provider.apr}%</span>
-            </CardItem>
-
-            <CardItem title="Delegators:" icon={faCogs}>
+            <CardItem title="Delegators:" icon={faUser}>
               <span className="text-secondary">{provider.numUsers}</span>
             </CardItem>
 
-            <CardItem title="Service fee:" icon={faCogs}>
-              <span className="text-secondary">{provider.serviceFee}%</span>
-            </CardItem>
-
-            <CardItem title="Total Cumulated Rewards:" icon={faCogs}>
+            <CardItem title="Total Cumulated Rewards:" icon={faCoins}>
               <span className="text-secondary">
                 <Denominate value={provider.totalCumulatedRewards || '0'} decimals={0} />
               </span>
