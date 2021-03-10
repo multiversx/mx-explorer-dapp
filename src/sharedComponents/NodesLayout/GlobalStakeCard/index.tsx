@@ -27,16 +27,16 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
     <div className="row global-stake-card">
       <div className="col mb-spacer">
         <div className="card d-flex flex-column flex-lg-row py-3 py-lg-spacer px-3 px-lg-spacer">
-          <div className="d-flex align-items-center mb-3 mb-lg-0 pr-4">
+          <div className="d-flex align-items-center mb-3 mb-lg-0 pr-md-5">
             <div className="right-angle-icon lg mr-4">
               <FontAwesomeIcon icon={faLock} />
             </div>
             <div className="d-flex flex-column">
               <span className="text-secondary mb-1">Active Stake</span>
               {globalStake && globalStake.totalStaked ? (
-                <h4 className="m-0 pb-1">
+                <h5 className="m-0 pb-1">
                   <Denominate value={globalStake.totalStaked} decimals={0} />
-                </h4>
+                </h5>
               ) : (
                 '...'
               )}
@@ -48,15 +48,15 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
             </div>
           </div>
 
-          <div className="d-flex align-items-center mb-3 mb-lg-0 pr-4">
+          <div className="d-flex align-items-center mb-3 mb-lg-0 pr-md-5">
             <div className="right-angle-icon lg mr-4">
               <FontAwesomeIcon icon={faCoins} />
             </div>
             <div className="d-flex flex-column">
               <span className="text-secondary mb-1">Staking APR</span>
-              <h4 className="m-0 pb-1">
+              <h5 className="m-0 pb-1">
                 {globalStake && globalStake.apr ? `${globalStake.apr}%` : '...'}
-              </h4>
+              </h5>
               <small className="text-secondary">
                 {globalStake && globalStake.waitingList
                   ? `${globalStake.waitingList}% for waiting list`
