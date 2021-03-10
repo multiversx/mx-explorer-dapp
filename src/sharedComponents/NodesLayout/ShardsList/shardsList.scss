@@ -1,0 +1,13 @@
+.shards-list {
+  .shard-card {
+    flex: 0 0 50%;
+
+    @include media-breakpoint-up(md) {
+      flex: 0 0 33.333%;
+    }
+
+    @include media-breakpoint-up(lg) {
+      flex: 0 0 16.666%;
+    }
+  }
+}

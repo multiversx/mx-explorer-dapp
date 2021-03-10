@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faServer } from '@fortawesome/pro-regular-svg-icons/faServer';
+import { faServer } from '@fortawesome/pro-solid-svg-icons/faServer';
 import { ShardSpan, Led } from 'sharedComponents';
 import { ShardType } from 'context/state';
 import computeShardStatus from './computeShardStatus';
@@ -10,27 +10,24 @@ interface ShardCardType {
   isOverall?: boolean;
 }
 
-const ShardCard = ({ shard, isOverall = false }: ShardCardType) => {
+const ShardCard = ({ shard, isOverall }: ShardCardType) => {
   const status = computeShardStatus(shard);
+
   return (
-    <div className="flex-grow-1 flex-basis-0 mr-3 mb-3 pb-3">
-      <div className="card">
-        <div className={`card-body px-3 ${isOverall ? 'overall-card bg-primary text-white' : ''}`}>
-          <small className={`text-nowrap ${isOverall ? 'text-white' : 'text-light'}`}>
-            {isOverall ? 'Active Validators' : <ShardSpan shard={shard.shard} />}
-          </small>
-          <span className="metric-value d-flex align-items-center">
-            {!isOverall && <Led color={`mr-2 bg-${status}`} />}
-            <span>
-              {shard.activeValidators}/{shard.validators}
-            </span>
-            {!isOverall && (
-              <span className="text-muted d-flex align-items-center justify-content-center ml-2">
-                <FontAwesomeIcon icon={faServer} className="shard-icon" />
-              </span>
-            )}
-          </span>
-        </div>
+    <div className="shard-card py-3">
+      <div className="mb-2 pb-1">
+        {!isOverall && (
+          <FontAwesomeIcon icon={faServer} className="shard-icon text-secondary mr-2" />
+        )}
+        <span className="text-secondary">
+          {isOverall ? 'Active Validators' : <ShardSpan shard={shard.shard} />}
+        </span>
+      </div>
+      <div className="d-flex align-items-center">
+        {!isOverall && <Led color={`led ml-1 mr-2 bg-${status}`} />}
+        <h5 className="m-0">
+          {shard.activeValidators}/{shard.validators}
+        </h5>
       </div>
     </div>
   );

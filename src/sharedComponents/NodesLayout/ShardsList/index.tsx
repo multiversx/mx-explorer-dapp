@@ -4,22 +4,15 @@ import ShardCard from './ShardCard';
 import { GlobalStakeType, ShardType } from 'context/state';
 import { PageState } from 'sharedComponents';
 import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faServer } from '@fortawesome/pro-regular-svg-icons/faServer';
 
 const StakingQueueCard = ({ globalStake }: { globalStake: GlobalStakeType | undefined }) => {
   return (
-    <div className="flex-grow-1 flex-basis-0 mr-3 mb-3 pb-3">
-      <div className="card">
-        <div className="card-body px-3">
-          <small className="text-light">Queue</small>
-          <span className="metric-value d-flex align-items-center">
-            <span>{globalStake !== undefined ? globalStake.queueSize : 'N/A'}</span>
-            <span className="text-muted d-flex align-items-center justify-content-center ml-2">
-              <FontAwesomeIcon icon={faServer} className="shard-icon" />
-            </span>
-          </span>
-        </div>
+    <div className="shard-card py-3">
+      <div className="mb-2 pb-1">
+        <span className="text-secondary">Queue</span>
+      </div>
+      <div className="metric-value">
+        <h5>{globalStake !== undefined ? globalStake.queueSize : 'N/A'}</h5>
       </div>
     </div>
   );
@@ -60,17 +53,20 @@ const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
           </div>
         </div>
       ) : (
-        <div className="row d-flex pl-3">
-          <ShardCard shard={overallCard} isOverall />
-          {shards.map((shard, i) => (
-            <React.Fragment key={shard.shard + i}>
-              {i === shards.length - 3 && (
-                <div className="d-none d-lg-block d-xl-none" style={{ flexBasis: '100%' }} />
-              )}
-              <ShardCard shard={shard} />
-            </React.Fragment>
-          ))}
-          <StakingQueueCard globalStake={globalStake} />
+        <div className="row shards-list">
+          <div className="col mb-spacer">
+            <div className="card">
+              <div className="card-body d-flex px-lg-spacer flex-wrap">
+                <ShardCard shard={overallCard} isOverall />
+                {shards.map((shard, i) => (
+                  <React.Fragment key={shard.shard + i}>
+                    <ShardCard shard={shard} />
+                  </React.Fragment>
+                ))}
+                <StakingQueueCard globalStake={globalStake} />
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </>
