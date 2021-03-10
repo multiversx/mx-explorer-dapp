@@ -35,11 +35,15 @@
   .right span {
     color: $body;
     font-size: 1rem;
+    pointer-events: none;
+    user-select: none;
   }
 
   .ellipsis {
     flex-shrink: 0;
     display: none;
+    pointer-events: none;
+    user-select: none;
   }
 
   /* IE fix */
@@ -61,7 +65,7 @@
   .hidden-text-ref {
     position: absolute;
     display: block;
-    visibility: hidden;
+    color: transparent;
   }
 }
 
@@ -73,10 +77,16 @@
 
 a:hover > .trim span {
   color: $link-hover-color !important;
+  &.hidden-text-ref {
+    color: transparent !important;
+  }
 }
 
 a > .trim span {
   color: $primary !important;
+  &.hidden-text-ref {
+    color: transparent !important;
+  }
 }
 
 .table .trim {
