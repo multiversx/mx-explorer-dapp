@@ -4,7 +4,7 @@ import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { faCalendarAlt } from '@fortawesome/pro-regular-svg-icons/faCalendarAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { addressIsBech32, urlBuilder, dateFormatted } from 'helpers';
+import { addressIsBech32, urlBuilder, dateFormatted, isContract } from 'helpers';
 import * as React from 'react';
 import {
   ShardSpan,
@@ -58,7 +58,9 @@ const LatestTransactions = () => {
   };
 
   const getTxType = (transaction: TransactionType) => {
-    return 'Transaction Type';
+    return isContract(transaction.sender) || isContract(transaction.receiver)
+      ? 'Smart Contract Call'
+      : 'Token Transfer';
   };
 
   React.useEffect(fetchTransactions, [activeNetworkId, timestamp]);
