@@ -20,11 +20,12 @@ export default function useAdapter() {
 
     getStats,
 
-    getLatestBlocks: () =>
+    getLatestBlocks: ({ size = 8, proposer }: GetBlocksType) =>
       provider({
         url: `/blocks`,
         params: {
-          size: 8,
+          size,
+          ...(proposer ? { proposer } : {}),
           ...{
             fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
           },

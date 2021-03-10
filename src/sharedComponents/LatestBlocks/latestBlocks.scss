@@ -1,0 +1,30 @@
+.latest-blocks {
+  .block-card-container {
+    overflow-x: scroll;
+
+    .block-card {
+      max-width: 16.5rem;
+      border-radius: 0.3rem;
+      border: 1px solid $border-color;
+      box-shadow: $card-small-box-shadow;
+      border-left: 0.5rem solid $primary;
+
+      &:not(:last-child) {
+        margin-right: 1.5rem;
+      }
+
+      .list-item-icon {
+        border-radius: 50%;
+        font-size: 0.9375rem;
+        text-align: center;
+        color: $secondary;
+        width: 2.1875rem;
+        height: 2.1875rem;
+        line-height: 2.1875rem;
+        background: $light;
+        box-shadow: inset 0 0 3px rgba($secondary, 0.2);
+        flex-shrink: 0;
+      }
+    }
+  }
+}

@@ -7,6 +7,8 @@ import RatingArrow from './ratingArrow';
 
 const NetworkMetrics = ({ node }: { node: NodeType }) => {
   const { totalUpTimeLabel, totalDownTimeLabel } = getUptimeDowntime(node);
+  const statusColor = node.status === 'online' ? 'success' : 'danger';
+
   return (
     <div className="card network-metrics">
       <div className="card-header">
@@ -38,8 +40,8 @@ const NetworkMetrics = ({ node }: { node: NodeType }) => {
 
           <DetailItem title="Status" colWidth="3">
             <div className="d-flex align-items-center">
-              <Led color={node.status === 'online' ? 'bg-success' : 'bg-danger'} />
-              <span className="ml-2">{node.status === 'online' ? 'Online' : 'Offline'}</span>
+              <Led color={`bg-${statusColor}`} />
+              <span className={`ml-2 text-${statusColor}`}>{node.status}</span>
             </div>
           </DetailItem>
         </div>

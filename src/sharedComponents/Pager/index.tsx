@@ -32,7 +32,7 @@ const Pager = ({
   const urlParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlParams);
 
-  const { size, start, last, lastPage, end } = pagerHelper({
+  const { size, lastPage, end } = pagerHelper({
     total,
     itemsPerPage,
     page,
@@ -104,7 +104,9 @@ const Pager = ({
           <span>
             <span data-testid="pageInterval">{startEnd}</span>
             &nbsp;/&nbsp;
-            <span data-testid="totalPages">{lastPage.toLocaleString('en')}</span>
+            <span data-testid="totalPages">
+              {!isNaN(lastPage) ? lastPage.toLocaleString('en') : 1}
+            </span>
           </span>
         </div>
 
