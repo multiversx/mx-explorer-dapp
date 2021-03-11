@@ -20,7 +20,8 @@ export type ActionType =
       type: 'changeTheme';
       theme: StateType['theme'];
     }
-  | { type: 'setGlobalStake'; globalStake: StateType['globalStake'] };
+  | { type: 'setGlobalStake'; globalStake: StateType['globalStake'] }
+  | { type: 'setAccountDetails'; accountDetails: StateType['accountDetails'] };
 
 export function globalReducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
@@ -83,6 +84,12 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
         expirationDate: in6m,
       });
       return newState;
+    }
+    case 'setAccountDetails': {
+      return {
+        ...state,
+        accountDetails: action.accountDetails,
+      };
     }
     default: {
       throw new Error(`Unhandled action type: ${action!.type}`);

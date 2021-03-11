@@ -1,8 +1,8 @@
 import React from 'react';
 import { useMatchPath } from 'helpers';
-import { validatorsRoutes, accountDetailsRoutes } from 'routes';
+import { validatorsRoutes, accountRoutes } from 'routes';
 import NodesLayout from 'components/Nodes/NodesLayout';
-import AccountDetailsLayout from 'components/AccountDetails/AccountDetailsLayout';
+import AccountLayout from 'components/AccountDetails/AccountLayout';
 
 export default function PageLayout({ children }: { children: React.ReactNode }) {
   const matchPath = useMatchPath();
@@ -13,9 +13,9 @@ export default function PageLayout({ children }: { children: React.ReactNode }) 
     case matchPath(validatorsRoutes.providers) !== null:
       return <NodesLayout>{children}</NodesLayout>;
 
-    case matchPath(accountDetailsRoutes.accountDetails) !== null:
-    case matchPath(accountDetailsRoutes.accountDetailsContract) !== null:
-      return <AccountDetailsLayout>{children}</AccountDetailsLayout>;
+    case matchPath(accountRoutes.index) !== null:
+    case matchPath(accountRoutes.contract) !== null:
+      return <AccountLayout>{children}</AccountLayout>;
 
     default:
       return <>{children}</>;

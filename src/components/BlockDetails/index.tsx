@@ -6,13 +6,10 @@ import { Loader, adapter, PageState } from 'sharedComponents';
 import BlockData, { BlockDataType } from './BlockData';
 
 const BlockDetails = () => {
-  const params: any = useParams();
-  const networkRoute = useNetworkRoute();
-  const { hash: blockId } = params;
-
   const ref = React.useRef(null);
-
+  const networkRoute = useNetworkRoute();
   const { getBlock } = adapter();
+  const { hash: blockId } = useParams() as any;
 
   const [state, setState] = React.useState<BlockDataType>();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();

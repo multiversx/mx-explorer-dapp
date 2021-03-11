@@ -2,7 +2,7 @@ import React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { adapter, ProvidersTable, Loader, PageState } from 'sharedComponents';
 import { useGlobalState } from 'context';
-import NodeTabs from 'components/Nodes/NodesLayout/NodeTabs';
+import NodesTabs from 'components/Nodes/NodesLayout/NodesTabs';
 import { useSize, types } from 'helpers';
 
 const Providers = () => {
@@ -97,7 +97,7 @@ const Providers = () => {
   return (
     <div className="card" ref={ref}>
       <div className="card-header">
-        <NodeTabs />
+        <NodesTabs />
       </div>
 
       {dataReady === undefined && <Loader />}

@@ -4,6 +4,7 @@ export interface AccountType {
   address: string;
   balance: string;
   nonce: number;
+  txCount?: number;
   code?: string;
 }
 

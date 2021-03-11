@@ -6,7 +6,7 @@ import { NodesTable } from 'sharedComponents';
 import Filters from './Filters';
 import { useFilters, useIsMainnet } from 'helpers';
 import { useLocation } from 'react-router-dom';
-import NodeTabs from 'components/Nodes/NodesLayout/NodeTabs';
+import NodesTabs from 'components/Nodes/NodesLayout/NodesTabs';
 
 const Nodes = () => {
   const ref = React.useRef(null);
@@ -44,7 +44,7 @@ const Nodes = () => {
   return (
     <div className="card" ref={ref}>
       <div className="card-header">
-        {isMainnet && <NodeTabs />}
+        {isMainnet && <NodesTabs />}
 
         <div className="card-header-item">
           <Filters />
