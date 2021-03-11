@@ -1,6 +1,6 @@
 import { InferType } from 'yup';
 import config, { defaultNetwork, schema, adapterSchema, networkLink } from './config';
-import { storage } from 'helpers';
+import { storage, types } from 'helpers';
 
 export type NetworkLinkType = InferType<typeof networkLink>;
 export type NetworkType = InferType<typeof schema>;
@@ -73,6 +73,14 @@ export interface NodeType {
   owner?: string;
 }
 
+export interface AccountDetailsType extends types.AccountType {
+  detailsFetched?: boolean;
+  delegationFetched?: boolean;
+  stakeFetched?: boolean;
+  delegation?: any;
+  stake?: any;
+}
+
 export interface StateType {
   config: ConfigType;
   defaultNetwork: NetworkType;
@@ -88,6 +96,7 @@ export interface StateType {
   blockchainTotalStake: number;
   shards: ShardType[];
   globalStake: GlobalStakeType | undefined;
+  accountDetails: AccountDetailsType | undefined;
 }
 
 const initialState = (optionalConfig?: ConfigType): StateType => {
@@ -110,6 +119,7 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
     blockchainTotalStake: 0,
     shards: [],
     globalStake: undefined,
+    accountDetails: undefined,
   };
 };
 

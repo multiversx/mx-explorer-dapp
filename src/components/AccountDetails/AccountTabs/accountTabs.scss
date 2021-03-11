@@ -1,0 +1,20 @@
+.account-tabs {
+  .tab-link {
+    display: flex;
+
+    h6 {
+      color: $primary;
+
+      &:hover {
+        color: $link-hover-color;
+      }
+    }
+
+    &.active:hover,
+    &.active {
+      h6 {
+        color: $body;
+      }
+    }
+  }
+}

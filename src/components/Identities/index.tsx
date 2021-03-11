@@ -4,7 +4,7 @@ import { useGlobalDispatch, useGlobalState } from 'context';
 import { IdentityType } from 'context/state';
 import { adapter, Loader, PageState } from 'sharedComponents';
 import IdentityRow from './IdentityRow';
-import NodeTabs from 'components/Nodes/NodesLayout/NodeTabs';
+import NodesTabs from 'components/Nodes/NodesLayout/NodesTabs';
 
 const Identities = () => {
   const ref = React.useRef(null);
@@ -45,7 +45,7 @@ const Identities = () => {
   return (
     <div className="card identities" ref={ref}>
       <div className="card-header">
-        <NodeTabs />
+        <NodesTabs />
       </div>
 
       {dataReady === undefined && <Loader />}

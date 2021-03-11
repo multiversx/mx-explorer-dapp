@@ -2,14 +2,15 @@
 @import '../../components/Layout/Navbar/navbar.scss';
 @import '../../components/Layout/Footer/footer.scss';
 @import '../../components/Nodes/NodesLayout/ShardsList/shardsList.scss';
-@import '../../components/Nodes/NodesLayout/nodesTabs.scss';
+@import '../../components/Nodes/NodesLayout/NodesTabs/nodesTabs.scss';
 @import '../../components/Nodes/NodesLayout/GlobalStakeCard/globalStakeCard.scss';
 @import '../../components/Home/NetworkHealth/networkHealth.scss';
 @import '../../components/Home/NetworkHealth/ProgressRing/progressRing.scss';
 @import '../../components/Home/ValidatorsStatus/SimpleMap/simpleMap.scss';
 @import '../../components/Home/home.scss';
 @import '../../components/BlockDetails/blockDetails.scss';
-@import '../../components/AccountDetails/BalanceAndBasicInfo/balanceAndBasicInfo.scss';
+@import '../../components/AccountDetails/AccountInfo/accountInfo.scss';
+@import '../../components/AccountDetails/AccountTabs/accountTabs.scss';
 @import '../../components/TransactionDetails/ScResultsList/scResultsList.scss';
 @import '../../components/Identities/identities.scss';
 @import '../../components/NodeDetails/Rounds/rounds.scss';

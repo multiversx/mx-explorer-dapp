@@ -39,7 +39,6 @@ const NodesTabs = ({ children }: { children?: React.ReactNode }) => {
             <h6>Nodes</h6>
           </NetworkLink>
         </div>
-        {children && <div className="ml-auto">{children}</div>}
       </div>
     </div>
   );

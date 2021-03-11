@@ -17,6 +17,7 @@ import TokenDetails from './components/TokenDetails';
 import { withPageTitle, withNetworkReady } from './sharedComponents';
 import Providers from 'components/Providers';
 import ProviderDetails from 'components/ProviderDetails';
+import AccountContract from './components/AccountDetails/AccountContract';
 
 interface RouteType {
   path: string;
@@ -36,9 +37,9 @@ export const validatorsRoutes = {
   providerDetails: '/providers/:hash',
 };
 
-export const accountDetailsRoutes = {
-  accountDetails: '/accounts/:hash',
-  accountDetailsContract: '/accounts/:hash/contract',
+export const accountRoutes = {
+  index: `/accounts/:hash`,
+  contract: `/accounts/:hash/contract`,
 };
 
 const routes: RouteType[] = [
@@ -103,7 +104,7 @@ const routes: RouteType[] = [
     component: Accounts,
   },
   {
-    path: '/accounts/:hash',
+    path: accountRoutes.index,
     title: 'Account Details',
     component: AccountDetails,
   },
@@ -111,6 +112,11 @@ const routes: RouteType[] = [
     path: '/address/:hash',
     title: 'Account Details',
     component: AccountDetails, // redirect
+  },
+  {
+    path: accountRoutes.contract,
+    title: 'Account Details',
+    component: AccountContract,
   },
   {
     path: '/miniblocks/:hash',
