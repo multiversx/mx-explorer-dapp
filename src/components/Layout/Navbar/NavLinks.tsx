@@ -52,8 +52,9 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
 
       <NetworkLink
         className={`nav-link ${
-          matchPath(networkRoute(validatorsRoutes.nodes)) !== null ||
-          matchPath(networkRoute(validatorsRoutes.index)) !== null
+          matchPath(networkRoute(validatorsRoutes.index)) !== null ||
+          matchPath(networkRoute(validatorsRoutes.providers)) !== null ||
+          matchPath(networkRoute(validatorsRoutes.nodes)) !== null
             ? 'active'
             : ''
         }`}

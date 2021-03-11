@@ -1,14 +1,16 @@
 import React from 'react';
+import { useGlobalState } from 'context';
 import Navbar from './Navbar/index';
 import Footer from './Footer/index';
 import NetworkRouter from './NetworkRouter';
-import { useGlobalState } from 'context';
 import LoopManager from './LoopManager';
 import { Search } from 'sharedComponents';
 import Unavailable from './Unavailable';
+import PageLayout from './PageLayout';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const { theme } = useGlobalState();
+  const offline = !window.navigator.onLine;
 
   React.useEffect(() => {
     const stylesheet = document.getElementById('stylesheet');
@@ -37,8 +39,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     }
   }, [theme]);
 
-  const offline = !window.navigator.onLine;
-
   return (
     <div className="d-flex">
       <div className="flex-fill vh-100">
@@ -60,7 +60,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 </div>
 
                 <div className="page-container" data-testid="mainPageContent">
-                  {children}
+                  <PageLayout>{children}</PageLayout>
                 </div>
               </>
             )}

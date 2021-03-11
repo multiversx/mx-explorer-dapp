@@ -3,9 +3,8 @@ import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import { IdentityType } from 'context/state';
 import { adapter, Loader, PageState } from 'sharedComponents';
-import NodesLayout from 'sharedComponents/NodesLayout';
 import IdentityRow from './IdentityRow';
-import NodeTabs from 'sharedComponents/NodesLayout/NodeTabs';
+import NodeTabs from 'components/Nodes/NodesLayout/NodeTabs';
 
 const Identities = () => {
   const ref = React.useRef(null);
@@ -44,48 +43,44 @@ const Identities = () => {
   React.useEffect(fetchIdentities, []);
 
   return (
-    <div className="d-flex flex-column flex-fill" ref={ref}>
-      <NodesLayout>
-        <div className="card identities">
-          <div className="card-header">
-            <NodeTabs />
-          </div>
+    <div className="card identities" ref={ref}>
+      <div className="card-header">
+        <NodeTabs />
+      </div>
 
-          {dataReady === undefined && <Loader />}
-          {dataReady === false && (
-            <PageState
-              icon={faCogs}
-              title="Unable to load validators"
-              className="py-spacer my-auto"
-              dataTestId="errorScreen"
-            />
-          )}
-          {dataReady === true && (
-            <div className="card-body p-0">
-              <div className="table-wrapper">
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th className="th-rank">#</th>
-                      <th className="th-name">Validator Name</th>
-                      <th>Stake</th>
-                      <th className="th-stake-percent">Cumulative stake</th>
-                      <th className="w-10 text-right">Nodes</th>
-                      <th className="w-10 text-right">Score</th>
-                      <th className="th-details">&nbsp;</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {identities.map((identity, i) => (
-                      <IdentityRow key={i} rank={i + 1} identity={identity} />
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
+      {dataReady === undefined && <Loader />}
+      {dataReady === false && (
+        <PageState
+          icon={faCogs}
+          title="Unable to load validators"
+          className="py-spacer my-auto"
+          dataTestId="errorScreen"
+        />
+      )}
+      {dataReady === true && (
+        <div className="card-body p-0">
+          <div className="table-wrapper">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th className="th-rank">#</th>
+                  <th className="th-name">Validator Name</th>
+                  <th>Stake</th>
+                  <th className="th-stake-percent">Cumulative stake</th>
+                  <th className="w-10 text-right">Nodes</th>
+                  <th className="w-10 text-right">Score</th>
+                  <th className="th-details">&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody>
+                {identities.map((identity, i) => (
+                  <IdentityRow key={i} rank={i + 1} identity={identity} />
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </NodesLayout>
+      )}
     </div>
   );
 };
