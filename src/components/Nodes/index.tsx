@@ -5,9 +5,8 @@ import { useGlobalDispatch, useGlobalState } from 'context';
 import { NodesTable } from 'sharedComponents';
 import Filters from './Filters';
 import { useFilters, useIsMainnet } from 'helpers';
-import NodesLayout from 'sharedComponents/NodesLayout';
 import { useLocation } from 'react-router-dom';
-import NodeTabs from 'sharedComponents/NodesLayout/NodeTabs';
+import NodeTabs from 'components/Nodes/NodesLayout/NodeTabs';
 
 const Nodes = () => {
   const ref = React.useRef(null);
@@ -43,41 +42,37 @@ const Nodes = () => {
   React.useEffect(fetchNodes, [search]);
 
   return (
-    <div className="d-flex flex-column flex-fill" ref={ref}>
-      <NodesLayout>
-        <div className="card" ref={ref}>
-          <div className="card-header">
-            {isMainnet && <NodeTabs />}
+    <div className="card" ref={ref}>
+      <div className="card-header">
+        {isMainnet && <NodeTabs />}
 
-            <div className="card-header-item">
-              <Filters />
-            </div>
-          </div>
-
-          {dataReady === undefined && <Loader />}
-          {dataReady === false && (
-            <PageState
-              icon={faCogs}
-              title="Unable to load nodes"
-              className="py-spacer my-auto"
-              dataTestId="errorScreen"
-            />
-          )}
-
-          {dataReady === true && (
-            <>
-              <div className="card-body p-0">
-                <NodesTable>
-                  <NodesTable.Body nodes={nodes} />
-                </NodesTable>
-              </div>
-              <div className="card-footer d-flex justify-content-end">
-                <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
-              </div>
-            </>
-          )}
+        <div className="card-header-item">
+          <Filters />
         </div>
-      </NodesLayout>
+      </div>
+
+      {dataReady === undefined && <Loader />}
+      {dataReady === false && (
+        <PageState
+          icon={faCogs}
+          title="Unable to load nodes"
+          className="py-spacer my-auto"
+          dataTestId="errorScreen"
+        />
+      )}
+
+      {dataReady === true && (
+        <>
+          <div className="card-body p-0">
+            <NodesTable>
+              <NodesTable.Body nodes={nodes} />
+            </NodesTable>
+          </div>
+          <div className="card-footer d-flex justify-content-end">
+            <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+          </div>
+        </>
+      )}
     </div>
   );
 };

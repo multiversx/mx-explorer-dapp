@@ -2,8 +2,7 @@ import React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { adapter, ProvidersTable, Loader, PageState } from 'sharedComponents';
 import { useGlobalState } from 'context';
-import NodesLayout from 'sharedComponents/NodesLayout';
-import NodeTabs from 'sharedComponents/NodesLayout/NodeTabs';
+import NodeTabs from 'components/Nodes/NodesLayout/NodeTabs';
 import { useSize, types } from 'helpers';
 
 const Providers = () => {
@@ -96,30 +95,26 @@ const Providers = () => {
   React.useEffect(fetchProviders, [activeNetworkId]);
 
   return (
-    <div className="d-flex flex-column flex-fill" ref={ref}>
-      <NodesLayout>
-        <div className="card" ref={ref}>
-          <div className="card-header">
-            <NodeTabs />
-          </div>
+    <div className="card" ref={ref}>
+      <div className="card-header">
+        <NodeTabs />
+      </div>
 
-          {dataReady === undefined && <Loader />}
-          {dataReady === false && (
-            <PageState
-              icon={faCode}
-              title="Unable to load providers"
-              className="py-spacer my-auto"
-              dataTestId="errorScreen"
-            />
-          )}
+      {dataReady === undefined && <Loader />}
+      {dataReady === false && (
+        <PageState
+          icon={faCode}
+          title="Unable to load providers"
+          className="py-spacer my-auto"
+          dataTestId="errorScreen"
+        />
+      )}
 
-          {dataReady === true && (
-            <div className="card-body p-0">
-              <ProvidersTable providers={providers} />
-            </div>
-          )}
+      {dataReady === true && (
+        <div className="card-body p-0">
+          <ProvidersTable providers={providers} />
         </div>
-      </NodesLayout>
+      )}
     </div>
   );
 };

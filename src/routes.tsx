@@ -36,6 +36,11 @@ export const validatorsRoutes = {
   providerDetails: '/providers/:hash',
 };
 
+export const accountDetailsRoutes = {
+  accountDetails: '/accounts/:hash',
+  accountDetailsContract: '/accounts/:hash/contract',
+};
+
 const routes: RouteType[] = [
   {
     path: '/search/:query',

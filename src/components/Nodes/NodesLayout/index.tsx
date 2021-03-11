@@ -10,7 +10,7 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
   const { activeNetworkId } = useGlobalState();
 
   const [dataReadyForNetwork, setDataReadyForNetwork] = React.useState<
-    string | undefined | false
+    string | undefined | boolean
   >();
 
   const fetchShardsAndGlobalStaking = () => {
