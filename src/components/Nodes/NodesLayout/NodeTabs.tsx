@@ -8,7 +8,7 @@ const NodesTabs = ({ children }: { children?: React.ReactNode }) => {
 
   return (
     <div className="nodes-tabs card-header-item">
-      <div className="d-flex flex-column flex-md-row align-items-md-center">
+      <div className="d-flex">
         <div>
           <NetworkLink
             to={validatorsRoutes.index}
