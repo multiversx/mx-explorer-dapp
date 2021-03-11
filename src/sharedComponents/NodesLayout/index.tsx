@@ -5,7 +5,7 @@ import { useGlobalDispatch, useGlobalState } from 'context';
 import GlobalStakeCard from './GlobalStakeCard';
 
 const NodesLayout = ({ children }: { children: React.ReactNode }) => {
-  const { getShards, getGlobalStake, getGlobalStakeNodes } = adapter();
+  const { getShards, getGlobalStake, getEconomics, getGlobalStakeNodes } = adapter();
   const dispatch = useGlobalDispatch();
   const { activeNetworkId } = useGlobalState();
 
@@ -15,34 +15,43 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
 
   const fetchShardsAndGlobalStaking = () => {
     if (dataReadyForNetwork !== activeNetworkId) {
-      Promise.all([getShards(), getGlobalStake(), getGlobalStakeNodes()]).then(
-        ([shards, globalStake, globalStakeNodes]) => {
-          if (globalStake.success) {
-            dispatch({
-              type: 'setGlobalStake',
-              globalStake: {
-                ...globalStake.data,
-                ...{
-                  apr: 29,
-                  waitingList: 21,
-                },
-                ...(globalStakeNodes.success
-                  ? globalStakeNodes.data
-                  : {
-                      nodesVerions: [
-                        { name: 'v.10', percent: 70 },
-                        { name: 'v.0.09', percent: 20 },
-                        { name: 'other', percent: 10 },
-                      ],
-                    }),
-              },
-            });
-          } else {
-            dispatch({
-              type: 'setGlobalStake',
-              globalStake: undefined,
-            });
-          }
+      Promise.all([getShards(), getGlobalStake(), getEconomics(), getGlobalStakeNodes()]).then(
+        ([shards, globalStake, economics, globalStakeNodes]) => {
+          const newGlobalStake = {
+            ...(globalStake.success
+              ? {
+                  ...globalStake.data,
+                  ...{
+                    deliquentStake: 0.3,
+                    apr: 29,
+                    waitingList: 21,
+                  },
+                }
+              : {}),
+          };
+
+          const newEconomics = {
+            ...(economics.success ? { ...economics.data } : {}),
+          };
+
+          const newGlobalStakeNodes = {
+            ...(globalStakeNodes.success
+              ? { ...globalStakeNodes.data }
+              : {
+                  nodesVerions: [
+                    { name: 'v.10', percent: 70 },
+                    { name: 'v.0.09', percent: 20 },
+                    { name: 'other', percent: 10 },
+                  ],
+                }),
+          };
+
+          dispatch({
+            type: 'setGlobalStake',
+            globalStake: globalStake.success
+              ? { ...newGlobalStake, ...newEconomics, ...newGlobalStakeNodes }
+              : undefined,
+          });
 
           if (shards.success) {
             dispatch({

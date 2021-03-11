@@ -4,10 +4,13 @@ import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
 import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
 import { useGlobalState } from 'context';
-import { Denominate, MultilayerPercentageBar, PageState } from 'sharedComponents';
+import { MultilayerPercentageBar, PageState } from 'sharedComponents';
 
 const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
-  const { globalStake } = useGlobalState();
+  const {
+    globalStake,
+    activeNetwork: { erdLabel },
+  } = useGlobalState();
 
   return stakeFetched === false ? (
     <div className="row">
@@ -33,9 +36,9 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
             </div>
             <div className="d-flex flex-column">
               <span className="text-secondary mb-1">Active Stake</span>
-              {globalStake && globalStake.totalStaked ? (
+              {globalStake && globalStake.staked ? (
                 <h5 className="m-0 pb-1">
-                  <Denominate value={globalStake.totalStaked} decimals={0} />
+                  {globalStake.staked.toLocaleString('en')} {erdLabel}
                 </h5>
               ) : (
                 '...'
