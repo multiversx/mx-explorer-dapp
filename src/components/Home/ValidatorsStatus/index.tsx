@@ -34,6 +34,7 @@ const ValidatorsStatus = () => {
   const [leaders, setLeaders] = React.useState<LeaderType[]>([]);
   const [continentsRank, setContinentsRank] = React.useState<RankType[]>(placeHolderRank);
   const [totalNodes, setTotalNodes] = React.useState<string | number>('...');
+  const ref = React.useRef(null);
 
   const {
     timeout,
@@ -43,40 +44,47 @@ const ValidatorsStatus = () => {
 
   const fetchMarkers = () => {
     // getMarkers({ timeout, apiUrl: apiUrl || '' }).then(({ data }) => {
+    //  if (ref.current !== null) {
     //   setMarkers(data);
+    //  }
     // });
     axios
       .get(`markers.json`, {
         timeout,
       })
       .then(({ data }) => {
-        setMarkers(data);
-        setContinentsRank(calcContinentRank(data));
+        if (ref.current !== null) {
+          setMarkers(data);
+          setContinentsRank(calcContinentRank(data));
 
-        let totalNodes = 0;
-        data.forEach((marker: MarkerType) => (totalNodes += marker.validators));
-        setTotalNodes(totalNodes);
+          let totalNodes = 0;
+          data.forEach((marker: MarkerType) => (totalNodes += marker.validators));
+          setTotalNodes(totalNodes);
+        }
       });
-    fetchLeaders();
   };
   React.useEffect(fetchMarkers, []);
 
   const fetchLeaders = () => {
     // getLeaders({ timeout, apiUrl: apiUrl || '' }).then((data) => {
+    //  if (ref.current !== null) {
     //   setLeaders(data);
+    //  }
     // });
     axios
       .get(`leaders.json`, {
         timeout,
       })
       .then(({ data }) => {
-        setLeaders(data);
+        if (ref.current !== null) {
+          setLeaders(data);
+        }
       });
   };
   React.useEffect(fetchLeaders, [timestamp, markers]);
 
   return (
-    <div className="card">
+    <div className="card" ref={ref}>
       <div className="card-header">
         <div className="card-header-item d-flex justify-content-between align-items-center">
           <h6 className="m-0">Validators Status</h6>

@@ -60,20 +60,24 @@ const SimpleMap = ({ markers, leaders }: SimpleMapType) => {
     refresh: { timestamp },
   } = useGlobalState();
 
+  const ref = React.useRef(null);
+
   const isLeader = (city: string) => {
     return leaders.filter((leader) => leader.city === city).length === 1;
   };
 
   const [blink, setBlink] = React.useState(false);
   React.useEffect(() => {
-    setBlink(true);
-    setTimeout(() => {
-      setBlink(false);
-    }, 1000);
+    if (ref.current !== null) {
+      setBlink(true);
+      setTimeout(() => {
+        setBlink(false);
+      }, 1000);
+    }
   }, [timestamp]);
 
   return (
-    <div className="simple-map">
+    <div className="simple-map" ref={ref}>
       <ComposableMap
         projectionConfig={{
           scale: 200,
