@@ -187,13 +187,14 @@
   align-items: center;
   justify-content: center;
 
-  padding: 1rem;
   background-color: $light;
   border-radius: 0.5rem;
+  min-width: 3.2rem;
+  min-height: 3.2rem;
 
   svg {
-    width: 1.2rem;
-    height: 1.2rem;
+    width: 1.15rem !important;
+    height: 1.15rem !important;
     fill: $secondary;
     color: $secondary;
 
@@ -206,8 +207,8 @@
     padding: 1.45rem;
 
     svg {
-      width: 2.2rem;
-      height: 2.2rem;
+      width: 2.2rem !important;
+      height: 2.2rem !important;
     }
   }
 }
