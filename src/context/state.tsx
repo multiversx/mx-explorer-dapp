@@ -26,7 +26,7 @@ export interface NodesVersionsType {
 export interface GlobalStakeType {
   activeValidators: number;
   queueSize: number;
-  totalStaked: string;
+  staked: number;
   totalValidators: number;
   apr?: number;
   waitingList?: number;

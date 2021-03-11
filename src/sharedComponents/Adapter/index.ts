@@ -248,5 +248,7 @@ export default function useAdapter() {
       }),
 
     getProvider: (address: string) => provider({ url: `/providers/${address}` }),
+
+    getEconomics: () => provider({ url: `/economics` }),
   };
 }
