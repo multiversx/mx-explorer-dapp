@@ -13,7 +13,7 @@ import {
 } from './helpers';
 
 export default function useAdapter() {
-  const { provider, getStats, getNodes, getRewards, getShards } = useAdapterConfig();
+  const { provider, getStats, getNodes, getAccountDelegation, getAccountStake, getShards, getEconomics } = useAdapterConfig();
 
   return {
     /* Homepage */
@@ -155,7 +155,9 @@ export default function useAdapter() {
         },
       }),
 
-    getRewards: (address: string) => getRewards(address),
+    getAccountDelegation: (address: string) => getAccountDelegation(address),
+    
+    getAccountStake: (address: string) => getAccountStake(address),
 
     /* Validators */
 
@@ -249,6 +251,6 @@ export default function useAdapter() {
 
     getProvider: (address: string) => provider({ url: `/providers/${address}` }),
 
-    getEconomics: () => provider({ url: `/economics` }),
+    getEconomics: () => getEconomics(),
   };
 }

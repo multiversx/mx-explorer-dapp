@@ -3,16 +3,16 @@ import useDebounce from './useDebounce';
 
 interface TrimType {
   text: string;
+  color?: 'muted' | 'secondary';
   dataTestId?: string;
 }
 
-const Trim = ({ text, dataTestId = '' }: TrimType) => {
+const Trim = ({ text, dataTestId = '', color }: TrimType) => {
   const [debounce, setDebounce] = React.useState(0);
 
   const [overflow, setOverflow] = React.useState(false);
   const trimRef = React.useRef(document.createElement('span'));
   const hiddenTextRef = React.useRef(document.createElement('span'));
-
   const debounceTracker = useDebounce(debounce, 100);
 
   const listener = () => {
@@ -36,7 +36,7 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
   }, [debounceTracker]);
 
   return (
-    <span ref={trimRef} className={`trim ${overflow ? 'overflow' : ''}`}>
+    <span ref={trimRef} className={`trim ${color ? color : ''} ${overflow ? 'overflow' : ''}`}>
       <span ref={hiddenTextRef} className="hidden-text-ref" data-testid={dataTestId}>
         {text}
       </span>

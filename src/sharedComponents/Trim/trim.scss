@@ -46,6 +46,20 @@
     user-select: none;
   }
 
+  &.secondary {
+    .left span,
+    .right span {
+      color: $secondary;
+    }
+  }
+
+  &.muted {
+    .left span,
+    .right span {
+      color: $muted;
+    }
+  }
+
   /* IE fix */
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     .right {

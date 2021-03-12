@@ -25,7 +25,6 @@ import SharedIdentity from './SharedIdentity';
 import ProvidersTable from './ProvidersTable';
 import MultilayerPercentageBar from './MultilayerPercentageBar';
 import CardItem from './CardItem';
-import ProviderStats from './ProviderStats';
 import LatestBlocks from './LatestBlocks';
 
 export {
@@ -57,6 +56,5 @@ export {
   ProvidersTable,
   MultilayerPercentageBar,
   CardItem,
-  ProviderStats,
   LatestBlocks,
 };

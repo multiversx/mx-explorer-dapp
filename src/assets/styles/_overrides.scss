@@ -39,6 +39,12 @@ body {
         line-height: 1.95rem;
         @extend .m-0;
       }
+
+      &.compact {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        background-color: $light;
+      }
     }
   }
 

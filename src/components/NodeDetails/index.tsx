@@ -1,13 +1,6 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import {
-  adapter,
-  LatestBlocks,
-  Loader,
-  PageState,
-  SharedIdentity,
-  ProviderStats,
-} from 'sharedComponents';
+import { adapter, LatestBlocks, Loader, PageState, SharedIdentity } from 'sharedComponents';
 import { useLocation, useParams } from 'react-router-dom';
 import { IdentityType, NodeType } from 'context/state';
 import NodeInformation from './NodeInformation';
@@ -31,13 +24,12 @@ const NodeDetails = () => {
   const ref = React.useRef(null);
   const { publicKey } = useParams() as any;
   const { search } = useLocation();
-  const { getNode, getIdentity, getRounds, getBlocks, getProvider } = adapter();
+  const { getNode, getIdentity, getRounds, getBlocks } = adapter();
   const isMainnet = useIsMainnet();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
   const [node, setNode] = React.useState<NodeDetailType<NodeType>>(initialState);
   const [identity, setIdentity] = React.useState<NodeDetailType<IdentityType>>(initialState);
-  const [provider, setProvider] = React.useState<NodeDetailType<types.ProviderType>>(initialState);
   const [rounds, setRounds] = React.useState<NodeDetailType<RoundType[]>>(initialState);
   const [blocks, setBlocks] = React.useState<NodeDetailType<BlockType[]>>(initialState);
 
@@ -46,17 +38,15 @@ const NodeDetails = () => {
     getNode(publicKey).then((nodeData) => {
       if (nodeData.success) {
         const fetchIdentity = isMainnet && nodeData.data.identity !== undefined;
-        const fetchProvider = nodeData.data.owner !== undefined;
 
         if (nodeData.data.nodeType !== 'observer') {
           const promises = [
             getRounds(publicKey),
             getBlocks({ proposer: publicKey }),
             ...(fetchIdentity ? [getIdentity(nodeData.data.identity)] : []),
-            ...(fetchProvider ? [getProvider(nodeData.data.owner)] : []),
           ];
           Promise.all(promises).then((response) => {
-            const [roundsData, blocksData, identityData, providerData] = response;
+            const [roundsData, blocksData, identityData] = response;
             if (ref.current !== null) {
               setNode(nodeData);
 
@@ -79,50 +69,17 @@ const NodeDetails = () => {
                 setIdentity(identityData);
               }
 
-              // if (providerData) {
-              //   setProvider(providerData);
-              // }
-
-              setProvider({
-                data: {
-                  contract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l',
-                  serviceFee: '12',
-                  withDelegationCap: true,
-                  maxDelegationCap: '100',
-                  apr: '29',
-                  totalActiveStake: '2250000000000000000000000',
-                  numUsers: 4,
-                  numNodes: 20,
-                  identity: {
-                    name: 'Just Mining',
-                    avatar:
-                      'https://s3.amazonaws.com/keybase_processed_uploads/b011b27c59f42344b38b476da9d85105_360_360.jpg',
-                    identity: 'thomasjustmining',
-                    website: 'https://elrond.com',
-                    validators: 1454,
-                    score: 174480,
-                    stake: 3635000,
-                    stakePercent: 67.04,
-                  },
-                },
-                success: true,
-              });
-
               setDataReady(nodeData.success);
             }
           });
         } else {
-          const promises = [
-            ...(fetchIdentity ? [getIdentity(nodeData.data.identity)] : []),
-            ...(fetchProvider ? [getProvider(nodeData.data.owner)] : []),
-          ];
+          const promises = [...(fetchIdentity ? [getIdentity(nodeData.data.identity)] : [])];
 
           if (promises.length > 0) {
             Promise.all(promises).then((response) => {
-              const [identityData, providerData] = response;
+              const [identityData] = response;
               if (ref.current !== null) {
                 setIdentity(identityData);
-                setProvider(providerData);
                 setNode(nodeData);
                 setDataReady(true);
               }
@@ -143,9 +100,6 @@ const NodeDetails = () => {
   const showIdentity =
     identity.success === false || (identity.success && identity.data !== undefined);
 
-  const showProviderStats =
-    provider.success === false || (provider.success && provider.data !== undefined);
-
   return (
     <>
       {dataReady === undefined && <Loader />}
@@ -161,6 +115,12 @@ const NodeDetails = () => {
         {dataReady === true && node.data !== undefined && (
           <>
             <div className="container pt-spacer">
+              <div className="row">
+                <div className="mb-spacer col">
+                  <NodeInformation node={node.data} />
+                </div>
+              </div>
+
               {showIdentity && (
                 <div className="row">
                   <div className="col mb-spacer">
@@ -168,20 +128,6 @@ const NodeDetails = () => {
                   </div>
                 </div>
               )}
-
-              {showProviderStats && (
-                <div className="row">
-                  <div className="col mb-spacer">
-                    <ProviderStats provider={provider.data} />
-                  </div>
-                </div>
-              )}
-
-              <div className="row">
-                <div className="mb-spacer col">
-                  <NodeInformation node={node.data} />
-                </div>
-              </div>
 
               {node.data.nodeType !== 'observer' && (
                 <div className="row">

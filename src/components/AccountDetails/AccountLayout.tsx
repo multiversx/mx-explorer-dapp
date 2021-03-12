@@ -4,7 +4,6 @@ import { useGlobalDispatch, useGlobalState } from 'context';
 import { Loader, adapter } from 'sharedComponents';
 import FailedAccount from './FailedAccount';
 import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
-import AccountTokens from './AccountTokens';
 import AccountInfo from './AccountInfo';
 import { types } from 'helpers';
 
@@ -15,9 +14,9 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { pathname } = useLocation();
   const { firstPageTicker } = useSize();
-  const { activeNetworkId, activeNetwork } = useGlobalState();
+  const { activeNetwork, accountDetails } = useGlobalState();
   const dispatch = useGlobalDispatch();
-  const { getAccount, getAccountTokens } = adapter();
+  const { getAccount, getAccountTokens, getAccountDelegation, getAccountStake } = adapter();
   const networkRoute = useNetworkRoute();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -30,11 +29,14 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     if (!document.hidden) {
       getAccount(address).then((accountDetailsData) => {
         if (ref.current !== null) {
+          const details = accountDetailsData.success ? accountDetailsData.data : {};
+
           dispatch({
             type: 'setAccountDetails',
-            accountDetails: accountDetailsData.success
-              ? { ...accountDetailsData.data, detailsFetched: accountDetailsData.success }
-              : {},
+            accountDetails: {
+              ...accountDetails,
+              ...details,
+            },
           });
 
           if (dataReady === undefined) {
@@ -42,6 +44,28 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
           }
         }
       });
+    }
+  };
+
+  const fetchLockedAmount = () => {
+    if (!document.hidden) {
+      Promise.all([getAccountDelegation(address), getAccountStake(address)]).then(
+        ([delegationData, stakeData]) => {
+          if (ref.current !== null) {
+            const delegation = delegationData.success ? delegationData.data : {};
+            const stake = stakeData.success ? stakeData.data : {};
+
+            dispatch({
+              type: 'setAccountDetails',
+              accountDetails: {
+                ...accountDetails,
+                ...delegation,
+                ...stake,
+              },
+            });
+          }
+        }
+      );
     }
   };
 
@@ -61,10 +85,22 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   React.useEffect(() => {
     if (!isOldAddressRoute) {
       fetchBalanceAndCount();
-      fetchAccountTokens();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetworkId, address]);
+  }, [firstPageTicker, activeNetwork.id, address]);
+
+  React.useEffect(() => {
+    if (!isOldAddressRoute) {
+      fetchLockedAmount();
+      // fetchAccountTokens();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeNetwork.id, address, accountDetails?.txCount]);
+
+  React.useEffect(() => {
+    setDataReady(undefined);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeNetwork.id, address]);
 
   const loading = dataReady === undefined;
   const failed = dataReady === false || !addressIsBech32(address);
@@ -80,28 +116,6 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
         {!loading && !failed && (
           <div className="container pt-spacer">
             <AccountInfo />
-
-            {/* {accountTokensFetched === false && (
-                  <div className="row">
-                    <div className="col-12 mb-spacer">
-                      <div className="card">
-                        <div className="card-body p-0">
-                          <FailedTokens />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              */}
-
-            {accountTokensFetched === true && accountTokens.length > 0 && (
-              <div className="row">
-                <div className="col-12 mb-spacer">
-                  <AccountTokens tokens={accountTokens} />
-                </div>
-              </div>
-            )}
-
             {children}
           </div>
         )}

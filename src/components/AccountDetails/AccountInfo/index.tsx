@@ -1,99 +1,145 @@
 import React from 'react';
-import { CopyButton, Denominate, DetailItem } from 'sharedComponents';
+import { CardItem, CopyButton, Denominate } from 'sharedComponents';
 import { NavDropdown } from 'react-bootstrap';
 import { useGlobalState } from 'context';
+import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
+import { faInfoCircle } from '@fortawesome/pro-solid-svg-icons/faInfoCircle';
+import { faDollarSign } from '@fortawesome/pro-solid-svg-icons/faDollarSign';
+import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
+import { faUser } from '@fortawesome/pro-solid-svg-icons/faUser';
+import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import denominate from 'sharedComponents/Denominate/denominate';
+import { denomination, decimals } from 'appConfig';
+import BigNumber from 'bignumber.js';
 
-const AccountInfo = () => {
-  const {
-    activeNetwork: { erdLabel },
-    accountDetails,
-  } = useGlobalState();
+const LockedDetails = ({ cardItemClass }: { cardItemClass: string }) => {
+  const { accountDetails } = useGlobalState();
 
+  // TODO find a better way?
   if (!accountDetails) {
     return null;
   }
 
-  const { address, stake, delegation, balance, code } = accountDetails;
+  const {
+    totalStaked,
+    claimableRewards,
+    userActiveStake,
+    userDeferredPaymentStake,
+    userUnstakedStake,
+    userWaitingStake,
+    userWithdrawOnlyStake,
+  } = accountDetails;
 
-  const total = (stake + delegation).toLocaleString('en', {
-    minimumFractionDigits: 4,
-  });
+  // const rewards = parseFloat(
+  //   denominate({
+  //     input: claimableRewards,
+  //     decimals,
+  //     denomination,
+  //     showLastNonZeroDecimal: false,
+  //     addCommas: false,
+  //   })
+  // );
+
+  const bNtotalStaked = new BigNumber(totalStaked ? totalStaked : 0);
+  const bNuserActiveStake = new BigNumber(userActiveStake ? userActiveStake : 0);
+  const bNuserWaitingStake = new BigNumber(userWaitingStake ? userWaitingStake : 0);
+
+  const totalLocked = bNtotalStaked.plus(bNuserActiveStake).plus(bNuserWaitingStake);
 
   return (
-    <div className="row balance-and-basic-info">
-      <div className="col-12 col-lg-6 mb-spacer">
-        <div className="card balance-card">
-          <div className="card-header">
-            <div className="card-header-item">
-              <h6 data-testid="title">Balance</h6>
-            </div>
+    <CardItem className={`overflow-visible ${cardItemClass}`} title="Locked" icon={faLock}>
+      <div className="d-flex align-items-center">
+        <span className="mr-2">
+          <Denominate value={totalLocked.toString(10)} />
+        </span>
+
+        <NavDropdown
+          title={<FontAwesomeIcon icon={faInfoCircle} size="1x" className="text-primary" />}
+          id="locked-amount-details"
+        >
+          <div className="locked-item">
+            <span className="locked-item-label">Active Delegation</span>
+            <span className="text-secondary">
+              <Denominate value={bNuserActiveStake.toString(10)} />
+            </span>
           </div>
 
-          <div className="card-body p-0">
-            <div className="container-fluid">
-              <DetailItem title="Balance">
-                {balance !== '...' ? <Denominate value={balance} /> : balance}
-              </DetailItem>
-              <DetailItem title="Locked">
-                <div className="d-flex align-items-center">
-                  <span className="mr-2">
-                    {total} {erdLabel}
-                  </span>
-                  <NavDropdown
-                    title={<span className="btn btn-sm btn-outline-primary">Details</span>}
-                    id="locked-amount-details"
-                  >
-                    <div className="locked-item">
-                      <span className="locked-item-label">
-                        <strong>Delegation</strong>
-                      </span>
-                      <span>
-                        12321321321321{stake} {erdLabel}
-                      </span>
-                    </div>
-                    <div className="locked-item">
-                      <span className="locked-item-label">
-                        <strong>Stake</strong>
-                      </span>
-                      <span>
-                        1231{delegation} {erdLabel}
-                      </span>
-                    </div>
-                  </NavDropdown>
-                </div>
-              </DetailItem>
-            </div>
+          <div className="locked-item">
+            <span className="locked-item-label">Waiting Delegation</span>
+            <span className="text-secondary">
+              <Denominate value={bNuserWaitingStake.toString(10)} />
+            </span>
           </div>
-        </div>
+
+          <div className="locked-item">
+            <span className="locked-item-label">Stake</span>
+            <span className="text-secondary">
+              <Denominate value={bNtotalStaked.toString(10)} />
+            </span>
+          </div>
+        </NavDropdown>
       </div>
-      <div className="col-12 col-lg-6 mb-spacer">
+    </CardItem>
+  );
+};
+
+const AccountInfo = () => {
+  const {
+    activeNetwork: { erdLabel, id, adapter },
+    accountDetails,
+  } = useGlobalState();
+
+  // TODO find a better way?
+  if (!accountDetails) {
+    return null;
+  }
+
+  const { address, balance, nonce } = accountDetails;
+
+  const tokensActive = id !== 'mainnet' && adapter === 'api';
+  const cardItemClass = tokensActive ? 'n5' : '';
+
+  return (
+    <div className="row account-info">
+      <div className="col mb-spacer">
         <div className="card">
           <div className="card-header">
             <div className="card-header-item">
-              <h6 data-testid="title">Basic Info</h6>
+              <h6 data-testid="title">Account Details</h6>
+            </div>
+            <div className="card-header-item compact d-flex">
+              Address:
+              <div className="d-flex align-items-center text-break-all ml-2 text-secondary">
+                <span>{address}</span>
+                <CopyButton text={address} />
+              </div>
             </div>
           </div>
 
-          <div className="card-body p-0">
-            <div className="container-fluid">
-              <DetailItem title="Address">
-                <div className="d-flex align-items-center text-break-all mr-lg-n1rem">
-                  <span data-testid="address">{address}</span>
-                  <CopyButton text={address} />
-                </div>
-              </DetailItem>
-              <DetailItem title="Nonce">[12312312]</DetailItem>
-              {code && (
-                <DetailItem title="Contract Code">
-                  <textarea
-                    readOnly
-                    className="form-control col cursor-text mt-2"
-                    rows={4}
-                    defaultValue={code}
-                  />
-                </DetailItem>
-              )}
-            </div>
+          <div className="card-body my-n2 d-flex flex-wrap flex-row">
+            <CardItem className={cardItemClass} title="Balance" customIcon={<ElrondSymbol />}>
+              <div className="d-flex align-items-center">
+                {balance !== '...' ? <Denominate value={balance} /> : balance}
+                <FontAwesomeIcon icon={faInfoCircle} size="1x" className="text-primary ml-2" />
+              </div>
+            </CardItem>
+
+            <CardItem className={cardItemClass} title="Value" icon={faDollarSign}>
+              {balance !== '...' ? <Denominate value={balance} /> : balance}
+            </CardItem>
+
+            <LockedDetails cardItemClass={cardItemClass} />
+
+            <CardItem className={cardItemClass} title="Nonce" icon={faUser}>
+              {nonce}
+            </CardItem>
+
+            {tokensActive && (
+              <CardItem className={cardItemClass} title="Tokens" icon={faCoins}>
+                [WIP]
+              </CardItem>
+            )}
           </div>
         </div>
       </div>

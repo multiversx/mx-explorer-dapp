@@ -15,7 +15,7 @@ const ShardCard = ({ shard, isOverall }: ShardCardType) => {
 
   return (
     <div className="shard-card py-3">
-      <div className="mb-2 pb-1">
+      <div className="mb-2">
         {!isOverall && (
           <FontAwesomeIcon icon={faServer} className="shard-icon text-secondary mr-2" />
         )}
