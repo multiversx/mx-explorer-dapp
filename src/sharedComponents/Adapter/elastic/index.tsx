@@ -26,7 +26,13 @@ export default {
     const { proxyUrl } = props;
     return shards({ proxyUrl });
   },
-  getRewards: () => {
+  getAccountDelegation: () => {
+    throw new Error('not defined');
+  },
+  getAccountStake: () => {
+    throw new Error('not defined');
+  },
+  getEconomics: () => {
     throw new Error('not defined');
   },
 };

@@ -22,8 +22,16 @@ export default {
       timeout,
     });
   },
-  getRewards: (props: ProviderPropsType & { proxyUrl: string; address: string }) => {
+  getAccountDelegation: (props: ProviderPropsType & { proxyUrl: string; address: string }) => {
     const { proxyUrl, address, timeout } = props;
     return axios.get(`${proxyUrl}/accounts/${address}/delegation`, { timeout });
+  },
+  getAccountStake: (props: ProviderPropsType & { proxyUrl: string; address: string }) => {
+    const { proxyUrl, address, timeout } = props;
+    return axios.get(`${proxyUrl}/accounts/${address}/stake`, { timeout });
+  },
+  getEconomics: (props: ProviderPropsType & { proxyUrl: string }) => {
+    const { proxyUrl, timeout } = props;
+    return axios.get(`${proxyUrl}/economics`, { timeout });
   },
 };

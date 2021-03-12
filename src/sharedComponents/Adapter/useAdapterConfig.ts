@@ -48,7 +48,7 @@ export default function useAdapterConfig() {
 
   const adapter: 'api' | 'elastic' = networkAdapter as any;
 
-  const { provider, getStats, getNodes, getRewards, getShards } = providers[adapter];
+  const { provider, getStats, getNodes, getAccountDelegation, getAccountStake, getEconomics, getShards } = providers[adapter];
 
   const providerProps = { ...providers[adapter], metaChainShardId, timeout };
 
@@ -59,7 +59,10 @@ export default function useAdapterConfig() {
     getStats: (props = basicProps) => wrap(() => getStats({ ...providerProps, ...props })),
     getNodes: (props = basicProps) => wrap(() => getNodes({ ...providerProps, ...props })),
     getShards: (props = basicProps) => wrap(() => getShards({ ...providerProps, ...props })),
-    getRewards: (address: string) =>
-      wrap(() => getRewards({ ...providerProps, ...basicProps, address })),
+    getAccountDelegation: (address: string) =>
+      wrap(() => getAccountDelegation({ ...providerProps, ...basicProps, address })),
+    getAccountStake: (address: string) =>
+      wrap(() => getAccountStake({ ...providerProps, ...basicProps, address })),
+      getEconomics: (props = basicProps) => wrap(() => getEconomics({ ...providerProps, ...props })),
   };
 }

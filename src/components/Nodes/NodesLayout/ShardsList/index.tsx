@@ -8,7 +8,7 @@ import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
 const StakingQueueCard = ({ globalStake }: { globalStake: GlobalStakeType | undefined }) => {
   return (
     <div className="shard-card py-3">
-      <div className="mb-2 pb-1">
+      <div className="mb-2">
         <span className="text-secondary">Queue</span>
       </div>
       <div className="metric-value">
@@ -56,7 +56,7 @@ const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
         <div className="row shards-list">
           <div className="col mb-spacer">
             <div className="card">
-              <div className="card-body d-flex px-lg-spacer flex-wrap">
+              <div className="card-body d-flex px-lg-spacer flex-wrap justify-content-lg-between">
                 <ShardCard shard={overallCard} isOverall />
                 {shards.map((shard, i) => (
                   <React.Fragment key={shard.shard + i}>

@@ -250,6 +250,11 @@
   overflow: hidden;
   flex: 0 0 100%;
 
+  .card-item-value,
+  .card-item-title {
+    line-height: 1.3;
+  }
+
   @include media-breakpoint-up(sm) {
     flex: 0 0 50%;
   }
@@ -260,5 +265,19 @@
 
   @include media-breakpoint-up(lg) {
     flex: 0 0 25%;
+  }
+
+  &.n5 {
+    @include media-breakpoint-up(md) {
+      flex: 0 0 50%;
+    }
+
+    @include media-breakpoint-up(lg) {
+      flex: 0 0 33.333%;
+    }
+
+    @include media-breakpoint-up(xl) {
+      flex: 0 0 20%;
+    }
   }
 }

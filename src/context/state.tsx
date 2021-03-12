@@ -73,14 +73,6 @@ export interface NodeType {
   owner?: string;
 }
 
-export interface AccountDetailsType extends types.AccountType {
-  detailsFetched?: boolean;
-  delegationFetched?: boolean;
-  stakeFetched?: boolean;
-  delegation?: any;
-  stake?: any;
-}
-
 export interface StateType {
   config: ConfigType;
   defaultNetwork: NetworkType;
@@ -96,7 +88,7 @@ export interface StateType {
   blockchainTotalStake: number;
   shards: ShardType[];
   globalStake: GlobalStakeType | undefined;
-  accountDetails: AccountDetailsType | undefined;
+  accountDetails: types.AccountType | undefined;
 }
 
 const initialState = (optionalConfig?: ConfigType): StateType => {
