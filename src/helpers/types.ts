@@ -7,12 +7,6 @@ export interface AccountType {
   txCount: number;
   claimableRewards: string;
   code?: string;
-  totalStaked?: string;
-  userActiveStake?: string;
-  userDeferredPaymentStake?: string;
-  userUnstakedStake?: string;
-  userWaitingStake?: string;
-  userWithdrawOnlyStake?: string;
 }
 
 export interface TokenType {

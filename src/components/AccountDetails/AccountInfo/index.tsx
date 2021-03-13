@@ -1,36 +1,27 @@
 import React from 'react';
 import { CardItem, CopyButton, Denominate } from 'sharedComponents';
-import { NavDropdown } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useGlobalState } from 'context';
 import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
 import { faInfoCircle } from '@fortawesome/pro-solid-svg-icons/faInfoCircle';
 import { faDollarSign } from '@fortawesome/pro-solid-svg-icons/faDollarSign';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { faUser } from '@fortawesome/pro-solid-svg-icons/faUser';
-import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import denominate from 'sharedComponents/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
 import BigNumber from 'bignumber.js';
+import { LockedAmountType } from '../AccountLayout';
 
-const LockedDetails = ({ cardItemClass }: { cardItemClass: string }) => {
-  const { accountDetails } = useGlobalState();
-
-  // TODO find a better way?
-  if (!accountDetails) {
-    return null;
-  }
-
-  const {
-    totalStaked,
-    claimableRewards,
-    userActiveStake,
-    userDeferredPaymentStake,
-    userUnstakedStake,
-    userWaitingStake,
-    userWithdrawOnlyStake,
-  } = accountDetails;
-
+const LockedDetails = ({
+  lockedAmount,
+  cardItemClass,
+}: {
+  lockedAmount: LockedAmountType;
+  cardItemClass: string;
+}) => {
+  // const { accountDetails } = useGlobalState();
+  // const claimableRewards = accountDetails ? accountDetails.claimableRewards : 0;
   // const rewards = parseFloat(
   //   denominate({
   //     input: claimableRewards,
@@ -41,66 +32,77 @@ const LockedDetails = ({ cardItemClass }: { cardItemClass: string }) => {
   //   })
   // );
 
+  const {
+    totalStaked,
+    userActiveStake,
+    userDeferredPaymentStake,
+    userUnstakedStake,
+    userWaitingStake,
+    userWithdrawOnlyStake,
+  } = lockedAmount;
+
   const bNtotalStaked = new BigNumber(totalStaked ? totalStaked : 0);
   const bNuserActiveStake = new BigNumber(userActiveStake ? userActiveStake : 0);
   const bNuserWaitingStake = new BigNumber(userWaitingStake ? userWaitingStake : 0);
-
   const totalLocked = bNtotalStaked.plus(bNuserActiveStake).plus(bNuserWaitingStake);
 
+  const show = lockedAmount.delegationFetched && lockedAmount.stakeFetched;
+
   return (
-    <CardItem className={`overflow-visible ${cardItemClass}`} title="Locked" icon={faLock}>
+    <CardItem className={cardItemClass} title="Locked" icon={faLock}>
       <div className="d-flex align-items-center">
         <span className="mr-2">
-          <Denominate value={totalLocked.toString(10)} />
+          {show ? <Denominate value={totalLocked.toString(10)} /> : <>...</>}
         </span>
 
-        <NavDropdown
-          title={<FontAwesomeIcon icon={faInfoCircle} size="1x" className="text-primary" />}
-          id="locked-amount-details"
-        >
-          <div className="locked-item">
-            <span className="locked-item-label">Active Delegation</span>
-            <span className="text-secondary">
-              <Denominate value={bNuserActiveStake.toString(10)} />
-            </span>
-          </div>
+        {show && (
+          <OverlayTrigger
+            placement="bottom"
+            delay={{ show: 0, hide: 400 }}
+            overlay={(props: any) => (
+              <Tooltip id="locked-amount-details" {...props} show={props.show.toString()}>
+                <div className="locked-item">
+                  <span className="locked-item-label">Active Delegation</span>
+                  <span className="text-secondary">
+                    <Denominate value={bNuserActiveStake.toString(10)} />
+                  </span>
+                </div>
 
-          <div className="locked-item">
-            <span className="locked-item-label">Waiting Delegation</span>
-            <span className="text-secondary">
-              <Denominate value={bNuserWaitingStake.toString(10)} />
-            </span>
-          </div>
+                <div className="locked-item">
+                  <span className="locked-item-label">Waiting Delegation</span>
+                  <span className="text-secondary">
+                    <Denominate value={bNuserWaitingStake.toString(10)} />
+                  </span>
+                </div>
 
-          <div className="locked-item">
-            <span className="locked-item-label">Stake</span>
-            <span className="text-secondary">
-              <Denominate value={bNtotalStaked.toString(10)} />
-            </span>
-          </div>
-        </NavDropdown>
+                <div className="locked-item">
+                  <span className="locked-item-label">Stake</span>
+                  <span className="text-secondary">
+                    <Denominate value={bNtotalStaked.toString(10)} />
+                  </span>
+                </div>
+              </Tooltip>
+            )}
+          >
+            <FontAwesomeIcon icon={faInfoCircle} size="1x" className="text-primary" />
+          </OverlayTrigger>
+        )}
       </div>
     </CardItem>
   );
 };
 
-const AccountInfo = () => {
+const AccountInfo = ({ lockedAmount }: { lockedAmount: LockedAmountType }) => {
   const {
-    activeNetwork: { erdLabel, id, adapter },
+    activeNetwork: { id, adapter },
     accountDetails,
   } = useGlobalState();
 
-  // TODO find a better way?
-  if (!accountDetails) {
-    return null;
-  }
-
   const { address, balance, nonce } = accountDetails;
-
   const tokensActive = id !== 'mainnet' && adapter === 'api';
   const cardItemClass = tokensActive ? 'n5' : '';
 
-  return (
+  return address !== '' ? (
     <div className="row account-info">
       <div className="col mb-spacer">
         <div className="card">
@@ -129,22 +131,22 @@ const AccountInfo = () => {
               {balance !== '...' ? <Denominate value={balance} /> : balance}
             </CardItem>
 
-            <LockedDetails cardItemClass={cardItemClass} />
+            <LockedDetails lockedAmount={lockedAmount} cardItemClass={cardItemClass} />
 
             <CardItem className={cardItemClass} title="Nonce" icon={faUser}>
-              {nonce}
+              {nonce !== undefined ? nonce : '...'}
             </CardItem>
 
-            {tokensActive && (
+            {/* {tokensActive && (
               <CardItem className={cardItemClass} title="Tokens" icon={faCoins}>
                 [WIP]
               </CardItem>
-            )}
+            )} */}
           </div>
         </div>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default AccountInfo;

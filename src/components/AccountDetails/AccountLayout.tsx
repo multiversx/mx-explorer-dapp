@@ -10,6 +10,17 @@ import { types } from 'helpers';
 import { useRouteMatch } from 'react-router-dom';
 import { accountRoutes } from 'routes';
 
+export interface LockedAmountType {
+  stakeFetched?: boolean | undefined;
+  totalStaked?: string;
+  delegationFetched?: boolean | undefined;
+  userActiveStake?: string;
+  userDeferredPaymentStake?: string;
+  userUnstakedStake?: string;
+  userWaitingStake?: string;
+  userWithdrawOnlyStake?: string;
+}
+
 const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { pathname } = useLocation();
@@ -19,64 +30,39 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const { getAccount, getAccountTokens, getAccountDelegation, getAccountStake } = adapter();
   const networkRoute = useNetworkRoute();
 
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-
   const isOldAddressRoute = pathname.includes('/address/');
   const match: any = useRouteMatch(accountRoutes.index);
-  const address = match ? match.params.hash : undefined;
+  const urlAddress = match ? match.params.hash : undefined;
+
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [lockedAmount, setLockedAmount] = React.useState<LockedAmountType>({
+    stakeFetched: undefined,
+    delegationFetched: undefined,
+  });
+
+  React.useEffect(() => {
+    setDataReady(undefined);
+  }, [urlAddress]);
 
   const fetchBalanceAndCount = () => {
     if (!document.hidden) {
-      getAccount(address).then((accountDetailsData) => {
-        if (ref.current !== null) {
-          const details = accountDetailsData.success ? accountDetailsData.data : {};
+      getAccount(urlAddress).then((accountDetailsData) => {
+        const details = accountDetailsData.success ? accountDetailsData.data : {};
 
-          dispatch({
-            type: 'setAccountDetails',
-            accountDetails: {
-              ...accountDetails,
-              ...details,
-            },
-          });
+        if (ref.current !== null) {
+          if (accountDetailsData.success) {
+            dispatch({
+              type: 'setAccountDetails',
+              accountDetails: {
+                ...details,
+              },
+            });
+            setDataReady(true);
+          }
 
           if (dataReady === undefined) {
             setDataReady(accountDetailsData.success);
           }
-        }
-      });
-    }
-  };
-
-  const fetchLockedAmount = () => {
-    if (!document.hidden) {
-      Promise.all([getAccountDelegation(address), getAccountStake(address)]).then(
-        ([delegationData, stakeData]) => {
-          if (ref.current !== null) {
-            const delegation = delegationData.success ? delegationData.data : {};
-            const stake = stakeData.success ? stakeData.data : {};
-
-            dispatch({
-              type: 'setAccountDetails',
-              accountDetails: {
-                ...accountDetails,
-                ...delegation,
-                ...stake,
-              },
-            });
-          }
-        }
-      );
-    }
-  };
-
-  const [accountTokens, setAccountTokens] = React.useState<types.TokenType[]>([]);
-  const [accountTokensFetched, setAccountTokensFetched] = React.useState<boolean | undefined>();
-  const fetchAccountTokens = () => {
-    if (activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api') {
-      getAccountTokens(address).then(({ success, data }) => {
-        if (ref.current !== null) {
-          setAccountTokens(data);
-          setAccountTokensFetched(success);
         }
       });
     }
@@ -87,7 +73,27 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
       fetchBalanceAndCount();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetwork.id, address]);
+  }, [firstPageTicker, activeNetwork.id, urlAddress]);
+
+  const fetchLockedAmount = () => {
+    if (!document.hidden) {
+      Promise.all([getAccountDelegation(urlAddress), getAccountStake(urlAddress)]).then(
+        ([delegationData, stakeData]) => {
+          if (ref.current !== null) {
+            const delegationFetched = delegationData.success ? delegationData.data : {};
+            const stakeFetched = stakeData.success ? stakeData.data : {};
+
+            setLockedAmount({
+              ...(delegationFetched ? delegationData.data : {}),
+              ...(stakeFetched ? stakeData.data : {}),
+              delegationFetched,
+              stakeFetched,
+            });
+          }
+        }
+      );
+    }
+  };
 
   React.useEffect(() => {
     if (!isOldAddressRoute) {
@@ -95,27 +101,35 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
       // fetchAccountTokens();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetwork.id, address, accountDetails?.txCount]);
+  }, [accountDetails.txCount, activeNetwork.id, urlAddress]);
 
-  React.useEffect(() => {
-    setDataReady(undefined);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetwork.id, address]);
+  const [accountTokens, setAccountTokens] = React.useState<types.TokenType[]>([]);
+  const [accountTokensFetched, setAccountTokensFetched] = React.useState<boolean | undefined>();
+  const fetchAccountTokens = () => {
+    if (activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api') {
+      getAccountTokens(urlAddress).then(({ success, data }) => {
+        if (ref.current !== null) {
+          setAccountTokens(data);
+          setAccountTokensFetched(success);
+        }
+      });
+    }
+  };
 
   const loading = dataReady === undefined;
-  const failed = dataReady === false || !addressIsBech32(address);
+  const failed = dataReady === false || !addressIsBech32(urlAddress);
 
   return isOldAddressRoute ? (
-    <Redirect to={networkRoute(`/accounts/${address}`)} />
+    <Redirect to={networkRoute(`/accounts/${urlAddress}`)} />
   ) : (
     <>
       {loading && <Loader />}
-      {!loading && failed && <FailedAccount address={address} />}
+      {!loading && failed && <FailedAccount address={urlAddress} />}
 
       <div ref={ref}>
         {!loading && !failed && (
           <div className="container pt-spacer">
-            <AccountInfo />
+            <AccountInfo lockedAmount={lockedAmount} />
             {children}
           </div>
         )}

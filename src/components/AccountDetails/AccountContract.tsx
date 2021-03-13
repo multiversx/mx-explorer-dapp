@@ -8,11 +8,8 @@ const AccountContract = () => {
   const { accountDetails } = useGlobalState();
   const networkRoute = useNetworkRoute();
 
-  const hasCode = accountDetails && accountDetails.code;
-  const address = accountDetails ? accountDetails.address : '';
-
-  return !hasCode ? (
-    <Redirect to={networkRoute(urlBuilder.accountDetails(address))} />
+  return !accountDetails.code ? (
+    <Redirect to={networkRoute(urlBuilder.accountDetails(accountDetails.address))} />
   ) : (
     <div className="card">
       <div className="card-header">
@@ -25,7 +22,7 @@ const AccountContract = () => {
           readOnly
           className="form-control col cursor-text"
           rows={10}
-          defaultValue={accountDetails?.code}
+          defaultValue={accountDetails.code}
         />
       </div>
     </div>
