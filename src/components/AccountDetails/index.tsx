@@ -20,9 +20,6 @@ const AccountDetails = () => {
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
 
-  const totalTransactions =
-    accountDetails && accountDetails.txCount ? accountDetails.txCount : '...';
-
   const fetchTransactions = () => {
     getTransactions({
       size,
@@ -70,7 +67,7 @@ const AccountDetails = () => {
       fetchTransactions();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountDetails?.txCount, accountDetails?.balance]);
+  }, [accountDetails.txCount, accountDetails.balance]);
 
   const loading = transactionsFetched === undefined;
   const showTransactions = transactionsFetched === true && transactions.length > 0;
@@ -83,7 +80,7 @@ const AccountDetails = () => {
             <TransactionsTable
               transactions={transactions}
               address={address}
-              totalTransactions={totalTransactions}
+              totalTransactions={accountDetails.txCount}
               size={size}
               directionCol={true}
               title={<AccountTabs />}

@@ -1,34 +1,37 @@
 .account-info {
   .card {
     overflow: visible !important;
+  }
+}
 
-    #locked-amount-details {
-      @extend .p-0;
-      font-size: 1rem;
+#locked-amount-details {
+  opacity: 1;
 
-      &:after {
-        content: none;
-      }
-    }
+  .arrow {
+    display: none;
+  }
 
-    .dropdown-menu {
-      @extend .p-3;
-      width: auto !important;
-      white-space: nowrap;
+  .tooltip-inner {
+    @extend .p-3;
 
-      .locked-item {
-        @extend .d-flex;
+    background-color: $card-bg;
+    border: 1px solid $border-color;
+    box-shadow: none;
+    color: $body;
+
+    max-width: none !important;
+    // white-space: nowrap;
+
+    .locked-item {
+      @extend .d-flex;
+
+      &:not(:last-child) {
         @extend .mb-2;
-
-        .locked-item-label {
-          min-width: 8.5rem;
-        }
       }
-    }
 
-    .card-item {
-      &.overflow-visible {
-        overflow: visible !important;
+      .locked-item-label {
+        min-width: 8.5rem;
+        text-align: left;
       }
     }
   }
