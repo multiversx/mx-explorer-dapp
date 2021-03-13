@@ -34,4 +34,9 @@ export default {
     const { proxyUrl, timeout } = props;
     return axios.get(`${proxyUrl}/economics`, { timeout });
   },
+
+  getEgldPrice: (props: ProviderPropsType) => {
+    const { timeout } = props;
+    return axios.get(`https://data.elrond.com/series/quotes/egld/price`, { timeout });
+  },
 };

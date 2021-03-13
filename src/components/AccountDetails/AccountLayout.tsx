@@ -18,6 +18,7 @@ export interface LockedAmountType {
   userUnstakedStake?: string;
   userWaitingStake?: string;
   userWithdrawOnlyStake?: string;
+  usd?: number;
 }
 
 const AccountLayout = ({ children }: { children: React.ReactNode }) => {
@@ -26,7 +27,13 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const { firstPageTicker } = useSize();
   const { activeNetwork, accountDetails } = useGlobalState();
   const dispatch = useGlobalDispatch();
-  const { getAccount, getAccountTokens, getAccountDelegation, getAccountStake } = adapter();
+  const {
+    getAccount,
+    getAccountTokens,
+    getAccountDelegation,
+    getAccountStake,
+    getEgldPrice,
+  } = adapter();
   const networkRoute = useNetworkRoute();
 
   const isOldAddressRoute = pathname.includes('/address/');
@@ -74,29 +81,36 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstPageTicker, activeNetwork.id, urlAddress]);
 
-  const fetchLockedAmount = () => {
+  const fetchLockedAmountAndPrice = () => {
     if (!document.hidden) {
-      Promise.all([getAccountDelegation(urlAddress), getAccountStake(urlAddress)]).then(
-        ([delegationData, stakeData]) => {
-          if (ref.current !== null) {
-            const delegationFetched = delegationData.success ? delegationData.data : {};
-            const stakeFetched = stakeData.success ? stakeData.data : {};
+      Promise.all([
+        getAccountDelegation(urlAddress),
+        getAccountStake(urlAddress),
+        getEgldPrice(),
+      ]).then(([delegationData, stakeData, priceData]) => {
+        if (ref.current !== null) {
+          const delegationFetched = delegationData.success ? delegationData.data : {};
+          const stakeFetched = stakeData.success ? stakeData.data : {};
+          const usd =
+            priceData.success && priceData.data.length > 0
+              ? priceData.data[priceData.data.length - 1].value
+              : undefined;
 
-            setLockedAmount({
-              ...(delegationFetched ? delegationData.data : {}),
-              ...(stakeFetched ? stakeData.data : {}),
-              delegationFetched,
-              stakeFetched,
-            });
-          }
+          setLockedAmount({
+            ...(delegationFetched ? delegationData.data : {}),
+            ...(stakeFetched ? stakeData.data : {}),
+            usd,
+            delegationFetched,
+            stakeFetched,
+          });
         }
-      );
+      });
     }
   };
 
   React.useEffect(() => {
     if (!isOldAddressRoute) {
-      fetchLockedAmount();
+      fetchLockedAmountAndPrice();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountDetails.txCount, activeNetwork.id, urlAddress]);

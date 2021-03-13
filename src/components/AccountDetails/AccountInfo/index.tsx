@@ -12,6 +12,7 @@ import denominate from 'sharedComponents/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
 import BigNumber from 'bignumber.js';
 import { LockedAmountType } from '../AccountLayout';
+import UsdValue from './UsdValue';
 
 const LockedDetails = ({
   lockedAmount,
@@ -128,7 +129,7 @@ const AccountInfo = ({ lockedAmount }: { lockedAmount: LockedAmountType }) => {
             </CardItem>
 
             <CardItem className={cardItemClass} title="Value" icon={faDollarSign}>
-              {balance !== '...' ? <Denominate value={balance} /> : balance}
+              <UsdValue input={balance} usd={lockedAmount.usd} />
             </CardItem>
 
             <LockedDetails lockedAmount={lockedAmount} cardItemClass={cardItemClass} />
