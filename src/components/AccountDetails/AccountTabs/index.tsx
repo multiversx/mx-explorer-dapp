@@ -8,30 +8,40 @@ const AccountTabs = () => {
   const activePath = useLocation().pathname;
   const { accountDetails } = useGlobalState();
 
-  const address = accountDetails ? accountDetails.address : '';
-  const code = accountDetails ? accountDetails.code : undefined;
-
-  const indexActive = !activePath.endsWith('contract');
+  const contractActive = activePath.endsWith('contract');
+  const indexActive = !contractActive;
 
   return (
     <div className="account-tabs d-flex flex-row">
       <div>
-        <NetworkLink
-          to={urlBuilder.accountDetails(address)}
-          className={`tab-link mr-3 ${indexActive ? 'active' : ''}`}
-        >
-          <h6>Transactions</h6>
-        </NetworkLink>
-      </div>
-      {code && (
-        <div>
+        {indexActive ? (
+          <div className="mr-3">
+            <h6>Transactions</h6>
+          </div>
+        ) : (
           <NetworkLink
-            to={urlBuilder.accountDetailsContract(address)}
-            className={`tab-link ml-3 ${!indexActive ? 'active' : ''}`}
+            to={urlBuilder.accountDetails(accountDetails.address)}
+            className="tab-link mr-3"
           >
-            <h6>Contract</h6>
+            <h6>Transactions</h6>
           </NetworkLink>
-        </div>
+        )}
+      </div>
+      {accountDetails.code && (
+        <>
+          {contractActive ? (
+            <div className="ml-3">
+              <h6>Contract</h6>
+            </div>
+          ) : (
+            <NetworkLink
+              to={urlBuilder.accountDetailsContract(accountDetails.address)}
+              className="tab-link ml-3"
+            >
+              <h6>Contract</h6>
+            </NetworkLink>
+          )}
+        </>
       )}
     </div>
   );

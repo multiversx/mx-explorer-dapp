@@ -17,7 +17,7 @@ const AccountContract = () => {
           <AccountTabs />
         </div>
       </div>
-      <div className="card-body">
+      <div className="card-body px-lg-spacer py-lg-4">
         <textarea
           readOnly
           className="form-control col cursor-text"
