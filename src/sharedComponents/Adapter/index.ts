@@ -13,7 +13,7 @@ import {
 } from './helpers';
 
 export default function useAdapter() {
-  const { provider, getStats, getNodes, getAccountDelegation, getAccountStake, getShards, getEconomics } = useAdapterConfig();
+  const { provider, getStats, getNodes, getAccountDelegation, getAccountStake, getShards, getEconomics, getEgldPrice } = useAdapterConfig();
 
   return {
     /* Homepage */
@@ -252,5 +252,7 @@ export default function useAdapter() {
     getProvider: (address: string) => provider({ url: `/providers/${address}` }),
 
     getEconomics: () => getEconomics(),
+
+    getEgldPrice: () => getEgldPrice(),
   };
 }

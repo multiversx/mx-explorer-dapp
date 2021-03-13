@@ -35,4 +35,7 @@ export default {
   getEconomics: () => {
     throw new Error('not defined');
   },
+  getEgldPrice: () => {
+    throw new Error('not defined');
+  },
 };
