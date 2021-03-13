@@ -92,7 +92,7 @@ const Providers = () => {
     });
   };
 
-  React.useEffect(fetchProviders, [activeNetworkId]);
+  React.useEffect(fetchProviders, [activeNetworkId, firstPageTicker]);
 
   return (
     <div className="card" ref={ref}>
