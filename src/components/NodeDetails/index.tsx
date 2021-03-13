@@ -9,7 +9,7 @@ import Rounds, { RoundType } from './Rounds';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 import { BlockType } from 'sharedComponents/BlocksTable';
-import { useIsMainnet, types } from 'helpers';
+import { useIsMainnet } from 'helpers';
 
 interface NodeDetailType<T> {
   data?: T;

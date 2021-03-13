@@ -5,7 +5,6 @@ import { Loader, adapter } from 'sharedComponents';
 import FailedAccount from './FailedAccount';
 import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
 import AccountInfo from './AccountInfo';
-import { types } from 'helpers';
 
 import { useRouteMatch } from 'react-router-dom';
 import { accountRoutes } from 'routes';
@@ -98,26 +97,25 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   React.useEffect(() => {
     if (!isOldAddressRoute) {
       fetchLockedAmount();
-      // fetchAccountTokens();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountDetails.txCount, activeNetwork.id, urlAddress]);
 
-  const [accountTokens, setAccountTokens] = React.useState<types.TokenType[]>([]);
-  const [accountTokensFetched, setAccountTokensFetched] = React.useState<boolean | undefined>();
-  const fetchAccountTokens = () => {
-    if (activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api') {
-      getAccountTokens(urlAddress).then(({ success, data }) => {
-        if (ref.current !== null) {
-          setAccountTokens(data);
-          setAccountTokensFetched(success);
-        }
-      });
-    }
-  };
-
   const loading = dataReady === undefined;
   const failed = dataReady === false || !addressIsBech32(urlAddress);
+
+  // const [accountTokens, setAccountTokens] = React.useState<types.TokenType[]>([]);
+  // const [accountTokensFetched, setAccountTokensFetched] = React.useState<boolean | undefined>();
+  // const fetchAccountTokens = () => {
+  //   if (activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api') {
+  //     getAccountTokens(urlAddress).then(({ success, data }) => {
+  //       if (ref.current !== null) {
+  //         setAccountTokens(data);
+  //         setAccountTokensFetched(success);
+  //       }
+  //     });
+  //   }
+  // };
 
   return isOldAddressRoute ? (
     <Redirect to={networkRoute(`/accounts/${urlAddress}`)} />

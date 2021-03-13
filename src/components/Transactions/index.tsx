@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { Loader, ShardSpan, TransactionsTable, adapter } from 'sharedComponents';
+import { Loader, TransactionsTable, adapter } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
