@@ -2,21 +2,24 @@ import * as React from 'react';
 import { faAngleRight } from '@fortawesome/pro-regular-svg-icons/faAngleRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IdentityType } from 'context/state';
-import { CopyButton, NetworkLink, SharedIdentity, Trim } from 'sharedComponents';
+import { NetworkLink, SharedIdentity, Trim } from 'sharedComponents';
 import { urlBuilder } from 'helpers';
-import { ReactComponent as TwitterLogo } from 'assets/images/logos/twitter.svg';
+import { useGlobalState } from 'context';
 
 const IdentitySummary = ({ identity }: { identity: IdentityType | undefined }) => {
+  const {
+    activeNetwork: { erdLabel },
+  } = useGlobalState();
+
   return identity !== undefined ? (
     <div className="identity-summary card">
       <div className="card-body px-lg-spacer">
         <div className="row">
           <div className="col">
-            <div className="d-flex flex-row align-items-center">
-              <div className="d-flex align-items-center flex-shrink-0 mr-3">
-                <div className="rounded-circle p-1 border">
-                  <SharedIdentity.Avatar identity={identity} />
-                </div>
+            <div className="d-flex flex-column flex-md-row align-items-md-center">
+              <div className="d-flex align-items-center min-w-0 mb-3 mb-md-0">
+                <SharedIdentity.Avatar identity={identity} />
+
                 <h5 className="mb-0 ml-2">
                   {identity.identity ? (
                     <NetworkLink to={urlBuilder.identityDetails(identity.identity)}>
@@ -26,40 +29,34 @@ const IdentitySummary = ({ identity }: { identity: IdentityType | undefined }) =
                     <>{identity.name ? <Trim text={identity.name} /> : 'N/A'}</>
                   )}
                 </h5>
+
+                <div className="flex-shrink-0 bg-success text-white btn-sm rounded-pill ml-2">
+                  Rank 10
+                </div>
               </div>
 
-              <div className="mr-3">
+              <div className="d-none d-md-flex mx-4">
                 <FontAwesomeIcon icon={faAngleRight} className="text-muted" size="2x" />
               </div>
 
-              <div className="d-flex text-secondary mr-3" style={{ maxWidth: '22rem' }}>
-                <span className="mr-2 d-flex flex-shrink-0">Public address:</span>
-                <NetworkLink
-                  to={urlBuilder.accountDetails(
-                    'erd104le4p88hwdyhtmnm8er547xgvr6w4es2c7e0dytt25l5633dt5qy59jtg'
-                  )}
-                  className="trim-wrapper"
-                >
-                  <Trim text="erd104le4p88hwdyhtmnm8er547xgvr6w4es2c7e0dytt25l5633dt5qy59jtg" />
-                </NetworkLink>
-                <CopyButton
-                  text={'erd104le4p88hwdyhtmnm8er547xgvr6w4es2c7e0dytt25l5633dt5qy59jtg'}
-                />
+              <div className="d-flex align-items-center mr-4">
+                <span className="pr-2">Stake Balance:</span>
+                <span className="text-secondary">
+                  {identity.stake.toLocaleString('en')} {erdLabel}
+                </span>
               </div>
-
-              <div>
-                {identity.location && (
-                  <>
-                    Location:
-                    <span className="text-secondary mx-2">{identity.location}</span>
-                  </>
-                )}
-
-                {identity.twitter && (
-                  <a target={`_blank`} rel={`noreferrer nofollow`} href={identity.twitter}>
-                    <TwitterLogo className="social-logo" />
-                  </a>
-                )}
+              <div className="d-flex align-items-center mr-4">
+                <span className="pr-2">Stake percent:</span>
+                <span className="text-secondary">
+                  {Math.round(identity.stakePercent) > 0
+                    ? Math.round(identity.stakePercent)
+                    : '< 1'}
+                  %
+                </span>
+              </div>
+              <div className="d-flex align-items-center">
+                <span className="pr-2">Nodes:</span>
+                <span className="text-secondary">{identity.validators}</span>
               </div>
             </div>
           </div>

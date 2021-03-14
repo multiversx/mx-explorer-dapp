@@ -4,15 +4,16 @@ import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
 import { Denominate, DetailItem, PageState } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import AccountTabs from './AccountTabs';
-import { urlBuilder } from 'helpers';
+import { urlBuilder, useNetworkRoute } from 'helpers';
 
 const AccountTokens = () => {
   const { activeNetwork, accountTokens } = useGlobalState();
+  const networkRoute = useNetworkRoute();
   const { hash: address } = useParams() as any;
   const tokensActive = activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api';
 
   return !tokensActive ? (
-    <Redirect to={urlBuilder.accountDetails(address)} />
+    <Redirect to={networkRoute(urlBuilder.accountDetails(address))} />
   ) : (
     <div className="card">
       <div className="card-header">

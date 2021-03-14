@@ -246,22 +246,22 @@
         }
       }
     }
+  }
+}
 
-    .gear-teeth {
-      fill: $card-bg;
-      stroke: $secondary;
-    }
+.gear-teeth {
+  fill: $card-bg;
+  stroke: $secondary;
+}
 
-    .gear-circle {
-      fill: $card-bg;
-    }
+.gear-circle {
+  fill: $card-bg;
+}
 
-    .gear-circle-border {
-      stroke: $secondary;
+.gear-circle-border {
+  stroke: $secondary;
 
-      &.light {
-        stroke: $muted;
-      }
-    }
+  &.light {
+    stroke: $muted;
   }
 }

@@ -46,6 +46,7 @@ export interface IdentityType {
   location?: string;
   avatar?: string;
   identity?: string;
+  description?: string;
 }
 
 export interface NodeType {

@@ -113,61 +113,59 @@ const NodeDetails = () => {
       )}
       <div ref={ref}>
         {dataReady === true && node.data !== undefined && (
-          <>
-            <div className="container pt-spacer">
+          <div className="container pt-spacer">
+            {showIdentity && (
               <div className="row">
-                <div className="mb-spacer col">
-                  <NodeInformation node={node.data} />
+                <div className="col mb-spacer">
+                  <SharedIdentity.Summary identity={identity.data} />
                 </div>
               </div>
+            )}
 
-              {showIdentity && (
-                <div className="row">
-                  <div className="col mb-spacer">
-                    <SharedIdentity.Summary identity={identity.data} />
-                  </div>
-                </div>
-              )}
-
-              {node.data.nodeType !== 'observer' && (
-                <div className="row">
-                  <div className="mb-spacer col-md-6">
-                    <NetworkMetrics node={node.data} />
-                  </div>
-                  <div className="col-md-6 mb-spacer">
-                    <Rounds rounds={rounds} node={node.data} />
-                  </div>
-                </div>
-              )}
-
-              {node.data.nodeType === 'validator' && (
-                <div className="row">
-                  <div className="col-12">
-                    {blocks.success && blocks.data && blocks.data.length > 0 ? (
-                      <LatestBlocks proposer={publicKey} />
-                    ) : (
-                      <div className="card">
-                        {blocks.success === false && <FailedBlocks />}
-                        {blocks.success && blocks.data && (
-                          <>
-                            {blocks.data.length === 0 && (
-                              <NoBlocks
-                                title={`${
-                                  node.data.peerType === 'eligible'
-                                    ? 'No blocks'
-                                    : 'Validator not in consensus'
-                                }`}
-                              />
-                            )}
-                          </>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
+            <div className="row">
+              <div className="mb-spacer col">
+                <NodeInformation node={node.data} />
+              </div>
             </div>
-          </>
+
+            {node.data.nodeType !== 'observer' && (
+              <div className="row">
+                <div className="mb-spacer col-md-6">
+                  <NetworkMetrics node={node.data} />
+                </div>
+                <div className="col-md-6 mb-spacer">
+                  <Rounds rounds={rounds} node={node.data} />
+                </div>
+              </div>
+            )}
+
+            {node.data.nodeType === 'validator' && (
+              <div className="row">
+                <div className="col-12">
+                  {blocks.success && blocks.data && blocks.data.length > 0 ? (
+                    <LatestBlocks proposer={publicKey} />
+                  ) : (
+                    <div className="card">
+                      {blocks.success === false && <FailedBlocks />}
+                      {blocks.success && blocks.data && (
+                        <>
+                          {blocks.data.length === 0 && (
+                            <NoBlocks
+                              title={`${
+                                node.data.peerType === 'eligible'
+                                  ? 'No blocks'
+                                  : 'Validator not in consensus'
+                              }`}
+                            />
+                          )}
+                        </>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         )}
       </div>
     </>

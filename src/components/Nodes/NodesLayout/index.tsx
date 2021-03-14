@@ -40,8 +40,7 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
               : {
                   nodesVerions: [
                     { name: 'v.10', percent: 70 },
-                    { name: 'v.0.09', percent: 20 },
-                    { name: 'other', percent: 10 },
+                    { name: 'other', percent: 30 },
                   ],
                 }),
           };
