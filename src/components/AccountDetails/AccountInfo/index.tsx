@@ -51,7 +51,7 @@ const AccountInfo = ({ lockedAmount }: { lockedAmount: LockedAmountType }) => {
             <LockedAmountCardItem lockedAmount={lockedAmount} cardItemClass={cardItemClass} />
 
             <CardItem className={cardItemClass} title="Nonce" icon={faUser}>
-              {nonce !== undefined ? nonce : '...'}
+              {nonce !== undefined ? nonce.toLocaleString('en') : '...'}
             </CardItem>
 
             {tokensActive && (

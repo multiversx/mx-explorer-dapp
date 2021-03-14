@@ -9,10 +9,18 @@
   }
 
   .step-2 {
-    background-color: $primary-light;
+    background-color: lighten($primary, 10%);;
   }
 
   .step-3 {
-    background-color: lighten($primary-light, 10%);
+    background-color: lighten($primary, 20%);
+  }
+
+  .step-4 {
+    background-color: lighten($primary, 30%);
+  }
+
+  .step-5 {
+    background-color: lighten($primary, 40%);
   }
 }

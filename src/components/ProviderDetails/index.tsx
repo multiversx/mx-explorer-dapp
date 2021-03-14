@@ -45,6 +45,8 @@ const ProviderDetails = () => {
               'https://s3.amazonaws.com/keybase_processed_uploads/b011b27c59f42344b38b476da9d85105_360_360.jpg',
             identity: 'thomasjustmining',
             website: 'https://elrond.com',
+            location: 'Craiova, Romania',
+            twitter: 'https://twitter.com/just_mining',
             validators: 1454,
             score: 174480,
             stake: 3635000,
@@ -73,12 +75,6 @@ const ProviderDetails = () => {
       <div ref={ref}>
         {dataReady === true && (
           <div className="container pt-spacer">
-            <div className="row">
-              <div className="col-12 mb-spacer">
-                <ProviderStats provider={provider} />
-              </div>
-            </div>
-
             {provider && provider.identity !== undefined && (
               <div className="row">
                 <div className="col-12 mb-spacer">
@@ -86,6 +82,12 @@ const ProviderDetails = () => {
                 </div>
               </div>
             )}
+
+            <div className="row">
+              <div className="col-12 mb-spacer">
+                <ProviderStats provider={provider} />
+              </div>
+            </div>
 
             <div className="row">
               <div className="col-12">

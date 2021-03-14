@@ -19,9 +19,9 @@ const MultilayerProgressBar = ({ steps }: { steps: PercentageStepType[] }) => {
       <div className={`d-flex legend-dot-container mt-2`}>
         {steps.map((step, i) => (
           <div key={`legend-${i}`} className="legend-dot d-flex align-items-center mr-1 mr-lg-3">
-            <Led color={`flex-shrink-0 step-${i + 1}`} />
-            <small className="text-secondary ml-1">
-              {step.name} ({step.percent}%)
+            <Led color={`flex-shrink-0 mr-1 step-${i + 1}`} />
+            <small>
+              {step.name} <span className="text-secondary">({step.percent}%)</span>
             </small>
           </div>
         ))}
