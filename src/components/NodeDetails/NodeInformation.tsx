@@ -39,7 +39,7 @@ const NodeInformation = ({ node }: { node: NodeType }) => {
           </div>
         </div>
       </div>
-      <div className="card-body my-n2 d-flex flex-wrap flex-row">
+      <div className="card-body card-item-container">
         <CardItem title="Shard" icon={faLock}>
           {shard !== undefined ? (
             <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">

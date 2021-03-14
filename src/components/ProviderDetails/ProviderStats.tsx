@@ -50,7 +50,7 @@ const ProviderStats = ({ provider }: { provider: types.ProviderType | undefined 
         </div>
       </div>
 
-      <div className="card-body my-n2 d-flex flex-wrap flex-row">
+      <div className="card-body card-item-container">
         <CardItem title="Number of nodes" icon={faServer}>
           <span className="text-secondary">
             {provider.numNodes} node{provider.numNodes !== 1 ? 's' : ''}
