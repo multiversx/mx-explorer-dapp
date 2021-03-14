@@ -89,6 +89,10 @@ export interface StateType {
   shards: ShardType[];
   globalStake: GlobalStakeType | undefined;
   accountDetails: types.AccountType;
+  accountTokens: {
+    success: boolean | undefined;
+    data: types.TokenType[];
+  };
 }
 
 const initialState = (optionalConfig?: ConfigType): StateType => {
@@ -111,6 +115,10 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
     blockchainTotalStake: 0,
     shards: [],
     globalStake: undefined,
+    accountTokens: {
+      success: undefined,
+      data: [],
+    },
     accountDetails: {
       address: '',
       balance: '',

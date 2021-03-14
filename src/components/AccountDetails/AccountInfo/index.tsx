@@ -7,6 +7,7 @@ import { faInfoCircle } from '@fortawesome/pro-solid-svg-icons/faInfoCircle';
 import { faDollarSign } from '@fortawesome/pro-solid-svg-icons/faDollarSign';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { faUser } from '@fortawesome/pro-solid-svg-icons/faUser';
+import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import denominate from 'sharedComponents/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
@@ -97,6 +98,7 @@ const AccountInfo = ({ lockedAmount }: { lockedAmount: LockedAmountType }) => {
   const {
     activeNetwork: { id, adapter },
     accountDetails,
+    accountTokens,
   } = useGlobalState();
 
   const { address, balance, nonce } = accountDetails;
@@ -120,7 +122,7 @@ const AccountInfo = ({ lockedAmount }: { lockedAmount: LockedAmountType }) => {
             </div>
           </div>
 
-          <div className="card-body my-n2 d-flex flex-wrap flex-row">
+          <div className="card-body card-item-container">
             <CardItem className={cardItemClass} title="Balance" customIcon={<ElrondSymbol />}>
               <div className="d-flex align-items-center">
                 {balance !== '...' ? <Denominate value={balance} /> : balance}
@@ -138,11 +140,11 @@ const AccountInfo = ({ lockedAmount }: { lockedAmount: LockedAmountType }) => {
               {nonce !== undefined ? nonce : '...'}
             </CardItem>
 
-            {/* {tokensActive && (
+            {tokensActive && (
               <CardItem className={cardItemClass} title="Tokens" icon={faCoins}>
-                [WIP]
+                {accountTokens.success ? accountTokens.data.length : '...'}
               </CardItem>
-            )} */}
+            )}
           </div>
         </div>
       </div>

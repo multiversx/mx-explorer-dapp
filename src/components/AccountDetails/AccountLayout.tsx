@@ -36,6 +36,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   } = adapter();
   const networkRoute = useNetworkRoute();
 
+  const tokensActive = activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api';
   const isOldAddressRoute = pathname.includes('/address/');
   const match: any = useRouteMatch(accountRoutes.index);
   const urlAddress = match ? match.params.hash : undefined;
@@ -108,28 +109,32 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const fetchAccountTokens = () => {
+    if (tokensActive) {
+      getAccountTokens(urlAddress).then(({ success, data }) => {
+        if (ref.current !== null) {
+          dispatch({
+            type: 'setAccountTokens',
+            accountTokens: {
+              success,
+              data,
+            },
+          });
+        }
+      });
+    }
+  };
+
   React.useEffect(() => {
     if (!isOldAddressRoute) {
       fetchLockedAmountAndPrice();
+      fetchAccountTokens();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountDetails.txCount, activeNetwork.id, urlAddress]);
 
   const loading = dataReady === undefined;
   const failed = dataReady === false || !addressIsBech32(urlAddress);
-
-  // const [accountTokens, setAccountTokens] = React.useState<types.TokenType[]>([]);
-  // const [accountTokensFetched, setAccountTokensFetched] = React.useState<boolean | undefined>();
-  // const fetchAccountTokens = () => {
-  //   if (activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api') {
-  //     getAccountTokens(urlAddress).then(({ success, data }) => {
-  //       if (ref.current !== null) {
-  //         setAccountTokens(data);
-  //         setAccountTokensFetched(success);
-  //       }
-  //     });
-  //   }
-  // };
 
   return isOldAddressRoute ? (
     <Redirect to={networkRoute(`/accounts/${urlAddress}`)} />

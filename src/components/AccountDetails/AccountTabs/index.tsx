@@ -6,10 +6,12 @@ import { useGlobalState } from 'context';
 
 const AccountTabs = () => {
   const activePath = useLocation().pathname;
-  const { accountDetails } = useGlobalState();
+  const { accountDetails, activeNetwork } = useGlobalState();
+  const tokensRouteActive = activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api';
 
   const contractActive = activePath.endsWith('contract');
-  const indexActive = !contractActive;
+  const tokensActive = activePath.endsWith('tokens');
+  const indexActive = !contractActive && !tokensActive;
 
   return (
     <div className="account-tabs d-flex flex-row">
@@ -27,6 +29,22 @@ const AccountTabs = () => {
           </NetworkLink>
         )}
       </div>
+      {tokensRouteActive && (
+        <>
+          {tokensActive ? (
+            <div className="mx-3">
+              <h6>ESDT Tokens</h6>
+            </div>
+          ) : (
+            <NetworkLink
+              to={urlBuilder.accountDetailsTokens(accountDetails.address)}
+              className="tab-link mx-3"
+            >
+              <h6>ESDT Tokens</h6>
+            </NetworkLink>
+          )}
+        </>
+      )}
       {accountDetails.code && (
         <>
           {contractActive ? (
