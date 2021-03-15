@@ -1,10 +1,8 @@
-import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
-import { faArrowRight } from '@fortawesome/pro-regular-svg-icons/faArrowRight';
-import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
-import { faCalendarAlt } from '@fortawesome/pro-regular-svg-icons/faCalendarAlt';
+import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { addressIsBech32, urlBuilder, dateFormatted, isContract } from 'helpers';
+import { addressIsBech32, urlBuilder } from 'helpers';
+import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
 import * as React from 'react';
 import {
   ShardSpan,
@@ -13,9 +11,7 @@ import {
   adapter,
   Trim,
   Loader,
-  TransactionStatus,
   Denominate,
-  CopyButton,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
@@ -57,16 +53,11 @@ const LatestTransactions = () => {
     });
   };
 
-  const getTxType = (transaction: TransactionType) => {
-    return isContract(transaction.sender) || isContract(transaction.receiver)
-      ? 'Smart Contract Call'
-      : 'Token Transfer';
-  };
-
   React.useEffect(fetchTransactions, [activeNetworkId, timestamp]);
 
   const Component = () => {
-    const someNew = transactions.some((transaction) => transaction.isNew);
+    // const someNew = transactions.some((transaction) => transaction.isNew);
+
     return (
       <div className="card" ref={ref}>
         {transactionsFetched === undefined && <Loader dataTestId="transactionsLoader" />}
@@ -82,36 +73,81 @@ const LatestTransactions = () => {
                 </NetworkLink>
               </div>
             </div>
-            <div className="card-body" data-testid="transactionsList">
-              <div className="p-lg-2">
-                <div className="transactions-card-container d-flex flex-column">
-                  {transactions.map((transaction, i) => (
-                    <div
-                      key={transaction.txHash}
-                      className={`transactions-card d-flex flex-row p-3 ${
-                        transaction.isNew && someNew ? 'new' : ''
-                      }`}
-                    >
-                      <div className="d-flex flex-column p-2 pr-4 border-right flex-shrink-0">
-                        <div className="mb-1">{getTxType(transaction)}</div>
-                        <div className="mb-1">
-                          <span className="text-secondary">Status:</span>{' '}
-                          <TransactionStatus status={transaction.status} onlyText />
+            <div className="card-body py-0 px-3 px-lg-spacer" data-testid="transactionsList">
+              <div className="latest-items-container">
+                {transactions.map((transaction, i) => (
+                  <div
+                    key={transaction.txHash}
+                    className={`latest-item-card ${i > 3 ? 'hide-sm' : ''} status-${
+                      getStatusIconAndColor(transaction.status).color
+                    }`}
+                  >
+                    <div className="d-flex flex-column overflow-hidden min-w-0">
+                      <div className="d-flex flex-row mb-1 align-items-center justify-content-between">
+                        <div className="d-flex align-items-center mr-2">
+                          <div className="latest-item-icon mr-2">
+                            <FontAwesomeIcon icon={faExchangeAlt} />
+                          </div>
+                          <div className="d-flex">
+                            <Denominate value={transaction.value} decimals={4} />
+                          </div>
                         </div>
-                        <div>
+
+                        <div className="text-secondary flex-shrink-0">
+                          <TimeAgo value={transaction.timestamp} short tooltip />
+                        </div>
+                      </div>
+
+                      <div className="mb-1">
+                        <div className="d-flex align-items-center">
+                          <span className="text-secondary mr-2">Hash:</span>
+
                           <NetworkLink
-                            to={urlBuilder.senderShard(transaction.senderShard)}
-                            className="flex-shrink-0"
+                            to={`/transactions/${transaction.txHash}`}
+                            data-testid={`transactionLink${i}`}
+                            className="trim-wrapper"
                           >
-                            <ShardSpan shard={transaction.senderShard} />
+                            <Trim text={transaction.txHash} />
                           </NetworkLink>
+                        </div>
+                      </div>
 
-                          <FontAwesomeIcon
-                            size="sm"
-                            icon={faArrowRight}
-                            className="mx-2 text-secondary"
-                          />
+                      <div className="mb-1">
+                        <div className="d-flex flex-row align-items-center text-secondary">
+                          <span className="mr-2">From:</span>
+                          {addressIsBech32(transaction.sender) ? (
+                            <>
+                              <NetworkLink
+                                to={urlBuilder.accountDetails(transaction.sender)}
+                                className="trim-wrapper"
+                              >
+                                <Trim text={transaction.sender} />
+                              </NetworkLink>
+                              <span className="mx-2 text-muted">•</span>
+                              <NetworkLink
+                                to={urlBuilder.senderShard(transaction.senderShard)}
+                                className="flex-shrink-0"
+                              >
+                                <ShardSpan shard={transaction.senderShard} />
+                              </NetworkLink>
+                            </>
+                          ) : (
+                            <ShardSpan shard={transaction.sender} />
+                          )}
+                        </div>
+                      </div>
 
+                      <div>
+                        <div className="d-flex flex-row align-items-center text-secondary">
+                          <span className="mr-2">To:</span>
+                          <NetworkLink
+                            to={urlBuilder.accountDetails(transaction.receiver)}
+                            data-testid={`transactionLinkTo${i}`}
+                            className="trim-wrapper"
+                          >
+                            <Trim text={transaction.receiver} />
+                          </NetworkLink>
+                          <span className="mx-2 text-muted">•</span>
                           <NetworkLink
                             to={urlBuilder.receiverShard(transaction.receiverShard)}
                             className="flex-shrink-0"
@@ -120,88 +156,9 @@ const LatestTransactions = () => {
                           </NetworkLink>
                         </div>
                       </div>
-
-                      <div className="d-flex flex-fill p-2 pr-4 border-right overflow-hidden">
-                        <div className="middle-section">
-                          <div className="row mb-1">
-                            <div className="col col-left">
-                              <span className="text-secondary">Amount:</span>
-                            </div>
-                            <div className="col">
-                              <Denominate value={transaction.value} showLastNonZeroDecimal />
-                            </div>
-                          </div>
-
-                          <div className="row mb-1">
-                            <div className="col col-left">
-                              <span className="text-secondary">From:</span>
-                            </div>
-                            <div className="col">
-                              <div className="d-flex flex-row align-items-center">
-                                {addressIsBech32(transaction.sender) ? (
-                                  <NetworkLink
-                                    to={urlBuilder.accountDetails(transaction.sender)}
-                                    className="trim-wrapper"
-                                  >
-                                    <Trim text={transaction.sender} />
-                                  </NetworkLink>
-                                ) : (
-                                  <ShardSpan shard={transaction.sender} />
-                                )}
-                                <FontAwesomeIcon
-                                  size="sm"
-                                  icon={faArrowRight}
-                                  className="mx-2 text-secondary"
-                                />
-                                <span className="text-secondary mr-2">To:</span>{' '}
-                                <NetworkLink
-                                  to={urlBuilder.accountDetails(transaction.receiver)}
-                                  data-testid={`transactionLinkTo${i}`}
-                                  className="trim-wrapper"
-                                >
-                                  <Trim text={transaction.receiver} />
-                                </NetworkLink>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="row mb-1 ">
-                            <div className="col col-left">
-                              <span className="text-secondary">Tx Hash:</span>
-                            </div>
-                            <div className="col d-flex align-items-center">
-                              <NetworkLink
-                                to={`/transactions/${transaction.txHash}`}
-                                data-testid={`transactionLink${i}`}
-                                className="trim-wrapper"
-                              >
-                                <Trim text={transaction.txHash} />
-                              </NetworkLink>
-                              <CopyButton text={transaction.txHash} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="p-2 pl-4 d-flex flex-column flex-shrink-0">
-                        <div className="d-flex align-items-center justify-content-end mb-1">
-                          <NetworkLink to={`/miniblocks/${transaction.miniBlockHash}`}>
-                            #{transaction.round}
-                          </NetworkLink>
-                          <FontAwesomeIcon className="ml-2 text-secondary" icon={faCube} />
-                        </div>
-                        <div className="d-flex align-items-center justify-content-end mb-1">
-                          <TimeAgo value={transaction.timestamp} short tooltip />
-                          <FontAwesomeIcon className="ml-2 text-secondary" icon={faClock} />
-                        </div>
-                        <div>
-                          {dateFormatted(transaction.timestamp, true)}
-                          <FontAwesomeIcon className="ml-2 text-secondary" icon={faCalendarAlt} />
-                        </div>
-                      </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
           </>

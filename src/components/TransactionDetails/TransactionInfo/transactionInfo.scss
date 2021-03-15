@@ -1,0 +1,13 @@
+.transaction-info {
+  .status-text-success {
+    box-shadow: inset 0 0.285rem 0 0 $success;
+  }
+
+  .status-text-warning {
+    box-shadow: inset 0 0.285rem 0 0 $warning;
+  }
+
+  .status-text-danger {
+    box-shadow: inset 0 0.285rem 0 0 $danger;
+  }
+}

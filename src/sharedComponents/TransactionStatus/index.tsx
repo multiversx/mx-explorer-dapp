@@ -1,23 +1,21 @@
 import React from 'react';
-import { faCheckCircle } from '@fortawesome/pro-regular-svg-icons/faCheckCircle';
-import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
-import { faHourglass } from '@fortawesome/pro-regular-svg-icons/faHourglass';
-import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
+import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
+import { faBan } from '@fortawesome/pro-solid-svg-icons/faBan';
+import { faHourglass } from '@fortawesome/pro-solid-svg-icons/faHourglass';
+import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import txStatus from './txStatus';
 
 interface TransactionStatusType {
   status: string;
-  onlyText?: boolean;
 }
 
-const capitalizeFirstLetter = (str: string) => {
+export const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-const TransactionStatus = ({ status, onlyText }: TransactionStatusType) => {
+export const getStatusIconAndColor = (status: TransactionStatusType['status']) => {
   const statusIs = (compareTo: string) => status.toLowerCase() === compareTo.toLowerCase();
-
   let Icon = () => <></>;
   let color = '';
 
@@ -44,13 +42,20 @@ const TransactionStatus = ({ status, onlyText }: TransactionStatusType) => {
       Icon = () => <FontAwesomeIcon icon={faHourglass} className={`mr-2 ${color}`} />;
   }
 
-  return onlyText ? (
-    <span className={color}>{capitalizeFirstLetter(status)}</span>
-  ) : (
-    <>
+  return {
+    Icon,
+    color,
+  };
+};
+
+const TransactionStatus = ({ status }: TransactionStatusType) => {
+  const { Icon } = getStatusIconAndColor(status);
+
+  return (
+    <span className="d-flex align-items-center">
       <Icon />
       {capitalizeFirstLetter(status)}
-    </>
+    </span>
   );
 };
 
