@@ -30,7 +30,7 @@ const ProviderStats = ({ provider }: { provider: types.ProviderType | undefined 
 
           {website && (
             <a
-              className="btn btn-sm btn-primary"
+              className="btn btn-sm btn-primary-light"
               target={`_blank`}
               rel={`noreferrer nofollow`}
               href={website}
