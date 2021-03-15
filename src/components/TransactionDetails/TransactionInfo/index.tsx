@@ -15,7 +15,8 @@ import {
   Trim,
   CopyButton,
 } from 'sharedComponents';
-import ScResultsList, { ScResultType } from './ScResultsList';
+import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
+import ScResultsList, { ScResultType } from '../ScResultsList';
 
 export interface TransactionType {
   fee?: string;
@@ -60,12 +61,12 @@ const getScResultsMessages = (transaction: TransactionType) => {
   return messages;
 };
 
-const Details = ({ transaction }: { transaction: TransactionType }) => {
+const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
   const scResultsMessages = getScResultsMessages(transaction);
 
   return (
-    <div className="card">
-      <div className="card-header">
+    <div className="transaction-info card">
+      <div className={`card-header status-${getStatusIconAndColor(transaction.status).color}`}>
         <div className="card-header-item d-flex align-items-center">
           <h6 data-testid="title">Transaction Details</h6>
         </div>
@@ -90,12 +91,12 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
 
           <DetailItem title="Age">
             {transaction.timestamp !== undefined ? (
-              <>
+              <div className="d-flex align-items-center">
                 <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
                 <TimeAgo value={transaction.timestamp} />
                 &nbsp;
                 <span className="text-secondary">({dateFormatted(transaction.timestamp)})</span>
-              </>
+              </div>
             ) : (
               <span className="text-secondary">N/A</span>
             )}
@@ -237,4 +238,4 @@ const Details = ({ transaction }: { transaction: TransactionType }) => {
   );
 };
 
-export default Details;
+export default TransactionInfo;

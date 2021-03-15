@@ -49,7 +49,8 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
   React.useEffect(fetchBlocks, [activeNetworkId, timestamp]);
 
   const Component = () => {
-    const someNew = blocks.some((block) => block.isNew);
+    // const someNew = blocks.some((block) => block.isNew);
+
     return (
       <div className="card latest-blocks" ref={ref}>
         {blocksFetched === undefined && <Loader dataTestId="blocksLoader" />}
@@ -71,44 +72,39 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
                 )}
               </div>
             </div>
-            <div className="card-body" data-testid="blocksList">
-              <div className="p-lg-2">
-                <div className="block-card-container d-flex flex-row">
-                  {blocks.map((block, i) => (
-                    <div
-                      key={block.hash}
-                      className={`block-card p-3 ${block.isNew && someNew ? 'new' : ''}`}
-                    >
-                      <div className="d-flex align-items-center justify-content-between mb-3">
-                        <div className="d-flex align-items-center">
-                          <div className="list-item-icon mr-2">
-                            <FontAwesomeIcon icon={faCube} />
-                          </div>
-                          <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
-                            {block.nonce}
-                          </NetworkLink>
+            <div className="card-body py-0 px-3 px-lg-spacer" data-testid="blocksList">
+              <div className="latest-items-container">
+                {blocks.map((block, i) => (
+                  <div key={block.hash} className={`latest-item-card ${i > 3 ? 'hide-sm' : ''}`}>
+                    <div className="d-flex align-items-center justify-content-between mb-3">
+                      <div className="d-flex align-items-center">
+                        <div className="latest-item-icon mr-2">
+                          <FontAwesomeIcon icon={faCube} />
                         </div>
+                        <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
+                          {block.nonce}
+                        </NetworkLink>
+                      </div>
 
-                        <span className="text-secondary">
-                          <TimeAgo value={block.timestamp} tooltip />
-                        </span>
-                      </div>
-                      <div className="mb-1">
-                        <span className="text-secondary">Transactions:</span> {block.txCount}
-                        <span className="mx-2 text-secondary">|</span>
-                        <NetworkLink to={urlBuilder.shard(block.shard)} className="flex-shrink-0">
-                          <ShardSpan shard={block.shard} />
-                        </NetworkLink>
-                      </div>
-                      <div className="d-flex flex-row">
-                        <span className="mr-2 text-secondary">Hash:</span>
-                        <NetworkLink to={`/blocks/${block.hash}`} className="trim-wrapper">
-                          <Trim dataTestId={`blockHashLink${i}`} text={block.hash} />
-                        </NetworkLink>
-                      </div>
+                      <span className="text-secondary">
+                        <TimeAgo value={block.timestamp} tooltip />
+                      </span>
                     </div>
-                  ))}
-                </div>
+                    <div className="d-flex flex-row">
+                      <span className="mr-2 text-secondary">Hash:</span>
+                      <NetworkLink to={`/blocks/${block.hash}`} className="trim-wrapper">
+                        <Trim dataTestId={`blockHashLink${i}`} text={block.hash} />
+                      </NetworkLink>
+                    </div>
+                    <div className="mt-1">
+                      <span className="text-secondary mr-2">Transactions:</span> {block.txCount}
+                      <span className="text-muted mx-2">•</span>
+                      <NetworkLink to={urlBuilder.shard(block.shard)} className="flex-shrink-0">
+                        <ShardSpan shard={block.shard} />
+                      </NetworkLink>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </>

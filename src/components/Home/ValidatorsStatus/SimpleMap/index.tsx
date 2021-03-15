@@ -66,15 +66,15 @@ const SimpleMap = ({ markers, leaders }: SimpleMapType) => {
     return leaders.filter((leader) => leader.city === city).length === 1;
   };
 
-  const [blink, setBlink] = React.useState(false);
-  React.useEffect(() => {
-    if (ref.current !== null) {
-      setBlink(true);
-      setTimeout(() => {
-        setBlink(false);
-      }, 1000);
-    }
-  }, [timestamp]);
+  const [blink /*setBlink*/] = React.useState(false);
+  // React.useEffect(() => {
+  //   if (ref.current !== null) {
+  //     setBlink(true);
+  //     setTimeout(() => {
+  //       setBlink(false);
+  //     }, 1000);
+  //   }
+  // }, [timestamp]);
 
   return (
     <div className="simple-map" ref={ref}>
