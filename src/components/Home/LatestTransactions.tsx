@@ -59,7 +59,7 @@ const LatestTransactions = () => {
     // const someNew = transactions.some((transaction) => transaction.isNew);
 
     return (
-      <div className="card" ref={ref}>
+      <div className="card custom-scroll" ref={ref}>
         {transactionsFetched === undefined && <Loader dataTestId="transactionsLoader" />}
         {transactionsFetched === false && <FailedTransactions />}
         {transactionsFetched === true && transactions.length === 0 && <NoTransactions />}
