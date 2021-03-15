@@ -127,7 +127,7 @@ const IdentityDetails = () => {
                             {identity.website ? (
                               <div className="ml-auto">
                                 <a
-                                  className="btn btn-sm btn-primary"
+                                  className="btn btn-sm btn-primary-light"
                                   target={`_blank`}
                                   rel={`noreferrer nofollow`}
                                   href={identity.website}
