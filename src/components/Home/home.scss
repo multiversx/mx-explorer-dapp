@@ -72,6 +72,7 @@
 
   @include media-breakpoint-down(sm) {
     flex-direction: column;
+    margin-bottom: -1rem !important;
 
     .latest-item-card {
       max-width: none;
