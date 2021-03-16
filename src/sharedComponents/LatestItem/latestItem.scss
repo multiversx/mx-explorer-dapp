@@ -1,28 +1,29 @@
 .custom-scroll {
-  overflow-x: scroll;
+  // overflow-x: scroll;
 
-  ::-webkit-scrollbar {
-    -webkit-appearance: none;
-    height: 0.375rem;
-  }
+  // ::-webkit-scrollbar {
+  //   -webkit-appearance: none;
+  //   height: 0.375rem;
+  // }
 
-  ::-webkit-scrollbar-thumb {
-    border-radius: $card-border-radius;
-    background-color: $muted;
-    box-shadow: 0 0 1px rgba($white, 0.5);
-    -webkit-box-shadow: 0 0 1px rgba($white, 0.5);
-  }
+  // ::-webkit-scrollbar-thumb {
+  //   border-radius: $card-border-radius;
+  //   background-color: transparent;
+  //   box-shadow: 0 0 1px rgba($white, 0.5);
+  //   -webkit-box-shadow: 0 0 1px rgba($white, 0.5);
+  // }
 }
 
 .latest-items-container {
   $itemMaxWidth: 20.5rem;
 
-  @extend .py-3;
-  @extend .py-lg-4;
+  @extend .m-3;
+  @extend .my-lg-4;
+  @extend .mx-lg-spacer;
   
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
+  overflow: hidden;
 
   .latest-item {
     transition: 0.3s max-width ease-in-out, 1s opacity ease-in-out;
@@ -87,7 +88,7 @@
 
   @include media-breakpoint-down(sm) {
     flex-direction: column;
-    margin-bottom: -1rem !important;
+    margin-bottom: 0rem !important;
 
     .latest-item  {
       margin-right: 0 !important;
