@@ -27,7 +27,7 @@ const LatestTransactions = () => {
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const { getLatestTransactions } = adapter();
-  const size = 8;
+  const size = 6;
 
   const fetchTransactions = () => {
     getLatestTransactions({ size }).then(({ data, success }) => {
@@ -35,9 +35,19 @@ const LatestTransactions = () => {
         if (success) {
           const existingHashes = transactions.map((b) => b.txHash);
 
-          // keep first 4 items and reset them
+          // keep first 4 items and reset isNew
+          // update pending transactions
           let newTransactions: TransactionType[] = [...transactions.slice(0, 4)];
-          newTransactions.forEach((transaction) => (transaction.isNew = false));
+          newTransactions.forEach((transaction) => {
+            transaction.isNew = false;
+
+            if (transaction.status === 'pending') {
+              const newStatusTx = (data as TransactionType[]).find(
+                (newStatusTx) => newStatusTx.txHash === transaction.txHash
+              );
+              transaction.status = newStatusTx ? newStatusTx.status : transaction.status;
+            }
+          });
 
           data.forEach((transaction: TransactionType) => {
             const isNew = !existingHashes.includes(transaction.txHash);

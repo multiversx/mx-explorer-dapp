@@ -13,7 +13,7 @@ const Trim = ({ text, dataTestId = '', color }: TrimType) => {
   const [overflow, setOverflow] = React.useState(false);
   const trimRef = React.useRef(document.createElement('span'));
   const hiddenTextRef = React.useRef(document.createElement('span'));
-  const debounceTracker = useDebounce(debounce, 100);
+  const debounceTracker = useDebounce(debounce, 300);
 
   const listener = () => {
     setDebounce(debounce + 1);
