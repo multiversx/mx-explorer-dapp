@@ -1,8 +1,16 @@
+import * as React from 'react';
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import * as React from 'react';
 import { useGlobalState } from 'context';
-import { ShardSpan, NetworkLink, TimeAgo, adapter, Trim, Loader } from 'sharedComponents';
+import {
+  ShardSpan,
+  NetworkLink,
+  TimeAgo,
+  adapter,
+  Trim,
+  Loader,
+  LatestItem,
+} from 'sharedComponents';
 import { BlockType } from 'sharedComponents/BlocksTable';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
@@ -25,21 +33,27 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
     getLatestBlocks(params).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
-          const sortedBlocks = data;
+          let newBlocks: BlockType[];
+
           if (blocks.length === 0) {
-            const newBlocks = sortedBlocks.map((block: BlockType) => ({
+            newBlocks = data.map((block: BlockType) => ({
               ...block,
               isNew: false,
             }));
-            setBlocks(newBlocks);
           } else {
             const existingHashes = blocks.map((b) => b.hash);
-            const newBlocks = sortedBlocks.map((block: BlockType) => ({
+            newBlocks = data.map((block: BlockType) => ({
               ...block,
               isNew: !existingHashes.includes(block.hash),
             }));
-            setBlocks(newBlocks);
           }
+
+          newBlocks = newBlocks.sort((a, b) => {
+            const aIsNew = a.isNew ? 1 : 0;
+            const bIsNew = b.isNew ? 1 : 0;
+            return b.timestamp - a.timestamp || bIsNew - aIsNew;
+          });
+          setBlocks(newBlocks);
         }
         setBlocksFetched(success);
       }
@@ -49,8 +63,6 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
   React.useEffect(fetchBlocks, [activeNetworkId, timestamp]);
 
   const Component = () => {
-    // const someNew = blocks.some((block) => block.isNew);
-
     return (
       <div className="card custom-scroll" ref={ref}>
         {blocksFetched === undefined && <Loader dataTestId="blocksLoader" />}
@@ -75,35 +87,37 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
             <div className="card-body py-0 px-3 px-lg-spacer" data-testid="blocksList">
               <div className="latest-items-container">
                 {blocks.map((block, i) => (
-                  <div key={block.hash} className={`latest-item-card ${i > 3 ? 'hide-sm' : ''}`}>
-                    <div className="d-flex align-items-center justify-content-between mb-3">
-                      <div className="d-flex align-items-center">
-                        <div className="latest-item-icon mr-2">
-                          <FontAwesomeIcon icon={faCube} />
+                  <LatestItem key={block.hash} isNew={block.isNew} index={i + 1}>
+                    <div className="latest-item-card">
+                      <div className="d-flex align-items-center justify-content-between mb-3">
+                        <div className="d-flex align-items-center">
+                          <div className="latest-item-icon mr-2">
+                            <FontAwesomeIcon icon={faCube} />
+                          </div>
+                          <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
+                            {block.nonce}
+                          </NetworkLink>
                         </div>
-                        <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
-                          {block.nonce}
+
+                        <span className="text-secondary">
+                          <TimeAgo value={block.timestamp} tooltip />
+                        </span>
+                      </div>
+                      <div className="d-flex flex-row">
+                        <span className="mr-2 text-secondary">Hash:</span>
+                        <NetworkLink to={`/blocks/${block.hash}`} className="trim-wrapper">
+                          <Trim dataTestId={`blockHashLink${i}`} text={block.hash} />
                         </NetworkLink>
                       </div>
-
-                      <span className="text-secondary">
-                        <TimeAgo value={block.timestamp} tooltip />
-                      </span>
+                      <div className="mt-1">
+                        <span className="text-secondary mr-2">Transactions:</span> {block.txCount}
+                        <span className="text-muted mx-2">•</span>
+                        <NetworkLink to={urlBuilder.shard(block.shard)} className="flex-shrink-0">
+                          <ShardSpan shard={block.shard} />
+                        </NetworkLink>
+                      </div>
                     </div>
-                    <div className="d-flex flex-row">
-                      <span className="mr-2 text-secondary">Hash:</span>
-                      <NetworkLink to={`/blocks/${block.hash}`} className="trim-wrapper">
-                        <Trim dataTestId={`blockHashLink${i}`} text={block.hash} />
-                      </NetworkLink>
-                    </div>
-                    <div className="mt-1">
-                      <span className="text-secondary mr-2">Transactions:</span> {block.txCount}
-                      <span className="text-muted mx-2">•</span>
-                      <NetworkLink to={urlBuilder.shard(block.shard)} className="flex-shrink-0">
-                        <ShardSpan shard={block.shard} />
-                      </NetworkLink>
-                    </div>
-                  </div>
+                  </LatestItem>
                 ))}
               </div>
             </div>

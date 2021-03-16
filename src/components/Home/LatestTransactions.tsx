@@ -12,6 +12,7 @@ import {
   Trim,
   Loader,
   Denominate,
+  LatestItem,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
@@ -33,20 +34,27 @@ const LatestTransactions = () => {
       if (ref.current !== null) {
         if (success) {
           const sortedTransactions = data;
+          let newTransactions: TransactionType[];
+
           if (transactions.length === 0) {
-            const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
+            newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
               ...transaction,
               isNew: false,
             }));
-            setTransactions(newTransactions);
           } else {
             const existingHashes = transactions.map((b) => b.txHash);
-            const newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
+            newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
               ...transaction,
               isNew: !existingHashes.includes(transaction.txHash),
             }));
-            setTransactions(newTransactions);
           }
+
+          newTransactions = newTransactions.sort((a, b) => {
+            const aIsNew = a.isNew ? 1 : 0;
+            const bIsNew = b.isNew ? 1 : 0;
+            return b.timestamp - a.timestamp || bIsNew - aIsNew;
+          });
+          setTransactions(newTransactions);
         }
         setTransactionsFetched(success);
       }
@@ -56,8 +64,6 @@ const LatestTransactions = () => {
   React.useEffect(fetchTransactions, [activeNetworkId, timestamp]);
 
   const Component = () => {
-    // const someNew = transactions.some((transaction) => transaction.isNew);
-
     return (
       <div className="card custom-scroll" ref={ref}>
         {transactionsFetched === undefined && <Loader dataTestId="transactionsLoader" />}
@@ -76,88 +82,89 @@ const LatestTransactions = () => {
             <div className="card-body py-0 px-3 px-lg-spacer" data-testid="transactionsList">
               <div className="latest-items-container">
                 {transactions.map((transaction, i) => (
-                  <div
-                    key={transaction.txHash}
-                    className={`latest-item-card ${i > 3 ? 'hide-sm' : ''} status-${
-                      getStatusIconAndColor(transaction.status).color
-                    }`}
-                  >
-                    <div className="d-flex flex-column overflow-hidden min-w-0">
-                      <div className="d-flex flex-row mb-1 align-items-center justify-content-between">
-                        <div className="d-flex align-items-center mr-2">
-                          <div className="latest-item-icon mr-2">
-                            <FontAwesomeIcon icon={faExchangeAlt} />
+                  <LatestItem key={transaction.txHash} isNew={transaction.isNew} index={i + 1}>
+                    <div
+                      className={`latest-item-card status-${
+                        getStatusIconAndColor(transaction.status).color
+                      }`}
+                    >
+                      <div className="d-flex flex-column overflow-hidden min-w-0">
+                        <div className="d-flex flex-row mb-1 align-items-center justify-content-between">
+                          <div className="d-flex align-items-center mr-2">
+                            <div className="latest-item-icon mr-2">
+                              <FontAwesomeIcon icon={faExchangeAlt} />
+                            </div>
+                            <div className="d-flex">
+                              <Denominate value={transaction.value} decimals={4} />
+                            </div>
                           </div>
-                          <div className="d-flex">
-                            <Denominate value={transaction.value} decimals={4} />
+
+                          <div className="text-secondary flex-shrink-0">
+                            <TimeAgo value={transaction.timestamp} short tooltip />
                           </div>
                         </div>
 
-                        <div className="text-secondary flex-shrink-0">
-                          <TimeAgo value={transaction.timestamp} short tooltip />
+                        <div className="mb-1">
+                          <div className="d-flex align-items-center">
+                            <span className="text-secondary mr-2">Hash:</span>
+
+                            <NetworkLink
+                              to={`/transactions/${transaction.txHash}`}
+                              data-testid={`transactionLink${i}`}
+                              className="trim-wrapper"
+                            >
+                              <Trim text={transaction.txHash} />
+                            </NetworkLink>
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="mb-1">
-                        <div className="d-flex align-items-center">
-                          <span className="text-secondary mr-2">Hash:</span>
-
-                          <NetworkLink
-                            to={`/transactions/${transaction.txHash}`}
-                            data-testid={`transactionLink${i}`}
-                            className="trim-wrapper"
-                          >
-                            <Trim text={transaction.txHash} />
-                          </NetworkLink>
+                        <div className="mb-1">
+                          <div className="d-flex flex-row align-items-center text-secondary">
+                            <span className="mr-2">From:</span>
+                            {addressIsBech32(transaction.sender) ? (
+                              <>
+                                <NetworkLink
+                                  to={urlBuilder.accountDetails(transaction.sender)}
+                                  className="trim-wrapper"
+                                >
+                                  <Trim text={transaction.sender} />
+                                </NetworkLink>
+                                <span className="mx-2 text-muted">•</span>
+                                <NetworkLink
+                                  to={urlBuilder.senderShard(transaction.senderShard)}
+                                  className="flex-shrink-0"
+                                >
+                                  <ShardSpan shard={transaction.senderShard} />
+                                </NetworkLink>
+                              </>
+                            ) : (
+                              <ShardSpan shard={transaction.sender} />
+                            )}
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="mb-1">
-                        <div className="d-flex flex-row align-items-center text-secondary">
-                          <span className="mr-2">From:</span>
-                          {addressIsBech32(transaction.sender) ? (
-                            <>
-                              <NetworkLink
-                                to={urlBuilder.accountDetails(transaction.sender)}
-                                className="trim-wrapper"
-                              >
-                                <Trim text={transaction.sender} />
-                              </NetworkLink>
-                              <span className="mx-2 text-muted">•</span>
-                              <NetworkLink
-                                to={urlBuilder.senderShard(transaction.senderShard)}
-                                className="flex-shrink-0"
-                              >
-                                <ShardSpan shard={transaction.senderShard} />
-                              </NetworkLink>
-                            </>
-                          ) : (
-                            <ShardSpan shard={transaction.sender} />
-                          )}
-                        </div>
-                      </div>
-
-                      <div>
-                        <div className="d-flex flex-row align-items-center text-secondary">
-                          <span className="mr-2">To:</span>
-                          <NetworkLink
-                            to={urlBuilder.accountDetails(transaction.receiver)}
-                            data-testid={`transactionLinkTo${i}`}
-                            className="trim-wrapper"
-                          >
-                            <Trim text={transaction.receiver} />
-                          </NetworkLink>
-                          <span className="mx-2 text-muted">•</span>
-                          <NetworkLink
-                            to={urlBuilder.receiverShard(transaction.receiverShard)}
-                            className="flex-shrink-0"
-                          >
-                            <ShardSpan shard={transaction.receiverShard} />
-                          </NetworkLink>
+                        <div>
+                          <div className="d-flex flex-row align-items-center text-secondary">
+                            <span className="mr-2">To:</span>
+                            <NetworkLink
+                              to={urlBuilder.accountDetails(transaction.receiver)}
+                              data-testid={`transactionLinkTo${i}`}
+                              className="trim-wrapper"
+                            >
+                              <Trim text={transaction.receiver} />
+                            </NetworkLink>
+                            <span className="mx-2 text-muted">•</span>
+                            <NetworkLink
+                              to={urlBuilder.receiverShard(transaction.receiverShard)}
+                              className="flex-shrink-0"
+                            >
+                              <ShardSpan shard={transaction.receiverShard} />
+                            </NetworkLink>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </LatestItem>
                 ))}
               </div>
             </div>

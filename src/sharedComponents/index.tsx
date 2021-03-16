@@ -26,6 +26,7 @@ import ProvidersTable from './ProvidersTable';
 import MultilayerPercentageBar from './MultilayerPercentageBar';
 import CardItem from './CardItem';
 import LatestBlocks from './LatestBlocks';
+import LatestItem from './LatestItem';
 
 export {
   Denominate,
@@ -57,4 +58,5 @@ export {
   MultilayerPercentageBar,
   CardItem,
   LatestBlocks,
+  LatestItem,
 };
