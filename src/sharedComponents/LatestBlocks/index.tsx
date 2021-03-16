@@ -33,26 +33,27 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
     getLatestBlocks(params).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
-          let newBlocks: BlockType[];
+          const existingHashes = blocks.map((b) => b.hash);
 
-          if (blocks.length === 0) {
-            newBlocks = data.map((block: BlockType) => ({
-              ...block,
-              isNew: false,
-            }));
-          } else {
-            const existingHashes = blocks.map((b) => b.hash);
-            newBlocks = data.map((block: BlockType) => ({
-              ...block,
-              isNew: !existingHashes.includes(block.hash),
-            }));
+          // keep first 4 items and reset them
+          let newBlocks: BlockType[] = [...blocks.slice(0, 4)];
+          newBlocks.forEach((block) => (block.isNew = false));
+
+          data.forEach((block: BlockType) => {
+            const isNew = !existingHashes.includes(block.hash);
+            if (isNew) {
+              newBlocks.unshift({
+                ...block,
+                isNew,
+              });
+            }
+          });
+
+          const allNew = newBlocks.filter((a) => a.isNew === true).length === 8;
+          if (allNew) {
+            newBlocks.forEach((block) => (block.isNew = false));
           }
 
-          newBlocks = newBlocks.sort((a, b) => {
-            const aIsNew = a.isNew ? 1 : 0;
-            const bIsNew = b.isNew ? 1 : 0;
-            return b.timestamp - a.timestamp || bIsNew - aIsNew;
-          });
           setBlocks(newBlocks);
         }
         setBlocksFetched(success);
@@ -84,7 +85,7 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
                 )}
               </div>
             </div>
-            <div className="card-body py-0 px-3 px-lg-spacer" data-testid="blocksList">
+            <div className="card-body p-0" data-testid="blocksList">
               <div className="latest-items-container">
                 {blocks.map((block, i) => (
                   <LatestItem key={block.hash} isNew={block.isNew} index={i + 1}>

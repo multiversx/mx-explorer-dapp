@@ -33,27 +33,27 @@ const LatestTransactions = () => {
     getLatestTransactions().then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
-          const sortedTransactions = data;
-          let newTransactions: TransactionType[];
+          const existingHashes = transactions.map((b) => b.txHash);
 
-          if (transactions.length === 0) {
-            newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
-              ...transaction,
-              isNew: false,
-            }));
-          } else {
-            const existingHashes = transactions.map((b) => b.txHash);
-            newTransactions = sortedTransactions.map((transaction: TransactionType) => ({
-              ...transaction,
-              isNew: !existingHashes.includes(transaction.txHash),
-            }));
+          // keep first 4 items and reset them
+          let newTransactions: TransactionType[] = [...transactions.slice(0, 4)];
+          newTransactions.forEach((transaction) => (transaction.isNew = false));
+
+          data.forEach((transaction: TransactionType) => {
+            const isNew = !existingHashes.includes(transaction.txHash);
+            if (isNew) {
+              newTransactions.unshift({
+                ...transaction,
+                isNew,
+              });
+            }
+          });
+
+          const allNew = newTransactions.filter((a) => a.isNew === true).length === 8;
+          if (allNew) {
+            newTransactions.forEach((transaction) => (transaction.isNew = false));
           }
 
-          newTransactions = newTransactions.sort((a, b) => {
-            const aIsNew = a.isNew ? 1 : 0;
-            const bIsNew = b.isNew ? 1 : 0;
-            return b.timestamp - a.timestamp || bIsNew - aIsNew;
-          });
           setTransactions(newTransactions);
         }
         setTransactionsFetched(success);
@@ -79,7 +79,7 @@ const LatestTransactions = () => {
                 </NetworkLink>
               </div>
             </div>
-            <div className="card-body py-0 px-3 px-lg-spacer" data-testid="transactionsList">
+            <div className="card-body p-0" data-testid="transactionsList">
               <div className="latest-items-container">
                 {transactions.map((transaction, i) => (
                   <LatestItem key={transaction.txHash} isNew={transaction.isNew} index={i + 1}>
