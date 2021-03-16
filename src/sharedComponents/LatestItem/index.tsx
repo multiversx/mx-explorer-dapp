@@ -4,19 +4,23 @@ const LatestItem = ({
   children,
   isNew,
   index,
+  maxNewItems,
 }: {
   children: React.ReactNode;
   isNew: boolean | undefined;
   index: number;
+  maxNewItems: number;
 }) => {
   const [internalIsNew, setInternalIsNew] = React.useState<boolean | undefined>();
-  const max = 8 * 600;
+  const expandDuration = 800;
+  const totalAnimationTime = maxNewItems * expandDuration;
+  const itemAnimationDelay = totalAnimationTime - expandDuration * index;
 
   React.useEffect(() => {
     if (isNew) {
       setTimeout(() => {
         setInternalIsNew(false);
-      }, max - 600 * index);
+      }, itemAnimationDelay);
     }
   }, []);
 

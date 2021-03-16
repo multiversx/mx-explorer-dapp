@@ -31,11 +31,11 @@ export default function useAdapter() {
           },
         },
       }),
-    getLatestTransactions: () =>
+    getLatestTransactions: ({ size = 8 }: { size: number }) =>
       provider({
         url: `/transactions`,
         params: {
-          size: 8,
+          size,
           ...{
             fields: [
               'txHash',

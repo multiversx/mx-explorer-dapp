@@ -27,7 +27,8 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
 
   const [blocks, setBlocks] = React.useState<BlockType[]>([]);
   const [blocksFetched, setBlocksFetched] = React.useState<boolean | undefined>();
-  const params = proposer ? { proposer } : {};
+  const size = 8;
+  const params = proposer ? { proposer, size } : { size };
 
   const fetchBlocks = () => {
     getLatestBlocks(params).then(({ data, success }) => {
@@ -49,7 +50,7 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
             }
           });
 
-          const allNew = newBlocks.filter((a) => a.isNew === true).length === 8;
+          const allNew = newBlocks.filter((a) => a.isNew === true).length === newBlocks.length;
           if (allNew) {
             newBlocks.forEach((block) => (block.isNew = false));
           }
@@ -88,7 +89,7 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
             <div className="card-body p-0" data-testid="blocksList">
               <div className="latest-items-container">
                 {blocks.map((block, i) => (
-                  <LatestItem key={block.hash} isNew={block.isNew} index={i + 1}>
+                  <LatestItem maxNewItems={size} key={block.hash} isNew={block.isNew} index={i + 1}>
                     <div className="latest-item-card">
                       <div className="d-flex align-items-center justify-content-between mb-3">
                         <div className="d-flex align-items-center">
