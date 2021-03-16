@@ -12,7 +12,7 @@ const LatestItem = ({
   maxNewItems: number;
 }) => {
   const [internalIsNew, setInternalIsNew] = React.useState<boolean | undefined>();
-  const expandDuration = 800;
+  const expandDuration = 600;
   const totalAnimationTime = maxNewItems * expandDuration;
   const itemAnimationDelay = totalAnimationTime - expandDuration * index;
 

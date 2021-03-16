@@ -27,7 +27,7 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
 
   const [blocks, setBlocks] = React.useState<BlockType[]>([]);
   const [blocksFetched, setBlocksFetched] = React.useState<boolean | undefined>();
-  const size = 8;
+  const size = 6;
   const params = proposer ? { proposer, size } : { size };
 
   const fetchBlocks = () => {
