@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
 import SimpleMap from './SimpleMap';
-import { getMarkers, getLeaders, MarkerType, LeaderType } from './helpers/asyncRequests';
+import { getMarkers, MarkerType, LeaderType } from './helpers/asyncRequests';
 import calcContinentRank, { RankType } from './helpers/calcContinentRank';
 
 import axios from 'axios';
@@ -65,23 +65,23 @@ const ValidatorsStatus = () => {
   };
   React.useEffect(fetchMarkers, []);
 
-  const fetchLeaders = () => {
-    // getLeaders({ timeout, apiUrl: apiUrl || '' }).then((data) => {
-    //  if (ref.current !== null) {
-    //   setLeaders(data);
-    //  }
-    // });
-    axios
-      .get(`leaders.json`, {
-        timeout,
-      })
-      .then(({ data }) => {
-        if (ref.current !== null) {
-          setLeaders(data);
-        }
-      });
-  };
-  React.useEffect(fetchLeaders, [timestamp, markers]);
+  // const fetchLeaders = () => {
+  //   // getLeaders({ timeout, apiUrl: apiUrl || '' }).then((data) => {
+  //   //  if (ref.current !== null) {
+  //   //   setLeaders(data);
+  //   //  }
+  //   // });
+  //   axios
+  //     .get(`leaders.json`, {
+  //       timeout,
+  //     })
+  //     .then(({ data }) => {
+  //       if (ref.current !== null) {
+  //         setLeaders(data);
+  //       }
+  //     });
+  // };
+  // React.useEffect(fetchLeaders, [timestamp, markers]);
 
   return (
     <div className="card" ref={ref}>
@@ -107,7 +107,7 @@ const ValidatorsStatus = () => {
               key={i}
               className={`row py-2 ${i + 1 < continentsRank.length ? 'border-bottom' : ''}`}
             >
-              <div className="col pl-0 d-flex align-items-center">
+              <div className="col pl-0 d-flex align-items-center continent-name">
                 {i + 1}. {continent}
               </div>
               <div className="col d-flex align-items-center text-secondary justify-content-end">
