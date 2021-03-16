@@ -22,8 +22,19 @@
   @extend .mx-lg-spacer;
   
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
+  position: relative;
   overflow: hidden;
+
+  &:before {
+    content: ' ';
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 1rem;
+    z-index: 999;
+    background: linear-gradient(90deg, rgba($card-bg, 0.7) 50%, rgba($card-bg, 0.3) 30%);
+  }
 
   .latest-item {
     transition: 0.3s max-width ease-in-out, 1s opacity ease-in-out;
@@ -37,10 +48,8 @@
         opacity: 0;
       }
   
-      &:not(:last-child) {
-        .latest-item-card {
-          margin-right: 1.5rem;
-        }
+      .latest-item-card {
+        margin-left: 1.5rem;
       }
     }
 
@@ -90,8 +99,12 @@
     flex-direction: column;
     margin-bottom: 0rem !important;
 
+    &:before { 
+      content: none;
+    }
+
     .latest-item  {
-      margin-right: 0 !important;
+      margin-left: 0 !important;
       margin-bottom: 1rem !important;
       max-width: none;
 

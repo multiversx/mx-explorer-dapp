@@ -26,11 +26,11 @@ const LatestTransactions = () => {
   } = useGlobalState();
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
-
   const { getLatestTransactions } = adapter();
+  const size = 8;
 
   const fetchTransactions = () => {
-    getLatestTransactions().then(({ data, success }) => {
+    getLatestTransactions({ size }).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
           const existingHashes = transactions.map((b) => b.txHash);
@@ -49,7 +49,9 @@ const LatestTransactions = () => {
             }
           });
 
-          const allNew = newTransactions.filter((a) => a.isNew === true).length === 8;
+          const allNew =
+            newTransactions.filter((a) => a.isNew === true).length === newTransactions.length;
+
           if (allNew) {
             newTransactions.forEach((transaction) => (transaction.isNew = false));
           }
@@ -82,7 +84,12 @@ const LatestTransactions = () => {
             <div className="card-body p-0" data-testid="transactionsList">
               <div className="latest-items-container">
                 {transactions.map((transaction, i) => (
-                  <LatestItem key={transaction.txHash} isNew={transaction.isNew} index={i + 1}>
+                  <LatestItem
+                    maxNewItems={size}
+                    key={transaction.txHash}
+                    isNew={transaction.isNew}
+                    index={i + 1}
+                  >
                     <div
                       className={`latest-item-card status-${
                         getStatusIconAndColor(transaction.status).color
