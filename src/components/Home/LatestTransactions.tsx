@@ -77,7 +77,7 @@ const LatestTransactions = () => {
 
   const Component = () => {
     return (
-      <div className="card custom-scroll" ref={ref}>
+      <div className="card" ref={ref}>
         {transactionsFetched === undefined && <Loader dataTestId="transactionsLoader" />}
         {transactionsFetched === false && <FailedTransactions />}
         {transactionsFetched === true && transactions.length === 0 && <NoTransactions />}
