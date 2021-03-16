@@ -66,7 +66,7 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
 
   const Component = () => {
     return (
-      <div className="card custom-scroll" ref={ref}>
+      <div className="card" ref={ref}>
         {blocksFetched === undefined && <Loader dataTestId="blocksLoader" />}
         {blocksFetched === false && <FailedBlocks />}
         {blocksFetched === true && blocks.length === 0 && <NoBlocks />}
