@@ -3,7 +3,6 @@ export interface AccountType {
   balance: string;
   nonce: number;
   code?: string;
-  username?: string;
 }
 
 export interface TokenType {
