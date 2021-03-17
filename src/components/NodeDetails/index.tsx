@@ -6,9 +6,6 @@ import { IdentityType, NodeType } from 'context/state';
 import NodeInformation from './NodeInformation';
 import NetworkMetrics from './NetworkMetrics';
 import Rounds, { RoundType } from './Rounds';
-import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
-import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
-import { BlockType } from 'sharedComponents/BlocksTable';
 import { useIsMainnet } from 'helpers';
 
 interface NodeDetailType<T> {
@@ -24,14 +21,13 @@ const NodeDetails = () => {
   const ref = React.useRef(null);
   const { publicKey } = useParams() as any;
   const { search } = useLocation();
-  const { getNode, getIdentity, getRounds, getBlocks } = adapter();
+  const { getNode, getIdentity, getRounds } = adapter();
   const isMainnet = useIsMainnet();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
   const [node, setNode] = React.useState<NodeDetailType<NodeType>>(initialState);
   const [identity, setIdentity] = React.useState<NodeDetailType<IdentityType>>(initialState);
   const [rounds, setRounds] = React.useState<NodeDetailType<RoundType[]>>(initialState);
-  const [blocks, setBlocks] = React.useState<NodeDetailType<BlockType[]>>(initialState);
 
   const fetchNodes = () => {
     setDataReady(undefined);
@@ -42,18 +38,12 @@ const NodeDetails = () => {
         if (nodeData.data.nodeType !== 'observer') {
           const promises = [
             getRounds(publicKey),
-            getBlocks({ proposer: publicKey }),
             ...(fetchIdentity ? [getIdentity(nodeData.data.identity)] : []),
           ];
           Promise.all(promises).then((response) => {
-            const [roundsData, blocksData, identityData] = response;
+            const [roundsData, identityData] = response;
             if (ref.current !== null) {
               setNode(nodeData);
-
-              setBlocks({
-                data: blocksData.success ? blocksData.data.blocks : [],
-                success: blocksData.success,
-              });
 
               setRounds({
                 data: roundsData.success
@@ -142,26 +132,12 @@ const NodeDetails = () => {
             {node.data.nodeType === 'validator' && (
               <div className="row">
                 <div className="col-12">
-                  {blocks.success && blocks.data && blocks.data.length > 0 ? (
-                    <LatestBlocks proposer={publicKey} />
-                  ) : (
-                    <div className="card">
-                      {blocks.success === false && <FailedBlocks />}
-                      {blocks.success && blocks.data && (
-                        <>
-                          {blocks.data.length === 0 && (
-                            <NoBlocks
-                              title={`${
-                                node.data.peerType === 'eligible'
-                                  ? 'No blocks'
-                                  : 'Validator not in consensus'
-                              }`}
-                            />
-                          )}
-                        </>
-                      )}
-                    </div>
-                  )}
+                  <LatestBlocks
+                    proposer={publicKey}
+                    noBlocksTitle={`${
+                      node.data.peerType === 'eligible' ? 'No blocks' : 'Validator not in consensus'
+                    }`}
+                  />
                 </div>
               </div>
             )}

@@ -18,7 +18,7 @@ import { TransactionType } from 'sharedComponents/TransactionsTable';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 
-const LatestTransactions = () => {
+const LatestTransactions = ({ address }: { address?: string }) => {
   const ref = React.useRef(null);
   const {
     activeNetworkId,
@@ -27,41 +27,39 @@ const LatestTransactions = () => {
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const { getLatestTransactions } = adapter();
-  const size = 6;
+  const size = 5;
 
   const fetchTransactions = () => {
-    getLatestTransactions({ size }).then(({ data, success }) => {
+    getLatestTransactions({ size, address }).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
           const existingHashes = transactions.map((b) => b.txHash);
 
-          // keep first 4 items and reset isNew
-          // update pending transactions
-          let newTransactions: TransactionType[] = [...transactions.slice(0, 4)];
-          newTransactions.forEach((transaction) => {
-            transaction.isNew = false;
+          // keep previous transactions, reset isNew and update status
+          let oldTransactions: TransactionType[] = [...transactions.slice(0, size)];
+          oldTransactions.forEach((oldTx) => {
+            oldTx.isNew = false;
 
-            if (transaction.status === 'pending') {
+            if (oldTx.status === 'pending') {
               const newStatusTx = (data as TransactionType[]).find(
-                (newStatusTx) => newStatusTx.txHash === transaction.txHash
+                (newStatusTx) => newStatusTx.txHash === oldTx.txHash
               );
-              transaction.status = newStatusTx ? newStatusTx.status : transaction.status;
+              oldTx.status = newStatusTx ? newStatusTx.status : oldTx.status;
             }
           });
 
-          // sort only new transactions by timestamp
-          let sortedNewTransactions: TransactionType[] = [];
+          let newTransactions: TransactionType[] = [];
           data.forEach((transaction: TransactionType) => {
             const isNew = !existingHashes.includes(transaction.txHash);
             if (isNew) {
-              sortedNewTransactions.push({
+              newTransactions.push({
                 ...transaction,
                 isNew,
               });
             }
           });
-          sortedNewTransactions = sortedNewTransactions.sort((a, b) => b.timestamp - a.timestamp);
-          newTransactions = [...sortedNewTransactions, ...newTransactions];
+
+          newTransactions = [...newTransactions, ...oldTransactions];
 
           const allNew =
             newTransactions.filter((a) => a.isNew === true).length === newTransactions.length;
@@ -89,8 +87,11 @@ const LatestTransactions = () => {
           <>
             <div className="card-header">
               <div className="card-header-item d-flex justify-content-between align-items-center">
-                <h6 className="m-0">Transactions</h6>
-                <NetworkLink to="/transactions" className="btn btn-sm btn-primary-light">
+                <h6 className="m-0">{address ? 'Latest' : ''} Transactions</h6>
+                <NetworkLink
+                  to={address ? urlBuilder.accountDetails(address) : '/transactions'}
+                  className="btn btn-sm btn-primary-light"
+                >
                   View All Transactions
                 </NetworkLink>
               </div>

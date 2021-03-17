@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { NodesTable, SharedIdentity } from 'sharedComponents';
 import { types, useFilters } from 'helpers';
 import ProviderStats from './ProviderStats';
+import LatestTransactions from 'components/Home/LatestTransactions';
 
 const ProviderDetails = () => {
   const ref = React.useRef(null);
@@ -86,6 +87,12 @@ const ProviderDetails = () => {
             <div className="row">
               <div className="col-12 mb-spacer">
                 <ProviderStats provider={provider} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-12 mb-spacer">
+                <LatestTransactions address={address} />
               </div>
             </div>
 

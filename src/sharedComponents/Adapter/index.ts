@@ -20,7 +20,7 @@ export default function useAdapter() {
 
     getStats,
 
-    getLatestBlocks: ({ size = 8, proposer }: GetBlocksType) =>
+    getLatestBlocks: ({ size = 5, proposer }: GetBlocksType) =>
       provider({
         url: `/blocks`,
         params: {
@@ -31,11 +31,12 @@ export default function useAdapter() {
           },
         },
       }),
-    getLatestTransactions: ({ size = 8 }: { size: number }) =>
+    getLatestTransactions: ({ size = 5, address }: TransactionsParamsType) =>
       provider({
         url: `/transactions`,
         params: {
           size,
+          ...getAccountParams(address),
           ...{
             fields: [
               'txHash',

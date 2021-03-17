@@ -16,7 +16,13 @@ import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 import { urlBuilder } from 'helpers';
 
-const LatestBlocks = ({ proposer }: { proposer?: string }) => {
+const LatestBlocks = ({
+  proposer,
+  noBlocksTitle,
+}: {
+  proposer?: string;
+  noBlocksTitle?: string;
+}) => {
   const ref = React.useRef(null);
   const {
     activeNetworkId,
@@ -27,7 +33,7 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
 
   const [blocks, setBlocks] = React.useState<BlockType[]>([]);
   const [blocksFetched, setBlocksFetched] = React.useState<boolean | undefined>();
-  const size = 6;
+  const size = 5;
   const params = proposer ? { proposer, size } : { size };
 
   const fetchBlocks = () => {
@@ -36,26 +42,27 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
         if (success) {
           const existingHashes = blocks.map((b) => b.hash);
 
-          // keep first 4 items and reset them
-          let newBlocks: BlockType[] = [...blocks.slice(0, 4)];
-          newBlocks.forEach((block) => (block.isNew = false));
+          // keep previous blocks and reset them
+          let oldBlocks: BlockType[] = [...blocks.slice(0, size)];
+          oldBlocks.forEach((block) => (block.isNew = false));
 
+          let newBlocks: BlockType[] = [];
           data.forEach((block: BlockType) => {
             const isNew = !existingHashes.includes(block.hash);
             if (isNew) {
-              newBlocks.unshift({
+              newBlocks.push({
                 ...block,
                 isNew,
               });
             }
           });
 
+          newBlocks = [...newBlocks, ...oldBlocks];
+
           const allNew = newBlocks.filter((a) => a.isNew === true).length === newBlocks.length;
           if (allNew) {
             newBlocks.forEach((block) => (block.isNew = false));
           }
-
-          newBlocks.sort((a, b) => b.timestamp - a.timestamp);
 
           setBlocks(newBlocks);
         }
@@ -71,7 +78,7 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
       <div className="card" ref={ref}>
         {blocksFetched === undefined && <Loader dataTestId="blocksLoader" />}
         {blocksFetched === false && <FailedBlocks />}
-        {blocksFetched === true && blocks.length === 0 && <NoBlocks />}
+        {blocksFetched === true && blocks.length === 0 && <NoBlocks title={noBlocksTitle} />}
         {blocksFetched === true && blocks.length > 0 && (
           <>
             <div className="card-header">
