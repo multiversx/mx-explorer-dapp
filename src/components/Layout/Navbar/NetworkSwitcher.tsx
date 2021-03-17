@@ -29,8 +29,10 @@ export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void })
     activeNetwork,
   } = useGlobalState();
 
+  const [networkId, setNetworkId] = React.useState(activeNetwork.id);
+
   React.useEffect(() => {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production' && networkId !== activeNetwork.id) {
       const requiredProtocol = networksWithHttps.includes(activeNetwork.id) ? 'https:' : 'http:';
       const { protocol: currentProtocol, origin: currentOrigin, pathname } = window.location;
       if (requiredProtocol !== currentProtocol) {
@@ -38,6 +40,7 @@ export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void })
         const href = `${origin}${pathname}`;
         window.location.href = href;
       }
+      setNetworkId(activeNetwork.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetwork]);
