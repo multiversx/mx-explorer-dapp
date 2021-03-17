@@ -69,6 +69,11 @@ const CONFIG = {
       name: 'Growth',
       url: 'https://growth.elrond.com/',
     },
+    {
+      id: 'maiar',
+      name: 'Maiar',
+      url: 'https://maiar.com/',
+    },
   ],
 };
 

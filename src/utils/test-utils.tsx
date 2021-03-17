@@ -60,7 +60,6 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
     accountsCount: () => Promise.resolve({ data: 1933 }),
     accounts: () => Promise.resolve({ data: rawData.accounts }),
     account: () => Promise.resolve({ data: rawData.account }),
-    username: () => Promise.resolve({ data: rawData.account }),
     delegation: () => Promise.resolve({ data: rawData.delegation }),
     node: () => Promise.resolve({ data: rawData.node }),
     identity: () => Promise.resolve({ data: rawData.identity }),
@@ -93,8 +92,6 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.account();
       case url.includes('/accounts'):
         return requests.accounts();
-      case url.includes('/usernames/'):
-        return requests.username();
       case url.includes('/blocks/count'):
         return requests.blocksCount();
       case url.includes('/blocks/'):
