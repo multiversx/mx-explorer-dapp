@@ -1,10 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { NavDropdown } from 'react-bootstrap';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { NetworkLinkType } from 'context/state';
-import { NavDropdown } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+
+const networksWithHttps = ['mainnet', 'devnet', 'testnet', 'testnet-azure-all-in-one-maiar'];
 
 const NetworkUrl = ({ link, onClick }: { link: NetworkLinkType; onClick: () => void }) => {
   const { activeNetworkId } = useGlobalState();
@@ -26,6 +28,22 @@ export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void })
     defaultNetwork,
     activeNetwork,
   } = useGlobalState();
+
+  const [networkId, setNetworkId] = React.useState(activeNetwork.id);
+
+  React.useEffect(() => {
+    if (process.env.NODE_ENV === 'production' && networkId !== activeNetwork.id) {
+      const requiredProtocol = networksWithHttps.includes(activeNetwork.id) ? 'https:' : 'http:';
+      const { protocol: currentProtocol, origin: currentOrigin, pathname } = window.location;
+      if (requiredProtocol !== currentProtocol) {
+        const origin = currentOrigin.replace(currentProtocol, requiredProtocol);
+        const href = `${origin}${pathname}`;
+        window.location.href = href;
+      }
+      setNetworkId(activeNetwork.id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeNetwork]);
 
   const internalLinks = networks.map(({ name, id }) => ({
     name,
