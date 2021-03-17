@@ -2,10 +2,9 @@ import React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { adapter, Loader, Pager, PageState } from 'sharedComponents';
 import { useParams } from 'react-router-dom';
-import { NodesTable, SharedIdentity } from 'sharedComponents';
+import { NodesTable, SharedIdentity, LatestTransactions } from 'sharedComponents';
 import { types, useFilters } from 'helpers';
 import ProviderStats from './ProviderStats';
-import LatestTransactions from 'components/Home/LatestTransactions';
 
 const ProviderDetails = () => {
   const ref = React.useRef(null);
