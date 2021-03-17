@@ -9,7 +9,7 @@ const AccountTabs = () => {
   const { accountDetails, activeNetwork } = useGlobalState();
   const tokensRouteActive = activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api';
 
-  const contractActive = activePath.endsWith('contract');
+  const contractActive = activePath.endsWith('code');
   const tokensActive = activePath.endsWith('tokens');
   const indexActive = !contractActive && !tokensActive;
 
@@ -49,14 +49,14 @@ const AccountTabs = () => {
         <>
           {contractActive ? (
             <div className="ml-3">
-              <h6>Contract</h6>
+              <h6>Contract Code</h6>
             </div>
           ) : (
             <NetworkLink
-              to={urlBuilder.accountDetailsContract(accountDetails.address)}
+              to={urlBuilder.accountDetailsContractCode(accountDetails.address)}
               className="tab-link ml-3"
             >
-              <h6>Contract</h6>
+              <h6>Contract Code</h6>
             </NetworkLink>
           )}
         </>

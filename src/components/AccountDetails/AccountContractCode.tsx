@@ -4,7 +4,7 @@ import AccountTabs from './AccountTabs';
 import { Redirect } from 'react-router-dom';
 import { urlBuilder, useNetworkRoute } from 'helpers';
 
-const AccountContract = () => {
+const AccountContractCode = () => {
   const { accountDetails } = useGlobalState();
   const networkRoute = useNetworkRoute();
 
@@ -29,4 +29,4 @@ const AccountContract = () => {
   );
 };
 
-export default AccountContract;
+export default AccountContractCode;

@@ -14,7 +14,7 @@ export default function PageLayout({ children }: { children: React.ReactNode }) 
       return <NodesLayout>{children}</NodesLayout>;
 
     case matchPath(accountRoutes.index) !== null:
-    case matchPath(accountRoutes.contract) !== null:
+    case matchPath(accountRoutes.code) !== null:
     case matchPath(accountRoutes.tokens) !== null:
       return <AccountLayout>{children}</AccountLayout>;
 
