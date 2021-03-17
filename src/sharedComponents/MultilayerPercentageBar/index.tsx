@@ -8,7 +8,7 @@ const MultilayerProgressBar = ({ steps }: { steps: PercentageStepType[] }) => {
   return (
     <div
       className={`d-flex h-100 flex-column multilayer-percentage-bar ${
-        steps.length == 2 ? 'two-items' : ''
+        steps.length === 2 ? 'two-items' : ''
       }`}
     >
       <div className="progress w-100 my-0">

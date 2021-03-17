@@ -25,7 +25,7 @@ const LatestItem = ({
         }
       }, itemAnimationDelay);
     }
-  }, []);
+  }, [isNew, itemAnimationDelay]);
 
   return (
     <div
