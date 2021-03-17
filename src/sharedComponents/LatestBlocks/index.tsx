@@ -89,7 +89,12 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
             <div className="card-body p-0" data-testid="blocksList">
               <div className="latest-items-container">
                 {blocks.map((block, i) => (
-                  <LatestItem maxNewItems={size} key={block.hash} isNew={block.isNew} index={i + 1}>
+                  <LatestItem
+                    maxNewItems={blocks.length}
+                    key={block.hash}
+                    isNew={block.isNew}
+                    index={i + 1}
+                  >
                     <div className="latest-item-card">
                       <div className="d-flex align-items-center justify-content-between mb-3">
                         <div className="d-flex align-items-center">
