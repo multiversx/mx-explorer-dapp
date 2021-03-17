@@ -55,6 +55,8 @@ const LatestBlocks = ({ proposer }: { proposer?: string }) => {
             newBlocks.forEach((block) => (block.isNew = false));
           }
 
+          newBlocks.sort((a, b) => b.timestamp - a.timestamp);
+
           setBlocks(newBlocks);
         }
         setBlocksFetched(success);

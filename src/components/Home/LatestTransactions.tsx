@@ -49,15 +49,19 @@ const LatestTransactions = () => {
             }
           });
 
+          // sort only new transactions by timestamp
+          let sortedNewTransactions: TransactionType[] = [];
           data.forEach((transaction: TransactionType) => {
             const isNew = !existingHashes.includes(transaction.txHash);
             if (isNew) {
-              newTransactions.unshift({
+              sortedNewTransactions.push({
                 ...transaction,
                 isNew,
               });
             }
           });
+          sortedNewTransactions = sortedNewTransactions.sort((a, b) => b.timestamp - a.timestamp);
+          newTransactions = [...sortedNewTransactions, ...newTransactions];
 
           const allNew =
             newTransactions.filter((a) => a.isNew === true).length === newTransactions.length;

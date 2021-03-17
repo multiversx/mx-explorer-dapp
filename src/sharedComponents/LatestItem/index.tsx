@@ -11,6 +11,7 @@ const LatestItem = ({
   index: number;
   maxNewItems: number;
 }) => {
+  const ref = React.useRef(null);
   const [internalIsNew, setInternalIsNew] = React.useState<boolean | undefined>();
   const expandDuration = 600;
   const totalAnimationTime = maxNewItems * expandDuration;
@@ -19,13 +20,16 @@ const LatestItem = ({
   React.useEffect(() => {
     if (isNew) {
       setTimeout(() => {
-        setInternalIsNew(false);
+        if (ref.current !== null) {
+          setInternalIsNew(false);
+        }
       }, itemAnimationDelay);
     }
   }, []);
 
   return (
     <div
+      ref={ref}
       className={`latest-item ${index > 4 ? 'hide-sm' : ''} ${
         isNew && internalIsNew === undefined ? 'isNew' : ''
       }`}
