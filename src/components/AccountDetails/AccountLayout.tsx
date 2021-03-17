@@ -47,10 +47,6 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     delegationFetched: undefined,
   });
 
-  React.useEffect(() => {
-    setDataReady(undefined);
-  }, [urlAddress]);
-
   const fetchBalanceAndCount = () => {
     if (!document.hidden) {
       getAccount(urlAddress).then((accountDetailsData) => {
@@ -132,6 +128,10 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountDetails.txCount, activeNetwork.id, urlAddress]);
+
+  React.useEffect(() => {
+    setDataReady(undefined);
+  }, [urlAddress, activeNetwork.id]);
 
   const loading = dataReady === undefined;
   const failed = dataReady === false || !addressIsBech32(urlAddress);
