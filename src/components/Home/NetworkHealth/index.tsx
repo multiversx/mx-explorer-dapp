@@ -167,7 +167,7 @@ const NetworkHealth = () => {
               <Gear className="w-100 h-100" />
             </div>
             <div className="gear-content">
-              {accounts}
+              <span data-testid="accounts">{accounts}</span>
               <small>Accounts</small>
             </div>
           </div>
@@ -177,7 +177,7 @@ const NetworkHealth = () => {
               <Gear className="w-100 h-100" />
             </div>
             <div className="gear-content">
-              {transactions}
+              <span data-testid="transactions">{transactions}</span>
               <small>Transactions</small>
             </div>
           </div>
@@ -188,7 +188,7 @@ const NetworkHealth = () => {
             </div>
             <div className="gear-content">
               <ProgressRing progress={epochPercentage} />
-              {epochTimeRemaining}
+              <span data-testid="epochTimeRemaining">{epochTimeRemaining}</span>
               <small>Epoch {epoch}</small>
             </div>
           </div>
@@ -198,7 +198,7 @@ const NetworkHealth = () => {
               <Gear className="w-100 h-100" />
             </div>
             <div className="gear-content">
-              {blocks}
+              <span data-testid="blocks">{blocks}</span>
               <small>Block Height</small>
             </div>
           </div>

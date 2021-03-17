@@ -7,7 +7,7 @@ describe('Latest Blocks', () => {
       route: '/',
     });
     await wait(async () => {
-      expect(render.queryByTestId('blocksList')!.childElementCount).toBe(25);
+      expect(render.queryByTestId('blocksList')!.childElementCount).toBe(1); // 1 because of the css animation
     });
   });
 

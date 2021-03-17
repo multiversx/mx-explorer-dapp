@@ -6,7 +6,7 @@ describe('Latest Transactions', () => {
       route: '/',
     });
     const transactions = await render.findByTestId('transactionsList');
-    expect(transactions!.childElementCount).toBe(50);
+    expect(transactions!.childElementCount).toBe(1); // 1 because of the css animation
   });
   test('Latest Transactions component loading state', async () => {
     const render = beforeAll({

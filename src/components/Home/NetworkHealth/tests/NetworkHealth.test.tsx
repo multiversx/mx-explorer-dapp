@@ -6,13 +6,10 @@ describe('NetworkHealth tests', () => {
       route: `/`,
     });
     const epochTimeRemaining = await render.findByTestId('epochTimeRemaining');
-    expect(epochTimeRemaining.innerHTML).toBe('04:10 remaining');
+    expect(epochTimeRemaining.innerHTML).toBe('04:10');
 
     const blocks = await render.findByTestId('blocks');
     expect(blocks.innerHTML).toBe('6,379,407');
-
-    const shards = await render.findByTestId('shards');
-    expect(shards.innerHTML).toBe('3');
 
     const accounts = await render.findByTestId('accounts');
     expect(accounts.innerHTML).toBe('60,655');
