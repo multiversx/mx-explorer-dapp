@@ -100,7 +100,7 @@ const LatestTransactions = ({ address }: { address?: string }) => {
               <div className="latest-items-container">
                 {transactions.map((transaction, i) => (
                   <LatestItem
-                    maxNewItems={transactions.length}
+                    totalItems={transactions.length}
                     key={transaction.txHash}
                     isNew={transaction.isNew}
                     index={i + 1}

@@ -99,7 +99,7 @@ const LatestBlocks = ({
               <div className="latest-items-container">
                 {blocks.map((block, i) => (
                   <LatestItem
-                    maxNewItems={blocks.length}
+                    totalItems={blocks.length}
                     key={block.hash}
                     isNew={block.isNew}
                     index={i + 1}
