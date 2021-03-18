@@ -5,11 +5,11 @@
 
   .th-details,
   .th-rank {
-    min-width: 12px;
+    min-width: 1rem;
   }
 
   .th-stake-percent {
-    width: 260px;
+    width: 18.5rem;
   }
 
   .identity-row {
@@ -29,11 +29,9 @@
     .stake-bar-col {
       .progress {
         margin: 0 !important;
-        background-color: $card-bg;
-        border-right: 1px solid $border-color;
-        border-left: 1px solid $border-color;
-        height: 4rem;
-        border-radius: 0;
+        background-color: lighten($muted, 10%);
+        height: 1rem;
+        border-radius: 0.2rem;
 
         .progress-bar {
           height: 100%;
@@ -52,11 +50,6 @@
         background-color: $primary !important;
         min-width: 2px;
       }
-    }
-
-    td {
-      padding-top: 0;
-      padding-bottom: 0;
     }
   }
 
