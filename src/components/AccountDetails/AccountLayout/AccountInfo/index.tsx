@@ -5,7 +5,7 @@ import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-char
 import { faDollarSign } from '@fortawesome/pro-solid-svg-icons/faDollarSign';
 import { faUser } from '@fortawesome/pro-solid-svg-icons/faUser';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
-import { LockedAmountType } from '../AccountLayout';
+import { LockedAmountType } from '../index';
 import UsdValue from './UsdValue';
 import LockedAmountCardItem from './LockedAmountCardItem';
 import { isContract, urlBuilder } from 'helpers';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGlobalState } from 'context';
-import AccountTabs from './AccountTabs';
+import AccountTabs from './AccountLayout/AccountTabs';
 import { Redirect } from 'react-router-dom';
 import { urlBuilder, useNetworkRoute } from 'helpers';
 
