@@ -49,14 +49,14 @@ const AccountTabs = () => {
         <>
           {contractActive ? (
             <div className="ml-3">
-              <h6>Contract Code</h6>
+              <h6>Code</h6>
             </div>
           ) : (
             <NetworkLink
               to={urlBuilder.accountDetailsContractCode(accountDetails.address)}
               className="tab-link ml-3"
             >
-              <h6>Contract Code</h6>
+              <h6>Code</h6>
             </NetworkLink>
           )}
         </>
