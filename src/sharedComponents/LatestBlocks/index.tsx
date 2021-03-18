@@ -116,7 +116,7 @@ const LatestBlocks = ({
                         </div>
 
                         <span className="text-secondary">
-                          <TimeAgo value={block.timestamp} tooltip />
+                          <TimeAgo value={block.timestamp} />
                         </span>
                       </div>
                       <div className="d-flex flex-row">
