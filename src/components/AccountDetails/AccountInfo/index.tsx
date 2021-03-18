@@ -55,7 +55,7 @@ const AccountInfo = ({ lockedAmount }: { lockedAmount: LockedAmountType }) => {
                     to={urlBuilder.providerDetails(accountDetails.address)}
                     className="btn btn-sm btn-primary-light"
                   >
-                    Contract Details
+                    Provider Details
                   </NetworkLink>
                 )}
               </div>
