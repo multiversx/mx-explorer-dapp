@@ -4,7 +4,7 @@ import { adapter, Loader, PageState } from 'sharedComponents';
 import { useRouteMatch } from 'react-router-dom';
 import { SharedIdentity } from 'sharedComponents';
 import { types } from 'helpers';
-import ProviderStats from './ProviderStats';
+import ProviderDetailsCard from './ProviderDetailsCard';
 import { providerRoutes } from 'routes';
 
 const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
@@ -76,7 +76,7 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
 
             <div className="row">
               <div className="col-12 mb-spacer">
-                <ProviderStats provider={provider} />
+                <ProviderDetailsCard provider={provider} />
               </div>
             </div>
 

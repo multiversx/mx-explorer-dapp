@@ -21,7 +21,7 @@ export interface LockedAmountType {
   usd?: number;
 }
 
-const AccountInfo = () => {
+const AccountDetailsCard = () => {
   const ref = React.useRef(null);
   const {
     activeNetwork: { id, adapter: networkAdapter },
@@ -88,7 +88,7 @@ const AccountInfo = () => {
   }, [id, address]);
 
   return address !== '' ? (
-    <div ref={ref} className="row account-info">
+    <div ref={ref} className="row account-details-card">
       <div className="col mb-spacer">
         <div className="card">
           <div className="card-header">
@@ -143,4 +143,4 @@ const AccountInfo = () => {
   ) : null;
 };
 
-export default AccountInfo;
+export default AccountDetailsCard;
