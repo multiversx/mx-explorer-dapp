@@ -14,7 +14,7 @@ const IdentityDetails = () => {
   const { getIdentity, getNodes, getNodesCount, getProviders } = adapter();
   const { getQueryObject, size } = useFilters();
   const {
-    config: { elrondApps },
+    activeNetwork: { walletAddress },
   } = useGlobalState();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
@@ -92,10 +92,7 @@ const IdentityDetails = () => {
   React.useEffect(fetchData, []);
 
   const showProviders = providersFetched === false || (providersFetched && providers);
-  const website =
-    identity && identity.website
-      ? identity.website
-      : elrondApps.find((app) => app.id === 'wallet')?.url;
+  const website = identity && identity.website ? identity.website : walletAddress;
 
   return (
     <>
@@ -139,7 +136,7 @@ const IdentityDetails = () => {
                                 className="btn btn-sm btn-primary-light"
                                 target={`_blank`}
                                 rel={`noreferrer nofollow`}
-                                href={website}
+                                href={website || ''}
                               >
                                 Stake now
                               </a>
