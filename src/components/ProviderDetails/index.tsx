@@ -1,127 +1,78 @@
 import React from 'react';
-import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
+import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { adapter, Loader, Pager, PageState } from 'sharedComponents';
-import { useParams } from 'react-router-dom';
-import { NodesTable, SharedIdentity, LatestTransactions } from 'sharedComponents';
-import { types, useFilters } from 'helpers';
-import ProviderStats from './ProviderStats';
+import { useGlobalDispatch, useGlobalState } from 'context';
+import { NodesTable } from 'sharedComponents';
+import { useFilters } from 'helpers';
+import { useLocation, useParams } from 'react-router-dom';
+import ProviderTabs from 'components/ProviderDetails/ProviderLayout/ProviderTabs';
 
-const ProviderDetails = () => {
+const Nodes = () => {
   const ref = React.useRef(null);
   const { hash: address } = useParams() as any;
-  const { getProvider, getNodes, getNodesCount } = adapter();
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
-  const [provider, setProvider] = React.useState<types.ProviderType>();
-  const [nodes, setNodes] = React.useState<any>();
-  const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
+  const { search } = useLocation();
+  const dispatch = useGlobalDispatch();
+  const { getNodes, getNodesCount } = adapter();
   const { getQueryObject, size } = useFilters();
+  const { nodes } = useGlobalState();
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
 
-  const fetchData = () => {
+  const fetchNodes = () => {
     const queryObject = getQueryObject();
 
+    setDataReady(undefined);
+
     Promise.all([
-      getProvider(address),
       getNodes({ ...queryObject, provider: address, size }),
       getNodesCount({ ...queryObject, provider: address }),
-    ]).then(([providerData, nodesData, nodesCount]) => {
+    ]).then(([nodesData, count]) => {
+      dispatch({
+        type: 'setNodes',
+        nodes: nodesData.data,
+      });
+      setTotalNodes(count.data);
+
       if (ref.current !== null) {
-        // setProvider(providerData.data);
-        setNodes(nodesData.data);
-        setTotalNodes(nodesCount.data);
-        // setDataReady(providerData.success && nodesData.success);
-
-        setProvider({
-          contract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l',
-          serviceFee: '12',
-          withDelegationCap: true,
-          maxDelegationCap: '100',
-          apr: '29',
-          totalActiveStake: '2250000000000000000000000',
-          numUsers: 4,
-          numNodes: 20,
-          identity: {
-            name: 'Just Mining',
-            avatar:
-              'https://s3.amazonaws.com/keybase_processed_uploads/b011b27c59f42344b38b476da9d85105_360_360.jpg',
-            identity: 'thomasjustmining',
-            website: 'https://elrond.com',
-            location: 'Craiova, Romania',
-            twitter: 'https://twitter.com/just_mining',
-            validators: 1454,
-            score: 174480,
-            stake: 3635000,
-            stakePercent: 67.04,
-          },
-        });
-
-        setDataReady(true && nodesData.success);
+        setDataReady(nodesData.success && count.success);
       }
     });
   };
 
-  React.useEffect(fetchData, []);
+  React.useEffect(fetchNodes, [search]);
 
   return (
-    <>
+    <div className="card" ref={ref}>
+      <div className="card-header">
+        <div className="card-header-item d-flex align-items-center">
+          <ProviderTabs />
+        </div>
+      </div>
+
       {dataReady === undefined && <Loader />}
       {dataReady === false && (
         <PageState
-          icon={faCode}
-          title="Unable to load provider details"
+          icon={faCogs}
+          title="Unable to load nodes"
           className="py-spacer my-auto"
           dataTestId="errorScreen"
         />
       )}
-      <div ref={ref}>
-        {dataReady === true && (
-          <div className="container pt-spacer">
-            {provider && provider.identity !== undefined && (
-              <div className="row">
-                <div className="col-12 mb-spacer">
-                  <SharedIdentity.Summary identity={provider.identity} />
-                </div>
-              </div>
-            )}
 
-            <div className="row">
-              <div className="col-12 mb-spacer">
-                <ProviderStats provider={provider} />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-12 mb-spacer">
-                <LatestTransactions address={address} />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-12">
-                <div className="card">
-                  <div className="card-header">
-                    <div className="card-header-item">
-                      <h6 className="m-0" data-testid="title">
-                        Nodes
-                      </h6>
-                    </div>
-                  </div>
-
-                  <div className="card-body p-0">
-                    <NodesTable>
-                      <NodesTable.Body nodes={nodes} />
-                    </NodesTable>
-                  </div>
-                  <div className="card-footer d-flex justify-content-end">
-                    <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
-                  </div>
-                </div>
-              </div>
-            </div>
+      {dataReady === true && (
+        <>
+          <div className="card-body p-0">
+            <NodesTable>
+              <NodesTable.Body nodes={nodes} />
+            </NodesTable>
           </div>
-        )}
-      </div>
-    </>
+          <div className="card-footer d-flex justify-content-end">
+            <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 
-export default ProviderDetails;
+export default Nodes;

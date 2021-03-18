@@ -19,6 +19,7 @@ import Providers from 'components/Providers';
 import ProviderDetails from 'components/ProviderDetails';
 import AccountContractCode from './components/AccountDetails/AccountContractCode';
 import AccountTokens from 'components/AccountDetails/AccountTokens';
+import ProviderTransactions from 'components/ProviderDetails/ProviderTransactions';
 
 interface RouteType {
   path: string;
@@ -31,17 +32,21 @@ interface RouteType {
 
 export const validatorsRoutes = {
   index: '/validators',
-  nodes: '/nodes',
   providers: '/providers',
+  nodes: '/nodes',
   nodeDetails: '/nodes/:publicKey',
   identityDetails: '/identities/:id',
-  providerDetails: '/providers/:hash',
 };
 
 export const accountRoutes = {
   index: `/accounts/:hash`,
   code: `/accounts/:hash/code`,
   tokens: `/accounts/:hash/tokens`,
+};
+
+export const providerRoutes = {
+  index: `/providers/:hash`,
+  transactions: `/providers/:hash/transactions`,
 };
 
 const routes: RouteType[] = [
@@ -149,6 +154,11 @@ const routes: RouteType[] = [
     path: '/providers/:hash',
     title: 'Provider Details',
     component: ProviderDetails,
+  },
+  {
+    path: '/providers/:hash/transactions',
+    title: 'Provider Details',
+    component: ProviderTransactions,
   },
 ];
 
