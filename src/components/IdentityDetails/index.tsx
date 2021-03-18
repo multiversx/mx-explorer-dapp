@@ -6,18 +6,23 @@ import { adapter, Loader, Pager, PageState, ProvidersTable } from 'sharedCompone
 import { useParams } from 'react-router-dom';
 import { NodesTable, SharedIdentity } from 'sharedComponents';
 import { useFilters, types } from 'helpers';
+import { useGlobalState } from 'context';
 
 const IdentityDetails = () => {
   const ref = React.useRef(null);
   const { id } = useParams() as any;
   const { getIdentity, getNodes, getNodesCount, getProviders } = adapter();
+  const { getQueryObject, size } = useFilters();
+  const {
+    config: { elrondApps },
+  } = useGlobalState();
+
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
   const [identity, setIdentity] = React.useState<IdentityType>();
   const [providers, setProviders] = React.useState<types.ProviderType[]>();
   const [providersFetched, setProvidersFetched] = React.useState<boolean | undefined>(undefined);
   const [nodes, setNodes] = React.useState<any>();
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
-  const { getQueryObject, size } = useFilters();
 
   const fetchData = () => {
     const queryObject = getQueryObject();
@@ -87,7 +92,10 @@ const IdentityDetails = () => {
   React.useEffect(fetchData, []);
 
   const showProviders = providersFetched === false || (providersFetched && providers);
-  const website = identity && identity.website ? identity.website : 'https://wallet.elrond.com';
+  const website =
+    identity && identity.website
+      ? identity.website
+      : elrondApps.find((app) => app.id === 'wallet')?.url;
 
   return (
     <>

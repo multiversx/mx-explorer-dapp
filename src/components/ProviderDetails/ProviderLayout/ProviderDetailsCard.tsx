@@ -15,12 +15,13 @@ import {
 const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | undefined }) => {
   const {
     activeNetwork: { erdLabel },
+    config: { elrondApps },
   } = useGlobalState();
 
   const website =
     provider && provider.identity && provider.identity.website
       ? provider.identity.website
-      : 'https://wallet.elrond.com';
+      : elrondApps.find((app) => app.id === 'wallet')?.url;
 
   return provider !== undefined ? (
     <div className="provider-details-card card">

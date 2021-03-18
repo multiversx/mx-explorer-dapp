@@ -35,7 +35,6 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
             avatar:
               'https://s3.amazonaws.com/keybase_processed_uploads/b011b27c59f42344b38b476da9d85105_360_360.jpg',
             identity: 'thomasjustmining',
-            website: 'https://elrond.com',
             location: 'Craiova, Romania',
             twitter: 'https://twitter.com/just_mining',
             validators: 1454,
