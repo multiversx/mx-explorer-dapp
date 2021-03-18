@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { validatorsRoutes } from 'routes';
 import { NetworkLink } from 'sharedComponents';
 
-const NodesTabs = ({ children }: { children?: React.ReactNode }) => {
+const NodesTabs = () => {
   const activePath = useLocation().pathname;
 
   return (
