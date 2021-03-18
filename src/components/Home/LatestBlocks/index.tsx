@@ -16,13 +16,7 @@ import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 import { urlBuilder } from 'helpers';
 
-const LatestBlocks = ({
-  proposer,
-  noBlocksTitle,
-}: {
-  proposer?: string;
-  noBlocksTitle?: string;
-}) => {
+const LatestBlocks = () => {
   const ref = React.useRef(null);
   const {
     activeNetworkId,
@@ -34,10 +28,9 @@ const LatestBlocks = ({
   const [blocks, setBlocks] = React.useState<BlockType[]>([]);
   const [blocksFetched, setBlocksFetched] = React.useState<boolean | undefined>();
   const size = 5;
-  const params = proposer ? { proposer, size } : { size };
 
   const fetchBlocks = () => {
-    getLatestBlocks(params).then(({ data, success }) => {
+    getLatestBlocks({ size }).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
           const existingHashes = blocks.map((b) => b.hash);
@@ -78,21 +71,15 @@ const LatestBlocks = ({
       <div className="card" ref={ref}>
         {blocksFetched === undefined && <Loader dataTestId="blocksLoader" />}
         {blocksFetched === false && <FailedBlocks />}
-        {blocksFetched === true && blocks.length === 0 && <NoBlocks title={noBlocksTitle} />}
+        {blocksFetched === true && blocks.length === 0 && <NoBlocks />}
         {blocksFetched === true && blocks.length > 0 && (
           <>
             <div className="card-header">
               <div className="card-header-item d-flex justify-content-between align-items-center">
-                {proposer ? (
-                  <h6 className="m-0">Latest proposed Blocks</h6>
-                ) : (
-                  <>
-                    <h6 className="m-0">Blocks</h6>
-                    <NetworkLink to="/blocks" className="btn btn-sm btn-primary-light">
-                      View All Blocks
-                    </NetworkLink>
-                  </>
-                )}
+                <h6 className="m-0">Blocks</h6>
+                <NetworkLink to="/blocks" className="btn btn-sm btn-primary-light">
+                  View All Blocks
+                </NetworkLink>
               </div>
             </div>
             <div className="card-body p-0" data-testid="blocksList">

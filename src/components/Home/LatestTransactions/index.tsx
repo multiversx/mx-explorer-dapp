@@ -18,7 +18,7 @@ import { TransactionType } from 'sharedComponents/TransactionsTable';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 
-const LatestTransactions = ({ address }: { address?: string }) => {
+const LatestTransactions = () => {
   const ref = React.useRef(null);
   const {
     activeNetworkId,
@@ -30,7 +30,7 @@ const LatestTransactions = ({ address }: { address?: string }) => {
   const size = 5;
 
   const fetchTransactions = () => {
-    getLatestTransactions({ size, address }).then(({ data, success }) => {
+    getLatestTransactions({ size }).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
           const existingHashes = transactions.map((b) => b.txHash);
@@ -87,11 +87,8 @@ const LatestTransactions = ({ address }: { address?: string }) => {
           <>
             <div className="card-header">
               <div className="card-header-item d-flex justify-content-between align-items-center">
-                <h6 className="m-0">{address ? 'Latest' : ''} Transactions</h6>
-                <NetworkLink
-                  to={address ? urlBuilder.accountDetails(address) : '/transactions'}
-                  className="btn btn-sm btn-primary-light"
-                >
+                <h6 className="m-0">Transactions</h6>
+                <NetworkLink to="/transactions" className="btn btn-sm btn-primary-light">
                   View All Transactions
                 </NetworkLink>
               </div>
