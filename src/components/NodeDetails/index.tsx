@@ -1,12 +1,15 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { adapter, LatestBlocks, Loader, PageState, SharedIdentity } from 'sharedComponents';
+import { adapter, Loader, PageState, SharedIdentity } from 'sharedComponents';
 import { useLocation, useParams } from 'react-router-dom';
 import { IdentityType, NodeType } from 'context/state';
 import NodeInformation from './NodeInformation';
 import NetworkMetrics from './NetworkMetrics';
 import Rounds, { RoundType } from './Rounds';
 import { useIsMainnet } from 'helpers';
+import BlocksTable, { BlockType } from 'sharedComponents/BlocksTable';
+import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
+import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 
 interface NodeDetailType<T> {
   data?: T;
@@ -21,13 +24,14 @@ const NodeDetails = () => {
   const ref = React.useRef(null);
   const { publicKey } = useParams() as any;
   const { search } = useLocation();
-  const { getNode, getIdentity, getRounds } = adapter();
+  const { getNode, getIdentity, getRounds, getBlocks } = adapter();
   const isMainnet = useIsMainnet();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
   const [node, setNode] = React.useState<NodeDetailType<NodeType>>(initialState);
   const [identity, setIdentity] = React.useState<NodeDetailType<IdentityType>>(initialState);
   const [rounds, setRounds] = React.useState<NodeDetailType<RoundType[]>>(initialState);
+  const [blocks, setBlocks] = React.useState<NodeDetailType<BlockType[]>>(initialState);
 
   const fetchNodes = () => {
     setDataReady(undefined);
@@ -38,12 +42,18 @@ const NodeDetails = () => {
         if (nodeData.data.nodeType !== 'observer') {
           const promises = [
             getRounds(publicKey),
+            getBlocks({ proposer: publicKey }),
             ...(fetchIdentity ? [getIdentity(nodeData.data.identity)] : []),
           ];
           Promise.all(promises).then((response) => {
-            const [roundsData, identityData] = response;
+            const [roundsData, blocksData, identityData] = response;
             if (ref.current !== null) {
               setNode(nodeData);
+
+              setBlocks({
+                data: blocksData.success ? blocksData.data.blocks : [],
+                success: blocksData.success,
+              });
 
               setRounds({
                 data: roundsData.success
@@ -63,12 +73,9 @@ const NodeDetails = () => {
             }
           });
         } else {
-          const promises = [...(fetchIdentity ? [getIdentity(nodeData.data.identity)] : [])];
-
-          if (promises.length > 0) {
-            Promise.all(promises).then((response) => {
-              const [identityData] = response;
-              if (ref.current !== null) {
+          if (isMainnet && nodeData.data.identity !== undefined) {
+            getIdentity(nodeData.data.identity).then((identityData) => {
+              if (isMainnet && identityData) {
                 setIdentity(identityData);
                 setNode(nodeData);
                 setDataReady(true);
@@ -132,12 +139,34 @@ const NodeDetails = () => {
             {node.data.nodeType === 'validator' && (
               <div className="row">
                 <div className="col-12">
-                  <LatestBlocks
-                    proposer={publicKey}
-                    noBlocksTitle={`${
-                      node.data.peerType === 'eligible' ? 'No blocks' : 'Validator not in consensus'
-                    }`}
-                  />
+                  <div className="card">
+                    {blocks.success === false && <FailedBlocks />}
+                    {blocks.success && blocks.data && (
+                      <>
+                        {blocks.data.length === 0 && (
+                          <NoBlocks
+                            title={`${
+                              node.data.peerType === 'eligible'
+                                ? 'No blocks'
+                                : 'Validator not in consensus'
+                            }`}
+                          />
+                        )}
+                        {blocks.data.length > 0 && (
+                          <>
+                            <div className="card-header">
+                              <div className="card-header-item">
+                                <h6 className="m-0">Latest Proposed Blocks</h6>
+                              </div>
+                            </div>
+                            <div className="card-body p-0">
+                              <BlocksTable blocks={blocks.data} shard={undefined} />
+                            </div>
+                          </>
+                        )}
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
             )}
