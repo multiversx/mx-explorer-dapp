@@ -20,23 +20,21 @@ export default function useAdapter() {
 
     getStats,
 
-    getLatestBlocks: ({ size = 5, proposer }: GetBlocksType) =>
+    getLatestBlocks: ({ size = 5 }: GetBlocksType) =>
       provider({
         url: `/blocks`,
         params: {
           size,
-          ...(proposer ? { proposer } : {}),
           ...{
             fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
           },
         },
       }),
-    getLatestTransactions: ({ size = 5, address }: TransactionsParamsType) =>
+    getLatestTransactions: ({ size = 5 }: TransactionsParamsType) =>
       provider({
         url: `/transactions`,
         params: {
           size,
-          ...getAccountParams(address),
           ...{
             fields: [
               'txHash',

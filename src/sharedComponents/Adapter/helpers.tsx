@@ -32,7 +32,7 @@ export interface ProviderPropsType {
     miniBlockHash?: string;
     sender?: string;
     receiver?: string;
-    condition?: 'should' | 'must';
+    condition?: string;
     senderShard?: number;
     receiverShard?: number;
     signersIndexes?: number;
@@ -59,6 +59,7 @@ export const getAccountParams = (address?: string) =>
     ? {
         sender: address,
         receiver: address,
+        condition: 'should',
       }
     : {};
 
