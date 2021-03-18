@@ -5,30 +5,75 @@ import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-char
 import { faDollarSign } from '@fortawesome/pro-solid-svg-icons/faDollarSign';
 import { faUser } from '@fortawesome/pro-solid-svg-icons/faUser';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
-import { LockedAmountType } from '../index';
 import UsdValue from './UsdValue';
 import LockedAmountCardItem from './LockedAmountCardItem';
 import { isContract, urlBuilder } from 'helpers';
 
-const AccountInfo = ({ lockedAmount }: { lockedAmount: LockedAmountType }) => {
+export interface LockedAmountType {
+  stakeFetched?: boolean | undefined;
+  totalStaked?: string;
+  delegationFetched?: boolean | undefined;
+  userActiveStake?: string;
+  userDeferredPaymentStake?: string;
+  userUnstakedStake?: string;
+  userWaitingStake?: string;
+  userWithdrawOnlyStake?: string;
+  usd?: number;
+}
+
+const AccountInfo = () => {
   const ref = React.useRef(null);
   const {
     activeNetwork: { id, adapter: networkAdapter },
     accountDetails,
     accountTokens,
   } = useGlobalState();
+  const { getProvider, getAccountDelegation, getAccountStake, getEgldPrice } = adapter();
+  const { address, balance, nonce, txCount } = accountDetails;
 
-  const { getProvider } = adapter();
-
-  const { address, balance, nonce } = accountDetails;
   const tokensActive = id !== 'mainnet' && networkAdapter === 'api';
   const cardItemClass = tokensActive ? 'n5' : '';
 
+  const [lockedAmount, setLockedAmount] = React.useState<LockedAmountType>({
+    stakeFetched: undefined,
+    delegationFetched: undefined,
+  });
+
+  const fetchLockedAmountAndPrice = () => {
+    if (!document.hidden) {
+      Promise.all([getAccountDelegation(address), getAccountStake(address), getEgldPrice()]).then(
+        ([delegationData, stakeData, priceData]) => {
+          if (ref.current !== null) {
+            const delegationFetched = delegationData.success ? delegationData.data : {};
+            const stakeFetched = stakeData.success ? stakeData.data : {};
+            const usd =
+              priceData.success && priceData.data.length > 0
+                ? priceData.data[priceData.data.length - 1].value
+                : undefined;
+
+            setLockedAmount({
+              ...(delegationFetched ? delegationData.data : {}),
+              ...(stakeFetched ? stakeData.data : {}),
+              usd,
+              delegationFetched,
+              stakeFetched,
+            });
+          }
+        }
+      );
+    }
+  };
+
+  React.useEffect(() => {
+    fetchLockedAmountAndPrice();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [txCount, id, address]);
+
   const [isProvider, setIsProvider] = React.useState(false);
   const fetchProviderDetails = () => {
-    if (isContract(accountDetails.address)) {
+    if (isContract(address)) {
       setIsProvider(true);
-      // getProvider(accountDetails.address).then(({ success, data }) => {
+      // getProvider(address).then(({ success, data }) => {
       //   if (ref.current !== null) {
       //     if (success && data !== undefined) {
       //       setIsProvider(true);
@@ -40,7 +85,7 @@ const AccountInfo = ({ lockedAmount }: { lockedAmount: LockedAmountType }) => {
 
   React.useEffect(() => {
     fetchProviderDetails();
-  }, [id, accountDetails.address]);
+  }, [id, address]);
 
   return address !== '' ? (
     <div ref={ref} className="row account-info">
@@ -63,7 +108,7 @@ const AccountInfo = ({ lockedAmount }: { lockedAmount: LockedAmountType }) => {
             <div className="card-header-item compact d-flex">
               Address:
               <div className="d-flex align-items-center text-break-all ml-2 text-secondary">
-                <span>{address}</span>
+                <span data-testid="address">{address}</span>
                 <CopyButton text={address} />
               </div>
             </div>

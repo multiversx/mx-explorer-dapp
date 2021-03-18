@@ -4,7 +4,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { faInfoCircle } from '@fortawesome/pro-regular-svg-icons/faInfoCircle';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { useGlobalState } from 'context';
-import { LockedAmountType } from '../index';
+import { LockedAmountType } from './index';
 import { CardItem, Denominate } from 'sharedComponents';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

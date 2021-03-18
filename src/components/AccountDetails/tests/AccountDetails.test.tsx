@@ -8,9 +8,9 @@ describe('Account Details Page', () => {
       route: `/accounts/${account.address}`,
     });
 
-    expect(document.title).toEqual('Account Details • Elrond Explorer');
-
     await wait(async () => {
+      expect(document.title).toEqual('Account Details • Elrond Explorer');
+
       const pageInterval = render.getByTestId('pageInterval');
       expect(pageInterval!.innerHTML).toBe('1');
     });
