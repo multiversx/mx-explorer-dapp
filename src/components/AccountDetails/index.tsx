@@ -7,7 +7,7 @@ import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import { useSize } from 'helpers';
-import AccountTabs from './AccountTabs';
+import AccountTabs from './AccountLayout/AccountTabs';
 
 const AccountDetails = () => {
   const ref = React.useRef(null);
@@ -17,7 +17,7 @@ const AccountDetails = () => {
   const { hash: address } = useParams() as any;
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
-  const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
 
   const fetchTransactions = () => {
@@ -38,11 +38,11 @@ const AccountDetails = () => {
             (tx: TransactionType) => tx.status.toLowerCase() === txStatus.pending.toLowerCase()
           );
           setHasPendingTransaction(pending);
-          setTransactionsFetched(true);
+          setDataReady(true);
         }
       } else if (transactions.length === 0) {
         if (ref.current !== null) {
-          setTransactionsFetched(false);
+          setDataReady(false);
         }
       }
     });
@@ -69,8 +69,8 @@ const AccountDetails = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountDetails.txCount, accountDetails.balance]);
 
-  const loading = transactionsFetched === undefined;
-  const showTransactions = transactionsFetched === true && transactions.length > 0;
+  const loading = dataReady === undefined;
+  const showTransactions = dataReady === true && transactions.length > 0;
 
   return (
     <div ref={ref}>
@@ -87,9 +87,9 @@ const AccountDetails = () => {
             />
           ) : (
             <div className="card">
-              {transactionsFetched === undefined && <Loader />}
-              {transactionsFetched === false && <FailedTransactions />}
-              {transactionsFetched === true && transactions.length === 0 && <NoTransactions />}
+              {dataReady === undefined && <Loader />}
+              {dataReady === false && <FailedTransactions />}
+              {dataReady === true && transactions.length === 0 && <NoTransactions />}
             </div>
           )}
         </div>

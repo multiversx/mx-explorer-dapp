@@ -39,7 +39,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const tokensActive = activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api';
   const isOldAddressRoute = pathname.includes('/address/');
   const match: any = useRouteMatch(accountRoutes.index);
-  const urlAddress = match ? match.params.hash : undefined;
+  const address = match ? match.params.hash : undefined;
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [lockedAmount, setLockedAmount] = React.useState<LockedAmountType>({
@@ -49,7 +49,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
 
   const fetchBalanceAndCount = () => {
     if (!document.hidden) {
-      getAccount(urlAddress).then((accountDetailsData) => {
+      getAccount(address).then((accountDetailsData) => {
         const details = accountDetailsData.success ? accountDetailsData.data : {};
 
         if (ref.current !== null) {
@@ -76,38 +76,36 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
       fetchBalanceAndCount();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetwork.id, urlAddress]);
+  }, [firstPageTicker, activeNetwork.id, address]);
 
   const fetchLockedAmountAndPrice = () => {
     if (!document.hidden) {
-      Promise.all([
-        getAccountDelegation(urlAddress),
-        getAccountStake(urlAddress),
-        getEgldPrice(),
-      ]).then(([delegationData, stakeData, priceData]) => {
-        if (ref.current !== null) {
-          const delegationFetched = delegationData.success ? delegationData.data : {};
-          const stakeFetched = stakeData.success ? stakeData.data : {};
-          const usd =
-            priceData.success && priceData.data.length > 0
-              ? priceData.data[priceData.data.length - 1].value
-              : undefined;
+      Promise.all([getAccountDelegation(address), getAccountStake(address), getEgldPrice()]).then(
+        ([delegationData, stakeData, priceData]) => {
+          if (ref.current !== null) {
+            const delegationFetched = delegationData.success ? delegationData.data : {};
+            const stakeFetched = stakeData.success ? stakeData.data : {};
+            const usd =
+              priceData.success && priceData.data.length > 0
+                ? priceData.data[priceData.data.length - 1].value
+                : undefined;
 
-          setLockedAmount({
-            ...(delegationFetched ? delegationData.data : {}),
-            ...(stakeFetched ? stakeData.data : {}),
-            usd,
-            delegationFetched,
-            stakeFetched,
-          });
+            setLockedAmount({
+              ...(delegationFetched ? delegationData.data : {}),
+              ...(stakeFetched ? stakeData.data : {}),
+              usd,
+              delegationFetched,
+              stakeFetched,
+            });
+          }
         }
-      });
+      );
     }
   };
 
   const fetchAccountTokens = () => {
     if (tokensActive) {
-      getAccountTokens(urlAddress).then(({ success, data }) => {
+      getAccountTokens(address).then(({ success, data }) => {
         if (ref.current !== null) {
           dispatch({
             type: 'setAccountTokens',
@@ -127,21 +125,21 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
       fetchAccountTokens();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountDetails.txCount, activeNetwork.id, urlAddress]);
+  }, [accountDetails.txCount, activeNetwork.id, address]);
 
   React.useEffect(() => {
     setDataReady(undefined);
-  }, [urlAddress, activeNetwork.id]);
+  }, [address, activeNetwork.id]);
 
   const loading = dataReady === undefined;
-  const failed = dataReady === false || !addressIsBech32(urlAddress);
+  const failed = dataReady === false || !addressIsBech32(address);
 
   return isOldAddressRoute ? (
-    <Redirect to={networkRoute(`/accounts/${urlAddress}`)} />
+    <Redirect to={networkRoute(`/accounts/${address}`)} />
   ) : (
     <>
       {loading && <Loader />}
-      {!loading && failed && <FailedAccount address={urlAddress} />}
+      {!loading && failed && <FailedAccount address={address} />}
 
       <div ref={ref}>
         {!loading && !failed && (

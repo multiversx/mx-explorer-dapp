@@ -3,7 +3,7 @@ import { Redirect, useParams } from 'react-router-dom';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
 import { Denominate, DetailItem, PageState } from 'sharedComponents';
 import { useGlobalState } from 'context';
-import AccountTabs from './AccountTabs';
+import AccountTabs from './AccountLayout/AccountTabs';
 import { urlBuilder, useNetworkRoute } from 'helpers';
 
 const AccountTokens = () => {

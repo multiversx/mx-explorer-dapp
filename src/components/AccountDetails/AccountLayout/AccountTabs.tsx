@@ -10,25 +10,24 @@ const AccountTabs = () => {
   const tokensRouteActive = activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api';
 
   const contractActive = activePath.endsWith('code');
-  const tokensActive = activePath.endsWith('tokens');
+  const tokensActive = activePath.includes('tokens');
   const indexActive = !contractActive && !tokensActive;
 
   return (
     <div className="account-tabs d-flex flex-row">
-      <div>
-        {indexActive ? (
-          <div className="mr-3">
-            <h6>Transactions</h6>
-          </div>
-        ) : (
-          <NetworkLink
-            to={urlBuilder.accountDetails(accountDetails.address)}
-            className="tab-link mr-3"
-          >
-            <h6>Transactions</h6>
-          </NetworkLink>
-        )}
-      </div>
+      {indexActive ? (
+        <div className="mr-3">
+          <h6>Transactions</h6>
+        </div>
+      ) : (
+        <NetworkLink
+          to={urlBuilder.accountDetails(accountDetails.address)}
+          className="tab-link mr-3"
+        >
+          <h6>Transactions</h6>
+        </NetworkLink>
+      )}
+
       {tokensRouteActive && (
         <>
           {tokensActive ? (
