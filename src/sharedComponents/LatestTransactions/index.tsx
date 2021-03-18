@@ -122,7 +122,7 @@ const LatestTransactions = ({ address }: { address?: string }) => {
                           </div>
 
                           <div className="text-secondary flex-shrink-0">
-                            <TimeAgo value={transaction.timestamp} short tooltip />
+                            <TimeAgo value={transaction.timestamp} short />
                           </div>
                         </div>
 
