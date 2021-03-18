@@ -4,7 +4,7 @@ import { useGlobalDispatch, useGlobalState } from 'context';
 import { Loader, adapter } from 'sharedComponents';
 import FailedAccount from './FailedAccount';
 import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
-import AccountInfo from './AccountInfo';
+import AccountDetailsCard from './AccountDetailsCard';
 import { useRouteMatch } from 'react-router-dom';
 import { accountRoutes } from 'routes';
 
@@ -94,7 +94,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
       <div ref={ref}>
         {!loading && !failed && (
           <div className="container pt-spacer">
-            <AccountInfo />
+            <AccountDetailsCard />
             {children}
           </div>
         )}

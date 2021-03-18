@@ -12,7 +12,7 @@ import {
   faCoins,
 } from '@fortawesome/pro-solid-svg-icons';
 
-const ProviderStats = ({ provider }: { provider: types.ProviderType | undefined }) => {
+const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | undefined }) => {
   const {
     activeNetwork: { erdLabel },
   } = useGlobalState();
@@ -23,7 +23,7 @@ const ProviderStats = ({ provider }: { provider: types.ProviderType | undefined 
       : 'https://wallet.elrond.com';
 
   return provider !== undefined ? (
-    <div className="provider-stats card">
+    <div className="provider-details-card card">
       <div className="card-header">
         <div className="card-header-item d-flex justify-content-between align-items-center">
           <h6 data-testid="title">Contract Details</h6>
@@ -88,4 +88,4 @@ const ProviderStats = ({ provider }: { provider: types.ProviderType | undefined 
   ) : null;
 };
 
-export default ProviderStats;
+export default ProviderDetailsCard;
