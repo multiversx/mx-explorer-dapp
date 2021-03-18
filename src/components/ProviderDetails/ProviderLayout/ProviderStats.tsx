@@ -20,24 +20,21 @@ const ProviderStats = ({ provider }: { provider: types.ProviderType | undefined 
   const website =
     provider && provider.identity && provider.identity.website
       ? provider.identity.website
-      : undefined;
+      : 'https://wallet.elrond.com';
 
   return provider !== undefined ? (
     <div className="provider-stats card">
       <div className="card-header">
         <div className="card-header-item d-flex justify-content-between align-items-center">
           <h6 data-testid="title">Contract Details</h6>
-
-          {website && (
-            <a
-              className="btn btn-sm btn-primary-light"
-              target={`_blank`}
-              rel={`noreferrer nofollow`}
-              href={website}
-            >
-              Stake now
-            </a>
-          )}
+          <a
+            className="btn btn-sm btn-primary-light"
+            target={`_blank`}
+            rel={`noreferrer nofollow`}
+            href={website}
+          >
+            Stake now
+          </a>
         </div>
         <div className="card-header-item compact d-flex">
           <span className="flex-shrink-0">Address:</span>
