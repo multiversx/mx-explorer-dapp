@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
-import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
+import { faLeaf } from '@fortawesome/pro-solid-svg-icons/faLeaf';
 import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
 import { useGlobalState } from 'context';
 import { MultilayerPercentageBar, PageState } from 'sharedComponents';
@@ -53,7 +53,7 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
 
           <div className="d-flex align-items-center mb-3 mb-lg-0 pr-md-5">
             <div className="right-angle-icon lg mr-4">
-              <FontAwesomeIcon icon={faCoins} />
+              <FontAwesomeIcon icon={faLeaf} />
             </div>
             <div className="d-flex flex-column">
               <span className="text-secondary mb-1">Staking APR</span>
