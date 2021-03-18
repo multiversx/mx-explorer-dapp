@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { NetworkLink } from 'sharedComponents';
 import { urlBuilder } from 'helpers';
-import { providerRoutes } from 'routes';
 
 const AccountTabs = () => {
   const { hash: address } = useParams() as any;

@@ -72,19 +72,19 @@ const AccountInfo = () => {
   const [isProvider, setIsProvider] = React.useState(false);
   const fetchProviderDetails = () => {
     if (isContract(address)) {
-      setIsProvider(true);
-      // getProvider(address).then(({ success, data }) => {
-      //   if (ref.current !== null) {
-      //     if (success && data !== undefined) {
-      //       setIsProvider(true);
-      //     }
-      //   }
-      // });
+      getProvider(address).then(({ success, data }) => {
+        if (ref.current !== null) {
+          if (success && data !== undefined) {
+            setIsProvider(true);
+          }
+        }
+      });
     }
   };
 
   React.useEffect(() => {
     fetchProviderDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, address]);
 
   return address !== '' ? (
