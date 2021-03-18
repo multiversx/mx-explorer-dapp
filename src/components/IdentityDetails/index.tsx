@@ -87,6 +87,7 @@ const IdentityDetails = () => {
   React.useEffect(fetchData, []);
 
   const showProviders = providersFetched === false || (providersFetched && providers);
+  const website = identity && identity.website ? identity.website : 'https://wallet.elrond.com';
 
   return (
     <>
@@ -124,18 +125,17 @@ const IdentityDetails = () => {
                         <div className="card-header">
                           <div className="card-header-item d-flex align-items-center">
                             <h6 className="m-0">Delegation Contracts</h6>
-                            {identity.website ? (
-                              <div className="ml-auto">
-                                <a
-                                  className="btn btn-sm btn-primary-light"
-                                  target={`_blank`}
-                                  rel={`noreferrer nofollow`}
-                                  href={identity.website}
-                                >
-                                  Stake now
-                                </a>
-                              </div>
-                            ) : null}
+
+                            <div className="ml-auto">
+                              <a
+                                className="btn btn-sm btn-primary-light"
+                                target={`_blank`}
+                                rel={`noreferrer nofollow`}
+                                href={website}
+                              >
+                                Stake now
+                              </a>
+                            </div>
                           </div>
                         </div>
 

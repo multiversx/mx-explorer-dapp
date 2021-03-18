@@ -171,7 +171,7 @@
 }
 
 .btn-primary-light {
-  color: $primary;
+  color: $primary !important;
   background-color: $primary-light;
 
   &:hover {
