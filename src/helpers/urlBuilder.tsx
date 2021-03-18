@@ -9,6 +9,7 @@ const urlBuilder = {
   identityDetails: (id: string) => `/identities/${id}`,
   tokenDetails: (tokenId: string) => `/tokens/${tokenId}`,
   providerDetails: (address: string) => `/providers/${address}`,
+  providerDetailsTransactions: (address: string) => `/providers/${address}/transactions`,
 };
 
 export default urlBuilder;
