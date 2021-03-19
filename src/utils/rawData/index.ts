@@ -16,6 +16,8 @@ import node from './node';
 import identity from './identity';
 import tokens from './tokens';
 import tokenDetails from './tokenDetails';
+import providers from './providers';
+import provider from './provider';
 
 export {
   transactions,
@@ -36,4 +38,6 @@ export {
   accounts,
   tokens,
   tokenDetails,
+  providers,
+  provider
 };
