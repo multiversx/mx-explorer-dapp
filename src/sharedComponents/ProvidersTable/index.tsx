@@ -22,7 +22,7 @@ const ProvidersTable = ({
       <table className="table">
         <thead>
           <tr>
-            {showIdentity && <th data-testid="indentity">Validator Name</th>}
+            {showIdentity && <th>Validator Name</th>}
             <th data-testid="address">Public Address</th>
             <th>Stake</th>
             <th>Nodes</th>
@@ -31,8 +31,8 @@ const ProvidersTable = ({
             <th>Delegation cap</th>
           </tr>
         </thead>
-        <tbody>
-          {providers.map((provider) => (
+        <tbody data-testid="providersTable">
+          {providers.map((provider, i) => (
             <tr key={provider.contract}>
               {showIdentity && (
                 <td>
@@ -57,6 +57,7 @@ const ProvidersTable = ({
                   <NetworkLink
                     to={urlBuilder.providerDetails(provider.contract)}
                     className="trim-wrapper"
+                    data-testid={`providerLink${i}`}
                   >
                     <Trim text={provider.contract} />
                   </NetworkLink>

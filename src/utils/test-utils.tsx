@@ -65,6 +65,8 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
     identity: () => Promise.resolve({ data: rawData.identity }),
     tokens: () => Promise.resolve({ data: rawData.tokens }),
     tokenDetails: () => Promise.resolve({ data: rawData.tokenDetails }),
+    providers: () => Promise.resolve({ data: rawData.providers }),
+    provider: () => Promise.resolve({ data: rawData.provider }),
     ...networkRequests,
   };
 
@@ -108,6 +110,10 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.tokens();
       case url.includes('/tokens/'):
         return requests.tokenDetails();
+      case url.includes('/providers'):
+        return requests.providers();
+      case url.includes('/providers/'):
+        return requests.provider();
     }
   };
 };
