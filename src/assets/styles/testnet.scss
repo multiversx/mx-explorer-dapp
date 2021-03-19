@@ -26,7 +26,7 @@ $input-hover-border-color: darken($border-color, 15%);
 @import './main';
 
 .main-content-container {
-  a {
+  a:not(.btn-primary-light) {
     text-decoration: none !important;
     position: relative;
 
@@ -39,10 +39,15 @@ $input-hover-border-color: darken($border-color, 15%);
       bottom: 4px;
       border-bottom: 1px solid $primary;
     }
+
+    &.tab-link {
+      &::after {
+        bottom: 7px;
+      }
+    }
   }
 
   .nodes-filters a,
-  .nodes-tabs a,
   .nodes-table thead a,
   .pager a,
   .side-action {
