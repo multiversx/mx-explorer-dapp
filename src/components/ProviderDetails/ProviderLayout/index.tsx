@@ -3,7 +3,7 @@ import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { adapter, Loader, PageState } from 'sharedComponents';
 import { useRouteMatch } from 'react-router-dom';
 import { SharedIdentity } from 'sharedComponents';
-import { types } from 'helpers';
+import { types, useIsMainnet } from 'helpers';
 import ProviderDetailsCard from './ProviderDetailsCard';
 import { providerRoutes } from 'routes';
 
@@ -12,6 +12,8 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   const match: any = useRouteMatch(providerRoutes.index);
   const address = match ? match.params.hash : undefined;
   const { getProvider } = adapter();
+  const isMainnet = useIsMainnet();
+
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
   const [provider, setProvider] = React.useState<types.ProviderType>();
 
@@ -65,7 +67,7 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
       <div ref={ref}>
         {dataReady === true && (
           <div className="container pt-spacer">
-            {provider && provider.identity !== undefined && (
+            {isMainnet && provider && provider.identity !== undefined && (
               <div className="row">
                 <div className="col-12 mb-spacer">
                   <SharedIdentity.Summary identity={provider.identity} />
