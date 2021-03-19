@@ -112,7 +112,7 @@ const LatestBlocks = () => {
                           <Trim dataTestId={`blockHashLink${i}`} text={block.hash} />
                         </NetworkLink>
                       </div>
-                      <div className="mt-1">
+                      <div className="d-flex mt-1">
                         <span className="text-secondary mr-2">Transactions:</span> {block.txCount}
                         <span className="text-muted mx-2">•</span>
                         <NetworkLink to={urlBuilder.shard(block.shard)} className="flex-shrink-0">
