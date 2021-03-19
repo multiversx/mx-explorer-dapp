@@ -39,7 +39,7 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
         <div className="card-header-item compact d-flex">
           <span className="flex-shrink-0">Address:</span>
           <div className="d-flex align-items-center text-break-all ml-2 text-secondary">
-            <NetworkLink to={urlBuilder.accountDetails(provider.contract)}>
+            <NetworkLink to={urlBuilder.accountDetails(provider.contract)} data-testid="address">
               {provider.contract}
             </NetworkLink>
             <CopyButton text={provider.contract} />

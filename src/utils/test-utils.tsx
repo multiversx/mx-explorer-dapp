@@ -106,14 +106,14 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.node();
       case url.includes('/identities/'):
         return requests.identity();
-      case url.includes('/tokens'):
-        return requests.tokens();
       case url.includes('/tokens/'):
         return requests.tokenDetails();
-      case url.includes('/providers'):
-        return requests.providers();
+      case url.includes('/tokens'):
+        return requests.tokens();
       case url.includes('/providers/'):
         return requests.provider();
+      case url.includes('/providers'):
+        return requests.providers();
     }
   };
 };
