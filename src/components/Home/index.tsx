@@ -12,7 +12,7 @@ const Home = () => {
     <div className="home">
       <div className="container">
         <div className="row">
-          <div className={`col-12 mt-spacer ${isMainnet ? 'col-lg-6' : ''}`}>
+          <div className="col-12 mx-auto col-lg-6 mt-spacer">
             <NetworkHealth />
           </div>
           {isMainnet && (
