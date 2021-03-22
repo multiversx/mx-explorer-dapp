@@ -64,7 +64,7 @@ const NetworkHealth = () => {
   const ref = React.useRef(null);
   const pageHidden = document.hidden;
 
-  const [animationActive, setAnimationActive] = React.useState(true);
+  const [animationActive /*setAnimationActive*/] = React.useState(true);
   const [stateBuffer, setStateBuffer] = React.useState<typeof initialState | undefined>();
   const [state, setState] = React.useState(initialState);
 

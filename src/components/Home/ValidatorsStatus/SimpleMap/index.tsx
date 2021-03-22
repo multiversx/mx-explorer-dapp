@@ -3,7 +3,6 @@ import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { MarkerType, LeaderType } from '../helpers/asyncRequests';
 import countries from './countries100m.json';
-import { useGlobalState } from 'context';
 
 interface SimpleMapType {
   markers: MarkerType[];
@@ -56,25 +55,11 @@ const MarkerToolTip = ({
 );
 
 const SimpleMap = ({ markers, leaders }: SimpleMapType) => {
-  const {
-    refresh: { timestamp },
-  } = useGlobalState();
-
   const ref = React.useRef(null);
 
   const isLeader = (city: string) => {
     return leaders.filter((leader) => leader.city === city).length === 1;
   };
-
-  const [blink /*setBlink*/] = React.useState(false);
-  // React.useEffect(() => {
-  //   if (ref.current !== null) {
-  //     setBlink(true);
-  //     setTimeout(() => {
-  //       setBlink(false);
-  //     }, 1000);
-  //   }
-  // }, [timestamp]);
 
   return (
     <div className="simple-map" ref={ref}>
@@ -93,10 +78,7 @@ const SimpleMap = ({ markers, leaders }: SimpleMapType) => {
           <Marker key={city} coordinates={[longitude, latitude]}>
             {isLeader(city) ? (
               <MarkerToolTip city={city} validators={validators}>
-                <circle
-                  r={calcRadius(validators)}
-                  className={`simple-map-marker ${blink ? 'blink' : ''}`}
-                />
+                <circle r={calcRadius(validators)} className="simple-map-marker" />
               </MarkerToolTip>
             ) : (
               <MarkerToolTip city={city} validators={validators}>

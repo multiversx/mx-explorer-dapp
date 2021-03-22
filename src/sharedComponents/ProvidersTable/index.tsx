@@ -4,7 +4,6 @@ import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { Denominate, NetworkLink, PageState, Trim } from 'sharedComponents';
 import IdentityAvatar from 'sharedComponents/SharedIdentity/IdentityAvatar';
 import CopyButton from 'sharedComponents/CopyButton';
-import { useGlobalState } from 'context';
 
 const ProvidersTable = ({
   providers,
@@ -13,10 +12,6 @@ const ProvidersTable = ({
   providers: types.ProviderType[];
   showIdentity?: boolean;
 }) => {
-  const {
-    activeNetwork: { erdLabel },
-  } = useGlobalState();
-
   return (
     <div className="providers-table table-wrapper">
       <table className="table">
@@ -39,9 +34,9 @@ const ProvidersTable = ({
                   <div className="d-flex align-items-center">
                     <IdentityAvatar identity={provider.identity || {}} />
 
-                    {provider.identity ? (
+                    {provider.identity && provider.identity.name ? (
                       <NetworkLink
-                        to={urlBuilder.identityDetails(provider.identity.identity || '')}
+                        to={urlBuilder.identityDetails(provider.identity.key || '')}
                         className="trim-wrapper ml-2"
                       >
                         {provider.identity.name}
@@ -71,11 +66,13 @@ const ProvidersTable = ({
                 {provider.numNodes} node{provider.numNodes !== 1 ? 's' : ''}
               </td>
               <td>{provider.apr}%</td>
-              <td>{provider.serviceFee}%</td>
+              <td>{parseInt(provider.serviceFee) / 100}%</td>
               <td>
-                {provider.withDelegationCap
-                  ? `${provider.maxDelegationCap} ${erdLabel}`
-                  : `Unlimited`}
+                {provider.withDelegationCap ? (
+                  <Denominate value={provider.maxDelegationCap} decimals={0} />
+                ) : (
+                  `Unlimited`
+                )}
               </td>
             </tr>
           ))}

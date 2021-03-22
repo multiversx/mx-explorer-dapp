@@ -31,7 +31,7 @@ const IdentitySummary = ({ identity }: { identity: IdentityType | undefined }) =
                 </h5>
 
                 <div className="flex-shrink-0 bg-success text-white btn-sm rounded-pill ml-2">
-                  Rank 10
+                  Rank {identity.rank ? identity.rank : '...'}
                 </div>
               </div>
 
@@ -42,21 +42,35 @@ const IdentitySummary = ({ identity }: { identity: IdentityType | undefined }) =
               <div className="d-flex align-items-center mr-4">
                 <span className="pr-2">Stake Balance:</span>
                 <span className="text-secondary">
-                  {identity.stake.toLocaleString('en')} {erdLabel}
+                  {identity.stake ? (
+                    <>
+                      {identity.stake.toLocaleString('en')} {erdLabel}
+                    </>
+                  ) : (
+                    '...'
+                  )}
                 </span>
               </div>
               <div className="d-flex align-items-center mr-4">
                 <span className="pr-2">Stake percent:</span>
                 <span className="text-secondary">
-                  {Math.round(identity.stakePercent) > 0
-                    ? Math.round(identity.stakePercent)
-                    : '< 1'}
-                  %
+                  {identity.stakePercent ? (
+                    <>
+                      {Math.round(identity.stakePercent) > 0
+                        ? Math.round(identity.stakePercent)
+                        : '< 1'}
+                      %
+                    </>
+                  ) : (
+                    '...'
+                  )}
                 </span>
               </div>
               <div className="d-flex align-items-center">
                 <span className="pr-2">Nodes:</span>
-                <span className="text-secondary">{identity.validators}</span>
+                <span className="text-secondary">
+                  {identity.validators ? identity.validators : '...'}
+                </span>
               </div>
             </div>
           </div>

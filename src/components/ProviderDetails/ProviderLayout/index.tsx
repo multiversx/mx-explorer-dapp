@@ -6,47 +6,38 @@ import { SharedIdentity } from 'sharedComponents';
 import { types, useIsMainnet } from 'helpers';
 import ProviderDetailsCard from './ProviderDetailsCard';
 import { providerRoutes } from 'routes';
+import { useGlobalState } from 'context';
+import { IdentityType } from 'context/state';
 
 const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
+  const {
+    activeNetwork: { delegationApi },
+  } = useGlobalState();
   const match: any = useRouteMatch(providerRoutes.index);
   const address = match ? match.params.hash : undefined;
-  const { getProvider } = adapter();
+  const { getProvider, getIdentity } = adapter();
   const isMainnet = useIsMainnet();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
   const [provider, setProvider] = React.useState<types.ProviderType>();
+  const [identity, setIdentity] = React.useState<IdentityType>();
 
   const fetchData = () => {
-    getProvider(address).then(({ success, data }) => {
+    getProvider({ baseUrl: delegationApi || '', address }).then(({ success, data }) => {
       if (ref.current !== null) {
-        // setProvider(data);
-        // setDataReady(success);
+        setProvider(data);
+        if (data.identity) {
+          getIdentity(data.identity.key).then((identityData) => {
+            if (identityData.success) {
+              setIdentity(identityData.data);
+            }
 
-        setProvider({
-          contract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l',
-          serviceFee: '12',
-          withDelegationCap: true,
-          maxDelegationCap: '100',
-          apr: '29',
-          totalActiveStake: '2250000000000000000000000',
-          numUsers: 4,
-          numNodes: 20,
-          identity: {
-            name: 'Just Mining',
-            avatar:
-              'https://s3.amazonaws.com/keybase_processed_uploads/b011b27c59f42344b38b476da9d85105_360_360.jpg',
-            identity: 'thomasjustmining',
-            location: 'Craiova, Romania',
-            twitter: 'https://twitter.com/just_mining',
-            validators: 1454,
-            score: 174480,
-            stake: 3635000,
-            stakePercent: 67.04,
-          },
-        });
-
-        setDataReady(true);
+            setDataReady(success);
+          });
+        } else {
+          setDataReady(success);
+        }
       }
     });
   };
@@ -67,10 +58,10 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
       <div ref={ref}>
         {dataReady === true && (
           <div className="container pt-spacer">
-            {isMainnet && provider && provider.identity !== undefined && (
+            {isMainnet && provider && identity !== undefined && (
               <div className="row">
                 <div className="col-12 mb-spacer">
-                  <SharedIdentity.Summary identity={provider.identity} />
+                  <SharedIdentity.Summary identity={identity} />
                 </div>
               </div>
             )}
