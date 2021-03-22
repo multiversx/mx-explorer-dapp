@@ -11,15 +11,14 @@ export const getPercentageFilled = (totalActiveStake: string, maxDelegationCap: 
   const bnTotalActiveStake = new BigNumber(nominate(String(totalActiveStake)));
   const bnmaxDelegationCap = new BigNumber(nominate(String(maxDelegationCap)));
 
-  return bnmaxDelegationCap.isGreaterThan(0)
-    ? bnTotalActiveStake.multipliedBy(100).dividedToIntegerBy(bnmaxDelegationCap).toString(10)
-    : 'Uncapped';
+  return bnTotalActiveStake.multipliedBy(100).dividedToIntegerBy(bnmaxDelegationCap).toString(10);
 };
 
 const PercentageFilled = ({ totalActiveStake, maxDelegationCap }: PercentageFilledType) => {
+  const bnmaxDelegationCap = new BigNumber(nominate(String(maxDelegationCap)));
   const percentage = getPercentageFilled(totalActiveStake, maxDelegationCap);
 
-  return percentage !== 'Uncapped' ? <>{percentage}%</> : <>{percentage}</>;
+  return bnmaxDelegationCap.isGreaterThan(0) ? <>{percentage}%</> : <>Uncapped</>;
 };
 
 export default PercentageFilled;

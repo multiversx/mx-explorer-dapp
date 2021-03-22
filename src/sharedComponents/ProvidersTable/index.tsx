@@ -86,10 +86,7 @@ const ProvidersTable = ({
         case sortField === 'filled':
           displayProviders.sort((a, b) => {
             let aFilled = getPercentageFilled(a.totalActiveStake, a.maxDelegationCap);
-            aFilled = aFilled !== 'Uncapped' ? aFilled : '9999999';
-
             let bFilled = getPercentageFilled(b.totalActiveStake, b.maxDelegationCap);
-            bFilled = bFilled !== 'Uncapped' ? bFilled : '9999999';
 
             return parseFloat(aFilled) > parseFloat(bFilled) ? sortParams[0] : sortParams[1];
           });
@@ -190,21 +187,41 @@ const ProvidersTable = ({
                 </td>
               )}
               <td>
-                <Denominate value={provider.totalActiveStake} />
+                {provider.totalActiveStake ? (
+                  <Denominate value={provider.totalActiveStake} />
+                ) : (
+                  <>N/A</>
+                )}
               </td>
               <td>
-                {provider.numNodes} node{provider.numNodes !== 1 ? 's' : ''}
+                {provider.numNodes !== undefined ? (
+                  <>
+                    {provider.numNodes} node{provider.numNodes !== 1 ? 's' : ''}
+                  </>
+                ) : (
+                  <>N/A</>
+                )}
               </td>
-              <td>{provider.apr}%</td>
-              <td>{parseInt(provider.serviceFee) / 100}%</td>
+              <td>{provider.apr ? <>{provider.apr}%</> : <>N/A</>}</td>
               <td>
-                <DelegationCap maxDelegationCap={provider.maxDelegationCap} />
+                {provider.serviceFee ? <>{parseInt(provider.serviceFee) / 100}%</> : <>N/A</>}
               </td>
               <td>
-                <PercentageFilled
-                  totalActiveStake={provider.totalActiveStake}
-                  maxDelegationCap={provider.maxDelegationCap}
-                />
+                {provider.maxDelegationCap ? (
+                  <DelegationCap maxDelegationCap={provider.maxDelegationCap} />
+                ) : (
+                  <>N/A</>
+                )}
+              </td>
+              <td>
+                {provider.totalActiveStake && provider.maxDelegationCap ? (
+                  <PercentageFilled
+                    totalActiveStake={provider.totalActiveStake}
+                    maxDelegationCap={provider.maxDelegationCap}
+                  />
+                ) : (
+                  <>N/A</>
+                )}
               </td>
             </tr>
           ))}
