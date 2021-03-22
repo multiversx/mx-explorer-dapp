@@ -64,7 +64,7 @@ const Identities = () => {
               <thead>
                 <tr>
                   <th className="th-rank">#</th>
-                  <th className="th-name">Validator Name</th>
+                  <th className="th-name">Name</th>
                   <th>Stake</th>
                   <th className="th-stake-percent">Cumulative stake</th>
                   <th className="w-10 text-right">Nodes</th>

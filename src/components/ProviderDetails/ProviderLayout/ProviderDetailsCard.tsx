@@ -12,8 +12,8 @@ import {
   faCoins,
   faChartPieAlt,
 } from '@fortawesome/pro-solid-svg-icons';
-import DelegationCap from 'sharedComponents/ProvidersTable/helpers/DelegationCap';
-import PercentageFilled from 'sharedComponents/ProvidersTable/helpers/PercentageFilled';
+import DelegationCap from 'sharedComponents/ProvidersTable/DelegationCap';
+import PercentageFilled from 'sharedComponents/ProvidersTable/PercentageFilled';
 
 const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | undefined }) => {
   const {
