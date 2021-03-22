@@ -27,7 +27,7 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
     getProvider({ baseUrl: delegationApi || '', address }).then(({ success, data }) => {
       if (ref.current !== null) {
         setProvider(data);
-        if (data.identity) {
+        if (data.identity && data.identity.key) {
           getIdentity(data.identity.key).then((identityData) => {
             if (identityData.success) {
               setIdentity(identityData.data);

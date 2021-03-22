@@ -10,17 +10,20 @@ import {
   faArrowToTop,
   faUser,
   faCoins,
+  faChartPieAlt,
 } from '@fortawesome/pro-solid-svg-icons';
+import DelegationCap from 'sharedComponents/ProvidersTable/helpers/DelegationCap';
+import PercentageFilled from 'sharedComponents/ProvidersTable/helpers/PercentageFilled';
 
 const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | undefined }) => {
   const {
     activeNetwork: { walletAddress },
   } = useGlobalState();
 
-  const website =
-    provider && provider.identity && provider.identity.website
-      ? provider.identity.website
-      : walletAddress;
+  const website = walletAddress;
+  // provider && provider.identity && provider.identity.website
+  //   ? provider.identity.website
+  //   : walletAddress;
 
   return provider !== undefined ? (
     <div className="provider-details-card card">
@@ -64,17 +67,7 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
 
         <CardItem title="Contract Stake" icon={faLock}>
           <span className="text-secondary">
-            <Denominate value={provider.totalActiveStake} decimals={0} />
-          </span>
-        </CardItem>
-
-        <CardItem title="Delegation Cap" icon={faArrowToTop}>
-          <span className="text-secondary">
-            {provider.withDelegationCap ? (
-              <Denominate value={provider.maxDelegationCap} decimals={0} />
-            ) : (
-              `Unlimited`
-            )}
+            <Denominate value={provider.totalActiveStake} />
           </span>
         </CardItem>
 
@@ -84,7 +77,22 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
 
         <CardItem title="Total Cumulated Rewards" icon={faCoins}>
           <span className="text-secondary">
-            <Denominate value={provider.totalCumulatedRewards || '0'} decimals={0} />
+            <Denominate value={provider.totalCumulatedRewards || '0'} />
+          </span>
+        </CardItem>
+
+        <CardItem title="Delegation Cap" icon={faArrowToTop}>
+          <span className="text-secondary">
+            <DelegationCap maxDelegationCap={provider.maxDelegationCap} />
+          </span>
+        </CardItem>
+
+        <CardItem title="Filled" icon={faChartPieAlt}>
+          <span className="text-secondary">
+            <PercentageFilled
+              totalActiveStake={provider.totalActiveStake}
+              maxDelegationCap={provider.maxDelegationCap}
+            />
           </span>
         </CardItem>
       </div>
