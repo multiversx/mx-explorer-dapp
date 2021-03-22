@@ -98,6 +98,11 @@ const AccountDetails = () => {
             />
           ) : (
             <div className="card">
+              <div className="card-header">
+                <div className="card-header-item d-flex align-items-center">
+                  <ProviderTabs />
+                </div>
+              </div>
               {dataReady === undefined && <Loader />}
               {dataReady === false && <FailedTransactions />}
               {dataReady === true && transactions.length === 0 && <NoTransactions />}
