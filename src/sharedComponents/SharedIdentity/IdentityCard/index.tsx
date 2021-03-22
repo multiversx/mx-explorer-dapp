@@ -25,7 +25,7 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
               <div className="d-flex align-items-center justify-content-center justify-content-sm-start">
                 <h5 className="mb-0">{identity.name}</h5>
                 <div className="d-flex flex-shrink-0 bg-success text-white btn-sm rounded-pill ml-2">
-                  Rank {identity.rank ? identity.rank : '...'}
+                  Rank {identity.rank ? identity.rank : 'N/A'}
                 </div>
               </div>
 
@@ -73,7 +73,7 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                       {identity.stake.toLocaleString('en')} {erdLabel}
                     </>
                   ) : (
-                    '...'
+                    'N/A'
                   )}
                 </span>
               </div>
@@ -88,14 +88,14 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                       %
                     </>
                   ) : (
-                    '...'
+                    'N/A'
                   )}
                 </span>
               </div>
               <div className="d-flex mt-2">
                 <span className="pr-2">Nodes:</span>
                 <span className="text-secondary">
-                  {identity.validators ? identity.validators : '...'}
+                  {identity.validators ? identity.validators : 'N/A'}
                 </span>
               </div>
             </div>

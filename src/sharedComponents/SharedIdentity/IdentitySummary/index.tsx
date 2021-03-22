@@ -31,7 +31,7 @@ const IdentitySummary = ({ identity }: { identity: IdentityType | undefined }) =
                 </h5>
 
                 <div className="flex-shrink-0 bg-success text-white btn-sm rounded-pill ml-2">
-                  Rank {identity.rank ? identity.rank : '...'}
+                  Rank {identity.rank ? identity.rank : 'N/A'}
                 </div>
               </div>
 
@@ -47,7 +47,7 @@ const IdentitySummary = ({ identity }: { identity: IdentityType | undefined }) =
                       {identity.stake.toLocaleString('en')} {erdLabel}
                     </>
                   ) : (
-                    '...'
+                    'N/A'
                   )}
                 </span>
               </div>
@@ -62,14 +62,14 @@ const IdentitySummary = ({ identity }: { identity: IdentityType | undefined }) =
                       %
                     </>
                   ) : (
-                    '...'
+                    'N/A'
                   )}
                 </span>
               </div>
               <div className="d-flex align-items-center">
                 <span className="pr-2">Nodes:</span>
                 <span className="text-secondary">
-                  {identity.validators ? identity.validators : '...'}
+                  {identity.validators ? identity.validators : 'N/A'}
                 </span>
               </div>
             </div>
