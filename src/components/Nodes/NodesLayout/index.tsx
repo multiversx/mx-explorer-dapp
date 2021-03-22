@@ -21,11 +21,6 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
             ...(globalStake.success
               ? {
                   ...globalStake.data,
-                  ...{
-                    deliquentStake: 0.3,
-                    apr: 29,
-                    waitingList: 21,
-                  },
                 }
               : {}),
           };

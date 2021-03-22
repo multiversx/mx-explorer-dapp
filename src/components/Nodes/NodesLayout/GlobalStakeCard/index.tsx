@@ -41,12 +41,13 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
                   {globalStake.staked.toLocaleString('en')} {erdLabel}
                 </h5>
               ) : (
-                '...'
+                'N/A'
               )}
               <small className="text-secondary">
+                Deliquent stake:{' '}
                 {globalStake && globalStake.deliquentStake
-                  ? `Deliquent stake: ${globalStake.deliquentStake}%`
-                  : '...'}
+                  ? `${globalStake.deliquentStake}%`
+                  : 'N/A'}
               </small>
             </div>
           </div>
@@ -58,12 +59,11 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
             <div className="d-flex flex-column">
               <span className="text-secondary mb-1">Staking APR</span>
               <h5 className="m-0 pb-1">
-                {globalStake && globalStake.apr ? `${globalStake.apr}%` : '...'}
+                {globalStake && globalStake.apr ? `${globalStake.apr}%` : 'N/A'}
               </h5>
               <small className="text-secondary">
-                {globalStake && globalStake.waitingList
-                  ? `${globalStake.waitingList}% for waiting list`
-                  : '...'}
+                {globalStake && globalStake.waitingList ? `${globalStake.waitingList}% ` : 'N/A '}
+                for waiting list
               </small>
             </div>
           </div>
@@ -77,7 +77,7 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
               {globalStake && globalStake.nodesVerions ? (
                 <MultilayerPercentageBar steps={globalStake.nodesVerions} />
               ) : (
-                '...'
+                'N/A'
               )}
             </div>
           </div>
