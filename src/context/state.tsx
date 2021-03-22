@@ -41,6 +41,8 @@ export interface IdentityType {
   stakePercent: number;
   overallStakePercent?: number;
   validators: number;
+  key?: string;
+  rank?: number;
   twitter?: string;
   website?: string;
   location?: string;

@@ -14,7 +14,7 @@ const IdentityDetails = () => {
   const { getIdentity, getNodes, getNodesCount, getProviders } = adapter();
   const { getQueryObject, size } = useFilters();
   const {
-    activeNetwork: { walletAddress },
+    activeNetwork: { walletAddress, delegationApi },
   } = useGlobalState();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
@@ -30,59 +30,19 @@ const IdentityDetails = () => {
     Promise.all([
       getIdentity(id),
       getProviders({
-        identity: id,
+        baseUrl: delegationApi || '',
+        props: {
+          identity: id,
+        },
       }),
       getNodes({ ...queryObject, identity: id, size }),
       getNodesCount({ ...queryObject, identity: id }),
     ]).then(([identityData, providersData, nodesData, nodesCount]) => {
       setIdentity(identityData.data);
 
-      // setProvidersFetched(providersData.success);
-      // setProviders(providersData.data);
+      setProviders(providersData.data);
+      setProvidersFetched(providersData.success);
 
-      setProviders([
-        {
-          contract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l',
-          serviceFee: '12',
-          maxDelegationCap: '12321',
-          apr: '29',
-          totalActiveStake: '2250000000000000000000000',
-          numUsers: 4,
-          numNodes: 20,
-          identity: {
-            name: 'Just Mining',
-            avatar:
-              'https://s3.amazonaws.com/keybase_processed_uploads/b011b27c59f42344b38b476da9d85105_360_360.jpg',
-            identity: 'thomasjustmining',
-            website: 'https://elrond.com',
-            validators: 1454,
-            score: 174480,
-            stake: 3635000,
-            stakePercent: 67.04,
-          },
-        },
-        {
-          contract: 'erd195fe57d7fm5h33585sc7wl8trqhrmy85z3dg6f6mqd0724ymljxq3zjemc',
-          serviceFee: '5',
-          maxDelegationCap: '12321',
-          apr: '34',
-          totalActiveStake: '1250000000000000000000000',
-          numUsers: 1,
-          numNodes: 1,
-          identity: {
-            avatar:
-              'https://s3.amazonaws.com/keybase_processed_uploads/b011b27c59f42344b38b476da9d85105_360_360.jpg',
-            identity: 'thomasjustmining',
-            website: 'https://elrond.com',
-            name: 'Just Mining',
-            validators: 1454,
-            score: 174480,
-            stake: 3635000,
-            stakePercent: 67.04,
-          },
-        },
-      ]);
-      setProvidersFetched(true);
       setNodes(nodesData.data);
       setTotalNodes(nodesCount.data);
       setDataReady(identityData.success && nodesData.success);

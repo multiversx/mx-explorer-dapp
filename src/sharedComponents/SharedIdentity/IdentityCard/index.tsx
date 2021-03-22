@@ -25,14 +25,13 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
               <div className="d-flex align-items-center justify-content-center justify-content-sm-start">
                 <h5 className="mb-0">{identity.name}</h5>
                 <div className="d-flex flex-shrink-0 bg-success text-white btn-sm rounded-pill ml-2">
-                  Rank 10
+                  Rank {identity.rank ? identity.rank : '...'}
                 </div>
               </div>
 
-              {!identity.description && (
+              {identity.description && (
                 <div className="idenity-description text-secondary mt-3">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices mi et velit
-                  rutrum feugiat.
+                  {identity.description}
                 </div>
               )}
 
@@ -69,21 +68,35 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
               <div className="d-flex">
                 <span className="pr-2">Stake Balance:</span>
                 <span className="text-secondary">
-                  {identity.stake.toLocaleString('en')} {erdLabel}
+                  {identity.stake ? (
+                    <>
+                      {identity.stake.toLocaleString('en')} {erdLabel}
+                    </>
+                  ) : (
+                    '...'
+                  )}
                 </span>
               </div>
               <div className="d-flex mt-2">
                 <span className="pr-2">Stake percent:</span>
                 <span className="text-secondary">
-                  {Math.round(identity.stakePercent) > 0
-                    ? Math.round(identity.stakePercent)
-                    : '< 1'}
-                  %
+                  {identity.stakePercent ? (
+                    <>
+                      {Math.round(identity.stakePercent) > 0
+                        ? Math.round(identity.stakePercent)
+                        : '< 1'}
+                      %
+                    </>
+                  ) : (
+                    '...'
+                  )}
                 </span>
               </div>
               <div className="d-flex mt-2">
                 <span className="pr-2">Nodes:</span>
-                <span className="text-secondary">{identity.validators}</span>
+                <span className="text-secondary">
+                  {identity.validators ? identity.validators : '...'}
+                </span>
               </div>
             </div>
             <div className="d-flex flex-column flex-fill mt-4 mt-lg-0">

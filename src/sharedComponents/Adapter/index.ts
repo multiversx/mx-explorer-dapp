@@ -13,7 +13,16 @@ import {
 } from './helpers';
 
 export default function useAdapter() {
-  const { provider, getStats, getNodes, getAccountDelegation, getAccountStake, getShards, getEconomics, getEgldPrice } = useAdapterConfig();
+  const {
+    provider,
+    getStats,
+    getNodes,
+    getAccountDelegation,
+    getAccountStake,
+    getShards,
+    getEconomics,
+    getEgldPrice,
+  } = useAdapterConfig();
 
   return {
     /* Homepage */
@@ -155,7 +164,7 @@ export default function useAdapter() {
       }),
 
     getAccountDelegation: (address: string) => getAccountDelegation(address),
-    
+
     getAccountStake: (address: string) => getAccountStake(address),
 
     /* Validators */
@@ -176,6 +185,7 @@ export default function useAdapter() {
       shard,
       status,
       identity,
+      provider,
     }: GetNodesType) =>
       getNodes({
         url: `/nodes/count`,
@@ -187,6 +197,7 @@ export default function useAdapter() {
           shard,
           status,
           identity,
+          provider,
         }),
       }),
 
@@ -242,13 +253,15 @@ export default function useAdapter() {
 
     getGlobalStakeNodes: () => provider({ url: `/stake/nodes` }),
 
-    getProviders: (props: GetProvidersType) =>
+    getProviders: ({ baseUrl, props }: { baseUrl: string; props: GetProvidersType }) =>
       provider({
+        baseUrl,
         url: `/providers`,
         params: getProviderParams(props),
       }),
 
-    getProvider: (address: string) => provider({ url: `/providers/${address}` }),
+    getProvider: ({ baseUrl, address }: { baseUrl: string; address: string }) =>
+      provider({ baseUrl, url: `/providers/${address}` }),
 
     getEconomics: () => getEconomics(),
 

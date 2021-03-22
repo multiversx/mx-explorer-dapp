@@ -14,7 +14,7 @@ import {
 
 const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | undefined }) => {
   const {
-    activeNetwork: { erdLabel, walletAddress },
+    activeNetwork: { walletAddress },
   } = useGlobalState();
 
   const website =
@@ -59,7 +59,7 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
         </CardItem>
 
         <CardItem title="Service fee" icon={faPercent}>
-          <span className="text-secondary">{provider.serviceFee}%</span>
+          <span className="text-secondary">{parseInt(provider.serviceFee) / 100}%</span>
         </CardItem>
 
         <CardItem title="Contract Stake" icon={faLock}>
@@ -70,7 +70,11 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
 
         <CardItem title="Delegation Cap" icon={faArrowToTop}>
           <span className="text-secondary">
-            {provider.withDelegationCap ? `${provider.maxDelegationCap} ${erdLabel}` : `Unlimited`}
+            {provider.withDelegationCap ? (
+              <Denominate value={provider.maxDelegationCap} decimals={0} />
+            ) : (
+              `Unlimited`
+            )}
           </span>
         </CardItem>
 
