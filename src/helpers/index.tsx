@@ -19,6 +19,7 @@ import * as types from './types';
 import analytics from './analytics';
 import isContract from './isContract';
 import usdValue from './usdValue';
+import nominate from './nominate';
 
 export {
   truncate,
@@ -42,4 +43,5 @@ export {
   analytics,
   isContract,
   usdValue,
+  nominate,
 };

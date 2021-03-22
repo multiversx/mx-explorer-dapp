@@ -52,7 +52,7 @@ const IdentityDetails = () => {
   React.useEffect(fetchData, []);
 
   const showProviders = providersFetched === false || (providersFetched && providers);
-  const website = identity && identity.website ? identity.website : walletAddress;
+  const website = walletAddress; // identity && identity.website ? identity.website : walletAddress;
 
   return (
     <>
