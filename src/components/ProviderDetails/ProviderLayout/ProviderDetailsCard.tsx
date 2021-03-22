@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { types, urlBuilder } from 'helpers';
+import { types, urlBuilder, stringIsInteger } from 'helpers';
 import { CardItem, CopyButton, Denominate, NetworkLink } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import {
@@ -14,6 +14,7 @@ import {
 } from '@fortawesome/pro-solid-svg-icons';
 import DelegationCap from 'sharedComponents/ProvidersTable/DelegationCap';
 import PercentageFilled from 'sharedComponents/ProvidersTable/PercentageFilled';
+import { getPercentageFilled } from 'sharedComponents/ProvidersTable/PercentageFilled';
 
 const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | undefined }) => {
   const {
@@ -53,48 +54,74 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
       <div className="card-body card-item-container">
         <CardItem title="Number of nodes" icon={faServer}>
           <span className="text-secondary">
-            {provider.numNodes} node{provider.numNodes !== 1 ? 's' : ''}
+            {provider.numNodes !== undefined ? (
+              <>
+                {provider.numNodes} node{provider.numNodes !== 1 ? 's' : ''}
+              </>
+            ) : (
+              <>N/A</>
+            )}
           </span>
         </CardItem>
 
         <CardItem title="Computed APR" icon={faChartBar}>
-          <span className="text-secondary">{provider.apr}%</span>
+          <span className="text-secondary">{provider.apr ? <>{provider.apr}%</> : <>N/A</>}</span>
         </CardItem>
 
         <CardItem title="Service fee" icon={faPercent}>
-          <span className="text-secondary">{parseInt(provider.serviceFee) / 100}%</span>
+          <span className="text-secondary">
+            {provider.serviceFee ? <>{parseInt(provider.serviceFee) / 100}%</> : <>N/A</>}
+          </span>
         </CardItem>
 
         <CardItem title="Contract Stake" icon={faLock}>
           <span className="text-secondary">
-            <Denominate value={provider.totalActiveStake} />
+            {provider.totalActiveStake ? (
+              <Denominate value={provider.totalActiveStake} />
+            ) : (
+              <>N/A</>
+            )}
           </span>
         </CardItem>
 
         <CardItem title="Delegators" icon={faUser}>
-          <span className="text-secondary">{provider.numUsers}</span>
+          <span className="text-secondary">
+            {provider.numUsers ? <>{provider.numUsers}</> : <>N/A</>}
+          </span>
         </CardItem>
 
         <CardItem title="Total Cumulated Rewards" icon={faCoins}>
           <span className="text-secondary">
-            <Denominate value={provider.totalCumulatedRewards || '0'} />
+            {provider.totalCumulatedRewards ? (
+              <Denominate value={provider.totalCumulatedRewards} />
+            ) : (
+              <>0</>
+            )}
           </span>
         </CardItem>
 
         <CardItem title="Delegation Cap" icon={faArrowToTop}>
           <span className="text-secondary">
-            <DelegationCap maxDelegationCap={provider.maxDelegationCap} />
+            {provider.maxDelegationCap ? (
+              <DelegationCap maxDelegationCap={provider.maxDelegationCap} />
+            ) : (
+              <>N/A</>
+            )}
           </span>
         </CardItem>
 
-        <CardItem title="Filled" icon={faChartPieAlt}>
-          <span className="text-secondary">
-            <PercentageFilled
-              totalActiveStake={provider.totalActiveStake}
-              maxDelegationCap={provider.maxDelegationCap}
-            />
-          </span>
-        </CardItem>
+        {stringIsInteger(
+          getPercentageFilled(provider.totalActiveStake, provider.maxDelegationCap)
+        ) && (
+          <CardItem title="Filled" icon={faChartPieAlt}>
+            <span className="text-secondary">
+              <PercentageFilled
+                totalActiveStake={provider.totalActiveStake}
+                maxDelegationCap={provider.maxDelegationCap}
+              />
+            </span>
+          </CardItem>
+        )}
       </div>
     </div>
   ) : null;
