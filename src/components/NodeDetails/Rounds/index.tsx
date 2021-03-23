@@ -31,7 +31,7 @@ const Rounds = ({ rounds, node }: { rounds: RoundsType; node: NodeType }) => {
       {rounds.success === false && <RoundsPageState message={'Unable to load rounds'} />}
       {rounds.success === true && rounds.data && rounds.data.length === 0 && (
         <RoundsPageState
-          message={`${node.peerType === 'eligible' ? 'No rounds' : 'Validator not in consensus'}`}
+          message={`${node.status === 'eligible' ? 'No rounds' : 'Validator not in consensus'}`}
         />
       )}
 

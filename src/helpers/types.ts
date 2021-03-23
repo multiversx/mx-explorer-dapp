@@ -39,6 +39,7 @@ export interface ProviderType {
   numUsers: number;
   numNodes: number;
 
+  // not used
   initialOwnerFunds?: string;
   automaticActivation?: boolean;
   withDelegationCap?: boolean;

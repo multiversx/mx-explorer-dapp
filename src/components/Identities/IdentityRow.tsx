@@ -1,5 +1,4 @@
 import React from 'react';
-import { useGlobalState } from 'context';
 import { IdentityType, NodeType } from 'context/state';
 import carretDown from 'assets/images/carret-down.svg';
 import {
@@ -27,10 +26,6 @@ const IdentityRow = ({ identity }: IdentityRowType) => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [identityNodes, setIdentityNodes] = React.useState<NodeType[]>([]);
   const { getNodes, getNode } = adapter();
-
-  const {
-    activeNetwork: { erdLabel },
-  } = useGlobalState();
 
   const expand = (identityRow: IdentityType) => () => {
     if (dataReady === undefined) {
