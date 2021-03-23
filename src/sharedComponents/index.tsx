@@ -26,6 +26,7 @@ import ProvidersTable from './ProvidersTable';
 import MultilayerPercentageBar from './MultilayerPercentageBar';
 import CardItem from './CardItem';
 import LatestItem from './LatestItem';
+import LockedAmountTooltip from './LockedAmountTooltip';
 
 export {
   Denominate,
@@ -57,4 +58,5 @@ export {
   MultilayerPercentageBar,
   CardItem,
   LatestItem,
+  LockedAmountTooltip,
 };
