@@ -81,13 +81,13 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
         </CardItem>
 
         <CardItem title="Locked" icon={faLock}>
-          {provider.locked ? (
+          {provider.totalActiveStake ? (
             <div className="d-flex align-items-center">
               <span className="mr-2">
-                <Denominate value={provider.locked} />
+                <Denominate value={provider.totalActiveStake} />
               </span>
 
-              <LockedAmountTooltip
+              {/* <LockedAmountTooltip
                 lockedDetails={[
                   { label: 'Stake', value: <Denominate value={provider.totalActiveStake} /> },
                   {
@@ -95,7 +95,7 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
                     value: <Denominate value={provider.topUp} />,
                   },
                 ]}
-              />
+              /> */}
             </div>
           ) : (
             <span className="text-secondary">N/A</span>
