@@ -6,7 +6,7 @@ export interface RankType {
   percentage: number;
 }
 
-export default function calcContinentRank (markers: MarkerType[]) {
+export default function calcContinentRank(markers: MarkerType[]) {
   const rank: RankType[] = [];
   const uniqueContinents = Array.from(new Set(markers.map((marker) => marker.continent)));
 
@@ -43,4 +43,4 @@ export default function calcContinentRank (markers: MarkerType[]) {
       percentage: Math.floor((otherNodes * 100) / totalNodes),
     },
   ];
-};
+}
