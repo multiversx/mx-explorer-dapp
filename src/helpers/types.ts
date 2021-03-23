@@ -34,6 +34,8 @@ export interface ProviderType {
   maxDelegationCap: string;
   apr: string;
   totalActiveStake: string;
+  locked: string;
+  topUp: string;
   numUsers: number;
   numNodes: number;
 

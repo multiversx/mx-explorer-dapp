@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { types, urlBuilder, stringIsInteger } from 'helpers';
-import { CardItem, CopyButton, Denominate, NetworkLink } from 'sharedComponents';
+import {
+  CardItem,
+  CopyButton,
+  Denominate,
+  LockedAmountTooltip,
+  NetworkLink,
+} from 'sharedComponents';
 import { useGlobalState } from 'context';
 import {
   faServer,
@@ -74,14 +80,26 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
           </span>
         </CardItem>
 
-        <CardItem title="Contract Stake" icon={faLock}>
-          <span className="text-secondary">
-            {provider.totalActiveStake ? (
-              <Denominate value={provider.totalActiveStake} />
-            ) : (
-              <>N/A</>
-            )}
-          </span>
+        <CardItem title="Locked" icon={faLock}>
+          {provider.locked ? (
+            <div className="d-flex align-items-center">
+              <span className="mr-2">
+                <Denominate value={provider.locked} />
+              </span>
+
+              <LockedAmountTooltip
+                lockedDetails={[
+                  { label: 'Stake', value: <Denominate value={provider.totalActiveStake} /> },
+                  {
+                    label: 'Topup',
+                    value: <Denominate value={provider.topUp} />,
+                  },
+                ]}
+              />
+            </div>
+          ) : (
+            <span className="text-secondary">N/A</span>
+          )}
         </CardItem>
 
         <CardItem title="Delegators" icon={faUser}>
