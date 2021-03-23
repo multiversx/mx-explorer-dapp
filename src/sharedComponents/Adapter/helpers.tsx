@@ -1,8 +1,8 @@
 export interface GetNodesType {
   search?: string;
   issues?: string;
-  peerType?: string;
-  nodeType?: string;
+  online?: boolean;
+  type?: string;
   shard?: string;
   status?: string;
   count?: boolean;
@@ -41,15 +41,15 @@ export interface ProviderPropsType {
     size?: number;
     search?: string;
     issues?: string;
-    peerType?: string;
-    nodeType?: string;
     status?: string;
+    type?: string;
     validator?: string;
     fields?: any;
     identity?: string;
     provider?: string;
     sort?: string;
     order?: string;
+    online?: boolean;
   };
   timeout: number;
 }
@@ -100,12 +100,12 @@ export function getTransactionsParams({
 }
 
 export function getNodeParams({
-  peerType,
+  type,
+  status,
   issues,
   search,
-  nodeType,
   shard,
-  status,
+  online,
   size,
   identity,
   pagination = true,
@@ -115,11 +115,11 @@ export function getNodeParams({
 }: GetNodesType) {
   const params: ProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
-    ...(peerType !== undefined ? { peerType } : {}),
-    ...(issues !== undefined ? { issues } : {}),
-    ...(nodeType !== undefined ? { nodeType } : {}),
-    ...(shard !== undefined ? { shard: parseInt(shard) } : {}),
+    ...(type !== undefined ? { type } : {}),
     ...(status !== undefined ? { status } : {}),
+    ...(issues !== undefined ? { issues } : {}),
+    ...(shard !== undefined ? { shard: parseInt(shard) } : {}),
+    ...(online !== undefined ? { online } : {}),
     ...(identity !== undefined ? { identity } : {}),
     ...(provider !== undefined ? { provider } : {}),
     ...(sort !== undefined ? { sort } : {}),

@@ -39,7 +39,7 @@ const NodeDetails = () => {
       if (nodeData.success) {
         const fetchIdentity = isMainnet && nodeData.data.identity !== undefined;
 
-        if (nodeData.data.nodeType !== 'observer') {
+        if (nodeData.data.type !== 'observer') {
           const promises = [
             getRounds(publicKey),
             getBlocks({ proposer: publicKey }),
@@ -121,11 +121,11 @@ const NodeDetails = () => {
 
             <div className="row">
               <div className="mb-spacer col">
-                <NodeInformation node={node.data} />
+                <NodeInformation nodeData={node.data} />
               </div>
             </div>
 
-            {node.data.nodeType !== 'observer' && (
+            {node.data.type !== 'observer' && (
               <div className="row">
                 <div className="mb-spacer col-md-6">
                   <NetworkMetrics node={node.data} />
@@ -136,7 +136,7 @@ const NodeDetails = () => {
               </div>
             )}
 
-            {node.data.nodeType === 'validator' && (
+            {node.data.type === 'validator' && (
               <div className="row">
                 <div className="col-12">
                   <div className="card">
@@ -146,7 +146,7 @@ const NodeDetails = () => {
                         {blocks.data.length === 0 && (
                           <NoBlocks
                             title={`${
-                              node.data.peerType === 'eligible'
+                              node.data.status === 'eligible'
                                 ? 'No blocks'
                                 : 'Validator not in consensus'
                             }`}
