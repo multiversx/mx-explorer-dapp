@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { MarkerType, LeaderType } from '../helpers/asyncRequests';
+import { MarkerType } from '../helpers/asyncRequests';
 import countries from './countries100m.json';
 
 interface SimpleMapType {
   markers: MarkerType[];
-  leaders: LeaderType[];
 }
 
 const calcRadius = (validators: number) => {
@@ -54,12 +53,8 @@ const MarkerToolTip = ({
   </OverlayTrigger>
 );
 
-const SimpleMap = ({ markers, leaders }: SimpleMapType) => {
+const SimpleMap = ({ markers }: SimpleMapType) => {
   const ref = React.useRef(null);
-
-  const isLeader = (city: string) => {
-    return leaders.filter((leader) => leader.city === city).length === 1;
-  };
 
   return (
     <div className="simple-map" ref={ref}>
@@ -75,16 +70,10 @@ const SimpleMap = ({ markers, leaders }: SimpleMapType) => {
           }
         </Geographies>
         {markers.map(({ city, longitude, latitude, validators }, i) => (
-          <Marker key={city} coordinates={[longitude, latitude]}>
-            {isLeader(city) ? (
-              <MarkerToolTip city={city} validators={validators}>
-                <circle r={calcRadius(validators)} className="simple-map-marker" />
-              </MarkerToolTip>
-            ) : (
-              <MarkerToolTip city={city} validators={validators}>
-                <circle r={calcRadius(validators)} className="simple-map-marker" />
-              </MarkerToolTip>
-            )}
+          <Marker key={longitude} coordinates={[longitude, latitude]}>
+            <MarkerToolTip city={city} validators={validators}>
+              <circle r={calcRadius(validators)} className="simple-map-marker" />
+            </MarkerToolTip>
           </Marker>
         ))}
       </ComposableMap>

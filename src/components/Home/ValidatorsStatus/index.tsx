@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
 import SimpleMap from './SimpleMap';
-import { getMarkers, MarkerType, LeaderType } from './helpers/asyncRequests';
+import { getMarkers, MarkerType } from './helpers/asyncRequests';
 import calcContinentRank, { RankType } from './helpers/calcContinentRank';
-
-import axios from 'axios';
 
 const placeHolderRank = [
   {
@@ -31,29 +29,19 @@ const placeHolderRank = [
 
 const ValidatorsStatus = () => {
   const [markers, setMarkers] = React.useState<MarkerType[]>([]);
-  const [leaders, setLeaders] = React.useState<LeaderType[]>([]);
   const [continentsRank, setContinentsRank] = React.useState<RankType[]>(placeHolderRank);
   const [totalNodes, setTotalNodes] = React.useState<string | number>('...');
   const ref = React.useRef(null);
 
   const {
     timeout,
-    refresh: { timestamp },
     activeNetwork: { apiUrl },
   } = useGlobalState();
 
   const fetchMarkers = () => {
-    // getMarkers({ timeout, apiUrl: apiUrl || '' }).then(({ data }) => {
-    //  if (ref.current !== null) {
-    //   setMarkers(data);
-    //  }
-    // });
-    axios
-      .get(`markers.json`, {
-        timeout,
-      })
-      .then(({ data }) => {
-        if (ref.current !== null) {
+    getMarkers({ timeout, apiUrl: apiUrl || '' }).then(({ data, success }) => {
+      if (ref.current !== null) {
+        if (success) {
           setMarkers(data);
           setContinentsRank(calcContinentRank(data));
 
@@ -61,27 +49,10 @@ const ValidatorsStatus = () => {
           data.forEach((marker: MarkerType) => (totalNodes += marker.validators));
           setTotalNodes(totalNodes);
         }
-      });
+      }
+    });
   };
   React.useEffect(fetchMarkers, []);
-
-  // const fetchLeaders = () => {
-  //   // getLeaders({ timeout, apiUrl: apiUrl || '' }).then((data) => {
-  //   //  if (ref.current !== null) {
-  //   //   setLeaders(data);
-  //   //  }
-  //   // });
-  //   axios
-  //     .get(`leaders.json`, {
-  //       timeout,
-  //     })
-  //     .then(({ data }) => {
-  //       if (ref.current !== null) {
-  //         setLeaders(data);
-  //       }
-  //     });
-  // };
-  // React.useEffect(fetchLeaders, [timestamp, markers]);
 
   return (
     <div className="card" ref={ref}>
@@ -95,7 +66,7 @@ const ValidatorsStatus = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-12 pl-0 pr-0">
-              {process.env.NODE_ENV !== 'test' && <SimpleMap markers={markers} leaders={leaders} />}
+              {process.env.NODE_ENV !== 'test' && <SimpleMap markers={markers} />}
             </div>
           </div>
         </div>
@@ -114,7 +85,7 @@ const ValidatorsStatus = () => {
                 {nodes > 0 ? `${nodes} node${nodes === 1 ? '' : 's'}` : '...'}
               </div>
               <div className="col pr-0 d-flex align-items-center text-secondary justify-content-end">
-                {percentage > 0 ? `${percentage}%` : '...'}
+                {percentage > 0 ? `${percentage}%` : '< 1%'}
               </div>
             </div>
           ))}

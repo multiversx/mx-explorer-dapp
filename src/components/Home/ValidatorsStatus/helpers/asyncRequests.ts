@@ -22,7 +22,7 @@ export async function getMarkers({
   apiUrl,
 }: GetMarkersType): Promise<{
   data: MarkerType[];
-  markersFetched: boolean;
+  success: boolean;
 }> {
   try {
     const { data } = await axios.get(`${apiUrl}/markers`, { timeout });
@@ -33,28 +33,12 @@ export async function getMarkers({
 
     return {
       data,
-      markersFetched: true,
+      success: true,
     };
   } catch {
     return {
       data: [],
-      markersFetched: false,
+      success: false,
     };
-  }
-}
-
-export interface LeaderType {
-  city: string;
-}
-
-export async function getLeaders({ timeout, apiUrl }: GetMarkersType) {
-  try {
-    const { data } = await axios.get(`${apiUrl}/leaders`, {
-      timeout,
-    });
-
-    return data;
-  } catch {
-    return [];
   }
 }
