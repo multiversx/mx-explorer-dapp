@@ -1,12 +1,9 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { faInfoCircle } from '@fortawesome/pro-regular-svg-icons/faInfoCircle';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { useGlobalState } from 'context';
 import { LockedAmountType } from './index';
-import { CardItem, Denominate } from 'sharedComponents';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CardItem, Denominate, LockedAmountTooltip } from 'sharedComponents';
 
 const LockedDetails = ({
   lockedAmount,
@@ -47,43 +44,23 @@ const LockedDetails = ({
         </span>
 
         {show && (
-          <OverlayTrigger
-            placement="bottom"
-            delay={{ show: 0, hide: 400 }}
-            overlay={(props: any) => (
-              <Tooltip id="locked-amount-details" {...props} show={props.show.toString()}>
-                <div className="locked-item">
-                  <span className="locked-item-label">Stake</span>
-                  <span className="text-secondary">
-                    <Denominate value={bNtotalStaked.toString(10)} />
-                  </span>
-                </div>
-
-                <div className="locked-item">
-                  <span className="locked-item-label">Active Delegation</span>
-                  <span className="text-secondary">
-                    <Denominate value={bNuserActiveStake.toString(10)} />
-                  </span>
-                </div>
-
-                <div className="locked-item">
-                  <span className="locked-item-label">Waiting Delegation</span>
-                  <span className="text-secondary">
-                    <Denominate value={bNuserWaitingStake.toString(10)} />
-                  </span>
-                </div>
-
-                <div className="locked-item">
-                  <span className="locked-item-label">Claimable Rewards</span>
-                  <span className="text-secondary">
-                    <Denominate value={bNClaimableRewards.toString(10)} />
-                  </span>
-                </div>
-              </Tooltip>
-            )}
-          >
-            <FontAwesomeIcon icon={faInfoCircle} size="1x" className="text-primary" />
-          </OverlayTrigger>
+          <LockedAmountTooltip
+            lockedDetails={[
+              { label: 'Stake', value: <Denominate value={bNtotalStaked.toString(10)} /> },
+              {
+                label: 'Active Delegation',
+                value: <Denominate value={bNuserActiveStake.toString(10)} />,
+              },
+              {
+                label: 'Waiting Delegation',
+                value: <Denominate value={bNuserWaitingStake.toString(10)} />,
+              },
+              {
+                label: 'Claimable Rewards',
+                value: <Denominate value={bNClaimableRewards.toString(10)} />,
+              },
+            ]}
+          />
         )}
       </div>
     </CardItem>

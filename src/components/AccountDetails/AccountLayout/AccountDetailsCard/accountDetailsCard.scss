@@ -3,36 +3,3 @@
     overflow: visible !important;
   }
 }
-
-#locked-amount-details {
-  opacity: 1;
-
-  .arrow {
-    display: none;
-  }
-
-  .tooltip-inner {
-    @extend .p-3;
-
-    background-color: $card-bg;
-    border: 1px solid $border-color;
-    box-shadow: none;
-    color: $body;
-
-    max-width: none !important;
-    // white-space: nowrap;
-
-    .locked-item {
-      @extend .d-flex;
-
-      &:not(:last-child) {
-        @extend .mb-2;
-      }
-
-      .locked-item-label {
-        min-width: 8.5rem;
-        text-align: left;
-      }
-    }
-  }
-}
