@@ -39,11 +39,13 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
+    "build-staging": "npm run copy-staging-config & REACT_APP_SHARE_PREFIX= REACT_APP_GA_ID=UA-140910543-1 npm run build",
     "build-mainnet": "npm run copy-mainnet-config & REACT_APP_SHARE_PREFIX= REACT_APP_GA_ID=UA-140910543-1 npm run build",
     "build-testnet": "npm run copy-testnet-config & REACT_APP_SHARE_PREFIX=testnet- REACT_APP_GA_ID=UA-129278450-2 npm run build",
     "build-internal": "npm run copy-internal-config & REACT_APP_SHARE_PREFIX=internal- npm run build",
     "build-devnet": "npm run copy-devnet-config & REACT_APP_SHARE_PREFIX=devnet- npm run build",
     "build": "REACT_APP_CACHE_BUST=$(git describe --always) react-scripts build",
+    "copy-staging-config": "cp ./config.staging.js ./public/config.js",
     "copy-mainnet-config": "cp ./config.mainnet.js ./public/config.js",
     "copy-testnet-config": "cp ./config.testnet.js ./public/config.js",
     "copy-internal-config": "cp ./config.internal.js ./public/config.js",
