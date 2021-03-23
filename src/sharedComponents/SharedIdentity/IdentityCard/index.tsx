@@ -91,13 +91,13 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
             <div className="d-flex flex-column flex-fill mt-4 mt-lg-0">
               <h6 className="mb-3">Stake Distribution</h6>
 
-              <MultilayerPercentageBar
+              {/* <MultilayerPercentageBar
                 steps={[
                   { name: 'Direct-staked', percent: 70 },
                   { name: 'Contract 1', percent: 30 },
                   // { name: 'Contract 2', percent: 10 },
                 ]}
-              />
+              /> */}
             </div>
           </div>
         </div>
