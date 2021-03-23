@@ -16,7 +16,6 @@ const Identities = () => {
   const fetchIdentities = () => {
     getIdentities().then(({ data, success }) => {
       const identitiesList: IdentityType[] = [];
-      let blockchainTotalStake = 0;
       let overallStakePercent = 0;
 
       if (success) {
@@ -26,13 +25,11 @@ const Identities = () => {
           }
 
           identitiesList.push({ ...identity, overallStakePercent });
-          blockchainTotalStake = blockchainTotalStake + identity.stake;
           overallStakePercent = overallStakePercent + identity.stakePercent;
         });
         dispatch({
           type: 'setIdentities',
           identities: identitiesList,
-          blockchainTotalStake,
         });
       }
 
@@ -74,7 +71,7 @@ const Identities = () => {
               </thead>
               <tbody>
                 {identities.map((identity, i) => (
-                  <IdentityRow key={i} rank={i + 1} identity={identity} />
+                  <IdentityRow key={i} identity={identity} />
                 ))}
               </tbody>
             </table>

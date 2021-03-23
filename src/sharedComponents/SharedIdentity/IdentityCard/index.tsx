@@ -1,17 +1,12 @@
 import * as React from 'react';
 import { ReactComponent as IdentityGear } from 'assets/images/identity-gear.svg';
 import { IdentityType } from 'context/state';
-import { MultilayerPercentageBar, SharedIdentity } from 'sharedComponents';
-import { useGlobalState } from 'context';
+import { Denominate, MultilayerPercentageBar, SharedIdentity } from 'sharedComponents';
 import { ReactComponent as TwitterLogo } from 'assets/images/logos/twitter.svg';
 import { faMapMarkerAlt } from '@fortawesome/pro-solid-svg-icons/faMapMarkerAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const IdentityCard = ({ identity }: { identity: IdentityType }) => {
-  const {
-    activeNetwork: { erdLabel },
-  } = useGlobalState();
-
   return identity !== undefined ? (
     <div className="identity-card card">
       <div className="card-body p-3 p-lg-4">
@@ -68,13 +63,7 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
               <div className="d-flex">
                 <span className="pr-2">Stake Balance:</span>
                 <span className="text-secondary">
-                  {identity.stake ? (
-                    <>
-                      {identity.stake.toLocaleString('en')} {erdLabel}
-                    </>
-                  ) : (
-                    'N/A'
-                  )}
+                  {identity.locked ? <Denominate value={identity.locked} /> : 'N/A'}
                 </span>
               </div>
               <div className="d-flex mt-2">

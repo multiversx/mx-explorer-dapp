@@ -12,7 +12,6 @@ export type ActionType =
   | {
       type: 'setIdentities';
       identities: StateType['identities'];
-      blockchainTotalStake: StateType['blockchainTotalStake'];
     }
   | { type: 'setShards'; shards: StateType['shards'] }
   | { type: 'triggerTick' }
@@ -61,7 +60,6 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
       return {
         ...state,
         identities: action.identities,
-        blockchainTotalStake: action.blockchainTotalStake,
       };
     }
     case 'setShards': {

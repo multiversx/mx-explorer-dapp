@@ -10,6 +10,7 @@ import {
   PageState,
   NodesTable,
   SharedIdentity,
+  Denominate,
 } from 'sharedComponents';
 import PercentegeBar from './PercentegeBar';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
@@ -17,10 +18,9 @@ import { urlBuilder } from 'helpers';
 
 export interface IdentityRowType {
   identity: IdentityType;
-  rank: number;
 }
 
-const IdentityRow = ({ identity, rank }: IdentityRowType) => {
+const IdentityRow = ({ identity }: IdentityRowType) => {
   const ref = React.useRef(null);
   const [collapsed, setCollapsed] = React.useState(true);
   const [showDetails, setShowDetails] = React.useState(false);
@@ -32,19 +32,21 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
     activeNetwork: { erdLabel },
   } = useGlobalState();
 
-  const expand = (node: IdentityType) => () => {
+  const expand = (identityRow: IdentityType) => () => {
     if (dataReady === undefined) {
-      if (node.identity) {
-        getNodes({ identity: node.identity, size: node.validators, pagination: false }).then(
-          (nodes) => {
-            if (ref.current !== null) {
-              setDataReady(nodes.success);
-              setIdentityNodes(nodes.data);
-            }
+      if (identityRow.identity) {
+        getNodes({
+          identity: identityRow.identity,
+          size: identityRow.validators,
+          pagination: false,
+        }).then((nodes) => {
+          if (ref.current !== null) {
+            setDataReady(nodes.success);
+            setIdentityNodes(nodes.data);
           }
-        );
+        });
       } else {
-        getNode(node.name).then((node) => {
+        getNode(identityRow.name).then((node) => {
           if (ref.current !== null) {
             setDataReady(node.success);
             setIdentityNodes([node.data]);
@@ -67,7 +69,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
         className={`identity-row ${collapsed ? 'collapsed' : ''}`}
         ref={ref}
       >
-        <td>{rank}</td>
+        <td>{identity.rank}</td>
         <td>
           <div className="d-flex align-items-center">
             <div className="mr-3">
@@ -86,7 +88,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
         </td>
 
         <td>
-          {identity.stake.toLocaleString('en')} {erdLabel}
+          <Denominate value={identity.locked} />
         </td>
         <td className="stake-bar-col">
           <div className="d-flex align-items-center">

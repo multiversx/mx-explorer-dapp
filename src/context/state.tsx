@@ -37,18 +37,20 @@ export interface GlobalStakeType {
 export interface IdentityType {
   name: string;
   score: number;
-  stake: number;
+  stake: string;
+  locked: string;
   stakePercent: number;
-  overallStakePercent?: number;
   validators: number;
   key?: string;
   rank?: number;
+  overallStakePercent?: number;
   twitter?: string;
   website?: string;
   location?: string;
   avatar?: string;
   identity?: string;
   description?: string;
+  topUp?: string;
 }
 
 export interface NodeType {
@@ -91,7 +93,6 @@ export interface StateType {
   theme: string;
   nodes: NodeType[];
   identities: IdentityType[];
-  blockchainTotalStake: number;
   shards: ShardType[];
   globalStake: GlobalStakeType | undefined;
   accountDetails: types.AccountType;
@@ -118,7 +119,6 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
     theme: getTheme(),
     nodes: [],
     identities: [],
-    blockchainTotalStake: 0,
     shards: [],
     globalStake: undefined,
     accountTokens: {

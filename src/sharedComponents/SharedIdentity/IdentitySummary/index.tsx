@@ -2,15 +2,10 @@ import * as React from 'react';
 import { faAngleRight } from '@fortawesome/pro-regular-svg-icons/faAngleRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IdentityType } from 'context/state';
-import { NetworkLink, SharedIdentity, Trim } from 'sharedComponents';
+import { Denominate, NetworkLink, SharedIdentity, Trim } from 'sharedComponents';
 import { urlBuilder } from 'helpers';
-import { useGlobalState } from 'context';
 
 const IdentitySummary = ({ identity }: { identity: IdentityType | undefined }) => {
-  const {
-    activeNetwork: { erdLabel },
-  } = useGlobalState();
-
   return identity !== undefined ? (
     <div className="identity-summary card">
       <div className="card-body px-lg-spacer">
@@ -42,13 +37,7 @@ const IdentitySummary = ({ identity }: { identity: IdentityType | undefined }) =
               <div className="d-flex align-items-center mr-4">
                 <span className="pr-2">Stake Balance:</span>
                 <span className="text-secondary">
-                  {identity.stake ? (
-                    <>
-                      {identity.stake.toLocaleString('en')} {erdLabel}
-                    </>
-                  ) : (
-                    'N/A'
-                  )}
+                  {identity.locked ? <Denominate value={identity.locked} /> : 'N/A'}
                 </span>
               </div>
               <div className="d-flex align-items-center mr-4">
