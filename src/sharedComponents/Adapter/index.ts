@@ -171,6 +171,8 @@ export default function useAdapter() {
 
     getShards,
 
+    getNode: (key: string) => getNodes({ url: `/nodes/${key}` }),
+
     getNodes: (props: GetNodesType) =>
       getNodes({
         url: `/nodes`,
@@ -201,11 +203,11 @@ export default function useAdapter() {
         }),
       }),
 
+    getNodesVersions: () => provider({ url: `/nodes/versions` }),
+
     getIdentities: () => provider({ url: `/identities` }),
 
     getIdentity: (identity: string) => provider({ url: `/identities/${identity}` }),
-
-    getNode: (key: string) => getNodes({ url: `/nodes/${key}` }),
 
     getRounds: (validator: string) =>
       provider({
@@ -250,8 +252,6 @@ export default function useAdapter() {
     getTokensCount: () => provider({ url: `/tokens/count` }),
 
     // Providers
-
-    getGlobalStakeNodes: () => provider({ url: `/stake/nodes` }),
 
     getProviders: ({ baseUrl, props }: { baseUrl: string; props: GetProvidersType }) =>
       provider({

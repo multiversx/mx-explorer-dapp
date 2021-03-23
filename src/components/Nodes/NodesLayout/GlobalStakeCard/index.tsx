@@ -74,11 +74,11 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
             </div>
             <div className="d-flex flex-column flex-fill">
               <span className="text-secondary mb-2">Stake Weighted Node Version</span>
-              {globalStake && globalStake.nodesVerions ? (
+              {/* {globalStake && globalStake.nodesVerions ? (
                 <MultilayerPercentageBar steps={globalStake.nodesVerions} />
               ) : (
                 'N/A'
-              )}
+              )} */}
             </div>
           </div>
         </div>

@@ -5,7 +5,7 @@ import { useGlobalDispatch, useGlobalState } from 'context';
 import GlobalStakeCard from './GlobalStakeCard';
 
 const NodesLayout = ({ children }: { children: React.ReactNode }) => {
-  const { getShards, getGlobalStake, getEconomics, getGlobalStakeNodes } = adapter();
+  const { getShards, getGlobalStake, getEconomics, getNodesVersions } = adapter();
   const dispatch = useGlobalDispatch();
   const { activeNetworkId } = useGlobalState();
 
@@ -15,8 +15,8 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
 
   const fetchShardsAndGlobalStaking = () => {
     if (dataReadyForNetwork !== activeNetworkId) {
-      Promise.all([getShards(), getGlobalStake(), getEconomics(), getGlobalStakeNodes()]).then(
-        ([shards, globalStake, economics, globalStakeNodes]) => {
+      Promise.all([getShards(), getGlobalStake(), getEconomics(), getNodesVersions()]).then(
+        ([shards, globalStake, economics, nodesVersions]) => {
           const newGlobalStake = {
             ...(globalStake.success
               ? {
@@ -29,21 +29,14 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
             ...(economics.success ? { ...economics.data } : {}),
           };
 
-          const newGlobalStakeNodes = {
-            ...(globalStakeNodes.success
-              ? { ...globalStakeNodes.data }
-              : {
-                  nodesVerions: [
-                    { name: 'v.10', percent: 70 },
-                    { name: 'other', percent: 30 },
-                  ],
-                }),
+          const newNodesVersions = {
+            ...(nodesVersions.success ? { ...nodesVersions.data } : {}),
           };
 
           dispatch({
             type: 'setGlobalStake',
             globalStake: globalStake.success
-              ? { ...newGlobalStake, ...newEconomics, ...newGlobalStakeNodes }
+              ? { ...newGlobalStake, ...newEconomics, ...newNodesVersions }
               : undefined,
           });
 
