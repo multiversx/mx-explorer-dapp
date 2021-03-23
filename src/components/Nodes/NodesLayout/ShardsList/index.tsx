@@ -36,9 +36,11 @@ const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
 
   shards.sort((a, b) => (a.shard > b.shard ? 1 : -1));
 
+  const failed = shardsFetched === false || (shardsFetched === true && shards.length === 0);
+
   return (
     <>
-      {shardsFetched === false ? (
+      {failed ? (
         <div className="row">
           <div className="col mb-spacer">
             <div className="card py-4">
