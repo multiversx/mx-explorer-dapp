@@ -3,6 +3,24 @@ import ShardsList from './ShardsList';
 import { adapter, Loader } from 'sharedComponents';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import GlobalStakeCard from './GlobalStakeCard';
+import { NodesVersionsType } from 'context/state';
+
+const prepareNodesVersions = (data: any) => {
+  const versions: NodesVersionsType[] = [];
+
+  Object.keys(data).forEach((version) => {
+    const percent = data[version];
+
+    if (percent > 0) {
+      versions.push({
+        name: version,
+        percent: Math.floor(percent * 100),
+      });
+    }
+  });
+
+  return versions.sort((a, b) => b.percent - a.percent);
+};
 
 const NodesLayout = ({ children }: { children: React.ReactNode }) => {
   const { getShards, getGlobalStake, getEconomics, getNodesVersions } = adapter();
@@ -18,11 +36,7 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
       Promise.all([getShards(), getGlobalStake(), getEconomics(), getNodesVersions()]).then(
         ([shards, globalStake, economics, nodesVersions]) => {
           const newGlobalStake = {
-            ...(globalStake.success
-              ? {
-                  ...globalStake.data,
-                }
-              : {}),
+            ...(globalStake.success ? { ...globalStake.data } : {}),
           };
 
           const newEconomics = {
@@ -30,7 +44,9 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
           };
 
           const newNodesVersions = {
-            ...(nodesVersions.success ? { ...nodesVersions.data } : {}),
+            ...(nodesVersions.success
+              ? { nodesVerions: prepareNodesVersions(nodesVersions.data) }
+              : {}),
           };
 
           dispatch({
