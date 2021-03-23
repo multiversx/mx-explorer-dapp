@@ -7,18 +7,8 @@ import { faLock, faServer, faCheck, faCode } from '@fortawesome/pro-solid-svg-ic
 
 import Alert from './Alert';
 
-const NodeInformation = ({ node }: { node: NodeType }) => {
-  const {
-    publicKey,
-    peerType,
-    shard,
-    versionNumber,
-    nodeName,
-    nodeType,
-    nonce,
-    numInstances,
-    owner,
-  } = node;
+const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
+  const { node, type, shard, version, name, nonce, instances, provider, online } = nodeData;
 
   return (
     <div className="card">
@@ -31,11 +21,11 @@ const NodeInformation = ({ node }: { node: NodeType }) => {
 
           <div className="d-flex flex-column min-w-0">
             <div className="d-flex align-items-center">
-              {nodeType === 'observer' && <RowIcon node={node} />}
-              <Trim color="secondary" text={publicKey} />
-              <CopyButton text={publicKey} className="ml-2" />
+              {type === 'observer' && <RowIcon node={nodeData} />}
+              <Trim color="secondary" text={node} />
+              <CopyButton text={node} className="ml-2" />
             </div>
-            <Alert node={node} />
+            <Alert node={nodeData} />
           </div>
         </div>
       </div>
@@ -51,25 +41,25 @@ const NodeInformation = ({ node }: { node: NodeType }) => {
         </CardItem>
 
         <CardItem title="Version" icon={faLock}>
-          <span className="text-secondary" data-testid="versionNumber">
-            {versionNumber ? versionNumber : <>N/A</>}
+          <span className="text-secondary" data-testid="version">
+            {version ? version : <>N/A</>}
           </span>
         </CardItem>
 
         <CardItem title="Instances" icon={faCheck}>
-          <span className="text-secondary">{numInstances ? numInstances : <>N/A</>}</span>
+          <span className="text-secondary">{instances ? instances : <>N/A</>}</span>
         </CardItem>
 
-        <CardItem title="Node Name" icon={faServer}>
-          <span className="text-secondary">{nodeName ? nodeName : <>N/A</>}</span>
+        <CardItem title="Name" icon={faServer}>
+          <span className="text-secondary">{name ? name : <>N/A</>}</span>
         </CardItem>
 
         <CardItem title="Type" icon={faCheck}>
           <span className="text-secondary">
-            {nodeType === 'observer' && <>Observer</>}
-            {nodeType !== 'observer' && (
+            {type === 'observer' && <>Observer</>}
+            {type !== 'observer' && (
               <>
-                Validator <span className="text-secondary">({peerType})</span>
+                Validator <span className="text-secondary">({online ? 'online' : 'offline'})</span>
               </>
             )}
           </span>
@@ -79,28 +69,16 @@ const NodeInformation = ({ node }: { node: NodeType }) => {
           <span className="text-secondary">{nonce ? nonce : <>N/A</>}</span>
         </CardItem>
 
-        {/* <CardItem title="Contract" icon={faCode}>
-          <div className="d-flex align-items-center min-w-0">
-            <NetworkLink to={urlBuilder.providerDetails(owner)} className="trim-wrapper">
-              <Trim text={owner} />
-            </NetworkLink>
-            <CopyButton text={owner} />
-          </div>
-        </CardItem> */}
-
-        <CardItem title="Contract" icon={faCode}>
-          <div className="d-flex align-items-center min-w-0">
-            <NetworkLink
-              to={urlBuilder.providerDetails(
-                'erd1qqqqqqqqqqqqqpgqxwakt2g7u9atsnr03gqcgmhcv38pt7mkd94q6shuwt'
-              )}
-              className="trim-wrapper"
-            >
-              <Trim text={'erd1qqqqqqqqqqqqqpgqxwakt2g7u9atsnr03gqcgmhcv38pt7mkd94q6shuwt'} />
-            </NetworkLink>
-            <CopyButton text={'erd1qqqqqqqqqqqqqpgqxwakt2g7u9atsnr03gqcgmhcv38pt7mkd94q6shuwt'} />
-          </div>
-        </CardItem>
+        {provider && (
+          <CardItem title="Provider" icon={faCode}>
+            <div className="d-flex align-items-center min-w-0">
+              <NetworkLink to={urlBuilder.providerDetails(provider)} className="trim-wrapper">
+                <Trim text={provider} />
+              </NetworkLink>
+              <CopyButton text={provider} />
+            </div>
+          </CardItem>
+        )}
       </div>
     </div>
   );

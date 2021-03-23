@@ -178,10 +178,10 @@ export default function useAdapter() {
       }),
 
     getNodesCount: ({
-      peerType,
+      online,
       issues,
       search,
-      nodeType,
+      type,
       shard,
       status,
       identity,
@@ -190,10 +190,10 @@ export default function useAdapter() {
       getNodes({
         url: `/nodes/count`,
         params: getNodeParams({
-          peerType,
+          online,
           issues,
           search,
-          nodeType,
+          type,
           shard,
           status,
           identity,

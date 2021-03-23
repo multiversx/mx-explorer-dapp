@@ -30,7 +30,7 @@ export default class RowIcon extends React.Component<{ node: NodeType; small?: b
     const { node, small } = this.props;
 
     switch (true) {
-      case node.peerType === 'jailed':
+      case node.status === 'jailed':
         return (
           <Overlay title="Jailed">
             <FontAwesomeIcon
@@ -41,7 +41,7 @@ export default class RowIcon extends React.Component<{ node: NodeType; small?: b
           </Overlay>
         );
 
-      case node.nodeType === 'observer':
+      case node.type === 'observer':
         return (
           <Overlay title="Observer">
             <FontAwesomeIcon
@@ -52,7 +52,7 @@ export default class RowIcon extends React.Component<{ node: NodeType; small?: b
           </Overlay>
         );
 
-      case node.peerType === 'new':
+      case node.status === 'new':
         return (
           <Overlay title="New">
             <FontAwesomeIcon
@@ -63,7 +63,7 @@ export default class RowIcon extends React.Component<{ node: NodeType; small?: b
           </Overlay>
         );
 
-      case node.peerType === 'inactive':
+      case node.status === 'inactive':
         return (
           <Overlay title="Inactive">
             <FontAwesomeIcon
@@ -97,7 +97,7 @@ export default class RowIcon extends React.Component<{ node: NodeType; small?: b
           </Overlay>
         );
 
-      case node.peerType === 'waiting':
+      case node.status === 'waiting':
         return (
           <Overlay title="Waiting">
             <FontAwesomeIcon

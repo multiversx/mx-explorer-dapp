@@ -19,9 +19,9 @@ const nodes = async ({
       from = 0,
       size = 25,
       search,
+      online,
       status,
-      peerType,
-      nodeType,
+      type,
       shard,
       issues,
       identity,
@@ -49,15 +49,15 @@ const nodes = async ({
           }
         }
 
-        if (status && node.status !== status) {
+        if (online && node.status !== online) {
           return false;
         }
 
-        if (peerType && node.peerType !== peerType) {
+        if (status && node.peerType !== status) {
           return false;
         }
 
-        if (nodeType && node.nodeType !== nodeType) {
+        if (type && node.nodeType !== type) {
           return false;
         }
 

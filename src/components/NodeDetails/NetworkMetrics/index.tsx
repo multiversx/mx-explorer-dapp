@@ -6,8 +6,8 @@ import { NodeType } from 'context/state';
 import RatingArrow from './ratingArrow';
 
 const NetworkMetrics = ({ node }: { node: NodeType }) => {
-  const { totalUpTimeLabel, totalDownTimeLabel } = getUptimeDowntime(node);
-  const statusColor = node.status === 'online' ? 'success' : 'danger';
+  const { uptimeLabel, downtimeLabel } = getUptimeDowntime(node);
+  const statusColor = node.online ? 'success' : 'danger';
 
   return (
     <div className="card network-metrics">
@@ -30,10 +30,10 @@ const NetworkMetrics = ({ node }: { node: NodeType }) => {
 
           <DetailItem title="Uptime" colWidth="3">
             <PercentegeBar
-              totalDownTimeLabel={totalDownTimeLabel}
-              totalUpTimeLabel={totalUpTimeLabel}
-              totalUpTimePercentege={node.totalUpTime ? node.totalUpTime : 0}
-              totalDownTimePercentege={node.totalDownTime ? node.totalDownTime : 0}
+              downtimeLabel={downtimeLabel}
+              uptimeLabel={uptimeLabel}
+              uptimePercentege={node.uptime ? node.uptime : 0}
+              downtimePercentege={node.downtime ? node.downtime : 0}
               tooltipPlacementUp={false}
             />
           </DetailItem>
@@ -41,7 +41,9 @@ const NetworkMetrics = ({ node }: { node: NodeType }) => {
           <DetailItem title="Status" colWidth="3">
             <div className="d-flex align-items-center">
               <Led color={`bg-${statusColor}`} />
-              <span className={`ml-2 text-${statusColor}`}>{node.status}</span>
+              <span className={`ml-2 text-${statusColor}`}>
+                {node.online ? 'online' : 'offline'}
+              </span>
             </div>
           </DetailItem>
         </div>

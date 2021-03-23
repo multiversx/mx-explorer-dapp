@@ -14,7 +14,7 @@ const Filters = () => {
   const networkRoute = useNetworkRoute();
   const history = useHistory();
   const urlParams = new URLSearchParams(locationSearch);
-  const { search, peerType, issues, nodeType } = Object.fromEntries(urlParams);
+  const { search, status, issues, type } = Object.fromEntries(urlParams);
   const [inputValue, setInputValue] = React.useState<string>(search);
 
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -30,29 +30,29 @@ const Filters = () => {
     history.push(networkRoute(`${validatorsRoutes.nodes}?${nextUrlParams}`));
   };
 
-  const peerTypeLink = (peerTypeValue: string) => {
-    const { peerType, nodeType, issues, page, ...rest } = Object.fromEntries(urlParams);
+  const nodeStatusLink = (statusValue: string) => {
+    const { status, type, issues, page, ...rest } = Object.fromEntries(urlParams);
     const nextUrlParams = new URLSearchParams({
       ...rest,
-      ...(peerTypeValue ? { peerType: peerTypeValue } : {}),
+      ...(statusValue ? { status: statusValue } : {}),
     }).toString();
     return `${validatorsRoutes.nodes}?${nextUrlParams}`;
   };
 
-  const nodeTypeLink = (nodeTypeValue: string) => {
-    const { nodeType, peerType, issues, page, ...rest } = Object.fromEntries(urlParams);
+  const nodeTypeLink = (typeValue: string) => {
+    const { type, status, issues, page, ...rest } = Object.fromEntries(urlParams);
     const nextUrlParams = new URLSearchParams({
       ...rest,
-      ...(nodeTypeValue ? { nodeType: nodeTypeValue } : {}),
+      ...(typeValue ? { type: typeValue } : {}),
     }).toString();
     return `${validatorsRoutes.nodes}?${nextUrlParams}`;
   };
 
   const issuesLink = (issuesValue: string) => {
-    const { nodeType, peerType, issues, page, ...rest } = Object.fromEntries(urlParams);
+    const { type, status, issues, page, ...rest } = Object.fromEntries(urlParams);
     const nextUrlParams = new URLSearchParams({
       ...rest,
-      ...(issuesValue ? { issues: issuesValue, nodeType: 'validator' } : {}),
+      ...(issuesValue ? { issues: issuesValue, type: 'validator' } : {}),
     }).toString();
     return `${validatorsRoutes.nodes}?${nextUrlParams}`;
   };
@@ -64,7 +64,7 @@ const Filters = () => {
           <NetworkLink
             to={validatorsRoutes.nodes}
             className={`btn btn-sm btn-outline-light btn-pill ${
-              [search, peerType, issues, nodeType].every((el) => el === undefined) ? 'active' : ''
+              [search, status, issues, type].every((el) => el === undefined) ? 'active' : ''
             }`}
           >
             All
@@ -74,7 +74,7 @@ const Filters = () => {
           <NetworkLink
             to={nodeTypeLink('validator')}
             className={`btn btn-sm btn-outline-light btn-pill ${
-              nodeType === 'validator' && issues !== 'true' ? 'active' : ''
+              type === 'validator' && issues !== 'true' ? 'active' : ''
             }`}
           >
             Validators
@@ -85,7 +85,7 @@ const Filters = () => {
             to={nodeTypeLink('observer')}
             data-testid="filterByObservers"
             className={`btn btn-sm btn-outline-light btn-pill ${
-              nodeType === 'observer' ? 'active' : ''
+              type === 'observer' ? 'active' : ''
             }`}
           >
             Observers
@@ -105,7 +105,7 @@ const Filters = () => {
               variant="outline-light"
               size="sm"
               className={`btn-pill ${
-                ['eligible', 'waiting', 'new', 'jailed'].includes(peerType) ? 'active' : ''
+                ['eligible', 'waiting', 'new', 'jailed'].includes(status) ? 'active' : ''
               }`}
               id="more"
             >
@@ -114,37 +114,37 @@ const Filters = () => {
 
             <Dropdown.Menu>
               <NetworkLink
-                className={`dropdown-item ${peerType === 'eligible' ? 'active' : ''}`}
+                className={`dropdown-item ${status === 'eligible' ? 'active' : ''}`}
                 data-testid="filterByValidators"
-                to={peerTypeLink('eligible')}
+                to={nodeStatusLink('eligible')}
               >
                 Eligible
               </NetworkLink>
               <NetworkLink
-                className={`dropdown-item ${peerType === 'waiting' ? 'active' : ''}`}
+                className={`dropdown-item ${status === 'waiting' ? 'active' : ''}`}
                 data-testid="filterByValidators"
-                to={peerTypeLink('waiting')}
+                to={nodeStatusLink('waiting')}
               >
                 Waiting
               </NetworkLink>
               <NetworkLink
-                className={`dropdown-item ${peerType === 'new' ? 'active' : ''}`}
+                className={`dropdown-item ${status === 'new' ? 'active' : ''}`}
                 data-testid="filterByValidators"
-                to={peerTypeLink('new')}
+                to={nodeStatusLink('new')}
               >
                 New
               </NetworkLink>
               <NetworkLink
-                className={`dropdown-item ${peerType === 'jailed' ? 'active' : ''}`}
+                className={`dropdown-item ${status === 'jailed' ? 'active' : ''}`}
                 data-testid="filterByValidators"
-                to={peerTypeLink('jailed')}
+                to={nodeStatusLink('jailed')}
               >
                 Jailed
               </NetworkLink>
               <NetworkLink
-                className={`dropdown-item ${peerType === 'leaving' ? 'active' : ''}`}
+                className={`dropdown-item ${status === 'leaving' ? 'active' : ''}`}
                 data-testid="filterByValidators"
-                to={peerTypeLink('leaving')}
+                to={nodeStatusLink('leaving')}
               >
                 Leaving
               </NetworkLink>

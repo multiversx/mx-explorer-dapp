@@ -52,28 +52,31 @@ export interface IdentityType {
 }
 
 export interface NodeType {
-  publicKey: string;
-  peerType: 'waiting' | 'eligible' | 'new' | 'jailed' | 'leaving' | 'inactive';
-  nodeType: 'observer' | 'validator';
-  status: 'online' | 'offline';
-  identity: string;
-  versionNumber: string;
-  shard: number;
-  tempRating: number;
+  node: string;
+  name: string;
+  type: 'observer' | 'validator';
+  status?: 'waiting' | 'eligible' | 'new' | 'jailed' | 'leaving' | 'inactive';
+  online: boolean;
   rating: number;
+  tempRating: number;
   ratingModifier: number;
+  shard: number;
   nonce: number;
-  numInstances: number;
-  totalUpTime?: number;
-  totalDownTime?: number;
-  totalUpTimeSec?: number;
-  totalDownTimeSec?: number;
-  nodeName?: string;
-  receivedShardID?: number;
-  timeStamp?: string;
-  computedShardID?: number;
+  instances: number;
+  version: string;
+  stake: string;
+  topUp: string;
+  uptime: number;
+  uptimeSec: number;
+  downtime: number;
+  downtimeSec: number;
   issues?: string[];
-  owner?: string;
+  provider?: string;
+  identity?: string;
+
+  receivedShardID?: number;
+  computedShardID?: number;
+  // timeStamp?: string;
 }
 
 export interface StateType {
