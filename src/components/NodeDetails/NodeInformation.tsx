@@ -1,6 +1,14 @@
 import * as React from 'react';
 import { urlBuilder } from 'helpers';
-import { ShardSpan, NetworkLink, Trim, CopyButton, CardItem } from 'sharedComponents';
+import {
+  ShardSpan,
+  NetworkLink,
+  Trim,
+  CopyButton,
+  CardItem,
+  Denominate,
+  LockedAmountTooltip,
+} from 'sharedComponents';
 import RowIcon from 'sharedComponents/NodesTable/RowIcon';
 import { NodeType } from 'context/state';
 import { faLock, faServer, faCheck, faCode } from '@fortawesome/pro-solid-svg-icons';
@@ -8,7 +16,20 @@ import { faLock, faServer, faCheck, faCode } from '@fortawesome/pro-solid-svg-ic
 import Alert from './Alert';
 
 const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
-  const { node, type, shard, version, name, nonce, instances, provider, online } = nodeData;
+  const {
+    node,
+    type,
+    shard,
+    version,
+    name,
+    nonce,
+    instances,
+    provider,
+    online,
+    locked,
+    topUp,
+    stake,
+  } = nodeData;
 
   return (
     <div className="card">
@@ -67,6 +88,24 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
 
         <CardItem title="Nonce" icon={faCheck}>
           <span className="text-secondary">{nonce ? nonce : <>N/A</>}</span>
+        </CardItem>
+
+        <CardItem title="Locked" icon={faLock}>
+          <div className="d-flex align-items-center">
+            <span className="mr-2">
+              <Denominate value={locked} />
+            </span>
+
+            <LockedAmountTooltip
+              lockedDetails={[
+                { label: 'Stake', value: <Denominate value={stake} /> },
+                {
+                  label: 'Topup',
+                  value: <Denominate value={topUp} />,
+                },
+              ]}
+            />
+          </div>
         </CardItem>
 
         {provider && (

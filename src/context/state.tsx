@@ -72,13 +72,14 @@ export interface NodeType {
   uptimeSec: number;
   downtime: number;
   downtimeSec: number;
+  locked: string;
+  topup: string;
+
   issues?: string[];
   provider?: string;
   identity?: string;
-
   receivedShardID?: number;
   computedShardID?: number;
-  // timeStamp?: string;
 }
 
 export interface StateType {
