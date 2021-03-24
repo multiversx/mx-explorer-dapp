@@ -59,7 +59,7 @@ const ValidatorsStatus = () => {
       <div className="card-header">
         <div className="card-header-item d-flex justify-content-between align-items-center">
           <h6 className="m-0">Validators Status</h6>
-          {totalNodes}
+          {totalNodes.toLocaleString('en')}
         </div>
       </div>
       <div className="card-body bg-black p-0 overflow-hidden">
@@ -82,7 +82,7 @@ const ValidatorsStatus = () => {
                 {i + 1}. {continent}
               </div>
               <div className="col d-flex align-items-center text-secondary justify-content-end">
-                {nodes > 0 ? `${nodes} node${nodes === 1 ? '' : 's'}` : '...'}
+                {nodes > 0 ? `${nodes.toLocaleString('en')} node${nodes === 1 ? '' : 's'}` : '...'}
               </div>
               <div className="col pr-0 d-flex align-items-center text-secondary justify-content-end">
                 {percentage > 0 ? `${percentage}%` : '< 1%'}
