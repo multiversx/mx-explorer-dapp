@@ -46,15 +46,12 @@ const ValidatorsStatus = () => {
       ([markersData, stakeData]) => {
         if (ref.current !== null) {
           if (markersData.success && stakeData.success) {
-            // TODO remove when /stake work
-            stakeData.data.totalValidators = 2416;
+            const totalValidators = stakeData.data.totalValidators;
 
-            if (markersData.data.length > 0 && stakeData.data.totalValidators > 0) {
+            if (markersData.data.length > 0 && totalValidators > 0) {
               setMarkers(markersData.data);
-              setTotalNodes(stakeData.data.totalValidators);
-              setContinentsRank(
-                calcContinentRank(markersData.data, stakeData.data.totalValidators)
-              );
+              setTotalNodes(totalValidators);
+              setContinentsRank(calcContinentRank(markersData.data, totalValidators));
             }
           }
         }

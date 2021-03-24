@@ -4,11 +4,12 @@
   @extend .m-3;
   @extend .my-lg-4;
   @extend .mx-lg-spacer;
-  
+
   display: flex;
   flex-direction: row-reverse;
   position: relative;
   overflow: hidden;
+  padding: 0.285rem 0;
 
   &:before {
     content: ' ';
@@ -31,12 +32,11 @@
         max-width: 0;
         opacity: 0;
       }
-  
+
       .latest-item-card {
         margin-left: 1.5rem;
       }
     }
-
 
     .latest-item-card {
       @extend .p-3;
@@ -46,25 +46,25 @@
       border-radius: 0.3rem;
       border: 1px solid $border-color;
       border-left: 0.3rem solid $primary;
-      box-shadow: 0 2px 4px 0 rgba($standard-box-shadow, 0.20);
-  
+      box-shadow: 0 2px 4px 0 rgba($standard-box-shadow, 0.2);
+
       &.status-text-success {
         border-left: 0.3rem solid $success;
       }
-  
+
       &.status-text-warning {
         border-left: 0.3rem solid $warning;
       }
-  
+
       &.status-text-danger {
         border-left: 0.3rem solid $danger;
       }
-  
+
       .latest-item-icon {
-        display:flex;
+        display: flex;
         align-items: center;
         justify-content: center;
-        
+
         border-radius: 50%;
         font-size: 0.9375rem;
         text-align: center;
@@ -83,11 +83,11 @@
     flex-direction: column;
     margin-bottom: 0rem !important;
 
-    &:before { 
+    &:before {
       content: none;
     }
 
-    .latest-item  {
+    .latest-item {
       margin-left: 0 !important;
       margin-bottom: 1rem !important;
       max-width: none;
