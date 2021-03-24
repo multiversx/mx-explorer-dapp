@@ -16,10 +16,11 @@
 
     .simple-map-marker {
       fill: $primary;
-      transition: opacity 0.35s ease-in-out;
+      transition: opacity 0.35s ease-in-out, transform 0.35s ease-in-out;
 
-      &.blink {
-        opacity: 0.5;
+      &.leader {
+        opacity: 0.7;
+        transform: scale(1.4);
       }
     }
   }
