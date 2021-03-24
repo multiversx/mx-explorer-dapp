@@ -3,6 +3,7 @@ import { useGlobalState } from 'context';
 import SimpleMap from './SimpleMap';
 import { getMarkers, MarkerType } from './helpers/asyncRequests';
 import calcContinentRank, { RankType } from './helpers/calcContinentRank';
+import { adapter } from 'sharedComponents';
 
 const placeHolderRank = [
   {
@@ -38,19 +39,24 @@ const ValidatorsStatus = () => {
     activeNetwork: { apiUrl },
   } = useGlobalState();
 
-  const fetchMarkers = () => {
-    getMarkers({ timeout, apiUrl: apiUrl || '' }).then(({ data, success }) => {
-      if (ref.current !== null) {
-        if (success) {
-          setMarkers(data);
-          setContinentsRank(calcContinentRank(data));
+  const { getGlobalStake } = adapter();
 
-          let totalNodes = 0;
-          data.forEach((marker: MarkerType) => (totalNodes += marker.validators));
-          setTotalNodes(totalNodes);
+  const fetchMarkers = () => {
+    Promise.all([getMarkers({ timeout, apiUrl: apiUrl || '' }), getGlobalStake()]).then(
+      ([markersData, stakeData]) => {
+        if (ref.current !== null) {
+          if (markersData.success && stakeData.success) {
+            if (markersData.data.length > 0 && stakeData.data.totalValidators > 0) {
+              setMarkers(markersData.data);
+              setTotalNodes(stakeData.data.totalValidators);
+              setContinentsRank(
+                calcContinentRank(markersData.data, stakeData.data.totalValidators)
+              );
+            }
+          }
         }
       }
-    });
+    );
   };
   React.useEffect(fetchMarkers, []);
 
@@ -85,7 +91,7 @@ const ValidatorsStatus = () => {
                 {nodes > 0 ? `${nodes.toLocaleString('en')} node${nodes === 1 ? '' : 's'}` : '...'}
               </div>
               <div className="col pr-0 d-flex align-items-center text-secondary justify-content-end">
-                {percentage > 0 ? `${percentage}%` : '< 1%'}
+                {percentage > 0 ? (percentage < 1 ? '< 1%' : `${Math.floor(percentage)}%`) : '...'}
               </div>
             </div>
           ))}
