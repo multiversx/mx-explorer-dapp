@@ -37,7 +37,7 @@ export default function calcContinentRank(markers: MarkerType[], totalNodes: num
     {
       continent: 'Others',
       nodes: otherNodes,
-      percentage: otherPercent,
+      percentage: otherPercent < 1 ? 1 : Math.floor(otherPercent),
     },
   ];
 }

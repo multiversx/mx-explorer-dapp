@@ -46,6 +46,9 @@ const ValidatorsStatus = () => {
       ([markersData, stakeData]) => {
         if (ref.current !== null) {
           if (markersData.success && stakeData.success) {
+            // TODO remove when /stake work
+            stakeData.data.totalValidators = 2416;
+
             if (markersData.data.length > 0 && stakeData.data.totalValidators > 0) {
               setMarkers(markersData.data);
               setTotalNodes(stakeData.data.totalValidators);
@@ -91,7 +94,7 @@ const ValidatorsStatus = () => {
                 {nodes > 0 ? `${nodes.toLocaleString('en')} node${nodes === 1 ? '' : 's'}` : '...'}
               </div>
               <div className="col pr-0 d-flex align-items-center text-secondary justify-content-end">
-                {percentage > 0 ? (percentage < 1 ? '< 1%' : `${Math.floor(percentage)}%`) : '...'}
+                {percentage > 0 ? `${percentage}%` : '...'}
               </div>
             </div>
           ))}
