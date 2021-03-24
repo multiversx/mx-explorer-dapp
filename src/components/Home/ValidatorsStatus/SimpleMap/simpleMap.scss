@@ -4,9 +4,9 @@
   }
 
   .rsm-svg {
-    fill: $primary-light; // background color
-    stroke: darken($primary-light, 30%); // border color
-    stroke-width: 0.017rem;
+    fill: $map-bg; // background color
+    stroke: $secondary; // border color
+    stroke-width: 0.015rem;
 
     .rsm-geography {
       &:focus {
