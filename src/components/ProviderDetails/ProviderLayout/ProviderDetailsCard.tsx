@@ -80,7 +80,7 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
         </CardItem>
 
         <CardItem title="Service fee" icon={faPercent}>
-          {provider.serviceFee ? <>{provider.serviceFee * 100}%</> : <>N/A</>}
+          {provider.serviceFee ? <>{(provider.serviceFee * 100).toFixed(2)}%</> : <>N/A</>}
         </CardItem>
 
         <CardItem title="Locked" icon={faLock}>

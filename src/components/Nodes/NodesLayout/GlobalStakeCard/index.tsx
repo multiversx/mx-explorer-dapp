@@ -36,13 +36,17 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
             </div>
             <div className="d-flex flex-column">
               <span className="text-secondary mb-1">Active Stake</span>
-              {globalStake && globalStake.staked ? (
-                <h5 className="m-0 pb-1">
-                  {globalStake.staked.toLocaleString('en')} {erdLabel}
-                </h5>
-              ) : (
-                'N/A'
-              )}
+
+              <h5 className="m-0 pb-1">
+                {globalStake && globalStake.staked ? (
+                  <>
+                    {globalStake.staked.toLocaleString('en')} {erdLabel}
+                  </>
+                ) : (
+                  'N/A'
+                )}
+              </h5>
+
               {/* <small>
                 <span className="text-secondary">Deliquent stake:</span>{' '}
                 {globalStake && globalStake.deliquentStake

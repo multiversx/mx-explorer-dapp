@@ -206,7 +206,9 @@ const ProvidersTable = ({
                   <>N/A</>
                 )}
               </td>
-              <td>{provider.serviceFee ? <>{provider.serviceFee * 100}%</> : <>N/A</>}</td>
+              <td>
+                {provider.serviceFee ? <>{(provider.serviceFee * 100).toFixed(2)}%</> : <>N/A</>}
+              </td>
               <td>
                 {provider.delegationCap ? (
                   <DelegationCap delegationCap={provider.delegationCap} />
