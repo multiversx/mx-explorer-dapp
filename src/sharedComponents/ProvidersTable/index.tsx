@@ -77,7 +77,7 @@ const ProvidersTable = ({
           sortedNames.sort((a, b) => {
             const aName = a.identityDetails && a.identityDetails.name ? a.identityDetails.name : '';
             const bName = b.identityDetails && b.identityDetails.name ? b.identityDetails.name : '';
-            return aName > bName ? sortParams[0] : sortParams[1];
+            return aName.toLowerCase() > bName.toLowerCase() ? sortParams[0] : sortParams[1];
           });
           sortedContracts.sort((a, b) => (a.provider > b.provider ? sortParams[0] : sortParams[1]));
           displayProviders = [...sortedNames, ...sortedContracts];
