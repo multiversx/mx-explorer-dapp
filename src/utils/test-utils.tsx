@@ -63,6 +63,7 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
     delegation: () => Promise.resolve({ data: rawData.delegation }),
     node: () => Promise.resolve({ data: rawData.node }),
     identity: () => Promise.resolve({ data: rawData.identity }),
+    identities: () => Promise.resolve({ data: rawData.identities }),
     tokens: () => Promise.resolve({ data: rawData.tokens }),
     tokenDetails: () => Promise.resolve({ data: rawData.tokenDetails }),
     providers: () => Promise.resolve({ data: rawData.providers }),
@@ -104,6 +105,8 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.miniblock();
       case url.includes('/nodes/'):
         return requests.node();
+      case url.includes('/identities'):
+        return requests.identities();
       case url.includes('/identities/'):
         return requests.identity();
       case url.includes('/tokens/'):

@@ -14,6 +14,7 @@ import account from './account';
 import accounts from './accounts';
 import node from './node';
 import identity from './identity';
+import identities from './identities';
 import tokens from './tokens';
 import tokenDetails from './tokenDetails';
 import providers from './providers';
@@ -39,5 +40,6 @@ export {
   tokens,
   tokenDetails,
   providers,
-  provider
+  provider,
+  identities,
 };
