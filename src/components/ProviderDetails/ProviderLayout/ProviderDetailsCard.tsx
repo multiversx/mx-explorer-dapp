@@ -47,8 +47,8 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
           </a>
         </div>
         <div className="card-header-item compact d-flex">
-          <span className="flex-shrink-0">Address:</span>
-          <div className="d-flex align-items-center text-break-all ml-2 text-secondary">
+          <span className="text-secondary flex-shrink-0">Address:</span>
+          <div className="d-flex align-items-center text-break-all ml-2">
             <NetworkLink to={urlBuilder.accountDetails(provider.provider)} data-testid="address">
               {provider.provider}
             </NetworkLink>
@@ -59,34 +59,28 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
 
       <div className="card-body card-item-container">
         <CardItem title="Number of nodes" icon={faServer}>
-          <span className="text-secondary">
-            {provider.numNodes !== undefined ? (
-              <>
-                {provider.numNodes} node{provider.numNodes !== 1 ? 's' : ''}
-              </>
-            ) : (
-              <>N/A</>
-            )}
-          </span>
+          {provider.numNodes !== undefined ? (
+            <>
+              {provider.numNodes} node{provider.numNodes !== 1 ? 's' : ''}
+            </>
+          ) : (
+            <>N/A</>
+          )}
         </CardItem>
 
         <CardItem title="Computed APR" icon={faChartBar}>
-          <span className="text-secondary">
-            {provider.apr ? (
-              <>
-                {provider.apr}
-                {provider.apr !== 'N/A' ? '%' : ''}
-              </>
-            ) : (
-              <>N/A</>
-            )}
-          </span>
+          {provider.apr ? (
+            <>
+              {provider.apr}
+              {provider.apr !== 'N/A' ? '%' : ''}
+            </>
+          ) : (
+            <>N/A</>
+          )}
         </CardItem>
 
         <CardItem title="Service fee" icon={faPercent}>
-          <span className="text-secondary">
-            {provider.serviceFee ? <>{provider.serviceFee * 100}%</> : <>N/A</>}
-          </span>
+          {provider.serviceFee ? <>{provider.serviceFee * 100}%</> : <>N/A</>}
         </CardItem>
 
         <CardItem title="Locked" icon={faLock}>
@@ -107,37 +101,29 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
               />
             </div>
           ) : (
-            <span className="text-secondary">N/A</span>
+            <>N/A</>
           )}
         </CardItem>
 
         <CardItem title="Delegators" icon={faUser}>
-          <span className="text-secondary">
-            {provider.numUsers ? <>{provider.numUsers}</> : <>N/A</>}
-          </span>
+          {provider.numUsers ? <>{provider.numUsers}</> : <>N/A</>}
         </CardItem>
 
         <CardItem title="Cumulated Rewards" icon={faCoins}>
-          <span className="text-secondary">
-            {provider.cumulatedRewards ? <Denominate value={provider.cumulatedRewards} /> : <>0</>}
-          </span>
+          {provider.cumulatedRewards ? <Denominate value={provider.cumulatedRewards} /> : <>0</>}
         </CardItem>
 
         <CardItem title="Delegation Cap" icon={faArrowToTop}>
-          <span className="text-secondary">
-            {provider.delegationCap ? (
-              <DelegationCap delegationCap={provider.delegationCap} />
-            ) : (
-              <>N/A</>
-            )}
-          </span>
+          {provider.delegationCap ? (
+            <DelegationCap delegationCap={provider.delegationCap} />
+          ) : (
+            <>N/A</>
+          )}
         </CardItem>
 
         {stringIsInteger(getPercentageFilled(provider.stake, provider.delegationCap)) && (
           <CardItem title="Filled" icon={faChartPieAlt}>
-            <span className="text-secondary">
-              <PercentageFilled stake={provider.stake} delegationCap={provider.delegationCap} />
-            </span>
+            <PercentageFilled stake={provider.stake} delegationCap={provider.delegationCap} />
           </CardItem>
         )}
       </div>

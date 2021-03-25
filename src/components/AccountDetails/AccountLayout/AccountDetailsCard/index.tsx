@@ -106,8 +106,8 @@ const AccountDetailsCard = () => {
               </div>
             </div>
             <div className="card-header-item compact d-flex">
-              Address:
-              <div className="d-flex align-items-center text-break-all ml-2 text-secondary">
+              <span className="text-secondary">Address:</span>
+              <div className="d-flex align-items-center text-break-all ml-2">
                 <span data-testid="address">{address}</span>
                 <CopyButton text={address} />
               </div>
