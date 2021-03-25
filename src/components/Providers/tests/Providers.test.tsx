@@ -9,11 +9,11 @@ describe('Providers Page', () => {
     await wait(async () => {
       expect(document.title).toEqual('Providers • Elrond Explorer');
       const table = await render.findByTestId('providersTable');
-      expect(table.childElementCount).toBe(2);
+      expect(table.childElementCount).toBe(8);
     });
   });
 
-  test('Accounts page loading state', async () => {
+  test('Providers page loading state', async () => {
     const render = beforeAll({
       route: '/providers',
     });
@@ -42,9 +42,7 @@ describe('Providers Page Links', () => {
     });
 
     const link = await render.findByTestId('providerLink0');
-    expect(link.textContent).toContain(
-      'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l'
-    );
+    expect(link.textContent).toContain('MetaStake');
 
     fireEvent.click(link);
     await wait(async () => {
