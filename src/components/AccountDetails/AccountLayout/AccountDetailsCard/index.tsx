@@ -125,7 +125,7 @@ const AccountDetailsCard = () => {
               <UsdValue input={balance} usd={lockedAmount.usd} />
             </CardItem>
 
-            <LockedAmountCardItem lockedAmount={lockedAmount} cardItemClass={cardItemClass} />
+            {/* <LockedAmountCardItem lockedAmount={lockedAmount} cardItemClass={cardItemClass} /> */}
 
             <CardItem className={cardItemClass} title="Nonce" icon={faUser}>
               {nonce !== undefined ? nonce.toLocaleString('en') : '...'}
