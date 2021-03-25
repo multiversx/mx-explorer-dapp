@@ -100,14 +100,14 @@ const IdentityRow = ({ identity }: IdentityRowType) => {
           </div>
         </td>
         <td className="text-right">{identity.validators.toLocaleString('en')}</td>
-        <td className="text-right">{Math.round(identity.score).toLocaleString('en')}</td>
+        {/* <td className="text-right">{Math.round(identity.score).toLocaleString('en')}</td> */}
         <td className="text-right">
           <img src={carretDown} className="details-arrow" alt="details-arrow" height="8" />
         </td>
       </tr>
       {showDetails && (
         <tr className={`identity-details-row ${collapsed ? 'collapsed' : ''}`}>
-          <td colSpan={7} className="p-0">
+          <td colSpan={6} className="p-0">
             <div className="content">
               {dataReady === undefined && (
                 <div className="py-4">
