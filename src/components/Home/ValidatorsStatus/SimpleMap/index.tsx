@@ -50,7 +50,7 @@ const MarkerToolTip = ({
     delay={{ show: 0, hide: 400 }}
     overlay={(props) => (
       <Tooltip id="marker-tooltip" {...props}>
-        {city}: {`${validators} node${validators === 1 ? '' : 's'}`}
+        {city ? `${city}:` : ''} {`${validators} node${validators === 1 ? '' : 's'}`}
       </Tooltip>
     )}
   >
