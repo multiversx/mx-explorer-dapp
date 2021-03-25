@@ -51,7 +51,7 @@ const BlockDetails = () => {
 
       <div className="block-details" ref={ref}>
         {dataReady === true && state && state.block.hash && (
-          <div className="container pt-spacer">
+          <div className="container page-content">
             <div className="row">
               <div className="col-12">
                 <BlockData {...state} />

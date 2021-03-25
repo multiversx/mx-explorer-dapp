@@ -7,9 +7,13 @@ import LoopManager from './LoopManager';
 import { Search } from 'sharedComponents';
 import Unavailable from './Unavailable';
 import PageLayout from './PageLayout';
+import { useLocation } from 'react-router-dom';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { theme } = useGlobalState();
+  const {
+    theme,
+    config: { elrondApps },
+  } = useGlobalState();
   const offline = !window.navigator.onLine;
 
   React.useEffect(() => {
@@ -39,6 +43,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     }
   }, [theme]);
 
+  const activePath = useLocation().pathname;
+  const isHome = activePath === '/';
+
+  const explorerApp = elrondApps.find((app) => app.id === 'explorer');
+  const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
+
   return (
     <div className="d-flex">
       <div className="flex-fill vh-100">
@@ -51,10 +61,20 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               <Unavailable />
             ) : (
               <>
-                <div className="container">
-                  <div className="row">
-                    <div className="col-12 col-lg-10 pt-spacer mx-auto">
-                      <Search />
+                <div className="main-search-container py-spacer">
+                  <div className={`container ${isHome ? 'py-3' : ''}`}>
+                    {isHome && (
+                      <div className="row">
+                        <div className="col-12">
+                          <h3 className="mb-3 text-white">The Elrond Blockchain {explorerTitle}</h3>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="row">
+                      <div className={`col-12 ${isHome ? '' : 'mx-auto'}`}>
+                        <Search />
+                      </div>
                     </div>
                   </div>
                 </div>

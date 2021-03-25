@@ -9,26 +9,24 @@ const Home = () => {
   const isMainnet = useIsMainnet();
 
   return (
-    <div className="home">
-      <div className="container">
-        <div className="row">
-          <div className="col-12 mx-auto col-lg-6 mt-spacer">
-            <NetworkHealth />
-          </div>
-          {isMainnet && (
-            <div className="col-12 col-lg-6 mt-spacer">
-              <ValidatorsStatus />
-            </div>
-          )}
+    <div className="home page-content container">
+      <div className="row">
+        <div className="col-12 mx-auto col-lg-6">
+          <NetworkHealth />
         </div>
+        {isMainnet && (
+          <div className="col-12 col-lg-6 mt-spacer mt-lg-0">
+            <ValidatorsStatus />
+          </div>
+        )}
+      </div>
 
-        <div className="row">
-          <div className="col-12 mt-spacer">
-            <LatestBlocks />
-          </div>
-          <div className="col-12 mt-spacer">
-            <LatestTransactions />
-          </div>
+      <div className="row">
+        <div className="col-12 mt-spacer">
+          <LatestBlocks />
+        </div>
+        <div className="col-12 mt-spacer">
+          <LatestTransactions />
         </div>
       </div>
     </div>

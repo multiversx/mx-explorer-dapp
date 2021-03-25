@@ -87,7 +87,7 @@ const MiniBlockDetails = () => {
 
       <div ref={ref}>
         {miniBlockFetched && miniBlock && (
-          <div className="container pt-spacer">
+          <div className="container page-content">
             <div className="row">
               <div className="col-12">
                 <div className="row">

@@ -56,7 +56,7 @@ const Transactions = () => {
 
       <div ref={ref}>
         {dataReady === true && (
-          <div className="container pt-spacer">
+          <div className="container page-content">
             <div className="row">
               <div className="col-12">
                 <div className="card">

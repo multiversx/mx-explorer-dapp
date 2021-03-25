@@ -93,7 +93,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
 
       <div ref={ref}>
         {!loading && !failed && (
-          <div className="container pt-spacer">
+          <div className="container page-content">
             <AccountDetailsCard />
             {children}
           </div>

@@ -110,7 +110,7 @@ const NodeDetails = () => {
       )}
       <div ref={ref}>
         {dataReady === true && node.data !== undefined && (
-          <div className="container pt-spacer">
+          <div className="container page-content">
             {showIdentity && (
               <div className="row">
                 <div className="col mb-spacer">

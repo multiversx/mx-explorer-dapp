@@ -71,7 +71,16 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
         </CardItem>
 
         <CardItem title="Computed APR" icon={faChartBar}>
-          <span className="text-secondary">{provider.apr ? <>{provider.apr}%</> : <>N/A</>}</span>
+          <span className="text-secondary">
+            {provider.apr ? (
+              <>
+                {provider.apr}
+                {provider.apr !== 'N/A' ? '%' : ''}
+              </>
+            ) : (
+              <>N/A</>
+            )}
+          </span>
         </CardItem>
 
         <CardItem title="Service fee" icon={faPercent}>

@@ -57,7 +57,7 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
       )}
       <div ref={ref}>
         {dataReady === true && (
-          <div className="container pt-spacer">
+          <div className="container page-content">
             {isMainnet && provider && identity !== undefined && (
               <div className="row">
                 <div className="col-12 mb-spacer">
