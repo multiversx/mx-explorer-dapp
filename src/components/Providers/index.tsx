@@ -41,22 +41,24 @@ const Providers = () => {
 
           if (identities) {
             getIdentities(identities).then((identitiesData) => {
-              if (identitiesData.success) {
-                newProvidersData.forEach((provider) => {
-                  if (provider.identity) {
-                    const identityDetails = identitiesData.data.find(
-                      (identity: IdentityType) => identity.identity === provider.identity
-                    );
+              if (ref.current !== null) {
+                if (identitiesData.success) {
+                  newProvidersData.forEach((provider) => {
+                    if (provider.identity) {
+                      const identityDetails = identitiesData.data.find(
+                        (identity: IdentityType) => identity.identity === provider.identity
+                      );
 
-                    if (identityDetails) {
-                      provider.identityDetails = identityDetails;
+                      if (identityDetails) {
+                        provider.identityDetails = identityDetails;
+                      }
                     }
-                  }
-                });
-              }
+                  });
+                }
 
-              setProviders(newProvidersData);
-              setDataReady(providersData.success && identitiesData.success);
+                setProviders(newProvidersData);
+                setDataReady(providersData.success && identitiesData.success);
+              }
             });
           } else {
             setProviders(providersData.data);

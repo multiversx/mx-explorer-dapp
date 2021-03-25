@@ -25,11 +25,13 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
         if (success) {
           if (data.identity) {
             getIdentity(data.identity).then((identityData) => {
-              if (identityData.success) {
-                setIdentity(identityData.data);
+              if (ref.current !== null) {
+                if (identityData.success) {
+                  setIdentity(identityData.data);
+                }
+                setProvider(data);
+                setDataReady(success);
               }
-              setProvider(data);
-              setDataReady(success);
             });
           } else {
             setProvider(data);

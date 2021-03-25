@@ -36,58 +36,62 @@ const NodeDetails = () => {
   const fetchNodes = () => {
     setDataReady(undefined);
     getNode(publicKey).then((nodeData) => {
-      if (nodeData.success) {
-        const fetchIdentity = isMainnet && nodeData.data.identity !== undefined;
+      if (ref.current !== null) {
+        if (nodeData.success) {
+          const fetchIdentity = isMainnet && nodeData.data.identity !== undefined;
 
-        if (nodeData.data.type !== 'observer') {
-          const promises = [
-            getRounds(publicKey),
-            getBlocks({ proposer: publicKey }),
-            ...(fetchIdentity ? [getIdentity(nodeData.data.identity)] : []),
-          ];
-          Promise.all(promises).then((response) => {
-            const [roundsData, blocksData, identityData] = response;
-            if (ref.current !== null) {
-              setNode(nodeData);
-
-              setBlocks({
-                data: blocksData.success ? blocksData.data.blocks : [],
-                success: blocksData.success,
-              });
-
-              setRounds({
-                data: roundsData.success
-                  ? (roundsData as any).data.map((round: any) => ({
-                      key: round.round,
-                      value: round.blockWasProposed,
-                    }))
-                  : [],
-                success: roundsData.success,
-              });
-
-              if (isMainnet && identityData) {
-                setIdentity(identityData);
-              }
-
-              setDataReady(nodeData.success);
-            }
-          });
-        } else {
-          if (isMainnet && nodeData.data.identity !== undefined) {
-            getIdentity(nodeData.data.identity).then((identityData) => {
-              if (isMainnet && identityData) {
-                setIdentity(identityData);
+          if (nodeData.data.type !== 'observer') {
+            const promises = [
+              getRounds(publicKey),
+              getBlocks({ proposer: publicKey }),
+              ...(fetchIdentity ? [getIdentity(nodeData.data.identity)] : []),
+            ];
+            Promise.all(promises).then((response) => {
+              const [roundsData, blocksData, identityData] = response;
+              if (ref.current !== null) {
                 setNode(nodeData);
-                setDataReady(true);
+
+                setBlocks({
+                  data: blocksData.success ? blocksData.data.blocks : [],
+                  success: blocksData.success,
+                });
+
+                setRounds({
+                  data: roundsData.success
+                    ? (roundsData as any).data.map((round: any) => ({
+                        key: round.round,
+                        value: round.blockWasProposed,
+                      }))
+                    : [],
+                  success: roundsData.success,
+                });
+
+                if (isMainnet && identityData) {
+                  setIdentity(identityData);
+                }
+
+                setDataReady(nodeData.success);
               }
             });
           } else {
-            setNode(nodeData);
-            setDataReady(true);
+            if (isMainnet && nodeData.data.identity !== undefined) {
+              getIdentity(nodeData.data.identity).then((identityData) => {
+                if (ref.current !== null) {
+                  if (isMainnet && identityData) {
+                    setIdentity(identityData);
+                    setNode(nodeData);
+                    setDataReady(true);
+                  }
+                }
+              });
+            } else {
+              setNode(nodeData);
+              setDataReady(true);
+            }
           }
+        } else {
+          setDataReady(false);
         }
-      } else {
-        setDataReady(false);
       }
     });
   };
