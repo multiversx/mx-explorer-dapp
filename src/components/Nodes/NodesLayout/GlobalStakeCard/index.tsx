@@ -43,12 +43,12 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
               ) : (
                 'N/A'
               )}
-              <small className="text-secondary">
-                Deliquent stake:{' '}
+              {/* <small>
+                <span className="text-secondary">Deliquent stake:</span>{' '}
                 {globalStake && globalStake.deliquentStake
                   ? `${globalStake.deliquentStake}%`
                   : 'N/A'}
-              </small>
+              </small> */}
             </div>
           </div>
 
@@ -61,10 +61,10 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
               <h5 className="m-0 pb-1">
                 {globalStake && globalStake.apr ? `${globalStake.apr}%` : 'N/A'}
               </h5>
-              <small className="text-secondary">
+              {/* <small>
                 {globalStake && globalStake.waitingList ? `${globalStake.waitingList}% ` : 'N/A '}
-                for waiting list
-              </small>
+                <span className="text-secondary">for waiting list</span>
+              </small> */}
             </div>
           </div>
 
