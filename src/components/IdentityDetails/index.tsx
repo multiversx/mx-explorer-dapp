@@ -33,14 +33,14 @@ const IdentityDetails = () => {
       getNodes({ ...queryObject, identity: id, size }),
       getNodesCount({ ...queryObject, identity: id }),
     ]).then(([identityData, providersData, nodesData, nodesCount]) => {
-      setIdentity(identityData.data);
-
-      setProviders(providersData.data);
-      setProvidersFetched(providersData.success);
-
-      setNodes(nodesData.data);
-      setTotalNodes(nodesCount.data);
-      setDataReady(identityData.success && nodesData.success);
+      if (ref.current !== null) {
+        setIdentity(identityData.data);
+        setProviders(providersData.data);
+        setProvidersFetched(providersData.success);
+        setNodes(nodesData.data);
+        setTotalNodes(nodesCount.data);
+        setDataReady(identityData.success && nodesData.success);
+      }
     });
   };
 

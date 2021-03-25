@@ -117,13 +117,9 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
           </span>
         </CardItem>
 
-        <CardItem title="Total Cumulated Rewards" icon={faCoins}>
+        <CardItem title="Cumulated Rewards" icon={faCoins}>
           <span className="text-secondary">
-            {provider.totalCumulatedRewards ? (
-              <Denominate value={provider.totalCumulatedRewards} />
-            ) : (
-              <>0</>
-            )}
+            {provider.cumulatedRewards ? <Denominate value={provider.cumulatedRewards} /> : <>0</>}
           </span>
         </CardItem>
 
