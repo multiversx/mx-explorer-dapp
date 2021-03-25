@@ -15,8 +15,8 @@ type SortFieldType =
   | 'serviceFee'
   | 'numNodes'
   | 'apr'
-  | 'totalActiveStake'
-  | 'maxDelegationCap'
+  | 'stake'
+  | 'delegationCap'
   | 'name'
   | undefined;
 type SortDirectionType = 'asc' | 'desc' | undefined;
@@ -69,24 +69,24 @@ const ProvidersTable = ({
       switch (true) {
         case sortField === 'name':
           const sortedNames = displayProviders.filter(
-            (provider) => provider.identity && provider.identity.name
+            (provider) => provider.identityDetails && provider.identityDetails.name
           );
           const sortedContracts = displayProviders.filter(
-            (provider) => !(provider.identity && provider.identity.name)
+            (provider) => !(provider.identityDetails && provider.identityDetails.name)
           );
           sortedNames.sort((a, b) => {
-            const aName = a.identity && a.identity.name ? a.identity.name : '';
-            const bName = b.identity && b.identity.name ? b.identity.name : '';
+            const aName = a.identityDetails && a.identityDetails.name ? a.identityDetails.name : '';
+            const bName = b.identityDetails && b.identityDetails.name ? b.identityDetails.name : '';
             return aName > bName ? sortParams[0] : sortParams[1];
           });
-          sortedContracts.sort((a, b) => (a.contract > b.contract ? sortParams[0] : sortParams[1]));
+          sortedContracts.sort((a, b) => (a.provider > b.provider ? sortParams[0] : sortParams[1]));
           displayProviders = [...sortedNames, ...sortedContracts];
           break;
 
         case sortField === 'filled':
           displayProviders.sort((a, b) => {
-            let aFilled = getPercentageFilled(a.totalActiveStake, a.maxDelegationCap);
-            let bFilled = getPercentageFilled(b.totalActiveStake, b.maxDelegationCap);
+            let aFilled = getPercentageFilled(a.stake, a.delegationCap);
+            let bFilled = getPercentageFilled(b.stake, b.delegationCap);
 
             return parseFloat(aFilled) > parseFloat(bFilled) ? sortParams[0] : sortParams[1];
           });
@@ -132,7 +132,7 @@ const ProvidersTable = ({
               <th>Address</th>
             )}
             <th>
-              <SortTh name="Stake" field="totalActiveStake" />
+              <SortTh name="Stake" field="stake" />
             </th>
             <th>
               <SortTh name="Nodes" field="numNodes" />
@@ -144,7 +144,7 @@ const ProvidersTable = ({
               <SortTh name="Service fee" field="serviceFee" />
             </th>
             <th>
-              <SortTh name="Delegation cap" field="maxDelegationCap" />
+              <SortTh name="Delegation cap" field="delegationCap" />
             </th>
             <th>
               <SortTh name="Filled" field="filled" />
@@ -153,21 +153,21 @@ const ProvidersTable = ({
         </thead>
         <tbody data-testid="providersTable">
           {displayProviders.map((provider, i) => (
-            <tr key={provider.contract}>
+            <tr key={provider.provider}>
               {showIdentity ? (
                 <td>
                   <div className="d-flex align-items-center">
-                    <IdentityAvatar identity={provider.identity || {}} />
+                    <IdentityAvatar identity={provider.identityDetails || {}} />
 
                     <NetworkLink
-                      to={urlBuilder.providerDetails(provider.contract)}
+                      to={urlBuilder.providerDetails(provider.provider)}
                       className="trim-wrapper"
                       data-testid={`providerLink${i}`}
                     >
-                      {provider.identity && provider.identity.name ? (
-                        <>{provider.identity.name}</>
+                      {provider.identityDetails && provider.identityDetails.name ? (
+                        <>{provider.identityDetails.name}</>
                       ) : (
-                        <Trim text={provider.contract} />
+                        <Trim text={provider.provider} />
                       )}
                     </NetworkLink>
                   </div>
@@ -176,23 +176,17 @@ const ProvidersTable = ({
                 <td>
                   <div className="d-flex align-items-center">
                     <NetworkLink
-                      to={urlBuilder.providerDetails(provider.contract)}
+                      to={urlBuilder.providerDetails(provider.provider)}
                       className="trim-wrapper"
                       data-testid={`providerLink${i}`}
                     >
-                      <Trim text={provider.contract} />
+                      <Trim text={provider.provider} />
                     </NetworkLink>
-                    <CopyButton text={provider.contract} />
+                    <CopyButton text={provider.provider} />
                   </div>
                 </td>
               )}
-              <td>
-                {provider.totalActiveStake ? (
-                  <Denominate value={provider.totalActiveStake} />
-                ) : (
-                  <>N/A</>
-                )}
-              </td>
+              <td>{provider.stake ? <Denominate value={provider.stake} /> : <>N/A</>}</td>
               <td>
                 {provider.numNodes !== undefined ? (
                   <>
@@ -212,22 +206,17 @@ const ProvidersTable = ({
                   <>N/A</>
                 )}
               </td>
+              <td>{provider.serviceFee ? <>{provider.serviceFee * 100}%</> : <>N/A</>}</td>
               <td>
-                {provider.serviceFee ? <>{parseInt(provider.serviceFee) / 100}%</> : <>N/A</>}
-              </td>
-              <td>
-                {provider.maxDelegationCap ? (
-                  <DelegationCap maxDelegationCap={provider.maxDelegationCap} />
+                {provider.delegationCap ? (
+                  <DelegationCap delegationCap={provider.delegationCap} />
                 ) : (
                   <>N/A</>
                 )}
               </td>
               <td>
-                {provider.totalActiveStake && provider.maxDelegationCap ? (
-                  <PercentageFilled
-                    totalActiveStake={provider.totalActiveStake}
-                    maxDelegationCap={provider.maxDelegationCap}
-                  />
+                {provider.stake && provider.delegationCap ? (
+                  <PercentageFilled stake={provider.stake} delegationCap={provider.delegationCap} />
                 ) : (
                   <>N/A</>
                 )}

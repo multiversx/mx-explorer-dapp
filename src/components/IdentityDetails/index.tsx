@@ -14,7 +14,7 @@ const IdentityDetails = () => {
   const { getIdentity, getNodes, getNodesCount, getProviders } = adapter();
   const { getQueryObject, size } = useFilters();
   const {
-    activeNetwork: { walletAddress, delegationApi },
+    activeNetwork: { walletAddress },
   } = useGlobalState();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
@@ -29,12 +29,7 @@ const IdentityDetails = () => {
 
     Promise.all([
       getIdentity(id),
-      getProviders({
-        baseUrl: delegationApi || '',
-        props: {
-          identity: id,
-        },
-      }),
+      getProviders({ identity: id }),
       getNodes({ ...queryObject, identity: id, size }),
       getNodesCount({ ...queryObject, identity: id }),
     ]).then(([identityData, providersData, nodesData, nodesCount]) => {

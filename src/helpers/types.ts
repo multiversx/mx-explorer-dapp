@@ -28,16 +28,18 @@ export interface TokenType {
 }
 
 export interface ProviderType {
-  identity?: IdentityType;
-  contract: string;
-  serviceFee: string;
-  maxDelegationCap: string;
+  provider: string;
   apr: string;
-  totalActiveStake: string;
+  delegationCap: string;
   locked: string;
-  topUp: string;
   numUsers: number;
   numNodes: number;
+  owner: string;
+  serviceFee: number;
+  stake: string;
+  topUp: string;
+  identity?: string;
+  identityDetails?: IdentityType;
 
   // not used
   initialOwnerFunds?: string;

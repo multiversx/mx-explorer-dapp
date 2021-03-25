@@ -6,14 +6,10 @@ import { SharedIdentity } from 'sharedComponents';
 import { types, useIsMainnet } from 'helpers';
 import ProviderDetailsCard from './ProviderDetailsCard';
 import { providerRoutes } from 'routes';
-import { useGlobalState } from 'context';
 import { IdentityType } from 'context/state';
 
 const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
-  const {
-    activeNetwork: { delegationApi },
-  } = useGlobalState();
   const match: any = useRouteMatch(providerRoutes.index);
   const address = match ? match.params.hash : undefined;
   const { getProvider, getIdentity } = adapter();
@@ -24,7 +20,7 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   const [identity, setIdentity] = React.useState<IdentityType>();
 
   const fetchData = () => {
-    getProvider({ baseUrl: delegationApi || '', address }).then(({ success, data }) => {
+    getProvider({ address }).then(({ success, data }) => {
       if (ref.current !== null) {
         setProvider(data);
         if (data.identity && data.identity.key) {

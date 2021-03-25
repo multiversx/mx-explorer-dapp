@@ -46,6 +46,7 @@ export interface ProviderPropsType {
     validator?: string;
     fields?: any;
     identity?: string;
+    identities?: string;
     provider?: string;
     sort?: string;
     order?: string;
