@@ -39,7 +39,9 @@ export interface ProviderType {
   stake: string;
   topUp: string;
   identity?: string;
-  identityDetails?: IdentityType;
+  cumulatedRewards?: string;
+
+  identityDetails?: IdentityType; // local field
 
   // not used
   initialOwnerFunds?: string;
@@ -50,7 +52,7 @@ export interface ProviderType {
   createdNonce?: number;
   unBondPeriod?: number;
   totalUnStaked?: string;
-  totalCumulatedRewards?: string;
+
   totalUnStakedFromNodes?: string;
   totalUnBondedFromNodes?: string;
   maxDelegateAmountAllowed?: string;
