@@ -28,8 +28,8 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
   } = useGlobalState();
 
   const website = walletAddress;
-  // provider && provider.identity && provider.identity.website
-  //   ? provider.identity.website
+  // provider && provider.identityDetails && provider.identityDetails.website
+  //   ? provider.identityDetails.website
   //   : walletAddress;
 
   return provider !== undefined ? (
@@ -49,10 +49,10 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
         <div className="card-header-item compact d-flex">
           <span className="flex-shrink-0">Address:</span>
           <div className="d-flex align-items-center text-break-all ml-2 text-secondary">
-            <NetworkLink to={urlBuilder.accountDetails(provider.contract)} data-testid="address">
-              {provider.contract}
+            <NetworkLink to={urlBuilder.accountDetails(provider.provider)} data-testid="address">
+              {provider.provider}
             </NetworkLink>
-            <CopyButton text={provider.contract} />
+            <CopyButton text={provider.provider} />
           </div>
         </div>
       </div>
@@ -85,26 +85,26 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
 
         <CardItem title="Service fee" icon={faPercent}>
           <span className="text-secondary">
-            {provider.serviceFee ? <>{parseInt(provider.serviceFee) / 100}%</> : <>N/A</>}
+            {provider.serviceFee ? <>{provider.serviceFee * 100}%</> : <>N/A</>}
           </span>
         </CardItem>
 
         <CardItem title="Locked" icon={faLock}>
-          {provider.totalActiveStake ? (
+          {provider.locked ? (
             <div className="d-flex align-items-center">
               <span className="mr-2">
-                <Denominate value={provider.totalActiveStake} />
+                <Denominate value={provider.locked} />
               </span>
 
-              {/* <LockedAmountTooltip
+              <LockedAmountTooltip
                 lockedDetails={[
-                  { label: 'Stake', value: <Denominate value={provider.totalActiveStake} /> },
+                  { label: 'Stake', value: <Denominate value={provider.stake} /> },
                   {
                     label: 'Topup',
                     value: <Denominate value={provider.topUp} />,
                   },
                 ]}
-              /> */}
+              />
             </div>
           ) : (
             <span className="text-secondary">N/A</span>
@@ -129,23 +129,18 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
 
         <CardItem title="Delegation Cap" icon={faArrowToTop}>
           <span className="text-secondary">
-            {provider.maxDelegationCap ? (
-              <DelegationCap maxDelegationCap={provider.maxDelegationCap} />
+            {provider.delegationCap ? (
+              <DelegationCap delegationCap={provider.delegationCap} />
             ) : (
               <>N/A</>
             )}
           </span>
         </CardItem>
 
-        {stringIsInteger(
-          getPercentageFilled(provider.totalActiveStake, provider.maxDelegationCap)
-        ) && (
+        {stringIsInteger(getPercentageFilled(provider.stake, provider.delegationCap)) && (
           <CardItem title="Filled" icon={faChartPieAlt}>
             <span className="text-secondary">
-              <PercentageFilled
-                totalActiveStake={provider.totalActiveStake}
-                maxDelegationCap={provider.maxDelegationCap}
-              />
+              <PercentageFilled stake={provider.stake} delegationCap={provider.delegationCap} />
             </span>
           </CardItem>
         )}

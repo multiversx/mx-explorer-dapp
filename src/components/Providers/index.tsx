@@ -2,14 +2,15 @@ import React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { adapter, ProvidersTable, Loader, PageState } from 'sharedComponents';
 import { useGlobalState } from 'context';
+import { IdentityType } from 'context/state';
 import NodesTabs from 'components/Nodes/NodesLayout/NodesTabs';
 import { types } from 'helpers';
 
 const Providers = () => {
   const ref = React.useRef(null);
-  const { getProviders } = adapter();
+  const { getProviders, getIdentities } = adapter();
   const {
-    activeNetwork: { delegationApi, id },
+    activeNetwork: { id },
   } = useGlobalState();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -19,24 +20,51 @@ const Providers = () => {
     setDataReady(undefined);
 
     getProviders({
-      baseUrl: delegationApi || '',
-      props: {
-        fields: [
-          'identity',
-          'contract',
-          'totalActiveStake',
-          'numNodes',
-          'apr',
-          'serviceFee',
-          'maxDelegationCap',
-        ].join(','),
-      },
+      fields: [
+        'identity',
+        'provider',
+        'stake',
+        'numNodes',
+        'apr',
+        'serviceFee',
+        'delegationCap',
+      ].join(','),
     }).then((providersData) => {
       if (ref.current !== null) {
         if (providersData.success) {
-          setProviders(providersData.data);
+          let newProvidersData: types.ProviderType[] = providersData.data;
+
+          const identities = newProvidersData
+            .filter((item) => item.identity)
+            .map((item) => item.identity)
+            .join(',');
+
+          if (identities) {
+            getIdentities(identities).then((identitiesData) => {
+              if (identitiesData.success) {
+                newProvidersData.forEach((provider) => {
+                  if (provider.identity) {
+                    const identityDetails = identitiesData.data.find(
+                      (identity: IdentityType) => identity.identity === provider.identity
+                    );
+
+                    if (identityDetails) {
+                      provider.identityDetails = identityDetails;
+                    }
+                  }
+                });
+              }
+
+              setProviders(newProvidersData);
+              setDataReady(providersData.success && identitiesData.success);
+            });
+          } else {
+            setProviders(providersData.data);
+            setDataReady(providersData.success);
+          }
+        } else {
+          setDataReady(providersData.success);
         }
-        setDataReady(providersData.success);
       }
     });
   };

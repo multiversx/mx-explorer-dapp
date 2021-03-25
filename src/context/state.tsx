@@ -39,7 +39,6 @@ export interface IdentityType {
   locked: string;
   stakePercent: number;
   validators: number;
-  key?: string;
   rank?: number;
   overallStakePercent?: number;
   twitter?: string;

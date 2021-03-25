@@ -3,14 +3,10 @@ import { BigNumber } from 'bignumber.js';
 import { nominate } from 'helpers';
 import { Denominate } from 'sharedComponents';
 
-const DelegationCap = ({ maxDelegationCap }: { maxDelegationCap: string }) => {
-  const bnmaxDelegationCap = new BigNumber(nominate(String(maxDelegationCap)));
+const DelegationCap = ({ delegationCap }: { delegationCap: string }) => {
+  const bnDelegationCap = new BigNumber(nominate(String(delegationCap)));
 
-  return bnmaxDelegationCap.isGreaterThan(0) ? (
-    <Denominate value={maxDelegationCap} />
-  ) : (
-    <>Uncapped</>
-  );
+  return bnDelegationCap.isGreaterThan(0) ? <Denominate value={delegationCap} /> : <>Uncapped</>;
 };
 
 export default DelegationCap;

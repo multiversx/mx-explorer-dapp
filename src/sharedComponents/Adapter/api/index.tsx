@@ -22,19 +22,11 @@ export default {
       timeout,
     });
   },
-  getAccountDelegation: (props: ProviderPropsType & { proxyUrl: string; address: string }) => {
-    const { proxyUrl, address, timeout } = props;
-    return axios.get(`${proxyUrl}/accounts/${address}/delegation`, { timeout });
-  },
-  getAccountStake: (props: ProviderPropsType & { proxyUrl: string; address: string }) => {
-    const { proxyUrl, address, timeout } = props;
-    return axios.get(`${proxyUrl}/accounts/${address}/stake`, { timeout });
-  },
-  getEconomics: (props: ProviderPropsType & { proxyUrl: string }) => {
-    const { proxyUrl, timeout } = props;
-    return axios.get(`${proxyUrl}/economics`, { timeout });
-  },
-
+  getAccountDelegation: api,
+  getAccountStake: api,
+  getProviders: api,
+  getProvider: api,
+  getEconomics: api,
   getEgldPrice: (props: ProviderPropsType) => {
     const { timeout } = props;
     return axios.get(`https://data.elrond.com/series/quotes/egld/price`, { timeout });

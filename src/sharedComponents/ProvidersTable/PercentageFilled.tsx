@@ -3,22 +3,22 @@ import { BigNumber } from 'bignumber.js';
 import { nominate } from 'helpers';
 
 interface PercentageFilledType {
-  totalActiveStake: string;
-  maxDelegationCap: string;
+  stake: string;
+  delegationCap: string;
 }
 
-export const getPercentageFilled = (totalActiveStake: string, maxDelegationCap: string) => {
-  const bnTotalActiveStake = new BigNumber(nominate(String(totalActiveStake)));
-  const bnmaxDelegationCap = new BigNumber(nominate(String(maxDelegationCap)));
+export const getPercentageFilled = (stake: string, delegationCap: string) => {
+  const bnStake = new BigNumber(nominate(String(stake)));
+  const bnDelegationCap = new BigNumber(nominate(String(delegationCap)));
 
-  return bnTotalActiveStake.multipliedBy(100).dividedToIntegerBy(bnmaxDelegationCap).toString(10);
+  return bnStake.multipliedBy(100).dividedToIntegerBy(bnDelegationCap).toString(10);
 };
 
-const PercentageFilled = ({ totalActiveStake, maxDelegationCap }: PercentageFilledType) => {
-  const bnmaxDelegationCap = new BigNumber(nominate(String(maxDelegationCap)));
-  const percentage = getPercentageFilled(totalActiveStake, maxDelegationCap);
+const PercentageFilled = ({ stake, delegationCap }: PercentageFilledType) => {
+  const bnDelegationCap = new BigNumber(nominate(String(delegationCap)));
+  const percentage = getPercentageFilled(stake, delegationCap);
 
-  return bnmaxDelegationCap.isGreaterThan(0) ? <>{percentage}%</> : <>Uncapped</>;
+  return bnDelegationCap.isGreaterThan(0) ? <>{percentage}%</> : <>Uncapped</>;
 };
 
 export default PercentageFilled;

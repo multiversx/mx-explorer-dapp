@@ -24,7 +24,7 @@ export interface LockedAmountType {
 const AccountDetailsCard = () => {
   const ref = React.useRef(null);
   const {
-    activeNetwork: { id, adapter: networkAdapter, delegationApi },
+    activeNetwork: { id, adapter: networkAdapter },
     accountDetails,
     accountTokens,
   } = useGlobalState();
@@ -72,7 +72,7 @@ const AccountDetailsCard = () => {
   const [isProvider, setIsProvider] = React.useState(false);
   const fetchProviderDetails = () => {
     if (isContract(address)) {
-      getProvider({ baseUrl: delegationApi || '', address }).then(({ success, data }) => {
+      getProvider({ address }).then(({ success, data }) => {
         if (ref.current !== null) {
           if (success && data !== undefined) {
             setIsProvider(true);
