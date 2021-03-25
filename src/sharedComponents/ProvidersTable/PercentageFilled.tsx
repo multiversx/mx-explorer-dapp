@@ -10,8 +10,9 @@ interface PercentageFilledType {
 export const getPercentageFilled = (stake: string, delegationCap: string) => {
   const bnStake = new BigNumber(nominate(String(stake)));
   const bnDelegationCap = new BigNumber(nominate(String(delegationCap)));
+  const percentageBn = bnStake.multipliedBy(100).dividedToIntegerBy(bnDelegationCap);
 
-  return bnStake.multipliedBy(100).dividedToIntegerBy(bnDelegationCap).toString(10);
+  return percentageBn.isNaN() ? 'Infinity' : percentageBn.toString(10);
 };
 
 const PercentageFilled = ({ stake, delegationCap }: PercentageFilledType) => {
