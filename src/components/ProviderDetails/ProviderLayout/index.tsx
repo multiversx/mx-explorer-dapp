@@ -22,15 +22,19 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   const fetchData = () => {
     getProvider({ address }).then(({ success, data }) => {
       if (ref.current !== null) {
-        setProvider(data);
-        if (data.identity && data.identity.key) {
-          getIdentity(data.identity.key).then((identityData) => {
-            if (identityData.success) {
-              setIdentity(identityData.data);
-            }
-
+        if (success) {
+          if (data.identity) {
+            getIdentity(data.identity).then((identityData) => {
+              if (identityData.success) {
+                setIdentity(identityData.data);
+              }
+              setProvider(data);
+              setDataReady(success);
+            });
+          } else {
+            setProvider(data);
             setDataReady(success);
-          });
+          }
         } else {
           setDataReady(success);
         }
