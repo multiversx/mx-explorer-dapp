@@ -5,8 +5,37 @@ import { Denominate, MultilayerPercentageBar, SharedIdentity } from 'sharedCompo
 import { ReactComponent as TwitterLogo } from 'assets/images/logos/twitter.svg';
 import { faMapMarkerAlt } from '@fortawesome/pro-solid-svg-icons/faMapMarkerAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { PercentageStepType } from 'sharedComponents/MultilayerPercentageBar';
+
+const prepareStakeDistribution = (identity: IdentityType) => {
+  const distribution: PercentageStepType[] = [];
+  if (identity.distribution && identity.distribution.length > 0) {
+    const duplicate = [...identity.distribution];
+
+    const direct = duplicate.pop();
+    if (direct) {
+      distribution.push({ name: 'Direct-staked', percent: direct * 100 });
+    }
+
+    duplicate.forEach((percentage) => {
+      distribution.push({ name: 'Contract', percent: percentage * 100 });
+    });
+
+    distribution.sort((a, b) => b.percent - a.percent);
+
+    distribution.forEach((item, i) => {
+      if (item.name !== 'Direct-staked') {
+        item.name = `${item.name} ${direct ? i : i + 1}`;
+      }
+    });
+  }
+
+  return distribution.sort((a, b) => b.percent - a.percent);
+};
 
 const IdentityCard = ({ identity }: { identity: IdentityType }) => {
+  const distribution = prepareStakeDistribution(identity);
+
   return identity !== undefined ? (
     <div className="identity-card card">
       <div className="card-body p-3 p-lg-4">
@@ -84,14 +113,11 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
             </div>
             <div className="d-flex flex-column flex-fill mt-4 mt-lg-0">
               <h6 className="mb-3">Stake Distribution</h6>
-              <span className="text-secondary">N/A</span>
-              {/* <MultilayerPercentageBar
-                steps={[
-                  { name: 'Direct-staked', percent: 70 },
-                  { name: 'Contract 1', percent: 30 },
-                  // { name: 'Contract 2', percent: 10 },
-                ]}
-              /> */}
+              {distribution && distribution.length > 0 ? (
+                <MultilayerPercentageBar steps={distribution} />
+              ) : (
+                <span className="text-secondary">N/A</span>
+              )}
             </div>
           </div>
         </div>
