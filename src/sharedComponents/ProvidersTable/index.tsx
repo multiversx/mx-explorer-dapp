@@ -202,7 +202,16 @@ const ProvidersTable = ({
                   <>N/A</>
                 )}
               </td>
-              <td>{provider.apr ? <>{provider.apr}%</> : <>N/A</>}</td>
+              <td>
+                {provider.apr ? (
+                  <>
+                    {provider.apr}
+                    {provider.apr !== 'N/A' ? '%' : ''}
+                  </>
+                ) : (
+                  <>N/A</>
+                )}
+              </td>
               <td>
                 {provider.serviceFee ? <>{parseInt(provider.serviceFee) / 100}%</> : <>N/A</>}
               </td>

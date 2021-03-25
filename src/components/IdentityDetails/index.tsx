@@ -67,7 +67,7 @@ const IdentityDetails = () => {
       )}
       <div ref={ref}>
         {dataReady === true && identity && (
-          <div className="container pt-spacer">
+          <div className="container page-content">
             <div className="row" data-testid="identityDetailsContainer">
               <div className="col-12 mb-spacer">
                 <SharedIdentity.Card identity={identity} />

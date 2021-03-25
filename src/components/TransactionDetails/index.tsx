@@ -63,7 +63,7 @@ const TransactionDetails = () => {
       )}
       <div ref={ref}>
         {dataReady === true && transaction && (
-          <div className="container pt-spacer">
+          <div className="container page-content">
             <div className="row">
               <div className="col-12">
                 <TransactionInfo transaction={transaction} />
