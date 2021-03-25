@@ -17,8 +17,8 @@ const LockedAmountTooltip = ({ lockedDetails }: { lockedDetails: LockedItemType[
         <Tooltip id="locked-amount-tooltip" {...props} show={props.show.toString()}>
           {lockedDetails.map(({ label, value }, i) => (
             <div key={i} className="locked-item">
-              <span className="locked-item-label">{label}</span>
-              <span className="text-secondary">{value}</span>
+              <span className="locked-item-label text-secondary">{label}</span>
+              <span>{value}</span>
             </div>
           ))}
         </Tooltip>

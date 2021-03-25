@@ -21,8 +21,8 @@ const CardItem = ({
     </div>
 
     <div className="min-w-0">
-      <div className="card-item-title">{title}</div>
-      <div className="card-item-value d-flex flex-row flex-nowrap text-secondary">{children}</div>
+      <div className="card-item-title text-secondary">{title}</div>
+      <div className="card-item-value d-flex flex-row flex-nowrap">{children}</div>
     </div>
   </div>
 );

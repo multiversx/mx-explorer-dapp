@@ -35,31 +35,25 @@ const IdentitySummary = ({ identity }: { identity: IdentityType | undefined }) =
               </div>
 
               <div className="d-flex align-items-center mr-4">
-                <span className="pr-2">Stake Balance:</span>
-                <span className="text-secondary">
-                  {identity.locked ? <Denominate value={identity.locked} /> : 'N/A'}
-                </span>
+                <span className="text-secondary pr-2">Stake Balance:</span>
+                {identity.locked ? <Denominate value={identity.locked} /> : 'N/A'}
               </div>
               <div className="d-flex align-items-center mr-4">
-                <span className="pr-2">Stake percent:</span>
-                <span className="text-secondary">
-                  {identity.stakePercent ? (
-                    <>
-                      {Math.round(identity.stakePercent) > 0
-                        ? Math.round(identity.stakePercent)
-                        : '< 1'}
-                      %
-                    </>
-                  ) : (
-                    'N/A'
-                  )}
-                </span>
+                <span className="text-secondary pr-2">Stake percent:</span>
+                {identity.stakePercent ? (
+                  <>
+                    {Math.round(identity.stakePercent) > 0
+                      ? Math.round(identity.stakePercent)
+                      : '< 1'}
+                    %
+                  </>
+                ) : (
+                  'N/A'
+                )}
               </div>
               <div className="d-flex align-items-center">
-                <span className="pr-2">Nodes:</span>
-                <span className="text-secondary">
-                  {identity.validators ? identity.validators : 'N/A'}
-                </span>
+                <span className="text-secondary pr-2">Nodes:</span>
+                {identity.validators ? identity.validators : 'N/A'}
               </div>
             </div>
           </div>

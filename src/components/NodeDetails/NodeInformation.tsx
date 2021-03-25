@@ -38,12 +38,12 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
           <h6 data-testid="title">Node Details</h6>
         </div>
         <div className="card-header-item compact d-flex">
-          <span className="flex-shrink-0 mr-2">Public key:</span>
+          <span className="flex-shrink-0 text-secondary mr-2">Public key:</span>
 
           <div className="d-flex flex-column min-w-0">
             <div className="d-flex align-items-center">
               {type === 'observer' && <RowIcon node={nodeData} />}
-              <Trim color="secondary" text={node} />
+              <Trim text={node} />
               <CopyButton text={node} className="ml-2" />
             </div>
             <Alert node={nodeData} />
@@ -57,37 +57,35 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
               <ShardSpan shard={shard} />
             </NetworkLink>
           ) : (
-            <span className="text-secondary">N/A</span>
+            <>N/A</>
           )}
         </CardItem>
 
         <CardItem title="Version" icon={faLock}>
-          <span className="text-secondary" data-testid="version">
-            {version ? version : <>N/A</>}
-          </span>
+          <span data-testid="version">{version ? version : <>N/A</>}</span>
         </CardItem>
 
         <CardItem title="Instances" icon={faCheck}>
-          <span className="text-secondary">{instances ? instances : <>N/A</>}</span>
+          {instances ? instances : <>N/A</>}
         </CardItem>
 
         <CardItem title="Name" icon={faServer}>
-          <span className="text-secondary">{name ? name : <>N/A</>}</span>
+          {name ? name : <>N/A</>}
         </CardItem>
 
         <CardItem title="Type" icon={faCheck}>
-          <span className="text-secondary">
+          <>
             {type === 'observer' && <>Observer</>}
             {type !== 'observer' && (
               <>
                 Validator <span className="text-secondary">({online ? 'online' : 'offline'})</span>
               </>
             )}
-          </span>
+          </>
         </CardItem>
 
         <CardItem title="Nonce" icon={faCheck}>
-          <span className="text-secondary">{nonce ? nonce : <>N/A</>}</span>
+          {nonce ? nonce : <>N/A</>}
         </CardItem>
 
         <CardItem title="Locked" icon={faLock}>

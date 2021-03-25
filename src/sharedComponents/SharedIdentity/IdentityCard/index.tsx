@@ -61,31 +61,25 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
               <h6 className="mb-3">Validator Details</h6>
 
               <div className="d-flex">
-                <span className="pr-2">Stake Balance:</span>
-                <span className="text-secondary">
-                  {identity.locked ? <Denominate value={identity.locked} /> : 'N/A'}
-                </span>
+                <span className="text-secondary pr-2">Stake Balance:</span>
+                {identity.locked ? <Denominate value={identity.locked} /> : 'N/A'}
               </div>
               <div className="d-flex mt-2">
-                <span className="pr-2">Stake percent:</span>
-                <span className="text-secondary">
-                  {identity.stakePercent ? (
-                    <>
-                      {Math.round(identity.stakePercent) > 0
-                        ? Math.round(identity.stakePercent)
-                        : '< 1'}
-                      %
-                    </>
-                  ) : (
-                    'N/A'
-                  )}
-                </span>
+                <span className="text-secondary pr-2">Stake percent:</span>
+                {identity.stakePercent ? (
+                  <>
+                    {Math.round(identity.stakePercent) > 0
+                      ? Math.round(identity.stakePercent)
+                      : '< 1'}
+                    %
+                  </>
+                ) : (
+                  'N/A'
+                )}
               </div>
               <div className="d-flex mt-2">
-                <span className="pr-2">Nodes:</span>
-                <span className="text-secondary">
-                  {identity.validators ? identity.validators : 'N/A'}
-                </span>
+                <span className="text-secondary pr-2">Nodes:</span>
+                {identity.validators ? identity.validators : 'N/A'}
               </div>
             </div>
             <div className="d-flex flex-column flex-fill mt-4 mt-lg-0">
