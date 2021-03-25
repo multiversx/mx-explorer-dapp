@@ -27,15 +27,16 @@ const CONFIG = {
   networks: [
     {
       default: true,
-      id: 'devnet',
-      name: 'Devnet',
+      id: 'mainnet',
+      name: 'Mainnet',
       adapter: 'api',
-      apiUrl: 'https://devnet-api.elrond.com',
+      apiUrl: 'https://beta-api.elrond.com',
       validatorDetails: true,
-      erdLabel: 'XeGLD',
-      walletAddress: 'https://devnet-wallet.elrond.com/',
-      explorerAddress: 'https://devnet-explorer.elrond.com/',
-      theme: 'testnet',
+      erdLabel: 'EGLD',
+      walletAddress: 'https://wallet.elrond.com/',
+      explorerAddress: 'https://explorer.elrond.com/',
+      theme: 'light',
+      accessToken: true,
     },
   ],
   elrondApps: [
@@ -46,13 +47,13 @@ const CONFIG = {
     },
     {
       id: 'wallet',
-      name: 'Devnet Wallet',
-      url: 'https://devnet-wallet.elrond.com',
+      name: 'Wallet',
+      url: 'https://wallet.elrond.com/',
     },
     {
       id: 'explorer',
-      name: 'Devnet Explorer', // navbar title
-      url: 'http://devnet-explorer.elrond.com',
+      name: 'Explorer', // navbar title
+      url: 'https://explorer.elrond.com/',
     },
     {
       id: 'bridge',

@@ -17,7 +17,6 @@ const networkBaseSchema = object({
   walletAddress: string(),
   explorerAddress: string(),
   accessToken: boolean(),
-  delegationApi: string(),
 }).required();
 
 export const adapterSchema = object({
