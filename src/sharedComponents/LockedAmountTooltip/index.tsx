@@ -15,8 +15,8 @@ const LockedAmountTooltip = ({ lockedDetails }: { lockedDetails: LockedItemType[
       delay={{ show: 0, hide: 400 }}
       overlay={(props: any) => (
         <Tooltip id="locked-amount-tooltip" {...props} show={props.show.toString()}>
-          {lockedDetails.map(({ label, value }) => (
-            <div className="locked-item">
+          {lockedDetails.map(({ label, value }, i) => (
+            <div key={i} className="locked-item">
               <span className="locked-item-label">{label}</span>
               <span className="text-secondary">{value}</span>
             </div>
