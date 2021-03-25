@@ -64,7 +64,6 @@ const NetworkHealth = () => {
   const ref = React.useRef(null);
   const pageHidden = document.hidden;
 
-  const [animationActive /*setAnimationActive*/] = React.useState(true);
   const [stateBuffer, setStateBuffer] = React.useState<typeof initialState | undefined>();
   const [state, setState] = React.useState(initialState);
 
@@ -112,44 +111,23 @@ const NetworkHealth = () => {
   };
 
   const updateSate = () => {
-    if (blockTimeProgress === intervalInSec && stateBuffer !== undefined) {
-      setState(stateBuffer);
+    if (ref.current !== null) {
+      if (blockTimeProgress === intervalInSec && stateBuffer !== undefined) {
+        setState(stateBuffer);
+      }
     }
   };
   React.useEffect(updateSate, [blockTimeProgress]);
 
   const { blocks, accounts, transactions, epoch, epochPercentage, epochTimeRemaining } = state;
 
-  const play = animationActive && !pageHidden;
+  const play = !pageHidden;
 
   return (
     <div ref={ref} className="card network-health">
       <div className="card-header">
         <div className="card-header-item d-flex justify-content-between align-items-center">
           <h6 className="m-0">Network Health</h6>
-          {/* 
-          <div className="d-flex align-items-center">
-            <span className={`nav-link p-0 mr-2 ${!animationActive ? 'text-primary' : ''}`}>
-              Stop
-            </span>
-            <div className="custom-control custom-toggle custom-toggle-sm">
-              <input
-                defaultChecked={animationActive}
-                type="checkbox"
-                id="animation-toggle"
-                name="animation-toggle"
-                className="custom-control-input"
-                onChange={() => {
-                  setAnimationActive((animationActive) => !animationActive);
-                }}
-              />
-              <label className="custom-control-label" htmlFor="animation-toggle" />
-            </div>
-            <span className={`nav-link p-0 ml-2 ${animationActive ? 'text-primary' : ''}`}>
-              Play
-            </span>
-          </div>
-          */}
         </div>
       </div>
       <div className="card-body d-flex justify-content-center align-items-center">

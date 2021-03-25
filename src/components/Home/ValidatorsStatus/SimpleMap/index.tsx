@@ -71,7 +71,7 @@ const SimpleMap = ({ markers }: SimpleMapType) => {
   };
 
   const chooseLeaders = () => {
-    if (markers.length > 0) {
+    if (ref.current !== null && markers.length > 0) {
       const newLeaders: string[] = [];
       const newMax = getRandomInt(1, 4);
 
@@ -85,7 +85,9 @@ const SimpleMap = ({ markers }: SimpleMapType) => {
       setLeaders(newLeaders);
 
       setTimeout(() => {
-        setLeaders([]);
+        if (ref.current !== null) {
+          setLeaders([]);
+        }
       }, 1200);
     }
   };
