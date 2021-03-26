@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { isHash, useNetworkRoute, urlBuilder } from 'helpers';
+import { isHash, useNetworkRoute, urlBuilder, useSize } from 'helpers';
 import { Redirect, useParams } from 'react-router-dom';
 import {
   Loader,
@@ -27,7 +27,9 @@ interface MiniBlockType {
 }
 
 const MiniBlockDetails = () => {
-  const { page, hash: miniBlockHash } = useParams() as any;
+  const { hash: miniBlockHash } = useParams() as any;
+  const { size } = useSize();
+
   const ref = React.useRef(null);
   const networkRoute = useNetworkRoute();
 
@@ -41,8 +43,6 @@ const MiniBlockDetails = () => {
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
-
-  const size = parseInt(page!) ? parseInt(page!) : 1;
 
   const invalid = miniBlockHash && !isHash(miniBlockHash);
 
