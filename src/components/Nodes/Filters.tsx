@@ -6,10 +6,12 @@ import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NetworkLink } from 'sharedComponents';
 import { validatorsRoutes } from 'routes';
+import { useNetworkRoute } from 'helpers';
 
 const Filters = () => {
   const { search: locationSearch } = useLocation();
 
+  const networkRoute = useNetworkRoute();
   const history = useHistory();
   const urlParams = new URLSearchParams(locationSearch);
   const { search, peerType, issues, nodeType } = Object.fromEntries(urlParams);
@@ -25,7 +27,7 @@ const Filters = () => {
       ...rest,
       ...(searchValue ? { search: searchValue } : {}),
     }).toString();
-    history.push(`${validatorsRoutes.nodes}?${nextUrlParams}`);
+    history.push(networkRoute(`${validatorsRoutes.nodes}?${nextUrlParams}`));
   };
 
   const peerTypeLink = (peerTypeValue: string) => {
