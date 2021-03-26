@@ -227,7 +227,7 @@ const ProvidersTable = ({
           ))}
           {displayProviders.length === 0 && (
             <tr>
-              <td colSpan={showIdentity ? 2 : 1}>
+              <td colSpan={7}>
                 <PageState
                   icon={faCode}
                   title="No Providers"
