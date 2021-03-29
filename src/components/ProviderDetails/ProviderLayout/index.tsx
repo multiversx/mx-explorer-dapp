@@ -8,6 +8,15 @@ import ProviderDetailsCard from './ProviderDetailsCard';
 import { providerRoutes } from 'routes';
 import { IdentityType } from 'context/state';
 
+interface ProviderLayoutType<T> {
+  data?: T;
+  success: boolean | undefined;
+}
+
+const initialState = {
+  success: undefined,
+};
+
 const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const match: any = useRouteMatch(providerRoutes.index);
@@ -15,30 +24,29 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   const { getProvider, getIdentity } = adapter();
   const isMainnet = useIsMainnet();
 
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
-  const [provider, setProvider] = React.useState<types.ProviderType>();
-  const [identity, setIdentity] = React.useState<IdentityType>();
+  const [provider, setProvider] = React.useState<ProviderLayoutType<types.ProviderType>>(
+    initialState
+  );
+  const [identity, setIdentity] = React.useState<ProviderLayoutType<IdentityType>>(initialState);
 
   const fetchData = () => {
-    getProvider({ address }).then(({ success, data }) => {
+    getProvider({ address }).then((providerData) => {
       if (ref.current !== null) {
-        if (success) {
-          if (data.identity) {
-            getIdentity(data.identity).then((identityData) => {
+        if (providerData.success) {
+          if (providerData.data.identity) {
+            getIdentity(providerData.data.identity).then((identityData) => {
               if (ref.current !== null) {
                 if (identityData.success) {
-                  setIdentity(identityData.data);
+                  setIdentity(identityData);
                 }
-                setProvider(data);
-                setDataReady(success);
+                setProvider(providerData);
               }
             });
           } else {
-            setProvider(data);
-            setDataReady(success);
+            setProvider(providerData);
           }
         } else {
-          setDataReady(success);
+          setProvider(providerData);
         }
       }
     });
@@ -46,10 +54,13 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
 
   React.useEffect(fetchData, []);
 
+  const showIdentity =
+    identity.success === false || (identity.success && identity.data !== undefined);
+
   return (
     <>
-      {dataReady === undefined && <Loader />}
-      {dataReady === false && (
+      {provider.success === undefined && <Loader />}
+      {provider.success === false && (
         <PageState
           icon={faCode}
           title="Unable to load provider details"
@@ -58,19 +69,19 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
         />
       )}
       <div ref={ref}>
-        {dataReady === true && (
+        {provider.success === true && (
           <div className="container page-content">
             {isMainnet && provider && identity !== undefined && (
               <div className="row">
                 <div className="col-12 mb-spacer">
-                  <SharedIdentity.Summary identity={identity} />
+                  <SharedIdentity.Summary identity={identity.data} />
                 </div>
               </div>
             )}
 
             <div className="row">
               <div className="col-12 mb-spacer">
-                <ProviderDetailsCard provider={provider} />
+                <ProviderDetailsCard provider={provider.data} />
               </div>
             </div>
 
