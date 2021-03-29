@@ -27,7 +27,7 @@ const AccountDetailsCard = () => {
     accountDetails,
     accountTokens,
   } = useGlobalState();
-  const { getProvider, getAccountDelegation, getAccountStake, getEgldPrice } = adapter();
+  const { getProvider, /*getAccountDelegation, getAccountStake,*/ getEgldPrice } = adapter();
   const { address, balance, nonce, txCount } = accountDetails;
 
   const tokensActive = id !== 'mainnet' && networkAdapter === 'api';
@@ -38,28 +38,45 @@ const AccountDetailsCard = () => {
     delegationFetched: undefined,
   });
 
+  // const fetchLockedAmountAndPrice = () => {
+  //   if (!document.hidden) {
+  //     Promise.all([getAccountDelegation(address), getAccountStake(address), getEgldPrice()]).then(
+  //       ([delegationData, stakeData, priceData]) => {
+  //         if (ref.current !== null) {
+  //           const delegationFetched = delegationData.success ? delegationData.data : {};
+  //           const stakeFetched = stakeData.success ? stakeData.data : {};
+  //           const usd =
+  //             priceData.success && priceData.data.length > 0
+  //               ? priceData.data[priceData.data.length - 1].value
+  //               : undefined;
+
+  //           setLockedAmount({
+  //             ...(delegationFetched ? delegationData.data : {}),
+  //             ...(stakeFetched ? stakeData.data : {}),
+  //             usd,
+  //             delegationFetched,
+  //             stakeFetched,
+  //           });
+  //         }
+  //       }
+  //     );
+  //   }
+  // };
+
   const fetchLockedAmountAndPrice = () => {
     if (!document.hidden) {
-      Promise.all([getAccountDelegation(address), getAccountStake(address), getEgldPrice()]).then(
-        ([delegationData, stakeData, priceData]) => {
-          if (ref.current !== null) {
-            const delegationFetched = delegationData.success ? delegationData.data : {};
-            const stakeFetched = stakeData.success ? stakeData.data : {};
-            const usd =
-              priceData.success && priceData.data.length > 0
-                ? priceData.data[priceData.data.length - 1].value
-                : undefined;
+      getEgldPrice().then((priceData) => {
+        if (ref.current !== null) {
+          const usd =
+            priceData.success && priceData.data.length > 0
+              ? priceData.data[priceData.data.length - 1].value
+              : undefined;
 
-            setLockedAmount({
-              ...(delegationFetched ? delegationData.data : {}),
-              ...(stakeFetched ? stakeData.data : {}),
-              usd,
-              delegationFetched,
-              stakeFetched,
-            });
-          }
+          setLockedAmount({
+            usd,
+          });
         }
-      );
+      });
     }
   };
 
