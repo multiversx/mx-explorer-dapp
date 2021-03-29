@@ -134,7 +134,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
   return route ? (
     <Redirect to={route} />
   ) : (
-    <form className="main-search w-100 d-flex">
+    <form className="main-search w-100 d-flex" noValidate={true}>
       <div className="input-group input-group-seamless">
         <input
           type="text"
