@@ -1,3 +1,7 @@
+@mixin left-bar($color) {
+  border-left: 0.5rem solid rgba($color, 0.4) !important;
+}
+
 .latest-items-container {
   $itemMaxWidth: 20.5rem;
 
@@ -39,24 +43,25 @@
 
     .latest-item-card {
       @extend .p-3;
+      @include left-bar($primary);
+
       max-width: $itemMaxWidth;
       display: flex;
       flex-direction: column;
       border-radius: 0.3rem;
       border: 1px solid $border-color;
-      border-left: 0.3rem solid $primary;
       box-shadow: 0 2px 4px 0 rgba($standard-box-shadow, 0.2);
 
       &.status-text-success {
-        border-left: 0.3rem solid $success;
+        @include left-bar($success);
       }
 
       &.status-text-warning {
-        border-left: 0.3rem solid $warning;
+        @include left-bar($warning);
       }
 
       &.status-text-danger {
-        border-left: 0.3rem solid $danger;
+        @include left-bar($danger);
       }
 
       .latest-item-icon {
