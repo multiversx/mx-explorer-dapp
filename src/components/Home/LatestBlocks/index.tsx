@@ -103,7 +103,7 @@ const LatestBlocks = () => {
                         </div>
 
                         <span className="text-secondary">
-                          <TimeAgo value={block.timestamp} />
+                          <TimeAgo value={block.timestamp} /> ago
                         </span>
                       </div>
                       <div className="d-flex flex-row">

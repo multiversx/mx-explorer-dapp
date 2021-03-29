@@ -119,7 +119,7 @@ const LatestTransactions = () => {
                           </div>
 
                           <div className="text-secondary flex-shrink-0">
-                            <TimeAgo value={transaction.timestamp} short />
+                            <TimeAgo value={transaction.timestamp} short /> ago
                           </div>
                         </div>
 
