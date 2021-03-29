@@ -29,6 +29,6 @@ export default {
   getEconomics: api,
   getEgldPrice: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/series/quotes/egld/price`, { timeout });
+    return axios.get(`https://data.elrond.com/market/quotes/egld/price`, { timeout });
   },
 };
