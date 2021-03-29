@@ -65,14 +65,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   <div className={`container ${isHome ? 'py-3' : ''}`}>
                     {isHome && (
                       <div className="row">
-                        <div className="col-12">
-                          <h3 className="mb-3 text-white">The Elrond Blockchain {explorerTitle}</h3>
+                        <div className="col-12 text-center">
+                          <h1 className="mb-4 text-white">The Elrond Blockchain {explorerTitle}</h1>
                         </div>
                       </div>
                     )}
 
                     <div className="row">
-                      <div className={`col-12 ${isHome ? '' : 'mx-auto'}`}>
+                      <div className="col-12 col-lg-9 mx-auto">
                         <Search />
                       </div>
                     </div>
