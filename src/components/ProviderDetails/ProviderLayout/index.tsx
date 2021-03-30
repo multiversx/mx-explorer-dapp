@@ -71,7 +71,7 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
       <div ref={ref}>
         {provider.success === true && (
           <div className="container page-content">
-            {isMainnet && provider && identity !== undefined && (
+            {isMainnet && showIdentity && (
               <div className="row">
                 <div className="col-12 mb-spacer">
                   <SharedIdentity.Summary identity={identity.data} />
