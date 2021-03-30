@@ -1,13 +1,17 @@
+@mixin top-bar($color) {
+  box-shadow: inset 0 0.285rem 0 0 rgba($color, 0.3);
+}
+
 .transaction-info {
   .status-text-success {
-    box-shadow: inset 0 0.285rem 0 0 rgba($success, 0.4);
+    @include top-bar($success);
   }
 
   .status-text-warning {
-    box-shadow: inset 0 0.285rem 0 0 rgba($warning, 0.4);
+    @include top-bar($warning);
   }
 
   .status-text-danger {
-    box-shadow: inset 0 0.285rem 0 0 rgba($danger, 0.4);
+    @include top-bar($danger);
   }
 }

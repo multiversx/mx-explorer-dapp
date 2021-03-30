@@ -124,15 +124,21 @@ const LatestTransactions = () => {
                         </div>
 
                         <div className="mb-1">
-                          <div className="d-flex align-items-center">
-                            <span className="text-secondary mr-2">Hash:</span>
-
+                          <div className="d-flex flex-row align-items-center text-secondary">
+                            <span className="mr-2">To:</span>
                             <NetworkLink
-                              to={`/transactions/${transaction.txHash}`}
-                              data-testid={`transactionLink${i}`}
+                              to={urlBuilder.accountDetails(transaction.receiver)}
+                              data-testid={`transactionLinkTo${i}`}
                               className="trim-wrapper"
                             >
-                              <Trim text={transaction.txHash} />
+                              <Trim text={transaction.receiver} />
+                            </NetworkLink>
+                            <span className="mx-2 text-muted">•</span>
+                            <NetworkLink
+                              to={urlBuilder.receiverShard(transaction.receiverShard)}
+                              className="flex-shrink-0"
+                            >
+                              <ShardSpan shard={transaction.receiverShard} />
                             </NetworkLink>
                           </div>
                         </div>
@@ -163,21 +169,15 @@ const LatestTransactions = () => {
                         </div>
 
                         <div>
-                          <div className="d-flex flex-row align-items-center text-secondary">
-                            <span className="mr-2">To:</span>
+                          <div className="d-flex align-items-center">
+                            <span className="text-secondary mr-2">Hash:</span>
+
                             <NetworkLink
-                              to={urlBuilder.accountDetails(transaction.receiver)}
-                              data-testid={`transactionLinkTo${i}`}
+                              to={`/transactions/${transaction.txHash}`}
+                              data-testid={`transactionLink${i}`}
                               className="trim-wrapper"
                             >
-                              <Trim text={transaction.receiver} />
-                            </NetworkLink>
-                            <span className="mx-2 text-muted">•</span>
-                            <NetworkLink
-                              to={urlBuilder.receiverShard(transaction.receiverShard)}
-                              className="flex-shrink-0"
-                            >
-                              <ShardSpan shard={transaction.receiverShard} />
+                              <Trim text={transaction.txHash} />
                             </NetworkLink>
                           </div>
                         </div>

@@ -106,17 +106,17 @@ const LatestBlocks = () => {
                           <TimeAgo value={block.timestamp} /> ago
                         </span>
                       </div>
-                      <div className="d-flex flex-row">
-                        <span className="mr-2 text-secondary">Hash:</span>
-                        <NetworkLink to={`/blocks/${block.hash}`} className="trim-wrapper">
-                          <Trim dataTestId={`blockHashLink${i}`} text={block.hash} />
-                        </NetworkLink>
-                      </div>
-                      <div className="d-flex mt-1">
+                      <div className="d-flex">
                         <span className="text-secondary mr-2">Transactions:</span> {block.txCount}
                         <span className="text-muted mx-2">•</span>
                         <NetworkLink to={urlBuilder.shard(block.shard)} className="flex-shrink-0">
                           <ShardSpan shard={block.shard} />
+                        </NetworkLink>
+                      </div>
+                      <div className="d-flex flex-row mt-1">
+                        <span className="mr-2 text-secondary">Hash:</span>
+                        <NetworkLink to={`/blocks/${block.hash}`} className="trim-wrapper">
+                          <Trim dataTestId={`blockHashLink${i}`} text={block.hash} />
                         </NetworkLink>
                       </div>
                     </div>
