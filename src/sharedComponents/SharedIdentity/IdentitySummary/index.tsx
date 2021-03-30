@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { faAngleRight } from '@fortawesome/pro-regular-svg-icons/faAngleRight';
-import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
+import { faCity } from '@fortawesome/pro-regular-svg-icons/faCity';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IdentityType } from 'context/state';
 import { Denominate, NetworkLink, PageState, SharedIdentity, Trim } from 'sharedComponents';
@@ -60,7 +60,7 @@ const IdentitySummary = ({ identity }: { identity: IdentityType | undefined }) =
           </div>
         ) : (
           <PageState
-            icon={faCogs}
+            icon={faCity}
             title="Unable to load identity details"
             className="py-spacer my-auto page-state-sm"
             dataTestId="errorScreen"

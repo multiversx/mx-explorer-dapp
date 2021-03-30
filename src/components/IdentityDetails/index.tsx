@@ -1,5 +1,5 @@
 import React from 'react';
-import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
+import { faCity } from '@fortawesome/pro-regular-svg-icons/faCity';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { IdentityType } from 'context/state';
 import { adapter, Loader, Pager, PageState, ProvidersTable } from 'sharedComponents';
@@ -54,7 +54,7 @@ const IdentityDetails = () => {
       {dataReady === undefined && <Loader />}
       {dataReady === false && (
         <PageState
-          icon={faCogs}
+          icon={faCity}
           title="Unable to load identity details"
           className="py-spacer my-auto"
           dataTestId="errorScreen"
