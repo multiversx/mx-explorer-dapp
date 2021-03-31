@@ -1,10 +1,16 @@
 import { NodesVersionsType } from 'context/state';
 import * as React from 'react';
-import { Led } from 'sharedComponents';
+import { Led, Trim } from 'sharedComponents';
 
 export interface PercentageStepType extends NodesVersionsType {}
 
-const MultilayerProgressBar = ({ steps }: { steps: PercentageStepType[] }) => {
+const MultilayerPercentageBar = ({
+  steps,
+  trim,
+}: {
+  steps: PercentageStepType[];
+  trim?: boolean;
+}) => {
   return (
     <div
       className={`d-flex h-100 flex-column multilayer-percentage-bar ${
@@ -20,12 +26,16 @@ const MultilayerProgressBar = ({ steps }: { steps: PercentageStepType[] }) => {
           />
         ))}
       </div>
-      <div className={`d-flex legend-dot-container mt-2`}>
+      <div className={`d-flex legend-dot-container mt-2 ${trim ? '' : 'flex-wrap'}`}>
         {steps.map((step, i) => (
-          <div key={`legend-${i}`} className="legend-dot d-flex align-items-center mr-1 mr-lg-3">
+          <div
+            key={`legend-${i}`}
+            className={`legend-dot d-flex align-items-center ${trim ? '' : 'mr-1 mr-lg-3'}`}
+          >
             <Led color={`flex-shrink-0 mr-1 step-${i + 1}`} />
-            <small>
-              {step.name} <span className="text-secondary">({step.percent}%)</span>
+            <small className="d-flex align-items-center overflow-hidden min-w-0">
+              {trim ? <Trim text={step.name} /> : <>{step.name}</>}
+              <span className="text-secondary ml-1">({step.percent}%)</span>
             </small>
           </div>
         ))}
@@ -34,4 +44,4 @@ const MultilayerProgressBar = ({ steps }: { steps: PercentageStepType[] }) => {
   );
 };
 
-export default MultilayerProgressBar;
+export default MultilayerPercentageBar;

@@ -9,24 +9,13 @@ import { PercentageStepType } from 'sharedComponents/MultilayerPercentageBar';
 
 const prepareStakeDistribution = (identity: IdentityType) => {
   const distribution: PercentageStepType[] = [];
-  if (identity.distribution && identity.distribution.length > 0) {
-    const duplicate = [...identity.distribution];
 
-    const direct = duplicate.pop();
-    if (direct) {
-      distribution.push({ name: 'Direct-staked', percent: direct * 100 });
-    }
-
-    duplicate.forEach((percentage) => {
-      distribution.push({ name: 'Contract', percent: percentage * 100 });
-    });
-
-    distribution.sort((a, b) => b.percent - a.percent);
-
-    distribution.forEach((item, i) => {
-      if (item.name !== 'Direct-staked') {
-        item.name = `${item.name} ${direct ? i : i + 1}`;
-      }
+  if (identity.distribution) {
+    Object.keys(identity.distribution).forEach((key) => {
+      distribution.push({
+        name: key === 'direct' ? 'Direct-staked' : key,
+        percent: identity.distribution[key] * 100,
+      });
     });
   }
 
@@ -90,7 +79,7 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
               <h6 className="mb-3">Validator Details</h6>
 
               <div className="d-flex">
-                <span className="text-secondary pr-2">Stake Balance:</span>
+                <span className="text-secondary text-nowrap pr-2">Stake Balance:</span>
                 {identity.locked ? <Denominate value={identity.locked} /> : 'N/A'}
               </div>
               <div className="d-flex mt-2">
@@ -111,10 +100,10 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                 {identity.validators ? identity.validators : 'N/A'}
               </div>
             </div>
-            <div className="d-flex flex-column flex-fill mt-4 mt-lg-0">
+            <div className="d-flex flex-column flex-fill mt-4 mt-lg-0 ml-sm-4 min-w-0">
               <h6 className="mb-3">Stake Distribution</h6>
               {distribution && distribution.length > 0 ? (
-                <MultilayerPercentageBar steps={distribution} />
+                <MultilayerPercentageBar steps={distribution} trim />
               ) : (
                 <span className="text-secondary">N/A</span>
               )}
