@@ -148,6 +148,13 @@ const Filters = () => {
               >
                 Leaving
               </NetworkLink>
+              <NetworkLink
+                className={`dropdown-item ${status === 'queued' ? 'active' : ''}`}
+                data-testid="filterByValidators"
+                to={nodeStatusLink('queued')}
+              >
+                Queued
+              </NetworkLink>
             </Dropdown.Menu>
           </Dropdown>
         </li>

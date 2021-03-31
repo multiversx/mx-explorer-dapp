@@ -17,7 +17,7 @@ import Alert from './Alert';
 
 const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
   const {
-    node,
+    bls,
     type,
     shard,
     version,
@@ -25,7 +25,7 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     nonce,
     instances,
     provider,
-    online,
+    status,
     locked,
     topUp,
     stake,
@@ -43,8 +43,8 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
           <div className="d-flex flex-column min-w-0">
             <div className="d-flex align-items-center">
               {type === 'observer' && <RowIcon node={nodeData} />}
-              <Trim text={node} />
-              <CopyButton text={node} className="ml-2" />
+              <Trim text={bls} />
+              <CopyButton text={bls} className="ml-2" />
             </div>
             <Alert node={nodeData} />
           </div>
@@ -78,7 +78,7 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             {type === 'observer' && <>Observer</>}
             {type !== 'observer' && (
               <>
-                Validator <span className="text-secondary">({online ? 'online' : 'offline'})</span>
+                Validator <span className="text-secondary ml-1">({status})</span>
               </>
             )}
           </>

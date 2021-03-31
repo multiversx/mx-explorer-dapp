@@ -52,10 +52,10 @@ export interface IdentityType {
 }
 
 export interface NodeType {
-  node: string;
+  bls: string;
   name: string;
   type: 'observer' | 'validator';
-  status?: 'waiting' | 'eligible' | 'new' | 'jailed' | 'leaving' | 'inactive';
+  status?: 'waiting' | 'eligible' | 'new' | 'jailed' | 'leaving' | 'inactive' | 'queued';
   online: boolean;
   rating: number;
   tempRating: number;
