@@ -9,7 +9,7 @@ import {
   Denominate,
   LockedAmountTooltip,
 } from 'sharedComponents';
-import RowIcon from 'sharedComponents/NodesTable/RowIcon';
+import RowIcon, { getIcon } from 'sharedComponents/NodesTable/RowIcon';
 import { NodeType } from 'context/state';
 import { faLock, faServer, faCheck, faCode } from '@fortawesome/pro-solid-svg-icons';
 import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
@@ -37,7 +37,7 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     issues,
   } = nodeData;
 
-  const versionOudated = issues && issues.includes('versionMismatch');
+  const versionOudated = version === undefined || (issues && issues.includes('versionMismatch'));
 
   return (
     <div className="card">
@@ -81,7 +81,7 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
           {name ? name : <>N/A</>}
         </CardItem>
 
-        <CardItem title="Type" icon={type === 'observer' ? faEye : faCogs}>
+        <CardItem title="Type" icon={getIcon(nodeData) || faCogs}>
           <>
             {type === 'observer' && <>Observer</>}
             {type !== 'observer' && (
