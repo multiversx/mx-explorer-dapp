@@ -5,6 +5,7 @@ import { faEye } from '@fortawesome/pro-regular-svg-icons/faEye';
 import { faLeaf } from '@fortawesome/pro-regular-svg-icons/faLeaf';
 import { faLock } from '@fortawesome/pro-regular-svg-icons/faLock';
 import { faSync } from '@fortawesome/pro-regular-svg-icons/faSync';
+import { faStopwatch } from '@fortawesome/pro-regular-svg-icons/faStopwatch';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { faSnooze } from '@fortawesome/pro-regular-svg-icons/faSnooze';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -102,6 +103,17 @@ export default class RowIcon extends React.Component<{ node: NodeType; small?: b
           <Overlay title="Waiting">
             <FontAwesomeIcon
               icon={faClock}
+              className="text-secondary mr-1"
+              size={small ? 'xs' : '1x'}
+            />
+          </Overlay>
+        );
+
+      case node.status === 'queued':
+        return (
+          <Overlay title="Queued">
+            <FontAwesomeIcon
+              icon={faStopwatch}
               className="text-secondary mr-1"
               size={small ? 'xs' : '1x'}
             />
