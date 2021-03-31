@@ -35,7 +35,7 @@ const IdentitySummary = ({ identity }: { identity: IdentityType | undefined }) =
                   <FontAwesomeIcon icon={faAngleRight} className="text-muted" size="2x" />
                 </div>
                 <div className="d-flex align-items-center mr-4">
-                  <span className="text-secondary pr-2">Stake Balance:</span>
+                  <span className="text-secondary text-nowrap pr-2">Stake Balance:</span>
                   {identity.locked ? <Denominate value={identity.locked} /> : 'N/A'}
                 </div>
                 <div className="d-flex align-items-center mr-4">

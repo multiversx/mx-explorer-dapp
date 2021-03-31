@@ -145,8 +145,10 @@ export const getShardAndEpochParam = (shard: number | undefined, epoch: number |
   switch (true) {
     case shard !== undefined:
       result = { ...result, shard };
+      break;
     case epoch !== undefined:
       result = { ...result, epoch };
+      break;
   }
 
   return result;
