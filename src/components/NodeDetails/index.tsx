@@ -24,7 +24,7 @@ const NodeDetails = () => {
   const ref = React.useRef(null);
   const { publicKey } = useParams() as any;
   const { search } = useLocation();
-  const { getNode, getIdentity, getRounds, getBlocks } = adapter();
+  const { getNode, getIdentity, getRounds, getBlocks, getStats } = adapter();
   const isMainnet = useIsMainnet();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
@@ -32,18 +32,25 @@ const NodeDetails = () => {
   const [identity, setIdentity] = React.useState<NodeDetailType<IdentityType>>(initialState);
   const [rounds, setRounds] = React.useState<NodeDetailType<RoundType[]>>(initialState);
   const [blocks, setBlocks] = React.useState<NodeDetailType<BlockType[]>>(initialState);
+  const [showExtendedInfo, setShowExtendedInfo] = React.useState(true);
 
   const fetchNodes = () => {
     setDataReady(undefined);
-    getNode(publicKey).then((nodeData) => {
+    Promise.all([getNode(publicKey), getStats()]).then(([nodeData, statsData]) => {
       if (ref.current !== null) {
         if (nodeData.success) {
           const fetchIdentity = isMainnet && nodeData.data.identity !== undefined;
+          const hasExtendedInfo =
+            nodeData.data.type !== 'observer' && nodeData.data.status !== 'queued';
+          setShowExtendedInfo(hasExtendedInfo);
 
-          if (nodeData.data.type !== 'observer') {
+          const epoch = statsData.success ? statsData.data.epoch : undefined;
+          const shard = nodeData.data.shard;
+
+          if (hasExtendedInfo) {
             const promises = [
-              getRounds(publicKey),
-              getBlocks({ proposer: publicKey }),
+              getRounds({ validator: publicKey, shard, epoch }),
+              getBlocks({ proposer: publicKey, shard, epoch }),
               ...(fetchIdentity ? [getIdentity(nodeData.data.identity)] : []),
             ];
             Promise.all(promises).then((response) => {
@@ -129,50 +136,50 @@ const NodeDetails = () => {
               </div>
             </div>
 
-            {node.data.type !== 'observer' && (
-              <div className="row">
-                <div className="mb-spacer col-md-6">
-                  <NetworkMetrics node={node.data} />
-                </div>
-                <div className="col-md-6 mb-spacer">
-                  <Rounds rounds={rounds} node={node.data} />
-                </div>
-              </div>
-            )}
-
-            {node.data.type === 'validator' && (
-              <div className="row">
-                <div className="col-12">
-                  <div className="card">
-                    {blocks.success === false && <FailedBlocks />}
-                    {blocks.success && blocks.data && (
-                      <>
-                        {blocks.data.length === 0 && (
-                          <NoBlocks
-                            title={`${
-                              node.data.status === 'eligible'
-                                ? 'No blocks'
-                                : 'Validator not in consensus'
-                            }`}
-                          />
-                        )}
-                        {blocks.data.length > 0 && (
-                          <>
-                            <div className="card-header">
-                              <div className="card-header-item">
-                                <h6 className="m-0">Latest Proposed Blocks</h6>
-                              </div>
-                            </div>
-                            <div className="card-body p-0">
-                              <BlocksTable blocks={blocks.data} shard={undefined} />
-                            </div>
-                          </>
-                        )}
-                      </>
-                    )}
+            {showExtendedInfo && (
+              <>
+                <div className="row">
+                  <div className="mb-spacer col-md-6">
+                    <NetworkMetrics node={node.data} />
+                  </div>
+                  <div className="col-md-6 mb-spacer">
+                    <Rounds rounds={rounds} node={node.data} />
                   </div>
                 </div>
-              </div>
+
+                <div className="row">
+                  <div className="col-12">
+                    <div className="card">
+                      {blocks.success === false && <FailedBlocks />}
+                      {blocks.success && blocks.data && (
+                        <>
+                          {blocks.data.length === 0 && (
+                            <NoBlocks
+                              title={`${
+                                node.data.status === 'eligible'
+                                  ? 'No blocks'
+                                  : 'Validator not in consensus'
+                              }`}
+                            />
+                          )}
+                          {blocks.data.length > 0 && (
+                            <>
+                              <div className="card-header">
+                                <div className="card-header-item">
+                                  <h6 className="m-0">Latest Proposed Blocks</h6>
+                                </div>
+                              </div>
+                              <div className="card-body p-0">
+                                <BlocksTable blocks={blocks.data} shard={undefined} />
+                              </div>
+                            </>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </>
             )}
           </div>
         )}
