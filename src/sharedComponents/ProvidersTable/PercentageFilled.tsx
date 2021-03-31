@@ -11,8 +11,9 @@ export const getPercentageFilled = (stake: string, delegationCap: string) => {
   const bnStake = new BigNumber(nominate(String(stake)));
   const bnDelegationCap = new BigNumber(nominate(String(delegationCap)));
   const percentageBn = bnStake.multipliedBy(100).dividedToIntegerBy(bnDelegationCap);
+  const isLessThanOne = bnDelegationCap.minus(bnStake).isLessThan(1);
 
-  return percentageBn.isNaN() ? 'Infinity' : percentageBn.toString(10);
+  return percentageBn.isNaN() ? 'Infinity' : isLessThanOne ? '100' : percentageBn.toString(10);
 };
 
 const PercentageFilled = ({ stake, delegationCap }: PercentageFilledType) => {
