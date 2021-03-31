@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import Chart, { ChartConfiguration } from 'chart.js';
+import * as ChartAnnotation from 'chartjs-plugin-annotation';
 import { faHeartRate } from '@fortawesome/pro-light-svg-icons/faHeartRate';
 import { faCaretUp } from '@fortawesome/pro-solid-svg-icons/faCaretUp';
 import { faCaretDown } from '@fortawesome/pro-solid-svg-icons/faCaretDown';
@@ -11,10 +12,11 @@ interface ChartConfigType {
   data: number[];
   min: number;
   stepSize: number;
-  gridLinesColor: string;
-  gridLabelsColor: string;
+  lastValue: number;
+  primaryColor: string;
+  secondaryColor: string;
   borderColor: string;
-  pointBackgroundColor: string;
+  cardColor: string;
   backgroundColor: string;
 }
 
@@ -23,14 +25,16 @@ const chartConfig = ({
   data = [],
   min = 0,
   stepSize = 2,
-  gridLinesColor,
-  gridLabelsColor,
+  lastValue = 0,
+  primaryColor,
+  secondaryColor,
   borderColor,
-  pointBackgroundColor,
+  cardColor,
   backgroundColor,
 }: ChartConfigType): ChartConfiguration => {
   return {
-    type: 'line',
+    type: 'lineWithVertical',
+    plugins: [ChartAnnotation],
     data: {
       labels,
       datasets: [
@@ -39,8 +43,8 @@ const chartConfig = ({
           fill: 'start',
           data,
           backgroundColor,
-          borderColor,
-          pointBackgroundColor,
+          borderColor: primaryColor,
+          pointBackgroundColor: cardColor,
           pointHoverBackgroundColor: borderColor,
           borderWidth: 1.5,
         },
@@ -70,7 +74,7 @@ const chartConfig = ({
               callback(tick: any, index: any) {
                 return index % stepSize === 0 ? tick : '';
               },
-              fontColor: gridLabelsColor,
+              fontColor: secondaryColor,
             },
             gridLines: {
               display: false,
@@ -79,10 +83,11 @@ const chartConfig = ({
         ],
         yAxes: [
           {
+            id: 'left-y-axis',
             ticks: {
               stepSize,
               min,
-              fontColor: gridLabelsColor,
+              fontColor: secondaryColor,
             },
             gridLines: { display: false },
           },
@@ -91,10 +96,38 @@ const chartConfig = ({
       tooltips: {
         mode: 'index',
         intersect: false,
+        backgroundColor: cardColor,
+        titleAlign: 'center',
+        titleFontColor: secondaryColor,
+        titleFontSize: 10,
+        titleFontStyle: '400',
+        bodyAlign: 'center',
+        bodyFontColor: secondaryColor,
+        bodyFontSize: 12,
+        bodyFontStyle: '500',
+        borderColor,
+        borderWidth: 1,
+        xPadding: 15,
+        yPadding: 15,
         custom: (tooltip) => {
           if (!tooltip) return;
           tooltip.displayColors = false;
         },
+      },
+      annotation: {
+        annotations: [
+          {
+            type: 'line',
+            mode: 'horizontal',
+            value: lastValue,
+            scaleID: 'left-y-axis',
+            drawTime: 'afterDatasetsDraw',
+            borderColor: secondaryColor,
+            borderWidth: 1,
+            borderDash: [4, 4],
+            borderDashOffset: 1,
+          },
+        ],
       },
     },
   };
@@ -119,10 +152,10 @@ const StatisticsChart = ({ chartData }: { chartData: any }) => {
       const feed =
         timeframe === 'week' ? chartData.slice(chartData.length - 7, chartData.length) : chartData;
       const docStyle = window.getComputedStyle(document.documentElement);
-      const gridLinesColor = docStyle.getPropertyValue('--border-color');
-      const gridLabelsColor = docStyle.getPropertyValue('--secondary');
-      const borderColor = docStyle.getPropertyValue('--primary');
-      const pointBackgroundColor = docStyle.getPropertyValue('--card-bg');
+      const borderColor = docStyle.getPropertyValue('--border-color');
+      const secondaryColor = docStyle.getPropertyValue('--secondary');
+      const primaryColor = docStyle.getPropertyValue('--primary');
+      const cardColor = docStyle.getPropertyValue('--card-bg');
       const backgroundColor = docStyle.getPropertyValue('--chart-faded-bg');
 
       const config = chartConfig({
@@ -130,16 +163,43 @@ const StatisticsChart = ({ chartData }: { chartData: any }) => {
         data: feed.map(({ value }: { value: any }) => value),
         min: Math.max(Math.round(Math.min(...feed.map((q: any) => q.value)) - 2), 0),
         stepSize: timeframe === 'week' ? 1 : 2,
-        gridLinesColor,
-        gridLabelsColor,
+        lastValue: feed[feed.length - 1].value,
+        primaryColor,
+        secondaryColor,
         borderColor,
-        pointBackgroundColor,
+        cardColor,
         backgroundColor,
       });
 
       if (instance) {
         instance.destroy();
       }
+
+      Chart.defaults.lineWithVertical = Chart.defaults.line;
+      Chart.controllers.lineWithVertical = Chart.controllers.line.extend({
+        draw: function (ease: any) {
+          Chart.controllers.line.prototype.draw.call(this, ease);
+
+          if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
+            const activePoint = this.chart.tooltip._active[0],
+              ctx = this.chart.ctx,
+              x = activePoint.tooltipPosition().x,
+              topY = this.chart.legend.bottom,
+              bottomY = this.chart.chartArea.bottom;
+
+            // draw line
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(x, topY);
+            ctx.setLineDash([4, 4]);
+            ctx.lineTo(x, bottomY);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = secondaryColor;
+            ctx.stroke();
+            ctx.restore();
+          }
+        },
+      });
 
       // eslint-disable-next-line
       const chart = new Chart((chartRef as any).current, config);
