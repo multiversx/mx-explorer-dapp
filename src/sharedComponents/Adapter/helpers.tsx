@@ -142,13 +142,12 @@ export function getProviderParams({ identity }: GetProvidersType) {
 export const getShardAndEpochParam = (shard: number | undefined, epoch: number | undefined) => {
   let result = {};
 
-  switch (true) {
-    case shard !== undefined:
-      result = { ...result, shard };
-      break;
-    case epoch !== undefined:
-      result = { ...result, epoch };
-      break;
+  if (shard !== undefined) {
+    result = { ...result, shard };
+  }
+
+  if (epoch !== undefined) {
+    result = { ...result, epoch };
   }
 
   return result;
