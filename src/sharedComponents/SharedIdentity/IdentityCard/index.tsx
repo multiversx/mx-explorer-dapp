@@ -50,7 +50,7 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
               )}
 
               {(identity.location || identity.twitter || identity.website) && (
-                <div className="d-flex mt-3 align-items-center">
+                <div className="d-flex mt-3 align-items-center flex-wrap">
                   {identity.location && (
                     <div className="d-flex align-items-center mr-3">
                       <FontAwesomeIcon icon={faMapMarkerAlt} className="text-secondary mr-1" />
@@ -59,8 +59,8 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                   )}
 
                   {identity.twitter && (
-                    <div className="d-flex align-items-center">
-                      <TwitterLogo className="identity-social-logo mr-3" />
+                    <div className="d-flex align-items-center mr-3">
+                      <TwitterLogo className="identity-social-logo mr-1" />
                       <a target={`_blank`} rel={`noreferrer nofollow`} href={identity.twitter}>
                         {identity.twitter.split('/').pop()}
                       </a>
