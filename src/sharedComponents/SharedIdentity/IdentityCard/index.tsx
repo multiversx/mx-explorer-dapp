@@ -4,6 +4,7 @@ import { IdentityType } from 'context/state';
 import { Denominate, MultilayerPercentageBar, SharedIdentity } from 'sharedComponents';
 import { ReactComponent as TwitterLogo } from 'assets/images/logos/twitter.svg';
 import { faMapMarkerAlt } from '@fortawesome/pro-solid-svg-icons/faMapMarkerAlt';
+import { faLink } from '@fortawesome/pro-solid-svg-icons/faLink';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PercentageStepType } from 'sharedComponents/MultilayerPercentageBar';
 
@@ -48,10 +49,10 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                 </div>
               )}
 
-              {(identity.location || identity.twitter) && (
+              {(identity.location || identity.twitter || identity.website) && (
                 <div className="d-flex mt-3 align-items-center">
                   {identity.location && (
-                    <div className="d-flex align-items-center mr-4">
+                    <div className="d-flex align-items-center mr-3">
                       <FontAwesomeIcon icon={faMapMarkerAlt} className="text-secondary mr-1" />
                       <span className="text-secondary">{identity.location}</span>
                     </div>
@@ -59,9 +60,18 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
 
                   {identity.twitter && (
                     <div className="d-flex align-items-center">
-                      <TwitterLogo className="identity-social-logo mr-1" />
+                      <TwitterLogo className="identity-social-logo mr-3" />
                       <a target={`_blank`} rel={`noreferrer nofollow`} href={identity.twitter}>
                         {identity.twitter.split('/').pop()}
+                      </a>
+                    </div>
+                  )}
+
+                  {identity.website && (
+                    <div className="d-flex align-items-center mr-1">
+                      <FontAwesomeIcon icon={faLink} className="text-secondary mr-1" />
+                      <a target={`_blank`} rel={`noreferrer nofollow`} href={identity.website}>
+                        {identity.website.split('//').pop()}
                       </a>
                     </div>
                   )}
