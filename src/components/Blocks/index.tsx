@@ -35,7 +35,7 @@ const Blocks = () => {
   const { getBlocks, getBlocksCount } = adapter();
 
   React.useEffect(() => {
-    getBlocks({ size, shard, epochId: undefined }).then(({ success, data }) => {
+    getBlocks({ size, shard }).then(({ success, data }) => {
       if (ref.current !== null) {
         if (success && data) {
           const { blocks, endBlockNr, startBlockNr } = data;

@@ -89,23 +89,25 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
           {nonce ? nonce : <>N/A</>}
         </CardItem>
 
-        <CardItem title="Locked" icon={faLock}>
-          <div className="d-flex align-items-center">
-            <span className="mr-2">
-              <Denominate value={locked} />
-            </span>
+        {type !== 'observer' && (
+          <CardItem title="Locked" icon={faLock}>
+            <div className="d-flex align-items-center">
+              <span className="mr-2">
+                <Denominate value={locked} />
+              </span>
 
-            <LockedAmountTooltip
-              lockedDetails={[
-                { label: 'Stake', value: <Denominate value={stake} /> },
-                {
-                  label: 'Topup',
-                  value: <Denominate value={topUp} />,
-                },
-              ]}
-            />
-          </div>
-        </CardItem>
+              <LockedAmountTooltip
+                lockedDetails={[
+                  { label: 'Stake', value: <Denominate value={stake} /> },
+                  {
+                    label: 'Topup',
+                    value: <Denominate value={topUp} />,
+                  },
+                ]}
+              />
+            </div>
+          </CardItem>
+        )}
 
         {provider && (
           <CardItem title="Provider" icon={faCode}>
