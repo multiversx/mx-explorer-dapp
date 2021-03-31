@@ -217,8 +217,11 @@ const ProvidersTable = ({
                 )}
               </td>
               <td>
-                {provider.stake && provider.delegationCap ? (
-                  <PercentageFilled stake={provider.stake} delegationCap={provider.delegationCap} />
+                {provider.locked && provider.delegationCap ? (
+                  <PercentageFilled
+                    locked={provider.locked}
+                    delegationCap={provider.delegationCap}
+                  />
                 ) : (
                   <>N/A</>
                 )}

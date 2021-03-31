@@ -3,24 +3,31 @@ import { BigNumber } from 'bignumber.js';
 import { nominate } from 'helpers';
 
 interface PercentageFilledType {
-  stake: string;
+  locked: string;
   delegationCap: string;
 }
 
-export const getPercentageFilled = (stake: string, delegationCap: string) => {
-  const bnStake = new BigNumber(nominate(String(stake)));
-  const bnDelegationCap = new BigNumber(nominate(String(delegationCap)));
-  const percentageBn = bnStake.multipliedBy(100).dividedToIntegerBy(bnDelegationCap);
-  const isLessThanOne = bnDelegationCap.minus(bnStake).isLessThan(1);
+export const getPercentageFilled = (locked: string, delegationCap: string) => {
+  const minDelegation = 1;
 
-  return percentageBn.isNaN() ? 'Infinity' : isLessThanOne ? '100' : percentageBn.toString(10);
+  const bnLocked = new BigNumber(locked);
+  const bnDelegationCap = new BigNumber(delegationCap);
+
+  const isOverMinimum = bnDelegationCap
+    .minus(bnLocked)
+    .isGreaterThanOrEqualTo(nominate(String(minDelegation)));
+
+  return isOverMinimum ? bnLocked.multipliedBy(100).dividedBy(bnDelegationCap).toFixed(1) : '100';
 };
 
-const PercentageFilled = ({ stake, delegationCap }: PercentageFilledType) => {
-  const bnDelegationCap = new BigNumber(nominate(String(delegationCap)));
-  const percentage = getPercentageFilled(stake, delegationCap);
+export const hasDelegationCap = (delegationCap: string) => {
+  const bnDelegationCap = new BigNumber(delegationCap);
+  return bnDelegationCap.isGreaterThan(0);
+};
 
-  return bnDelegationCap.isGreaterThan(0) ? <>{percentage}%</> : <>Uncapped</>;
+const PercentageFilled = ({ locked, delegationCap }: PercentageFilledType) => {
+  const percentage = getPercentageFilled(locked, delegationCap);
+  return hasDelegationCap(delegationCap) ? <>{percentage}%</> : <>Uncapped</>;
 };
 
 export default PercentageFilled;
