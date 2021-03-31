@@ -10,6 +10,9 @@ export default function calcContinentRank(markers: MarkerType[], totalNodes: num
   const rank: RankType[] = [];
   const uniqueContinents = Array.from(new Set(markers.map((marker) => marker.continent)));
 
+  let markersTotalNodes = 0;
+  markers.forEach((marker) => (markersTotalNodes += marker.validators));
+
   uniqueContinents.forEach((continent) => {
     let nodes = 0;
     markers.forEach((marker) => {
@@ -18,10 +21,13 @@ export default function calcContinentRank(markers: MarkerType[], totalNodes: num
       }
     });
 
+    const percentage = (nodes * 100) / markersTotalNodes;
+    const alteredNodesCount = Math.floor((percentage * totalNodes) / 100);
+
     rank.push({
       continent,
-      nodes,
-      percentage: Math.floor((nodes * 100) / totalNodes),
+      nodes: alteredNodesCount,
+      percentage: Math.floor(percentage),
     });
   });
   rank.sort((a, b) => b.percentage - a.percentage);
@@ -30,13 +36,21 @@ export default function calcContinentRank(markers: MarkerType[], totalNodes: num
 
   let otherNodes = 0;
   rank.forEach((item) => (otherNodes += item.nodes));
-  const otherPercent = (otherNodes * 100) / totalNodes;
+
+  const otherPercent = (otherNodes * 100) / markersTotalNodes;
+  const alteredOtherNodesCount = Math.floor((otherPercent * totalNodes) / 100);
+
+  let totalAlteredNodesCount = alteredOtherNodesCount;
+  topThree.forEach((rank) => {
+    totalAlteredNodesCount += rank.nodes;
+  });
+  const diff = totalNodes - totalAlteredNodesCount;
 
   return [
     ...topThree,
     {
       continent: 'Others',
-      nodes: otherNodes,
+      nodes: alteredOtherNodesCount + diff,
       percentage: otherPercent < 1 ? 1 : Math.floor(otherPercent),
     },
   ];
