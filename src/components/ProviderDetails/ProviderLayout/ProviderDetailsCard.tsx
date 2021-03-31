@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { types, urlBuilder, stringIsInteger } from 'helpers';
+import { types, urlBuilder } from 'helpers';
 import {
   CardItem,
   CopyButton,
@@ -20,7 +20,7 @@ import {
 } from '@fortawesome/pro-solid-svg-icons';
 import DelegationCap from 'sharedComponents/ProvidersTable/DelegationCap';
 import PercentageFilled from 'sharedComponents/ProvidersTable/PercentageFilled';
-import { getPercentageFilled } from 'sharedComponents/ProvidersTable/PercentageFilled';
+import { hasDelegationCap } from 'sharedComponents/ProvidersTable/PercentageFilled';
 
 const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | undefined }) => {
   const {
@@ -121,9 +121,9 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
           )}
         </CardItem>
 
-        {stringIsInteger(getPercentageFilled(provider.stake, provider.delegationCap)) && (
+        {hasDelegationCap(provider.delegationCap) && (
           <CardItem title="Filled" icon={faChartPieAlt}>
-            <PercentageFilled stake={provider.stake} delegationCap={provider.delegationCap} />
+            <PercentageFilled locked={provider.locked} delegationCap={provider.delegationCap} />
           </CardItem>
         )}
       </div>
