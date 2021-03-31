@@ -15,7 +15,7 @@ const prepareStakeDistribution = (identity: IdentityType) => {
     Object.keys(identity.distribution).forEach((key) => {
       distribution.push({
         name: key === 'direct' ? 'Direct' : key,
-        percent: identity.distribution[key] * 100,
+        percent: Math.floor(identity.distribution[key] * 100),
       });
     });
   }
