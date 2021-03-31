@@ -31,6 +31,7 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     stake,
   } = nodeData;
 
+  // TODO delete
   return (
     <div className="card">
       <div className="card-header">
