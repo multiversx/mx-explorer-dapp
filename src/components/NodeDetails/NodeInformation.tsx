@@ -89,7 +89,7 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
           {nonce ? nonce : <>N/A</>}
         </CardItem>
 
-        {type !== 'observer' && (
+        {type !== 'observer' && locked !== undefined && (
           <CardItem title="Locked" icon={faLock}>
             <div className="d-flex align-items-center">
               <span className="mr-2">
