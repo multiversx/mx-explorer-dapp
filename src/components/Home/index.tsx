@@ -3,6 +3,7 @@ import ValidatorsStatus from './ValidatorsStatus';
 import NetworkHealth from './NetworkHealth';
 import LatestBlocks from './LatestBlocks';
 import LatestTransactions from './LatestTransactions';
+import PriceChart from './PriceChart';
 import { useIsMainnet } from 'helpers';
 
 const Home = () => {
@@ -27,6 +28,12 @@ const Home = () => {
         </div>
         <div className="col-12 mt-spacer">
           <LatestTransactions />
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-12 col-lg-6 mt-spacer">
+          <PriceChart />
         </div>
       </div>
     </div>
