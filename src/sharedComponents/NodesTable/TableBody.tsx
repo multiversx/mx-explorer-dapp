@@ -9,12 +9,12 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
   return (
     <tbody>
       {nodes.map((nodeData, index) => (
-        <tr key={nodeData.node}>
+        <tr key={nodeData.bls}>
           <td>
             <div className="d-flex align-items-center">
               <RowIcon node={nodeData} />
-              <NetworkLink to={urlBuilder.nodeDetails(nodeData.node)} className="trim-wrapper">
-                <Trim text={nodeData.node} />
+              <NetworkLink to={urlBuilder.nodeDetails(nodeData.bls)} className="trim-wrapper">
+                <Trim text={nodeData.bls} />
               </NetworkLink>
             </div>
           </td>
