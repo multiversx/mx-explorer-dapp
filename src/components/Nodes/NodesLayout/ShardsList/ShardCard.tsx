@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faServer } from '@fortawesome/pro-solid-svg-icons/faServer';
+import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
 import { ShardSpan, Led } from 'sharedComponents';
 import { ShardType } from 'context/state';
 import computeShardStatus from './computeShardStatus';
@@ -17,7 +17,7 @@ const ShardCard = ({ shard, isOverall }: ShardCardType) => {
     <div className="shard-card py-3">
       <div className="mb-2">
         {!isOverall && (
-          <FontAwesomeIcon icon={faServer} className="shard-icon text-secondary mr-2" />
+          <FontAwesomeIcon icon={faLayerGroup} className="shard-icon text-secondary mr-2" />
         )}
         <span className="text-secondary">
           {isOverall ? 'Active Validators' : <ShardSpan shard={shard.shard} />}
