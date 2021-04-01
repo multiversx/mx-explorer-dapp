@@ -22,6 +22,7 @@ export default function useAdapter() {
     getShards,
     getEconomics,
     getEgldPrice,
+    getEgldMarketCap,
     getProviders,
     getProvider,
   } = useAdapterConfig();
@@ -269,5 +270,6 @@ export default function useAdapter() {
     getEconomics: () => getEconomics({ url: `/economics` }),
 
     getEgldPrice,
+    getEgldMarketCap,
   };
 }

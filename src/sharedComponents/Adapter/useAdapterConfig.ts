@@ -57,6 +57,7 @@ export default function useAdapterConfig() {
     getEconomics,
     getShards,
     getEgldPrice,
+    getEgldMarketCap,
     getProviders,
     getProvider,
   } = providers[adapter];
@@ -76,6 +77,9 @@ export default function useAdapterConfig() {
       wrap(() => getAccountStake({ ...providerProps, ...props })),
     getEconomics: (props = basicProps) => wrap(() => getEconomics({ ...providerProps, ...props })),
     getEgldPrice: (props = basicProps) => wrap(() => getEgldPrice({ ...providerProps, ...props })),
+    getEgldMarketCap: (props = basicProps) =>
+      wrap(() => getEgldMarketCap({ ...providerProps, ...props })),
+
     getProviders: (props = basicProps) => wrap(() => getProviders({ ...providerProps, ...props })),
     getProvider: (props = basicProps) => wrap(() => getProvider({ ...providerProps, ...props })),
   };
