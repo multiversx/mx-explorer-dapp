@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import Chart, { ChartConfiguration } from 'chart.js';
-import * as ChartAnnotation from 'chartjs-plugin-annotation';
 import { faHeartRate } from '@fortawesome/pro-light-svg-icons/faHeartRate';
 import { faCaretUp } from '@fortawesome/pro-solid-svg-icons/faCaretUp';
 import { faCaretDown } from '@fortawesome/pro-solid-svg-icons/faCaretDown';
@@ -12,39 +11,41 @@ interface ChartConfigType {
   data: number[];
   min: number;
   stepSize: number;
-  lastValue: number;
+  label: string;
   primaryColor: string;
   secondaryColor: string;
   borderColor: string;
-  cardColor: string;
+  cardBackgroundColor: string;
   backgroundColor: string;
 }
+type ChartResponseType = { time: string; value: number }[];
+type DirectionType = 'up' | 'down' | 'none' | '';
+type TimeFrameType = 'week' | 'month';
 
 const chartConfig = ({
   labels,
   data = [],
   min = 0,
   stepSize = 2,
-  lastValue = 0,
+  label = '',
   primaryColor,
   secondaryColor,
   borderColor,
-  cardColor,
+  cardBackgroundColor,
   backgroundColor,
 }: ChartConfigType): ChartConfiguration => {
   return {
     type: 'lineWithVertical',
-    plugins: [ChartAnnotation],
     data: {
       labels,
       datasets: [
         {
-          label: 'USD',
+          label,
           fill: 'start',
           data,
           backgroundColor,
           borderColor: primaryColor,
-          pointBackgroundColor: cardColor,
+          pointBackgroundColor: cardBackgroundColor,
           pointHoverBackgroundColor: borderColor,
           borderWidth: 1.5,
         },
@@ -83,7 +84,8 @@ const chartConfig = ({
         ],
         yAxes: [
           {
-            id: 'left-y-axis',
+            id: 'right-y-axis',
+            position: 'right',
             ticks: {
               stepSize,
               min,
@@ -96,7 +98,7 @@ const chartConfig = ({
       tooltips: {
         mode: 'index',
         intersect: false,
-        backgroundColor: cardColor,
+        backgroundColor: cardBackgroundColor,
         titleAlign: 'center',
         titleFontColor: secondaryColor,
         titleFontSize: 10,
@@ -114,28 +116,11 @@ const chartConfig = ({
           tooltip.displayColors = false;
         },
       },
-      annotation: {
-        annotations: [
-          {
-            type: 'line',
-            mode: 'horizontal',
-            value: lastValue,
-            scaleID: 'left-y-axis',
-            drawTime: 'afterDatasetsDraw',
-            borderColor: secondaryColor,
-            borderWidth: 1,
-            borderDash: [4, 4],
-            borderDashOffset: 1,
-          },
-        ],
-      },
     },
   };
 };
 
-type TimeFrameType = 'week' | 'month';
-
-const StatisticsChart = ({ chartData }: { chartData: any }) => {
+const StatisticsChart = ({ chartData, label }: { chartData: ChartResponseType; label: string }) => {
   const ref = React.useRef(null);
   const chartRef = React.useRef(null);
 
@@ -144,8 +129,8 @@ const StatisticsChart = ({ chartData }: { chartData: any }) => {
 
   const lastValue = chartData[chartData.length - 1].value;
   const penultimateValue = chartData[chartData.length - 2].value;
-  const direction = lastValue > penultimateValue ? 'up' : 'down';
-  const percent = Math.abs(((lastValue - penultimateValue) / penultimateValue) * 100);
+  const direction: DirectionType = lastValue > penultimateValue ? 'up' : 'down';
+  const percent: number = Math.abs(((lastValue - penultimateValue) / penultimateValue) * 100);
 
   const buildChart = (instance: any) => () => {
     if ((chartRef as any).current) {
@@ -155,7 +140,7 @@ const StatisticsChart = ({ chartData }: { chartData: any }) => {
       const borderColor = docStyle.getPropertyValue('--border-color');
       const secondaryColor = docStyle.getPropertyValue('--secondary');
       const primaryColor = docStyle.getPropertyValue('--primary');
-      const cardColor = docStyle.getPropertyValue('--card-bg');
+      const cardBackgroundColor = docStyle.getPropertyValue('--card-bg');
       const backgroundColor = docStyle.getPropertyValue('--chart-faded-bg');
 
       const config = chartConfig({
@@ -163,36 +148,42 @@ const StatisticsChart = ({ chartData }: { chartData: any }) => {
         data: feed.map(({ value }: { value: any }) => value),
         min: Math.max(Math.round(Math.min(...feed.map((q: any) => q.value)) - 2), 0),
         stepSize: timeframe === 'week' ? 1 : 2,
-        lastValue: feed[feed.length - 1].value,
+        label,
         primaryColor,
         secondaryColor,
         borderColor,
-        cardColor,
+        cardBackgroundColor,
         backgroundColor,
       });
 
       if (instance) {
         instance.destroy();
       }
-
       Chart.defaults.lineWithVertical = Chart.defaults.line;
       Chart.controllers.lineWithVertical = Chart.controllers.line.extend({
         draw: function (ease: any) {
           Chart.controllers.line.prototype.draw.call(this, ease);
 
           if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
-            const activePoint = this.chart.tooltip._active[0],
-              ctx = this.chart.ctx,
-              x = activePoint.tooltipPosition().x,
-              topY = this.chart.legend.bottom,
-              bottomY = this.chart.chartArea.bottom;
+            const activePoint = this.chart.tooltip._active[0];
+            const ctx = this.chart.ctx;
+            const x = activePoint.tooltipPosition().x;
+            const y = activePoint.tooltipPosition().y;
+            const bottomY = this.chart.chartArea.bottom;
+            const rightX = this.chart.chartArea.right;
 
-            // draw line
             ctx.save();
             ctx.beginPath();
-            ctx.moveTo(x, topY);
+            ctx.moveTo(x, y);
             ctx.setLineDash([4, 4]);
             ctx.lineTo(x, bottomY);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = secondaryColor;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.setLineDash([4, 4]);
+            ctx.lineTo(rightX, y);
             ctx.lineWidth = 1;
             ctx.strokeStyle = secondaryColor;
             ctx.stroke();
@@ -200,18 +191,15 @@ const StatisticsChart = ({ chartData }: { chartData: any }) => {
           }
         },
       });
-
-      // eslint-disable-next-line
-      const chart = new Chart((chartRef as any).current, config);
-      setChart(chart);
+      const newChart = new Chart((chartRef as any).current, config);
+      setChart(newChart);
     }
   };
 
-  React.useEffect(buildChart(chart), [chartData]);
+  React.useEffect(buildChart(chart), [chartData, timeframe]);
 
   const setChartTimeframe = (newTimeFrame: TimeFrameType) => () => {
     setTimeframe(newTimeFrame);
-    buildChart(chart)();
   };
 
   return (
