@@ -8,7 +8,13 @@ interface LockedItemType {
   value: React.ReactNode;
 }
 
-const LockedAmountTooltip = ({ lockedDetails }: { lockedDetails: LockedItemType[] }) => {
+const LockedAmountTooltip = ({
+  lockedDetails,
+  small,
+}: {
+  lockedDetails: LockedItemType[];
+  small?: boolean;
+}) => {
   return (
     <OverlayTrigger
       placement="bottom"
@@ -16,7 +22,7 @@ const LockedAmountTooltip = ({ lockedDetails }: { lockedDetails: LockedItemType[
       overlay={(props: any) => (
         <Tooltip id="locked-amount-tooltip" {...props} show={props.show.toString()}>
           {lockedDetails.map(({ label, value }, i) => (
-            <div key={i} className="locked-item">
+            <div key={i} className={`locked-item ${small ? 'small-labels' : ''}`}>
               <span className="locked-item-label text-secondary">{label}</span>
               <span>{value}</span>
             </div>

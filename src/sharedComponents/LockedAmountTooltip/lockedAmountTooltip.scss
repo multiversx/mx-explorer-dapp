@@ -27,6 +27,12 @@
         min-width: 8.5rem;
         text-align: left;
       }
+
+      &.small-labels {
+        .locked-item-label {
+          min-width: 4.5rem;
+        }
+      }
     }
   }
 }
