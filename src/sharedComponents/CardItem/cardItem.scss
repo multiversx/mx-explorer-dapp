@@ -1,0 +1,107 @@
+.card-item-container {
+  @extend .my-n2;
+  @extend .d-flex;
+  @extend .flex-wrap;
+  @extend .flex-row;
+
+  &.mx-spacing {
+    @extend .px-2;
+    @extend .mx-lg-3;
+  }
+
+  .card-item {
+    overflow: hidden;
+    flex: 0 0 100%;
+
+    .card-item-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background-color: $light;
+      border-radius: 0.5rem;
+      min-width: 3.2rem;
+      min-height: 3.2rem;
+
+      svg {
+        width: 1.15rem !important;
+        height: 1.15rem !important;
+        fill: $secondary;
+        color: $secondary;
+
+        #elrond-symbol {
+          fill: $secondary;
+        }
+      }
+    }
+
+    .card-item-value,
+    .card-item-title {
+      line-height: 1.3;
+    }
+
+    &.lg {
+      .card-item-icon {
+        padding: 1.45rem;
+
+        svg {
+          width: 2.2rem !important;
+          height: 2.2rem !important;
+        }
+      }
+
+      .card-item-title {
+        color: $body !important;
+        margin-bottom: 0.5rem;
+      }
+
+      .card-item-value {
+        padding-right: 0.5rem;
+      }
+    }
+
+    @include media-breakpoint-up(sm) {
+      flex: 0 0 50%;
+    }
+
+    @include media-breakpoint-up(md) {
+      flex: 0 0 33.333%;
+    }
+
+    @include media-breakpoint-up(lg) {
+      flex: 0 0 25%;
+    }
+
+    &.n5 {
+      @include media-breakpoint-up(md) {
+        flex: 0 0 50%;
+      }
+
+      @include media-breakpoint-up(lg) {
+        flex: 0 0 33.333%;
+      }
+
+      @include media-breakpoint-up(xl) {
+        flex: 0 0 20%;
+      }
+    }
+
+    &.n3 {
+      @include media-breakpoint-up(sm) {
+        flex: 0 0 100%;
+      }
+
+      @include media-breakpoint-up(md) {
+        flex: 0 0 100%;
+      }
+
+      @include media-breakpoint-up(lg) {
+        flex: 0 0 50%;
+      }
+
+      @include media-breakpoint-up(xl) {
+        flex: 0 0 33.333%;
+      }
+    }
+  }
+}
