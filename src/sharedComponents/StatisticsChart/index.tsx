@@ -24,9 +24,17 @@ interface ChartConfigType {
   backgroundColor: string;
 }
 
-const formatValue = (value: string | number | undefined, formatUsd: boolean) => {
+const formatValue = (value: string | number | undefined, formatUsd: boolean, compact: boolean) => {
   if (value) {
-    return `${formatUsd ? '$' : ''}${value.toLocaleString()}`;
+    value = parseFloat(String(value));
+    const formattedValue =
+      compact && value > 1000000000
+        ? `${(value / 1000000000).toFixed(1)}b`
+        : value.toLocaleString('en', {
+            maximumFractionDigits: parseFloat(String(value)) > 1000 ? 0 : 2,
+          });
+
+    return `${formatUsd ? '$' : ''}${formattedValue}`;
   }
   return '';
 };
@@ -103,7 +111,7 @@ const chartConfig = ({
               fontColor: mutedColor,
               fontSize: 10,
               callback: (value) => {
-                const formattedValue = formatValue(value, formatMoney);
+                const formattedValue = formatValue(value, formatMoney, true);
                 return formattedValue;
               },
             },
@@ -117,11 +125,11 @@ const chartConfig = ({
         backgroundColor: cardBackgroundColor,
         titleAlign: 'center',
         titleFontColor: secondaryColor,
-        titleFontSize: displayType === 'small' ? 8 : 11,
+        titleFontSize: displayType === 'small' ? 9 : 11,
         titleFontStyle: '400',
         bodyAlign: 'center',
         bodyFontColor: secondaryColor,
-        bodyFontSize: displayType === 'small' ? 6 : 8,
+        bodyFontSize: displayType === 'small' ? 8 : 9,
         bodyFontStyle: '300',
         borderColor,
         borderWidth: 1,
@@ -136,7 +144,7 @@ const chartConfig = ({
           title: (tooltipItem) => {
             let formattedValue = `${
               formatMoney && displayType === 'price' ? '' : `${label}: `
-            }${formatValue(tooltipItem[0].yLabel, formatMoney)}`;
+            }${formatValue(tooltipItem[0].yLabel, formatMoney, false)}`;
 
             return formattedValue;
           },
@@ -206,7 +214,7 @@ const StatisticsChart = ({
       const backgroundColor = getBackgroundColor();
 
       const config = chartConfig({
-        labels: chartData.map(({ time }: { time: any }) => moment(time).format('MMM D')),
+        labels: chartData.map(({ time }: { time: any }) => moment(time).format('MMMM D')),
         data: chartData.map(({ value }: { value: any }) => value),
         min: Math.max(Math.round(Math.min(...chartData.map((q: any) => q.value)) - 2), 0),
         stepSize: 2,
@@ -255,7 +263,7 @@ const StatisticsChart = ({
               ctx.beginPath();
               ctx.moveTo(0, bottomY);
               ctx.lineTo(rightX, bottomY);
-              ctx.lineWidth = 1;
+              ctx.lineWidth = 0.5;
               ctx.strokeStyle = mutedColor;
               ctx.stroke();
               ctx.restore();
