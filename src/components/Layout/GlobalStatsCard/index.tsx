@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartPie } from '@fortawesome/pro-solid-svg-icons/faChartPie';
 import { faUsers } from '@fortawesome/pro-solid-svg-icons/faUsers';
 import { faChartArea } from '@fortawesome/pro-solid-svg-icons/faChartArea';
@@ -73,7 +72,7 @@ const GlobalStatsCard = () => {
               <div className="card-item-container w-100">
                 <CardItem className="n3 lg" title="Market Info" icon={faChartArea}>
                   <div className="d-flex flex-column w-100">
-                    <div className="d-flex justify-content-between">
+                    <div className="d-flex justify-content-between mb-1">
                       <span className="text-secondary mr-3">Price:</span>
                       {data.usd}
                     </div>
@@ -86,7 +85,7 @@ const GlobalStatsCard = () => {
 
                 <CardItem className="n3 lg" title="Economics" icon={faChartPie}>
                   <div className="d-flex flex-column w-100">
-                    <div className="d-flex justify-content-between">
+                    <div className="d-flex justify-content-between mb-1">
                       <span className="text-secondary mr-3">Circulating Supply:</span>
                       {data.circulatingSupply}
                     </div>
@@ -99,7 +98,7 @@ const GlobalStatsCard = () => {
 
                 <CardItem className="n3 lg" title="Usage" icon={faUsers}>
                   <div className="d-flex flex-column w-100">
-                    <div className="d-flex justify-content-between">
+                    <div className="d-flex justify-content-between mb-1">
                       <span className="text-secondary mr-3">Addresses:</span>
                       {data.accounts}
                     </div>
