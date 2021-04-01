@@ -1,26 +1,35 @@
 import React from 'react';
 import moment from 'moment';
 import Chart, { ChartConfiguration } from 'chart.js';
-import { faHeartRate } from '@fortawesome/pro-light-svg-icons/faHeartRate';
-import { faCaretUp } from '@fortawesome/pro-solid-svg-icons/faCaretUp';
-import { faCaretDown } from '@fortawesome/pro-solid-svg-icons/faCaretDown';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+type ChartResponseType = { time: string; value: number }[];
+type ChartType = 'lineWithVertical' | 'line' | 'bar';
+type displayType = undefined | 'small' | 'price';
 interface ChartConfigType {
   labels: string[];
   data: number[];
   min: number;
   stepSize: number;
   label: string;
+  showYaxis: boolean;
+  type: ChartType;
+  aspectRatio: undefined | number;
+  displayType: displayType;
+  formatMoney: undefined | boolean;
   primaryColor: string;
   secondaryColor: string;
+  mutedColor: string;
   borderColor: string;
   cardBackgroundColor: string;
   backgroundColor: string;
 }
-type ChartResponseType = { time: string; value: number }[];
-type DirectionType = 'up' | 'down' | 'none' | '';
-type TimeFrameType = 'week' | 'month';
+
+const formatValue = (value: string | number | undefined, formatUsd: boolean) => {
+  if (value) {
+    return `${formatUsd ? '$' : ''}${value.toLocaleString()}`;
+  }
+  return '';
+};
 
 const chartConfig = ({
   labels,
@@ -28,14 +37,20 @@ const chartConfig = ({
   min = 0,
   stepSize = 2,
   label = '',
+  showYaxis = false,
+  type = 'lineWithVertical',
+  aspectRatio = 2,
+  displayType,
+  formatMoney = false,
   primaryColor,
   secondaryColor,
+  mutedColor,
   borderColor,
   cardBackgroundColor,
   backgroundColor,
 }: ChartConfigType): ChartConfiguration => {
   return {
-    type: 'lineWithVertical',
+    type,
     data: {
       labels,
       datasets: [
@@ -44,9 +59,11 @@ const chartConfig = ({
           fill: 'start',
           data,
           backgroundColor,
-          borderColor: primaryColor,
+          borderColor: type === 'bar' ? 'transparent' : primaryColor,
           pointBackgroundColor: cardBackgroundColor,
-          pointHoverBackgroundColor: borderColor,
+          pointHoverBackgroundColor: cardBackgroundColor,
+          pointHoverBorderColor: primaryColor,
+          hoverBackgroundColor: primaryColor,
           borderWidth: 1.5,
         },
       ],
@@ -54,42 +71,41 @@ const chartConfig = ({
     options: {
       responsive: true,
       maintainAspectRatio: true,
-      aspectRatio: 2,
+      aspectRatio,
       elements: {
         line: {
-          tension: 0.38,
+          tension: 0.1,
         },
         point: {
-          radius: 4,
-          hoverRadius: 5,
+          radius: 0,
+          hitRadius: 4,
+          hoverRadius: 3,
+          borderColor: primaryColor,
         },
       },
-
       legend: {
         display: false,
       },
       scales: {
         xAxes: [
           {
-            ticks: {
-              callback(tick: any, index: any) {
-                return index % stepSize === 0 ? tick : '';
-              },
-              fontColor: secondaryColor,
-            },
-            gridLines: {
-              display: false,
-            },
+            display: false,
           },
         ],
         yAxes: [
           {
-            id: 'right-y-axis',
+            display: showYaxis,
             position: 'right',
             ticks: {
+              maxTicksLimit: 7,
               stepSize,
-              min,
-              fontColor: secondaryColor,
+              suggestedMin: min,
+              fontColor: mutedColor,
+              fontSize: 10,
+              callback: (value) => {
+                const formattedValue = formatValue(value, formatMoney);
+                return formattedValue;
+              },
             },
             gridLines: { display: false },
           },
@@ -101,56 +117,108 @@ const chartConfig = ({
         backgroundColor: cardBackgroundColor,
         titleAlign: 'center',
         titleFontColor: secondaryColor,
-        titleFontSize: 10,
+        titleFontSize: displayType === 'small' ? 8 : 11,
         titleFontStyle: '400',
         bodyAlign: 'center',
         bodyFontColor: secondaryColor,
-        bodyFontSize: 12,
-        bodyFontStyle: '500',
+        bodyFontSize: displayType === 'small' ? 6 : 8,
+        bodyFontStyle: '300',
         borderColor,
         borderWidth: 1,
-        xPadding: 15,
-        yPadding: 15,
+        xPadding: displayType === 'small' ? 10 : 15,
+        yPadding: displayType === 'small' ? 4 : 15,
         custom: (tooltip) => {
           if (!tooltip) return;
           tooltip.displayColors = false;
         },
+        callbacks: {
+          label: (tooltipItem) => String(tooltipItem.xLabel),
+          title: (tooltipItem) => {
+            let formattedValue = `${
+              formatMoney && displayType === 'price' ? '' : `${label}: `
+            }${formatValue(tooltipItem[0].yLabel, formatMoney)}`;
+
+            return formattedValue;
+          },
+        },
       },
+      ...(displayType === 'small'
+        ? {
+            layout: {
+              padding: {
+                right: 36,
+              },
+            },
+          }
+        : {}),
     },
   };
 };
 
-const StatisticsChart = ({ chartData, label }: { chartData: ChartResponseType; label: string }) => {
+const StatisticsChart = ({
+  chartData,
+  label,
+  showYaxis,
+  type,
+  aspectRatio,
+  displayType,
+  formatMoney,
+}: {
+  chartData: ChartResponseType;
+  label: string;
+  showYaxis: boolean;
+  type: ChartType;
+  aspectRatio?: number;
+  displayType?: displayType;
+  formatMoney?: boolean;
+}) => {
   const ref = React.useRef(null);
   const chartRef = React.useRef(null);
 
   const [chart, setChart] = React.useState<any>();
-  const [timeframe, setTimeframe] = React.useState<TimeFrameType>('week');
-
-  const lastValue = chartData[chartData.length - 1].value;
-  const penultimateValue = chartData[chartData.length - 2].value;
-  const direction: DirectionType = lastValue > penultimateValue ? 'up' : 'down';
-  const percent: number = Math.abs(((lastValue - penultimateValue) / penultimateValue) * 100);
 
   const buildChart = (instance: any) => () => {
     if ((chartRef as any).current) {
-      const feed =
-        timeframe === 'week' ? chartData.slice(chartData.length - 7, chartData.length) : chartData;
       const docStyle = window.getComputedStyle(document.documentElement);
       const borderColor = docStyle.getPropertyValue('--border-color');
       const secondaryColor = docStyle.getPropertyValue('--secondary');
+      const mutedColor = docStyle.getPropertyValue('--muted');
       const primaryColor = docStyle.getPropertyValue('--primary');
       const cardBackgroundColor = docStyle.getPropertyValue('--card-bg');
-      const backgroundColor = docStyle.getPropertyValue('--chart-faded-bg');
+      const fadedBackground = docStyle.getPropertyValue('--chart-faded-bg');
+
+      const chartElement = (chartRef as any).current.getContext('2d');
+      let gradient = chartElement.createLinearGradient(0, 0, 0, 400);
+      gradient.addColorStop(0, 'rgba(27, 70, 194, 0.4)');
+      gradient.addColorStop(0.4, 'rgba(27, 70, 194, 0.05)');
+      gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+      const getBackgroundColor = () => {
+        switch (true) {
+          case type === 'bar' && displayType === 'small':
+            return fadedBackground;
+          case type === 'bar':
+            return primaryColor;
+          default:
+            return gradient;
+        }
+      };
+      const backgroundColor = getBackgroundColor();
 
       const config = chartConfig({
-        labels: feed.map(({ time }: { time: any }) => moment(time).format('MMM D')),
-        data: feed.map(({ value }: { value: any }) => value),
-        min: Math.max(Math.round(Math.min(...feed.map((q: any) => q.value)) - 2), 0),
-        stepSize: timeframe === 'week' ? 1 : 2,
+        labels: chartData.map(({ time }: { time: any }) => moment(time).format('MMM D')),
+        data: chartData.map(({ value }: { value: any }) => value),
+        min: Math.max(Math.round(Math.min(...chartData.map((q: any) => q.value)) - 2), 0),
+        stepSize: 2,
         label,
+        type,
+        displayType,
+        formatMoney,
+        aspectRatio,
+        showYaxis,
         primaryColor,
         secondaryColor,
+        mutedColor,
         borderColor,
         cardBackgroundColor,
         backgroundColor,
@@ -159,89 +227,55 @@ const StatisticsChart = ({ chartData, label }: { chartData: ChartResponseType; l
       if (instance) {
         instance.destroy();
       }
-      Chart.defaults.lineWithVertical = Chart.defaults.line;
-      Chart.controllers.lineWithVertical = Chart.controllers.line.extend({
-        draw: function (ease: any) {
-          Chart.controllers.line.prototype.draw.call(this, ease);
 
-          if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
-            const activePoint = this.chart.tooltip._active[0];
+      if (type === 'lineWithVertical') {
+        Chart.defaults.lineWithVertical = Chart.defaults.line;
+        Chart.controllers.lineWithVertical = Chart.controllers.line.extend({
+          draw: function (ease: any) {
+            Chart.controllers.line.prototype.draw.call(this, ease);
             const ctx = this.chart.ctx;
-            const x = activePoint.tooltipPosition().x;
-            const y = activePoint.tooltipPosition().y;
             const bottomY = this.chart.chartArea.bottom;
             const rightX = this.chart.chartArea.right;
+            if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
+              const activePoint = this.chart.tooltip._active[0];
+              const x = activePoint.tooltipPosition().x;
+              const y = activePoint.tooltipPosition().y;
+              ctx.save();
+              ctx.beginPath();
+              ctx.moveTo(x, y);
+              ctx.setLineDash([4, 4]);
+              ctx.lineTo(x, bottomY);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = mutedColor;
+              ctx.stroke();
+              ctx.restore();
+            }
+            if (displayType === 'price') {
+              ctx.save();
+              ctx.beginPath();
+              ctx.moveTo(0, bottomY);
+              ctx.lineTo(rightX, bottomY);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = mutedColor;
+              ctx.stroke();
+              ctx.restore();
+            }
+          },
+        });
+      }
 
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.setLineDash([4, 4]);
-            ctx.lineTo(x, bottomY);
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = secondaryColor;
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.setLineDash([4, 4]);
-            ctx.lineTo(rightX, y);
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = secondaryColor;
-            ctx.stroke();
-            ctx.restore();
-          }
-        },
-      });
       const newChart = new Chart((chartRef as any).current, config);
       setChart(newChart);
     }
   };
 
-  React.useEffect(buildChart(chart), [chartData, timeframe]);
-
-  const setChartTimeframe = (newTimeFrame: TimeFrameType) => () => {
-    setTimeframe(newTimeFrame);
-  };
+  React.useEffect(buildChart(chart), [chartData]);
 
   return (
     <div ref={ref} className="statistics-chart chart h-100 d-flex flex-column">
       {
         <>
-          <div className="py-2 row d-flex flex-column flex-sm-row justify-content-between">
-            <div className="col d-flex align-items-center pl-3 pt-3">
-              <>
-                <FontAwesomeIcon icon={faHeartRate} className="text-primary" />
-                &nbsp;
-                <span className="text-secondary">{lastValue}</span>
-                <span className={direction === 'up' ? 'text-success' : 'text-danger'}>
-                  &nbsp;
-                  <FontAwesomeIcon icon={direction === 'up' ? faCaretUp : faCaretDown} />
-                  &nbsp;
-                  {percent && percent.toFixed(2)}%
-                </span>
-              </>
-            </div>
-
-            <div className="col pt-3 text-left text-sm-right">
-              <div className="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
-                <label
-                  onClick={setChartTimeframe('week')}
-                  className={`btn btn-white ${timeframe === 'week' ? 'active' : ''}`}
-                >
-                  <input type="radio" name="options" id="week" />
-                  Week
-                </label>
-                <label
-                  onClick={setChartTimeframe('month')}
-                  className={`btn btn-white ${timeframe === 'month' ? 'active' : ''}`}
-                >
-                  <input type="radio" name="options" id="month" />
-                  Month
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-3 d-flex align-items-center justify-content-center flex-fill">
+          <div className="d-flex align-items-center justify-content-center flex-fill">
             <canvas ref={chartRef} />
           </div>
         </>
