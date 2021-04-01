@@ -87,6 +87,7 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
               </span>
 
               <LockedAmountTooltip
+                small
                 lockedDetails={[
                   { label: 'Stake', value: <Denominate value={provider.stake} /> },
                   {

@@ -104,6 +104,7 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
               </span>
 
               <LockedAmountTooltip
+                small
                 lockedDetails={[
                   { label: 'Stake', value: <Denominate value={stake} /> },
                   {
