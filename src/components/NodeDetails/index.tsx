@@ -32,7 +32,6 @@ const NodeDetails = () => {
   const [identity, setIdentity] = React.useState<NodeDetailType<IdentityType>>(initialState);
   const [rounds, setRounds] = React.useState<NodeDetailType<RoundType[]>>(initialState);
   const [blocks, setBlocks] = React.useState<NodeDetailType<BlockType[]>>(initialState);
-  const [showExtendedInfo, setShowExtendedInfo] = React.useState(true);
 
   const fetchNodes = () => {
     setDataReady(undefined);
@@ -42,7 +41,6 @@ const NodeDetails = () => {
           const fetchIdentity = isMainnet && nodeData.data.identity !== undefined;
           const hasExtendedInfo =
             nodeData.data.type !== 'observer' && nodeData.data.status !== 'queued';
-          setShowExtendedInfo(hasExtendedInfo);
 
           const epoch = statsData.success ? statsData.data.epoch : undefined;
           const shard = nodeData.data.shard;
@@ -107,6 +105,9 @@ const NodeDetails = () => {
 
   const showIdentity =
     identity.success === false || (identity.success && identity.data !== undefined);
+
+  const showExtendedInfo =
+    node.data !== undefined && node.data.type !== 'observer' && node.data.status !== 'queued';
 
   return (
     <>
