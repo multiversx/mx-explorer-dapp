@@ -10,6 +10,8 @@ export const initialStats = {
   epochTotalTime: '...',
   epochTimeElapsed: '...',
   epochTimeRemaining: '...',
+  roundsPerEpoch: 0,
+  roundsPassed: 0,
 };
 
 export default function processStats(statsData: any) {
@@ -32,6 +34,8 @@ export default function processStats(statsData: any) {
         epochTimeRemaining: check
           ? moment.utc(data.refreshRate * (data.roundsPerEpoch - data.roundsPassed)).format('HH:mm')
           : '...',
+        roundsPerEpoch: data.roundsPerEpoch,
+        roundsPassed: data.roundsPassed,
       }
     : initialStats;
 
