@@ -9,12 +9,11 @@ import {
   Denominate,
   LockedAmountTooltip,
 } from 'sharedComponents';
-import RowIcon, { getIcon } from 'sharedComponents/NodesTable/RowIcon';
+import { getIcon } from 'sharedComponents/NodesTable/RowIcon';
 import { NodeType } from 'context/state';
 import { faLock, faServer, faCheck, faCode } from '@fortawesome/pro-solid-svg-icons';
 import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
 import { faStream } from '@fortawesome/pro-regular-svg-icons/faStream';
-import { faEye } from '@fortawesome/pro-regular-svg-icons/faEye';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 

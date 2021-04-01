@@ -8,6 +8,7 @@ import { Search } from 'sharedComponents';
 import Unavailable from './Unavailable';
 import PageLayout from './PageLayout';
 import { useLocation } from 'react-router-dom';
+import GlobalStats from './GlobalStats';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const {
@@ -56,6 +57,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <NetworkRouter />
           <LoopManager />
           <Navbar />
+          <GlobalStats />
           <div className="main-content-container container-fluid p-0 d-flex flex-column">
             {offline ? (
               <Unavailable />

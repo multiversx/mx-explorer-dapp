@@ -8,11 +8,6 @@ export type ActionType =
       type: 'updateNetworks';
       config: ConfigType;
     }
-  | { type: 'setNodes'; nodes: StateType['nodes'] }
-  | {
-      type: 'setIdentities';
-      identities: StateType['identities'];
-    }
   | { type: 'setShards'; shards: StateType['shards'] }
   | { type: 'triggerTick' }
   | {
@@ -21,7 +16,8 @@ export type ActionType =
     }
   | { type: 'setGlobalStake'; globalStake: StateType['globalStake'] }
   | { type: 'setAccountDetails'; accountDetails: StateType['accountDetails'] }
-  | { type: 'setAccountTokens'; accountTokens: StateType['accountTokens'] };
+  | { type: 'setAccountTokens'; accountTokens: StateType['accountTokens'] }
+  | { type: 'setGlobalStats'; globalStats: StateType['globalStats'] };
 
 export function globalReducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
@@ -48,18 +44,6 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
         refresh: {
           timestamp: Date.now(),
         },
-      };
-    }
-    case 'setNodes': {
-      return {
-        ...state,
-        nodes: action.nodes,
-      };
-    }
-    case 'setIdentities': {
-      return {
-        ...state,
-        identities: action.identities,
       };
     }
     case 'setShards': {
@@ -90,11 +74,16 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
         accountDetails: action.accountDetails,
       };
     }
-
     case 'setAccountTokens': {
       return {
         ...state,
         accountTokens: action.accountTokens,
+      };
+    }
+    case 'setGlobalStats': {
+      return {
+        ...state,
+        globalStats: action.globalStats,
       };
     }
     default: {

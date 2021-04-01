@@ -1,7 +1,7 @@
 import React from 'react';
 import { faCity } from '@fortawesome/pro-regular-svg-icons/faCity';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
-import { IdentityType } from 'context/state';
+import { IdentityType, NodeType } from 'context/state';
 import { adapter, Loader, Pager, PageState, ProvidersTable } from 'sharedComponents';
 import { useParams } from 'react-router-dom';
 import { NodesTable, SharedIdentity } from 'sharedComponents';
@@ -21,7 +21,7 @@ const IdentityDetails = () => {
   const [identity, setIdentity] = React.useState<IdentityType>();
   const [providers, setProviders] = React.useState<types.ProviderType[]>();
   const [providersFetched, setProvidersFetched] = React.useState<boolean | undefined>(undefined);
-  const [nodes, setNodes] = React.useState<any>();
+  const [nodes, setNodes] = React.useState<NodeType[]>([]);
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
 
   const fetchData = () => {
