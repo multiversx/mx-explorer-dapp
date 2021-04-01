@@ -65,12 +65,9 @@ const AccountDetailsCard = () => {
 
   const fetchLockedAmountAndPrice = () => {
     if (!document.hidden) {
-      getEgldPrice().then((priceData) => {
+      getEgldPrice().then((priceData: any) => {
         if (ref.current !== null) {
-          const usd =
-            priceData.success && priceData.data.length > 0
-              ? priceData.data[priceData.data.length - 1].value
-              : undefined;
+          const usd = priceData.success && priceData.data ? priceData.data : undefined;
 
           setLockedAmount({
             usd,

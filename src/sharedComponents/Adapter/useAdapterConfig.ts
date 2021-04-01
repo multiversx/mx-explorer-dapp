@@ -57,7 +57,14 @@ export default function useAdapterConfig() {
     getEconomics,
     getShards,
     getEgldPrice,
-    getEgldMarketCap,
+    getEgldPriceHistory,
+    getEgldMarketCapHistory,
+    getEgldVolumeHistory,
+    getEgldTotalStakedHistory,
+    getEgldUsersStaking,
+    getEgldTotalTransactions,
+    getEgldTransactionsHistory,
+    getEgldAccountsHistory,
     getProviders,
     getProvider,
   } = providers[adapter];
@@ -77,9 +84,22 @@ export default function useAdapterConfig() {
       wrap(() => getAccountStake({ ...providerProps, ...props })),
     getEconomics: (props = basicProps) => wrap(() => getEconomics({ ...providerProps, ...props })),
     getEgldPrice: (props = basicProps) => wrap(() => getEgldPrice({ ...providerProps, ...props })),
-    getEgldMarketCap: (props = basicProps) =>
-      wrap(() => getEgldMarketCap({ ...providerProps, ...props })),
-
+    getEgldPriceHistory: (props = basicProps) =>
+      wrap(() => getEgldPriceHistory({ ...providerProps, ...props })),
+    getEgldMarketCapHistory: (props = basicProps) =>
+      wrap(() => getEgldMarketCapHistory({ ...providerProps, ...props })),
+    getEgldVolumeHistory: (props = basicProps) =>
+      wrap(() => getEgldVolumeHistory({ ...providerProps, ...props })),
+    getEgldTotalStakedHistory: (props = basicProps) =>
+      wrap(() => getEgldTotalStakedHistory({ ...providerProps, ...props })),
+    getEgldUsersStaking: (props = basicProps) =>
+      wrap(() => getEgldUsersStaking({ ...providerProps, ...props })),
+    getEgldTotalTransactions: (props = basicProps) =>
+      wrap(() => getEgldTotalTransactions({ ...providerProps, ...props })),
+    getEgldTransactionsHistory: (props = basicProps) =>
+      wrap(() => getEgldTransactionsHistory({ ...providerProps, ...props })),
+    getEgldAccountsHistory: (props = basicProps) =>
+      wrap(() => getEgldAccountsHistory({ ...providerProps, ...props })),
     getProviders: (props = basicProps) => wrap(() => getProviders({ ...providerProps, ...props })),
     getProvider: (props = basicProps) => wrap(() => getProvider({ ...providerProps, ...props })),
   };

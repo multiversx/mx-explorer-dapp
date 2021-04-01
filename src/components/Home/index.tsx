@@ -4,6 +4,9 @@ import NetworkHealth from './NetworkHealth';
 import LatestBlocks from './LatestBlocks';
 import LatestTransactions from './LatestTransactions';
 import PriceChart from './PriceChart';
+import StakingChart from './StakingChart';
+import TransactionsChart from './TransactionsChart';
+import AccountsChart from './AccountsChart';
 import { useIsMainnet } from 'helpers';
 
 const Home = () => {
@@ -34,6 +37,15 @@ const Home = () => {
       <div className="row">
         <div className="col-12 col-lg-6 mt-spacer">
           <PriceChart />
+        </div>
+        <div className="col-12 col-lg-6 mt-spacer">
+          <StakingChart />
+        </div>
+        <div className="col-12 col-lg-6 mt-spacer">
+          <TransactionsChart />
+        </div>
+        <div className="col-12 col-lg-6 mt-spacer">
+          <AccountsChart />
         </div>
       </div>
     </div>
