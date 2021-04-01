@@ -67,6 +67,7 @@ export default function useAdapterConfig() {
     getEgldAccountsHistory,
     getProviders,
     getProvider,
+    getEgldMarketCap,
   } = providers[adapter];
 
   const providerProps = { ...providers[adapter], metaChainShardId, timeout };
@@ -102,5 +103,7 @@ export default function useAdapterConfig() {
       wrap(() => getEgldAccountsHistory({ ...providerProps, ...props })),
     getProviders: (props = basicProps) => wrap(() => getProviders({ ...providerProps, ...props })),
     getProvider: (props = basicProps) => wrap(() => getProvider({ ...providerProps, ...props })),
+    getEgldMarketCap: (props = basicProps) =>
+      wrap(() => getEgldMarketCap({ ...providerProps, ...props })),
   };
 }

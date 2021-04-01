@@ -20,6 +20,7 @@ import analytics from './analytics';
 import isContract from './isContract';
 import usdValue from './usdValue';
 import nominate from './nominate';
+import processStats from './processStats';
 
 export {
   truncate,
@@ -44,4 +45,5 @@ export {
   isContract,
   usdValue,
   nominate,
+  processStats,
 };

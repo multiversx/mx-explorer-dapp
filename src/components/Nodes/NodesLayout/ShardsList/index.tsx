@@ -7,7 +7,7 @@ import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
 
 const StakingQueueCard = ({ globalStake }: { globalStake: GlobalStakeType | undefined }) => {
   return (
-    <div className="shard-card py-3 mr-lg-3">
+    <div className="shard-card py-3 mr-lg-5">
       <div className="mb-2">
         <span className="text-secondary">Queue</span>
       </div>

@@ -45,11 +45,8 @@ const AccountDetailsCard = () => {
   //         if (ref.current !== null) {
   //           const delegationFetched = delegationData.success ? delegationData.data : {};
   //           const stakeFetched = stakeData.success ? stakeData.data : {};
-  //           const usd =
-  //             priceData.success && priceData.data.length > 0
-  //               ? priceData.data[priceData.data.length - 1].value
-  //               : undefined;
-
+  //           const usd = priceData.success ? priceData.data : undefined;
+  //
   //           setLockedAmount({
   //             ...(delegationFetched ? delegationData.data : {}),
   //             ...(stakeFetched ? stakeData.data : {}),
@@ -67,7 +64,7 @@ const AccountDetailsCard = () => {
     if (!document.hidden) {
       getEgldPrice().then((priceData: any) => {
         if (ref.current !== null) {
-          const usd = priceData.success && priceData.data ? priceData.data : undefined;
+          const usd = priceData.success ? priceData.data : undefined;
 
           setLockedAmount({
             usd,
@@ -127,7 +124,7 @@ const AccountDetailsCard = () => {
             </div>
           </div>
 
-          <div className="card-body card-item-container">
+          <div className="card-body card-item-container mx-spacing">
             <CardItem className={cardItemClass} title="Balance" customIcon={<ElrondSymbol />}>
               <div className="d-flex align-items-center">
                 {balance !== '...' ? <Denominate value={balance} /> : balance}

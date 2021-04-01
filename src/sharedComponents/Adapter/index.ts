@@ -32,6 +32,7 @@ export default function useAdapter() {
     getEgldAccountsHistory,
     getProviders,
     getProvider,
+    getEgldMarketCap,
   } = useAdapterConfig();
 
   return {
@@ -280,6 +281,7 @@ export default function useAdapter() {
 
     getEgldPrice,
     getEgldPriceHistory,
+    getEgldMarketCap,
     getEgldMarketCapHistory,
     getEgldVolumeHistory,
     getEgldTotalStakedHistory,

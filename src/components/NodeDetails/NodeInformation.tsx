@@ -9,14 +9,13 @@ import {
   Denominate,
   LockedAmountTooltip,
 } from 'sharedComponents';
-import RowIcon, { getIcon } from 'sharedComponents/NodesTable/RowIcon';
+import { getIcon } from 'sharedComponents/NodesTable/RowIcon';
 import { NodeType } from 'context/state';
 import { faLock, faServer, faCheck, faCode } from '@fortawesome/pro-solid-svg-icons';
-import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
-import { faStream } from '@fortawesome/pro-regular-svg-icons/faStream';
-import { faEye } from '@fortawesome/pro-regular-svg-icons/faEye';
-import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
+import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
+import { faStream } from '@fortawesome/pro-solid-svg-icons/faStream';
+import { faCogs } from '@fortawesome/pro-solid-svg-icons/faCogs';
+import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
 
 import Alert from './Alert';
 
@@ -57,7 +56,7 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
           </div>
         </div>
       </div>
-      <div className="card-body card-item-container">
+      <div className="card-body card-item-container mx-spacing">
         <CardItem title="Shard" icon={faLayerGroup}>
           {shard !== undefined ? (
             <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">

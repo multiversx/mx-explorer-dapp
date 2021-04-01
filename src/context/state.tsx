@@ -90,8 +90,6 @@ export interface StateType {
     timestamp: number;
   };
   theme: string;
-  nodes: NodeType[];
-  identities: IdentityType[];
   shards: ShardType[];
   globalStake: GlobalStakeType | undefined;
   accountDetails: types.AccountType;
@@ -116,8 +114,6 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
       timestamp: Date.now(),
     },
     theme: getTheme(),
-    nodes: [],
-    identities: [],
     shards: [],
     globalStake: undefined,
     accountTokens: {

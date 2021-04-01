@@ -8,6 +8,24 @@ import { Search } from 'sharedComponents';
 import Unavailable from './Unavailable';
 import PageLayout from './PageLayout';
 import { useLocation } from 'react-router-dom';
+import GlobalStatsCard from './GlobalStatsCard';
+import { validatorsRoutes } from 'routes';
+
+const showGlobalStats = (activePath: string) => {
+  let show = true;
+
+  switch (true) {
+    case activePath === '/':
+    case activePath.includes('/identities'):
+    case activePath.includes(validatorsRoutes.index):
+    case activePath.includes(validatorsRoutes.nodes):
+    case activePath.includes(validatorsRoutes.providers):
+      show = false;
+      break;
+  }
+
+  return show;
+};
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const {
@@ -78,6 +96,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     </div>
                   </div>
                 </div>
+
+                {showGlobalStats(activePath) && <GlobalStatsCard />}
 
                 <div className="page-container" data-testid="mainPageContent">
                   <PageLayout>{children}</PageLayout>
