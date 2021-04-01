@@ -50,7 +50,6 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
 
           <div className="d-flex flex-column min-w-0">
             <div className="d-flex align-items-center">
-              {type === 'observer' && <RowIcon node={nodeData} />}
               <Trim text={bls} />
               <CopyButton text={bls} className="ml-2" />
             </div>
