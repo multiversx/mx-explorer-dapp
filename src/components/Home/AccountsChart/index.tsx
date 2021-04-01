@@ -1,41 +1,63 @@
 import * as React from 'react';
 import { StatisticsChart, Loader, adapter } from 'sharedComponents';
+import { useGlobalState } from 'context';
+import { processStats } from 'helpers';
+import { initialStats } from 'helpers/processStats';
 
 type ChartResponseType = { time: string; value: number }[];
+const initialState = {
+  ...initialStats,
+};
 
 const AccountsChart = () => {
-  const {
-    getEgldPriceHistory,
-    getEgldMarketCapHistory,
-    getEgldVolumeHistory,
-    getEgldTotalStakedHistory,
-    getEgldUsersStaking,
-    getEgldTotalTransactions,
-    getEgldTransactionsHistory,
-    getEgldAccountsHistory,
-  } = adapter();
+  const ref = React.useRef(null);
+  const { activeNetworkId } = useGlobalState();
+  const { getStats, getEgldAccountsHistory } = adapter();
+
+  const [data, setData] = React.useState(initialState);
   const [chartData, setChartData] = React.useState<ChartResponseType>([]);
 
-  React.useEffect(() => {
-    getEgldAccountsHistory().then((chartData: any) => {
-      const { data = [], success } = chartData;
+  const getData = () => {
+    if (ref.current !== null) {
+      Promise.all([getStats(), getEgldAccountsHistory()]).then(
+        ([statsData, accountsHistoryData]) => {
+          if (ref.current !== null) {
+            setData(processStats(statsData));
+            accountsHistoryData.success ? setChartData(accountsHistoryData.data) : setChartData([]);
+          }
+        }
+      );
+    }
+  };
+  const getDailyAccounts = (chartData: ChartResponseType) => {
+    if (chartData.length >= 2) {
+      const lastDayAccounts = chartData[chartData.length - 1].value;
+      const penultimateDayAccounts = chartData[chartData.length - 2].value;
 
-      if (success && data.length > 0) {
-        setChartData(chartData.data);
-      }
-    });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      return (lastDayAccounts - penultimateDayAccounts).toLocaleString('en');
+    }
+    return '...';
+  };
+  React.useEffect(getData, [activeNetworkId]);
 
   return (
-    <div className="card price-chart">
+    <div className="card accounts-chart" ref={ref}>
       <div className="card-header">
         <div className="card-header-item d-flex align-items-center">
           <h6 className="mb-0">Address Metrics</h6>
         </div>
       </div>
-      <div className="card-body p-spacer">
+      <div className="card-body px-spacer pb-spacer">
+        <div className="card-details">
+          <div>
+            <small className="text-secondary pr-3">Total Addresses: </small>
+            <span>{data.accounts}</span>
+          </div>
+          <div>
+            <small className="text-secondary pr-3">Daily Addresses: </small>
+            <span>{getDailyAccounts(chartData)}</span>
+          </div>
+        </div>
         {chartData.length > 0 ? (
           <StatisticsChart
             chartData={chartData}

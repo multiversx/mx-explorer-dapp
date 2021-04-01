@@ -57,7 +57,7 @@ export default {
   },
   getEgldUsersStaking: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latestseries/staking/total/count`, {
+    return axios.get(`https://data.elrond.com/latest/staking/total/count`, {
       timeout,
     });
   },

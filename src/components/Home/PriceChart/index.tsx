@@ -1,68 +1,64 @@
 import * as React from 'react';
 import { StatisticsChart, Loader, adapter } from 'sharedComponents';
+import { useGlobalState } from 'context';
 
 type ActiveChartType = 'price' | 'marketcap';
 type ChartResponseType = { time: string; value: number }[];
 
 const PriceChart = () => {
+  const ref = React.useRef(null);
+  const { activeNetworkId } = useGlobalState();
+
   const { getEgldPriceHistory, getEgldMarketCapHistory, getEgldVolumeHistory } = adapter();
   const [chartData, setChartData] = React.useState<ChartResponseType>([]);
-  const [pricechartData, setPriceChartData] = React.useState<ChartResponseType>([]);
+  const [priceChartData, setPriceChartData] = React.useState<ChartResponseType>([]);
   const [marketCapChartData, setMarketCapChartData] = React.useState<ChartResponseType>([]);
   const [volumeChartData, setVolumeChartData] = React.useState<ChartResponseType>([]);
   const [activeChart, setActiveChart] = React.useState<ActiveChartType>('price');
 
-  React.useEffect(() => {
-    switch (true) {
-      case activeChart === 'price':
-        if (pricechartData.length === 0) {
-          getEgldPriceHistory().then((chartData: any) => {
-            const { data = [], success } = chartData;
+  const getData = () => {
+    if (ref.current !== null) {
+      Promise.all([getEgldPriceHistory(), getEgldMarketCapHistory(), getEgldVolumeHistory()]).then(
+        ([priceHistoryData, marketCapHistoryData, volumeHistoryData]) => {
+          if (ref.current !== null) {
+            priceHistoryData.success
+              ? setPriceChartData(priceHistoryData.data)
+              : setPriceChartData([]);
 
-            if (success && data.length > 0) {
-              setPriceChartData(chartData.data);
-              setChartData(chartData.data);
-            }
-          });
-        } else {
-          setChartData(pricechartData);
+            marketCapHistoryData.success
+              ? setMarketCapChartData(marketCapHistoryData.data)
+              : setMarketCapChartData([]);
+
+            volumeHistoryData.success
+              ? setVolumeChartData(volumeHistoryData.data)
+              : setVolumeChartData([]);
+          }
         }
-
-        break;
-      case activeChart === 'marketcap':
-        if (marketCapChartData.length === 0) {
-          getEgldMarketCapHistory().then((chartData: any) => {
-            const { data = [], success } = chartData;
-
-            if (success && data.length > 0) {
-              setMarketCapChartData(chartData.data);
-              setChartData(chartData.data);
-            }
-          });
-        } else {
-          setChartData(marketCapChartData);
-        }
-
-        break;
+      );
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeChart]);
+  };
+  React.useEffect(getData, [activeNetworkId]);
 
   React.useEffect(() => {
-    getEgldVolumeHistory().then((chartData: any) => {
-      const { data = [], success } = chartData;
-
-      if (success && data.length > 0) {
-        setVolumeChartData(chartData.data);
-      }
-    });
-
+    if (activeChart === 'price' && priceChartData.length > 0) {
+      setChartData(priceChartData);
+    }
+    if (activeChart === 'marketcap' && marketCapChartData.length > 0) {
+      setChartData(marketCapChartData);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [activeChart, priceChartData]);
+
+  const getCurrentValue = (chartData: ChartResponseType) => {
+    if (chartData.length >= 1) {
+      const value = chartData[chartData.length - 1].value;
+      return `$${value.toLocaleString('en', { maximumFractionDigits: value > 1000 ? 0 : 2 })}`;
+    }
+    return '...';
+  };
 
   return (
-    <div className="card price-chart">
+    <div className="card price-chart" ref={ref}>
       <div className="card-header">
         <div className="card-header-item d-flex align-items-center">
           <h6
@@ -70,6 +66,7 @@ const PriceChart = () => {
             onClick={() => {
               setActiveChart('price');
             }}
+            style={{ cursor: 'pointer' }}
           >
             Price
           </h6>
@@ -78,15 +75,26 @@ const PriceChart = () => {
             onClick={() => {
               setActiveChart('marketcap');
             }}
+            style={{ cursor: 'pointer' }}
           >
             Market Cap
           </h6>
         </div>
       </div>
       <div className="card-body">
-        <div className="pl-3 pt-3">
+        <div className="pl-3">
+          <div className="card-details mb-lg-n5">
+            <div>
+              <small className="text-secondary pr-3">Current Price: </small>
+              <span>{getCurrentValue(priceChartData)}</span>
+            </div>
+            <div>
+              <small className="text-secondary pr-3">Market Cap: </small>
+              <span>{getCurrentValue(marketCapChartData)}</span>
+            </div>
+          </div>
           {chartData.length > 0 ? (
-            <div className="pb-3">
+            <div className="pt-5 pb-3">
               <StatisticsChart
                 chartData={chartData}
                 displayType="price"
@@ -100,7 +108,7 @@ const PriceChart = () => {
           ) : (
             <Loader />
           )}
-          {chartData.length > 0 ? (
+          {volumeChartData.length > 0 && (
             <StatisticsChart
               chartData={volumeChartData}
               displayType="small"
@@ -110,8 +118,6 @@ const PriceChart = () => {
               showYaxis={false}
               aspectRatio={8}
             />
-          ) : (
-            <Loader />
           )}
         </div>
       </div>
