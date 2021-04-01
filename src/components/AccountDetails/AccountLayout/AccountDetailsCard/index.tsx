@@ -26,30 +26,31 @@ const AccountDetailsCard = () => {
     activeNetwork: { id, adapter: networkAdapter },
     accountDetails,
     accountTokens,
-    globalStats,
   } = useGlobalState();
-  const { getProvider /*getAccountDelegation, getAccountStake,*/ } = adapter();
-  const { address, balance, nonce } = accountDetails;
+  const { getProvider, /*getAccountDelegation, getAccountStake,*/ getEgldPrice } = adapter();
+  const { address, balance, nonce, txCount } = accountDetails;
 
   const tokensActive = id !== 'mainnet' && networkAdapter === 'api';
   const cardItemClass = tokensActive ? 'n5' : '';
 
-  // const [lockedAmount, setLockedAmount] = React.useState<LockedAmountType>({
-  //   stakeFetched: undefined,
-  //   delegationFetched: undefined,
-  // });
+  const [lockedAmount, setLockedAmount] = React.useState<LockedAmountType>({
+    stakeFetched: undefined,
+    delegationFetched: undefined,
+  });
 
-  // const fetchLockedAmount = () => {
+  // const fetchLockedAmountAndPrice = () => {
   //   if (!document.hidden) {
-  //     Promise.all([getAccountDelegation(address), getAccountStake(address)]).then(
+  //     Promise.all([getAccountDelegation(address), getAccountStake(address), getEgldPrice()]).then(
   //       ([delegationData, stakeData, priceData]) => {
   //         if (ref.current !== null) {
   //           const delegationFetched = delegationData.success ? delegationData.data : {};
   //           const stakeFetched = stakeData.success ? stakeData.data : {};
-
+  //           const usd = priceData.success ? priceData.data : undefined;
+  //
   //           setLockedAmount({
   //             ...(delegationFetched ? delegationData.data : {}),
   //             ...(stakeFetched ? stakeData.data : {}),
+  //             usd,
   //             delegationFetched,
   //             stakeFetched,
   //           });
@@ -59,10 +60,24 @@ const AccountDetailsCard = () => {
   //   }
   // };
 
-  // React.useEffect(() => {
-  //   fetchLockedAmount();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [txCount, id, address]);
+  const fetchLockedAmountAndPrice = () => {
+    if (!document.hidden) {
+      getEgldPrice().then((priceData) => {
+        if (ref.current !== null) {
+          const usd = priceData.success ? priceData.data : undefined;
+
+          setLockedAmount({
+            usd,
+          });
+        }
+      });
+    }
+  };
+
+  React.useEffect(() => {
+    fetchLockedAmountAndPrice();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [txCount, id, address]);
 
   const [isProvider, setIsProvider] = React.useState(false);
   const fetchProviderDetails = () => {
@@ -117,7 +132,7 @@ const AccountDetailsCard = () => {
             </CardItem>
 
             <CardItem className={cardItemClass} title="Value" icon={faDollarSign}>
-              <UsdValue input={balance} usd={globalStats.usd} />
+              <UsdValue input={balance} usd={lockedAmount.usd} />
             </CardItem>
 
             {/* <LockedAmountCardItem lockedAmount={lockedAmount} cardItemClass={cardItemClass} /> */}

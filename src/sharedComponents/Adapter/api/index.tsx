@@ -29,6 +29,22 @@ export default {
   getEconomics: api,
   getEgldPrice: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/market/quotes/egld/price`, { timeout });
+    return axios.get(`https://data.elrond.com/latest/quotes/egld/price`, { timeout });
+  },
+  getEgldMarketCap: (props: ProviderPropsType) => {
+    const { timeout } = props;
+    return axios.get(`https://data.elrond.com/latest/quotes/egld/market_cap`, { timeout });
+  },
+  getEgldCirculatingSupply: (props: ProviderPropsType) => {
+    const { timeout } = props;
+    return axios.get(`https://data.elrond.com/latest/economics/economics/circulating_supply`, {
+      timeout,
+    });
+  },
+  getEgldTotalStaked: (props: ProviderPropsType) => {
+    const { timeout } = props;
+    return axios.get(`https://data.elrond.com/latest/economics/economics/staked`, {
+      timeout,
+    });
   },
 };

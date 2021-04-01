@@ -80,19 +80,6 @@ export interface NodeType {
   computedShardID?: number;
 }
 
-export interface GlobalStatsType {
-  shards: string;
-  blocks: string;
-  accounts: string;
-  transactions: string;
-  epoch: string;
-  epochPercentage: number;
-  epochTotalTime: string;
-  epochTimeElapsed: string;
-  epochTimeRemaining: string;
-  usd?: number;
-}
-
 export interface StateType {
   config: ConfigType;
   defaultNetwork: NetworkType;
@@ -110,7 +97,6 @@ export interface StateType {
     success: boolean | undefined;
     data: types.TokenType[];
   };
-  globalStats: GlobalStatsType;
 }
 
 const initialState = (optionalConfig?: ConfigType): StateType => {
@@ -140,17 +126,6 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
       nonce: 0,
       txCount: 0,
       claimableRewards: '',
-    },
-    globalStats: {
-      shards: '...',
-      blocks: '...',
-      accounts: '...',
-      transactions: '...',
-      epoch: '...',
-      epochPercentage: 0,
-      epochTotalTime: '...',
-      epochTimeElapsed: '...',
-      epochTimeRemaining: '...',
     },
   };
 };

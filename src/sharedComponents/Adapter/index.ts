@@ -24,6 +24,9 @@ export default function useAdapter() {
     getEgldPrice,
     getProviders,
     getProvider,
+    getEgldMarketCap,
+    getEgldCirculatingSupply,
+    getEgldTotalStaked,
   } = useAdapterConfig();
 
   return {
@@ -271,5 +274,8 @@ export default function useAdapter() {
     getEconomics: () => getEconomics({ url: `/economics` }),
 
     getEgldPrice,
+    getEgldMarketCap,
+    getEgldCirculatingSupply,
+    getEgldTotalStaked,
   };
 }
