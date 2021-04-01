@@ -44,4 +44,13 @@ export default {
   getProvider: () => {
     throw new Error('not defined');
   },
+  getEgldMarketCap: () => {
+    throw new Error('not defined');
+  },
+  getEgldCirculatingSupply: () => {
+    throw new Error('not defined');
+  },
+  getEgldTotalStaked: () => {
+    throw new Error('not defined');
+  },
 };

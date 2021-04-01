@@ -73,24 +73,6 @@
 }
 
 .network-health {
-  .custom-toggle {
-    &.custom-toggle-sm {
-      padding-left: 2.2rem;
-
-      .custom-control-label {
-        &::before {
-          background: $light;
-          border-color: $light;
-          box-shadow: none;
-        }
-
-        &::after {
-          background: $primary;
-        }
-      }
-    }
-  }
-
   .gears-layout-container {
     @include radial-bg();
 

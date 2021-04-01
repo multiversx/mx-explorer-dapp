@@ -1,0 +1,20 @@
+.global-stats-card {
+  .gear-container.center {
+    background: radial-gradient(circle, rgba($primary-light, 0.25) 60%, rgba(0, 0, 0, 0) 40%)
+      no-repeat;
+    position: relative;
+    width: 7rem;
+    height: 7rem;
+
+    .gear-content {
+      @extend .position-absolute-center;
+      width: 80%;
+      height: 80%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-direction: column;
+    }
+  }
+}
