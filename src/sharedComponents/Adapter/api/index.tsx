@@ -35,16 +35,4 @@ export default {
     const { timeout } = props;
     return axios.get(`https://data.elrond.com/latest/quotes/egld/market_cap`, { timeout });
   },
-  getEgldCirculatingSupply: (props: ProviderPropsType) => {
-    const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latest/economics/economics/circulating_supply`, {
-      timeout,
-    });
-  },
-  getEgldTotalStaked: (props: ProviderPropsType) => {
-    const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latest/economics/economics/staked`, {
-      timeout,
-    });
-  },
 };
