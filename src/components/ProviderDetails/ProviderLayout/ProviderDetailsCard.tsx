@@ -52,7 +52,7 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
         </div>
       </div>
 
-      <div className="card-body card-item-container">
+      <div className="card-body card-item-container mx-spacing">
         <CardItem title="Number of nodes" icon={faServer}>
           {provider.numNodes !== undefined ? (
             <>

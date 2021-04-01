@@ -8,11 +8,6 @@ export type ActionType =
       type: 'updateNetworks';
       config: ConfigType;
     }
-  | { type: 'setNodes'; nodes: StateType['nodes'] }
-  | {
-      type: 'setIdentities';
-      identities: StateType['identities'];
-    }
   | { type: 'setShards'; shards: StateType['shards'] }
   | { type: 'triggerTick' }
   | {
@@ -50,18 +45,6 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
         },
       };
     }
-    case 'setNodes': {
-      return {
-        ...state,
-        nodes: action.nodes,
-      };
-    }
-    case 'setIdentities': {
-      return {
-        ...state,
-        identities: action.identities,
-      };
-    }
     case 'setShards': {
       return {
         ...state,
@@ -90,7 +73,6 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
         accountDetails: action.accountDetails,
       };
     }
-
     case 'setAccountTokens': {
       return {
         ...state,

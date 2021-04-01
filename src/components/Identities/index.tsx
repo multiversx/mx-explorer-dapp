@@ -1,6 +1,5 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { useGlobalDispatch, useGlobalState } from 'context';
 import { IdentityType } from 'context/state';
 import { adapter, Loader, PageState } from 'sharedComponents';
 import IdentityRow from './IdentityRow';
@@ -9,9 +8,9 @@ import NodesTabs from 'components/Nodes/NodesLayout/NodesTabs';
 const Identities = () => {
   const ref = React.useRef(null);
   const { getIdentities } = adapter();
+
+  const [identities, setIdentities] = React.useState<IdentityType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
-  const dispatch = useGlobalDispatch();
-  const { identities } = useGlobalState();
 
   const fetchIdentities = () => {
     getIdentities().then(({ data, success }) => {
@@ -23,14 +22,10 @@ const Identities = () => {
           if (!identity.stake || !identity.validators) {
             return;
           }
-
           identitiesList.push({ ...identity, overallStakePercent });
           overallStakePercent = overallStakePercent + identity.stakePercent;
         });
-        dispatch({
-          type: 'setIdentities',
-          identities: identitiesList,
-        });
+        setIdentities(identitiesList);
       }
 
       setDataReady(success);

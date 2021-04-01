@@ -68,4 +68,7 @@ export default {
   getProvider: () => {
     throw new Error('not defined');
   },
+  getEgldMarketCap: () => {
+    throw new Error('not defined');
+  },
 };
