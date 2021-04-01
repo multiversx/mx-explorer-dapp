@@ -6,6 +6,6 @@ export const refreshRate = 6000;
 export const nrOfShards = 3;
 export const versionNumber = 'v1.1.0.0';
 export const denomination = 18;
-export const decimals = 4;
+export const decimals = 2;
 export const numInitCharactersForScAddress = 13;
 export const stakePerValidator = 2500000;

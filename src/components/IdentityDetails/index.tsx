@@ -50,8 +50,6 @@ const IdentityDetails = () => {
     providersFetched === false ||
     (providersFetched && providers !== undefined && providers.length > 0);
 
-  const website = walletAddress; // identity && identity.website ? identity.website : walletAddress;
-
   return (
     <>
       {dataReady === undefined && <Loader />}
@@ -94,7 +92,7 @@ const IdentityDetails = () => {
                                 className="btn btn-sm btn-primary-light"
                                 target={`_blank`}
                                 rel={`noreferrer nofollow`}
-                                href={website || ''}
+                                href={walletAddress}
                               >
                                 Stake now
                               </a>

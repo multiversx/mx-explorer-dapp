@@ -39,25 +39,25 @@ const ValidatorsStatus = () => {
     activeNetwork: { apiUrl },
   } = useGlobalState();
 
-  const { getNodesCount } = adapter();
+  const { getShards } = adapter();
 
   const fetchMarkers = () => {
-    Promise.all([
-      getMarkers({ timeout, apiUrl: apiUrl || '' }),
-      getNodesCount({ type: 'validator' }),
-    ]).then(([markersData, nodesData]) => {
-      if (ref.current !== null) {
-        if (markersData.success && nodesData.success) {
-          const totalValidators = nodesData.data;
+    Promise.all([getMarkers({ timeout, apiUrl: apiUrl || '' }), getShards()]).then(
+      ([markersData, shardData]) => {
+        if (ref.current !== null) {
+          if (markersData.success && shardData.success) {
+            let totalValidators = 0;
+            shardData.data.forEach((shard: any) => (totalValidators += shard.validators));
 
-          if (markersData.data.length > 0 && totalValidators > 0) {
-            setMarkers(markersData.data);
-            setTotalNodes(totalValidators);
-            setContinentsRank(calcContinentRank(markersData.data, totalValidators));
+            if (markersData.data.length > 0 && totalValidators > 0) {
+              setMarkers(markersData.data);
+              setTotalNodes(totalValidators);
+              setContinentsRank(calcContinentRank(markersData.data, totalValidators));
+            }
           }
         }
       }
-    });
+    );
   };
   React.useEffect(fetchMarkers, []);
 

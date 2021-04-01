@@ -15,7 +15,7 @@ type SortFieldType =
   | 'serviceFee'
   | 'numNodes'
   | 'apr'
-  | 'stake'
+  | 'locked'
   | 'delegationCap'
   | 'name'
   | undefined;
@@ -132,7 +132,7 @@ const ProvidersTable = ({
               <th>Address</th>
             )}
             <th>
-              <SortTh name="Stake" field="stake" />
+              <SortTh name="Stake" field="locked" />
             </th>
             <th>
               <SortTh name="Nodes" field="numNodes" />
@@ -186,7 +186,7 @@ const ProvidersTable = ({
                   </div>
                 </td>
               )}
-              <td>{provider.stake ? <Denominate value={provider.stake} /> : <>N/A</>}</td>
+              <td>{provider.locked ? <Denominate value={provider.locked} /> : <>N/A</>}</td>
               <td>
                 {provider.numNodes !== undefined ? (
                   <>

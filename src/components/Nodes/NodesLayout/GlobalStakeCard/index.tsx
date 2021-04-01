@@ -73,7 +73,7 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
           </div>
 
           <div className="d-flex align-items-center flex-fill">
-            <div className="right-angle-icon lg mr-4">
+            <div className="right-angle-icon flex-shrink-0 lg mr-4">
               <ElrondSymbol />
             </div>
             <div className="d-flex flex-column flex-fill">

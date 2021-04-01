@@ -32,7 +32,7 @@ const IdentityRow = ({ identity }: IdentityRowType) => {
       if (identityRow.identity) {
         getNodes({
           identity: identityRow.identity,
-          size: identityRow.validators,
+          size: 1500,
           pagination: false,
         }).then((nodes) => {
           if (ref.current !== null) {

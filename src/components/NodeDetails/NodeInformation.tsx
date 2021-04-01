@@ -9,9 +9,14 @@ import {
   Denominate,
   LockedAmountTooltip,
 } from 'sharedComponents';
-import RowIcon from 'sharedComponents/NodesTable/RowIcon';
+import RowIcon, { getIcon } from 'sharedComponents/NodesTable/RowIcon';
 import { NodeType } from 'context/state';
 import { faLock, faServer, faCheck, faCode } from '@fortawesome/pro-solid-svg-icons';
+import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
+import { faStream } from '@fortawesome/pro-regular-svg-icons/faStream';
+import { faEye } from '@fortawesome/pro-regular-svg-icons/faEye';
+import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
+import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 
 import Alert from './Alert';
 
@@ -29,9 +34,11 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     locked,
     topUp,
     stake,
+    issues,
   } = nodeData;
 
-  // TODO delete
+  const versionOudated = version === undefined || (issues && issues.includes('versionMismatch'));
+
   return (
     <div className="card">
       <div className="card-header">
@@ -43,7 +50,6 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
 
           <div className="d-flex flex-column min-w-0">
             <div className="d-flex align-items-center">
-              {type === 'observer' && <RowIcon node={nodeData} />}
               <Trim text={bls} />
               <CopyButton text={bls} className="ml-2" />
             </div>
@@ -52,7 +58,7 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
         </div>
       </div>
       <div className="card-body card-item-container">
-        <CardItem title="Shard" icon={faLock}>
+        <CardItem title="Shard" icon={faLayerGroup}>
           {shard !== undefined ? (
             <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
               <ShardSpan shard={shard} />
@@ -62,11 +68,11 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
           )}
         </CardItem>
 
-        <CardItem title="Version" icon={faLock}>
+        <CardItem title="Version" icon={versionOudated ? faExclamationTriangle : faCheck}>
           <span data-testid="version">{version ? version : <>N/A</>}</span>
         </CardItem>
 
-        <CardItem title="Instances" icon={faCheck}>
+        <CardItem title="Instances" icon={instances !== 1 ? faExclamationTriangle : faCheck}>
           {instances ? instances : <>N/A</>}
         </CardItem>
 
@@ -74,7 +80,7 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
           {name ? name : <>N/A</>}
         </CardItem>
 
-        <CardItem title="Type" icon={faCheck}>
+        <CardItem title="Type" icon={getIcon(nodeData) || faCogs}>
           <>
             {type === 'observer' && <>Observer</>}
             {type !== 'observer' && (
@@ -85,27 +91,30 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
           </>
         </CardItem>
 
-        <CardItem title="Nonce" icon={faCheck}>
+        <CardItem title="Nonce" icon={faStream}>
           {nonce ? nonce : <>N/A</>}
         </CardItem>
 
-        <CardItem title="Locked" icon={faLock}>
-          <div className="d-flex align-items-center">
-            <span className="mr-2">
-              <Denominate value={locked} />
-            </span>
+        {type !== 'observer' && locked !== undefined && (
+          <CardItem title="Locked" icon={faLock}>
+            <div className="d-flex align-items-center">
+              <span className="mr-2">
+                <Denominate value={locked} />
+              </span>
 
-            <LockedAmountTooltip
-              lockedDetails={[
-                { label: 'Stake', value: <Denominate value={stake} /> },
-                {
-                  label: 'Topup',
-                  value: <Denominate value={topUp} />,
-                },
-              ]}
-            />
-          </div>
-        </CardItem>
+              <LockedAmountTooltip
+                small
+                lockedDetails={[
+                  { label: 'Stake', value: <Denominate value={stake} /> },
+                  {
+                    label: 'Topup',
+                    value: <Denominate value={topUp} />,
+                  },
+                ]}
+              />
+            </div>
+          </CardItem>
+        )}
 
         {provider && (
           <CardItem title="Provider" icon={faCode}>
