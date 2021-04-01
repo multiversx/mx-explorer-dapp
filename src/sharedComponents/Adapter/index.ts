@@ -25,8 +25,6 @@ export default function useAdapter() {
     getProviders,
     getProvider,
     getEgldMarketCap,
-    getEgldCirculatingSupply,
-    getEgldTotalStaked,
   } = useAdapterConfig();
 
   return {
@@ -275,7 +273,5 @@ export default function useAdapter() {
 
     getEgldPrice,
     getEgldMarketCap,
-    getEgldCirculatingSupply,
-    getEgldTotalStaked,
   };
 }
