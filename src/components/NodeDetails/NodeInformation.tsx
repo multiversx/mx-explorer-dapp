@@ -12,10 +12,10 @@ import {
 import { getIcon } from 'sharedComponents/NodesTable/RowIcon';
 import { NodeType } from 'context/state';
 import { faLock, faServer, faCheck, faCode } from '@fortawesome/pro-solid-svg-icons';
-import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
-import { faStream } from '@fortawesome/pro-regular-svg-icons/faStream';
-import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
+import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
+import { faStream } from '@fortawesome/pro-solid-svg-icons/faStream';
+import { faCogs } from '@fortawesome/pro-solid-svg-icons/faCogs';
+import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
 
 import Alert from './Alert';
 

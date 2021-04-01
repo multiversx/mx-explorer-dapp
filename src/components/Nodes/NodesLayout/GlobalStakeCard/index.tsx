@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { faLeaf } from '@fortawesome/pro-solid-svg-icons/faLeaf';
 import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
