@@ -9,6 +9,7 @@ import Unavailable from './Unavailable';
 import PageLayout from './PageLayout';
 import { useLocation } from 'react-router-dom';
 import GlobalStats from './GlobalStats';
+import GlobalStatsCard from './GlobalStatsCard';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const {
@@ -80,6 +81,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     </div>
                   </div>
                 </div>
+
+                <GlobalStatsCard />
 
                 <div className="page-container" data-testid="mainPageContent">
                   <PageLayout>{children}</PageLayout>
