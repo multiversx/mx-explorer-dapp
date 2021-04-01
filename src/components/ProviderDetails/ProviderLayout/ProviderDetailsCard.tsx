@@ -12,7 +12,6 @@ import {
   faServer,
   faLock,
   faArrowToTop,
-  faUser,
   faCoins,
   faChartPieAlt,
   faReceipt,
