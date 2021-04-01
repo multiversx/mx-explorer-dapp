@@ -139,21 +139,24 @@ export function getProviderParams({ identity }: GetProvidersType) {
   return params;
 }
 
-export const getShardOrEpochParam = (shard: number | undefined, epoch: number | undefined) => {
-  switch (true) {
-    case shard !== undefined:
-      return { shard };
-    case epoch !== undefined:
-      return { epoch };
-    default:
-      return {};
+export const getShardAndEpochParam = (shard: number | undefined, epoch: number | undefined) => {
+  let result = {};
+
+  if (shard !== undefined) {
+    result = { ...result, shard };
   }
+
+  if (epoch !== undefined) {
+    result = { ...result, epoch };
+  }
+
+  return result;
 };
 
 export interface GetBlocksType {
   size?: number;
   shard?: number;
-  epochId?: number;
+  epoch?: number;
   proposer?: string;
 }
 

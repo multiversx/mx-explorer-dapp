@@ -10,13 +10,13 @@ import {
 import { useGlobalState } from 'context';
 import {
   faServer,
-  faChartBar,
-  faPercent,
   faLock,
   faArrowToTop,
-  faUser,
   faCoins,
   faChartPieAlt,
+  faReceipt,
+  faLeaf,
+  faUserFriends,
 } from '@fortawesome/pro-solid-svg-icons';
 import DelegationCap from 'sharedComponents/ProvidersTable/DelegationCap';
 import PercentageFilled from 'sharedComponents/ProvidersTable/PercentageFilled';
@@ -27,11 +27,6 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
     activeNetwork: { walletAddress },
   } = useGlobalState();
 
-  const website = walletAddress;
-  // provider && provider.identityDetails && provider.identityDetails.website
-  //   ? provider.identityDetails.website
-  //   : walletAddress;
-
   return provider !== undefined ? (
     <div className="provider-details-card card">
       <div className="card-header">
@@ -41,7 +36,7 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
             className="btn btn-sm btn-primary-light"
             target={`_blank`}
             rel={`noreferrer nofollow`}
-            href={website || ''}
+            href={walletAddress}
           >
             Stake now
           </a>
@@ -68,7 +63,7 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
           )}
         </CardItem>
 
-        <CardItem title="Computed APR" icon={faChartBar}>
+        <CardItem title="Computed APR" icon={faLeaf}>
           {provider.apr ? (
             <>
               {provider.apr}
@@ -79,7 +74,7 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
           )}
         </CardItem>
 
-        <CardItem title="Service fee" icon={faPercent}>
+        <CardItem title="Service fee" icon={faReceipt}>
           {provider.serviceFee ? <>{(provider.serviceFee * 100).toFixed(2)}%</> : <>N/A</>}
         </CardItem>
 
@@ -91,6 +86,7 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
               </span>
 
               <LockedAmountTooltip
+                small
                 lockedDetails={[
                   { label: 'Stake', value: <Denominate value={provider.stake} /> },
                   {
@@ -105,7 +101,7 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
           )}
         </CardItem>
 
-        <CardItem title="Delegators" icon={faUser}>
+        <CardItem title="Delegators" icon={faUserFriends}>
           {provider.numUsers ? <>{provider.numUsers}</> : <>N/A</>}
         </CardItem>
 

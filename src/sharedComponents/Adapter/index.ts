@@ -2,7 +2,7 @@ import useAdapterConfig from './useAdapterConfig';
 import {
   GetBlocksType,
   processBlocks,
-  getShardOrEpochParam,
+  getShardAndEpochParam,
   getTransactionsParams,
   TransactionsParamsType,
   getAccountParams,
@@ -97,7 +97,7 @@ export default function useAdapter() {
       }
     },
 
-    getBlocks: async ({ size = 1, shard, epochId, proposer }: GetBlocksType) => {
+    getBlocks: async ({ size = 1, shard, epoch, proposer }: GetBlocksType) => {
       try {
         const { data: blocks, success } = await provider({
           url: `/blocks`,
@@ -105,7 +105,7 @@ export default function useAdapter() {
             from: (size - 1) * 25,
             size: 25,
             ...(proposer ? { proposer } : {}),
-            ...getShardOrEpochParam(shard, epochId),
+            ...getShardAndEpochParam(shard, epoch),
             fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
           },
         });
@@ -124,8 +124,8 @@ export default function useAdapter() {
       }
     },
 
-    getBlocksCount: ({ shard, epochId }: GetBlocksType) =>
-      provider({ url: `/blocks/count`, params: getShardOrEpochParam(shard, epochId) }),
+    getBlocksCount: ({ shard, epoch }: GetBlocksType) =>
+      provider({ url: `/blocks/count`, params: getShardAndEpochParam(shard, epoch) }),
 
     /* Transaction */
 
@@ -214,13 +214,15 @@ export default function useAdapter() {
 
     getIdentity: (identity: string) => provider({ url: `/identities/${identity}` }),
 
-    getRounds: (validator: string) =>
+    getRounds: ({ validator, shard, epoch }: { validator: string; shard: number; epoch: number }) =>
       provider({
         url: `/rounds`,
         params: {
           size: 138,
           from: 0,
           validator,
+          shard,
+          epoch,
         },
       }),
 

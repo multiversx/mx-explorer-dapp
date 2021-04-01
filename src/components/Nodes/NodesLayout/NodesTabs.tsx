@@ -27,11 +27,11 @@ const NodesTabs = () => {
 
         {activePath.includes(validatorsRoutes.providers) ? (
           <div className="mx-3">
-            <h6>Contracts</h6>
+            <h6>Staking Providers</h6>
           </div>
         ) : (
           <NetworkLink to={validatorsRoutes.providers} className="tab-link mx-3">
-            <h6>Contracts</h6>
+            <h6>Staking Providers</h6>
           </NetworkLink>
         )}
         {activePath.includes(validatorsRoutes.nodes) ? (

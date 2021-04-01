@@ -48,7 +48,7 @@ export interface IdentityType {
   identity?: string;
   description?: string;
   topUp?: string;
-  distribution?: number[];
+  distribution?: any;
 }
 
 export interface NodeType {
