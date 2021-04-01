@@ -10,6 +10,7 @@ import { useIsMainnet } from 'helpers';
 import BlocksTable, { BlockType } from 'sharedComponents/BlocksTable';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
+import { useGlobalState } from 'context';
 
 interface NodeDetailType<T> {
   data?: T;
@@ -22,9 +23,10 @@ const initialState = {
 
 const NodeDetails = () => {
   const ref = React.useRef(null);
+  const { globalStats } = useGlobalState();
   const { publicKey } = useParams() as any;
   const { search } = useLocation();
-  const { getNode, getIdentity, getRounds, getBlocks, getStats } = adapter();
+  const { getNode, getIdentity, getRounds, getBlocks } = adapter();
   const isMainnet = useIsMainnet();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
@@ -34,15 +36,19 @@ const NodeDetails = () => {
   const [blocks, setBlocks] = React.useState<NodeDetailType<BlockType[]>>(initialState);
 
   const fetchNodes = () => {
-    setDataReady(undefined);
-    Promise.all([getNode(publicKey), getStats()]).then(([nodeData, statsData]) => {
+    setDataReady(node.success);
+    if (globalStats.epoch === '...') {
+      return;
+    }
+
+    getNode(publicKey).then((nodeData) => {
       if (ref.current !== null) {
         if (nodeData.success) {
           const fetchIdentity = isMainnet && nodeData.data.identity !== undefined;
           const hasExtendedInfo =
             nodeData.data.type !== 'observer' && nodeData.data.status !== 'queued';
 
-          const epoch = statsData.success ? statsData.data.epoch : undefined;
+          const epoch = parseInt(globalStats.epoch);
           const shard = nodeData.data.shard;
 
           if (hasExtendedInfo) {
@@ -101,7 +107,7 @@ const NodeDetails = () => {
     });
   };
 
-  React.useEffect(fetchNodes, [search]);
+  React.useEffect(fetchNodes, [search, globalStats.epoch]);
 
   const showIdentity =
     identity.success === false || (identity.success && identity.data !== undefined);
