@@ -47,22 +47,24 @@ const TransactionsChart = () => {
         </div>
       </div>
       <div className="card-body px-spacer pb-spacer">
-        <div className="card-details mb-lg-n5">
-          <div>
-            <small className="text-secondary pr-3">Total Transactions: </small>
-            <span>{data.transactions}</span>
-          </div>
+        <div className="card-details pb-3">
           <div>
             <small className="text-secondary pr-3">Transactions Today: </small>
             <span>{getDailyTransactions(chartData)}</span>
+          </div>
+          <div>
+            <small className="text-secondary pr-3">Total Transactions: </small>
+            <span>{data.transactions}</span>
           </div>
         </div>
         {chartData.length > 0 ? (
           <StatisticsChart
             chartData={chartData}
+            displayType="grouped"
+            type="bar"
             label="Transactions"
             showYaxis={false}
-            type="bar"
+            aspectRatio={4}
           />
         ) : (
           <Loader />

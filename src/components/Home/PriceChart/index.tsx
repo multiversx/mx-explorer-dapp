@@ -81,20 +81,20 @@ const PriceChart = () => {
           </h6>
         </div>
       </div>
-      <div className="card-body">
+      <div className="card-body pb-3">
         <div className="pl-3">
-          <div className="card-details mb-lg-n5">
+          <div className="card-details pb-3">
             <div>
               <small className="text-secondary pr-3">Current Price: </small>
               <span>{getCurrentValue(priceChartData)}</span>
             </div>
             <div>
-              <small className="text-secondary pr-3">Market Cap: </small>
-              <span>{getCurrentValue(marketCapChartData)}</span>
+              <small className="text-secondary pr-3">Volume 24h: </small>
+              <span>{getCurrentValue(volumeChartData)}</span>
             </div>
           </div>
           {chartData.length > 0 ? (
-            <div className="pt-5 pb-3">
+            <div className="pb-1">
               <StatisticsChart
                 chartData={chartData}
                 displayType="price"
@@ -102,7 +102,7 @@ const PriceChart = () => {
                 label="USD"
                 formatMoney={true}
                 showYaxis={true}
-                aspectRatio={3}
+                aspectRatio={4}
               />
             </div>
           ) : (
@@ -116,7 +116,7 @@ const PriceChart = () => {
               label="Volume 24h"
               formatMoney={true}
               showYaxis={false}
-              aspectRatio={8}
+              aspectRatio={9}
             />
           )}
         </div>
