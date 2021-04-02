@@ -32,6 +32,7 @@ const ValidatorsStatus = () => {
   const [markers, setMarkers] = React.useState<MarkerType[]>([]);
   const [continentsRank, setContinentsRank] = React.useState<RankType[]>(placeHolderRank);
   const [totalNodes, setTotalNodes] = React.useState<string | number>('...');
+  const [queuedNodes, setQueuedNodes] = React.useState<string | number>('...');
   const ref = React.useRef(null);
 
   const {
@@ -39,25 +40,29 @@ const ValidatorsStatus = () => {
     activeNetwork: { apiUrl },
   } = useGlobalState();
 
-  const { getShards } = adapter();
+  const { getShards, getGlobalStake } = adapter();
 
   const fetchMarkers = () => {
-    Promise.all([getMarkers({ timeout, apiUrl: apiUrl || '' }), getShards()]).then(
-      ([markersData, shardData]) => {
-        if (ref.current !== null) {
-          if (markersData.success && shardData.success) {
-            let totalValidators = 0;
-            shardData.data.forEach((shard: any) => (totalValidators += shard.validators));
-
-            if (markersData.data.length > 0 && totalValidators > 0) {
-              setMarkers(markersData.data);
-              setTotalNodes(totalValidators);
-              setContinentsRank(calcContinentRank(markersData.data, totalValidators));
-            }
+    Promise.all([
+      getMarkers({ timeout, apiUrl: apiUrl || '' }),
+      getShards(),
+      getGlobalStake(),
+    ]).then(([markersData, shardData, globalStake]) => {
+      if (ref.current !== null) {
+        if (markersData.success && shardData.success) {
+          let totalValidators = 0;
+          shardData.data.forEach((shard: any) => (totalValidators += shard.validators));
+          if (markersData.data.length > 0 && totalValidators > 0) {
+            setMarkers(markersData.data);
+            setTotalNodes(totalValidators);
+            setContinentsRank(calcContinentRank(markersData.data, totalValidators));
+          }
+          if (globalStake.success) {
+            setQueuedNodes(globalStake.data.queueSize);
           }
         }
       }
-    );
+    });
   };
   React.useEffect(fetchMarkers, []);
 
@@ -66,7 +71,9 @@ const ValidatorsStatus = () => {
       <div className="card-header">
         <div className="card-header-item d-flex justify-content-between align-items-center">
           <h6 className="m-0">Validators Status</h6>
-          {totalNodes.toLocaleString('en')}
+          <div>
+            {totalNodes.toLocaleString('en')} Active / {queuedNodes.toLocaleString('en')} Queue
+          </div>
         </div>
       </div>
       <div className="card-body bg-black p-0 overflow-hidden">
