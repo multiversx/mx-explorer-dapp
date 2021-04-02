@@ -28,9 +28,9 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
 
   return identity !== undefined ? (
     <div className="identity-card card">
-      <div className="card-body p-3 p-lg-4">
+      <div className="card-body p-3 p-lg-spacer my-lg-2">
         <div className="row">
-          <div className="col-12 col-lg-5 d-flex flex-column flex-sm-row">
+          <div className="col-12 col-lg-5 d-flex flex-column flex-sm-row pr-lg-0">
             <div className="d-flex align-items-center pr-sm-4 mb-3 mb-sm-0 justify-content-center justify-content-sm-center">
               <SharedIdentity.Avatar identity={identity} />
             </div>
@@ -84,9 +84,9 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
             <IdentityGear className="middle-gear" />
           </div>
 
-          <div className="col-12 col-lg-5 d-flex flex-column flex-sm-row">
+          <div className="col-12 col-lg-5 d-flex flex-column flex-sm-row pl-lg-0">
             <div className="d-flex flex-column flex-fill mt-4 mt-lg-0">
-              <h6 className="mb-3">Validator Details</h6>
+              <h6 className="mb-3 font-weight-600">Validator Details</h6>
 
               <div className="d-flex">
                 <span className="text-secondary text-nowrap pr-2">Stake Balance:</span>
@@ -110,8 +110,8 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                 {identity.validators ? identity.validators : 'N/A'}
               </div>
             </div>
-            <div className="d-flex flex-column flex-fill mt-4 mt-lg-0 ml-sm-4 min-w-0">
-              <h6 className="mb-3">Stake Distribution</h6>
+            <div className="d-flex flex-column flex-fill mt-4 mt-lg-0 ml-sm-spacer min-w-0">
+              <h6 className="mb-3 font-weight-600">Stake Distribution</h6>
               {distribution && distribution.length > 0 ? (
                 <MultilayerPercentageBar steps={distribution} trim />
               ) : (

@@ -15,6 +15,7 @@ const initialState = {
   marketCap: '...',
   circulatingSupply: '...',
   totalStaked: '...',
+  totalStakedPercent: 0,
 };
 
 const GlobalStatsCard = () => {
@@ -45,6 +46,13 @@ const GlobalStatsCard = () => {
             ? parseInt(economicsData.data.staked).toLocaleString('en')
             : '...';
 
+          let totalStakedPercent = 0;
+          if (circulatingSupply !== '...' && totalStaked !== '...') {
+            totalStakedPercent = Math.floor(
+              (economicsData.data.staked * 100) / economicsData.data.circulatingSupply
+            );
+          }
+
           if (ref.current !== null) {
             setData({
               ...processStats(statsData),
@@ -52,6 +60,7 @@ const GlobalStatsCard = () => {
               marketCap,
               circulatingSupply,
               totalStaked,
+              totalStakedPercent,
             });
           }
         }
@@ -70,10 +79,10 @@ const GlobalStatsCard = () => {
                 <EpochGear stats={data} />
               </div>
               <div className="card-item-container w-100">
-                <CardItem className="n3 lg" title="Market Info" icon={faChartArea}>
+                <CardItem className="n3 lg title-bold" title="Market Info" icon={faChartArea}>
                   <div className="d-flex flex-column w-100">
                     <div className="d-flex justify-content-between mb-1">
-                      <span className="text-secondary mr-3">Price:</span>
+                      <span className="text-secondary mr-3">EGLD Price:</span>
                       {data.usd}
                     </div>
                     <div className="d-flex justify-content-between">
@@ -83,7 +92,7 @@ const GlobalStatsCard = () => {
                   </div>
                 </CardItem>
 
-                <CardItem className="n3 lg" title="Economics" icon={faChartPie}>
+                <CardItem className="n3 lg title-bold" title="Economics" icon={faChartPie}>
                   <div className="d-flex flex-column w-100">
                     <div className="d-flex justify-content-between mb-1">
                       <span className="text-secondary mr-3">Circulating Supply:</span>
@@ -92,11 +101,12 @@ const GlobalStatsCard = () => {
                     <div className="d-flex justify-content-between">
                       <span className="text-secondary mr-3">Total Staked:</span>
                       {data.totalStaked}
+                      {data.totalStakedPercent > 0 ? ` (${data.totalStakedPercent}%)` : ''}
                     </div>
                   </div>
                 </CardItem>
 
-                <CardItem className="n3 lg" title="Usage" icon={faUsers}>
+                <CardItem className="n3 lg title-bold" title="Usage" icon={faUsers}>
                   <div className="d-flex flex-column w-100">
                     <div className="d-flex justify-content-between mb-1">
                       <span className="text-secondary mr-3">Addresses:</span>
