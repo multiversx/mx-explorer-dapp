@@ -38,6 +38,15 @@ export default {
   getEgldPrice: () => {
     throw new Error('not defined');
   },
+  getProviders: () => {
+    throw new Error('not defined');
+  },
+  getProvider: () => {
+    throw new Error('not defined');
+  },
+  getEgldMarketCap: () => {
+    throw new Error('not defined');
+  },
   getEgldPriceHistory: () => {
     throw new Error('not defined');
   },
@@ -47,28 +56,16 @@ export default {
   getEgldVolumeHistory: () => {
     throw new Error('not defined');
   },
-  getEgldTotalStakedHistory: () => {
+  getTotalStakedHistory: () => {
     throw new Error('not defined');
   },
-  getEgldUsersStaking: () => {
+  getUsersStaking: () => {
     throw new Error('not defined');
   },
-  getEgldTotalTransactions: () => {
+  getTransactionsHistory: () => {
     throw new Error('not defined');
   },
-  getEgldTransactionsHistory: () => {
-    throw new Error('not defined');
-  },
-  getEgldAccountsHistory: () => {
-    throw new Error('not defined');
-  },
-  getProviders: () => {
-    throw new Error('not defined');
-  },
-  getProvider: () => {
-    throw new Error('not defined');
-  },
-  getEgldMarketCap: () => {
+  getAccountsHistory: () => {
     throw new Error('not defined');
   },
 };

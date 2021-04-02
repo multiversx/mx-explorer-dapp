@@ -12,14 +12,14 @@ const initialState = {
 const TransactionsChart = () => {
   const ref = React.useRef(null);
   const { activeNetworkId } = useGlobalState();
-  const { getStats, getEgldTransactionsHistory } = adapter();
+  const { getStats, getTransactionsHistory } = adapter();
 
   const [data, setData] = React.useState(initialState);
   const [chartData, setChartData] = React.useState<ChartResponseType>([]);
 
   const getData = () => {
     if (ref.current !== null) {
-      Promise.all([getStats(), getEgldTransactionsHistory()]).then(
+      Promise.all([getStats(), getTransactionsHistory()]).then(
         ([statsData, transactionHistoryData]) => {
           if (ref.current !== null) {
             setData(processStats(statsData));
