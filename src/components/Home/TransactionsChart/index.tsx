@@ -60,7 +60,6 @@ const TransactionsChart = () => {
         {chartData.length > 0 ? (
           <StatisticsChart
             chartData={chartData}
-            displayType="grouped"
             type="bar"
             label="Transactions"
             showYaxis={false}
