@@ -7,11 +7,11 @@ import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
 
 const StakingQueueCard = ({ globalStake }: { globalStake: GlobalStakeType | undefined }) => {
   return (
-    <div className="shard-card py-3 mr-lg-5">
+    <div className="shard-card py-3">
       <div className="mb-2">
         <span className="text-secondary">Queue</span>
       </div>
-      <div className="metric-value">
+      <div className="d-flex align-items-center">
         <h5>{globalStake !== undefined ? globalStake.queueSize : 'N/A'}</h5>
       </div>
     </div>
@@ -58,14 +58,16 @@ const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
         <div className="row shards-list">
           <div className="col mb-spacer">
             <div className="card">
-              <div className="card-body d-flex px-lg-spacer flex-wrap justify-content-lg-between">
-                <ShardCard shard={overallCard} isOverall />
-                {shards.map((shard, i) => (
-                  <React.Fragment key={shard.shard + i}>
-                    <ShardCard shard={shard} />
-                  </React.Fragment>
-                ))}
-                <StakingQueueCard globalStake={globalStake} />
+              <div className="card-body px-lg-spacer py-lg-4">
+                <div className="shards-container">
+                  <ShardCard shard={overallCard} isOverall />
+                  {shards.map((shard, i) => (
+                    <React.Fragment key={shard.shard + i}>
+                      <ShardCard shard={shard} />
+                    </React.Fragment>
+                  ))}
+                  <StakingQueueCard globalStake={globalStake} />
+                </div>
               </div>
             </div>
           </div>
