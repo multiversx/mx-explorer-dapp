@@ -57,6 +57,13 @@ export default function useAdapterConfig() {
     getEconomics,
     getShards,
     getEgldPrice,
+    getEgldPriceHistory,
+    getEgldMarketCapHistory,
+    getEgldVolumeHistory,
+    getTotalStakedHistory,
+    getUsersStaking,
+    getTransactionsHistory,
+    getAccountsHistory,
     getProviders,
     getProvider,
     getEgldMarketCap,
@@ -81,5 +88,19 @@ export default function useAdapterConfig() {
     getProvider: (props = basicProps) => wrap(() => getProvider({ ...providerProps, ...props })),
     getEgldMarketCap: (props = basicProps) =>
       wrap(() => getEgldMarketCap({ ...providerProps, ...props })),
+    getEgldPriceHistory: (props = basicProps) =>
+      wrap(() => getEgldPriceHistory({ ...providerProps, ...props })),
+    getEgldMarketCapHistory: (props = basicProps) =>
+      wrap(() => getEgldMarketCapHistory({ ...providerProps, ...props })),
+    getEgldVolumeHistory: (props = basicProps) =>
+      wrap(() => getEgldVolumeHistory({ ...providerProps, ...props })),
+    getTotalStakedHistory: (props = basicProps) =>
+      wrap(() => getTotalStakedHistory({ ...providerProps, ...props })),
+    getUsersStaking: (props = basicProps) =>
+      wrap(() => getUsersStaking({ ...providerProps, ...props })),
+    getTransactionsHistory: (props = basicProps) =>
+      wrap(() => getTransactionsHistory({ ...providerProps, ...props })),
+    getAccountsHistory: (props = basicProps) =>
+      wrap(() => getAccountsHistory({ ...providerProps, ...props })),
   };
 }
