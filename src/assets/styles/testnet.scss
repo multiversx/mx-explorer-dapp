@@ -13,6 +13,7 @@ $primary-light: #eaeffc;
 $primary-light-hover: darken($primary-light, 5%);
 
 $standard-box-shadow: $primary;
+$item-box-shadow: $standard-box-shadow;
 $link-hover-color: darken($primary, 7%);
 
 $map-bg: #fafbfe;
