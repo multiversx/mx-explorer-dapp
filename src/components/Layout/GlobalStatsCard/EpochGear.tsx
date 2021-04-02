@@ -64,7 +64,7 @@ const EpochGear = ({ stats }: { stats: typeof initialStats }) => {
         </div>
         <div className="gear-content">
           <ProgressRing progress={percentRemaining} />
-          <span data-testid="epochTimeRemaining">
+          <span className="line-height-1">
             {nextEpoch ? (
               <>
                 {hours}:{minutes}
