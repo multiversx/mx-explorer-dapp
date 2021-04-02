@@ -54,12 +54,18 @@
       }
 
       .card-item-title {
-        color: $body !important;
         margin-bottom: 0.5rem;
       }
 
       .card-item-value {
         padding-right: 1rem;
+      }
+    }
+
+    &.title-bold {
+      .card-item-title {
+        color: $body !important;
+        font-weight: 600;
       }
     }
 
