@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { StatisticsChart, Loader, adapter } from 'sharedComponents';
+import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
+import { StatisticsChart, Loader, PageState, adapter } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import { processStats } from 'helpers';
 import { initialStats } from 'helpers/processStats';
@@ -15,6 +16,7 @@ const TransactionsChart = () => {
   const { getStats, getTransactionsHistory } = adapter();
 
   const [data, setData] = React.useState(initialState);
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chartData, setChartData] = React.useState<ChartResponseType>([]);
 
   const getData = () => {
@@ -23,9 +25,10 @@ const TransactionsChart = () => {
         ([statsData, transactionHistoryData]) => {
           if (ref.current !== null) {
             setData(processStats(statsData));
-            transactionHistoryData.success
-              ? setChartData(transactionHistoryData.data)
-              : setChartData([]);
+            setDataReady(transactionHistoryData.success);
+            if (transactionHistoryData.success) {
+              setChartData(transactionHistoryData.data);
+            }
           }
         }
       );
@@ -57,7 +60,17 @@ const TransactionsChart = () => {
             <span>{data.transactions}</span>
           </div>
         </div>
-        {chartData.length > 0 ? (
+        {dataReady === undefined && <Loader small={true} />}
+        {dataReady === false && (
+          <PageState
+            icon={faChartBar}
+            title="Unable to load chart"
+            className="my-auto"
+            titleClassName="mt-0"
+            dataTestId="transactionsChartError"
+          />
+        )}
+        {dataReady === true && chartData.length > 0 && (
           <StatisticsChart
             chartData={chartData}
             type="bar"
@@ -65,8 +78,6 @@ const TransactionsChart = () => {
             showYaxis={false}
             aspectRatio={4}
           />
-        ) : (
-          <Loader />
         )}
       </div>
     </div>
