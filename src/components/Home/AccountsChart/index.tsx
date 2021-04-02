@@ -48,12 +48,12 @@ const AccountsChart = () => {
       <div className="card-body px-spacer pb-spacer">
         <div className="card-details">
           <div>
-            <small className="text-secondary pr-3">Total Addresses: </small>
-            <span>{data.accounts}</span>
-          </div>
-          <div>
             <small className="text-secondary pr-3">Daily Addresses: </small>
             <span>{getDailyAccounts(chartData)}</span>
+          </div>
+          <div>
+            <small className="text-secondary pr-3">Total Addresses: </small>
+            <span>{data.accounts}</span>
           </div>
         </div>
         {chartData.length > 0 ? (

@@ -4,13 +4,18 @@ import { useGlobalState } from 'context';
 
 type ChartResponseType = { time: string; value: number }[];
 
+const initialState = {
+  usersStaking: '...',
+  totalStaked: '...',
+  percentageStaked: '...',
+};
+
 const StakingChart = () => {
   const ref = React.useRef(null);
   const { activeNetworkId } = useGlobalState();
   const { getTotalStakedHistory, getUsersStaking, getEconomics } = adapter();
 
-  const [totalStaked, setTotalStaked] = React.useState('...');
-  const [usersStaking, setUsersStaking] = React.useState('...');
+  const [data, setData] = React.useState(initialState);
   const [chartData, setChartData] = React.useState<ChartResponseType>([]);
 
   const getData = () => {
@@ -23,10 +28,16 @@ const StakingChart = () => {
           const totalStaked = economicsData.success
             ? parseInt(economicsData.data.staked).toLocaleString('en')
             : '...';
+          const percentageStaked = economicsData.success
+            ? `${(
+                (parseInt(economicsData.data.staked) /
+                  parseInt(economicsData.data.circulatingSupply)) *
+                100
+              ).toFixed()}%`
+            : '...';
 
           if (ref.current !== null) {
-            setTotalStaked(totalStaked);
-            setUsersStaking(usersStaking);
+            setData({ usersStaking, totalStaked, percentageStaked });
             totalStakedData.success ? setChartData(totalStakedData.data) : setChartData([]);
           }
         }
@@ -42,15 +53,17 @@ const StakingChart = () => {
           <h6 className="mb-0">Staking Metrics</h6>
         </div>
       </div>
-      <div className="card-body px-spacer pb-spacer">
-        <div className="card-details mb-lg-n5">
+      <div className="card-body px-spacer pb-3">
+        <div className="card-details">
           <div>
             <small className="text-secondary pr-3">Total Staked: </small>
-            <span>{totalStaked}</span>
+            <span>
+              {data.totalStaked} / {data.percentageStaked}
+            </span>
           </div>
           <div>
             <small className="text-secondary pr-3">Users Staking: </small>
-            <span>{usersStaking}</span>
+            <span>{data.usersStaking}</span>
           </div>
         </div>
         {chartData.length > 0 ? (
@@ -59,6 +72,7 @@ const StakingChart = () => {
             label="Total Staked"
             showYaxis={false}
             type="lineWithVertical"
+            aspectRatio={2.5}
           />
         ) : (
           <Loader />

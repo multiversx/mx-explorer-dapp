@@ -47,7 +47,7 @@ const chartConfig = ({
   label = '',
   showYaxis = false,
   type = 'lineWithVertical',
-  aspectRatio = 2,
+  aspectRatio = 3.5,
   displayType,
   formatMoney = false,
   primaryColor,
@@ -193,13 +193,13 @@ const StatisticsChart = ({
       const mutedColor = docStyle.getPropertyValue('--muted');
       const primaryColor = docStyle.getPropertyValue('--primary');
       const cardBackgroundColor = docStyle.getPropertyValue('--card-bg');
-      const fadedBackground = docStyle.getPropertyValue('--chart-faded-bg');
+      const fadedBackground = 'rgb(203, 212, 255)';
 
       const chartElement = (chartRef as any).current.getContext('2d');
       let gradient = chartElement.createLinearGradient(0, 0, 0, 400);
       gradient.addColorStop(0, 'rgba(27, 70, 194, 0.4)');
-      gradient.addColorStop(0.4, 'rgba(27, 70, 194, 0.05)');
-      gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      gradient.addColorStop(0.32, 'rgba(27, 70, 194, 0.005)');
+      gradient.addColorStop(1, 'rgba(27, 70, 194, 0)');
 
       const getBackgroundColor = () => {
         switch (true) {
@@ -280,10 +280,10 @@ const StatisticsChart = ({
   React.useEffect(buildChart(chart), [chartData]);
 
   return (
-    <div ref={ref} className="statistics-chart chart h-100 d-flex flex-column">
+    <div ref={ref} className="statistics-chart chart">
       {
         <>
-          <div className="d-flex align-items-center justify-content-center flex-fill">
+          <div className="d-flex align-items-end justify-content-center flex-fill">
             <canvas ref={chartRef} />
           </div>
         </>
