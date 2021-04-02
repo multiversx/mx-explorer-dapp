@@ -47,4 +47,25 @@ export default {
   getEgldMarketCap: () => {
     throw new Error('not defined');
   },
+  getEgldPriceHistory: () => {
+    throw new Error('not defined');
+  },
+  getEgldMarketCapHistory: () => {
+    throw new Error('not defined');
+  },
+  getEgldVolumeHistory: () => {
+    throw new Error('not defined');
+  },
+  getTotalStakedHistory: () => {
+    throw new Error('not defined');
+  },
+  getUsersStaking: () => {
+    throw new Error('not defined');
+  },
+  getTransactionsHistory: () => {
+    throw new Error('not defined');
+  },
+  getAccountsHistory: () => {
+    throw new Error('not defined');
+  },
 };

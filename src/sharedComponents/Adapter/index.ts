@@ -25,6 +25,13 @@ export default function useAdapter() {
     getProviders,
     getProvider,
     getEgldMarketCap,
+    getEgldPriceHistory,
+    getEgldMarketCapHistory,
+    getEgldVolumeHistory,
+    getTotalStakedHistory,
+    getUsersStaking,
+    getTransactionsHistory,
+    getAccountsHistory,
   } = useAdapterConfig();
 
   return {
@@ -272,6 +279,13 @@ export default function useAdapter() {
     getEconomics: () => getEconomics({ url: `/economics` }),
 
     getEgldPrice,
+    getEgldPriceHistory,
     getEgldMarketCap,
+    getEgldMarketCapHistory,
+    getEgldVolumeHistory,
+    getTotalStakedHistory,
+    getUsersStaking,
+    getTransactionsHistory,
+    getAccountsHistory,
   };
 }
