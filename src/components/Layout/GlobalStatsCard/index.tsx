@@ -66,7 +66,7 @@ const GlobalStatsCard = () => {
         <div className="col mb-spacer">
           <div className="card d-flex flex-column flex-lg-row flex-wrap py-4 px-3 px-lg-spacer">
             <div className="card-body p-0 d-flex flex-column flex-lg-row">
-              <div className="d-flex align-items-center justify-content-center mb-3 mb-lg-0 pr-lg-4">
+              <div className="d-flex align-items-center justify-content-center">
                 <EpochGear stats={data} />
               </div>
               <div className="card-item-container w-100">
