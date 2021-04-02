@@ -1,15 +1,25 @@
 .shards-list {
-  .shard-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  .shards-container {
+    @extend .my-n2;
+    @extend .d-flex;
+    @extend .flex-wrap;
+    @extend .flex-row;
 
-    @include media-breakpoint-down(md) {
-      flex: 0 0 33.333%;
-    }
-
-    @include media-breakpoint-down(sm) {
+    .shard-card {
+      overflow: hidden;
       flex: 0 0 50%;
+
+      @include media-breakpoint-up(md) {
+        flex: 0 0 33.333%;
+      }
+
+      @include media-breakpoint-up(lg) {
+        flex: 0 0 18%;
+
+        &:last-child {
+          flex: 0 0 10%;
+        }
+      }
     }
   }
 }
