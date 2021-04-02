@@ -74,7 +74,7 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
                   <NetworkLink
                     to={`/blocks/${block.hash}`}
                     data-testid={`blockHashLink${i}`}
-                    className="trim-wrapper"
+                    className="trim-wrapper trim-size-xl mr-xl-n5"
                   >
                     <Trim text={block.hash} />
                   </NetworkLink>

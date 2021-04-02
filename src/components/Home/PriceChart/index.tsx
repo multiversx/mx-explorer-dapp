@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { StatisticsChart, Loader, adapter } from 'sharedComponents';
+import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
+import { StatisticsChart, Loader, PageState, adapter } from 'sharedComponents';
 import { useGlobalState } from 'context';
 
 type ActiveChartType = 'price' | 'marketcap';
@@ -10,6 +11,7 @@ const PriceChart = () => {
   const { activeNetworkId } = useGlobalState();
 
   const { getEgldPriceHistory, getEgldMarketCapHistory, getEgldVolumeHistory } = adapter();
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chartData, setChartData] = React.useState<ChartResponseType>([]);
   const [priceChartData, setPriceChartData] = React.useState<ChartResponseType>([]);
   const [marketCapChartData, setMarketCapChartData] = React.useState<ChartResponseType>([]);
@@ -21,10 +23,10 @@ const PriceChart = () => {
       Promise.all([getEgldPriceHistory(), getEgldMarketCapHistory(), getEgldVolumeHistory()]).then(
         ([priceHistoryData, marketCapHistoryData, volumeHistoryData]) => {
           if (ref.current !== null) {
-            priceHistoryData.success
-              ? setPriceChartData(priceHistoryData.data)
-              : setPriceChartData([]);
-
+            setDataReady(priceHistoryData.success);
+            if (priceHistoryData.success) {
+              setPriceChartData(priceHistoryData.data);
+            }
             marketCapHistoryData.success
               ? setMarketCapChartData(marketCapHistoryData.data)
               : setMarketCapChartData([]);
@@ -93,7 +95,17 @@ const PriceChart = () => {
               <span>{getCurrentValue(volumeChartData)}</span>
             </div>
           </div>
-          {chartData.length > 0 ? (
+          {dataReady === undefined && <Loader small={true} />}
+          {dataReady === false && (
+            <PageState
+              icon={faChartBar}
+              title="Unable to load chart"
+              className="my-auto"
+              titleClassName="mt-0"
+              dataTestId="priceChartError"
+            />
+          )}
+          {dataReady === true && chartData.length > 0 && (
             <div className="pb-1">
               <StatisticsChart
                 chartData={chartData}
@@ -105,8 +117,6 @@ const PriceChart = () => {
                 aspectRatio={4}
               />
             </div>
-          ) : (
-            <Loader />
           )}
           {volumeChartData.length > 0 && (
             <StatisticsChart
