@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { StatisticsChart, Loader, adapter } from 'sharedComponents';
+import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
+import { StatisticsChart, Loader, PageState, adapter } from 'sharedComponents';
 import { useGlobalState } from 'context';
 
 type ChartResponseType = { time: string; value: number }[];
@@ -16,6 +17,7 @@ const StakingChart = () => {
   const { getTotalStakedHistory, getUsersStaking, getEconomics } = adapter();
 
   const [data, setData] = React.useState(initialState);
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chartData, setChartData] = React.useState<ChartResponseType>([]);
 
   const getData = () => {
@@ -38,7 +40,10 @@ const StakingChart = () => {
 
           if (ref.current !== null) {
             setData({ usersStaking, totalStaked, percentageStaked });
-            totalStakedData.success ? setChartData(totalStakedData.data) : setChartData([]);
+            setDataReady(totalStakedData.success);
+            if (totalStakedData.success) {
+              setChartData(totalStakedData.data);
+            }
           }
         }
       );
@@ -66,7 +71,17 @@ const StakingChart = () => {
             <span>{data.usersStaking}</span>
           </div>
         </div>
-        {chartData.length > 0 ? (
+        {dataReady === undefined && <Loader small={true} />}
+        {dataReady === false && (
+          <PageState
+            icon={faChartBar}
+            title="Unable to load chart"
+            className="my-auto"
+            titleClassName="mt-0"
+            dataTestId="stakingChartError"
+          />
+        )}
+        {dataReady === true && chartData.length > 0 && (
           <StatisticsChart
             chartData={chartData}
             label="Total Staked"
@@ -74,8 +89,6 @@ const StakingChart = () => {
             type="lineWithVertical"
             aspectRatio={2.5}
           />
-        ) : (
-          <Loader />
         )}
       </div>
     </div>
