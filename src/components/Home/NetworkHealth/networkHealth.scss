@@ -65,13 +65,6 @@
     no-repeat;
 }
 
-.position-absolute-center {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-}
-
 .network-health {
   .gears-layout-container {
     @include radial-bg();

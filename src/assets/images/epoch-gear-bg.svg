@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="206" height="240" viewBox="0 0 206 240">
+  <defs>
+    <clipPath id="clip-Global_Stats_Gear_1">
+      <rect width="206" height="240"/>
+    </clipPath>
+  </defs>
+  <g id="Global_Stats_Gear_1" clip-path="url(#clip-Global_Stats_Gear_1)">
+    <line class="gear-circle-border light" y1="140" x2="146" transform="translate(30.5 50.5)" fill="none" stroke="#e2e2e2" stroke-width="0.5"/>
+    <g class="gear-circle-border light" transform="translate(30 50)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
+      <rect width="147" height="141" stroke="none"/>
+      <rect x="0.25" y="0.25" width="146.5" height="140.5" fill="none"/>
+    </g>
+    <line class="gear-circle-border light" x2="146" y2="140" transform="translate(30.5 50.5)" fill="none" stroke="#e2e2e2" stroke-width="0.5"/>
+    <g transform="translate(-892 -253)">
+      <rect width="0.5" height="240" transform="translate(995 253)" fill="#818ea3" opacity="0.2"/>
+    </g>
+    <g transform="translate(1 18)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
+      <circle cx="102" cy="102" r="102" stroke="none"/>
+      <circle class="gear-circle-border light" cx="102" cy="102" r="101.75" fill="none"/>
+    </g>
+  </g>
+</svg>
