@@ -193,13 +193,13 @@ const StatisticsChart = ({
       const mutedColor = docStyle.getPropertyValue('--muted');
       const primaryColor = docStyle.getPropertyValue('--primary');
       const cardBackgroundColor = docStyle.getPropertyValue('--card-bg');
-      const fadedBackground = 'rgb(203, 212, 255)';
+      const fadedBackground = docStyle.getPropertyValue('--chart-faded-bg');
 
       const chartElement = (chartRef as any).current.getContext('2d');
       let gradient = chartElement.createLinearGradient(0, 0, 0, 400);
-      gradient.addColorStop(0, 'rgba(27, 70, 194, 0.4)');
-      gradient.addColorStop(0.32, 'rgba(27, 70, 194, 0.005)');
-      gradient.addColorStop(1, 'rgba(27, 70, 194, 0)');
+      gradient.addColorStop(0, 'rgba(31, 67, 244, 0.4)');
+      gradient.addColorStop(0.32, 'rgba(31, 67, 244, 0.005)');
+      gradient.addColorStop(1, 'rgba(31, 67, 244, 0)');
 
       const getBackgroundColor = () => {
         switch (true) {
