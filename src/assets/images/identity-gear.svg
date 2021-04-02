@@ -24,7 +24,7 @@
 		</g>
 		<g transform="translate(1 42)" fill="none" stroke="#e2e2e2" stroke-width="0.5">
 			<circle class="gear-circle-border light" cx="102" cy="102" r="102" stroke="none"/>
-			<circle cx="102" cy="102" r="101.75" fill="none"/>
+			<circle class="gear-circle-border light" cx="102" cy="102" r="101.75" fill="none"/>
 		</g>
 	</g>
 </svg>
