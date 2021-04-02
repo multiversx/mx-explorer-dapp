@@ -11,7 +11,7 @@ const IdentityAvatar = ({ identity }: { identity: IdentityAvatarType }) => {
     <img
       className={`identity-avatar rounded-circle mr-2 ${!identity.avatar ? 'p-1 bg-light' : ''}`}
       src={identity.avatar ? identity.avatar : require('../../../assets/images/default-avatar.svg')}
-      alt={identity.name}
+      alt="img"
       height="42"
     />
   );
