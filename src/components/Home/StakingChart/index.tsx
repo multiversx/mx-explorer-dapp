@@ -7,7 +7,7 @@ type ChartResponseType = { time: string; value: number }[];
 const StakingChart = () => {
   const ref = React.useRef(null);
   const { activeNetworkId } = useGlobalState();
-  const { getEgldTotalStakedHistory, getEgldUsersStaking, getEconomics } = adapter();
+  const { getTotalStakedHistory, getUsersStaking, getEconomics } = adapter();
 
   const [totalStaked, setTotalStaked] = React.useState('...');
   const [usersStaking, setUsersStaking] = React.useState('...');
@@ -15,7 +15,7 @@ const StakingChart = () => {
 
   const getData = () => {
     if (ref.current !== null) {
-      Promise.all([getEgldTotalStakedHistory(), getEgldUsersStaking(), getEconomics()]).then(
+      Promise.all([getTotalStakedHistory(), getUsersStaking(), getEconomics()]).then(
         ([totalStakedData, usersStakingData, economicsData]) => {
           const usersStaking = usersStakingData.success
             ? parseInt(usersStakingData.data).toLocaleString('en')

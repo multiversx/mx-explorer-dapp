@@ -12,21 +12,19 @@ const initialState = {
 const AccountsChart = () => {
   const ref = React.useRef(null);
   const { activeNetworkId } = useGlobalState();
-  const { getStats, getEgldAccountsHistory } = adapter();
+  const { getStats, getAccountsHistory } = adapter();
 
   const [data, setData] = React.useState(initialState);
   const [chartData, setChartData] = React.useState<ChartResponseType>([]);
 
   const getData = () => {
     if (ref.current !== null) {
-      Promise.all([getStats(), getEgldAccountsHistory()]).then(
-        ([statsData, accountsHistoryData]) => {
-          if (ref.current !== null) {
-            setData(processStats(statsData));
-            accountsHistoryData.success ? setChartData(accountsHistoryData.data) : setChartData([]);
-          }
+      Promise.all([getStats(), getAccountsHistory()]).then(([statsData, accountsHistoryData]) => {
+        if (ref.current !== null) {
+          setData(processStats(statsData));
+          accountsHistoryData.success ? setChartData(accountsHistoryData.data) : setChartData([]);
         }
-      );
+      });
     }
   };
   const getDailyAccounts = (chartData: ChartResponseType) => {

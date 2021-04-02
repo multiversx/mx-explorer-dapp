@@ -28,7 +28,7 @@ const formatValue = (value: string | number | undefined, formatUsd: boolean, com
   if (value) {
     value = parseFloat(String(value));
     const formattedValue =
-      compact && value > 1000000000
+      compact && value > 500000000
         ? `${(value / 1000000000).toFixed(1)}b`
         : value.toLocaleString('en', {
             maximumFractionDigits: parseFloat(String(value)) > 1000 ? 0 : 2,
