@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ReactComponent as CenterGear } from 'assets/images/network-health/center-gear.svg';
+import { ReactComponent as EpochGearBg } from 'assets/images/epoch-gear-bg.svg';
 import ProgressRing from '../../Home/NetworkHealth/ProgressRing';
 import { initialStats } from 'helpers/processStats';
 import moment from 'moment';
@@ -55,22 +56,25 @@ const EpochGear = ({ stats }: { stats: typeof initialStats }) => {
   React.useEffect(mount, [nextEpoch]);
 
   return (
-    <div ref={ref} className="gear-container center">
-      <div className={`animate ${play ? '' : 'paused'}`}>
-        <CenterGear className="w-100 h-100" />
-      </div>
-      <div className="gear-content">
-        <ProgressRing progress={percentRemaining} />
-        <span data-testid="epochTimeRemaining">
-          {nextEpoch ? (
-            <>
-              {hours}:{minutes}
-            </>
-          ) : (
-            <>...</>
-          )}
-        </span>
-        <small className="text-secondary">Epoch {stats.epoch}</small>
+    <div className="ml-lg-2 mr-lg-4 pr-lg-3 mb-4 mb-lg-0" ref={ref}>
+      <div className="epoch-gear-container">
+        <EpochGearBg className="epoch-gear-bg" />
+        <div className={`animate ${play ? '' : 'paused'}`}>
+          <CenterGear className="position-relative w-100 h-100" />
+        </div>
+        <div className="gear-content">
+          <ProgressRing progress={percentRemaining} />
+          <span data-testid="epochTimeRemaining">
+            {nextEpoch ? (
+              <>
+                {hours}:{minutes}
+              </>
+            ) : (
+              <>...</>
+            )}
+          </span>
+          <small className="text-secondary">Epoch {stats.epoch}</small>
+        </div>
       </div>
     </div>
   );
