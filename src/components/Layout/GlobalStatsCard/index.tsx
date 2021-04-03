@@ -95,11 +95,11 @@ const GlobalStatsCard = () => {
                 <CardItem className="n3 lg title-bold" title="Economics" icon={faChartPie}>
                   <div className="d-flex flex-column w-100">
                     <div className="d-flex justify-content-between mb-1">
-                      <span className="text-secondary mr-3">Circulating Supply:</span>
+                      <span className="text-secondary mr-1">Circulating Supply:</span>
                       {data.circulatingSupply}
                     </div>
                     <div className="d-flex justify-content-between">
-                      <span className="text-secondary mr-3">Total Staked:</span>
+                      <span className="text-secondary mr-1">Total Staked:</span>
                       {data.totalStaked}
                       {data.totalStakedPercent > 0 ? ` (${data.totalStakedPercent}%)` : ''}
                     </div>
