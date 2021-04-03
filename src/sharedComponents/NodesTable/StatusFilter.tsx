@@ -43,7 +43,7 @@ const StatusFilter = () => {
               to={onlineLink('false')}
               data-testid="filterByStatusOffline"
             >
-              Offiline
+              Offline
             </NetworkLink>
             <NetworkLink
               className={`dropdown-item ${online === undefined ? '' : ''}`}
