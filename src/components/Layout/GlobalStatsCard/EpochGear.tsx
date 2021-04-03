@@ -11,16 +11,19 @@ const EpochGear = ({ stats }: { stats: typeof initialStats }) => {
   const play = !pageHidden;
 
   const [nextEpoch, setNextEpoch] = React.useState<any>();
-  const [hours, setHours] = React.useState('0');
-  const [minutes, setMinutes] = React.useState('0');
+  // const [hours, setHours] = React.useState('0');
+  // const [minutes, setMinutes] = React.useState('0');
   const [percentRemaining, setPercentRemaining] = React.useState(0);
+  const [roundsLeft, setRoundsLeft] = React.useState<number | undefined>();
 
   const init = () => {
     if (stats.epoch !== '...') {
       const secondsUntilNextEpoch = 6 * (stats.roundsPerEpoch - stats.roundsPassed);
       const nextEpochDate: any = moment().utc().add(secondsUntilNextEpoch, 'seconds');
+
       if (ref.current !== null) {
         setNextEpoch(nextEpochDate);
+        setRoundsLeft(stats.roundsPerEpoch - stats.roundsPassed);
       }
     }
   };
@@ -29,23 +32,24 @@ const EpochGear = ({ stats }: { stats: typeof initialStats }) => {
 
   const calculate = () => {
     const now: any = moment();
-    const diff = moment(nextEpoch).diff(now);
+    // const diff = moment(nextEpoch).diff(now);
 
-    const hours = moment.utc(diff).format('H');
-    const minutes = moment.utc(diff).format('mm');
+    // const hours = moment.utc(diff).format('H');
+    // const minutes = moment.utc(diff).format('mm');
     const percentRemaining = ((nextEpoch.unix() - now.unix()) * 100) / 86400;
 
     if (ref.current !== null) {
-      setHours(hours);
-      setMinutes(minutes);
+      // setHours(hours);
+      // setMinutes(minutes);
       setPercentRemaining(100 - percentRemaining);
+      setRoundsLeft((roundsLeft) => (roundsLeft && roundsLeft > 0 ? roundsLeft - 1 : roundsLeft));
     }
   };
 
   const mount = () => {
     if (nextEpoch) {
       calculate();
-      const interval = setInterval(calculate, 1000);
+      const interval = setInterval(calculate, 6000);
       return () => {
         clearInterval(interval);
       };
@@ -64,16 +68,12 @@ const EpochGear = ({ stats }: { stats: typeof initialStats }) => {
         </div>
         <div className="gear-content">
           <ProgressRing progress={percentRemaining} />
-          <span className="line-height-1">
-            {nextEpoch ? (
-              <>
-                {hours}:{minutes}
-              </>
-            ) : (
-              <>...</>
-            )}
-          </span>
-          <small className="text-secondary">Epoch {stats.epoch}</small>
+          <span className="mt-1 pt-1">{nextEpoch ? <>Epoch {stats.epoch}</> : <>...</>}</span>
+          {roundsLeft && (
+            <small className="text-secondary">
+              {roundsLeft.toLocaleString('en')} Rounds <br /> Left
+            </small>
+          )}
         </div>
       </div>
     </div>

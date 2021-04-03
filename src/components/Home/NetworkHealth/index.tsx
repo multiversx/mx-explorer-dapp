@@ -82,7 +82,15 @@ const NetworkHealth = () => {
   };
   React.useEffect(updateSate, [blockTimeProgress]);
 
-  const { blocks, accounts, transactions, epoch, epochPercentage, epochTimeRemaining } = state;
+  const {
+    blocks,
+    accounts,
+    transactions,
+    epoch,
+    epochPercentage,
+    roundsPerEpoch,
+    roundsPassed,
+  } = state;
 
   const play = !pageHidden;
 
@@ -129,8 +137,15 @@ const NetworkHealth = () => {
             </div>
             <div className="gear-content">
               <ProgressRing progress={epochPercentage} />
-              <span data-testid="epochTimeRemaining">{epochTimeRemaining}</span>
-              <small>Epoch {epoch}</small>
+              <span className="mt-1" data-testid="epochTimeRemaining">
+                Epoch {epoch}
+              </span>
+              {epoch !== '...' && (
+                <small>
+                  {(roundsPerEpoch - roundsPassed).toLocaleString('en')} Rounds <br />
+                  Left
+                </small>
+              )}
             </div>
           </div>
 
