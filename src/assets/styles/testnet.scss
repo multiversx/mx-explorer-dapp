@@ -47,6 +47,14 @@ $input-hover-border-color: darken($border-color, 15%);
       &::after {
         bottom: 7px;
       }
+
+      &.active {
+        text-decoration: none;
+
+        &::after {
+          content: none;
+        }
+      }
     }
   }
 

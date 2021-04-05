@@ -15,50 +15,28 @@ const AccountTabs = () => {
 
   return (
     <div className="account-tabs d-flex flex-row">
-      {indexActive ? (
-        <div className="mr-3">
-          <h6>Transactions</h6>
-        </div>
-      ) : (
-        <NetworkLink
-          to={urlBuilder.accountDetails(accountDetails.address)}
-          className="tab-link mr-3"
-        >
-          <h6>Transactions</h6>
-        </NetworkLink>
-      )}
+      <NetworkLink
+        to={urlBuilder.accountDetails(accountDetails.address)}
+        className={`tab-link mr-3 ${indexActive ? 'active' : ''}`}
+      >
+        <h6>Transactions</h6>
+      </NetworkLink>
 
       {tokensRouteActive && (
-        <>
-          {tokensActive ? (
-            <div className="mx-3">
-              <h6>ESDT Tokens</h6>
-            </div>
-          ) : (
-            <NetworkLink
-              to={urlBuilder.accountDetailsTokens(accountDetails.address)}
-              className="tab-link mx-3"
-            >
-              <h6>ESDT Tokens</h6>
-            </NetworkLink>
-          )}
-        </>
+        <NetworkLink
+          to={urlBuilder.accountDetailsTokens(accountDetails.address)}
+          className={`tab-link mx-3 ${tokensActive ? 'active' : ''}`}
+        >
+          <h6>ESDT Tokens</h6>
+        </NetworkLink>
       )}
       {accountDetails.code && (
-        <>
-          {contractActive ? (
-            <div className="ml-3">
-              <h6>Code</h6>
-            </div>
-          ) : (
-            <NetworkLink
-              to={urlBuilder.accountDetailsContractCode(accountDetails.address)}
-              className="tab-link ml-3"
-            >
-              <h6>Code</h6>
-            </NetworkLink>
-          )}
-        </>
+        <NetworkLink
+          to={urlBuilder.accountDetailsContractCode(accountDetails.address)}
+          className={`tab-link ml-3 ${contractActive ? 'active' : ''}`}
+        >
+          <h6>Code</h6>
+        </NetworkLink>
       )}
     </div>
   );

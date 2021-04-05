@@ -21,6 +21,7 @@ import isContract from './isContract';
 import usdValue from './usdValue';
 import nominate from './nominate';
 import processStats from './processStats';
+import useFetchPrice from './useFetchPrice';
 
 export {
   truncate,
@@ -46,4 +47,5 @@ export {
   usdValue,
   nominate,
   processStats,
+  useFetchPrice,
 };
