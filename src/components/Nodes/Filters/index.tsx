@@ -100,7 +100,7 @@ const Filters = () => {
           </NetworkLink>
         </li>
         <li className="list-inline-item my-1 my-md-0">
-          <Dropdown>
+          <Dropdown className="position-unset">
             <Dropdown.Toggle
               variant="outline-light"
               size="sm"
@@ -112,7 +112,7 @@ const Filters = () => {
               More
             </Dropdown.Toggle>
 
-            <Dropdown.Menu>
+            <Dropdown.Menu style={{ marginTop: '0.35rem', marginBottom: '0.35rem' }}>
               <NetworkLink
                 className={`dropdown-item ${status === 'eligible' ? 'active' : ''}`}
                 data-testid="filterByValidators"
