@@ -57,6 +57,9 @@ const IdentityRow = ({ identity }: IdentityRowType) => {
     ? urlBuilder.identityDetails(identity.identity)
     : urlBuilder.nodeDetails(identity.name);
 
+  const stakePercentLabel =
+    Math.round(identity.stakePercent) > 0 ? `${Math.round(identity.stakePercent)}%` : '< 1 %';
+
   return (
     <>
       <tr
@@ -91,12 +94,10 @@ const IdentityRow = ({ identity }: IdentityRowType) => {
               <PercentegeBar
                 overallPercent={identity.overallStakePercent || 0}
                 fillPercent={identity.stakePercent}
-                fillPercentLabel={Math.round(identity.stakePercent) + '%'}
+                fillPercentLabel={stakePercentLabel}
               />
             </div>
-            <div className="ml-3">
-              {Math.round(identity.stakePercent) > 0 ? Math.round(identity.stakePercent) : '< 1'}%
-            </div>
+            <div className="ml-3">{stakePercentLabel}</div>
           </div>
         </td>
         <td className="text-right">{identity.validators.toLocaleString('en')}</td>
