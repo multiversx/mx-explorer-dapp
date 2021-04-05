@@ -223,6 +223,12 @@
       color: $link-hover-color;
     }
   }
+
+  &.active {
+    h6 {
+      color: $body;
+    }
+  }
 }
 
 .position-absolute-center {
