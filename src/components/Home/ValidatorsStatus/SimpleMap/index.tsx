@@ -26,7 +26,7 @@ const calcRadius = (validators: number) => {
       break;
 
     default:
-      radius = 5;
+      radius = 6;
   }
 
   return radius;
@@ -73,7 +73,7 @@ const SimpleMap = ({ markers }: SimpleMapType) => {
   const chooseLeaders = () => {
     if (ref.current !== null && markers.length > 0) {
       const newLeaders: string[] = [];
-      const newMax = getRandomInt(1, 4);
+      const newMax = getRandomInt(1, 1);
 
       while (newLeaders.length !== newMax) {
         const candidate = markers[getRandomInt(1, markers.length) - 1];
@@ -88,7 +88,7 @@ const SimpleMap = ({ markers }: SimpleMapType) => {
         if (ref.current !== null) {
           setLeaders([]);
         }
-      }, 1200);
+      }, 2800);
     }
   };
 
@@ -107,13 +107,16 @@ const SimpleMap = ({ markers }: SimpleMapType) => {
             geographies.map((geo: any) => <Geography key={geo.rsmKey} geography={geo} />)
           }
         </Geographies>
-        {markers.map(({ city, longitude, latitude, validators }, i) => (
+        {markers.map(({ city, longitude, latitude, validators }) => (
           <Marker key={longitude} coordinates={[longitude, latitude]}>
             <MarkerToolTip city={city} validators={validators}>
-              <circle
-                r={calcRadius(validators)}
-                className={`simple-map-marker ${isLeader(city) ? 'leader' : ''}`}
-              />
+              <g>
+                <circle
+                  r={calcRadius(validators)}
+                  className={`simple-map-marker ${isLeader(city) ? 'leader' : ''}`}
+                />
+                {isLeader(city) && <circle className="pulse" r={calcRadius(validators)} />}
+              </g>
             </MarkerToolTip>
           </Marker>
         ))}
