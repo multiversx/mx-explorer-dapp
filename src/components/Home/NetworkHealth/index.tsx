@@ -137,7 +137,7 @@ const NetworkHealth = () => {
             </div>
             <div className="gear-content">
               <ProgressRing progress={epochPercentage} />
-              <span className="mt-1" data-testid="epochTimeRemaining">
+              <span className="mt-1" data-testid="currentEpoch">
                 Epoch {epoch}
               </span>
               {epoch !== '...' && (
