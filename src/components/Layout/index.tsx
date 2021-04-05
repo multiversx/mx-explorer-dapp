@@ -10,6 +10,7 @@ import PageLayout from './PageLayout';
 import { useLocation } from 'react-router-dom';
 import GlobalStatsCard from './GlobalStatsCard';
 import { validatorsRoutes } from 'routes';
+import { useFetchPrice } from 'helpers';
 
 const showGlobalStats = (activePath: string) => {
   let show = true;
@@ -32,6 +33,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     theme,
     config: { elrondApps },
   } = useGlobalState();
+
+  useFetchPrice();
+
   const offline = !window.navigator.onLine;
 
   React.useEffect(() => {
