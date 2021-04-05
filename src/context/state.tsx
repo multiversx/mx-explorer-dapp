@@ -97,6 +97,7 @@ export interface StateType {
     success: boolean | undefined;
     data: types.TokenType[];
   };
+  usd: number | undefined;
 }
 
 const initialState = (optionalConfig?: ConfigType): StateType => {
@@ -127,6 +128,7 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
       txCount: 0,
       claimableRewards: '',
     },
+    usd: undefined,
   };
 };
 

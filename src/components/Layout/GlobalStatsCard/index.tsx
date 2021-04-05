@@ -11,7 +11,6 @@ import { initialStats } from 'helpers/processStats';
 
 const initialState = {
   ...initialStats,
-  usd: '...',
   marketCap: '...',
   circulatingSupply: '...',
   totalStaked: '...',
@@ -20,20 +19,16 @@ const initialState = {
 
 const GlobalStatsCard = () => {
   const ref = React.useRef(null);
-  const { activeNetworkId } = useGlobalState();
+  const { activeNetworkId, usd } = useGlobalState();
 
-  const { getStats, getEgldPrice, getEgldMarketCap, getEconomics } = adapter();
+  const { getStats, getEgldMarketCap, getEconomics } = adapter();
 
   const [data, setData] = React.useState(initialState);
 
   const getData = () => {
     if (ref.current !== null) {
-      Promise.all([getStats(), getEgldPrice(), getEgldMarketCap(), getEconomics()]).then(
-        ([statsData, priceData, marketCapData, economicsData]) => {
-          const usd = priceData.success
-            ? `$${parseFloat(priceData.data).toLocaleString('en')}`
-            : '...';
-
+      Promise.all([getStats(), getEgldMarketCap(), getEconomics()]).then(
+        ([statsData, marketCapData, economicsData]) => {
           const marketCap = marketCapData.success
             ? `$${parseInt(marketCapData.data).toLocaleString('en')}`
             : '...';
@@ -56,7 +51,6 @@ const GlobalStatsCard = () => {
           if (ref.current !== null) {
             setData({
               ...processStats(statsData),
-              usd,
               marketCap,
               circulatingSupply,
               totalStaked,
@@ -83,7 +77,11 @@ const GlobalStatsCard = () => {
                   <div className="d-flex flex-column w-100">
                     <div className="d-flex justify-content-between mb-1">
                       <span className="text-secondary mr-3">EGLD Price:</span>
-                      {data.usd}
+                      {usd
+                        ? `$${usd.toLocaleString('en', {
+                            maximumFractionDigits: usd > 1000 ? 0 : 2,
+                          })}`
+                        : '...'}
                     </div>
                     <div className="d-flex justify-content-between">
                       <span className="text-secondary mr-3">Market Cap:</span>
