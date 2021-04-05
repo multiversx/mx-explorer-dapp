@@ -16,11 +16,32 @@
 
     .simple-map-marker {
       fill: $primary;
-      transition: opacity 0.35s ease, transform 0.35s ease;
 
       &.leader {
-        opacity: 0.7;
-        transform: scale(1.4);
+        fill: $white;
+        stroke-width: 3px;
+        stroke: $primary;
+      }
+    }
+
+    .pulse {
+      fill: none;
+      stroke: $primary;
+      animation-duration: 1.4s;
+      animation-name: pulse;
+      animation-iteration-count: 2;
+    }
+
+    @keyframes pulse {
+      from {
+        stroke-width: 0.214rem;
+        stroke-opacity: 1;
+        transform: scale3D(1, 1, 1);
+      }
+      to {
+        stroke-width: 0;
+        stroke-opacity: 0;
+        transform: scale3d(6, 6, 1);
       }
     }
   }
