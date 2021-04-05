@@ -5,8 +5,8 @@ describe('NetworkHealth tests', () => {
     const render = beforeAll({
       route: `/`,
     });
-    const epochTimeRemaining = await render.findByTestId('epochTimeRemaining');
-    expect(epochTimeRemaining.innerHTML).toBe('04:10');
+    const currentEpoch = await render.findByTestId('currentEpoch');
+    expect(currentEpoch.innerHTML).toBe('Epoch 110');
 
     const blocks = await render.findByTestId('blocks');
     expect(blocks.innerHTML).toBe('6,379,407');
