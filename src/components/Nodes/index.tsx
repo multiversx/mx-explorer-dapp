@@ -36,8 +36,8 @@ const Nodes = () => {
   React.useEffect(fetchNodes, [search]);
 
   return (
-    <div className="card" ref={ref}>
-      <div className="card-header">
+    <div className="card position-unset" ref={ref}>
+      <div className="card-header position-unset">
         <NodesTabs />
 
         <div className="card-header-item">
