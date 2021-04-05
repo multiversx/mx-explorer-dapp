@@ -12,25 +12,19 @@ const AccountTabs = () => {
 
   return (
     <div className="provider-tabs d-flex flex-row">
-      {indexActive ? (
-        <div className="mr-3">
-          <h6>Nodes</h6>
-        </div>
-      ) : (
-        <NetworkLink to={urlBuilder.providerDetails(address)} className="tab-link mr-3">
-          <h6>Nodes</h6>
-        </NetworkLink>
-      )}
+      <NetworkLink
+        to={urlBuilder.providerDetails(address)}
+        className={`tab-link mr-3 ${indexActive ? 'active' : ''}`}
+      >
+        <h6>Nodes</h6>
+      </NetworkLink>
 
-      {transactionsActive ? (
-        <div className="ml-3">
-          <h6>Transactions</h6>
-        </div>
-      ) : (
-        <NetworkLink to={urlBuilder.providerDetailsTransactions(address)} className="tab-link ml-3">
-          <h6>Transactions</h6>
-        </NetworkLink>
-      )}
+      <NetworkLink
+        to={urlBuilder.providerDetailsTransactions(address)}
+        className={`tab-link ml-3 ${transactionsActive ? 'active' : ''}`}
+      >
+        <h6>Transactions</h6>
+      </NetworkLink>
     </div>
   );
 };
