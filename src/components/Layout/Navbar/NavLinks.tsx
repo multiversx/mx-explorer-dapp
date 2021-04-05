@@ -3,6 +3,7 @@ import { NetworkLink } from 'sharedComponents';
 import { validatorsRoutes } from 'routes';
 import { useNetworkRoute, useMatchPath, useIsMainnet } from 'helpers';
 import { useGlobalState } from 'context';
+import { useLocation } from 'react-router-dom';
 
 interface NavLinksType {
   setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,6 +16,7 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
     setExpanded(isExpanded);
   };
   const { activeNetwork } = useGlobalState();
+  const activePath = useLocation().pathname;
 
   const isMainnet = useIsMainnet();
   return (
@@ -27,7 +29,13 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
         Dashboard
       </NetworkLink>
       <NetworkLink
-        className={`nav-link ${matchPath(networkRoute('/blocks')) !== null ? 'active' : ''}`}
+        className={`nav-link ${
+          matchPath(networkRoute('/blocks')) !== null ||
+          activePath.includes('/blocks/') ||
+          activePath.includes('/miniblocks/')
+            ? 'active'
+            : ''
+        }`}
         to="/blocks"
         onClick={() => onToggle(false)}
       >
@@ -35,7 +43,11 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
       </NetworkLink>
 
       <NetworkLink
-        className={`nav-link ${matchPath(networkRoute('/transactions')) !== null ? 'active' : ''}`}
+        className={`nav-link ${
+          matchPath(networkRoute('/transactions')) !== null || activePath.includes('/transactions/')
+            ? 'active'
+            : ''
+        }`}
         to="/transactions"
         onClick={() => onToggle(false)}
       >
@@ -43,7 +55,11 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
       </NetworkLink>
 
       <NetworkLink
-        className={`nav-link ${matchPath(networkRoute('/accounts')) !== null ? 'active' : ''}`}
+        className={`nav-link ${
+          matchPath(networkRoute('/accounts')) !== null || activePath.includes('/accounts/')
+            ? 'active'
+            : ''
+        }`}
         to="/accounts"
         onClick={() => onToggle(false)}
       >
@@ -54,7 +70,10 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
         className={`nav-link ${
           matchPath(networkRoute(validatorsRoutes.index)) !== null ||
           matchPath(networkRoute(validatorsRoutes.providers)) !== null ||
-          matchPath(networkRoute(validatorsRoutes.nodes)) !== null
+          matchPath(networkRoute(validatorsRoutes.nodes)) !== null ||
+          activePath.includes('/identities/') ||
+          activePath.includes('/providers/') ||
+          activePath.includes('/nodes/')
             ? 'active'
             : ''
         }`}
@@ -66,7 +85,11 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
 
       {activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api' && (
         <NetworkLink
-          className={`nav-link ${matchPath(networkRoute('/tokens')) !== null ? 'active' : ''}`}
+          className={`nav-link ${
+            matchPath(networkRoute('/tokens')) !== null || activePath.includes('/tokens/')
+              ? 'active'
+              : ''
+          }`}
           to="/tokens"
           onClick={() => onToggle(false)}
         >

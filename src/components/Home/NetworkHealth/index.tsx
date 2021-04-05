@@ -137,7 +137,7 @@ const NetworkHealth = () => {
             </div>
             <div className="gear-content">
               <ProgressRing progress={epochPercentage} />
-              <span className="mt-1" data-testid="epochTimeRemaining">
+              <span className="mt-1" data-testid="currentEpoch">
                 Epoch {epoch}
               </span>
               {epoch !== '...' && (
@@ -163,7 +163,7 @@ const NetworkHealth = () => {
             <div className={`animate ${play ? '' : 'paused'}`}>
               <Gear className="w-100 h-100" />
             </div>
-            <div className="gear-content">
+            <div className={`gear-content current-block-time-${blockTimeProgress}`}>
               <ProgressRing progress={(blockTimeProgress * 100) / intervalInSec} />
               {stateBuffer !== undefined ? blockTimeProgress : '...'}
               <small>Block Time</small>

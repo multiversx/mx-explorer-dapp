@@ -223,6 +223,12 @@
       color: $link-hover-color;
     }
   }
+
+  &.active {
+    h6 {
+      color: $body;
+    }
+  }
 }
 
 .position-absolute-center {
@@ -234,4 +240,8 @@
 
 .line-height-1 {
   line-height: 1;
+}
+
+.position-unset {
+  position: unset;
 }

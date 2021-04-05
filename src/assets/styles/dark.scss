@@ -31,3 +31,11 @@ $input-hover-border-color: lighten($border-color, 15%);
 .identity-avatar {
   border: 1px solid #1c1c1d;
 }
+
+.simple-map {
+  .rsm-svg {
+    .pulse {
+      stroke: $secondary;
+    }
+  }
+}
