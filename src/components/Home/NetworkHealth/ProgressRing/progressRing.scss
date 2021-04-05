@@ -11,3 +11,11 @@
     transition: stroke-dashoffset 0.35s;
   }
 }
+
+.current-block-time-0 {
+  .progress-ring {
+    circle {
+      transition: none;
+    }
+  }
+}
