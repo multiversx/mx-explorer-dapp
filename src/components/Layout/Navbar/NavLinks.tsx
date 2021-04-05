@@ -30,7 +30,9 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
       </NetworkLink>
       <NetworkLink
         className={`nav-link ${
-          matchPath(networkRoute('/blocks')) !== null || activePath.includes('/blocks/')
+          matchPath(networkRoute('/blocks')) !== null ||
+          activePath.includes('/blocks/') ||
+          activePath.includes('/miniblocks/')
             ? 'active'
             : ''
         }`}
