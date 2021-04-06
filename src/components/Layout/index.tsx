@@ -10,29 +10,31 @@ import PageLayout from './PageLayout';
 import { useLocation } from 'react-router-dom';
 import GlobalStatsCard from './GlobalStatsCard';
 import { validatorsRoutes } from 'routes';
-import { useFetchPrice } from 'helpers';
-
-const showGlobalStats = (activePath: string) => {
-  let show = true;
-
-  switch (true) {
-    case activePath === '/':
-    case activePath.includes('/identities'):
-    case activePath.includes(validatorsRoutes.index):
-    case activePath.includes(validatorsRoutes.nodes):
-    case activePath.includes(validatorsRoutes.providers):
-      show = false;
-      break;
-  }
-
-  return show;
-};
+import { useFetchPrice, useMatchPath, useNetworkRoute } from 'helpers';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
+  const networkRoute = useNetworkRoute();
+  const matchPath = useMatchPath();
   const {
     theme,
     config: { elrondApps },
   } = useGlobalState();
+
+  const showGlobalStats = (activePath: string) => {
+    let show = true;
+
+    switch (true) {
+      case matchPath(networkRoute('/')) !== null:
+      case activePath.includes('/identities'):
+      case activePath.includes(validatorsRoutes.index):
+      case activePath.includes(validatorsRoutes.nodes):
+      case activePath.includes(validatorsRoutes.providers):
+        show = false;
+        break;
+    }
+
+    return show;
+  };
 
   useFetchPrice();
 

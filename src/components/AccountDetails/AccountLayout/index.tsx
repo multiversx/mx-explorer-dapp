@@ -20,10 +20,10 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const tokensActive = activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api';
 
   const isOldAddressRoute = pathname.includes('/address/');
-  const oldMatch: any = useRouteMatch(accountRoutes.oldAccountDetails);
+  const oldMatch: any = useRouteMatch(networkRoute(accountRoutes.oldAccountDetails));
   const oldAddress = oldMatch ? oldMatch.params.hash : undefined;
 
-  const match: any = useRouteMatch(accountRoutes.index);
+  const match: any = useRouteMatch(networkRoute(accountRoutes.index));
   const address = match ? match.params.hash : undefined;
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
