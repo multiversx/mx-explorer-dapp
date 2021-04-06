@@ -3,7 +3,7 @@ import moment from 'moment';
 import { useGlobalState, useGlobalDispatch } from 'context';
 import { refreshRate } from 'appConfig';
 
-export default function LoopManager() {
+export default function useLoopManager() {
   const {
     refresh: { timestamp },
   } = useGlobalState();
@@ -25,6 +25,4 @@ export default function LoopManager() {
   };
 
   React.useEffect(setRounds, []);
-
-  return <></>;
 }
