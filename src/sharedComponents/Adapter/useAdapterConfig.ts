@@ -52,6 +52,7 @@ export default function useAdapterConfig() {
     provider,
     getStats,
     getNodes,
+    getNodesVersions,
     getAccountDelegation,
     getAccountStake,
     getEconomics,
@@ -77,6 +78,8 @@ export default function useAdapterConfig() {
     provider: (props = basicProps) => wrap(() => provider({ ...providerProps, ...props })),
     getStats: (props = basicProps) => wrap(() => getStats({ ...providerProps, ...props })),
     getNodes: (props = basicProps) => wrap(() => getNodes({ ...providerProps, ...props })),
+    getNodesVersions: (props = basicProps) =>
+      wrap(() => getNodesVersions({ ...providerProps, ...props })),
     getShards: (props = basicProps) => wrap(() => getShards({ ...providerProps, ...props })),
     getAccountDelegation: (props = basicProps) =>
       wrap(() => getAccountDelegation({ ...providerProps, ...props })),

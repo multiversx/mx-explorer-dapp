@@ -15,6 +15,13 @@ export default {
     });
   },
   getNodes: api,
+  getNodesVersions: ({ baseUrl, timeout }: ProviderPropsType) => {
+    return api({
+      baseUrl,
+      url: `/nodes/versions`,
+      timeout,
+    });
+  },
   getShards: ({ baseUrl, timeout }: ProviderPropsType) => {
     return api({
       baseUrl,
