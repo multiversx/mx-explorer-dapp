@@ -23,8 +23,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     theme,
     config: { elrondApps },
   } = useGlobalState();
+  const activePath = useLocation().pathname;
 
-  const showGlobalStats = (activePath: string) => {
+  const showGlobalStats = () => {
     let show = true;
 
     switch (true) {
@@ -73,8 +74,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     }
   }, [theme]);
 
-  const activePath = useLocation().pathname;
-  const isHome = activePath === '/';
+  const isHome = matchPath(networkRoute('/')) !== null;
 
   const explorerApp = elrondApps.find((app) => app.id === 'explorer');
   const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
@@ -107,7 +107,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   </div>
                 </div>
 
-                {showGlobalStats(activePath) && <GlobalStatsCard />}
+                {showGlobalStats() && <GlobalStatsCard />}
 
                 <div className="page-container" data-testid="mainPageContent">
                   <PageLayout>{children}</PageLayout>
