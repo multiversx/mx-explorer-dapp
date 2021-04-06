@@ -26,6 +26,9 @@ export default {
     const { proxyUrl } = props;
     return shards({ proxyUrl });
   },
+  getNodesVersions: () => {
+    throw new Error('not defined');
+  },
   getAccountDelegation: () => {
     throw new Error('not defined');
   },

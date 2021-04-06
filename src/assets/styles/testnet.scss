@@ -58,6 +58,14 @@ $input-hover-border-color: darken($border-color, 15%);
     }
   }
 
+  .card-item-value {
+    a {
+      &::after {
+        bottom: 2px;
+      }
+    }
+  }
+
   .nodes-filters a,
   .nodes-table thead a,
   .pager a,

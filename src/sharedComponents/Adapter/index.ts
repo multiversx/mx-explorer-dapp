@@ -17,6 +17,7 @@ export default function useAdapter() {
     provider,
     getStats,
     getNodes,
+    getNodesVersions,
     getAccountDelegation,
     getAccountStake,
     getShards,
@@ -214,7 +215,7 @@ export default function useAdapter() {
         }),
       }),
 
-    getNodesVersions: () => provider({ url: `/nodes/versions` }),
+    getNodesVersions,
 
     getIdentities: (identities?: string) =>
       provider({ url: `/identities`, params: { identities } }),
