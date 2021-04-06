@@ -18,9 +18,14 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const networkRoute = useNetworkRoute();
 
   const tokensActive = activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api';
+
   const isOldAddressRoute = pathname.includes('/address/');
+  const oldMatch: any = useRouteMatch(accountRoutes.oldAccountDetails);
+  const oldAddress = oldMatch ? oldMatch.params.hash : undefined;
+
   const match: any = useRouteMatch(accountRoutes.index);
   const address = match ? match.params.hash : undefined;
+
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchBalanceAndCount = () => {
@@ -85,7 +90,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const failed = dataReady === false || !addressIsBech32(address);
 
   return isOldAddressRoute ? (
-    <Redirect to={networkRoute(`/accounts/${address}`)} />
+    <Redirect to={networkRoute(`/accounts/${oldAddress}`)} />
   ) : (
     <>
       {loading && <Loader />}

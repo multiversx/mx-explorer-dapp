@@ -42,6 +42,7 @@ export const accountRoutes = {
   index: `/accounts/:hash`,
   code: `/accounts/:hash/code`,
   tokens: `/accounts/:hash/tokens`,
+  oldAccountDetails: `/address/:hash`,
 };
 
 export const providerRoutes = {
@@ -116,7 +117,7 @@ const routes: RouteType[] = [
     component: AccountDetails,
   },
   {
-    path: '/address/:hash',
+    path: accountRoutes.oldAccountDetails,
     title: 'Account Details',
     component: AccountDetails, // redirect
   },
