@@ -112,7 +112,7 @@ const AccountDetailsCard = () => {
           <div className="card-body card-item-container mx-spacing">
             <CardItem className={cardItemClass} title="Balance" customIcon={<ElrondSymbol />}>
               <div className="d-flex align-items-center">
-                {balance !== '...' ? <Denominate value={balance} /> : balance}
+                {balance !== '...' ? <Denominate value={balance} decimals={4} /> : balance}
               </div>
             </CardItem>
 
