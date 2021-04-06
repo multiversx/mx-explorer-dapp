@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useGlobalDispatch, useGlobalState } from 'context';
 
-export default function NetworkRouter() {
+export default function useNetworkRouter() {
   const {
     config,
     activeNetworkId,
@@ -47,6 +47,4 @@ export default function NetworkRouter() {
   }
 
   React.useEffect(changeNetwork, [networkId, activeNetworkId]);
-
-  return <></>;
 }

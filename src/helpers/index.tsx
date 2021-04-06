@@ -22,6 +22,8 @@ import usdValue from './usdValue';
 import nominate from './nominate';
 import processStats from './processStats';
 import useFetchPrice from './useFetchPrice';
+import useNetworkRouter from './useNetworkRouter';
+import useLoopManager from './useLoopManager';
 
 export {
   truncate,
@@ -48,4 +50,6 @@ export {
   nominate,
   processStats,
   useFetchPrice,
+  useNetworkRouter,
+  useLoopManager,
 };

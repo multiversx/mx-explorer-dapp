@@ -2,15 +2,19 @@ import React from 'react';
 import { useGlobalState } from 'context';
 import Navbar from './Navbar/index';
 import Footer from './Footer/index';
-import NetworkRouter from './NetworkRouter';
-import LoopManager from './LoopManager';
 import { Search } from 'sharedComponents';
 import Unavailable from './Unavailable';
 import PageLayout from './PageLayout';
 import { useLocation } from 'react-router-dom';
 import GlobalStatsCard from './GlobalStatsCard';
 import { validatorsRoutes } from 'routes';
-import { useFetchPrice, useMatchPath, useNetworkRoute } from 'helpers';
+import {
+  useFetchPrice,
+  useMatchPath,
+  useNetworkRoute,
+  useNetworkRouter,
+  useLoopManager,
+} from 'helpers';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const networkRoute = useNetworkRoute();
@@ -36,6 +40,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     return show;
   };
 
+  useNetworkRouter();
+  useLoopManager();
   useFetchPrice();
 
   const offline = !window.navigator.onLine;
@@ -77,8 +83,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <div className="d-flex">
       <div className="flex-fill vh-100">
         <main className="main-content d-flex flex-column flex-grow-1">
-          <NetworkRouter />
-          <LoopManager />
           <Navbar />
           <div className="main-content-container container-fluid p-0 d-flex flex-column">
             {offline ? (
