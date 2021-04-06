@@ -25,20 +25,22 @@ const Home = () => {
         )}
       </div>
 
-      <div className="row">
-        <div className="col-12 col-lg-6 mt-spacer">
-          <PriceChart />
+      {isMainnet && (
+        <div className="row">
+          <div className="col-12 col-lg-6 mt-spacer">
+            <PriceChart />
+          </div>
+          <div className="col-12 col-lg-6 mt-spacer">
+            <StakingChart />
+          </div>
+          <div className="col-12 col-lg-6 mt-spacer">
+            <TransactionsChart />
+          </div>
+          <div className="col-12 col-lg-6 mt-spacer">
+            <AccountsChart />
+          </div>
         </div>
-        <div className="col-12 col-lg-6 mt-spacer">
-          <StakingChart />
-        </div>
-        <div className="col-12 col-lg-6 mt-spacer">
-          <TransactionsChart />
-        </div>
-        <div className="col-12 col-lg-6 mt-spacer">
-          <AccountsChart />
-        </div>
-      </div>
+      )}
 
       <div className="row">
         <div className="col-12 mt-spacer">
