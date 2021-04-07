@@ -7,7 +7,7 @@ import Unavailable from './Unavailable';
 import PageLayout from './PageLayout';
 import { useLocation } from 'react-router-dom';
 import GlobalStatsCard from './GlobalStatsCard';
-import { validatorsRoutes } from 'routes';
+import Routes, { validatorsRoutes } from 'routes';
 import {
   useFetchPrice,
   useMatchPath,
@@ -27,8 +27,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   const showGlobalStats = () => {
     let show = true;
+    const routeExists = Routes.some(({ path }) => matchPath(networkRoute(path)));
 
     switch (true) {
+      case !routeExists:
       case matchPath(networkRoute('/')) !== null:
       case activePath.includes('/identities'):
       case activePath.includes(validatorsRoutes.index):
