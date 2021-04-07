@@ -30,34 +30,53 @@ interface RouteType {
 // INFO: to split the app in chunks use:
 // component: React.lazy(() => import('./components/Validators')),
 
-export const validatorsRoutes = {
-  index: '/validators',
-  providers: '/providers',
-  nodes: '/nodes',
-  nodeDetails: '/nodes/:publicKey',
-  identityDetails: '/identities/:id',
+export const searchRoutes = {
+  index: '/search/',
+  query: '/search/:hash',
 };
 
-export const accountRoutes = {
-  index: `/accounts/:hash`,
-  code: `/accounts/:hash/code`,
-  tokens: `/accounts/:hash/tokens`,
+export const blocksRoutes = {
+  blocks: '/blocks',
+  blocksDetails: '/blocks/:hash',
+  miniBlockDetails: '/miniblocks/:hash',
+};
+
+export const transactionsRoutes = {
+  transactions: '/transactions',
+  transactionDetails: '/transactions/:hash',
+};
+
+export const accountsRoutes = {
+  accounts: '/accounts',
+  accountDetails: '/accounts/:hash',
+  accountCode: `/accounts/:hash/code`,
+  accountTokens: `/accounts/:hash/tokens`,
   oldAccountDetails: `/address/:hash`,
 };
 
-export const providerRoutes = {
-  index: `/providers/:hash`,
-  transactions: `/providers/:hash/transactions`,
+export const validatorsRoutes = {
+  identities: '/validators',
+  identityDetails: '/identities/:hash',
+  providers: '/providers',
+  providerDetails: '/providers/:hash',
+  providerTransactions: '/providers/:hash/transactions',
+  nodes: '/nodes',
+  nodeDetails: '/nodes/:hash',
+};
+
+export const tokensRoutes = {
+  tokens: '/tokens',
+  tokenDetails: '/tokens/:hash',
 };
 
 const routes: RouteType[] = [
   {
-    path: '/search/:query',
+    path: searchRoutes.index,
     title: 'Search',
     component: EmptySearch,
   },
   {
-    path: '/search/',
+    path: searchRoutes.query,
     title: 'Search',
     component: EmptySearch,
   },
@@ -67,27 +86,32 @@ const routes: RouteType[] = [
     component: Home,
   },
   {
-    path: '/blocks',
+    path: blocksRoutes.blocks,
     title: 'Blocks',
     component: Blocks,
   },
   {
-    path: '/blocks/:hash',
+    path: blocksRoutes.blocksDetails,
     title: 'Block Details',
     component: BlockDetails,
   },
   {
-    path: '/transactions',
+    path: blocksRoutes.miniBlockDetails,
+    title: 'Miniblock Details',
+    component: MiniBlockDetails,
+  },
+  {
+    path: transactionsRoutes.transactions,
     title: 'Transactions',
     component: Transactions,
   },
   {
-    path: '/transactions/:hash',
+    path: transactionsRoutes.transactionDetails,
     title: 'Transaction Details',
     component: TransactionDetails,
   },
   {
-    path: validatorsRoutes.index,
+    path: validatorsRoutes.identities,
     title: 'Validators',
     component: Identities,
   },
@@ -107,57 +131,53 @@ const routes: RouteType[] = [
     component: NodeDetails,
   },
   {
-    path: '/accounts',
+    path: accountsRoutes.accounts,
     title: 'Accounts',
     component: Accounts,
   },
   {
-    path: accountRoutes.index,
+    path: accountsRoutes.accountDetails,
     title: 'Account Details',
     component: AccountDetails,
   },
   {
-    path: accountRoutes.oldAccountDetails,
+    path: accountsRoutes.oldAccountDetails,
     title: 'Account Details',
     component: AccountDetails, // redirect
   },
   {
-    path: accountRoutes.code,
+    path: accountsRoutes.accountCode,
     title: 'Account Details',
     component: AccountContractCode,
   },
   {
-    path: accountRoutes.tokens,
+    path: accountsRoutes.accountTokens,
     title: 'Account Details',
     component: AccountTokens,
   },
+
   {
-    path: '/miniblocks/:hash',
-    title: 'Miniblock Details',
-    component: MiniBlockDetails,
-  },
-  {
-    path: '/tokens',
+    path: tokensRoutes.tokens,
     title: 'Tokens',
     component: Tokens,
   },
   {
-    path: '/tokens/:hash',
+    path: tokensRoutes.tokenDetails,
     title: 'Token Details',
     component: TokenDetails,
   },
   {
-    path: '/providers',
+    path: validatorsRoutes.providers,
     title: 'Providers',
     component: Providers,
   },
   {
-    path: '/providers/:hash',
+    path: validatorsRoutes.providerDetails,
     title: 'Provider Details',
     component: ProviderDetails,
   },
   {
-    path: '/providers/:hash/transactions',
+    path: validatorsRoutes.providerTransactions,
     title: 'Provider Details',
     component: ProviderTransactions,
   },

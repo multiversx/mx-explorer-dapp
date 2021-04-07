@@ -6,7 +6,7 @@ import FailedAccount from './FailedAccount';
 import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
 import AccountDetailsCard from './AccountDetailsCard';
 import { useRouteMatch } from 'react-router-dom';
-import { accountRoutes } from 'routes';
+import { accountsRoutes } from 'routes';
 
 const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
@@ -20,10 +20,10 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const tokensActive = activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api';
 
   const isOldAddressRoute = pathname.includes('/address/');
-  const oldMatch: any = useRouteMatch(networkRoute(accountRoutes.oldAccountDetails));
+  const oldMatch: any = useRouteMatch(networkRoute(accountsRoutes.oldAccountDetails));
   const oldAddress = oldMatch ? oldMatch.params.hash : undefined;
 
-  const match: any = useRouteMatch(networkRoute(accountRoutes.index));
+  const match: any = useRouteMatch(networkRoute(accountsRoutes.accountDetails));
   const address = match ? match.params.hash : undefined;
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();

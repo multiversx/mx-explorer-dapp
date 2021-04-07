@@ -22,7 +22,7 @@ const initialState = {
 
 const NodeDetails = () => {
   const ref = React.useRef(null);
-  const { publicKey } = useParams() as any;
+  const { hash: publicKey } = useParams() as any;
   const { search } = useLocation();
   const { getNode, getIdentity, getRounds, getBlocks, getStats } = adapter();
   const isMainnet = useIsMainnet();

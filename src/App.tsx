@@ -21,7 +21,10 @@ export const Routes = ({
   const isMainnet = useIsMainnet();
 
   const restrictedRoutes = routes.filter(({ path }) => {
-    if (!isMainnet && [validatorsRoutes.index, validatorsRoutes.identityDetails].includes(path)) {
+    if (
+      !isMainnet &&
+      [validatorsRoutes.identities, validatorsRoutes.identityDetails].includes(path)
+    ) {
       return false;
     }
     return true;
