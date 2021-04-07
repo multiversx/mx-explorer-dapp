@@ -87,8 +87,15 @@ const ProvidersTable = ({
           displayProviders.sort((a, b) => {
             let aFilled = getPercentageFilled(a.locked, a.delegationCap);
             let bFilled = getPercentageFilled(b.locked, b.delegationCap);
-
             return parseFloat(aFilled) > parseFloat(bFilled) ? sortParams[0] : sortParams[1];
+          });
+          break;
+
+        case sortField === 'serviceFee':
+          displayProviders.sort((a, b) => {
+            let aFee = a.serviceFee ? a.serviceFee : -1;
+            let bFee = b.serviceFee ? b.serviceFee : -1;
+            return aFee > bFee ? sortParams[0] : sortParams[1];
           });
           break;
 
@@ -207,7 +214,11 @@ const ProvidersTable = ({
                 )}
               </td>
               <td>
-                {provider.serviceFee ? <>{(provider.serviceFee * 100).toFixed(2)}%</> : <>N/A</>}
+                {provider.serviceFee ? (
+                  <>{(provider.serviceFee * 100).toFixed(2).replace('.00', '')}%</>
+                ) : (
+                  <>N/A</>
+                )}
               </td>
               <td>
                 {provider.delegationCap ? (
