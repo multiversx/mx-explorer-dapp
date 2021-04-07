@@ -14,7 +14,7 @@ const NetworkUrl = ({ link, onClick }: { link: NetworkLinkType; onClick: () => v
   return (
     <Link
       className={`dropdown-item ${activeNetworkId === link.id ? 'active' : ''}`}
-      to={link.url}
+      to={`/${link.url}`}
       onClick={onClick}
     >
       {link.name}
