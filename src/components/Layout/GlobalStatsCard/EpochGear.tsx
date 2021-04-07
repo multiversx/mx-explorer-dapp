@@ -28,6 +28,16 @@ const EpochGear = ({ stats }: { stats: typeof initialStats }) => {
     }
   };
 
+  const hardReset = (roundsPerEpoch: number) => {
+    const secondsUntilNextEpoch = 6 * roundsPerEpoch;
+    const nextEpochDate: any = moment().utc().add(secondsUntilNextEpoch, 'seconds');
+
+    if (ref.current !== null) {
+      setNextEpoch(nextEpochDate);
+      setRoundsLeft(roundsPerEpoch);
+    }
+  };
+
   React.useEffect(init, [stats]);
 
   const calculate = () => {
@@ -41,8 +51,13 @@ const EpochGear = ({ stats }: { stats: typeof initialStats }) => {
     if (ref.current !== null) {
       // setHours(hours);
       // setMinutes(minutes);
-      setPercentRemaining(100 - percentRemaining);
-      setRoundsLeft((roundsLeft) => (roundsLeft && roundsLeft > 0 ? roundsLeft - 1 : roundsLeft));
+
+      if (percentRemaining <= 0) {
+        hardReset(stats.roundsPerEpoch);
+      } else {
+        setPercentRemaining(100 - percentRemaining);
+        setRoundsLeft((roundsLeft) => (roundsLeft && roundsLeft > 0 ? roundsLeft - 1 : roundsLeft));
+      }
     }
   };
 
@@ -68,8 +83,8 @@ const EpochGear = ({ stats }: { stats: typeof initialStats }) => {
         </div>
         <div className="gear-content">
           <ProgressRing progress={percentRemaining} />
-          <span className="mt-1 pt-1">{nextEpoch ? <>Epoch {stats.epoch}</> : <>...</>}</span>
-          {roundsLeft && (
+          <span className="mt-1 pt-2">{nextEpoch ? <>Epoch {stats.epoch}</> : <>...</>}</span>
+          {roundsLeft !== undefined && (
             <small className="text-secondary">
               {roundsLeft.toLocaleString('en')} Rounds <br /> Left
             </small>
