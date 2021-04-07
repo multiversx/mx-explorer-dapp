@@ -1,27 +1,27 @@
 import * as React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { NetworkLink } from 'sharedComponents';
-import { urlBuilder } from 'helpers';
+import { urlBuilder, useActiveRoute } from 'helpers';
+import { validatorsRoutes } from 'routes';
 
 const AccountTabs = () => {
   const { hash: address } = useParams() as any;
-  const activePath = useLocation().pathname;
-
-  const transactionsActive = activePath.includes('transactions');
-  const indexActive = !transactionsActive;
+  const activeRoute = useActiveRoute();
 
   return (
     <div className="provider-tabs d-flex flex-row">
       <NetworkLink
         to={urlBuilder.providerDetails(address)}
-        className={`tab-link mr-3 ${indexActive ? 'active' : ''}`}
+        className={`tab-link mr-3 ${activeRoute(validatorsRoutes.providerDetails) ? 'active' : ''}`}
       >
         <h6>Nodes</h6>
       </NetworkLink>
 
       <NetworkLink
         to={urlBuilder.providerDetailsTransactions(address)}
-        className={`tab-link ml-3 ${transactionsActive ? 'active' : ''}`}
+        className={`tab-link ml-3 ${
+          activeRoute(validatorsRoutes.providerTransactions) ? 'active' : ''
+        }`}
       >
         <h6>Transactions</h6>
       </NetworkLink>

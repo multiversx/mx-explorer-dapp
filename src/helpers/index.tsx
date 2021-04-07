@@ -24,6 +24,7 @@ import processStats from './processStats';
 import useFetchPrice from './useFetchPrice';
 import useNetworkRouter from './useNetworkRouter';
 import useLoopManager from './useLoopManager';
+import useActiveRoute from './useActiveRoute';
 
 export {
   truncate,
@@ -52,4 +53,5 @@ export {
   useFetchPrice,
   useNetworkRouter,
   useLoopManager,
+  useActiveRoute,
 };

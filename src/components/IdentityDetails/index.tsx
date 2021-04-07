@@ -10,7 +10,7 @@ import { useGlobalState } from 'context';
 
 const IdentityDetails = () => {
   const ref = React.useRef(null);
-  const { id } = useParams() as any;
+  const { hash: id } = useParams() as any;
   const { getIdentity, getNodes, getNodesCount, getProviders } = adapter();
   const { getQueryObject, size } = useFilters();
   const {

@@ -1,23 +1,19 @@
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
 import { NetworkLink } from 'sharedComponents';
-import { urlBuilder } from 'helpers';
+import { urlBuilder, useActiveRoute } from 'helpers';
 import { useGlobalState } from 'context';
+import { accountsRoutes } from 'routes';
 
 const AccountTabs = () => {
-  const activePath = useLocation().pathname;
+  const activeRoute = useActiveRoute();
   const { accountDetails, activeNetwork } = useGlobalState();
   const tokensRouteActive = activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api';
-
-  const contractActive = activePath.endsWith('code');
-  const tokensActive = activePath.includes('tokens');
-  const indexActive = !contractActive && !tokensActive;
 
   return (
     <div className="account-tabs d-flex flex-row">
       <NetworkLink
         to={urlBuilder.accountDetails(accountDetails.address)}
-        className={`tab-link mr-3 ${indexActive ? 'active' : ''}`}
+        className={`tab-link mr-3 ${activeRoute(accountsRoutes.accountDetails) ? 'active' : ''}`}
       >
         <h6>Transactions</h6>
       </NetworkLink>
@@ -25,7 +21,7 @@ const AccountTabs = () => {
       {tokensRouteActive && (
         <NetworkLink
           to={urlBuilder.accountDetailsTokens(accountDetails.address)}
-          className={`tab-link mx-3 ${tokensActive ? 'active' : ''}`}
+          className={`tab-link mx-3 ${activeRoute(accountsRoutes.accountTokens) ? 'active' : ''}`}
         >
           <h6>ESDT Tokens</h6>
         </NetworkLink>
@@ -33,7 +29,7 @@ const AccountTabs = () => {
       {accountDetails.code && (
         <NetworkLink
           to={urlBuilder.accountDetailsContractCode(accountDetails.address)}
-          className={`tab-link ml-3 ${contractActive ? 'active' : ''}`}
+          className={`tab-link ml-3 ${activeRoute(accountsRoutes.accountCode) ? 'active' : ''}`}
         >
           <h6>Code</h6>
         </NetworkLink>

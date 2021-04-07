@@ -3,9 +3,9 @@ import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { adapter, Loader, PageState } from 'sharedComponents';
 import { useRouteMatch } from 'react-router-dom';
 import { SharedIdentity } from 'sharedComponents';
-import { types, useIsMainnet } from 'helpers';
+import { types, useIsMainnet, useNetworkRoute } from 'helpers';
 import ProviderDetailsCard from './ProviderDetailsCard';
-import { providerRoutes } from 'routes';
+import { validatorsRoutes } from 'routes';
 import { IdentityType } from 'context/state';
 
 interface ProviderLayoutType<T> {
@@ -19,8 +19,10 @@ const initialState = {
 
 const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
-  const match: any = useRouteMatch(providerRoutes.index);
+  const networkRoute = useNetworkRoute();
+  const match: any = useRouteMatch(networkRoute(validatorsRoutes.providerDetails));
   const address = match ? match.params.hash : undefined;
+
   const { getProvider, getIdentity } = adapter();
   const isMainnet = useIsMainnet();
 

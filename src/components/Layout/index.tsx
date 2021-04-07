@@ -5,37 +5,33 @@ import Footer from './Footer/index';
 import { Search } from 'sharedComponents';
 import Unavailable from './Unavailable';
 import PageLayout from './PageLayout';
-import { useLocation } from 'react-router-dom';
 import GlobalStatsCard from './GlobalStatsCard';
-import Routes, { validatorsRoutes } from 'routes';
-import {
-  useFetchPrice,
-  useMatchPath,
-  useNetworkRoute,
-  useNetworkRouter,
-  useLoopManager,
-} from 'helpers';
+import Routes, { validatorsRoutes, searchRoutes } from 'routes';
+import { useFetchPrice, useNetworkRouter, useLoopManager, useActiveRoute } from 'helpers';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const networkRoute = useNetworkRoute();
-  const matchPath = useMatchPath();
   const {
     theme,
     config: { elrondApps },
   } = useGlobalState();
-  const activePath = useLocation().pathname;
+  const activeRoute = useActiveRoute();
 
   const showGlobalStats = () => {
     let show = true;
-    const routeExists = Routes.some(({ path }) => matchPath(networkRoute(path)));
+    const routeExists = Routes.some(({ path }) => activeRoute(path));
 
     switch (true) {
       case !routeExists:
-      case matchPath(networkRoute('/')) !== null:
-      case activePath.includes('/identities'):
-      case activePath.includes(validatorsRoutes.index):
-      case activePath.includes(validatorsRoutes.nodes):
-      case activePath.includes(validatorsRoutes.providers):
+      case activeRoute('/'):
+      case activeRoute(searchRoutes.index):
+      case activeRoute(searchRoutes.query):
+      case activeRoute(validatorsRoutes.identities):
+      case activeRoute(validatorsRoutes.identityDetails):
+      case activeRoute(validatorsRoutes.providers):
+      case activeRoute(validatorsRoutes.providerDetails):
+      case activeRoute(validatorsRoutes.providerTransactions):
+      case activeRoute(validatorsRoutes.nodes):
+      case activeRoute(validatorsRoutes.nodeDetails):
         show = false;
         break;
     }
@@ -76,7 +72,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     }
   }, [theme]);
 
-  const isHome = matchPath(networkRoute('/')) !== null;
+  const isHome = activeRoute('/');
 
   const explorerApp = elrondApps.find((app) => app.id === 'explorer');
   const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
