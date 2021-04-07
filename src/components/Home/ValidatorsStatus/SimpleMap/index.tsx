@@ -3,7 +3,6 @@ import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { MarkerType } from '../helpers/asyncRequests';
 import countries from './countries100m.json';
-import { useGlobalState } from 'context';
 
 interface SimpleMapType {
   markers: MarkerType[];
@@ -60,39 +59,45 @@ const MarkerToolTip = ({
 
 const SimpleMap = ({ markers }: SimpleMapType) => {
   const ref = React.useRef(null);
-  const {
-    refresh: { timestamp },
-  } = useGlobalState();
+  const [localMarkers, setLocalMarkers] = React.useState<MarkerType[]>([]);
+  const [pulse, setPulse] = React.useState(0);
+  const [pulseMarker, setPulseMarker] = React.useState<MarkerType | undefined>();
 
-  const [leaders, setLeaders] = React.useState<string[]>([]);
+  React.useEffect(() => {
+    setLocalMarkers(markers);
+  }, [markers]);
 
-  const isLeader = (city: string) => {
-    return leaders.includes(city);
-  };
+  const chooseMarker = () => {
+    if (ref.current !== null && localMarkers.length > 0) {
+      let newPulseMarker;
 
-  const chooseLeaders = () => {
-    if (ref.current !== null && markers.length > 0) {
-      const newLeaders: string[] = [];
-      const newMax = getRandomInt(1, 1);
-
-      while (newLeaders.length !== newMax) {
-        const candidate = markers[getRandomInt(1, markers.length) - 1];
-        if (candidate && candidate.city && !newLeaders.includes(candidate.city)) {
-          newLeaders.push(candidate.city);
+      while (newPulseMarker === undefined) {
+        const candidate = localMarkers[getRandomInt(1, localMarkers.length) - 1];
+        if (candidate && candidate.city) {
+          newPulseMarker = candidate;
         }
       }
 
-      setLeaders(newLeaders);
+      setPulseMarker(newPulseMarker);
 
       setTimeout(() => {
-        if (ref.current !== null) {
-          setLeaders([]);
-        }
-      }, 2800);
+        setPulseMarker(undefined);
+      }, 800);
     }
   };
 
-  React.useEffect(chooseLeaders, [timestamp]);
+  React.useEffect(chooseMarker, [pulse]);
+
+  const pulseInterval = () => {
+    const interval = setInterval(() => {
+      if (ref.current !== null && !document.hidden) {
+        setPulse((pulse) => pulse + 1);
+      }
+    }, 2000);
+    return () => clearInterval(interval);
+  };
+
+  React.useEffect(pulseInterval, []);
 
   return (
     <div className="simple-map" ref={ref}>
@@ -107,19 +112,29 @@ const SimpleMap = ({ markers }: SimpleMapType) => {
             geographies.map((geo: any) => <Geography key={geo.rsmKey} geography={geo} />)
           }
         </Geographies>
-        {markers.map(({ city, longitude, latitude, validators }) => (
-          <Marker key={longitude} coordinates={[longitude, latitude]}>
-            <MarkerToolTip city={city} validators={validators}>
-              <g>
-                <circle
-                  r={calcRadius(validators)}
-                  className={`simple-map-marker ${isLeader(city) ? 'leader' : ''}`}
-                />
-                {isLeader(city) && <circle className="pulse" r={calcRadius(validators)} />}
-              </g>
-            </MarkerToolTip>
-          </Marker>
-        ))}
+        {localMarkers
+          .sort((a, b) => {
+            const aCity = a.city === pulseMarker?.city ? -1 : 1;
+            const bCity = b.city === pulseMarker?.city ? -1 : 1;
+            return bCity - aCity;
+          })
+          .map(({ city, longitude, latitude, validators }) => (
+            <Marker key={longitude} coordinates={[longitude, latitude]}>
+              <MarkerToolTip city={city} validators={validators}>
+                <g>
+                  <circle
+                    r={calcRadius(validators)}
+                    className={`simple-map-marker ${
+                      pulseMarker && pulseMarker.city === city ? 'pulse-marker' : ''
+                    }`}
+                  />
+                  {pulseMarker && pulseMarker.city === city && (
+                    <circle className="pulse" r={calcRadius(validators)} />
+                  )}
+                </g>
+              </MarkerToolTip>
+            </Marker>
+          ))}
       </ComposableMap>
     </div>
   );
