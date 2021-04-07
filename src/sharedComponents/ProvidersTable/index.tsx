@@ -85,8 +85,8 @@ const ProvidersTable = ({
 
         case sortField === 'filled':
           displayProviders.sort((a, b) => {
-            let aFilled = getPercentageFilled(a.stake, a.delegationCap);
-            let bFilled = getPercentageFilled(b.stake, b.delegationCap);
+            let aFilled = getPercentageFilled(a.locked, a.delegationCap);
+            let bFilled = getPercentageFilled(b.locked, b.delegationCap);
 
             return parseFloat(aFilled) > parseFloat(bFilled) ? sortParams[0] : sortParams[1];
           });
