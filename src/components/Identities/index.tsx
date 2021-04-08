@@ -1,23 +1,20 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { useGlobalDispatch, useGlobalState } from 'context';
 import { IdentityType } from 'context/state';
 import { adapter, Loader, PageState } from 'sharedComponents';
-import NodesLayout from 'sharedComponents/NodesLayout';
 import IdentityRow from './IdentityRow';
-import NodeTabs from 'sharedComponents/NodesLayout/NodeTabs';
+import NodesTabs from 'components/Nodes/NodesLayout/NodesTabs';
 
 const Identities = () => {
   const ref = React.useRef(null);
   const { getIdentities } = adapter();
+
+  const [identities, setIdentities] = React.useState<IdentityType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
-  const dispatch = useGlobalDispatch();
-  const { identities } = useGlobalState();
 
   const fetchIdentities = () => {
     getIdentities().then(({ data, success }) => {
       const identitiesList: IdentityType[] = [];
-      let blockchainTotalStake = 0;
       let overallStakePercent = 0;
 
       if (success) {
@@ -25,16 +22,10 @@ const Identities = () => {
           if (!identity.stake || !identity.validators) {
             return;
           }
-
           identitiesList.push({ ...identity, overallStakePercent });
-          blockchainTotalStake = blockchainTotalStake + identity.stake;
           overallStakePercent = overallStakePercent + identity.stakePercent;
         });
-        dispatch({
-          type: 'setIdentities',
-          identities: identitiesList,
-          blockchainTotalStake,
-        });
+        setIdentities(identitiesList);
       }
 
       setDataReady(success);
@@ -44,48 +35,44 @@ const Identities = () => {
   React.useEffect(fetchIdentities, []);
 
   return (
-    <div className="d-flex flex-column flex-fill" ref={ref}>
-      <NodesLayout>
-        <div className="card identities">
-          <div className="card-header">
-            <NodeTabs />
-          </div>
+    <div className="card identities" ref={ref}>
+      <div className="card-header">
+        <NodesTabs />
+      </div>
 
-          {dataReady === undefined && <Loader />}
-          {dataReady === false && (
-            <PageState
-              icon={faCogs}
-              title="Unable to load validators"
-              className="py-spacer my-auto"
-              dataTestId="errorScreen"
-            />
-          )}
-          {dataReady === true && (
-            <div className="card-body p-0">
-              <div className="table-wrapper">
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th className="th-rank">#</th>
-                      <th className="th-name">Validator Name</th>
-                      <th>Stake</th>
-                      <th className="th-stake-percent">Cumulative stake</th>
-                      <th className="w-10 text-right">Nodes</th>
-                      <th className="w-10 text-right">Score</th>
-                      <th className="th-details">&nbsp;</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {identities.map((identity, i) => (
-                      <IdentityRow key={i} rank={i + 1} identity={identity} />
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
+      {dataReady === undefined && <Loader />}
+      {dataReady === false && (
+        <PageState
+          icon={faCogs}
+          title="Unable to load validators"
+          className="py-spacer my-auto"
+          dataTestId="errorScreen"
+        />
+      )}
+      {dataReady === true && (
+        <div className="card-body p-0">
+          <div className="table-wrapper">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th className="th-rank">#</th>
+                  <th className="th-name">Name</th>
+                  <th>Stake</th>
+                  <th className="th-stake-percent">Cumulative stake</th>
+                  <th className="w-10 text-right">Nodes</th>
+                  {/* <th className="w-10 text-right">Score</th> */}
+                  <th className="th-details">&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody>
+                {identities.map((identity, i) => (
+                  <IdentityRow key={i} identity={identity} />
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </NodesLayout>
+      )}
     </div>
   );
 };

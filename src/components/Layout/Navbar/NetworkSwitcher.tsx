@@ -14,7 +14,7 @@ const NetworkUrl = ({ link, onClick }: { link: NetworkLinkType; onClick: () => v
   return (
     <Link
       className={`dropdown-item ${activeNetworkId === link.id ? 'active' : ''}`}
-      to={link.url}
+      to={`/${link.url}`}
       onClick={onClick}
     >
       {link.name}
@@ -62,7 +62,7 @@ export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void })
     <>
       <NavDropdown
         title={
-          <div className="nav-link-icon flex-fill pr-0 pl-md-1 ml-md-2" data-testid="networkSwitch">
+          <div className="nav-link-icon flex-fill pr-0 pl-lg-1 ml-lg-2" data-testid="networkSwitch">
             {activeNetwork.name}
             <FontAwesomeIcon className="d-inline-block ml-1" icon={faAngleDown} />
           </div>

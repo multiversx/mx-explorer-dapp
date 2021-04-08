@@ -1,6 +1,5 @@
 import BlocksTable from './BlocksTable';
 import Denominate from './Denominate';
-import Highlights from './Highlights';
 import Loader from './Loader';
 import Pager from './Pager';
 import PageState from './PageState';
@@ -23,10 +22,15 @@ import Trim from './Trim';
 import Led from './Led';
 import AxiosInterceptor from './AxiosInterceptor';
 import SharedIdentity from './SharedIdentity';
+import ProvidersTable from './ProvidersTable';
+import MultilayerPercentageBar from './MultilayerPercentageBar';
+import CardItem from './CardItem';
+import LatestItem from './LatestItem';
+import LockedAmountTooltip from './LockedAmountTooltip';
+import StatisticsChart from './StatisticsChart';
 
 export {
   Denominate,
-  Highlights,
   Pager,
   ScAddressIcon,
   NetworkLink,
@@ -51,4 +55,10 @@ export {
   Led,
   AxiosInterceptor,
   SharedIdentity,
+  ProvidersTable,
+  MultilayerPercentageBar,
+  CardItem,
+  LatestItem,
+  LockedAmountTooltip,
+  StatisticsChart,
 };

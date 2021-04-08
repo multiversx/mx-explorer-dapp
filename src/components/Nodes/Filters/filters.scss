@@ -1,0 +1,11 @@
+.nodes-filters {
+  .btn-pill {
+    font-size: 0.8125rem;
+  }
+
+  #more {
+    &:after {
+      vertical-align: 1px;
+    }
+  }
+}

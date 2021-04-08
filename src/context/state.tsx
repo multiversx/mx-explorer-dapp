@@ -1,6 +1,6 @@
 import { InferType } from 'yup';
 import config, { defaultNetwork, schema, adapterSchema, networkLink } from './config';
-import { storage } from 'helpers';
+import { storage, types } from 'helpers';
 
 export type NetworkLinkType = InferType<typeof networkLink>;
 export type NetworkType = InferType<typeof schema>;
@@ -18,49 +18,66 @@ export interface ShardType {
   activeValidators: number;
 }
 
+export interface NodesVersionsType {
+  name: string;
+  percent: number;
+}
+
 export interface GlobalStakeType {
-  activeValidators: number;
   queueSize: number;
-  totalStaked: string;
-  totalValidators: number;
+  staked: number;
+  apr?: number;
+  waitingList?: number;
+  deliquentStake?: number;
+  nodesVerions?: NodesVersionsType[];
 }
 
 export interface IdentityType {
   name: string;
   score: number;
-  stake: number;
+  stake: string;
+  locked: string;
   stakePercent: number;
-  overallStakePercent: number;
   validators: number;
+  rank?: number;
+  overallStakePercent?: number;
   twitter?: string;
   website?: string;
   location?: string;
   avatar?: string;
   identity?: string;
+  description?: string;
+  topUp?: string;
+  distribution?: any;
 }
 
 export interface NodeType {
-  publicKey: string;
-  peerType: 'waiting' | 'eligible' | 'new' | 'jailed' | 'leaving' | 'inactive';
-  nodeType: 'observer' | 'validator';
-  status: 'online' | 'offline';
-  identity: string;
-  versionNumber: string;
-  shard: number;
-  tempRating: number;
+  bls: string;
+  name: string;
+  type: 'observer' | 'validator';
+  status?: 'waiting' | 'eligible' | 'new' | 'jailed' | 'leaving' | 'inactive' | 'queued';
+  online: boolean;
   rating: number;
+  tempRating: number;
   ratingModifier: number;
+  shard: number;
   nonce: number;
-  numInstances: number;
-  totalUpTime?: number;
-  totalDownTime?: number;
-  totalUpTimeSec?: number;
-  totalDownTimeSec?: number;
-  nodeName?: string;
-  receivedShardID?: number;
-  timeStamp?: string;
-  computedShardID?: number;
+  instances: number;
+  version: string;
+  stake: string;
+  topUp: string;
+  uptime: number;
+  uptimeSec: number;
+  downtime: number;
+  downtimeSec: number;
+  locked: string;
+  topup: string;
+
   issues?: string[];
+  provider?: string;
+  identity?: string;
+  receivedShardID?: number;
+  computedShardID?: number;
 }
 
 export interface StateType {
@@ -73,11 +90,14 @@ export interface StateType {
     timestamp: number;
   };
   theme: string;
-  nodes: NodeType[];
-  identities: IdentityType[];
-  blockchainTotalStake: number;
   shards: ShardType[];
   globalStake: GlobalStakeType | undefined;
+  accountDetails: types.AccountType;
+  accountTokens: {
+    success: boolean | undefined;
+    data: types.TokenType[];
+  };
+  usd: number | undefined;
 }
 
 const initialState = (optionalConfig?: ConfigType): StateType => {
@@ -95,11 +115,20 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
       timestamp: Date.now(),
     },
     theme: getTheme(),
-    nodes: [],
-    identities: [],
-    blockchainTotalStake: 0,
     shards: [],
     globalStake: undefined,
+    accountTokens: {
+      success: undefined,
+      data: [],
+    },
+    accountDetails: {
+      address: '',
+      balance: '',
+      nonce: 0,
+      txCount: 0,
+      claimableRewards: '',
+    },
+    usd: undefined,
   };
 };
 

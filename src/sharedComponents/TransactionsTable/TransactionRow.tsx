@@ -1,4 +1,4 @@
-import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
+import { faArrowRight } from '@fortawesome/pro-regular-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { addressIsBech32, urlBuilder } from 'helpers';
@@ -64,7 +64,7 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
           >
             <ShardSpan shard={transaction.senderShard} />
           </NetworkLink>
-          <FontAwesomeIcon icon={faChevronRight} className="text-secondary mx-2" />
+          <FontAwesomeIcon icon={faArrowRight} className="text-secondary mx-2" />
           <NetworkLink
             to={urlBuilder.receiverShard(transaction.receiverShard)}
             data-testid="shardToLink"

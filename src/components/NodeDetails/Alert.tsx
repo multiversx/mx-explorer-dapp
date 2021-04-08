@@ -9,7 +9,7 @@ const Container = ({ children }: { children: React.ReactNode }) => <div>{childre
 
 const Alert = ({ node }: { node: NodeType }) => {
   switch (true) {
-    case node.peerType === 'jailed':
+    case node.status === 'jailed':
       return (
         <Container>
           <RowIcon node={node} small={true} />
@@ -23,11 +23,11 @@ const Alert = ({ node }: { node: NodeType }) => {
           <small className="text-warning mt-1">{nodeIssue(node)}</small>
         </Container>
       );
-    case node.status === 'offline':
+    case node.online === false:
       return (
         <Container>
           <FontAwesomeIcon icon={faExclamationTriangle} size="xs" className="text-warning mr-1" />
-          <small className={`mt-1 ${node.nodeType === 'observer' ? 'text-muted' : ''}`}>
+          <small className={`mt-1 ${node.type === 'observer' ? 'text-muted' : ''}`}>
             &nbsp;Offline
           </small>
         </Container>

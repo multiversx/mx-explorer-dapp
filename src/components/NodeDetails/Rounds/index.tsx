@@ -31,7 +31,7 @@ const Rounds = ({ rounds, node }: { rounds: RoundsType; node: NodeType }) => {
       {rounds.success === false && <RoundsPageState message={'Unable to load rounds'} />}
       {rounds.success === true && rounds.data && rounds.data.length === 0 && (
         <RoundsPageState
-          message={`${node.peerType === 'eligible' ? 'No rounds' : 'Validator not in consensus'}`}
+          message={`${node.status === 'eligible' ? 'No rounds' : 'Validator not in consensus'}`}
         />
       )}
 
@@ -45,9 +45,9 @@ const Rounds = ({ rounds, node }: { rounds: RoundsType; node: NodeType }) => {
           <div className="card-body px-lg-spacer">
             <div className="squares" data-testid="rounds">
               {rounds.data.length &&
-                rounds.data.map((round) => (
+                rounds.data.map((round, i) => (
                   <OverlayTrigger
-                    key={round.key}
+                    key={`roundkey-${i}`}
                     placement="top"
                     delay={{ show: 0, hide: 50 }}
                     overlay={(props: any) => (

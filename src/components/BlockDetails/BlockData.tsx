@@ -45,6 +45,12 @@ const BlockData = (props: BlockDataType) => {
 
   return (
     <div className="card">
+      <div className="card-header">
+        <div className="card-header-item d-flex align-items-center">
+          <h6 data-testid="title">Block Details</h6>
+        </div>
+      </div>
+
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Block Height">

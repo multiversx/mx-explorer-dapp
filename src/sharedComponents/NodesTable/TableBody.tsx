@@ -8,28 +8,31 @@ import RowIcon from './RowIcon';
 const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
   return (
     <tbody>
-      {nodes.map((node, index) => (
-        <tr key={node.publicKey}>
+      {nodes.map((nodeData, index) => (
+        <tr key={nodeData.bls}>
           <td>
             <div className="d-flex align-items-center">
-              <RowIcon node={node} />
-              <NetworkLink to={urlBuilder.nodeDetails(node.publicKey)} className="trim-wrapper">
-                <Trim text={node.publicKey} />
+              <RowIcon node={nodeData} />
+              <NetworkLink to={urlBuilder.nodeDetails(nodeData.bls)} className="trim-wrapper">
+                <Trim text={nodeData.bls} />
               </NetworkLink>
             </div>
           </td>
           <td>
-            {node.nodeName ? (
-              <div className="truncate-item-lg">{node.nodeName}</div>
+            {nodeData.name ? (
+              <div className="truncate-item-lg">{nodeData.name}</div>
             ) : (
               <span className="text-secondary">N/A</span>
             )}
           </td>
           <td>
             <div className="d-flex">
-              {node.shard !== undefined ? (
-                <NetworkLink to={urlBuilder.shard(node.shard)} data-testid={`shardLink${index}`}>
-                  <ShardSpan shard={node.shard} />
+              {nodeData.shard !== undefined ? (
+                <NetworkLink
+                  to={urlBuilder.shard(nodeData.shard)}
+                  data-testid={`shardLink${index}`}
+                >
+                  <ShardSpan shard={nodeData.shard} />
                 </NetworkLink>
               ) : (
                 <span className="text-secondary">N/A</span>
@@ -38,24 +41,26 @@ const NodesTable = ({ nodes }: { nodes: NodeType[] }) => {
           </td>
 
           <td>
-            {node.versionNumber ? node.versionNumber : <span className="text-secondary">N/A</span>}
+            {nodeData.version ? nodeData.version : <span className="text-secondary">N/A</span>}
           </td>
           <td className="text-right">
-            {node.totalUpTimeSec !== undefined && node.totalUpTimeSec !== 0 ? (
-              <span>{node.totalUpTime}%</span>
+            {nodeData.uptimeSec !== undefined && nodeData.uptimeSec !== 0 ? (
+              <span>{nodeData.uptime}%</span>
             ) : (
               <span className="text-secondary">N/A</span>
             )}
           </td>
           <td>
             <div className="d-flex align-items-center justify-content-end">
-              <Led color={node.status === 'online' ? 'bg-success' : 'bg-danger'} />
-              <span className="ml-2">{node.status === 'online' ? 'Online' : 'Offline'}</span>
+              <Led color={nodeData.online ? 'bg-success' : 'bg-danger'} />
+              <span className={`ml-2 ${nodeData.online ? 'text-success' : 'text-danger'}`}>
+                {nodeData.online ? 'online' : 'offline'}
+              </span>
             </div>
           </td>
           <td className="text-right">
-            {!isNaN(node.tempRating) ? (
-              Math.floor(node.tempRating)
+            {!isNaN(nodeData.tempRating) ? (
+              Math.floor(nodeData.tempRating)
             ) : (
               <span className="text-secondary">N/A</span>
             )}

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useGlobalState } from 'context';
 import { IdentityType, NodeType } from 'context/state';
 import carretDown from 'assets/images/carret-down.svg';
 import {
@@ -10,6 +9,7 @@ import {
   PageState,
   NodesTable,
   SharedIdentity,
+  Denominate,
 } from 'sharedComponents';
 import PercentegeBar from './PercentegeBar';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
@@ -17,10 +17,9 @@ import { urlBuilder } from 'helpers';
 
 export interface IdentityRowType {
   identity: IdentityType;
-  rank: number;
 }
 
-const IdentityRow = ({ identity, rank }: IdentityRowType) => {
+const IdentityRow = ({ identity }: IdentityRowType) => {
   const ref = React.useRef(null);
   const [collapsed, setCollapsed] = React.useState(true);
   const [showDetails, setShowDetails] = React.useState(false);
@@ -28,23 +27,21 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
   const [identityNodes, setIdentityNodes] = React.useState<NodeType[]>([]);
   const { getNodes, getNode } = adapter();
 
-  const {
-    activeNetwork: { erdLabel },
-  } = useGlobalState();
-
-  const expand = (node: IdentityType) => () => {
+  const expand = (identityRow: IdentityType) => () => {
     if (dataReady === undefined) {
-      if (node.identity) {
-        getNodes({ identity: node.identity, size: node.validators, pagination: false }).then(
-          (nodes) => {
-            if (ref.current !== null) {
-              setDataReady(nodes.success);
-              setIdentityNodes(nodes.data);
-            }
+      if (identityRow.identity) {
+        getNodes({
+          identity: identityRow.identity,
+          size: 1500,
+          pagination: false,
+        }).then((nodes) => {
+          if (ref.current !== null) {
+            setDataReady(nodes.success);
+            setIdentityNodes(nodes.data);
           }
-        );
+        });
       } else {
-        getNode(node.name).then((node) => {
+        getNode(identityRow.name).then((node) => {
           if (ref.current !== null) {
             setDataReady(node.success);
             setIdentityNodes([node.data]);
@@ -60,6 +57,9 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
     ? urlBuilder.identityDetails(identity.identity)
     : urlBuilder.nodeDetails(identity.name);
 
+  const stakePercentLabel =
+    Math.round(identity.stakePercent) > 0 ? `${Math.round(identity.stakePercent)}%` : '< 1 %';
+
   return (
     <>
       <tr
@@ -67,7 +67,7 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
         className={`identity-row ${collapsed ? 'collapsed' : ''}`}
         ref={ref}
       >
-        <td>{rank}</td>
+        <td>{identity.rank}</td>
         <td>
           <div className="d-flex align-items-center">
             <div className="mr-3">
@@ -86,32 +86,29 @@ const IdentityRow = ({ identity, rank }: IdentityRowType) => {
         </td>
 
         <td>
-          {identity.stake.toLocaleString('en')} {erdLabel}
+          <Denominate value={identity.locked} />
         </td>
         <td className="stake-bar-col">
           <div className="d-flex align-items-center">
             <div className="bar">
               <PercentegeBar
-                totalUpTimeLabel={Math.round(identity.overallStakePercent) + '%'}
-                totalUpTimePercentege={identity.overallStakePercent}
-                totalDownTimeLabel={Math.round(identity.stakePercent) + '%'}
-                totalDownTimePercentege={identity.stakePercent}
+                overallPercent={identity.overallStakePercent || 0}
+                fillPercent={identity.stakePercent}
+                fillPercentLabel={stakePercentLabel}
               />
             </div>
-            <div className="ml-3">
-              {Math.round(identity.stakePercent) > 0 ? Math.round(identity.stakePercent) : '< 1'}%
-            </div>
+            <div className="ml-3">{stakePercentLabel}</div>
           </div>
         </td>
         <td className="text-right">{identity.validators.toLocaleString('en')}</td>
-        <td className="text-right">{Math.round(identity.score).toLocaleString('en')}</td>
+        {/* <td className="text-right">{Math.round(identity.score).toLocaleString('en')}</td> */}
         <td className="text-right">
           <img src={carretDown} className="details-arrow" alt="details-arrow" height="8" />
         </td>
       </tr>
       {showDetails && (
         <tr className={`identity-details-row ${collapsed ? 'collapsed' : ''}`}>
-          <td colSpan={7} className="p-0">
+          <td colSpan={6} className="p-0">
             <div className="content">
               {dataReady === undefined && (
                 <div className="py-4">

@@ -3,16 +3,17 @@ import useDebounce from './useDebounce';
 
 interface TrimType {
   text: string;
+  color?: 'muted' | 'secondary';
   dataTestId?: string;
 }
 
-const Trim = ({ text, dataTestId = '' }: TrimType) => {
+const Trim = ({ text, dataTestId = '', color }: TrimType) => {
   const [debounce, setDebounce] = React.useState(0);
-  const [overflow, setOverflow] = React.useState(false);
-  const wrapperRef = React.useRef(document.createElement('span'));
-  const childRef = React.useRef(document.createElement('span'));
 
-  const debounceTracker = useDebounce(debounce, 100);
+  const [overflow, setOverflow] = React.useState(false);
+  const trimRef = React.useRef(document.createElement('span'));
+  const hiddenTextRef = React.useRef(document.createElement('span'));
+  const debounceTracker = useDebounce(debounce, 300);
 
   const listener = () => {
     setDebounce(debounce + 1);
@@ -28,21 +29,31 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
   React.useEffect(effect, [debounce]);
 
   React.useEffect(() => {
-    if (childRef.current && wrapperRef.current) {
-      const diff = childRef.current.offsetWidth - wrapperRef.current.offsetWidth;
+    if (trimRef.current && hiddenTextRef.current) {
+      const diff = hiddenTextRef.current.offsetWidth - trimRef.current.offsetWidth;
       setOverflow(diff > 1);
     }
   }, [debounceTracker]);
 
   return (
-    <span className={`trim ${overflow ? 'overflow' : ''}`} data-testid={dataTestId}>
-      <span className="left" ref={wrapperRef}>
-        <span ref={childRef}>{String(text).substring(0, Math.floor(text.length / 2))}</span>
+    <span ref={trimRef} className={`trim ${color ? color : ''} ${overflow ? 'overflow' : ''}`}>
+      <span ref={hiddenTextRef} className="hidden-text-ref" data-testid={dataTestId}>
+        {text}
       </span>
-      <span className="ellipsis">...</span>
-      <span className="right">
-        <span>{String(text).substring(Math.ceil(text.length / 2))}</span>
-      </span>
+
+      {overflow ? (
+        <>
+          <span className="left">
+            <span>{String(text).substring(0, Math.floor(text.length / 2))}</span>
+          </span>
+          <span className="ellipsis">...</span>
+          <span className="right">
+            <span>{String(text).substring(Math.ceil(text.length / 2))}</span>
+          </span>
+        </>
+      ) : (
+        <>{text}</>
+      )}
     </span>
   );
 };

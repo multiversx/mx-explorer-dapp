@@ -41,6 +41,22 @@
       }
     }
   }
+
+  .nav-links {
+    .nav-link {
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      border-top: 0.25rem solid transparent;
+      border-bottom: 0.25rem solid transparent;
+      color: $secondary;
+
+      &.active {
+        color: $primary;
+        border-bottom-color: $primary;
+      }
+    }
+  }
 }
 
 .main-navbar,

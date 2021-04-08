@@ -1,8 +1,8 @@
 export interface GetNodesType {
   search?: string;
   issues?: string;
-  peerType?: string;
-  nodeType?: string;
+  online?: boolean;
+  type?: string;
   shard?: string;
   status?: string;
   count?: boolean;
@@ -11,6 +11,12 @@ export interface GetNodesType {
   sort?: string;
   order?: string;
   pagination?: boolean;
+  provider?: string;
+}
+
+export interface GetProvidersType {
+  identity?: string;
+  fields?: string;
 }
 
 export interface ProviderPropsType {
@@ -26,7 +32,7 @@ export interface ProviderPropsType {
     miniBlockHash?: string;
     sender?: string;
     receiver?: string;
-    condition?: 'should' | 'must';
+    condition?: string;
     senderShard?: number;
     receiverShard?: number;
     signersIndexes?: number;
@@ -35,14 +41,16 @@ export interface ProviderPropsType {
     size?: number;
     search?: string;
     issues?: string;
-    peerType?: string;
-    nodeType?: string;
     status?: string;
+    type?: string;
     validator?: string;
     fields?: any;
     identity?: string;
+    identities?: string;
+    provider?: string;
     sort?: string;
     order?: string;
+    online?: boolean;
   };
   timeout: number;
 }
@@ -52,6 +60,7 @@ export const getAccountParams = (address?: string) =>
     ? {
         sender: address,
         receiver: address,
+        condition: 'should',
       }
     : {};
 
@@ -92,26 +101,28 @@ export function getTransactionsParams({
 }
 
 export function getNodeParams({
-  peerType,
+  type,
+  status,
   issues,
   search,
-  nodeType,
   shard,
-  status,
+  online,
   size,
   identity,
   pagination = true,
   sort,
   order,
+  provider,
 }: GetNodesType) {
   const params: ProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
-    ...(peerType !== undefined ? { peerType } : {}),
-    ...(issues !== undefined ? { issues } : {}),
-    ...(nodeType !== undefined ? { nodeType } : {}),
-    ...(shard !== undefined ? { shard: parseInt(shard) } : {}),
+    ...(type !== undefined ? { type } : {}),
     ...(status !== undefined ? { status } : {}),
+    ...(issues !== undefined ? { issues } : {}),
+    ...(shard !== undefined ? { shard: parseInt(shard) } : {}),
+    ...(online !== undefined ? { online } : {}),
     ...(identity !== undefined ? { identity } : {}),
+    ...(provider !== undefined ? { provider } : {}),
     ...(sort !== undefined ? { sort } : {}),
     ...(order !== undefined ? { order } : {}),
     ...(size !== undefined ? (pagination ? { from: (size - 1) * 25, size: 25 } : { size }) : {}),
@@ -120,21 +131,32 @@ export function getNodeParams({
   return params;
 }
 
-export const getShardOrEpochParam = (shard: number | undefined, epoch: number | undefined) => {
-  switch (true) {
-    case shard !== undefined:
-      return { shard };
-    case epoch !== undefined:
-      return { epoch };
-    default:
-      return {};
+export function getProviderParams({ identity }: GetProvidersType) {
+  const params: ProviderPropsType['params'] = {
+    ...(identity !== undefined ? { identity } : {}),
+  };
+
+  return params;
+}
+
+export const getShardAndEpochParam = (shard: number | undefined, epoch: number | undefined) => {
+  let result = {};
+
+  if (shard !== undefined) {
+    result = { ...result, shard };
   }
+
+  if (epoch !== undefined) {
+    result = { ...result, epoch };
+  }
+
+  return result;
 };
 
 export interface GetBlocksType {
   size?: number;
   shard?: number;
-  epochId?: number;
+  epoch?: number;
   proposer?: string;
 }
 

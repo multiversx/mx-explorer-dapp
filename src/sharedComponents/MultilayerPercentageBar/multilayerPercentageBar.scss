@@ -1,0 +1,32 @@
+.multilayer-percentage-bar {
+  .progress,
+  .progress-bar {
+    height: 1.5rem !important;
+  }
+
+  .step-1 {
+    background-color: $primary;
+  }
+
+  .step-2 {
+    background-color: lighten($primary, 10%);;
+  }
+
+  &.two-items {
+    .step-2 {
+      background-color: lighten($primary, 20%);;
+    } 
+  }
+
+  .step-3 {
+    background-color: lighten($primary, 20%);
+  }
+
+  .step-4 {
+    background-color: lighten($primary, 30%);
+  }
+
+  .step-5 {
+    background-color: lighten($primary, 40%);
+  }
+}

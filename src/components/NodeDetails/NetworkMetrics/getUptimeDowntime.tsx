@@ -2,17 +2,13 @@ import moment from 'moment';
 import { NodeType } from 'context/state';
 
 export default function getUptimeDowntime(node: NodeType) {
-  const totalUpTimeLabel = node.totalUpTime
-    ? `${node.totalUpTime.toFixed(2)}% (${moment
-        .duration({ seconds: node.totalUpTimeSec })
-        .humanize()})`
+  const uptimeLabel = node.uptime
+    ? `${node.uptime.toFixed(2)}% (${moment.duration({ seconds: node.uptimeSec }).humanize()})`
     : '';
 
-  const totalDownTimeLabel = node.totalDownTime
-    ? `${node.totalDownTime.toFixed(2)} (${moment
-        .duration({ seconds: node.totalDownTimeSec })
-        .humanize()})%`
+  const downtimeLabel = node.downtime
+    ? `${node.downtime.toFixed(2)} (${moment.duration({ seconds: node.downtimeSec }).humanize()})%`
     : '';
 
-  return { totalUpTimeLabel, totalDownTimeLabel };
+  return { uptimeLabel, downtimeLabel };
 }

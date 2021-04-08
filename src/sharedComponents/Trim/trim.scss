@@ -2,6 +2,8 @@
   display: flex;
   max-width: 100%;
   overflow: hidden;
+  position: relative;
+  white-space: nowrap;
 
   &.overflow {
     .ellipsis {
@@ -33,11 +35,29 @@
   .right span {
     color: $body;
     font-size: 1rem;
+    pointer-events: none;
+    user-select: none;
   }
 
   .ellipsis {
     flex-shrink: 0;
     display: none;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  &.secondary {
+    .left span,
+    .right span {
+      color: $secondary;
+    }
+  }
+
+  &.muted {
+    .left span,
+    .right span {
+      color: $muted;
+    }
   }
 
   /* IE fix */
@@ -55,6 +75,12 @@
       }
     }
   }
+
+  .hidden-text-ref {
+    position: absolute;
+    display: block;
+    color: transparent;
+  }
 }
 
 .trim-wrapper {
@@ -65,10 +91,16 @@
 
 a:hover > .trim span {
   color: $link-hover-color !important;
+  &.hidden-text-ref {
+    color: transparent !important;
+  }
 }
 
 a > .trim span {
   color: $primary !important;
+  &.hidden-text-ref {
+    color: transparent !important;
+  }
 }
 
 .table .trim {
@@ -88,5 +120,11 @@ a > .trim span {
   .right span,
   .ellipsis {
     font-size: 0.8125rem;
+  }
+}
+
+.table .trim-size-xl .trim {
+  @include media-breakpoint-up(md) {
+    max-width: 13rem;
   }
 }

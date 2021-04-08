@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { PageState } from 'sharedComponents';
 
 const EmptySearch = () => {
-  const { query } = useParams() as any;
+  const { hash: query } = useParams() as any;
 
   return (
     <PageState

@@ -48,7 +48,7 @@ const Tokens = () => {
 
       <div ref={ref}>
         {dataReady === true && (
-          <div className="container pt-spacer">
+          <div className="container page-content">
             <div className="row page-header">
               <div className="col-12">
                 <h3 className="page-title mb-4">
@@ -110,7 +110,7 @@ const Tokens = () => {
                         </div>
                       </div>
 
-                      <div className="card-footer">
+                      <div className="card-footer d-flex justify-content-end">
                         <Pager
                           page={String(page)}
                           total={totalTokens !== '...' ? Math.min(totalTokens, 10000) : totalTokens}

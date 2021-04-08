@@ -5,11 +5,11 @@
 
   .th-details,
   .th-rank {
-    min-width: 12px;
+    min-width: 1rem;
   }
 
   .th-stake-percent {
-    width: 260px;
+    width: 18.5rem;
   }
 
   .identity-row {
@@ -27,16 +27,28 @@
     }
 
     .stake-bar-col {
+      .progress {
+        margin: 0 !important;
+        background-color: lighten($muted, 10%);
+        height: 1rem;
+        border-radius: 0.2rem;
+
+        .progress-bar {
+          height: 100%;
+        }
+      }
+
       .bar {
         width: 10.32rem;
       }
 
       .bg-success {
-        background-color: $primary-accent !important;
+        background-color: $primary-light !important;
       }
 
       .bg-danger {
         background-color: $primary !important;
+        min-width: 2px;
       }
     }
   }
@@ -82,20 +94,5 @@
         }
       }
     }
-  }
-}
-
-.identity-header-item {
-  @extend .px-3;
-  @extend .px-lg-0;
-
-  display: flex;
-  align-items: center;
-  padding-top: 1.2rem;
-  padding-bottom: 1.2rem;
-
-  @include media-breakpoint-up(lg) {
-    padding-top: 0.45rem;
-    padding-bottom: 0.45rem;
   }
 }

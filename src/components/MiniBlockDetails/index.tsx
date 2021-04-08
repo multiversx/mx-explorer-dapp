@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { isHash, useNetworkRoute, urlBuilder } from 'helpers';
+import { isHash, useNetworkRoute, urlBuilder, useSize } from 'helpers';
 import { Redirect, useParams } from 'react-router-dom';
 import {
   Loader,
@@ -27,7 +27,9 @@ interface MiniBlockType {
 }
 
 const MiniBlockDetails = () => {
-  const { page, hash: miniBlockHash } = useParams() as any;
+  const { hash: miniBlockHash } = useParams() as any;
+  const { size } = useSize();
+
   const ref = React.useRef(null);
   const networkRoute = useNetworkRoute();
 
@@ -41,8 +43,6 @@ const MiniBlockDetails = () => {
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
-
-  const size = parseInt(page!) ? parseInt(page!) : 1;
 
   const invalid = miniBlockHash && !isHash(miniBlockHash);
 
@@ -87,19 +87,18 @@ const MiniBlockDetails = () => {
 
       <div ref={ref}>
         {miniBlockFetched && miniBlock && (
-          <div className="container pt-spacer">
-            <div className="row page-header">
-              <div className="col-12">
-                <h3 className="page-title mb-4" data-testid="pageTitle">
-                  Miniblock Details
-                </h3>
-              </div>
-            </div>
+          <div className="container page-content">
             <div className="row">
               <div className="col-12">
                 <div className="row">
                   <div className="col-12">
                     <div className="card">
+                      <div className="card-header">
+                        <div className="card-header-item">
+                          <h6 data-testid="pageTitle">Miniblock Details</h6>
+                        </div>
+                      </div>
+
                       <div className="card-body p-0">
                         <div className="container-fluid">
                           <DetailItem title="Miniblock Hash">
@@ -169,7 +168,6 @@ const MiniBlockDetails = () => {
                         address={undefined}
                         totalTransactions={totalTransactions}
                         size={size}
-                        title={true}
                       />
                     ) : (
                       <div className="card">

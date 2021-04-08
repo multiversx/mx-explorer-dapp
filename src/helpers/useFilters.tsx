@@ -5,10 +5,10 @@ export default function useGetFilters() {
   const { search: urlSearch } = useLocation();
   const urlParams = new URLSearchParams(urlSearch);
   const {
-    status,
+    online,
     search,
-    peerType,
-    nodeType,
+    status,
+    type,
     issues,
     shard,
     identity,
@@ -21,9 +21,9 @@ export default function useGetFilters() {
 
   const getQueryObject = () => ({
     ...(search ? { search } : {}),
+    ...(online ? { online: online === 'true' } : {}),
     ...(status ? { status } : {}),
-    ...(peerType ? { peerType } : {}),
-    ...(nodeType ? { nodeType } : {}),
+    ...(type ? { type } : {}),
     ...(identity ? { identity } : {}),
     ...(sort ? { sort } : {}),
     ...(order ? { order } : {}),
