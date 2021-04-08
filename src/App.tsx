@@ -22,8 +22,9 @@ export const Routes = ({
 
   const restrictedRoutes = routes.filter(({ path }) => {
     if (
-      !isMainnet &&
-      [validatorsRoutes.identities, validatorsRoutes.identityDetails].includes(path)
+      (!isMainnet &&
+        [validatorsRoutes.identities, validatorsRoutes.identityDetails].includes(path)) ||
+      (activeNetwork.adapter === 'elastic' && Object.values(validatorsRoutes).includes(path))
     ) {
       return false;
     }

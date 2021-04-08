@@ -57,7 +57,7 @@ const Providers = () => {
                 }
 
                 setProviders(newProvidersData);
-                setDataReady(providersData.success && identitiesData.success);
+                setDataReady(providersData.success);
               }
             });
           } else {
