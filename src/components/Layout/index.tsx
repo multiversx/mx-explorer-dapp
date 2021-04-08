@@ -6,8 +6,15 @@ import { Search } from 'sharedComponents';
 import Unavailable from './Unavailable';
 import PageLayout from './PageLayout';
 import GlobalStatsCard from './GlobalStatsCard';
+import ElasticGlobalStatsCard from './ElasticGlobalStatsCard';
 import Routes, { validatorsRoutes, searchRoutes } from 'routes';
-import { useFetchPrice, useNetworkRouter, useLoopManager, useActiveRoute } from 'helpers';
+import {
+  useFetchPrice,
+  useNetworkRouter,
+  useLoopManager,
+  useActiveRoute,
+  useIsMainnet,
+} from 'helpers';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const {
@@ -15,6 +22,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     config: { elrondApps },
   } = useGlobalState();
   const activeRoute = useActiveRoute();
+  const isMainnet = useIsMainnet();
 
   const showGlobalStats = () => {
     let show = true;
@@ -107,7 +115,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
                 {showGlobalStats() && (
                   <div className="container mb-spacer">
-                    <GlobalStatsCard />
+                    <>{isMainnet ? <GlobalStatsCard /> : <ElasticGlobalStatsCard />}</>
                   </div>
                 )}
 
