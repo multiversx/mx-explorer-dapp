@@ -8,38 +8,41 @@ import StakingChart from './StakingChart';
 import TransactionsChart from './TransactionsChart';
 import AccountsChart from './AccountsChart';
 import { useIsMainnet } from 'helpers';
+import GlobalStatsCard from 'components/Layout/GlobalStatsCard';
 
 const Home = () => {
   const isMainnet = useIsMainnet();
 
   return (
     <div className="home page-content container">
-      <div className="row">
-        <div className="col-12 mx-auto col-lg-6">
-          <NetworkHealth />
-        </div>
-        {isMainnet && (
-          <div className="col-12 col-lg-6 mt-spacer mt-lg-0">
-            <ValidatorsStatus />
+      {isMainnet ? (
+        <>
+          <div className="row">
+            <div className="col-12 mx-auto col-lg-6">
+              <NetworkHealth />
+            </div>
+            <div className="col-12 col-lg-6 mt-spacer mt-lg-0">
+              <ValidatorsStatus />
+            </div>
           </div>
-        )}
-      </div>
 
-      {isMainnet && (
-        <div className="row">
-          <div className="col-12 col-lg-6 mt-spacer">
-            <PriceChart />
+          <div className="row">
+            <div className="col-12 col-lg-6 mt-spacer">
+              <PriceChart />
+            </div>
+            <div className="col-12 col-lg-6 mt-spacer">
+              <StakingChart />
+            </div>
+            <div className="col-12 col-lg-6 mt-spacer">
+              <TransactionsChart />
+            </div>
+            <div className="col-12 col-lg-6 mt-spacer">
+              <AccountsChart />
+            </div>
           </div>
-          <div className="col-12 col-lg-6 mt-spacer">
-            <StakingChart />
-          </div>
-          <div className="col-12 col-lg-6 mt-spacer">
-            <TransactionsChart />
-          </div>
-          <div className="col-12 col-lg-6 mt-spacer">
-            <AccountsChart />
-          </div>
-        </div>
+        </>
+      ) : (
+        <GlobalStatsCard />
       )}
 
       <div className="row">

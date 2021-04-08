@@ -64,9 +64,9 @@ const GlobalStatsCard = () => {
   React.useEffect(getData, [activeNetworkId]);
 
   return (
-    <div ref={ref} className="container global-stats-card">
+    <div ref={ref} className="global-stats-card">
       <div className="row">
-        <div className="col mb-spacer">
+        <div className="col">
           <div className="card d-flex flex-column flex-lg-row flex-wrap py-4 px-3 px-lg-spacer">
             <div className="card-body p-0 d-flex flex-column flex-lg-row">
               <div className="d-flex align-items-center justify-content-center">
