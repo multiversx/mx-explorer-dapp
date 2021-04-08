@@ -44,23 +44,19 @@ const GlobalStatsCard = () => {
               </div>
               <div className="card-item-container w-100">
                 <CardItem className="lg title-bold" title="Shards" icon={faLayerGroup}>
-                  {data.shards !== '...' ? parseInt(data.shards).toLocaleString('en') : data.shards}
+                  {data.shards}
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Blocks" icon={faCube}>
-                  {data.blocks !== '...' ? parseInt(data.blocks).toLocaleString('en') : data.blocks}
+                  {data.blocks}
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Accounts" icon={faUser}>
-                  {data.accounts !== '...'
-                    ? parseInt(data.accounts).toLocaleString('en')
-                    : data.accounts}
+                  {data.accounts}
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Transactions" icon={faExchangeAlt}>
-                  {data.transactions !== '...'
-                    ? parseInt(data.transactions).toLocaleString('en')
-                    : data.transactions}
+                  {data.transactions}
                 </CardItem>
               </div>
             </div>
