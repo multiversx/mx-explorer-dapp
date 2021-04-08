@@ -3,7 +3,7 @@ import { useGlobalState } from 'context';
 import ShardCard from './ShardCard';
 import { GlobalStakeType, ShardType } from 'context/state';
 import { PageState } from 'sharedComponents';
-import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
+import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 
 const StakingQueueCard = ({ globalStake }: { globalStake: GlobalStakeType | undefined }) => {
   return (
