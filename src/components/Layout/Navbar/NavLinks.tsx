@@ -74,23 +74,25 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
         Accounts
       </NetworkLink>
 
-      <NetworkLink
-        className={`nav-link ${
-          activeRoute(validatorsRoutes.identities) ||
-          activeRoute(validatorsRoutes.identityDetails) ||
-          activeRoute(validatorsRoutes.providers) ||
-          activeRoute(validatorsRoutes.providerDetails) ||
-          activeRoute(validatorsRoutes.providerTransactions) ||
-          activeRoute(validatorsRoutes.nodes) ||
-          activeRoute(validatorsRoutes.nodeDetails)
-            ? 'active'
-            : ''
-        }`}
-        to={isMainnet ? validatorsRoutes.identities : validatorsRoutes.nodes}
-        onClick={() => onToggle(false)}
-      >
-        Validators
-      </NetworkLink>
+      {activeNetwork.adapter === 'api' && (
+        <NetworkLink
+          className={`nav-link ${
+            activeRoute(validatorsRoutes.identities) ||
+            activeRoute(validatorsRoutes.identityDetails) ||
+            activeRoute(validatorsRoutes.providers) ||
+            activeRoute(validatorsRoutes.providerDetails) ||
+            activeRoute(validatorsRoutes.providerTransactions) ||
+            activeRoute(validatorsRoutes.nodes) ||
+            activeRoute(validatorsRoutes.nodeDetails)
+              ? 'active'
+              : ''
+          }`}
+          to={isMainnet ? validatorsRoutes.identities : validatorsRoutes.nodes}
+          onClick={() => onToggle(false)}
+        >
+          Validators
+        </NetworkLink>
+      )}
 
       {activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api' && (
         <NetworkLink
