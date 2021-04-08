@@ -105,7 +105,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   </div>
                 </div>
 
-                {showGlobalStats() && <GlobalStatsCard />}
+                {showGlobalStats() && (
+                  <div className="container mb-spacer">
+                    <GlobalStatsCard />
+                  </div>
+                )}
 
                 <div className="page-container" data-testid="mainPageContent">
                   <PageLayout>{children}</PageLayout>
