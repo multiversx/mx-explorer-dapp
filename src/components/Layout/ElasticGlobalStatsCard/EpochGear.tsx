@@ -11,11 +11,11 @@ const EpochGear = ({ stats }: { stats: typeof initialStats }) => {
   const play = !pageHidden;
 
   const [nextEpoch, setNextEpoch] = React.useState<any>();
-  // const [hours, setHours] = React.useState('0');
-  // const [minutes, setMinutes] = React.useState('0');
+  const [hours, setHours] = React.useState('0');
+  const [minutes, setMinutes] = React.useState('0');
+  const [seconds, setSeconds] = React.useState('0');
   const [epochDurationSec, setEpochDurationSec] = React.useState(0);
   const [percentRemaining, setPercentRemaining] = React.useState(0);
-  const [roundsLeft, setRoundsLeft] = React.useState<number | undefined>();
 
   const init = () => {
     if (stats.epoch !== '...') {
@@ -25,7 +25,6 @@ const EpochGear = ({ stats }: { stats: typeof initialStats }) => {
       if (ref.current !== null) {
         setNextEpoch(nextEpochDate);
         setEpochDurationSec(6 * stats.roundsPerEpoch);
-        setRoundsLeft(stats.roundsPerEpoch - stats.roundsPassed);
       }
     }
   };
@@ -36,7 +35,6 @@ const EpochGear = ({ stats }: { stats: typeof initialStats }) => {
 
     if (ref.current !== null) {
       setNextEpoch(nextEpochDate);
-      setRoundsLeft(roundsPerEpoch);
     }
   };
 
@@ -44,21 +42,21 @@ const EpochGear = ({ stats }: { stats: typeof initialStats }) => {
 
   const calculate = () => {
     const now: any = moment();
-    // const diff = moment(nextEpoch).diff(now);
+    const diff = moment(nextEpoch).diff(now);
 
-    // const hours = moment.utc(diff).format('H');
-    // const minutes = moment.utc(diff).format('mm');
+    const hours = moment.utc(diff).format('H');
+    const minutes = moment.utc(diff).format('mm');
+    const seconds = moment.utc(diff).format('ss');
     const percentRemaining = ((nextEpoch.unix() - now.unix()) * 100) / epochDurationSec;
 
     if (ref.current !== null) {
-      // setHours(hours);
-      // setMinutes(minutes);
-
       if (percentRemaining <= 0) {
         hardReset(stats.roundsPerEpoch);
       } else {
+        setHours(hours);
+        setMinutes(minutes);
+        setSeconds(seconds);
         setPercentRemaining(100 - percentRemaining);
-        setRoundsLeft((roundsLeft) => (roundsLeft && roundsLeft > 0 ? roundsLeft - 1 : roundsLeft));
       }
     }
   };
@@ -66,7 +64,7 @@ const EpochGear = ({ stats }: { stats: typeof initialStats }) => {
   const mount = () => {
     if (nextEpoch) {
       calculate();
-      const interval = setInterval(calculate, 6000);
+      const interval = setInterval(calculate, 1000);
       return () => {
         clearInterval(interval);
       };
@@ -85,12 +83,17 @@ const EpochGear = ({ stats }: { stats: typeof initialStats }) => {
         </div>
         <div className="gear-content">
           <ProgressRing progress={percentRemaining} />
-          <span className="mt-1 pt-2">{nextEpoch ? <>Epoch {stats.epoch}</> : <>...</>}</span>
-          {roundsLeft !== undefined && (
-            <small className="text-secondary">
-              {roundsLeft.toLocaleString('en')} Rounds <br /> Left
-            </small>
-          )}
+          <span className="mt-1 pt-2">
+            {nextEpoch ? (
+              <>
+                {hours}h {minutes}m {seconds}s
+              </>
+            ) : (
+              <>...</>
+            )}
+          </span>
+
+          {nextEpoch !== undefined && <small className="text-secondary">Epoch {stats.epoch}</small>}
         </div>
       </div>
     </div>
