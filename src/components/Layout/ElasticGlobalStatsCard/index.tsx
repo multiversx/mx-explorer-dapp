@@ -4,7 +4,7 @@ import { faExchangeAlt } from '@fortawesome/pro-solid-svg-icons/faExchangeAlt';
 import { faCube } from '@fortawesome/pro-solid-svg-icons/faCube';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 import { useGlobalState } from 'context';
-import EpochGear from 'components/Layout/GlobalStatsCard/EpochGear';
+import EpochGear from 'components/Layout/ElasticGlobalStatsCard/EpochGear';
 import { adapter, CardItem } from 'sharedComponents';
 
 import { processStats } from 'helpers';
