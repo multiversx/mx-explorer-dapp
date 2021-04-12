@@ -111,7 +111,7 @@ const EpochGear = ({ stats, showTime }: { stats: typeof initialStats; showTime?:
           ) : (
             <>
               <span className="mt-2 pt-2">
-                {nextEpoch ? <>Epoch {stats.epoch + resetCount}</> : <>...</>}
+                {nextEpoch ? <>Epoch {parseInt(stats.epoch) + resetCount}</> : <>...</>}
               </span>
               {roundsLeft !== undefined && (
                 <small className="text-secondary">
