@@ -4,7 +4,7 @@ import { faExchangeAlt } from '@fortawesome/pro-solid-svg-icons/faExchangeAlt';
 import { faCube } from '@fortawesome/pro-solid-svg-icons/faCube';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 import { useGlobalState } from 'context';
-import EpochGear from 'components/Layout/ElasticGlobalStatsCard/EpochGear';
+import EpochGear from 'components/Layout/GlobalStatsCard/EpochGear';
 import { adapter, CardItem } from 'sharedComponents';
 
 import { processStats } from 'helpers';
@@ -14,7 +14,7 @@ const initialState = {
   ...initialStats,
 };
 
-const GlobalStatsCard = () => {
+const TestnetGlobalStatsCard = () => {
   const ref = React.useRef(null);
   const { activeNetworkId } = useGlobalState();
   const { getStats } = adapter();
@@ -40,7 +40,7 @@ const GlobalStatsCard = () => {
           <div className="card d-flex flex-column flex-lg-row flex-wrap py-4 px-3 px-lg-spacer">
             <div className="card-body p-0 d-flex flex-column flex-lg-row">
               <div className="d-flex align-items-center justify-content-center">
-                <EpochGear stats={data} />
+                <EpochGear stats={data} showTime />
               </div>
               <div className="card-item-container w-100">
                 <CardItem className="lg title-bold" title="Shards" icon={faLayerGroup}>
@@ -67,4 +67,4 @@ const GlobalStatsCard = () => {
   );
 };
 
-export default GlobalStatsCard;
+export default TestnetGlobalStatsCard;
