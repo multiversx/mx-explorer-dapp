@@ -85,7 +85,6 @@ const EpochGear = ({ stats, showTime }: { stats: typeof initialStats; showTime?:
 
   const timeLabel = nextEpoch ? `${hours}h ${minutes}m ${seconds}s` : '...';
   const epochLabel = nextEpoch ? `Epoch ${parseInt(stats.epoch) + resetCount}` : '...';
-  const roundsLeftLabel = roundsLeft ? `${roundsLeft.toLocaleString('en')}` : '...';
 
   return (
     <div className="ml-lg-2 mr-lg-4 pr-lg-3 mb-4 mb-lg-0" ref={ref}>
@@ -105,7 +104,13 @@ const EpochGear = ({ stats, showTime }: { stats: typeof initialStats; showTime?:
             <>
               <span className="mt-2 pt-2">{epochLabel}</span>
               <small className="text-secondary">
-                {roundsLeftLabel} Rounds <br /> Left
+                {roundsLeft ? (
+                  <>
+                    {roundsLeft.toLocaleString('en')} Rounds <br /> Left
+                  </>
+                ) : (
+                  '...'
+                )}
               </small>
             </>
           )}
