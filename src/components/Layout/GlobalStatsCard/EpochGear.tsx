@@ -83,6 +83,10 @@ const EpochGear = ({ stats, showTime }: { stats: typeof initialStats; showTime?:
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(mount, [nextEpoch]);
 
+  const timeLabel = nextEpoch ? `${hours}h ${minutes}m ${seconds}s` : '...';
+  const epochLabel = nextEpoch ? `Epoch ${parseInt(stats.epoch) + resetCount}` : '...';
+  const roundsLeftLabel = roundsLeft ? `${roundsLeft.toLocaleString('en')}` : '...';
+
   return (
     <div className="ml-lg-2 mr-lg-4 pr-lg-3 mb-4 mb-lg-0" ref={ref}>
       <div className="epoch-gear-container">
@@ -94,30 +98,15 @@ const EpochGear = ({ stats, showTime }: { stats: typeof initialStats; showTime?:
           <ProgressRing progress={percentRemaining} />
           {showTime ? (
             <>
-              <span className="mt-2 pt-2">
-                {nextEpoch ? (
-                  <>
-                    {hours}h {minutes}m {seconds}s
-                  </>
-                ) : (
-                  <>...</>
-                )}
-              </span>
-
-              {nextEpoch !== undefined && (
-                <small className="text-secondary">Epoch {stats.epoch + resetCount}</small>
-              )}
+              <span className="mt-2 pt-2">{timeLabel}</span>
+              <small className="text-secondary">{epochLabel}</small>
             </>
           ) : (
             <>
-              <span className="mt-2 pt-2">
-                {nextEpoch ? <>Epoch {parseInt(stats.epoch) + resetCount}</> : <>...</>}
-              </span>
-              {roundsLeft !== undefined && (
-                <small className="text-secondary">
-                  {roundsLeft.toLocaleString('en')} Rounds <br /> Left
-                </small>
-              )}
+              <span className="mt-2 pt-2">{epochLabel}</span>
+              <small className="text-secondary">
+                {roundsLeftLabel} Rounds <br /> Left
+              </small>
             </>
           )}
         </div>
