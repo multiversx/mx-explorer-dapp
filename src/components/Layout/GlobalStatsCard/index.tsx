@@ -14,7 +14,7 @@ const initialState = {
   marketCap: '...',
   circulatingSupply: '...',
   totalStaked: '...',
-  totalStakedPercent: 0,
+  totalStakedPercent: '...',
 };
 
 const GlobalStatsCard = () => {
@@ -41,12 +41,13 @@ const GlobalStatsCard = () => {
             ? parseInt(economicsData.data.staked).toLocaleString('en')
             : '...';
 
-          let totalStakedPercent = 0;
-          if (circulatingSupply !== '...' && totalStaked !== '...') {
-            totalStakedPercent = Math.floor(
-              (economicsData.data.staked * 100) / economicsData.data.circulatingSupply
-            );
-          }
+          const totalStakedPercent = economicsData.success
+            ? `${(
+                (parseInt(economicsData.data.staked) /
+                  parseInt(economicsData.data.circulatingSupply)) *
+                100
+              ).toFixed()}%`
+            : '...';
 
           if (ref.current !== null) {
             setData({
@@ -98,8 +99,7 @@ const GlobalStatsCard = () => {
                     </div>
                     <div className="d-flex justify-content-between">
                       <span className="text-secondary mr-1">Total Staked:</span>
-                      {data.totalStaked}
-                      {data.totalStakedPercent > 0 ? ` (${data.totalStakedPercent}%)` : ''}
+                      {data.totalStaked} ({data.totalStakedPercent})
                     </div>
                   </div>
                 </CardItem>
