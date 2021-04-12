@@ -8,7 +8,7 @@ import StakingChart from './StakingChart';
 import TransactionsChart from './TransactionsChart';
 import AccountsChart from './AccountsChart';
 import { useIsMainnet } from 'helpers';
-import ElasticGlobalStatsCard from 'components/Layout/ElasticGlobalStatsCard';
+import TestnetGlobalStatsCard from 'components/Layout/TestnetGlobalStatsCard';
 
 const Home = () => {
   const isMainnet = useIsMainnet();
@@ -42,7 +42,7 @@ const Home = () => {
           </div>
         </>
       ) : (
-        <ElasticGlobalStatsCard />
+        <TestnetGlobalStatsCard />
       )}
 
       <div className="row">
