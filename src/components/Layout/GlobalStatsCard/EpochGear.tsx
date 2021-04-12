@@ -94,7 +94,7 @@ const EpochGear = ({ stats, showTime }: { stats: typeof initialStats; showTime?:
           <ProgressRing progress={percentRemaining} />
           {showTime ? (
             <>
-              <span className="mt-1 pt-2">
+              <span className="mt-2 pt-2">
                 {nextEpoch ? (
                   <>
                     {hours}h {minutes}m {seconds}s

@@ -14,7 +14,7 @@ const initialState = {
   ...initialStats,
 };
 
-const GlobalStatsCard = () => {
+const TestnetGlobalStatsCard = () => {
   const ref = React.useRef(null);
   const { activeNetworkId } = useGlobalState();
   const { getStats } = adapter();
@@ -67,4 +67,4 @@ const GlobalStatsCard = () => {
   );
 };
 
-export default GlobalStatsCard;
+export default TestnetGlobalStatsCard;

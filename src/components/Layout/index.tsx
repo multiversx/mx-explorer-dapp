@@ -6,7 +6,7 @@ import { Search } from 'sharedComponents';
 import Unavailable from './Unavailable';
 import PageLayout from './PageLayout';
 import GlobalStatsCard from './GlobalStatsCard';
-import ElasticGlobalStatsCard from './ElasticGlobalStatsCard';
+import TestnetGlobalStatsCard from './TestnetGlobalStatsCard';
 import Routes, { validatorsRoutes, searchRoutes } from 'routes';
 import {
   useFetchPrice,
@@ -115,7 +115,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
                 {showGlobalStats() && (
                   <div className="container mb-spacer">
-                    <>{isMainnet ? <GlobalStatsCard /> : <ElasticGlobalStatsCard />}</>
+                    <>{isMainnet ? <GlobalStatsCard /> : <TestnetGlobalStatsCard />}</>
                   </div>
                 )}
 
