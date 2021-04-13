@@ -38,9 +38,11 @@ export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void })
       if (requiredProtocol !== currentProtocol) {
         const origin = currentOrigin.replace(currentProtocol, requiredProtocol);
         const href = `${origin}${pathname}`;
+        setNetworkId(activeNetwork.id);
         window.location.href = href;
+      } else {
+        setNetworkId(activeNetwork.id);
       }
-      setNetworkId(activeNetwork.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetwork]);
