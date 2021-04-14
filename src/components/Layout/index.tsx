@@ -75,7 +75,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       } else {
         const secondHrefPart = href.slice(href.lastIndexOf('/') + 1);
         const currentTheme = secondHrefPart.slice(0, secondHrefPart.indexOf('.css'));
-        (stylesheet as any).href = href.replace(currentTheme, theme);
+
+        if (currentTheme !== theme) {
+          (stylesheet as any).href = href.replace(currentTheme, theme);
+        }
       }
     }
   }, [theme]);
