@@ -74,6 +74,20 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
         Accounts
       </NetworkLink>
 
+      {activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api' && (
+        <NetworkLink
+          className={`nav-link ${
+            activeRoute(tokensRoutes.tokens) || activeRoute(tokensRoutes.tokenDetails)
+              ? 'active'
+              : ''
+          }`}
+          to={tokensRoutes.tokens}
+          onClick={() => onToggle(false)}
+        >
+          Tokens
+        </NetworkLink>
+      )}
+
       {activeNetwork.adapter === 'api' && (
         <NetworkLink
           className={`nav-link ${
@@ -91,20 +105,6 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
           onClick={() => onToggle(false)}
         >
           Validators
-        </NetworkLink>
-      )}
-
-      {activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api' && (
-        <NetworkLink
-          className={`nav-link ${
-            activeRoute(tokensRoutes.tokens) || activeRoute(tokensRoutes.tokenDetails)
-              ? 'active'
-              : ''
-          }`}
-          to={tokensRoutes.tokens}
-          onClick={() => onToggle(false)}
-        >
-          Tokens
         </NetworkLink>
       )}
     </>
