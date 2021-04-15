@@ -68,7 +68,7 @@ const Tokens = () => {
                             <thead>
                               <tr>
                                 <th>Name</th>
-                                <th>Identifier</th>
+                                <th>Token</th>
                                 <th>Owner Account</th>
                                 {/* <th>Minted</th>
                                 <th>Status</th> */}
@@ -76,28 +76,25 @@ const Tokens = () => {
                             </thead>
                             <tbody data-testid="tokensTable">
                               {tokens.map((token, i) => (
-                                <tr key={token.tokenIdentifier}>
+                                <tr key={token.token}>
                                   <td>
                                     <div className="d-flex align-items-center">
                                       <NetworkLink
-                                        to={urlBuilder.tokenDetails(token.tokenIdentifier)}
+                                        to={urlBuilder.tokenDetails(token.token)}
                                         data-testid={`tokensLink${i}`}
                                       >
-                                        {token.tokenName}
+                                        {token.name}
                                       </NetworkLink>
                                     </div>
                                   </td>
-                                  <td>{token.tokenIdentifier}</td>
+                                  <td>{token.token}</td>
                                   <td>
                                     <div className="d-flex">
                                       <NetworkLink
-                                        to={urlBuilder.accountDetails(token.ownerAddress)}
+                                        to={urlBuilder.accountDetails(token.owner)}
                                         className="trim-wrapper"
                                       >
-                                        <Trim
-                                          text={token.ownerAddress}
-                                          dataTestId={`accountLink${i}`}
-                                        />
+                                        <Trim text={token.owner} dataTestId={`accountLink${i}`} />
                                       </NetworkLink>
                                     </div>
                                   </td>
