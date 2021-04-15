@@ -38,13 +38,13 @@ const AccountTokens = () => {
 
           {accountTokens.success === true && accountTokens.data.length > 0 && (
             <>
-              {accountTokens.data.map(({ tokenIdentifier, tokenName, balance, numDecimals }) => (
-                <DetailItem title={tokenName} key={tokenIdentifier}>
+              {accountTokens.data.map(({ token, name, balance, decimals }) => (
+                <DetailItem title={name} key={token}>
                   <Denominate
                     value={balance ? balance : '0'}
                     showLastNonZeroDecimal={true}
-                    token={tokenIdentifier}
-                    denomination={numDecimals}
+                    token={token}
+                    denomination={decimals}
                   />
                 </DetailItem>
               ))}

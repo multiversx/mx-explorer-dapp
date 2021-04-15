@@ -10,13 +10,13 @@ export interface AccountType {
 }
 
 export interface TokenType {
-  tokenIdentifier: string;
-  tokenName: string;
+  token: string;
+  name: string;
   balance?: string;
-  numDecimals?: number;
-  ownerAddress: string;
-  mintedValue: string;
-  burntValue: string;
+  decimals?: number;
+  owner: string;
+  minted: string;
+  burnt: string;
   canBurn: boolean;
   canChangeOwner: boolean;
   canFreeze: boolean;
