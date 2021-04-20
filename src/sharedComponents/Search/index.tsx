@@ -12,16 +12,9 @@ interface SearchType {
 
 const Search = ({ setExpanded = () => null }: SearchType) => {
   const { pathname } = useLocation();
-  const networkRoute = useNetworkRoute();
   const isMainnet = useIsMainnet();
-  const {
-    getAccount,
-    getBlock,
-    getTransaction,
-    getNode,
-    getMiniBlock,
-    getTokenDetails,
-  } = adapter();
+  const networkRoute = useNetworkRoute();
+  const { getAccount, getBlock, getTransaction, getNode, getMiniBlock, getToken } = adapter();
   const [route, setRoute] = React.useState('');
   const [searching, setSearching] = React.useState(false);
   const [hash, setHash] = React.useState<string>('');
@@ -73,7 +66,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
           if (isMainnet) {
             setRoute(notFoundRoute);
           } else {
-            getTokenDetails(hash).then((token) => {
+            getToken(hash).then((token) => {
               setExpanded(false);
               const newRoute = token.success
                 ? networkRoute(urlBuilder.tokenDetails(hash))

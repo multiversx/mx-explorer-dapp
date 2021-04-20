@@ -135,6 +135,14 @@ export function getProviderParams({ identity }: GetProvidersType) {
   const params: ProviderPropsType['params'] = {
     ...(identity !== undefined ? { identity } : {}),
   };
+  return params;
+}
+
+export function getTokensParam({ search, size }: GetTokensType) {
+  const params: ProviderPropsType['params'] = {
+    ...(search !== undefined ? { search } : {}),
+    ...(size !== undefined ? { from: (size - 1) * 25, size: 25 } : {}),
+  };
 
   return params;
 }
@@ -185,3 +193,8 @@ export function processBlocks(blocks: any[]) {
 }
 
 export type ProviderType = (props: ProviderPropsType & { url: string }) => Promise<any>;
+
+export interface GetTokensType {
+  search?: string;
+  size?: number;
+}
