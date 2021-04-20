@@ -21,13 +21,13 @@ const TokenDetails = () => {
 
   const ref = React.useRef(null);
 
-  const { getTokenDetails } = adapter();
+  const { getToken } = adapter();
 
   const [tokenDetails, setTokenDetails] = React.useState<types.TokenType>();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchTokenDetails = () => {
-    getTokenDetails(tokenId).then(({ success, data }) => {
+    getToken(tokenId).then(({ success, data }) => {
       if (ref.current !== null) {
         setTokenDetails(data);
         setDataReady(success);

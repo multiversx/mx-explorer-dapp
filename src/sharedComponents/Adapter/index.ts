@@ -10,6 +10,8 @@ import {
   getNodeParams,
   GetProvidersType,
   getProviderParams,
+  GetTokensType,
+  getTokensParam,
 } from './helpers';
 
 export default function useAdapter() {
@@ -253,18 +255,19 @@ export default function useAdapter() {
 
     getAccountTokens: (address: string) => provider({ url: `/accounts/${address}/tokens` }),
 
-    getTokens: (size = 1) =>
+    getTokens: (props: GetTokensType) =>
       provider({
         url: `/tokens`,
-        params: {
-          from: (size - 1) * 25,
-          size: 25,
-        },
+        params: getTokensParam(props),
       }),
 
-    getTokenDetails: (tokenId: string) => provider({ url: `/tokens/${tokenId}` }),
+    getTokensCount: ({ search }: GetTokensType) =>
+      provider({
+        url: `/tokens/count`,
+        params: getTokensParam({ search }),
+      }),
 
-    getTokensCount: () => provider({ url: `/tokens/count` }),
+    getToken: (tokenId: string) => provider({ url: `/tokens/${tokenId}` }),
 
     // Providers
 

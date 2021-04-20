@@ -133,11 +133,10 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
 };
 
 const getTheme = (): StateType['theme'] => {
-  const isMainnet =
-    config.networks.find((network) => network.id === 'mainnet' && network.default === true) !==
-    undefined;
   const defaultNetwork = config.networks.find((network) => network.default);
-  let theme = defaultNetwork ? defaultNetwork.theme : '';
+  const isMainnet = defaultNetwork && defaultNetwork.id === 'mainnet';
+
+  let theme = defaultNetwork && defaultNetwork.theme ? defaultNetwork.theme : 'light';
 
   if (isMainnet) {
     const savedTheme = storage.getFromLocal('theme');
@@ -149,7 +148,7 @@ const getTheme = (): StateType['theme'] => {
       theme = savedTheme === 'dark' ? 'dark' : theme;
     }
   }
-  return theme ? theme : 'default';
+  return theme;
 };
 
 export default initialState;
