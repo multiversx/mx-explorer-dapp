@@ -1,13 +1,14 @@
 import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
-import { Denominate, DetailItem, PageState } from 'sharedComponents';
+import { Denominate, DetailItem, Pager, PageState } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import AccountTabs from './AccountLayout/AccountTabs';
-import { urlBuilder, useNetworkRoute } from 'helpers';
+import { urlBuilder, useFilters, useNetworkRoute } from 'helpers';
 
 const AccountTokens = () => {
   const { activeNetwork, accountTokens } = useGlobalState();
+  const { size } = useFilters();
   const networkRoute = useNetworkRoute();
   const { hash: address } = useParams() as any;
   const tokensActive = activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api';
@@ -48,6 +49,14 @@ const AccountTokens = () => {
                   />
                 </DetailItem>
               ))}
+              <div className="card-footer d-flex justify-content-end">
+                <Pager
+                  itemsPerPage={25}
+                  page={String(size)}
+                  total={accountTokens.count}
+                  show={accountTokens.data.length > 0}
+                />
+              </div>
             </>
           )}
         </div>
