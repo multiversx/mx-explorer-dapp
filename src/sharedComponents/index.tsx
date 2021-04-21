@@ -28,6 +28,7 @@ import CardItem from './CardItem';
 import LatestItem from './LatestItem';
 import LockedAmountTooltip from './LockedAmountTooltip';
 import StatisticsChart from './StatisticsChart';
+import NodesFilters from './NodesFilters';
 
 export {
   Denominate,
@@ -61,4 +62,5 @@ export {
   LatestItem,
   LockedAmountTooltip,
   StatisticsChart,
+  NodesFilters,
 };

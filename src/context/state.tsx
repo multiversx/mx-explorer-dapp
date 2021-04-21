@@ -72,10 +72,17 @@ export interface NodeType {
   downtimeSec: number;
   locked: string;
   topup: string;
-
-  issues?: string[];
-  provider?: string;
   identity?: string;
+  provider?: string;
+  issues?: string[];
+
+  leaderSuccess?: number;
+  leaderFailure?: number;
+  validatorSuccess?: number;
+  validatorFailure?: number;
+  validatorIgnoredSignatures?: number;
+
+  // TODO check if used
   receivedShardID?: number;
   computedShardID?: number;
 }
