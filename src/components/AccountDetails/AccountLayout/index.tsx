@@ -3,7 +3,7 @@ import { Redirect, useLocation } from 'react-router-dom';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import { Loader, adapter } from 'sharedComponents';
 import FailedAccount from './FailedAccount';
-import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
+import { addressIsBech32, useFilters, useNetworkRoute, useSize } from 'helpers';
 import AccountDetailsCard from './AccountDetailsCard';
 import { useRouteMatch } from 'react-router-dom';
 import { accountsRoutes } from 'routes';
@@ -11,10 +11,11 @@ import { accountsRoutes } from 'routes';
 const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { pathname } = useLocation();
+  const { size } = useFilters();
   const { firstPageTicker } = useSize();
   const { activeNetwork, accountDetails } = useGlobalState();
   const dispatch = useGlobalDispatch();
-  const { getAccount, getAccountTokens } = adapter();
+  const { getAccount, getAccountTokens, getAccountTokensCount } = adapter();
   const networkRoute = useNetworkRoute();
 
   const tokensActive = activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api';
@@ -61,13 +62,20 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
 
   const fetchAccountTokens = () => {
     if (tokensActive) {
-      getAccountTokens(address).then(({ success, data }) => {
+      Promise.all([
+        getAccountTokens({
+          size,
+          address,
+        }),
+        getAccountTokensCount(address),
+      ]).then(([accountTokensData, accountTokensCountData]) => {
         if (ref.current !== null) {
           dispatch({
             type: 'setAccountTokens',
             accountTokens: {
-              success,
-              data,
+              success: accountTokensData.success,
+              data: accountTokensData.data,
+              count: accountTokensCountData.success ? accountTokensCountData.data : 0,
             },
           });
         }
@@ -80,7 +88,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
       fetchAccountTokens();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountDetails.txCount, activeNetwork.id, address]);
+  }, [accountDetails.txCount, activeNetwork.id, address, size]);
 
   React.useEffect(() => {
     setDataReady(undefined);

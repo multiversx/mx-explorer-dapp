@@ -103,6 +103,7 @@ export interface StateType {
   accountTokens: {
     success: boolean | undefined;
     data: types.TokenType[];
+    count: number;
   };
   usd: number | undefined;
 }
@@ -127,6 +128,7 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
     accountTokens: {
       success: undefined,
       data: [],
+      count: 0,
     },
     accountDetails: {
       address: '',
