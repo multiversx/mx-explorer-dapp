@@ -12,6 +12,7 @@ export default function PageLayout({ children }: { children: React.ReactNode }) 
     case activeRoute(validatorsRoutes.identities):
     case activeRoute(validatorsRoutes.nodes):
     case activeRoute(validatorsRoutes.providers):
+    case activeRoute(validatorsRoutes.statistics):
       return <NodesLayout>{children}</NodesLayout>;
 
     case activeRoute(accountsRoutes.accountDetails):

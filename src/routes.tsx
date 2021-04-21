@@ -20,6 +20,7 @@ import ProviderDetails from 'components/ProviderDetails';
 import AccountContractCode from './components/AccountDetails/AccountContractCode';
 import AccountTokens from 'components/AccountDetails/AccountTokens';
 import ProviderTransactions from 'components/ProviderDetails/ProviderTransactions';
+import NodesStatistics from 'components/NodesStatistics';
 
 interface RouteType {
   path: string;
@@ -62,6 +63,7 @@ export const validatorsRoutes = {
   providerTransactions: '/providers/:hash/transactions',
   nodes: '/nodes',
   nodeDetails: '/nodes/:hash',
+  statistics: '/statistics',
 };
 
 export const tokensRoutes = {
@@ -180,6 +182,11 @@ const routes: RouteType[] = [
     path: validatorsRoutes.providerTransactions,
     title: 'Provider Details',
     component: ProviderTransactions,
+  },
+  {
+    path: validatorsRoutes.statistics,
+    title: 'Nodes Statistics',
+    component: NodesStatistics,
   },
 ];
 

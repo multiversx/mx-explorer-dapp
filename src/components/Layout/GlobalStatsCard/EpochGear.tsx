@@ -98,11 +98,15 @@ const EpochGear = ({ stats, showTime }: { stats: typeof initialStats; showTime?:
           {showTime ? (
             <>
               <span className="mt-2 pt-2">{timeLabel}</span>
-              <small className="text-secondary">{epochLabel}</small>
+              <small className="text-secondary" data-testid="currentEpoch">
+                {epochLabel}
+              </small>
             </>
           ) : (
             <>
-              <span className="mt-2 pt-2">{epochLabel}</span>
+              <span className="mt-2 pt-2" data-testid="currentEpoch">
+                {epochLabel}
+              </span>
               <small className="text-secondary">
                 {roundsLeft ? (
                   <>
