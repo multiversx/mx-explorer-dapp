@@ -6,13 +6,10 @@ import { Loader, adapter, PageState } from 'sharedComponents';
 import BlockData, { BlockDataType } from './BlockData';
 
 const BlockDetails = () => {
-  const params: any = useParams();
-  const networkRoute = useNetworkRoute();
-  const { hash: blockId } = params;
-
   const ref = React.useRef(null);
-
+  const networkRoute = useNetworkRoute();
   const { getBlock } = adapter();
+  const { hash: blockId } = useParams() as any;
 
   const [state, setState] = React.useState<BlockDataType>();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -54,14 +51,7 @@ const BlockDetails = () => {
 
       <div className="block-details" ref={ref}>
         {dataReady === true && state && state.block.hash && (
-          <div className="container pt-spacer">
-            <div className="row page-header">
-              <div className="col-12">
-                <h3 className="page-title mb-4" data-testid="title">
-                  Block Details
-                </h3>
-              </div>
-            </div>
+          <div className="container page-content">
             <div className="row">
               <div className="col-12">
                 <BlockData {...state} />

@@ -44,9 +44,7 @@ describe('Accounts Page Links', () => {
     });
 
     const link = await render.findByTestId('accountLink0');
-    expect(link.textContent).toBe(
-      'erd1sea63y47u569ns3x5mqjf4vnygn...9whkk7p6ry4rfpqyd6rd5addqyd9lf2'
-    );
+    expect(link.textContent).toBe('erd1sea63y47u569ns3x5mqjf4vnygn9whkk7p6ry4rfpqyd6rd5addqyd9lf2');
 
     fireEvent.click(link);
     await wait(async () => {

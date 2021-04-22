@@ -72,8 +72,8 @@ describe('Blocks Page Links', () => {
     });
 
     const link = await render.findByTestId('blockHashLink0');
-    expect(link.textContent).toBe(
-      'f2b1bc5b74c6d0bc7730e18a7f6a4a89...0820cba85aef4562f11b8100d618004a'
+    expect(link.textContent).toContain(
+      'f2b1bc5b74c6d0bc7730e18a7f6a4a890820cba85aef4562f11b8100d618004a'
     );
 
     fireEvent.click(link);

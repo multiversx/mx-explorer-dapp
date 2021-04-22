@@ -7,9 +7,13 @@ $muted: red !default; // strong faded text
 $light: red !default; // menu items hover
 $success: red !default;
 
-$primary-accent: red !default; // progressbar
+$primary-light: red !default; // pager btns
+$primary-light-hover: red !default; // pager btns
+
+$map-bg: red !default;
 
 $standard-box-shadow: red !default; // sidebar, navbar, cards
+$item-box-shadow: red !default; // card items
 $link-hover-color: red !default;
 
 $card-bg: red !default; // cards, navbar, sidebar
@@ -22,7 +26,8 @@ $input-hover-border-color: red !default;
 
 // do no copy below code
 :root {
+  --muted: #{$muted};
   --card-bg: #{$card-bg};
   --border-color: #{$border-color};
-  --chart-faded-bg: #{rgba($primary, 0.1)};
+  --chart-faded-bg: #{rgba($primary, 0.3)};
 }

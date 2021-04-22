@@ -1,7 +1,6 @@
 import React from 'react';
 import { Nav, Collapse } from 'react-bootstrap';
 import AppSwitcher from './AppSwitcher';
-import { Search } from 'sharedComponents';
 import NetworkSwitcher from './NetworkSwitcher';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars';
@@ -52,11 +51,9 @@ export default function Navbar() {
             <div className="d-flex align-items-center">
               <Logo />
             </div>
-
-            <div className="d-none d-md-flex flex-fill">
-              <Search />
+            <div className="nav-links d-none d-lg-flex flex-fill justify-content-around">
+              <NavLinks />
             </div>
-
             <div>
               <ul className="flex-row navbar-nav">
                 {activeNetwork.id === 'mainnet' && (
@@ -76,16 +73,16 @@ export default function Navbar() {
                     </a>
                   </li>
                 )}
-                <li className="nav-item d-none d-md-flex">
+                <li className="nav-item d-none d-lg-flex">
                   <AppSwitcher />
                 </li>
 
-                <li className="nav-item d-none d-md-flex align-items-strech">
+                <li className="nav-item d-none d-lg-flex align-items-strech">
                   <NetworkSwitcher />
                 </li>
               </ul>
 
-              <div className="nav d-md-none">
+              <div className="nav d-lg-none">
                 <a
                   className="nav-link nav-link-icon text-center d-flex align-items-center justify-content-center pr-0"
                   href="/"
@@ -105,22 +102,18 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="header-navbar d-md-flex p-0 border-top">
+      <div className="header-navbar d-lg-none p-0">
         <Collapse in={headerNavCollapsed}>
-          <div className="container d-md-flex">
+          <div className="container d-lg-flex">
             <div className="row">
-              <div className="col d-flex flex-column flex-md-row py-3 py-md-0">
-                <div className="d-md-none">
-                  <Search setExpanded={setHeaderNavCollapsed} />
-                </div>
-
+              <div className="col d-flex flex-column flex-lg-row py-3 py-md-0">
                 <NavLinks setExpanded={setHeaderNavCollapsed} />
 
-                <div className="d-md-none">
+                <div className="d-lg-none">
                   <AppSwitcher onToggle={toggleState} />
                 </div>
 
-                <div className="d-md-none">
+                <div className="d-lg-none">
                   <NetworkSwitcher onToggle={toggleState} />
                 </div>
               </div>

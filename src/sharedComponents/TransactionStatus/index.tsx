@@ -1,8 +1,8 @@
 import React from 'react';
-import { faCheckCircle } from '@fortawesome/pro-regular-svg-icons/faCheckCircle';
-import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
-import { faHourglass } from '@fortawesome/pro-regular-svg-icons/faHourglass';
-import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
+import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
+import { faBan } from '@fortawesome/pro-solid-svg-icons/faBan';
+import { faHourglass } from '@fortawesome/pro-solid-svg-icons/faHourglass';
+import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import txStatus from './txStatus';
 
@@ -10,37 +10,52 @@ interface TransactionStatusType {
   status: string;
 }
 
-const capitalizeFirstLetter = (str: string) => {
+export const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-const TransactionStatus = ({ status }: TransactionStatusType) => {
+export const getStatusIconAndColor = (status: TransactionStatusType['status']) => {
   const statusIs = (compareTo: string) => status.toLowerCase() === compareTo.toLowerCase();
-
   let Icon = () => <></>;
+  let color = '';
+
   switch (true) {
     case statusIs(txStatus.notExecuted):
-      Icon = () => <FontAwesomeIcon icon={faBan} className="mr-2 text-danger" />;
+      color = 'text-danger';
+      Icon = () => <FontAwesomeIcon icon={faBan} className={`mr-2 ${color}`} />;
       break;
     case statusIs(txStatus.fail):
     case statusIs(txStatus.failed):
-      Icon = () => <FontAwesomeIcon icon={faTimes} className="mr-2 text-danger" />;
+      color = 'text-danger';
+      Icon = () => <FontAwesomeIcon icon={faTimes} className={`mr-2 ${color}`} />;
       break;
     case statusIs(txStatus.success):
-      Icon = () => <FontAwesomeIcon icon={faCheckCircle} className="mr-2 text-success" />;
+      color = 'text-success';
+      Icon = () => <FontAwesomeIcon icon={faCheckCircle} className={`mr-2 ${color}`} />;
       break;
     case statusIs(txStatus.invalid):
-      Icon = () => <FontAwesomeIcon icon={faBan} className="mr-2 text-danger" />;
+      color = 'text-danger';
+      Icon = () => <FontAwesomeIcon icon={faBan} className={`mr-2 ${color}`} />;
       break;
     default:
-      Icon = () => <FontAwesomeIcon icon={faHourglass} className="mr-2 text-warning" />;
+      color = 'text-warning';
+      Icon = () => <FontAwesomeIcon icon={faHourglass} className={`mr-2 ${color}`} />;
   }
 
+  return {
+    Icon,
+    color,
+  };
+};
+
+const TransactionStatus = ({ status }: TransactionStatusType) => {
+  const { Icon } = getStatusIconAndColor(status);
+
   return (
-    <>
+    <span className="d-flex align-items-center">
       <Icon />
       {capitalizeFirstLetter(status)}
-    </>
+    </span>
   );
 };
 

@@ -1,0 +1,242 @@
+@mixin rotate-clockwise($duration) {
+  animation: rotating $duration linear infinite;
+
+  @keyframes rotating {
+    0% {
+      will-change: transform;
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    100% {
+      will-change: unset;
+      transform: translate3d(0, 0, 0) rotate(360deg);
+    }
+  }
+
+  &.paused {
+    animation-play-state: paused;
+  }
+}
+
+@mixin rotate-counter-clockwise($duration) {
+  animation: rotate $duration linear infinite;
+
+  @keyframes rotate {
+    0% {
+      will-change: transform;
+      transform: translate3d(0, 0, 0) rotate(360deg);
+    }
+    100% {
+      will-change: unset;
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+  }
+
+  &.paused {
+    animation-play-state: paused;
+  }
+}
+
+@mixin blink($index) {
+  .tl-#{$index - 1},
+  .bl-#{$index - 1},
+  .tr-#{$index - 1} {
+    fill: lighten($primary, 25%);
+  }
+
+  .tl-#{$index},
+  .bl-#{$index},
+  .tr-#{$index} {
+    fill: lighten($primary, 15%);
+  }
+}
+
+@mixin blink-reverse($index) {
+  .br-#{$index + 1} {
+    fill: lighten($primary, 25%);
+  }
+
+  .br-#{$index} {
+    fill: lighten($primary, 15%);
+  }
+}
+
+@mixin radial-bg() {
+  background: radial-gradient(circle, rgba($primary-light, 0.25) 60%, rgba(0, 0, 0, 0) 40%)
+    no-repeat;
+}
+
+.network-health {
+  .gears-layout-container {
+    @include radial-bg();
+
+    .layout-gear {
+      width: 100%;
+      height: 100%;
+
+      .blinking-dot {
+        transition: fill 0.35s;
+        fill: $muted;
+      }
+
+      &.blink-1 {
+        .bl-1,
+        .tl-1,
+        .tr-1,
+        .br-6 {
+          fill: lighten($primary, 15%);
+        }
+      }
+
+      &.blink-2 {
+        @include blink(2);
+        @include blink-reverse(5);
+      }
+
+      &.blink-3 {
+        @include blink(3);
+        @include blink-reverse(4);
+      }
+
+      &.blink-4 {
+        @include blink(4);
+        @include blink-reverse(3);
+      }
+
+      &.blink-5 {
+        @include blink(5);
+        @include blink-reverse(2);
+      }
+
+      &.blink-6 {
+        .bl-6,
+        .tl-6,
+        .tr-6,
+        .br-1 {
+          fill: lighten($primary, 25%);
+        }
+      }
+    }
+
+    .big-gear-container {
+      @extend .position-absolute-center;
+      width: 97%;
+      height: 97%;
+
+      .animate {
+        @include rotate-counter-clockwise(220s);
+      }
+    }
+
+    .gear-container {
+      @include radial-bg();
+
+      position: absolute;
+      width: 30%;
+      height: 30%;
+      $gearPos: 2.1%;
+
+      &.top-left {
+        top: $gearPos;
+        left: $gearPos;
+
+        .animate {
+          @include rotate-clockwise(140s);
+        }
+      }
+
+      &.top-right {
+        top: $gearPos;
+        right: $gearPos;
+
+        .animate {
+          @include rotate-counter-clockwise(60s);
+        }
+      }
+
+      &.center {
+        @extend .position-absolute-center;
+        .gear-content {
+          width: 81%;
+          height: 81%;
+          border-radius: 50%;
+        }
+
+        .animate {
+          @include rotate-clockwise(80s);
+        }
+      }
+
+      &.bottom-left {
+        bottom: $gearPos;
+        left: $gearPos;
+
+        .animate {
+          @include rotate-counter-clockwise(60s);
+        }
+      }
+
+      &.bottom-right {
+        bottom: $gearPos;
+        right: $gearPos;
+
+        .gear-content {
+          width: 73%;
+          height: 73%;
+          border-radius: 50%;
+        }
+
+        .animate {
+          @include rotate-clockwise(45s);
+        }
+      }
+
+      .gear-content {
+        @extend .position-absolute-center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        font-size: 8px;
+
+        @media (min-width: 350px) {
+          font-size: 10px;
+        }
+
+        @media (min-width: 390px) {
+          font-size: 11px;
+        }
+
+        @media (min-width: 450px) {
+          font-size: 13px;
+        }
+
+        @media (min-width: 1050px) {
+          font-size: 14px;
+        }
+
+        small {
+          @extend .text-secondary;
+          font-size: 85%;
+        }
+      }
+    }
+  }
+}
+
+.gear-teeth {
+  fill: $card-bg;
+  stroke: $secondary;
+}
+
+.gear-circle {
+  fill: $card-bg;
+}
+
+.gear-circle-border {
+  stroke: $secondary;
+
+  &.light {
+    stroke: $muted;
+  }
+}

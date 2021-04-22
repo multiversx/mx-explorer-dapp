@@ -12,16 +12,9 @@ interface SearchType {
 
 const Search = ({ setExpanded = () => null }: SearchType) => {
   const { pathname } = useLocation();
-  const networkRoute = useNetworkRoute();
   const isMainnet = useIsMainnet();
-  const {
-    getAccount,
-    getBlock,
-    getTransaction,
-    getNode,
-    getMiniBlock,
-    getTokenDetails,
-  } = adapter();
+  const networkRoute = useNetworkRoute();
+  const { getAccount, getBlock, getTransaction, getNode, getMiniBlock, getToken } = adapter();
   const [route, setRoute] = React.useState('');
   const [searching, setSearching] = React.useState(false);
   const [hash, setHash] = React.useState<string>('');
@@ -73,7 +66,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
           if (isMainnet) {
             setRoute(notFoundRoute);
           } else {
-            getTokenDetails(hash).then((token) => {
+            getToken(hash).then((token) => {
               setExpanded(false);
               const newRoute = token.success
                 ? networkRoute(urlBuilder.tokenDetails(hash))
@@ -134,13 +127,13 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
   return route ? (
     <Redirect to={route} />
   ) : (
-    <form className="w-100 d-flex mx-md-2">
-      <div className="input-group input-group-seamless py-md-2">
+    <form className="main-search w-100 d-flex" noValidate={true}>
+      <div className="input-group input-group-seamless">
         <input
           type="text"
-          className="form-control rounded-pill my-1 text-truncate"
-          placeholder={`Address / Tx Hash / Block Hash / Validator Key ${
-            isMainnet ? '' : '/ TokenID'
+          className="form-control border-0 rounded-pill py-3 pl-3 pl-lg-4 text-truncate"
+          placeholder={`Search for an address, transaction/block hash ${
+            isMainnet ? 'or validator key' : ',validator key or token id'
           }`} // TODO remove condition when Tokens go live
           name="requestType"
           data-testid="search"
@@ -152,18 +145,20 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
         <div className="input-group-append">
           <button
             type="submit"
-            className="input-group-text side-action outline-0 m-0"
+            className="input-group-text outline-0 m-0 p-0"
             onClick={(e) => {
               e.preventDefault();
               onClick();
             }}
             data-testid="searchButton"
           >
-            {searching ? (
-              <FontAwesomeIcon icon={faCircleNotch} spin className="mr-1 text-primary" />
-            ) : (
-              <FontAwesomeIcon icon={faSearch} className="mr-1" />
-            )}
+            <div className="my-1 py-1 px-3 px-lg-4 border-left">
+              {searching ? (
+                <FontAwesomeIcon icon={faCircleNotch} spin className="mr-1 text-primary" />
+              ) : (
+                <FontAwesomeIcon icon={faSearch} className="mr-1 text-" />
+              )}
+            </div>
           </button>
         </div>
       </div>

@@ -16,7 +16,7 @@ describe('Transactions Page', () => {
       route: '/transactions',
     });
     const pageInterval = await waitForElement(() => render.queryByTestId('pageInterval'));
-    expect(pageInterval!.innerHTML).toBe('1-25');
+    expect(pageInterval!.innerHTML).toBe('1');
 
     const table = render.queryByTestId('transactionsTable');
     const numberOfRows = table!.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
@@ -29,7 +29,7 @@ describe('Transactions Page', () => {
     });
 
     const pageInterval = await waitForElement(() => render.queryByTestId('pageInterval'));
-    expect(pageInterval!.innerHTML).toBe('1-25');
+    expect(pageInterval!.innerHTML).toBe('1');
   });
 });
 
@@ -40,8 +40,8 @@ describe('Transactions Page Links', () => {
     });
 
     const links = await render.findAllByTestId('transactionLink');
-    expect(links[0].textContent).toBe(
-      '72d26fd09ed2d2bb649a401428eca1a0...a7b5a11242daf5500990305f600a9a91'
+    expect(links[0].textContent).toContain(
+      '72d26fd09ed2d2bb649a401428eca1a0a7b5a11242daf5500990305f600a9a91'
     );
 
     fireEvent.click(links[0]);
@@ -83,8 +83,8 @@ describe('Transactions Page Links', () => {
     });
 
     const links = await render.findAllByTestId('receiverLink');
-    expect(links[0].textContent).toBe(
-      'erd1hqplnafrhnd4zv846wumat2462j...y9jkmwxtp3nwmw8ye9eclr6fq40f044'
+    expect(links[0].textContent).toContain(
+      'erd1hqplnafrhnd4zv846wumat2462jy9jkmwxtp3nwmw8ye9eclr6fq40f044'
     );
 
     fireEvent.click(links[0]);

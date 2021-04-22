@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { NavDropdown } from 'react-bootstrap';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,17 +7,33 @@ import { NetworkLinkType } from 'context/state';
 
 const networksWithHttps = ['mainnet', 'devnet', 'testnet', 'testnet-azure-all-in-one-maiar'];
 
-const NetworkUrl = ({ link, onClick }: { link: NetworkLinkType; onClick: () => void }) => {
+const NetworkUrl = ({
+  link,
+  onClick,
+  internal,
+}: {
+  link: NetworkLinkType;
+  onClick: () => void;
+  internal?: boolean;
+}) => {
   const { activeNetworkId } = useGlobalState();
 
+  let internalUrl = `/${link.url}`;
+  if (process.env.NODE_ENV === 'production' && internal) {
+    const { protocol: currentProtocol, origin: currentOrigin } = window.location;
+    const requiredProtocol = networksWithHttps.includes(link.id) ? 'https:' : 'http:';
+    const newOrigin = currentOrigin.replace(currentProtocol, requiredProtocol);
+    internalUrl = `${newOrigin}${internalUrl}`;
+  }
+
   return (
-    <Link
+    <a
       className={`dropdown-item ${activeNetworkId === link.id ? 'active' : ''}`}
-      to={link.url}
+      href={internal ? internalUrl : link.url}
       onClick={onClick}
     >
       {link.name}
-    </Link>
+    </a>
   );
 };
 
@@ -28,22 +43,6 @@ export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void })
     defaultNetwork,
     activeNetwork,
   } = useGlobalState();
-
-  const [networkId, setNetworkId] = React.useState(activeNetwork.id);
-
-  React.useEffect(() => {
-    if (process.env.NODE_ENV === 'production' && networkId !== activeNetwork.id) {
-      const requiredProtocol = networksWithHttps.includes(activeNetwork.id) ? 'https:' : 'http:';
-      const { protocol: currentProtocol, origin: currentOrigin, pathname } = window.location;
-      if (requiredProtocol !== currentProtocol) {
-        const origin = currentOrigin.replace(currentProtocol, requiredProtocol);
-        const href = `${origin}${pathname}`;
-        window.location.href = href;
-      }
-      setNetworkId(activeNetwork.id);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetwork]);
 
   const internalLinks = networks.map(({ name, id }) => ({
     name,
@@ -62,7 +61,7 @@ export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void })
     <>
       <NavDropdown
         title={
-          <div className="nav-link-icon flex-fill pr-0 pl-md-1 ml-md-2" data-testid="networkSwitch">
+          <div className="nav-link-icon flex-fill pr-0 pl-lg-1 ml-lg-2" data-testid="networkSwitch">
             {activeNetwork.name}
             <FontAwesomeIcon className="d-inline-block ml-1" icon={faAngleDown} />
           </div>
@@ -71,18 +70,9 @@ export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void })
         alignRight
       >
         {links.length > 0
-          ? links.map((link) => (
-              <a
-                className={`dropdown-item ${activeNetwork.id === link.id ? 'active' : ''}`}
-                href={link.url}
-                key={link.id}
-                onClick={hidePopover}
-              >
-                {link.name}
-              </a>
-            ))
+          ? links.map((link) => <NetworkUrl link={link} onClick={hidePopover} key={link.id} />)
           : internalLinks.map((link) => (
-              <NetworkUrl link={link} onClick={hidePopover} key={link.id} />
+              <NetworkUrl link={link} onClick={hidePopover} key={link.id} internal />
             ))}
       </NavDropdown>
     </>

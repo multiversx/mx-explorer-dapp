@@ -7,11 +7,15 @@ $primary: #1b4cd9;
 $secondary: #b0b3b8;
 $muted: #4e5052;
 $light: #2a2a2b;
-$success: #28a745;
+$success: #17c671;
 
-$primary-accent: darken($primary, 20%);
+$primary-light: #2e3547;
+$primary-light-hover: darken($primary-light, 5%);
+
+$map-bg: #26292e;
 
 $standard-box-shadow: #000;
+$item-box-shadow: $secondary;
 $link-hover-color: lighten($primary, 7%);
 
 $card-bg: #242526;
@@ -23,3 +27,15 @@ $input-disabled-bg: $muted;
 $input-hover-border-color: lighten($border-color, 15%);
 
 @import './main';
+
+.identity-avatar {
+  border: 1px solid #1c1c1d;
+}
+
+.simple-map {
+  .rsm-svg {
+    .pulse {
+      stroke: $secondary;
+    }
+  }
+}

@@ -3,8 +3,7 @@ import { useGlobalState } from 'context';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader, adapter, PageState } from 'sharedComponents';
-import { TransactionType } from './TransactionDetails';
-import Details from './TransactionDetails';
+import TransactionInfo, { TransactionType } from './TransactionInfo';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 
 const TransactionDetails = () => {
@@ -64,17 +63,10 @@ const TransactionDetails = () => {
       )}
       <div ref={ref}>
         {dataReady === true && transaction && (
-          <div className="container pt-spacer">
-            <div className="row page-header">
-              <div className="col-12">
-                <h3 className="page-title mb-4" data-testid="title">
-                  Transaction Details
-                </h3>
-              </div>
-            </div>
+          <div className="container page-content">
             <div className="row">
               <div className="col-12">
-                <Details transaction={transaction} />
+                <TransactionInfo transaction={transaction} />
               </div>
             </div>
           </div>

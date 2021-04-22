@@ -8,19 +8,16 @@ export type ActionType =
       type: 'updateNetworks';
       config: ConfigType;
     }
-  | { type: 'setNodes'; nodes: StateType['nodes'] }
-  | {
-      type: 'setIdentities';
-      identities: StateType['identities'];
-      blockchainTotalStake: StateType['blockchainTotalStake'];
-    }
   | { type: 'setShards'; shards: StateType['shards'] }
   | { type: 'triggerTick' }
   | {
       type: 'changeTheme';
       theme: StateType['theme'];
     }
-  | { type: 'setGlobalStake'; globalStake: StateType['globalStake'] };
+  | { type: 'setGlobalStake'; globalStake: StateType['globalStake'] }
+  | { type: 'setAccountDetails'; accountDetails: StateType['accountDetails'] }
+  | { type: 'setAccountTokens'; accountTokens: StateType['accountTokens'] }
+  | { type: 'setUsd'; usd: StateType['usd'] };
 
 export function globalReducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
@@ -49,19 +46,6 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
         },
       };
     }
-    case 'setNodes': {
-      return {
-        ...state,
-        nodes: action.nodes,
-      };
-    }
-    case 'setIdentities': {
-      return {
-        ...state,
-        identities: action.identities,
-        blockchainTotalStake: action.blockchainTotalStake,
-      };
-    }
     case 'setShards': {
       return {
         ...state,
@@ -83,6 +67,24 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
         expirationDate: in6m,
       });
       return newState;
+    }
+    case 'setAccountDetails': {
+      return {
+        ...state,
+        accountDetails: action.accountDetails,
+      };
+    }
+    case 'setAccountTokens': {
+      return {
+        ...state,
+        accountTokens: action.accountTokens,
+      };
+    }
+    case 'setUsd': {
+      return {
+        ...state,
+        usd: action.usd,
+      };
     }
     default: {
       throw new Error(`Unhandled action type: ${action!.type}`);

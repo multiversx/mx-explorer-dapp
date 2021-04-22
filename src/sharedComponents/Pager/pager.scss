@@ -1,0 +1,51 @@
+.pager {
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    border: 0;
+    width: 2.81rem;
+  }
+
+  .btns-contrainer {
+    display: flex;
+    overflow: hidden;
+    border-color: $primary-light !important;
+
+    &.left {
+      border-top-left-radius: 0.25rem;
+      border-bottom-left-radius: 0.25rem;
+      border-right: 0 !important;
+    }
+
+    &.right {
+      border-top-right-radius: 0.25rem;
+      border-bottom-right-radius: 0.25rem;
+      border-left: 0 !important;
+    }
+
+    &.inactive {
+      border-color: $light !important;
+
+      .btn {
+        color: $muted !important;
+        background-color: $light;
+
+        &:hover {
+          color: $muted !important;
+          background-color: $light;
+        }
+      }
+    }
+
+    .btn:first-child {
+      margin-right: 1px;
+    }
+  }
+
+  .current-page {
+    border-color: $primary-light !important;
+    // font-size: 0.8rem;
+  }
+}

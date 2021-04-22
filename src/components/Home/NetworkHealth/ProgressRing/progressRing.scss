@@ -1,0 +1,21 @@
+.progress-ring {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+
+  circle {
+    stroke: $primary;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    transition: stroke-dashoffset 0.35s;
+  }
+}
+
+.current-block-time-0 {
+  .progress-ring {
+    circle {
+      transition: none;
+    }
+  }
+}

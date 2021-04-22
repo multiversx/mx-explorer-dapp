@@ -1,81 +1,130 @@
 import * as React from 'react';
 import { urlBuilder } from 'helpers';
-import { ShardSpan, NetworkLink, Trim, DetailItem, CopyButton } from 'sharedComponents';
-import RowIcon from 'sharedComponents/NodesTable/RowIcon';
+import {
+  ShardSpan,
+  NetworkLink,
+  Trim,
+  CopyButton,
+  CardItem,
+  Denominate,
+  LockedAmountTooltip,
+} from 'sharedComponents';
+import { getIcon } from 'sharedComponents/NodesTable/RowIcon';
 import { NodeType } from 'context/state';
+import { faLock, faServer, faCheck, faCode } from '@fortawesome/pro-solid-svg-icons';
+import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
+import { faStream } from '@fortawesome/pro-solid-svg-icons/faStream';
+import { faCogs } from '@fortawesome/pro-solid-svg-icons/faCogs';
+import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
+
 import Alert from './Alert';
 
-const NodeInformation = ({ node, colWidth }: { node: NodeType; colWidth: string }) => {
+const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
   const {
-    publicKey,
-    peerType,
+    bls,
+    type,
     shard,
-    versionNumber,
-    nodeName,
-    nodeType,
+    version,
+    name,
     nonce,
-    numInstances,
-  } = node;
+    instances,
+    provider,
+    status,
+    locked,
+    topUp,
+    stake,
+    issues,
+  } = nodeData;
+
+  const versionOudated = version === undefined || (issues && issues.includes('versionMismatch'));
+
   return (
     <div className="card">
-      <div className="card-body p-0">
-        <div className="container-fluid">
-          <DetailItem title="Public Key" colWidth={colWidth}>
-            <div className="d-flex flex-column">
-              <div className="d-flex align-items-center">
-                {nodeType === 'observer' && <RowIcon node={node} />}
-                <Trim text={publicKey} />
-                <CopyButton text={publicKey} className="ml-2" />
-              </div>
-              <Alert node={node} />
-            </div>
-          </DetailItem>
-          <DetailItem title="Shard" colWidth={colWidth}>
-            <div className="d-flex">
-              {shard !== undefined ? (
-                <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
-                  <ShardSpan shard={shard} />
-                </NetworkLink>
-              ) : (
-                <span className="text-secondary">N/A</span>
-              )}
-            </div>
-          </DetailItem>
+      <div className="card-header">
+        <div className="card-header-item">
+          <h6 data-testid="title">Node Details</h6>
+        </div>
+        <div className="card-header-item compact d-flex">
+          <span className="flex-shrink-0 text-secondary mr-2">Public key:</span>
 
-          <DetailItem title="Name" colWidth={colWidth}>
-            {nodeName ? nodeName : <span className="text-secondary">N/A</span>}
-          </DetailItem>
+          <div className="d-flex flex-column min-w-0">
+            <div className="d-flex align-items-center">
+              <Trim text={bls} />
+              <CopyButton text={bls} className="ml-2" />
+            </div>
+            <Alert node={nodeData} />
+          </div>
+        </div>
+      </div>
+      <div className="card-body card-item-container mx-spacing">
+        <CardItem title="Shard" icon={faLayerGroup}>
+          {shard !== undefined ? (
+            <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
+              <ShardSpan shard={shard} />
+            </NetworkLink>
+          ) : (
+            <>N/A</>
+          )}
+        </CardItem>
 
-          <DetailItem title="Type" colWidth={colWidth}>
-            {nodeType === 'observer' && <>Observer</>}
-            {nodeType !== 'observer' && (
+        <CardItem title="Version" icon={versionOudated ? faExclamationTriangle : faCheck}>
+          <span data-testid="version">{version ? version : <>N/A</>}</span>
+        </CardItem>
+
+        <CardItem title="Instances" icon={instances !== 1 ? faExclamationTriangle : faCheck}>
+          {instances ? instances : <>N/A</>}
+        </CardItem>
+
+        <CardItem title="Name" icon={faServer}>
+          {name ? name : <>N/A</>}
+        </CardItem>
+
+        <CardItem title="Type" icon={getIcon(nodeData) || faCogs}>
+          <>
+            {type === 'observer' && <>Observer</>}
+            {type !== 'observer' && (
               <>
-                Validator <span className="text-secondary">({peerType})</span>
+                Validator <span className="text-secondary ml-1">({status})</span>
               </>
             )}
-          </DetailItem>
+          </>
+        </CardItem>
 
-          <DetailItem title="" colWidth={colWidth}>
-            <div className="d-flex flex-wrap justify-content-between justify-content-lg-start">
-              <div className="d-flex flex-column mr-2 mr-sm-4">
-                <span className="text-secondary mr-2">Version</span>
-                <span data-testid="versionNumber">
-                  {versionNumber ? versionNumber : <span className="text-secondary">N/A</span>}
-                </span>
-              </div>
-              <div className="d-flex flex-column ml-2 mr-2 mr-sm-4">
-                <span className="text-secondary mr-2">Nonce</span>
-                <span>{nonce ? nonce : <span className="text-secondary">N/A</span>}</span>
-              </div>
-              <div className="d-flex flex-column ml-2">
-                <span className="text-secondary mr-2">Instances</span>
-                <span>
-                  {numInstances ? numInstances : <span className="text-secondary">N/A</span>}
-                </span>
-              </div>
+        <CardItem title="Nonce" icon={faStream}>
+          {nonce ? nonce : <>N/A</>}
+        </CardItem>
+
+        {type !== 'observer' && locked !== undefined && (
+          <CardItem title="Locked" icon={faLock}>
+            <div className="d-flex align-items-center">
+              <span className="mr-2">
+                <Denominate value={locked} />
+              </span>
+
+              <LockedAmountTooltip
+                small
+                lockedDetails={[
+                  { label: 'Stake', value: <Denominate value={stake} /> },
+                  {
+                    label: 'Topup',
+                    value: <Denominate value={topUp} />,
+                  },
+                ]}
+              />
             </div>
-          </DetailItem>
-        </div>
+          </CardItem>
+        )}
+
+        {provider && (
+          <CardItem title="Provider" icon={faCode}>
+            <div className="d-flex align-items-center min-w-0">
+              <NetworkLink to={urlBuilder.providerDetails(provider)} className="trim-wrapper">
+                <Trim text={provider} />
+              </NetworkLink>
+              <CopyButton text={provider} />
+            </div>
+          </CardItem>
+        )}
       </div>
     </div>
   );

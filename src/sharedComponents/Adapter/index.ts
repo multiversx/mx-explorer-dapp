@@ -2,37 +2,61 @@ import useAdapterConfig from './useAdapterConfig';
 import {
   GetBlocksType,
   processBlocks,
-  getShardOrEpochParam,
+  getShardAndEpochParam,
   getTransactionsParams,
   TransactionsParamsType,
   getAccountParams,
   GetNodesType,
   getNodeParams,
+  GetProvidersType,
+  getProviderParams,
+  GetTokensType,
+  getTokensParam,
 } from './helpers';
 
 export default function useAdapter() {
-  const { provider, getStats, getNodes, getRewards, getShards } = useAdapterConfig();
+  const {
+    provider,
+    getStats,
+    getNodes,
+    getNodesVersions,
+    getAccountDelegation,
+    getAccountStake,
+    getShards,
+    getEconomics,
+    getEgldPrice,
+    getProviders,
+    getProvider,
+    getEgldMarketCap,
+    getEgldPriceHistory,
+    getEgldMarketCapHistory,
+    getEgldVolumeHistory,
+    getTotalStakedHistory,
+    getUsersStaking,
+    getTransactionsHistory,
+    getAccountsHistory,
+  } = useAdapterConfig();
 
   return {
     /* Homepage */
 
     getStats,
 
-    getLatestBlocks: () =>
+    getLatestBlocks: ({ size = 5 }: GetBlocksType) =>
       provider({
         url: `/blocks`,
         params: {
-          size: 25,
+          size,
           ...{
             fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
           },
         },
       }),
-    getLatestTransactions: () =>
+    getLatestTransactions: ({ size = 5 }: TransactionsParamsType) =>
       provider({
         url: `/transactions`,
         params: {
-          size: 25,
+          size,
           ...{
             fields: [
               'txHash',
@@ -43,6 +67,8 @@ export default function useAdapter() {
               'status',
               'timestamp',
               'value',
+              'miniBlockHash',
+              'round',
             ].join(','),
           },
         },
@@ -81,7 +107,7 @@ export default function useAdapter() {
       }
     },
 
-    getBlocks: async ({ size = 1, shard, epochId, proposer }: GetBlocksType) => {
+    getBlocks: async ({ size = 1, shard, epoch, proposer }: GetBlocksType) => {
       try {
         const { data: blocks, success } = await provider({
           url: `/blocks`,
@@ -89,7 +115,7 @@ export default function useAdapter() {
             from: (size - 1) * 25,
             size: 25,
             ...(proposer ? { proposer } : {}),
-            ...getShardOrEpochParam(shard, epochId),
+            ...getShardAndEpochParam(shard, epoch),
             fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
           },
         });
@@ -108,8 +134,8 @@ export default function useAdapter() {
       }
     },
 
-    getBlocksCount: ({ shard, epochId }: GetBlocksType) =>
-      provider({ url: `/blocks/count`, params: getShardOrEpochParam(shard, epochId) }),
+    getBlocksCount: ({ shard, epoch }: GetBlocksType) =>
+      provider({ url: `/blocks/count`, params: getShardAndEpochParam(shard, epoch) }),
 
     /* Transaction */
 
@@ -150,11 +176,16 @@ export default function useAdapter() {
         },
       }),
 
-    getRewards: (address: string) => getRewards(address),
+    getAccountDelegation: (address: string) =>
+      getAccountDelegation({ url: `/accounts/${address}/delegation` }),
+
+    getAccountStake: (address: string) => getAccountStake({ url: `/accounts/${address}/stake` }),
 
     /* Validators */
 
     getShards,
+
+    getNode: (key: string) => getNodes({ url: `/nodes/${key}` }),
 
     getNodes: (props: GetNodesType) =>
       getNodes({
@@ -163,40 +194,45 @@ export default function useAdapter() {
       }),
 
     getNodesCount: ({
-      peerType,
+      online,
       issues,
       search,
-      nodeType,
+      type,
       shard,
       status,
       identity,
+      provider,
     }: GetNodesType) =>
       getNodes({
         url: `/nodes/count`,
         params: getNodeParams({
-          peerType,
+          online,
           issues,
           search,
-          nodeType,
+          type,
           shard,
           status,
           identity,
+          provider,
         }),
       }),
 
-    getIdentities: () => provider({ url: `/identities` }),
+    getNodesVersions,
+
+    getIdentities: (identities?: string) =>
+      provider({ url: `/identities`, params: { identities } }),
 
     getIdentity: (identity: string) => provider({ url: `/identities/${identity}` }),
 
-    getNode: (key: string) => getNodes({ url: `/nodes/${key}` }),
-
-    getRounds: (validator: string) =>
+    getRounds: ({ validator, shard, epoch }: { validator: string; shard: number; epoch: number }) =>
       provider({
         url: `/rounds`,
         params: {
           size: 138,
           from: 0,
           validator,
+          shard,
+          epoch,
         },
       }),
 
@@ -217,19 +253,53 @@ export default function useAdapter() {
 
     // Tokens
 
-    getAccountTokens: (address: string) => provider({ url: `/accounts/${address}/tokens` }),
-
-    getTokens: (size = 1) =>
+    getAccountTokens: ({ address, size }: { address: string; size: number }) =>
       provider({
-        url: `/tokens`,
+        url: `/accounts/${address}/tokens`,
         params: {
           from: (size - 1) * 25,
           size: 25,
         },
       }),
 
-    getTokenDetails: (tokenId: string) => provider({ url: `/tokens/${tokenId}` }),
+    getAccountTokensCount: (address: string) =>
+      provider({ url: `/accounts/${address}/tokens/count` }),
 
-    getTokensCount: () => provider({ url: `/tokens/count` }),
+    getTokens: (props: GetTokensType) =>
+      provider({
+        url: `/tokens`,
+        params: getTokensParam(props),
+      }),
+
+    getTokensCount: ({ search }: GetTokensType) =>
+      provider({
+        url: `/tokens/count`,
+        params: getTokensParam({ search }),
+      }),
+
+    getToken: (tokenId: string) => provider({ url: `/tokens/${tokenId}` }),
+
+    // Providers
+
+    getProviders: (props: GetProvidersType) =>
+      getProviders({
+        url: `/providers`,
+        params: getProviderParams(props),
+      }),
+
+    getProvider: ({ address }: { address: string }) =>
+      getProvider({ url: `/providers/${address}` }),
+
+    getEconomics: () => getEconomics({ url: `/economics` }),
+
+    getEgldPrice,
+    getEgldPriceHistory,
+    getEgldMarketCap,
+    getEgldMarketCapHistory,
+    getEgldVolumeHistory,
+    getTotalStakedHistory,
+    getUsersStaking,
+    getTransactionsHistory,
+    getAccountsHistory,
   };
 }

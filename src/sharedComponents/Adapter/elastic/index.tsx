@@ -26,7 +26,49 @@ export default {
     const { proxyUrl } = props;
     return shards({ proxyUrl });
   },
-  getRewards: () => {
+  getNodesVersions: () => {
+    throw new Error('not defined');
+  },
+  getAccountDelegation: () => {
+    throw new Error('not defined');
+  },
+  getAccountStake: () => {
+    throw new Error('not defined');
+  },
+  getEconomics: () => {
+    throw new Error('not defined');
+  },
+  getEgldPrice: () => {
+    throw new Error('not defined');
+  },
+  getProviders: () => {
+    throw new Error('not defined');
+  },
+  getProvider: () => {
+    throw new Error('not defined');
+  },
+  getEgldMarketCap: () => {
+    throw new Error('not defined');
+  },
+  getEgldPriceHistory: () => {
+    throw new Error('not defined');
+  },
+  getEgldMarketCapHistory: () => {
+    throw new Error('not defined');
+  },
+  getEgldVolumeHistory: () => {
+    throw new Error('not defined');
+  },
+  getTotalStakedHistory: () => {
+    throw new Error('not defined');
+  },
+  getUsersStaking: () => {
+    throw new Error('not defined');
+  },
+  getTransactionsHistory: () => {
+    throw new Error('not defined');
+  },
+  getAccountsHistory: () => {
     throw new Error('not defined');
   },
 };

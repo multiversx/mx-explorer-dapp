@@ -1,0 +1,50 @@
+.simple-map {
+  @include media-breakpoint-up(lg) {
+    max-height: 25rem;
+  }
+
+  .rsm-svg {
+    fill: $map-bg; // background color
+    stroke: $secondary; // border color
+    stroke-width: 0.015rem;
+
+    .rsm-geography {
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .simple-map-marker {
+      fill: $primary;
+
+      &.pulse-marker {
+        fill: lighten($primary, 15%);
+      }
+    }
+
+    .pulse {
+      fill: none;
+      stroke: $primary;
+      animation-duration: 0.9s;
+      animation-name: pulse;
+      animation-iteration-count: 1;
+    }
+
+    @keyframes pulse {
+      0% {
+        stroke-width: 0.214rem;
+        stroke-opacity: 1;
+        transform: scale3D(1, 1, 1);
+      }
+      100% {
+        stroke-width: 0;
+        stroke-opacity: 0;
+        transform: scale3d(6, 6, 1);
+      }
+    }
+  }
+}
+
+.continent-name {
+  line-height: 1.4;
+}

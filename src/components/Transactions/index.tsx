@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { Loader, ShardSpan, TransactionsTable, adapter } from 'sharedComponents';
+import { Loader, TransactionsTable, adapter } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import { useSize, useURLSearchParams } from 'helpers';
+import { shardSpanText } from 'sharedComponents/ShardSpan';
 
 const Transactions = () => {
   const ref = React.useRef(null);
@@ -85,28 +86,7 @@ const Transactions = () => {
 
       <div ref={ref}>
         {dataReady === true && (
-          <div className="container pt-spacer">
-            <div className="row page-header">
-              <div className="col-12">
-                <h3 className="page-title mb-4">
-                  <span data-testid="title">Transactions</span>
-                  {senderShard !== undefined && (
-                    <>
-                      <span>&nbsp;from&nbsp;</span>
-                      <ShardSpan shard={senderShard} />
-                    </>
-                  )}
-                  &nbsp;
-                  {receiverShard !== undefined && (
-                    <>
-                      <span>to&nbsp;</span>
-                      <ShardSpan shard={receiverShard} />
-                    </>
-                  )}
-                </h3>
-              </div>
-            </div>
-
+          <div className="container page-content">
             <div className="row">
               <div className="col-12">
                 {transactions.length > 0 ? (
@@ -114,6 +94,23 @@ const Transactions = () => {
                     transactions={transactions}
                     totalTransactions={totalTransactions}
                     size={size}
+                    title={
+                      <h6 data-testid="title">
+                        Transactions
+                        {senderShard !== undefined && (
+                          <>
+                            <span>&nbsp;from&nbsp;</span>
+                            {shardSpanText(senderShard)}
+                          </>
+                        )}
+                        {receiverShard !== undefined && (
+                          <>
+                            <span>&nbsp;to&nbsp;</span>
+                            {shardSpanText(receiverShard)}
+                          </>
+                        )}
+                      </h6>
+                    }
                   />
                 ) : (
                   <div className="card">

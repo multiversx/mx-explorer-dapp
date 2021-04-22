@@ -1,0 +1,22 @@
+.main-search {
+  .form-control {
+    box-shadow: $card-small-box-shadow;
+    padding-right: 3.5rem !important;
+
+    @include media-breakpoint-up(lg) {
+      padding-right: 4rem !important;
+    }
+
+    &::placeholder {
+      color: $muted;
+    }
+  }
+
+  .input-group-text {
+    color: $secondary;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+}

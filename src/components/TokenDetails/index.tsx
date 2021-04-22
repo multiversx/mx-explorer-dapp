@@ -21,13 +21,13 @@ const TokenDetails = () => {
 
   const ref = React.useRef(null);
 
-  const { getTokenDetails } = adapter();
+  const { getToken } = adapter();
 
   const [tokenDetails, setTokenDetails] = React.useState<types.TokenType>();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchTokenDetails = () => {
-    getTokenDetails(tokenId).then(({ success, data }) => {
+    getToken(tokenId).then(({ success, data }) => {
       if (ref.current !== null) {
         setTokenDetails(data);
         setDataReady(success);
@@ -44,7 +44,7 @@ const TokenDetails = () => {
 
       <div ref={ref}>
         {dataReady === true && tokenDetails && (
-          <div className="container pt-spacer">
+          <div className="container page-content">
             <div className="row page-header">
               <div className="col-12">
                 <h3 className="page-title mb-4" data-testid="title">
@@ -57,30 +57,30 @@ const TokenDetails = () => {
                 <div className="card">
                   <div className="card-body p-0">
                     <div className="container-fluid">
-                      <DetailItem title="Name">{tokenDetails.tokenName}</DetailItem>
-                      <DetailItem title="Identifier">{tokenDetails.tokenIdentifier}</DetailItem>
+                      <DetailItem title="Name">{tokenDetails.name}</DetailItem>
+                      <DetailItem title="Token">{tokenDetails.token}</DetailItem>
                       <DetailItem title="Owner">
                         <div className="d-flex">
                           <NetworkLink
-                            to={urlBuilder.accountDetails(tokenDetails.ownerAddress)}
+                            to={urlBuilder.accountDetails(tokenDetails.owner)}
                             className="trim-wrapper"
                           >
-                            <Trim text={tokenDetails.ownerAddress} />
+                            <Trim text={tokenDetails.owner} />
                           </NetworkLink>
                         </div>
                       </DetailItem>
                       <DetailItem title="Minted">
                         <Denominate
-                          value={tokenDetails.mintedValue}
+                          value={tokenDetails.minted}
                           showLastNonZeroDecimal={true}
                           showLabel={false}
-                          denomination={tokenDetails.numDecimals}
+                          denomination={tokenDetails.decimals}
                         />
                       </DetailItem>
-                      <DetailItem title="Num Decimals">{tokenDetails.numDecimals}</DetailItem>
+                      <DetailItem title="Decimals">{tokenDetails.decimals}</DetailItem>
                       <DetailItem title="Burnt">
                         <Denominate
-                          value={tokenDetails.burntValue}
+                          value={tokenDetails.burnt}
                           showLastNonZeroDecimal={true}
                           showLabel={false}
                         />

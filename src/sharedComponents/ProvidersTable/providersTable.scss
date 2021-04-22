@@ -1,0 +1,16 @@
+.providers-table {
+  .sort-col {
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.active {
+      .sort-icon {
+        color: $primary;
+      }
+    }
+  }
+}

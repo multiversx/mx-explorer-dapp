@@ -48,7 +48,27 @@ export default function useAdapterConfig() {
 
   const adapter: 'api' | 'elastic' = networkAdapter as any;
 
-  const { provider, getStats, getNodes, getRewards, getShards } = providers[adapter];
+  const {
+    provider,
+    getStats,
+    getNodes,
+    getNodesVersions,
+    getAccountDelegation,
+    getAccountStake,
+    getEconomics,
+    getShards,
+    getEgldPrice,
+    getEgldPriceHistory,
+    getEgldMarketCapHistory,
+    getEgldVolumeHistory,
+    getTotalStakedHistory,
+    getUsersStaking,
+    getTransactionsHistory,
+    getAccountsHistory,
+    getProviders,
+    getProvider,
+    getEgldMarketCap,
+  } = providers[adapter];
 
   const providerProps = { ...providers[adapter], metaChainShardId, timeout };
 
@@ -58,8 +78,32 @@ export default function useAdapterConfig() {
     provider: (props = basicProps) => wrap(() => provider({ ...providerProps, ...props })),
     getStats: (props = basicProps) => wrap(() => getStats({ ...providerProps, ...props })),
     getNodes: (props = basicProps) => wrap(() => getNodes({ ...providerProps, ...props })),
+    getNodesVersions: (props = basicProps) =>
+      wrap(() => getNodesVersions({ ...providerProps, ...props })),
     getShards: (props = basicProps) => wrap(() => getShards({ ...providerProps, ...props })),
-    getRewards: (address: string) =>
-      wrap(() => getRewards({ ...providerProps, ...basicProps, address })),
+    getAccountDelegation: (props = basicProps) =>
+      wrap(() => getAccountDelegation({ ...providerProps, ...props })),
+    getAccountStake: (props = basicProps) =>
+      wrap(() => getAccountStake({ ...providerProps, ...props })),
+    getEconomics: (props = basicProps) => wrap(() => getEconomics({ ...providerProps, ...props })),
+    getEgldPrice: (props = basicProps) => wrap(() => getEgldPrice({ ...providerProps, ...props })),
+    getProviders: (props = basicProps) => wrap(() => getProviders({ ...providerProps, ...props })),
+    getProvider: (props = basicProps) => wrap(() => getProvider({ ...providerProps, ...props })),
+    getEgldMarketCap: (props = basicProps) =>
+      wrap(() => getEgldMarketCap({ ...providerProps, ...props })),
+    getEgldPriceHistory: (props = basicProps) =>
+      wrap(() => getEgldPriceHistory({ ...providerProps, ...props })),
+    getEgldMarketCapHistory: (props = basicProps) =>
+      wrap(() => getEgldMarketCapHistory({ ...providerProps, ...props })),
+    getEgldVolumeHistory: (props = basicProps) =>
+      wrap(() => getEgldVolumeHistory({ ...providerProps, ...props })),
+    getTotalStakedHistory: (props = basicProps) =>
+      wrap(() => getTotalStakedHistory({ ...providerProps, ...props })),
+    getUsersStaking: (props = basicProps) =>
+      wrap(() => getUsersStaking({ ...providerProps, ...props })),
+    getTransactionsHistory: (props = basicProps) =>
+      wrap(() => getTransactionsHistory({ ...providerProps, ...props })),
+    getAccountsHistory: (props = basicProps) =>
+      wrap(() => getAccountsHistory({ ...providerProps, ...props })),
   };
 }

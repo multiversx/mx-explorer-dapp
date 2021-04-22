@@ -1,7 +1,7 @@
-import { faAngleLeft } from '@fortawesome/pro-regular-svg-icons/faAngleLeft';
-import { faAngleRight } from '@fortawesome/pro-regular-svg-icons/faAngleRight';
-import { faAngleDoubleRight } from '@fortawesome/pro-regular-svg-icons/faAngleDoubleRight';
-import { faAngleDoubleLeft } from '@fortawesome/pro-regular-svg-icons/faAngleDoubleLeft';
+import { faCaretLeft } from '@fortawesome/pro-solid-svg-icons/faCaretLeft';
+import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
+import { faForward } from '@fortawesome/pro-solid-svg-icons/faForward';
+import { faBackward } from '@fortawesome/pro-solid-svg-icons/faBackward';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
@@ -14,11 +14,13 @@ const Pager = ({
   show,
   page,
   itemsPerPage,
+  className = '',
 }: {
   page: string;
   total: number | '...';
   itemsPerPage: number;
   show: boolean;
+  className?: string;
 }) => {
   const { activeNetworkId } = useGlobalState();
 
@@ -30,7 +32,7 @@ const Pager = ({
   const urlParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlParams);
 
-  const { size, start, last, lastPage, end } = pagerHelper({
+  const { size, lastPage, end } = pagerHelper({
     total,
     itemsPerPage,
     page,
@@ -53,81 +55,89 @@ const Pager = ({
 
   const prevPageUrl = size === 2 ? `${pathname}?${firstUrlParams}` : `${pathname}?${prevUrlParams}`;
 
-  const startEnd = end <= 1 ? end : `${start.toLocaleString('en')}-${last.toLocaleString('en')}`;
+  const startEnd = size;
 
   const lastUrlParams = new URLSearchParams({
     ...params,
     page: `${lastPage}`,
   }).toString();
 
+  const leftBtnActive = size !== 1;
+  const rightBtnsActive = end < total;
+
   return show ? (
-    <div className="float-right mt-3">
-      <ul className="list-inline">
-        <li className="list-inline-item">
-          <div className="pager">
-            {size === 1 ? (
-              <span className="text-muted">
-                <FontAwesomeIcon icon={faAngleDoubleLeft} /> First
-              </span>
-            ) : (
-              <NetworkLink data-testid="nextPageButton" to={`${pathname}?${firstUrlParams}`}>
-                <FontAwesomeIcon icon={faAngleDoubleLeft} /> First
-              </NetworkLink>
-            )}
-          </div>
-        </li>
-        <li className="list-inline-item">
+    <div className={`pager ${className}`}>
+      <div className="m-0 d-flex align-items-strech">
+        <div className={`btns-contrainer left border ${leftBtnActive ? '' : 'inactive'}`}>
           {size === 1 ? (
-            <div className="pager">
-              <span className="text-muted" data-testid="disabledPreviousPageButton">
-                <FontAwesomeIcon icon={faAngleLeft} /> Prev
-              </span>
+            <div className="btn btn-primary-light">
+              <FontAwesomeIcon icon={faBackward} />
             </div>
           ) : (
-            <div className="pager">
-              <NetworkLink to={prevPageUrl} data-testid="previousPageButton">
-                <FontAwesomeIcon icon={faAngleLeft} /> Prev
-              </NetworkLink>
-            </div>
+            <NetworkLink
+              className="btn btn-primary-light"
+              data-testid="nextPageButton"
+              to={`${pathname}?${firstUrlParams}`}
+            >
+              <FontAwesomeIcon icon={faBackward} />
+            </NetworkLink>
           )}
-        </li>
-        <li className="list-inline-item mx-2">
+
+          {size === 1 ? (
+            <div className="btn btn-primary-light" data-testid="disabledPreviousPageButton">
+              <FontAwesomeIcon icon={faCaretLeft} size="lg" />
+            </div>
+          ) : (
+            <NetworkLink
+              className="btn btn-primary-light"
+              to={prevPageUrl}
+              data-testid="previousPageButton"
+            >
+              <FontAwesomeIcon icon={faCaretLeft} size="lg" />
+            </NetworkLink>
+          )}
+        </div>
+
+        <div className="d-flex align-items-center current-page border px-2">
           <span>
             <span data-testid="pageInterval">{startEnd}</span>
-            &nbsp;of&nbsp;
-            <span data-testid="totalPages">{total.toLocaleString('en')}</span>
+            &nbsp;/&nbsp;
+            <span data-testid="totalPages">
+              {!isNaN(lastPage) ? lastPage.toLocaleString('en') : 1}
+            </span>
           </span>
-        </li>
-        <li className="list-inline-item ml-2">
+        </div>
+
+        <div className={`btns-contrainer right border ${rightBtnsActive ? '' : 'inactive'}`}>
           {total === '...' || end < total ? (
-            <div className="pager">
-              <NetworkLink data-testid="nextPageButton" to={`${pathname}?${nextUrlParams}`}>
-                Next <FontAwesomeIcon icon={faAngleRight} />
-              </NetworkLink>
-            </div>
+            <NetworkLink
+              className="btn btn-primary-light"
+              data-testid="nextPageButton"
+              to={`${pathname}?${nextUrlParams}`}
+            >
+              <FontAwesomeIcon icon={faCaretRight} size="lg" />
+            </NetworkLink>
           ) : (
-            <div className="pager">
-              <span className="text-muted" data-testid="disabledNextPageButton">
-                Next <FontAwesomeIcon icon={faAngleRight} />
-              </span>
+            <div className="btn btn-primary-light" data-testid="disabledNextPageButton">
+              <FontAwesomeIcon icon={faCaretRight} size="lg" />
             </div>
           )}
-        </li>
 
-        <li className="list-inline-item">
-          <div className="pager">
-            {!isNaN(lastPage) && end < total ? (
-              <NetworkLink data-testid="nextPageButton" to={`${pathname}?${lastUrlParams}`}>
-                Last <FontAwesomeIcon icon={faAngleDoubleRight} />
-              </NetworkLink>
-            ) : (
-              <span className="text-muted">
-                Last <FontAwesomeIcon icon={faAngleDoubleRight} />
-              </span>
-            )}
-          </div>
-        </li>
-      </ul>
+          {!isNaN(lastPage) && end < total ? (
+            <NetworkLink
+              className="btn btn-primary-light"
+              data-testid="nextPageButton"
+              to={`${pathname}?${lastUrlParams}`}
+            >
+              <FontAwesomeIcon icon={faForward} />
+            </NetworkLink>
+          ) : (
+            <span className="btn btn-primary-light">
+              <FontAwesomeIcon icon={faForward} />
+            </span>
+          )}
+        </div>
+      </div>
     </div>
   ) : null;
 };

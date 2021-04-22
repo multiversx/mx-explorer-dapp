@@ -1,12 +1,19 @@
 import * as React from 'react';
-import { IdentityType } from 'context/state';
 
-const IdentityAvatar = ({ identity }: { identity: IdentityType }) => {
+interface IdentityAvatarType {
+  name?: string;
+  avatar?: string;
+  identity?: string;
+}
+
+const IdentityAvatar = ({ identity }: { identity: IdentityAvatarType }) => {
   return (
     <img
-      className={`identity-avatar rounded-circle mr-2 ${!identity.avatar ? 'p-1 bg-light' : ''}`}
+      className={`identity-avatar rounded-circle flex-shrink-0 mr-2 ${
+        !identity.avatar ? 'p-1 bg-light' : ''
+      }`}
       src={identity.avatar ? identity.avatar : require('../../../assets/images/default-avatar.svg')}
-      alt={identity.name}
+      alt="img"
       height="42"
     />
   );

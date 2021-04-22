@@ -1,8 +1,20 @@
-// Uncomment in case of reeboot override not working
-// html,
-// body {
-//   font-weight: 400;
-// }
+$base-font-size: 14px;
+
+html {
+  font-size: $base-font-size;
+  font-weight: 500;
+
+  // Adjust font sizes for 144dpi+ (including retina).
+  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+    font-size: $base-font-size;
+    font-weight: 400;
+  }
+}
+
+body {
+  font-size: $base-font-size;
+  font-weight: 500;
+}
 
 .card {
   @extend .card-small;
@@ -21,29 +33,24 @@
 
     .card-header-item {
       border-bottom: 1px solid $border-color;
-      padding: 1rem;
-    }
+      padding: 1.1rem 1rem;
 
-    .identity-header-item {
-      @extend .px-3;
-      @extend .px-lg-0;
+      h6 {
+        line-height: 1.95rem;
+        @extend .m-0;
+      }
 
-      display: flex;
-      align-items: center;
-      padding-top: 1.2rem;
-      padding-bottom: 1.2rem;
-
-      @include media-breakpoint-up(lg) {
-        padding-top: 0.45rem;
-        padding-bottom: 0.45rem;
+      &.compact {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        background-color: $light;
       }
     }
   }
 
   .card-footer {
     border-top: 1px solid $border-color;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    line-height: 2.37rem;
   }
 
   @include media-breakpoint-up(lg) {

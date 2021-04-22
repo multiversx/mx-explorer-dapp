@@ -17,6 +17,14 @@ import useIsMainnet from './useIsMainnet';
 import useNetworkPathname from './useNetworkPathname';
 import * as types from './types';
 import analytics from './analytics';
+import isContract from './isContract';
+import usdValue from './usdValue';
+import nominate from './nominate';
+import processStats from './processStats';
+import useFetchPrice from './useFetchPrice';
+import useNetworkRouter from './useNetworkRouter';
+import useLoopManager from './useLoopManager';
+import useActiveRoute from './useActiveRoute';
 
 export {
   truncate,
@@ -38,4 +46,12 @@ export {
   useNetworkPathname,
   types,
   analytics,
+  isContract,
+  usdValue,
+  nominate,
+  processStats,
+  useFetchPrice,
+  useNetworkRouter,
+  useLoopManager,
+  useActiveRoute,
 };
