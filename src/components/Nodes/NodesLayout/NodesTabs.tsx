@@ -9,7 +9,7 @@ const NodesTabs = () => {
 
   return (
     <div className="nodes-tabs card-header-item">
-      <div className="d-flex">
+      <div className="d-flex flex-wrap">
         {isMainnet && (
           <NetworkLink
             to={validatorsRoutes.identities}
@@ -30,14 +30,18 @@ const NodesTabs = () => {
 
         <NetworkLink
           to={validatorsRoutes.nodes}
-          className={`tab-link mx-3 ${activeRoute(validatorsRoutes.nodes) ? 'active' : ''}`}
+          className={`tab-link mx-3 pr-3 pr-sm-0 ${
+            activeRoute(validatorsRoutes.nodes) ? 'active' : ''
+          }`}
         >
           <h6>Nodes</h6>
         </NetworkLink>
 
         <NetworkLink
           to={validatorsRoutes.statistics}
-          className={`tab-link ml-3 ${activeRoute(validatorsRoutes.statistics) ? 'active' : ''}`}
+          className={`tab-link ml-0 ml-sm-3 ${
+            activeRoute(validatorsRoutes.statistics) ? 'active' : ''
+          }`}
         >
           <h6>Statistics</h6>
         </NetworkLink>

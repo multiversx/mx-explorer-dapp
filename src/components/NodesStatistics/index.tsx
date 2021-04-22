@@ -1,7 +1,7 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { adapter, Loader, Pager, PageState } from 'sharedComponents';
-import { NodesTable } from 'sharedComponents';
+import { NodesTable, NodesFilters } from 'sharedComponents';
 import { useFilters } from 'helpers';
 import { useLocation } from 'react-router-dom';
 import NodesTabs from 'components/Nodes/NodesLayout/NodesTabs';
@@ -39,9 +39,9 @@ const NodesStatistics = () => {
       <div className="card-header position-unset">
         <NodesTabs />
 
-        {/* <div className="card-header-item">
-          <NodesFilters />
-        </div> */}
+        <div className="card-header-item">
+          <NodesFilters onlySearch />
+        </div>
       </div>
 
       {dataReady === undefined && <Loader />}

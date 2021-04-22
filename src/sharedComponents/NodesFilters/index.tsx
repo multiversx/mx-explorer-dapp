@@ -8,14 +8,15 @@ import { NetworkLink } from 'sharedComponents';
 import { validatorsRoutes } from 'routes';
 import { useNetworkRoute } from 'helpers';
 
-const Filters = () => {
+const Filters = ({ onlySearch }: { onlySearch?: boolean }) => {
   const { search: locationSearch } = useLocation();
-
   const networkRoute = useNetworkRoute();
   const history = useHistory();
   const urlParams = new URLSearchParams(locationSearch);
   const { search, status, issues, type } = Object.fromEntries(urlParams);
   const [inputValue, setInputValue] = React.useState<string>(search);
+
+  const baseRoute = onlySearch ? validatorsRoutes.statistics : validatorsRoutes.nodes;
 
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setInputValue(e.target.value);
@@ -27,7 +28,7 @@ const Filters = () => {
       ...rest,
       ...(searchValue ? { search: searchValue } : {}),
     }).toString();
-    history.push(networkRoute(`${validatorsRoutes.nodes}?${nextUrlParams}`));
+    history.push(networkRoute(`${baseRoute}?${nextUrlParams}`));
   };
 
   const nodeStatusLink = (statusValue: string) => {
@@ -36,7 +37,7 @@ const Filters = () => {
       ...rest,
       ...(statusValue ? { status: statusValue } : {}),
     }).toString();
-    return `${validatorsRoutes.nodes}?${nextUrlParams}`;
+    return `${baseRoute}?${nextUrlParams}`;
   };
 
   const nodeTypeLink = (typeValue: string) => {
@@ -45,7 +46,7 @@ const Filters = () => {
       ...rest,
       ...(typeValue ? { type: typeValue } : {}),
     }).toString();
-    return `${validatorsRoutes.nodes}?${nextUrlParams}`;
+    return `${baseRoute}?${nextUrlParams}`;
   };
 
   const issuesLink = (issuesValue: string) => {
@@ -54,111 +55,119 @@ const Filters = () => {
       ...rest,
       ...(issuesValue ? { issues: issuesValue, type: 'validator' } : {}),
     }).toString();
-    return `${validatorsRoutes.nodes}?${nextUrlParams}`;
+    return `${baseRoute}?${nextUrlParams}`;
   };
 
-  return (
-    <div className="nodes-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
-      <ul className="list-inline m-0">
-        <li className="list-inline-item my-1 my-md-0">
-          <NetworkLink
-            to={validatorsRoutes.nodes}
-            className={`btn btn-sm btn-outline-light btn-pill ${
-              [search, status, issues, type].every((el) => el === undefined) ? 'active' : ''
-            }`}
-          >
-            All
-          </NetworkLink>
-        </li>
-        <li className="list-inline-item my-1 my-md-0">
-          <NetworkLink
-            to={nodeTypeLink('validator')}
-            className={`btn btn-sm btn-outline-light btn-pill ${
-              type === 'validator' && issues !== 'true' ? 'active' : ''
-            }`}
-          >
-            Validators
-          </NetworkLink>
-        </li>
-        <li className="list-inline-item my-1 my-md-0">
-          <NetworkLink
-            to={nodeTypeLink('observer')}
-            data-testid="filterByObservers"
-            className={`btn btn-sm btn-outline-light btn-pill ${
-              type === 'observer' ? 'active' : ''
-            }`}
-          >
-            Observers
-          </NetworkLink>
-        </li>
-        <li className="list-inline-item my-1 my-md-0">
-          <NetworkLink
-            to={issuesLink('true')}
-            className={`btn btn-sm btn-outline-light btn-pill ${issues === 'true' ? 'active' : ''}`}
-          >
-            Issues
-          </NetworkLink>
-        </li>
-        <li className="list-inline-item my-1 my-md-0">
-          <Dropdown className="position-unset">
-            <Dropdown.Toggle
-              variant="outline-light"
-              size="sm"
-              className={`btn-pill ${
-                ['eligible', 'waiting', 'new', 'jailed'].includes(status) ? 'active' : ''
-              }`}
-              id="more"
-            >
-              More
-            </Dropdown.Toggle>
+  const containerClasses = onlySearch
+    ? 'justify-content-end'
+    : 'align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row';
 
-            <Dropdown.Menu style={{ marginTop: '0.35rem', marginBottom: '0.35rem' }}>
-              <NetworkLink
-                className={`dropdown-item ${status === 'eligible' ? 'active' : ''}`}
-                data-testid="filterByValidators"
-                to={nodeStatusLink('eligible')}
+  return (
+    <div className={`nodes-filters d-flex ${containerClasses}`}>
+      {!onlySearch && (
+        <ul className="list-inline m-0">
+          <li className="list-inline-item my-1 my-md-0">
+            <NetworkLink
+              to={baseRoute}
+              className={`btn btn-sm btn-outline-light btn-pill ${
+                [search, status, issues, type].every((el) => el === undefined) ? 'active' : ''
+              }`}
+            >
+              All
+            </NetworkLink>
+          </li>
+          <li className="list-inline-item my-1 my-md-0">
+            <NetworkLink
+              to={nodeTypeLink('validator')}
+              className={`btn btn-sm btn-outline-light btn-pill ${
+                type === 'validator' && issues !== 'true' ? 'active' : ''
+              }`}
+            >
+              Validators
+            </NetworkLink>
+          </li>
+          <li className="list-inline-item my-1 my-md-0">
+            <NetworkLink
+              to={nodeTypeLink('observer')}
+              data-testid="filterByObservers"
+              className={`btn btn-sm btn-outline-light btn-pill ${
+                type === 'observer' ? 'active' : ''
+              }`}
+            >
+              Observers
+            </NetworkLink>
+          </li>
+          <li className="list-inline-item my-1 my-md-0">
+            <NetworkLink
+              to={issuesLink('true')}
+              className={`btn btn-sm btn-outline-light btn-pill ${
+                issues === 'true' ? 'active' : ''
+              }`}
+            >
+              Issues
+            </NetworkLink>
+          </li>
+          <li className="list-inline-item my-1 my-md-0">
+            <Dropdown className="position-unset">
+              <Dropdown.Toggle
+                variant="outline-light"
+                size="sm"
+                className={`btn-pill ${
+                  ['eligible', 'waiting', 'new', 'jailed'].includes(status) ? 'active' : ''
+                }`}
+                id="more"
               >
-                Eligible
-              </NetworkLink>
-              <NetworkLink
-                className={`dropdown-item ${status === 'waiting' ? 'active' : ''}`}
-                data-testid="filterByValidators"
-                to={nodeStatusLink('waiting')}
-              >
-                Waiting
-              </NetworkLink>
-              <NetworkLink
-                className={`dropdown-item ${status === 'new' ? 'active' : ''}`}
-                data-testid="filterByValidators"
-                to={nodeStatusLink('new')}
-              >
-                New
-              </NetworkLink>
-              <NetworkLink
-                className={`dropdown-item ${status === 'jailed' ? 'active' : ''}`}
-                data-testid="filterByValidators"
-                to={nodeStatusLink('jailed')}
-              >
-                Jailed
-              </NetworkLink>
-              <NetworkLink
-                className={`dropdown-item ${status === 'leaving' ? 'active' : ''}`}
-                data-testid="filterByValidators"
-                to={nodeStatusLink('leaving')}
-              >
-                Leaving
-              </NetworkLink>
-              <NetworkLink
-                className={`dropdown-item ${status === 'queued' ? 'active' : ''}`}
-                data-testid="filterByValidators"
-                to={nodeStatusLink('queued')}
-              >
-                Queued
-              </NetworkLink>
-            </Dropdown.Menu>
-          </Dropdown>
-        </li>
-      </ul>
+                More
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu style={{ marginTop: '0.35rem', marginBottom: '0.35rem' }}>
+                <NetworkLink
+                  className={`dropdown-item ${status === 'eligible' ? 'active' : ''}`}
+                  data-testid="filterByValidators"
+                  to={nodeStatusLink('eligible')}
+                >
+                  Eligible
+                </NetworkLink>
+                <NetworkLink
+                  className={`dropdown-item ${status === 'waiting' ? 'active' : ''}`}
+                  data-testid="filterByValidators"
+                  to={nodeStatusLink('waiting')}
+                >
+                  Waiting
+                </NetworkLink>
+                <NetworkLink
+                  className={`dropdown-item ${status === 'new' ? 'active' : ''}`}
+                  data-testid="filterByValidators"
+                  to={nodeStatusLink('new')}
+                >
+                  New
+                </NetworkLink>
+                <NetworkLink
+                  className={`dropdown-item ${status === 'jailed' ? 'active' : ''}`}
+                  data-testid="filterByValidators"
+                  to={nodeStatusLink('jailed')}
+                >
+                  Jailed
+                </NetworkLink>
+                <NetworkLink
+                  className={`dropdown-item ${status === 'leaving' ? 'active' : ''}`}
+                  data-testid="filterByValidators"
+                  to={nodeStatusLink('leaving')}
+                >
+                  Leaving
+                </NetworkLink>
+                <NetworkLink
+                  className={`dropdown-item ${status === 'queued' ? 'active' : ''}`}
+                  data-testid="filterByValidators"
+                  to={nodeStatusLink('queued')}
+                >
+                  Queued
+                </NetworkLink>
+              </Dropdown.Menu>
+            </Dropdown>
+          </li>
+        </ul>
+      )}
 
       <div className="my-1 my-md-0">
         <div role="search">
