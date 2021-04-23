@@ -36,48 +36,60 @@ export default {
   getEconomics: api,
   getEgldPrice: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latest/quotes/egld/price`, { timeout });
+    return axios.get(`https://data.elrond.com/latest/quoteshistorical/egld/price`, { timeout });
   },
   getEgldMarketCap: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latest/quotes/egld/market_cap`, { timeout });
+    return axios.get(`https://data.elrond.com/latest/quoteshistorical/egld/market_cap`, {
+      timeout,
+    });
   },
   getEgldPriceHistory: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/marketcomplete/quotes/egld/price`, { timeout });
+    return axios.get(`https://data.elrond.com/latestcomplete/quoteshistorical/egld/price`, {
+      timeout,
+    });
   },
   getEgldMarketCapHistory: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/marketcomplete/quotes/egld/market_cap`, { timeout });
+    return axios.get(`https://data.elrond.com/latestcomplete/quoteshistorical/egld/market_cap`, {
+      timeout,
+    });
   },
   getEgldVolumeHistory: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latestcomplete/quotes/egld/volume_24h`, {
+    return axios.get(`https://data.elrond.com/latestcomplete/quoteshistorical/egld/volume_24h`, {
       timeout,
     });
   },
   getTotalStakedHistory: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latestcomplete/economics/economics/staked`, {
+    return axios.get(`https://data.elrond.com/latestcomplete/stakinghistoricalbackup/total/value`, {
       timeout,
     });
   },
   getUsersStaking: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latest/staking/total/count`, {
+    return axios.get(`https://data.elrond.com/latest/stakinghistoricalbackup/total/users`, {
       timeout,
     });
   },
   getTransactionsHistory: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latestcomplete/transactions/transactions/count_24h`, {
-      timeout,
-    });
+    return axios.get(
+      `https://data.elrond.com/latestcomplete/transactionshistoricalbackup/transactions/count_24h`,
+      {
+        timeout,
+      }
+    );
   },
   getAccountsHistory: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latestcomplete/accounts/accounts/count`, {
-      timeout,
-    });
+    return axios.get(
+      `https://data.elrond.com/latestcomplete/accountshistoricalbackup/accounts/count`,
+      {
+        timeout,
+      }
+    );
   },
 };
