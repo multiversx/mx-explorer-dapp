@@ -258,12 +258,12 @@ const StatisticsChart = ({
               ctx.stroke();
               ctx.restore();
             }
-            if (displayType === 'price') {
+            if (displayType !== 'small') {
               ctx.save();
               ctx.beginPath();
               ctx.moveTo(0, bottomY);
               ctx.lineTo(rightX, bottomY);
-              ctx.lineWidth = 0.5;
+              ctx.lineWidth = 1;
               ctx.strokeStyle = mutedColor;
               ctx.stroke();
               ctx.restore();
