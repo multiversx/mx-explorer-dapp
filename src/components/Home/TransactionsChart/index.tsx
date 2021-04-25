@@ -49,8 +49,8 @@ const TransactionsChart = () => {
           <h6 className="mb-0">Daily Transactions</h6>
         </div>
       </div>
-      <div className="card-body px-spacer pb-spacer">
-        <div className="card-details pb-3">
+      <div className="card-body pr-1 pr-sm-3 pb-3">
+        <div className="card-details pl-3 pb-3">
           <div>
             <small className="text-secondary pr-3">Transactions Today: </small>
             <span>{getDailyTransactions(chartData)}</span>
@@ -71,13 +71,15 @@ const TransactionsChart = () => {
           />
         )}
         {dataReady === true && chartData.length > 0 && (
-          <StatisticsChart
-            chartData={chartData}
-            type="bar"
-            label="Transactions"
-            showYaxis={false}
-            aspectRatio={4}
-          />
+          <div className="ml-n3">
+            <StatisticsChart
+              chartData={chartData}
+              type="bar"
+              label="Transactions"
+              showYaxis={true}
+              aspectRatio={3.85}
+            />
+          </div>
         )}
       </div>
     </div>

@@ -83,42 +83,42 @@ const PriceChart = () => {
           </h6>
         </div>
       </div>
-      <div className="card-body pb-3">
-        <div className="pl-3">
-          <div className="card-details pb-3">
-            <div>
-              <small className="text-secondary pr-3">Current Price: </small>
-              <span>{getCurrentValue(priceChartData)}</span>
-            </div>
-            <div>
-              <small className="text-secondary pr-3">Volume 24h: </small>
-              <span>{getCurrentValue(volumeChartData)}</span>
-            </div>
+      <div className="card-body pr-1 pr-sm-3 pb-3">
+        <div className="card-details pl-3">
+          <div>
+            <small className="text-secondary pr-3">Current Price: </small>
+            <span>{getCurrentValue(priceChartData)}</span>
           </div>
-          {dataReady === undefined && <Loader small={true} />}
-          {dataReady === false && (
-            <PageState
-              icon={faChartBar}
-              title="Unable to load chart"
-              className="my-auto"
-              titleClassName="mt-0"
-              dataTestId="priceChartError"
+          <div>
+            <small className="text-secondary pr-3">Volume 24h: </small>
+            <span>{getCurrentValue(volumeChartData)}</span>
+          </div>
+        </div>
+        {dataReady === undefined && <Loader small={true} />}
+        {dataReady === false && (
+          <PageState
+            icon={faChartBar}
+            title="Unable to load chart"
+            className="my-auto"
+            titleClassName="mt-0"
+            dataTestId="priceChartError"
+          />
+        )}
+        {dataReady === true && chartData.length > 0 && (
+          <div className="ml-n3 mb-n1">
+            <StatisticsChart
+              chartData={chartData}
+              displayType="price"
+              type="lineWithVertical"
+              label="USD"
+              formatMoney={true}
+              showYaxis={true}
+              aspectRatio={3.43}
             />
-          )}
-          {dataReady === true && chartData.length > 0 && (
-            <div className="pb-1">
-              <StatisticsChart
-                chartData={chartData}
-                displayType="price"
-                type="lineWithVertical"
-                label="USD"
-                formatMoney={true}
-                showYaxis={true}
-                aspectRatio={4}
-              />
-            </div>
-          )}
-          {volumeChartData.length > 0 && (
+          </div>
+        )}
+        {volumeChartData.length > 0 && (
+          <div className="pl-3">
             <StatisticsChart
               chartData={volumeChartData}
               displayType="small"
@@ -128,8 +128,8 @@ const PriceChart = () => {
               showYaxis={false}
               aspectRatio={9}
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -58,8 +58,8 @@ const StakingChart = () => {
           <h6 className="mb-0">Staking Metrics</h6>
         </div>
       </div>
-      <div className="card-body px-spacer pb-3">
-        <div className="card-details">
+      <div className="card-body pr-1 pr-sm-3 pb-3">
+        <div className="card-details pl-3">
           <div>
             <small className="text-secondary pr-3">Total Staked: </small>
             <span>
@@ -82,13 +82,15 @@ const StakingChart = () => {
           />
         )}
         {dataReady === true && chartData.length > 0 && (
-          <StatisticsChart
-            chartData={chartData}
-            label="Total Staked"
-            showYaxis={false}
-            type="lineWithVertical"
-            aspectRatio={2.5}
-          />
+          <div className="ml-n3">
+            <StatisticsChart
+              chartData={chartData}
+              label="Total Staked"
+              showYaxis={true}
+              type="lineWithVertical"
+              aspectRatio={2.5}
+            />
+          </div>
         )}
       </div>
     </div>
