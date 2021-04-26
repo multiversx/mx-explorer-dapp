@@ -50,10 +50,10 @@ const AccountsChart = () => {
           <h6 className="mb-0">Address Metrics</h6>
         </div>
       </div>
-      <div className="card-body px-spacer pb-spacer">
-        <div className="card-details">
+      <div className="card-body pr-1 pr-sm-3 pb-3">
+        <div className="card-details pl-3">
           <div>
-            <small className="text-secondary pr-3">Daily Addresses: </small>
+            <small className="text-secondary pr-3">New Addresses Today: </small>
             <span>{getDailyAccounts(chartData)}</span>
           </div>
           <div>
@@ -72,12 +72,14 @@ const AccountsChart = () => {
           />
         )}
         {dataReady === true && chartData.length > 0 && (
-          <StatisticsChart
-            chartData={chartData}
-            label="Total Addresses"
-            showYaxis={false}
-            type="lineWithVertical"
-          />
+          <div className="ml-n3">
+            <StatisticsChart
+              chartData={chartData}
+              label="Total Addresses"
+              showYaxis={true}
+              type="lineWithVertical"
+            />
+          </div>
         )}
       </div>
     </div>

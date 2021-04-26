@@ -27,12 +27,23 @@ interface ChartConfigType {
 const formatValue = (value: string | number | undefined, formatUsd: boolean, compact: boolean) => {
   if (value) {
     value = parseFloat(String(value));
-    const formattedValue =
-      compact && value > 500000000
-        ? `${(value / 1000000000).toFixed(1)}b`
-        : value.toLocaleString('en', {
-            maximumFractionDigits: parseFloat(String(value)) > 1000 ? 0 : 2,
-          });
+    let decimal;
+    const units = ['k', 'm', 'b', 't'];
+    const compactValue = (value: number) => {
+      for (var i = units.length - 1; i >= 0; i--) {
+        decimal = Math.pow(1000, i + 1);
+        if (value <= -decimal || value >= decimal) {
+          const displayValue = value / decimal;
+          return (displayValue > 9 ? displayValue : displayValue.toFixed(1)) + units[i];
+        }
+      }
+      return value;
+    };
+    const formattedValue = compact
+      ? compactValue(value)
+      : value.toLocaleString('en', {
+          maximumFractionDigits: parseFloat(String(value)) > 1000 ? 0 : 2,
+        });
 
     return `${formatUsd ? '$' : ''}${formattedValue}`;
   }
@@ -91,13 +102,25 @@ const chartConfig = ({
           borderColor: primaryColor,
         },
       },
+
       legend: {
         display: false,
       },
       scales: {
         xAxes: [
           {
-            display: false,
+            display: displayType !== 'small',
+            ticks: {
+              display: true,
+              maxTicksLimit: 1,
+              fontColor: mutedColor,
+              fontSize: 10,
+              minRotation: 0,
+              maxRotation: 0,
+              labelOffset: 8,
+              padding: -6,
+            },
+            gridLines: { display: false },
           },
         ],
         yAxes: [
@@ -214,7 +237,7 @@ const StatisticsChart = ({
       const backgroundColor = getBackgroundColor();
 
       const config = chartConfig({
-        labels: chartData.map(({ time }: { time: any }) => moment(time).format('MMMM D')),
+        labels: chartData.map(({ time }: { time: any }) => moment.utc(time).format('D MMM YYYY')),
         data: chartData.map(({ value }: { value: any }) => value),
         min: Math.max(Math.round(Math.min(...chartData.map((q: any) => q.value)) - 2), 0),
         stepSize: 2,
@@ -261,13 +284,32 @@ const StatisticsChart = ({
             if (displayType !== 'small') {
               ctx.save();
               ctx.beginPath();
-              ctx.moveTo(0, bottomY);
+              ctx.moveTo(28, bottomY);
               ctx.lineTo(rightX, bottomY);
               ctx.lineWidth = 1;
               ctx.strokeStyle = mutedColor;
               ctx.stroke();
               ctx.restore();
             }
+          },
+        });
+      }
+
+      if (displayType !== 'small') {
+        Chart.controllers.bar = Chart.controllers.bar.extend({
+          draw: function (ease: any) {
+            Chart.controllers.line.prototype.draw.call(this, ease);
+            const ctx = this.chart.ctx;
+            const bottomY = this.chart.chartArea.bottom;
+            const rightX = this.chart.chartArea.right;
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(28, bottomY);
+            ctx.lineTo(rightX, bottomY);
+            ctx.lineWidth = 0.8;
+            ctx.strokeStyle = mutedColor;
+            ctx.stroke();
+            ctx.restore();
           },
         });
       }
