@@ -237,7 +237,7 @@ const StatisticsChart = ({
       const backgroundColor = getBackgroundColor();
 
       const config = chartConfig({
-        labels: chartData.map(({ time }: { time: any }) => moment(time).format('D MMM YYYY')),
+        labels: chartData.map(({ time }: { time: any }) => moment.utc(time).format('D MMM YYYY')),
         data: chartData.map(({ value }: { value: any }) => value),
         min: Math.max(Math.round(Math.min(...chartData.map((q: any) => q.value)) - 2), 0),
         stepSize: 2,

@@ -53,7 +53,7 @@ const AccountsChart = () => {
       <div className="card-body pr-1 pr-sm-3 pb-3">
         <div className="card-details pl-3">
           <div>
-            <small className="text-secondary pr-3">Daily Addresses: </small>
+            <small className="text-secondary pr-3">New Addresses Today: </small>
             <span>{getDailyAccounts(chartData)}</span>
           </div>
           <div>
