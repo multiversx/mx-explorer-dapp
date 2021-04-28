@@ -11,7 +11,7 @@ import {
 } from 'sharedComponents';
 import { getIcon } from 'sharedComponents/NodesTable/RowIcon';
 import { NodeType } from 'context/state';
-import { faLock, faServer, faCheck, faCode } from '@fortawesome/pro-solid-svg-icons';
+import { faLock, faServer, faCheck, faCode, faTimes } from '@fortawesome/pro-solid-svg-icons';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 import { faStream } from '@fortawesome/pro-solid-svg-icons/faStream';
 import { faCogs } from '@fortawesome/pro-solid-svg-icons/faCogs';
@@ -34,6 +34,11 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     topUp,
     stake,
     issues,
+    leaderSuccess,
+    leaderFailure,
+    validatorSuccess,
+    validatorFailure,
+    validatorIgnoredSignatures,
   } = nodeData;
 
   const versionOudated = version === undefined || (issues && issues.includes('versionMismatch'));
@@ -66,19 +71,15 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             <>N/A</>
           )}
         </CardItem>
-
         <CardItem title="Version" icon={versionOudated ? faExclamationTriangle : faCheck}>
           <span data-testid="version">{version ? version : <>N/A</>}</span>
         </CardItem>
-
         <CardItem title="Instances" icon={instances !== 1 ? faExclamationTriangle : faCheck}>
           {instances ? instances : <>N/A</>}
         </CardItem>
-
         <CardItem title="Name" icon={faServer}>
           {name ? name : <>N/A</>}
         </CardItem>
-
         <CardItem title="Type" icon={getIcon(nodeData) || faCogs}>
           <>
             {type === 'observer' && <>Observer</>}
@@ -89,11 +90,9 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             )}
           </>
         </CardItem>
-
         <CardItem title="Nonce" icon={faStream}>
           {nonce ? nonce : <>N/A</>}
         </CardItem>
-
         {type !== 'observer' && locked !== undefined && (
           <CardItem title="Locked" icon={faLock}>
             <div className="d-flex align-items-center">
@@ -114,7 +113,25 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             </div>
           </CardItem>
         )}
-
+        {type === 'validator' && status === 'eligible' && (
+          <>
+            <CardItem title="Ignored Signature" icon={faTimes}>
+              {validatorIgnoredSignatures ? validatorIgnoredSignatures : <>N/A</>}
+            </CardItem>
+            <CardItem title="Leader Success" icon={faCheck}>
+              {leaderSuccess ? leaderSuccess : <>N/A</>}
+            </CardItem>
+            <CardItem title="Leader Failure" icon={faTimes}>
+              {leaderFailure ? leaderFailure : <>N/A</>}
+            </CardItem>
+            <CardItem title="Validator Success" icon={faCheck}>
+              {validatorSuccess ? validatorSuccess : <>N/A</>}
+            </CardItem>
+            <CardItem title="Validator Failure" icon={faTimes}>
+              {validatorFailure ? validatorFailure : <>N/A</>}
+            </CardItem>
+          </>
+        )}
         {provider && (
           <CardItem title="Provider" icon={faCode}>
             <div className="d-flex align-items-center min-w-0">
