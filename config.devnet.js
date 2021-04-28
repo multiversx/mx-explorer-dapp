@@ -75,7 +75,7 @@ const CONFIG = {
       url: 'https://maiar.com/',
     },
     {
-      id: 'maiar',
+      id: 'maiar-exchange',
       name: 'Maiar Exchange',
       url: 'https://maiar.exchange/',
     },
