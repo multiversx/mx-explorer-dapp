@@ -18,7 +18,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const { getAccount, getAccountTokens, getAccountTokensCount } = adapter();
   const networkRoute = useNetworkRoute();
 
-  const tokensActive = activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api';
+  const tokensActive = activeNetwork.adapter === 'api';
 
   const isOldAddressRoute = pathname.includes('/address/');
   const oldMatch: any = useRouteMatch(networkRoute(accountsRoutes.oldAccountDetails));
