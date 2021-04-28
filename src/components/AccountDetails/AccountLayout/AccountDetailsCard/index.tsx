@@ -31,7 +31,7 @@ const AccountDetailsCard = () => {
   const { getProvider /*getAccountDelegation, getAccountStake,*/ } = adapter();
   const { address, balance, nonce /*txCount*/ } = accountDetails;
 
-  const tokensActive = id !== 'mainnet' && networkAdapter === 'api';
+  const tokensActive = networkAdapter === 'api';
   const cardItemClass = tokensActive ? 'n5' : '';
 
   // const [lockedAmount, setLockedAmount] = React.useState<LockedAmountType>({

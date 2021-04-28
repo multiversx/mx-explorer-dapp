@@ -11,7 +11,7 @@ const AccountTokens = () => {
   const { size } = useFilters();
   const networkRoute = useNetworkRoute();
   const { hash: address } = useParams() as any;
-  const tokensActive = activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api';
+  const tokensActive = activeNetwork.adapter === 'api';
 
   return !tokensActive ? (
     <Redirect to={networkRoute(urlBuilder.accountDetails(address))} />
@@ -49,7 +49,7 @@ const AccountTokens = () => {
                   />
                 </DetailItem>
               ))}
-              <div className="card-footer d-flex justify-content-end">
+              <div className="card-footer d-flex justify-content-end border-0">
                 <Pager
                   itemsPerPage={25}
                   page={String(size)}
