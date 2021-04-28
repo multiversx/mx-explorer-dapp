@@ -45,16 +45,14 @@ const TokenDetails = () => {
       <div ref={ref}>
         {dataReady === true && tokenDetails && (
           <div className="container page-content">
-            <div className="row page-header">
-              <div className="col-12">
-                <h3 className="page-title mb-4" data-testid="title">
-                  Token Details
-                </h3>
-              </div>
-            </div>
             <div className="row">
               <div className="col-12">
                 <div className="card">
+                  <div className="card-header">
+                    <div className="card-header-item d-flex align-items-center">
+                      <h6 data-testid="title">Token Details</h6>
+                    </div>
+                  </div>
                   <div className="card-body p-0">
                     <div className="container-fluid">
                       <DetailItem title="Name">{tokenDetails.name}</DetailItem>

@@ -7,7 +7,7 @@ import { accountsRoutes } from 'routes';
 const AccountTabs = () => {
   const activeRoute = useActiveRoute();
   const { accountDetails, activeNetwork } = useGlobalState();
-  const tokensRouteActive = activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api';
+  const tokensRouteActive = activeNetwork.adapter === 'api';
 
   return (
     <div className="account-tabs d-flex flex-row">

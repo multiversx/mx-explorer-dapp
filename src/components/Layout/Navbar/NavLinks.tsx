@@ -74,38 +74,38 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
         Accounts
       </NetworkLink>
 
-      {activeNetwork.id !== 'mainnet' && activeNetwork.adapter === 'api' && (
-        <NetworkLink
-          className={`nav-link ${
-            activeRoute(tokensRoutes.tokens) || activeRoute(tokensRoutes.tokenDetails)
-              ? 'active'
-              : ''
-          }`}
-          to={tokensRoutes.tokens}
-          onClick={() => onToggle(false)}
-        >
-          Tokens
-        </NetworkLink>
-      )}
-
       {activeNetwork.adapter === 'api' && (
-        <NetworkLink
-          className={`nav-link ${
-            activeRoute(validatorsRoutes.identities) ||
-            activeRoute(validatorsRoutes.identityDetails) ||
-            activeRoute(validatorsRoutes.providers) ||
-            activeRoute(validatorsRoutes.providerDetails) ||
-            activeRoute(validatorsRoutes.providerTransactions) ||
-            activeRoute(validatorsRoutes.nodes) ||
-            activeRoute(validatorsRoutes.nodeDetails)
-              ? 'active'
-              : ''
-          }`}
-          to={isMainnet ? validatorsRoutes.identities : validatorsRoutes.nodes}
-          onClick={() => onToggle(false)}
-        >
-          Validators
-        </NetworkLink>
+        <>
+          <NetworkLink
+            className={`nav-link ${
+              activeRoute(tokensRoutes.tokens) || activeRoute(tokensRoutes.tokenDetails)
+                ? 'active'
+                : ''
+            }`}
+            to={tokensRoutes.tokens}
+            onClick={() => onToggle(false)}
+          >
+            Tokens
+          </NetworkLink>
+
+          <NetworkLink
+            className={`nav-link ${
+              activeRoute(validatorsRoutes.identities) ||
+              activeRoute(validatorsRoutes.identityDetails) ||
+              activeRoute(validatorsRoutes.providers) ||
+              activeRoute(validatorsRoutes.providerDetails) ||
+              activeRoute(validatorsRoutes.providerTransactions) ||
+              activeRoute(validatorsRoutes.nodes) ||
+              activeRoute(validatorsRoutes.nodeDetails)
+                ? 'active'
+                : ''
+            }`}
+            to={isMainnet ? validatorsRoutes.identities : validatorsRoutes.nodes}
+            onClick={() => onToggle(false)}
+          >
+            Validators
+          </NetworkLink>
+        </>
       )}
     </>
   );
