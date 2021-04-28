@@ -11,21 +11,11 @@ import {
 } from 'sharedComponents';
 import { getIcon } from 'sharedComponents/NodesTable/RowIcon';
 import { NodeType } from 'context/state';
-import {
-  faLock,
-  faServer,
-  faCheck,
-  faCode,
-  faTimes,
-  faShieldCheck,
-  faBadgeCheck,
-  faStrikethrough,
-} from '@fortawesome/pro-solid-svg-icons';
+import { faLock, faServer, faCheck, faCode, faTimes } from '@fortawesome/pro-solid-svg-icons';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 import { faStream } from '@fortawesome/pro-solid-svg-icons/faStream';
 import { faCogs } from '@fortawesome/pro-solid-svg-icons/faCogs';
 import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
-import { faShield } from '@fortawesome/pro-regular-svg-icons';
 
 import Alert from './Alert';
 
@@ -49,7 +39,6 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     validatorSuccess,
     validatorFailure,
     validatorIgnoredSignatures,
-    tempRating,
   } = nodeData;
 
   const versionOudated = version === undefined || (issues && issues.includes('versionMismatch'));
@@ -124,6 +113,25 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             </div>
           </CardItem>
         )}
+        {type === 'validator' && status === 'eligible' && (
+          <>
+            <CardItem title="Ignored Signature" icon={faTimes}>
+              {validatorIgnoredSignatures ? validatorIgnoredSignatures : <>N/A</>}
+            </CardItem>
+            <CardItem title="Leader Success" icon={faCheck}>
+              {leaderSuccess ? leaderSuccess : <>N/A</>}
+            </CardItem>
+            <CardItem title="Leader Failure" icon={faTimes}>
+              {leaderFailure ? leaderFailure : <>N/A</>}
+            </CardItem>
+            <CardItem title="Validator Success" icon={faCheck}>
+              {validatorSuccess ? validatorSuccess : <>N/A</>}
+            </CardItem>
+            <CardItem title="Validator Failure" icon={faTimes}>
+              {validatorFailure ? validatorFailure : <>N/A</>}
+            </CardItem>
+          </>
+        )}
         {provider && (
           <CardItem title="Provider" icon={faCode}>
             <div className="d-flex align-items-center min-w-0">
@@ -133,28 +141,6 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
               <CopyButton text={provider} />
             </div>
           </CardItem>
-        )}
-        {type === 'validator' && status === 'eligible' && (
-          <>
-            <CardItem title="Leader Success" icon={faCheck}>
-              {leaderSuccess ? leaderSuccess : <>N/A</>}
-            </CardItem>
-            <CardItem title="Leader Failure" icon={faTimes}>
-              {leaderFailure ? leaderFailure : <>N/A</>}
-            </CardItem>
-            <CardItem title="Validator Success" icon={faShieldCheck}>
-              {validatorSuccess ? validatorSuccess : <>N/A</>}
-            </CardItem>
-            <CardItem title="Validator Failure" icon={faShield}>
-              {validatorFailure ? validatorFailure : <>N/A</>}
-            </CardItem>
-            <CardItem title="Ignored Signature" icon={faStrikethrough}>
-              {validatorIgnoredSignatures ? validatorIgnoredSignatures : <>N/A</>}
-            </CardItem>
-            <CardItem title="Temp Rating" icon={faBadgeCheck}>
-              {tempRating ? tempRating : <>N/A</>}
-            </CardItem>
-          </>
         )}
       </div>
     </div>
