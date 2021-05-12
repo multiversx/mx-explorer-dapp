@@ -21,6 +21,7 @@ import AccountContractCode from './components/AccountDetails/AccountContractCode
 import AccountTokens from 'components/AccountDetails/AccountTokens';
 import ProviderTransactions from 'components/ProviderDetails/ProviderTransactions';
 import NodesStatistics from 'components/NodesStatistics';
+import NodesQueue from 'components/NodesQueue';
 
 interface RouteType {
   path: string;
@@ -64,6 +65,7 @@ export const validatorsRoutes = {
   nodes: '/nodes',
   nodeDetails: '/nodes/:hash',
   statistics: '/statistics',
+  queue: '/queue',
 };
 
 export const tokensRoutes = {
@@ -133,6 +135,16 @@ const routes: RouteType[] = [
     component: NodeDetails,
   },
   {
+    path: validatorsRoutes.statistics,
+    title: 'Nodes Statistics',
+    component: NodesStatistics,
+  },
+  {
+    path: validatorsRoutes.queue,
+    title: 'Nodes Queue',
+    component: NodesQueue,
+  },
+  {
     path: accountsRoutes.accounts,
     title: 'Accounts',
     component: Accounts,
@@ -182,11 +194,6 @@ const routes: RouteType[] = [
     path: validatorsRoutes.providerTransactions,
     title: 'Provider Details',
     component: ProviderTransactions,
-  },
-  {
-    path: validatorsRoutes.statistics,
-    title: 'Nodes Statistics',
-    component: NodesStatistics,
   },
 ];
 
