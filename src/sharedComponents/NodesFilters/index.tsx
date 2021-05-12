@@ -5,18 +5,15 @@ import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NetworkLink } from 'sharedComponents';
-import { validatorsRoutes } from 'routes';
 import { useNetworkRoute } from 'helpers';
 
-const Filters = ({ onlySearch }: { onlySearch?: boolean }) => {
+const NodesFilters = ({ baseRoute, onlySearch }: { baseRoute: string; onlySearch?: boolean }) => {
   const { search: locationSearch } = useLocation();
   const networkRoute = useNetworkRoute();
   const history = useHistory();
   const urlParams = new URLSearchParams(locationSearch);
   const { search, status, issues, type } = Object.fromEntries(urlParams);
   const [inputValue, setInputValue] = React.useState<string>(search);
-
-  const baseRoute = onlySearch ? validatorsRoutes.statistics : validatorsRoutes.nodes;
 
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setInputValue(e.target.value);
@@ -211,4 +208,4 @@ const Filters = ({ onlySearch }: { onlySearch?: boolean }) => {
   );
 };
 
-export default Filters;
+export default NodesFilters;

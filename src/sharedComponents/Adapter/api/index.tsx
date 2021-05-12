@@ -64,7 +64,7 @@ export default {
   },
   getTotalStakedHistory: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latestcomplete/stakinghistoricalbackup/total/value`, {
+    return axios.get(`https://data.elrond.com/latestcomplete/stakinghistorical/total/value`, {
       timeout,
     });
   },

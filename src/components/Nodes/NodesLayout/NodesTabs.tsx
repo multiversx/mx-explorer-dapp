@@ -39,11 +39,18 @@ const NodesTabs = () => {
 
         <NetworkLink
           to={validatorsRoutes.statistics}
-          className={`tab-link ml-0 ml-sm-3 ${
+          className={`tab-link mx-3 pr-3 pr-sm-0 ${
             activeRoute(validatorsRoutes.statistics) ? 'active' : ''
           }`}
         >
           <h6>Statistics</h6>
+        </NetworkLink>
+
+        <NetworkLink
+          to={validatorsRoutes.queue}
+          className={`tab-link ml-0 ml-sm-3 ${activeRoute(validatorsRoutes.queue) ? 'active' : ''}`}
+        >
+          <h6>Queue</h6>
         </NetworkLink>
       </div>
     </div>

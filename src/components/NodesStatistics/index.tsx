@@ -6,6 +6,7 @@ import { useFilters } from 'helpers';
 import { useLocation } from 'react-router-dom';
 import NodesTabs from 'components/Nodes/NodesLayout/NodesTabs';
 import { NodeType } from 'context/state';
+import { validatorsRoutes } from 'routes';
 
 const NodesStatistics = () => {
   const ref = React.useRef(null);
@@ -40,7 +41,7 @@ const NodesStatistics = () => {
         <NodesTabs />
 
         <div className="card-header-item">
-          <NodesFilters onlySearch />
+          <NodesFilters baseRoute={validatorsRoutes.statistics} onlySearch />
         </div>
       </div>
 
