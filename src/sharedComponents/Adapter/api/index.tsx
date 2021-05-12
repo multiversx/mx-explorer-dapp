@@ -70,7 +70,7 @@ export default {
   },
   getUsersStaking: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latest/stakinghistoricalbackup/total/users`, {
+    return axios.get(`https://data.elrond.com/latest/stakinghistorical/total/users`, {
       timeout,
     });
   },
