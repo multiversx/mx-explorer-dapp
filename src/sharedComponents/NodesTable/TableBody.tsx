@@ -179,7 +179,7 @@ const NodesTable = ({
   statistics?: boolean;
   queue?: boolean;
 }) => {
-  const colSpan = statistics ? 8 : queue ? 5 : 7;
+  const colSpan = statistics ? 8 : queue ? 6 : 7;
 
   return (
     <tbody>
