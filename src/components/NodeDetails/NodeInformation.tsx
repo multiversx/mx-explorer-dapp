@@ -11,11 +11,12 @@ import {
 } from 'sharedComponents';
 import { getIcon } from 'sharedComponents/NodesTable/RowIcon';
 import { NodeType } from 'context/state';
-import { faLock, faServer, faCheck, faCode, faTimes } from '@fortawesome/pro-solid-svg-icons';
+import { faLock, faServer, faCheck, faCode } from '@fortawesome/pro-solid-svg-icons';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 import { faStream } from '@fortawesome/pro-solid-svg-icons/faStream';
 import { faCogs } from '@fortawesome/pro-solid-svg-icons/faCogs';
 import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
+import { faFlagAlt } from '@fortawesome/pro-regular-svg-icons/faFlagAlt';
 
 import Alert from './Alert';
 
@@ -34,11 +35,7 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     topUp,
     stake,
     issues,
-    leaderSuccess,
-    leaderFailure,
-    validatorSuccess,
-    validatorFailure,
-    validatorIgnoredSignatures,
+    position,
   } = nodeData;
 
   const versionOudated = version === undefined || (issues && issues.includes('versionMismatch'));
@@ -62,6 +59,11 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
         </div>
       </div>
       <div className="card-body card-item-container mx-spacing">
+        {position && (
+          <CardItem title="Queue Position" icon={faFlagAlt}>
+            {position.toLocaleString('en')}
+          </CardItem>
+        )}
         <CardItem title="Shard" icon={faLayerGroup}>
           {shard !== undefined ? (
             <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
@@ -112,25 +114,6 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
               />
             </div>
           </CardItem>
-        )}
-        {type === 'validator' && status === 'eligible' && (
-          <>
-            <CardItem title="Ignored Signature" icon={faTimes}>
-              {validatorIgnoredSignatures ? validatorIgnoredSignatures : <>N/A</>}
-            </CardItem>
-            <CardItem title="Leader Success" icon={faCheck}>
-              {leaderSuccess ? leaderSuccess : <>N/A</>}
-            </CardItem>
-            <CardItem title="Leader Failure" icon={faTimes}>
-              {leaderFailure ? leaderFailure : <>N/A</>}
-            </CardItem>
-            <CardItem title="Validator Success" icon={faCheck}>
-              {validatorSuccess ? validatorSuccess : <>N/A</>}
-            </CardItem>
-            <CardItem title="Validator Failure" icon={faTimes}>
-              {validatorFailure ? validatorFailure : <>N/A</>}
-            </CardItem>
-          </>
         )}
         {provider && (
           <CardItem title="Provider" icon={faCode}>

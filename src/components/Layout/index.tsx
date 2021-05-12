@@ -41,6 +41,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       case activeRoute(validatorsRoutes.nodes):
       case activeRoute(validatorsRoutes.nodeDetails):
       case activeRoute(validatorsRoutes.statistics):
+      case activeRoute(validatorsRoutes.queue):
         show = false;
         break;
     }
