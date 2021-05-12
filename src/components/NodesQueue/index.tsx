@@ -8,7 +8,7 @@ import NodesTabs from 'components/Nodes/NodesLayout/NodesTabs';
 import { NodeType } from 'context/state';
 import { validatorsRoutes } from 'routes';
 
-const Nodes = () => {
+const NodesStatistics = () => {
   const ref = React.useRef(null);
   const { search } = useLocation();
   const { getNodes, getNodesCount } = adapter();
@@ -17,8 +17,18 @@ const Nodes = () => {
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
+  const queryParams = getQueryObject();
+  if (!queryParams.sort) {
+    queryParams.sort = 'position';
+    queryParams.order = 'asc';
+  }
+
   const fetchNodes = () => {
-    const queryObject = getQueryObject();
+    const queryObject = {
+      ...queryParams,
+      type: 'validator',
+      status: 'queued',
+    };
     setDataReady(undefined);
 
     Promise.all([getNodes({ ...queryObject, size }), getNodesCount(queryObject)]).then(
@@ -41,7 +51,7 @@ const Nodes = () => {
         <NodesTabs />
 
         <div className="card-header-item">
-          <NodesFilters baseRoute={validatorsRoutes.nodes} />
+          <NodesFilters baseRoute={validatorsRoutes.queue} onlySearch />
         </div>
       </div>
 
@@ -58,8 +68,8 @@ const Nodes = () => {
       {dataReady === true && (
         <>
           <div className="card-body p-0">
-            <NodesTable>
-              <NodesTable.Body nodes={nodes} />
+            <NodesTable queue>
+              <NodesTable.Body nodes={nodes} queue />
             </NodesTable>
           </div>
           <div className="card-footer d-flex justify-content-end">
@@ -71,4 +81,4 @@ const Nodes = () => {
   );
 };
 
-export default Nodes;
+export default NodesStatistics;

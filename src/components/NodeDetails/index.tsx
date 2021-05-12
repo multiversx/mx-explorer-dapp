@@ -10,6 +10,7 @@ import { useIsMainnet } from 'helpers';
 import BlocksTable, { BlockType } from 'sharedComponents/BlocksTable';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
+import ValidatorDetails from './ValidatorDetails';
 
 interface NodeDetailType<T> {
   data?: T;
@@ -139,6 +140,12 @@ const NodeDetails = () => {
 
             {showExtendedInfo && (
               <>
+                <div className="row">
+                  <div className="mb-spacer col">
+                    <ValidatorDetails nodeData={node.data} />
+                  </div>
+                </div>
+
                 <div className="row">
                   <div className="mb-spacer col-md-6">
                     <NetworkMetrics node={node.data} />
