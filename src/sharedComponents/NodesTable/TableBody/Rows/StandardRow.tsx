@@ -2,7 +2,8 @@ import * as React from 'react';
 import { NodeType } from 'context/state';
 import { urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, Trim, Led } from 'sharedComponents';
-import RowIcon from '../../RowIcon';
+import RowIcon from 'sharedComponents/NodesTable/RowIcon';
+import RowIssueIcon from 'sharedComponents/NodesTable/RowIssueIcon';
 
 const StandardRow = ({ nodeData, index }: { nodeData: NodeType; index: number }) => {
   return (
@@ -13,6 +14,7 @@ const StandardRow = ({ nodeData, index }: { nodeData: NodeType; index: number })
           <NetworkLink to={urlBuilder.nodeDetails(nodeData.bls)} className="trim-wrapper">
             <Trim text={nodeData.bls} />
           </NetworkLink>
+          <RowIssueIcon node={nodeData} />
         </div>
       </td>
       <td>

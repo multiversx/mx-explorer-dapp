@@ -2,7 +2,8 @@ import * as React from 'react';
 import { NodeType } from 'context/state';
 import { urlBuilder } from 'helpers';
 import { NetworkLink, Trim, Led } from 'sharedComponents';
-import RowIcon from '../../RowIcon';
+import RowIcon from 'sharedComponents/NodesTable/RowIcon';
+import RowIssueIcon from 'sharedComponents/NodesTable/RowIssueIcon';
 
 const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
   return (
@@ -20,6 +21,7 @@ const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
           <NetworkLink to={urlBuilder.nodeDetails(nodeData.bls)} className="trim-wrapper">
             <Trim text={nodeData.bls} />
           </NetworkLink>
+          <RowIssueIcon node={nodeData} />
         </div>
       </td>
       <td>
