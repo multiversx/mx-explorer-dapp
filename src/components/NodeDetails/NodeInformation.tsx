@@ -59,11 +59,6 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
         </div>
       </div>
       <div className="card-body card-item-container mx-spacing">
-        {position && (
-          <CardItem title="Queue Position" icon={faFlagAlt}>
-            {position.toLocaleString('en')}
-          </CardItem>
-        )}
         <CardItem title="Shard" icon={faLayerGroup}>
           {shard !== undefined ? (
             <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
@@ -123,6 +118,11 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
               </NetworkLink>
               <CopyButton text={provider} />
             </div>
+          </CardItem>
+        )}
+        {position && (
+          <CardItem title="Queue Position" icon={faFlagAlt}>
+            {position.toLocaleString('en')}
           </CardItem>
         )}
       </div>
