@@ -3,14 +3,11 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { faEye } from '@fortawesome/pro-regular-svg-icons/faEye';
 import { faLeaf } from '@fortawesome/pro-regular-svg-icons/faLeaf';
-import { faLock } from '@fortawesome/pro-regular-svg-icons/faLock';
 import { faSync } from '@fortawesome/pro-regular-svg-icons/faSync';
 import { faFlagAlt } from '@fortawesome/pro-regular-svg-icons/faFlagAlt';
-import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { faSnooze } from '@fortawesome/pro-regular-svg-icons/faSnooze';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NodeType } from 'context/state';
-import { nodeIssue } from 'helpers';
 
 const Overlay = ({ children, title }: { children: React.ReactNode; title: string }) => (
   <OverlayTrigger
@@ -30,10 +27,6 @@ export const getIcon = (node: NodeType) => {
   let icon;
 
   switch (true) {
-    case node.status === 'jailed':
-      icon = faLock;
-      break;
-
     case node.type === 'observer':
       icon = faEye;
       break;
@@ -44,10 +37,6 @@ export const getIcon = (node: NodeType) => {
 
     case node.status === 'inactive':
       icon = faSnooze;
-      break;
-
-    case node.issues && node.issues.length > 0:
-      icon = faExclamationTriangle;
       break;
 
     case node.receivedShardID !== node.computedShardID:
@@ -76,17 +65,6 @@ export default class RowIcon extends React.Component<{ node: NodeType; small?: b
 
     if (icon) {
       switch (true) {
-        case node.status === 'jailed':
-          return (
-            <Overlay title="Jailed">
-              <FontAwesomeIcon
-                icon={icon}
-                className="text-danger mr-1"
-                size={small ? 'xs' : '1x'}
-              />
-            </Overlay>
-          );
-
         case node.type === 'observer':
           return (
             <Overlay title="Observer">
@@ -119,18 +97,6 @@ export default class RowIcon extends React.Component<{ node: NodeType; small?: b
               />
             </Overlay>
           );
-
-        case node.issues && node.issues.length > 0: {
-          return (
-            <Overlay title={nodeIssue(node)}>
-              <FontAwesomeIcon
-                icon={icon}
-                className="mr-1 text-warning"
-                size={small ? 'xs' : '1x'}
-              />
-            </Overlay>
-          );
-        }
 
         case node.receivedShardID !== node.computedShardID:
           return (
