@@ -28,6 +28,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const address = match ? match.params.hash : undefined;
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [allowFetchTokens, setAllowFetchTokens] = React.useState(false);
 
   const fetchBalanceAndCount = () => {
     if (!document.hidden) {
@@ -36,6 +37,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
 
         if (ref.current !== null) {
           if (accountDetailsData.success) {
+            setAllowFetchTokens(true);
             dispatch({
               type: 'setAccountDetails',
               accountDetails: {
@@ -84,7 +86,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   React.useEffect(() => {
-    if (!isOldAddressRoute) {
+    if (!isOldAddressRoute && allowFetchTokens) {
       fetchAccountTokens();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
