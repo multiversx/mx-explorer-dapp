@@ -101,11 +101,6 @@ export interface StateType {
   shards: ShardType[];
   globalStake: GlobalStakeType | undefined;
   accountDetails: types.AccountType;
-  accountTokens: {
-    success: boolean | undefined;
-    data: types.TokenType[];
-    count: number;
-  };
   usd: number | undefined;
 }
 
@@ -126,11 +121,6 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
     theme: getTheme(),
     shards: [],
     globalStake: undefined,
-    accountTokens: {
-      success: undefined,
-      data: [],
-      count: 0,
-    },
     accountDetails: {
       address: '',
       balance: '',

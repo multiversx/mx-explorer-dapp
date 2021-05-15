@@ -137,9 +137,7 @@ const NetworkHealth = () => {
             </div>
             <div className="gear-content">
               <ProgressRing progress={epochPercentage} />
-              <span className="mt-1" data-testid="currentEpoch">
-                Epoch {epoch}
-              </span>
+              <span className="mt-1">Epoch {epoch}</span>
               {epoch !== '...' && (
                 <small>
                   {(roundsPerEpoch - roundsPassed).toLocaleString('en')} Rounds <br />

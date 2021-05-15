@@ -3,7 +3,7 @@ import { Redirect, useLocation } from 'react-router-dom';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import { Loader, adapter } from 'sharedComponents';
 import FailedAccount from './FailedAccount';
-import { addressIsBech32, useFilters, useNetworkRoute, useSize } from 'helpers';
+import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
 import AccountDetailsCard from './AccountDetailsCard';
 import { useRouteMatch } from 'react-router-dom';
 import { accountsRoutes } from 'routes';
@@ -11,14 +11,11 @@ import { accountsRoutes } from 'routes';
 const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { pathname } = useLocation();
-  const { size } = useFilters();
   const { firstPageTicker } = useSize();
-  const { activeNetwork, accountDetails } = useGlobalState();
+  const { activeNetwork } = useGlobalState();
   const dispatch = useGlobalDispatch();
-  const { getAccount, getAccountTokens, getAccountTokensCount } = adapter();
+  const { getAccount } = adapter();
   const networkRoute = useNetworkRoute();
-
-  const tokensActive = activeNetwork.adapter === 'api';
 
   const isOldAddressRoute = pathname.includes('/address/');
   const oldMatch: any = useRouteMatch(networkRoute(accountsRoutes.oldAccountDetails));
@@ -28,7 +25,6 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const address = match ? match.params.hash : undefined;
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [allowFetchTokens, setAllowFetchTokens] = React.useState(false);
 
   const fetchBalanceAndCount = () => {
     if (!document.hidden) {
@@ -37,7 +33,6 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
 
         if (ref.current !== null) {
           if (accountDetailsData.success) {
-            setAllowFetchTokens(true);
             dispatch({
               type: 'setAccountDetails',
               accountDetails: {
@@ -61,36 +56,6 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstPageTicker, activeNetwork.id, address]);
-
-  const fetchAccountTokens = () => {
-    if (tokensActive) {
-      Promise.all([
-        getAccountTokens({
-          size,
-          address,
-        }),
-        getAccountTokensCount(address),
-      ]).then(([accountTokensData, accountTokensCountData]) => {
-        if (ref.current !== null) {
-          dispatch({
-            type: 'setAccountTokens',
-            accountTokens: {
-              success: accountTokensData.success,
-              data: accountTokensData.data,
-              count: accountTokensCountData.success ? accountTokensCountData.data : 0,
-            },
-          });
-        }
-      });
-    }
-  };
-
-  React.useEffect(() => {
-    if (!isOldAddressRoute && allowFetchTokens) {
-      fetchAccountTokens();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountDetails.txCount, activeNetwork.id, address, size]);
 
   React.useEffect(() => {
     setDataReady(undefined);

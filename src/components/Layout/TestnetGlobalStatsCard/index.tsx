@@ -48,15 +48,15 @@ const TestnetGlobalStatsCard = () => {
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Blocks" icon={faCube}>
-                  {data.blocks}
+                  <div data-testid="blocks">{data.blocks}</div>
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Accounts" icon={faUser}>
-                  {data.accounts}
+                  <div data-testid="accounts">{data.accounts}</div>
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Transactions" icon={faExchangeAlt}>
-                  {data.transactions}
+                  <div data-testid="transactions">{data.transactions}</div>
                 </CardItem>
               </div>
             </div>

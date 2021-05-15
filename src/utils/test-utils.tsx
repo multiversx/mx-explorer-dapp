@@ -60,6 +60,8 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
     accountsCount: () => Promise.resolve({ data: 1933 }),
     accounts: () => Promise.resolve({ data: rawData.accounts }),
     account: () => Promise.resolve({ data: rawData.account }),
+    accountTokens: () => Promise.resolve({ data: rawData.accountTokens }),
+    accountTokensCount: () => Promise.resolve({ data: rawData.accountTokens.length }),
     delegation: () => Promise.resolve({ data: rawData.delegation }),
     node: () => Promise.resolve({ data: rawData.node }),
     identity: () => Promise.resolve({ data: rawData.identity }),
@@ -68,6 +70,7 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
     tokenDetails: () => Promise.resolve({ data: rawData.tokenDetails }),
     providers: () => Promise.resolve({ data: rawData.providers }),
     provider: () => Promise.resolve({ data: rawData.provider }),
+    price: () => Promise.resolve({ data: 161.4137347617252 }),
     ...networkRequests,
   };
 
@@ -89,6 +92,10 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.transactions();
       case url.includes('/delegation'):
         return requests.delegation();
+      case url.includes('/accounts/') && url.includes('/tokens/count'):
+        return requests.accountTokensCount();
+      case url.includes('/accounts/') && url.includes('/tokens'):
+        return requests.accountTokens();
       case url.includes('/accounts/count'):
         return requests.accountsCount();
       case url.includes('/accounts/'):
@@ -117,6 +124,8 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.provider();
       case url.includes('/providers'):
         return requests.providers();
+      case url.includes('/price'):
+        return requests.price();
     }
   };
 };
