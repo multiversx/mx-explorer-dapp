@@ -25,11 +25,14 @@ const AccountDetailsCard = () => {
   const {
     activeNetwork: { id, adapter: networkAdapter },
     accountDetails,
-    accountTokens,
     usd,
   } = useGlobalState();
-  const { getProvider /*getAccountDelegation, getAccountStake,*/ } = adapter();
+  const {
+    getProvider /*getAccountDelegation, getAccountStake,*/,
+    getAccountTokensCount,
+  } = adapter();
   const { address, balance, nonce /*txCount*/ } = accountDetails;
+  const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
 
   const tokensActive = networkAdapter === 'api';
   const cardItemClass = tokensActive ? 'n5' : '';
@@ -82,6 +85,20 @@ const AccountDetailsCard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, address]);
 
+  const fetchAccountTokensCount = () => {
+    if (tokensActive) {
+      getAccountTokensCount(address).then(({ data, success }) => {
+        if (ref.current !== null && success) {
+          setAccountTokensCount(typeof data === 'number' ? data : 0);
+        }
+      });
+    }
+  };
+  React.useEffect(() => {
+    fetchAccountTokensCount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accountDetails.txCount, id, address]);
+
   return address !== '' ? (
     <div ref={ref} className="row account-details-card">
       <div className="col mb-spacer">
@@ -128,7 +145,7 @@ const AccountDetailsCard = () => {
 
             {tokensActive && (
               <CardItem className={cardItemClass} title="Tokens" icon={faCoins}>
-                {accountTokens.success ? accountTokens.data.length : '...'}
+                {accountTokensCount !== undefined ? accountTokensCount : '...'}
               </CardItem>
             )}
           </div>

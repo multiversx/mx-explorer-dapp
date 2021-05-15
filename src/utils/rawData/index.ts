@@ -19,6 +19,7 @@ import tokens from './tokens';
 import tokenDetails from './tokenDetails';
 import providers from './providers';
 import provider from './provider';
+import accountTokens from './accountTokens';
 
 export {
   transactions,
@@ -33,6 +34,7 @@ export {
   blockValidators,
   stats,
   account,
+  accountTokens,
   delegation,
   node,
   identity,

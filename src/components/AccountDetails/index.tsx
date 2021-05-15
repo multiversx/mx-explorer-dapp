@@ -26,22 +26,21 @@ const AccountDetails = () => {
       address,
     }).then((transactionsData) => {
       const { data, success } = transactionsData;
-      if (success) {
-        const existingHashes = transactions.map((b) => b.txHash);
-        const newTransactions = data.map((transaction: TransactionType) => ({
-          ...transaction,
-          isNew: !existingHashes.includes(transaction.txHash),
-        }));
-        if (ref.current !== null) {
+      if (ref.current !== null) {
+        if (success) {
+          const existingHashes = transactions.map((b) => b.txHash);
+          const newTransactions = data.map((transaction: TransactionType) => ({
+            ...transaction,
+            isNew: !existingHashes.includes(transaction.txHash),
+          }));
+
           setTransactions(newTransactions);
           const pending = data.some(
             (tx: TransactionType) => tx.status.toLowerCase() === txStatus.pending.toLowerCase()
           );
           setHasPendingTransaction(pending);
           setDataReady(true);
-        }
-      } else if (transactions.length === 0) {
-        if (ref.current !== null) {
+        } else if (transactions.length === 0) {
           setDataReady(false);
         }
       }

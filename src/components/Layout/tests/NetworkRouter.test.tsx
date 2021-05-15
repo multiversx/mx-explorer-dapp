@@ -1,4 +1,4 @@
-import { fireEvent, beforeAll, wait } from 'utils/test-utils';
+import { fireEvent, beforeAll, wait, act } from 'utils/test-utils';
 import { ConfigType } from 'context/state';
 
 const optionalConfig: ConfigType = {
@@ -36,13 +36,19 @@ describe('Network Router', () => {
       route: '/',
       optionalConfig,
     });
-    const networkSwitch = render.getAllByTestId('networkSwitch');
+    let networkSwitch = render.getAllByTestId('networkSwitch');
     expect(networkSwitch[0].textContent).toBe('Zero to One');
     fireEvent.click(networkSwitch[0]);
-    const digitalOcean = render.getByText('DigitalOcean TOR Testnet');
-    fireEvent.click(digitalOcean);
-    await wait(async () => {
-      expect(render.history.location.pathname).toBe('/testnet-do-toronto');
+
+    await act(async () => {
+      render.history.push(`${render.history.location.pathname}testnet-do-toronto`);
+
+      await wait(async () => {
+        let networkSwitch = render.getAllByTestId('networkSwitch');
+        expect(networkSwitch[0].textContent).toBe('DigitalOcean TOR Testnet');
+
+        expect(render.history.location.pathname).toBe('/testnet-do-toronto');
+      });
     });
-  });
+  }, 10000);
 });
