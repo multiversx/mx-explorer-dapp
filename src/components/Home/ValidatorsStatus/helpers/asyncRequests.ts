@@ -25,7 +25,8 @@ export async function getMarkers({
   success: boolean;
 }> {
   try {
-    const { data } = await axios.get(`${apiUrl}/markers`, { timeout });
+    // const { data } = await axios.get(`${apiUrl}/markers`, { timeout });
+    const { data } = await axios.get(`https://api.elrond.com/markers`, { timeout });
 
     schema.validate((data as any)[Object.keys(data)[0]], { strict: true }).catch(({ errors }) => {
       console.error('Markers format errors: ', errors);
