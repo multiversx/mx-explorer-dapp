@@ -4,6 +4,7 @@ import ShardCard from './ShardCard';
 import { GlobalStakeType, ShardType } from 'context/state';
 import { PageState } from 'sharedComponents';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
+import { metaChainShardId } from 'appConfig';
 
 const StakingQueueCard = ({ globalStake }: { globalStake: GlobalStakeType | undefined }) => {
   return (
@@ -16,6 +17,25 @@ const StakingQueueCard = ({ globalStake }: { globalStake: GlobalStakeType | unde
       </div>
     </div>
   );
+};
+
+const sortShards = ({
+  shards,
+  metaChainShardId,
+}: {
+  shards: ShardType[];
+  metaChainShardId: number;
+}) => {
+  const sorted = [...shards];
+  sorted.sort((a, b) => (a.shard > b.shard ? 1 : -1));
+
+  const metaShard = sorted.find((shard) => shard.shard === metaChainShardId);
+  if (metaShard && sorted[0].shard !== metaShard.shard) {
+    sorted.splice(sorted.indexOf(metaShard));
+    sorted.unshift(metaShard);
+  }
+
+  return sorted;
 };
 
 const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
@@ -34,9 +54,9 @@ const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
     ),
   };
 
-  shards.sort((a, b) => (a.shard > b.shard ? 1 : -1));
+  const sortedShards = sortShards({ shards, metaChainShardId });
 
-  const failed = shardsFetched === false || (shardsFetched === true && shards.length === 0);
+  const failed = shardsFetched === false || (shardsFetched === true && sortedShards.length === 0);
 
   return (
     <>
@@ -61,7 +81,7 @@ const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
               <div className="card-body px-lg-spacer py-lg-4">
                 <div className="shards-container">
                   <ShardCard shard={overallCard} isOverall />
-                  {shards.map((shard, i) => (
+                  {sortedShards.map((shard, i) => (
                     <React.Fragment key={shard.shard + i}>
                       <ShardCard shard={shard} />
                     </React.Fragment>
