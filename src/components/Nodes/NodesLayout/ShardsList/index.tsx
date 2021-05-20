@@ -4,6 +4,7 @@ import ShardCard from './ShardCard';
 import { GlobalStakeType, ShardType } from 'context/state';
 import { PageState } from 'sharedComponents';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
+import { metaChainShardId } from 'appConfig';
 
 const StakingQueueCard = ({ globalStake }: { globalStake: GlobalStakeType | undefined }) => {
   return (
@@ -35,6 +36,12 @@ const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
   };
 
   shards.sort((a, b) => (a.shard > b.shard ? 1 : -1));
+
+  const metaShard = shards.find((shard) => shard.shard === metaChainShardId);
+  if (metaShard && shards[0].shard !== metaShard.shard) {
+    shards.splice(shards.indexOf(metaShard));
+    shards.unshift(metaShard);
+  }
 
   const failed = shardsFetched === false || (shardsFetched === true && shards.length === 0);
 
