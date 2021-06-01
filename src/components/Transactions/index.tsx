@@ -25,9 +25,8 @@ const Transactions = () => {
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
-  const [transactionsCount, setTransactionsCount] = React.useState();
 
-  const fetchTransactions = () => {
+  React.useEffect(() => {
     getTransactions({
       size,
       senderShard,
@@ -45,39 +44,16 @@ const Transactions = () => {
         setDataReady(success);
       }
     });
-  };
-
-  const fetchTransactionsCount = () => {
     getTransactionsCount({
       senderShard,
       receiverShard,
     }).then(({ data: count, success }) => {
       if (ref.current !== null && success) {
         setTotalTransactions(Math.min(count, 10000));
-        setTransactionsCount(count);
       }
     });
-  };
-
-  React.useEffect(() => {
-    fetchTransactions();
-    fetchTransactionsCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, size]);
-
-  React.useEffect(() => {
-    if (dataReady !== undefined) {
-      fetchTransactionsCount();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker]);
-
-  React.useEffect(() => {
-    if (dataReady !== undefined) {
-      fetchTransactions();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transactionsCount]);
+  }, [activeNetworkId, size, firstPageTicker]);
 
   return (
     <>
