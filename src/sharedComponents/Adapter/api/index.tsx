@@ -38,6 +38,12 @@ export default {
     const { timeout } = props;
     return axios.get(`https://data.elrond.com/latest/quoteshistorical/egld/price`, { timeout });
   },
+  getEgldClosingPrice: (props: ProviderPropsType) => {
+    const { timeout, timestamp } = props;
+    return axios.get(`https://data.elrond.com/closing/quoteshistorical/egld/price/${timestamp}`, {
+      timeout,
+    });
+  },
   getEgldMarketCap: (props: ProviderPropsType) => {
     const { timeout } = props;
     return axios.get(`https://data.elrond.com/latest/quoteshistorical/egld/market_cap`, {

@@ -25,6 +25,7 @@ export default function useAdapter() {
     getShards,
     getEconomics,
     getEgldPrice,
+    getEgldClosingPrice,
     getProviders,
     getProvider,
     getEgldMarketCap,
@@ -291,6 +292,9 @@ export default function useAdapter() {
       getProvider({ url: `/providers/${address}` }),
 
     getEconomics: () => getEconomics({ url: `/economics` }),
+
+    getEgldClosingPrice: ({ timestamp }: { timestamp: number }) =>
+      getEgldClosingPrice({ timestamp, url: '' }),
 
     getEgldPrice,
     getEgldPriceHistory,
