@@ -14,6 +14,7 @@ import {
   DetailItem,
   Trim,
   CopyButton,
+  adapter,
 } from 'sharedComponents';
 import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
 import ScResultsList, { ScResultType } from '../ScResultsList';
@@ -62,10 +63,32 @@ const getScResultsMessages = (transaction: TransactionType) => {
 };
 
 const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
+  const { getEgldClosingPrice } = adapter();
+  const ref = React.useRef(null);
+  const [closingPrice, setClosingPrice] = React.useState<string>('...');
+
+  const fetchClosingPrice = (transaction: TransactionType) => {
+    if (transaction.timestamp) {
+      getEgldClosingPrice({ timestamp: transaction.timestamp }).then(({ data, success }) => {
+        if (ref.current !== null && data && success) {
+          const formattedPrice = `$${data.toLocaleString('en', {
+            minimumFractionDigits: 2,
+          })}`;
+          setClosingPrice(formattedPrice);
+        }
+      });
+    }
+  };
+
   const scResultsMessages = getScResultsMessages(transaction);
 
+  React.useEffect(() => {
+    fetchClosingPrice(transaction);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transaction]);
+
   return (
-    <div className="transaction-info card">
+    <div className="transaction-info card" ref={ref}>
       <div className={`card-header status-${getStatusIconAndColor(transaction.status).color}`}>
         <div className="card-header-item d-flex align-items-center">
           <h6 data-testid="title">Transaction Details</h6>
@@ -183,6 +206,8 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
           <DetailItem title="Value">
             <Denominate value={transaction.value} showLastNonZeroDecimal />
           </DetailItem>
+
+          <DetailItem title="EGLD Price">{closingPrice}</DetailItem>
 
           <DetailItem title="Transaction Fee">
             {transaction.gasUsed !== undefined ? (

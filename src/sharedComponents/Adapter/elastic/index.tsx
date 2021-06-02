@@ -41,6 +41,9 @@ export default {
   getEgldPrice: () => {
     throw new Error('not defined');
   },
+  getEgldClosingPrice: () => {
+    throw new Error('not defined');
+  },
   getProviders: () => {
     throw new Error('not defined');
   },

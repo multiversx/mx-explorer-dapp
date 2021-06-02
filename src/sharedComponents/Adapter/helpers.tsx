@@ -53,6 +53,7 @@ export interface ProviderPropsType {
     online?: boolean;
   };
   timeout: number;
+  timestamp?: number;
 }
 
 export const getAccountParams = (address?: string) =>
