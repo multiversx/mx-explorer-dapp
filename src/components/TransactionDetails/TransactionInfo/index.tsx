@@ -67,9 +67,10 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
   const ref = React.useRef(null);
   const [closingPrice, setClosingPrice] = React.useState<string>('...');
 
-  const fetchClosingPrice = (transaction: TransactionType) => {
-    if (transaction.timestamp) {
-      getEgldClosingPrice({ timestamp: transaction.timestamp }).then(({ data, success }) => {
+  const fetchClosingPrice = () => {
+    const {timestamp} = transaction;
+    if (timestamp) {
+      getEgldClosingPrice({ timestamp }).then(({ data, success }) => {
         if (ref.current !== null && data && success) {
           const formattedPrice = `$${data.toLocaleString('en', {
             minimumFractionDigits: 2,
@@ -82,10 +83,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
 
   const scResultsMessages = getScResultsMessages(transaction);
 
-  React.useEffect(() => {
-    fetchClosingPrice(transaction);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transaction]);
+  React.useEffect(fetchClosingPrice, [transaction]);
 
   return (
     <div className="transaction-info card" ref={ref}>
