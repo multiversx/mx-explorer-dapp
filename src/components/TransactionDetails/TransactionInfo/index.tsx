@@ -3,7 +3,7 @@ import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
-import { addressIsBech32, dateFormatted, urlBuilder } from 'helpers';
+import { addressIsBech32, dateFormatted, urlBuilder, usdValue } from 'helpers';
 import {
   Denominate,
   ScAddressIcon,
@@ -18,6 +18,8 @@ import {
 } from 'sharedComponents';
 import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
 import ScResultsList, { ScResultType } from '../ScResultsList';
+import denominate from 'sharedComponents/Denominate/denominate';
+import { denomination, decimals } from 'appConfig';
 
 export interface TransactionType {
   fee?: string;
@@ -45,6 +47,7 @@ const getFee = (transaction: TransactionType) => {
   const bNgasPrice = new BigNumber(transaction.gasPrice);
   const bNgasUsed = new BigNumber(transaction.gasUsed);
   const output = bNgasPrice.times(bNgasUsed).toString();
+
   return output;
 };
 
@@ -65,17 +68,37 @@ const getScResultsMessages = (transaction: TransactionType) => {
 const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
   const { getEgldClosingPrice } = adapter();
   const ref = React.useRef(null);
-  const [closingPrice, setClosingPrice] = React.useState<string>('...');
+  const [closingPrice, setClosingPrice] = React.useState();
+  const [transactionValuePrice, setTransactionValuePrice] = React.useState<string>('...');
+  const [transactionFeePrice, setTransactionFeePrice] = React.useState<string>('...');
+
+  const formattedUsdValue = (bNvalue: BigNumber, usd: string) => {
+    const amount = denominate({
+      input: bNvalue.toString(),
+      denomination,
+      decimals,
+      showLastNonZeroDecimal: false,
+      addCommas: false,
+    });
+    const formattedValue = usdValue({
+      amount,
+      usd: Number(usd),
+    });
+    return ` ${bNvalue.isGreaterThan(new BigNumber(0)) ? '≈' : '='} $${formattedValue}`;
+  };
 
   const fetchClosingPrice = () => {
-    const {timestamp} = transaction;
+    const { timestamp } = transaction;
     if (timestamp) {
       getEgldClosingPrice({ timestamp }).then(({ data, success }) => {
         if (ref.current !== null && data && success) {
-          const formattedPrice = `$${data.toLocaleString('en', {
-            minimumFractionDigits: 2,
-          })}`;
-          setClosingPrice(formattedPrice);
+          const bNvalue = new BigNumber(transaction.value);
+          if (transaction.fee) {
+            const bNfee = new BigNumber(transaction.fee ? transaction.fee : getFee(transaction));
+            setTransactionFeePrice(formattedUsdValue(bNfee, data));
+          }
+          setTransactionValuePrice(formattedUsdValue(bNvalue, data));
+          setClosingPrice(data);
         }
       });
     }
@@ -202,20 +225,30 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
           </DetailItem>
 
           <DetailItem title="Value">
-            <Denominate value={transaction.value} showLastNonZeroDecimal />
+            <Denominate value={transaction.value} showLastNonZeroDecimal />{' '}
+            <span className="text-secondary">{transactionValuePrice}</span>
           </DetailItem>
-
-          <DetailItem title="EGLD Price">{closingPrice}</DetailItem>
 
           <DetailItem title="Transaction Fee">
             {transaction.gasUsed !== undefined ? (
-              <Denominate
-                value={transaction.fee ? transaction.fee : getFee(transaction)}
-                showLastNonZeroDecimal
-              />
+              <>
+                <Denominate
+                  value={transaction.fee ? transaction.fee : getFee(transaction)}
+                  showLastNonZeroDecimal
+                />{' '}
+                <span className="text-secondary">{transactionFeePrice}</span>
+              </>
             ) : (
               <span className="text-secondary">N/A</span>
             )}
+          </DetailItem>
+
+          <DetailItem title="EGLD Price">
+            {closingPrice
+              ? `$${Number(closingPrice).toLocaleString('en', {
+                  minimumFractionDigits: 2,
+                })}`
+              : '...'}
           </DetailItem>
 
           <DetailItem title="Gas Limit">
