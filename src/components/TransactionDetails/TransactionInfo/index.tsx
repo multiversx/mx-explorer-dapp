@@ -72,7 +72,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
       getEgldClosingPrice({ timestamp: transaction.timestamp }).then(({ data, success }) => {
         if (ref.current !== null && data && success) {
           const formattedPrice = `$${data.toLocaleString('en', {
-            maximumFractionDigits: data > 1000 ? 0 : 2,
+            minimumFractionDigits: 2,
           })}`;
           setClosingPrice(formattedPrice);
         }
