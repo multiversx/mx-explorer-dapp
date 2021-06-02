@@ -11,6 +11,7 @@ interface PropsType {
   url?: string;
   params?: ProviderPropsType['params'];
   timeout?: ProviderPropsType['timeout'];
+  timestamp?: ProviderPropsType['timestamp'];
 }
 
 async function wrap(asyncRequest: () => Promise<any>) {
@@ -58,6 +59,7 @@ export default function useAdapterConfig() {
     getEconomics,
     getShards,
     getEgldPrice,
+    getEgldClosingPrice,
     getEgldPriceHistory,
     getEgldMarketCapHistory,
     getEgldVolumeHistory,
@@ -87,6 +89,8 @@ export default function useAdapterConfig() {
       wrap(() => getAccountStake({ ...providerProps, ...props })),
     getEconomics: (props = basicProps) => wrap(() => getEconomics({ ...providerProps, ...props })),
     getEgldPrice: (props = basicProps) => wrap(() => getEgldPrice({ ...providerProps, ...props })),
+    getEgldClosingPrice: (props = basicProps) =>
+      wrap(() => getEgldClosingPrice({ ...providerProps, ...props })),
     getProviders: (props = basicProps) => wrap(() => getProviders({ ...providerProps, ...props })),
     getProvider: (props = basicProps) => wrap(() => getProvider({ ...providerProps, ...props })),
     getEgldMarketCap: (props = basicProps) =>
