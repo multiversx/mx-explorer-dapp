@@ -77,7 +77,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
       input: bNvalue.toString(),
       denomination,
       decimals,
-      showLastNonZeroDecimal: false,
+      showLastNonZeroDecimal: true,
       addCommas: false,
     });
     const formattedValue = usdValue({
