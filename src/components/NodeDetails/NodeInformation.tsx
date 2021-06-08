@@ -120,7 +120,7 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             </div>
           </CardItem>
         )}
-        {position && (
+        {position !== undefined && (
           <CardItem title="Queue Position" icon={faFlagAlt}>
             {position.toLocaleString('en')}
           </CardItem>
