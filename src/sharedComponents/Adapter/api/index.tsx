@@ -83,7 +83,7 @@ export default {
   getTransactionsHistory: (props: ProviderPropsType) => {
     const { timeout } = props;
     return axios.get(
-      `https://data.elrond.com/latestcomplete/transactionshistoricalbackup/transactions/count_24h`,
+      `https://data.elrond.com/latestcomplete/transactionshistorical/transactions/count_24h`,
       {
         timeout,
       }
@@ -91,11 +91,8 @@ export default {
   },
   getAccountsHistory: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(
-      `https://data.elrond.com/latestcomplete/accountshistoricalbackup/accounts/count`,
-      {
-        timeout,
-      }
-    );
+    return axios.get(`https://data.elrond.com/latestcomplete/accountshistorical/accounts/count`, {
+      timeout,
+    });
   },
 };
