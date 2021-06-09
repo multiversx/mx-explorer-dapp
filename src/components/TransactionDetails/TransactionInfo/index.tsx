@@ -226,7 +226,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
 
           <DetailItem title="Value">
             <Denominate value={transaction.value} showLastNonZeroDecimal />{' '}
-            <span className="text-secondary">{transactionValuePrice}</span>
+            <span className="text-secondary">({transactionValuePrice})</span>
           </DetailItem>
 
           <DetailItem title="Transaction Fee">
@@ -236,7 +236,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
                   value={transaction.fee ? transaction.fee : getFee(transaction)}
                   showLastNonZeroDecimal
                 />{' '}
-                <span className="text-secondary">{transactionFeePrice}</span>
+                <span className="text-secondary">({transactionFeePrice})</span>
               </>
             ) : (
               <span className="text-secondary">N/A</span>
