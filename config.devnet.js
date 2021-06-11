@@ -30,7 +30,7 @@ const CONFIG = {
       id: 'devnet',
       name: 'Devnet',
       adapter: 'api',
-      apiUrl: 'https://devnet-api.elrond.com',
+      apiUrl: 'https://devnet-beta-api.elrond.com',
       validatorDetails: true,
       erdLabel: 'XeGLD',
       walletAddress: 'https://devnet-wallet.elrond.com/',
