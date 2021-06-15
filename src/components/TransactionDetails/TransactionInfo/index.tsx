@@ -3,7 +3,7 @@ import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
-import { addressIsBech32, dateFormatted, urlBuilder, usdValue } from 'helpers';
+import { addressIsBech32, dateFormatted, urlBuilder } from 'helpers';
 import {
   Denominate,
   ScAddressIcon,
@@ -72,7 +72,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
   const [transactionValuePrice, setTransactionValuePrice] = React.useState<string>('...');
   const [transactionFeePrice, setTransactionFeePrice] = React.useState<string>('...');
 
-  const formattedUsdValue = (bNvalue: BigNumber, usd: string) => {
+  const formattedUsdValue = (bNvalue: BigNumber, usd: string, digits: number) => {
     const amount = denominate({
       input: bNvalue.toString(),
       denomination,
@@ -80,9 +80,10 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
       showLastNonZeroDecimal: true,
       addCommas: false,
     });
-    const formattedValue = usdValue({
-      amount,
-      usd: Number(usd),
+    const sum = (parseFloat(amount) * Number(usd)).toFixed(digits);
+    const formattedValue = parseFloat(sum).toLocaleString('en', {
+      maximumFractionDigits: digits,
+      minimumFractionDigits: digits,
     });
     return ` ${bNvalue.isGreaterThan(new BigNumber(0)) ? '≈' : '='} $${formattedValue}`;
   };
@@ -95,9 +96,9 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
           const bNvalue = new BigNumber(transaction.value);
           if (transaction.fee) {
             const bNfee = new BigNumber(transaction.fee ? transaction.fee : getFee(transaction));
-            setTransactionFeePrice(formattedUsdValue(bNfee, data));
+            setTransactionFeePrice(formattedUsdValue(bNfee, data, 4));
           }
-          setTransactionValuePrice(formattedUsdValue(bNvalue, data));
+          setTransactionValuePrice(formattedUsdValue(bNvalue, data, 2));
           setClosingPrice(data);
         }
       });
