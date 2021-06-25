@@ -280,7 +280,11 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
               className="form-control col cursor-text mt-1"
               rows={2}
               defaultValue={
-                transaction.data ? Buffer.from(transaction.data, 'base64').toString() : 'N/A'
+                transaction.data
+                  ? Buffer.from(transaction.data, 'base64')
+                      .toString()
+                      .replace('lottery-elrond.com', 'l***d.com')
+                  : 'N/A'
               }
             />
           </DetailItem>
