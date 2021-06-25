@@ -20,6 +20,7 @@ import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
 import ScResultsList, { ScResultType } from '../ScResultsList';
 import denominate from 'sharedComponents/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
+import anonymizeUrls from './helpres/anonymizeUrls';
 
 export interface TransactionType {
   fee?: string;
@@ -281,9 +282,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
               rows={2}
               defaultValue={
                 transaction.data
-                  ? Buffer.from(transaction.data, 'base64')
-                      .toString()
-                      .replace('lottery-elrond.com', 'l***d.com')
+                  ? anonymizeUrls(Buffer.from(transaction.data, 'base64').toString())
                   : 'N/A'
               }
             />
