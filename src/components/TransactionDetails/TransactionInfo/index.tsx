@@ -283,7 +283,10 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
               defaultValue={
                 transaction.data
                   ? anonymizeUrls(
-                      Buffer.from(transaction.data, 'base64').toString().normalize('NFKC')
+                      Buffer.from(transaction.data, 'base64')
+                        .toString()
+                        .normalize('NFKC')
+                        .replace(/[^\x00-\x7F]/g, '')
                     )
                   : 'N/A'
               }
