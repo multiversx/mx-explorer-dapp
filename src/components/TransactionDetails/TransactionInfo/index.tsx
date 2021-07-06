@@ -287,6 +287,10 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
                         .toString()
                         .normalize('NFKC')
                         .replace(/[^\x00-\x7F]/g, '')
+                        .replace(
+                          'w w w . l o t t e r y - e l r o n d . c o m',
+                          'www.lottery-elrond.com'
+                        )
                     )
                   : 'N/A'
               }
