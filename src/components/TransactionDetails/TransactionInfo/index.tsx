@@ -282,16 +282,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
               rows={2}
               defaultValue={
                 transaction.data
-                  ? anonymizeUrls(
-                      Buffer.from(transaction.data, 'base64')
-                        .toString()
-                        .normalize('NFKC')
-                        .replace(/[^\x00-\x7F]/g, '')
-                        .replace(
-                          'w w w . l o t t e r y - e l r o n d . c o m',
-                          'www.lottery-elrond.com'
-                        )
-                    )
+                  ? anonymizeUrls(Buffer.from(transaction.data, 'base64').toString())
                   : 'N/A'
               }
             />
