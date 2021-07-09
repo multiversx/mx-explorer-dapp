@@ -75,7 +75,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
 
   const formattedUsdValue = (bNvalue: BigNumber, usd: string, digits: number) => {
     const amount = denominate({
-      input: bNvalue.toString(),
+      input: bNvalue.toString(10),
       denomination,
       decimals,
       showLastNonZeroDecimal: true,
