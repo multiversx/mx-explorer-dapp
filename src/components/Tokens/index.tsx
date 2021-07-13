@@ -7,7 +7,7 @@ import Filters from './Filters';
 import { useLocation } from 'react-router-dom';
 
 export interface TokenTypeTMP {
-  token: string;
+  identifier: string;
   name: string;
   owner: string;
 }
@@ -76,14 +76,14 @@ const Tokens = () => {
                                   <td>
                                     <div className="d-flex align-items-center">
                                       <NetworkLink
-                                        to={urlBuilder.tokenDetails(token.token)}
+                                        to={urlBuilder.tokenDetails(token.identifier)}
                                         data-testid={`tokensLink${i}`}
                                       >
                                         {token.name}
                                       </NetworkLink>
                                     </div>
                                   </td>
-                                  <td>{token.token}</td>
+                                  <td>{token.identifier}</td>
                                   <td>
                                     <div className="d-flex trim-size-xl">
                                       <NetworkLink
