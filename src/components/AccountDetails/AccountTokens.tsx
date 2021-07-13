@@ -73,16 +73,18 @@ const AccountTokens = () => {
 
           {dataReady === true && accountTokens.length > 0 && (
             <>
-              {accountTokens.map(({ token, name, balance, decimals }) => (
-                <DetailItem title={name} key={token}>
-                  <Denominate
-                    value={balance ? balance : '0'}
-                    showLastNonZeroDecimal={true}
-                    token={token}
-                    denomination={decimals}
-                  />
-                </DetailItem>
-              ))}
+              {accountTokens.map(({ identifier, name, balance, decimals }) => {
+                return (
+                  <DetailItem title={name} key={identifier}>
+                    <Denominate
+                      value={balance ? balance : '0'}
+                      showLastNonZeroDecimal={true}
+                      token={identifier}
+                      denomination={decimals}
+                    />
+                  </DetailItem>
+                );
+              })}
               <div className="card-footer d-flex justify-content-end border-0">
                 <Pager
                   itemsPerPage={25}

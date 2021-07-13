@@ -10,7 +10,7 @@ export interface AccountType {
 }
 
 export interface TokenType {
-  token: string;
+  identifier: string;
   name: string;
   balance?: string;
   decimals?: number;
