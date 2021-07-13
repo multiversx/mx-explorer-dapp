@@ -56,7 +56,7 @@ const TokenDetails = () => {
                   <div className="card-body p-0">
                     <div className="container-fluid">
                       <DetailItem title="Name">{tokenDetails.name}</DetailItem>
-                      <DetailItem title="Token">{tokenDetails.token}</DetailItem>
+                      <DetailItem title="Token">{tokenDetails.identifier}</DetailItem>
                       <DetailItem title="Owner">
                         <div className="d-flex">
                           <NetworkLink
