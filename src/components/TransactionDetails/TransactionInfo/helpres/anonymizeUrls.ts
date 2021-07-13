@@ -1,41 +1,34 @@
 import anchorme from 'anchorme';
 
-// const inputs = [
-//   '[...] link.com',
-//   '[...] http://google.com',
-//   '[...] https://linkedin.com',
-//   '[...] http://google.com?asd=true',
-//   '[...] http://www1.google.com',
-//   '[...] http://www.google.ceva.com',
-// ];
+const blacklist = ['lottery-elrond.com', 'bitly.com', 'bit.ly'];
 
-// TODO: create tests
+const anonymizeUrls = (input: string) => {
+  if (input.length > 1000) {
+    return input;
+  }
 
-const anonymizeUrls = (input: string) =>
-  anchorme({
-    input,
+  // eslint-disable-next-line
+  let clean = input.normalize('NFKC').replace(/[^\x00-\x7F]/g, '');
+
+  blacklist.forEach((item) => {
+    if (clean.replace(/\s/g, '').includes(item)) {
+      clean = '***** [message removed for security reasons]';
+    }
+  });
+
+  return anchorme({
+    input: clean,
     options: {
       specialTransform: [
         {
           test: /.*$/,
-          transform: (found) => {
-            const url = new URL(found.includes('http') ? found : `http://${found}`);
-
-            const parts = url.hostname.split('.');
-            const anonymized =
-              parts[0][0] +
-              '***' +
-              parts[parts.length - 2][parts[parts.length - 2].length - 1] +
-              '.' +
-              parts[parts.length - 1];
-
-            const result = found.replace(url.hostname, anonymized);
-
-            return result;
+          transform: () => {
+            return '***** [link removed for security reasons]';
           },
         },
       ],
     },
   });
+};
 
 export default anonymizeUrls;
