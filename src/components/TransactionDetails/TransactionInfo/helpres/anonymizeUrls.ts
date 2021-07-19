@@ -1,6 +1,13 @@
 import anchorme from 'anchorme';
 
-const blacklist = ['lottery-elrond.com', 'bitly.com', 'bit.ly'];
+const blacklist = [
+  'lottery-elrond',
+  'l0ttery-elr0nd',
+  'l0ttery-elrond',
+  'lottery-elr0nd',
+  'bitly.com',
+  'bit.ly',
+];
 
 const anonymizeUrls = (input: string) => {
   if (input.length > 1000) {
@@ -8,10 +15,10 @@ const anonymizeUrls = (input: string) => {
   }
 
   // eslint-disable-next-line
-  let clean = input.normalize('NFKC').replace(/[^\x00-\x7F]/g, '');
+  let clean = input.normalize('NFKC').replace(/[\u200B-\u200D\uFEFF]/g, '');
 
   blacklist.forEach((item) => {
-    if (clean.replace(/\s/g, '').includes(item)) {
+    if (clean.replace(/\s/g, '').toLocaleLowerCase().includes(item)) {
       clean = '***** [message removed for security reasons]';
     }
   });
