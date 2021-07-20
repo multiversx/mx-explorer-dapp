@@ -38,6 +38,7 @@ export interface ProviderType {
   serviceFee: number;
   stake: string;
   topUp: string;
+  featured?: boolean;
   identity?: string;
   cumulatedRewards?: string;
 

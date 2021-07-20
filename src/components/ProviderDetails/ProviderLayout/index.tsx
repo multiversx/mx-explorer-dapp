@@ -76,7 +76,10 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
             {isMainnet && showIdentity && (
               <div className="row">
                 <div className="col-12 mb-spacer">
-                  <SharedIdentity.Summary identity={identity.data} />
+                  <SharedIdentity.Summary
+                    identity={identity.data}
+                    featured={provider.data?.featured}
+                  />
                 </div>
               </div>
             )}
