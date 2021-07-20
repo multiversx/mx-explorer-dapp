@@ -15,10 +15,16 @@ const anonymizeUrls = (input: string) => {
   }
 
   // eslint-disable-next-line
-  let clean = input.normalize('NFKC').replace(/[\u200B-\u200D\uFEFF]/g, '');
+  let clean = input.normalize('NFKC');
 
   blacklist.forEach((item) => {
-    if (clean.replace(/\s/g, '').toLocaleLowerCase().includes(item)) {
+    if (
+      clean
+        .toLocaleLowerCase()
+        .replace(/\s/g, '')
+        .replace(/[^\x00-\x7F]/g, '')
+        .includes(item)
+    ) {
       clean = '***** [message removed for security reasons]';
     }
   });
