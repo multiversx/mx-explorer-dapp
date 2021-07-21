@@ -1,47 +1,20 @@
 import anchorme from 'anchorme';
 
-const blacklist = [
-  'lottery-elrond',
-  'l0ttery-elr0nd',
-  'l0ttery-elrond',
-  'lottery-elr0nd',
-  'bitly.com',
-  'bit.ly',
-];
-
 const anonymizeUrls = (input: string) => {
   if (input.length > 1000) {
     return input;
   }
 
+  let output = input.normalize('NFKC');
+
   // eslint-disable-next-line
-  let clean = input.normalize('NFKC');
+  const clean = output.toLocaleLowerCase().replace(/[^\x00-\x7F]/g, '');
 
-  blacklist.forEach((item) => {
-    if (
-      clean
-        .toLocaleLowerCase()
-        .replace(/\s/g, '')
-        .replace(/[^\x00-\x7F]/g, '')
-        .includes(item)
-    ) {
-      clean = '***** [message removed for security reasons]';
-    }
-  });
+  if (anchorme.list(clean.replace(/\s/g, '')).length) {
+    output = '***** [message removed for security reasons]';
+  }
 
-  return anchorme({
-    input: clean,
-    options: {
-      specialTransform: [
-        {
-          test: /.*$/,
-          transform: () => {
-            return '***** [link removed for security reasons]';
-          },
-        },
-      ],
-    },
-  });
+  return output;
 };
 
 export default anonymizeUrls;
