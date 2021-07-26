@@ -1,6 +1,6 @@
 import anchorme from 'anchorme';
 
-const blacklist = ['lottery', 'l0ttery'];
+const blacklist = ['lottery', 'l0ttery', '🅻🅾🆃🆃🅴🆁🆈'];
 
 const anonymizeUrls = (input: string) => {
   if (input.length > 1000) {
@@ -14,6 +14,7 @@ const anonymizeUrls = (input: string) => {
 
   if (
     anchorme.list(clean.replace(/\s/g, '')).length ||
+    blacklist.filter((item) => input.includes(item)).length ||
     blacklist.filter((item) => clean.includes(item)).length
   ) {
     output = '***** [message removed for security reasons]';
