@@ -16,7 +16,11 @@ export type ActionType =
     }
   | { type: 'setGlobalStake'; globalStake: StateType['globalStake'] }
   | { type: 'setAccountDetails'; accountDetails: StateType['accountDetails'] }
-  | { type: 'setUsd'; usd: StateType['usd'] };
+  | { type: 'setUsd'; usd: StateType['usd'] }
+  | {
+      type: 'setUrlBlacklist';
+      urlBlacklist: StateType['urlBlacklist'];
+    };
 
 export function globalReducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
@@ -79,8 +83,11 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
         usd: action.usd,
       };
     }
+    case 'setUrlBlacklist': {
+      return { ...state, urlBlacklist: action.urlBlacklist };
+    }
     default: {
-      throw new Error(`Unhandled action type: ${action!.type}`);
+      throw new Error(`Unhandled action type: ${(action as any).type}`);
     }
   }
 }
