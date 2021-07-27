@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '12.x'
       - run: npm install
-      - run: npm run build-mainnet
+      - run: npm run build-staging
         env:
           CI: false
       - name: Configure AWS Credentials
