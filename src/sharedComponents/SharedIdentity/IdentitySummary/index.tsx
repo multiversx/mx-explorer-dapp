@@ -1,12 +1,20 @@
 import * as React from 'react';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { faAngleRight } from '@fortawesome/pro-regular-svg-icons/faAngleRight';
 import { faCity } from '@fortawesome/pro-regular-svg-icons/faCity';
+import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons/faBadgeCheck';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IdentityType } from 'context/state';
 import { Denominate, NetworkLink, PageState, SharedIdentity, Trim } from 'sharedComponents';
 import { urlBuilder } from 'helpers';
 
-const IdentitySummary = ({ identity }: { identity: IdentityType | undefined }) => {
+const IdentitySummary = ({
+  identity,
+  featured,
+}: {
+  identity: IdentityType | undefined;
+  featured?: boolean;
+}) => {
   return (
     <div className="identity-summary card">
       <div className="card-body px-lg-spacer">
@@ -19,9 +27,28 @@ const IdentitySummary = ({ identity }: { identity: IdentityType | undefined }) =
 
                   <h5 className="mb-0 ml-2">
                     {identity.identity ? (
-                      <NetworkLink to={urlBuilder.identityDetails(identity.identity)}>
-                        {identity.name ? identity.name : 'N/A'}
-                      </NetworkLink>
+                      <>
+                        <NetworkLink to={urlBuilder.identityDetails(identity.identity)}>
+                          {identity.name ? identity.name : 'N/A'}
+                        </NetworkLink>
+                        {featured && (
+                          <OverlayTrigger
+                            placement="top"
+                            delay={{ show: 0, hide: 400 }}
+                            overlay={(props: any) => (
+                              <Tooltip {...props} show={props.show.toString()}>
+                                Verified
+                              </Tooltip>
+                            )}
+                          >
+                            <FontAwesomeIcon
+                              icon={faBadgeCheck}
+                              size="lg"
+                              className="ml-2 text-primary"
+                            />
+                          </OverlayTrigger>
+                        )}
+                      </>
                     ) : (
                       <>{identity.name ? <Trim text={identity.name} /> : 'N/A'}</>
                     )}
