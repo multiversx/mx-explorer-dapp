@@ -102,6 +102,7 @@ export interface StateType {
   globalStake: GlobalStakeType | undefined;
   accountDetails: types.AccountType;
   usd: number | undefined;
+  urlBlacklist?: string[];
 }
 
 const initialState = (optionalConfig?: ConfigType): StateType => {
@@ -129,6 +130,7 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
       claimableRewards: '',
     },
     usd: undefined,
+    urlBlacklist: undefined,
   };
 };
 
