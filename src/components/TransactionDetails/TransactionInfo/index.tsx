@@ -20,7 +20,7 @@ import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
 import ScResultsList, { ScResultType } from '../ScResultsList';
 import denominate from 'sharedComponents/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
-import anonymizeUrls from './helpres/anonymizeUrls';
+import useScamDetect from './helpres/useScamDetect';
 
 export interface TransactionType {
   fee?: string;
@@ -72,6 +72,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
   const [closingPrice, setClosingPrice] = React.useState();
   const [transactionValuePrice, setTransactionValuePrice] = React.useState<string>('...');
   const [transactionFeePrice, setTransactionFeePrice] = React.useState<string>('...');
+  const scamDetect = useScamDetect();
 
   const formattedUsdValue = (bNvalue: BigNumber, usd: string, digits: number) => {
     const amount = denominate({
@@ -280,9 +281,9 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
               readOnly
               className="form-control col cursor-text mt-1"
               rows={2}
-              defaultValue={
+              value={
                 transaction.data
-                  ? anonymizeUrls(Buffer.from(transaction.data, 'base64').toString())
+                  ? scamDetect(Buffer.from(transaction.data, 'base64').toString())
                   : 'N/A'
               }
             />

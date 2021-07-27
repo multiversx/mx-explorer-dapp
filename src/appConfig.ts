@@ -9,3 +9,4 @@ export const denomination = 18;
 export const decimals = 2;
 export const numInitCharactersForScAddress = 13;
 export const stakePerValidator = 2500000;
+export const extrasApi = '***REMOVED***';
