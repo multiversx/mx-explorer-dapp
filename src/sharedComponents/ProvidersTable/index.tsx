@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { types, urlBuilder } from 'helpers';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { Denominate, NetworkLink, PageState, Trim } from 'sharedComponents';
 import IdentityAvatar from 'sharedComponents/SharedIdentity/IdentityAvatar';
@@ -7,6 +8,7 @@ import CopyButton from 'sharedComponents/CopyButton';
 import DelegationCap from './DelegationCap';
 import PercentageFilled, { getPercentageFilled } from './PercentageFilled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons/faBadgeCheck';
 import { faArrowDown } from '@fortawesome/pro-regular-svg-icons/faArrowDown';
 import { faArrowUp } from '@fortawesome/pro-regular-svg-icons/faArrowUp';
 
@@ -177,6 +179,23 @@ const ProvidersTable = ({
                         <Trim text={provider.provider} />
                       )}
                     </NetworkLink>
+                    {provider.featured && (
+                      <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 0, hide: 400 }}
+                        overlay={(props: any) => (
+                          <Tooltip {...props} show={props.show.toString()}>
+                            Verified
+                          </Tooltip>
+                        )}
+                      >
+                        <FontAwesomeIcon
+                          icon={faBadgeCheck}
+                          size="sm"
+                          className="ml-2 text-primary"
+                        />
+                      </OverlayTrigger>
+                    )}
                   </div>
                 </td>
               ) : (
