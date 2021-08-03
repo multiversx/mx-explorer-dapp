@@ -20,7 +20,7 @@ import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
 import ScResultsList, { ScResultType } from '../ScResultsList';
 import denominate from 'sharedComponents/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
-import useScamDetect from './helpres/useScamDetect';
+import DataField from './DataField';
 
 export interface TransactionType {
   fee?: string;
@@ -72,7 +72,6 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
   const [closingPrice, setClosingPrice] = React.useState();
   const [transactionValuePrice, setTransactionValuePrice] = React.useState<string>('...');
   const [transactionFeePrice, setTransactionFeePrice] = React.useState<string>('...');
-  const scamDetect = useScamDetect();
 
   const formattedUsdValue = (bNvalue: BigNumber, usd: string, digits: number) => {
     const amount = denominate({
@@ -276,18 +275,8 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
 
           <DetailItem title="Nonce">{transaction.nonce}</DetailItem>
 
-          <DetailItem title="Input Data">
-            <textarea
-              readOnly
-              className="form-control col cursor-text mt-1"
-              rows={2}
-              value={
-                transaction.data
-                  ? scamDetect(Buffer.from(transaction.data, 'base64').toString())
-                  : 'N/A'
-              }
-            />
-          </DetailItem>
+          <DataField data={transaction.data} />
+
           {transaction.scResults && transaction.scResults?.length > 0 && (
             <DetailItem title="Smart&nbsp;Contract Results">
               <ScResultsList scResults={transaction.scResults} />

@@ -31,6 +31,7 @@
     "moment": "2.26.0",
     "node-sass": "4.14.1",
     "react": "16.13.1",
+    "react-anchorme": "2.2.1",
     "react-bootstrap": "1.0.1",
     "react-dom": "16.13.1",
     "react-router-dom": "5.2.0",
