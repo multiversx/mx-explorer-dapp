@@ -34,22 +34,6 @@ export default {
   getProviders: api,
   getProvider: api,
   getEconomics: api,
-  getEgldPrice: (props: ProviderPropsType) => {
-    const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latest/quoteshistorical/egld/price`, { timeout });
-  },
-  getEgldClosingPrice: (props: ProviderPropsType) => {
-    const { timeout, timestamp } = props;
-    return axios.get(`https://data.elrond.com/closing/quoteshistorical/egld/price/${timestamp}`, {
-      timeout,
-    });
-  },
-  getEgldMarketCap: (props: ProviderPropsType) => {
-    const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latest/quoteshistorical/egld/market_cap`, {
-      timeout,
-    });
-  },
   getEgldPriceHistory: (props: ProviderPropsType) => {
     const { timeout } = props;
     return axios.get(`https://data.elrond.com/latestcomplete/quoteshistorical/egld/price`, {
