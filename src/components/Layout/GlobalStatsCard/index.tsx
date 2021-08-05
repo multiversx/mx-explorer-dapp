@@ -21,45 +21,43 @@ const GlobalStatsCard = () => {
   const ref = React.useRef(null);
   const { activeNetworkId, usd } = useGlobalState();
 
-  const { getStats, getEgldMarketCap, getEconomics } = adapter();
+  const { getStats, getEconomics } = adapter();
 
   const [data, setData] = React.useState(initialState);
 
   const getData = () => {
     if (ref.current !== null) {
-      Promise.all([getStats(), getEgldMarketCap(), getEconomics()]).then(
-        ([statsData, marketCapData, economicsData]) => {
-          const marketCap = marketCapData.success
-            ? `$${parseInt(marketCapData.data).toLocaleString('en')}`
-            : '...';
+      Promise.all([getStats(), getEconomics()]).then(([statsData, economicsData]) => {
+        const marketCap = economicsData.success
+          ? `$${parseInt(economicsData.data.marketCap).toLocaleString('en')}`
+          : '...';
 
-          const circulatingSupply = economicsData.success
-            ? parseInt(economicsData.data.circulatingSupply).toLocaleString('en')
-            : '...';
+        const circulatingSupply = economicsData.success
+          ? parseInt(economicsData.data.circulatingSupply).toLocaleString('en')
+          : '...';
 
-          const totalStaked = economicsData.success
-            ? parseInt(economicsData.data.staked).toLocaleString('en')
-            : '...';
+        const totalStaked = economicsData.success
+          ? parseInt(economicsData.data.staked).toLocaleString('en')
+          : '...';
 
-          const totalStakedPercent = economicsData.success
-            ? `${(
-                (parseInt(economicsData.data.staked) /
-                  parseInt(economicsData.data.circulatingSupply)) *
-                100
-              ).toFixed()}%`
-            : '...';
+        const totalStakedPercent = economicsData.success
+          ? `${(
+              (parseInt(economicsData.data.staked) /
+                parseInt(economicsData.data.circulatingSupply)) *
+              100
+            ).toFixed()}%`
+          : '...';
 
-          if (ref.current !== null) {
-            setData({
-              ...processStats(statsData),
-              marketCap,
-              circulatingSupply,
-              totalStaked,
-              totalStakedPercent,
-            });
-          }
+        if (ref.current !== null) {
+          setData({
+            ...processStats(statsData),
+            marketCap,
+            circulatingSupply,
+            totalStaked,
+            totalStakedPercent,
+          });
         }
-      );
+      });
     }
   };
   React.useEffect(getData, [activeNetworkId]);
