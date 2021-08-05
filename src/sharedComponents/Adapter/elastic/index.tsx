@@ -38,19 +38,10 @@ export default {
   getEconomics: () => {
     throw new Error('not defined');
   },
-  getEgldPrice: () => {
-    throw new Error('not defined');
-  },
-  getEgldClosingPrice: () => {
-    throw new Error('not defined');
-  },
   getProviders: () => {
     throw new Error('not defined');
   },
   getProvider: () => {
-    throw new Error('not defined');
-  },
-  getEgldMarketCap: () => {
     throw new Error('not defined');
   },
   getEgldPriceHistory: () => {

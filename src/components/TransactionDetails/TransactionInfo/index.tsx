@@ -14,13 +14,13 @@ import {
   DetailItem,
   Trim,
   CopyButton,
-  adapter,
 } from 'sharedComponents';
 import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
 import ScResultsList, { ScResultType } from '../ScResultsList';
 import denominate from 'sharedComponents/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
 import useScamDetect from './helpres/useScamDetect';
+import { useGlobalState } from 'context';
 
 export interface TransactionType {
   fee?: string;
@@ -41,6 +41,7 @@ export interface TransactionType {
   status: string;
   timestamp: number;
   value: string;
+  price: number;
   scResults?: ScResultType[];
 }
 
@@ -67,49 +68,37 @@ const getScResultsMessages = (transaction: TransactionType) => {
 };
 
 const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
-  const { getEgldClosingPrice } = adapter();
   const ref = React.useRef(null);
-  const [closingPrice, setClosingPrice] = React.useState();
-  const [transactionValuePrice, setTransactionValuePrice] = React.useState<string>('...');
-  const [transactionFeePrice, setTransactionFeePrice] = React.useState<string>('...');
   const scamDetect = useScamDetect();
+  const {
+    activeNetwork: { erdLabel },
+  } = useGlobalState();
 
-  const formattedUsdValue = (bNvalue: BigNumber, usd: string, digits: number) => {
-    const amount = denominate({
-      input: bNvalue.toString(10),
-      denomination,
-      decimals,
-      showLastNonZeroDecimal: true,
-      addCommas: false,
-    });
-    const sum = (parseFloat(amount) * Number(usd)).toFixed(digits);
+  const formattedUsdValue = (amount: string, usd: number, digits: number) => {
+    const sum = (parseFloat(amount) * usd).toFixed(digits);
     const formattedValue = parseFloat(sum).toLocaleString('en', {
       maximumFractionDigits: digits,
       minimumFractionDigits: digits,
     });
-    return ` ${bNvalue.isGreaterThan(new BigNumber(0)) ? '≈' : '='} $${formattedValue}`;
-  };
-
-  const fetchClosingPrice = () => {
-    const { timestamp } = transaction;
-    if (timestamp) {
-      getEgldClosingPrice({ timestamp }).then(({ data, success }) => {
-        if (ref.current !== null && data && success) {
-          const bNvalue = new BigNumber(transaction.value);
-          if (transaction.fee) {
-            const bNfee = new BigNumber(transaction.fee ? transaction.fee : getFee(transaction));
-            setTransactionFeePrice(formattedUsdValue(bNfee, data, 4));
-          }
-          setTransactionValuePrice(formattedUsdValue(bNvalue, data, 2));
-          setClosingPrice(data);
-        }
-      });
-    }
+    return ` ${parseFloat(amount) > 0 ? '≈' : '='} $${formattedValue}`;
   };
 
   const scResultsMessages = getScResultsMessages(transaction);
 
-  React.useEffect(fetchClosingPrice, [transaction]);
+  const transactionFee = denominate({
+    input: transaction.fee ? transaction.fee : getFee(transaction),
+    denomination,
+    decimals,
+    showLastNonZeroDecimal: true,
+    addCommas: false,
+  });
+  const transactionValue = denominate({
+    input: transaction.value,
+    denomination,
+    decimals,
+    showLastNonZeroDecimal: true,
+    addCommas: false,
+  });
 
   return (
     <div className="transaction-info card" ref={ref}>
@@ -228,18 +217,27 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
           </DetailItem>
 
           <DetailItem title="Value">
-            <Denominate value={transaction.value} showLastNonZeroDecimal />{' '}
-            <span className="text-secondary">({transactionValuePrice})</span>
+            {transactionValue} {erdLabel}{' '}
+            <span className="text-secondary">
+              {transaction.price !== undefined ? (
+                <>({formattedUsdValue(transactionValue, transaction.price, 2)})</>
+              ) : (
+                <>N/A</>
+              )}
+            </span>
           </DetailItem>
 
           <DetailItem title="Transaction Fee">
             {transaction.gasUsed !== undefined ? (
               <>
-                <Denominate
-                  value={transaction.fee ? transaction.fee : getFee(transaction)}
-                  showLastNonZeroDecimal
-                />{' '}
-                <span className="text-secondary">({transactionFeePrice})</span>
+                {transactionFee} {erdLabel}{' '}
+                <span className="text-secondary">
+                  {transaction.price !== undefined ? (
+                    <>({formattedUsdValue(transactionFee, transaction.price, 4)})</>
+                  ) : (
+                    <>N/A</>
+                  )}
+                </span>
               </>
             ) : (
               <span className="text-secondary">N/A</span>
@@ -247,11 +245,15 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
           </DetailItem>
 
           <DetailItem title="EGLD Price">
-            {closingPrice
-              ? `$${Number(closingPrice).toLocaleString('en', {
+            {transaction.price !== undefined ? (
+              <>
+                {`$${Number(transaction.price).toLocaleString('en', {
                   minimumFractionDigits: 2,
-                })}`
-              : '...'}
+                })}`}
+              </>
+            ) : (
+              <span className="text-secondary">N/A</span>
+            )}
           </DetailItem>
 
           <DetailItem title="Gas Limit">
