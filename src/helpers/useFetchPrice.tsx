@@ -4,11 +4,11 @@ import { adapter } from 'sharedComponents';
 
 export default function useFetchPrice() {
   const dispatch = useGlobalDispatch();
-  const { getEgldPrice } = adapter();
+  const { getEconomics } = adapter();
 
   const fetchPrice = () => {
-    getEgldPrice().then((priceData) => {
-      const usd = priceData.success ? priceData.data : undefined;
+    getEconomics().then((getEconomics) => {
+      const usd = getEconomics.success ? getEconomics.data.price : undefined;
 
       dispatch({
         type: 'setUsd',
