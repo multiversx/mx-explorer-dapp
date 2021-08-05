@@ -85,13 +85,17 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
 
   const scResultsMessages = getScResultsMessages(transaction);
 
-  const transactionFee = denominate({
-    input: transaction.fee ? transaction.fee : getFee(transaction),
-    denomination,
-    decimals,
-    showLastNonZeroDecimal: true,
-    addCommas: false,
-  });
+  const transactionFee =
+    transaction.fee === undefined && transaction.gasUsed === undefined
+      ? 'N/A'
+      : denominate({
+          input: transaction.fee ? transaction.fee : getFee(transaction),
+          denomination,
+          decimals,
+          showLastNonZeroDecimal: true,
+          addCommas: false,
+        });
+
   const transactionValue = denominate({
     input: transaction.value,
     denomination,
