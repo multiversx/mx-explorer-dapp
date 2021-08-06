@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Anchorme, LinkComponentProps } from 'react-anchorme';
+import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal } from 'react-bootstrap';
 import { DetailItem } from 'sharedComponents';
 import useScamDetect from './helpres/useScamDetect';
@@ -16,26 +18,47 @@ const ModalLink = (props: LinkComponentProps) => {
     setShow(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (e: React.MouseEvent) => {
+    e.preventDefault();
     setShow(false);
   };
 
   return (
     <>
       <a {...props} onClick={onClick} />
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <button className="btn btn-default" onClick={handleClose}>
-            Close
-          </button>
-          <a href="/#" className="btn">
-            Leave site
-          </a>
-        </Modal.Footer>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        animation={false}
+        centered
+        className="modal-container"
+      >
+        <div className="card card-small">
+          <div className="card-body text-center p-spacer">
+            <p className="h3">
+              <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 text-warning" />
+              Warning
+            </p>
+            <p className="lead mb-spacer">
+              You are leaving the <b>elrond</b> domain
+            </p>
+            <div className="mx-auto mb-spacer">
+              <p>
+                By clicking <b>Access</b> button you may be redirected to a phishing site (
+                {props.href}). <br />
+                Make sure not to give away your secret phrase or upload your keystore file.
+              </p>
+            </div>
+            <div className="d-flex align-items-center flex-column mt-spacer">
+              <a href={props.href} target={`_blank`} className="btn btn-warning px-spacer">
+                Access {props.href}
+              </a>
+              <a href="/#" className="mt-3" onClick={handleClose}>
+                Close
+              </a>
+            </div>
+          </div>
+        </div>
       </Modal>
     </>
   );
