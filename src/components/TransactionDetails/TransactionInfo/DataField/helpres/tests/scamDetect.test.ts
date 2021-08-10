@@ -5,6 +5,8 @@ describe('scamDetect tests', () => {
   const output = '[Message hidden due to suspicious content]';
   const strings: { [key: string]: string } = {
     '👉 link.com': '👉 http://link.com',
+    'first-link.com or 🎉 second-link.com 🎉':
+      'http://first-link.com or 🎉 http://second-link.com 🎉',
     'http://google.com 🎉': 'http://google.com 🎉',
     '👉 https://linkedin.com 🎉': '👉 https://linkedin.com 🎉',
     'http://google.com?asd=true': 'http://google.com?asd=true',
