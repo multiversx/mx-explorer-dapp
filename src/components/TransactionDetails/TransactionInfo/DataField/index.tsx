@@ -13,8 +13,6 @@ const ModalLink = (props: LinkComponentProps) => {
 
   const onClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log(props);
-
     setShow(true);
   };
 
@@ -81,7 +79,7 @@ const DataField = ({ data }: { data?: string }) => {
         <>
           <div className="textarea form-control col cursor-text mt-1">
             <Anchorme linkComponent={ModalLink} target="_blank" rel="noreferrer noopener">
-              {dataString}
+              {scamDetect(dataString).stringWithLinks}
             </Anchorme>
           </div>
         </>
@@ -91,7 +89,7 @@ const DataField = ({ data }: { data?: string }) => {
             readOnly
             className="form-control col cursor-text mt-1"
             rows={2}
-            value={scamDetect(dataString)}
+            value={scamDetect(dataString).output}
           />
         </>
       )}
