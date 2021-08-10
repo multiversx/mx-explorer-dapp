@@ -36,34 +36,47 @@ export const scamDetect = (blacklist: string[]) => (
   const clean = cleanLink(output);
   const cleanedWithReplace = cleanAndReplace(output);
 
-  const [originalLink] = anchorme.list(cleanedWithReplace);
-  let firstPart = '';
-  let lastPart = '';
-  let link = '';
+  const allLinks = anchorme.list(clean);
 
-  if (originalLink) {
-    const { string: foundLink } = originalLink;
-    link = `${
-      foundLink.startsWith('http://') || foundLink.startsWith('https://')
-        ? foundLink
-        : `http://${foundLink}`
-    }`;
-    for (let i = 0; i < output.length; i++) {
-      const start = output.slice(i);
-      const [newFoundLink] = anchorme.list(cleanAndReplace(start));
-      if (newFoundLink && foundLink === newFoundLink.string) {
-        firstPart = output.substring(0, i);
+  let parts = [];
+
+  if (allLinks.length > 0) {
+    let remainingOutput = output;
+
+    allLinks.forEach((entry, index) => {
+      const { string: foundLink } = entry;
+      let firstPart = '';
+      let lastPart = '';
+      let link = `${
+        foundLink.startsWith('http://') || foundLink.startsWith('https://')
+          ? foundLink
+          : `http://${foundLink}`
+      }`;
+
+      for (let i = 0; i < remainingOutput.length; i++) {
+        const start = remainingOutput.slice(i);
+        const [newFoundLink] = anchorme.list(cleanLink(start));
+        if (newFoundLink && foundLink === newFoundLink.string) {
+          firstPart = remainingOutput.substring(0, i);
+        }
       }
-    }
-    for (let i = output.length; i > 0; i--) {
-      const start = output.slice(0, i);
-      const [newFoundLink] = anchorme.list(cleanAndReplace(start));
-      if (newFoundLink && foundLink === newFoundLink.string) {
-        lastPart = output.substring(i);
+      for (let i = output.length; i > 0; i--) {
+        const start = remainingOutput.slice(0, i);
+        const [newFoundLink] = anchorme.list(cleanLink(start));
+        if (newFoundLink && foundLink === newFoundLink.string) {
+          lastPart = remainingOutput.substring(i);
+        }
       }
-    }
+      parts.push(firstPart);
+      parts.push(link);
+      remainingOutput = lastPart;
+
+      if (index === allLinks.length - 1) {
+        parts.push(lastPart);
+      }
+    });
   } else {
-    link = input;
+    parts.push(input);
   }
 
   if (
@@ -74,7 +87,7 @@ export const scamDetect = (blacklist: string[]) => (
     output = '[Message hidden due to suspicious content]';
   }
 
-  return { output, stringWithLinks: `${firstPart}${link}${lastPart}` };
+  return { output, stringWithLinks: parts.join('') };
 };
 
 export default useScamDetect;
