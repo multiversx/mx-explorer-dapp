@@ -36,16 +36,15 @@ const ModalLink = (props: LinkComponentProps) => {
       >
         <div className="card card-small">
           <div className="card-body text-center p-spacer">
-            <p className="h3">
+            <p className="h3 pt-1">
               <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 text-warning" />
-              Warning
+              Caution!
             </p>
-            <p className="lead mb-spacer">You are leaving Elrond Network</p>
+            <p className="lead mb-spacer">You are about to navigate to an external website.</p>
             <div className="mx-auto mb-spacer">
               <p>
-                By clicking <b>Access</b> button you may be redirected to a phishing site ({link}).{' '}
-                <br />
-                Make sure not to give away your secret phrase or upload your keystore file.
+                This link is not part of Elrond. Do not enter your private words, your keystore
+                file, or any of your Elrond account information.
               </p>
             </div>
             <div className="d-flex align-items-center flex-column mt-spacer">
