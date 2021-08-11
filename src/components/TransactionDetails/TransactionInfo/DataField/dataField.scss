@@ -1,17 +1,27 @@
-.textarea {
-  -moz-appearance: textfield-multiline;
-  -webkit-appearance: textarea;
-  border: 1px solid $border-color;
-  background-color: $input-disabled-bg;
-  border-radius: $input-border-radius;
-  font: medium -moz-fixed;
-  font: -webkit-small-control;
-  font-size: 0.8125rem;
-  height: 3rem;
-  overflow: auto;
-  padding: 0.375rem 0.75rem;
-  resize: both;
+.data-field {
+  $font-size: 0.8125rem;
+  .textarea {
+    -moz-appearance: textfield-multiline;
+    -webkit-appearance: textarea;
+    border: 1px solid $border-color;
+    background-color: $input-disabled-bg;
+    border-radius: $input-border-radius;
+    font: medium -moz-fixed;
+    font: -webkit-small-control;
+    font-size: $font-size;
+    height: 3rem;
+    overflow: auto;
+    padding: 0.375rem 0.75rem;
+    resize: both;
+    &:hover{
+      border: 1px solid $border-color;
+    }
+  }
+  .small-font {
+    font-size: $font-size;
+  }
 }
+
 
 .modal-container {
   .modal-dialog {
