@@ -21,8 +21,11 @@ const ModalLink = (props: LinkComponentProps) => {
     setShow(false);
   };
 
+  const link = props.href.replace('https://', '').replace('http://', '');
+
   return (
     <>
+      {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
       <a {...props} onClick={onClick} />
       <Modal
         show={show}
@@ -37,22 +40,20 @@ const ModalLink = (props: LinkComponentProps) => {
               <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 text-warning" />
               Warning
             </p>
-            <p className="lead mb-spacer">
-              You are leaving the <b>elrond</b> domain
-            </p>
+            <p className="lead mb-spacer">You are leaving Elrond Network</p>
             <div className="mx-auto mb-spacer">
               <p>
-                By clicking <b>Access</b> button you may be redirected to a phishing site (
-                {props.href}). <br />
+                By clicking <b>Access</b> button you may be redirected to a phishing site ({link}).{' '}
+                <br />
                 Make sure not to give away your secret phrase or upload your keystore file.
               </p>
             </div>
             <div className="d-flex align-items-center flex-column mt-spacer">
-              <a href={props.href} target={`_blank`} className="btn btn-warning px-spacer">
-                Access {props.href}
+              <a href="/#" className="btn btn-primary px-spacer" onClick={handleClose}>
+                Back to safety
               </a>
-              <a href="/#" className="mt-3" onClick={handleClose}>
-                Close
+              <a href={props.href} target={`_blank`} className="mt-3">
+                Continue to {link}
               </a>
             </div>
           </div>
@@ -72,14 +73,15 @@ const DataField = ({ data }: { data?: string }) => {
   };
 
   const dataString = data ? Buffer.from(data, 'base64').toString() : 'N/A';
+  const { stringWithLinks, output, found } = scamDetect(dataString);
 
   return (
-    <DetailItem title="Input Data">
+    <DetailItem title="Input Data" className="data-field">
       {showData ? (
         <>
           <div className="textarea form-control col cursor-text mt-1">
             <Anchorme linkComponent={ModalLink} target="_blank" rel="noreferrer noopener">
-              {scamDetect(dataString).stringWithLinks}
+              {stringWithLinks}
             </Anchorme>
           </div>
         </>
@@ -89,13 +91,15 @@ const DataField = ({ data }: { data?: string }) => {
             readOnly
             className="form-control col cursor-text mt-1"
             rows={2}
-            value={scamDetect(dataString).output}
+            value={output}
           />
         </>
       )}
-      <a href="/#" onClick={show}>
-        {!showData ? 'Show' : 'Hide'} original message
-      </a>
+      {found && (
+        <a href="/#" onClick={show} className="small-font text-muted">
+          {!showData ? 'Show' : 'Hide'} original message
+        </a>
+      )}
     </DetailItem>
   );
 };

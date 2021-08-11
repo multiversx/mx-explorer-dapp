@@ -3,15 +3,16 @@ import anchorme from 'anchorme';
 import axios from 'axios';
 import { useGlobalState, useGlobalDispatch } from 'context';
 import { extrasApi } from 'appConfig';
+import { StateType } from 'context/state';
 
 const useScamDetect = () => {
   const { urlBlacklist } = useGlobalState();
   const dispatch = useGlobalDispatch();
-  const blacklist: string[] = urlBlacklist ? urlBlacklist : [];
+  const blacklist: StateType['urlBlacklist'] = urlBlacklist ? urlBlacklist : {};
 
   React.useEffect(() => {
     if (urlBlacklist === undefined) {
-      axios.get(`${extrasApi}/blacklist`).then(({ data }) => {
+      axios.get(`${extrasApi}/permissions/deny/terms`).then(({ data }) => {
         dispatch({ type: 'setUrlBlacklist', urlBlacklist: data });
       });
     }
@@ -24,11 +25,12 @@ const useScamDetect = () => {
 const cleanLink = (input: string) => input.toLocaleLowerCase().replace(/[^\x00-\x7F]/g, '');
 const cleanAndReplace = (input: string) => cleanLink(input).replace(/\s/g, '');
 
-export const scamDetect = (blacklist: string[]) => (
+export const scamDetect = (blacklist: StateType['urlBlacklist'] = {}) => (
   input: string
-): { output: string; stringWithLinks: string } => {
+): { output: string; stringWithLinks: string; found: boolean } => {
+  let found = false;
   if (input.length > 1000) {
-    return { output: input, stringWithLinks: '' };
+    return { output: input, stringWithLinks: '', found };
   }
 
   let output = input.normalize('NFKC');
@@ -47,11 +49,7 @@ export const scamDetect = (blacklist: string[]) => (
       const { string: foundLink } = entry;
       let firstPart = '';
       let lastPart = '';
-      let link = `${
-        foundLink.startsWith('http://') || foundLink.startsWith('https://')
-          ? foundLink
-          : `http://${foundLink}`
-      }`;
+      let link = foundLink;
 
       for (let i = 0; i < remainingOutput.length; i++) {
         const start = remainingOutput.slice(i);
@@ -79,15 +77,19 @@ export const scamDetect = (blacklist: string[]) => (
     parts.push(input);
   }
 
-  if (
-    anchorme.list(cleanedWithReplace).length ||
-    blacklist.filter((item) => input.includes(item)).length ||
-    blacklist.filter((item) => clean.includes(item)).length
-  ) {
-    output = '[Message hidden due to suspicious content]';
+  const blacklistKeys = Object.keys(blacklist);
+
+  const [key] = [
+    ...blacklistKeys.filter((item) => input.includes(item)),
+    ...blacklistKeys.filter((item) => clean.includes(item)),
+  ];
+
+  if (anchorme.list(cleanedWithReplace).length || key) {
+    found = true;
+    output = `[Message hidden due to suspicious content${key ? ' - ' + blacklist[key] : ''}]`;
   }
 
-  return { output, stringWithLinks: parts.join('') };
+  return { output, stringWithLinks: parts.join(''), found };
 };
 
 export default useScamDetect;
