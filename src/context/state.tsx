@@ -102,7 +102,7 @@ export interface StateType {
   globalStake: GlobalStakeType | undefined;
   accountDetails: types.AccountType;
   usd: number | undefined;
-  urlBlacklist?: string[];
+  urlBlacklist?: { [key: string]: string };
 }
 
 const initialState = (optionalConfig?: ConfigType): StateType => {
