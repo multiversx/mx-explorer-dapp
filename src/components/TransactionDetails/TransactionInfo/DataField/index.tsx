@@ -6,8 +6,6 @@ import { Modal } from 'react-bootstrap';
 import { DetailItem } from 'sharedComponents';
 import useScamDetect from './helpres/useScamDetect';
 
-// http://localhost:3000/transactions/e6d98b3ed9cfbe50651ea355e11440e40b910df763edba3489392128d088c531
-
 const ModalLink = (props: LinkComponentProps) => {
   const [show, setShow] = React.useState(false);
 
@@ -17,7 +15,10 @@ const ModalLink = (props: LinkComponentProps) => {
   };
 
   const handleClose = (e: React.MouseEvent) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
+
     setShow(false);
   };
 
@@ -40,8 +41,8 @@ const ModalLink = (props: LinkComponentProps) => {
               <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 text-warning" />
               Caution!
             </p>
-            <p className="lead mb-spacer">You are about to navigate to an external website.</p>
-            <div className="mx-auto mb-spacer">
+            <p className="lead">You are about to navigate to an external website.</p>
+            <div className="mx-auto mb-spacer ">
               <p>
                 This link is not part of Elrond. Do not enter your private words, your keystore
                 file, or any of your Elrond account information.
