@@ -72,9 +72,6 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
   const {
     activeNetwork: { erdLabel },
   } = useGlobalState();
-  const [closingPrice, setClosingPrice] = React.useState();
-  const [transactionValuePrice, setTransactionValuePrice] = React.useState<string>('...');
-  const [transactionFeePrice, setTransactionFeePrice] = React.useState<string>('...');
 
   const formattedUsdValue = (amount: string, usd: number, digits: number) => {
     const sum = (parseFloat(amount) * usd).toFixed(digits);
