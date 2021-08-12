@@ -31,6 +31,7 @@
     "moment": "2.26.0",
     "node-sass": "4.14.1",
     "react": "16.13.1",
+    "react-anchorme": "2.2.1",
     "react-bootstrap": "1.0.1",
     "react-dom": "16.13.1",
     "react-router-dom": "5.2.0",
@@ -43,6 +44,8 @@
   "scripts": {
     "start": "react-app-rewired start",
     "start-internal": "npm run copy-internal-config & react-app-rewired start",
+    "start-devnet": "npm run copy-devnet-config & react-app-rewired start",
+    "start-mainnet": "npm run copy-mainnet-config & react-app-rewired start",
     "build-mainnet": "npm run copy-mainnet-config & REACT_APP_SHARE_PREFIX= REACT_APP_GA_ID=UA-140910543-1 REACT_APP_THEME=light npm run build",
     "build-staging": "npm run copy-staging-config & REACT_APP_SHARE_PREFIX= REACT_APP_GA_ID=UA-140910543-1 REACT_APP_THEME=light npm run build",
     "build-testnet": "npm run copy-testnet-config & REACT_APP_SHARE_PREFIX=testnet- REACT_APP_GA_ID=UA-129278450-2 REACT_APP_THEME=testnet npm run build",
