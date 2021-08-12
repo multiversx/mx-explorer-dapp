@@ -71,6 +71,7 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
     providers: () => Promise.resolve({ data: rawData.providers }),
     provider: () => Promise.resolve({ data: rawData.provider }),
     price: () => Promise.resolve({ data: 161.4137347617252 }),
+    blacklist: () => Promise.resolve({ data: {} }),
     ...networkRequests,
   };
 
@@ -126,6 +127,8 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.providers();
       case url.includes('/price'):
         return requests.price();
+      case url.endsWith('/permissions/deny/terms'):
+        return requests.blacklist();
     }
   };
 };
