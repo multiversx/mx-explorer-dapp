@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal } from 'react-bootstrap';
 import { DetailItem } from 'sharedComponents';
 import useScamDetect from './helpres/useScamDetect';
+import { truncate } from 'helpers';
+import { displayedDataLength } from 'appConfig';
 
 const ModalLink = (props: LinkComponentProps) => {
   const [show, setShow] = React.useState(false);
@@ -91,7 +93,7 @@ const DataField = ({ data }: { data?: string }) => {
             readOnly
             className="form-control col cursor-text mt-1"
             rows={2}
-            value={output}
+            value={truncate(output, displayedDataLength)}
           />
         </>
       )}
