@@ -19,8 +19,8 @@ import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
 import ScResultsList, { ScResultType } from '../ScResultsList';
 import denominate from 'sharedComponents/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
-import useScamDetect from './helpres/useScamDetect';
 import { useGlobalState } from 'context';
+import DataField from './DataField';
 
 export interface TransactionType {
   fee?: string;
@@ -69,7 +69,6 @@ const getScResultsMessages = (transaction: TransactionType) => {
 
 const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
   const ref = React.useRef(null);
-  const scamDetect = useScamDetect();
   const {
     activeNetwork: { erdLabel },
   } = useGlobalState();
@@ -282,18 +281,8 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
 
           <DetailItem title="Nonce">{transaction.nonce}</DetailItem>
 
-          <DetailItem title="Input Data">
-            <textarea
-              readOnly
-              className="form-control col cursor-text mt-1"
-              rows={2}
-              value={
-                transaction.data
-                  ? scamDetect(Buffer.from(transaction.data, 'base64').toString())
-                  : 'N/A'
-              }
-            />
-          </DetailItem>
+          <DataField data={transaction.data} />
+
           {transaction.scResults && transaction.scResults?.length > 0 && (
             <DetailItem title="Smart&nbsp;Contract Results">
               <ScResultsList scResults={transaction.scResults} />
