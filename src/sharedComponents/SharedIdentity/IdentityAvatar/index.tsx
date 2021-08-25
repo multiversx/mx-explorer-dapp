@@ -10,7 +10,7 @@ const IdentityAvatar = ({ identity }: { identity: IdentityAvatarType }) => {
   return (
     <img
       className={`identity-avatar rounded-circle flex-shrink-0 mr-2 ${
-        !identity.avatar ? 'p-1 bg-light' : ''
+        !identity.avatar ? 'border-0' : ''
       }`}
       src={identity.avatar ? identity.avatar : require('../../../assets/images/default-avatar.svg')}
       alt="img"
