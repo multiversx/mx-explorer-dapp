@@ -54,7 +54,9 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
               <CardItem className="n3 lg" title="Staking APR" icon={faLeaf}>
                 <div className="d-flex flex-column w-100">
                   <h5 className="m-0 pb-1">
-                    {globalStake && globalStake.apr ? `${globalStake.apr}%` : 'N/A'}
+                    {globalStake && globalStake.baseApr
+                      ? `Up to ${(globalStake.baseApr * 100).toFixed(2)}%`
+                      : 'N/A'}
                   </h5>
                   {/* <small>
                     {globalStake && globalStake.waitingList ? `${globalStake.waitingList}% ` : 'N/A '}
