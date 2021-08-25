@@ -27,6 +27,8 @@ export interface GlobalStakeType {
   queueSize: number;
   staked: number;
   apr?: number;
+  topUpApr?: number;
+  baseApr?: number;
   waitingList?: number;
   deliquentStake?: number;
   nodesVerions?: NodesVersionsType[];
