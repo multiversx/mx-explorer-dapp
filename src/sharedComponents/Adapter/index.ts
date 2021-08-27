@@ -277,6 +277,19 @@ export default function useAdapter() {
 
     getToken: (tokenId: string) => provider({ url: `/tokens/${tokenId}` }),
 
+    // Nfts
+
+    getAccountNfts: ({ address, size }: { address: string; size: number }) =>
+      provider({
+        url: `/accounts/${address}/nfts`,
+        params: {
+          from: (size - 1) * 25,
+          size: 25,
+        },
+      }),
+
+    getAccountNftsCount: (address: string) => provider({ url: `/accounts/${address}/nfts/count` }),
+
     // Providers
 
     getProviders: (props: GetProvidersType) =>

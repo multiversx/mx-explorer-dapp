@@ -43,9 +43,9 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "start-internal": "npm run copy-internal-config & react-app-rewired start",
-    "start-devnet": "npm run copy-devnet-config & react-app-rewired start",
-    "start-mainnet": "npm run copy-mainnet-config & react-app-rewired start",
+    "start-internal": "npm run copy-internal-config & REACT_APP_THEME=testnet react-app-rewired start",
+    "start-devnet": "npm run copy-devnet-config & REACT_APP_THEME=testnet react-app-rewired start",
+    "start-mainnet": "npm run copy-mainnet-config & REACT_APP_THEME=light react-app-rewired start",
     "build-mainnet": "npm run copy-mainnet-config & REACT_APP_SHARE_PREFIX= REACT_APP_GA_ID=UA-140910543-1 REACT_APP_THEME=light npm run build",
     "build-staging": "npm run copy-staging-config & REACT_APP_SHARE_PREFIX= REACT_APP_GA_ID=UA-140910543-1 REACT_APP_THEME=light npm run build",
     "build-testnet": "npm run copy-testnet-config & REACT_APP_SHARE_PREFIX=testnet- REACT_APP_GA_ID=UA-129278450-2 REACT_APP_THEME=testnet npm run build",
