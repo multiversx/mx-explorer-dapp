@@ -27,6 +27,23 @@ export interface TokenType {
   isPaused: boolean;
 }
 
+export interface NftType {
+  identifier: string;
+  collection: string;
+  timestamp: number;
+  attributes: string;
+  nonce: number;
+  type: 'SemiFungibleESDT' | 'NonFungibleESDT';
+  name: string;
+  creator: string;
+  royalties: number;
+  balance: string;
+  uris?: string[];
+  url?: string;
+  thumbnailUrl?: string;
+  tags?: string[];
+}
+
 export interface ProviderType {
   provider: string;
   apr: string;
