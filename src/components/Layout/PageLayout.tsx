@@ -19,6 +19,7 @@ export default function PageLayout({ children }: { children: React.ReactNode }) 
     case activeRoute(accountsRoutes.accountDetails):
     case activeRoute(accountsRoutes.accountCode):
     case activeRoute(accountsRoutes.accountTokens):
+    case activeRoute(accountsRoutes.accountNfts):
     case activeRoute(accountsRoutes.oldAccountDetails):
       return <AccountLayout>{children}</AccountLayout>;
 

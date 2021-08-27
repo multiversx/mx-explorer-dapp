@@ -26,6 +26,14 @@ const AccountTabs = () => {
           <h6>ESDT Tokens</h6>
         </NetworkLink>
       )}
+
+      <NetworkLink
+        to={urlBuilder.accountDetailsNfts(accountDetails.address)}
+        className={`tab-link mx-3 ${activeRoute(accountsRoutes.accountNfts) ? 'active' : ''}`}
+      >
+        <h6>NFTs</h6>
+      </NetworkLink>
+
       {accountDetails.code && (
         <NetworkLink
           to={urlBuilder.accountDetailsContractCode(accountDetails.address)}
