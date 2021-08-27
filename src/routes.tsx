@@ -19,6 +19,7 @@ import Providers from 'components/Providers';
 import ProviderDetails from 'components/ProviderDetails';
 import AccountContractCode from './components/AccountDetails/AccountContractCode';
 import AccountTokens from 'components/AccountDetails/AccountTokens';
+import AccountNfts from 'components/AccountDetails/AccountNfts';
 import ProviderTransactions from 'components/ProviderDetails/ProviderTransactions';
 import NodesStatistics from 'components/NodesStatistics';
 import NodesQueue from 'components/NodesQueue';
@@ -53,6 +54,7 @@ export const accountsRoutes = {
   accountDetails: '/accounts/:hash',
   accountCode: `/accounts/:hash/code`,
   accountTokens: `/accounts/:hash/tokens`,
+  accountNfts: `/accounts/:hash/nfts`,
   oldAccountDetails: `/address/:hash`,
 };
 
@@ -169,7 +171,11 @@ const routes: RouteType[] = [
     title: 'Account Details',
     component: AccountTokens,
   },
-
+  {
+    path: accountsRoutes.accountNfts,
+    title: 'Account Details',
+    component: AccountNfts,
+  },
   {
     path: tokensRoutes.tokens,
     title: 'Tokens',
