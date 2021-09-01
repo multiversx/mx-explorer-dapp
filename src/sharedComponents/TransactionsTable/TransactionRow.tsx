@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { addressIsBech32, urlBuilder } from 'helpers';
 import { Denominate, ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
-import { ScResultType } from 'components/TransactionDetails/ScResultsList';
+import { ResultType } from 'components/TransactionDetails/ScResultsList';
 import TransactionIcon from '../TransactionsTable/TransactionIcon';
 
 export interface TransactionType {
@@ -24,7 +24,7 @@ export interface TransactionType {
   nonce?: number;
   round?: number;
   signature?: string;
-  scResults?: ScResultType[];
+  results?: ResultType[];
   isNew?: boolean; // UI flag
 }
 
