@@ -16,7 +16,7 @@ import {
   CopyButton,
 } from 'sharedComponents';
 import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
-import ScResultsList, { ScResultType } from '../ScResultsList';
+import ScResultsList, { ResultType } from '../ScResultsList';
 import denominate from 'sharedComponents/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
 import { useGlobalState } from 'context';
@@ -42,7 +42,7 @@ export interface TransactionType {
   timestamp: number;
   value: string;
   price: number;
-  scResults?: ScResultType[];
+  results?: ResultType[];
 }
 
 const getFee = (transaction: TransactionType) => {
@@ -56,8 +56,8 @@ const getFee = (transaction: TransactionType) => {
 const getScResultsMessages = (transaction: TransactionType) => {
   const messages: string[] = [];
 
-  if (transaction.scResults) {
-    transaction.scResults.forEach((result) => {
+  if (transaction.results) {
+    transaction.results.forEach((result) => {
       if (result.returnMessage) {
         messages.push(result.returnMessage);
       }
@@ -283,9 +283,9 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
 
           <DataField data={transaction.data} />
 
-          {transaction.scResults && transaction.scResults?.length > 0 && (
+          {transaction.results && transaction.results?.length > 0 && (
             <DetailItem title="Smart&nbsp;Contract Results">
-              <ScResultsList scResults={transaction.scResults} />
+              <ScResultsList results={transaction.results} />
             </DetailItem>
           )}
         </div>
