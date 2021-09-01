@@ -17,7 +17,7 @@ export default [
       'beaca33f40d2604209bfef4cdd8890816f94ce7a7bbedb6e6d08d8df5361dbef7e4052d0ff0336a9304e3869196bc6bf3d897654d0726a50cd2826e734fff60a',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '995810ce0cc85efb2ba4053d8b35fbef76f98b061458debc7c445dbc021ee24f',
@@ -37,7 +37,7 @@ export default [
       '224142bb81476178574f3c44aa119970c93644b19767acb13137ce205a338576f05dd52c6aa757508314e1f5b417b59a5cd195bebc6138f35ebfca5abc690b07',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '2b2821d43d1d6c94c12bd2a34e48c574484886a416be0ee3bd57bbdcc3fa9c53',
@@ -57,7 +57,7 @@ export default [
       'ed1712cd7dbb8c79674f20846ef3899335560b88710edba134e3447a1e3e6259d6d1cf707164bbddea14cb88913a308b3fa56400fa41cef08a03fc7d552bf300',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '2768d527d6213e0166d66bbe01f81a64f31d6fc02bc47fbb96081f14a65624e7',
@@ -77,7 +77,7 @@ export default [
       '5bbab88a60e0c44bc88ae3cf430034dff6406111c9bda929f32131c0bc4b9eabd7fea01a91ce9ea6f87e410104ff5af8835e56a9c56986794922a095b9c11803',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: 'e7ac8b2ca01cc2bd1c4c18afc40b9103a25e7129d3ffbc5dc58565fbdf234a35',
@@ -97,7 +97,7 @@ export default [
       'b6a32f2d61c7e349224f9568582e83ef5c149c150b1f876511d2c163498d5924c79078b2a004cbfa9a5e3d61f46581b5dd56400185d0747cbbae184128eebc08',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '37323b7061cab3a498c8b857c9d3a651953a79e37819782e1e687bdf4afb27fb',
@@ -117,7 +117,7 @@ export default [
       '26ab479d7724ce0971c313d71a4d18425ff086e5e6839cf682eed36e24ef9ab548872b7c40c787b64b3ceb1cb36974deab1275fccfd03873757eb31828efab03',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '2deb37aa9c7f0be3167353434cd8b1004a3f3272352ada73a7e6f794a35e0b4d',
@@ -137,7 +137,7 @@ export default [
       '9d3b7d7517abd8ee804841b06bac3ad12608bd63756b179b19c0b810704223fd3603ed2f0c1032e35040c4baa009de72c86d42ba003eecb11b1ccaf36b07b907',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '690624c2c8ba413c19d78ed198e2f3ba011fe7e3e1098c13b804ab3b2cec342a',
@@ -157,7 +157,7 @@ export default [
       'bd96b015952e895bae54f67e95e28b67f6a1ca8fd00af95e74f1b089418d9216c0b2f097eabc0b1592e358b998681f8a9ec96f7b3f85e5d2261f2de89ae31d0e',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '93081e6ce94aa4b223777009179c18e1431601d49e9c147f4b7ae89f5935d701',
@@ -177,7 +177,7 @@ export default [
       '0aebb3860e52e2f2eeb5fe736440a933cd01498e00f503193e32fbd3988273fefea603e6469530d700b45546395b47ca6f2cc23b656f4d6843be87b8ccc3d10c',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '69c1df2eb60f86a89c2f9f8c8ef82a25a67d29553c34fe4cd568fd7eec8b9dce',
@@ -197,7 +197,7 @@ export default [
       'b5a16abaae737c20d1320e680494518d8d609fc05882aa92f6eeafe1404edfe51728b4fb31a9905e19ebe2ab114103a6d7ac001449e405044dd6738a7a2c4e0d',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '33a76c1e9c5e295180fbcd53e2396e8ca6bb10fb9b450f8b97b0c7bb1fa7cf40',
@@ -217,7 +217,7 @@ export default [
       '14ed9215d3d999532a21476d24db3d157f881bda534012f53651ed1218094d7b9c546f674e5433dc5fbf6eb2043c418a748a56e33d1eed49890e81b30368c105',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: 'b4dc48ecaf2c64fd9e4662af49cd2f9d8fdf649c52105dd7629e552d132e5427',
@@ -237,7 +237,7 @@ export default [
       'a48b012a4fdf0f43318a520a06f6ea10c501c5cbdf2071a6ae521ee83d6bdffaa6e96ec8c679b55a131d321cf13ada14cecd69bd521e7b44405c763b2de14d02',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: 'a5aad329ede1cd7d210c87697ea70dd786e1ab4a7a082c924197026f99dc2c05',
@@ -257,7 +257,7 @@ export default [
       'f55de1306ce8e8cb2dc0a5ec2575f207b3b29bf821a6366e66ac4c3ac85859257c894be903aff60cbd5fdb48b1b1f1a4067c521ab3513b302601b84abd54800f',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '4f7b2f357f057206647fd246d46da31b365f7334ff2cd42c9f77a7723a264814',
@@ -277,7 +277,7 @@ export default [
       '66ed500362bbe200dfb9e4a09b106569ac9901c8a1ae854319b70c1a76ef77ee921be0557c3deae30ef462a7879881532ccaf59d36de92b7c16468fb2d91280d',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '909d13785eb6500134d8cc55281e50908a9afabb5d0b38553b57a93fba8ad9a5',
@@ -297,7 +297,7 @@ export default [
       '82d51589f1facf871017b16bf3cf858c697cefe6cfbc3b548710e355cc187690506ff5861eb897cb2d711f46e8ab01a4dfe8bcd2468c0217acb13cbcbe91ca03',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: 'bb91a878c6e200b8e3ac2ee9d95fd22cd1b9c0e8909ae3f8ea31573b9eb87d70',
@@ -317,7 +317,7 @@ export default [
       '4574793ba947e3cec105d3c69a56e9e90900f57f51fbddd08f6d12662c28bdef986c7d90b8e60941aa705e8453dbe32f4cb3ce1fe680955275e878ec44931f0a',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '778969ad3e83f2a8d549b78670a1dae732c70e1c93643364c4a311cafdf110f6',
@@ -337,7 +337,7 @@ export default [
       '5569e8021b0db556e1d68ab48e1c71f9f7b3a0ff6a3d413a21c89e8d6ca0622824117f36c9f42015332d7b1737044bfeadbb295301887d1b1efa9eb93de96409',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '1bdca08b650516e3ee11f03db635fe01b871e852d6cb2b70d78e0228b86969d5',
@@ -357,7 +357,7 @@ export default [
       '1427a42833c820472f4bf5b13df98bfee6e4ed52933001627f656b07bef4a72b1e14393abc5ff15b55f41e6d7181157d748473273f38509a9856c0edab4eaf00',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: 'b0e5828afe035181ab8baf6dbb47601989d53f77b045b8dd0fa88858e8445304',
@@ -377,7 +377,7 @@ export default [
       '4167e469de9f9ad43066a77f69f035c38da60ee8f8ba9ec2dcb0995a01ed4c1985b826061f338973f88c9795ede71df9c879d34cdfd26f66930e9e43c9f9e60f',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '9f51f4527700060b86ed2a7d2a9b586604a599706531e80716c0bdf10149e67a',
@@ -397,7 +397,7 @@ export default [
       'a4936f12475114ffc01bb060038a8ae40b54b84a2997ee496e0944ee941b512ddfd1d5be93e49f1604554a94ff0f28698f31ff15cbe74a4f594d0de45f845401',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '9562ebf1b34cb101618e92ac3240badfa2bb69a27c387fd4cc3a64fb658bba56',
@@ -417,7 +417,7 @@ export default [
       '66a98497d6fc07979c8dcd89f573c94501af77a05ee8a81c2f01e6f104189d095e16356e97ef49e238d9ab152893a1df4ed4429c602d314e1be9ede6b9eae607',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '38eab9af38dfed976b098aee18bc227571bca8b2939ac42ea08ba17c226ce9b4',
@@ -437,7 +437,7 @@ export default [
       '1be8719384e5d62cebe447fa7b7dafb53ad551411eb6fadec70166fd214b0dadcd9ff7584ca9e6b8d6fe9d8141f2016fd44a8398182a29a575cf9169a0626c03',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '95c17e570b60f100acf606f4b437b2680de69fd0a7fe48ef5769842be64d11a0',
@@ -457,7 +457,7 @@ export default [
       '04f6cadf0faecd2afa8ca24adc9701f2c6268a9f7103939a4d9496f8d3560dc5f3c586b910445c013b870efabfb6e3c6782a182c89755df02a9b59953c436a00',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '57d3ea4b4675f305a6a89a3375b8763d3c5760ebfe2dca5bbed9ad68b203430d',
@@ -477,7 +477,7 @@ export default [
       '2af2d556aaeba925643372bca5c3966881cb88383fd3f2ab3f1d35b1f61b06b203b2723c8fb759e3411904b32edddfdeeaec557096b50e3fd7078e482cd5ec0d',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '93dffce4ef43f94341db465daf66196f0e1818405a4a0a85b953e45c84b4b04c',
@@ -497,7 +497,7 @@ export default [
       'f801a873c645c0f9461d16460877eee8cf58b313a809a0ef7fb4aee51bab2813c0b3a6604c89470a399a6ef16d462e72cd8aa8da1cb9e52ac2a285341da02909',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: 'ad96d38093a6368037bf47762c9c8563598d93b5a6fdf75723ae2839e941e70c',
@@ -517,7 +517,7 @@ export default [
       'f541d81a50af68399de0d86458eabcb84c7bf1c56bff5763292a57d866c072a6c963febf3363d137f4f9bcf0beb99e7c22bb5cbc61c0e964dc89e04c1867a300',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '0080febed339815f4ce963b2b88518ee9ea9c6921d6ed71b9c36a9df2bc45ddd',
@@ -537,7 +537,7 @@ export default [
       'bf5ab8904cb11b39ae154cbc3d3cd85cba1c610102762e9a96bb5ca1a93b95af2f72e4811ac2d0fc8dad2589f061b7f581ad5e70635671bfe3c1a1037b1e3d04',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '4bb9809b34f9b1efaf35afd25803e3aa630dd7547ab3b1de50a44e60de560b07',
@@ -557,7 +557,7 @@ export default [
       '430fb2863a7da5082b38dd7ee3ccab80abe29dc889af3faf4cd0321f0c806660f886f59dda90f7799b8beb632ab068c05c44b7d20716ff28ce5f7d57755f8609',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '264f788af62ed96543b41cc7993741439f96b05bec60124f13d04fd08f30131a',
@@ -577,7 +577,7 @@ export default [
       '5fd4b8f747cf396d60cbd4f91fc21372ea588f2be2424645da8c382b919efebe93a752e52941089b7587a3e671e030e0b6bb56da5f9af51a36409b4218b3f00f',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '9f1be56d1f4ae0c9b0e38069c0df9174f578b9432a4b7a741f286a9d618df4e8',
@@ -597,7 +597,7 @@ export default [
       'c9e24e08895597775f735a62792b2b53d4152bc9f5fc9143fbb1429400ae65b0e37a748c18edb66e999f7a5f79481613c46a5c51dc3387e6b5c4a4898cadb20d',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: 'f2b16c0974e3dfc4105304bd90a3213ed4998115f0d66f12a4cc861865f9aed5',
@@ -617,7 +617,7 @@ export default [
       'a6df889dd077ac4dc1f4eafe84c617bd0ec61a6167a84ca9dd542b02f1a4242af65119e79bb2534945ca3b82946368f9832167cbd2ea5bc3a7ba337d6e379104',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '1b46b74bb0ea3c3c95df35797b108c98d3bdbefc15919785fc23a3da1c4e507a',
@@ -637,7 +637,7 @@ export default [
       '4e7238d0474af7d385fb6f193715117c523a5879d43ed02177d67150b80824e061a0561eef17f18a955445e85dfec7bd63c67942b36bc4bc46ecd2c1055c6e00',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '40a00e6297d80cb8a99e3a3ca19210da0dbae99249c2095c5cc9375252a7a3de',
@@ -657,7 +657,7 @@ export default [
       '6495e54636bc837654e7058c329d2d924d5510202fa8fc9d204c6f3723939f9f0dee45f9fa4636c7cac1ce6b4dfe2a5ad390da31be33d6a1efc05a3ca9e0380e',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '101a0b36cd48546658276960af667cbb9224627b461670d7fd7e44f380d457cb',
@@ -677,7 +677,7 @@ export default [
       '63340f26439ce463faf95aac0f1fbba58d3100db9c6ade58a897b4163482598920b12345d41b32d28594c7d46c3df1f62cb6586be432d82c2dab431ddb34ac04',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '95f0714bbde3b4bf92d90b77f1cc431f33bf4dd8ab4c69fd7bc4f137b25e953a',
@@ -697,7 +697,7 @@ export default [
       '2031c5db4ed612e01264fa59ff907bb82f107b2f04d966efe7977008d897619a66d8992d3f9d22c56c2b0a7f989f243c0c995c26c3f94eb731ab761b0613d70e',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: 'ce53a2a5c68ca2c8bc678b724cb69196d6a2073e7dc20ada950fc5adf77ed9a6',
@@ -717,7 +717,7 @@ export default [
       'ad32a4162f6dd3ff58765155e298133825ee69612bd79dc37909c1d90dbbed41d593cc08ab81bae939775ca7dc43331612520b163ef739b1489ee0b7a0b03a06',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '9286a4c43668fe044e24b1488641345ee06b8eb325751196037c81b8c3b4839e',
@@ -737,7 +737,7 @@ export default [
       'b0cddffdd15b07244ef6fe7a256d49f8038daa895a314babe05dec55d2e2b126ab717a2b0aebad35a8b95f91c25871f06a8a3fd9c5734d5125997416eee1150f',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '8edc2eda636c033218870567e0336e098cd885c8f3d517ef4fcdba0bee0b5ca7',
@@ -757,7 +757,7 @@ export default [
       '559f7301e5a1aef3659df6f1aa9a21fae67a2fce5cf9de6174562e17ddbc402d06bb655d89bb23e318f9562af870ee826690f0b1c9a3e5a688553505a647bc05',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '36ab0f7f7d542f688087fbbc36d1037177fac2369066122cbf0acd9c8e77fd3f',
@@ -777,7 +777,7 @@ export default [
       '9d2b27c17dd9c65cbfd55c355b37b57243e09615bb4e55df78a1a3dec968a64795c3f2d18bccd11f978a0f31a5a2ef8dca7e9871f33e9ab0456f1cc25183770b',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '6a81766238a06ba66985323c9ba1c804663a4e3f4928142c7295d054449b40e0',
@@ -797,7 +797,7 @@ export default [
       '80e4cb9d339a22f0b366cf45836bd4135ecee7170fd2caee4692dd54561449625a1694084290b64949d57563d2dabfe69f92f77e4d18bcb207f5f789cdde750d',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: 'c780c11a54b4839a84834f318e3d0ddddc91517f52c6f4def23895867cdb2f20',
@@ -817,7 +817,7 @@ export default [
       'f1e2d18f09612ae0df1b237de739e71620a0cc3638bd83fc1bf633151cda922161a46e481b32d62efd0cc048a5010c035a8810bfa0aee648ecfe221adf26630e',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '77bec72b2273e05c208fdfddab24d6f887628b5442ef32d3071644b3ac77bfd7',
@@ -837,7 +837,7 @@ export default [
       '4ed7e31fb3cc7b075d49cd47c7bc88aef150bbc35b6e7b4c109c046fe5ad2857c63d10e7927676e6ecbc78793f3591aea51d4e72a6343572bf02f5b2c3f1820a',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '971d65d72e525e6454d1ab48a5d6580a4d5072a8bc6d32ce20c0c7d87bdac443',
@@ -857,7 +857,7 @@ export default [
       '81c6bcc7095486ab41f953508fda5bccc291d4741cd55fcf2670eba80c197e23963aa1a88aa8ecb45fb6c250c5738bd9e019b8e90c50b32ef7242edc44f2f20c',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '900e656d04b17626191dd24b8c1bf2a708e6262eeb7109893793f5eb930c611b',
@@ -877,7 +877,7 @@ export default [
       '5acac4bc0c4d30c34b54df2e66af25a4791e7dfa14db283f146e06b0c65f012f579d79075612c6a99b803f40ede56bf86dbdca4115d7c3f5bb21a9e7bd48240f',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '3bffcef2d84bd791ee1e1c0073def779dab520883aa4892478e6ef613e9643a2',
@@ -897,7 +897,7 @@ export default [
       'fa854be1fc581ae3e2a228a3f7486a0a005b71ca06f8ebbf9cd822e1a53f04be0c35eb8008f3f9767f8c4a59c5255d856fa2285342803678744d21ec12a8e502',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: 'f55fb9bb5ed9c1d7b264dc9bfe19c72e47f0ec70cb2a8acd5d73bab9d28b001c',
@@ -917,7 +917,7 @@ export default [
       '20d01d9ec35cc9ac1e3bcb7437c828cb023f37799f0620e075561179c2cfe4d75fd6fb8c3125b6d4aa174d768d6ffb41a52c72eebb0cc6fe0a8f70fa751eb90c',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '351196f57d63b60ea047e1fe19c1c8ddcaa72173fe52e19a559a7e68dab4514e',
@@ -937,7 +937,7 @@ export default [
       '5dfcad14f61a132765fd8911410389d0df6f4891012641a50c374bb5744334a8a940b9f6e57ca0299b2e98c08c3d4b18a9658035f554d93da57082a07ac17702',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: 'b656ea00f440ae3e212038bf3c0b1058d472675569ed79445c41cf058fddef3e',
@@ -957,7 +957,7 @@ export default [
       '63f80af85f06ad254fc0382614079b9deea4a2595787d32eb502f9978e5ff0c16473a4095b231e5922072031dfe09770e061ba9b1258ee8da0be81839bfad001',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: '2d4b414b5a60ef5eebe53818394c699ed40ba9105f08f9ff4cb88b57dfd7e57c',
@@ -977,7 +977,7 @@ export default [
       'a4df0755ea29bd5960531f789801bfed84e3cc5b4bd295690aeb2e6fe6ad180a67e169d604e50eacd3f54d8d22cbcc35adaa2fececd725feb1efb0aa3157d005',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
   {
     txHash: 'a002a5584bbc7f8ee2cb7e9e30811440d3f77199ccc33c875812c85e4078a59f',
@@ -997,6 +997,6 @@ export default [
       'b48694629e3488de616c253df47d901b8526faeb805a54e5be7f596bc6de9691c4e17904689830c017ef5ab6b725ea193ef319c3972a2c443508353fecbc2e0f',
     timestamp: 1594131330,
     status: 'Success',
-    scResults: null,
+    results: null,
   },
 ];

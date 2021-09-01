@@ -4,7 +4,7 @@ import { faExchange } from '@fortawesome/pro-regular-svg-icons/faExchange';
 import { Denominate, CopyButton, Trim } from 'sharedComponents';
 import decodePart from './decodePart';
 
-export interface ScResultType {
+export interface ResultType {
   callType: string;
   gasLimit: number;
   gasPrice: number;
@@ -17,7 +17,7 @@ export interface ScResultType {
   returnMessage?: string;
 }
 
-const ScResultsList = ({ scResults }: { scResults: ScResultType[] }) => {
+const ScResultsList = ({ results }: { results: ResultType[] }) => {
   const decodeData = (data: string) => {
     const parts = Buffer.from(data, 'base64').toString().split('@');
 
@@ -34,7 +34,7 @@ const ScResultsList = ({ scResults }: { scResults: ScResultType[] }) => {
 
   return (
     <div className="sc-results-list d-flex flex-column mt-1">
-      {scResults.map((result: ScResultType, i) => {
+      {results.map((result: ResultType, i) => {
         return (
           <div key={i} className="result-item d-flex border-left border-bottom ml-3 py-3">
             <div className="transaction-icon">
