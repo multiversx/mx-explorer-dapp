@@ -43,6 +43,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
+    "start-testnet": "npm run copy-testnet-config & REACT_APP_THEME=testnet react-app-rewired start",
     "start-internal": "npm run copy-internal-config & REACT_APP_THEME=testnet react-app-rewired start",
     "start-devnet": "npm run copy-devnet-config & REACT_APP_THEME=testnet react-app-rewired start",
     "start-mainnet": "npm run copy-mainnet-config & REACT_APP_THEME=light react-app-rewired start",

@@ -276,7 +276,11 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
           </DetailItem>
 
           <DetailItem title="Gas Price">
-            <Denominate value={transaction.gasPrice.toString()} showLastNonZeroDecimal />
+            {transaction.price !== undefined ? (
+              <Denominate value={transaction.gasPrice.toString()} showLastNonZeroDecimal />
+            ) : (
+              <span className="text-secondary">N/A</span>
+            )}
           </DetailItem>
 
           <DetailItem title="Nonce">{transaction.nonce}</DetailItem>
