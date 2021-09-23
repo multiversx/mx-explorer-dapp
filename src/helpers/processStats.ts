@@ -23,7 +23,7 @@ export default function processStats(statsData: any) {
         blocks: parseInt(data.blocks).toLocaleString('en'),
         accounts: parseInt(data.accounts).toLocaleString('en'),
         transactions: parseInt(data.transactions).toLocaleString('en'),
-        epoch: data.epoch.toLocaleString('en'),
+        epoch: String(data.epoch),
         epochPercentage: check ? (100 * data.roundsPassed) / data.roundsPerEpoch : 0,
         epochTotalTime: check
           ? moment.utc(data.refreshRate * data.roundsPerEpoch).format('HH:mm')
