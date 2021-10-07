@@ -84,7 +84,9 @@ const EpochGear = ({ stats, showTime }: { stats: typeof initialStats; showTime?:
   React.useEffect(mount, [nextEpoch]);
 
   const timeLabel = nextEpoch ? `${hours}h ${minutes}m ${seconds}s` : '...';
-  const epochLabel = nextEpoch ? `Epoch ${parseInt(stats.epoch) + resetCount}` : '...';
+  const epochLabel = nextEpoch
+    ? `Epoch ${(parseInt(stats.epoch) + resetCount).toLocaleString('en')}`
+    : '...';
 
   return (
     <div className="ml-lg-2 mr-lg-4 pr-lg-3 mb-4 mb-lg-0" ref={ref}>
