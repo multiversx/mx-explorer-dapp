@@ -72,7 +72,7 @@ const getNodes = async (args: any & { proxyUrl: () => string }) => {
     let publicKey = publicKeys[i];
 
     let node: any = {};
-    const found = heartbeats.find((element: any) => element.publicKey === publicKey);
+    const found = (heartbeats as any).find((element: any) => element.publicKey === publicKey);
 
     if (statistics[publicKey]) {
       node = statistics[publicKey];
@@ -153,7 +153,7 @@ const getNodes = async (args: any & { proxyUrl: () => string }) => {
       }
     }
 
-    resultNode.issues = nodeIssues(resultNode, config.erd_latest_tag_software_version);
+    resultNode.issues = nodeIssues(resultNode, (config as any).erd_latest_tag_software_version);
 
     data.push(resultNode);
   }
