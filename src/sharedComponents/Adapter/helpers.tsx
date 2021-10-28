@@ -94,6 +94,8 @@ export function getTransactionsParams({
         'status',
         'timestamp',
         'value',
+        'tokenValue',
+        'tokenIdentifier',
       ].join(','),
     },
   };

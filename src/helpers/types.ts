@@ -25,6 +25,13 @@ export interface TokenType {
   canUpgrade: boolean;
   canWipe: boolean;
   isPaused: boolean;
+  assets?: {
+    website?: string;
+    description?: string;
+    status?: string;
+    pngUrl?: string;
+    svgUrl?: string;
+  };
 }
 
 export interface NftType {

@@ -58,7 +58,7 @@ export interface NodeType {
   name: string;
   type: 'observer' | 'validator';
   status?: 'waiting' | 'eligible' | 'new' | 'jailed' | 'leaving' | 'inactive' | 'queued';
-  online: boolean;
+  online: false;
   rating: number;
   tempRating: number;
   ratingModifier: number;
@@ -103,6 +103,7 @@ export interface StateType {
   shards: ShardType[];
   globalStake: GlobalStakeType | undefined;
   accountDetails: types.AccountType;
+  tokenDetails: types.TokenType;
   usd: number | undefined;
   urlBlacklist?: { [key: string]: string };
 }
@@ -130,6 +131,21 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
       nonce: 0,
       txCount: 0,
       claimableRewards: '',
+    },
+    tokenDetails: {
+      identifier: '',
+      name: '',
+      owner: '',
+      minted: '',
+      burnt: '',
+      canBurn: false,
+      canChangeOwner: false,
+      canFreeze: false,
+      canMint: false,
+      canPause: false,
+      canUpgrade: false,
+      canWipe: false,
+      isPaused: false,
     },
     usd: undefined,
     urlBlacklist: undefined,

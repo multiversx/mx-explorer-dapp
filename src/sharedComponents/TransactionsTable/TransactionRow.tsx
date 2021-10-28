@@ -26,6 +26,8 @@ export interface TransactionType {
   signature?: string;
   results?: ResultType[];
   isNew?: boolean; // UI flag
+  tokenValue?: string;
+  tokenIdentifier?: string;
 }
 
 interface TransactionRowType {
@@ -131,7 +133,15 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
         </div>
       </td>
       <td>
-        <Denominate value={transaction.value} />
+        {transaction.tokenValue && transaction.tokenIdentifier ? (
+          <Denominate
+            token={transaction.tokenIdentifier}
+            value={transaction.tokenValue}
+            showLastNonZeroDecimal
+          />
+        ) : (
+          <Denominate value={transaction.value} />
+        )}
       </td>
     </tr>
   );
