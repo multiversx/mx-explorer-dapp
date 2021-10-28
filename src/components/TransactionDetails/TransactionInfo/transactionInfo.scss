@@ -14,4 +14,56 @@
   .status-text-danger {
     @include top-bar($danger);
   }
+
+  .tab-link {
+    font-size: 1rem;
+    line-height: 1.95rem;
+    padding: 0;
+  }
+
+  .detailed-list {
+    .detailed-item {
+      &:first-child {
+        @extend .pt-0;
+      }
+
+      &:last-child {
+        @extend .pb-0;
+        @extend .border-bottom-0;
+        @extend .mb-1;
+      }
+
+      .col-left {
+        color: $secondary;
+
+        @include media-breakpoint-up(sm) {
+          max-width: 6.5rem;
+          text-align: right;
+        }
+      }
+
+      .detailed-item-content {
+        margin-top: 0.4rem;
+        max-width: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .transaction-icon {
+        margin-left: -1.1rem;
+        margin-right: 0.5rem;
+
+        border-radius: 50%;
+        font-size: 0.9375rem;
+        text-align: center;
+        color: $secondary;
+        width: 2.1875rem;
+        height: 2.1875rem;
+        min-width: 2.1875rem;
+        line-height: 2.1875rem;
+        background: $light;
+        box-shadow: inset 0 0 3px rgba($secondary, 0.2);
+      }
+    }
+  }
 }
