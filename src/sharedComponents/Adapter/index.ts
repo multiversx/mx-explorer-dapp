@@ -67,6 +67,8 @@ export default function useAdapter() {
               'value',
               'miniBlockHash',
               'round',
+              'tokenValue',
+              'tokenIdentifier',
             ].join(','),
           },
         },
@@ -276,6 +278,31 @@ export default function useAdapter() {
       }),
 
     getToken: (tokenId: string) => provider({ url: `/tokens/${tokenId}` }),
+
+    getTokenTransactions: ({ size, tokenId }: { size: number; tokenId: string }) =>
+      provider({
+        url: `/tokens/${tokenId}/transactions`,
+        params: getTokensParam({ size }),
+      }),
+
+    getTokenTransactionsCount: ({ tokenId }: { tokenId: string }) =>
+      provider({
+        url: `/tokens/${tokenId}/transactions/count`,
+      }),
+
+    getTokenAccounts: ({ size, tokenId }: { size: number; tokenId: string }) =>
+      provider({
+        url: `/tokens/${tokenId}/accounts`,
+        params: {
+          from: (size - 1) * 25,
+          size: 25,
+        },
+      }),
+
+    getTokenAccountsCount: ({ tokenId }: { tokenId: string }) =>
+      provider({
+        url: `/tokens/${tokenId}/accounts/count`,
+      }),
 
     // Nfts
 

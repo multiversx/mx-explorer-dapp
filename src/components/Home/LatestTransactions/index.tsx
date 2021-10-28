@@ -114,7 +114,15 @@ const LatestTransactions = () => {
                               <FontAwesomeIcon icon={faExchangeAlt} />
                             </div>
                             <div className="d-flex">
-                              <Denominate value={transaction.value} decimals={4} />
+                              {transaction.tokenValue && transaction.tokenIdentifier ? (
+                                <Denominate
+                                  token={transaction.tokenIdentifier}
+                                  value={transaction.tokenValue}
+                                  showLastNonZeroDecimal
+                                />
+                              ) : (
+                                <Denominate value={transaction.value} decimals={4} />
+                              )}
                             </div>
                           </div>
 
