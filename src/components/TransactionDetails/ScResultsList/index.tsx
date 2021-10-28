@@ -33,15 +33,15 @@ const ScResultsList = ({ results }: { results: ResultType[] }) => {
   };
 
   return (
-    <div className="sc-results-list d-flex flex-column mt-1">
+    <div className="sc-results-list detailed-list d-flex flex-column mt-1">
       {results.map((result: ResultType, i) => {
         return (
-          <div key={i} className="result-item d-flex border-left border-bottom ml-3 py-3">
+          <div key={i} className="detailed-item d-flex border-left border-bottom ml-3 py-3">
             <div className="transaction-icon">
               <FontAwesomeIcon icon={faExchange} />
             </div>
 
-            <div className="result-item-content">
+            <div className="detailed-item-content">
               {result.sender && (
                 <div className="row mb-3 d-flex flex-column flex-sm-row">
                   <div className="col col-left">From</div>
