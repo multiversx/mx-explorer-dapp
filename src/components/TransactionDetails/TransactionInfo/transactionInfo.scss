@@ -19,6 +19,9 @@
     font-size: 1rem;
     line-height: 1.95rem;
     padding: 0;
+    &.active {
+      color: $body;
+    }
   }
 
   .detailed-list {
