@@ -46,7 +46,7 @@ export const blocksRoutes = {
 
 export const transactionsRoutes = {
   transactions: '/transactions',
-  transactionDetails: '/transactions/:hash',
+  transactionDetails: '/transactions/:hash/:tab?',
 };
 
 export const accountsRoutes = {
