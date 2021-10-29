@@ -90,11 +90,10 @@ const TokenAccounts = () => {
                           </td>
                           <td>
                             <Denominate
-                              token={identifier}
                               value={account.balance}
-                              decimals={decimals}
+                              showLastNonZeroDecimal={true}
                               showLabel={false}
-                              showLastNonZeroDecimal
+                              denomination={decimals}
                             />
                           </td>
                         </tr>

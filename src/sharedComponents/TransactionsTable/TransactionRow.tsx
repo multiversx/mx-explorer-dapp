@@ -134,11 +134,7 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
       </td>
       <td>
         {transaction.tokenValue && transaction.tokenIdentifier ? (
-          <Denominate
-            token={transaction.tokenIdentifier}
-            value={transaction.tokenValue}
-            showLastNonZeroDecimal
-          />
+          <Denominate token={transaction.tokenIdentifier} value={transaction.tokenValue} />
         ) : (
           <Denominate value={transaction.value} />
         )}

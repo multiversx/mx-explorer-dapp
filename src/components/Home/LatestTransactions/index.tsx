@@ -118,7 +118,7 @@ const LatestTransactions = () => {
                                 <Denominate
                                   token={transaction.tokenIdentifier}
                                   value={transaction.tokenValue}
-                                  showLastNonZeroDecimal
+                                  decimals={4}
                                 />
                               ) : (
                                 <Denominate value={transaction.value} decimals={4} />

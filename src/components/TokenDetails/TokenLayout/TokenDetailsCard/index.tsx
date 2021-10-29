@@ -49,14 +49,10 @@ const TokenDetailsCard = () => {
           <div className="container-fluid">
             <DetailItem title="Name">
               <div className="d-flex align-items-center">
-                <div className="mr-2">{name}</div>
-                {assets && (assets.svgUrl || assets.pngUrl) && (
-                  <img
-                    src={assets?.svgUrl ? assets?.svgUrl : assets?.pngUrl}
-                    alt={name}
-                    className="token-icon"
-                  />
+                {assets && assets.svgUrl && (
+                  <img src={assets.svgUrl} alt={name} className="token-icon mr-1" />
                 )}
+                <div>{name}</div>
               </div>
             </DetailItem>
             <DetailItem title="Token">{identifier}</DetailItem>
@@ -93,17 +89,12 @@ const TokenDetailsCard = () => {
                 {assets.website && (
                   <DetailItem title="Website">
                     <a href={assets.website} target={`_blank`} rel={`noreferrer nofollow`}>
-                      {assets.website}
+                      {assets.website.replace(/^https?:\/\//i, '')}
                     </a>
                   </DetailItem>
                 )}
                 {assets.description && (
                   <DetailItem title="Description">{assets.description}</DetailItem>
-                )}
-                {assets.status && (
-                  <DetailItem title="Status">
-                    <span className="text-capitalize">{assets.status}</span>
-                  </DetailItem>
                 )}
               </>
             )}

@@ -24,68 +24,98 @@ export interface OperationType {
   value: string;
 }
 
+const OperationSender = ({
+  operation,
+  size,
+  action,
+}: {
+  operation: OperationType;
+  size?: string;
+  action?: string;
+}) => {
+  return operation.sender ? (
+    <div className="col-lg-6 d-flex align-items-center col-xl-3 pr-xl-0">
+      <div className="mr-2 text-nowrap">{action ? `${action} from ` : 'From'}</div>
+      {addressIsBech32(operation.sender) ? (
+        <>
+          <NetworkLink to={urlBuilder.accountDetails(operation.sender)} className="trim-wrapper">
+            <Trim text={operation.sender} color="secondary" />
+          </NetworkLink>
+          <CopyButton text={operation.sender} className="side-action ml-2" />
+        </>
+      ) : (
+        ''
+      )}
+    </div>
+  ) : null;
+};
+
+const OperationReceiver = ({
+  operation,
+  size,
+  action,
+}: {
+  operation: OperationType;
+  size?: string;
+  action?: string;
+}) => {
+  return operation.receiver ? (
+    <div className="col-lg-6 d-flex align-items-center col-xl-3 pr-xl-0">
+      <div className="mr-2 text-nowrap">{action ? `${action} to ` : 'To'}</div>
+      {addressIsBech32(operation.sender) ? (
+        <>
+          <NetworkLink to={urlBuilder.accountDetails(operation.receiver)} className="trim-wrapper">
+            <Trim text={operation.receiver} color="secondary" />
+          </NetworkLink>
+          <CopyButton text={operation.receiver} className="side-action ml-2" />
+        </>
+      ) : (
+        ''
+      )}
+    </div>
+  ) : null;
+};
+
+const OperationText = ({ operation }: { operation: OperationType }) => {
+  switch (operation.action) {
+    case 'create':
+    case 'localMint':
+      return <OperationReceiver operation={operation} size="lg" action="Mint" />;
+    case 'burn':
+      return <OperationSender operation={operation} size="lg" action="Burn" />;
+    default:
+      return (
+        <>
+          <OperationSender operation={operation} /> <OperationReceiver operation={operation} />
+        </>
+      );
+  }
+};
+
 const OperationsList = ({ operations }: { operations: OperationType[] }) => {
   return (
     <div className="operations-list d-flex flex-column mb-n2">
       {operations.map((operation: OperationType, i) => {
         return (
           <div key={i} className="detailed-item d-flex row mb-3 mb-xl-2">
-            {operation.sender && (
-              <div className="col-lg-6 col-xl-3 d-flex align-items-center">
-                <div className="mr-2">From</div>
-                {addressIsBech32(operation.sender) ? (
-                  <>
-                    <NetworkLink
-                      to={urlBuilder.accountDetails(operation.sender)}
-                      className="trim-wrapper"
-                    >
-                      <Trim text={operation.sender} color="secondary" />
-                    </NetworkLink>
-                    <CopyButton text={operation.sender} className="side-action ml-2" />
-                  </>
-                ) : (
-                  ''
-                )}
-              </div>
-            )}
+            <OperationText operation={operation} />
 
-            {operation.receiver && (
-              <div className="col-lg-6 col-xl-3 d-flex align-items-center pl-xl-0">
-                <div className="mr-2">To</div>
-                {addressIsBech32(operation.sender) ? (
-                  <>
-                    <NetworkLink
-                      to={urlBuilder.accountDetails(operation.receiver)}
-                      className="trim-wrapper"
-                    >
-                      <Trim text={operation.receiver} color="secondary" />
-                    </NetworkLink>
-                    <CopyButton text={operation.receiver} className="side-action ml-2" />
-                  </>
-                ) : (
-                  ''
-                )}
-              </div>
-            )}
-
-            {operation.value !== undefined && operation.identifier !== undefined && (
-              <div className="col-lg-6 col-xl-5 d-flex align-items-center px-xl-0">
-                <div className="mr-2">Value</div>
-                <div className="d-flex flex-wrap">
-                  <Denominate
-                    token={operation.identifier}
-                    value={operation.value}
-                    showLastNonZeroDecimal
-                  />
+            {operation.value !== undefined &&
+              operation.identifier !== undefined &&
+              operation.type !== undefined && (
+                <div className="col-lg-6 col-xl-6 d-flex align-items-center">
+                  <div className="mr-2">Value</div>
+                  <div className="d-flex flex-wrap">
+                    {operation.type === 'nft' ? (
+                      <div>
+                        {operation.value} <span className="text-muted">{operation.identifier}</span>
+                      </div>
+                    ) : (
+                      <Denominate token={operation.identifier} value={operation.value} />
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
-
-            {operation.action !== undefined && operation.type !== undefined && (
-              <div className="col-lg-6 col-xl-1 d-flex align-items-center px-xl-0 ml-xl-n3">
-                <span className="text-uppercase mr-1">{operation.type}</span> {operation.action}
-              </div>
-            )}
+              )}
           </div>
         );
       })}
