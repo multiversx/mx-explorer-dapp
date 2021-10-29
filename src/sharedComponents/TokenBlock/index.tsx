@@ -24,9 +24,12 @@ const TokenBlock = ({ identifier }: { identifier: string }) => {
   React.useEffect(fetchTokenBlock, [identifier]);
 
   return (
-    <div ref={ref} className="d-inline-block ml-2">
-      <NetworkLink to={urlBuilder.tokenDetails(identifier)}>
-        <div className="d-flex align-items-center">
+    <div ref={ref} className="d-inline-block ml-1">
+      <NetworkLink
+        to={urlBuilder.tokenDetails(identifier)}
+        className={`d-flex ${tokenDetails?.assets?.svgUrl ? 'token-link' : ''}`}
+      >
+        <div className="d-flex align-items-center symbol">
           {dataReady === undefined && (
             <>
               <span className="mr-2">{identifier}</span>
@@ -37,23 +40,20 @@ const TokenBlock = ({ identifier }: { identifier: string }) => {
               />
             </>
           )}
-          {dataReady === false && <span>{identifier}</span>}
-          {dataReady === true && tokenDetails && (
+          {dataReady === false && <span className="text-truncate">{identifier}</span>}
+          {dataReady === true && tokenDetails && tokenDetails.assets ? (
             <>
-              <div className="mr-2">{tokenDetails.name}</div>
-              {tokenDetails.assets &&
-                (tokenDetails.assets.svgUrl || tokenDetails.assets.pngUrl) && (
-                  <img
-                    src={
-                      tokenDetails.assets?.svgUrl
-                        ? tokenDetails.assets?.svgUrl
-                        : tokenDetails.assets?.pngUrl
-                    }
-                    alt={tokenDetails.name}
-                    className="token-icon"
-                  />
-                )}
+              {tokenDetails.assets.svgUrl && (
+                <img
+                  src={tokenDetails.assets.svgUrl}
+                  alt={tokenDetails.name}
+                  className="token-icon mx-1"
+                />
+              )}
+              <div>{tokenDetails.name}</div>
             </>
+          ) : (
+            <span className="text-truncate">{identifier}</span>
           )}
         </div>
       </NetworkLink>
