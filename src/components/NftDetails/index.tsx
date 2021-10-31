@@ -12,16 +12,16 @@ import {
 } from 'sharedComponents';
 import FailedNftDetails from './FailedNftDetails';
 
-const NftText = ({ type }: { type: types.NftType['type'] }) => {
+const nftText = (type: types.NftType['type']) => {
   switch (type) {
     case 'SemiFungibleESDT':
-      return <span>SFT</span>;
+      return 'SFT';
     case 'NonFungibleESDT':
-      return <span>NFT</span>;
+      return 'NFT';
     case 'MetaESDT':
-      return <span>META</span>;
+      return 'META';
     default:
-      return null;
+      return '';
   }
 };
 
@@ -38,6 +38,9 @@ const NftDetails = () => {
       if (ref.current !== null) {
         setNftDetails(data);
         setDataReady(success);
+        if (success && data && data.type) {
+          document.title = `${nftText(data.type)} Details`;
+        }
       }
     });
   };
@@ -57,9 +60,7 @@ const NftDetails = () => {
                 <div className="card">
                   <div className="card-header">
                     <div className="card-header-item d-flex align-items-center">
-                      <h6 data-testid="title">
-                        <NftText type={nftDetails.type} /> Details
-                      </h6>
+                      <h6 data-testid="title">{nftText(nftDetails.type)} Details</h6>
                     </div>
                   </div>
                   <div className="card-body p-0">
@@ -98,7 +99,7 @@ const NftDetails = () => {
                         <DetailItem title="Royalties">{nftDetails.royalties}</DetailItem>
                       )}
                       {nftDetails.supply !== undefined && Number(nftDetails.supply) > 0 && (
-                        <DetailItem title="Supply">{nftDetails.royalties}</DetailItem>
+                        <DetailItem title="Supply">{nftDetails.supply}</DetailItem>
                       )}
                       {nftDetails.decimals !== undefined && (
                         <DetailItem title="Decimals">{nftDetails.decimals}</DetailItem>
