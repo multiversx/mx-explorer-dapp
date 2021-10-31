@@ -18,20 +18,22 @@ interface CollectionBlockType {
 const CollectionBlock = (props: CollectionBlockType) => {
   const ref = React.useRef(null);
   const { getCollection } = adapter();
-  const [tokenDetails, setCollectionBlock] = React.useState<types.CollectionType>();
+  const [collectionDetails, setCollectionDetails] = React.useState<types.CollectionType>();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchCollectionBlock = () => {
     getCollection(props.identifier).then(({ success, data }) => {
       if (ref.current !== null) {
-        setCollectionBlock(data);
+        setCollectionDetails(data);
         setDataReady(success);
       }
     });
   };
 
   const denomination =
-    dataReady === true && tokenDetails && tokenDetails.decimals ? tokenDetails.decimals : 1;
+    dataReady === true && collectionDetails && collectionDetails.decimals
+      ? collectionDetails.decimals
+      : 1;
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchCollectionBlock, [props.identifier]);
@@ -50,7 +52,7 @@ const CollectionBlock = (props: CollectionBlockType) => {
       )}
       <NetworkLink
         to={urlBuilder.collectionDetails(props.identifier)}
-        className={`d-flex ${tokenDetails?.assets?.svgUrl ? 'token-link' : ''}`}
+        className={`d-flex ${collectionDetails?.assets?.svgUrl ? 'token-link' : ''}`}
       >
         <div className="d-flex align-items-center symbol">
           {dataReady === undefined && (
@@ -64,18 +66,18 @@ const CollectionBlock = (props: CollectionBlockType) => {
             </>
           )}
           {dataReady === false && <span className="text-truncate">{props.identifier}</span>}
-          {dataReady === true && tokenDetails && (
+          {dataReady === true && collectionDetails && (
             <>
-              {tokenDetails.assets ? (
+              {collectionDetails.assets ? (
                 <>
-                  {tokenDetails.assets.svgUrl && (
+                  {collectionDetails.assets.svgUrl && (
                     <img
-                      src={tokenDetails.assets.svgUrl}
-                      alt={tokenDetails.name}
-                      className="token-icon mx-1"
+                      src={collectionDetails.assets.svgUrl}
+                      alt={collectionDetails.name}
+                      className="token-icon mr-1"
                     />
                   )}
-                  <div>{tokenDetails.name}</div>
+                  <div>{collectionDetails.name}</div>
                 </>
               ) : (
                 <span className="text-truncate">{props.identifier}</span>

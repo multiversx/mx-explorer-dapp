@@ -31,6 +31,8 @@ import StatisticsChart from './StatisticsChart';
 import NodesFilters from './NodesFilters';
 import TokenBlock from './TokenBlock';
 import CollectionBlock from './CollectionBlock';
+import NftBadge from './NftBadge';
+import NftBlock from './NftBlock';
 
 export {
   Denominate,
@@ -67,4 +69,6 @@ export {
   NodesFilters,
   TokenBlock,
   CollectionBlock,
+  NftBadge,
+  NftBlock,
 };

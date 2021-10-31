@@ -71,6 +71,7 @@ export interface NftType {
   thumbnailUrl?: string;
   tags?: string[];
   decimals?: number;
+  owner?: string;
 }
 
 export interface ProviderType {

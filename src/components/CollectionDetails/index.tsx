@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { types, urlBuilder } from 'helpers';
-import { Loader, adapter, DetailItem, Trim, NetworkLink } from 'sharedComponents';
+import { Loader, adapter, DetailItem, Trim, NetworkLink, NftBadge } from 'sharedComponents';
 import FailedCollectionDetails from './FailedCollectionDetails';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
@@ -69,7 +69,9 @@ const CollectionDetails = () => {
                       </DetailItem>
                       <DetailItem title="Collection">{collectionDetails.collection}</DetailItem>
                       <DetailItem title="Ticker">{collectionDetails.ticker}</DetailItem>
-                      <DetailItem title="Type">{collectionDetails.type}</DetailItem>
+                      <DetailItem title="Type">
+                        <NftBadge type={collectionDetails.type} />
+                      </DetailItem>
                       <DetailItem title="Owner">
                         <div className="d-flex">
                           <NetworkLink
@@ -80,7 +82,9 @@ const CollectionDetails = () => {
                           </NetworkLink>
                         </div>
                       </DetailItem>
-                      <DetailItem title="Decimals">{collectionDetails.decimals}</DetailItem>
+                      {collectionDetails.decimals !== undefined && (
+                        <DetailItem title="Decimals">{collectionDetails.decimals}</DetailItem>
+                      )}
                       <DetailItem title="Properties">
                         <div className="d-flex alig-items-center flex-wrap">
                           <CreatePill

@@ -1,16 +1,12 @@
 import * as React from 'react';
 import { PageState } from 'sharedComponents';
-import { faCoins } from '@fortawesome/pro-regular-svg-icons/faCoins';
+import { faPalette } from '@fortawesome/pro-regular-svg-icons/faPalette';
 
-export default function FailedCollectionDetails({
-  identifier,
-}: {
-  identifier: string | undefined;
-}) {
+export default function FailedNftDetails({ identifier }: { identifier: string | undefined }) {
   return (
     <PageState
-      icon={faCoins}
-      title="Unable to locate this collection"
+      icon={faPalette}
+      title="Unable to locate this NFT"
       description={
         <div className="px-spacer">
           <span className="text-break-all">{identifier}</span>
