@@ -9,6 +9,8 @@ import {
   PageState,
   CollectionBlock,
   Denominate,
+  NftBadge,
+  NftBlock,
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import AccountTabs from './AccountLayout/AccountTabs';
@@ -29,19 +31,6 @@ const AccountNfts = () => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [accountNfts, setAccountNfts] = React.useState<NftType[]>([]);
   const [accountNftsCount, setAccountNftsCount] = React.useState(0);
-
-  const NFTType = ({ type }: { type: NftType['type'] }) => {
-    switch (type) {
-      case 'SemiFungibleESDT':
-        return <div className="badge badge-secondary font-weight-light">SFT</div>;
-      case 'NonFungibleESDT':
-        return <div className="badge badge-secondary font-weight-light">NFT</div>;
-      case 'MetaESDT':
-        return <div className="badge badge-secondary font-weight-light">META</div>;
-      default:
-        return null;
-    }
-  };
 
   const fetchAccountNfts = () => {
     if (nftsActive) {
@@ -99,17 +88,16 @@ const AccountNfts = () => {
                   <DetailItem title={<CollectionBlock identifier={collection} />} key={identifier}>
                     <div className="d-flex align-items-center">
                       {Number(balance) > 1 ? (
-                        <span className="mr-2">
+                        <div className="mr-1">
                           <Denominate
-                            token={identifier}
+                            showLabel={false}
                             value={balance}
                             denomination={type === 'MetaESDT' ? decimals : 1}
                           />
-                        </span>
+                        </div>
                       ) : null}
-                      <div className="badge badge-secondary font-weight-light">
-                        <NFTType type={type} />
-                      </div>
+                      <NftBlock identifier={identifier} collection={collection} />
+                      <NftBadge type={type} className="ml-2" />
                     </div>
                   </DetailItem>
                 );

@@ -64,7 +64,8 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
           activeRoute(accountsRoutes.accounts) ||
           activeRoute(accountsRoutes.accountDetails) ||
           activeRoute(accountsRoutes.accountCode) ||
-          activeRoute(accountsRoutes.accountTokens)
+          activeRoute(accountsRoutes.accountTokens) ||
+          activeRoute(accountsRoutes.accountNfts)
             ? 'active'
             : ''
         }`}
@@ -78,7 +79,9 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
         <>
           <NetworkLink
             className={`nav-link ${
-              activeRoute(tokensRoutes.tokens) || activeRoute(tokensRoutes.tokenDetails)
+              activeRoute(tokensRoutes.tokens) ||
+              activeRoute(tokensRoutes.tokenDetails) ||
+              activeRoute(tokensRoutes.tokenDetailsAccounts)
                 ? 'active'
                 : ''
             }`}

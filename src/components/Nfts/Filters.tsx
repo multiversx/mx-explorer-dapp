@@ -23,11 +23,11 @@ const Filters = () => {
       ...rest,
       ...(searchValue ? { search: searchValue } : {}),
     }).toString();
-    history.push(`/collections?${nextUrlParams}`);
+    history.push(`/nfts?${nextUrlParams}`);
   };
 
   return (
-    <div className="collections-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
+    <div className="nfts-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
       <div className="my-1 my-md-0">
         <div role="search">
           <div className="input-group input-group-seamless">
@@ -42,8 +42,8 @@ const Filters = () => {
                 }
               }}
               placeholder="Search"
-              name="collectionsSearch"
-              data-testid="collectionsSearch"
+              name="nftsSearch"
+              data-testid="nftsSearch"
             />
             <div className="input-group-append">
               {inputValue ? (

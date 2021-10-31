@@ -17,6 +17,8 @@ import TokenDetails from './components/TokenDetails';
 import TokenAccounts from './components/TokenDetails/TokenAccounts';
 import Collections from './components/Collections';
 import CollectionDetails from './components/CollectionDetails';
+import Nfts from './components/Nfts';
+import NftDetails from './components/NftDetails';
 import { withPageTitle, withNetworkReady } from './sharedComponents';
 import Providers from 'components/Providers';
 import ProviderDetails from 'components/ProviderDetails';
@@ -82,6 +84,11 @@ export const tokensRoutes = {
 export const collectionRoutes = {
   collections: '/collections',
   collectionDetails: '/collections/:hash',
+};
+
+export const nftRoutes = {
+  nfts: '/nfts',
+  nftDetails: '/nfts/:hash',
 };
 
 const routes: RouteType[] = [
@@ -209,6 +216,16 @@ const routes: RouteType[] = [
     path: collectionRoutes.collectionDetails,
     title: 'Collection Details',
     component: CollectionDetails,
+  },
+  {
+    path: nftRoutes.nfts,
+    title: 'NFTs',
+    component: Nfts,
+  },
+  {
+    path: nftRoutes.nftDetails,
+    title: 'NFT Details',
+    component: NftDetails,
   },
   {
     path: validatorsRoutes.providers,
