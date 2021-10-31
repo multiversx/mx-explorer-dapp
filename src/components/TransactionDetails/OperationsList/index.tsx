@@ -1,38 +1,18 @@
 import * as React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExchange } from '@fortawesome/pro-regular-svg-icons/faExchange';
-import { addressIsBech32, dateFormatted, urlBuilder, useNetworkRoute } from 'helpers';
-
-import {
-  Denominate,
-  ScAddressIcon,
-  ShardSpan,
-  NetworkLink,
-  TimeAgo,
-  TransactionStatus,
-  DetailItem,
-  Trim,
-  CopyButton,
-} from 'sharedComponents';
+import { addressIsBech32, urlBuilder } from 'helpers';
+import { NetworkLink, Trim, CopyButton, TokenBlock, CollectionBlock } from 'sharedComponents';
 
 export interface OperationType {
   action: string;
   type: string;
+  collection?: string;
   identifier: string;
   sender: string;
   receiver: string;
   value: string;
 }
 
-const OperationSender = ({
-  operation,
-  size,
-  action,
-}: {
-  operation: OperationType;
-  size?: string;
-  action?: string;
-}) => {
+const OperationSender = ({ operation, action }: { operation: OperationType; action?: string }) => {
   return operation.sender ? (
     <div className="col-lg-6 d-flex align-items-center col-xl-3 pr-xl-0">
       <div className="mr-2 text-nowrap">{action ? `${action} from ` : 'From'}</div>
@@ -52,11 +32,9 @@ const OperationSender = ({
 
 const OperationReceiver = ({
   operation,
-  size,
   action,
 }: {
   operation: OperationType;
-  size?: string;
   action?: string;
 }) => {
   return operation.receiver ? (
@@ -80,9 +58,9 @@ const OperationText = ({ operation }: { operation: OperationType }) => {
   switch (operation.action) {
     case 'create':
     case 'localMint':
-      return <OperationReceiver operation={operation} size="lg" action="Mint" />;
+      return <OperationReceiver operation={operation} action="Mint" />;
     case 'burn':
-      return <OperationSender operation={operation} size="lg" action="Burn" />;
+      return <OperationSender operation={operation} action="Burn" />;
     default:
       return (
         <>
@@ -106,12 +84,10 @@ const OperationsList = ({ operations }: { operations: OperationType[] }) => {
                 <div className="col-lg-6 col-xl-6 d-flex align-items-center">
                   <div className="mr-2">Value</div>
                   <div className="d-flex flex-wrap">
-                    {operation.type === 'nft' ? (
-                      <div>
-                        {operation.value} <span className="text-muted">{operation.identifier}</span>
-                      </div>
+                    {operation.type === 'nft' && operation.collection ? (
+                      <CollectionBlock identifier={operation.collection} value={operation.value} />
                     ) : (
-                      <Denominate token={operation.identifier} value={operation.value} />
+                      <TokenBlock identifier={operation.identifier} value={operation.value} />
                     )}
                   </div>
                 </div>

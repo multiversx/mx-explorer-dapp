@@ -1,44 +1,44 @@
 import * as React from 'react';
 import { Loader, adapter, NetworkLink, Trim, Pager } from 'sharedComponents';
-import NoTokens from './NoTokens';
-import FailedTokens from './FailedTokens';
+import NoCollections from './NoCollections';
+import FailedCollections from './FailedCollections';
 import { urlBuilder, useFilters, useURLSearchParams, types } from 'helpers';
 import Filters from './Filters';
 import { useLocation } from 'react-router-dom';
 
-const Tokens = () => {
+const Collections = () => {
   const ref = React.useRef(null);
   const { page } = useURLSearchParams();
   const { search } = useLocation();
   const { getQueryObject, size } = useFilters();
-  const { getTokens, getTokensCount } = adapter();
+  const { getCollections, getCollectionsCount } = adapter();
 
-  const [tokens, setTokens] = React.useState<types.TokenType[]>([]);
+  const [collections, setCollections] = React.useState<types.CollectionType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [totalTokens, setTotalTokens] = React.useState<number | '...'>('...');
+  const [totalCollections, setTotalCollections] = React.useState<number | '...'>('...');
 
-  const fetchTokens = () => {
+  const fetchCollections = () => {
     const queryObject = getQueryObject();
 
-    Promise.all([getTokens({ ...queryObject, size }), getTokensCount(queryObject)]).then(
-      ([tokensData, count]) => {
+    Promise.all([getCollections({ ...queryObject, size }), getCollectionsCount(queryObject)]).then(
+      ([collectionsData, count]) => {
         if (ref.current !== null) {
-          if (tokensData.success) {
-            setTokens(tokensData.data);
-            setTotalTokens(Math.min(count.data, 10000));
+          if (collectionsData.success) {
+            setCollections(collectionsData.data);
+            setTotalCollections(Math.min(count.data, 10000));
           }
-          setDataReady(tokensData.success && count.success);
+          setDataReady(collectionsData.success && count.success);
         }
       }
     );
   };
 
-  React.useEffect(fetchTokens, [search]);
+  React.useEffect(fetchCollections, [search]);
 
   return (
     <>
       {dataReady === undefined && <Loader />}
-      {dataReady === false && <FailedTokens />}
+      {dataReady === false && <FailedCollections />}
 
       <div ref={ref}>
         {dataReady === true && (
@@ -52,7 +52,7 @@ const Tokens = () => {
                     </div>
                   </div>
 
-                  {tokens && tokens.length > 0 ? (
+                  {collections && collections.length > 0 ? (
                     <>
                       <div className="card-body border-0 p-0">
                         <div className="table-wrapper">
@@ -60,40 +60,43 @@ const Tokens = () => {
                             <thead>
                               <tr>
                                 <th>Name</th>
-                                <th>Token</th>
+                                <th>Collection</th>
                                 <th>Owner Account</th>
                               </tr>
                             </thead>
-                            <tbody data-testid="tokensTable">
-                              {tokens.map((token, i) => (
-                                <tr key={token.name}>
+                            <tbody data-testid="collectionsTable">
+                              {collections.map((collection, i) => (
+                                <tr key={collection.name}>
                                   <td>
                                     <div className="d-flex align-items-center">
                                       <NetworkLink
-                                        to={urlBuilder.tokenDetails(token.identifier)}
-                                        data-testid={`tokensLink${i}`}
+                                        to={urlBuilder.collectionDetails(collection.collection)}
+                                        data-testid={`collectionsLink${i}`}
                                       >
                                         <div className="d-flex align-items-center">
-                                          {token.assets && token.assets.svgUrl && (
+                                          {collection.assets && collection.assets.svgUrl && (
                                             <img
-                                              src={token.assets.svgUrl}
-                                              alt={token.name}
+                                              src={collection.assets.svgUrl}
+                                              alt={collection.name}
                                               className="token-icon mr-1"
                                             />
                                           )}
-                                          <div>{token.name}</div>
+                                          <div>{collection.name}</div>
                                         </div>
                                       </NetworkLink>
                                     </div>
                                   </td>
-                                  <td>{token.identifier}</td>
+                                  <td>{collection.collection}</td>
                                   <td>
                                     <div className="d-flex trim-size-xl">
                                       <NetworkLink
-                                        to={urlBuilder.accountDetails(token.owner)}
+                                        to={urlBuilder.accountDetails(collection.owner)}
                                         className="trim-wrapper"
                                       >
-                                        <Trim text={token.owner} dataTestId={`accountLink${i}`} />
+                                        <Trim
+                                          text={collection.owner}
+                                          dataTestId={`accountLink${i}`}
+                                        />
                                       </NetworkLink>
                                     </div>
                                   </td>
@@ -107,14 +110,18 @@ const Tokens = () => {
                       <div className="card-footer d-flex justify-content-end">
                         <Pager
                           page={String(page)}
-                          total={totalTokens !== '...' ? Math.min(totalTokens, 10000) : totalTokens}
+                          total={
+                            totalCollections !== '...'
+                              ? Math.min(totalCollections, 10000)
+                              : totalCollections
+                          }
                           itemsPerPage={25}
-                          show={tokens.length > 0}
+                          show={collections.length > 0}
                         />
                       </div>
                     </>
                   ) : (
-                    <NoTokens />
+                    <NoCollections />
                   )}
                 </div>
               </div>
@@ -126,4 +133,4 @@ const Tokens = () => {
   );
 };
 
-export default Tokens;
+export default Collections;

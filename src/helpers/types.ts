@@ -34,13 +34,34 @@ export interface TokenType {
   };
 }
 
+export interface CollectionType {
+  collection: string;
+  type: 'SemiFungibleESDT' | 'NonFungibleESDT' | 'MetaESDT';
+  name: string;
+  ticker: string;
+  timestamp: number;
+  canFreeze: boolean;
+  canWipe: boolean;
+  canPause: boolean;
+  canTransferRole: boolean;
+  owner: string;
+  decimals?: number;
+  assets?: {
+    website?: string;
+    description?: string;
+    status?: string;
+    pngUrl?: string;
+    svgUrl?: string;
+  };
+}
+
 export interface NftType {
   identifier: string;
   collection: string;
   timestamp: number;
   attributes: string;
   nonce: number;
-  type: 'SemiFungibleESDT' | 'NonFungibleESDT';
+  type: 'SemiFungibleESDT' | 'NonFungibleESDT' | 'MetaESDT';
   name: string;
   creator: string;
   royalties: number;
@@ -49,6 +70,7 @@ export interface NftType {
   url?: string;
   thumbnailUrl?: string;
   tags?: string[];
+  decimals?: number;
 }
 
 export interface ProviderType {

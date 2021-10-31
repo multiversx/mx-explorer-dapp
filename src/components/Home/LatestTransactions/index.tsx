@@ -13,6 +13,7 @@ import {
   Loader,
   Denominate,
   LatestItem,
+  TokenBlock,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
@@ -115,8 +116,8 @@ const LatestTransactions = () => {
                             </div>
                             <div className="d-flex">
                               {transaction.tokenValue && transaction.tokenIdentifier ? (
-                                <Denominate
-                                  token={transaction.tokenIdentifier}
+                                <TokenBlock
+                                  identifier={transaction.tokenIdentifier}
                                   value={transaction.tokenValue}
                                   decimals={4}
                                 />
