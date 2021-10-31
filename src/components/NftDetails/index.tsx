@@ -97,6 +97,9 @@ const NftDetails = () => {
                       {nftDetails.royalties !== null && (
                         <DetailItem title="Royalties">{nftDetails.royalties}</DetailItem>
                       )}
+                      {nftDetails.supply !== undefined && Number(nftDetails.supply) > 0 && (
+                        <DetailItem title="Supply">{nftDetails.royalties}</DetailItem>
+                      )}
                       {nftDetails.decimals !== undefined && (
                         <DetailItem title="Decimals">{nftDetails.decimals}</DetailItem>
                       )}

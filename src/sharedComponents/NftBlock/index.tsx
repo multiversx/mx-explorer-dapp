@@ -2,33 +2,63 @@ import * as React from 'react';
 import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons/faSpinnerThird';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { types, urlBuilder } from 'helpers';
-import { adapter, NetworkLink } from 'sharedComponents';
+import { adapter, NetworkLink, Denominate } from 'sharedComponents';
 
 interface NftBlockType {
   identifier: string;
   collection: string;
+  value?: string;
+  showLastNonZeroDecimal?: boolean;
+  showLabel?: boolean;
+  token?: string | React.ReactNode;
+  decimals?: number;
+  denomination?: number;
+  'data-testid'?: string;
 }
 
 const NftBlock = (props: NftBlockType) => {
   const ref = React.useRef(null);
-  const { getCollection } = adapter();
+  const { getCollection, getNft } = adapter();
   const [nftCollectionDetails, setNftCollectionDetails] = React.useState<types.CollectionType>();
+  const [nftDetails, setNftDetails] = React.useState<types.NftType>();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchNftBlock = () => {
-    getCollection(props.collection).then(({ success, data }) => {
-      if (ref.current !== null) {
-        setNftCollectionDetails(data);
-        setDataReady(success);
+    Promise.all([getCollection(props.collection), getNft(props.identifier)]).then(
+      ([collectionsData, nftData]) => {
+        if (ref.current !== null) {
+          if (collectionsData.success) {
+            setNftCollectionDetails(collectionsData.data);
+          }
+          if (nftData.success) {
+            setNftDetails(nftData.data);
+          }
+          setDataReady(collectionsData.success && nftData.success);
+        }
       }
-    });
+    );
   };
+
+  const denomination =
+    dataReady === true && nftCollectionDetails && nftCollectionDetails.decimals
+      ? nftCollectionDetails.decimals
+      : 1;
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchNftBlock, [props.identifier]);
 
   return (
     <div ref={ref} className="d-flex">
+      {props.value && (
+        <div className="mr-1">
+          <Denominate
+            {...props}
+            value={props.value}
+            showLabel={false}
+            denomination={denomination}
+          />
+        </div>
+      )}
       <NetworkLink
         to={urlBuilder.nftDetails(props.identifier)}
         className={`d-flex ${nftCollectionDetails?.assets?.svgUrl ? 'token-link' : ''}`}
@@ -45,18 +75,18 @@ const NftBlock = (props: NftBlockType) => {
             </>
           )}
           {dataReady === false && <span className="text-truncate">{props.identifier}</span>}
-          {dataReady === true && nftCollectionDetails && (
+          {dataReady === true && nftCollectionDetails && nftDetails && (
             <>
               {nftCollectionDetails.assets ? (
                 <>
                   {nftCollectionDetails.assets.svgUrl && (
                     <img
                       src={nftCollectionDetails.assets.svgUrl}
-                      alt={props.identifier}
+                      alt={nftDetails.name}
                       className="token-icon mr-1"
                     />
                   )}
-                  <div>{props.identifier}</div>
+                  <div>{nftDetails.name}</div>
                 </>
               ) : (
                 <span className="text-truncate">{props.identifier}</span>

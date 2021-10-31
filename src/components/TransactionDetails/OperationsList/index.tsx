@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { addressIsBech32, urlBuilder } from 'helpers';
-import { NetworkLink, Trim, CopyButton, TokenBlock, CollectionBlock } from 'sharedComponents';
+import { NetworkLink, Trim, CopyButton, TokenBlock, NftBlock } from 'sharedComponents';
 
 export interface OperationType {
   action: string;
@@ -84,8 +84,12 @@ const OperationsList = ({ operations }: { operations: OperationType[] }) => {
                 <div className="col-lg-6 col-xl-6 d-flex align-items-center">
                   <div className="mr-2">Value</div>
                   <div className="d-flex flex-wrap">
-                    {operation.type === 'nft' && operation.collection ? (
-                      <CollectionBlock identifier={operation.collection} value={operation.value} />
+                    {operation.type === 'nft' && operation.collection && operation.identifier ? (
+                      <NftBlock
+                        identifier={operation.identifier}
+                        collection={operation.collection}
+                        value={operation.value}
+                      />
                     ) : (
                       <TokenBlock identifier={operation.identifier} value={operation.value} />
                     )}

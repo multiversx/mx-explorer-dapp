@@ -72,6 +72,7 @@ export interface NftType {
   tags?: string[];
   decimals?: number;
   owner?: string;
+  supply?: string;
 }
 
 export interface ProviderType {
