@@ -1,7 +1,15 @@
 import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
-import { adapter, DetailItem, Loader, Pager, PageState } from 'sharedComponents';
+import {
+  adapter,
+  DetailItem,
+  Loader,
+  Pager,
+  PageState,
+  CollectionBlock,
+  Denominate,
+} from 'sharedComponents';
 import { useGlobalState } from 'context';
 import AccountTabs from './AccountLayout/AccountTabs';
 import { urlBuilder, useFilters, useNetworkRoute } from 'helpers';
@@ -21,6 +29,19 @@ const AccountNfts = () => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [accountNfts, setAccountNfts] = React.useState<NftType[]>([]);
   const [accountNftsCount, setAccountNftsCount] = React.useState(0);
+
+  const NFTType = ({ type }: { type: NftType['type'] }) => {
+    switch (type) {
+      case 'SemiFungibleESDT':
+        return <div className="badge badge-secondary font-weight-light">SFT</div>;
+      case 'NonFungibleESDT':
+        return <div className="badge badge-secondary font-weight-light">NFT</div>;
+      case 'MetaESDT':
+        return <div className="badge badge-secondary font-weight-light">META</div>;
+      default:
+        return null;
+    }
+  };
 
   const fetchAccountNfts = () => {
     if (nftsActive) {
@@ -73,13 +94,22 @@ const AccountNfts = () => {
 
           {dataReady === true && accountNfts.length > 0 && (
             <>
-              {accountNfts.map(({ identifier, name, balance, type }) => {
+              {accountNfts.map(({ identifier, decimals, balance, type, collection }) => {
                 return (
-                  <DetailItem title={name} key={identifier}>
-                    {Number(balance) > 1 ? <span className="mr-2">{balance}</span> : null}
-                    <span className="mr-2 text-muted">{identifier}</span>
-                    <div className="badge badge-secondary font-weight-light">
-                      {type === 'SemiFungibleESDT' ? 'SFT' : 'NFT'}
+                  <DetailItem title={<CollectionBlock identifier={collection} />} key={identifier}>
+                    <div className="d-flex align-items-center">
+                      {Number(balance) > 1 ? (
+                        <span className="mr-2">
+                          <Denominate
+                            token={identifier}
+                            value={balance}
+                            denomination={type === 'MetaESDT' ? decimals : 1}
+                          />
+                        </span>
+                      ) : null}
+                      <div className="badge badge-secondary font-weight-light">
+                        <NFTType type={type} />
+                      </div>
                     </div>
                   </DetailItem>
                 );

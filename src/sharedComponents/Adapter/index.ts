@@ -293,10 +293,7 @@ export default function useAdapter() {
     getTokenAccounts: ({ size, tokenId }: { size: number; tokenId: string }) =>
       provider({
         url: `/tokens/${tokenId}/accounts`,
-        params: {
-          from: (size - 1) * 25,
-          size: 25,
-        },
+        params: getTokensParam({ size }),
       }),
 
     getTokenAccountsCount: ({ tokenId }: { tokenId: string }) =>
@@ -309,13 +306,24 @@ export default function useAdapter() {
     getAccountNfts: ({ address, size }: { address: string; size: number }) =>
       provider({
         url: `/accounts/${address}/nfts`,
-        params: {
-          from: (size - 1) * 25,
-          size: 25,
-        },
+        params: getTokensParam({ size }),
       }),
 
     getAccountNftsCount: (address: string) => provider({ url: `/accounts/${address}/nfts/count` }),
+
+    getCollections: (props: GetTokensType) =>
+      provider({
+        url: `/collections`,
+        params: getTokensParam(props),
+      }),
+
+    getCollectionsCount: ({ search }: GetTokensType) =>
+      provider({
+        url: `/collections/count`,
+        params: getTokensParam({ search }),
+      }),
+
+    getCollection: (collection: string) => provider({ url: `/collections/${collection}` }),
 
     // Providers
 

@@ -15,6 +15,8 @@ import NodeDetails from './components/NodeDetails';
 import Tokens from './components/Tokens';
 import TokenDetails from './components/TokenDetails';
 import TokenAccounts from './components/TokenDetails/TokenAccounts';
+import Collections from './components/Collections';
+import CollectionDetails from './components/CollectionDetails';
 import { withPageTitle, withNetworkReady } from './sharedComponents';
 import Providers from 'components/Providers';
 import ProviderDetails from 'components/ProviderDetails';
@@ -75,6 +77,11 @@ export const tokensRoutes = {
   tokens: '/tokens',
   tokenDetails: '/tokens/:hash',
   tokenDetailsAccounts: '/tokens/:hash/accounts',
+};
+
+export const collectionRoutes = {
+  collections: '/collections',
+  collectionDetails: '/collections/:hash',
 };
 
 const routes: RouteType[] = [
@@ -192,6 +199,16 @@ const routes: RouteType[] = [
     path: tokensRoutes.tokenDetailsAccounts,
     title: 'Token Details',
     component: TokenAccounts,
+  },
+  {
+    path: collectionRoutes.collections,
+    title: 'Collections',
+    component: Collections,
+  },
+  {
+    path: collectionRoutes.collectionDetails,
+    title: 'Collection Details',
+    component: CollectionDetails,
   },
   {
     path: validatorsRoutes.providers,

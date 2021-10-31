@@ -30,6 +30,7 @@ import LockedAmountTooltip from './LockedAmountTooltip';
 import StatisticsChart from './StatisticsChart';
 import NodesFilters from './NodesFilters';
 import TokenBlock from './TokenBlock';
+import CollectionBlock from './CollectionBlock';
 
 export {
   Denominate,
@@ -65,4 +66,5 @@ export {
   StatisticsChart,
   NodesFilters,
   TokenBlock,
+  CollectionBlock,
 };

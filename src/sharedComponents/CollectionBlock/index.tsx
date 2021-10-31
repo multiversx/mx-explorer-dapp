@@ -3,45 +3,53 @@ import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons/faSpinnerThir
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { types, urlBuilder } from 'helpers';
 import { adapter, NetworkLink, Denominate } from 'sharedComponents';
-import { denomination as configDenomination } from 'appConfig';
-import { DenominateType } from 'sharedComponents/Denominate';
 
-interface TokenBlockType extends DenominateType {
+interface CollectionBlockType {
   identifier: string;
+  value?: string;
+  showLastNonZeroDecimal?: boolean;
+  showLabel?: boolean;
+  token?: string | React.ReactNode;
+  decimals?: number;
+  denomination?: number;
+  'data-testid'?: string;
 }
 
-const TokenBlock = (props: TokenBlockType) => {
+const CollectionBlock = (props: CollectionBlockType) => {
   const ref = React.useRef(null);
-  const { getToken } = adapter();
-  const [tokenDetails, setTokenBlock] = React.useState<types.TokenType>();
+  const { getCollection } = adapter();
+  const [tokenDetails, setCollectionBlock] = React.useState<types.CollectionType>();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
-  const fetchTokenBlock = () => {
-    getToken(props.identifier).then(({ success, data }) => {
+  const fetchCollectionBlock = () => {
+    getCollection(props.identifier).then(({ success, data }) => {
       if (ref.current !== null) {
-        setTokenBlock(data);
+        setCollectionBlock(data);
         setDataReady(success);
       }
     });
   };
 
   const denomination =
-    dataReady === true && tokenDetails && tokenDetails.decimals
-      ? tokenDetails.decimals
-      : configDenomination;
+    dataReady === true && tokenDetails && tokenDetails.decimals ? tokenDetails.decimals : 1;
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchTokenBlock, [props.identifier]);
+  React.useEffect(fetchCollectionBlock, [props.identifier]);
 
   return (
     <div ref={ref} className="d-flex">
       {props.value && (
         <div className="mr-1">
-          <Denominate {...props} denomination={denomination} showLabel={false} />
+          <Denominate
+            {...props}
+            value={props.value}
+            showLabel={false}
+            denomination={denomination}
+          />
         </div>
       )}
       <NetworkLink
-        to={urlBuilder.tokenDetails(props.identifier)}
+        to={urlBuilder.collectionDetails(props.identifier)}
         className={`d-flex ${tokenDetails?.assets?.svgUrl ? 'token-link' : ''}`}
       >
         <div className="d-flex align-items-center symbol">
@@ -80,4 +88,4 @@ const TokenBlock = (props: TokenBlockType) => {
   );
 };
 
-export default TokenBlock;
+export default CollectionBlock;
