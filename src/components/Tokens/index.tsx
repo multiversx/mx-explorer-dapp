@@ -72,6 +72,9 @@ const Tokens = () => {
                                       <NetworkLink
                                         to={urlBuilder.tokenDetails(token.identifier)}
                                         data-testid={`tokensLink${i}`}
+                                        className={`d-flex ${
+                                          token.assets?.svgUrl ? 'token-link' : ''
+                                        }`}
                                       >
                                         <div className="d-flex align-items-center">
                                           {token.assets && token.assets.svgUrl && (

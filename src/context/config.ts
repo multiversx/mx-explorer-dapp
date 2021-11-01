@@ -25,6 +25,10 @@ export const adapterSchema = object({
     is: 'api',
     then: string().required(),
   }),
+  delegationApi: string().when('adapter', {
+    is: 'api',
+    then: string().required(),
+  }),
   elasticUrl: string().when('adapter', {
     is: 'elastic',
     then: string().required(),
@@ -50,6 +54,7 @@ export const defaultNetwork: NetworkType = {
   adapter: 'api',
   erdLabel: '',
   apiUrl: 'https://api.elrond.com',
+  delegationApi: 'https://delegation-api.elrond.com',
   theme: 'default',
   accessToken: false,
 };

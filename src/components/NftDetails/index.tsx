@@ -11,6 +11,7 @@ import {
   CollectionBlock,
 } from 'sharedComponents';
 import FailedNftDetails from './FailedNftDetails';
+import NftPreview from './NftPreview';
 
 const nftText = (type: types.NftType['type']) => {
   switch (type) {
@@ -45,6 +46,7 @@ const NftDetails = () => {
     });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchNftDetails, [identifier]); // run the operation only once since the parameter does not change
 
   return (
@@ -96,13 +98,18 @@ const NftDetails = () => {
                         </div>
                       </DetailItem>
                       {nftDetails.royalties !== null && (
-                        <DetailItem title="Royalties">{nftDetails.royalties}</DetailItem>
+                        <DetailItem title="Royalties">{nftDetails.royalties}%</DetailItem>
                       )}
                       {nftDetails.supply !== undefined && Number(nftDetails.supply) > 0 && (
                         <DetailItem title="Supply">{nftDetails.supply}</DetailItem>
                       )}
                       {nftDetails.decimals !== undefined && (
                         <DetailItem title="Decimals">{nftDetails.decimals}</DetailItem>
+                      )}
+                      {nftDetails.uris !== undefined && (
+                        <DetailItem title="Assets">
+                          <NftPreview token={nftDetails} />
+                        </DetailItem>
                       )}
                     </div>
                   </div>

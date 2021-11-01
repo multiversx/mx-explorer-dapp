@@ -20,8 +20,6 @@ export default function useAdapter() {
     getStats,
     getNodes,
     getNodesVersions,
-    getAccountDelegation,
-    getAccountStake,
     getShards,
     getEconomics,
     getProviders,
@@ -33,6 +31,7 @@ export default function useAdapter() {
     getUsersStaking,
     getTransactionsHistory,
     getAccountsHistory,
+    delegationApi,
   } = useAdapterConfig();
 
   return {
@@ -177,9 +176,12 @@ export default function useAdapter() {
       }),
 
     getAccountDelegation: (address: string) =>
-      getAccountDelegation({ url: `/accounts/${address}/delegation` }),
+      provider({ url: `/accounts/${address}/delegations`, baseUrl: delegationApi }),
 
-    getAccountStake: (address: string) => getAccountStake({ url: `/accounts/${address}/stake` }),
+    getAccountDelegationLegacy: (address: string) =>
+      provider({ url: `/accounts/${address}/delegation-legacy` }),
+
+    getAccountStake: (address: string) => provider({ url: `/accounts/${address}/stake` }),
 
     /* Validators */
 

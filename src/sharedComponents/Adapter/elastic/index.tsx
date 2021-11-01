@@ -32,6 +32,9 @@ export default {
   getAccountDelegation: () => {
     throw new Error('not defined');
   },
+  getAccountDelegationLegacy: () => {
+    throw new Error('not defined');
+  },
   getAccountStake: () => {
     throw new Error('not defined');
   },

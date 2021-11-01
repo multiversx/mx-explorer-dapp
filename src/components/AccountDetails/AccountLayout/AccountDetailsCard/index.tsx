@@ -1,22 +1,52 @@
 import React from 'react';
-import { CardItem, CopyButton, Denominate, NetworkLink, adapter } from 'sharedComponents';
+import {
+  CardItem,
+  CopyButton,
+  Denominate,
+  NetworkLink,
+  adapter,
+  ShardSpan,
+  ScAddressIcon,
+} from 'sharedComponents';
 import { useGlobalState } from 'context';
+import { isContract, urlBuilder } from 'helpers';
 import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
 import { faDollarSign } from '@fortawesome/pro-solid-svg-icons/faDollarSign';
 import { faUser } from '@fortawesome/pro-solid-svg-icons/faUser';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
+import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
+import LockedAmountCardItem from './LockedAmountCardItem';
 import UsdValue from './UsdValue';
-import { isContract, urlBuilder } from 'helpers';
 
+interface Undelegation {
+  amount: string;
+  seconds: number;
+}
+
+interface DelegationType {
+  address: string;
+  contract: string;
+  userUnBondable?: string;
+  userActiveStake: string;
+  claimableRewards?: string;
+  userUndelegatedList: Undelegation[];
+}
 export interface LockedAmountType {
-  stakeFetched?: boolean | undefined;
-  totalStaked?: string;
-  delegationFetched?: boolean | undefined;
-  userActiveStake?: string;
-  userDeferredPaymentStake?: string;
-  userUnstakedStake?: string;
-  userWaitingStake?: string;
-  userWithdrawOnlyStake?: string;
+  stakeFetched: boolean | undefined;
+  delegationLegacyFetched: boolean | undefined;
+  delegationFetched: boolean | undefined;
+  stake?: {
+    totalStaked?: string;
+  };
+  delegationLegacy?: {
+    userActiveStake?: string;
+    userDeferredPaymentStake?: string;
+    userUnstakedStake?: string;
+    userWaitingStake?: string;
+    userWithdrawOnlyStake?: string;
+    claimableRewards?: string;
+  };
+  delegation?: DelegationType[];
   usd?: number;
 }
 
@@ -28,44 +58,65 @@ const AccountDetailsCard = () => {
     usd,
   } = useGlobalState();
   const {
-    getProvider /*getAccountDelegation, getAccountStake,*/,
+    getProvider,
+    getAccountDelegationLegacy,
+    getAccountDelegation,
+    getAccountStake,
     getAccountTokensCount,
   } = adapter();
-  const { address, balance, nonce /*txCount*/ } = accountDetails;
+  const { address, balance, nonce, txCount, shard, ownerAddress } = accountDetails;
   const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
 
   const tokensActive = networkAdapter === 'api';
   const cardItemClass = tokensActive ? 'n5' : '';
 
-  // const [lockedAmount, setLockedAmount] = React.useState<LockedAmountType>({
-  //   stakeFetched: undefined,
-  //   delegationFetched: undefined,
-  // });
+  const [lockedAmount, setLockedAmount] = React.useState<LockedAmountType>({
+    stakeFetched: undefined,
+    delegationLegacyFetched: undefined,
+    delegationFetched: undefined,
+    stake: undefined,
+    delegationLegacy: undefined,
+    delegation: undefined,
+  });
 
-  // const fetchLockedAmountAndPrice = () => {
-  //   if (!document.hidden) {
-  //     Promise.all([getAccountDelegation(address), getAccountStake(address)]).then(
-  //       ([delegationData, stakeData]) => {
-  //         if (ref.current !== null) {
-  //           const delegationFetched = delegationData.success ? delegationData.data : {};
-  //           const stakeFetched = stakeData.success ? stakeData.data : {};
-  //
-  //           setLockedAmount({
-  //             ...(delegationFetched ? delegationData.data : {}),
-  //             ...(stakeFetched ? stakeData.data : {}),
-  //             delegationFetched,
-  //             stakeFetched,
-  //           });
-  //         }
-  //       }
-  //     );
-  //   }
-  // };
+  const fetchLockedAmountAndPrice = () => {
+    if (!document.hidden) {
+      Promise.all([
+        getAccountDelegation(address),
+        getAccountStake(address),
+        getAccountDelegationLegacy(address),
+      ]).then(([delegationData, stakeData, delegationLegacyData]) => {
+        if (ref.current !== null) {
+          const delegationFetched = delegationData.success ? delegationData.data : {};
+          const stakeFetched = stakeData.success ? stakeData.data : {};
+          const delegationLegacyFetched = delegationLegacyData.success
+            ? delegationLegacyData.data
+            : {};
 
-  // React.useEffect(() => {
-  //   fetchLockedAmountAndPrice();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [txCount, id, address]);
+          const delegation = delegationFetched ? delegationData.data : [];
+          const stake = stakeFetched ? stakeData.data : {};
+          const delegationLegacy = delegationLegacyFetched ? delegationLegacyData.data : {};
+
+          setLockedAmount({
+            delegation,
+            stake,
+            delegationLegacy,
+            delegationFetched,
+            stakeFetched,
+            delegationLegacyFetched,
+          });
+        }
+      });
+    }
+  };
+
+  React.useEffect(() => {
+    if (!isContract(address)) {
+      fetchLockedAmountAndPrice();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [txCount, id, address]);
 
   const [isProvider, setIsProvider] = React.useState(false);
   const fetchProviderDetails = () => {
@@ -120,10 +171,31 @@ const AccountDetailsCard = () => {
             <div className="card-header-item compact d-flex">
               <span className="text-secondary">Address:</span>
               <div className="d-flex align-items-center text-break-all ml-2">
+                <ScAddressIcon initiator={address} />
                 <span data-testid="address">{address}</span>
                 <CopyButton text={address} />
               </div>
             </div>
+            {ownerAddress && (
+              <div className="card-header-item compact d-flex">
+                <span className="text-secondary">Owner Address:</span>
+                <div className="d-flex align-items-center text-break-all ml-2">
+                  <ScAddressIcon initiator={ownerAddress} />
+                  {ownerAddress !== address ? (
+                    <NetworkLink
+                      to={urlBuilder.accountDetails(ownerAddress)}
+                      data-testid="ownerLink"
+                      className="trim-wrapper"
+                    >
+                      <span data-testid="ownerAddress">{ownerAddress}</span>
+                    </NetworkLink>
+                  ) : (
+                    <span data-testid="ownerAddress">{ownerAddress}</span>
+                  )}
+                  <CopyButton text={ownerAddress} />
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="card-body card-item-container mx-spacing">
@@ -137,8 +209,6 @@ const AccountDetailsCard = () => {
               <UsdValue input={balance} usd={usd} />
             </CardItem>
 
-            {/* <LockedAmountCardItem lockedAmount={lockedAmount} cardItemClass={cardItemClass} /> */}
-
             <CardItem className={cardItemClass} title="Nonce" icon={faUser}>
               {nonce !== undefined ? nonce.toLocaleString('en') : '...'}
             </CardItem>
@@ -147,6 +217,20 @@ const AccountDetailsCard = () => {
               <CardItem className={cardItemClass} title="Tokens" icon={faCoins}>
                 {accountTokensCount !== undefined ? accountTokensCount : '...'}
               </CardItem>
+            )}
+
+            {isContract(address) ? (
+              <CardItem className={cardItemClass} title="Shard" icon={faLayerGroup}>
+                {shard !== undefined ? (
+                  <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
+                    <ShardSpan shard={shard} />
+                  </NetworkLink>
+                ) : (
+                  <>N/A</>
+                )}
+              </CardItem>
+            ) : (
+              <LockedAmountCardItem lockedAmount={lockedAmount} cardItemClass={cardItemClass} />
             )}
           </div>
         </div>

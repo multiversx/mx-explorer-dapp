@@ -30,6 +30,7 @@ export default {
     });
   },
   getAccountDelegation: api,
+  getAccountDelegationLegacy: api,
   getAccountStake: api,
   getProviders: api,
   getProvider: api,

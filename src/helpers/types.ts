@@ -7,6 +7,8 @@ export interface AccountType {
   txCount: number;
   claimableRewards: string;
   code?: string;
+  shard?: number;
+  ownerAddress?: string;
 }
 
 export interface TokenType {
@@ -73,6 +75,13 @@ export interface NftType {
   decimals?: number;
   owner?: string;
   supply?: string;
+  assets?: {
+    website?: string;
+    description?: string;
+    status?: string;
+    pngUrl?: string;
+    svgUrl?: string;
+  };
 }
 
 export interface ProviderType {
