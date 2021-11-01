@@ -111,6 +111,19 @@ const NftDetails = () => {
                           <NftPreview token={nftDetails} />
                         </DetailItem>
                       )}
+                      {nftDetails.attributes !== undefined && (
+                        <DetailItem title="Attributes">
+                          <textarea
+                            readOnly
+                            className="form-control col cursor-text"
+                            rows={2}
+                            defaultValue={Buffer.from(
+                              String(nftDetails.attributes),
+                              'base64'
+                            ).toString()}
+                          />
+                        </DetailItem>
+                      )}
                     </div>
                   </div>
                 </div>
