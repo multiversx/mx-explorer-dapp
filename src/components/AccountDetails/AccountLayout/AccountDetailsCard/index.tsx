@@ -7,6 +7,7 @@ import {
   adapter,
   ShardSpan,
   ScAddressIcon,
+  Trim,
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import { isContract, urlBuilder } from 'helpers';
@@ -176,26 +177,6 @@ const AccountDetailsCard = () => {
                 <CopyButton text={address} />
               </div>
             </div>
-            {ownerAddress && (
-              <div className="card-header-item compact d-flex">
-                <span className="text-secondary">Owner Address:</span>
-                <div className="d-flex align-items-center text-break-all ml-2">
-                  <ScAddressIcon initiator={ownerAddress} />
-                  {ownerAddress !== address ? (
-                    <NetworkLink
-                      to={urlBuilder.accountDetails(ownerAddress)}
-                      data-testid="ownerLink"
-                      className="trim-wrapper"
-                    >
-                      <span data-testid="ownerAddress">{ownerAddress}</span>
-                    </NetworkLink>
-                  ) : (
-                    <span data-testid="ownerAddress">{ownerAddress}</span>
-                  )}
-                  <CopyButton text={ownerAddress} />
-                </div>
-              </div>
-            )}
           </div>
 
           <div className="card-body card-item-container mx-spacing">
@@ -220,15 +201,35 @@ const AccountDetailsCard = () => {
             )}
 
             {isContract(address) ? (
-              <CardItem className={cardItemClass} title="Shard" icon={faLayerGroup}>
-                {shard !== undefined ? (
-                  <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
-                    <ShardSpan shard={shard} />
-                  </NetworkLink>
-                ) : (
-                  <>N/A</>
+              <>
+                <CardItem className={cardItemClass} title="Shard" icon={faLayerGroup}>
+                  {shard !== undefined ? (
+                    <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
+                      <ShardSpan shard={shard} />
+                    </NetworkLink>
+                  ) : (
+                    <>N/A</>
+                  )}
+                </CardItem>
+
+                {ownerAddress && (
+                  <CardItem className={cardItemClass} title="Owner" icon={faUser}>
+                    <ScAddressIcon initiator={ownerAddress} />
+                    {ownerAddress !== address ? (
+                      <NetworkLink
+                        to={urlBuilder.accountDetails(ownerAddress)}
+                        data-testid="ownerLink"
+                        className="trim-wrapper"
+                      >
+                        <Trim text={ownerAddress} />
+                      </NetworkLink>
+                    ) : (
+                      <Trim text={ownerAddress} />
+                    )}
+                    <CopyButton text={ownerAddress} />
+                  </CardItem>
                 )}
-              </CardItem>
+              </>
             ) : (
               <LockedAmountCardItem lockedAmount={lockedAmount} cardItemClass={cardItemClass} />
             )}
