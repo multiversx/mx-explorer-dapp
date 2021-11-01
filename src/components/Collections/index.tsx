@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Loader, adapter, NetworkLink, Trim, Pager } from 'sharedComponents';
+import { Loader, adapter, NetworkLink, Trim, Pager, NftBadge } from 'sharedComponents';
 import NoCollections from './NoCollections';
 import FailedCollections from './FailedCollections';
 import { urlBuilder, useFilters, useURLSearchParams, types } from 'helpers';
@@ -84,6 +84,7 @@ const Collections = () => {
                                           <div>{collection.name}</div>
                                         </div>
                                       </NetworkLink>
+                                      <NftBadge type={collection.type} className="ml-2" />
                                     </div>
                                   </td>
                                   <td>{collection.collection}</td>

@@ -106,12 +106,12 @@ const NftDetails = () => {
                       {nftDetails.decimals !== undefined && (
                         <DetailItem title="Decimals">{nftDetails.decimals}</DetailItem>
                       )}
-                      {nftDetails.uris !== undefined && (
+                      {nftDetails.uris !== undefined && nftDetails.uris[0] && (
                         <DetailItem title="Assets">
                           <NftPreview token={nftDetails} />
                         </DetailItem>
                       )}
-                      {nftDetails.attributes !== undefined && (
+                      {/* {nftDetails.attributes !== undefined && (
                         <DetailItem title="Attributes">
                           <textarea
                             readOnly
@@ -123,7 +123,7 @@ const NftDetails = () => {
                             ).toString()}
                           />
                         </DetailItem>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>
