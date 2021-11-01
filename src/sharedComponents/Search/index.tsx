@@ -122,6 +122,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(reset, [route, pathname]);
 
   return route ? (

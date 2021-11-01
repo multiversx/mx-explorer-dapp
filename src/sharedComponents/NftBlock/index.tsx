@@ -61,7 +61,7 @@ const NftBlock = (props: NftBlockType) => {
       )}
       <NetworkLink
         to={urlBuilder.nftDetails(props.identifier)}
-        className={`d-flex ${nftCollectionDetails?.assets?.svgUrl ? 'token-link' : ''}`}
+        className={`d-flex ${nftDetails?.assets?.svgUrl ? 'token-link' : ''}`}
       >
         <div className="d-flex align-items-center symbol">
           {dataReady === undefined && (
@@ -75,13 +75,13 @@ const NftBlock = (props: NftBlockType) => {
             </>
           )}
           {dataReady === false && <span className="text-truncate">{props.identifier}</span>}
-          {dataReady === true && nftCollectionDetails && nftDetails && (
+          {dataReady === true && nftDetails && (
             <>
-              {nftCollectionDetails.assets ? (
+              {nftDetails.assets ? (
                 <>
-                  {nftCollectionDetails.assets.svgUrl && (
+                  {nftDetails.assets.svgUrl && (
                     <img
-                      src={nftCollectionDetails.assets.svgUrl}
+                      src={nftDetails.assets.svgUrl}
                       alt={nftDetails.name}
                       className="token-icon mr-1"
                     />

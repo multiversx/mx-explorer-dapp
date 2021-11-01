@@ -107,7 +107,6 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
           denomination,
           decimals,
           showLastNonZeroDecimal: true,
-          addCommas: false,
         });
 
   const transactionValue = denominate({
@@ -115,7 +114,6 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
     denomination,
     decimals,
     showLastNonZeroDecimal: true,
-    addCommas: false,
   });
 
   return (

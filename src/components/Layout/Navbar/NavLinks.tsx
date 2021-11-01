@@ -6,6 +6,7 @@ import {
   accountsRoutes,
   validatorsRoutes,
   tokensRoutes,
+  nftRoutes,
 } from 'routes';
 import { useIsMainnet, useActiveRoute } from 'helpers';
 import { useGlobalState } from 'context';
@@ -89,6 +90,16 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
             onClick={() => onToggle(false)}
           >
             Tokens
+          </NetworkLink>
+
+          <NetworkLink
+            className={`nav-link ${
+              activeRoute(nftRoutes.nfts) || activeRoute(nftRoutes.nftDetails) ? 'active' : ''
+            }`}
+            to={nftRoutes.nfts}
+            onClick={() => onToggle(false)}
+          >
+            NFTs
           </NetworkLink>
 
           <NetworkLink

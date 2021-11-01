@@ -75,7 +75,7 @@ const Nfts = () => {
                             </thead>
                             <tbody data-testid="nftsTable">
                               {nfts.map((nft, i) => (
-                                <tr key={nft.name}>
+                                <tr key={`${nft.name}-${nft.identifier}`}>
                                   <td>
                                     <div className="d-flex align-items-center">
                                       <NetworkLink

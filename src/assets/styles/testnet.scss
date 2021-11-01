@@ -62,7 +62,7 @@ $input-hover-border-color: darken($border-color, 15%);
     &::after {
       right: 0;
       left: unset;
-      width: calc(100% - 2rem);
+      width: calc(100% - 1.85rem);
     }
   }
 
