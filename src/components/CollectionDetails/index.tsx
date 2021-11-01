@@ -86,7 +86,7 @@ const CollectionDetails = () => {
                         <DetailItem title="Decimals">{collectionDetails.decimals}</DetailItem>
                       )}
                       <DetailItem title="Properties">
-                        <div className="d-flex alig-items-center flex-wrap">
+                        <div className="d-flex alig-items-center flex-wrap col-lg-7 ml-n3">
                           <CreatePill
                             name={'Can Transfer Role'}
                             active={collectionDetails.canTransferRole}
