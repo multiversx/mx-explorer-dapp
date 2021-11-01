@@ -71,7 +71,7 @@ const LockedDetails = ({
   }
 
   return (
-    <CardItem className={cardItemClass} title="Locked" icon={faLock}>
+    <CardItem className={cardItemClass} title="Stake" icon={faLock}>
       <div className="d-flex align-items-center">
         {show ? (
           <span className="mr-2">
