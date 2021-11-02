@@ -82,6 +82,12 @@ export interface NftType {
     pngUrl?: string;
     svgUrl?: string;
   };
+  metadata?: {
+    description?: string;
+    fileType?: string;
+    fileUri?: string;
+    fileName?: string;
+  };
 }
 
 export interface ProviderType {

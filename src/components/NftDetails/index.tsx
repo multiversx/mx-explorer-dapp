@@ -1,6 +1,8 @@
 import * as React from 'react';
+import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams } from 'react-router-dom';
-import { types, urlBuilder } from 'helpers';
+import { types, urlBuilder, dateFormatted } from 'helpers';
 import {
   Loader,
   adapter,
@@ -9,6 +11,8 @@ import {
   NetworkLink,
   NftBadge,
   CollectionBlock,
+  Denominate,
+  TimeAgo,
 } from 'sharedComponents';
 import FailedNftDetails from './FailedNftDetails';
 import NftPreview from './NftPreview';
@@ -97,11 +101,31 @@ const NftDetails = () => {
                           </NetworkLink>
                         </div>
                       </DetailItem>
-                      {nftDetails.royalties !== null && (
+                      {nftDetails.timestamp !== undefined && (
+                        <DetailItem title="Minted">
+                          <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
+                          <TimeAgo value={nftDetails.timestamp} />
+                          &nbsp;
+                          <span className="text-secondary">
+                            ({dateFormatted(nftDetails.timestamp)})
+                          </span>
+                        </DetailItem>
+                      )}
+                      {nftDetails.royalties !== undefined && nftDetails.royalties !== null && (
                         <DetailItem title="Royalties">{nftDetails.royalties}%</DetailItem>
                       )}
                       {nftDetails.supply !== undefined && Number(nftDetails.supply) > 0 && (
-                        <DetailItem title="Supply">{nftDetails.supply}</DetailItem>
+                        <DetailItem title="Supply">
+                          {nftDetails.decimals !== undefined ? (
+                            <Denominate
+                              value={nftDetails.supply}
+                              showLabel={false}
+                              denomination={nftDetails.decimals}
+                            />
+                          ) : (
+                            <>{nftDetails.supply}</>
+                          )}
+                        </DetailItem>
                       )}
                       {nftDetails.decimals !== undefined && (
                         <DetailItem title="Decimals">{nftDetails.decimals}</DetailItem>
@@ -109,6 +133,15 @@ const NftDetails = () => {
                       {nftDetails.uris !== undefined && nftDetails.uris[0] && (
                         <DetailItem title="Assets">
                           <NftPreview token={nftDetails} />
+                        </DetailItem>
+                      )}
+                      {nftDetails.tags !== undefined && nftDetails.tags.length > 0 && (
+                        <DetailItem title="Tags">
+                          {nftDetails.tags.map((tag) => (
+                            <div className="badge badge-light p-2 mr-2 font-weight-normal">
+                              {tag}
+                            </div>
+                          ))}
                         </DetailItem>
                       )}
                       {/* {nftDetails.attributes !== undefined && (
