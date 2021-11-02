@@ -194,12 +194,6 @@ const AccountDetailsCard = () => {
               {nonce !== undefined ? nonce.toLocaleString('en') : '...'}
             </CardItem>
 
-            {tokensActive && (
-              <CardItem className={cardItemClass} title="Tokens" icon={faCoins}>
-                {accountTokensCount !== undefined ? accountTokensCount : '...'}
-              </CardItem>
-            )}
-
             {isContract(address) ? (
               <>
                 <CardItem className={cardItemClass} title="Shard" icon={faLayerGroup}>
@@ -231,7 +225,14 @@ const AccountDetailsCard = () => {
                 )}
               </>
             ) : (
-              <LockedAmountCardItem lockedAmount={lockedAmount} cardItemClass={cardItemClass} />
+              <>
+                {tokensActive && (
+                  <CardItem className={cardItemClass} title="Tokens" icon={faCoins}>
+                    {accountTokensCount !== undefined ? accountTokensCount : '...'}
+                  </CardItem>
+                )}
+                <LockedAmountCardItem lockedAmount={lockedAmount} cardItemClass={cardItemClass} />
+              </>
             )}
           </div>
         </div>

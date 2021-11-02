@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Loader, adapter, NetworkLink, Trim, Pager, NftBadge } from 'sharedComponents';
+import { Loader, adapter, NetworkLink, Trim, Pager, NftBadge, TimeAgo } from 'sharedComponents';
 import NoCollections from './NoCollections';
 import FailedCollections from './FailedCollections';
 import { urlBuilder, useFilters, useURLSearchParams, types } from 'helpers';
@@ -61,6 +61,7 @@ const Collections = () => {
                               <tr>
                                 <th>Name</th>
                                 <th>Collection</th>
+                                <th>Created</th>
                                 <th>Owner Account</th>
                               </tr>
                             </thead>
@@ -88,6 +89,9 @@ const Collections = () => {
                                     </div>
                                   </td>
                                   <td>{collection.collection}</td>
+                                  <td>
+                                    <TimeAgo value={collection.timestamp} tooltip />
+                                  </td>
                                   <td>
                                     <div className="d-flex trim-size-xl">
                                       <NetworkLink

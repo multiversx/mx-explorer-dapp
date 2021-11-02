@@ -1,11 +1,20 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { types, urlBuilder } from 'helpers';
-import { Loader, adapter, DetailItem, Trim, NetworkLink, NftBadge } from 'sharedComponents';
+import { types, urlBuilder, dateFormatted } from 'helpers';
+import {
+  Loader,
+  adapter,
+  DetailItem,
+  Trim,
+  NetworkLink,
+  NftBadge,
+  TimeAgo,
+} from 'sharedComponents';
 import FailedCollectionDetails from './FailedCollectionDetails';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import { faCheck } from '@fortawesome/pro-light-svg-icons/faCheck';
+import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 
 const CreatePill = ({ name, active }: { name: string; active: boolean }) => {
   return (
@@ -68,7 +77,10 @@ const CollectionDetails = () => {
                         </div>
                       </DetailItem>
                       <DetailItem title="Collection">{collectionDetails.collection}</DetailItem>
-                      <DetailItem title="Ticker">{collectionDetails.ticker}</DetailItem>
+                      {collectionDetails.ticker !== undefined &&
+                        collectionDetails.ticker !== collectionDetails.collection && (
+                          <DetailItem title="Ticker">{collectionDetails.ticker}</DetailItem>
+                        )}
                       <DetailItem title="Type">
                         <NftBadge type={collectionDetails.type} />
                       </DetailItem>
@@ -82,6 +94,16 @@ const CollectionDetails = () => {
                           </NetworkLink>
                         </div>
                       </DetailItem>
+                      {collectionDetails.timestamp !== undefined && (
+                        <DetailItem title="Created">
+                          <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
+                          <TimeAgo value={collectionDetails.timestamp} />
+                          &nbsp;
+                          <span className="text-secondary">
+                            ({dateFormatted(collectionDetails.timestamp)})
+                          </span>
+                        </DetailItem>
+                      )}
                       {collectionDetails.decimals !== undefined && (
                         <DetailItem title="Decimals">{collectionDetails.decimals}</DetailItem>
                       )}

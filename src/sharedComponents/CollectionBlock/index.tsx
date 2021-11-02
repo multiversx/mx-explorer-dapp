@@ -73,11 +73,11 @@ const CollectionBlock = (props: CollectionBlockType) => {
                   {collectionDetails.assets.svgUrl && (
                     <img
                       src={collectionDetails.assets.svgUrl}
-                      alt={collectionDetails.name}
+                      alt={collectionDetails.ticker}
                       className="token-icon mr-1"
                     />
                   )}
-                  <div>{collectionDetails.name}</div>
+                  <div>{collectionDetails.ticker}</div>
                 </>
               ) : (
                 <span className="text-truncate">{props.identifier}</span>

@@ -86,7 +86,9 @@ const NftBlock = (props: NftBlockType) => {
                       className="token-icon mr-1"
                     />
                   )}
-                  <div>{nftDetails.name}</div>
+                  <div>
+                    {nftDetails.name} ({nftDetails.identifier})
+                  </div>
                 </>
               ) : (
                 <span className="text-truncate">{props.identifier}</span>
