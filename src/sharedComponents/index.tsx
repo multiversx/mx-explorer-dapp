@@ -29,6 +29,11 @@ import LatestItem from './LatestItem';
 import LockedAmountTooltip from './LockedAmountTooltip';
 import StatisticsChart from './StatisticsChart';
 import NodesFilters from './NodesFilters';
+import TokenBlock from './TokenBlock';
+import CollectionBlock from './CollectionBlock';
+import NftBadge from './NftBadge';
+import NftBlock from './NftBlock';
+import SocialIcons from './SocialIcons';
 
 export {
   Denominate,
@@ -63,4 +68,9 @@ export {
   LockedAmountTooltip,
   StatisticsChart,
   NodesFilters,
+  TokenBlock,
+  CollectionBlock,
+  NftBadge,
+  NftBlock,
+  SocialIcons,
 };

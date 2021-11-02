@@ -20,8 +20,6 @@ export default function useAdapter() {
     getStats,
     getNodes,
     getNodesVersions,
-    getAccountDelegation,
-    getAccountStake,
     getShards,
     getEconomics,
     getProviders,
@@ -33,6 +31,7 @@ export default function useAdapter() {
     getUsersStaking,
     getTransactionsHistory,
     getAccountsHistory,
+    delegationApi,
   } = useAdapterConfig();
 
   return {
@@ -67,6 +66,8 @@ export default function useAdapter() {
               'value',
               'miniBlockHash',
               'round',
+              'tokenValue',
+              'tokenIdentifier',
             ].join(','),
           },
         },
@@ -175,9 +176,12 @@ export default function useAdapter() {
       }),
 
     getAccountDelegation: (address: string) =>
-      getAccountDelegation({ url: `/accounts/${address}/delegation` }),
+      provider({ url: `/accounts/${address}/delegations`, baseUrl: delegationApi }),
 
-    getAccountStake: (address: string) => getAccountStake({ url: `/accounts/${address}/stake` }),
+    getAccountDelegationLegacy: (address: string) =>
+      provider({ url: `/accounts/${address}/delegation-legacy` }),
+
+    getAccountStake: (address: string) => provider({ url: `/accounts/${address}/stake` }),
 
     /* Validators */
 
@@ -277,18 +281,65 @@ export default function useAdapter() {
 
     getToken: (tokenId: string) => provider({ url: `/tokens/${tokenId}` }),
 
+    getTokenTransactions: ({ size, tokenId }: { size: number; tokenId: string }) =>
+      provider({
+        url: `/tokens/${tokenId}/transactions`,
+        params: getTokensParam({ size }),
+      }),
+
+    getTokenTransactionsCount: ({ tokenId }: { tokenId: string }) =>
+      provider({
+        url: `/tokens/${tokenId}/transactions/count`,
+      }),
+
+    getTokenAccounts: ({ size, tokenId }: { size: number; tokenId: string }) =>
+      provider({
+        url: `/tokens/${tokenId}/accounts`,
+        params: getTokensParam({ size }),
+      }),
+
+    getTokenAccountsCount: ({ tokenId }: { tokenId: string }) =>
+      provider({
+        url: `/tokens/${tokenId}/accounts/count`,
+      }),
+
     // Nfts
 
     getAccountNfts: ({ address, size }: { address: string; size: number }) =>
       provider({
         url: `/accounts/${address}/nfts`,
-        params: {
-          from: (size - 1) * 25,
-          size: 25,
-        },
+        params: getTokensParam({ size }),
       }),
 
     getAccountNftsCount: (address: string) => provider({ url: `/accounts/${address}/nfts/count` }),
+
+    getCollections: (props: GetTokensType) =>
+      provider({
+        url: `/collections`,
+        params: getTokensParam(props),
+      }),
+
+    getCollectionsCount: ({ search }: GetTokensType) =>
+      provider({
+        url: `/collections/count`,
+        params: getTokensParam({ search }),
+      }),
+
+    getCollection: (collection: string) => provider({ url: `/collections/${collection}` }),
+
+    getNfts: (props: GetTokensType) =>
+      provider({
+        url: `/nfts`,
+        params: getTokensParam(props),
+      }),
+
+    getNftsCount: ({ search }: GetTokensType) =>
+      provider({
+        url: `/nfts/count`,
+        params: getTokensParam({ search }),
+      }),
+
+    getNft: (identifier: string) => provider({ url: `/nfts/${identifier}` }),
 
     // Providers
 

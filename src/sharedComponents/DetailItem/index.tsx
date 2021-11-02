@@ -7,7 +7,7 @@ const DetailItem = ({
   colWidth = '2',
 }: {
   children: React.ReactNode;
-  title: string;
+  title: string | React.ReactNode;
   className?: string;
   colWidth?: string;
 }) => (

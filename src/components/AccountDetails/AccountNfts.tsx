@@ -1,7 +1,17 @@
 import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
-import { adapter, DetailItem, Loader, Pager, PageState } from 'sharedComponents';
+import {
+  adapter,
+  DetailItem,
+  Loader,
+  Pager,
+  PageState,
+  CollectionBlock,
+  Denominate,
+  NftBadge,
+  NftBlock,
+} from 'sharedComponents';
 import { useGlobalState } from 'context';
 import AccountTabs from './AccountLayout/AccountTabs';
 import { urlBuilder, useFilters, useNetworkRoute } from 'helpers';
@@ -73,13 +83,21 @@ const AccountNfts = () => {
 
           {dataReady === true && accountNfts.length > 0 && (
             <>
-              {accountNfts.map(({ identifier, name, balance, type }) => {
+              {accountNfts.map(({ identifier, decimals, balance, type, collection }) => {
                 return (
-                  <DetailItem title={name} key={identifier}>
-                    {Number(balance) > 1 ? <span className="mr-2">{balance}</span> : null}
-                    <span className="mr-2 text-muted">{identifier}</span>
-                    <div className="badge badge-secondary font-weight-light">
-                      {type === 'SemiFungibleESDT' ? 'SFT' : 'NFT'}
+                  <DetailItem title={<CollectionBlock identifier={collection} />} key={identifier}>
+                    <div className="d-flex align-items-center">
+                      {Number(balance) > 1 ? (
+                        <div className="mr-1">
+                          <Denominate
+                            showLabel={false}
+                            value={balance}
+                            denomination={type === 'MetaESDT' ? decimals : 1}
+                          />
+                        </div>
+                      ) : null}
+                      <NftBlock identifier={identifier} collection={collection} />
+                      <NftBadge type={type} className="ml-2" />
                     </div>
                   </DetailItem>
                 );
