@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { addressIsBech32, urlBuilder } from 'helpers';
 import { NetworkLink, Trim, CopyButton, TokenBlock, NftBlock } from 'sharedComponents';
 
@@ -15,6 +17,7 @@ export interface OperationType {
 const OperationSender = ({ operation, action }: { operation: OperationType; action?: string }) => {
   return operation.sender ? (
     <div className="col-lg-6 d-flex align-items-center col-xl-3 pr-xl-0">
+      <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary mr-2" />
       <div className="mr-2 text-nowrap">{action ? `${action} from ` : 'From'}</div>
       {addressIsBech32(operation.sender) ? (
         <>
@@ -39,6 +42,7 @@ const OperationReceiver = ({
 }) => {
   return operation.receiver ? (
     <div className="col-lg-6 d-flex align-items-center col-xl-3 pr-xl-0">
+      {action && <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary mr-2" />}
       <div className="mr-2 text-nowrap">{action ? `${action} to ` : 'To'}</div>
       {addressIsBech32(operation.sender) ? (
         <>
@@ -77,7 +81,6 @@ const OperationsList = ({ operations }: { operations: OperationType[] }) => {
         return (
           <div key={i} className="detailed-item d-flex row mb-3 mb-xl-2">
             <OperationText operation={operation} />
-
             {operation.value !== undefined &&
               operation.identifier !== undefined &&
               operation.type !== undefined && (

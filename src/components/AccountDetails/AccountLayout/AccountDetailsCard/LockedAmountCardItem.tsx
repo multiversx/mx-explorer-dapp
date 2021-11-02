@@ -22,6 +22,7 @@ const LockedDetails = ({
   const bNClaimableRewards = new BigNumber(
     accountDetails.claimableRewards ? accountDetails.claimableRewards : 0
   );
+  let bNtotalClaimable = bNClaimableRewards;
 
   const {
     stake,
@@ -62,6 +63,7 @@ const LockedDetails = ({
     );
     const activePlusUnStaked = bNtotalUserActiveStake.plus(bNtotalUserUnStakedValue);
     bNtotalDelegation = bNtotalClaimableRewards.plus(activePlusUnStaked);
+    bNtotalClaimable = bNtotalClaimable.plus(bNtotalClaimableRewards);
   }
   if (stake && delegationLegacy && delegationLegacy) {
     bNtotalLocked = bNClaimableRewards
@@ -97,7 +99,7 @@ const LockedDetails = ({
               },
               {
                 label: 'Claimable Rewards',
-                value: <Denominate value={bNClaimableRewards.toString(10)} />,
+                value: <Denominate value={bNtotalClaimable.toString(10)} />,
               },
             ]}
           />
