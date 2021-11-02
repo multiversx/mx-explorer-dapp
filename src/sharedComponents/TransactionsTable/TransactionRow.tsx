@@ -141,11 +141,7 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
         </div>
       </td>
       <td>
-        {transaction.tokenValue && transaction.tokenIdentifier ? (
-          <TokenBlock identifier={transaction.tokenIdentifier} value={transaction.tokenValue} />
-        ) : (
-          <Denominate value={transaction.value} />
-        )}
+        <Denominate value={transaction.value} />
       </td>
     </tr>
   );
