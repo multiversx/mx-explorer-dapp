@@ -61,7 +61,7 @@ const Collections = () => {
                               <tr>
                                 <th>Name</th>
                                 <th>Collection</th>
-                                <th>Created</th>
+                                <th>Age</th>
                                 <th>Owner Account</th>
                               </tr>
                             </thead>

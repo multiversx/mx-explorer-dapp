@@ -33,6 +33,7 @@ import TokenBlock from './TokenBlock';
 import CollectionBlock from './CollectionBlock';
 import NftBadge from './NftBadge';
 import NftBlock from './NftBlock';
+import SocialIcons from './SocialIcons';
 
 export {
   Denominate,
@@ -71,4 +72,5 @@ export {
   CollectionBlock,
   NftBadge,
   NftBlock,
+  SocialIcons,
 };

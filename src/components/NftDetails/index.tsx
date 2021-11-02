@@ -79,10 +79,6 @@ const NftDetails = () => {
                       <DetailItem title="Collection">
                         <CollectionBlock identifier={nftDetails.collection} />
                       </DetailItem>
-                      {nftDetails.ticker !== undefined &&
-                        nftDetails.ticker !== nftDetails.collection && (
-                          <DetailItem title="Ticker">{nftDetails.ticker}</DetailItem>
-                        )}
                       {nftDetails.owner !== undefined && (
                         <DetailItem title="Owner">
                           <div className="d-flex">

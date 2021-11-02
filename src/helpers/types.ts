@@ -33,6 +33,7 @@ export interface TokenType {
     status?: string;
     pngUrl?: string;
     svgUrl?: string;
+    social?: any;
   };
 }
 
