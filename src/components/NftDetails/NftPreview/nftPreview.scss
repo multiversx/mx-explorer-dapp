@@ -1,0 +1,19 @@
+#nft-tooltip {
+  opacity: 1;
+  .tooltip-inner {
+    max-width: unset;
+    background-color: $body-bg;
+  }
+  .arrow {
+    &::before {
+      border-width: 0.4rem 0.4rem 0;
+      border-top-color: $body-bg;
+    }
+  }
+}
+
+.nft-preview {
+  a {
+    font-size: 0.8em;
+  }
+}

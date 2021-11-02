@@ -30,7 +30,13 @@ async function wrap(asyncRequest: () => Promise<any>) {
 
 export default function useAdapterConfig() {
   const {
-    activeNetwork: { elasticUrl, adapter: networkAdapter, proxyUrl: nodeUrl, apiUrl },
+    activeNetwork: {
+      elasticUrl,
+      adapter: networkAdapter,
+      proxyUrl: nodeUrl,
+      apiUrl,
+      delegationApi,
+    },
     timeout,
   } = useGlobalState();
 
@@ -54,8 +60,9 @@ export default function useAdapterConfig() {
     getStats,
     getNodes,
     getNodesVersions,
-    getAccountDelegation,
     getAccountStake,
+    getAccountDelegationLegacy,
+    getAccountDelegation,
     getEconomics,
     getShards,
     getEgldPriceHistory,
@@ -74,6 +81,7 @@ export default function useAdapterConfig() {
   const basicProps: PropsType & { url: string } = { url: '' };
 
   return {
+    delegationApi,
     provider: (props = basicProps) => wrap(() => provider({ ...providerProps, ...props })),
     getStats: (props = basicProps) => wrap(() => getStats({ ...providerProps, ...props })),
     getNodes: (props = basicProps) => wrap(() => getNodes({ ...providerProps, ...props })),
@@ -82,6 +90,8 @@ export default function useAdapterConfig() {
     getShards: (props = basicProps) => wrap(() => getShards({ ...providerProps, ...props })),
     getAccountDelegation: (props = basicProps) =>
       wrap(() => getAccountDelegation({ ...providerProps, ...props })),
+    getAccountDelegationLegacy: (props = basicProps) =>
+      wrap(() => getAccountDelegationLegacy({ ...providerProps, ...props })),
     getAccountStake: (props = basicProps) =>
       wrap(() => getAccountStake({ ...providerProps, ...props })),
     getEconomics: (props = basicProps) => wrap(() => getEconomics({ ...providerProps, ...props })),

@@ -1,0 +1,17 @@
+.social-icons {
+  a {
+    &:after {
+      display: none;
+    }
+  }
+  .social-icon {
+    width: 1rem;
+    height: 1rem;
+    fill: $secondary;
+    color: $secondary;
+    &:hover {
+      fill: lighten($secondary, 20%);
+      color: lighten($secondary, 20%);
+    }
+  }
+}

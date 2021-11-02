@@ -140,7 +140,6 @@
   @extend .badge;
   @extend .badge-pill;
   @extend .text-uppercase;
-  @extend .flex-fill;
 
   font-weight: normal;
   font-size: 63%;
@@ -244,4 +243,9 @@
 
 .position-unset {
   position: unset;
+}
+
+.token-icon {
+  width: 1.5rem;
+  height: 1.5rem;
 }

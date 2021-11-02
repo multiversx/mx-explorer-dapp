@@ -7,6 +7,8 @@ export interface AccountType {
   txCount: number;
   claimableRewards: string;
   code?: string;
+  shard?: number;
+  ownerAddress?: string;
 }
 
 export interface TokenType {
@@ -25,15 +27,45 @@ export interface TokenType {
   canUpgrade: boolean;
   canWipe: boolean;
   isPaused: boolean;
+  assets?: {
+    website?: string;
+    description?: string;
+    status?: string;
+    pngUrl?: string;
+    svgUrl?: string;
+    social?: any;
+  };
+}
+
+export interface CollectionType {
+  collection: string;
+  type: 'SemiFungibleESDT' | 'NonFungibleESDT' | 'MetaESDT';
+  name: string;
+  ticker: string;
+  timestamp: number;
+  canFreeze: boolean;
+  canWipe: boolean;
+  canPause: boolean;
+  canTransferRole: boolean;
+  owner: string;
+  decimals?: number;
+  assets?: {
+    website?: string;
+    description?: string;
+    status?: string;
+    pngUrl?: string;
+    svgUrl?: string;
+  };
 }
 
 export interface NftType {
   identifier: string;
   collection: string;
+  ticker?: string;
   timestamp: number;
   attributes: string;
   nonce: number;
-  type: 'SemiFungibleESDT' | 'NonFungibleESDT';
+  type: 'SemiFungibleESDT' | 'NonFungibleESDT' | 'MetaESDT';
   name: string;
   creator: string;
   royalties: number;
@@ -42,6 +74,22 @@ export interface NftType {
   url?: string;
   thumbnailUrl?: string;
   tags?: string[];
+  decimals?: number;
+  owner?: string;
+  supply?: string;
+  assets?: {
+    website?: string;
+    description?: string;
+    status?: string;
+    pngUrl?: string;
+    svgUrl?: string;
+  };
+  metadata?: {
+    description?: string;
+    fileType?: string;
+    fileUri?: string;
+    fileName?: string;
+  };
 }
 
 export interface ProviderType {

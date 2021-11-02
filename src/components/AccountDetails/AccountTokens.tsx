@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
-import { adapter, Denominate, DetailItem, Loader, Pager, PageState } from 'sharedComponents';
+import { adapter, TokenBlock, DetailItem, Loader, Pager, PageState } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import AccountTabs from './AccountLayout/AccountTabs';
 import { urlBuilder, useFilters, useNetworkRoute } from 'helpers';
@@ -73,14 +73,13 @@ const AccountTokens = () => {
 
           {dataReady === true && accountTokens.length > 0 && (
             <>
-              {accountTokens.map(({ identifier, name, balance, decimals }) => {
+              {accountTokens.map(({ identifier, name, balance }) => {
                 return (
                   <DetailItem title={name} key={identifier}>
-                    <Denominate
+                    <TokenBlock
+                      identifier={identifier}
                       value={balance ? balance : '0'}
                       showLastNonZeroDecimal={true}
-                      token={identifier}
-                      denomination={decimals}
                     />
                   </DetailItem>
                 );

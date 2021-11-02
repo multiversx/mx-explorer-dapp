@@ -2,15 +2,9 @@ import * as React from 'react';
 import { Loader, adapter, NetworkLink, Trim, Pager } from 'sharedComponents';
 import NoTokens from './NoTokens';
 import FailedTokens from './FailedTokens';
-import { urlBuilder, useFilters, useURLSearchParams } from 'helpers';
+import { urlBuilder, useFilters, useURLSearchParams, types } from 'helpers';
 import Filters from './Filters';
 import { useLocation } from 'react-router-dom';
-
-export interface TokenTypeTMP {
-  identifier: string;
-  name: string;
-  owner: string;
-}
 
 const Tokens = () => {
   const ref = React.useRef(null);
@@ -19,7 +13,7 @@ const Tokens = () => {
   const { getQueryObject, size } = useFilters();
   const { getTokens, getTokensCount } = adapter();
 
-  const [tokens, setTokens] = React.useState<TokenTypeTMP[]>([]);
+  const [tokens, setTokens] = React.useState<types.TokenType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [totalTokens, setTotalTokens] = React.useState<number | '...'>('...');
 
@@ -78,8 +72,20 @@ const Tokens = () => {
                                       <NetworkLink
                                         to={urlBuilder.tokenDetails(token.identifier)}
                                         data-testid={`tokensLink${i}`}
+                                        className={`d-flex ${
+                                          token.assets?.svgUrl ? 'token-link' : ''
+                                        }`}
                                       >
-                                        {token.name}
+                                        <div className="d-flex align-items-center">
+                                          {token.assets && token.assets.svgUrl && (
+                                            <img
+                                              src={token.assets.svgUrl}
+                                              alt={token.name}
+                                              className="token-icon mr-1"
+                                            />
+                                          )}
+                                          <div>{token.name}</div>
+                                        </div>
                                       </NetworkLink>
                                     </div>
                                   </td>

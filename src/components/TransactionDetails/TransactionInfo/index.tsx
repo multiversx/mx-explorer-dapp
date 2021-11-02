@@ -107,7 +107,6 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
           denomination,
           decimals,
           showLastNonZeroDecimal: true,
-          addCommas: false,
         });
 
   const transactionValue = denominate({
@@ -115,7 +114,6 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
     denomination,
     decimals,
     showLastNonZeroDecimal: true,
-    addCommas: false,
   });
 
   return (
@@ -299,6 +297,12 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
                   </span>
                 </DetailItem>
 
+                {transaction.operations && transaction.operations?.length > 0 && (
+                  <DetailItem title="Token Operations">
+                    <OperationsList operations={transaction.operations} />
+                  </DetailItem>
+                )}
+
                 <DetailItem title="Transaction Fee">
                   {transaction.gasUsed !== undefined ? (
                     <>
@@ -355,12 +359,6 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
                 <DetailItem title="Nonce">{transaction.nonce}</DetailItem>
 
                 <DataField data={transaction.data} />
-
-                {transaction.operations && transaction.operations?.length > 0 && (
-                  <DetailItem title="Token Operations">
-                    <OperationsList operations={transaction.operations} />
-                  </DetailItem>
-                )}
               </Tab.Pane>
 
               {transaction.results && transaction.results?.length > 0 && (
