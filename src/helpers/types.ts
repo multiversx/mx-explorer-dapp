@@ -60,6 +60,7 @@ export interface CollectionType {
 export interface NftType {
   identifier: string;
   collection: string;
+  ticker?: string;
   timestamp: number;
   attributes: string;
   nonce: number;

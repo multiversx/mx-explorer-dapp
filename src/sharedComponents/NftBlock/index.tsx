@@ -87,7 +87,8 @@ const NftBlock = (props: NftBlockType) => {
                     />
                   )}
                   <div>
-                    {nftDetails.name} ({nftDetails.identifier})
+                    {nftDetails.ticker ? nftDetails.ticker : nftDetails.name} (
+                    {nftDetails.identifier})
                   </div>
                 </>
               ) : (

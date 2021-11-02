@@ -50,14 +50,18 @@ const NftPreview = ({ token }: { token: types.NftType }) => {
             return (
               <li key={i}>
                 <Thumbnail token={token}>
-                  <a
-                    href={link}
-                    {...{ target: '_blank' }}
-                    data-testid={`${token.identifier}-link-${i}`}
-                    className="text-break"
-                  >
-                    {link}
-                  </a>
+                  {link.startsWith('http') ? (
+                    <a
+                      href={link}
+                      {...{ target: '_blank' }}
+                      data-testid={`${token.identifier}-link-${i}`}
+                      className="text-break"
+                    >
+                      {link}
+                    </a>
+                  ) : (
+                    <span className="text-break">{link}</span>
+                  )}
                 </Thumbnail>
               </li>
             );
