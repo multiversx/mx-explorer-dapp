@@ -3,7 +3,6 @@ import BigNumber from 'bignumber.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import { faCheck } from '@fortawesome/pro-light-svg-icons/faCheck';
-import { faExternalLink } from '@fortawesome/pro-light-svg-icons/faExternalLink';
 import { urlBuilder } from 'helpers';
 import { Trim, Denominate, NetworkLink, SocialIcons } from 'sharedComponents';
 import { useGlobalState } from 'context';
@@ -30,14 +29,6 @@ const SmallDetailItem = ({
 );
 
 const TokenDetailsCard = () => {
-  const social = {
-    email: 'web-token@elrond.com',
-    blog: 'https://www.elrond.com/web-token-blog',
-    twitter: 'https://twitter.com/web-token-twitter',
-    whitepaper: 'https://www.elrond.com/web-token-whitepaper.pdf',
-    coinmarketcap: 'https://coinmarketcap.com/currencies/web-token',
-    coingecko: 'https://www.coingecko.com/en/coins/web-token',
-  };
   const ref = React.useRef(null);
   const { tokenDetails } = useGlobalState();
 
@@ -81,24 +72,31 @@ const TokenDetailsCard = () => {
                 </SmallDetailItem>
                 <SmallDetailItem title="Token">{identifier}</SmallDetailItem>
 
-                <SmallDetailItem title="Minted">
-                  <Denominate
-                    value={minted}
-                    showLastNonZeroDecimal={true}
-                    showLabel={false}
-                    denomination={decimals}
-                  />
-                </SmallDetailItem>
-                <SmallDetailItem title="Burnt">
-                  <Denominate value={burnt} showLastNonZeroDecimal={true} showLabel={false} />
-                </SmallDetailItem>
                 <SmallDetailItem title="Supply">
-                  <Denominate
-                    value={new BigNumber(minted).minus(new BigNumber(burnt)).toString(10)}
-                    showLastNonZeroDecimal={true}
-                    showLabel={false}
-                    denomination={decimals}
-                  />
+                  <div className="d-flex flex-row">
+                    <Denominate
+                      value={new BigNumber(minted).minus(new BigNumber(burnt)).toString(10)}
+                      showLastNonZeroDecimal={true}
+                      showLabel={false}
+                      denomination={decimals}
+                    />{' '}
+                    <div className="ml-1 d-inline-flex text-secondary">
+                      (
+                      <Denominate
+                        value={minted}
+                        showLastNonZeroDecimal={true}
+                        showLabel={false}
+                        denomination={decimals}
+                      />
+                      <span className="mx-1">minted - </span>
+                      <Denominate
+                        value={burnt}
+                        showLastNonZeroDecimal={true}
+                        showLabel={false}
+                      />{' '}
+                      <span className="ml-1">burnt</span>)
+                    </div>
+                  </div>
                 </SmallDetailItem>
 
                 <SmallDetailItem title="Properties">
@@ -110,6 +108,7 @@ const TokenDetailsCard = () => {
                     <CreatePill name={'Can Pause'} active={canPause} />
                     <CreatePill name={'Can Freeze'} active={canFreeze} />
                     <CreatePill name={'Can Wipe'} active={canWipe} />
+                    <CreatePill name={'Not Paused'} active={!isPaused} />
                   </div>
                 </SmallDetailItem>
               </div>
@@ -133,27 +132,32 @@ const TokenDetailsCard = () => {
                   </div>
                 </SmallDetailItem>
                 <SmallDetailItem title="Decimals">{decimals}</SmallDetailItem>
-                <SmallDetailItem title="Paused">{isPaused ? 'Yes' : 'No'}</SmallDetailItem>
                 <SmallDetailItem title="Website">
                   {assets && assets.website ? (
                     <a href={assets.website} target={`_blank`} rel={`noreferrer nofollow`}>
                       {assets.website.replace(/^https?:\/\//i, '')}
                     </a>
                   ) : (
-                    <>N/A</>
-                  )}
-                </SmallDetailItem>
-                <SmallDetailItem title="Social">
-                  {social ? (
-                    <div className="d-flex h-100">
-                      <SocialIcons assets={social} />
-                    </div>
-                  ) : (
-                    <>N/A</>
+                    <span className="text-secondary">N/A</span>
                   )}
                 </SmallDetailItem>
                 <SmallDetailItem title="Description">
-                  {assets && assets.description ? assets.description : <>N/A</>}
+                  <div className="text-truncate">
+                    {assets && assets.description ? (
+                      assets.description
+                    ) : (
+                      <span className="text-secondary">N/A</span>
+                    )}
+                  </div>
+                </SmallDetailItem>
+                <SmallDetailItem title="Social">
+                  {assets && assets.social ? (
+                    <div className="d-flex h-100">
+                      <SocialIcons assets={assets.social} />
+                    </div>
+                  ) : (
+                    <span className="text-secondary">N/A</span>
+                  )}
                 </SmallDetailItem>
               </div>
             </div>
