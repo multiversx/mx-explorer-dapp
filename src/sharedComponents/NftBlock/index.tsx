@@ -18,31 +18,23 @@ interface NftBlockType {
 
 const NftBlock = (props: NftBlockType) => {
   const ref = React.useRef(null);
-  const { getCollection, getNft } = adapter();
-  const [nftCollectionDetails, setNftCollectionDetails] = React.useState<types.CollectionType>();
+  const { getNft } = adapter();
   const [nftDetails, setNftDetails] = React.useState<types.NftType>();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchNftBlock = () => {
-    Promise.all([getCollection(props.collection), getNft(props.identifier)]).then(
-      ([collectionsData, nftData]) => {
-        if (ref.current !== null) {
-          if (collectionsData.success) {
-            setNftCollectionDetails(collectionsData.data);
-          }
-          if (nftData.success) {
-            setNftDetails(nftData.data);
-          }
-          setDataReady(collectionsData.success && nftData.success);
+    getNft(props.identifier).then((nftData) => {
+      if (ref.current !== null) {
+        if (nftData.success) {
+          setNftDetails(nftData.data);
         }
+        setDataReady(nftData.success);
       }
-    );
+    });
   };
 
   const denomination =
-    dataReady === true && nftCollectionDetails && nftCollectionDetails.decimals
-      ? nftCollectionDetails.decimals
-      : 1;
+    dataReady === true && nftDetails && nftDetails.decimals ? nftDetails.decimals : 1;
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchNftBlock, [props.identifier]);
