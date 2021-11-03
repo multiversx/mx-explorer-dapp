@@ -23,7 +23,6 @@ interface Undelegation {
   amount: string;
   seconds: number;
 }
-
 interface DelegationType {
   address: string;
   contract: string;
@@ -65,7 +64,7 @@ const AccountDetailsCard = () => {
     getAccountStake,
     getAccountTokensCount,
   } = adapter();
-  const { address, balance, nonce, txCount, shard, ownerAddress } = accountDetails;
+  const { address, balance, nonce, txCount, shard, ownerAddress, developerReward } = accountDetails;
   const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
 
   const tokensActive = networkAdapter === 'api';
@@ -158,7 +157,7 @@ const AccountDetailsCard = () => {
           <div className="card-header">
             <div className="card-header-item">
               <div className="d-flex align-items-center justify-content-between">
-                <h6 data-testid="title">Account Details</h6>
+                <h6 data-testid="title">{isContract(address) ? 'Contract' : 'Address'} Details</h6>
                 {isProvider && (
                   <NetworkLink
                     to={urlBuilder.providerDetails(accountDetails.address)}
@@ -205,6 +204,12 @@ const AccountDetailsCard = () => {
                     <>N/A</>
                   )}
                 </CardItem>
+
+                {developerReward && (
+                  <CardItem className={cardItemClass} title="Developer Rewards" icon={faCoins}>
+                    <Denominate value={developerReward} decimals={4} />
+                  </CardItem>
+                )}
 
                 {ownerAddress && (
                   <CardItem className={cardItemClass} title="Owner" icon={faUser}>
