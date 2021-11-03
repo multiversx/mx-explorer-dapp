@@ -1,4 +1,4 @@
-import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
+import { faFileAlt } from '@fortawesome/pro-regular-svg-icons/faFileAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { numInitCharactersForScAddress as charNum } from 'appConfig';
@@ -25,7 +25,7 @@ const ScAddressIcon = ({ initiator, secondInitiator }: ScAddressIconType) => {
         </Tooltip>
       )}
     >
-      <FontAwesomeIcon icon={faCode} className="mr-1 text-secondary" />
+      <FontAwesomeIcon icon={faFileAlt} className="mr-1 text-secondary" />
     </OverlayTrigger>
   ) : null;
 };
