@@ -10,6 +10,7 @@ export interface AccountType {
   shard?: number;
   ownerAddress?: string;
   developerReward?: string;
+  deployedAt?: number;
 }
 
 export interface TokenType {
