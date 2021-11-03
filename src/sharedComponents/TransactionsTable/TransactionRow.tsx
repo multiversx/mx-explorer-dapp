@@ -2,15 +2,7 @@ import { faArrowRight } from '@fortawesome/pro-regular-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { addressIsBech32, urlBuilder } from 'helpers';
-import {
-  Denominate,
-  ScAddressIcon,
-  ShardSpan,
-  NetworkLink,
-  TimeAgo,
-  Trim,
-  TokenBlock,
-} from 'sharedComponents';
+import { Denominate, ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 import { ResultType } from 'components/TransactionDetails/ScResultsList';
 import TransactionIcon from '../TransactionsTable/TransactionIcon';
 
