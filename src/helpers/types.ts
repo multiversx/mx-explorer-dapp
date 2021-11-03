@@ -9,6 +9,7 @@ export interface AccountType {
   code?: string;
   shard?: number;
   ownerAddress?: string;
+  developerReward?: string;
 }
 
 export interface TokenType {
