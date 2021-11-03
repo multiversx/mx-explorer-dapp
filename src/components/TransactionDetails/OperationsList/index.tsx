@@ -64,6 +64,8 @@ const OperationText = ({ operation }: { operation: OperationType }) => {
     case 'localMint':
       return <OperationReceiver operation={operation} action="Mint" />;
     case 'burn':
+    case 'localBurn':
+    case 'ESDTLocalBurn':
       return <OperationSender operation={operation} action="Burn" />;
     default:
       return (
