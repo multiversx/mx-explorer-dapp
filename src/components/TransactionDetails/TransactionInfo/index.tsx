@@ -5,7 +5,7 @@ import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
-import { addressIsBech32, dateFormatted, urlBuilder, useNetworkRoute } from 'helpers';
+import { addressIsBech32, dateFormatted, urlBuilder, useNetworkRoute, isContract } from 'helpers';
 import {
   Denominate,
   ScAddressIcon,
@@ -141,21 +141,6 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
             >
               Transaction Details
             </Nav.Link>
-            {transaction.results && transaction.results?.length > 0 && (
-              <Nav.Link
-                eventKey="sc-results"
-                className={`tab-link mr-3 ${activeKey === 'sc-results' ? 'active' : ''}`}
-                onClick={() => {
-                  window.history.replaceState(
-                    null,
-                    '',
-                    urlBuilder.transactionDetailsScResults(transaction.txHash)
-                  );
-                }}
-              >
-                Smart Contract Results
-              </Nav.Link>
-            )}
             {transaction.logs && (
               <Nav.Link
                 eventKey="logs"
@@ -254,7 +239,11 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
                 <DetailItem title="To">
                   <div className="d-flex flex-column">
                     <div className="d-flex align-items-center">
-                      <ScAddressIcon initiator={transaction.receiver} />
+                      {isContract(transaction.receiver) ? (
+                        <span className="mr-2">Contract</span>
+                      ) : (
+                        ''
+                      )}
                       <NetworkLink
                         to={urlBuilder.accountDetails(transaction.receiver)}
                         className="trim-wrapper"
@@ -297,8 +286,17 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
                   </span>
                 </DetailItem>
 
-                {transaction.operations && transaction.operations?.length > 0 && (
-                  <DetailItem title="Token Operations">
+                {transaction.operations && transaction.operations.length > 0 && (
+                  <DetailItem
+                    title={
+                      <>
+                        <span className="mr-2">Token Operations</span>
+                        <span className="badge badge-secondary badge-pill font-weight-light">
+                          {transaction.operations.length}
+                        </span>
+                      </>
+                    }
+                  >
                     <OperationsList operations={transaction.operations} />
                   </DetailItem>
                 )}
@@ -359,15 +357,13 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
                 <DetailItem title="Nonce">{transaction.nonce}</DetailItem>
 
                 <DataField data={transaction.data} />
-              </Tab.Pane>
 
-              {transaction.results && transaction.results?.length > 0 && (
-                <Tab.Pane eventKey="sc-results">
+                {transaction.results && transaction.results?.length > 0 && (
                   <DetailItem title="Smart&nbsp;Contract Results">
                     <ScResultsList results={transaction.results} />
                   </DetailItem>
-                </Tab.Pane>
-              )}
+                )}
+              </Tab.Pane>
 
               {transaction.logs && (
                 <Tab.Pane eventKey="logs">
