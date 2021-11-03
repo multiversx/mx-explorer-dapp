@@ -23,8 +23,8 @@ const SmallDetailItem = ({
   title: string | React.ReactNode;
 }) => (
   <div className="row py-3 border-bottom detail-item">
-    <div className="col-lg-3 text-secondary pl-lg-spacer pr-lg-0">{title}</div>
-    <div className="col pr-lg-spacer pl-lg-0">{children}</div>
+    <div className="col-lg-3 text-secondary pl-lg-spacer">{title}</div>
+    <div className="col pr-lg-spacer">{children}</div>
   </div>
 );
 
@@ -73,16 +73,14 @@ const TokenDetailsCard = () => {
                 <SmallDetailItem title="Token">{identifier}</SmallDetailItem>
 
                 <SmallDetailItem title="Supply">
-                  <div className="d-flex flex-row flex-wrap">
-                    <span className="mr-1">
-                      <Denominate
-                        value={new BigNumber(minted).minus(new BigNumber(burnt)).toString(10)}
-                        showLastNonZeroDecimal={true}
-                        showLabel={false}
-                        denomination={decimals}
-                      />
-                    </span>
-                    <div className="d-inline-flex text-secondary">
+                  <div className="d-flex flex-row">
+                    <Denominate
+                      value={new BigNumber(minted).minus(new BigNumber(burnt)).toString(10)}
+                      showLastNonZeroDecimal={true}
+                      showLabel={false}
+                      denomination={decimals}
+                    />{' '}
+                    <div className="ml-1 d-inline-flex text-secondary">
                       (
                       <Denominate
                         value={minted}
