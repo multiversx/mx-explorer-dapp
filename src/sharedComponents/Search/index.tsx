@@ -39,7 +39,11 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
         hash.includes('-') &&
         hash.split('-')[1].length === 6 &&
         validHashChars.test(hash.split('-')[1]) === true;
-      const isPubKeyAccount = hash.length < 65 && addressIsBech32(bech32.encode(hash));
+
+      let isPubKeyAccount = false;
+      try {
+        isPubKeyAccount = hash.length < 65 && addressIsBech32(bech32.encode(hash));
+      } catch {}
 
       switch (true) {
         case isAccount:

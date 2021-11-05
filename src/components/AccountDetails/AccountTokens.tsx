@@ -1,11 +1,20 @@
 import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
-import { adapter, TokenBlock, DetailItem, Loader, Pager, PageState } from 'sharedComponents';
+import {
+  adapter,
+  TokenBlock,
+  DetailItem,
+  Loader,
+  Pager,
+  PageState,
+  Denominate,
+  NftBlock,
+} from 'sharedComponents';
 import { useGlobalState } from 'context';
 import AccountTabs from './AccountLayout/AccountTabs';
 import { urlBuilder, useFilters, useNetworkRoute } from 'helpers';
-import { TokenType } from 'helpers/types';
+import { TokenType, NftType } from 'helpers/types';
 
 const AccountTokens = () => {
   const ref = React.useRef(null);
@@ -13,7 +22,12 @@ const AccountTokens = () => {
   const { size } = useFilters();
   const networkRoute = useNetworkRoute();
 
-  const { getAccountTokens, getAccountTokensCount } = adapter();
+  const {
+    getAccountTokens,
+    getAccountTokensCount,
+    getAccountNfts,
+    getAccountNftsCount,
+  } = adapter();
 
   const { hash: address } = useParams() as any;
   const tokensActive = activeNetwork.adapter === 'api';
@@ -21,24 +35,42 @@ const AccountTokens = () => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [accountTokens, setAccountTokens] = React.useState<TokenType[]>([]);
   const [accountTokensCount, setAccountTokensCount] = React.useState(0);
+  const [accountNfts, setAccountNfts] = React.useState<NftType[]>([]);
+  const [accountNftsCount, setAccountNftsCount] = React.useState(0);
 
   const fetchAccountTokens = () => {
     if (tokensActive) {
+      const type = 'MetaESDT';
       Promise.all([
         getAccountTokens({
           size,
           address,
         }),
         getAccountTokensCount(address),
-      ]).then(([accountTokensData, accountTokensCountData]) => {
-        if (ref.current !== null) {
-          if (accountTokensData.success && accountTokensCountData.success) {
-            setAccountTokens(accountTokensData.data);
-            setAccountTokensCount(accountTokensCountData.data);
+        getAccountNfts({
+          size,
+          address,
+          type,
+        }),
+        getAccountNftsCount({ address, type }),
+      ]).then(
+        ([accountTokensData, accountTokensCountData, accountNftsData, accountNftsCountData]) => {
+          if (ref.current !== null) {
+            if (accountTokensData.success && accountTokensCountData.success) {
+              setAccountTokens(accountTokensData.data);
+              setAccountTokensCount(accountTokensCountData.data);
+              setAccountNfts(accountNftsData.data);
+              setAccountNftsCount(accountNftsCountData.data);
+            }
+            setDataReady(
+              accountTokensData.success &&
+                accountTokensCountData.success &&
+                accountNftsData.success &&
+                accountNftsCountData.success
+            );
           }
-          setDataReady(accountTokensData.success && accountTokensCountData.success);
         }
-      });
+      );
     }
   };
 
@@ -54,13 +86,13 @@ const AccountTokens = () => {
       <div className="card-header">
         <div className="card-header-item d-flex justify-content-between align-items-center">
           <AccountTabs />
-          {dataReady === true && accountTokens.length > 0 && (
-            <div className="d-none d-sm-flex">
+          {dataReady === true && (accountTokens.length > 0 || accountNfts.length > 0) && (
+            <div className="d-none d-md-flex">
               <Pager
                 itemsPerPage={25}
                 page={String(size)}
                 total={accountTokensCount}
-                show={accountTokens.length > 0}
+                show={accountTokens.length > 0 || accountNfts.length > 0}
               />
             </div>
           )}
@@ -77,12 +109,30 @@ const AccountTokens = () => {
               dataTestId="errorScreen"
             />
           )}
-          {dataReady === true && accountTokens.length === 0 && (
+          {dataReady === true && (accountTokens.length === 0 || accountNfts.length === 0) && (
             <PageState icon={faCoins} title="No tokens" className="py-spacer my-auto" />
           )}
 
-          {dataReady === true && accountTokens.length > 0 && (
+          {dataReady === true && (accountTokens.length > 0 || accountNfts.length > 0) && (
             <>
+              {accountNfts.map(({ name, identifier, decimals, balance, type, collection }) => {
+                return (
+                  <DetailItem title={name} key={identifier}>
+                    <div className="d-flex align-items-center">
+                      {Number(balance) > 1 ? (
+                        <div className="mr-1">
+                          <Denominate
+                            showLabel={false}
+                            value={balance}
+                            denomination={type === 'MetaESDT' ? decimals : 1}
+                          />
+                        </div>
+                      ) : null}
+                      <NftBlock identifier={identifier} collection={collection} />
+                    </div>
+                  </DetailItem>
+                );
+              })}
               {accountTokens.map(({ identifier, name, balance }) => {
                 return (
                   <DetailItem title={name} key={identifier}>
@@ -99,12 +149,12 @@ const AccountTokens = () => {
         </div>
       </div>
       <div className="card-footer d-flex justify-content-end border-0 pt-0">
-        {dataReady === true && accountTokens.length > 0 && (
+        {dataReady === true && (accountTokens.length > 0 || accountNfts.length > 0) && (
           <Pager
             itemsPerPage={25}
             page={String(size)}
             total={accountTokensCount}
-            show={accountTokens.length > 0}
+            show={accountTokens.length > 0 || accountNfts.length > 0}
           />
         )}
       </div>
