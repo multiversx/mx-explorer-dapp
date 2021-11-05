@@ -1,21 +1,21 @@
 import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { faCode } from '@fortawesome/pro-solid-svg-icons/faCode';
-import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   adapter,
-  DetailItem,
   Loader,
   Pager,
   PageState,
   NetworkLink,
   TimeAgo,
   Trim,
+  ScAddressIcon,
+  ShardSpan,
+  Denominate,
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import AccountTabs from './AccountLayout/AccountTabs';
-import { urlBuilder, useFilters, useNetworkRoute, dateFormatted } from 'helpers';
+import { urlBuilder, useFilters, useNetworkRoute, addressIsBech32 } from 'helpers';
 import { ScResultType } from 'helpers/types';
 
 const AccountScResults = () => {
@@ -70,7 +70,7 @@ const AccountScResults = () => {
               <Pager
                 itemsPerPage={25}
                 page={String(size)}
-                total={accountScResultsCount}
+                total={Math.min(accountScResultsCount, 10000)}
                 show={accountScResults.length > 0}
               />
             )}
@@ -101,33 +101,78 @@ const AccountScResults = () => {
                 <tr>
                   <th scope="col">Txn Hash</th>
                   <th scope="col">Age</th>
+
+                  <th scope="col">From</th>
+                  <th scope="col">To</th>
+                  <th scope="col">Value</th>
                 </tr>
               </thead>
               <tbody>
-                {accountScResults.map((scResult) => (
-                  <tr className="animated-row trim-only-sm">
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <NetworkLink
-                          to={`/transactions/${scResult.originalTxHash}`}
-                          data-testid="transactionLink"
-                          className="trim-wrapper"
-                        >
-                          <Trim text={scResult.originalTxHash} />
-                        </NetworkLink>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
-                        <TimeAgo value={scResult.timestamp} /> ago &nbsp;
-                        <span className="text-secondary">
-                          ({dateFormatted(scResult.timestamp)})
-                        </span>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                {accountScResults.map((scResult) => {
+                  const directionOut = address === scResult.sender;
+                  const directionIn = address === scResult.receiver;
+                  return (
+                    <tr className="animated-row">
+                      <td>
+                        <div className="d-flex align-items-center trim-size-xl">
+                          <NetworkLink
+                            to={`/transactions/${scResult.originalTxHash}`}
+                            data-testid="transactionLink"
+                            className="trim-wrapper"
+                          >
+                            <Trim text={scResult.originalTxHash} />
+                          </NetworkLink>
+                        </div>
+                      </td>
+                      <td>
+                        <TimeAgo value={scResult.timestamp} short tooltip />
+                      </td>
+                      <td>
+                        <div className="d-flex align-items-center">
+                          <ScAddressIcon initiator={scResult.sender} />
+                          {directionOut ? (
+                            <Trim text={scResult.sender} />
+                          ) : (
+                            <>
+                              {addressIsBech32(scResult.sender) ? (
+                                <NetworkLink
+                                  to={urlBuilder.accountDetails(scResult.sender)}
+                                  data-testid="senderLink"
+                                  className="trim-wrapper"
+                                >
+                                  <Trim text={scResult.sender} />
+                                </NetworkLink>
+                              ) : (
+                                <ShardSpan shard={scResult.sender} />
+                              )}
+                            </>
+                          )}
+                        </div>
+                      </td>
+                      <td>
+                        {scResult.receiver && (
+                          <div className="d-flex align-items-center">
+                            <ScAddressIcon initiator={scResult.receiver} />
+                            {directionIn ? (
+                              <Trim text={scResult.receiver} />
+                            ) : (
+                              <NetworkLink
+                                to={urlBuilder.accountDetails(scResult.receiver)}
+                                data-testid="receiverLink"
+                                className="trim-wrapper"
+                              >
+                                <Trim text={scResult.receiver} />
+                              </NetworkLink>
+                            )}
+                          </div>
+                        )}
+                      </td>
+                      <td>
+                        <Denominate value={scResult.value} />
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -138,7 +183,7 @@ const AccountScResults = () => {
           <Pager
             itemsPerPage={25}
             page={String(size)}
-            total={accountScResultsCount}
+            total={Math.min(accountScResultsCount, 10000)}
             show={accountScResults.length > 0}
           />
         )}
