@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons/faSpinnerThird';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { types, urlBuilder } from 'helpers';
 import { adapter, NetworkLink, Denominate } from 'sharedComponents';
 
@@ -56,16 +54,7 @@ const NftBlock = (props: NftBlockType) => {
         className={`d-flex ${nftDetails?.assets?.svgUrl ? 'token-link' : ''}`}
       >
         <div className="d-flex align-items-center symbol">
-          {dataReady === undefined && (
-            <>
-              <span className="mr-2">{props.identifier}</span>
-              <FontAwesomeIcon
-                icon={faSpinnerThird}
-                size="xs"
-                className="text-primary fa-spin fast-spin"
-              />
-            </>
-          )}
+          {dataReady === undefined && <span>{props.identifier}</span>}
           {dataReady === false && <span className="text-truncate">{props.identifier}</span>}
           {dataReady === true && nftDetails && (
             <>

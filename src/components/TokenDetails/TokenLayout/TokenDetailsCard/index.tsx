@@ -1,5 +1,4 @@
 import * as React from 'react';
-import BigNumber from 'bignumber.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import { faCheck } from '@fortawesome/pro-light-svg-icons/faCheck';
@@ -37,8 +36,6 @@ const TokenDetailsCard = () => {
     name,
     decimals,
     owner,
-    minted,
-    burnt,
     canBurn,
     canChangeOwner,
     canFreeze,
@@ -48,6 +45,7 @@ const TokenDetailsCard = () => {
     canWipe,
     isPaused,
     assets,
+    supply,
   } = tokenDetails;
 
   return identifier !== '' ? (
@@ -73,32 +71,7 @@ const TokenDetailsCard = () => {
                 <SmallDetailItem title="Token">{identifier}</SmallDetailItem>
 
                 <SmallDetailItem title="Supply">
-                  <div className="d-flex flex-row flex-wrap">
-                    <span className="mr-1">
-                      <Denominate
-                        value={new BigNumber(minted).minus(new BigNumber(burnt)).toString(10)}
-                        showLastNonZeroDecimal={true}
-                        showLabel={false}
-                        denomination={decimals}
-                      />
-                    </span>
-                    <div className="d-inline-flex text-secondary">
-                      (
-                      <Denominate
-                        value={minted}
-                        showLastNonZeroDecimal={true}
-                        showLabel={false}
-                        denomination={decimals}
-                      />
-                      <span className="mx-1">minted - </span>
-                      <Denominate
-                        value={burnt}
-                        showLastNonZeroDecimal={true}
-                        showLabel={false}
-                      />{' '}
-                      <span className="ml-1">burnt</span>)
-                    </div>
-                  </div>
+                  <Denominate value={supply} showLastNonZeroDecimal={true} showLabel={false} />
                 </SmallDetailItem>
 
                 <SmallDetailItem title="Properties">
