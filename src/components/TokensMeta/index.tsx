@@ -8,14 +8,16 @@ import {
   CollectionBlock,
   NftBadge,
 } from 'sharedComponents';
-import NoNfts from './NoNfts';
-import FailedNfts from './FailedNfts';
-import { urlBuilder, useFilters, useURLSearchParams, types } from 'helpers';
+import NoTokens from './NoTokens';
+import FailedTokens from './FailedTokens';
+import { urlBuilder, useFilters, useURLSearchParams, types, useActiveRoute } from 'helpers';
 import Filters from './Filters';
 import { useLocation } from 'react-router-dom';
+import { tokensRoutes } from 'routes';
 
-const Nfts = () => {
+const TokensMeta = () => {
   const ref = React.useRef(null);
+  const activeRoute = useActiveRoute();
   const { page } = useURLSearchParams();
   const { search } = useLocation();
   const { getQueryObject, size } = useFilters();
@@ -27,7 +29,7 @@ const Nfts = () => {
 
   const fetchNfts = () => {
     const queryObject = getQueryObject();
-    const type = 'SemiFungibleESDT,NonFungibleESDT';
+    const type = 'MetaESDT';
 
     Promise.all([
       getNfts({ ...queryObject, size, type }),
@@ -48,7 +50,7 @@ const Nfts = () => {
   return (
     <>
       {dataReady === undefined && <Loader />}
-      {dataReady === false && <FailedNfts />}
+      {dataReady === false && <FailedTokens />}
 
       <div ref={ref}>
         {dataReady === true && (
@@ -57,8 +59,33 @@ const Nfts = () => {
               <div className="col-12">
                 <div className="card">
                   <div className="card-header">
+                    <div className="card-header-item d-flex align-items-center justify-content-between">
+                      <h6 data-testid="title">Meta</h6>
+                    </div>
                     <div className="card-header-item d-flex justify-content-between align-items-center">
-                      <Filters />
+                      <div className="nodes-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
+                        <ul className="list-inline m-0">
+                          <li className="list-inline-item my-1 my-md-0">
+                            <NetworkLink
+                              to={tokensRoutes.tokens}
+                              className={`btn btn-sm btn-outline-light btn-pill mr-2 ${
+                                activeRoute(tokensRoutes.tokens) ? 'active' : ''
+                              }`}
+                            >
+                              Tokens
+                            </NetworkLink>
+                            <NetworkLink
+                              to={tokensRoutes.tokensMeta}
+                              className={`btn btn-sm btn-outline-light btn-pill mr-2 ${
+                                activeRoute(tokensRoutes.tokensMeta) ? 'active' : ''
+                              }`}
+                            >
+                              Meta
+                            </NetworkLink>
+                          </li>
+                        </ul>
+                        <Filters />
+                      </div>
                       {nfts && nfts.length > 0 && (
                         <div className="d-none d-sm-flex">
                           <Pager
@@ -80,9 +107,9 @@ const Nfts = () => {
                             <thead>
                               <tr>
                                 <th>Name</th>
-                                <th>Identifier</th>
-                                <th>Collection</th>
-                                <th>Creator Account</th>
+                                <th>Token</th>
+
+                                <th>Owner Account</th>
                               </tr>
                             </thead>
                             <tbody data-testid="nftsTable">
@@ -98,13 +125,9 @@ const Nfts = () => {
                                           <div>{nft.name}</div>
                                         </div>
                                       </NetworkLink>
-                                      <NftBadge type={nft.type} className="ml-2" />
                                     </div>
                                   </td>
                                   <td>{nft.identifier}</td>
-                                  <td>
-                                    <CollectionBlock identifier={nft.collection} />
-                                  </td>
                                   <td>
                                     <div className="d-flex trim-size-xl">
                                       <NetworkLink
@@ -132,7 +155,7 @@ const Nfts = () => {
                       </div>
                     </>
                   ) : (
-                    <NoNfts />
+                    <NoTokens />
                   )}
                 </div>
               </div>
@@ -144,4 +167,4 @@ const Nfts = () => {
   );
 };
 
-export default Nfts;
+export default TokensMeta;

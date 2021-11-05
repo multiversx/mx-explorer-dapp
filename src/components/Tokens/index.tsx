@@ -2,12 +2,14 @@ import * as React from 'react';
 import { Loader, adapter, NetworkLink, Trim, Pager } from 'sharedComponents';
 import NoTokens from './NoTokens';
 import FailedTokens from './FailedTokens';
-import { urlBuilder, useFilters, useURLSearchParams, types } from 'helpers';
+import { urlBuilder, useFilters, useURLSearchParams, types, useActiveRoute } from 'helpers';
 import Filters from './Filters';
 import { useLocation } from 'react-router-dom';
+import { tokensRoutes } from 'routes';
 
 const Tokens = () => {
   const ref = React.useRef(null);
+  const activeRoute = useActiveRoute();
   const { page } = useURLSearchParams();
   const { search } = useLocation();
   const { getQueryObject, size } = useFilters();
@@ -47,8 +49,33 @@ const Tokens = () => {
               <div className="col-12">
                 <div className="card">
                   <div className="card-header">
+                    <div className="card-header-item d-flex align-items-center justify-content-between">
+                      <h6 data-testid="title">Tokens</h6>
+                    </div>
                     <div className="card-header-item d-flex justify-content-between align-items-center">
-                      <Filters />
+                      <div className="nodes-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
+                        <ul className="list-inline m-0">
+                          <li className="list-inline-item my-1 my-md-0">
+                            <NetworkLink
+                              to={tokensRoutes.tokens}
+                              className={`btn btn-sm btn-outline-light btn-pill mr-2 ${
+                                activeRoute(tokensRoutes.tokens) ? 'active' : ''
+                              }`}
+                            >
+                              Tokens
+                            </NetworkLink>
+                            <NetworkLink
+                              to={tokensRoutes.tokensMeta}
+                              className={`btn btn-sm btn-outline-light btn-pill mr-2 ${
+                                activeRoute(tokensRoutes.tokensMeta) ? 'active' : ''
+                              }`}
+                            >
+                              Meta
+                            </NetworkLink>
+                          </li>
+                        </ul>
+                        <Filters />
+                      </div>
                       {tokens && tokens.length > 0 && (
                         <div className="d-none d-sm-flex">
                           <Pager
