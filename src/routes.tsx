@@ -14,6 +14,7 @@ import Identities from './components/Identities';
 import IdentityDetails from './components/IdentityDetails';
 import NodeDetails from './components/NodeDetails';
 import Tokens from './components/Tokens';
+import TokensMeta from './components/TokensMeta';
 import TokenDetails from './components/TokenDetails';
 import TokenAccounts from './components/TokenDetails/TokenAccounts';
 import Collections from './components/Collections';
@@ -80,6 +81,7 @@ export const validatorsRoutes = {
 
 export const tokensRoutes = {
   tokens: '/tokens',
+  tokensMeta: '/meta-tokens',
   tokenDetails: '/tokens/:hash',
   tokenDetailsAccounts: '/tokens/:hash/accounts',
 };
@@ -204,6 +206,11 @@ const routes: RouteType[] = [
     path: tokensRoutes.tokens,
     title: 'Tokens',
     component: Tokens,
+  },
+  {
+    path: tokensRoutes.tokensMeta,
+    title: 'Meta Tokens',
+    component: TokensMeta,
   },
   {
     path: tokensRoutes.tokenDetails,
