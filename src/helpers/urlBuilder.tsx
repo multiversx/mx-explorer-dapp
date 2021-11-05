@@ -10,6 +10,7 @@ const urlBuilder = {
   accountDetailsContractCode: (address: string) => `/accounts/${address}/code`,
   accountDetailsTokens: (address: string) => `/accounts/${address}/tokens`,
   accountDetailsNfts: (address: string) => `/accounts/${address}/nfts`,
+  accountDetailsScResults: (address: string) => `/accounts/${address}/sc-results`,
   identityDetails: (id: string) => `/identities/${id}`,
   tokenDetails: (tokenId: string) => `/tokens/${tokenId}`,
   tokenDetailsAccounts: (tokenId: string) => `/tokens/${tokenId}/accounts`,
