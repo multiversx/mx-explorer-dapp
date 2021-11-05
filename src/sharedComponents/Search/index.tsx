@@ -72,16 +72,6 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
           });
           break;
 
-        case isPubKeyAccount:
-          getAccount(bech32.encode(hash)).then((account) => {
-            const newRoute = account.success
-              ? networkRoute(urlBuilder.accountDetails(bech32.encode(hash)))
-              : '';
-            setRoute(newRoute);
-            setSearching(false);
-          });
-          break;
-
         case isValidHash:
           Promise.all([getBlock(hash), getTransaction(hash), getMiniBlock(hash)]).then(
             ([block, transaction, miniblock]) => {
@@ -102,6 +92,14 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
               }
             }
           );
+          if (isPubKeyAccount) {
+            getAccount(bech32.encode(hash)).then((account) => {
+              const newRoute = account.success
+                ? networkRoute(urlBuilder.accountDetails(bech32.encode(hash)))
+                : '';
+              setRoute(newRoute);
+            });
+          }
           break;
 
         default:
