@@ -4,7 +4,7 @@ import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExcl
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal } from 'react-bootstrap';
 import { DetailItem } from 'sharedComponents';
-import useScamDetect from './helpres/useScamDetect';
+import useScamFlag from './helpres/useScamFlag';
 import { truncate } from 'helpers';
 import { displayedDataLength } from 'appConfig';
 
@@ -65,8 +65,17 @@ const ModalLink = (props: LinkComponentProps) => {
   );
 };
 
-const DataField = ({ data }: { data?: string }) => {
-  const scamDetect = useScamDetect();
+const DataField = ({
+  data,
+  scamInfo,
+}: {
+  data?: string;
+  scamInfo?: {
+    type: string;
+    info: string;
+  };
+}) => {
+  const scamFlag = useScamFlag();
   const [showData, setShowData] = React.useState(false);
 
   const show = (e: React.MouseEvent) => {
@@ -75,7 +84,7 @@ const DataField = ({ data }: { data?: string }) => {
   };
 
   const dataString = data ? Buffer.from(data, 'base64').toString() : 'N/A';
-  const { stringWithLinks, output, found } = scamDetect(dataString);
+  const { stringWithLinks, output, found } = scamFlag(dataString, scamInfo);
 
   return (
     <DetailItem title="Input Data" className="data-field">

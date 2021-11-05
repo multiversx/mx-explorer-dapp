@@ -53,6 +53,10 @@ export interface TransactionType {
     address: string;
     events: EventType[];
   };
+  scamInfo?: {
+    type: string;
+    info: string;
+  };
 }
 
 const getFee = (transaction: TransactionType) => {
@@ -356,7 +360,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
 
                 <DetailItem title="Nonce">{transaction.nonce}</DetailItem>
 
-                <DataField data={transaction.data} />
+                <DataField data={transaction.data} scamInfo={transaction.scamInfo} />
 
                 {transaction.results && transaction.results?.length > 0 && (
                   <DetailItem title="Smart&nbsp;Contract Results">
