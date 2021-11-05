@@ -54,6 +54,16 @@ const AccountTokens = () => {
       <div className="card-header">
         <div className="card-header-item d-flex justify-content-between align-items-center">
           <AccountTabs />
+          {dataReady === true && accountTokens.length > 0 && (
+            <div className="d-none d-sm-flex">
+              <Pager
+                itemsPerPage={25}
+                page={String(size)}
+                total={accountTokensCount}
+                show={accountTokens.length > 0}
+              />
+            </div>
+          )}
         </div>
       </div>
       <div className="card-body pt-0 px-lg-spacer py-lg-4">
@@ -84,17 +94,19 @@ const AccountTokens = () => {
                   </DetailItem>
                 );
               })}
-              <div className="card-footer d-flex justify-content-end border-0">
-                <Pager
-                  itemsPerPage={25}
-                  page={String(size)}
-                  total={accountTokensCount}
-                  show={accountTokens.length > 0}
-                />
-              </div>
             </>
           )}
         </div>
+      </div>
+      <div className="card-footer d-flex justify-content-end border-0 pt-0">
+        {dataReady === true && accountTokens.length > 0 && (
+          <Pager
+            itemsPerPage={25}
+            page={String(size)}
+            total={accountTokensCount}
+            show={accountTokens.length > 0}
+          />
+        )}
       </div>
     </div>
   );

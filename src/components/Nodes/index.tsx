@@ -40,8 +40,13 @@ const Nodes = () => {
       <div className="card-header position-unset">
         <NodesTabs />
 
-        <div className="card-header-item">
+        <div className="card-header-item d-flex justify-content-between align-items-center">
           <NodesFilters baseRoute={validatorsRoutes.nodes} />
+          {dataReady === true && (
+            <div className="d-none d-lg-flex">
+              <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+            </div>
+          )}
         </div>
       </div>
 

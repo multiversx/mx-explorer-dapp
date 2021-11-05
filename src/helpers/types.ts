@@ -21,6 +21,7 @@ export interface TokenType {
   owner: string;
   minted: string;
   burnt: string;
+  supply: string;
   canBurn: boolean;
   canChangeOwner: boolean;
   canFreeze: boolean;
@@ -92,6 +93,22 @@ export interface NftType {
     fileUri?: string;
     fileName?: string;
   };
+}
+
+export interface ScResultType {
+  callType: string;
+  gasLimit: number;
+  gasPrice: number;
+  nonce: number;
+  prevTxHash: string;
+  hash: string;
+  originalTxHash: string;
+  receiver?: string;
+  sender: string;
+  timestamp: number;
+  value: string;
+  data?: string;
+  returnMessage?: string;
 }
 
 export interface ProviderType {

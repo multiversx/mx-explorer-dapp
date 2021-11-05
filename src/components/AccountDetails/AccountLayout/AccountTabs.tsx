@@ -18,6 +18,13 @@ const AccountTabs = () => {
         <h6>Transactions</h6>
       </NetworkLink>
 
+      <NetworkLink
+        to={urlBuilder.accountDetailsScResults(accountDetails.address)}
+        className={`tab-link mr-3 ${activeRoute(accountsRoutes.accountScResults) ? 'active' : ''}`}
+      >
+        <h6>Sc Results</h6>
+      </NetworkLink>
+
       {tokensRouteActive && (
         <NetworkLink
           to={urlBuilder.accountDetailsTokens(accountDetails.address)}

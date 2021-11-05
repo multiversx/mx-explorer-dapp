@@ -15,12 +15,14 @@ const Pager = ({
   page,
   itemsPerPage,
   className = '',
+  hasTestId = true,
 }: {
   page: string;
   total: number | '...';
   itemsPerPage: number;
   show: boolean;
   className?: string;
+  hasTestId?: boolean;
 }) => {
   const { activeNetworkId } = useGlobalState();
 
@@ -76,7 +78,7 @@ const Pager = ({
           ) : (
             <NetworkLink
               className="btn btn-primary-light"
-              data-testid="nextPageButton"
+              {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
               to={`${pathname}?${firstUrlParams}`}
             >
               <FontAwesomeIcon icon={faBackward} />
@@ -84,14 +86,17 @@ const Pager = ({
           )}
 
           {size === 1 ? (
-            <div className="btn btn-primary-light" data-testid="disabledPreviousPageButton">
+            <div
+              className="btn btn-primary-light"
+              {...(hasTestId ? { 'data-testid': 'disabledPreviousPageButton' } : {})}
+            >
               <FontAwesomeIcon icon={faCaretLeft} size="lg" />
             </div>
           ) : (
             <NetworkLink
               className="btn btn-primary-light"
               to={prevPageUrl}
-              data-testid="previousPageButton"
+              {...(hasTestId ? { 'data-testid': 'previousPageButton' } : {})}
             >
               <FontAwesomeIcon icon={faCaretLeft} size="lg" />
             </NetworkLink>
@@ -100,9 +105,9 @@ const Pager = ({
 
         <div className="d-flex align-items-center current-page border px-2">
           <span>
-            <span data-testid="pageInterval">{startEnd}</span>
+            <span {...(hasTestId ? { 'data-testid': 'pageInterval' } : {})}>{startEnd}</span>
             &nbsp;/&nbsp;
-            <span data-testid="totalPages">
+            <span {...(hasTestId ? { 'data-testid': 'totalPages' } : {})}>
               {!isNaN(lastPage) ? lastPage.toLocaleString('en') : 1}
             </span>
           </span>
@@ -112,13 +117,16 @@ const Pager = ({
           {total === '...' || end < total ? (
             <NetworkLink
               className="btn btn-primary-light"
-              data-testid="nextPageButton"
+              {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
               to={`${pathname}?${nextUrlParams}`}
             >
               <FontAwesomeIcon icon={faCaretRight} size="lg" />
             </NetworkLink>
           ) : (
-            <div className="btn btn-primary-light" data-testid="disabledNextPageButton">
+            <div
+              className="btn btn-primary-light"
+              {...(hasTestId ? { 'data-testid': 'disabledNextPageButton' } : {})}
+            >
               <FontAwesomeIcon icon={faCaretRight} size="lg" />
             </div>
           )}
@@ -126,7 +134,7 @@ const Pager = ({
           {!isNaN(lastPage) && end < total ? (
             <NetworkLink
               className="btn btn-primary-light"
-              data-testid="nextPageButton"
+              {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
               to={`${pathname}?${lastUrlParams}`}
             >
               <FontAwesomeIcon icon={faForward} />

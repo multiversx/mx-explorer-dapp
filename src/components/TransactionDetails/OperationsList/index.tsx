@@ -62,11 +62,23 @@ const OperationText = ({ operation }: { operation: OperationType }) => {
   switch (operation.action) {
     case 'create':
     case 'localMint':
+    case 'ESDTLocalMint':
       return <OperationReceiver operation={operation} action="Mint" />;
     case 'burn':
     case 'localBurn':
     case 'ESDTLocalBurn':
       return <OperationSender operation={operation} action="Burn" />;
+    case 'addQuantity':
+      return <OperationReceiver operation={operation} action="Add quantity" />;
+    case 'wipe':
+      return <OperationSender operation={operation} action="Wipe" />;
+    case 'multiTransfer':
+      return (
+        <>
+          <OperationSender operation={operation} action="Multi transfer" />{' '}
+          <OperationReceiver operation={operation} />
+        </>
+      );
     default:
       return (
         <>

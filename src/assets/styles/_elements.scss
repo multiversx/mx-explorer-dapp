@@ -1,4 +1,7 @@
 .form-control {
+  &:focus-visible {
+    text-shadow: none;
+  }
   &.is-invalid {
     background-image: none;
     padding-right: 0.75rem;

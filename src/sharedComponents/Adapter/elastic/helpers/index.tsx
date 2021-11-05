@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ProviderType, ProviderPropsType } from '../../helpers';
 import getNodes from './getNodes';
-import * as bech32 from './bech32';
+import { bech32 } from 'helpers';
 import computeShard from './computeShard';
 
 const createMustQuery = (value: any, boolQuery: any) => {
