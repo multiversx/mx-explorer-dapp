@@ -346,10 +346,10 @@ export default function useAdapter() {
         params: getTokensParam(props),
       }),
 
-    getNftsCount: ({ search }: GetTokensType) =>
+    getNftsCount: (props: GetTokensType) =>
       provider({
         url: `/nfts/count`,
-        params: getTokensParam({ search }),
+        params: getTokensParam(props),
       }),
 
     getNft: (identifier: string) => provider({ url: `/nfts/${identifier}` }),
