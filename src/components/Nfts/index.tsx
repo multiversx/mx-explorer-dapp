@@ -27,18 +27,20 @@ const Nfts = () => {
 
   const fetchNfts = () => {
     const queryObject = getQueryObject();
+    const type = 'SemiFungibleESDT,NonFungibleESDT';
 
-    Promise.all([getNfts({ ...queryObject, size }), getNftsCount(queryObject)]).then(
-      ([nftsData, count]) => {
-        if (ref.current !== null) {
-          if (nftsData.success) {
-            setNfts(nftsData.data);
-            setTotalNfts(Math.min(count.data, 10000));
-          }
-          setDataReady(nftsData.success && count.success);
+    Promise.all([
+      getNfts({ ...queryObject, size, type }),
+      getNftsCount({ ...queryObject, type }),
+    ]).then(([nftsData, count]) => {
+      if (ref.current !== null) {
+        if (nftsData.success) {
+          setNfts(nftsData.data);
+          setTotalNfts(Math.min(count.data, 10000));
         }
+        setDataReady(nftsData.success && count.success);
       }
-    );
+    });
   };
 
   React.useEffect(fetchNfts, [search]);
