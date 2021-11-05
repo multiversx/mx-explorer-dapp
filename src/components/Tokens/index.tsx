@@ -47,8 +47,20 @@ const Tokens = () => {
               <div className="col-12">
                 <div className="card">
                   <div className="card-header">
-                    <div className="card-header-item">
+                    <div className="card-header-item d-flex justify-content-between align-items-center">
                       <Filters />
+                      {tokens && tokens.length > 0 && (
+                        <div className="d-none d-sm-flex">
+                          <Pager
+                            page={String(page)}
+                            total={
+                              totalTokens !== '...' ? Math.min(totalTokens, 10000) : totalTokens
+                            }
+                            itemsPerPage={25}
+                            show={totalTokens > 25}
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
 

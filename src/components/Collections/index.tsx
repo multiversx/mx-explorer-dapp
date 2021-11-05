@@ -47,8 +47,22 @@ const Collections = () => {
               <div className="col-12">
                 <div className="card">
                   <div className="card-header">
-                    <div className="card-header-item">
+                    <div className="card-header-item d-flex justify-content-between align-items-center">
                       <Filters />
+                      <div className="d-none d-sm-flex">
+                        {collections && collections.length > 0 && (
+                          <Pager
+                            page={String(page)}
+                            total={
+                              totalCollections !== '...'
+                                ? Math.min(totalCollections, 10000)
+                                : totalCollections
+                            }
+                            itemsPerPage={25}
+                            show={totalCollections > 25}
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
 
