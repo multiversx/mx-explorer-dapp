@@ -1,5 +1,13 @@
 import * as React from 'react';
-import { Loader, adapter, NetworkLink, Trim, Pager } from 'sharedComponents';
+import {
+  Loader,
+  adapter,
+  NetworkLink,
+  Trim,
+  Pager,
+  CollectionBlock,
+  NftBadge,
+} from 'sharedComponents';
 import NoTokens from './NoTokens';
 import FailedTokens from './FailedTokens';
 import { urlBuilder, useFilters, useURLSearchParams, types, useActiveRoute } from 'helpers';
@@ -7,35 +15,37 @@ import Filters from './Filters';
 import { useLocation } from 'react-router-dom';
 import { tokensRoutes } from 'routes';
 
-const Tokens = () => {
+const TokensMeta = () => {
   const ref = React.useRef(null);
   const activeRoute = useActiveRoute();
   const { page } = useURLSearchParams();
   const { search } = useLocation();
   const { getQueryObject, size } = useFilters();
-  const { getTokens, getTokensCount } = adapter();
+  const { getNfts, getNftsCount } = adapter();
 
-  const [tokens, setTokens] = React.useState<types.TokenType[]>([]);
+  const [nfts, setNfts] = React.useState<types.NftType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [totalTokens, setTotalTokens] = React.useState<number | '...'>('...');
+  const [totalNfts, setTotalNfts] = React.useState<number | '...'>('...');
 
-  const fetchTokens = () => {
+  const fetchNfts = () => {
     const queryObject = getQueryObject();
+    const type = 'MetaESDT';
 
-    Promise.all([getTokens({ ...queryObject, size }), getTokensCount(queryObject)]).then(
-      ([tokensData, count]) => {
-        if (ref.current !== null) {
-          if (tokensData.success) {
-            setTokens(tokensData.data);
-            setTotalTokens(Math.min(count.data, 10000));
-          }
-          setDataReady(tokensData.success && count.success);
+    Promise.all([
+      getNfts({ ...queryObject, size, type }),
+      getNftsCount({ ...queryObject, type }),
+    ]).then(([nftsData, count]) => {
+      if (ref.current !== null) {
+        if (nftsData.success) {
+          setNfts(nftsData.data);
+          setTotalNfts(Math.min(count.data, 10000));
         }
+        setDataReady(nftsData.success && count.success);
       }
-    );
+    });
   };
 
-  React.useEffect(fetchTokens, [search]);
+  React.useEffect(fetchNfts, [search]);
 
   return (
     <>
@@ -50,7 +60,7 @@ const Tokens = () => {
                 <div className="card">
                   <div className="card-header">
                     <div className="card-header-item d-flex align-items-center justify-content-between">
-                      <h6 data-testid="title">Tokens</h6>
+                      <h6 data-testid="title">Meta</h6>
                     </div>
                     <div className="card-header-item d-flex justify-content-between align-items-center">
                       <div className="nodes-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
@@ -76,22 +86,20 @@ const Tokens = () => {
                         </ul>
                         <Filters />
                       </div>
-                      {tokens && tokens.length > 0 && (
+                      {nfts && nfts.length > 0 && (
                         <div className="d-none d-sm-flex">
                           <Pager
                             page={String(page)}
-                            total={
-                              totalTokens !== '...' ? Math.min(totalTokens, 10000) : totalTokens
-                            }
+                            total={totalNfts !== '...' ? Math.min(totalNfts, 10000) : totalNfts}
                             itemsPerPage={25}
-                            show={tokens.length > 0}
+                            show={nfts.length > 0}
                           />
                         </div>
                       )}
                     </div>
                   </div>
 
-                  {tokens && tokens.length > 0 ? (
+                  {nfts && nfts.length > 0 ? (
                     <>
                       <div className="card-body border-0 p-0">
                         <div className="table-wrapper">
@@ -100,42 +108,33 @@ const Tokens = () => {
                               <tr>
                                 <th>Name</th>
                                 <th>Token</th>
+
                                 <th>Owner Account</th>
                               </tr>
                             </thead>
-                            <tbody data-testid="tokensTable">
-                              {tokens.map((token, i) => (
-                                <tr key={token.identifier}>
+                            <tbody data-testid="nftsTable">
+                              {nfts.map((nft, i) => (
+                                <tr key={`${nft.name}-${nft.identifier}`}>
                                   <td>
                                     <div className="d-flex align-items-center">
                                       <NetworkLink
-                                        to={urlBuilder.tokenDetails(token.identifier)}
-                                        data-testid={`tokensLink${i}`}
-                                        className={`d-flex ${
-                                          token.assets?.svgUrl ? 'token-link' : ''
-                                        }`}
+                                        to={urlBuilder.nftDetails(nft.identifier)}
+                                        data-testid={`nftsLink${i}`}
                                       >
                                         <div className="d-flex align-items-center">
-                                          {token.assets && token.assets.svgUrl && (
-                                            <img
-                                              src={token.assets.svgUrl}
-                                              alt={token.name}
-                                              className="token-icon mr-1"
-                                            />
-                                          )}
-                                          <div>{token.name}</div>
+                                          <div>{nft.name}</div>
                                         </div>
                                       </NetworkLink>
                                     </div>
                                   </td>
-                                  <td>{token.identifier}</td>
+                                  <td>{nft.identifier}</td>
                                   <td>
                                     <div className="d-flex trim-size-xl">
                                       <NetworkLink
-                                        to={urlBuilder.accountDetails(token.owner)}
+                                        to={urlBuilder.accountDetails(nft.creator)}
                                         className="trim-wrapper"
                                       >
-                                        <Trim text={token.owner} dataTestId={`accountLink${i}`} />
+                                        <Trim text={nft.creator} dataTestId={`accountLink${i}`} />
                                       </NetworkLink>
                                     </div>
                                   </td>
@@ -149,9 +148,9 @@ const Tokens = () => {
                       <div className="card-footer d-flex justify-content-end">
                         <Pager
                           page={String(page)}
-                          total={totalTokens !== '...' ? Math.min(totalTokens, 10000) : totalTokens}
+                          total={totalNfts !== '...' ? Math.min(totalNfts, 10000) : totalNfts}
                           itemsPerPage={25}
-                          show={tokens.length > 0}
+                          show={nfts.length > 0}
                         />
                       </div>
                     </>
@@ -168,4 +167,4 @@ const Tokens = () => {
   );
 };
 
-export default Tokens;
+export default TokensMeta;

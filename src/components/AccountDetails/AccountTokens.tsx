@@ -55,7 +55,7 @@ const AccountTokens = () => {
         <div className="card-header-item d-flex justify-content-between align-items-center">
           <AccountTabs />
           {dataReady === true && accountTokens.length > 0 && (
-            <div className="d-none d-sm-flex">
+            <div className="d-none d-md-flex">
               <Pager
                 itemsPerPage={25}
                 page={String(size)}
