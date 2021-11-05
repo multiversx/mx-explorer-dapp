@@ -86,13 +86,13 @@ const AccountTokens = () => {
       <div className="card-header">
         <div className="card-header-item d-flex justify-content-between align-items-center">
           <AccountTabs />
-          {dataReady === true && accountTokens.length > 0 && (
+          {dataReady === true && (accountTokens.length > 0 || accountNfts.length > 0) && (
             <div className="d-none d-md-flex">
               <Pager
                 itemsPerPage={25}
                 page={String(size)}
                 total={accountTokensCount}
-                show={accountTokens.length > 0}
+                show={accountTokens.length > 0 || accountNfts.length > 0}
               />
             </div>
           )}
@@ -109,11 +109,11 @@ const AccountTokens = () => {
               dataTestId="errorScreen"
             />
           )}
-          {dataReady === true && accountTokens.length === 0 && (
+          {dataReady === true && (accountTokens.length === 0 || accountNfts.length === 0) && (
             <PageState icon={faCoins} title="No tokens" className="py-spacer my-auto" />
           )}
 
-          {dataReady === true && accountTokens.length > 0 && (
+          {dataReady === true && (accountTokens.length > 0 || accountNfts.length > 0) && (
             <>
               {accountNfts.map(({ name, identifier, decimals, balance, type, collection }) => {
                 return (
@@ -149,12 +149,12 @@ const AccountTokens = () => {
         </div>
       </div>
       <div className="card-footer d-flex justify-content-end border-0 pt-0">
-        {dataReady === true && accountTokens.length > 0 && (
+        {dataReady === true && (accountTokens.length > 0 || accountNfts.length > 0) && (
           <Pager
             itemsPerPage={25}
             page={String(size)}
             total={accountTokensCount}
-            show={accountTokens.length > 0}
+            show={accountTokens.length > 0 || accountNfts.length > 0}
           />
         )}
       </div>
