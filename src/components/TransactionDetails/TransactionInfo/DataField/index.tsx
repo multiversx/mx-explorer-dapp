@@ -54,7 +54,7 @@ const ModalLink = (props: LinkComponentProps) => {
               <a href="/#" className="btn btn-primary px-spacer" onClick={handleClose}>
                 Back to safety
               </a>
-              <a href={props.href} target={`_blank`} className="mt-3">
+              <a href={props.href} target={`_blank`} className="mt-3" rel="noreferrer noopener">
                 Continue to {link}
               </a>
             </div>
