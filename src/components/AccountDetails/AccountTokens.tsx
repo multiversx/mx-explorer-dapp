@@ -109,7 +109,7 @@ const AccountTokens = () => {
               dataTestId="errorScreen"
             />
           )}
-          {dataReady === true && (accountTokens.length === 0 || accountNfts.length === 0) && (
+          {dataReady === true && accountTokens.length === 0 && accountNfts.length === 0 && (
             <PageState icon={faCoins} title="No tokens" className="py-spacer my-auto" />
           )}
 
