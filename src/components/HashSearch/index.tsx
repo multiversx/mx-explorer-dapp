@@ -32,7 +32,10 @@ const HashSearch = () => {
         query.split('-')[1].length === 6 &&
         validqueryChars.test(query.split('-')[1]) === true;
 
-      const isPubKeyAccount = query.length < 65 && addressIsBech32(bech32.encode(query));
+      let isPubKeyAccount = false;
+      try {
+        isPubKeyAccount = query.length < 65 && addressIsBech32(bech32.encode(query));
+      } catch {}
 
       switch (true) {
         case isAccount:
