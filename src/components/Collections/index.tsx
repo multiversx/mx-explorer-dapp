@@ -59,7 +59,7 @@ const Collections = () => {
                                 : totalCollections
                             }
                             itemsPerPage={25}
-                            show={totalCollections > 25}
+                            show={collections.length > 0}
                           />
                         )}
                       </div>

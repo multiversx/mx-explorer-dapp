@@ -90,7 +90,7 @@ const Blocks = () => {
                                 totalBlocks !== '...' ? Math.min(totalBlocks, 10000) : totalBlocks
                               }
                               itemsPerPage={25}
-                              show={totalBlocks > 25}
+                              show={state.blocks.length > 0}
                             />
                           </div>
                         </div>

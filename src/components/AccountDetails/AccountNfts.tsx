@@ -70,7 +70,7 @@ const AccountNfts = () => {
                 itemsPerPage={25}
                 page={String(size)}
                 total={accountNftsCount}
-                show={accountNfts.length > 25}
+                show={accountNfts.length > 0}
               />
             )}
           </div>

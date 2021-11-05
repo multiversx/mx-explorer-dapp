@@ -63,7 +63,7 @@ const Nfts = () => {
                             page={String(page)}
                             total={totalNfts !== '...' ? Math.min(totalNfts, 10000) : totalNfts}
                             itemsPerPage={25}
-                            show={totalNfts > 25}
+                            show={nfts.length > 0}
                           />
                         </div>
                       )}

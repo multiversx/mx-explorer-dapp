@@ -57,7 +57,7 @@ const Tokens = () => {
                               totalTokens !== '...' ? Math.min(totalTokens, 10000) : totalTokens
                             }
                             itemsPerPage={25}
-                            show={totalTokens > 25}
+                            show={tokens.length > 0}
                           />
                         </div>
                       )}

@@ -67,7 +67,7 @@ const TokenAccounts = () => {
                 page={String(page)}
                 total={totalAccounts !== '...' ? Math.min(totalAccounts, 10000) : totalAccounts}
                 itemsPerPage={25}
-                show={totalAccounts > 25}
+                show={accounts.length > 0}
               />
             </div>
           </div>

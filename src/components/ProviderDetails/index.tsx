@@ -44,12 +44,7 @@ const Nodes = () => {
           <ProviderTabs />
           <div className="d-none d-sm-flex">
             {dataReady === true && (
-              <Pager
-                itemsPerPage={25}
-                page={String(size)}
-                total={totalNodes}
-                show={totalNodes > 25}
-              />
+              <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
             )}
           </div>
         </div>

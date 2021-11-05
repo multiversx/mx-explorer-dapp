@@ -60,7 +60,7 @@ const AccountTokens = () => {
                 itemsPerPage={25}
                 page={String(size)}
                 total={accountTokensCount}
-                show={accountTokens.length > 25}
+                show={accountTokens.length > 0}
               />
             </div>
           )}
