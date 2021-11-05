@@ -175,6 +175,18 @@ export default function useAdapter() {
         },
       }),
 
+    getAccountScResults: ({ address, size }: { address: string; size: number }) =>
+      provider({
+        url: `/accounts/${address}/sc-results`,
+        params: {
+          from: (size - 1) * 25,
+          size: 25,
+        },
+      }),
+
+    getAccountScResultsCount: (address: string) =>
+      provider({ url: `/accounts/${address}/sc-results/count` }),
+
     getAccountDelegation: (address: string) =>
       provider({ url: `/accounts/${address}/delegations`, baseUrl: delegationApi }),
 

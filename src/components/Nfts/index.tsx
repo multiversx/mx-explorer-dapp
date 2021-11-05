@@ -93,7 +93,7 @@ const Nfts = () => {
                                         data-testid={`nftsLink${i}`}
                                       >
                                         <div className="d-flex align-items-center">
-                                          <div>{nft.ticker ? nft.ticker : nft.name}</div>
+                                          <div>{nft.name}</div>
                                         </div>
                                       </NetworkLink>
                                       <NftBadge type={nft.type} className="ml-2" />

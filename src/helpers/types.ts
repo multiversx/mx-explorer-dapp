@@ -95,6 +95,22 @@ export interface NftType {
   };
 }
 
+export interface ScResultType {
+  callType: string;
+  gasLimit: number;
+  gasPrice: number;
+  nonce: number;
+  prevTxHash: string;
+  hash: string;
+  originalTxHash: string;
+  receiver?: string;
+  sender: string;
+  timestamp: number;
+  value: string;
+  data?: string;
+  returnMessage?: string;
+}
+
 export interface ProviderType {
   provider: string;
   apr: string;

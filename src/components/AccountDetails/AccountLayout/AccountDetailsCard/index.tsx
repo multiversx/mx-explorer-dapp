@@ -18,7 +18,7 @@ import { useGlobalState } from 'context';
 import { isContract, urlBuilder, dateFormatted } from 'helpers';
 import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
 
-import LockedAmountCardItem from './LockedAmountCardItem';
+// import LockedAmountCardItem from './LockedAmountCardItem';
 import UsdValue from './UsdValue';
 
 interface Undelegation {
@@ -74,16 +74,16 @@ const AccountDetailsCard = () => {
   } = useGlobalState();
   const {
     getProvider,
-    getAccountDelegationLegacy,
-    getAccountDelegation,
-    getAccountStake,
+    // getAccountDelegationLegacy,
+    // getAccountDelegation,
+    // getAccountStake,
     getAccountTokensCount,
   } = adapter();
   const {
     address,
     balance,
     nonce,
-    txCount,
+    // txCount,
     shard,
     ownerAddress,
     developerReward,
@@ -94,53 +94,53 @@ const AccountDetailsCard = () => {
   const tokensActive = networkAdapter === 'api';
   const cardItemClass = tokensActive ? 'n5' : '';
 
-  const [lockedAmount, setLockedAmount] = React.useState<LockedAmountType>({
-    stakeFetched: undefined,
-    delegationLegacyFetched: undefined,
-    delegationFetched: undefined,
-    stake: undefined,
-    delegationLegacy: undefined,
-    delegation: undefined,
-  });
+  // const [lockedAmount, setLockedAmount] = React.useState<LockedAmountType>({
+  //   stakeFetched: undefined,
+  //   delegationLegacyFetched: undefined,
+  //   delegationFetched: undefined,
+  //   stake: undefined,
+  //   delegationLegacy: undefined,
+  //   delegation: undefined,
+  // });
 
-  const fetchLockedAmountAndPrice = () => {
-    if (!document.hidden) {
-      Promise.all([
-        getAccountDelegation(address),
-        getAccountStake(address),
-        getAccountDelegationLegacy(address),
-      ]).then(([delegationData, stakeData, delegationLegacyData]) => {
-        if (ref.current !== null) {
-          const delegationFetched = delegationData.success ? delegationData.data : {};
-          const stakeFetched = stakeData.success ? stakeData.data : {};
-          const delegationLegacyFetched = delegationLegacyData.success
-            ? delegationLegacyData.data
-            : {};
+  // const fetchLockedAmountAndPrice = () => {
+  //   if (!document.hidden) {
+  //     Promise.all([
+  //       getAccountDelegation(address),
+  //       getAccountStake(address),
+  //       getAccountDelegationLegacy(address),
+  //     ]).then(([delegationData, stakeData, delegationLegacyData]) => {
+  //       if (ref.current !== null) {
+  //         const delegationFetched = delegationData.success ? delegationData.data : {};
+  //         const stakeFetched = stakeData.success ? stakeData.data : {};
+  //         const delegationLegacyFetched = delegationLegacyData.success
+  //           ? delegationLegacyData.data
+  //           : {};
 
-          const delegation = delegationFetched ? delegationData.data : [];
-          const stake = stakeFetched ? stakeData.data : {};
-          const delegationLegacy = delegationLegacyFetched ? delegationLegacyData.data : {};
+  //         const delegation = delegationFetched ? delegationData.data : [];
+  //         const stake = stakeFetched ? stakeData.data : {};
+  //         const delegationLegacy = delegationLegacyFetched ? delegationLegacyData.data : {};
 
-          setLockedAmount({
-            delegation,
-            stake,
-            delegationLegacy,
-            delegationFetched,
-            stakeFetched,
-            delegationLegacyFetched,
-          });
-        }
-      });
-    }
-  };
+  //         setLockedAmount({
+  //           delegation,
+  //           stake,
+  //           delegationLegacy,
+  //           delegationFetched,
+  //           stakeFetched,
+  //           delegationLegacyFetched,
+  //         });
+  //       }
+  //     });
+  //   }
+  // };
 
-  React.useEffect(() => {
-    if (!isContract(address)) {
-      fetchLockedAmountAndPrice();
-    }
+  // React.useEffect(() => {
+  //   if (!isContract(address)) {
+  //     fetchLockedAmountAndPrice();
+  //   }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txCount, id, address]);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [txCount, id, address]);
 
   const [isProvider, setIsProvider] = React.useState(false);
   const fetchProviderDetails = () => {
@@ -319,7 +319,7 @@ const AccountDetailsCard = () => {
                   {accountTokensCount !== undefined ? accountTokensCount : '...'}
                 </CardItem>
               )}
-              <LockedAmountCardItem lockedAmount={lockedAmount} cardItemClass={cardItemClass} />
+              {/* <LockedAmountCardItem lockedAmount={lockedAmount} cardItemClass={cardItemClass} /> */}
             </div>
           </div>
         </div>
