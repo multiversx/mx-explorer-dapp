@@ -109,11 +109,11 @@ const AccountScResults = () => {
                     <td>
                       <div className="d-flex align-items-center">
                         <NetworkLink
-                          to={`/transactions/${scResult.hash}`}
+                          to={`/transactions/${scResult.originalTxHash}`}
                           data-testid="transactionLink"
                           className="trim-wrapper"
                         >
-                          <Trim text={scResult.hash} />
+                          <Trim text={scResult.originalTxHash} />
                         </NetworkLink>
                       </div>
                     </td>
