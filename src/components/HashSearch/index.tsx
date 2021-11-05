@@ -32,7 +32,7 @@ const HashSearch = () => {
         query.split('-')[1].length === 6 &&
         validqueryChars.test(query.split('-')[1]) === true;
 
-      const isPubKeyAccount = addressIsBech32(bech32.encode(query));
+      const isPubKeyAccount = query.length < 65 && addressIsBech32(bech32.encode(query));
 
       switch (true) {
         case isAccount:
@@ -63,6 +63,16 @@ const HashSearch = () => {
           }
           break;
 
+        case isPubKeyAccount:
+          getAccount(bech32.encode(query)).then((account) => {
+            const newRoute = account.success
+              ? networkRoute(urlBuilder.accountDetails(bech32.encode(query)))
+              : '';
+            setRoute(newRoute);
+            setSearching(false);
+          });
+          break;
+
         case isValidquery:
           Promise.all([getBlock(query), getTransaction(query), getMiniBlock(query)]).then(
             ([block, transaction, miniblock]) => {
@@ -83,16 +93,6 @@ const HashSearch = () => {
               setSearching(false);
             }
           );
-          break;
-
-        case isPubKeyAccount:
-          getAccount(bech32.encode(query)).then((account) => {
-            const newRoute = account.success
-              ? networkRoute(urlBuilder.accountDetails(bech32.encode(query)))
-              : '';
-            setRoute(newRoute);
-            setSearching(false);
-          });
           break;
 
         default:

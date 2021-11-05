@@ -39,7 +39,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
         hash.includes('-') &&
         hash.split('-')[1].length === 6 &&
         validHashChars.test(hash.split('-')[1]) === true;
-      const isPubKeyAccount = addressIsBech32(bech32.encode(hash));
+      const isPubKeyAccount = hash.length < 65 && addressIsBech32(bech32.encode(hash));
 
       switch (true) {
         case isAccount:
@@ -72,6 +72,16 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
           });
           break;
 
+        case isPubKeyAccount:
+          getAccount(bech32.encode(hash)).then((account) => {
+            const newRoute = account.success
+              ? networkRoute(urlBuilder.accountDetails(bech32.encode(hash)))
+              : '';
+            setRoute(newRoute);
+            setSearching(false);
+          });
+          break;
+
         case isValidHash:
           Promise.all([getBlock(hash), getTransaction(hash), getMiniBlock(hash)]).then(
             ([block, transaction, miniblock]) => {
@@ -92,16 +102,6 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
               }
             }
           );
-          break;
-
-        case isPubKeyAccount:
-          getAccount(bech32.encode(hash)).then((account) => {
-            const newRoute = account.success
-              ? networkRoute(urlBuilder.accountDetails(bech32.encode(hash)))
-              : '';
-            setRoute(newRoute);
-            setSearching(false);
-          });
           break;
 
         default:

@@ -41,6 +41,7 @@ const TransactionsTable = ({
                     : totalTransactions
                 }
                 show={transactions.length > 0}
+                hasTestId={false}
               />
             </div>
           </div>
