@@ -317,13 +317,14 @@ export default function useAdapter() {
 
     // Nfts
 
-    getAccountNfts: ({ address, size }: { address: string; size: number }) =>
+    getAccountNfts: ({ address, size, type }: { address: string; size: number; type?: string }) =>
       provider({
         url: `/accounts/${address}/nfts`,
-        params: getTokensParam({ size }),
+        params: getTokensParam({ size, type }),
       }),
 
-    getAccountNftsCount: (address: string) => provider({ url: `/accounts/${address}/nfts/count` }),
+    getAccountNftsCount: ({ address, type }: { address: string; type?: string }) =>
+      provider({ url: `/accounts/${address}/nfts/count`, params: getTokensParam({ type }) }),
 
     getCollections: (props: GetTokensType) =>
       provider({
