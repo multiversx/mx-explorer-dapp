@@ -34,12 +34,14 @@ const AccountNfts = () => {
 
   const fetchAccountNfts = () => {
     if (nftsActive) {
+      const type = 'SemiFungibleESDT,NonFungibleESDT';
       Promise.all([
         getAccountNfts({
           size,
           address,
+          type,
         }),
-        getAccountNftsCount(address),
+        getAccountNftsCount({ address, type }),
       ]).then(([accountNftsData, accountNftsCountData]) => {
         if (ref.current !== null) {
           if (accountNftsData.success && accountNftsCountData.success) {
