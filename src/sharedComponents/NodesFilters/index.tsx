@@ -55,12 +55,8 @@ const NodesFilters = ({ baseRoute, onlySearch }: { baseRoute: string; onlySearch
     return `${baseRoute}?${nextUrlParams}`;
   };
 
-  const containerClasses = onlySearch
-    ? 'justify-content-end'
-    : 'align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row';
-
   return (
-    <div className={`nodes-filters d-flex ${containerClasses}`}>
+    <div className="nodes-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
       {!onlySearch && (
         <ul className="list-inline m-0">
           <li className="list-inline-item my-1 my-md-0">
@@ -109,7 +105,7 @@ const NodesFilters = ({ baseRoute, onlySearch }: { baseRoute: string; onlySearch
               <Dropdown.Toggle
                 variant="outline-light"
                 size="sm"
-                className={`btn-pill ${
+                className={`btn-pill mr-2 ${
                   ['eligible', 'waiting', 'new', 'jailed'].includes(status) ? 'active' : ''
                 }`}
                 id="more"

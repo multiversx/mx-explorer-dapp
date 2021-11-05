@@ -74,7 +74,7 @@ const Transactions = () => {
                                   : totalAccounts
                               }
                               itemsPerPage={25}
-                              show={totalAccounts > 25}
+                              show={accounts.length > 0}
                             />
                           </div>
                         </div>

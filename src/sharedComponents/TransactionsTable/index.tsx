@@ -40,7 +40,7 @@ const TransactionsTable = ({
                     ? Math.min(totalTransactions, 10000)
                     : totalTransactions
                 }
-                show={totalTransactions > 25}
+                show={transactions.length > 0}
               />
             </div>
           </div>
