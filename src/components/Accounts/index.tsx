@@ -63,8 +63,20 @@ const Transactions = () => {
                   {accounts && accounts.length > 0 ? (
                     <>
                       <div className="card-header">
-                        <div className="card-header-item">
+                        <div className="card-header-item d-flex justify-content-between align-items-center">
                           <h6 data-testid="title">Accounts</h6>
+                          <div className="d-none d-sm-flex">
+                            <Pager
+                              page={String(page)}
+                              total={
+                                totalAccounts !== '...'
+                                  ? Math.min(totalAccounts, 10000)
+                                  : totalAccounts
+                              }
+                              itemsPerPage={25}
+                              show={totalAccounts > 25}
+                            />
+                          </div>
                         </div>
                       </div>
 

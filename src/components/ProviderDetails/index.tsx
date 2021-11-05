@@ -40,8 +40,18 @@ const Nodes = () => {
   return (
     <div className="card" ref={ref}>
       <div className="card-header">
-        <div className="card-header-item d-flex align-items-center">
+        <div className="card-header-item d-flex justify-content-between align-items-center">
           <ProviderTabs />
+          <div className="d-none d-sm-flex">
+            {dataReady === true && (
+              <Pager
+                itemsPerPage={25}
+                page={String(size)}
+                total={totalNodes}
+                show={totalNodes > 25}
+              />
+            )}
+          </div>
         </div>
       </div>
 

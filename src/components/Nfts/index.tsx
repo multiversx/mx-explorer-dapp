@@ -55,8 +55,18 @@ const Nfts = () => {
               <div className="col-12">
                 <div className="card">
                   <div className="card-header">
-                    <div className="card-header-item">
+                    <div className="card-header-item d-flex justify-content-between align-items-center">
                       <Filters />
+                      {nfts && nfts.length > 0 && (
+                        <div className="d-none d-sm-flex">
+                          <Pager
+                            page={String(page)}
+                            total={totalNfts !== '...' ? Math.min(totalNfts, 10000) : totalNfts}
+                            itemsPerPage={25}
+                            show={totalNfts > 25}
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
 

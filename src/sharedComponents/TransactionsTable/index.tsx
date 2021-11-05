@@ -29,7 +29,21 @@ const TransactionsTable = ({
     <div className="transactions-table">
       <div className="card">
         <div className="card-header">
-          <div className="card-header-item d-flex align-items-center">{title}</div>
+          <div className="card-header-item d-flex justify-content-between align-items-center">
+            <div>{title}</div>
+            <div className="d-none d-sm-flex">
+              <Pager
+                itemsPerPage={25}
+                page={String(size)}
+                total={
+                  totalTransactions !== '...'
+                    ? Math.min(totalTransactions, 10000)
+                    : totalTransactions
+                }
+                show={totalTransactions > 25}
+              />
+            </div>
+          </div>
         </div>
 
         <div className="card-body p-0">
