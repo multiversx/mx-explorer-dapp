@@ -42,16 +42,6 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
       const isPubKeyAccount = addressIsBech32(bech32.encode(hash));
 
       switch (true) {
-        case isPubKeyAccount:
-          getAccount(bech32.encode(hash)).then((account) => {
-            const newRoute = account.success
-              ? networkRoute(urlBuilder.accountDetails(bech32.encode(hash)))
-              : '';
-            setRoute(newRoute);
-            setSearching(false);
-          });
-          break;
-
         case isAccount:
           getAccount(hash).then((account) => {
             setExpanded(false);
@@ -102,6 +92,16 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
               }
             }
           );
+          break;
+
+        case isPubKeyAccount:
+          getAccount(bech32.encode(hash)).then((account) => {
+            const newRoute = account.success
+              ? networkRoute(urlBuilder.accountDetails(bech32.encode(hash)))
+              : '';
+            setRoute(newRoute);
+            setSearching(false);
+          });
           break;
 
         default:
