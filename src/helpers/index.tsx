@@ -25,6 +25,7 @@ import useFetchPrice from './useFetchPrice';
 import useNetworkRouter from './useNetworkRouter';
 import useLoopManager from './useLoopManager';
 import useActiveRoute from './useActiveRoute';
+import * as bech32 from './bech32';
 
 export {
   truncate,
@@ -54,4 +55,5 @@ export {
   useNetworkRouter,
   useLoopManager,
   useActiveRoute,
+  bech32,
 };
