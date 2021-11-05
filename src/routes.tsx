@@ -2,6 +2,7 @@ import React from 'react';
 import BlockDetails from './components/BlockDetails';
 import Blocks from './components/Blocks';
 import EmptySearch from './components/EmptySearch';
+import HashSearch from './components/HashSearch';
 import Home from './components/Home';
 import MiniBlockDetails from './components/MiniBlockDetails';
 import TransactionDetails from './components/TransactionDetails';
@@ -100,7 +101,7 @@ const routes: RouteType[] = [
   {
     path: searchRoutes.query,
     title: 'Search',
-    component: EmptySearch,
+    component: HashSearch,
   },
   {
     path: '/',
