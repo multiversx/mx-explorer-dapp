@@ -53,6 +53,10 @@ export interface TransactionType {
     address: string;
     events: EventType[];
   };
+  scamInfo?: {
+    type: string;
+    info: string;
+  };
 }
 
 const getFee = (transaction: TransactionType) => {
@@ -165,10 +169,6 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
               <Tab.Pane eventKey="details">
                 <DetailItem title="Hash">
                   <div className="d-flex align-items-center text-break-all">
-                    <ScAddressIcon
-                      initiator={transaction.sender}
-                      secondInitiator={transaction.receiver}
-                    />
                     {transaction.txHash}
                     <CopyButton text={transaction.txHash} />
                   </div>
@@ -356,7 +356,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
 
                 <DetailItem title="Nonce">{transaction.nonce}</DetailItem>
 
-                <DataField data={transaction.data} />
+                <DataField data={transaction.data} scamInfo={transaction.scamInfo} />
 
                 {transaction.results && transaction.results?.length > 0 && (
                   <DetailItem title="Smart&nbsp;Contract Results">

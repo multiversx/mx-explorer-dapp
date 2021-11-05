@@ -73,7 +73,7 @@ const Blocks = () => {
                   {state && state.blocks.length > 0 ? (
                     <>
                       <div className="card-header">
-                        <div className="card-header-item">
+                        <div className="card-header-item d-flex justify-content-between align-items-center">
                           <h6 className="m-0" data-testid="title">
                             Blocks
                             {shard !== undefined && shard >= 0 && (
@@ -83,6 +83,16 @@ const Blocks = () => {
                               </>
                             )}
                           </h6>
+                          <div className="d-none d-sm-flex">
+                            <Pager
+                              page={String(page)}
+                              total={
+                                totalBlocks !== '...' ? Math.min(totalBlocks, 10000) : totalBlocks
+                              }
+                              itemsPerPage={25}
+                              show={state.blocks.length > 0}
+                            />
+                          </div>
                         </div>
                       </div>
 
