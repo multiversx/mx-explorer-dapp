@@ -66,7 +66,7 @@ const AccountNfts = () => {
       <div className="card-header">
         <div className="card-header-item d-flex justify-content-between align-items-center">
           <AccountTabs />
-          <div className="d-none d-sm-flex">
+          <div className="d-none d-md-flex">
             {dataReady === true && accountNfts.length > 0 && (
               <Pager
                 itemsPerPage={25}
