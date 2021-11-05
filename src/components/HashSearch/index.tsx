@@ -83,7 +83,6 @@ const HashSearch = () => {
                   setRoute('');
                   break;
               }
-              setSearching(false);
             }
           );
           if (isPubKeyAccount) {
@@ -93,7 +92,10 @@ const HashSearch = () => {
                 : '';
               setRoute(newRoute);
             });
+          } else {
+            setRoute('');
           }
+          setSearching(false);
           break;
 
         default:
@@ -105,6 +107,7 @@ const HashSearch = () => {
 
   React.useEffect(() => {
     checkQuery();
+    setSearching(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
