@@ -13,6 +13,7 @@ import {
   CollectionBlock,
   Denominate,
   TimeAgo,
+  ScAddressIcon,
 } from 'sharedComponents';
 import FailedNftDetails from './FailedNftDetails';
 import NftPreview from './NftPreview';
@@ -114,17 +115,14 @@ const NftDetails = () => {
                       {nftDetails.royalties !== undefined && nftDetails.royalties !== null && (
                         <DetailItem title="Royalties">{nftDetails.royalties}%</DetailItem>
                       )}
-                      {nftDetails.supply !== undefined && Number(nftDetails.supply) > 0 && (
+                      {nftDetails.supply !== undefined && (
                         <DetailItem title="Supply">
-                          {nftDetails.decimals !== undefined ? (
-                            <Denominate
-                              value={nftDetails.supply}
-                              showLabel={false}
-                              denomination={nftDetails.decimals}
-                            />
-                          ) : (
-                            <>{nftDetails.supply}</>
-                          )}
+                          <Denominate
+                            value={nftDetails.supply}
+                            showLabel={false}
+                            showLastNonZeroDecimal={true}
+                            denomination={nftDetails.decimals ? nftDetails.decimals : 1}
+                          />
                         </DetailItem>
                       )}
                       {nftDetails.decimals !== undefined && (
@@ -162,6 +160,60 @@ const NftDetails = () => {
                 </div>
               </div>
             </div>
+            {nftDetails.owners && nftDetails.owners.length > 0 && (
+              <div className="row mt-spacer">
+                <div className="col-12">
+                  <div className="card">
+                    <div className="card-header">
+                      <div className="card-header-item d-flex justify-content-between align-items-center">
+                        <h6>Accounts</h6>
+                      </div>
+
+                      <div className="card-body border-0 p-0">
+                        <div className="table-wrapper">
+                          <table className="table">
+                            <thead>
+                              <tr>
+                                <th>Address</th>
+                                <th>Balance</th>
+                              </tr>
+                            </thead>
+                            <tbody data-testid="accountsTable">
+                              {nftDetails.owners.map((account, i) => (
+                                <tr key={account.address}>
+                                  <td>
+                                    <div className="d-flex align-items-center">
+                                      <ScAddressIcon initiator={account.address} />
+                                      <NetworkLink
+                                        to={urlBuilder.accountDetails(account.address)}
+                                        className="trim-only-sm"
+                                      >
+                                        <Trim
+                                          text={account.address}
+                                          dataTestId={`accountLink${i}`}
+                                        />
+                                      </NetworkLink>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <Denominate
+                                      value={account.balance}
+                                      showLastNonZeroDecimal={true}
+                                      showLabel={false}
+                                      denomination={nftDetails.decimals ? nftDetails.decimals : 1}
+                                    />
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
