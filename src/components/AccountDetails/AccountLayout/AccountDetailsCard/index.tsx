@@ -247,7 +247,7 @@ const AccountDetailsCard = () => {
                     )}
                   </SmallDetailItem>
 
-                  <SmallDetailItem title="Owner Address">
+                  <SmallDetailItem title="Owner">
                     {ownerAddress !== undefined ? (
                       <div className="d-flex align-items-center">
                         <ScAddressIcon initiator={ownerAddress} />
