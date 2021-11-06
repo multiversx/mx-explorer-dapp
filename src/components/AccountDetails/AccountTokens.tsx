@@ -119,15 +119,14 @@ const AccountTokens = () => {
                 return (
                   <DetailItem title={name} key={identifier}>
                     <div className="d-flex align-items-center">
-                      {Number(balance) > 1 ? (
-                        <div className="mr-1">
-                          <Denominate
-                            showLabel={false}
-                            value={balance}
-                            denomination={type === 'MetaESDT' ? decimals : 1}
-                          />
-                        </div>
-                      ) : null}
+                      <div className="mr-1">
+                        <Denominate
+                          showLabel={false}
+                          value={balance ? balance : '0'}
+                          denomination={type === 'MetaESDT' ? decimals : 1}
+                        />
+                      </div>
+
                       <NftBlock identifier={identifier} collection={collection} />
                     </div>
                   </DetailItem>
