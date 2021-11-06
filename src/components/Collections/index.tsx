@@ -76,7 +76,7 @@ const Collections = () => {
                                 <th>Name</th>
                                 <th>Collection</th>
                                 <th>Age</th>
-                                <th>Owner Account</th>
+                                <th>Owner</th>
                               </tr>
                             </thead>
                             <tbody data-testid="collectionsTable">

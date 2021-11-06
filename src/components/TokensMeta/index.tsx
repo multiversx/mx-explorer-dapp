@@ -1,13 +1,5 @@
 import * as React from 'react';
-import {
-  Loader,
-  adapter,
-  NetworkLink,
-  Trim,
-  Pager,
-  CollectionBlock,
-  NftBadge,
-} from 'sharedComponents';
+import { Loader, adapter, NetworkLink, Trim, Pager } from 'sharedComponents';
 import NoTokens from './NoTokens';
 import FailedTokens from './FailedTokens';
 import { urlBuilder, useFilters, useURLSearchParams, types, useActiveRoute } from 'helpers';
@@ -106,10 +98,9 @@ const TokensMeta = () => {
                           <table className="table">
                             <thead>
                               <tr>
-                                <th>Name</th>
                                 <th>Token</th>
-
-                                <th>Owner Account</th>
+                                <th>Name</th>
+                                <th>Owner</th>
                               </tr>
                             </thead>
                             <tbody data-testid="nftsTable">
@@ -120,14 +111,24 @@ const TokensMeta = () => {
                                       <NetworkLink
                                         to={urlBuilder.nftDetails(nft.identifier)}
                                         data-testid={`nftsLink${i}`}
+                                        className={`d-flex ${
+                                          nft.assets?.svgUrl ? 'token-link' : ''
+                                        }`}
                                       >
                                         <div className="d-flex align-items-center">
-                                          <div>{nft.name}</div>
+                                          {nft.assets && nft.assets.svgUrl && (
+                                            <img
+                                              src={nft.assets.svgUrl}
+                                              alt={nft.name}
+                                              className="token-icon mr-1"
+                                            />
+                                          )}
+                                          <div>{nft.identifier}</div>
                                         </div>
                                       </NetworkLink>
                                     </div>
                                   </td>
-                                  <td>{nft.identifier}</td>
+                                  <td>{nft.name}</td>
                                   <td>
                                     <div className="d-flex trim-size-xl">
                                       <NetworkLink
