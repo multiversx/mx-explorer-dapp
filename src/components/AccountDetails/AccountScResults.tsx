@@ -178,7 +178,7 @@ const AccountScResults = () => {
           </div>
         )}
       </div>
-      <div className="card-footer d-flex justify-content-end border-0 pt-0">
+      <div className="card-footer d-flex justify-content-end">
         {dataReady === true && accountScResults.length > 0 && (
           <Pager
             itemsPerPage={25}
