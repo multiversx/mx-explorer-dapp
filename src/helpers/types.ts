@@ -80,6 +80,10 @@ export interface NftType {
   decimals?: number;
   owner?: string;
   supply?: string;
+  owners?: {
+    address: string;
+    balance: string;
+  }[];
   assets?: {
     website?: string;
     description?: string;

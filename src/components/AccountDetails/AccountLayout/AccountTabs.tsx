@@ -20,7 +20,7 @@ const AccountTabs = () => {
 
       <NetworkLink
         to={urlBuilder.accountDetailsScResults(accountDetails.address)}
-        className={`tab-link mr-3 ${activeRoute(accountsRoutes.accountScResults) ? 'active' : ''}`}
+        className={`tab-link mx-3 ${activeRoute(accountsRoutes.accountScResults) ? 'active' : ''}`}
       >
         <h6>Sc Results</h6>
       </NetworkLink>
