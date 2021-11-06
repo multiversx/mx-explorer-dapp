@@ -79,8 +79,8 @@ const Nfts = () => {
                           <table className="table">
                             <thead>
                               <tr>
-                                <th>Name</th>
                                 <th>Identifier</th>
+                                <th>Name</th>
                                 <th>Collection</th>
                                 <th>Creator Account</th>
                               </tr>
@@ -93,15 +93,25 @@ const Nfts = () => {
                                       <NetworkLink
                                         to={urlBuilder.nftDetails(nft.identifier)}
                                         data-testid={`nftsLink${i}`}
+                                        className={`d-flex ${
+                                          nft.assets?.svgUrl ? 'token-link' : ''
+                                        }`}
                                       >
                                         <div className="d-flex align-items-center">
-                                          <div>{nft.name}</div>
+                                          {nft.assets && nft.assets.svgUrl && (
+                                            <img
+                                              src={nft.assets.svgUrl}
+                                              alt={nft.name}
+                                              className="token-icon mr-1"
+                                            />
+                                          )}
+                                          <div>{nft.identifier}</div>
                                         </div>
                                       </NetworkLink>
                                       <NftBadge type={nft.type} className="ml-2" />
                                     </div>
                                   </td>
-                                  <td>{nft.identifier}</td>
+                                  <td>{nft.name}</td>
                                   <td>
                                     <CollectionBlock identifier={nft.collection} />
                                   </td>
