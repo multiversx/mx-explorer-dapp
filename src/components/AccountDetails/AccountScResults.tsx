@@ -125,7 +125,7 @@ const AccountScResults = () => {
                         </div>
                       </td>
                       <td>
-                        <TimeAgo value={scResult.timestamp} short tooltip />
+                        <TimeAgo value={scResult.timestamp} /> ago &nbsp;
                       </td>
                       <td>
                         <div className="d-flex align-items-center">
