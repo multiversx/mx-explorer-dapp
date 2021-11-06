@@ -98,9 +98,9 @@ const Tokens = () => {
                           <table className="table">
                             <thead>
                               <tr>
-                                <th>Name</th>
                                 <th>Token</th>
-                                <th>Owner Account</th>
+                                <th>Name</th>
+                                <th>Owner</th>
                               </tr>
                             </thead>
                             <tbody data-testid="tokensTable">
@@ -123,12 +123,12 @@ const Tokens = () => {
                                               className="token-icon mr-1"
                                             />
                                           )}
-                                          <div>{token.name}</div>
+                                          <div>{token.identifier}</div>
                                         </div>
                                       </NetworkLink>
                                     </div>
                                   </td>
-                                  <td>{token.identifier}</td>
+                                  <td>{token.name}</td>
                                   <td>
                                     <div className="d-flex trim-size-xl">
                                       <NetworkLink
