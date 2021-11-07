@@ -71,7 +71,12 @@ const TokenDetailsCard = () => {
                 <SmallDetailItem title="Token">{identifier}</SmallDetailItem>
 
                 <SmallDetailItem title="Supply">
-                  <Denominate value={supply} showLastNonZeroDecimal={true} showLabel={false} />
+                  <Denominate
+                    value={supply}
+                    denomination={decimals}
+                    showLastNonZeroDecimal={true}
+                    showLabel={false}
+                  />
                 </SmallDetailItem>
 
                 <SmallDetailItem title="Properties">
