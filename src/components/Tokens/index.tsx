@@ -70,7 +70,7 @@ const Tokens = () => {
                                 activeRoute(tokensRoutes.tokensMeta) ? 'active' : ''
                               }`}
                             >
-                              Meta
+                              Meta-ESDT
                             </NetworkLink>
                           </li>
                         </ul>
