@@ -73,8 +73,8 @@ const Collections = () => {
                           <table className="table">
                             <thead>
                               <tr>
-                                <th>Name</th>
                                 <th>Collection</th>
+                                <th>Name</th>
                                 <th>Age</th>
                                 <th>Owner</th>
                               </tr>
@@ -96,13 +96,13 @@ const Collections = () => {
                                               className="token-icon mr-1"
                                             />
                                           )}
-                                          <div>{collection.name}</div>
+                                          <div>{collection.collection}</div>
                                         </div>
                                       </NetworkLink>
                                       <NftBadge type={collection.type} className="ml-2" />
                                     </div>
                                   </td>
-                                  <td>{collection.collection}</td>
+                                  <td>{collection.name}</td>
                                   <td>
                                     <TimeAgo value={collection.timestamp} tooltip />
                                   </td>
