@@ -25,7 +25,7 @@ const nftText = (type: types.NftType['type']) => {
     case 'NonFungibleESDT':
       return 'NFT';
     case 'MetaESDT':
-      return 'META';
+      return 'Meta-ESDT';
     default:
       return '';
   }

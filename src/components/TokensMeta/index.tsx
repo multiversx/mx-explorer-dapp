@@ -52,7 +52,7 @@ const TokensMeta = () => {
                 <div className="card">
                   <div className="card-header">
                     <div className="card-header-item d-flex align-items-center justify-content-between">
-                      <h6 data-testid="title">Meta</h6>
+                      <h6 data-testid="title">Meta-ESDT</h6>
                     </div>
                     <div className="card-header-item d-flex justify-content-between align-items-center">
                       <div className="nodes-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
@@ -72,7 +72,7 @@ const TokensMeta = () => {
                                 activeRoute(tokensRoutes.tokensMeta) ? 'active' : ''
                               }`}
                             >
-                              Meta
+                              Meta-ESDT
                             </NetworkLink>
                           </li>
                         </ul>

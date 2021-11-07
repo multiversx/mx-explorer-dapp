@@ -37,7 +37,7 @@ const CollectionBlock = (props: CollectionBlockType) => {
   React.useEffect(fetchCollectionBlock, [props.identifier]);
 
   return (
-    <div ref={ref} className="d-flex">
+    <div ref={ref} className="d-flex text-truncate">
       {props.value && (
         <div className="mr-1">
           <Denominate
@@ -52,8 +52,8 @@ const CollectionBlock = (props: CollectionBlockType) => {
         to={urlBuilder.collectionDetails(props.identifier)}
         className={`d-flex ${collectionDetails?.assets?.svgUrl ? 'token-link' : ''}`}
       >
-        <div className="d-flex align-items-center symbol">
-          {dataReady === undefined && <span>{props.identifier}</span>}
+        <div className="d-flex align-items-center symbol text-truncate">
+          {dataReady === undefined && <span className="text-truncate">{props.identifier}</span>}
           {dataReady === false && <span className="text-truncate">{props.identifier}</span>}
           {dataReady === true && collectionDetails && (
             <>
@@ -66,7 +66,7 @@ const CollectionBlock = (props: CollectionBlockType) => {
                       className="token-icon mr-1"
                     />
                   )}
-                  <div>{collectionDetails.ticker}</div>
+                  <div className="text-truncate">{collectionDetails.ticker}</div>
                 </>
               ) : (
                 <span className="text-truncate">{props.identifier}</span>
