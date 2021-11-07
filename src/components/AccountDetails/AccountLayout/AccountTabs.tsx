@@ -10,17 +10,21 @@ const AccountTabs = () => {
   const tokensRouteActive = activeNetwork.adapter === 'api';
 
   return (
-    <div className="account-tabs d-flex flex-row">
+    <div className="account-tabs d-flex flex-row flex-wrap">
       <NetworkLink
         to={urlBuilder.accountDetails(accountDetails.address)}
-        className={`tab-link mr-3 ${activeRoute(accountsRoutes.accountDetails) ? 'active' : ''}`}
+        className={`tab-link mr-3 mr-lg-spacer ${
+          activeRoute(accountsRoutes.accountDetails) ? 'active' : ''
+        }`}
       >
         <h6>Transactions</h6>
       </NetworkLink>
 
       <NetworkLink
         to={urlBuilder.accountDetailsScResults(accountDetails.address)}
-        className={`tab-link mx-3 ${activeRoute(accountsRoutes.accountScResults) ? 'active' : ''}`}
+        className={`tab-link mr-3 mr-lg-spacer ${
+          activeRoute(accountsRoutes.accountScResults) ? 'active' : ''
+        }`}
       >
         <h6>SC Results</h6>
       </NetworkLink>
@@ -28,7 +32,9 @@ const AccountTabs = () => {
       {tokensRouteActive && (
         <NetworkLink
           to={urlBuilder.accountDetailsTokens(accountDetails.address)}
-          className={`tab-link mx-3 ${activeRoute(accountsRoutes.accountTokens) ? 'active' : ''}`}
+          className={`tab-link mr-3 mr-lg-spacer ${
+            activeRoute(accountsRoutes.accountTokens) ? 'active' : ''
+          }`}
         >
           <h6>ESDT Tokens</h6>
         </NetworkLink>
@@ -36,7 +42,9 @@ const AccountTabs = () => {
 
       <NetworkLink
         to={urlBuilder.accountDetailsNfts(accountDetails.address)}
-        className={`tab-link mx-3 ${activeRoute(accountsRoutes.accountNfts) ? 'active' : ''}`}
+        className={`tab-link mr-3 mr-lg-spacer ${
+          activeRoute(accountsRoutes.accountNfts) ? 'active' : ''
+        }`}
       >
         <h6>NFTs</h6>
       </NetworkLink>
@@ -44,7 +52,7 @@ const AccountTabs = () => {
       {accountDetails.code && (
         <NetworkLink
           to={urlBuilder.accountDetailsContractCode(accountDetails.address)}
-          className={`tab-link ml-3 ${activeRoute(accountsRoutes.accountCode) ? 'active' : ''}`}
+          className={`tab-link ${activeRoute(accountsRoutes.accountCode) ? 'active' : ''}`}
         >
           <h6>Code</h6>
         </NetworkLink>

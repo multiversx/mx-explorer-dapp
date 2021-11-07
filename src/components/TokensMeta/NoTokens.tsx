@@ -3,5 +3,5 @@ import { faCoins } from '@fortawesome/pro-regular-svg-icons/faCoins';
 import { PageState } from 'sharedComponents';
 
 export default function NoTokens() {
-  return <PageState icon={faCoins} title="No Meta Tokens" className="py-spacer my-auto" />;
+  return <PageState icon={faCoins} title="No Meta-ESDT Tokens" className="py-spacer my-auto" />;
 }
