@@ -120,7 +120,6 @@ const NftDetails = () => {
                           <Denominate
                             value={nftDetails.supply}
                             showLabel={false}
-                            showLastNonZeroDecimal={true}
                             denomination={nftDetails.decimals ? nftDetails.decimals : 1}
                           />
                         </DetailItem>
@@ -198,7 +197,6 @@ const NftDetails = () => {
                                   <td>
                                     <Denominate
                                       value={account.balance}
-                                      showLastNonZeroDecimal={true}
                                       showLabel={false}
                                       denomination={nftDetails.decimals ? nftDetails.decimals : 1}
                                     />
