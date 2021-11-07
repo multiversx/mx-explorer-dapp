@@ -100,7 +100,7 @@ const OperationsList = ({ operations }: { operations: OperationType[] }) => {
               operation.type !== undefined && (
                 <div className="col-lg-6 col-xl-6 d-flex align-items-center">
                   <div className="mr-2">Value</div>
-                  <div className="d-flex flex-wrap">
+                  <div className="d-flex flex-wrap text-truncate">
                     {operation.type === 'nft' && operation.collection && operation.identifier ? (
                       <NftBlock
                         identifier={operation.identifier}

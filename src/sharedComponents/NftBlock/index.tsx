@@ -38,7 +38,7 @@ const NftBlock = (props: NftBlockType) => {
   React.useEffect(fetchNftBlock, [props.identifier]);
 
   return (
-    <div ref={ref} className="d-flex">
+    <div ref={ref} className="d-flex text-truncate">
       {props.value && (
         <div className="mr-1">
           <Denominate
@@ -51,10 +51,10 @@ const NftBlock = (props: NftBlockType) => {
       )}
       <NetworkLink
         to={urlBuilder.nftDetails(props.identifier)}
-        className={`d-flex ${nftDetails?.assets?.svgUrl ? 'token-link' : ''}`}
+        className={`d-flex text-truncate ${nftDetails?.assets?.svgUrl ? 'token-link' : ''}`}
       >
-        <div className="d-flex align-items-center symbol">
-          {dataReady === undefined && <span>{props.identifier}</span>}
+        <div className="d-flex align-items-center symbol text-truncate">
+          {dataReady === undefined && <span className="text-truncate">{props.identifier}</span>}
           {dataReady === false && <span className="text-truncate">{props.identifier}</span>}
           {dataReady === true && nftDetails && (
             <>
@@ -67,7 +67,7 @@ const NftBlock = (props: NftBlockType) => {
                       className="token-icon mr-1"
                     />
                   )}
-                  <div>
+                  <div className="text-truncate">
                     {nftDetails.name} ({nftDetails.identifier})
                   </div>
                 </>
