@@ -209,7 +209,7 @@ const routes: RouteType[] = [
   },
   {
     path: tokensRoutes.tokensMeta,
-    title: 'Meta Tokens',
+    title: 'Meta-ESDT Tokens',
     component: TokensMeta,
   },
   {

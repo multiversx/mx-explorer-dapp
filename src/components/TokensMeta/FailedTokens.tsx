@@ -6,7 +6,7 @@ export default function FailedTokens() {
   return (
     <PageState
       icon={faCoins}
-      title="Unable to load Meta Tokens"
+      title="Unable to load Meta-ESDT Tokens"
       className="py-spacer my-auto"
       dataTestId="errorScreen"
     />
