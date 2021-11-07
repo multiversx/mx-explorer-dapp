@@ -32,7 +32,7 @@ const TokenBlock = (props: TokenBlockType) => {
   React.useEffect(fetchTokenBlock, [props.identifier]);
 
   return (
-    <div ref={ref} className="d-flex">
+    <div ref={ref} className="d-flex text-truncate">
       {props.value && (
         <div className="mr-1">
           <Denominate {...props} denomination={denomination} showLabel={false} />
@@ -40,10 +40,10 @@ const TokenBlock = (props: TokenBlockType) => {
       )}
       <NetworkLink
         to={urlBuilder.tokenDetails(props.identifier)}
-        className={`d-flex ${tokenDetails?.assets?.svgUrl ? 'token-link' : ''}`}
+        className={`d-flex text-truncate ${tokenDetails?.assets?.svgUrl ? 'token-link' : ''}`}
       >
-        <div className="d-flex align-items-center symbol">
-          {dataReady === undefined && <span>{props.identifier}</span>}
+        <div className="d-flex align-items-center symbol text-truncate">
+          {dataReady === undefined && <span className="text-truncate">{props.identifier}</span>}
           {dataReady === false && <span className="text-truncate">{props.identifier}</span>}
           {dataReady === true && tokenDetails && (
             <>
@@ -56,7 +56,7 @@ const TokenBlock = (props: TokenBlockType) => {
                       className="token-icon mx-1"
                     />
                   )}
-                  <div>{tokenDetails.name}</div>
+                  <div className="text-truncate">{tokenDetails.name}</div>
                 </>
               ) : (
                 <span className="text-truncate">{props.identifier}</span>
