@@ -51,6 +51,7 @@ export interface ProviderPropsType {
     sort?: string;
     order?: string;
     online?: boolean;
+    collection?: string;
   };
   timeout: number;
   timestamp?: number;
@@ -151,6 +152,17 @@ export function getTokensParam({ search, size, type }: GetTokensType) {
   return params;
 }
 
+export function getNftsParam({ search, size, type, collection }: GetNftsType) {
+  const params: ProviderPropsType['params'] = {
+    ...(search !== undefined ? { search } : {}),
+    ...(collection !== undefined ? { collection } : {}),
+    ...(type !== undefined ? { type } : {}),
+    ...(size !== undefined ? { from: (size - 1) * 25, size: 25 } : {}),
+  };
+
+  return params;
+}
+
 export const getShardAndEpochParam = (shard: number | undefined, epoch: number | undefined) => {
   let result = {};
 
@@ -202,4 +214,10 @@ export interface GetTokensType {
   search?: string;
   size?: number;
   type?: string;
+}
+export interface GetNftsType {
+  search?: string;
+  size?: number;
+  type?: string;
+  collection?: string;
 }
