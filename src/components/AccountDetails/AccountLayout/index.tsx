@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { Redirect, useLocation } from 'react-router-dom';
+import { Redirect, useLocation, useRouteMatch } from 'react-router-dom';
 import { useGlobalDispatch, useGlobalState } from 'context';
 import { Loader, adapter } from 'sharedComponents';
 import FailedAccount from './FailedAccount';
 import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
 import AccountDetailsCard from './AccountDetailsCard';
-import { useRouteMatch } from 'react-router-dom';
 import { accountsRoutes } from 'routes';
 
 const AccountLayout = ({ children }: { children: React.ReactNode }) => {

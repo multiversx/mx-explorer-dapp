@@ -10,8 +10,10 @@ import {
   getNodeParams,
   GetProvidersType,
   getProviderParams,
+  GetNftsType,
   GetTokensType,
   getTokensParam,
+  getNftsParam,
 } from './helpers';
 
 export default function useAdapter() {
@@ -326,30 +328,30 @@ export default function useAdapter() {
     getAccountNftsCount: ({ address, type }: { address: string; type?: string }) =>
       provider({ url: `/accounts/${address}/nfts/count`, params: getTokensParam({ type }) }),
 
-    getCollections: (props: GetTokensType) =>
+    getCollections: (props: GetNftsType) =>
       provider({
         url: `/collections`,
-        params: getTokensParam(props),
+        params: getNftsParam(props),
       }),
 
-    getCollectionsCount: ({ search }: GetTokensType) =>
+    getCollectionsCount: ({ search }: GetNftsType) =>
       provider({
         url: `/collections/count`,
-        params: getTokensParam({ search }),
+        params: getNftsParam({ search }),
       }),
 
     getCollection: (collection: string) => provider({ url: `/collections/${collection}` }),
 
-    getNfts: (props: GetTokensType) =>
+    getNfts: (props: GetNftsType) =>
       provider({
         url: `/nfts`,
-        params: getTokensParam(props),
+        params: getNftsParam(props),
       }),
 
-    getNftsCount: (props: GetTokensType) =>
+    getNftsCount: (props: GetNftsType) =>
       provider({
         url: `/nfts/count`,
-        params: getTokensParam(props),
+        params: getNftsParam(props),
       }),
 
     getNft: (identifier: string) => provider({ url: `/nfts/${identifier}` }),
