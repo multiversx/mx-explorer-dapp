@@ -116,10 +116,13 @@ const IdentityDetails = () => {
               <div className="col-12">
                 <div className="card">
                   <div className="card-header">
-                    <div className="card-header-item">
+                    <div className="card-header-item d-flex justify-content-between align-items-center">
                       <h6 className="m-0" data-testid="title">
                         Nodes
                       </h6>
+                      <div className="d-none d-md-flex">
+                        <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+                      </div>
                     </div>
                   </div>
 
