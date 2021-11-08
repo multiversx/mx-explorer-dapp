@@ -78,6 +78,7 @@ const AccountDetailsCard = () => {
     // getAccountDelegation,
     // getAccountStake,
     getAccountTokensCount,
+    getAccountNftsCount,
   } = adapter();
   const {
     address,
@@ -162,11 +163,21 @@ const AccountDetailsCard = () => {
 
   const fetchAccountTokensCount = () => {
     if (tokensActive) {
-      getAccountTokensCount(address).then(({ data, success }) => {
-        if (ref.current !== null && success) {
-          setAccountTokensCount(typeof data === 'number' ? data : 0);
+      const type = 'MetaESDT';
+      Promise.all([getAccountTokensCount(address), getAccountNftsCount({ address, type })]).then(
+        ([accountTokensCountData, accountNftsCountData]) => {
+          if (ref.current !== null) {
+            if (accountTokensCountData.success && accountNftsCountData.success) {
+              const accountTokens =
+                typeof accountTokensCountData.data === 'number' ? accountTokensCountData.data : 0;
+              const accountMetaTokens =
+                typeof accountNftsCountData.data === 'number' ? accountNftsCountData.data : 0;
+
+              setAccountTokensCount(accountTokens + accountMetaTokens);
+            }
+          }
         }
-      });
+      );
     }
   };
   React.useEffect(() => {

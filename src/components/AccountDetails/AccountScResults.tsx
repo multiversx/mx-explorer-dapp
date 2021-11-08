@@ -115,7 +115,7 @@ const AccountScResults = () => {
                       <td>
                         <div className="d-flex align-items-center trim-size-xl">
                           <NetworkLink
-                            to={`/transactions/${scResult.originalTxHash}`}
+                            to={`/transactions/${scResult.originalTxHash}#${scResult.hash}`}
                             data-testid="transactionLink"
                             className="trim-wrapper"
                           >
