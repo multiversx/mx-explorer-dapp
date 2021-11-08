@@ -99,9 +99,8 @@ const AccountScResults = () => {
             <table className="table" data-testid="transactionsTable">
               <thead>
                 <tr>
-                  <th scope="col">Txn Hash</th>
+                  <th scope="col">Original Txn Hash</th>
                   <th scope="col">Age</th>
-
                   <th scope="col">From</th>
                   <th scope="col">To</th>
                   <th scope="col">Value</th>
