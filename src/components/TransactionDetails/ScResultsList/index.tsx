@@ -1,10 +1,12 @@
 import * as React from 'react';
+import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchange } from '@fortawesome/pro-regular-svg-icons/faExchange';
 import { Denominate, CopyButton, Trim } from 'sharedComponents';
 import decodePart from './decodePart';
 
 export interface ResultType {
+  hash: string;
   callType: string;
   gasLimit: number;
   gasPrice: number;
@@ -18,6 +20,9 @@ export interface ResultType {
 }
 
 const ScResultsList = ({ results }: { results: ResultType[] }) => {
+  const { hash } = useLocation();
+  const ref = React.useRef<HTMLDivElement>(null);
+
   const decodeData = (data: string) => {
     const parts = Buffer.from(data, 'base64').toString().split('@');
 
@@ -32,11 +37,28 @@ const ScResultsList = ({ results }: { results: ResultType[] }) => {
     return parts.join('@');
   };
 
+  React.useEffect(() => {
+    if (ref.current && ref.current !== null) {
+      window.scrollTo({
+        top: ref.current.getBoundingClientRect().top - 70,
+        behavior: 'smooth',
+      });
+    }
+  }, []);
+
   return (
     <div className="sc-results-list detailed-list d-flex flex-column mt-1">
       {results.map((result: ResultType, i) => {
+        const highlightTx = hash.replace('#', '') === result.hash;
         return (
-          <div key={i} className="detailed-item d-flex border-left border-bottom ml-3 py-3">
+          <div
+            key={i}
+            id={result.hash}
+            className={`detailed-item d-flex border-left border-bottom ml-3 py-3 ${
+              highlightTx ? 'highlighted' : ''
+            }`}
+            {...(highlightTx ? { ref: ref } : {})}
+          >
             <div className="transaction-icon">
               <FontAwesomeIcon icon={faExchange} />
             </div>
