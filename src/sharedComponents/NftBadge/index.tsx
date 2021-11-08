@@ -18,7 +18,7 @@ const NftBadge = ({ type, className }: { type: NftType['type']; className?: stri
     case 'MetaESDT':
       return (
         <div className={`badge badge-secondary font-weight-light ${className ? className : ''}`}>
-          META
+          Meta-ESDT
         </div>
       );
     default:
