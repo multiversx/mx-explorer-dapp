@@ -56,7 +56,12 @@ const AccountTokens = () => {
       ]).then(
         ([accountTokensData, accountTokensCountData, accountNftsData, accountNftsCountData]) => {
           if (ref.current !== null) {
-            if (accountTokensData.success && accountTokensCountData.success) {
+            if (
+              accountTokensData.success &&
+              accountTokensCountData.success &&
+              accountNftsData.success &&
+              accountNftsCountData.success
+            ) {
               setAccountTokens(accountTokensData.data);
               setAccountTokensCount(accountTokensCountData.data);
               setAccountNfts(accountNftsData.data);
