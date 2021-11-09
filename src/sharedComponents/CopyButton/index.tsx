@@ -7,9 +7,10 @@ import copyTextToClipboard from './helpers/copyToClipboard';
 interface CopyButtonType {
   text: string;
   className?: string;
+  icon?: any;
 }
 
-const CopyButton = ({ text, className = '' }: CopyButtonType) => {
+const CopyButton = ({ text, icon, className = '' }: CopyButtonType) => {
   const [copyResult, setCopyResut] = React.useState({
     default: true,
     success: false,
@@ -36,7 +37,7 @@ const CopyButton = ({ text, className = '' }: CopyButtonType) => {
   return (
     <a href="/#" onClick={handleCopyToClipboard} className={`side-action ${className}`}>
       {copyResult.default || !copyResult.success ? (
-        <FontAwesomeIcon icon={faClone} />
+        <FontAwesomeIcon icon={icon ? icon : faClone} />
       ) : (
         <FontAwesomeIcon icon={faCheck} className="text-primary" />
       )}

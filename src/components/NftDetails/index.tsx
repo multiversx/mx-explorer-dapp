@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams } from 'react-router-dom';
-import { types, urlBuilder, dateFormatted } from 'helpers';
+import { types, urlBuilder, dateFormatted, useFilters, useURLSearchParams } from 'helpers';
 import {
   Loader,
   adapter,
@@ -14,9 +14,15 @@ import {
   Denominate,
   TimeAgo,
   ScAddressIcon,
+  Pager,
 } from 'sharedComponents';
 import FailedNftDetails from './FailedNftDetails';
 import NftPreview from './NftPreview';
+
+interface NftOwnerType {
+  address: string;
+  balance: string;
+}
 
 const nftText = (type: types.NftType['type']) => {
   switch (type) {
@@ -35,18 +41,31 @@ const NftDetails = () => {
   const params: any = useParams();
   const { hash: identifier } = params;
   const ref = React.useRef(null);
-  const { getNft } = adapter();
+  const { page } = useURLSearchParams();
+  const { getQueryObject, size } = useFilters();
+  const { getNft, getNftOwners, getNftOwnersCount } = adapter();
   const [nftDetails, setNftDetails] = React.useState<types.NftType>();
+  const [nftOwners, setNftOwners] = React.useState<NftOwnerType[]>([]);
+  const [nftOwnersCount, setNftOwnersCount] = React.useState<number | '...'>('...');
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchNftDetails = () => {
-    getNft(identifier).then(({ success, data }) => {
+    const queryObject = getQueryObject();
+    Promise.all([
+      getNft(identifier),
+      getNftOwners({ ...queryObject, size, identifier }),
+      getNftOwnersCount({ ...queryObject, identifier }),
+    ]).then(([nftData, nftOwners, nftOwnersCount]) => {
       if (ref.current !== null) {
-        setNftDetails(data);
-        setDataReady(success);
-        if (success && data && data.type) {
-          document.title = `${nftText(data.type)} Details`;
+        if (nftData.success) {
+          setNftDetails(nftData.data);
+          document.title = `${nftText(nftData.data.type)} Details`;
         }
+        if (nftOwners.success && nftOwnersCount.success) {
+          setNftOwners(nftOwners.data);
+          setNftOwnersCount(Math.min(nftOwnersCount.data, 10000));
+        }
+        setDataReady(nftData.success);
       }
     });
   };
@@ -159,15 +178,22 @@ const NftDetails = () => {
                 </div>
               </div>
             </div>
-            {nftDetails.owners && nftDetails.owners.length > 0 && (
+            {nftOwners && nftOwners.length > 0 && (
               <div className="row mt-spacer">
                 <div className="col-12">
                   <div className="card">
                     <div className="card-header">
                       <div className="card-header-item d-flex justify-content-between align-items-center">
-                        <h6>Accounts</h6>
+                        <h6>Owners</h6>
+                        <div className="d-none d-sm-flex">
+                          <Pager
+                            page={String(page)}
+                            total={nftOwnersCount}
+                            itemsPerPage={25}
+                            show={nftOwners.length > 0}
+                          />
+                        </div>
                       </div>
-
                       <div className="card-body border-0 p-0">
                         <div className="table-wrapper">
                           <table className="table">
@@ -178,7 +204,7 @@ const NftDetails = () => {
                               </tr>
                             </thead>
                             <tbody data-testid="accountsTable">
-                              {nftDetails.owners.map((account, i) => (
+                              {nftOwners.map((account, i) => (
                                 <tr key={account.address}>
                                   <td>
                                     <div className="d-flex align-items-center">
@@ -206,6 +232,14 @@ const NftDetails = () => {
                             </tbody>
                           </table>
                         </div>
+                      </div>
+                      <div className="card-footer d-flex justify-content-end">
+                        <Pager
+                          page={String(page)}
+                          total={nftOwnersCount}
+                          itemsPerPage={25}
+                          show={nftOwners.length > 0}
+                        />
                       </div>
                     </div>
                   </div>

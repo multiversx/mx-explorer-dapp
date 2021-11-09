@@ -158,20 +158,18 @@ const CollectionDetails = () => {
                     <div className="card-header">
                       <div className="card-header-item d-flex justify-content-between align-items-center">
                         <h6 data-testid="title">{`${nftText(collectionDetails.type)}`}s</h6>
-                        {nfts && (
-                          <div className="d-none d-sm-flex">
-                            <Pager
-                              page={String(page)}
-                              total={totalNfts !== '...' ? Math.min(totalNfts, 10000) : totalNfts}
-                              itemsPerPage={25}
-                              show={nfts.length > 0}
-                            />
-                          </div>
-                        )}
+                        <div className="d-none d-sm-flex">
+                          <Pager
+                            page={String(page)}
+                            total={totalNfts !== '...' ? Math.min(totalNfts, 10000) : totalNfts}
+                            itemsPerPage={25}
+                            show={nfts.length > 0}
+                          />
+                        </div>
                       </div>
                     </div>
 
-                    {nfts && nfts.length > 0 ? (
+                    {nfts.length > 0 ? (
                       <>
                         <div className="card-body border-0 p-0">
                           <div className="table-wrapper">
@@ -233,7 +231,6 @@ const CollectionDetails = () => {
                             </table>
                           </div>
                         </div>
-
                         <div className="card-footer d-flex justify-content-end">
                           <Pager
                             page={String(page)}
@@ -245,8 +242,8 @@ const CollectionDetails = () => {
                       </>
                     ) : (
                       <PageState
-                        icon={faPalette}
-                        title={`${nftText(collectionDetails.type)}`}
+                        icon={collectionDetails.type === 'MetaESDT' ? faCoins : faPalette}
+                        title={`No ${nftText(collectionDetails.type)}`}
                         className="py-spacer my-auto"
                       />
                     )}
