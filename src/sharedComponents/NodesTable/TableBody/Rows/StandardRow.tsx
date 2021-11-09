@@ -36,9 +36,9 @@ const StandardRow = ({ nodeData, index }: { nodeData: NodeType; index: number })
         </div>
       </td>
       <td>{nodeData.version ? nodeData.version : <span className="text-secondary">N/A</span>}</td>
-      <td className="text-right">
-        {nodeData.uptimeSec !== undefined && nodeData.uptimeSec !== 0 ? (
-          <span>{nodeData.uptime}%</span>
+      <td className="text-right" style={{ maxWidth: '8rem' }}>
+        {nodeData.validatorIgnoredSignatures ? (
+          nodeData.validatorIgnoredSignatures.toLocaleString('en')
         ) : (
           <span className="text-secondary">N/A</span>
         )}
