@@ -14,8 +14,12 @@ const StandardHead = ({ hideFilters }: { hideFilters?: boolean }) => {
       <th data-testid="version">
         <Sort id="version" field="Version" />
       </th>
-      <th className="text-right" data-testid="uptime">
-        <Sort id="uptime" field="Uptime" />
+      <th
+        className="text-right"
+        data-testid="validatorIgnoredSignatures"
+        style={{ maxWidth: '8rem' }}
+      >
+        <Sort id="validatorIgnoredSignatures" field="Ignored Signatures" />
       </th>
       <th className="text-right" data-testid="status">
         Status
