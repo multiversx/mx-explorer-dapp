@@ -15,7 +15,15 @@ const HashSearch = () => {
   const { hash: query } = useParams() as any;
   const isMainnet = useIsMainnet();
   const networkRoute = useNetworkRoute();
-  const { getAccount, getBlock, getTransaction, getNode, getMiniBlock, getToken } = adapter();
+  const {
+    getAccount,
+    getBlock,
+    getTransaction,
+    getNode,
+    getMiniBlock,
+    getToken,
+    getScResult,
+  } = adapter();
   const [route, setRoute] = React.useState('');
   const [searching, setSearching] = React.useState(false);
 
@@ -67,24 +75,30 @@ const HashSearch = () => {
           break;
 
         case isValidquery:
-          Promise.all([getBlock(query), getTransaction(query), getMiniBlock(query)]).then(
-            ([block, transaction, miniblock]) => {
-              switch (true) {
-                case block.success:
-                  setRoute(networkRoute(`/blocks/${query}`));
-                  break;
-                case transaction.success:
-                  setRoute(networkRoute(`/transactions/${query}`));
-                  break;
-                case miniblock.success:
-                  setRoute(networkRoute(`/miniblocks/${query}`));
-                  break;
-                default:
-                  setRoute('');
-                  break;
-              }
+          Promise.all([
+            getBlock(query),
+            getScResult(query),
+            getTransaction(query),
+            getMiniBlock(query),
+          ]).then(([block, scResult, transaction, miniblock]) => {
+            switch (true) {
+              case block.success:
+                setRoute(networkRoute(`/blocks/${query}`));
+                break;
+              case scResult.success:
+                setRoute(networkRoute(`/transactions/${scResult.data.originalTxHash}#${query}`));
+                break;
+              case transaction.success:
+                setRoute(networkRoute(`/transactions/${query}`));
+                break;
+              case miniblock.success:
+                setRoute(networkRoute(`/miniblocks/${query}`));
+                break;
+              default:
+                setRoute('');
+                break;
             }
-          );
+          });
           if (isPubKeyAccount) {
             getAccount(bech32.encode(query)).then((account) => {
               const newRoute = account.success
