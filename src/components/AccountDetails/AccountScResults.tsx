@@ -99,7 +99,7 @@ const AccountScResults = () => {
             <table className="table" data-testid="transactionsTable">
               <thead>
                 <tr>
-                  <th scope="col">Original Txn Hash</th>
+                  <th scope="col">Hash</th>
                   <th scope="col">Age</th>
                   <th scope="col">From</th>
                   <th scope="col">To</th>
@@ -111,7 +111,7 @@ const AccountScResults = () => {
                   const directionOut = address === scResult.sender;
                   const directionIn = address === scResult.receiver;
                   return (
-                    <tr className="animated-row">
+                    <tr className="animated-row" key={scResult.hash}>
                       <td>
                         <div className="d-flex align-items-center trim-size-xl">
                           <NetworkLink
@@ -119,7 +119,7 @@ const AccountScResults = () => {
                             data-testid="transactionLink"
                             className="trim-wrapper"
                           >
-                            <Trim text={scResult.originalTxHash} />
+                            <Trim text={scResult.hash} />
                           </NetworkLink>
                         </div>
                       </td>
