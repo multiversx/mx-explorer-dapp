@@ -95,20 +95,18 @@ const HashSearch = () => {
                 setRoute(networkRoute(`/miniblocks/${query}`));
                 break;
               default:
+                if (isPubKeyAccount) {
+                  getAccount(bech32.encode(query)).then((account) => {
+                    const newRoute = account.success
+                      ? networkRoute(urlBuilder.accountDetails(bech32.encode(query)))
+                      : '';
+                    setRoute(newRoute);
+                  });
+                }
                 setRoute('');
                 break;
             }
           });
-          if (isPubKeyAccount) {
-            getAccount(bech32.encode(query)).then((account) => {
-              const newRoute = account.success
-                ? networkRoute(urlBuilder.accountDetails(bech32.encode(query)))
-                : '';
-              setRoute(newRoute);
-            });
-          } else {
-            setRoute('');
-          }
           setSearching(false);
           break;
 
