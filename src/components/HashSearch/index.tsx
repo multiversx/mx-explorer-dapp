@@ -10,7 +10,7 @@ import {
   bech32,
 } from 'helpers';
 import { Redirect, useParams } from 'react-router-dom';
-import { adapter, PageState } from 'sharedComponents';
+import { adapter, PageState, Loader } from 'sharedComponents';
 
 const HashSearch = () => {
   const { hash: query } = useParams() as any;
@@ -26,11 +26,10 @@ const HashSearch = () => {
     getScResult,
   } = adapter();
   const [route, setRoute] = React.useState('');
-  const [searching, setSearching] = React.useState(false);
+  const [searching, setSearching] = React.useState<boolean | undefined>();
 
   const checkQuery = async () => {
     if (Boolean(query)) {
-      setSearching(true);
       const validqueryChars = /^[0-9A-Fa-f]+$/i;
 
       const isAccount = addressIsBech32(query);
@@ -111,38 +110,29 @@ const HashSearch = () => {
                 setRoute('');
                 break;
             }
+            setSearching(false);
           });
-          setSearching(false);
           break;
 
         default:
           setRoute('');
+          setSearching(false);
           break;
       }
+    } else {
+      setSearching(false);
     }
   };
 
   React.useEffect(() => {
     checkQuery();
-    setSearching(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      {searching ? (
-        <PageState
-          icon={faSearch}
-          title="Searching..."
-          description={
-            <div className="px-spacer">
-              <span className="text-break-all">{query}</span>
-            </div>
-          }
-          className="py-spacer m-auto"
-          dataTestId="searchScreen"
-        />
-      ) : (
+      {searching === undefined && <Loader />}
+      {searching === false && (
         <>
           {route ? (
             <Redirect to={route} />

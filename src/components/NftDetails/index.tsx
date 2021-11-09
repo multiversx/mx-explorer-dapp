@@ -178,7 +178,7 @@ const NftDetails = () => {
                 </div>
               </div>
             </div>
-            {nftOwners && nftOwners.length > 0 && (
+            {nftOwners && nftOwners.length > 0 && nftDetails.type !== 'NonFungibleESDT' && (
               <div className="row mt-spacer">
                 <div className="col-12">
                   <div className="card">
