@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { faCircleNotch } from '@fortawesome/pro-regular-svg-icons/faCircleNotch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNetworkRoute, urlBuilder, isHash, addressIsBech32, bech32 } from 'helpers';
+import { useNetworkRoute, urlBuilder, isHash, isContract, addressIsBech32, bech32 } from 'helpers';
 import { Redirect, useLocation } from 'react-router-dom';
 import { adapter } from 'sharedComponents';
 
@@ -108,10 +108,14 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
               default:
                 if (isPubKeyAccount) {
                   getAccount(bech32.encode(hash)).then((account) => {
-                    const newRoute = account.success
-                      ? networkRoute(urlBuilder.accountDetails(bech32.encode(hash)))
-                      : '';
-                    setRoute(newRoute);
+                    if (account.success) {
+                      if (isContract(hash) || account.data.nonce > 0) {
+                        const newRoute = networkRoute(
+                          urlBuilder.accountDetails(bech32.encode(hash))
+                        );
+                        setRoute(newRoute);
+                      }
+                    }
                   });
                 }
                 setRoute(notFoundRoute);

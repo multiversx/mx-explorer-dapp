@@ -5,6 +5,7 @@ import {
   urlBuilder,
   useIsMainnet,
   isHash,
+  isContract,
   addressIsBech32,
   bech32,
 } from 'helpers';
@@ -97,10 +98,14 @@ const HashSearch = () => {
               default:
                 if (isPubKeyAccount) {
                   getAccount(bech32.encode(query)).then((account) => {
-                    const newRoute = account.success
-                      ? networkRoute(urlBuilder.accountDetails(bech32.encode(query)))
-                      : '';
-                    setRoute(newRoute);
+                    if (account.success) {
+                      if (isContract(query) || account.data.nonce > 0) {
+                        const newRoute = networkRoute(
+                          urlBuilder.accountDetails(bech32.encode(query))
+                        );
+                        setRoute(newRoute);
+                      }
+                    }
                   });
                 }
                 setRoute('');
