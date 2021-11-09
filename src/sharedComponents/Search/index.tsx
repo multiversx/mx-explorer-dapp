@@ -106,18 +106,19 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
                 setRoute(networkRoute(`/miniblocks/${hash}`));
                 break;
               default:
+                if (isPubKeyAccount) {
+                  getAccount(bech32.encode(hash)).then((account) => {
+                    const newRoute = account.success
+                      ? networkRoute(urlBuilder.accountDetails(bech32.encode(hash)))
+                      : '';
+                    setRoute(newRoute);
+                  });
+                }
                 setRoute(notFoundRoute);
                 break;
             }
           });
-          if (isPubKeyAccount) {
-            getAccount(bech32.encode(hash)).then((account) => {
-              const newRoute = account.success
-                ? networkRoute(urlBuilder.accountDetails(bech32.encode(hash)))
-                : '';
-              setRoute(newRoute);
-            });
-          }
+
           break;
 
         default:
