@@ -186,6 +186,21 @@ export default function useAdapter() {
         },
       }),
 
+    getScResult: (hash: string) => provider({ url: `/sc-results/${hash}` }),
+
+    getScResults: (size = 1) =>
+      provider({
+        url: `/sc-results`,
+        params: {
+          from: (size - 1) * 25,
+          size: 25,
+        },
+      }),
+
+    getScResultsCount: () => provider({ url: `/sc-results/count` }),
+
+    /* Stake */
+
     getAccountScResultsCount: (address: string) =>
       provider({ url: `/accounts/${address}/sc-results/count` }),
 
