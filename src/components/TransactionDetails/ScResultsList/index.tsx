@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExchange } from '@fortawesome/pro-regular-svg-icons/faExchange';
+import { faExchange, faLink } from '@fortawesome/pro-regular-svg-icons';
 import { Denominate, CopyButton, Trim } from 'sharedComponents';
+import { useGlobalState } from 'context';
 import decodePart from './decodePart';
 
 export interface ResultType {
@@ -16,12 +17,16 @@ export interface ResultType {
   sender: string;
   value: string;
   data?: string;
+  originalTxHash: string;
   returnMessage?: string;
 }
 
 const ScResultsList = ({ results }: { results: ResultType[] }) => {
   const { hash } = useLocation();
   const ref = React.useRef<HTMLDivElement>(null);
+  const {
+    activeNetwork: { explorerAddress },
+  } = useGlobalState();
 
   const decodeData = (data: string) => {
     const parts = Buffer.from(data, 'base64').toString().split('@');
@@ -64,6 +69,20 @@ const ScResultsList = ({ results }: { results: ResultType[] }) => {
             </div>
 
             <div className="detailed-item-content">
+              {result.hash && (
+                <div className="row mb-3 d-flex flex-column flex-sm-row">
+                  <div className="col col-left">Txn Hash</div>
+                  <div className="col d-flex align-items-center">
+                    <Trim text={result.hash} />
+                    <CopyButton
+                      text={`${explorerAddress}transactions/${result.originalTxHash}#${result.hash}`}
+                      icon={faLink}
+                      className="side-action ml-2"
+                    />
+                  </div>
+                </div>
+              )}
+
               {result.sender && (
                 <div className="row mb-3 d-flex flex-column flex-sm-row">
                   <div className="col col-left">From</div>
