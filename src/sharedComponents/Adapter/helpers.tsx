@@ -52,6 +52,7 @@ export interface ProviderPropsType {
     order?: string;
     online?: boolean;
     collection?: string;
+    identifier?: string;
   };
   timeout: number;
   timestamp?: number;
@@ -152,7 +153,7 @@ export function getTokensParam({ search, size, type }: GetTokensType) {
   return params;
 }
 
-export function getNftsParam({ search, size, type, collection }: GetNftsType) {
+export function getNftsParam({ search, size, type, collection, identifier }: GetNftsType) {
   const params: ProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
     ...(collection !== undefined ? { collection } : {}),
@@ -216,8 +217,9 @@ export interface GetTokensType {
   type?: string;
 }
 export interface GetNftsType {
+  collection?: string;
+  identifier?: string;
   search?: string;
   size?: number;
   type?: string;
-  collection?: string;
 }
