@@ -2,7 +2,7 @@ import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
-import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons/faSpinnerThird';
+import { faSpinnerThird, faAngleDown } from '@fortawesome/pro-regular-svg-icons';
 import { types } from 'helpers';
 
 const Thumbnail = ({ token, children }: { token: types.NftType; children: any }) => {
@@ -16,21 +16,23 @@ const Thumbnail = ({ token, children }: { token: types.NftType; children: any })
       }}
       overlay={(props) => (
         <Tooltip id="nft-tooltip" {...props}>
-          {!loaded && (
-            <FontAwesomeIcon
-              icon={faSpinnerThird}
-              size="2x"
-              className="text-white fa-spin fast-spin"
+          <div style={{ width: '90px' }}>
+            {!loaded && (
+              <FontAwesomeIcon
+                icon={faSpinnerThird}
+                size="2x"
+                className="text-white fa-spin fast-spin"
+              />
+            )}
+            <img
+              src={token.thumbnailUrl}
+              alt={token.name}
+              height={90}
+              onLoad={() => {
+                setLoaded(true);
+              }}
             />
-          )}
-          <img
-            src={token.thumbnailUrl}
-            alt={token.name}
-            height={90}
-            onLoad={() => {
-              setLoaded(true);
-            }}
-          />
+          </div>
         </Tooltip>
       )}
     >
@@ -51,7 +53,7 @@ const NftPreview = ({ token }: { token: types.NftType }) => {
             return (
               <li key={i}>
                 <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary mr-2" />
-                {link.startsWith('https://ipfs.io/ipfs/') ? (
+                {link.startsWith('https://ipfs.io/ipfs/') && token.isWhitelistedStorage === true ? (
                   <Thumbnail token={token}>
                     <a
                       href={link}
@@ -70,6 +72,18 @@ const NftPreview = ({ token }: { token: types.NftType }) => {
           } else return null;
         })}
       </ul>
+      {token.isWhitelistedStorage === false && (
+        <div className="d-flex ml-2 text-break-all pl-1">
+          <FontAwesomeIcon
+            icon={faAngleDown}
+            className="text-secondary"
+            style={{ marginTop: '2px' }}
+            transform={{ rotate: 45 }}
+          />
+          &nbsp;
+          <small className="text-danger ml-1">storage not whitelisted</small>
+        </div>
+      )}
     </div>
   ) : null;
 };
