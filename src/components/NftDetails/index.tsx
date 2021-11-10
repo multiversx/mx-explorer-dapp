@@ -136,11 +136,15 @@ const NftDetails = () => {
                       )}
                       {nftDetails.supply !== undefined && (
                         <DetailItem title="Supply">
-                          <Denominate
-                            value={nftDetails.supply}
-                            showLabel={false}
-                            denomination={nftDetails.decimals ? nftDetails.decimals : 1}
-                          />
+                          {nftDetails.decimals ? (
+                            <Denominate
+                              value={nftDetails.supply}
+                              showLabel={false}
+                              denomination={nftDetails.decimals}
+                            />
+                          ) : (
+                            Number(nftDetails.supply).toLocaleString('en')
+                          )}
                         </DetailItem>
                       )}
                       {nftDetails.decimals !== undefined && (
@@ -221,11 +225,15 @@ const NftDetails = () => {
                                     </div>
                                   </td>
                                   <td>
-                                    <Denominate
-                                      value={account.balance}
-                                      showLabel={false}
-                                      denomination={nftDetails.decimals ? nftDetails.decimals : 1}
-                                    />
+                                    {nftDetails.decimals ? (
+                                      <Denominate
+                                        value={account.balance}
+                                        showLabel={false}
+                                        denomination={nftDetails.decimals}
+                                      />
+                                    ) : (
+                                      Number(account.balance).toLocaleString('en')
+                                    )}
                                   </td>
                                 </tr>
                               ))}

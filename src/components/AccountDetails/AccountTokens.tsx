@@ -128,7 +128,7 @@ const AccountTokens = () => {
                         <Denominate
                           showLabel={false}
                           value={balance ? balance : '0'}
-                          denomination={type === 'MetaESDT' ? decimals : 1}
+                          denomination={decimals}
                         />
                       </div>
 

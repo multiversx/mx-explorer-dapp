@@ -100,11 +100,15 @@ const AccountNfts = () => {
                   <DetailItem title={<CollectionBlock identifier={collection} />} key={identifier}>
                     <div className="d-flex align-items-center">
                       <div className="mr-1">
-                        <Denominate
-                          showLabel={false}
-                          value={balance ? balance : '0'}
-                          denomination={type === 'MetaESDT' ? decimals : 1}
-                        />
+                        {decimals ? (
+                          <Denominate
+                            showLabel={false}
+                            value={balance ? balance : '0'}
+                            denomination={decimals}
+                          />
+                        ) : (
+                          Number(balance).toLocaleString('en')
+                        )}
                       </div>
                       <NftBlock identifier={identifier} collection={collection} />
                       <NftBadge type={type} className="ml-2" />
