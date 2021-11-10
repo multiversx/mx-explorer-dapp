@@ -53,7 +53,9 @@ const NftPreview = ({ token }: { token: types.NftType }) => {
             return (
               <li key={i}>
                 <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary mr-2" />
-                {link.startsWith('https://ipfs.io/ipfs/') && token.isWhitelistedStorage === true ? (
+                {link.startsWith(
+                  'https://ipfs.io/ipfs/'
+                ) /* && token.isWhitelistedStorage === true */ ? (
                   <Thumbnail token={token}>
                     <a
                       href={link}
@@ -72,7 +74,7 @@ const NftPreview = ({ token }: { token: types.NftType }) => {
           } else return null;
         })}
       </ul>
-      {token.isWhitelistedStorage === false && (
+      {/* {token.isWhitelistedStorage === false && (
         <div className="d-flex ml-2 text-break-all pl-1">
           <FontAwesomeIcon
             icon={faAngleDown}
@@ -83,7 +85,7 @@ const NftPreview = ({ token }: { token: types.NftType }) => {
           &nbsp;
           <small className="text-danger ml-1">storage not whitelisted</small>
         </div>
-      )}
+      )} */}
     </div>
   ) : null;
 };
