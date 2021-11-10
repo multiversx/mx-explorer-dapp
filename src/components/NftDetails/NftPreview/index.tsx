@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
 import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons/faSpinnerThird';
 import { types } from 'helpers';
 
@@ -49,6 +50,7 @@ const NftPreview = ({ token }: { token: types.NftType }) => {
             const link = Buffer.from(String(uri), 'base64').toString();
             return (
               <li key={i}>
+                <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary mr-2" />
                 {link.startsWith('https://ipfs.io/ipfs/') ? (
                   <Thumbnail token={token}>
                     <a

@@ -134,7 +134,7 @@ const NftDetails = () => {
                       {nftDetails.royalties !== undefined && nftDetails.royalties !== null && (
                         <DetailItem title="Royalties">{nftDetails.royalties}%</DetailItem>
                       )}
-                      {nftDetails.supply !== undefined && (
+                      {nftDetails.supply !== undefined && nftDetails.type !== 'NonFungibleESDT' && (
                         <DetailItem title="Supply">
                           {nftDetails.decimals ? (
                             <Denominate
