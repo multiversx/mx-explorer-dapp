@@ -178,7 +178,7 @@ const CollectionDetails = () => {
                                 <tr>
                                   <th>Identifier</th>
                                   <th>Name</th>
-                                  <th>Owner</th>
+                                  <th>Creator</th>
                                 </tr>
                               </thead>
                               <tbody data-testid="nftsTable">

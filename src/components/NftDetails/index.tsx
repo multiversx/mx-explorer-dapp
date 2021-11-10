@@ -97,7 +97,7 @@ const NftDetails = () => {
                       </DetailItem>
                       <DetailItem title="Identifier">{nftDetails.identifier}</DetailItem>
                       <DetailItem title="Collection">
-                        <CollectionBlock identifier={nftDetails.collection} />
+                        <CollectionBlock nft={nftDetails} />
                       </DetailItem>
                       {nftDetails.owner !== undefined && (
                         <DetailItem title="Owner">
@@ -158,7 +158,10 @@ const NftDetails = () => {
                       {nftDetails.tags !== undefined && nftDetails.tags.length > 0 && (
                         <DetailItem title="Tags">
                           {nftDetails.tags.map((tag) => (
-                            <div className="badge badge-light p-2 mr-2 font-weight-normal">
+                            <div
+                              key={tag}
+                              className="badge badge-light p-2 mr-2 font-weight-normal"
+                            >
                               {tag}
                             </div>
                           ))}
