@@ -49,8 +49,8 @@ const NftPreview = ({ token }: { token: types.NftType }) => {
             const link = Buffer.from(String(uri), 'base64').toString();
             return (
               <li key={i}>
-                <Thumbnail token={token}>
-                  {link.startsWith('http') ? (
+                {link.startsWith('https://ipfs.io/ipfs/') ? (
+                  <Thumbnail token={token}>
                     <a
                       href={link}
                       {...{ target: '_blank' }}
@@ -59,10 +59,10 @@ const NftPreview = ({ token }: { token: types.NftType }) => {
                     >
                       {link}
                     </a>
-                  ) : (
-                    <span className="text-break">{link}</span>
-                  )}
-                </Thumbnail>
+                  </Thumbnail>
+                ) : (
+                  <span className="text-break">{link}</span>
+                )}
               </li>
             );
           } else return null;
