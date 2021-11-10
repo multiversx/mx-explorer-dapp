@@ -1,77 +1,24 @@
 import * as React from 'react';
 import { types, urlBuilder } from 'helpers';
-import { adapter, NetworkLink, Denominate } from 'sharedComponents';
+import { NetworkLink } from 'sharedComponents';
 
-interface CollectionBlockType {
-  identifier: string;
-  value?: string;
-  showLastNonZeroDecimal?: boolean;
-  showLabel?: boolean;
-  token?: string | React.ReactNode;
-  decimals?: number;
-  denomination?: number;
-  'data-testid'?: string;
-}
-
-const CollectionBlock = (props: CollectionBlockType) => {
-  const ref = React.useRef(null);
-  const { getCollection } = adapter();
-  const [collectionDetails, setCollectionDetails] = React.useState<types.CollectionType>();
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-
-  const fetchCollectionBlock = () => {
-    getCollection(props.identifier).then(({ success, data }) => {
-      if (ref.current !== null) {
-        setCollectionDetails(data);
-        setDataReady(success);
-      }
-    });
-  };
-
-  const denomination =
-    dataReady === true && collectionDetails && collectionDetails.decimals
-      ? collectionDetails.decimals
-      : 1;
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchCollectionBlock, [props.identifier]);
-
+const CollectionBlock = ({ nft }: { nft: types.NftType }) => {
   return (
-    <div ref={ref} className="d-flex text-truncate">
-      {props.value && (
-        <div className="mr-1">
-          <Denominate
-            {...props}
-            value={props.value}
-            showLabel={false}
-            denomination={denomination}
-          />
-        </div>
-      )}
+    <div className="d-flex text-truncate">
       <NetworkLink
-        to={urlBuilder.collectionDetails(props.identifier)}
-        className={`d-flex ${collectionDetails?.assets?.svgUrl ? 'token-link' : ''}`}
+        to={urlBuilder.collectionDetails(nft.collection)}
+        className={`d-flex ${nft?.assets?.svgUrl ? 'token-link' : ''}`}
       >
         <div className="d-flex align-items-center symbol text-truncate">
-          {dataReady === undefined && <span className="text-truncate">{props.identifier}</span>}
-          {dataReady === false && <span className="text-truncate">{props.identifier}</span>}
-          {dataReady === true && collectionDetails && (
+          {nft.assets ? (
             <>
-              {collectionDetails.assets ? (
-                <>
-                  {collectionDetails.assets.svgUrl && (
-                    <img
-                      src={collectionDetails.assets.svgUrl}
-                      alt={collectionDetails.ticker}
-                      className="token-icon mr-1"
-                    />
-                  )}
-                  <div className="text-truncate">{collectionDetails.ticker}</div>
-                </>
-              ) : (
-                <span className="text-truncate">{props.identifier}</span>
+              {nft.assets.svgUrl && (
+                <img src={nft.assets.svgUrl} className="token-icon mr-1" alt="" />
               )}
+              <div className="text-truncate">{nft.collection}</div>
             </>
+          ) : (
+            <span className="text-truncate">{nft.collection}</span>
           )}
         </div>
       </NetworkLink>
