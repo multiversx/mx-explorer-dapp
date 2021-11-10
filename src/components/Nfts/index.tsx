@@ -113,7 +113,7 @@ const Nfts = () => {
                                   </td>
                                   <td>{nft.name}</td>
                                   <td>
-                                    <CollectionBlock identifier={nft.collection} />
+                                    <CollectionBlock nft={nft} />
                                   </td>
                                   <td>
                                     <div className="d-flex trim-size-xl">
