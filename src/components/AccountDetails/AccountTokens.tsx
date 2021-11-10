@@ -3,13 +3,12 @@ import { Redirect, useParams } from 'react-router-dom';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
 import {
   adapter,
-  TokenBlock,
   DetailItem,
   Loader,
   Pager,
   PageState,
   Denominate,
-  NftBlock,
+  NetworkLink,
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import AccountTabs from './AccountLayout/AccountTabs';
@@ -120,7 +119,7 @@ const AccountTokens = () => {
 
           {dataReady === true && (accountTokens.length > 0 || accountNfts.length > 0) && (
             <>
-              {accountNfts.map(({ name, identifier, decimals, balance, type, collection }) => {
+              {accountNfts.map(({ name, identifier, decimals, balance, assets }) => {
                 return (
                   <DetailItem title={name} key={identifier}>
                     <div className="d-flex align-items-center">
@@ -132,15 +131,47 @@ const AccountTokens = () => {
                         />
                       </div>
 
-                      <NftBlock identifier={identifier} collection={collection} />
+                      <NetworkLink
+                        to={urlBuilder.nftDetails(identifier)}
+                        className={`d-flex text-truncate ${assets?.svgUrl ? 'token-link' : ''}`}
+                      >
+                        <div className="d-flex align-items-center symbol text-truncate">
+                          {assets?.svgUrl && (
+                            <img src={assets.svgUrl} alt={name} className="token-icon mr-1" />
+                          )}
+                          <div className="text-truncate">
+                            {name} ({identifier})
+                          </div>
+                        </div>
+                      </NetworkLink>
                     </div>
                   </DetailItem>
                 );
               })}
-              {accountTokens.map(({ identifier, name, balance }) => {
+              {accountTokens.map(({ identifier, name, balance, decimals, assets }) => {
                 return (
                   <DetailItem title={name} key={identifier}>
-                    <TokenBlock identifier={identifier} value={balance ? balance : '0'} />
+                    <div className="d-flex align-items-center">
+                      <div className="mr-1">
+                        <Denominate
+                          showLabel={false}
+                          value={balance ? balance : '0'}
+                          denomination={decimals}
+                        />
+                      </div>
+
+                      <NetworkLink
+                        to={urlBuilder.nftDetails(identifier)}
+                        className={`d-flex text-truncate ${assets?.svgUrl ? 'token-link' : ''}`}
+                      >
+                        <div className="d-flex align-items-center symbol text-truncate">
+                          {assets?.svgUrl && (
+                            <img src={assets.svgUrl} alt={name} className="token-icon mr-1" />
+                          )}
+                          <div className="text-truncate">{assets ? name : identifier}</div>
+                        </div>
+                      </NetworkLink>
+                    </div>
                   </DetailItem>
                 );
               })}
