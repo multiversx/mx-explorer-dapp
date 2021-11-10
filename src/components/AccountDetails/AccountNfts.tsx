@@ -10,7 +10,7 @@ import {
   CollectionBlock,
   Denominate,
   NftBadge,
-  NftBlock,
+  NetworkLink,
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import AccountTabs from './AccountLayout/AccountTabs';
@@ -95,23 +95,43 @@ const AccountNfts = () => {
 
           {dataReady === true && accountNfts.length > 0 && (
             <>
-              {accountNfts.map(({ identifier, decimals, balance, type, collection }) => {
+              {accountNfts.map((nft) => {
                 return (
-                  <DetailItem title={<CollectionBlock identifier={collection} />} key={identifier}>
+                  <DetailItem title={<CollectionBlock nft={nft} />} key={nft.identifier}>
                     <div className="d-flex align-items-center">
-                      <div className="mr-1">
-                        {decimals ? (
-                          <Denominate
-                            showLabel={false}
-                            value={balance ? balance : '0'}
-                            denomination={decimals}
-                          />
-                        ) : (
-                          Number(balance).toLocaleString('en')
-                        )}
+                      {nft.balance !== undefined && (
+                        <div className="mr-1">
+                          {nft.decimals ? (
+                            <Denominate
+                              showLabel={false}
+                              value={nft.balance ? nft.balance : '0'}
+                              denomination={nft.decimals}
+                            />
+                          ) : (
+                            Number(nft.balance).toLocaleString('en')
+                          )}
+                        </div>
+                      )}
+                      <div className="d-flex text-truncate">
+                        <NetworkLink
+                          to={urlBuilder.nftDetails(nft.identifier)}
+                          className={`d-flex text-truncate ${
+                            nft?.assets?.svgUrl ? 'token-link' : ''
+                          }`}
+                        >
+                          <div className="d-flex align-items-center symbol text-truncate">
+                            {nft?.assets?.svgUrl && (
+                              <img
+                                src={nft.assets.svgUrl}
+                                alt={nft.name}
+                                className="token-icon mr-1"
+                              />
+                            )}
+                            <div className="text-truncate">{nft.identifier}</div>
+                          </div>
+                        </NetworkLink>
                       </div>
-                      <NftBlock identifier={identifier} collection={collection} />
-                      <NftBadge type={type} className="ml-2" />
+                      <NftBadge type={nft.type} className="ml-2" />
                     </div>
                   </DetailItem>
                 );
