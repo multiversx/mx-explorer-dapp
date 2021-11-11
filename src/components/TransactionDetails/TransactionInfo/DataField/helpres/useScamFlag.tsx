@@ -29,7 +29,7 @@ export const scamFlag = () => (
     let parts = [];
 
     if (allLinks.length > 0) {
-      let remainingOutput = output;
+      let remainingOutput = input;
 
       allLinks.forEach((entry, index) => {
         const { string: foundLink } = entry;
@@ -44,7 +44,7 @@ export const scamFlag = () => (
             firstPart = remainingOutput.substring(0, i);
           }
         }
-        for (let i = output.length; i > 0; i--) {
+        for (let i = input.length; i > 0; i--) {
           const start = remainingOutput.slice(0, i);
           const [newFoundLink] = anchorme.list(cleanLink(start));
           if (newFoundLink && foundLink === newFoundLink.string) {
