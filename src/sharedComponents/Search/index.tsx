@@ -20,7 +20,9 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
     getNode,
     getMiniBlock,
     getToken,
+    getNft,
     getScResult,
+    getCollection,
   } = adapter();
   const [route, setRoute] = React.useState('');
   const [searching, setSearching] = React.useState(false);
@@ -75,13 +77,26 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
           break;
 
         case isToken:
-          getToken(hash).then((token) => {
-            setExpanded(false);
-            const newRoute = token.success
-              ? networkRoute(urlBuilder.tokenDetails(hash))
-              : notFoundRoute;
-            setRoute(newRoute);
-          });
+          Promise.all([getToken(hash), getNft(hash), getCollection(hash)]).then(
+            ([token, nft, collection]) => {
+              setExpanded(false);
+              switch (true) {
+                case token.success:
+                  setRoute(networkRoute(urlBuilder.tokenDetails(hash)));
+                  break;
+                case nft.success:
+                  setRoute(networkRoute(urlBuilder.nftDetails(hash)));
+                  break;
+                case collection.success:
+                  setRoute(networkRoute(urlBuilder.collectionDetails(hash)));
+                  break;
+                default:
+                  setRoute(notFoundRoute);
+                  break;
+              }
+            }
+          );
+
           break;
 
         case isValidHash:
