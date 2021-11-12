@@ -4,7 +4,6 @@ import { adapter, NetworkLink, Denominate } from 'sharedComponents';
 
 interface NftBlockType {
   identifier: string;
-  collection: string;
   value?: string;
   showLastNonZeroDecimal?: boolean;
   showLabel?: boolean;
@@ -31,33 +30,36 @@ const NftBlock = (props: NftBlockType) => {
     });
   };
 
-  const denomination =
-    dataReady === true && nftDetails && nftDetails.decimals ? nftDetails.decimals : 1;
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchNftBlock, [props.identifier]);
 
   return (
     <div ref={ref} className="d-flex text-truncate">
-      {props.value && (
-        <div className="mr-1">
-          <Denominate
-            {...props}
-            value={props.value}
-            showLabel={false}
-            denomination={denomination}
-          />
-        </div>
-      )}
-      <NetworkLink
-        to={urlBuilder.nftDetails(props.identifier)}
-        className={`d-flex text-truncate ${nftDetails?.assets?.svgUrl ? 'token-link' : ''}`}
-      >
-        <div className="d-flex align-items-center symbol text-truncate">
-          {dataReady === undefined && <span className="text-truncate">{props.identifier}</span>}
-          {dataReady === false && <span className="text-truncate">{props.identifier}</span>}
-          {dataReady === true && nftDetails && (
+      {dataReady === undefined && <span className="text-truncate">{props.identifier}</span>}
+      {dataReady === false && <span className="text-truncate">{props.identifier}</span>}
+      {dataReady === true && nftDetails && (
+        <>
+          {props.value && nftDetails.type !== 'NonFungibleESDT' && (
             <>
+              <div className="mr-2">Value</div>
+              <div className="mr-1">
+                {nftDetails.decimals ? (
+                  <Denominate
+                    value={props.value}
+                    showLabel={false}
+                    denomination={nftDetails.decimals}
+                  />
+                ) : (
+                  Number(props.value).toLocaleString('en')
+                )}
+              </div>
+            </>
+          )}
+          <NetworkLink
+            to={urlBuilder.nftDetails(props.identifier)}
+            className={`d-flex text-truncate ${nftDetails?.assets?.svgUrl ? 'token-link' : ''}`}
+          >
+            <div className="d-flex align-items-center symbol text-truncate">
               {nftDetails.assets ? (
                 <>
                   {nftDetails.assets.svgUrl && (
@@ -74,10 +76,10 @@ const NftBlock = (props: NftBlockType) => {
               ) : (
                 <span className="text-truncate">{props.identifier}</span>
               )}
-            </>
-          )}
-        </div>
-      </NetworkLink>
+            </div>
+          </NetworkLink>
+        </>
+      )}
     </div>
   );
 };
