@@ -1,20 +1,11 @@
 import * as React from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
-import {
-  useNetworkRoute,
-  urlBuilder,
-  useIsMainnet,
-  isHash,
-  isContract,
-  addressIsBech32,
-  bech32,
-} from 'helpers';
+import { useNetworkRoute, urlBuilder, isHash, isContract, addressIsBech32, bech32 } from 'helpers';
 import { Redirect, useParams } from 'react-router-dom';
 import { adapter, PageState, Loader } from 'sharedComponents';
 
 const HashSearch = () => {
   const { hash: query } = useParams() as any;
-  const isMainnet = useIsMainnet();
   const networkRoute = useNetworkRoute();
   const {
     getAccount,
@@ -24,6 +15,8 @@ const HashSearch = () => {
     getMiniBlock,
     getToken,
     getScResult,
+    getNft,
+    getCollection,
   } = adapter();
   const [route, setRoute] = React.useState('');
   const [searching, setSearching] = React.useState<boolean | undefined>();
@@ -63,15 +56,25 @@ const HashSearch = () => {
           break;
 
         case isToken:
-          if (isMainnet) {
-            setRoute('');
-          } else {
-            getToken(query).then((token) => {
-              const newRoute = token.success ? networkRoute(urlBuilder.tokenDetails(query)) : '';
-              setRoute(newRoute);
+          Promise.all([getToken(query), getNft(query), getCollection(query)]).then(
+            ([token, nft, collection]) => {
+              switch (true) {
+                case token.success:
+                  setRoute(networkRoute(urlBuilder.tokenDetails(query)));
+                  break;
+                case nft.success:
+                  setRoute(networkRoute(urlBuilder.nftDetails(query)));
+                  break;
+                case collection.success:
+                  setRoute(networkRoute(urlBuilder.collectionDetails(query)));
+                  break;
+                default:
+                  setRoute('');
+                  break;
+              }
               setSearching(false);
-            });
-          }
+            }
+          );
           break;
 
         case isValidquery:
