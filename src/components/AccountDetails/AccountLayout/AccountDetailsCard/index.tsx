@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
-import { faDollarSign, faUser, faCoins } from '@fortawesome/pro-solid-svg-icons';
+import { faClock } from '@fortawesome/pro-regular-svg-icons';
+import { faDollarSign, faUser, faCoins, faLayerGroup } from '@fortawesome/pro-solid-svg-icons';
 import {
   CardItem,
   CopyButton,
@@ -330,6 +330,15 @@ const AccountDetailsCard = () => {
                   {accountTokensCount !== undefined ? accountTokensCount : '...'}
                 </CardItem>
               )}
+              <CardItem className={cardItemClass} title="Shard" icon={faLayerGroup}>
+                {shard !== undefined ? (
+                  <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
+                    <ShardSpan shard={shard} />
+                  </NetworkLink>
+                ) : (
+                  <>N/A</>
+                )}
+              </CardItem>
               {/* <LockedAmountCardItem lockedAmount={lockedAmount} cardItemClass={cardItemClass} /> */}
             </div>
           </div>
