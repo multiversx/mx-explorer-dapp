@@ -161,7 +161,7 @@ const AccountTokens = () => {
                       </div>
 
                       <NetworkLink
-                        to={urlBuilder.nftDetails(identifier)}
+                        to={urlBuilder.tokenDetails(identifier)}
                         className={`d-flex text-truncate ${assets?.svgUrl ? 'token-link' : ''}`}
                       >
                         <div className="d-flex align-items-center symbol text-truncate">
