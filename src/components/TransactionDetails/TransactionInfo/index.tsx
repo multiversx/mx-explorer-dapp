@@ -113,10 +113,18 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
           showLastNonZeroDecimal: true,
         });
 
-  const transactionValue = denominate({
+  const formattedTxValue = denominate({
     input: transaction.value,
     denomination,
     decimals,
+    showLastNonZeroDecimal: true,
+  });
+
+  const txValue = denominate({
+    input: transaction.value,
+    denomination,
+    decimals,
+    addCommas: false,
     showLastNonZeroDecimal: true,
   });
 
@@ -276,10 +284,10 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
                 </DetailItem>
 
                 <DetailItem title="Value">
-                  {transactionValue} {erdLabel}{' '}
+                  {formattedTxValue} {erdLabel}{' '}
                   <span className="text-secondary">
                     {transaction.price !== undefined ? (
-                      <>({formattedUsdValue(transactionValue, transaction.price, 2)})</>
+                      <>({formattedUsdValue(txValue, transaction.price, 2)})</>
                     ) : (
                       <>N/A</>
                     )}
