@@ -82,7 +82,8 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
             className={`nav-link ${
               activeRoute(tokensRoutes.tokens) ||
               activeRoute(tokensRoutes.tokenDetails) ||
-              activeRoute(tokensRoutes.tokenDetailsAccounts)
+              activeRoute(tokensRoutes.tokenDetailsAccounts) ||
+              activeRoute(tokensRoutes.tokensMeta)
                 ? 'active'
                 : ''
             }`}

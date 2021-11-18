@@ -9,6 +9,8 @@ export interface AccountType {
   code?: string;
   shard?: number;
   ownerAddress?: string;
+  developerReward?: string;
+  deployedAt?: number;
 }
 
 export interface TokenType {
@@ -19,6 +21,7 @@ export interface TokenType {
   owner: string;
   minted: string;
   burnt: string;
+  supply: string;
   canBurn: boolean;
   canChangeOwner: boolean;
   canFreeze: boolean;
@@ -77,6 +80,11 @@ export interface NftType {
   decimals?: number;
   owner?: string;
   supply?: string;
+  isWhitelistedStorage?: boolean;
+  owners?: {
+    address: string;
+    balance: string;
+  }[];
   assets?: {
     website?: string;
     description?: string;
@@ -90,6 +98,22 @@ export interface NftType {
     fileUri?: string;
     fileName?: string;
   };
+}
+
+export interface ScResultType {
+  callType: string;
+  gasLimit: number;
+  gasPrice: number;
+  nonce: number;
+  prevTxHash: string;
+  hash: string;
+  originalTxHash: string;
+  receiver?: string;
+  sender: string;
+  timestamp: number;
+  value: string;
+  data?: string;
+  returnMessage?: string;
 }
 
 export interface ProviderType {

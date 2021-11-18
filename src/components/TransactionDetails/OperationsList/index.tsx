@@ -62,9 +62,23 @@ const OperationText = ({ operation }: { operation: OperationType }) => {
   switch (operation.action) {
     case 'create':
     case 'localMint':
+    case 'ESDTLocalMint':
       return <OperationReceiver operation={operation} action="Mint" />;
     case 'burn':
+    case 'localBurn':
+    case 'ESDTLocalBurn':
       return <OperationSender operation={operation} action="Burn" />;
+    case 'addQuantity':
+      return <OperationReceiver operation={operation} action="Add quantity" />;
+    case 'wipe':
+      return <OperationSender operation={operation} action="Wipe" />;
+    case 'multiTransfer':
+      return (
+        <>
+          <OperationSender operation={operation} action="Multi transfer" />{' '}
+          <OperationReceiver operation={operation} />
+        </>
+      );
     default:
       return (
         <>
@@ -85,16 +99,14 @@ const OperationsList = ({ operations }: { operations: OperationType[] }) => {
               operation.identifier !== undefined &&
               operation.type !== undefined && (
                 <div className="col-lg-6 col-xl-6 d-flex align-items-center">
-                  <div className="mr-2">Value</div>
-                  <div className="d-flex flex-wrap">
-                    {operation.type === 'nft' && operation.collection && operation.identifier ? (
-                      <NftBlock
-                        identifier={operation.identifier}
-                        collection={operation.collection}
-                        value={operation.value}
-                      />
+                  <div className="d-flex flex-wrap text-truncate">
+                    {operation.type === 'nft' && operation.identifier ? (
+                      <NftBlock identifier={operation.identifier} value={operation.value} />
                     ) : (
-                      <TokenBlock identifier={operation.identifier} value={operation.value} />
+                      <>
+                        <div className="mr-2">Value</div>
+                        <TokenBlock identifier={operation.identifier} value={operation.value} />
+                      </>
                     )}
                   </div>
                 </div>

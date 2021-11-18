@@ -1,10 +1,13 @@
 import * as React from 'react';
+import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExchange } from '@fortawesome/pro-regular-svg-icons/faExchange';
-import { Denominate, CopyButton, Trim } from 'sharedComponents';
+import { faExchange, faSearch } from '@fortawesome/pro-regular-svg-icons';
+import { Denominate, CopyButton, Trim, NetworkLink } from 'sharedComponents';
+import { useGlobalState } from 'context';
 import decodePart from './decodePart';
 
 export interface ResultType {
+  hash: string;
   callType: string;
   gasLimit: number;
   gasPrice: number;
@@ -14,10 +17,17 @@ export interface ResultType {
   sender: string;
   value: string;
   data?: string;
+  originalTxHash: string;
   returnMessage?: string;
 }
 
 const ScResultsList = ({ results }: { results: ResultType[] }) => {
+  const { hash } = useLocation();
+  const ref = React.useRef<HTMLDivElement>(null);
+  const {
+    activeNetwork: { explorerAddress },
+  } = useGlobalState();
+
   const decodeData = (data: string) => {
     const parts = Buffer.from(data, 'base64').toString().split('@');
 
@@ -32,16 +42,49 @@ const ScResultsList = ({ results }: { results: ResultType[] }) => {
     return parts.join('@');
   };
 
+  React.useEffect(() => {
+    if (ref.current && ref.current !== null) {
+      window.scrollTo({
+        top: ref.current.getBoundingClientRect().top - 70,
+        behavior: 'smooth',
+      });
+    }
+  }, []);
+
   return (
     <div className="sc-results-list detailed-list d-flex flex-column mt-1">
       {results.map((result: ResultType, i) => {
+        const highlightTx = hash.replace('#', '') === result.hash;
         return (
-          <div key={i} className="detailed-item d-flex border-left border-bottom ml-3 py-3">
+          <div
+            key={i}
+            id={result.hash}
+            className={`detailed-item d-flex border-left border-bottom ml-3 py-3 ${
+              highlightTx ? 'highlighted' : ''
+            }`}
+            {...(highlightTx ? { ref: ref } : {})}
+          >
             <div className="transaction-icon">
               <FontAwesomeIcon icon={faExchange} />
             </div>
 
             <div className="detailed-item-content">
+              {result.hash && (
+                <div className="row mb-3 d-flex flex-column flex-sm-row">
+                  <div className="col col-left">Hash</div>
+                  <div className="col d-flex align-items-center">
+                    <Trim text={result.hash} />
+
+                    <NetworkLink
+                      to={`/transactions/${result.originalTxHash}#${result.hash}`}
+                      className="side-action ml-2"
+                    >
+                      <FontAwesomeIcon icon={faSearch} />
+                    </NetworkLink>
+                  </div>
+                </div>
+              )}
+
               {result.sender && (
                 <div className="row mb-3 d-flex flex-column flex-sm-row">
                   <div className="col col-left">From</div>

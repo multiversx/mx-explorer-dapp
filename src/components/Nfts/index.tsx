@@ -27,18 +27,20 @@ const Nfts = () => {
 
   const fetchNfts = () => {
     const queryObject = getQueryObject();
+    const type = 'SemiFungibleESDT,NonFungibleESDT';
 
-    Promise.all([getNfts({ ...queryObject, size }), getNftsCount(queryObject)]).then(
-      ([nftsData, count]) => {
-        if (ref.current !== null) {
-          if (nftsData.success) {
-            setNfts(nftsData.data);
-            setTotalNfts(Math.min(count.data, 10000));
-          }
-          setDataReady(nftsData.success && count.success);
+    Promise.all([
+      getNfts({ ...queryObject, size, type }),
+      getNftsCount({ ...queryObject, type }),
+    ]).then(([nftsData, count]) => {
+      if (ref.current !== null) {
+        if (nftsData.success) {
+          setNfts(nftsData.data);
+          setTotalNfts(Math.min(count.data, 10000));
         }
+        setDataReady(nftsData.success && count.success);
       }
-    );
+    });
   };
 
   React.useEffect(fetchNfts, [search]);
@@ -55,8 +57,18 @@ const Nfts = () => {
               <div className="col-12">
                 <div className="card">
                   <div className="card-header">
-                    <div className="card-header-item">
+                    <div className="card-header-item d-flex justify-content-between align-items-center">
                       <Filters />
+                      {nfts && nfts.length > 0 && (
+                        <div className="d-none d-sm-flex">
+                          <Pager
+                            page={String(page)}
+                            total={totalNfts !== '...' ? Math.min(totalNfts, 10000) : totalNfts}
+                            itemsPerPage={25}
+                            show={nfts.length > 0}
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -67,8 +79,8 @@ const Nfts = () => {
                           <table className="table">
                             <thead>
                               <tr>
-                                <th>Name</th>
                                 <th>Identifier</th>
+                                <th>Name</th>
                                 <th>Collection</th>
                                 <th>Creator Account</th>
                               </tr>
@@ -81,17 +93,27 @@ const Nfts = () => {
                                       <NetworkLink
                                         to={urlBuilder.nftDetails(nft.identifier)}
                                         data-testid={`nftsLink${i}`}
+                                        className={`d-flex ${
+                                          nft.assets?.svgUrl ? 'token-link' : ''
+                                        }`}
                                       >
                                         <div className="d-flex align-items-center">
-                                          <div>{nft.ticker ? nft.ticker : nft.name}</div>
+                                          {nft.assets && nft.assets.svgUrl && (
+                                            <img
+                                              src={nft.assets.svgUrl}
+                                              alt={nft.name}
+                                              className="token-icon mr-1"
+                                            />
+                                          )}
+                                          <div>{nft.identifier}</div>
                                         </div>
                                       </NetworkLink>
                                       <NftBadge type={nft.type} className="ml-2" />
                                     </div>
                                   </td>
-                                  <td>{nft.identifier}</td>
+                                  <td>{nft.name}</td>
                                   <td>
-                                    <CollectionBlock identifier={nft.collection} />
+                                    <CollectionBlock nft={nft} />
                                   </td>
                                   <td>
                                     <div className="d-flex trim-size-xl">

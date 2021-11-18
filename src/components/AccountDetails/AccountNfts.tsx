@@ -10,7 +10,7 @@ import {
   CollectionBlock,
   Denominate,
   NftBadge,
-  NftBlock,
+  NetworkLink,
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import AccountTabs from './AccountLayout/AccountTabs';
@@ -34,12 +34,14 @@ const AccountNfts = () => {
 
   const fetchAccountNfts = () => {
     if (nftsActive) {
+      const type = 'SemiFungibleESDT,NonFungibleESDT';
       Promise.all([
         getAccountNfts({
           size,
           address,
+          type,
         }),
-        getAccountNftsCount(address),
+        getAccountNftsCount({ address, type }),
       ]).then(([accountNftsData, accountNftsCountData]) => {
         if (ref.current !== null) {
           if (accountNftsData.success && accountNftsCountData.success) {
@@ -64,6 +66,16 @@ const AccountNfts = () => {
       <div className="card-header">
         <div className="card-header-item d-flex justify-content-between align-items-center">
           <AccountTabs />
+          <div className="d-none d-md-flex">
+            {dataReady === true && accountNfts.length > 0 && (
+              <Pager
+                itemsPerPage={25}
+                page={String(size)}
+                total={accountNftsCount}
+                show={accountNfts.length > 0}
+              />
+            )}
+          </div>
         </div>
       </div>
       <div className="card-body pt-0 px-lg-spacer py-lg-4">
@@ -83,36 +95,60 @@ const AccountNfts = () => {
 
           {dataReady === true && accountNfts.length > 0 && (
             <>
-              {accountNfts.map(({ identifier, decimals, balance, type, collection }) => {
+              {accountNfts.map((nft) => {
                 return (
-                  <DetailItem title={<CollectionBlock identifier={collection} />} key={identifier}>
+                  <DetailItem title={<CollectionBlock nft={nft} />} key={nft.identifier}>
                     <div className="d-flex align-items-center">
-                      {Number(balance) > 1 ? (
+                      {nft.balance !== undefined && (
                         <div className="mr-1">
-                          <Denominate
-                            showLabel={false}
-                            value={balance}
-                            denomination={type === 'MetaESDT' ? decimals : 1}
-                          />
+                          {nft.decimals ? (
+                            <Denominate
+                              showLabel={false}
+                              value={nft.balance ? nft.balance : '0'}
+                              denomination={nft.decimals}
+                            />
+                          ) : (
+                            Number(nft.balance).toLocaleString('en')
+                          )}
                         </div>
-                      ) : null}
-                      <NftBlock identifier={identifier} collection={collection} />
-                      <NftBadge type={type} className="ml-2" />
+                      )}
+                      <div className="d-flex text-truncate">
+                        <NetworkLink
+                          to={urlBuilder.nftDetails(nft.identifier)}
+                          className={`d-flex text-truncate ${
+                            nft?.assets?.svgUrl ? 'token-link' : ''
+                          }`}
+                        >
+                          <div className="d-flex align-items-center symbol text-truncate">
+                            {nft?.assets?.svgUrl && (
+                              <img
+                                src={nft.assets.svgUrl}
+                                alt={nft.name}
+                                className="token-icon mr-1"
+                              />
+                            )}
+                            <div className="text-truncate">{nft.identifier}</div>
+                          </div>
+                        </NetworkLink>
+                      </div>
+                      <NftBadge type={nft.type} className="ml-2" />
                     </div>
                   </DetailItem>
                 );
               })}
-              <div className="card-footer d-flex justify-content-end border-0">
-                <Pager
-                  itemsPerPage={25}
-                  page={String(size)}
-                  total={accountNftsCount}
-                  show={accountNfts.length > 0}
-                />
-              </div>
             </>
           )}
         </div>
+      </div>
+      <div className="card-footer d-flex justify-content-end border-0 pt-0">
+        {dataReady === true && accountNfts.length > 0 && (
+          <Pager
+            itemsPerPage={25}
+            page={String(size)}
+            total={accountNftsCount}
+            show={accountNfts.length > 0}
+          />
+        )}
       </div>
     </div>
   );

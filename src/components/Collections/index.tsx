@@ -47,8 +47,22 @@ const Collections = () => {
               <div className="col-12">
                 <div className="card">
                   <div className="card-header">
-                    <div className="card-header-item">
+                    <div className="card-header-item d-flex justify-content-between align-items-center">
                       <Filters />
+                      <div className="d-none d-sm-flex">
+                        {collections && collections.length > 0 && (
+                          <Pager
+                            page={String(page)}
+                            total={
+                              totalCollections !== '...'
+                                ? Math.min(totalCollections, 10000)
+                                : totalCollections
+                            }
+                            itemsPerPage={25}
+                            show={collections.length > 0}
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
 
@@ -59,10 +73,10 @@ const Collections = () => {
                           <table className="table">
                             <thead>
                               <tr>
-                                <th>Name</th>
                                 <th>Collection</th>
+                                <th>Name</th>
                                 <th>Age</th>
-                                <th>Owner Account</th>
+                                <th>Owner</th>
                               </tr>
                             </thead>
                             <tbody data-testid="collectionsTable">
@@ -82,13 +96,13 @@ const Collections = () => {
                                               className="token-icon mr-1"
                                             />
                                           )}
-                                          <div>{collection.name}</div>
+                                          <div>{collection.collection}</div>
                                         </div>
                                       </NetworkLink>
                                       <NftBadge type={collection.type} className="ml-2" />
                                     </div>
                                   </td>
-                                  <td>{collection.collection}</td>
+                                  <td>{collection.name}</td>
                                   <td>
                                     <TimeAgo value={collection.timestamp} tooltip />
                                   </td>

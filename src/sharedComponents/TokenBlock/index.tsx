@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons/faSpinnerThird';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { types, urlBuilder } from 'helpers';
 import { adapter, NetworkLink, Denominate } from 'sharedComponents';
 import { denomination as configDenomination } from 'appConfig';
@@ -34,7 +32,7 @@ const TokenBlock = (props: TokenBlockType) => {
   React.useEffect(fetchTokenBlock, [props.identifier]);
 
   return (
-    <div ref={ref} className="d-flex">
+    <div ref={ref} className="d-flex text-truncate">
       {props.value && (
         <div className="mr-1">
           <Denominate {...props} denomination={denomination} showLabel={false} />
@@ -42,19 +40,10 @@ const TokenBlock = (props: TokenBlockType) => {
       )}
       <NetworkLink
         to={urlBuilder.tokenDetails(props.identifier)}
-        className={`d-flex ${tokenDetails?.assets?.svgUrl ? 'token-link' : ''}`}
+        className={`d-flex text-truncate ${tokenDetails?.assets?.svgUrl ? 'token-link' : ''}`}
       >
-        <div className="d-flex align-items-center symbol">
-          {dataReady === undefined && (
-            <>
-              <span className="mr-2">{props.identifier}</span>
-              <FontAwesomeIcon
-                icon={faSpinnerThird}
-                size="xs"
-                className="text-primary fa-spin fast-spin"
-              />
-            </>
-          )}
+        <div className="d-flex align-items-center symbol text-truncate">
+          {dataReady === undefined && <span className="text-truncate">{props.identifier}</span>}
           {dataReady === false && <span className="text-truncate">{props.identifier}</span>}
           {dataReady === true && tokenDetails && (
             <>
@@ -67,7 +56,7 @@ const TokenBlock = (props: TokenBlockType) => {
                       className="token-icon mx-1"
                     />
                   )}
-                  <div>{tokenDetails.name}</div>
+                  <div className="text-truncate">{tokenDetails.name}</div>
                 </>
               ) : (
                 <span className="text-truncate">{props.identifier}</span>

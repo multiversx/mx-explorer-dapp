@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { types, urlBuilder, dateFormatted } from 'helpers';
+import { types, urlBuilder, dateFormatted, useFilters, useURLSearchParams } from 'helpers';
 import {
   Loader,
   adapter,
@@ -9,12 +9,14 @@ import {
   NetworkLink,
   NftBadge,
   TimeAgo,
+  Pager,
+  PageState,
 } from 'sharedComponents';
 import FailedCollectionDetails from './FailedCollectionDetails';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
-import { faCheck } from '@fortawesome/pro-light-svg-icons/faCheck';
-import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
+import { faTimes, faCheck } from '@fortawesome/pro-light-svg-icons';
+import { faClock, faPalette } from '@fortawesome/pro-regular-svg-icons';
+import { faCoins } from '@fortawesome/pro-solid-svg-icons';
 
 const CreatePill = ({ name, active }: { name: string; active: boolean }) => {
   return (
@@ -24,26 +26,51 @@ const CreatePill = ({ name, active }: { name: string; active: boolean }) => {
   );
 };
 
+const nftText = (type: types.NftType['type']) => {
+  switch (type) {
+    case 'SemiFungibleESDT':
+      return 'SFT';
+    case 'NonFungibleESDT':
+      return 'NFT';
+    case 'MetaESDT':
+      return 'Meta-ESDT';
+    default:
+      return '';
+  }
+};
+
 const CollectionDetails = () => {
   const params: any = useParams();
   const { hash: identifier } = params;
-
   const ref = React.useRef(null);
-
-  const { getCollection } = adapter();
-
+  const { page } = useURLSearchParams();
+  const { getQueryObject, size } = useFilters();
+  const { getCollection, getNfts, getNftsCount } = adapter();
   const [collectionDetails, setCollectionDetails] = React.useState<types.CollectionType>();
+  const [nfts, setNfts] = React.useState<types.NftType[]>([]);
+  const [totalNfts, setTotalNfts] = React.useState<number | '...'>('...');
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchCollectionDetails = () => {
-    getCollection(identifier).then(({ success, data }) => {
+    const queryObject = getQueryObject();
+    const collection = identifier;
+    Promise.all([
+      getCollection(identifier),
+      getNfts({ ...queryObject, size, collection }),
+      getNftsCount({ ...queryObject, collection }),
+    ]).then(([collectionData, nftsData, count]) => {
       if (ref.current !== null) {
-        setCollectionDetails(data);
-        setDataReady(success);
+        if (collectionData.success && nftsData.success && count.success) {
+          setCollectionDetails(collectionData.data);
+          setNfts(nftsData.data);
+          setTotalNfts(Math.min(count.data, 10000));
+        }
+        setDataReady(collectionData.success && nftsData.success && count.success);
       }
     });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchCollectionDetails, [identifier]); // run the operation only once since the parameter does not change
 
   return (
@@ -123,6 +150,107 @@ const CollectionDetails = () => {
                 </div>
               </div>
             </div>
+
+            {nfts && (
+              <div className="row mt-spacer">
+                <div className="col-12">
+                  <div className="card">
+                    <div className="card-header">
+                      <div className="card-header-item d-flex justify-content-between align-items-center">
+                        <h6 data-testid="title">{`${nftText(collectionDetails.type)}`}s</h6>
+                        <div className="d-none d-sm-flex">
+                          <Pager
+                            page={String(page)}
+                            total={totalNfts !== '...' ? Math.min(totalNfts, 10000) : totalNfts}
+                            itemsPerPage={25}
+                            show={nfts.length > 0}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {nfts.length > 0 ? (
+                      <>
+                        <div className="card-body border-0 p-0">
+                          <div className="table-wrapper">
+                            <table className="table">
+                              <thead>
+                                <tr>
+                                  <th>Identifier</th>
+                                  <th>Name</th>
+                                  <th>Creator</th>
+                                </tr>
+                              </thead>
+                              <tbody data-testid="nftsTable">
+                                {nfts.map((nft, i) => (
+                                  <tr key={`${nft.name}-${nft.identifier}`}>
+                                    <td>
+                                      <div className="d-flex align-items-center">
+                                        <NetworkLink
+                                          to={urlBuilder.nftDetails(nft.identifier)}
+                                          data-testid={`nftsLink${i}`}
+                                          className={`d-flex ${
+                                            nft.assets?.svgUrl ? 'token-link' : ''
+                                          }`}
+                                        >
+                                          <div className="d-flex align-items-center">
+                                            {nft.assets && nft.assets.svgUrl && (
+                                              <img
+                                                src={nft.assets.svgUrl}
+                                                alt={nft.name}
+                                                className="token-icon mr-1"
+                                              />
+                                            )}
+                                            <div>{nft.identifier}</div>
+                                          </div>
+                                        </NetworkLink>
+                                        {collectionDetails.type !== 'MetaESDT' && (
+                                          <NftBadge type={nft.type} className="ml-2" />
+                                        )}
+                                      </div>
+                                    </td>
+                                    <td>{nft.name}</td>
+                                    <td>
+                                      <div className="d-flex trim-size-xl">
+                                        <NetworkLink
+                                          to={urlBuilder.accountDetails(
+                                            nft.owner ? nft.owner : nft.creator
+                                          )}
+                                          className="trim-wrapper"
+                                        >
+                                          <Trim
+                                            text={nft.owner ? nft.owner : nft.creator}
+                                            dataTestId={`accountLink${i}`}
+                                          />
+                                        </NetworkLink>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div className="card-footer d-flex justify-content-end">
+                          <Pager
+                            page={String(page)}
+                            total={totalNfts !== '...' ? Math.min(totalNfts, 10000) : totalNfts}
+                            itemsPerPage={25}
+                            show={nfts.length > 0}
+                          />
+                        </div>
+                      </>
+                    ) : (
+                      <PageState
+                        icon={collectionDetails.type === 'MetaESDT' ? faCoins : faPalette}
+                        title={`No ${nftText(collectionDetails.type)}`}
+                        className="py-spacer my-auto"
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

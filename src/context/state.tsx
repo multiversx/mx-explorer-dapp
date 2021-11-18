@@ -138,6 +138,7 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
       owner: '',
       minted: '',
       burnt: '',
+      supply: '',
       canBurn: false,
       canChangeOwner: false,
       canFreeze: false,

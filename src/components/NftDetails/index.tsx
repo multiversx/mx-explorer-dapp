@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams } from 'react-router-dom';
-import { types, urlBuilder, dateFormatted } from 'helpers';
+import { types, urlBuilder, dateFormatted, useFilters, useURLSearchParams } from 'helpers';
 import {
   Loader,
   adapter,
@@ -13,9 +13,16 @@ import {
   CollectionBlock,
   Denominate,
   TimeAgo,
+  ScAddressIcon,
+  Pager,
 } from 'sharedComponents';
 import FailedNftDetails from './FailedNftDetails';
 import NftPreview from './NftPreview';
+
+interface NftOwnerType {
+  address: string;
+  balance: string;
+}
 
 const nftText = (type: types.NftType['type']) => {
   switch (type) {
@@ -24,7 +31,7 @@ const nftText = (type: types.NftType['type']) => {
     case 'NonFungibleESDT':
       return 'NFT';
     case 'MetaESDT':
-      return 'META';
+      return 'Meta-ESDT';
     default:
       return '';
   }
@@ -34,18 +41,31 @@ const NftDetails = () => {
   const params: any = useParams();
   const { hash: identifier } = params;
   const ref = React.useRef(null);
-  const { getNft } = adapter();
+  const { page } = useURLSearchParams();
+  const { getQueryObject, size } = useFilters();
+  const { getNft, getNftOwners, getNftOwnersCount } = adapter();
   const [nftDetails, setNftDetails] = React.useState<types.NftType>();
+  const [nftOwners, setNftOwners] = React.useState<NftOwnerType[]>([]);
+  const [nftOwnersCount, setNftOwnersCount] = React.useState<number | '...'>('...');
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchNftDetails = () => {
-    getNft(identifier).then(({ success, data }) => {
+    const queryObject = getQueryObject();
+    Promise.all([
+      getNft(identifier),
+      getNftOwners({ ...queryObject, size, identifier }),
+      getNftOwnersCount({ ...queryObject, identifier }),
+    ]).then(([nftData, nftOwners, nftOwnersCount]) => {
       if (ref.current !== null) {
-        setNftDetails(data);
-        setDataReady(success);
-        if (success && data && data.type) {
-          document.title = `${nftText(data.type)} Details`;
+        if (nftData.success) {
+          setNftDetails(nftData.data);
+          document.title = `${nftText(nftData.data.type)} Details`;
         }
+        if (nftOwners.success && nftOwnersCount.success) {
+          setNftOwners(nftOwners.data);
+          setNftOwnersCount(Math.min(nftOwnersCount.data, 10000));
+        }
+        setDataReady(nftData.success);
       }
     });
   };
@@ -77,7 +97,7 @@ const NftDetails = () => {
                       </DetailItem>
                       <DetailItem title="Identifier">{nftDetails.identifier}</DetailItem>
                       <DetailItem title="Collection">
-                        <CollectionBlock identifier={nftDetails.collection} />
+                        <CollectionBlock nft={nftDetails} />
                       </DetailItem>
                       {nftDetails.owner !== undefined && (
                         <DetailItem title="Owner">
@@ -114,16 +134,16 @@ const NftDetails = () => {
                       {nftDetails.royalties !== undefined && nftDetails.royalties !== null && (
                         <DetailItem title="Royalties">{nftDetails.royalties}%</DetailItem>
                       )}
-                      {nftDetails.supply !== undefined && Number(nftDetails.supply) > 0 && (
+                      {nftDetails.supply !== undefined && nftDetails.type !== 'NonFungibleESDT' && (
                         <DetailItem title="Supply">
-                          {nftDetails.decimals !== undefined ? (
+                          {nftDetails.decimals ? (
                             <Denominate
                               value={nftDetails.supply}
                               showLabel={false}
                               denomination={nftDetails.decimals}
                             />
                           ) : (
-                            <>{nftDetails.supply}</>
+                            Number(nftDetails.supply).toLocaleString('en')
                           )}
                         </DetailItem>
                       )}
@@ -138,7 +158,10 @@ const NftDetails = () => {
                       {nftDetails.tags !== undefined && nftDetails.tags.length > 0 && (
                         <DetailItem title="Tags">
                           {nftDetails.tags.map((tag) => (
-                            <div className="badge badge-light p-2 mr-2 font-weight-normal">
+                            <div
+                              key={tag}
+                              className="badge badge-light p-2 mr-2 font-weight-normal"
+                            >
                               {tag}
                             </div>
                           ))}
@@ -162,6 +185,78 @@ const NftDetails = () => {
                 </div>
               </div>
             </div>
+            {nftOwners && nftOwners.length > 0 && nftDetails.type !== 'NonFungibleESDT' && (
+              <div className="row mt-spacer">
+                <div className="col-12">
+                  <div className="card">
+                    <div className="card-header">
+                      <div className="card-header-item d-flex justify-content-between align-items-center">
+                        <h6>Owners</h6>
+                        <div className="d-none d-sm-flex">
+                          <Pager
+                            page={String(page)}
+                            total={nftOwnersCount}
+                            itemsPerPage={25}
+                            show={nftOwners.length > 0}
+                          />
+                        </div>
+                      </div>
+                      <div className="card-body border-0 p-0">
+                        <div className="table-wrapper">
+                          <table className="table">
+                            <thead>
+                              <tr>
+                                <th>Address</th>
+                                <th>Balance</th>
+                              </tr>
+                            </thead>
+                            <tbody data-testid="accountsTable">
+                              {nftOwners.map((account, i) => (
+                                <tr key={account.address}>
+                                  <td>
+                                    <div className="d-flex align-items-center">
+                                      <ScAddressIcon initiator={account.address} />
+                                      <NetworkLink
+                                        to={urlBuilder.accountDetails(account.address)}
+                                        className="trim-only-sm"
+                                      >
+                                        <Trim
+                                          text={account.address}
+                                          dataTestId={`accountLink${i}`}
+                                        />
+                                      </NetworkLink>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    {nftDetails.decimals ? (
+                                      <Denominate
+                                        value={account.balance}
+                                        showLabel={false}
+                                        denomination={nftDetails.decimals}
+                                      />
+                                    ) : (
+                                      Number(account.balance).toLocaleString('en')
+                                    )}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div className="card-footer d-flex justify-content-end">
+                        <Pager
+                          page={String(page)}
+                          total={nftOwnersCount}
+                          itemsPerPage={25}
+                          show={nftOwners.length > 0}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

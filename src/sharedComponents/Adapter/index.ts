@@ -10,8 +10,10 @@ import {
   getNodeParams,
   GetProvidersType,
   getProviderParams,
+  GetNftsType,
   GetTokensType,
   getTokensParam,
+  getNftsParam,
 } from './helpers';
 
 export default function useAdapter() {
@@ -175,6 +177,33 @@ export default function useAdapter() {
         },
       }),
 
+    getAccountScResults: ({ address, size }: { address: string; size: number }) =>
+      provider({
+        url: `/accounts/${address}/sc-results`,
+        params: {
+          from: (size - 1) * 25,
+          size: 25,
+        },
+      }),
+
+    getScResult: (hash: string) => provider({ url: `/sc-results/${hash}` }),
+
+    getScResults: (size = 1) =>
+      provider({
+        url: `/sc-results`,
+        params: {
+          from: (size - 1) * 25,
+          size: 25,
+        },
+      }),
+
+    getScResultsCount: () => provider({ url: `/sc-results/count` }),
+
+    /* Stake */
+
+    getAccountScResultsCount: (address: string) =>
+      provider({ url: `/accounts/${address}/sc-results/count` }),
+
     getAccountDelegation: (address: string) =>
       provider({ url: `/accounts/${address}/delegations`, baseUrl: delegationApi }),
 
@@ -305,39 +334,49 @@ export default function useAdapter() {
 
     // Nfts
 
-    getAccountNfts: ({ address, size }: { address: string; size: number }) =>
+    getAccountNfts: ({ address, size, type }: { address: string; size: number; type?: string }) =>
       provider({
         url: `/accounts/${address}/nfts`,
-        params: getTokensParam({ size }),
+        params: getNftsParam({ size, type }),
       }),
 
-    getAccountNftsCount: (address: string) => provider({ url: `/accounts/${address}/nfts/count` }),
+    getAccountNftsCount: ({ address, type }: { address: string; type?: string }) =>
+      provider({ url: `/accounts/${address}/nfts/count`, params: getNftsParam({ type }) }),
 
-    getCollections: (props: GetTokensType) =>
+    getCollections: (props: GetNftsType) =>
       provider({
         url: `/collections`,
-        params: getTokensParam(props),
+        params: getNftsParam(props),
       }),
 
-    getCollectionsCount: ({ search }: GetTokensType) =>
+    getCollectionsCount: ({ search }: GetNftsType) =>
       provider({
         url: `/collections/count`,
-        params: getTokensParam({ search }),
+        params: getNftsParam({ search }),
       }),
 
     getCollection: (collection: string) => provider({ url: `/collections/${collection}` }),
 
-    getNfts: (props: GetTokensType) =>
+    getNfts: (props: GetNftsType) =>
       provider({
         url: `/nfts`,
-        params: getTokensParam(props),
+        params: getNftsParam(props),
       }),
 
-    getNftsCount: ({ search }: GetTokensType) =>
+    getNftsCount: (props: GetNftsType) =>
       provider({
         url: `/nfts/count`,
-        params: getTokensParam({ search }),
+        params: getNftsParam(props),
       }),
+
+    getNftOwners: (props: GetNftsType) =>
+      provider({
+        url: `/nfts/${props.identifier}/owners`,
+        params: getNftsParam(props),
+      }),
+
+    getNftOwnersCount: (props: GetNftsType) =>
+      provider({ url: `/nfts/${props.identifier}/owners/count`, params: getNftsParam(props) }),
 
     getNft: (identifier: string) => provider({ url: `/nfts/${identifier}` }),
 

@@ -23,7 +23,7 @@ const TokenAccounts = () => {
   const { getTokenAccounts, getTokenAccountsCount } = adapter();
 
   const { hash: tokenId } = useParams() as any;
-  const { identifier, decimals } = tokenDetails;
+  const { decimals } = tokenDetails;
 
   const [accounts, setAccounts] = React.useState<types.AccountType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -60,8 +60,16 @@ const TokenAccounts = () => {
     <div ref={ref}>
       <div className="card">
         <div className="card-header">
-          <div className="card-header-item d-flex align-items-center">
+          <div className="card-header-item d-flex justify-content-between align-items-center">
             <TokenTabs />
+            <div className="d-none d-sm-flex">
+              <Pager
+                page={String(page)}
+                total={totalAccounts !== '...' ? Math.min(totalAccounts, 10000) : totalAccounts}
+                itemsPerPage={25}
+                show={accounts.length > 0}
+              />
+            </div>
           </div>
           {showAccounts ? (
             <>

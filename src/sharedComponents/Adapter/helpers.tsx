@@ -51,6 +51,8 @@ export interface ProviderPropsType {
     sort?: string;
     order?: string;
     online?: boolean;
+    collection?: string;
+    identifier?: string;
   };
   timeout: number;
   timestamp?: number;
@@ -141,9 +143,21 @@ export function getProviderParams({ identity }: GetProvidersType) {
   return params;
 }
 
-export function getTokensParam({ search, size }: GetTokensType) {
+export function getTokensParam({ search, size, type }: GetTokensType) {
   const params: ProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
+    ...(type !== undefined ? { type } : {}),
+    ...(size !== undefined ? { from: (size - 1) * 25, size: 25 } : {}),
+  };
+
+  return params;
+}
+
+export function getNftsParam({ search, size, type, collection, identifier }: GetNftsType) {
+  const params: ProviderPropsType['params'] = {
+    ...(search !== undefined ? { search } : {}),
+    ...(collection !== undefined ? { collection } : {}),
+    ...(type !== undefined ? { type } : {}),
     ...(size !== undefined ? { from: (size - 1) * 25, size: 25 } : {}),
   };
 
@@ -200,4 +214,12 @@ export type ProviderType = (props: ProviderPropsType & { url: string }) => Promi
 export interface GetTokensType {
   search?: string;
   size?: number;
+  type?: string;
+}
+export interface GetNftsType {
+  collection?: string;
+  identifier?: string;
+  search?: string;
+  size?: number;
+  type?: string;
 }

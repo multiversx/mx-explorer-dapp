@@ -6,9 +6,14 @@
     @include media-breakpoint-up(lg) {
       padding-right: 4rem !important;
     }
-
     &::placeholder {
       color: $muted;
+    }
+    &:focus-visible {
+      text-shadow: none;
+      &::placeholder {
+        color: darken($muted, 8%);
+      }
     }
   }
 
