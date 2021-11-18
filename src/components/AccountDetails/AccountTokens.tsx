@@ -95,7 +95,7 @@ const AccountTokens = () => {
               <Pager
                 itemsPerPage={25}
                 page={String(size)}
-                total={accountTokensCount}
+                total={Math.max(accountTokensCount, accountNftsCount)}
                 show={accountTokens.length > 0 || accountNfts.length > 0}
               />
             </div>
@@ -184,7 +184,7 @@ const AccountTokens = () => {
           <Pager
             itemsPerPage={25}
             page={String(size)}
-            total={accountTokensCount}
+            total={Math.max(accountTokensCount, accountNftsCount)}
             show={accountTokens.length > 0 || accountNfts.length > 0}
           />
         )}
