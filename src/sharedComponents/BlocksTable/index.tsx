@@ -1,4 +1,5 @@
 import * as React from 'react';
+import BigNumber from 'bignumber.js';
 import { sizeFormat, urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 
@@ -77,14 +78,11 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
               <td className="text-right">
                 {block.gasConsumed - block.gasRefunded - block.gasPenalized > 0 &&
                 block.maxGasLimit > 0 ? (
-                  `${Number(
+                  `${new BigNumber(
                     ((block.gasConsumed - block.gasRefunded - block.gasPenalized) /
                       block.maxGasLimit) *
                       100
-                  ).toLocaleString('en', {
-                    maximumFractionDigits: 2,
-                    minimumFractionDigits: 2,
-                  })}%`
+                  ).toFormat(2)}%`
                 ) : (
                   <>N/A</>
                 )}

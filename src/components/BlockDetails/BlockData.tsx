@@ -1,4 +1,5 @@
 import * as React from 'react';
+import BigNumber from 'bignumber.js';
 import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons/faChevronLeft';
 import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
@@ -129,14 +130,11 @@ const BlockData = (props: BlockDataType) => {
                 )}{' '}
                 <span className="text-secondary">
                   (
-                  {Number(
+                  {new BigNumber(
                     ((block.gasConsumed - block.gasRefunded - block.gasPenalized) /
                       block.maxGasLimit) *
                       100
-                  ).toLocaleString('en', {
-                    maximumFractionDigits: 2,
-                    minimumFractionDigits: 2,
-                  })}
+                  ).toFormat(2)}
                   %)
                 </span>
               </>
