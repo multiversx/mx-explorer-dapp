@@ -123,16 +123,23 @@ const BlockData = (props: BlockDataType) => {
           <DetailItem title="Gas Used">
             {block.gasConsumed - block.gasRefunded - block.gasPenalized > 0 &&
             block.maxGasLimit > 0 ? (
-              <span>
-                {Number(
-                  ((block.gasConsumed - block.gasRefunded - block.gasPenalized) /
-                    block.maxGasLimit) *
-                    100
-                ).toLocaleString('en', {
-                  maximumFractionDigits: 2,
-                })}
-                %
-              </span>
+              <>
+                {Number(block.gasConsumed - block.gasRefunded - block.gasPenalized).toLocaleString(
+                  'en'
+                )}{' '}
+                <span className="text-secondary">
+                  (
+                  {Number(
+                    ((block.gasConsumed - block.gasRefunded - block.gasPenalized) /
+                      block.maxGasLimit) *
+                      100
+                  ).toLocaleString('en', {
+                    maximumFractionDigits: 2,
+                    minimumFractionDigits: 2,
+                  })}
+                  %)
+                </span>
+              </>
             ) : null}
           </DetailItem>
           <DetailItem title="Gas Consumed">{block.gasConsumed.toLocaleString('en')} </DetailItem>
