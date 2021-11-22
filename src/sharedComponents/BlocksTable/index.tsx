@@ -37,7 +37,7 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
             <th>Txns</th>
             <th>Shard</th>
             <th className="text-right">Size</th>
-            <th className="text-right">Gas Consumed</th>
+            <th className="text-right">Gas Used</th>
             <th className="text-right">Block Hash</th>
           </tr>
         </thead>
@@ -75,8 +75,13 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
                   : sizeFormat(block.size)}
               </td>
               <td className="text-right">
-                {block.gasConsumed > 0 && block.maxGasLimit > 0 ? (
-                  `${Number((block.gasConsumed / block.maxGasLimit) * 100).toLocaleString('en', {
+                {block.gasConsumed - block.gasRefunded - block.gasPenalized > 0 &&
+                block.maxGasLimit > 0 ? (
+                  `${Number(
+                    ((block.gasConsumed - block.gasRefunded - block.gasPenalized) /
+                      block.maxGasLimit) *
+                      100
+                  ).toLocaleString('en', {
                     maximumFractionDigits: 2,
                     minimumFractionDigits: 2,
                   })}%`
