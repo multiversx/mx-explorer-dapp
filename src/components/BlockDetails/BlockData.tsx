@@ -37,6 +37,10 @@ const BlockData = (props: BlockDataType) => {
     setExpanded(true);
   };
 
+  const gasUsedBn = new BigNumber(block.gasConsumed)
+    .minus(block.gasRefunded)
+    .minus(block.gasPenalized);
+
   // Fixes Trim re-render bug
   React.useEffect(() => {
     setTimeout(() => {
@@ -122,19 +126,11 @@ const BlockData = (props: BlockDataType) => {
             </OverlayTrigger>
           </DetailItem>
           <DetailItem title="Gas Used">
-            {block.gasConsumed - block.gasRefunded - block.gasPenalized > 0 &&
-            block.maxGasLimit > 0 ? (
+            {gasUsedBn.isGreaterThan(0) && new BigNumber(block.maxGasLimit).isGreaterThan(0) ? (
               <>
-                {new BigNumber(
-                  block.gasConsumed - block.gasRefunded - block.gasPenalized
-                ).toFormat()}{' '}
+                {gasUsedBn.toFormat()}{' '}
                 <span className="text-secondary">
-                  (
-                  {new BigNumber(
-                    ((block.gasConsumed - block.gasRefunded - block.gasPenalized) /
-                      block.maxGasLimit) *
-                      100
-                  ).toFormat(2)}
+                  ({gasUsedBn.dividedBy(block.maxGasLimit).times(100).toFormat(2)}
                   %)
                 </span>
               </>
