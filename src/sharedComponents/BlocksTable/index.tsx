@@ -36,9 +36,9 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
             <th>Age</th>
             <th>Txns</th>
             <th>Shard</th>
-            <th>Size</th>
-            <th>Gas Consumed</th>
-            <th>Block Hash</th>
+            <th className="text-right">Size</th>
+            <th className="text-right">Gas Consumed</th>
+            <th className="text-right">Block Hash</th>
           </tr>
         </thead>
         <tbody data-testid="blocksTable">
@@ -69,22 +69,23 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
                   )}
                 </div>
               </td>
-              <td>
+              <td className="text-right">
                 {block.sizeTxs !== undefined
                   ? sizeFormat(block.size + block.sizeTxs)
                   : sizeFormat(block.size)}
               </td>
-              <td>
+              <td className="text-right">
                 {block.gasConsumed > 0 && block.maxGasLimit > 0 ? (
                   `${Number((block.gasConsumed / block.maxGasLimit) * 100).toLocaleString('en', {
                     maximumFractionDigits: 2,
+                    minimumFractionDigits: 2,
                   })}%`
                 ) : (
                   <>N/A</>
                 )}
               </td>
               <td>
-                <div className="d-flex">
+                <div className="d-flex justify-content-end mr-spacer">
                   <NetworkLink
                     to={`/blocks/${block.hash}`}
                     data-testid={`blockHashLink${i}`}
