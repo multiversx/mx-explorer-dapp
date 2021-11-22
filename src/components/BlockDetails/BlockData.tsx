@@ -120,12 +120,17 @@ const BlockData = (props: BlockDataType) => {
               </span>
             </OverlayTrigger>
           </DetailItem>
-          <DetailItem title="Gas Consumed">
+          <DetailItem title="Gas Used">
             {block.gasConsumed.toLocaleString('en')}{' '}
-            {block.gasConsumed > 0 && block.maxGasLimit > 0 ? (
+            {block.gasConsumed - block.gasRefunded - block.gasPenalized > 0 &&
+            block.maxGasLimit > 0 ? (
               <span className="text-secondary">
                 (
-                {Number((block.gasConsumed / block.maxGasLimit) * 100).toLocaleString('en', {
+                {Number(
+                  ((block.gasConsumed - block.gasRefunded - block.gasPenalized) /
+                    block.maxGasLimit) *
+                    100
+                ).toLocaleString('en', {
                   maximumFractionDigits: 2,
                 })}
                 %)
