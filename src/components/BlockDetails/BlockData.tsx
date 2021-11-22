@@ -125,9 +125,9 @@ const BlockData = (props: BlockDataType) => {
             {block.gasConsumed - block.gasRefunded - block.gasPenalized > 0 &&
             block.maxGasLimit > 0 ? (
               <>
-                {Number(block.gasConsumed - block.gasRefunded - block.gasPenalized).toLocaleString(
-                  'en'
-                )}{' '}
+                {new BigNumber(
+                  block.gasConsumed - block.gasRefunded - block.gasPenalized
+                ).toFormat()}{' '}
                 <span className="text-secondary">
                   (
                   {new BigNumber(
@@ -140,10 +140,18 @@ const BlockData = (props: BlockDataType) => {
               </>
             ) : null}
           </DetailItem>
-          <DetailItem title="Gas Consumed">{block.gasConsumed.toLocaleString('en')} </DetailItem>
-          <DetailItem title="Gas Refunded">{block.gasRefunded.toLocaleString('en')}</DetailItem>
-          <DetailItem title="Gas Penalized">{block.gasPenalized.toLocaleString('en')}</DetailItem>
-          <DetailItem title="Max Gas Limit">{block.maxGasLimit.toLocaleString('en')}</DetailItem>
+          <DetailItem title="Gas Consumed">
+            {new BigNumber(block.gasConsumed).toFormat()}{' '}
+          </DetailItem>
+          <DetailItem title="Gas Refunded">
+            {new BigNumber(block.gasRefunded).toFormat()}
+          </DetailItem>
+          <DetailItem title="Gas Penalized">
+            {new BigNumber(block.gasPenalized).toFormat()}
+          </DetailItem>
+          <DetailItem title="Max Gas Limit">
+            {new BigNumber(block.maxGasLimit).toFormat()}
+          </DetailItem>
           <DetailItem title="Proposer">
             <NetworkLink
               to={`${validatorsRoutes.nodes}/${block.proposer}`}
