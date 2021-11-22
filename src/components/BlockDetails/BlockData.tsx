@@ -1,4 +1,5 @@
 import * as React from 'react';
+import BigNumber from 'bignumber.js';
 import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons/faChevronLeft';
 import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
@@ -35,6 +36,10 @@ const BlockData = (props: BlockDataType) => {
     e.preventDefault();
     setExpanded(true);
   };
+
+  const gasUsedBn = new BigNumber(block.gasConsumed)
+    .minus(block.gasRefunded)
+    .minus(block.gasPenalized);
 
   // Fixes Trim re-render bug
   React.useEffect(() => {
@@ -121,25 +126,28 @@ const BlockData = (props: BlockDataType) => {
             </OverlayTrigger>
           </DetailItem>
           <DetailItem title="Gas Used">
-            {block.gasConsumed.toLocaleString('en')}{' '}
-            {block.gasConsumed - block.gasRefunded - block.gasPenalized > 0 &&
-            block.maxGasLimit > 0 ? (
-              <span className="text-secondary">
-                (
-                {Number(
-                  ((block.gasConsumed - block.gasRefunded - block.gasPenalized) /
-                    block.maxGasLimit) *
-                    100
-                ).toLocaleString('en', {
-                  maximumFractionDigits: 2,
-                })}
-                %)
-              </span>
+            {gasUsedBn.isGreaterThan(0) && new BigNumber(block.maxGasLimit).isGreaterThan(0) ? (
+              <>
+                {gasUsedBn.toFormat()}{' '}
+                <span className="text-secondary">
+                  ({gasUsedBn.dividedBy(block.maxGasLimit).times(100).toFormat(2)}
+                  %)
+                </span>
+              </>
             ) : null}
           </DetailItem>
-          <DetailItem title="Gas Refunded">{block.gasRefunded.toLocaleString('en')}</DetailItem>
-          <DetailItem title="Gas Penalized">{block.gasPenalized.toLocaleString('en')}</DetailItem>
-          <DetailItem title="Max Gas Limit">{block.maxGasLimit.toLocaleString('en')}</DetailItem>
+          <DetailItem title="Gas Consumed">
+            {new BigNumber(block.gasConsumed).toFormat()}{' '}
+          </DetailItem>
+          <DetailItem title="Gas Refunded">
+            {new BigNumber(block.gasRefunded).toFormat()}
+          </DetailItem>
+          <DetailItem title="Gas Penalized">
+            {new BigNumber(block.gasPenalized).toFormat()}
+          </DetailItem>
+          <DetailItem title="Max Gas Limit">
+            {new BigNumber(block.maxGasLimit).toFormat()}
+          </DetailItem>
           <DetailItem title="Proposer">
             <NetworkLink
               to={`${validatorsRoutes.nodes}/${block.proposer}`}

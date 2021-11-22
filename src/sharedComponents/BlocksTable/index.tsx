@@ -1,4 +1,5 @@
 import * as React from 'react';
+import BigNumber from 'bignumber.js';
 import { sizeFormat, urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 
@@ -42,66 +43,66 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
           </tr>
         </thead>
         <tbody data-testid="blocksTable">
-          {blocks.map((block, i) => (
-            <tr key={block.hash} className={`animated-row ${block.isNew ? 'new' : ''}`}>
-              <td>
-                <div className="d-flex">
-                  <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
-                    {block.nonce}
-                  </NetworkLink>
-                </div>
-              </td>
-              <td>
-                <TimeAgo value={block.timestamp} tooltip />
-              </td>
-              <td>{block.txCount}</td>
-              <td>
-                <div className="d-flex">
-                  {shard !== undefined ? (
-                    <ShardSpan shard={block.shard} />
-                  ) : (
-                    <NetworkLink
-                      to={urlBuilder.shard(block.shard)}
-                      data-testid={`blockShardLink${i}`}
-                    >
-                      <ShardSpan shard={block.shard} />
+          {blocks.map((block, i) => {
+            const gasUsedBn = new BigNumber(block.gasConsumed)
+              .minus(block.gasRefunded)
+              .minus(block.gasPenalized);
+
+            return (
+              <tr key={block.hash} className={`animated-row ${block.isNew ? 'new' : ''}`}>
+                <td>
+                  <div className="d-flex">
+                    <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
+                      {block.nonce}
                     </NetworkLink>
+                  </div>
+                </td>
+                <td>
+                  <TimeAgo value={block.timestamp} tooltip />
+                </td>
+                <td>{block.txCount}</td>
+                <td>
+                  <div className="d-flex">
+                    {shard !== undefined ? (
+                      <ShardSpan shard={block.shard} />
+                    ) : (
+                      <NetworkLink
+                        to={urlBuilder.shard(block.shard)}
+                        data-testid={`blockShardLink${i}`}
+                      >
+                        <ShardSpan shard={block.shard} />
+                      </NetworkLink>
+                    )}
+                  </div>
+                </td>
+                <td className="text-right">
+                  {block.sizeTxs !== undefined
+                    ? sizeFormat(block.size + block.sizeTxs)
+                    : sizeFormat(block.size)}
+                </td>
+
+                <td className="text-right">
+                  {gasUsedBn.isGreaterThan(0) &&
+                  new BigNumber(block.maxGasLimit).isGreaterThan(0) ? (
+                    <>{gasUsedBn.dividedBy(block.maxGasLimit).times(100).toFormat(2)}%</>
+                  ) : (
+                    <>N/A</>
                   )}
-                </div>
-              </td>
-              <td className="text-right">
-                {block.sizeTxs !== undefined
-                  ? sizeFormat(block.size + block.sizeTxs)
-                  : sizeFormat(block.size)}
-              </td>
-              <td className="text-right">
-                {block.gasConsumed - block.gasRefunded - block.gasPenalized > 0 &&
-                block.maxGasLimit > 0 ? (
-                  `${Number(
-                    ((block.gasConsumed - block.gasRefunded - block.gasPenalized) /
-                      block.maxGasLimit) *
-                      100
-                  ).toLocaleString('en', {
-                    maximumFractionDigits: 2,
-                    minimumFractionDigits: 2,
-                  })}%`
-                ) : (
-                  <>N/A</>
-                )}
-              </td>
-              <td>
-                <div className="d-flex justify-content-end mr-spacer">
-                  <NetworkLink
-                    to={`/blocks/${block.hash}`}
-                    data-testid={`blockHashLink${i}`}
-                    className="trim-wrapper trim-size-xl mr-xl-n5"
-                  >
-                    <Trim text={block.hash} />
-                  </NetworkLink>
-                </div>
-              </td>
-            </tr>
-          ))}
+                </td>
+                <td>
+                  <div className="d-flex justify-content-end mr-spacer">
+                    <NetworkLink
+                      to={`/blocks/${block.hash}`}
+                      data-testid={`blockHashLink${i}`}
+                      className="trim-wrapper trim-size-xl mr-xl-n5"
+                    >
+                      <Trim text={block.hash} />
+                    </NetworkLink>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
