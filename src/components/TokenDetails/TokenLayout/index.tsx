@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
 import { useRouteMatch } from 'react-router-dom';
 import { tokensRoutes } from 'routes';
 import { useGlobalDispatch, useGlobalState } from 'context';

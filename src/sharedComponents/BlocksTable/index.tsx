@@ -20,6 +20,10 @@ export interface BlockType {
   round?: number;
   stateRootHash?: string;
   isNew?: boolean; // UI flag
+  gasConsumed: number;
+  gasRefunded: number;
+  gasPenalized: number;
+  maxGasLimit: number;
 }
 
 const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | undefined }) => {
@@ -32,8 +36,9 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
             <th>Age</th>
             <th>Txns</th>
             <th>Shard</th>
-            <th>Size</th>
-            <th>Block Hash</th>
+            <th className="text-right">Size</th>
+            <th className="text-right">Gas Used</th>
+            <th className="text-right">Block Hash</th>
           </tr>
         </thead>
         <tbody data-testid="blocksTable">
@@ -64,13 +69,28 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
                   )}
                 </div>
               </td>
-              <td>
+              <td className="text-right">
                 {block.sizeTxs !== undefined
                   ? sizeFormat(block.size + block.sizeTxs)
                   : sizeFormat(block.size)}
               </td>
+              <td className="text-right">
+                {block.gasConsumed - block.gasRefunded - block.gasPenalized > 0 &&
+                block.maxGasLimit > 0 ? (
+                  `${Number(
+                    ((block.gasConsumed - block.gasRefunded - block.gasPenalized) /
+                      block.maxGasLimit) *
+                      100
+                  ).toLocaleString('en', {
+                    maximumFractionDigits: 2,
+                    minimumFractionDigits: 2,
+                  })}%`
+                ) : (
+                  <>N/A</>
+                )}
+              </td>
               <td>
-                <div className="d-flex">
+                <div className="d-flex justify-content-end mr-spacer">
                   <NetworkLink
                     to={`/blocks/${block.hash}`}
                     data-testid={`blockHashLink${i}`}
