@@ -80,26 +80,21 @@ const BlockData = (props: BlockDataType) => {
               </ul>
             </div>
           </DetailItem>
-
           <DetailItem title="Block Hash">
             <div className="d-flex align-items-center text-break-all">
               {block.hash}
               <CopyButton text={block.hash} />
             </div>
           </DetailItem>
-
           <DetailItem title="Epoch">{block.epoch}</DetailItem>
-
           <DetailItem title="Age">
             <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
             <TimeAgo value={block.timestamp} />
             &nbsp;<span className="text-secondary">({dateFormatted(block.timestamp)})</span>
           </DetailItem>
-
           <DetailItem title="Transactions">
             {block.txCount + ' transactions in this block'}
           </DetailItem>
-
           <DetailItem title="Shard">
             <div className="d-flex">
               <NetworkLink to={urlBuilder.shard(block.shard)}>
@@ -107,7 +102,6 @@ const BlockData = (props: BlockDataType) => {
               </NetworkLink>
             </div>
           </DetailItem>
-
           <DetailItem title="Size">
             <OverlayTrigger
               placement="top"
@@ -126,7 +120,21 @@ const BlockData = (props: BlockDataType) => {
               </span>
             </OverlayTrigger>
           </DetailItem>
-
+          <DetailItem title="Gas Consumed">
+            {block.gasConsumed.toLocaleString('en')}{' '}
+            {block.gasConsumed > 0 && block.maxGasLimit > 0 ? (
+              <span className="text-secondary">
+                (
+                {Number((block.gasConsumed / block.maxGasLimit) * 100).toLocaleString('en', {
+                  maximumFractionDigits: 2,
+                })}
+                %)
+              </span>
+            ) : null}
+          </DetailItem>
+          <DetailItem title="Gas Refunded">{block.gasRefunded.toLocaleString('en')}</DetailItem>
+          <DetailItem title="Gas Penalized">{block.gasPenalized.toLocaleString('en')}</DetailItem>
+          <DetailItem title="Max Gas Limit">{block.maxGasLimit.toLocaleString('en')}</DetailItem>
           <DetailItem title="Proposer">
             <NetworkLink
               to={`${validatorsRoutes.nodes}/${block.proposer}`}
@@ -139,7 +147,6 @@ const BlockData = (props: BlockDataType) => {
               )}
             </NetworkLink>
           </DetailItem>
-
           <DetailItem title="Consensus Group" className="hash-group-row">
             <>
               {expanded === false && (
@@ -168,7 +175,6 @@ const BlockData = (props: BlockDataType) => {
               </Collapse>
             </>
           </DetailItem>
-
           <DetailItem title="State Root Hash">
             {block.stateRootHash ? (
               <Trim text={block.stateRootHash} />
@@ -176,7 +182,6 @@ const BlockData = (props: BlockDataType) => {
               <span className="text-secondary">N/A</span>
             )}
           </DetailItem>
-
           {block.shard === metaChainShardId && (
             <DetailItem title="Notarized Blocks" className="hash-group-row">
               {block.notarizedBlocksHashes === undefined ||
@@ -197,7 +202,6 @@ const BlockData = (props: BlockDataType) => {
               )}
             </DetailItem>
           )}
-
           <DetailItem title="Miniblocks" className="hash-group-row">
             {block.miniBlocksHashes === undefined ||
             (Array.isArray(block.miniBlocksHashes) && block.miniBlocksHashes.length === 0) ? (
@@ -215,7 +219,6 @@ const BlockData = (props: BlockDataType) => {
               </div>
             )}
           </DetailItem>
-
           <DetailItem title="Previous Hash">
             <div className="d-flex align-items-center">
               {isFirstBlock ? (
@@ -231,7 +234,6 @@ const BlockData = (props: BlockDataType) => {
               )}
             </div>
           </DetailItem>
-
           <DetailItem title="Public Keys Bitmap">
             {block.pubKeyBitmap ? (
               <Trim text={block.pubKeyBitmap} />
@@ -239,7 +241,6 @@ const BlockData = (props: BlockDataType) => {
               <span className="text-secondary">N/A</span>
             )}
           </DetailItem>
-
           {isFirstBlock && block.prevHash && (
             <>
               <DetailItem title="">

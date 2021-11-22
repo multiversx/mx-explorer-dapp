@@ -20,6 +20,10 @@ export interface BlockType {
   round?: number;
   stateRootHash?: string;
   isNew?: boolean; // UI flag
+  gasConsumed: number;
+  gasRefunded: number;
+  gasPenalized: number;
+  maxGasLimit: number;
 }
 
 const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | undefined }) => {
@@ -33,6 +37,7 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
             <th>Txns</th>
             <th>Shard</th>
             <th>Size</th>
+            <th>Gas Consumed</th>
             <th>Block Hash</th>
           </tr>
         </thead>
@@ -68,6 +73,15 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
                 {block.sizeTxs !== undefined
                   ? sizeFormat(block.size + block.sizeTxs)
                   : sizeFormat(block.size)}
+              </td>
+              <td>
+                {block.gasConsumed > 0 && block.maxGasLimit > 0 ? (
+                  `${Number((block.gasConsumed / block.maxGasLimit) * 100).toLocaleString('en', {
+                    maximumFractionDigits: 2,
+                  })}%`
+                ) : (
+                  <>N/A</>
+                )}
               </td>
               <td>
                 <div className="d-flex">
