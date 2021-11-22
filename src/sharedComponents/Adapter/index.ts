@@ -117,7 +117,19 @@ export default function useAdapter() {
             size: 25,
             ...(proposer ? { proposer } : {}),
             ...getShardAndEpochParam(shard, epoch),
-            fields: ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount'].join(','),
+            fields: [
+              'hash',
+              'nonce',
+              'shard',
+              'size',
+              'sizeTxs',
+              'timestamp',
+              'txCount',
+              'gasConsumed',
+              'gasRefunded',
+              'gasPenalized',
+              'maxGasLimit',
+            ].join(','),
           },
         });
         if (success) {
