@@ -136,7 +136,7 @@ const BlockData = (props: BlockDataType) => {
               </>
             ) : null}
           </DetailItem>
-          <DetailItem title="Gas Consumed">
+          <DetailItem title="Gas Provided">
             {new BigNumber(block.gasConsumed).toFormat()}{' '}
           </DetailItem>
           <DetailItem title="Gas Refunded">
