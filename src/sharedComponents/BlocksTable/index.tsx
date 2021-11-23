@@ -82,12 +82,12 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
                 </td>
 
                 <td>
-                  <div className="d-flex justify-content-end" style={{ marginTop: '8px' }}>
+                  <div className="d-flex justify-content-end pb-1" style={{ marginTop: '9px' }}>
                     {gasUsedBn.isGreaterThan(0) &&
                     new BigNumber(block.maxGasLimit).isGreaterThan(0) ? (
                       <>
                         <div className="d-flex flex-column align-items-end">
-                          <div className="text-right mb-2">
+                          <div className="text-right mb-1">
                             {gasUsedBn.toFormat()}{' '}
                             <span className="text-secondary">
                               ({gasUsedBn.dividedBy(block.maxGasLimit).times(100).toFormat(2)}%)
