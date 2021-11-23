@@ -82,7 +82,7 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
                 </td>
 
                 <td>
-                  <div className="d-flex justify-content-end mt-2">
+                  <div className="d-flex justify-content-end" style={{ marginTop: '8px' }}>
                     {gasUsedBn.isGreaterThan(0) &&
                     new BigNumber(block.maxGasLimit).isGreaterThan(0) ? (
                       <>
