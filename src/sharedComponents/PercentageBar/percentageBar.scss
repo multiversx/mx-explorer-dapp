@@ -1,0 +1,27 @@
+.percentage-bar {
+  width: 10.32rem;
+  &.small {
+    .progress {
+      height: 2px;
+    }
+  }
+  .progress {
+    margin: 0 !important;
+    background-color: lighten($muted, 10%);
+    height: 1rem;
+    border-radius: 0.2rem;
+
+    .progress-bar {
+      height: 100%;
+    }
+  }
+
+  .bg-success {
+    background-color: $primary-light !important;
+  }
+
+  .bg-danger {
+    background-color: $primary !important;
+    min-width: 2px;
+  }
+}

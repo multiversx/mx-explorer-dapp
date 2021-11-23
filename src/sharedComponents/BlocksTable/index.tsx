@@ -1,7 +1,7 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
 import { sizeFormat, urlBuilder } from 'helpers';
-import { ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
+import { ShardSpan, NetworkLink, TimeAgo, Trim, PercentageBar } from 'sharedComponents';
 
 export interface BlockType {
   hash: string;
@@ -81,13 +81,36 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
                     : sizeFormat(block.size)}
                 </td>
 
-                <td className="text-right">
-                  {gasUsedBn.isGreaterThan(0) &&
-                  new BigNumber(block.maxGasLimit).isGreaterThan(0) ? (
-                    <>{gasUsedBn.dividedBy(block.maxGasLimit).times(100).toFormat(2)}%</>
-                  ) : (
-                    <>N/A</>
-                  )}
+                <td>
+                  <div className="d-flex justify-content-end pb-1" style={{ marginTop: '9px' }}>
+                    {gasUsedBn.isGreaterThan(0) &&
+                    new BigNumber(block.maxGasLimit).isGreaterThan(0) ? (
+                      <>
+                        <div className="d-flex flex-column align-items-end">
+                          <div className="text-right mb-1">
+                            {gasUsedBn.toFormat()}{' '}
+                            <span className="text-secondary">
+                              ({gasUsedBn.dividedBy(block.maxGasLimit).times(100).toFormat(2)}%)
+                            </span>
+                          </div>
+                          <PercentageBar
+                            overallPercent={0}
+                            fillPercent={gasUsedBn
+                              .dividedBy(block.maxGasLimit)
+                              .times(100)
+                              .toNumber()}
+                            fillPercentLabel={`${gasUsedBn
+                              .dividedBy(block.maxGasLimit)
+                              .times(100)
+                              .toFormat(2)}%`}
+                            type="small"
+                          />
+                        </div>
+                      </>
+                    ) : (
+                      <>N/A</>
+                    )}
+                  </div>
                 </td>
                 <td>
                   <div className="d-flex justify-content-end mr-spacer">
