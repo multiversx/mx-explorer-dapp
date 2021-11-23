@@ -5,12 +5,16 @@ const PercentegeBar = ({
   overallPercent,
   fillPercent,
   fillPercentLabel,
+  type,
 }: {
   overallPercent: number;
   fillPercent: number;
   fillPercentLabel: string;
+  type?: string;
 }) => (
-  <div className="d-flex h-100 align-items-center">
+  <div
+    className={`d-flex h-100 align-items-center percentage-bar ${type === 'small' ? 'small' : ''}`}
+  >
     {overallPercent + fillPercent > 0 ? (
       <div className="progress progress-sm w-100 my-2">
         <div
