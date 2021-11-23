@@ -25,32 +25,6 @@
         transform: rotateZ(-90deg);
       }
     }
-
-    .stake-bar-col {
-      .progress {
-        margin: 0 !important;
-        background-color: lighten($muted, 10%);
-        height: 1rem;
-        border-radius: 0.2rem;
-
-        .progress-bar {
-          height: 100%;
-        }
-      }
-
-      .bar {
-        width: 10.32rem;
-      }
-
-      .bg-success {
-        background-color: $primary-light !important;
-      }
-
-      .bg-danger {
-        background-color: $primary !important;
-        min-width: 2px;
-      }
-    }
   }
 
   $detailsTableBgColor: $light;

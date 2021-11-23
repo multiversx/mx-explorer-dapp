@@ -10,8 +10,8 @@ import {
   NodesTable,
   SharedIdentity,
   Denominate,
+  PercentageBar,
 } from 'sharedComponents';
-import PercentegeBar from './PercentegeBar';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { urlBuilder } from 'helpers';
 
@@ -88,15 +88,14 @@ const IdentityRow = ({ identity }: IdentityRowType) => {
         <td>
           <Denominate value={identity.locked} />
         </td>
-        <td className="stake-bar-col">
+        <td>
           <div className="d-flex align-items-center">
-            <div className="bar">
-              <PercentegeBar
-                overallPercent={identity.overallStakePercent || 0}
-                fillPercent={identity.stakePercent}
-                fillPercentLabel={stakePercentLabel}
-              />
-            </div>
+            <PercentageBar
+              overallPercent={identity.overallStakePercent || 0}
+              fillPercent={identity.stakePercent}
+              fillPercentLabel={stakePercentLabel}
+            />
+
             <div className="ml-3">{stakePercentLabel}</div>
           </div>
         </td>
