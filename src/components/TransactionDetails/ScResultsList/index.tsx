@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchange, faSearch } from '@fortawesome/pro-regular-svg-icons';
 import { Denominate, CopyButton, Trim, NetworkLink } from 'sharedComponents';
-import { useGlobalState } from 'context';
 import decodePart from './decodePart';
 
 export interface ResultType {
@@ -24,9 +23,6 @@ export interface ResultType {
 const ScResultsList = ({ results }: { results: ResultType[] }) => {
   const { hash } = useLocation();
   const ref = React.useRef<HTMLDivElement>(null);
-  const {
-    activeNetwork: { explorerAddress },
-  } = useGlobalState();
 
   const decodeData = (data: string) => {
     const parts = Buffer.from(data, 'base64').toString().split('@');
