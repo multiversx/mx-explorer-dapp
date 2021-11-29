@@ -2,7 +2,7 @@ import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
-import { faSpinnerThird, faAngleDown } from '@fortawesome/pro-regular-svg-icons';
+import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons';
 import { types } from 'helpers';
 
 const Thumbnail = ({ token, children }: { token: types.NftType; children: any }) => {
