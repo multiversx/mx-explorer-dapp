@@ -39,6 +39,8 @@ const PriceChart = () => {
       );
     }
   };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(getData, [activeNetworkId]);
 
   React.useEffect(() => {
@@ -54,7 +56,9 @@ const PriceChart = () => {
   const getCurrentValue = (chartData: ChartResponseType) => {
     if (chartData.length >= 1) {
       const value = chartData[chartData.length - 1].value;
-      return `$${value.toLocaleString('en', { maximumFractionDigits: value > 1000 ? 0 : 2 })}`;
+      return `$${value.toLocaleString('en', {
+        maximumFractionDigits: value > 1000 ? 0 : 2,
+      })}`;
     }
     return '...';
   };
