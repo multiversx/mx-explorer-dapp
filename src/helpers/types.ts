@@ -15,6 +15,7 @@ export interface AccountType {
 
 export interface TokenType {
   identifier: string;
+  ticker?: string;
   name: string;
   balance?: string;
   decimals?: number;

@@ -4,7 +4,14 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader, adapter, PageState } from 'sharedComponents';
 import TransactionInfo, { TransactionType } from './TransactionInfo';
+import { OperationType } from './OperationsList';
+import { TokenType, NftType } from 'helpers/types';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
+
+export interface OperationsTokensType {
+  esdts: TokenType[];
+  nfts: NftType[];
+}
 
 const TransactionDetails = () => {
   const params: any = useParams();
@@ -15,9 +22,12 @@ const TransactionDetails = () => {
     refresh: { timestamp },
   } = useGlobalState();
 
-  const { getTransaction } = adapter();
+  const { getTransaction, getTokens, getNfts } = adapter();
 
   const [transaction, setTransaction] = React.useState<TransactionType | undefined>();
+  const [operationsTokens, setOperationsTokens] = React.useState<
+    OperationsTokensType | undefined
+  >();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchTransaction = () => {
@@ -25,13 +35,62 @@ const TransactionDetails = () => {
       getTransaction(transactionId).then(({ data, success }) => {
         if (ref.current !== null) {
           setTransaction(data);
-          setDataReady(success);
+          if (data.operations !== undefined && data.operations.length > 0) {
+            prepareOperationsTokens(data.operations);
+          } else {
+            setDataReady(success);
+          }
         }
       });
     }
   };
 
-  React.useEffect(fetchTransaction, []);
+  const prepareOperationsTokens = (operations: OperationType[]) => {
+    const promises = [];
+
+    const uniqueTokenIdentifiers = Array.from(
+      new Set(
+        operations
+          .filter((operation) => operation.type === 'esdt')
+          .map((operation) => operation.identifier)
+      )
+    ).join();
+    if (uniqueTokenIdentifiers) {
+      const esdts = getTokens({ identifiers: uniqueTokenIdentifiers }).then((res) => ({
+        res,
+        promise: 'esdts',
+      }));
+      promises.push(esdts);
+    }
+
+    const uniqueNftIdentifiers = Array.from(
+      new Set(
+        operations
+          .filter((operation) => operation.type === 'nft')
+          .map((operation) => operation.identifier)
+      )
+    ).join();
+    if (uniqueNftIdentifiers) {
+      const nfts = getNfts({ identifiers: uniqueNftIdentifiers }).then((res) => ({
+        res,
+        promise: 'nfts',
+      }));
+      promises.push(nfts);
+    }
+
+    Promise.all(promises).then((res) => {
+      if (ref.current !== null) {
+        const esdts = res.filter((res) => res.promise === 'esdts')[0];
+        const nfts = res.filter((res) => res.promise === 'nfts')[0];
+        setOperationsTokens({
+          esdts: esdts ? esdts.res.data : [],
+          nfts: nfts ? nfts.res.data : [],
+        });
+
+        setDataReady((esdts ? esdts.res.success : true) && (nfts ? nfts.res.success : true));
+      }
+    });
+  };
 
   const checkRefetch = () => {
     if (
@@ -43,6 +102,10 @@ const TransactionDetails = () => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  React.useEffect(fetchTransaction, []);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(checkRefetch, [timestamp]);
 
   return (
@@ -66,7 +129,7 @@ const TransactionDetails = () => {
           <div className="container page-content">
             <div className="row">
               <div className="col-12">
-                <TransactionInfo transaction={transaction} />
+                <TransactionInfo transaction={transaction} operationsTokens={operationsTokens} />
               </div>
             </div>
           </div>

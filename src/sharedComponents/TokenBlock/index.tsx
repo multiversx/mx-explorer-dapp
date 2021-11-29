@@ -1,65 +1,48 @@
 import * as React from 'react';
-import { types, urlBuilder } from 'helpers';
-import { adapter, NetworkLink, Denominate } from 'sharedComponents';
+import { urlBuilder } from 'helpers';
+import { TokenType } from 'helpers/types';
+import { NetworkLink, Denominate } from 'sharedComponents';
 import { denomination as configDenomination } from 'appConfig';
-import { DenominateType } from 'sharedComponents/Denominate';
 
-interface TokenBlockType extends DenominateType {
-  identifier: string;
+interface TokenBlockType {
+  operationToken: TokenType;
+  value?: string;
 }
 
-const TokenBlock = (props: TokenBlockType) => {
+const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
   const ref = React.useRef(null);
-  const { getToken } = adapter();
-  const [tokenDetails, setTokenBlock] = React.useState<types.TokenType>();
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
-  const fetchTokenBlock = () => {
-    getToken(props.identifier).then(({ success, data }) => {
-      if (ref.current !== null) {
-        setTokenBlock(data);
-        setDataReady(success);
-      }
-    });
-  };
-
-  const denomination =
-    dataReady === true && tokenDetails && tokenDetails.decimals
-      ? tokenDetails.decimals
-      : configDenomination;
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchTokenBlock, [props.identifier]);
+  const denomination = operationToken.decimals ? operationToken.decimals : configDenomination;
 
   return (
     <div ref={ref} className="d-flex text-truncate">
-      {props.value && (
+      {value && (
         <div className="mr-1">
-          <Denominate {...props} denomination={denomination} showLabel={false} />
+          <Denominate value={value} denomination={denomination} showLabel={false} />
         </div>
       )}
       <NetworkLink
-        to={urlBuilder.tokenDetails(props.identifier)}
-        className={`d-flex text-truncate ${tokenDetails?.assets?.svgUrl ? 'token-link' : ''}`}
+        to={urlBuilder.tokenDetails(operationToken.identifier)}
+        className={`d-flex text-truncate ${operationToken?.assets?.svgUrl ? 'token-link' : ''}`}
       >
         <div className="d-flex align-items-center symbol text-truncate">
-          {dataReady === undefined && <span className="text-truncate">{props.identifier}</span>}
-          {dataReady === false && <span className="text-truncate">{props.identifier}</span>}
-          {dataReady === true && tokenDetails && (
+          {operationToken && (
             <>
-              {tokenDetails.assets ? (
+              {operationToken.assets ? (
                 <>
-                  {tokenDetails.assets.svgUrl && (
+                  {operationToken.assets.svgUrl && (
                     <img
-                      src={tokenDetails.assets.svgUrl}
-                      alt={tokenDetails.name}
+                      src={operationToken.assets.svgUrl}
+                      alt={operationToken.name}
                       className="token-icon mx-1"
                     />
                   )}
-                  <div className="text-truncate">{tokenDetails.name}</div>
+                  <div className="text-truncate">
+                    {operationToken.ticker ? operationToken.ticker : operationToken.name}
+                  </div>
                 </>
               ) : (
-                <span className="text-truncate">{props.identifier}</span>
+                <span className="text-truncate">{operationToken.identifier}</span>
               )}
             </>
           )}

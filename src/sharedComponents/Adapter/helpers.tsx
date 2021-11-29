@@ -143,21 +143,31 @@ export function getProviderParams({ identity }: GetProvidersType) {
   return params;
 }
 
-export function getTokensParam({ search, size, type }: GetTokensType) {
+export function getTokensParam({ search, size, type, identifiers }: GetTokensType) {
   const params: ProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
     ...(type !== undefined ? { type } : {}),
+    ...(identifiers !== undefined ? { identifiers } : {}),
     ...(size !== undefined ? { from: (size - 1) * 25, size: 25 } : {}),
   };
 
   return params;
 }
 
-export function getNftsParam({ search, size, type, collection, identifier }: GetNftsType) {
+export function getNftsParam({
+  search,
+  size,
+  type,
+  collection,
+  identifiers,
+  collections,
+}: GetNftsType) {
   const params: ProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
     ...(collection !== undefined ? { collection } : {}),
     ...(type !== undefined ? { type } : {}),
+    ...(identifiers !== undefined ? { identifiers } : {}),
+    ...(collections !== undefined ? { collections } : {}),
     ...(size !== undefined ? { from: (size - 1) * 25, size: 25 } : {}),
   };
 
@@ -215,6 +225,7 @@ export interface GetTokensType {
   search?: string;
   size?: number;
   type?: string;
+  identifiers?: string;
 }
 export interface GetNftsType {
   collection?: string;
@@ -222,4 +233,6 @@ export interface GetNftsType {
   search?: string;
   size?: number;
   type?: string;
+  collections?: string;
+  identifiers?: string;
 }
