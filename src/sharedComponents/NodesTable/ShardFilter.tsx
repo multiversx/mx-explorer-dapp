@@ -30,6 +30,7 @@ const ShardFilter = () => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchShards, []);
 
   const shardLink = (shard: string) => {
