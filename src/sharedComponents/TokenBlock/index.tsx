@@ -31,11 +31,7 @@ const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
               {operationToken.assets ? (
                 <>
                   {operationToken.assets.svgUrl && (
-                    <img
-                      src={operationToken.assets.svgUrl}
-                      alt={operationToken.name}
-                      className="token-icon mx-1"
-                    />
+                    <img src={operationToken.assets.svgUrl} alt=" " className="token-icon mx-1" />
                   )}
                   <div className="text-truncate">
                     {operationToken.ticker ? operationToken.ticker : operationToken.name}

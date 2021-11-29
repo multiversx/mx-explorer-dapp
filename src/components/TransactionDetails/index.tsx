@@ -35,7 +35,7 @@ const TransactionDetails = () => {
       getTransaction(transactionId).then(({ data, success }) => {
         if (ref.current !== null) {
           setTransaction(data);
-          if (data.operations !== undefined && data.operations.length > 0) {
+          if (data && data.operations && data.operations.length > 0) {
             prepareOperationsTokens(data.operations);
           } else {
             setDataReady(success);
