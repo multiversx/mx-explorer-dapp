@@ -119,7 +119,7 @@ const AccountTokens = () => {
 
           {dataReady === true && (accountTokens.length > 0 || accountNfts.length > 0) && (
             <>
-              {accountNfts.map(({ name, identifier, decimals, balance, assets }) => {
+              {accountNfts.map(({ name, identifier, decimals, balance, assets, ticker }) => {
                 return (
                   <DetailItem title={name} key={identifier}>
                     <div className="d-flex align-items-center">
@@ -136,19 +136,27 @@ const AccountTokens = () => {
                         className={`d-flex text-truncate ${assets?.svgUrl ? 'token-link' : ''}`}
                       >
                         <div className="d-flex align-items-center symbol text-truncate">
-                          {assets?.svgUrl && (
-                            <img src={assets.svgUrl} alt={name} className="token-icon mr-1" />
+                          {assets ? (
+                            <>
+                              {assets.svgUrl && (
+                                <img src={assets.svgUrl} alt={name} className="token-icon mr-1" />
+                              )}
+                              <div className="text-truncate">
+                                {ticker ? ticker : name} ({identifier})
+                              </div>
+                            </>
+                          ) : (
+                            <div className="text-truncate">
+                              {name} ({identifier})
+                            </div>
                           )}
-                          <div className="text-truncate">
-                            {name} ({identifier})
-                          </div>
                         </div>
                       </NetworkLink>
                     </div>
                   </DetailItem>
                 );
               })}
-              {accountTokens.map(({ identifier, name, balance, decimals, assets }) => {
+              {accountTokens.map(({ identifier, name, balance, decimals, assets, ticker }) => {
                 return (
                   <DetailItem title={name} key={identifier}>
                     <div className="d-flex align-items-center">
@@ -165,10 +173,16 @@ const AccountTokens = () => {
                         className={`d-flex text-truncate ${assets?.svgUrl ? 'token-link' : ''}`}
                       >
                         <div className="d-flex align-items-center symbol text-truncate">
-                          {assets?.svgUrl && (
-                            <img src={assets.svgUrl} alt={name} className="token-icon mr-1" />
+                          {assets ? (
+                            <>
+                              {assets?.svgUrl && (
+                                <img src={assets.svgUrl} alt={name} className="token-icon mr-1" />
+                              )}
+                              <div className="text-truncate">{ticker ? ticker : name}</div>
+                            </>
+                          ) : (
+                            <div className="text-truncate">{identifier}</div>
                           )}
-                          <div className="text-truncate">{assets ? name : identifier}</div>
                         </div>
                       </NetworkLink>
                     </div>

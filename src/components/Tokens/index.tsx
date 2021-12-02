@@ -35,6 +35,7 @@ const Tokens = () => {
     );
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchTokens, [search]);
 
   return (
@@ -116,14 +117,20 @@ const Tokens = () => {
                                         }`}
                                       >
                                         <div className="d-flex align-items-center">
-                                          {token.assets && token.assets.svgUrl && (
-                                            <img
-                                              src={token.assets.svgUrl}
-                                              alt={token.name}
-                                              className="token-icon mr-1"
-                                            />
+                                          {token.assets ? (
+                                            <>
+                                              {token.assets.svgUrl && (
+                                                <img
+                                                  src={token.assets.svgUrl}
+                                                  alt={token.name}
+                                                  className="token-icon mr-1"
+                                                />
+                                              )}
+                                              <div>{token.ticker ? token.ticker : token.name}</div>
+                                            </>
+                                          ) : (
+                                            <div>{token.identifier}</div>
                                           )}
-                                          <div>{token.identifier}</div>
                                         </div>
                                       </NetworkLink>
                                     </div>

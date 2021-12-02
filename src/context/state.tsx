@@ -134,6 +134,7 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
     },
     tokenDetails: {
       identifier: '',
+      ticker: '',
       name: '',
       owner: '',
       minted: '',
