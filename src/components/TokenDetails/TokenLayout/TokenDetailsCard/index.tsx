@@ -33,6 +33,7 @@ const TokenDetailsCard = () => {
 
   const {
     identifier,
+    ticker,
     name,
     decimals,
     owner,
@@ -62,10 +63,16 @@ const TokenDetailsCard = () => {
               <div className="container-fluid">
                 <SmallDetailItem title="Name">
                   <div className="d-flex align-items-center">
-                    {assets && assets.svgUrl && (
-                      <img src={assets.svgUrl} alt={name} className="token-icon mr-1" />
+                    {assets ? (
+                      <>
+                        {assets.svgUrl && (
+                          <img src={assets.svgUrl} alt={ticker} className="token-icon mr-1" />
+                        )}
+                        <div>{ticker ? ticker : name}</div>
+                      </>
+                    ) : (
+                      <div>{name}</div>
                     )}
-                    <div>{name}</div>
                   </div>
                 </SmallDetailItem>
                 <SmallDetailItem title="Token">{identifier}</SmallDetailItem>
