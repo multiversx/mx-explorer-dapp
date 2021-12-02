@@ -6,6 +6,7 @@ import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { addressIsBech32, dateFormatted, urlBuilder, useNetworkRoute, isContract } from 'helpers';
+import { OperationsTokensType } from 'components/TransactionDetails';
 import {
   Denominate,
   ScAddressIcon,
@@ -81,7 +82,13 @@ const getScResultsMessages = (transaction: TransactionType) => {
   return messages;
 };
 
-const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
+const TransactionInfo = ({
+  transaction,
+  operationsTokens,
+}: {
+  transaction: TransactionType;
+  operationsTokens?: OperationsTokensType;
+}) => {
   const ref = React.useRef(null);
   const {
     activeNetwork: { erdLabel },
@@ -305,7 +312,10 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
                       </>
                     }
                   >
-                    <OperationsList operations={transaction.operations} />
+                    <OperationsList
+                      operations={transaction.operations}
+                      operationsTokens={operationsTokens}
+                    />
                   </DetailItem>
                 )}
 

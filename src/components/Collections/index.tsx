@@ -33,6 +33,7 @@ const Collections = () => {
     );
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchCollections, [search]);
 
   return (

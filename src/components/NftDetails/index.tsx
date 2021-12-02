@@ -92,10 +92,13 @@ const NftDetails = () => {
                   <div className="card-body p-0">
                     <div className="container-fluid">
                       <DetailItem title="Name">{nftDetails.name}</DetailItem>
+                      <DetailItem title="Identifier">{nftDetails.identifier}</DetailItem>
+                      {nftDetails.ticker !== undefined && (
+                        <DetailItem title="Ticker">{nftDetails.ticker}</DetailItem>
+                      )}
                       <DetailItem title="Type">
                         <NftBadge type={nftDetails.type} />
                       </DetailItem>
-                      <DetailItem title="Identifier">{nftDetails.identifier}</DetailItem>
                       <DetailItem title="Collection">
                         <CollectionBlock nft={nftDetails} />
                       </DetailItem>
