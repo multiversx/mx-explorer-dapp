@@ -48,6 +48,12 @@ const NftDetails = () => {
   const [nftOwners, setNftOwners] = React.useState<NftOwnerType[]>([]);
   const [nftOwnersCount, setNftOwnersCount] = React.useState<number | '...'>('...');
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [showData, setShowData] = React.useState(false);
+
+  const show = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowData((existing) => !existing);
+  };
 
   const fetchNftDetails = () => {
     const queryObject = getQueryObject();
@@ -91,7 +97,13 @@ const NftDetails = () => {
                   </div>
                   <div className="card-body p-0">
                     <div className="container-fluid">
-                      <DetailItem title="Name">{nftDetails.name}</DetailItem>
+                      <DetailItem title="Name">
+                        {nftDetails.scamInfo
+                          ? showData
+                            ? nftDetails.name
+                            : `[Hidden - ${nftDetails.scamInfo.info}]`
+                          : nftDetails.name}
+                      </DetailItem>
                       <DetailItem title="Identifier">{nftDetails.identifier}</DetailItem>
                       {nftDetails.ticker !== undefined && (
                         <DetailItem title="Ticker">{nftDetails.ticker}</DetailItem>
@@ -155,7 +167,15 @@ const NftDetails = () => {
                       )}
                       {nftDetails.uris !== undefined && nftDetails.uris[0] && (
                         <DetailItem title="Assets">
-                          <NftPreview token={nftDetails} />
+                          {nftDetails.scamInfo ? (
+                            showData ? (
+                              <NftPreview token={nftDetails} />
+                            ) : (
+                              `[Hidden - ${nftDetails.scamInfo.info}]`
+                            )
+                          ) : (
+                            <NftPreview token={nftDetails} />
+                          )}
                         </DetailItem>
                       )}
                       {nftDetails.tags !== undefined && nftDetails.tags.length > 0 && (
@@ -168,6 +188,13 @@ const NftDetails = () => {
                               {tag}
                             </div>
                           ))}
+                        </DetailItem>
+                      )}
+                      {nftDetails.scamInfo && (
+                        <DetailItem title="">
+                          <a href="/#" onClick={show} className="small-font text-secondary">
+                            {!showData ? 'Show' : 'Hide'} original content
+                          </a>
                         </DetailItem>
                       )}
                       {/* {nftDetails.attributes !== undefined && (
