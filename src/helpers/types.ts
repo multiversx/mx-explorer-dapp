@@ -99,6 +99,10 @@ export interface NftType {
     fileUri?: string;
     fileName?: string;
   };
+  scamInfo?: {
+    type: string;
+    info: string;
+  };
 }
 
 export interface ScResultType {
