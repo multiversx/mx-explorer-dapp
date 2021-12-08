@@ -24,6 +24,7 @@ const NftBlock = ({ value, operationToken }: NftBlockType) => {
                     value={value}
                     showLabel={false}
                     denomination={operationToken.decimals}
+                    showLastNonZeroDecimal={true}
                   />
                 ) : (
                   Number(value).toLocaleString('en')
