@@ -18,7 +18,12 @@ const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
     <div ref={ref} className="d-flex text-truncate">
       {value && (
         <div className="mr-1">
-          <Denominate value={value} denomination={denomination} showLabel={false} />
+          <Denominate
+            value={value}
+            denomination={denomination}
+            showLabel={false}
+            showLastNonZeroDecimal={true}
+          />
         </div>
       )}
       <NetworkLink
