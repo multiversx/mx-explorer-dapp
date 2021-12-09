@@ -59,39 +59,11 @@ const NftPreview = ({ token }: { token: types.NftType }) => {
             return (
               <li key={i}>
                 <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary mr-2" />
-                {link.startsWith(
-                  'https://ipfs.io/ipfs/'
-                ) /* && token.isWhitelistedStorage === true */ ? (
-                  <Thumbnail token={token}>
-                    {found ? (
-                      <Anchorme linkComponent={ModalLink} target="_blank" rel="noreferrer noopener">
-                        {stringWithLinks}
-                      </Anchorme>
-                    ) : (
-                      <a
-                        href={link.replace(
-                          'https://ipfs.io/ipfs',
-                          'http://media.elrond.com/nfts/asset'
-                        )}
-                        {...{ target: '_blank' }}
-                        data-testid={`${token.identifier}-link-${i}`}
-                        className="text-break"
-                      >
-                        {link}
-                      </a>
-                    )}
-                  </Thumbnail>
-                ) : (
-                  <span className="text-break">
-                    {found ? (
-                      <Anchorme linkComponent={ModalLink} target="_blank" rel="noreferrer noopener">
-                        {stringWithLinks}
-                      </Anchorme>
-                    ) : (
-                      link
-                    )}
-                  </span>
-                )}
+                <Thumbnail token={token}>
+                  <Anchorme linkComponent={ModalLink} target="_blank" rel="noreferrer noopener">
+                    {found ? stringWithLinks : link}
+                  </Anchorme>
+                </Thumbnail>
               </li>
             );
           } else return null;
