@@ -123,7 +123,7 @@ const AccountNfts = () => {
                             {nft?.assets?.svgUrl && (
                               <img
                                 src={nft.assets.svgUrl}
-                                alt={nft.name}
+                                alt={nft.identifier}
                                 className="token-icon mr-1"
                               />
                             )}

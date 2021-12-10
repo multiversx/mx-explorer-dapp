@@ -35,6 +35,7 @@ import NftBadge from './NftBadge';
 import NftBlock from './NftBlock';
 import SocialIcons from './SocialIcons';
 import PercentageBar from './PercentageBar';
+import ModalLink from './ModalLink';
 
 export {
   Denominate,
@@ -75,4 +76,5 @@ export {
   NftBlock,
   SocialIcons,
   PercentageBar,
+  ModalLink,
 };
