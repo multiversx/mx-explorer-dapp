@@ -119,7 +119,7 @@ const TokensMeta = () => {
                                           {nft.assets && nft.assets.svgUrl && (
                                             <img
                                               src={nft.assets.svgUrl}
-                                              alt={nft.name}
+                                              alt={nft.identifier}
                                               className="token-icon mr-1"
                                             />
                                           )}
@@ -128,7 +128,9 @@ const TokensMeta = () => {
                                       </NetworkLink>
                                     </div>
                                   </td>
-                                  <td>{nft.name}</td>
+                                  <td>
+                                    {nft.scamInfo ? `[Hidden - ${nft.scamInfo.info}]` : nft.name}
+                                  </td>
                                   <td>
                                     <div className="d-flex trim-size-xl">
                                       <NetworkLink

@@ -209,7 +209,9 @@ const CollectionDetails = () => {
                                         )}
                                       </div>
                                     </td>
-                                    <td>{nft.name}</td>
+                                    <td>
+                                      {nft.scamInfo ? `[Hidden - ${nft.scamInfo.info}]` : nft.name}
+                                    </td>
                                     <td>
                                       <div className="d-flex trim-size-xl">
                                         <NetworkLink
