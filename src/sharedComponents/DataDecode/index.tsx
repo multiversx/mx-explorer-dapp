@@ -46,7 +46,7 @@ const DataDecode = ({
       if (value.includes('@')) {
         const parts = value.split('@');
         const decodedParts = parts.map((part, index) => {
-          if (parts.length > 2 && (index === 0 || (index === 1 && !parts[0]))) {
+          if (parts.length >= 2 && (index === 0 || (index === 1 && !parts[0]))) {
             return part;
           } else {
             return decode(part, activeKey);
@@ -72,9 +72,9 @@ const DataDecode = ({
   }, [activeKey, value]);
 
   return (
-    <div className="position-relative data-decode">
+    <div className="position-relative data-decode mt-1">
       <div
-        className={`form-control textarea cursor-text mt-1 ${className ? className : ''} ${
+        className={`form-control textarea cursor-text ${className ? className : ''} ${
           readOnly ? 'readonly' : ''
         }`}
       >
@@ -82,7 +82,7 @@ const DataDecode = ({
       </div>
       {value && value !== 'N/A' && (
         <Dropdown
-          className="position-absolute dropdown d-flex align-items-center"
+          className="position-absolute dropdown"
           onSelect={(selectedKey: DecodeMethodType) => {
             return selectedKey ? setActiveKey(selectedKey) : 'raw';
           }}
