@@ -121,6 +121,46 @@ export interface ScResultType {
   returnMessage?: string;
 }
 
+export enum TxActionsEnum {
+  claimLockedAssets = 'claimLockedAssets',
+  swapTokensFixedInput = 'swapTokensFixedInput',
+  addLiquidity = 'addLiquidity',
+  addLiquidityProxy = 'addLiquidityProxy',
+  removeLiquidity = 'removeLiquidity',
+  removeLiquidityProxy = 'removeLiquidityProxy',
+  enterFarm = 'enterFarm',
+  enterFarmProxy = 'enterFarmProxy',
+  enterFarmAndLockRewards = 'enterFarmAndLockRewards',
+  enterFarmAndLockRewardsProxy = 'enterFarmAndLockRewardsProxy',
+  exitFarm = 'exitFarm',
+  exitFarmProxy = 'exitFarmProxy',
+  claimRewards = 'claimRewards',
+  claimRewardsProxy = 'claimRewardsProxy',
+  compoundRewards = 'compoundRewards',
+  compoundRewardsProxy = 'compoundRewardsProxy',
+  wrapEgld = 'wrapEgld',
+  unwrapEgld = 'unwrapEgld',
+}
+
+export interface TokenArgumentType {
+  type: string;
+  name: string;
+  collection: string;
+  identifier: string;
+  ticker: string;
+  decimals: number;
+  value: string;
+}
+
+type TokenStringType = 'token' | 'token1' | 'token2' | string;
+
+export interface TxActionType {
+  category: string;
+  name: TxActionsEnum;
+  description: string;
+  arguments: Record<TokenStringType, TokenArgumentType>;
+}
+
 export interface ProviderType {
   provider: string;
   apr: string;
