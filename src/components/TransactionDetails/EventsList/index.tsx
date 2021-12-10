@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchange } from '@fortawesome/pro-regular-svg-icons/faExchange';
-import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
-import decodeTopic from './helpers/decodeTopic';
-import { CopyButton, Trim } from 'sharedComponents';
+import { CopyButton, Trim, DataDecode } from 'sharedComponents';
 
 export interface EventType {
   address: string;
@@ -12,52 +10,9 @@ export interface EventType {
 }
 
 const EventTopics = ({ topics }: { topics: EventType['topics'] }) => {
-  const [topicList, setTopicList] = React.useState<string[]>(topics);
-  const [isDecoded, setIsDecoded] = React.useState<boolean>(false);
+  const mergedTopics = topics.join('\n');
 
-  React.useEffect(() => {
-    if (isDecoded) {
-      const decodedTopics = topics.map((topic) => decodeTopic(topic));
-      setTopicList(decodedTopics);
-    } else {
-      setTopicList(topics);
-    }
-  }, [isDecoded, topics]);
-
-  return (
-    <>
-      {topicList.map((topic, index) => (
-        <>
-          {topic && (
-            <div className="text-break d-flex align-items-center" key={`${topic}-${index}`}>
-              <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary mr-2" />
-              {topic}
-            </div>
-          )}
-        </>
-      ))}
-      <div className="d-flex flex-row mt-3">
-        <button
-          type="button"
-          onClick={() => {
-            setIsDecoded(true);
-          }}
-          className="mr-3"
-        >
-          Decode
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            setIsDecoded(false);
-          }}
-          className="mr-3"
-        >
-          Reset
-        </button>
-      </div>
-    </>
-  );
+  return <DataDecode className="col" value={mergedTopics} />;
 };
 
 const EventsList = ({ events }: { events: EventType[] }) => {
