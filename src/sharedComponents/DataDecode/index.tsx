@@ -22,6 +22,9 @@ const decode = (part: string, decodeMethod: DecodeMethodType) => {
           return bech32Encoded;
         }
       } catch {}
+      try {
+        return Buffer.from(String(part), 'hex').toString('utf8').trim();
+      } catch {}
       return part;
     case 'raw':
     default:
@@ -90,7 +93,7 @@ const DataDecode = ({
           <Dropdown.Toggle
             variant="light"
             size="sm"
-            className={`border text-capitalize`}
+            className={`border text-capitalize py-1`}
             id="decode"
           >
             {activeKey}
