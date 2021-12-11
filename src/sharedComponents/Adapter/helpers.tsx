@@ -53,6 +53,7 @@ export interface ProviderPropsType {
     online?: boolean;
     collection?: string;
     identifier?: string;
+    includeFlagged?: boolean;
   };
   timeout: number;
   timestamp?: number;
@@ -169,6 +170,7 @@ export function getNftsParam({
     ...(identifiers !== undefined ? { identifiers } : {}),
     ...(collections !== undefined ? { collections } : {}),
     ...(size !== undefined ? { from: (size - 1) * 25, size: 25 } : {}),
+    includeFlagged: true,
   };
 
   return params;
