@@ -12,7 +12,7 @@ export interface EventType {
 const EventTopics = ({ topics }: { topics: EventType['topics'] }) => {
   const mergedTopics = topics.join('\n');
 
-  return <DataDecode readOnly value={mergedTopics} />;
+  return <DataDecode value={mergedTopics} />;
 };
 
 const EventsList = ({ events }: { events: EventType[] }) => {

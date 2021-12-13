@@ -32,15 +32,7 @@ const decode = (part: string, decodeMethod: DecodeMethodType) => {
   }
 };
 
-const DataDecode = ({
-  value,
-  className,
-  readOnly,
-}: {
-  value: string;
-  className?: string;
-  readOnly?: boolean;
-}) => {
+const DataDecode = ({ value, className }: { value: string; className?: string }) => {
   const [activeKey, setActiveKey] = React.useState<DecodeMethodType>('raw');
   const [displayValue, setDisplayValue] = React.useState('');
 
@@ -76,11 +68,7 @@ const DataDecode = ({
 
   return (
     <div className="position-relative data-decode mt-1">
-      <div
-        className={`form-control textarea cursor-text ${className ? className : ''} ${
-          readOnly ? 'readonly' : ''
-        }`}
-      >
+      <div className={`form-control textarea cursor-text ${className ? className : ''}`}>
         {displayValue}
       </div>
       {value && value !== 'N/A' && (

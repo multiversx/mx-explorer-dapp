@@ -114,7 +114,7 @@ const ScResultsList = ({ results }: { results: ResultType[] }) => {
                 <div className="row d-flex flex-column flex-sm-row">
                   <div className="col col-left">Data</div>
                   <div className="col">
-                    <DataDecode readOnly value={result.data ? decodeData(result.data) : 'N/A'} />
+                    <DataDecode value={result.data ? decodeData(result.data) : 'N/A'} />
                   </div>
                 </div>
               )}
