@@ -53,9 +53,8 @@
 
       .detailed-item-content {
         margin-top: 0.4rem;
-        max-width: 100%;
-        width: 100%;
-        overflow: hidden;
+        max-width: calc(100% - 1.5875rem);
+        width: calc(100% - 1.5875rem);
       }
 
       .transaction-icon {

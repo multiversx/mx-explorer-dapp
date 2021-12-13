@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchange, faSearch } from '@fortawesome/pro-regular-svg-icons';
-import { Denominate, CopyButton, Trim, NetworkLink } from 'sharedComponents';
+import { Denominate, CopyButton, Trim, NetworkLink, DataDecode } from 'sharedComponents';
 import decodePart from './decodePart';
 
 export interface ResultType {
@@ -114,12 +114,7 @@ const ScResultsList = ({ results }: { results: ResultType[] }) => {
                 <div className="row d-flex flex-column flex-sm-row">
                   <div className="col col-left">Data</div>
                   <div className="col">
-                    <textarea
-                      readOnly
-                      className="form-control cursor-text mt-1"
-                      rows={2}
-                      defaultValue={result.data ? decodeData(result.data) : 'N/A'}
-                    />
+                    <DataDecode value={result.data ? decodeData(result.data) : 'N/A'} />
                   </div>
                 </div>
               )}
