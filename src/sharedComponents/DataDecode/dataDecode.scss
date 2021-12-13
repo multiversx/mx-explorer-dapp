@@ -27,8 +27,5 @@
     &:hover {
       border: 1px solid $border-color;
     }
-    &.readonly {
-      background-color: $input-disabled-bg;
-    }
   }
 }
