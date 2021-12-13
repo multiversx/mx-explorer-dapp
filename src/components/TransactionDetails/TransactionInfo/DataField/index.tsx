@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Anchorme } from 'react-anchorme';
-import { DetailItem, ModalLink } from 'sharedComponents';
+import { DetailItem, ModalLink, DataDecode } from 'sharedComponents';
 import { truncate, useScamFlag } from 'helpers';
 import { displayedDataLength } from 'appConfig';
 
@@ -28,22 +28,13 @@ const DataField = ({
   return (
     <DetailItem title="Input Data" className="data-field">
       {showData ? (
-        <>
-          <div className="textarea form-control col cursor-text mt-1">
-            <Anchorme linkComponent={ModalLink} target="_blank" rel="noreferrer noopener">
-              {stringWithLinks}
-            </Anchorme>
-          </div>
-        </>
+        <div className="textarea form-control col cursor-text mt-1">
+          <Anchorme linkComponent={ModalLink} target="_blank" rel="noreferrer noopener">
+            {stringWithLinks}
+          </Anchorme>
+        </div>
       ) : (
-        <>
-          <textarea
-            readOnly
-            className="form-control col cursor-text mt-1"
-            rows={2}
-            value={truncate(output, displayedDataLength)}
-          />
-        </>
+        <DataDecode className="col" value={truncate(output, displayedDataLength)} />
       )}
       {found && (
         <a href="/#" onClick={show} className="small-font text-muted">
