@@ -1,26 +1,35 @@
 import * as React from 'react';
-import { TokenArgumentType, TxActionType } from 'helpers/types';
+import { TokenBlock, NftBlock } from 'sharedComponents';
+import { TokenArgumentType, TxActionType, OperationsTokensType } from 'helpers/types';
 import unwrapper from './unwrapper';
 
-const DescriptionToken = ({ token }: { token: TokenArgumentType }) => {
-  const { tokens, nfts, extraEsdts, extraNfts } = useAccount();
+const DescriptionToken = ({
+  token,
+  operationsTokens,
+}: {
+  token: TokenArgumentType;
+  operationsTokens?: OperationsTokensType;
+}) => {
+  switch (token.type) {
+    case 'MetaESDT':
+    case 'SemiFungibleESDT':
+    case 'NonFungibleESDT':
+      const operationNft = operationsTokens?.nfts.filter((operationToken) => {
+        return operationToken.identifier === token.identifier.replace('-undefined', '');
+      });
 
-  const foundToken =
-    token.type === 'FungibleESDT'
-      ? [...tokens, ...extraEsdts].find((el) => el.identifier === token.identifier)
-      : [...nfts, ...extraNfts].find((el) => el.identifier === token.identifier);
+      return operationNft?.length ? (
+        <NftBlock operationToken={operationNft[0]} value={token.value} />
+      ) : null;
 
-  return (
-    <Tokens.TokenElement
-      name={token.name}
-      identifier={token.identifier}
-      balance={token.value}
-      denomination={token.decimals}
-      isEgld={false}
-      avatar={foundToken?.assets?.svgUrl || foundToken?.assets?.pngUrl || ''}
-      inTransactionList
-    />
-  );
+    default:
+      const operationToken = operationsTokens?.esdts.filter((operationToken) => {
+        return operationToken.identifier === token.identifier.replace('-undefined', '');
+      });
+      return operationToken?.length ? (
+        <TokenBlock operationToken={operationToken[0]} value={token.value} />
+      ) : null;
+  }
 };
 
 const Description = ({
@@ -28,7 +37,7 @@ const Description = ({
   operationsTokens,
 }: {
   action: TxActionType;
-  operationsTokens: any;
+  operationsTokens?: OperationsTokensType;
 }) => {
   const [unwrappedResult, setUnwrappedResult] = React.useState<ReturnType<typeof unwrapper>>([]);
 
@@ -42,9 +51,13 @@ const Description = ({
       {unwrappedResult.map((entry, i) => (
         <div
           key={JSON.stringify(unwrappedResult) + i}
-          className={`small ${i > 0 && entry !== 'string' ? 'mx-1' : ''}`}
+          className={`${i > 0 && entry !== 'string' ? 'mr-1' : ''}`}
         >
-          {typeof entry === 'string' ? entry : <DescriptionToken token={entry} />}
+          {typeof entry === 'string' ? (
+            <span className="mr-1">{entry}</span>
+          ) : (
+            <DescriptionToken token={entry} operationsTokens={operationsTokens} />
+          )}
         </div>
       ))}
     </div>
