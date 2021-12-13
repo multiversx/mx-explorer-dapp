@@ -25,6 +25,7 @@ import useFetchPrice from './useFetchPrice';
 import useNetworkRouter from './useNetworkRouter';
 import useLoopManager from './useLoopManager';
 import useActiveRoute from './useActiveRoute';
+import isUtf8 from './isUtf8';
 import useScamFlag from './useScamFlag';
 import * as bech32 from './bech32';
 
@@ -57,5 +58,6 @@ export {
   useLoopManager,
   useActiveRoute,
   bech32,
+  isUtf8,
   useScamFlag,
 };

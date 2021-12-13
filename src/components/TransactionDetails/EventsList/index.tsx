@@ -1,13 +1,19 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchange } from '@fortawesome/pro-regular-svg-icons/faExchange';
-import { CopyButton, Trim } from 'sharedComponents';
+import { CopyButton, Trim, DataDecode } from 'sharedComponents';
 
 export interface EventType {
   address: string;
   identifier: string;
   topics: string[];
 }
+
+const EventTopics = ({ topics }: { topics: EventType['topics'] }) => {
+  const mergedTopics = topics.filter((topic) => topic).join('\n');
+
+  return <DataDecode value={mergedTopics} />;
+};
 
 const EventsList = ({ events }: { events: EventType[] }) => {
   return (
@@ -41,11 +47,7 @@ const EventsList = ({ events }: { events: EventType[] }) => {
                 <div className="row mb-3 d-flex flex-column flex-sm-row">
                   <div className="col col-left">Topics</div>
                   <div className="col d-flex flex-column">
-                    {event.topics.map((topic, index) => (
-                      <div className="text-break" key={`${topic}-${index}`}>
-                        {topic}
-                      </div>
-                    ))}
+                    <EventTopics topics={event.topics} />
                   </div>
                 </div>
               )}
