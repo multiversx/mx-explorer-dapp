@@ -3,22 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchange, faSearch } from '@fortawesome/pro-regular-svg-icons';
 import { Denominate, CopyButton, Trim, NetworkLink, DataDecode } from 'sharedComponents';
+import { ResultType } from 'helpers/types';
 import decodePart from './decodePart';
-
-export interface ResultType {
-  hash: string;
-  callType: string;
-  gasLimit: number;
-  gasPrice: number;
-  nonce: number;
-  prevTxHash: string;
-  receiver?: string;
-  sender: string;
-  value: string;
-  data?: string;
-  originalTxHash: string;
-  returnMessage?: string;
-}
 
 const ScResultsList = ({ results }: { results: ResultType[] }) => {
   const { hash } = useLocation();
