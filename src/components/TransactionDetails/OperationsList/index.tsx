@@ -95,7 +95,7 @@ const DetailedItem = ({
     <div className="detailed-item d-flex row mb-3 mb-xl-2">
       <OperationText operation={operation} />
       <div className="col-lg-6 col-xl-6 d-flex align-items-center">
-        <div className="d-flex flex-wrap text-truncate">{children}</div>
+        <div className="d-flex text-truncate">{children}</div>
       </div>
     </div>
   );
@@ -124,7 +124,12 @@ const OperationsList = ({
 
               return operationNft?.length ? (
                 <DetailedItem operation={operation} key={i}>
-                  <NftBlock operationToken={operationNft[0]} value={operation.value} />
+                  <>
+                    {operationNft[0].type !== 'NonFungibleESDT' && (
+                      <div className="mr-2">Value</div>
+                    )}
+                    <NftBlock operationToken={operationNft[0]} value={operation.value} />
+                  </>
                 </DetailedItem>
               ) : null;
 

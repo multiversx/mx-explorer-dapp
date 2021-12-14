@@ -16,21 +16,18 @@ const NftBlock = ({ value, operationToken }: NftBlockType) => {
       {operationToken && (
         <>
           {value && operationToken.type !== 'NonFungibleESDT' && (
-            <>
-              <div className="mr-2">Value</div>
-              <div className="mr-1">
-                {operationToken.decimals ? (
-                  <Denominate
-                    value={value}
-                    showLabel={false}
-                    denomination={operationToken.decimals}
-                    showLastNonZeroDecimal={true}
-                  />
-                ) : (
-                  Number(value).toLocaleString('en')
-                )}
-              </div>
-            </>
+            <div className="mr-1">
+              {operationToken.decimals ? (
+                <Denominate
+                  value={value}
+                  showLabel={false}
+                  denomination={operationToken.decimals}
+                  showLastNonZeroDecimal={true}
+                />
+              ) : (
+                Number(value).toLocaleString('en')
+              )}
+            </div>
           )}
           <NetworkLink
             to={urlBuilder.nftDetails(operationToken.identifier)}
