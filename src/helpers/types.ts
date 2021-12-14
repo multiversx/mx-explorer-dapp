@@ -127,8 +127,12 @@ export interface OperationsTokensType {
 }
 
 export enum TxActionsEnum {
+  // esdtNft category
+  transfer = 'transfer',
+  // mex category
   claimLockedAssets = 'claimLockedAssets',
   swapTokensFixedInput = 'swapTokensFixedInput',
+  swap = 'swap',
   addLiquidity = 'addLiquidity',
   addLiquidityProxy = 'addLiquidityProxy',
   removeLiquidity = 'removeLiquidity',
@@ -157,7 +161,7 @@ export interface TokenArgumentType {
   value: string;
 }
 
-type TokenStringType = 'token' | 'token1' | 'token2' | string;
+type TokenStringType = 'token' | 'token1' | 'token2' | 'receiver' | string;
 
 export interface TxActionType {
   category: string;
