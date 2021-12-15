@@ -10,7 +10,7 @@ export interface EventType {
 }
 
 const EventTopics = ({ topics }: { topics: EventType['topics'] }) => {
-  const mergedTopics = topics.join('\n');
+  const mergedTopics = topics.filter((topic) => topic).join('\n');
 
   return <DataDecode value={mergedTopics} />;
 };
