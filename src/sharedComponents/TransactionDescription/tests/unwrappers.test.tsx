@@ -2,7 +2,7 @@ import unwrapper from '../unwrapper';
 import { TxActionsEnum } from 'helpers/types';
 
 // file.only
-describe('Pager helper tests', () => {
+describe('Tx Description unwrapper tests', () => {
   test('Token Transfer', () => {
     const { action } = {
       action: {
