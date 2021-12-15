@@ -129,13 +129,13 @@ const TokenDetailsCard = () => {
                   )}
                 </SmallDetailItem>
                 <SmallDetailItem title="Description">
-                  <div className="text-truncate">
-                    {assets && assets.description ? (
-                      assets.description
-                    ) : (
-                      <span className="text-secondary">N/A</span>
-                    )}
-                  </div>
+                  {assets && assets.description ? (
+                    <div className="text-truncate" title={assets.description}>
+                      {assets.description}
+                    </div>
+                  ) : (
+                    <span className="text-secondary">N/A</span>
+                  )}
                 </SmallDetailItem>
                 <SmallDetailItem title="Social">
                   {assets && assets.social ? (
