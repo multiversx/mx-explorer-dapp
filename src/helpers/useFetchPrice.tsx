@@ -17,5 +17,6 @@ export default function useFetchPrice() {
     });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchPrice, []);
 }
