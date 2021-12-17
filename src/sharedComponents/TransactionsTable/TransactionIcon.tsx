@@ -1,5 +1,5 @@
 import React from 'react';
-import { TransactionType } from './TransactionRow';
+import { UITransactionType } from './TransactionRow';
 import txStatus from '../TransactionStatus/txStatus';
 import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 interface TransactionIconType {
-  transaction: TransactionType;
+  transaction: UITransactionType;
 }
 
 const capitalizeFirstLetter = (str: string) => {

@@ -5,8 +5,14 @@ import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
-import { addressIsBech32, dateFormatted, urlBuilder, useNetworkRoute, isContract } from 'helpers';
-import { OperationsTokensType } from 'components/TransactionDetails';
+import {
+  addressIsBech32,
+  dateFormatted,
+  urlBuilder,
+  useNetworkRoute,
+  isContract,
+  types,
+} from 'helpers';
 import {
   Denominate,
   ScAddressIcon,
@@ -17,50 +23,19 @@ import {
   DetailItem,
   Trim,
   CopyButton,
+  TransactionDescription,
 } from 'sharedComponents';
 import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
-import EventsList, { EventType } from '../EventsList';
-import OperationsList, { OperationType } from '../OperationsList';
-import ScResultsList, { ResultType } from '../ScResultsList';
+import EventsList from '../EventsList';
+import OperationsList from '../OperationsList';
+import ScResultsList from '../ScResultsList';
 import denominate from 'sharedComponents/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
 import { useGlobalState } from 'context';
 import { transactionsRoutes } from 'routes';
 import DataField from './DataField';
 
-export interface TransactionType {
-  fee?: string;
-  blockHash: string;
-  data: string;
-  gasLimit: number;
-  gasPrice: number;
-  gasUsed: number;
-  txHash: string;
-  miniBlockHash: string;
-  nonce: number;
-  receiver: string;
-  receiverShard: number;
-  round: number;
-  sender: string;
-  senderShard: number;
-  signature: string;
-  status: string;
-  timestamp: number;
-  value: string;
-  price: number;
-  results?: ResultType[];
-  operations?: OperationType[];
-  logs?: {
-    address: string;
-    events: EventType[];
-  };
-  scamInfo?: {
-    type: string;
-    info: string;
-  };
-}
-
-const getFee = (transaction: TransactionType) => {
+const getFee = (transaction: types.TransactionType) => {
   const bNgasPrice = new BigNumber(transaction.gasPrice);
   const bNgasUsed = new BigNumber(transaction.gasUsed);
   const output = bNgasPrice.times(bNgasUsed).toString();
@@ -68,7 +43,7 @@ const getFee = (transaction: TransactionType) => {
   return output;
 };
 
-const getScResultsMessages = (transaction: TransactionType) => {
+const getScResultsMessages = (transaction: types.TransactionType) => {
   const messages: string[] = [];
 
   if (transaction.results) {
@@ -86,8 +61,8 @@ const TransactionInfo = ({
   transaction,
   operationsTokens,
 }: {
-  transaction: TransactionType;
-  operationsTokens?: OperationsTokensType;
+  transaction: types.TransactionType;
+  operationsTokens?: types.OperationsTokensType;
 }) => {
   const ref = React.useRef(null);
   const {
@@ -300,6 +275,15 @@ const TransactionInfo = ({
                     )}
                   </span>
                 </DetailItem>
+
+                {transaction.action && (
+                  <DetailItem title="Description">
+                    <TransactionDescription
+                      action={transaction.action}
+                      operationsTokens={operationsTokens}
+                    />
+                  </DetailItem>
+                )}
 
                 {transaction.operations && transaction.operations.length > 0 && (
                   <DetailItem
