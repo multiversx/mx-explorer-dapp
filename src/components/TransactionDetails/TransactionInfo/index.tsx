@@ -23,7 +23,6 @@ import {
   DetailItem,
   Trim,
   CopyButton,
-  TransactionDescription,
 } from 'sharedComponents';
 import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
 import EventsList from '../EventsList';
@@ -276,15 +275,6 @@ const TransactionInfo = ({
                   </span>
                 </DetailItem>
 
-                {transaction.action && (
-                  <DetailItem title="Description">
-                    <TransactionDescription
-                      action={transaction.action}
-                      operationsTokens={operationsTokens}
-                    />
-                  </DetailItem>
-                )}
-
                 {transaction.operations && transaction.operations.length > 0 && (
                   <DetailItem
                     title={
@@ -362,7 +352,10 @@ const TransactionInfo = ({
 
                 {transaction.results && transaction.results?.length > 0 && (
                   <DetailItem title="Smart&nbsp;Contract Results">
-                    <ScResultsList results={transaction.results} />
+                    <ScResultsList
+                      results={transaction.results}
+                      operationsTokens={operationsTokens}
+                    />
                   </DetailItem>
                 )}
               </Tab.Pane>
