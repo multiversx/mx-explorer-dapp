@@ -1,21 +1,16 @@
 import * as React from 'react';
 import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { addressIsBech32, urlBuilder } from 'helpers';
-import { OperationsTokensType } from 'components/TransactionDetails';
+import { addressIsBech32, urlBuilder, types } from 'helpers';
 import { NetworkLink, Trim, CopyButton, TokenBlock, NftBlock } from 'sharedComponents';
 
-export interface OperationType {
-  action: string;
-  type: string;
-  collection?: string;
-  identifier: string;
-  sender: string;
-  receiver: string;
-  value: string;
-}
-
-const OperationSender = ({ operation, action }: { operation: OperationType; action?: string }) => {
+const OperationSender = ({
+  operation,
+  action,
+}: {
+  operation: types.OperationType;
+  action?: string;
+}) => {
   return operation.sender ? (
     <div className="col-lg-6 d-flex align-items-center col-xl-3 pr-xl-0">
       <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary mr-2" />
@@ -38,7 +33,7 @@ const OperationReceiver = ({
   operation,
   action,
 }: {
-  operation: OperationType;
+  operation: types.OperationType;
   action?: string;
 }) => {
   return operation.receiver ? (
@@ -59,7 +54,7 @@ const OperationReceiver = ({
   ) : null;
 };
 
-const OperationText = ({ operation }: { operation: OperationType }) => {
+const OperationText = ({ operation }: { operation: types.OperationType }) => {
   switch (operation.action) {
     case 'create':
     case 'localMint':
@@ -94,13 +89,13 @@ const DetailedItem = ({
   operation,
 }: {
   children: React.ReactNode;
-  operation: OperationType;
+  operation: types.OperationType;
 }) => {
   return (
     <div className="detailed-item d-flex row mb-3 mb-xl-2">
       <OperationText operation={operation} />
       <div className="col-lg-6 col-xl-6 d-flex align-items-center">
-        <div className="d-flex flex-wrap text-truncate">{children}</div>
+        <div className="d-flex text-truncate">{children}</div>
       </div>
     </div>
   );
@@ -110,30 +105,35 @@ const OperationsList = ({
   operations,
   operationsTokens,
 }: {
-  operations: OperationType[];
-  operationsTokens?: OperationsTokensType;
+  operations: types.OperationType[];
+  operationsTokens?: types.OperationsTokensType;
 }) => {
   return (
     <div className="operations-list d-flex flex-column mb-n2">
-      {operations.map((operation: OperationType, i) => {
+      {operations.map((operation: types.OperationType, i) => {
         if (
           operation.value !== undefined &&
           operation.identifier !== undefined &&
           operation.type !== undefined
         ) {
-          switch (true) {
-            case operation.type === 'nft':
+          switch (operation.type) {
+            case 'nft':
               const operationNft = operationsTokens?.nfts.filter((token) => {
                 return token.identifier === operation.identifier;
               });
 
               return operationNft?.length ? (
                 <DetailedItem operation={operation} key={i}>
-                  <NftBlock operationToken={operationNft[0]} value={operation.value} />
+                  <>
+                    {operationNft[0].type !== 'NonFungibleESDT' && (
+                      <div className="mr-2">Value</div>
+                    )}
+                    <NftBlock operationToken={operationNft[0]} value={operation.value} />
+                  </>
                 </DetailedItem>
               ) : null;
 
-            case operation.type === 'esdt':
+            case 'esdt':
               const operationToken = operationsTokens?.esdts.filter((token) => {
                 return token.identifier === operation.identifier;
               });

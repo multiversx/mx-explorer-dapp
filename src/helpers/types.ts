@@ -121,6 +121,119 @@ export interface ScResultType {
   returnMessage?: string;
 }
 
+export interface OperationsTokensType {
+  esdts: TokenType[];
+  nfts: NftType[];
+}
+
+export enum TxActionsEnum {
+  // esdtNft category
+  transfer = 'transfer',
+  // mex category
+  claimLockedAssets = 'claimLockedAssets',
+  swapTokensFixedInput = 'swapTokensFixedInput',
+  swap = 'swap',
+  addLiquidity = 'addLiquidity',
+  addLiquidityProxy = 'addLiquidityProxy',
+  removeLiquidity = 'removeLiquidity',
+  removeLiquidityProxy = 'removeLiquidityProxy',
+  enterFarm = 'enterFarm',
+  enterFarmProxy = 'enterFarmProxy',
+  enterFarmAndLockRewards = 'enterFarmAndLockRewards',
+  enterFarmAndLockRewardsProxy = 'enterFarmAndLockRewardsProxy',
+  exitFarm = 'exitFarm',
+  exitFarmProxy = 'exitFarmProxy',
+  claimRewards = 'claimRewards',
+  claimRewardsProxy = 'claimRewardsProxy',
+  compoundRewards = 'compoundRewards',
+  compoundRewardsProxy = 'compoundRewardsProxy',
+  wrapEgld = 'wrapEgld',
+  unwrapEgld = 'unwrapEgld',
+}
+
+export interface TokenArgumentType {
+  type: string;
+  name: string;
+  collection: string;
+  identifier: string;
+  ticker: string;
+  decimals: number;
+  value: string;
+}
+
+type TokenStringType = 'token' | 'token1' | 'token2' | 'receiver' | string;
+
+export interface TxActionType {
+  category: string;
+  name: TxActionsEnum;
+  description: string;
+  arguments: Record<TokenStringType, TokenArgumentType>;
+}
+
+export interface OperationType {
+  action: string;
+  type: string;
+  collection?: string;
+  identifier: string;
+  sender: string;
+  receiver: string;
+  value: string;
+}
+
+export interface ResultType {
+  hash: string;
+  callType: string;
+  gasLimit: number;
+  gasPrice: number;
+  nonce: number;
+  prevTxHash: string;
+  receiver?: string;
+  sender: string;
+  value: string;
+  data?: string;
+  originalTxHash: string;
+  returnMessage?: string;
+}
+
+export interface EventType {
+  address: string;
+  identifier: string;
+  topics: string[];
+}
+
+export interface TransactionType {
+  fee?: string;
+  blockHash: string;
+  data: string;
+  gasLimit: number;
+  gasPrice: number;
+  gasUsed: number;
+  txHash: string;
+  miniBlockHash: string;
+  nonce: number;
+  receiver: string;
+  receiverShard: number;
+  round: number;
+  sender: string;
+  senderShard: number;
+  signature: string;
+  status: string;
+  timestamp: number;
+  value: string;
+  price: number;
+  results?: ResultType[];
+  operations?: OperationType[];
+  action?: TxActionType;
+  logs?: {
+    address: string;
+    events: EventType[];
+  };
+  scamInfo?: {
+    type: string;
+    info: string;
+  };
+}
+
 export interface ProviderType {
   provider: string;
   apr: string;
