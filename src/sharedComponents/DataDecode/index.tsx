@@ -1,9 +1,9 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
 import { Dropdown } from 'react-bootstrap';
-import { addressIsBech32, bech32 } from 'helpers';
+import { addressIsBech32, bech32, isUtf8 } from 'helpers';
 
-type DecodeMethodType = 'raw' | 'text' | 'decimal' | 'address' | string;
+type DecodeMethodType = 'raw' | 'text' | 'decimal' | 'smart' | string;
 
 const decode = (part: string, decodeMethod: DecodeMethodType) => {
   switch (decodeMethod) {
@@ -15,7 +15,7 @@ const decode = (part: string, decodeMethod: DecodeMethodType) => {
     case 'decimal':
       const bn = new BigNumber(part, 16);
       return bn.toString(10);
-    case 'address':
+    case 'smart':
       try {
         const bech32Encoded = bech32.encode(part);
         if (addressIsBech32(bech32Encoded)) {
@@ -23,7 +23,13 @@ const decode = (part: string, decodeMethod: DecodeMethodType) => {
         }
       } catch {}
       try {
-        return Buffer.from(String(part), 'hex').toString('utf8').trim();
+        const decoded = Buffer.from(String(part), 'hex').toString('utf8').trim();
+        if (!isUtf8(decoded)) {
+          const bn = new BigNumber(part, 16);
+          return bn.toString(10);
+        } else {
+          return decoded;
+        }
       } catch {}
       return part;
     case 'raw':
@@ -99,11 +105,8 @@ const DataDecode = ({ value, className }: { value: string; className?: string })
             >
               Decimal
             </Dropdown.Item>
-            <Dropdown.Item
-              eventKey="address"
-              className={`${activeKey === 'address' ? 'active' : ''}`}
-            >
-              Address
+            <Dropdown.Item eventKey="smart" className={`${activeKey === 'smart' ? 'active' : ''}`}>
+              Smart
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
