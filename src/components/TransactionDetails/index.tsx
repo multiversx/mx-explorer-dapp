@@ -3,15 +3,9 @@ import { useGlobalState } from 'context';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader, adapter, PageState } from 'sharedComponents';
-import TransactionInfo, { TransactionType } from './TransactionInfo';
-import { OperationType } from './OperationsList';
-import { TokenType, NftType } from 'helpers/types';
+import TransactionInfo from './TransactionInfo';
+import { TransactionType, OperationsTokensType, OperationType } from 'helpers/types';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
-
-export interface OperationsTokensType {
-  esdts: TokenType[];
-  nfts: NftType[];
-}
 
 const TransactionDetails = () => {
   const params: any = useParams();
