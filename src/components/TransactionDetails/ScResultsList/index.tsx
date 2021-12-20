@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchange, faSearch } from '@fortawesome/pro-regular-svg-icons';
 import { Denominate, CopyButton, Trim, NetworkLink, DataDecode } from 'sharedComponents';
 import { ResultType, OperationsTokensType } from 'helpers/types';
+import { transactionsRoutes } from 'routes';
 import decodePart from './decodePart';
 
 const ScResultsList = ({
@@ -15,9 +16,13 @@ const ScResultsList = ({
 }) => {
   const { hash } = useLocation();
   const ref = React.useRef<HTMLDivElement>(null);
-  const formattedHash = hash.substring(0, hash.indexOf('&')).replace('#', '');
-  const initialDecodeMethod = hash.substring(hash.indexOf('&') + 1);
-  const [decodeMethod, setDecodeMethod] = React.useState<string>(initialDecodeMethod);
+  const formattedHash = hash.substring(0, hash.indexOf('/')).replace('#', '');
+  const initialDecodeMethod = hash.substring(hash.indexOf('/') + 1);
+  const [decodeMethod, setDecodeMethod] = React.useState<string>(
+    initialDecodeMethod && ['raw', 'text', 'decimal', 'smart'].includes(initialDecodeMethod)
+      ? initialDecodeMethod
+      : 'raw'
+  );
 
   const decodeData = (data: string) => {
     const parts = Buffer.from(data, 'base64').toString().split('@');
@@ -67,7 +72,7 @@ const ScResultsList = ({
                     <Trim text={result.hash} />
 
                     <NetworkLink
-                      to={`/transactions/${result.originalTxHash}#${result.hash}&${decodeMethod}`}
+                      to={`${transactionsRoutes.transactions}/${result.originalTxHash}#${result.hash}/${decodeMethod}`}
                       className="side-action ml-2"
                     >
                       <FontAwesomeIcon icon={faSearch} />
