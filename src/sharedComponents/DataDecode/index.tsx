@@ -35,6 +35,9 @@ const decode = (
             if (tokens.some((token) => decoded.includes(token.identifier))) {
               return decoded;
             }
+            if (operationsTokens.nfts.some((token) => decoded.includes(token.collection))) {
+              return decoded;
+            }
           }
           const bn = new BigNumber(part, 16);
           return bn.toString(10);
