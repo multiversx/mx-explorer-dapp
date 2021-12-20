@@ -12,14 +12,14 @@ export default function useLoopManager() {
   const dispatch = useGlobalDispatch();
   const { addNotification } = useNotifications();
 
-  const isProductionExplorer = process.env.NODE_ENV === 'production';
+  const isMainnetExplorer = window.location.origin === 'https://explorer.elrond.com';
   const explorerVersion = process.env.REACT_APP_CACHE_BUST;
 
   const withinInterval = moment().subtract(refreshRate, 'ms').isAfter(moment(timestamp));
 
   const checkVersion = () => {
     axios
-      .get('/version.json')
+      .get('https:***REMOVED***')
       .then(({ data }) => {
         const latestExplorerVersion = data;
         if (explorerVersion !== undefined && latestExplorerVersion !== undefined) {
@@ -58,7 +58,7 @@ export default function useLoopManager() {
         dispatch({
           type: 'triggerTick',
         });
-        if (isProductionExplorer) {
+        if (isMainnetExplorer) {
           checkVersion();
         }
       }
