@@ -59,11 +59,12 @@
     "copy-testnet-config": "cp ./config.testnet.js ./public/config.js",
     "copy-internal-config": "cp ./config.internal.js ./public/config.js",
     "copy-devnet-config": "cp ./config.devnet.js ./public/config.js",
-    "postbuild": "npm run compile",
+    "postbuild": "npm run compile & npm run create-version-file",
     "compile-light": "node-sass src/assets/styles/light.scss build/light.css",
     "compile-dark": "node-sass src/assets/styles/dark.scss build/dark.css",
     "compile-testnet": "node-sass src/assets/styles/testnet.scss build/testnet.css",
     "compile": "npm run compile-light & npm run compile-dark & npm run compile-testnet",
+    "create-version-file": "git describe --always | sed 's/^/\"/;s/$/\"/' > build/version.json",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"

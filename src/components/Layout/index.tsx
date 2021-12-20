@@ -2,7 +2,7 @@ import React from 'react';
 import { useGlobalState } from 'context';
 import Navbar from './Navbar/index';
 import Footer from './Footer/index';
-import { Search } from 'sharedComponents';
+import { Search, NotificationsBar } from 'sharedComponents';
 import Unavailable from './Unavailable';
 import PageLayout from './PageLayout';
 import GlobalStatsCard from './GlobalStatsCard';
@@ -95,6 +95,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div className="flex-fill vh-100">
         <main className="main-content d-flex flex-column flex-grow-1">
           <Navbar />
+          <NotificationsBar />
           <div className="main-content-container container-fluid p-0 d-flex flex-column">
             {offline ? (
               <Unavailable />
