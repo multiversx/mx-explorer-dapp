@@ -28,6 +28,7 @@ import useActiveRoute from './useActiveRoute';
 import isUtf8 from './isUtf8';
 import useScamFlag from './useScamFlag';
 import * as bech32 from './bech32';
+import useNotifications from './useNotifications';
 
 export {
   truncate,
@@ -60,4 +61,5 @@ export {
   bech32,
   isUtf8,
   useScamFlag,
+  useNotifications,
 };
