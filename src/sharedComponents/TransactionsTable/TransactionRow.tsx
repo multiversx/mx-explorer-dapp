@@ -1,37 +1,18 @@
 import { faArrowRight } from '@fortawesome/pro-regular-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { addressIsBech32, urlBuilder } from 'helpers';
+import { addressIsBech32, urlBuilder, types } from 'helpers';
 import { Denominate, ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
-import { ResultType } from 'components/TransactionDetails/ScResultsList';
 import TransactionIcon from '../TransactionsTable/TransactionIcon';
 
-export interface TransactionType {
-  txHash: string;
-  receiver: string;
-  receiverShard: number;
-  sender: string;
-  senderShard: number;
-  status: string;
-  timestamp: number;
-  value: string;
-  blockHash?: string;
-  data?: string;
-  gasLimit?: number;
-  gasPrice?: number;
-  gasUsed?: number;
-  miniBlockHash?: string;
-  nonce?: number;
-  round?: number;
-  signature?: string;
-  results?: ResultType[];
+export interface UITransactionType extends types.TransactionType {
   isNew?: boolean; // UI flag
   tokenValue?: string;
   tokenIdentifier?: string;
 }
 
-interface TransactionRowType {
-  transaction: TransactionType;
+export interface TransactionRowType {
+  transaction: UITransactionType;
   directionCol?: boolean;
   address?: string;
 }

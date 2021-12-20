@@ -2,12 +2,7 @@ import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchange } from '@fortawesome/pro-regular-svg-icons/faExchange';
 import { CopyButton, Trim, DataDecode } from 'sharedComponents';
-
-export interface EventType {
-  address: string;
-  identifier: string;
-  topics: string[];
-}
+import { EventType } from 'helpers/types';
 
 const EventTopics = ({ topics }: { topics: EventType['topics'] }) => {
   const mergedTopics = topics.filter((topic) => topic).join('\n');

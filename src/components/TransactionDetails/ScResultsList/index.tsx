@@ -3,26 +3,26 @@ import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchange, faSearch } from '@fortawesome/pro-regular-svg-icons';
 import { Denominate, CopyButton, Trim, NetworkLink, DataDecode } from 'sharedComponents';
+import { ResultType, OperationsTokensType } from 'helpers/types';
+import { transactionsRoutes } from 'routes';
 import decodePart from './decodePart';
 
-export interface ResultType {
-  hash: string;
-  callType: string;
-  gasLimit: number;
-  gasPrice: number;
-  nonce: number;
-  prevTxHash: string;
-  receiver?: string;
-  sender: string;
-  value: string;
-  data?: string;
-  originalTxHash: string;
-  returnMessage?: string;
-}
-
-const ScResultsList = ({ results }: { results: ResultType[] }) => {
+const ScResultsList = ({
+  results,
+  operationsTokens,
+}: {
+  results: ResultType[];
+  operationsTokens?: OperationsTokensType;
+}) => {
   const { hash } = useLocation();
   const ref = React.useRef<HTMLDivElement>(null);
+  const formattedHash = hash.substring(0, hash.indexOf('/')).replace('#', '');
+  const initialDecodeMethod = hash.substring(hash.indexOf('/') + 1);
+  const [decodeMethod, setDecodeMethod] = React.useState<string>(
+    initialDecodeMethod && ['raw', 'text', 'decimal', 'smart'].includes(initialDecodeMethod)
+      ? initialDecodeMethod
+      : 'raw'
+  );
 
   const decodeData = (data: string) => {
     const parts = Buffer.from(data, 'base64').toString().split('@');
@@ -50,7 +50,7 @@ const ScResultsList = ({ results }: { results: ResultType[] }) => {
   return (
     <div className="sc-results-list detailed-list d-flex flex-column mt-1">
       {results.map((result: ResultType, i) => {
-        const highlightTx = hash.replace('#', '') === result.hash;
+        const highlightTx = formattedHash === result.hash;
         return (
           <div
             key={i}
@@ -72,7 +72,7 @@ const ScResultsList = ({ results }: { results: ResultType[] }) => {
                     <Trim text={result.hash} />
 
                     <NetworkLink
-                      to={`/transactions/${result.originalTxHash}#${result.hash}`}
+                      to={`${transactionsRoutes.transactions}/${result.originalTxHash}#${result.hash}/${decodeMethod}`}
                       className="side-action ml-2"
                     >
                       <FontAwesomeIcon icon={faSearch} />
@@ -114,7 +114,11 @@ const ScResultsList = ({ results }: { results: ResultType[] }) => {
                 <div className="row d-flex flex-column flex-sm-row">
                   <div className="col col-left">Data</div>
                   <div className="col">
-                    <DataDecode value={result.data ? decodeData(result.data) : 'N/A'} />
+                    <DataDecode
+                      value={result.data ? decodeData(result.data) : 'N/A'}
+                      operationsTokens={operationsTokens}
+                      {...(highlightTx ? { initialDecodeMethod, setDecodeMethod } : {})}
+                    />
                   </div>
                 </div>
               )}
