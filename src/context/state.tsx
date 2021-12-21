@@ -90,6 +90,14 @@ export interface NodeType {
   computedShardID?: number;
 }
 
+export interface NotificationType {
+  id: string;
+  text: React.ReactNode;
+  priority: number;
+  bgClassName: string;
+  dismissable: boolean;
+}
+
 export interface StateType {
   config: ConfigType;
   defaultNetwork: NetworkType;
@@ -106,6 +114,7 @@ export interface StateType {
   tokenDetails: types.TokenType;
   usd: number | undefined;
   urlBlacklist?: { [key: string]: string };
+  notifications: NotificationType[];
 }
 
 const initialState = (optionalConfig?: ConfigType): StateType => {
@@ -151,6 +160,7 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
     },
     usd: undefined,
     urlBlacklist: undefined,
+    notifications: [],
   };
 };
 
