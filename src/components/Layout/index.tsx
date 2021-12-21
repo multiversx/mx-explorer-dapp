@@ -14,6 +14,7 @@ import {
   useLoopManager,
   useActiveRoute,
   useIsMainnet,
+  useCheckVersion,
 } from 'helpers';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -52,6 +53,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   useNetworkRouter();
   useLoopManager();
   useFetchPrice();
+  useCheckVersion();
 
   const offline = !window.navigator.onLine;
 

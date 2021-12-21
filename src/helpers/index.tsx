@@ -1,3 +1,5 @@
+import * as types from './types';
+import * as bech32 from './bech32';
 import isHash from './isHash';
 import stringIsInteger from './stringIsInteger';
 import addressIsBech32 from './addressIsBech32';
@@ -15,7 +17,6 @@ import useSize from './useSize';
 import useMatchPath from './useMatchPath';
 import useIsMainnet from './useIsMainnet';
 import useNetworkPathname from './useNetworkPathname';
-import * as types from './types';
 import analytics from './analytics';
 import isContract from './isContract';
 import usdValue from './usdValue';
@@ -27,8 +28,8 @@ import useLoopManager from './useLoopManager';
 import useActiveRoute from './useActiveRoute';
 import isUtf8 from './isUtf8';
 import useScamFlag from './useScamFlag';
-import * as bech32 from './bech32';
 import useNotifications from './useNotifications';
+import useCheckVersion from './useCheckVersion';
 
 export {
   truncate,
@@ -62,4 +63,5 @@ export {
   isUtf8,
   useScamFlag,
   useNotifications,
+  useCheckVersion,
 };
