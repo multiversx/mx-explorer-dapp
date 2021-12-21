@@ -1,4 +1,4 @@
-import { StateType, ConfigType } from './state';
+import { StateType, ConfigType, NotificationType } from './state';
 import moment from 'moment';
 import { storage } from 'helpers';
 
@@ -21,6 +21,14 @@ export type ActionType =
   | {
       type: 'setUrlBlacklist';
       urlBlacklist: StateType['urlBlacklist'];
+    }
+  | {
+      type: 'addNotification';
+      notification: NotificationType;
+    }
+  | {
+      type: 'removeNotification';
+      id: NotificationType['id'];
     };
 
 export function globalReducer(state: StateType, action: ActionType): StateType {
@@ -92,6 +100,12 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
     }
     case 'setUrlBlacklist': {
       return { ...state, urlBlacklist: action.urlBlacklist };
+    }
+    case 'addNotification': {
+      return { ...state, notifications: [action.notification, ...state.notifications] };
+    }
+    case 'removeNotification': {
+      return { ...state, notifications: state.notifications.filter((n) => n.id !== action.id) };
     }
     default: {
       throw new Error(`Unhandled action type: ${(action as any).type}`);
