@@ -24,5 +24,6 @@ export default function useLoopManager() {
     };
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(setRounds, []);
 }

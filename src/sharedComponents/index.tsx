@@ -37,6 +37,7 @@ import SocialIcons from './SocialIcons';
 import PercentageBar from './PercentageBar';
 import ModalLink from './ModalLink';
 import DataDecode from './DataDecode';
+import NotificationsBar from './NotificationsBar';
 
 export {
   Denominate,
@@ -79,4 +80,5 @@ export {
   PercentageBar,
   ModalLink,
   DataDecode,
+  NotificationsBar,
 };

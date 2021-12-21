@@ -1,0 +1,14 @@
+.notification-bar {
+  border-radius: 0;
+  color: $black;
+
+  .close-icon {
+    color: $black;
+    opacity: 0.6;
+    font-size: 1.2rem;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
