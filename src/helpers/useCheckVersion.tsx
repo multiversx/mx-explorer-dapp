@@ -4,7 +4,7 @@ import moment from 'moment';
 import { useGlobalState } from 'context';
 import { useNotifications } from 'helpers';
 
-export default function useLoopManager() {
+export default function useCheckVersion() {
   const {
     refresh: { timestamp },
   } = useGlobalState();
