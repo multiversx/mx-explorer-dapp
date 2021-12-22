@@ -23,6 +23,7 @@ import {
   DetailItem,
   Trim,
   CopyButton,
+  TransactionDescription,
 } from 'sharedComponents';
 import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
 import EventsList from '../EventsList';
@@ -274,6 +275,15 @@ const TransactionInfo = ({
                     )}
                   </span>
                 </DetailItem>
+
+                {transaction.action && (
+                  <DetailItem title="Description">
+                    <TransactionDescription
+                      action={transaction.action}
+                      operationsTokens={operationsTokens}
+                    />
+                  </DetailItem>
+                )}
 
                 {transaction.operations && transaction.operations.length > 0 && (
                   <DetailItem
