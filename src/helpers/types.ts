@@ -126,6 +126,51 @@ export interface OperationsTokensType {
   nfts: NftType[];
 }
 
+export enum TxActionsEnum {
+  // esdtNft category
+  transfer = 'transfer',
+  // mex category
+  claimLockedAssets = 'claimLockedAssets',
+  swapTokensFixedInput = 'swapTokensFixedInput',
+  swap = 'swap',
+  addLiquidity = 'addLiquidity',
+  addLiquidityProxy = 'addLiquidityProxy',
+  removeLiquidity = 'removeLiquidity',
+  removeLiquidityProxy = 'removeLiquidityProxy',
+  enterFarm = 'enterFarm',
+  enterFarmProxy = 'enterFarmProxy',
+  enterFarmAndLockRewards = 'enterFarmAndLockRewards',
+  enterFarmAndLockRewardsProxy = 'enterFarmAndLockRewardsProxy',
+  exitFarm = 'exitFarm',
+  exitFarmProxy = 'exitFarmProxy',
+  claimRewards = 'claimRewards',
+  claimRewardsProxy = 'claimRewardsProxy',
+  compoundRewards = 'compoundRewards',
+  compoundRewardsProxy = 'compoundRewardsProxy',
+  wrapEgld = 'wrapEgld',
+  unwrapEgld = 'unwrapEgld',
+}
+
+export interface TokenArgumentType {
+  type: string;
+  name: string;
+  ticker: string;
+  collection?: string;
+  identifier?: string;
+  token?: string;
+  decimals: number;
+  value: string;
+}
+
+type TokenStringType = 'token' | 'token1' | 'token2' | 'receiver' | string;
+
+export interface TxActionType {
+  category: string;
+  name: TxActionsEnum;
+  description: string;
+  arguments: Record<TokenStringType, TokenArgumentType>;
+}
+
 export interface OperationType {
   action: string;
   type: string;
@@ -179,6 +224,7 @@ export interface TransactionType {
   price: number;
   results?: ResultType[];
   operations?: OperationType[];
+  action?: TxActionType;
   logs?: {
     address: string;
     events: EventType[];
