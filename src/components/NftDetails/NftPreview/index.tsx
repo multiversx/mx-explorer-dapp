@@ -7,9 +7,25 @@ import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons';
 import { types, useScamFlag } from 'helpers';
 import { ModalLink } from 'sharedComponents';
 
-const Thumbnail = ({ token, children }: { token: types.NftType; children: any }) => {
+const Thumbnail = ({
+  token,
+  link,
+  children,
+}: {
+  token: types.NftType;
+  link: string;
+  children: any;
+}) => {
+  let thumbnail = '';
   const [loaded, setLoaded] = React.useState(false);
-  return token.thumbnailUrl ? (
+  if (token.media && link) {
+    const found = token.media.find((mediaEntry) => mediaEntry.originalUrl === link);
+    if (found) {
+      thumbnail = found.thumbnailUrl;
+    }
+  }
+
+  return thumbnail ? (
     <OverlayTrigger
       placement="top"
       delay={{ show: 250, hide: 400 }}
@@ -27,8 +43,8 @@ const Thumbnail = ({ token, children }: { token: types.NftType; children: any })
               />
             )}
             <img
-              src={token.thumbnailUrl}
-              alt={token.name}
+              src={thumbnail}
+              alt=" "
               height={90}
               onLoad={() => {
                 setLoaded(true);
@@ -59,11 +75,25 @@ const NftPreview = ({ token }: { token: types.NftType }) => {
             return (
               <li key={i}>
                 <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary mr-2" />
-                <Thumbnail token={token}>
-                  <Anchorme linkComponent={ModalLink} target="_blank" rel="noreferrer noopener">
-                    {found ? stringWithLinks : link}
-                  </Anchorme>
-                </Thumbnail>
+                {link.startsWith(
+                  'https://ipfs.io/ipfs/'
+                ) /* && token.isWhitelistedStorage === true */ ? (
+                  <Thumbnail link={found ? '' : link} token={token}>
+                    <Anchorme linkComponent={ModalLink} target="_blank" rel="noreferrer noopener">
+                      {found ? stringWithLinks : link}
+                    </Anchorme>
+                  </Thumbnail>
+                ) : (
+                  <span className="text-break">
+                    {found ? (
+                      <Anchorme linkComponent={ModalLink} target="_blank" rel="noreferrer noopener">
+                        {stringWithLinks}
+                      </Anchorme>
+                    ) : (
+                      link
+                    )}
+                  </span>
+                )}
               </li>
             );
           } else return null;

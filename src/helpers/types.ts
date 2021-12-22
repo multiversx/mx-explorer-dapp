@@ -99,6 +99,13 @@ export interface NftType {
     fileUri?: string;
     fileName?: string;
   };
+  media?: {
+    url: string;
+    originalUrl: string;
+    thumbnailUrl: string;
+    fileType: string;
+    fileSize: number;
+  }[];
   scamInfo?: {
     type: string;
     info: string;
