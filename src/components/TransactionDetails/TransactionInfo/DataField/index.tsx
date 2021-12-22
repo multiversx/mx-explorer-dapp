@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useLocation } from 'react-router-dom';
 import { Anchorme } from 'react-anchorme';
 import { DetailItem, ModalLink, DataDecode } from 'sharedComponents';
 import { truncate, useScamFlag } from 'helpers';
@@ -14,6 +15,13 @@ const DataField = ({
     info: string;
   };
 }) => {
+  const { hash, pathname } = useLocation();
+  const hashDecodeMethod = hash.replace('#', '');
+  const initialDecodeMethod =
+    hashDecodeMethod && ['raw', 'text', 'decimal', 'smart'].includes(hashDecodeMethod)
+      ? hashDecodeMethod
+      : 'raw';
+  const [decodeMethod, setDecodeMethod] = React.useState<string>(hashDecodeMethod);
   const scamFlag = useScamFlag();
   const [showData, setShowData] = React.useState(false);
 
@@ -25,6 +33,12 @@ const DataField = ({
   const dataString = data ? Buffer.from(data, 'base64').toString() : 'N/A';
   const { stringWithLinks, output, found } = scamFlag(dataString, scamInfo);
 
+  React.useEffect(() => {
+    if (decodeMethod && decodeMethod !== 'raw') {
+      window.history.replaceState(null, '', `${pathname}#${decodeMethod}`);
+    }
+  }, [decodeMethod, pathname]);
+
   return (
     <DetailItem title="Input Data" className="data-field">
       {showData ? (
@@ -34,7 +48,12 @@ const DataField = ({
           </Anchorme>
         </div>
       ) : (
-        <DataDecode className="col" value={truncate(output, displayedDataLength)} />
+        <DataDecode
+          className="col"
+          value={truncate(output, displayedDataLength)}
+          initialDecodeMethod={initialDecodeMethod}
+          setDecodeMethod={setDecodeMethod}
+        />
       )}
       {found && (
         <a href="/#" onClick={show} className="small-font text-muted">
