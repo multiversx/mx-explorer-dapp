@@ -101,6 +101,7 @@ export interface NftType {
   };
   media?: {
     url: string;
+    originalUrl: string;
     thumbnailUrl: string;
     fileType: string;
     fileSize: number;

@@ -19,8 +19,7 @@ const Thumbnail = ({
   let thumbnail = '';
   const [loaded, setLoaded] = React.useState(false);
   if (token.media && link) {
-    const mediaLink = link.replace('https://ipfs.io/ipfs', 'http://media.elrond.com/nfts/asset');
-    const found = token.media.find((mediaEntry) => mediaEntry.url === mediaLink);
+    const found = token.media.find((mediaEntry) => mediaEntry.originalUrl === link);
     if (found) {
       thumbnail = found.thumbnailUrl;
     }
