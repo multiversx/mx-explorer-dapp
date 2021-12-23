@@ -66,7 +66,9 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
           activeRoute(accountsRoutes.accountDetails) ||
           activeRoute(accountsRoutes.accountCode) ||
           activeRoute(accountsRoutes.accountTokens) ||
-          activeRoute(accountsRoutes.accountNfts)
+          activeRoute(accountsRoutes.accountNfts) ||
+          activeRoute(accountsRoutes.accountContracts) ||
+          activeRoute(accountsRoutes.accountScResults)
             ? 'active'
             : ''
         }`}
