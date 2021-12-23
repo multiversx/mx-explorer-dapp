@@ -198,6 +198,21 @@ export default function useAdapter() {
         },
       }),
 
+    getAccountScResultsCount: (address: string) =>
+      provider({ url: `/accounts/${address}/sc-results/count` }),
+
+    getAccountContracts: ({ address, size }: { address: string; size: number }) =>
+      provider({
+        url: `/accounts/${address}/contracts`,
+        params: {
+          from: (size - 1) * 25,
+          size: 25,
+        },
+      }),
+
+    getAccountContractsCount: (address: string) =>
+      provider({ url: `/accounts/${address}/contracts/count` }),
+
     getScResult: (hash: string) => provider({ url: `/sc-results/${hash}` }),
 
     getScResults: (size = 1) =>
@@ -212,9 +227,6 @@ export default function useAdapter() {
     getScResultsCount: () => provider({ url: `/sc-results/count` }),
 
     /* Stake */
-
-    getAccountScResultsCount: (address: string) =>
-      provider({ url: `/accounts/${address}/sc-results/count` }),
 
     getAccountDelegation: (address: string) =>
       provider({ url: `/accounts/${address}/delegations`, baseUrl: delegationApi }),

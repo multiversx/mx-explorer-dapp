@@ -86,6 +86,7 @@ const SimpleMap = ({ markers }: SimpleMapType) => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(chooseMarker, [pulse]);
 
   const pulseInterval = () => {
