@@ -105,9 +105,11 @@ const NftDetails = () => {
                           : nftDetails.name}
                       </DetailItem>
                       <DetailItem title="Identifier">{nftDetails.identifier}</DetailItem>
-                      {nftDetails.ticker !== undefined && (
-                        <DetailItem title="Ticker">{nftDetails.ticker}</DetailItem>
-                      )}
+                      {nftDetails.ticker !== undefined &&
+                        nftDetails.ticker !== nftDetails.collection &&
+                        nftDetails.type === 'MetaESDT' && (
+                          <DetailItem title="Ticker">{nftDetails.ticker}</DetailItem>
+                        )}
                       <DetailItem title="Type">
                         <NftBadge type={nftDetails.type} />
                       </DetailItem>
