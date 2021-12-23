@@ -177,16 +177,17 @@ const AccountScResults = () => {
           </div>
         )}
       </div>
-      <div className="card-footer d-flex justify-content-end">
-        {dataReady === true && accountScResults.length > 0 && (
+
+      {dataReady === true && accountScResults.length > 0 && (
+        <div className="card-footer d-flex justify-content-end">
           <Pager
             itemsPerPage={25}
             page={String(size)}
             total={Math.min(accountScResultsCount, 10000)}
             show={accountScResults.length > 0}
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

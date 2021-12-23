@@ -140,16 +140,17 @@ const AccountNfts = () => {
           )}
         </div>
       </div>
-      <div className="card-footer d-flex justify-content-end border-0 pt-0">
-        {dataReady === true && accountNfts.length > 0 && (
+
+      {dataReady === true && accountNfts.length > 0 && (
+        <div className="card-footer d-flex justify-content-end border-0 pt-0">
           <Pager
             itemsPerPage={25}
             page={String(size)}
             total={accountNftsCount}
             show={accountNfts.length > 0}
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
