@@ -277,7 +277,7 @@ const TransactionInfo = ({
                 </DetailItem>
 
                 {transaction.action && (
-                  <DetailItem title="Description">
+                  <DetailItem title="Transaction Action">
                     <TransactionDescription
                       action={transaction.action}
                       operationsTokens={operationsTokens}
