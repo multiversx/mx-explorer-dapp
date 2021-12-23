@@ -13,7 +13,6 @@ import {
   Loader,
   Denominate,
   LatestItem,
-  TokenBlock,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
@@ -76,6 +75,7 @@ const LatestTransactions = () => {
     });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchTransactions, [activeNetworkId, timestamp]);
 
   const Component = () => {
