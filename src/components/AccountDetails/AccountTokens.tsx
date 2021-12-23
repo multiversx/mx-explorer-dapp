@@ -193,16 +193,17 @@ const AccountTokens = () => {
           )}
         </div>
       </div>
-      <div className="card-footer d-flex justify-content-end border-0 pt-0">
-        {dataReady === true && (accountTokens.length > 0 || accountNfts.length > 0) && (
+
+      {dataReady === true && (accountTokens.length > 0 || accountNfts.length > 0) && (
+        <div className="card-footer d-flex justify-content-end border-0 pt-0">
           <Pager
             itemsPerPage={25}
             page={String(size)}
             total={Math.max(accountTokensCount, accountNftsCount)}
             show={accountTokens.length > 0 || accountNfts.length > 0}
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
