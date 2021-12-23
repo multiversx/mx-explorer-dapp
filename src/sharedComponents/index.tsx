@@ -37,6 +37,7 @@ import SocialIcons from './SocialIcons';
 import PercentageBar from './PercentageBar';
 import ModalLink from './ModalLink';
 import DataDecode from './DataDecode';
+import TransactionDescription from './TransactionDescription';
 import NotificationsBar from './NotificationsBar';
 
 export {
@@ -80,5 +81,6 @@ export {
   PercentageBar,
   ModalLink,
   DataDecode,
+  TransactionDescription,
   NotificationsBar,
 };
