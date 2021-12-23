@@ -49,6 +49,17 @@ const AccountTabs = () => {
         <h6>NFTs</h6>
       </NetworkLink>
 
+      {!accountDetails.code && (
+        <NetworkLink
+          to={urlBuilder.accountDetailsContracts(accountDetails.address)}
+          className={`tab-link mr-3 mr-lg-spacer ${
+            activeRoute(accountsRoutes.accountContracts) ? 'active' : ''
+          }`}
+        >
+          <h6>Smart Contracts</h6>
+        </NetworkLink>
+      )}
+
       {accountDetails.code && (
         <NetworkLink
           to={urlBuilder.accountDetailsContractCode(accountDetails.address)}

@@ -128,9 +128,3 @@ a > .trim span {
     font-size: 0.8125rem;
   }
 }
-
-.table .trim-size-xl .trim {
-  @include media-breakpoint-up(md) {
-    max-width: 13rem;
-  }
-}
