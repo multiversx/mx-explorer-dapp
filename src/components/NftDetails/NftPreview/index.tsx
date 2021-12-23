@@ -10,18 +10,26 @@ import { ModalLink } from 'sharedComponents';
 const Thumbnail = ({
   token,
   link,
+  index,
   children,
 }: {
   token: types.NftType;
   link: string;
+  index: number;
   children: any;
 }) => {
   let thumbnail = '';
   const [loaded, setLoaded] = React.useState(false);
-  if (token.media && link) {
+  if (token.media && token.media.length && link) {
     const found = token.media.find((mediaEntry) => mediaEntry.originalUrl === link);
+
     if (found) {
       thumbnail = found.thumbnailUrl;
+    } else {
+      thumbnail =
+        token.media[index] && token.media[index].thumbnailUrl
+          ? token.media[index].thumbnailUrl
+          : '';
     }
   }
 
@@ -78,7 +86,7 @@ const NftPreview = ({ token }: { token: types.NftType }) => {
                 {link.startsWith(
                   'https://ipfs.io/ipfs/'
                 ) /* && token.isWhitelistedStorage === true */ ? (
-                  <Thumbnail link={found ? '' : link} token={token}>
+                  <Thumbnail link={found ? '' : link} token={token} index={i}>
                     <Anchorme linkComponent={ModalLink} target="_blank" rel="noreferrer noopener">
                       {found ? stringWithLinks : link}
                     </Anchorme>
@@ -90,7 +98,9 @@ const NftPreview = ({ token }: { token: types.NftType }) => {
                         {stringWithLinks}
                       </Anchorme>
                     ) : (
-                      link
+                      <Thumbnail link={link} token={token} index={i}>
+                        <span>{link}</span>
+                      </Thumbnail>
                     )}
                   </span>
                 )}
