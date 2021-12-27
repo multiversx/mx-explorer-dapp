@@ -17,7 +17,7 @@ const NftBlock = ({ value, operationToken }: NftBlockType) => {
         <>
           {value && operationToken.type !== 'NonFungibleESDT' && (
             <div className="mr-1">
-              {operationToken.decimals ? (
+              {operationToken.decimals !== undefined ? (
                 <Denominate
                   value={value}
                   showLabel={false}
