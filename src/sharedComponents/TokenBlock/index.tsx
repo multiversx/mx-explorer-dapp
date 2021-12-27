@@ -12,7 +12,8 @@ interface TokenBlockType {
 const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
   const ref = React.useRef(null);
 
-  const denomination = operationToken.decimals ? operationToken.decimals : configDenomination;
+  const denomination =
+    operationToken.decimals !== undefined ? operationToken.decimals : configDenomination;
 
   return (
     <div ref={ref} className="d-flex text-truncate">
