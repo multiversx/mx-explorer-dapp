@@ -276,7 +276,7 @@ const TransactionInfo = ({
                   </span>
                 </DetailItem>
 
-                {transaction.action && (
+                {transaction.action && transaction.action.arguments && (
                   <DetailItem title="Transaction Action">
                     <TransactionDescription
                       action={transaction.action}
