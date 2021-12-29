@@ -276,14 +276,16 @@ const TransactionInfo = ({
                   </span>
                 </DetailItem>
 
-                {transaction.action && transaction.action.arguments && (
-                  <DetailItem title="Transaction Action">
-                    <TransactionDescription
-                      action={transaction.action}
-                      operationsTokens={operationsTokens}
-                    />
-                  </DetailItem>
-                )}
+                {transaction.action &&
+                  transaction.action.category &&
+                  ['esdtNft', 'mex'].includes(transaction.action.category) && (
+                    <DetailItem title="Transaction Action">
+                      <TransactionDescription
+                        action={transaction.action}
+                        operationsTokens={operationsTokens}
+                      />
+                    </DetailItem>
+                  )}
 
                 {transaction.operations && transaction.operations.length > 0 && (
                   <DetailItem
