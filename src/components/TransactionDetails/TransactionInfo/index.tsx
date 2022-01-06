@@ -23,7 +23,7 @@ import {
   DetailItem,
   Trim,
   CopyButton,
-  TransactionDescription,
+  TransactionAction,
 } from 'sharedComponents';
 import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
 import EventsList from '../EventsList';
@@ -276,16 +276,14 @@ const TransactionInfo = ({
                   </span>
                 </DetailItem>
 
-                {transaction.action &&
-                  transaction.action.category &&
-                  ['esdtNft', 'mex'].includes(transaction.action.category) && (
-                    <DetailItem title="Transaction Action">
-                      <TransactionDescription
-                        action={transaction.action}
-                        operationsTokens={operationsTokens}
-                      />
-                    </DetailItem>
-                  )}
+                {transaction.action && transaction.action.category && (
+                  <DetailItem title="Transaction Action">
+                    <TransactionAction
+                      action={transaction.action}
+                      operationsTokens={operationsTokens}
+                    />
+                  </DetailItem>
+                )}
 
                 {transaction.operations && transaction.operations.length > 0 && (
                   <DetailItem
