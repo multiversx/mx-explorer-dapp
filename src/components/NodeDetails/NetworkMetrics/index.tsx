@@ -20,15 +20,14 @@ const NetworkMetrics = ({ node }: { node: NodeType }) => {
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Rating" colWidth="3">
-            <div className="d-flex align-items-center h-100">
+            <div className="d-flex align-items-center">
               <div className="gradient-bar progress progress-sm w-100 my-2">
                 <RatingArrow node={node} showTemp={true} />
                 <RatingArrow node={node} />
               </div>
             </div>
           </DetailItem>
-
-          <DetailItem title="Uptime" colWidth="3">
+          {/* <DetailItem title="Uptime" colWidth="3">
             <PercentegeBar
               downtimeLabel={downtimeLabel}
               uptimeLabel={uptimeLabel}
@@ -36,7 +35,7 @@ const NetworkMetrics = ({ node }: { node: NodeType }) => {
               downtimePercentege={node.downtime ? node.downtime : 0}
               tooltipPlacementUp={false}
             />
-          </DetailItem>
+          </DetailItem> */}
 
           <DetailItem title="Status" colWidth="3">
             <div className="d-flex align-items-center">
