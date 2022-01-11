@@ -1,10 +1,17 @@
 import * as React from 'react';
-import { TokenBlock, NftBlock, ScAddressIcon, NetworkLink, Trim } from 'sharedComponents';
+import {
+  TokenBlock,
+  NftBlock,
+  ScAddressIcon,
+  NetworkLink,
+  Trim,
+  Denominate,
+} from 'sharedComponents';
 import { addressIsBech32, urlBuilder } from 'helpers';
 import { TokenArgumentType, TxActionType, OperationsTokensType } from 'helpers/types';
 import unwrapper from './unwrapper';
 
-const DescriptionToken = ({
+const ActionToken = ({
   token,
   operationsTokens,
 }: {
@@ -34,7 +41,7 @@ const DescriptionToken = ({
   }
 };
 
-const DescriptionText = ({
+const ActionText = ({
   entry,
   operationsTokens,
 }: {
@@ -43,38 +50,51 @@ const DescriptionText = ({
 }) => {
   switch (true) {
     case typeof entry === 'string':
+      return <span className="mr-1">{entry.replace('eGLD', 'EGLD')}</span>;
+
+    case Boolean(entry.address):
       return (
         <>
-          {addressIsBech32(entry) ? (
+          {addressIsBech32(entry.address) ? (
             <div className="d-flex align-items-center">
-              <ScAddressIcon initiator={entry} />
+              <ScAddressIcon initiator={entry.address} />
               <NetworkLink
-                to={urlBuilder.accountDetails(entry)}
+                to={urlBuilder.accountDetails(entry.address)}
                 data-testid="receiverLink"
                 className="trim-wrapper"
               >
-                <Trim text={entry} />
+                <Trim text={entry.address} />
               </NetworkLink>
             </div>
           ) : (
-            <span className="mr-1">{entry.replace('eGLD', 'EGLD')}</span>
+            ''
           )}
         </>
       );
-    case Array.isArray(entry):
-      const transferTokens = entry.map((token: TokenArgumentType, index: number) => (
-        <>
-          <DescriptionToken token={token} operationsTokens={operationsTokens} />
-          {index > 0 && <span className="ml-n1 mr-1">,</span>}
-        </>
-      ));
+
+    case Boolean(entry.token && entry.token.length > 0):
+      const transferTokens = entry.token.map((token: TokenArgumentType, index: number) => {
+        return (
+          <div key={`tx-${token.identifier}-${index}`}>
+            <ActionToken token={token} operationsTokens={operationsTokens} />
+            {index > 0 && <span className="ml-n1 mr-1">,</span>}
+          </div>
+        );
+      });
       return transferTokens;
+
+    case Boolean(entry.value):
+      return <Denominate value={entry.value} />;
+
+    case Boolean(entry.providerName):
+      return <span className="mr-1">{entry.providerName}</span>;
+
     default:
-      return <DescriptionToken token={entry} operationsTokens={operationsTokens} />;
+      return null;
   }
 };
 
-const Description = ({
+const TransactionAction = ({
   action,
   operationsTokens,
 }: {
@@ -95,10 +115,10 @@ const Description = ({
           key={JSON.stringify(unwrappedResult) + i}
           className={`${i > 0 && entry !== 'string' ? 'mr-1' : ''}`}
         >
-          <DescriptionText entry={entry} operationsTokens={operationsTokens} />
+          <ActionText entry={entry} operationsTokens={operationsTokens} />
         </div>
       ))}
     </div>
   );
 };
-export default Description;
+export default TransactionAction;

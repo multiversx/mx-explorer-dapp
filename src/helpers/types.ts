@@ -136,9 +136,17 @@ export interface OperationsTokensType {
 export enum TxActionsEnum {
   // esdtNft category
   transfer = 'transfer',
+  // stake category
+  delegate = 'delegate',
+  stake = 'stake',
+  unDelegate = 'unDelegate',
+  stakeClaimRewards = 'claimRewards',
+  reDelegateRewards = 'reDelegateRewards',
+  withdraw = 'withdraw',
   // mex category
   claimLockedAssets = 'claimLockedAssets',
   swapTokensFixedInput = 'swapTokensFixedInput',
+  swapTokensFixedOutput = 'swapTokensFixedOutput',
   swap = 'swap',
   addLiquidity = 'addLiquidity',
   addLiquidityProxy = 'addLiquidityProxy',
@@ -158,6 +166,13 @@ export enum TxActionsEnum {
   unwrapEgld = 'unwrapEgld',
 }
 
+export enum TxActionCategoryEnum {
+  esdtNft = 'esdtNft',
+  mex = 'mex',
+  stake = 'stake',
+  scCall = 'scCall',
+}
+
 export interface TokenArgumentType {
   type: string;
   name: string;
@@ -167,15 +182,21 @@ export interface TokenArgumentType {
   token?: string;
   decimals: number;
   value: string;
+  providerName?: string;
 }
-
-type TokenStringType = 'token' | 'token1' | 'token2' | 'receiver' | string;
 
 export interface TxActionType {
   category: string;
   name: TxActionsEnum;
-  description: string;
-  arguments: Record<TokenStringType, TokenArgumentType>;
+  description?: string;
+  arguments?: { [key: string]: any };
+}
+
+export interface UnwrapperType {
+  token?: TokenArgumentType[];
+  address?: string;
+  value?: string;
+  providerName?: string;
 }
 
 export interface OperationType {

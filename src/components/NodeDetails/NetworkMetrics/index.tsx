@@ -27,8 +27,7 @@ const NetworkMetrics = ({ node }: { node: NodeType }) => {
               </div>
             </div>
           </DetailItem>
-
-          <DetailItem title="Uptime" colWidth="3">
+          {/* <DetailItem title="Uptime" colWidth="3">
             <PercentegeBar
               downtimeLabel={downtimeLabel}
               uptimeLabel={uptimeLabel}
@@ -36,7 +35,7 @@ const NetworkMetrics = ({ node }: { node: NodeType }) => {
               downtimePercentege={node.downtime ? node.downtime : 0}
               tooltipPlacementUp={false}
             />
-          </DetailItem>
+          </DetailItem> */}
 
           <DetailItem title="Status" colWidth="3">
             <div className="d-flex align-items-center">
