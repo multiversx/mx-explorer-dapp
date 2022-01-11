@@ -32,13 +32,13 @@ const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
         )}
       </td>
       <td>{nodeData.version ? nodeData.version : <span className="text-secondary">N/A</span>}</td>
-      <td className="text-right">
+      {/* <td className="text-right">
         {nodeData.uptimeSec !== undefined && nodeData.uptimeSec !== 0 ? (
           <span>{nodeData.uptime}%</span>
         ) : (
           <span className="text-secondary">N/A</span>
         )}
-      </td>
+      </td> */}
       <td>
         <div className="d-flex align-items-center justify-content-end">
           <Led color={nodeData.online ? 'bg-success' : 'bg-danger'} />
