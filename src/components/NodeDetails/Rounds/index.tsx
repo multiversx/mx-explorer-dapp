@@ -44,24 +44,23 @@ const Rounds = ({ rounds, node }: { rounds: RoundsType; node: NodeType }) => {
           </div>
           <div className="card-body px-lg-spacer">
             <div className="squares" data-testid="rounds">
-              {rounds.data.length &&
-                rounds.data.map((round, i) => (
-                  <OverlayTrigger
-                    key={`roundkey-${i}`}
-                    placement="top"
-                    delay={{ show: 0, hide: 50 }}
-                    overlay={(props: any) => (
-                      <Tooltip id={round.key} {...props}>
-                        Block {round.value ? ' ' : ' not '} proposed{' '}
-                        {String(round.key).indexOf('_') > 0
-                          ? String(round.key).split('_').pop()
-                          : round.key}
-                      </Tooltip>
-                    )}
-                  >
-                    <div className={round.value ? 'full square-block' : 'square-block'} />
-                  </OverlayTrigger>
-                ))}
+              {rounds.data.slice(0, 100).map((round, i) => (
+                <OverlayTrigger
+                  key={`roundkey-${i}`}
+                  placement="top"
+                  delay={{ show: 0, hide: 50 }}
+                  overlay={(props: any) => (
+                    <Tooltip id={round.key} {...props}>
+                      Block {round.value ? ' ' : ' not '} proposed{' '}
+                      {String(round.key).indexOf('_') > 0
+                        ? String(round.key).split('_').pop()
+                        : round.key}
+                    </Tooltip>
+                  )}
+                >
+                  <div className={round.value ? 'full square-block' : 'square-block'} />
+                </OverlayTrigger>
+              ))}
             </div>
           </div>
         </>
