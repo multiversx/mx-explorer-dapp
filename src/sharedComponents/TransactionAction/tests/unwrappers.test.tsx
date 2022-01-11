@@ -26,9 +26,9 @@ describe('Tx Description unwrapper tests', () => {
     };
     expect(unwrapper(action)).toEqual([
       'Transfer',
-      action.arguments.transfers,
+      { token: action.arguments.transfers },
       'to',
-      action.arguments.receiver,
+      { address: action.arguments.receiver },
     ]);
   });
   test('NFT Transfer', () => {
@@ -55,9 +55,9 @@ describe('Tx Description unwrapper tests', () => {
     };
     expect(unwrapper(action)).toEqual([
       'Transfer',
-      action.arguments.transfers,
+      { token: action.arguments.transfers },
       'to',
-      action.arguments.receiver,
+      { address: action.arguments.receiver },
     ]);
   });
   test('MetaESDT Transfer', () => {
@@ -85,11 +85,91 @@ describe('Tx Description unwrapper tests', () => {
     };
     expect(unwrapper(action)).toEqual([
       'Transfer',
-      action.arguments.transfers,
+      { token: action.arguments.transfers },
       'to',
-      action.arguments.receiver,
+      { address: action.arguments.receiver },
     ]);
   });
+
+  test('stake', () => {
+    const { action } = {
+      action: {
+        category: 'stake',
+        name: 'delegate',
+        description: 'Delegate 14.167802221131358682 EGLD to staking provider ARC Stake',
+        arguments: { value: '14167802221131358682', providerName: 'ARC Stake' },
+      },
+    };
+    expect(unwrapper(action)).toEqual([
+      'Delegate',
+      { value: action.arguments?.value },
+      'to staking provider',
+      { providerName: action.arguments?.providerName },
+    ]);
+  });
+
+  test('stake unDelegate', () => {
+    const { action } = {
+      action: {
+        category: 'stake',
+        name: 'unDelegate',
+        description: 'Undelegate 5 eGLD from staking provider ARC Stake',
+        arguments: { value: '5000000000000000000', providerName: 'ARC Stake' },
+      },
+    };
+    expect(unwrapper(action)).toEqual([
+      'Undelegate',
+      { value: action.arguments?.value },
+      'from staking provider',
+      { providerName: action.arguments?.providerName },
+    ]);
+  });
+
+  test('stake claimRewards', () => {
+    const { action } = {
+      action: {
+        category: 'stake',
+        name: 'claimRewards',
+        description: 'Claim rewards from staking provider ARC Stake',
+        arguments: { providerName: 'ARC Stake' },
+      },
+    };
+    expect(unwrapper(action)).toEqual([
+      'Claim rewards from staking provider',
+      { providerName: action.arguments?.providerName },
+    ]);
+  });
+
+  test('stake reDelegateRewards', () => {
+    const { action } = {
+      action: {
+        category: 'stake',
+        name: 'reDelegateRewards',
+        description: 'Redelegate rewards from staking provider ARC Stake',
+        arguments: { providerName: 'ARC Stake' },
+      },
+    };
+    expect(unwrapper(action)).toEqual([
+      'Redelegate rewards from staking provider',
+      { providerName: action.arguments?.providerName },
+    ]);
+  });
+
+  test('stake withdraw', () => {
+    const { action } = {
+      action: {
+        category: 'stake',
+        name: 'withdraw',
+        description: 'Withdraw from staking provider ARC Stake',
+        arguments: { providerName: 'ARC Stake' },
+      },
+    };
+    expect(unwrapper(action)).toEqual([
+      'Withdraw from staking provider',
+      { providerName: action.arguments?.providerName },
+    ]);
+  });
+
   //TODO claimlockedassets
   test('Enter farm', () => {
     const { action } = {
@@ -110,7 +190,7 @@ describe('Tx Description unwrapper tests', () => {
         },
       },
     };
-    expect(unwrapper(action)).toEqual(['Enter farm with', action.arguments.token]);
+    expect(unwrapper(action)).toEqual(['Enter farm with', { token: [action.arguments.token] }]);
   });
   test('Enter farm and lock rewards', () => {
     const { action } = {
@@ -129,7 +209,10 @@ describe('Tx Description unwrapper tests', () => {
         },
       },
     };
-    expect(unwrapper(action)).toEqual(['Enter farm and lock rewards with', action.arguments.token]);
+    expect(unwrapper(action)).toEqual([
+      'Enter farm and lock rewards with',
+      { token: [action.arguments.token] },
+    ]);
   });
   test('Exit farm', () => {
     const { action } = {
@@ -150,7 +233,7 @@ describe('Tx Description unwrapper tests', () => {
         },
       },
     };
-    expect(unwrapper(action)).toEqual(['Exit farm with', action.arguments.token]);
+    expect(unwrapper(action)).toEqual(['Exit farm with', { token: [action.arguments.token] }]);
   });
   test('Claim rewards', () => {
     const { action } = {
@@ -171,7 +254,7 @@ describe('Tx Description unwrapper tests', () => {
         },
       },
     };
-    expect(unwrapper(action)).toEqual(['Claim rewards', action.arguments.token]);
+    expect(unwrapper(action)).toEqual(['Claim rewards', { token: [action.arguments.token] }]);
   });
   test('Compound rewards', () => {
     const { action } = {
@@ -192,14 +275,14 @@ describe('Tx Description unwrapper tests', () => {
         },
       },
     };
-    expect(unwrapper(action)).toEqual(['Reinvest rewards', action.arguments.token]);
+    expect(unwrapper(action)).toEqual(['Reinvest rewards', { token: [action.arguments.token] }]);
   });
   test('Swap tokens', () => {
     const { action } = {
       action: {
         category: 'mex',
         name: TxActionsEnum.swap,
-        description: 'Swap 1 WEGLD for 281066.754391919467235791 MEX',
+        description: 'Swap 1 WEGLD for a minimum of 281066.754391919467235791 MEX',
         arguments: {
           token1: {
             name: 'WrappedEGLD',
@@ -220,9 +303,9 @@ describe('Tx Description unwrapper tests', () => {
     };
     expect(unwrapper(action)).toEqual([
       'Swap',
-      action.arguments.token1,
-      'for',
-      action.arguments.token2,
+      { token: [action.arguments.token1] },
+      'for a minimum of',
+      { token: [action.arguments.token2] },
     ]);
   });
   test('Add liquidity', () => {
@@ -252,9 +335,9 @@ describe('Tx Description unwrapper tests', () => {
     };
     expect(unwrapper(action)).toEqual([
       'Added liquidity for',
-      action.arguments.token1,
+      { token: [action.arguments.token1] },
       'and',
-      action.arguments.token2,
+      { token: [action.arguments.token2] },
     ]);
   });
   test('Remove liquidity', () => {
@@ -274,6 +357,6 @@ describe('Tx Description unwrapper tests', () => {
         },
       },
     };
-    expect(unwrapper(action)).toEqual(['Removed liquidity', action.arguments.token]);
+    expect(unwrapper(action)).toEqual(['Removed liquidity', { token: [action.arguments.token] }]);
   });
 });
