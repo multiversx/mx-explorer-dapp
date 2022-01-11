@@ -175,7 +175,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
         <input
           type="text"
           className="form-control border-0 rounded-pill py-3 pl-3 pl-lg-4 text-truncate"
-          placeholder="Search for an address, transaction/block hash ,validator key or token id"
+          placeholder="Search for an address, transaction/block hash, validator key or token id"
           name="requestType"
           data-testid="search"
           required
