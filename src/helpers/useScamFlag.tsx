@@ -1,4 +1,5 @@
 import anchorme from 'anchorme';
+import { ScamInfoType } from 'helpers/types';
 
 const useScamFlag = () => {
   return scamFlag();
@@ -9,10 +10,7 @@ const cleanLink = (input: string) => input.toLocaleLowerCase().replace(/[^\x00-\
 
 export const scamFlag = () => (
   input: string,
-  scamInfo?: {
-    type: string;
-    info: string;
-  }
+  scamInfo?: ScamInfoType
 ): { output: string; stringWithLinks: string; found: boolean } => {
   if (!scamInfo) {
     return { output: input, stringWithLinks: '', found: false };
