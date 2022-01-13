@@ -3,18 +3,10 @@ import { useLocation } from 'react-router-dom';
 import { Anchorme } from 'react-anchorme';
 import { DetailItem, ModalLink, DataDecode } from 'sharedComponents';
 import { truncate, useScamFlag } from 'helpers';
+import { ScamInfoType } from 'helpers/types';
 import { displayedDataLength } from 'appConfig';
 
-const DataField = ({
-  data,
-  scamInfo,
-}: {
-  data?: string;
-  scamInfo?: {
-    type: string;
-    info: string;
-  };
-}) => {
+const DataField = ({ data, scamInfo }: { data?: string; scamInfo?: ScamInfoType }) => {
   const { hash, pathname } = useLocation();
   const hashDecodeMethod = hash.replace('#', '');
   const initialDecodeMethod =
