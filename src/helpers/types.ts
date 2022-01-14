@@ -1,5 +1,9 @@
 import { IdentityType } from 'context/state';
 
+export interface ScamInfoType {
+  type: string;
+  info: string;
+}
 export interface AccountType {
   address: string;
   balance: string;
@@ -11,6 +15,7 @@ export interface AccountType {
   ownerAddress?: string;
   developerReward?: string;
   deployedAt?: number;
+  scamInfo?: ScamInfoType;
 }
 
 export interface TokenType {
@@ -106,10 +111,7 @@ export interface NftType {
     fileType: string;
     fileSize: number;
   }[];
-  scamInfo?: {
-    type: string;
-    info: string;
-  };
+  scamInfo?: ScamInfoType;
 }
 
 export interface ScResultType {
@@ -257,10 +259,7 @@ export interface TransactionType {
     address: string;
     events: EventType[];
   };
-  scamInfo?: {
-    type: string;
-    info: string;
-  };
+  scamInfo?: ScamInfoType;
 }
 
 export interface ProviderType {
