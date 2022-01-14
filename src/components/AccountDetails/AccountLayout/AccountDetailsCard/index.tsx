@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock } from '@fortawesome/pro-regular-svg-icons';
+import { faClock, faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons';
 import { faDollarSign, faUser, faCoins, faLayerGroup } from '@fortawesome/pro-solid-svg-icons';
 import {
   CardItem,
@@ -89,6 +89,7 @@ const AccountDetailsCard = () => {
     ownerAddress,
     developerReward,
     deployedAt,
+    scamInfo,
   } = accountDetails;
   const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
 
@@ -191,9 +192,23 @@ const AccountDetailsCard = () => {
         <>
           <div className="col-12 col-lg-6 mb-spacer mb-lg-0">
             <div className="card">
-              <div className="card-header">
+              <div className={`card-header ${scamInfo ? 'status-text-warning' : ''}`}>
                 <div className="card-header-item d-flex align-items-center justify-content-between">
-                  <h6 data-testid="title">Contract Details</h6>
+                  <div className="d-flex align-items-center">
+                    <span className="mr-2 h6 mb-0" data-testid="title">
+                      Contract Details
+                    </span>
+                    {scamInfo && (
+                      <span className="text-warning d-flex align-items-center">
+                        <FontAwesomeIcon
+                          icon={faExclamationTriangle}
+                          size="sm"
+                          className="text-warning mr-2"
+                        />
+                        {scamInfo.info}
+                      </span>
+                    )}
+                  </div>
                   {isProvider && (
                     <NetworkLink
                       to={urlBuilder.providerDetails(accountDetails.address)}
@@ -299,10 +314,24 @@ const AccountDetailsCard = () => {
       ) : (
         <div className="col mb-spacer">
           <div className="card">
-            <div className="card-header">
+            <div className={`card-header ${scamInfo ? 'status-text-warning' : ''}`}>
               <div className="card-header-item">
                 <div className="d-flex align-items-center justify-content-between">
-                  <h6 data-testid="title">Address Details</h6>
+                  <div className="d-flex align-items-center">
+                    <span className="mr-2 h6 mb-0" data-testid="title">
+                      Address Details
+                    </span>
+                    {scamInfo && (
+                      <span className="text-warning d-flex align-items-center">
+                        <FontAwesomeIcon
+                          icon={faExclamationTriangle}
+                          size="sm"
+                          className="text-warning mr-2"
+                        />
+                        {scamInfo.info}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="card-header-item compact d-flex">
