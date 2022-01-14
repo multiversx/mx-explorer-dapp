@@ -192,18 +192,18 @@ const AccountDetailsCard = () => {
         <>
           <div className="col-12 col-lg-6 mb-spacer mb-lg-0">
             <div className="card">
-              <div className={`card-header ${scamInfo ? 'status-text-danger' : ''}`}>
+              <div className={`card-header ${scamInfo ? 'status-text-warning' : ''}`}>
                 <div className="card-header-item d-flex align-items-center justify-content-between">
                   <div className="d-flex align-items-center">
                     <span className="mr-2 h6 mb-0" data-testid="title">
                       Contract Details
                     </span>
                     {scamInfo && (
-                      <span className="text-danger d-flex align-items-center">
+                      <span className="text-warning d-flex align-items-center">
                         <FontAwesomeIcon
                           icon={faExclamationTriangle}
                           size="sm"
-                          className="text-danger mr-2"
+                          className="text-warning mr-2"
                         />
                         {scamInfo.info}
                       </span>
@@ -314,7 +314,7 @@ const AccountDetailsCard = () => {
       ) : (
         <div className="col mb-spacer">
           <div className="card">
-            <div className={`card-header ${scamInfo ? 'status-text-danger' : ''}`}>
+            <div className={`card-header ${scamInfo ? 'status-text-warning' : ''}`}>
               <div className="card-header-item">
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="d-flex align-items-center">
@@ -322,11 +322,11 @@ const AccountDetailsCard = () => {
                       Address Details
                     </span>
                     {scamInfo && (
-                      <span className="text-danger d-flex align-items-center">
+                      <span className="text-warning d-flex align-items-center">
                         <FontAwesomeIcon
                           icon={faExclamationTriangle}
                           size="sm"
-                          className="text-danger mr-2"
+                          className="text-warning mr-2"
                         />
                         {scamInfo.info}
                       </span>
