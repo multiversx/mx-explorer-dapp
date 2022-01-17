@@ -18,7 +18,7 @@ export default function useCheckVersion() {
 
   const checkVersion = () => {
     axios
-      .get('https:***REMOVED***')
+      .get(`https:***REMOVED***?${Date.now()}`)
       .then(({ data: latestExplorerVersion }) => {
         if (explorerVersion !== undefined && latestExplorerVersion !== undefined) {
           if (explorerVersion !== latestExplorerVersion) {
