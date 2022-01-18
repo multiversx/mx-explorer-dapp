@@ -114,6 +114,9 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
         </div>
       </td>
       <td>
+        {transaction.action && transaction.action.name ? transaction.action.name : 'Transaction'}
+      </td>
+      <td>
         <Denominate value={transaction.value} />
       </td>
     </tr>
