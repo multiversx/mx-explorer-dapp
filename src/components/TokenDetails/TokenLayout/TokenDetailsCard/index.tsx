@@ -1,19 +1,8 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
-import { faCheck } from '@fortawesome/pro-light-svg-icons/faCheck';
 import { urlBuilder } from 'helpers';
-import { Trim, Denominate, NetworkLink, SocialIcons } from 'sharedComponents';
+import { Trim, Denominate, NetworkLink, SocialIcons, PropertyPill } from 'sharedComponents';
 import { useGlobalState } from 'context';
-
-const CreatePill = ({ name, active }: { name: string; active: boolean }) => {
-  return (
-    <span className={`direction-badge m-1 ${active ? 'in' : 'out'}`}>
-      <FontAwesomeIcon className="mr-1" icon={active ? faCheck : faTimes} /> {name}
-    </span>
-  );
-};
 
 const SmallDetailItem = ({
   children,
@@ -99,14 +88,14 @@ const TokenDetailsCard = () => {
 
                 <SmallDetailItem title="Properties">
                   <div className="d-flex alig-items-center flex-wrap">
-                    <CreatePill name={'Can Upgrade'} active={canUpgrade} />
-                    <CreatePill name={'Can Mint'} active={canMint} />
-                    <CreatePill name={'Can Burn'} active={canBurn} />
-                    <CreatePill name={'Can Change Owner'} active={canChangeOwner} />
-                    <CreatePill name={'Can Pause'} active={canPause} />
-                    <CreatePill name={'Can Freeze'} active={canFreeze} />
-                    <CreatePill name={'Can Wipe'} active={canWipe} />
-                    <CreatePill name={'Not Paused'} active={!isPaused} />
+                    <PropertyPill name={'Can Upgrade'} active={canUpgrade} />
+                    <PropertyPill name={'Can Mint'} active={canMint} />
+                    <PropertyPill name={'Can Burn'} active={canBurn} />
+                    <PropertyPill name={'Can Change Owner'} active={canChangeOwner} />
+                    <PropertyPill name={'Can Pause'} active={canPause} />
+                    <PropertyPill name={'Can Freeze'} active={canFreeze} />
+                    <PropertyPill name={'Can Wipe'} active={canWipe} />
+                    <PropertyPill name={'Not Paused'} active={!isPaused} />
                   </div>
                 </SmallDetailItem>
               </div>
