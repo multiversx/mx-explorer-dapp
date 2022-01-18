@@ -175,7 +175,7 @@ const TransactionInfo = ({
                       <TimeAgo value={transaction.timestamp} />
                       &nbsp;
                       <span className="text-secondary">
-                        ({dateFormatted(transaction.timestamp)})
+                        ({dateFormatted(transaction.timestamp, false, true)})
                       </span>
                     </div>
                   ) : (
@@ -279,7 +279,7 @@ const TransactionInfo = ({
                 {transaction.action && transaction.action.category && (
                   <DetailItem title="Transaction Action">
                     <TransactionAction
-                      action={transaction.action}
+                      transaction={transaction}
                       operationsTokens={operationsTokens}
                     />
                   </DetailItem>
