@@ -95,7 +95,8 @@ const BlockData = (props: BlockDataType) => {
           <DetailItem title="Age">
             <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
             <TimeAgo value={block.timestamp} />
-            &nbsp;<span className="text-secondary">({dateFormatted(block.timestamp)})</span>
+            &nbsp;
+            <span className="text-secondary">({dateFormatted(block.timestamp, false, true)})</span>
           </DetailItem>
           <DetailItem title="Transactions">
             {block.txCount + ' transactions in this block'}
