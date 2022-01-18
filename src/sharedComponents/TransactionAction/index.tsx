@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { faExternalLink } from '@fortawesome/pro-regular-svg-icons/faExternalLink';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   TokenBlock,
   NftBlock,
@@ -8,7 +10,7 @@ import {
   Denominate,
 } from 'sharedComponents';
 import { addressIsBech32, urlBuilder } from 'helpers';
-import { TokenArgumentType, TxActionType, OperationsTokensType } from 'helpers/types';
+import { TokenArgumentType, OperationsTokensType, TransactionType } from 'helpers/types';
 import unwrapper from './unwrapper';
 
 const ActionToken = ({
@@ -43,9 +45,11 @@ const ActionToken = ({
 
 const ActionText = ({
   entry,
+  transaction,
   operationsTokens,
 }: {
   entry: any;
+  transaction: TransactionType;
   operationsTokens?: OperationsTokensType;
 }) => {
   switch (true) {
@@ -87,7 +91,17 @@ const ActionText = ({
       return <Denominate value={entry.value} />;
 
     case Boolean(entry.providerName):
-      return <span className="mr-1">{entry.providerName}</span>;
+      return (
+        <span className="d-flex mr-1">
+          {entry.providerName}
+          <NetworkLink
+            to={urlBuilder.providerDetails(transaction.receiver)}
+            className="d-flex align-self-center"
+          >
+            <FontAwesomeIcon icon={faExternalLink} className="ml-2 text-primary" size="xs" />
+          </NetworkLink>
+        </span>
+      );
 
     default:
       return null;
@@ -95,18 +109,20 @@ const ActionText = ({
 };
 
 const TransactionAction = ({
-  action,
+  transaction,
   operationsTokens,
 }: {
-  action: TxActionType;
+  transaction: TransactionType;
   operationsTokens?: OperationsTokensType;
 }) => {
   const [unwrappedResult, setUnwrappedResult] = React.useState<ReturnType<typeof unwrapper>>([]);
 
   React.useEffect(() => {
-    const result = unwrapper(action);
-    setUnwrappedResult(result);
-  }, [action]);
+    if (transaction.action) {
+      const result = unwrapper(transaction.action);
+      setUnwrappedResult(result);
+    }
+  }, [transaction.action]);
 
   return (
     <div className="d-flex flex-column flex-lg-row">
@@ -115,7 +131,7 @@ const TransactionAction = ({
           key={JSON.stringify(unwrappedResult) + i}
           className={`${i > 0 && entry !== 'string' ? 'mr-1' : ''}`}
         >
-          <ActionText entry={entry} operationsTokens={operationsTokens} />
+          <ActionText entry={entry} transaction={transaction} operationsTokens={operationsTokens} />
         </div>
       ))}
     </div>
