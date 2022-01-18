@@ -16,6 +16,10 @@ export interface AccountType {
   developerReward?: string;
   deployedAt?: number;
   scamInfo?: ScamInfoType;
+  isUpgradeable?: boolean;
+  isReadable?: boolean;
+  isPayable?: boolean;
+  isPayableBySmartContract?: boolean;
 }
 
 export interface TokenType {
