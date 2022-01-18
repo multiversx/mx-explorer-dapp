@@ -28,7 +28,7 @@ const TimeAgo = ({
       delay={{ show: 0, hide: 400 }}
       overlay={(props) => (
         <Tooltip id="button-tooltip" {...props}>
-          {dateFormatted(value)}
+          {dateFormatted(value, false, true)}
         </Tooltip>
       )}
     >

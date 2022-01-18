@@ -300,7 +300,9 @@ const AccountDetailsCard = () => {
                       <div className="d-flex align-items-center">
                         <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
                         <TimeAgo value={deployedAt} /> ago &nbsp;
-                        <span className="text-secondary">({dateFormatted(deployedAt)})</span>
+                        <span className="text-secondary">
+                          ({dateFormatted(deployedAt, false, true)})
+                        </span>
                       </div>
                     ) : (
                       <span className="text-secondary">N/A</span>

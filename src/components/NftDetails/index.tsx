@@ -144,7 +144,7 @@ const NftDetails = () => {
                           <TimeAgo value={nftDetails.timestamp} />
                           &nbsp;
                           <span className="text-secondary">
-                            ({dateFormatted(nftDetails.timestamp)})
+                            ({dateFormatted(nftDetails.timestamp, false, true)})
                           </span>
                         </DetailItem>
                       )}

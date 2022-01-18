@@ -127,7 +127,7 @@ const CollectionDetails = () => {
                           <TimeAgo value={collectionDetails.timestamp} />
                           &nbsp;
                           <span className="text-secondary">
-                            ({dateFormatted(collectionDetails.timestamp)})
+                            ({dateFormatted(collectionDetails.timestamp, false, true)})
                           </span>
                         </DetailItem>
                       )}
