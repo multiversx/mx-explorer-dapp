@@ -1,4 +1,5 @@
 import * as React from 'react';
+import BigNumber from 'bignumber.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import { faCheck } from '@fortawesome/pro-light-svg-icons/faCheck';
@@ -47,6 +48,8 @@ const TokenDetailsCard = () => {
     isPaused,
     assets,
     supply,
+    holders,
+    transactions,
   } = tokenDetails;
 
   return identifier !== '' ? (
@@ -84,6 +87,14 @@ const TokenDetailsCard = () => {
                     showLastNonZeroDecimal={true}
                     showLabel={false}
                   />
+                </SmallDetailItem>
+
+                <SmallDetailItem title="Holders">
+                  {new BigNumber(holders).toFormat()}
+                </SmallDetailItem>
+
+                <SmallDetailItem title="Transactions">
+                  {new BigNumber(transactions).toFormat()}
                 </SmallDetailItem>
 
                 <SmallDetailItem title="Properties">
@@ -130,9 +141,7 @@ const TokenDetailsCard = () => {
                 </SmallDetailItem>
                 <SmallDetailItem title="Description">
                   {assets && assets.description ? (
-                    <div className="text-truncate" title={assets.description}>
-                      {assets.description}
-                    </div>
+                    <div className="token-description">{assets.description}</div>
                   ) : (
                     <span className="text-secondary">N/A</span>
                   )}

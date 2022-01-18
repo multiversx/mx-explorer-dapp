@@ -20,14 +20,13 @@ const TokenAccounts = () => {
   const { activeNetworkId, tokenDetails } = useGlobalState();
   const { page } = useURLSearchParams();
   const { size } = useSize();
-  const { getTokenAccounts, getTokenAccountsCount } = adapter();
+  const { getTokenAccounts } = adapter();
 
   const { hash: tokenId } = useParams() as any;
-  const { decimals } = tokenDetails;
+  const { decimals, holders: totalAccounts } = tokenDetails;
 
   const [accounts, setAccounts] = React.useState<types.AccountType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [totalAccounts, setTotalAccounts] = React.useState<number | '...'>('...');
 
   const fetchAccounts = () => {
     getTokenAccounts({ tokenId, size }).then(({ data, success }) => {
@@ -40,19 +39,10 @@ const TokenAccounts = () => {
     });
   };
 
-  const fetchAccountsCount = () => {
-    getTokenAccountsCount({ tokenId }).then(({ data: count, success }) => {
-      if (ref.current !== null && success) {
-        setTotalAccounts(Math.min(count, 10000));
-      }
-    });
-  };
-
   React.useEffect(() => {
     fetchAccounts();
-    fetchAccountsCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, size]);
+  }, [activeNetworkId, size, totalAccounts]);
 
   const showAccounts = dataReady === true && accounts.length > 0;
 
@@ -65,7 +55,7 @@ const TokenAccounts = () => {
             <div className="d-none d-sm-flex">
               <Pager
                 page={String(page)}
-                total={totalAccounts !== '...' ? Math.min(totalAccounts, 10000) : totalAccounts}
+                total={totalAccounts ? Math.min(totalAccounts, 10000) : 0}
                 itemsPerPage={25}
                 show={accounts.length > 0}
               />
@@ -114,7 +104,7 @@ const TokenAccounts = () => {
               <div className="card-footer d-flex justify-content-end">
                 <Pager
                   page={String(page)}
-                  total={totalAccounts !== '...' ? Math.min(totalAccounts, 10000) : totalAccounts}
+                  total={totalAccounts ? Math.min(totalAccounts, 10000) : 0}
                   itemsPerPage={25}
                   show={accounts.length > 0}
                 />
