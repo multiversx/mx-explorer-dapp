@@ -157,6 +157,8 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
       canUpgrade: false,
       canWipe: false,
       isPaused: false,
+      accounts: 0,
+      transactions: 0,
     },
     usd: undefined,
     urlBlacklist: undefined,

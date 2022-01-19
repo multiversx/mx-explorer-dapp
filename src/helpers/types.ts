@@ -16,6 +16,10 @@ export interface AccountType {
   developerReward?: string;
   deployedAt?: number;
   scamInfo?: ScamInfoType;
+  isUpgradeable?: boolean;
+  isReadable?: boolean;
+  isPayable?: boolean;
+  isPayableBySmartContract?: boolean;
 }
 
 export interface TokenType {
@@ -36,6 +40,8 @@ export interface TokenType {
   canUpgrade: boolean;
   canWipe: boolean;
   isPaused: boolean;
+  transactions: number;
+  accounts: number;
   assets?: {
     website?: string;
     description?: string;
