@@ -13,6 +13,7 @@ import {
   ScAddressIcon,
   Trim,
   TimeAgo,
+  PropertyPill,
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import { isContract, urlBuilder, dateFormatted } from 'helpers';
@@ -90,6 +91,10 @@ const AccountDetailsCard = () => {
     developerReward,
     deployedAt,
     scamInfo,
+    isUpgradeable,
+    isReadable,
+    isPayable,
+    isPayableBySmartContract,
   } = accountDetails;
   const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
 
@@ -239,8 +244,16 @@ const AccountDetailsCard = () => {
                     <UsdValue input={balance} usd={usd} />
                   </SmallDetailItem>
 
-                  <SmallDetailItem title="Nonce">
-                    {nonce !== undefined ? nonce.toLocaleString('en') : '...'}
+                  <SmallDetailItem title="Properties">
+                    <div className="d-flex alig-items-center flex-wrap">
+                      <PropertyPill name={'Can Upgrade'} active={Boolean(isUpgradeable)} />
+                      <PropertyPill name={'Can Read'} active={Boolean(isReadable)} />
+                      <PropertyPill name={'Can Pay'} active={Boolean(isPayable)} />
+                      <PropertyPill
+                        name={'Can Pay by Smart Contract'}
+                        active={Boolean(isPayableBySmartContract)}
+                      />
+                    </div>
                   </SmallDetailItem>
                 </div>
               </div>
@@ -250,7 +263,9 @@ const AccountDetailsCard = () => {
             <div className="card">
               <div className="card-header">
                 <div className="card-header-item d-flex align-items-center">
-                  <h6 data-testid="title">Overview</h6>
+                  <span className="h6 mb-0" data-testid="overview">
+                    Overview
+                  </span>
                 </div>
               </div>
               <div className="card-body p-0">

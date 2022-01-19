@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { faExternalLink } from '@fortawesome/pro-regular-svg-icons/faExternalLink';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   TokenBlock,
   NftBlock,
@@ -54,7 +52,7 @@ const ActionText = ({
 }) => {
   switch (true) {
     case typeof entry === 'string':
-      return <span className="mr-1">{entry.replace('eGLD', 'EGLD')}</span>;
+      return <span>{entry.replace('eGLD', 'EGLD')}</span>;
 
     case Boolean(entry.address):
       return (
@@ -92,13 +90,12 @@ const ActionText = ({
 
     case Boolean(entry.providerName):
       return (
-        <span className="d-flex mr-1">
-          {entry.providerName}
+        <span className="d-flex">
           <NetworkLink
             to={urlBuilder.providerDetails(transaction.receiver)}
             className="d-flex align-self-center"
           >
-            <FontAwesomeIcon icon={faExternalLink} className="ml-2 text-primary" size="xs" />
+            {entry.providerName}
           </NetworkLink>
         </span>
       );
@@ -127,10 +124,7 @@ const TransactionAction = ({
   return (
     <div className="d-flex flex-column flex-lg-row">
       {unwrappedResult.map((entry, i) => (
-        <div
-          key={JSON.stringify(unwrappedResult) + i}
-          className={`${i > 0 && entry !== 'string' ? 'mr-1' : ''}`}
-        >
+        <div key={JSON.stringify(unwrappedResult) + i} className="mr-1">
           <ActionText entry={entry} transaction={transaction} operationsTokens={operationsTokens} />
         </div>
       ))}

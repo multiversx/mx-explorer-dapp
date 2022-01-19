@@ -39,6 +39,7 @@ import ModalLink from './ModalLink';
 import DataDecode from './DataDecode';
 import TransactionAction from './TransactionAction';
 import NotificationsBar from './NotificationsBar';
+import PropertyPill from './PropertyPill';
 
 export {
   Denominate,
@@ -83,4 +84,5 @@ export {
   DataDecode,
   TransactionAction,
   NotificationsBar,
+  PropertyPill,
 };

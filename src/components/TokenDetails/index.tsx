@@ -11,14 +11,15 @@ import TokenTabs from './TokenLayout/TokenTabs';
 
 const TokenDetails = () => {
   const ref = React.useRef(null);
-  const { getTokenTransactions, getTokenTransactionsCount } = adapter();
+  const { getTokenTransactions } = adapter();
   const { size, firstPageTicker } = useSize();
-  const { activeNetworkId } = useGlobalState();
+  const { activeNetworkId, tokenDetails } = useGlobalState();
   const { hash: tokenId } = useParams() as any;
+
+  const { transactions: transactionsCount } = tokenDetails;
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [transactionsCount, setTransactionsCount] = React.useState(0);
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
 
   const fetchTransactions = () => {
@@ -48,17 +49,8 @@ const TokenDetails = () => {
     });
   };
 
-  const fetchTransactionsCount = () => {
-    getTokenTransactionsCount({ tokenId }).then(({ data: count, success }) => {
-      if (ref.current !== null && success) {
-        setTransactionsCount(count);
-      }
-    });
-  };
-
   React.useEffect(() => {
     fetchTransactions();
-    fetchTransactionsCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, size, tokenId]);
 
@@ -67,7 +59,6 @@ const TokenDetails = () => {
       if (hasPendingTransaction) {
         fetchTransactions();
       }
-      fetchTransactionsCount();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstPageTicker]);
