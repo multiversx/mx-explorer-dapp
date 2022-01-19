@@ -121,13 +121,11 @@ const TokensMeta = () => {
                                         <NetworkLink
                                           to={urlBuilder.nftDetails(nft.identifier)}
                                           data-testid={`nftsLink${i}`}
-                                          className={`d-flex ${
+                                          className={`d-block ${
                                             nft.assets?.svgUrl ? 'token-link' : ''
                                           }`}
                                         >
-                                          <div className="d-flex align-items-center">
-                                            <div>{nft.identifier}</div>
-                                          </div>
+                                          {nft.identifier}
                                         </NetworkLink>
                                         {nft.assets && nft.assets.description && (
                                           <div className="token-description text-wrap text-secondary small">
