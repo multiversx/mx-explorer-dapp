@@ -1,4 +1,5 @@
 import * as React from 'react';
+import BigNumber from 'bignumber.js';
 import { Loader, adapter, NetworkLink, Trim, Pager } from 'sharedComponents';
 import NoTokens from './NoTokens';
 import FailedTokens from './FailedTokens';
@@ -45,7 +46,7 @@ const Tokens = () => {
 
       <div ref={ref}>
         {dataReady === true && (
-          <div className="container page-content">
+          <div className="tokens container page-content">
             <div className="row">
               <div className="col-12">
                 <div className="card">
@@ -101,6 +102,8 @@ const Tokens = () => {
                               <tr>
                                 <th>Token</th>
                                 <th>Name</th>
+                                <th>Holders</th>
+                                <th>Transactions</th>
                                 <th>Owner</th>
                               </tr>
                             </thead>
@@ -108,11 +111,11 @@ const Tokens = () => {
                               {tokens.map((token, i) => (
                                 <tr key={token.identifier}>
                                   <td>
-                                    <div className="d-flex align-items-center">
+                                    <div className="token-identity">
                                       <NetworkLink
                                         to={urlBuilder.tokenDetails(token.identifier)}
                                         data-testid={`tokensLink${i}`}
-                                        className={`d-flex ${
+                                        className={`d-flex w-auto ${
                                           token.assets?.svgUrl ? 'token-link' : ''
                                         }`}
                                       >
@@ -133,9 +136,22 @@ const Tokens = () => {
                                           )}
                                         </div>
                                       </NetworkLink>
+                                      {token.assets && token.assets.description && (
+                                        <div className="token-description text-wrap text-secondary small">
+                                          {token.assets.description}
+                                        </div>
+                                      )}
                                     </div>
                                   </td>
                                   <td>{token.name}</td>
+                                  <td>
+                                    {token.accounts ? new BigNumber(token.accounts).toFormat() : 0}
+                                  </td>
+                                  <td>
+                                    {token.transactions
+                                      ? new BigNumber(token.transactions).toFormat()
+                                      : 0}
+                                  </td>
                                   <td>
                                     <div className="d-flex trim-size-xl">
                                       <NetworkLink
