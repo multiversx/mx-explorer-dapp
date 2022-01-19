@@ -12,7 +12,7 @@ const TokenLayout = ({ children }: { children: React.ReactNode }) => {
   const { firstPageTicker } = useSize();
   const { activeNetwork } = useGlobalState();
   const dispatch = useGlobalDispatch();
-  const { getToken, getTokenTransactionsCount, getTokenAccountsCount } = adapter();
+  const { getToken } = adapter();
   const networkRoute = useNetworkRoute();
 
   const match: any = useRouteMatch(networkRoute(tokensRoutes.tokenDetails));
@@ -22,34 +22,22 @@ const TokenLayout = ({ children }: { children: React.ReactNode }) => {
 
   const fetchTokenDetails = () => {
     if (!document.hidden) {
-      Promise.all([
-        getToken(tokenId),
-        getTokenAccountsCount({ tokenId }),
-        getTokenTransactionsCount({ tokenId }),
-      ]).then(([tokenDetailsData, tokenAccountsCountData, tokenTransactionsCountData]) => {
+      getToken(tokenId).then((tokenDetailsData) => {
+        const details = tokenDetailsData.success ? tokenDetailsData.data : {};
+
         if (ref.current !== null) {
-          if (
-            tokenDetailsData.success &&
-            tokenAccountsCountData.success &&
-            tokenTransactionsCountData.success
-          ) {
+          if (tokenDetailsData.success) {
             dispatch({
               type: 'setTokenDetails',
               tokenDetails: {
-                ...tokenDetailsData.data,
-                holders: tokenAccountsCountData.data,
-                transactions: tokenTransactionsCountData.data,
+                ...details,
               },
             });
             setDataReady(true);
           }
 
           if (dataReady === undefined) {
-            setDataReady(
-              tokenDetailsData.success &&
-                tokenAccountsCountData.success &&
-                tokenTransactionsCountData.success
-            );
+            setDataReady(tokenDetailsData.success);
           }
         }
       });

@@ -40,6 +40,8 @@ export interface TokenType {
   canUpgrade: boolean;
   canWipe: boolean;
   isPaused: boolean;
+  transactions: number;
+  accounts: number;
   assets?: {
     website?: string;
     description?: string;
