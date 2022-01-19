@@ -125,20 +125,18 @@ const TokenDetailsCard = () => {
                     <span className="text-secondary">N/A</span>
                   )}
                 </SmallDetailItem>
-                <SmallDetailItem title="Description">
-                  {assets && assets.description ? (
-                    <div className="text-truncate" title={assets.description}>
-                      {assets.description}
-                    </div>
-                  ) : (
-                    <span className="text-secondary">N/A</span>
-                  )}
-                </SmallDetailItem>
                 <SmallDetailItem title="Social">
                   {assets && assets.social ? (
                     <div className="d-flex h-100">
                       <SocialIcons assets={assets.social} />
                     </div>
+                  ) : (
+                    <span className="text-secondary">N/A</span>
+                  )}
+                </SmallDetailItem>
+                <SmallDetailItem title="Description">
+                  {assets && assets.description ? (
+                    <div>{assets.description}</div>
                   ) : (
                     <span className="text-secondary">N/A</span>
                   )}
