@@ -107,30 +107,34 @@ const TokensMeta = () => {
                               {nfts.map((nft, i) => (
                                 <tr key={`${nft.name}-${nft.identifier}`}>
                                   <td>
-                                    <div className="token-identity">
-                                      <NetworkLink
-                                        to={urlBuilder.nftDetails(nft.identifier)}
-                                        data-testid={`nftsLink${i}`}
-                                        className={`d-flex ${
-                                          nft.assets?.svgUrl ? 'token-link' : ''
-                                        }`}
-                                      >
-                                        <div className="d-flex align-items-center">
-                                          {nft.assets && nft.assets.svgUrl && (
-                                            <img
-                                              src={nft.assets.svgUrl}
-                                              alt={nft.identifier}
-                                              className="token-icon mr-1"
-                                            />
-                                          )}
-                                          <div>{nft.identifier}</div>
-                                        </div>
-                                      </NetworkLink>
-                                      {nft.assets && nft.assets.description && (
-                                        <div className="token-description text-wrap text-secondary small">
-                                          {nft.assets.description}
-                                        </div>
-                                      )}
+                                    <div className="token-identity d-flex flex-row">
+                                      <div className="d-flex align-items-center mr-3">
+                                        {nft.assets && nft.assets.svgUrl && (
+                                          <img
+                                            src={nft.assets.svgUrl}
+                                            alt={nft.name}
+                                            className="token-icon"
+                                          />
+                                        )}
+                                      </div>
+                                      <div className="d-flex flex-column justify-content-center">
+                                        <NetworkLink
+                                          to={urlBuilder.nftDetails(nft.identifier)}
+                                          data-testid={`nftsLink${i}`}
+                                          className={`d-flex ${
+                                            nft.assets?.svgUrl ? 'token-link' : ''
+                                          }`}
+                                        >
+                                          <div className="d-flex align-items-center">
+                                            <div>{nft.identifier}</div>
+                                          </div>
+                                        </NetworkLink>
+                                        {nft.assets && nft.assets.description && (
+                                          <div className="token-description text-wrap text-secondary small">
+                                            {nft.assets.description}
+                                          </div>
+                                        )}
+                                      </div>
                                     </div>
                                   </td>
                                   <td>

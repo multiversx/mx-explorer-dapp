@@ -117,7 +117,7 @@ const Tokens = () => {
                                           <img
                                             src={token.assets.svgUrl}
                                             alt={token.name}
-                                            className="token-icon mr-1"
+                                            className="token-icon"
                                           />
                                         )}
                                       </div>
