@@ -246,11 +246,11 @@ const AccountDetailsCard = () => {
 
                   <SmallDetailItem title="Properties">
                     <div className="d-flex alig-items-center flex-wrap">
-                      <PropertyPill name={'Can Upgrade'} active={Boolean(isUpgradeable)} />
-                      <PropertyPill name={'Can Read'} active={Boolean(isReadable)} />
-                      <PropertyPill name={'Can Pay'} active={Boolean(isPayable)} />
+                      <PropertyPill name={'Upgradeable'} active={Boolean(isUpgradeable)} />
+                      <PropertyPill name={'Readable'} active={Boolean(isReadable)} />
+                      <PropertyPill name={'Payable'} active={Boolean(isPayable)} />
                       <PropertyPill
-                        name={'Can Pay by Smart Contract'}
+                        name={'Payable by Smart Contract'}
                         active={Boolean(isPayableBySmartContract)}
                       />
                     </div>
