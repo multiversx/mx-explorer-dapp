@@ -2,4 +2,9 @@
   &:last-child {
     border-bottom: 0 !important;
   }
+  .token-description {
+    max-height: 5.05rem;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+  }
 }
