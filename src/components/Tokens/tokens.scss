@@ -1,12 +1,14 @@
 .tokens,
 .tokens-meta {
   .table {
-    .token-icon {
-      width: 3rem;
-      height: 3rem;
-    }
     .token-description {
       max-width: 16rem;
+    }
+    @include media-breakpoint-up(md) {
+      .token-icon {
+        width: 3rem;
+        height: 3rem;
+      }
     }
     @include media-breakpoint-down(md) {
       .token-description {
