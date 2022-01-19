@@ -1,18 +1,12 @@
 import { faArrowRight } from '@fortawesome/pro-regular-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { addressIsBech32, urlBuilder, types } from 'helpers';
+import { addressIsBech32, urlBuilder, types, transactionFunction } from 'helpers';
 import { Denominate, ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 import TransactionIcon from '../TransactionsTable/TransactionIcon';
 
-export interface UITransactionType extends types.TransactionType {
-  isNew?: boolean; // UI flag
-  tokenValue?: string;
-  tokenIdentifier?: string;
-}
-
 export interface TransactionRowType {
-  transaction: UITransactionType;
+  transaction: types.UITransactionType;
   directionCol?: boolean;
   address?: string;
 }
@@ -113,9 +107,7 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
           )}
         </div>
       </td>
-      <td>
-        {transaction.action && transaction.action.name ? transaction.action.name : 'Transaction'}
-      </td>
+      <td>{transactionFunction(transaction)}</td>
       <td>
         <Denominate value={transaction.value} />
       </td>

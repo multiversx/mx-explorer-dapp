@@ -268,6 +268,12 @@ export interface TransactionType {
   scamInfo?: ScamInfoType;
 }
 
+export interface UITransactionType extends TransactionType {
+  isNew?: boolean; // UI flag
+  tokenValue?: string;
+  tokenIdentifier?: string;
+}
+
 export interface ProviderType {
   provider: string;
   apr: string;
