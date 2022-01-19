@@ -1,6 +1,7 @@
 import * as React from 'react';
-import TransactionRow, { UITransactionType as TransacionInterface } from './TransactionRow';
+import TransactionRow from './TransactionRow';
 import Pager from '../Pager';
+import { UITransactionType as TransacionInterface } from 'helpers/types';
 
 export type TransactionType = TransacionInterface;
 

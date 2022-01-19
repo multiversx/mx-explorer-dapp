@@ -1,11 +1,11 @@
 import React from 'react';
-import { UITransactionType } from './TransactionRow';
 import txStatus from '../TransactionStatus/txStatus';
 import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { faHourglass } from '@fortawesome/pro-regular-svg-icons/faHourglass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { UITransactionType } from 'helpers/types';
 
 interface TransactionIconType {
   transaction: UITransactionType;
