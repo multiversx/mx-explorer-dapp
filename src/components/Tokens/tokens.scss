@@ -1,6 +1,9 @@
 .tokens,
 .tokens-meta {
   .table {
+    .token-link {
+      width: fit-content;
+    }
     .token-description {
       max-width: 16rem;
     }
