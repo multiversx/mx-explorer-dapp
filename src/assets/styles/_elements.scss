@@ -151,8 +151,8 @@
   min-width: 2.5rem;
 
   &.out {
-    color: $warning;
-    border: 1px solid rgba($warning, 0.2);
+    color: darken($warning, 10%);
+    border: 1px solid rgba(darken($warning, 10%), 0.2);
   }
 
   &.in {
