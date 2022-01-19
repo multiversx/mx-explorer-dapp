@@ -125,7 +125,7 @@ const Tokens = () => {
                                         <NetworkLink
                                           to={urlBuilder.tokenDetails(token.identifier)}
                                           data-testid={`tokensLink${i}`}
-                                          className={`d-flex w-auto ${
+                                          className={`d-block ${
                                             token.assets?.svgUrl ? 'token-link' : ''
                                           }`}
                                         >
