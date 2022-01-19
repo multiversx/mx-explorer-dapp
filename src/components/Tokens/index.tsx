@@ -111,36 +111,38 @@ const Tokens = () => {
                               {tokens.map((token, i) => (
                                 <tr key={token.identifier}>
                                   <td>
-                                    <div className="token-identity">
-                                      <NetworkLink
-                                        to={urlBuilder.tokenDetails(token.identifier)}
-                                        data-testid={`tokensLink${i}`}
-                                        className={`d-flex w-auto ${
-                                          token.assets?.svgUrl ? 'token-link' : ''
-                                        }`}
-                                      >
-                                        <div className="d-flex align-items-center">
-                                          {token.assets ? (
-                                            <>
-                                              {token.assets.svgUrl && (
-                                                <img
-                                                  src={token.assets.svgUrl}
-                                                  alt={token.name}
-                                                  className="token-icon mr-1"
-                                                />
-                                              )}
+                                    <div className="token-identity d-flex flex-row">
+                                      <div className="d-flex align-items-center mr-3">
+                                        {token.assets && token.assets.svgUrl && (
+                                          <img
+                                            src={token.assets.svgUrl}
+                                            alt={token.name}
+                                            className="token-icon mr-1"
+                                          />
+                                        )}
+                                      </div>
+                                      <div className="d-flex flex-column justify-content-center">
+                                        <NetworkLink
+                                          to={urlBuilder.tokenDetails(token.identifier)}
+                                          data-testid={`tokensLink${i}`}
+                                          className={`d-flex w-auto ${
+                                            token.assets?.svgUrl ? 'token-link' : ''
+                                          }`}
+                                        >
+                                          <div className="d-flex align-items-center">
+                                            {token.assets ? (
                                               <div>{token.ticker ? token.ticker : token.name}</div>
-                                            </>
-                                          ) : (
-                                            <div>{token.identifier}</div>
-                                          )}
-                                        </div>
-                                      </NetworkLink>
-                                      {token.assets && token.assets.description && (
-                                        <div className="token-description text-wrap text-secondary small">
-                                          {token.assets.description}
-                                        </div>
-                                      )}
+                                            ) : (
+                                              <div>{token.identifier}</div>
+                                            )}
+                                          </div>
+                                        </NetworkLink>
+                                        {token.assets && token.assets.description && (
+                                          <div className="token-description text-wrap text-secondary small">
+                                            {token.assets.description}
+                                          </div>
+                                        )}
+                                      </div>
                                     </div>
                                   </td>
                                   <td>{token.name}</td>

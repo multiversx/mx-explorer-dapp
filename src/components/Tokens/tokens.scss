@@ -1,8 +1,11 @@
 .tokens,
 .tokens-meta {
   .table {
+    .token-icon {
+      width: 3rem;
+      height: 3rem;
+    }
     .token-description {
-      margin-left: 1.8rem;
       max-width: 16rem;
     }
     @include media-breakpoint-down(md) {
