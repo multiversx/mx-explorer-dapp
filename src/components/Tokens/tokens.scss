@@ -1,0 +1,29 @@
+.tokens,
+.tokens-meta {
+  .table {
+    .token-description {
+      max-width: 16rem;
+    }
+    @include media-breakpoint-up(md) {
+      .token-icon {
+        width: 3rem;
+        height: 3rem;
+      }
+    }
+    @include media-breakpoint-down(md) {
+      .token-description {
+        display: none;
+      }
+    }
+    @include media-breakpoint-down(lg) {
+      th:first-child,
+      td:first-child {
+        width: 35%;
+      }
+      th:last-child,
+      td:last-child {
+        max-width: 8rem;
+      }
+    }
+  }
+}
