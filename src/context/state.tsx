@@ -98,11 +98,6 @@ export interface NotificationType {
   dismissable: boolean;
 }
 
-export interface TokenDetailsType extends types.TokenType {
-  holders: number;
-  transactions: number;
-}
-
 export interface StateType {
   config: ConfigType;
   defaultNetwork: NetworkType;
@@ -116,7 +111,7 @@ export interface StateType {
   shards: ShardType[];
   globalStake: GlobalStakeType | undefined;
   accountDetails: types.AccountType;
-  tokenDetails: TokenDetailsType;
+  tokenDetails: types.TokenType;
   usd: number | undefined;
   urlBlacklist?: { [key: string]: string };
   notifications: NotificationType[];
@@ -162,7 +157,7 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
       canUpgrade: false,
       canWipe: false,
       isPaused: false,
-      holders: 0,
+      accounts: 0,
       transactions: 0,
     },
     usd: undefined,

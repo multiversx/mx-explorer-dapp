@@ -23,7 +23,7 @@ const TokenAccounts = () => {
   const { getTokenAccounts } = adapter();
 
   const { hash: tokenId } = useParams() as any;
-  const { decimals, holders: totalAccounts } = tokenDetails;
+  const { decimals, accounts: totalAccounts } = tokenDetails;
 
   const [accounts, setAccounts] = React.useState<types.AccountType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();

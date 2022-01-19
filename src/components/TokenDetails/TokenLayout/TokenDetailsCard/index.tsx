@@ -37,7 +37,7 @@ const TokenDetailsCard = () => {
     isPaused,
     assets,
     supply,
-    holders,
+    accounts,
     transactions,
   } = tokenDetails;
 
@@ -79,7 +79,7 @@ const TokenDetailsCard = () => {
                 </SmallDetailItem>
 
                 <SmallDetailItem title="Holders">
-                  {new BigNumber(holders).toFormat()}
+                  {new BigNumber(accounts).toFormat()}
                 </SmallDetailItem>
 
                 <SmallDetailItem title="Transactions">
