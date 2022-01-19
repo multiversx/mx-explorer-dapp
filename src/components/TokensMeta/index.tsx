@@ -46,7 +46,7 @@ const TokensMeta = () => {
 
       <div ref={ref}>
         {dataReady === true && (
-          <div className="container page-content">
+          <div className="tokens-meta container page-content">
             <div className="row">
               <div className="col-12">
                 <div className="card">
@@ -107,7 +107,7 @@ const TokensMeta = () => {
                               {nfts.map((nft, i) => (
                                 <tr key={`${nft.name}-${nft.identifier}`}>
                                   <td>
-                                    <div className="d-flex align-items-center">
+                                    <div className="token-identity">
                                       <NetworkLink
                                         to={urlBuilder.nftDetails(nft.identifier)}
                                         data-testid={`nftsLink${i}`}
@@ -126,6 +126,11 @@ const TokensMeta = () => {
                                           <div>{nft.identifier}</div>
                                         </div>
                                       </NetworkLink>
+                                      {nft.assets && nft.assets.description && (
+                                        <div className="token-description text-wrap text-secondary small">
+                                          {nft.assets.description}
+                                        </div>
+                                      )}
                                     </div>
                                   </td>
                                   <td>
