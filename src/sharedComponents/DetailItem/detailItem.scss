@@ -2,11 +2,4 @@
   &:last-child {
     border-bottom: 0 !important;
   }
-  .token-description {
-    @include media-breakpoint-up(lg) {
-      height: 5.05rem;
-    }
-    overflow-y: scroll;
-    scrollbar-width: thin;
-  }
 }
