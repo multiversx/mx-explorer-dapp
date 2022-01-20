@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { types, urlBuilder, dateFormatted, useFilters, useURLSearchParams } from 'helpers';
+import { urlBuilder, dateFormatted, useFilters, useURLSearchParams } from 'helpers';
+import { NftType, NftEnumType, CollectionType } from 'helpers/types';
 import {
   Loader,
   adapter,
@@ -18,13 +19,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faPalette } from '@fortawesome/pro-regular-svg-icons';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons';
 
-const nftText = (type: types.NftType['type']) => {
+const nftText = (type: NftType['type']) => {
   switch (type) {
-    case 'SemiFungibleESDT':
+    case NftEnumType.SemiFungibleESDT:
       return 'SFT';
-    case 'NonFungibleESDT':
+    case NftEnumType.NonFungibleESDT:
       return 'NFT';
-    case 'MetaESDT':
+    case NftEnumType.MetaESDT:
       return 'Meta-ESDT';
     default:
       return '';
@@ -38,8 +39,8 @@ const CollectionDetails = () => {
   const { page } = useURLSearchParams();
   const { getQueryObject, size } = useFilters();
   const { getCollection, getNfts, getNftsCount } = adapter();
-  const [collectionDetails, setCollectionDetails] = React.useState<types.CollectionType>();
-  const [nfts, setNfts] = React.useState<types.NftType[]>([]);
+  const [collectionDetails, setCollectionDetails] = React.useState<CollectionType>();
+  const [nfts, setNfts] = React.useState<NftType[]>([]);
   const [totalNfts, setTotalNfts] = React.useState<number | '...'>('...');
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 

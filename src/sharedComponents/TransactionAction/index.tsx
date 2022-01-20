@@ -9,6 +9,7 @@ import {
   Denominate,
 } from 'sharedComponents';
 import { addressIsBech32, urlBuilder } from 'helpers';
+import { NftEnumType } from 'helpers/types';
 import { TokenArgumentType, OperationsTokensType, TransactionType } from 'helpers/types';
 import unwrapper from './unwrapper';
 
@@ -24,29 +25,34 @@ const ActionToken = ({
       return operationToken.identifier === token.identifier;
     });
 
-    return operationNft?.length ? (
-      <div>
-        {token.type === 'NonFungibleESDT' && (
-          <div>
-            <span>NFT</span>
-            <NftBlock operationToken={operationNft[0]} value={token.value} />
-            <span>of collection</span>
-            <CollectionBlock nft={operationNft[0]} />
-          </div>
-        )}
-        {token.type === 'SemiFungibleESDT' && (
-          <div>
-            <span>SFT quantity</span>
-            <NftBlock operationToken={operationNft[0]} value={token.value} />
-            <span>of collection</span>
-            <CollectionBlock nft={operationNft[0]} />
-          </div>
-        )}
-        {token.type === 'MetaESDT' && (
-          <NftBlock operationToken={operationNft[0]} value={token.value} />
-        )}
-      </div>
-    ) : null;
+    if (operationNft?.length) {
+      switch (token.type) {
+        case NftEnumType.SemiFungibleESDT:
+          return (
+            <div>
+              <span>SFT quantity</span>
+              <NftBlock operationToken={operationNft[0]} value={token.value} />
+              <span>of collection</span>
+              <CollectionBlock nft={operationNft[0]} />
+            </div>
+          );
+        case NftEnumType.NonFungibleESDT:
+          return (
+            <div>
+              <span>NFT</span>
+              <NftBlock operationToken={operationNft[0]} value={token.value} />
+              <span>of collection</span>
+              <CollectionBlock nft={operationNft[0]} />
+            </div>
+          );
+        case NftEnumType.MetaESDT:
+          return <NftBlock operationToken={operationNft[0]} value={token.value} />;
+        default:
+          return null;
+      }
+    } else {
+      return null;
+    }
   } else {
     const operationToken = operationsTokens?.esdts.filter((operationToken) => {
       return operationToken.identifier === token.token;
@@ -100,7 +106,11 @@ const ActionText = ({
       return transferTokens;
 
     case Boolean(entry.value):
-      return <Denominate value={entry.value} />;
+      return (
+        <span>
+          <Denominate value={entry.value} />
+        </span>
+      );
 
     case Boolean(entry.providerName):
       return (
