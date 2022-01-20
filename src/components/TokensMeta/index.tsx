@@ -108,27 +108,32 @@ const TokensMeta = () => {
                                 <tr key={`${nft.name}-${nft.identifier}`}>
                                   <td>
                                     <div className="token-identity d-flex flex-row">
-                                      <div className="d-flex align-items-center mr-3">
-                                        {nft.assets && nft.assets.svgUrl && (
-                                          <img
-                                            src={nft.assets.svgUrl}
-                                            alt={nft.name}
-                                            className="token-icon"
-                                          />
-                                        )}
-                                      </div>
+                                      {nft.assets && nft.assets.svgUrl && (
+                                        <div className="d-flex align-items-center mr-3">
+                                          <NetworkLink
+                                            to={urlBuilder.nftDetails(nft.identifier)}
+                                            data-testid={`nftsLink${i}`}
+                                            className="token-link"
+                                          >
+                                            <img
+                                              src={nft.assets.svgUrl}
+                                              alt={nft.name}
+                                              className="token-icon"
+                                            />
+                                          </NetworkLink>
+                                        </div>
+                                      )}
+
                                       <div className="d-flex flex-column justify-content-center">
                                         <NetworkLink
                                           to={urlBuilder.nftDetails(nft.identifier)}
                                           data-testid={`nftsLink${i}`}
-                                          className={`d-block ${
-                                            nft.assets?.svgUrl ? 'token-link' : ''
-                                          }`}
+                                          className="d-block token-ticker"
                                         >
                                           {nft.identifier}
                                         </NetworkLink>
                                         {nft.assets && nft.assets.description && (
-                                          <div className="token-description text-wrap text-secondary small">
+                                          <div className="token-description text-wrap text-secondary small d-none d-md-block">
                                             {nft.assets.description}
                                           </div>
                                         )}

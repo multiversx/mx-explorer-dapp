@@ -112,33 +112,31 @@ const Tokens = () => {
                                 <tr key={token.identifier}>
                                   <td>
                                     <div className="token-identity d-flex flex-row">
-                                      <div className="d-flex align-items-center mr-3">
-                                        {token.assets && token.assets.svgUrl && (
-                                          <img
-                                            src={token.assets.svgUrl}
-                                            alt={token.name}
-                                            className="token-icon"
-                                          />
-                                        )}
-                                      </div>
+                                      {token.assets && token.assets.svgUrl && (
+                                        <div className="d-flex align-items-center mr-3">
+                                          <NetworkLink
+                                            to={urlBuilder.tokenDetails(token.identifier)}
+                                            data-testid={`tokensLink${i}`}
+                                            className="token-link"
+                                          >
+                                            <img
+                                              src={token.assets.svgUrl}
+                                              alt={token.name}
+                                              className="token-icon"
+                                            />
+                                          </NetworkLink>
+                                        </div>
+                                      )}
                                       <div className="d-flex flex-column justify-content-center">
                                         <NetworkLink
                                           to={urlBuilder.tokenDetails(token.identifier)}
                                           data-testid={`tokensLink${i}`}
-                                          className={`d-block ${
-                                            token.assets?.svgUrl ? 'token-link' : ''
-                                          }`}
+                                          className="d-block token-ticker"
                                         >
-                                          <div className="d-flex align-items-center">
-                                            {token.assets ? (
-                                              <div>{token.ticker ? token.ticker : token.name}</div>
-                                            ) : (
-                                              <div>{token.identifier}</div>
-                                            )}
-                                          </div>
+                                          {token.ticker}
                                         </NetworkLink>
                                         {token.assets && token.assets.description && (
-                                          <div className="token-description text-wrap text-secondary small">
+                                          <div className="token-description text-wrap text-secondary small d-none d-md-block">
                                             {token.assets.description}
                                           </div>
                                         )}
