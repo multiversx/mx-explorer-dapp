@@ -4,7 +4,7 @@ import shards from './shards';
 import elastic from './helpers';
 import { ProviderPropsType } from '../helpers';
 
-export default {
+const elasticAdapter = {
   provider: elastic,
   getStats: (props: ProviderPropsType & { proxyUrl: string }) => {
     const { proxyUrl, baseUrl: elasticUrl, metaChainShardId } = props;
@@ -69,3 +69,5 @@ export default {
     throw new Error('not defined');
   },
 };
+
+export default elasticAdapter;

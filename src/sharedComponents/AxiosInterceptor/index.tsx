@@ -30,7 +30,11 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
         const logError = reqUrl && !ignoreList.some((url) => reqUrl.indexOf(url) > -1);
 
         if (explorerVersion !== undefined && logError) {
-          analytics.sendEvent({ action: 'failed-request', label: reqUrl, explorerVersion });
+          analytics.sendEvent({
+            action: 'failed-request',
+            label: reqUrl,
+            explorerVersion,
+          });
         }
 
         return Promise.reject(error);
@@ -96,7 +100,9 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
     };
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(configureAxios, [token]);
+
   return interceptorsReady ? <>{children}</> : null;
 };
 

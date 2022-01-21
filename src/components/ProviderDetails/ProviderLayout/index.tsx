@@ -32,7 +32,9 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   const [identity, setIdentity] = React.useState<ProviderLayoutType<IdentityType>>(initialState);
 
   const fetchData = () => {
-    getProvider({ address }).then((providerData) => {
+    getProvider({
+      address,
+    }).then((providerData) => {
       if (ref.current !== null) {
         if (providerData.success) {
           if (providerData.data.identity) {
@@ -54,6 +56,7 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchData, []);
 
   const showIdentity =
