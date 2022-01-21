@@ -64,6 +64,8 @@ const ValidatorsStatus = () => {
       }
     });
   };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchMarkers, []);
 
   return (

@@ -18,7 +18,11 @@ const NodesStatistics = () => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchNodes = () => {
-    const queryObject = { ...getQueryObject(), type: 'validator', status: 'eligible' };
+    const queryObject = {
+      ...getQueryObject(),
+      type: 'validator',
+      status: 'eligible',
+    };
     setDataReady(undefined);
 
     Promise.all([getNodes({ ...queryObject, size }), getNodesCount(queryObject)]).then(
@@ -33,6 +37,7 @@ const NodesStatistics = () => {
     );
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchNodes, [search]);
 
   return (

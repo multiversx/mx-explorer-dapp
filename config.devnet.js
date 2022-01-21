@@ -35,7 +35,7 @@ const CONFIG = {
       erdLabel: 'XeGLD',
       walletAddress: 'https://devnet-wallet.elrond.com/',
       explorerAddress: 'https://devnet-explorer.elrond.com/',
-      delegationApi: 'https://devnet-delegation.maiarbrowser.com',
+      delegationApi: 'https://devnet-delegation-api.elrond.com/',
       theme: 'testnet',
     },
   ],

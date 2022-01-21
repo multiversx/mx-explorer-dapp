@@ -57,6 +57,8 @@ const NetworkHealth = () => {
       }
     });
   };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(getData, [timestamp, activeNetworkId]);
 
   const [blockTimeProgress, setBlockTimeProgress] = React.useState(0);
@@ -80,6 +82,8 @@ const NetworkHealth = () => {
       }
     }
   };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(updateSate, [blockTimeProgress]);
 
   const {

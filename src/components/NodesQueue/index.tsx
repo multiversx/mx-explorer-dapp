@@ -43,6 +43,7 @@ const NodesStatistics = () => {
     );
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchNodes, [search]);
 
   return (

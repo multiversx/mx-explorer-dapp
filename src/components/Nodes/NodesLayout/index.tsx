@@ -36,23 +36,37 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
       Promise.all([getShards(), getGlobalStake(), getEconomics(), getNodesVersions()]).then(
         ([shards, globalStake, economics, nodesVersions]) => {
           const newGlobalStake = {
-            ...(globalStake.success ? { ...globalStake.data } : {}),
+            ...(globalStake.success
+              ? {
+                  ...globalStake.data,
+                }
+              : {}),
           };
 
           const newEconomics = {
-            ...(economics.success ? { ...economics.data } : {}),
+            ...(economics.success
+              ? {
+                  ...economics.data,
+                }
+              : {}),
           };
 
           const newNodesVersions = {
             ...(nodesVersions.success
-              ? { nodesVerions: prepareNodesVersions(nodesVersions.data) }
+              ? {
+                  nodesVerions: prepareNodesVersions(nodesVersions.data),
+                }
               : {}),
           };
 
           dispatch({
             type: 'setGlobalStake',
             globalStake: globalStake.success
-              ? { ...newGlobalStake, ...newEconomics, ...newNodesVersions }
+              ? {
+                  ...newGlobalStake,
+                  ...newEconomics,
+                  ...newNodesVersions,
+                }
               : undefined,
           });
 
@@ -70,6 +84,7 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchShardsAndGlobalStaking, [activeNetworkId]);
 
   return (
