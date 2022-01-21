@@ -2,12 +2,14 @@ import * as React from 'react';
 import {
   TokenBlock,
   NftBlock,
+  CollectionBlock,
   ScAddressIcon,
   NetworkLink,
   Trim,
   Denominate,
 } from 'sharedComponents';
 import { addressIsBech32, urlBuilder } from 'helpers';
+import { NftEnumType } from 'helpers/types';
 import { TokenArgumentType, OperationsTokensType, TransactionType } from 'helpers/types';
 import unwrapper from './unwrapper';
 
@@ -23,14 +25,34 @@ const ActionToken = ({
       return operationToken.identifier === token.identifier;
     });
 
-    return operationNft?.length ? (
-      <div className="d-flex text-truncate">
-        {['SemiFungibleESDT', 'NonFungibleESDT'].includes(token.type) ? (
-          <span className="mr-1">{token.type === 'NonFungibleESDT' ? 'NFT' : 'SFT'}</span>
-        ) : null}
-        <NftBlock operationToken={operationNft[0]} value={token.value} />
-      </div>
-    ) : null;
+    if (operationNft?.length) {
+      switch (token.type) {
+        case NftEnumType.SemiFungibleESDT:
+          return (
+            <div>
+              <span>SFT quantity</span>
+              <NftBlock operationToken={operationNft[0]} value={token.value} />
+              <span>of collection</span>
+              <CollectionBlock nft={operationNft[0]} />
+            </div>
+          );
+        case NftEnumType.NonFungibleESDT:
+          return (
+            <div>
+              <span>NFT</span>
+              <NftBlock operationToken={operationNft[0]} value={token.value} />
+              <span>of collection</span>
+              <CollectionBlock nft={operationNft[0]} />
+            </div>
+          );
+        case NftEnumType.MetaESDT:
+          return <NftBlock operationToken={operationNft[0]} value={token.value} />;
+        default:
+          return null;
+      }
+    } else {
+      return null;
+    }
   } else {
     const operationToken = operationsTokens?.esdts.filter((operationToken) => {
       return operationToken.identifier === token.token;
@@ -55,23 +77,19 @@ const ActionText = ({
       return <span>{entry.replace('eGLD', 'EGLD')}</span>;
 
     case Boolean(entry.address):
-      return (
-        <>
-          {addressIsBech32(entry.address) ? (
-            <div className="d-flex align-items-center">
-              <ScAddressIcon initiator={entry.address} />
-              <NetworkLink
-                to={urlBuilder.accountDetails(entry.address)}
-                data-testid="receiverLink"
-                className="trim-wrapper"
-              >
-                <Trim text={entry.address} />
-              </NetworkLink>
-            </div>
-          ) : (
-            ''
-          )}
-        </>
+      return addressIsBech32(entry.address) ? (
+        <div className="d-flex align-items-center">
+          <ScAddressIcon initiator={entry.address} />
+          <NetworkLink
+            to={urlBuilder.accountDetails(entry.address)}
+            data-testid="receiverLink"
+            className="trim-wrapper"
+          >
+            <Trim text={entry.address} />
+          </NetworkLink>
+        </div>
+      ) : (
+        ''
       );
 
     case Boolean(entry.token && entry.token.length > 0):
@@ -79,14 +97,20 @@ const ActionText = ({
         return (
           <div key={`tx-${token.identifier}-${index}`}>
             <ActionToken token={token} operationsTokens={operationsTokens} />
-            {index > 0 && <span className="ml-n1 mr-1">,</span>}
+            {index < entry.token.length - 1 && (
+              <span className="ml-n1 mr-1 d-none d-sm-flex">,</span>
+            )}
           </div>
         );
       });
       return transferTokens;
 
     case Boolean(entry.value):
-      return <Denominate value={entry.value} />;
+      return (
+        <span>
+          <Denominate value={entry.value} />
+        </span>
+      );
 
     case Boolean(entry.providerName):
       return (
@@ -122,9 +146,9 @@ const TransactionAction = ({
   }, [transaction.action]);
 
   return (
-    <div className="d-flex flex-column flex-lg-row">
+    <div className="transaction-action d-flex flex-column flex-lg-row flex-lg-wrap">
       {unwrappedResult.map((entry, i) => (
-        <div key={JSON.stringify(unwrappedResult) + i} className="mr-1">
+        <div key={JSON.stringify(unwrappedResult) + i} className="action-step">
           <ActionText entry={entry} transaction={transaction} operationsTokens={operationsTokens} />
         </div>
       ))}

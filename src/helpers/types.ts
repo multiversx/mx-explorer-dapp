@@ -54,7 +54,7 @@ export interface TokenType {
 
 export interface CollectionType {
   collection: string;
-  type: 'SemiFungibleESDT' | 'NonFungibleESDT' | 'MetaESDT';
+  type: NftEnumType;
   name: string;
   ticker: string;
   timestamp: number;
@@ -73,6 +73,11 @@ export interface CollectionType {
   };
 }
 
+export enum NftEnumType {
+  NonFungibleESDT = 'NonFungibleESDT',
+  SemiFungibleESDT = 'SemiFungibleESDT',
+  MetaESDT = 'MetaESDT',
+}
 export interface NftType {
   identifier: string;
   collection: string;
@@ -80,7 +85,7 @@ export interface NftType {
   timestamp: number;
   attributes: string;
   nonce: number;
-  type: 'SemiFungibleESDT' | 'NonFungibleESDT' | 'MetaESDT';
+  type: NftEnumType;
   name: string;
   creator: string;
   royalties: number;

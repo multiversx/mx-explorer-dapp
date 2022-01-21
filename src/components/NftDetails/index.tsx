@@ -2,7 +2,8 @@ import * as React from 'react';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams } from 'react-router-dom';
-import { types, urlBuilder, dateFormatted, useFilters, useURLSearchParams } from 'helpers';
+import { urlBuilder, dateFormatted, useFilters, useURLSearchParams } from 'helpers';
+import { NftType, NftEnumType } from 'helpers/types';
 import {
   Loader,
   adapter,
@@ -24,13 +25,13 @@ interface NftOwnerType {
   balance: string;
 }
 
-const nftText = (type: types.NftType['type']) => {
+const nftText = (type: NftType['type']) => {
   switch (type) {
-    case 'SemiFungibleESDT':
+    case NftEnumType.SemiFungibleESDT:
       return 'SFT';
-    case 'NonFungibleESDT':
+    case NftEnumType.NonFungibleESDT:
       return 'NFT';
-    case 'MetaESDT':
+    case NftEnumType.MetaESDT:
       return 'Meta-ESDT';
     default:
       return '';
@@ -44,7 +45,7 @@ const NftDetails = () => {
   const { page } = useURLSearchParams();
   const { getQueryObject, size } = useFilters();
   const { getNft, getNftOwners, getNftOwnersCount } = adapter();
-  const [nftDetails, setNftDetails] = React.useState<types.NftType>();
+  const [nftDetails, setNftDetails] = React.useState<NftType>();
   const [nftOwners, setNftOwners] = React.useState<NftOwnerType[]>([]);
   const [nftOwnersCount, setNftOwnersCount] = React.useState<number | '...'>('...');
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();

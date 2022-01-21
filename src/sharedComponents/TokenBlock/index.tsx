@@ -16,7 +16,7 @@ const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
     operationToken.decimals !== undefined ? operationToken.decimals : configDenomination;
 
   return (
-    <div ref={ref} className="d-flex text-truncate">
+    <div ref={ref} className="token-block d-flex text-truncate">
       {value && (
         <div className="mr-1">
           <Denominate
