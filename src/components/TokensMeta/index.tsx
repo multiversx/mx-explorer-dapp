@@ -37,6 +37,7 @@ const TokensMeta = () => {
     });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchNfts, [search]);
 
   return (

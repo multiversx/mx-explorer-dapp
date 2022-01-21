@@ -5,7 +5,7 @@ const api: ProviderType = ({ baseUrl, url, params, timeout }) => {
   return axios.get(`${baseUrl}${url}`, { params, timeout });
 };
 
-export default {
+const apiAdapter = {
   provider: api,
   getStats: ({ baseUrl, timeout }: ProviderPropsType) => {
     return api({
@@ -81,3 +81,5 @@ export default {
     });
   },
 };
+
+export default apiAdapter;

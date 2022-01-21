@@ -31,6 +31,8 @@ const TestnetGlobalStatsCard = () => {
       });
     }
   };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(getData, [activeNetworkId]);
 
   return (

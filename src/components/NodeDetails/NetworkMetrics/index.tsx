@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { DetailItem, Led } from 'sharedComponents';
-import PercentegeBar from './PercentegeBar';
-import getUptimeDowntime from './getUptimeDowntime';
+// import PercentegeBar from './PercentegeBar';
+// import getUptimeDowntime from './getUptimeDowntime';
 import { NodeType } from 'context/state';
 import RatingArrow from './ratingArrow';
 
 const NetworkMetrics = ({ node }: { node: NodeType }) => {
-  const { uptimeLabel, downtimeLabel } = getUptimeDowntime(node);
+  // const { uptimeLabel, downtimeLabel } = getUptimeDowntime(node);
   const statusColor = node.online ? 'success' : 'danger';
 
   return (
