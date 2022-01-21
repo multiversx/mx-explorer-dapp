@@ -4,7 +4,7 @@ import { NetworkLink } from 'sharedComponents';
 
 const CollectionBlock = ({ nft }: { nft: types.NftType }) => {
   return (
-    <div className="d-flex text-truncate">
+    <div className="collection-block d-flex text-truncate">
       <NetworkLink
         to={urlBuilder.collectionDetails(nft.collection)}
         className={`d-flex ${nft?.assets?.svgUrl ? 'token-link' : ''}`}
