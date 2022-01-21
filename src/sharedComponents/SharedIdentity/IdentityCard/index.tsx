@@ -117,6 +117,10 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
               ) : (
                 <span className="text-secondary">N/A</span>
               )}
+              <div className="d-flex mt-2">
+                <span className="text-secondary pr-2">Computed APR:</span>
+                {identity.apr ? `${identity.apr}%` : 'N/A'}
+              </div>
             </div>
           </div>
         </div>
