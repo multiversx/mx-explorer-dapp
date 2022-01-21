@@ -48,25 +48,22 @@ const TokenDetailsCard = () => {
           <div className="card">
             <div className="card-header">
               <div className="card-header-item d-flex align-items-center">
-                <h6 data-testid="title">Overview</h6>
+                <h6 className="d-flex align-items-center" data-testid="title">
+                  {assets ? (
+                    <>
+                      {assets.svgUrl && (
+                        <img src={assets.svgUrl} alt={ticker} className="token-icon mr-1" />
+                      )}
+                      <div>{ticker ? ticker : name}</div>
+                    </>
+                  ) : (
+                    <div>{name}</div>
+                  )}
+                </h6>
               </div>
             </div>
             <div className="card-body p-0">
               <div className="container-fluid">
-                <SmallDetailItem title="Name">
-                  <div className="d-flex align-items-center">
-                    {assets ? (
-                      <>
-                        {assets.svgUrl && (
-                          <img src={assets.svgUrl} alt={ticker} className="token-icon mr-1" />
-                        )}
-                        <div>{ticker ? ticker : name}</div>
-                      </>
-                    ) : (
-                      <div>{name}</div>
-                    )}
-                  </div>
-                </SmallDetailItem>
                 <SmallDetailItem title="Token">{identifier}</SmallDetailItem>
 
                 <SmallDetailItem title="Supply">
@@ -128,18 +125,18 @@ const TokenDetailsCard = () => {
                     <span className="text-secondary">N/A</span>
                   )}
                 </SmallDetailItem>
-                <SmallDetailItem title="Description">
-                  {assets && assets.description ? (
-                    <div className="token-description">{assets.description}</div>
-                  ) : (
-                    <span className="text-secondary">N/A</span>
-                  )}
-                </SmallDetailItem>
                 <SmallDetailItem title="Social">
                   {assets && assets.social ? (
                     <div className="d-flex h-100">
                       <SocialIcons assets={assets.social} />
                     </div>
+                  ) : (
+                    <span className="text-secondary">N/A</span>
+                  )}
+                </SmallDetailItem>
+                <SmallDetailItem title="Description">
+                  {assets && assets.description ? (
+                    <div>{assets.description}</div>
                   ) : (
                     <span className="text-secondary">N/A</span>
                   )}

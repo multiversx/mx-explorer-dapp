@@ -12,7 +12,7 @@ const NftBlock = ({ value, operationToken }: NftBlockType) => {
   const ref = React.useRef(null);
 
   return (
-    <div ref={ref} className="d-flex text-truncate">
+    <div ref={ref} className="nft-block d-flex text-truncate">
       {operationToken && (
         <>
           {value && operationToken.type !== 'NonFungibleESDT' && (
