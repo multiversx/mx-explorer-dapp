@@ -102,6 +102,7 @@ const NodeDetails = () => {
     });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchNodes, [search]);
 
   const showIdentity =

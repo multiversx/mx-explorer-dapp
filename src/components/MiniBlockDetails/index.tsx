@@ -74,6 +74,7 @@ const MiniBlockDetails = () => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchMiniBlockData, [activeNetworkId, size, miniBlockHash]);
 
   const showTransactions = transactionsFetched === true && transactions.length > 0;
