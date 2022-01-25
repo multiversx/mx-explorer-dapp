@@ -1,6 +1,6 @@
 import { UITransactionType } from 'helpers/types';
 
-const transactionFunction = (transaction: UITransactionType) => {
+const getTransactionFunction = (transaction: UITransactionType) => {
   let transactionAction = 'Transaction';
   if (transaction.action && transaction.action.name && transaction.action.category) {
     switch (true) {
@@ -18,4 +18,4 @@ const transactionFunction = (transaction: UITransactionType) => {
   return transactionAction;
 };
 
-export default transactionFunction;
+export default getTransactionFunction;
