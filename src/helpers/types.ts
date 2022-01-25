@@ -141,7 +141,7 @@ export interface ScResultType {
   returnMessage?: string;
 }
 
-export interface OperationsTokensType {
+export interface TransactionTokensType {
   esdts: TokenType[];
   nfts: NftType[];
 }
