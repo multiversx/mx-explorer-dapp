@@ -196,6 +196,7 @@ export interface TokenArgumentType {
   decimals: number;
   value: string;
   providerName?: string;
+  providerAvatar?: string;
 }
 
 export interface TxActionType {
@@ -210,6 +211,7 @@ export interface UnwrapperType {
   address?: string;
   value?: string;
   providerName?: string;
+  providerAvatar?: string;
 }
 
 export interface OperationType {
