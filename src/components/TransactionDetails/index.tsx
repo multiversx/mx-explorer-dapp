@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader, adapter, PageState } from 'sharedComponents';
 import TransactionInfo from './TransactionInfo';
-import { TransactionType, OperationsTokensType, OperationType } from 'helpers/types';
+import { TransactionType, TransactionTokensType, OperationType } from 'helpers/types';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 
 const TransactionDetails = () => {
@@ -19,8 +19,8 @@ const TransactionDetails = () => {
   const { getTransaction, getTokens, getNfts } = adapter();
 
   const [transaction, setTransaction] = React.useState<TransactionType | undefined>();
-  const [operationsTokens, setOperationsTokens] = React.useState<
-    OperationsTokensType | undefined
+  const [transactionTokens, setTransactionTokens] = React.useState<
+    TransactionTokensType | undefined
   >();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
@@ -30,7 +30,7 @@ const TransactionDetails = () => {
         if (ref.current !== null) {
           setTransaction(data);
           if (data && data.operations && data.operations.length > 0) {
-            prepareOperationsTokens(data.operations);
+            prepareTransactionTokens(data.operations);
           } else {
             setDataReady(success);
           }
@@ -39,7 +39,7 @@ const TransactionDetails = () => {
     }
   };
 
-  const prepareOperationsTokens = (operations: OperationType[]) => {
+  const prepareTransactionTokens = (operations: OperationType[]) => {
     const promises = [];
 
     const uniqueTokenIdentifiers = Array.from(
@@ -76,7 +76,7 @@ const TransactionDetails = () => {
       if (ref.current !== null) {
         const esdts = res.filter((res) => res.promise === 'esdts')[0];
         const nfts = res.filter((res) => res.promise === 'nfts')[0];
-        setOperationsTokens({
+        setTransactionTokens({
           esdts: esdts ? esdts.res.data : [],
           nfts: nfts ? nfts.res.data : [],
         });
@@ -123,7 +123,7 @@ const TransactionDetails = () => {
           <div className="container page-content">
             <div className="row">
               <div className="col-12">
-                <TransactionInfo transaction={transaction} operationsTokens={operationsTokens} />
+                <TransactionInfo transaction={transaction} transactionTokens={transactionTokens} />
               </div>
             </div>
           </div>
