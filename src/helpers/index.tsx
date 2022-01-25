@@ -30,7 +30,7 @@ import isUtf8 from './isUtf8';
 import useScamFlag from './useScamFlag';
 import useNotifications from './useNotifications';
 import useCheckVersion from './useCheckVersion';
-import transactionFunction from './transactionFunction';
+import getTransactionFunction from './getTransactionFunction';
 
 export {
   truncate,
@@ -65,5 +65,5 @@ export {
   useScamFlag,
   useNotifications,
   useCheckVersion,
-  transactionFunction,
+  getTransactionFunction,
 };
