@@ -12,6 +12,7 @@ import { addressIsBech32, urlBuilder } from 'helpers';
 import { NftEnumType } from 'helpers/types';
 import { TokenArgumentType, OperationsTokensType, TransactionType } from 'helpers/types';
 import unwrapper from './unwrapper';
+import { ReactComponent as DefaultAvatar } from 'assets/images/default-avatar.svg';
 
 const ActionToken = ({
   token,
@@ -119,6 +120,15 @@ const ActionText = ({
             to={urlBuilder.providerDetails(transaction.receiver)}
             className="d-flex align-self-center"
           >
+            {entry.providerAvatar ? (
+              <img
+                src={entry.providerAvatar}
+                className="token-icon rounded-circle ml-lg-1 mr-2"
+                alt=" "
+              />
+            ) : (
+              <DefaultAvatar className="token-icon rounded-circle ml-lg-1 mr-2" />
+            )}
             {entry.providerName}
           </NetworkLink>
         </span>
