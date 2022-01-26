@@ -79,27 +79,45 @@ const stakeUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => 
         'Delegate',
         { value: action.arguments?.value },
         'to staking provider',
-        { providerName: action.arguments?.providerName },
+        {
+          providerName: action.arguments?.providerName,
+          providerAvatar: action.arguments?.providerAvatar,
+        },
       ];
     case TxActionsEnum.unDelegate:
       return [
         'Undelegate',
         { value: action.arguments?.value },
         'from staking provider',
-        { providerName: action.arguments?.providerName },
+        {
+          providerName: action.arguments?.providerName,
+          providerAvatar: action.arguments?.providerAvatar,
+        },
       ];
     case TxActionsEnum.stakeClaimRewards:
       return [
         'Claim rewards from staking provider',
-        { providerName: action.arguments?.providerName },
+        {
+          providerName: action.arguments?.providerName,
+          providerAvatar: action.arguments?.providerAvatar,
+        },
       ];
     case TxActionsEnum.reDelegateRewards:
       return [
         'Redelegate rewards from staking provider',
-        { providerName: action.arguments?.providerName },
+        {
+          providerName: action.arguments?.providerName,
+          providerAvatar: action.arguments?.providerAvatar,
+        },
       ];
     case TxActionsEnum.withdraw:
-      return ['Withdraw from staking provider', { providerName: action.arguments?.providerName }];
+      return [
+        'Withdraw from staking provider',
+        {
+          providerName: action.arguments?.providerName,
+          providerAvatar: action.arguments?.providerAvatar,
+        },
+      ];
 
     default:
       return [];
