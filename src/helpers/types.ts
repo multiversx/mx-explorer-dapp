@@ -141,7 +141,7 @@ export interface ScResultType {
   returnMessage?: string;
 }
 
-export interface OperationsTokensType {
+export interface TransactionTokensType {
   esdts: TokenType[];
   nfts: NftType[];
 }
@@ -273,6 +273,12 @@ export interface TransactionType {
     events: EventType[];
   };
   scamInfo?: ScamInfoType;
+}
+
+export interface UITransactionType extends TransactionType {
+  isNew?: boolean; // UI flag
+  tokenValue?: string;
+  tokenIdentifier?: string;
 }
 
 export interface ProviderType {

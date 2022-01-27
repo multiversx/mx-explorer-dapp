@@ -70,6 +70,7 @@ export default function useAdapter() {
               'round',
               'tokenValue',
               'tokenIdentifier',
+              'action',
             ].join(','),
           },
         },
