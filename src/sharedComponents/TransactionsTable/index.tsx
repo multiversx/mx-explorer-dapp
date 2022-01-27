@@ -1,6 +1,7 @@
 import * as React from 'react';
-import TransactionRow, { UITransactionType as TransacionInterface } from './TransactionRow';
+import TransactionRow from './TransactionRow';
 import Pager from '../Pager';
+import { UITransactionType as TransacionInterface } from 'helpers/types';
 
 export type TransactionType = TransacionInterface;
 
@@ -58,6 +59,7 @@ const TransactionsTable = ({
                   <th scope="col">From</th>
                   {directionCol && <th scope="col" />}
                   <th scope="col">To</th>
+                  <th scope="col">Action</th>
                   <th scope="col">Value</th>
                 </tr>
               </thead>

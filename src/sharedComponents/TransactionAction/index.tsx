@@ -10,19 +10,19 @@ import {
 } from 'sharedComponents';
 import { addressIsBech32, urlBuilder } from 'helpers';
 import { NftEnumType } from 'helpers/types';
-import { TokenArgumentType, OperationsTokensType, TransactionType } from 'helpers/types';
+import { TokenArgumentType, TransactionTokensType, TransactionType } from 'helpers/types';
 import unwrapper from './unwrapper';
 import { ReactComponent as DefaultAvatar } from 'assets/images/default-avatar.svg';
 
 const ActionToken = ({
   token,
-  operationsTokens,
+  transactionTokens,
 }: {
   token: TokenArgumentType;
-  operationsTokens?: OperationsTokensType;
+  transactionTokens?: TransactionTokensType;
 }) => {
   if (token.type && ['MetaESDT', 'SemiFungibleESDT', 'NonFungibleESDT'].includes(token.type)) {
-    const operationNft = operationsTokens?.nfts.filter((operationToken) => {
+    const operationNft = transactionTokens?.nfts.filter((operationToken) => {
       return operationToken.identifier === token.identifier;
     });
 
@@ -55,7 +55,7 @@ const ActionToken = ({
       return null;
     }
   } else {
-    const operationToken = operationsTokens?.esdts.filter((operationToken) => {
+    const operationToken = transactionTokens?.esdts.filter((operationToken) => {
       return operationToken.identifier === token.token;
     });
     return operationToken?.length ? (
@@ -67,11 +67,11 @@ const ActionToken = ({
 const ActionText = ({
   entry,
   transaction,
-  operationsTokens,
+  transactionTokens,
 }: {
   entry: any;
   transaction: TransactionType;
-  operationsTokens?: OperationsTokensType;
+  transactionTokens?: TransactionTokensType;
 }) => {
   switch (true) {
     case typeof entry === 'string':
@@ -97,7 +97,7 @@ const ActionText = ({
       const transferTokens = entry.token.map((token: TokenArgumentType, index: number) => {
         return (
           <div key={`tx-${token.identifier}-${index}`}>
-            <ActionToken token={token} operationsTokens={operationsTokens} />
+            <ActionToken token={token} transactionTokens={transactionTokens} />
             {index < entry.token.length - 1 && (
               <span className="ml-n1 mr-1 d-none d-sm-flex">,</span>
             )}
@@ -141,10 +141,10 @@ const ActionText = ({
 
 const TransactionAction = ({
   transaction,
-  operationsTokens,
+  transactionTokens,
 }: {
   transaction: TransactionType;
-  operationsTokens?: OperationsTokensType;
+  transactionTokens?: TransactionTokensType;
 }) => {
   const [unwrappedResult, setUnwrappedResult] = React.useState<ReturnType<typeof unwrapper>>([]);
 
@@ -159,7 +159,11 @@ const TransactionAction = ({
     <div className="transaction-action d-flex flex-column flex-lg-row flex-lg-wrap">
       {unwrappedResult.map((entry, i) => (
         <div key={JSON.stringify(unwrappedResult) + i} className="action-step">
-          <ActionText entry={entry} transaction={transaction} operationsTokens={operationsTokens} />
+          <ActionText
+            entry={entry}
+            transaction={transaction}
+            transactionTokens={transactionTokens}
+          />
         </div>
       ))}
     </div>
