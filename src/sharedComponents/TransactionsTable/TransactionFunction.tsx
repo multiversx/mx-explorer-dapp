@@ -3,7 +3,14 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { UITransactionType } from 'helpers/types';
 import { getTransactionFunction } from 'helpers';
 
-const TrasactionFunction = ({ transaction }: { transaction: UITransactionType }) => {
+const TransactionFunction = ({ transaction }: { transaction: UITransactionType }) => {
+  const TxFunctionText = (
+    <span className="badge badge-secondary badge-pill font-weight-light">
+      <div className="transaction-function-badge text-truncate text-capitalize">
+        {getTransactionFunction(transaction)}
+      </div>
+    </span>
+  );
   return transaction.action?.description ? (
     <OverlayTrigger
       placement="top"
@@ -14,11 +21,11 @@ const TrasactionFunction = ({ transaction }: { transaction: UITransactionType })
         </Tooltip>
       )}
     >
-      <span>{getTransactionFunction(transaction)}</span>
+      {TxFunctionText}
     </OverlayTrigger>
   ) : (
-    <div>{getTransactionFunction(transaction)}</div>
+    TxFunctionText
   );
 };
 
-export default TrasactionFunction;
+export default TransactionFunction;
