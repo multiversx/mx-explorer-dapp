@@ -187,7 +187,7 @@ export enum TxActionCategoryEnum {
 }
 
 export interface TokenArgumentType {
-  type: string;
+  type: NftEnumType | 'FungibleESDT';
   name: string;
   ticker: string;
   collection?: string;
