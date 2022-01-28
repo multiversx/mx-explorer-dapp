@@ -6,6 +6,12 @@
     }
     .token-description {
       max-width: 16rem;
+      @include media-breakpoint-up(md) {
+        display: -webkit-box !important;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+      }
     }
     .token-link {
       &::after {

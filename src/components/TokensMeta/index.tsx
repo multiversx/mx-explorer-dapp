@@ -134,7 +134,10 @@ const TokensMeta = () => {
                                           {nft.identifier}
                                         </NetworkLink>
                                         {nft.assets && nft.assets.description && (
-                                          <div className="token-description text-wrap text-secondary small d-none d-md-block">
+                                          <div
+                                            className="token-description text-wrap text-secondary small d-none d-md-block"
+                                            title={nft.assets.description}
+                                          >
                                             {nft.assets.description}
                                           </div>
                                         )}
