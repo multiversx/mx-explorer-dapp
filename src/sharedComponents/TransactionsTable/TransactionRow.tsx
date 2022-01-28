@@ -58,7 +58,7 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
             to={urlBuilder.receiverShard(transaction.receiverShard)}
             data-testid="shardToLink"
           >
-            <ShardSpan shard={transaction.receiverShard} />
+            <ShardSpan shard={transaction.receiverShard} hideText />
           </NetworkLink>
         </div>
       </td>
