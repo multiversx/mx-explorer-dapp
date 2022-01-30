@@ -16,8 +16,10 @@ const ScResultsList = ({
 }) => {
   const { hash } = useLocation();
   const ref = React.useRef<HTMLDivElement>(null);
-  const formattedHash = hash.substring(0, hash.indexOf('/')).replace('#', '');
-  const initialDecodeMethod = hash.substring(hash.indexOf('/') + 1);
+  const formattedHash = hash
+    .substring(0, hash.indexOf('/') > 0 ? hash.indexOf('/') : hash.length)
+    .replace('#', '');
+  const initialDecodeMethod = hash.indexOf('/') > 0 ? hash.substring(hash.indexOf('/')) : 'raw';
   const [decodeMethod, setDecodeMethod] = React.useState<string>(
     initialDecodeMethod && ['raw', 'text', 'decimal', 'smart'].includes(initialDecodeMethod)
       ? initialDecodeMethod
