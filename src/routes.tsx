@@ -16,7 +16,8 @@ import NodeDetails from './components/NodeDetails';
 import Tokens from './components/Tokens';
 import TokensMeta from './components/TokensMeta';
 import TokenDetails from './components/TokenDetails';
-import TokenAccounts from './components/TokenDetails/TokenAccounts';
+import TokenDetailsAccounts from './components/TokenDetails/TokenAccounts';
+import TokenDetailsRoles from './components/TokenDetails/TokenRoles';
 import Collections from './components/Collections';
 import CollectionDetails from './components/CollectionDetails';
 import Nfts from './components/Nfts';
@@ -86,6 +87,7 @@ export const tokensRoutes = {
   tokensMeta: '/meta-tokens',
   tokenDetails: '/tokens/:hash',
   tokenDetailsAccounts: '/tokens/:hash/accounts',
+  tokenDetailsRoles: '/tokens/:hash/roles',
 };
 
 export const collectionRoutes = {
@@ -226,8 +228,13 @@ const routes: RouteType[] = [
   },
   {
     path: tokensRoutes.tokenDetailsAccounts,
-    title: 'Token Details',
-    component: TokenAccounts,
+    title: 'Token Holders',
+    component: TokenDetailsAccounts,
+  },
+  {
+    path: tokensRoutes.tokenDetailsRoles,
+    title: 'Token Roles',
+    component: TokenDetailsRoles,
   },
   {
     path: collectionRoutes.collections,
