@@ -13,4 +13,11 @@
   .status-text-danger {
     @include top-bar($danger);
   }
+  .transactions-table {
+    .table {
+      .transaction-value {
+        max-width: 13rem;
+      }
+    }
+  }
 }
