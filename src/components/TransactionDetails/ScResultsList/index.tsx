@@ -3,21 +3,23 @@ import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchange, faSearch } from '@fortawesome/pro-regular-svg-icons';
 import { Denominate, CopyButton, Trim, NetworkLink, DataDecode } from 'sharedComponents';
-import { ResultType, OperationsTokensType } from 'helpers/types';
+import { ResultType, TransactionTokensType } from 'helpers/types';
 import { transactionsRoutes } from 'routes';
 import decodePart from './decodePart';
 
 const ScResultsList = ({
   results,
-  operationsTokens,
+  transactionTokens,
 }: {
   results: ResultType[];
-  operationsTokens?: OperationsTokensType;
+  transactionTokens?: TransactionTokensType;
 }) => {
   const { hash } = useLocation();
   const ref = React.useRef<HTMLDivElement>(null);
-  const formattedHash = hash.substring(0, hash.indexOf('/')).replace('#', '');
-  const initialDecodeMethod = hash.substring(hash.indexOf('/') + 1);
+  const formattedHash = hash
+    .substring(0, hash.indexOf('/') > 0 ? hash.indexOf('/') : hash.length)
+    .replace('#', '');
+  const initialDecodeMethod = hash.indexOf('/') > 0 ? hash.substring(hash.indexOf('/')) : 'raw';
   const [decodeMethod, setDecodeMethod] = React.useState<string>(
     initialDecodeMethod && ['raw', 'text', 'decimal', 'smart'].includes(initialDecodeMethod)
       ? initialDecodeMethod
@@ -116,7 +118,7 @@ const ScResultsList = ({
                   <div className="col">
                     <DataDecode
                       value={result.data ? decodeData(result.data) : 'N/A'}
-                      operationsTokens={operationsTokens}
+                      transactionTokens={transactionTokens}
                       {...(highlightTx ? { initialDecodeMethod, setDecodeMethod } : {})}
                     />
                   </div>

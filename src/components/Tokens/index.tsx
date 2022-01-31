@@ -136,7 +136,10 @@ const Tokens = () => {
                                           {token.ticker}
                                         </NetworkLink>
                                         {token.assets && token.assets.description && (
-                                          <div className="token-description text-wrap text-secondary small d-none d-md-block">
+                                          <div
+                                            className="token-description text-wrap text-secondary small d-none d-md-block"
+                                            title={token.assets.description}
+                                          >
                                             {token.assets.description}
                                           </div>
                                         )}

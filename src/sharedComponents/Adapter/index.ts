@@ -70,6 +70,7 @@ export default function useAdapter() {
               'round',
               'tokenValue',
               'tokenIdentifier',
+              'action',
             ].join(','),
           },
         },
@@ -354,6 +355,11 @@ export default function useAdapter() {
     getTokenAccountsCount: ({ tokenId }: { tokenId: string }) =>
       provider({
         url: `/tokens/${tokenId}/accounts/count`,
+      }),
+
+    getTokenRoles: ({ tokenId }: { tokenId: string }) =>
+      provider({
+        url: `/tokens/${tokenId}/roles`,
       }),
 
     // Nfts

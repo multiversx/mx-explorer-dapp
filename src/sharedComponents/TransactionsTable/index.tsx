@@ -1,6 +1,7 @@
 import * as React from 'react';
-import TransactionRow, { UITransactionType as TransacionInterface } from './TransactionRow';
+import TransactionRow from './TransactionRow';
 import Pager from '../Pager';
+import { UITransactionType as TransacionInterface } from 'helpers/types';
 
 export type TransactionType = TransacionInterface;
 
@@ -49,7 +50,7 @@ const TransactionsTable = ({
 
         <div className="card-body p-0">
           <div className="table-wrapper animated-list">
-            <table className="table" data-testid="transactionsTable">
+            <table className="table trim-size-sm" data-testid="transactionsTable">
               <thead>
                 <tr>
                   <th scope="col">Txn Hash</th>
@@ -58,6 +59,7 @@ const TransactionsTable = ({
                   <th scope="col">From</th>
                   {directionCol && <th scope="col" />}
                   <th scope="col">To</th>
+                  <th scope="col">Method</th>
                   <th scope="col">Value</th>
                 </tr>
               </thead>

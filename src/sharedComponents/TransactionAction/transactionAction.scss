@@ -1,5 +1,5 @@
 .transaction-action {
-  div:not([class]) {
+  div:not([class]):not([data-testid]) {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -8,7 +8,7 @@
   .token-block,
   .collection-block,
   .nft-block,
-  span:not([class]) {
+  span:not([class]):not([data-testid]) {
     margin-right: 0.25rem;
     margin-left: 0;
   }
