@@ -1,7 +1,13 @@
 import React from 'react';
 import { NftType, NftEnumType } from 'helpers/types';
 
-const NftBadge = ({ type, className }: { type: NftType['type']; className?: string }) => {
+const NftBadge = ({
+  type,
+  className,
+}: {
+  type: NftType['type'] | 'FungibleESDT';
+  className?: string;
+}) => {
   switch (type) {
     case NftEnumType.SemiFungibleESDT:
       return (

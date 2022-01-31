@@ -279,13 +279,10 @@ const TransactionInfo = ({
 
                 {transaction.action && transaction.action.category && (
                   <>
-                    <DetailItem title="Function">{getTransactionFunction(transaction)}</DetailItem>
+                    <DetailItem title="Method">{getTransactionFunction(transaction)}</DetailItem>
                     {transaction.action.category !== types.TxActionCategoryEnum.scCall && (
                       <DetailItem title="Transaction Action">
-                        <TransactionAction
-                          transaction={transaction}
-                          transactionTokens={transactionTokens}
-                        />
+                        <TransactionAction transaction={transaction} />
                       </DetailItem>
                     )}
                   </>

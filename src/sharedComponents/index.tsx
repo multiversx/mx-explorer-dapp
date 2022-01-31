@@ -40,6 +40,7 @@ import DataDecode from './DataDecode';
 import TransactionAction from './TransactionAction';
 import NotificationsBar from './NotificationsBar';
 import PropertyPill from './PropertyPill';
+import TxActionBlock from './TxActionBlock';
 
 export {
   Denominate,
@@ -85,4 +86,5 @@ export {
   TransactionAction,
   NotificationsBar,
   PropertyPill,
+  TxActionBlock,
 };

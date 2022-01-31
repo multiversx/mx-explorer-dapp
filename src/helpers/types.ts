@@ -197,6 +197,7 @@ export interface TokenArgumentType {
   value: string;
   providerName?: string;
   providerAvatar?: string;
+  svgUrl?: string;
 }
 
 export interface TxActionType {
