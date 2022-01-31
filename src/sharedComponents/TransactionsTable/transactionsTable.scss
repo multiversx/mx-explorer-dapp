@@ -15,13 +15,8 @@
     td:last-child {
       padding-right: 1rem !important;
     }
-
     .transaction-value {
       width: 13rem;
-      .token-value,
-      .nft-value {
-        display: contents;
-      }
     }
     .transaction-function {
       width: 10.5rem;

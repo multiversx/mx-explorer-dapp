@@ -1,15 +1,16 @@
 import React from 'react';
 import { Denominate, NetworkLink } from 'sharedComponents';
 import { urlBuilder } from 'helpers';
+import { TokenArgumentType } from 'helpers/types';
 import { denomination as configDenomination } from 'appConfig';
 
-const TokenValue = ({ token }: { token: any }) => {
+const TxActionToken = ({ token }: { token: TokenArgumentType }) => {
   const ref = React.useRef(null);
   const denomination = token.decimals !== undefined ? token.decimals : configDenomination;
 
   return (
-    <div ref={ref} className="token-value">
-      {token && (
+    <div ref={ref} className="token-action-block">
+      {token && token.token && (
         <>
           {token.value && (
             <div className="mr-1 text-truncate">
@@ -31,4 +32,4 @@ const TokenValue = ({ token }: { token: any }) => {
   );
 };
 
-export default TokenValue;
+export default TxActionToken;

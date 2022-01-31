@@ -1,16 +1,16 @@
 import React from 'react';
-import { NftEnumType } from 'helpers/types';
 import { Denominate, NetworkLink, NftBadge } from 'sharedComponents';
 import { urlBuilder } from 'helpers';
+import { NftEnumType, TokenArgumentType } from 'helpers/types';
 
-const NftValue = ({ token }: { token: any }) => {
+const TxActionNft = ({ token, showBadge }: { token: TokenArgumentType; showBadge?: boolean }) => {
   const ref = React.useRef(null);
 
   return (
-    <div ref={ref} className="nft-value">
-      {token && (
+    <div ref={ref} className="nft-action-block">
+      {token && token.identifier && (
         <>
-          {token.type !== NftEnumType.MetaESDT && (
+          {showBadge && token.type !== NftEnumType.MetaESDT && (
             <NftBadge type={token.type} className="mr-1 my-auto" />
           )}
           {token.value && token.type !== NftEnumType.NonFungibleESDT && (
@@ -28,7 +28,7 @@ const NftValue = ({ token }: { token: any }) => {
           >
             <div className="d-flex align-items-center symbol">
               {token.svgUrl && <img src={token.svgUrl} alt=" " className="token-icon mr-1" />}
-              <span>{token.ticker}</span>
+              <span>{token.ticker === token.collection ? token.identifier : token.ticker}</span>
             </div>
           </NetworkLink>
         </>
@@ -37,4 +37,4 @@ const NftValue = ({ token }: { token: any }) => {
   );
 };
 
-export default NftValue;
+export default TxActionNft;
