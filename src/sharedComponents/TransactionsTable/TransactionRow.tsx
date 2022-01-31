@@ -29,7 +29,7 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
   const directionSelf = directionOut && directionIn;
 
   return (
-    <tr className={`animated-row ${transaction.isNew ? 'new' : ''}`}>
+    <tr className={`animated-row trim-size-sm ${transaction.isNew ? 'new' : ''}`}>
       <td>
         <div className="d-flex align-items-center">
           <TransactionIcon transaction={transaction} />

@@ -50,10 +50,7 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
   }
 
   return (
-    <span
-      data-testid={props['data-testid'] ? props['data-testid'] : 'denominateComponent'}
-      className="d-flex align-items-center"
-    >
+    <span data-testid={props['data-testid'] ? props['data-testid'] : 'denominateComponent'}>
       <span className="int-amount">{valueParts[0]}</span>
       {valueParts.length > 1 && <span className="decimals">.{valueParts[1]}</span>}
       {showLabel && (

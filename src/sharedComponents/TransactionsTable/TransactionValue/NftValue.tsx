@@ -7,7 +7,7 @@ const NftValue = ({ token }: { token: any }) => {
   const ref = React.useRef(null);
 
   return (
-    <div ref={ref} className="nft-value d-flex flex-wrap">
+    <div ref={ref} className="nft-value">
       {token && (
         <>
           {token.type !== NftEnumType.MetaESDT && (
@@ -24,11 +24,11 @@ const NftValue = ({ token }: { token: any }) => {
           )}
           <NetworkLink
             to={urlBuilder.nftDetails(token.identifier)}
-            className={`d-flex text-truncate ${token.svgUrl ? 'token-link' : ''}`}
+            className={`d-flex ${token.svgUrl ? 'token-link' : ''}`}
           >
-            <div className="d-flex align-items-center symbol text-truncate">
+            <div className="d-flex align-items-center symbol">
               {token.svgUrl && <img src={token.svgUrl} alt=" " className="token-icon mr-1" />}
-              <span className="text-truncate">{token.ticker}</span>
+              <span>{token.ticker}</span>
             </div>
           </NetworkLink>
         </>
