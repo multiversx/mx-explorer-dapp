@@ -3,21 +3,20 @@ import { metaChainShardId } from 'appConfig';
 
 interface ShardSpanType {
   shard: number | string;
-  hideText?: boolean;
 }
 
-export const shardSpanText = (shard: number | string, hideText?: boolean) => {
+export const shardSpanText = (shard: number | string) => {
   if (typeof shard === 'string' && shard.includes('Shard')) {
     shard = shard.replace('Shard', '');
   }
 
   const isMetachain = metaChainShardId.toString() === String(shard).toString();
 
-  return isMetachain ? 'Metachain' : `${hideText ? '' : 'Shard'} ${shard}`;
+  return isMetachain ? 'Metachain' : `Shard ${shard}`;
 };
 
-const ShardSpan = ({ shard, hideText }: ShardSpanType) => {
-  return <span>{shardSpanText(shard, hideText)}</span>;
+const ShardSpan = ({ shard }: ShardSpanType) => {
+  return <span>{shardSpanText(shard)}</span>;
 };
 
 export default ShardSpan;
