@@ -43,7 +43,7 @@ const TokenDetailsCard = () => {
 
   return identifier !== '' ? (
     <div ref={ref}>
-      <div className="row mb-spacer">
+      <div className="token-details-card row mb-spacer">
         <div className="col-12 col-lg-6 mb-spacer mb-lg-0">
           <div className="card">
             <div className="card-header">
@@ -136,7 +136,9 @@ const TokenDetailsCard = () => {
                 </SmallDetailItem>
                 <SmallDetailItem title="Description">
                   {assets && assets.description ? (
-                    <div>{assets.description}</div>
+                    <div className="token-description" title={assets.description}>
+                      {assets.description}
+                    </div>
                   ) : (
                     <span className="text-secondary">N/A</span>
                   )}
