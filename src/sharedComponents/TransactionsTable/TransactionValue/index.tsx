@@ -1,8 +1,25 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLayerPlus } from '@fortawesome/pro-regular-svg-icons';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { UITransactionType, NftEnumType, TxActionsEnum } from 'helpers/types';
 import { Denominate } from 'sharedComponents';
 import NftValue from './NftValue';
 import TokenValue from './TokenValue';
+
+const MultipleTokensBadge = () => (
+  <OverlayTrigger
+    placement="top"
+    delay={{ show: 0, hide: 400 }}
+    overlay={(props) => (
+      <Tooltip id="multiple-tooltip" {...props}>
+        Multiple Tokens
+      </Tooltip>
+    )}
+  >
+    <FontAwesomeIcon icon={faLayerPlus} className="ml-2 text-muted" />
+  </OverlayTrigger>
+);
 
 const TransactionValue = ({ transaction }: { transaction: UITransactionType }) => {
   if (transaction.action) {
@@ -21,45 +38,30 @@ const TransactionValue = ({ transaction }: { transaction: UITransactionType }) =
     ];
 
     if (transactionTokens.length) {
-      return (
-        <>
-          {transactionTokens.map((token, index) => {
-            switch (token.type) {
-              case NftEnumType.SemiFungibleESDT:
-              case NftEnumType.NonFungibleESDT:
-              case NftEnumType.MetaESDT:
-                return (
-                  <div
-                    key={`${transaction.txHash}-value-${index}`}
-                    className={index > 0 ? 'mt-1' : ''}
-                  >
-                    <NftValue token={token} />
-                  </div>
-                );
+      const txToken = transactionTokens[0];
 
-              case 'FungibleESDT':
-                return (
-                  <div
-                    key={`${transaction.txHash}-value-${index}`}
-                    className={index > 0 ? 'mt-1' : ''}
-                  >
-                    <TokenValue token={token} />
-                  </div>
-                );
+      switch (txToken.type) {
+        case NftEnumType.SemiFungibleESDT:
+        case NftEnumType.NonFungibleESDT:
+        case NftEnumType.MetaESDT:
+          return (
+            <div className="transaction-value d-flex align-items-center">
+              <NftValue token={txToken} />
+              {transactionTokens.length > 1 && <MultipleTokensBadge />}
+            </div>
+          );
 
-              default:
-                return (
-                  <div
-                    key={`${transaction.txHash}-value-${index}`}
-                    className={index > 0 ? 'mt-1' : ''}
-                  >
-                    <Denominate value={transaction.value} />
-                  </div>
-                );
-            }
-          })}
-        </>
-      );
+        case 'FungibleESDT':
+          return (
+            <div className="transaction-value d-flex align-items-center">
+              <TokenValue token={txToken} />
+              {transactionTokens.length > 1 && <MultipleTokensBadge />}
+            </div>
+          );
+
+        default:
+          return <Denominate value={transaction.value} />;
+      }
     }
   }
 

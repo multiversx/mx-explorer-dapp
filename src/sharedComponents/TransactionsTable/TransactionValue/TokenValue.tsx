@@ -8,7 +8,7 @@ const TokenValue = ({ token }: { token: any }) => {
   const denomination = token.decimals !== undefined ? token.decimals : configDenomination;
 
   return (
-    <div ref={ref} className="token-value d-flex flex-wrap">
+    <div ref={ref} className="token-value">
       {token && (
         <>
           {token.value && (
@@ -18,11 +18,11 @@ const TokenValue = ({ token }: { token: any }) => {
           )}
           <NetworkLink
             to={urlBuilder.tokenDetails(token.token)}
-            className={`d-flex text-truncate ${token.svgUrl ? 'token-link' : ''}`}
+            className={`d-flex ${token.svgUrl ? 'token-link' : ''}`}
           >
-            <div className="d-flex align-items-center symbol text-truncate">
+            <div className="d-flex align-items-center symbol">
               {token.svgUrl && <img src={token.svgUrl} alt=" " className="token-icon mr-1" />}
-              <span className="text-truncate">{token.ticker}</span>
+              <span>{token.ticker}</span>
             </div>
           </NetworkLink>
         </>
