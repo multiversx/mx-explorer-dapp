@@ -36,6 +36,7 @@ const CONFIG = {
       walletAddress: 'https://devnet-wallet.elrond.com/',
       explorerAddress: 'https://devnet-explorer.elrond.com/',
       delegationApi: 'https://devnet-delegation-api.elrond.com/',
+      extrasApi: 'https://devnet-extras-api.elrond.com',
       theme: 'testnet',
     },
   ],
