@@ -11,5 +11,19 @@
         max-width: 10rem;
       }
     }
+    th:last-child,
+    td:last-child {
+      padding-right: 1rem !important;
+    }
+    .transaction-value {
+      width: 13rem;
+    }
+    .transaction-function {
+      width: 10.5rem;
+      .transaction-function-badge {
+        max-width: 9.5rem;
+        line-height: 1.2;
+      }
+    }
   }
 }

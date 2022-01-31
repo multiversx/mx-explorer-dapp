@@ -2,14 +2,14 @@ import * as React from 'react';
 import BigNumber from 'bignumber.js';
 import { Dropdown } from 'react-bootstrap';
 import { addressIsBech32, bech32, isUtf8 } from 'helpers';
-import { OperationsTokensType } from 'helpers/types';
+import { TransactionTokensType } from 'helpers/types';
 
 type DecodeMethodType = 'raw' | 'text' | 'decimal' | 'smart' | string;
 
 const decode = (
   part: string,
   decodeMethod: DecodeMethodType,
-  operationsTokens?: OperationsTokensType
+  transactionTokens?: TransactionTokensType
 ) => {
   switch (decodeMethod) {
     case 'text':
@@ -30,12 +30,12 @@ const decode = (
       try {
         const decoded = Buffer.from(String(part), 'hex').toString('utf8').trim();
         if (!isUtf8(decoded)) {
-          if (operationsTokens) {
-            const tokens = [...operationsTokens.esdts, ...operationsTokens.nfts];
+          if (transactionTokens) {
+            const tokens = [...transactionTokens.esdts, ...transactionTokens.nfts];
             if (tokens.some((token) => decoded.includes(token.identifier))) {
               return decoded;
             }
-            if (operationsTokens.nfts.some((token) => decoded.includes(token.collection))) {
+            if (transactionTokens.nfts.some((token) => decoded.includes(token.collection))) {
               return decoded;
             }
           }
@@ -55,13 +55,13 @@ const decode = (
 const DataDecode = ({
   value,
   className,
-  operationsTokens,
+  transactionTokens,
   initialDecodeMethod,
   setDecodeMethod,
 }: {
   value: string;
   className?: string;
-  operationsTokens?: OperationsTokensType;
+  transactionTokens?: TransactionTokensType;
   initialDecodeMethod?: DecodeMethodType;
   setDecodeMethod?: React.Dispatch<React.SetStateAction<string>>;
 }) => {
@@ -78,7 +78,7 @@ const DataDecode = ({
           if (parts.length >= 2 && (index === 0 || (index === 1 && !parts[0]))) {
             return part;
           } else {
-            return decode(part, activeKey, operationsTokens);
+            return decode(part, activeKey, transactionTokens);
           }
         });
         setDisplayValue(decodedParts.join('@'));
@@ -90,15 +90,15 @@ const DataDecode = ({
           if (activeKey === 'raw') {
             return part;
           } else {
-            return decode(base64Buffer.toString('hex').trim(), activeKey, operationsTokens);
+            return decode(base64Buffer.toString('hex').trim(), activeKey, transactionTokens);
           }
         });
         setDisplayValue(decodedParts.join('\n'));
       }
     } else {
-      setDisplayValue(decode(value, activeKey, operationsTokens));
+      setDisplayValue(decode(value, activeKey, transactionTokens));
     }
-  }, [activeKey, value, operationsTokens]);
+  }, [activeKey, value, transactionTokens]);
 
   React.useEffect(() => {
     if (setDecodeMethod) {

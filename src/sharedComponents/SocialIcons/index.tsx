@@ -61,35 +61,34 @@ const Icon = ({ icon }: { icon: string }) => {
 const SocialIcons = ({ assets }: { assets: any }) => {
   return (
     <div className="social-icons d-flex align-items-center ml-n2 mt-2 mt-lg-0">
-      {Object.keys(assets).map((key, i) => (
+      {Object.keys(assets).map((social, i) => (
         <OverlayTrigger
           placement="top"
           delay={{ show: 250, hide: 400 }}
           overlay={(props) => (
             <Tooltip id="social-tooltip" {...props}>
-              <span className="text-capitalize">{key}: </span>
-              {assets[key]}
+              <span className="text-capitalize">{social}: </span>
+              {assets[social]}
             </Tooltip>
           )}
+          key={`social-icon-${i}`}
         >
-          {key === 'email' ? (
+          {social === 'email' ? (
             <a
               className="icon d-flex align-items-center justify-content-center mx-2"
-              href={`mailto:${assets[key]}`}
-              key={key}
+              href={`mailto:${assets[social]}`}
             >
-              <Icon icon={key} />
+              <Icon icon={social} />
             </a>
           ) : (
             <a
               target="_blank"
               className="icon d-flex align-items-center justify-content-center mx-2"
-              href={assets[key]}
-              aria-label={key}
-              key={key}
+              href={assets[social]}
+              aria-label={social}
               rel="noreferrer nofollow"
             >
-              <Icon icon={key} />
+              <Icon icon={social} />
             </a>
           )}
         </OverlayTrigger>

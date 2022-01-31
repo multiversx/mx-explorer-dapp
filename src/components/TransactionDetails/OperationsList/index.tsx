@@ -103,10 +103,10 @@ const DetailedItem = ({
 
 const OperationsList = ({
   operations,
-  operationsTokens,
+  transactionTokens,
 }: {
   operations: types.OperationType[];
-  operationsTokens?: types.OperationsTokensType;
+  transactionTokens?: types.TransactionTokensType;
 }) => {
   return (
     <div className="operations-list d-flex flex-column mb-n2">
@@ -118,7 +118,7 @@ const OperationsList = ({
         ) {
           switch (operation.type) {
             case 'nft':
-              const operationNft = operationsTokens?.nfts.filter((token) => {
+              const operationNft = transactionTokens?.nfts.filter((token) => {
                 return token.identifier === operation.identifier;
               });
 
@@ -134,7 +134,7 @@ const OperationsList = ({
               ) : null;
 
             case 'esdt':
-              const operationToken = operationsTokens?.esdts.filter((token) => {
+              const operationToken = transactionTokens?.esdts.filter((token) => {
                 return token.identifier === operation.identifier;
               });
               return operationToken?.length ? (

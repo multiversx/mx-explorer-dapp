@@ -141,7 +141,7 @@ export interface ScResultType {
   returnMessage?: string;
 }
 
-export interface OperationsTokensType {
+export interface TransactionTokensType {
   esdts: TokenType[];
   nfts: NftType[];
 }
@@ -187,7 +187,7 @@ export enum TxActionCategoryEnum {
 }
 
 export interface TokenArgumentType {
-  type: string;
+  type: NftEnumType | 'FungibleESDT';
   name: string;
   ticker: string;
   collection?: string;
@@ -197,6 +197,7 @@ export interface TokenArgumentType {
   value: string;
   providerName?: string;
   providerAvatar?: string;
+  svgUrl?: string;
 }
 
 export interface TxActionType {
@@ -273,6 +274,12 @@ export interface TransactionType {
     events: EventType[];
   };
   scamInfo?: ScamInfoType;
+}
+
+export interface UITransactionType extends TransactionType {
+  isNew?: boolean; // UI flag
+  tokenValue?: string;
+  tokenIdentifier?: string;
 }
 
 export interface ProviderType {

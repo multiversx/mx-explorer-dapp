@@ -12,6 +12,7 @@ import {
   useNetworkRoute,
   isContract,
   types,
+  getTransactionFunction,
 } from 'helpers';
 import {
   Denominate,
@@ -59,10 +60,10 @@ const getScResultsMessages = (transaction: types.TransactionType) => {
 
 const TransactionInfo = ({
   transaction,
-  operationsTokens,
+  transactionTokens,
 }: {
   transaction: types.TransactionType;
-  operationsTokens?: types.OperationsTokensType;
+  transactionTokens?: types.TransactionTokensType;
 }) => {
   const ref = React.useRef(null);
   const {
@@ -277,12 +278,14 @@ const TransactionInfo = ({
                 </DetailItem>
 
                 {transaction.action && transaction.action.category && (
-                  <DetailItem title="Transaction Action">
-                    <TransactionAction
-                      transaction={transaction}
-                      operationsTokens={operationsTokens}
-                    />
-                  </DetailItem>
+                  <>
+                    <DetailItem title="Method">{getTransactionFunction(transaction)}</DetailItem>
+                    {transaction.action.category !== types.TxActionCategoryEnum.scCall && (
+                      <DetailItem title="Transaction Action">
+                        <TransactionAction transaction={transaction} />
+                      </DetailItem>
+                    )}
+                  </>
                 )}
 
                 {transaction.operations && transaction.operations.length > 0 && (
@@ -298,7 +301,7 @@ const TransactionInfo = ({
                   >
                     <OperationsList
                       operations={transaction.operations}
-                      operationsTokens={operationsTokens}
+                      transactionTokens={transactionTokens}
                     />
                   </DetailItem>
                 )}
@@ -364,7 +367,7 @@ const TransactionInfo = ({
                   <DetailItem title="Smart&nbsp;Contract Results">
                     <ScResultsList
                       results={transaction.results}
-                      operationsTokens={operationsTokens}
+                      transactionTokens={transactionTokens}
                     />
                   </DetailItem>
                 )}
