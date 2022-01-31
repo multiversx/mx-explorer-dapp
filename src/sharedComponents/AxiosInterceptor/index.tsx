@@ -6,7 +6,7 @@ import { useGlobalState } from 'context';
 const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
   const timeoutRef = React.useRef<any>();
   const {
-    activeNetwork: { accessToken, apiUrl },
+    activeNetwork: { extrasApi, accessToken },
   } = useGlobalState();
   const [interceptorsReady, setInterceptorsReady] = React.useState(false);
   const [requestId, setRequestId] = React.useState(-1);
@@ -40,6 +40,7 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
         return Promise.reject(error);
       }
     );
+
     setResponseId(newResponseId);
   };
 
@@ -47,7 +48,7 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
     const newRequestId = axios.interceptors.request.use(
       async (config) => {
         config.headers = {
-          'x-access': `${newToken}`,
+          Authorization: `Bearer ${newToken}`,
         };
         return config;
       },
@@ -62,9 +63,8 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
   const fetchToken = () => {
     const instance = axios.create();
     instance
-      .post(`${apiUrl}/access`, '')
-      .then((response) => {
-        const newToken = response.headers['x-access'];
+      .get(`***REMOVED***`)
+      .then(({ data: newToken }) => {
         setToken(newToken);
         setInterceptors(newToken);
         setInterceptorsReady(true);
