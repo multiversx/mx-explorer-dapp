@@ -50,7 +50,7 @@ const TransactionsTable = ({
 
         <div className="card-body p-0">
           <div className="table-wrapper animated-list">
-            <table className="table" data-testid="transactionsTable">
+            <table className="table trim-size-sm" data-testid="transactionsTable">
               <thead>
                 <tr>
                   <th scope="col">Txn Hash</th>

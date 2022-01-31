@@ -11,6 +11,18 @@
         max-width: 10rem;
       }
     }
+    th:last-child,
+    td:last-child {
+      padding-right: 1rem !important;
+    }
+
+    .transaction-value {
+      max-width: 13rem;
+      .token-value,
+      .nft-value {
+        display: contents;
+      }
+    }
     .transaction-function {
       width: 10.5rem;
       .transaction-function-badge {

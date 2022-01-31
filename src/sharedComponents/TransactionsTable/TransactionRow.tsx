@@ -1,24 +1,35 @@
 import React from 'react';
 import { faArrowRight } from '@fortawesome/pro-regular-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { addressIsBech32, urlBuilder, types } from 'helpers';
-import { Denominate, ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
+import { addressIsBech32, urlBuilder } from 'helpers';
+import { UITransactionType, TxActionsEnum, TxActionCategoryEnum } from 'helpers/types';
+import { ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 import TransactionIcon from '../TransactionsTable/TransactionIcon';
 import TransactionFunction from '../TransactionsTable/TransactionFunction';
+import TransactionValue from '../TransactionsTable/TransactionValue';
 
 export interface TransactionRowType {
-  transaction: types.UITransactionType;
+  transaction: UITransactionType;
   directionCol?: boolean;
   address?: string;
 }
 
 const TransactionRow = ({ transaction, address, directionCol }: TransactionRowType) => {
+  let receiver = transaction.receiver;
+  if (
+    transaction.action &&
+    transaction.action.category === TxActionCategoryEnum.esdtNft &&
+    transaction.action.name === TxActionsEnum.transfer &&
+    transaction.action.arguments?.receiver
+  ) {
+    receiver = transaction.action.arguments.receiver;
+  }
   const directionOut = address === transaction.sender;
-  const directionIn = address === transaction.receiver;
+  const directionIn = address === receiver;
   const directionSelf = directionOut && directionIn;
 
   return (
-    <tr className={`animated-row ${transaction.isNew ? 'new' : ''}`}>
+    <tr className={`animated-row trim-size-sm ${transaction.isNew ? 'new' : ''}`}>
       <td>
         <div className="d-flex align-items-center">
           <TransactionIcon transaction={transaction} />
@@ -94,16 +105,16 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
 
       <td>
         <div className="d-flex align-items-center">
-          <ScAddressIcon initiator={transaction.receiver} />
+          <ScAddressIcon initiator={receiver} />
           {directionIn ? (
-            <Trim text={transaction.receiver} />
+            <Trim text={receiver} />
           ) : (
             <NetworkLink
-              to={urlBuilder.accountDetails(transaction.receiver)}
+              to={urlBuilder.accountDetails(receiver)}
               data-testid="receiverLink"
               className="trim-wrapper"
             >
-              <Trim text={transaction.receiver} />
+              <Trim text={receiver} />
             </NetworkLink>
           )}
         </div>
@@ -112,7 +123,7 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
         <TransactionFunction transaction={transaction} />
       </td>
       <td>
-        <Denominate value={transaction.value} />
+        <TransactionValue transaction={transaction} />
       </td>
     </tr>
   );
