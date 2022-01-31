@@ -29,21 +29,30 @@ const TransactionValue = ({ transaction }: { transaction: UITransactionType }) =
               case NftEnumType.NonFungibleESDT:
               case NftEnumType.MetaESDT:
                 return (
-                  <div key={`${transaction.txHash}-value-${index}`}>
+                  <div
+                    key={`${transaction.txHash}-value-${index}`}
+                    className={index > 0 ? 'mt-1' : ''}
+                  >
                     <NftValue token={token} />
                   </div>
                 );
 
               case 'FungibleESDT':
                 return (
-                  <div key={`${transaction.txHash}-value-${index}`}>
+                  <div
+                    key={`${transaction.txHash}-value-${index}`}
+                    className={index > 0 ? 'mt-1' : ''}
+                  >
                     <TokenValue token={token} />
                   </div>
                 );
 
               default:
                 return (
-                  <div key={`${transaction.txHash}-value-${index}`}>
+                  <div
+                    key={`${transaction.txHash}-value-${index}`}
+                    className={index > 0 ? 'mt-1' : ''}
+                  >
                     <Denominate value={transaction.value} />
                   </div>
                 );
