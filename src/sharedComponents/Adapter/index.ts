@@ -357,6 +357,11 @@ export default function useAdapter() {
         url: `/tokens/${tokenId}/accounts/count`,
       }),
 
+    getTokenRoles: ({ tokenId }: { tokenId: string }) =>
+      provider({
+        url: `/tokens/${tokenId}/roles`,
+      }),
+
     // Nfts
 
     getAccountNfts: ({ address, size, type }: { address: string; size: number; type?: string }) =>

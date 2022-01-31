@@ -25,6 +25,13 @@ const TokenTabs = () => {
       >
         <h6>Accounts</h6>
       </NetworkLink>
+
+      <NetworkLink
+        to={urlBuilder.tokenDetailsRoles(tokenDetails.identifier)}
+        className={`tab-link mx-3 ${activeRoute(tokensRoutes.tokenDetailsRoles) ? 'active' : ''}`}
+      >
+        <h6>Roles</h6>
+      </NetworkLink>
     </div>
   );
 };
