@@ -174,10 +174,22 @@ export default function useAdapter() {
 
     /* Transactions */
 
-    getTransactions: ({ size, address, senderShard, receiverShard }: TransactionsParamsType) =>
+    getTransactions: ({
+      size,
+      address,
+      senderShard,
+      receiverShard,
+      withScResults,
+    }: TransactionsParamsType) =>
       provider({
         url: `/transactions`,
-        params: getTransactionsParams({ size, address, senderShard, receiverShard }),
+        params: getTransactionsParams({
+          size,
+          address,
+          senderShard,
+          receiverShard,
+          withScResults,
+        }),
       }),
 
     getTransactionsCount: ({ address, senderShard, receiverShard }: TransactionsParamsType) =>
