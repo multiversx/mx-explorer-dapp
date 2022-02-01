@@ -12,7 +12,7 @@ import {
   useNetworkRoute,
   isContract,
   types,
-  getTransactionFunction,
+  getTransactionMethod,
 } from 'helpers';
 import {
   Denominate,
@@ -279,7 +279,7 @@ const TransactionInfo = ({
 
                 {transaction.action && transaction.action.category && (
                   <>
-                    <DetailItem title="Method">{getTransactionFunction(transaction)}</DetailItem>
+                    <DetailItem title="Method">{getTransactionMethod(transaction)}</DetailItem>
                     {transaction.action.category !== types.TxActionCategoryEnum.scCall && (
                       <DetailItem title="Transaction Action">
                         <TransactionAction transaction={transaction} />
