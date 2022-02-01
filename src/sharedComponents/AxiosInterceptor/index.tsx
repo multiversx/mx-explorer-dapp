@@ -2,6 +2,7 @@ import * as React from 'react';
 import axios from 'axios';
 import { analytics } from 'helpers';
 import { useGlobalState, useGlobalDispatch } from 'context';
+import parseJwt from './parseJwt';
 
 const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
   const timeoutRef = React.useRef<any>();
@@ -58,7 +59,6 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
         const isIgnored = ignoreList.filter((url) => {
           return config.url && config.url.includes(url);
         });
-
         if (!isIgnored.length) {
           config.headers = {
             Authorization: `Bearer ${newToken}`,
@@ -98,25 +98,17 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
       if (!accessToken) {
         fetchToken();
       } else {
-        const [, encodedToken] = accessToken.split('.');
-        const jwt = Buffer.from(encodedToken, 'base64').toString();
-        const { exp } = JSON.parse(jwt);
-        const now = Math.floor(Date.now() / 1000);
-        const fetchNextTokenSec = exp - now - 60;
-
-        if (now + 60 < exp) {
+        const { exp: tokenTimestamp } = parseJwt(accessToken);
+        if (tokenTimestamp !== undefined) {
+          const now = Math.floor(Date.now() / 1000);
+          const fetchNextTokenSec = tokenTimestamp - now - 60;
+          setInterceptors(accessToken);
+          setInterceptorsReady(true);
           timeoutRef.current = setTimeout(() => {
             axios.interceptors.request.eject(requestId);
             axios.interceptors.request.eject(responseId);
             fetchToken();
           }, fetchNextTokenSec * 1000);
-
-          setInterceptors(accessToken);
-          setInterceptorsReady(true);
-        } else {
-          axios.interceptors.request.eject(requestId);
-          axios.interceptors.request.eject(responseId);
-          fetchToken();
         }
       }
     } else {

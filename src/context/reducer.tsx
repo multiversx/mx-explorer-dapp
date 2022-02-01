@@ -113,11 +113,11 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
     }
     case 'setAccessToken': {
       const newState = { ...state, accessToken: action.accessToken };
-      const in10min = new Date(moment().add(10, 'minutes').toDate());
+      const in2h = new Date(moment().add(2, 'hours').toDate());
       storage.saveToLocal({
         key: 'accessToken',
         data: action.accessToken,
-        expirationDate: in10min,
+        expirationDate: in2h,
       });
       return newState;
     }
