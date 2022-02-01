@@ -71,6 +71,7 @@ export default function useAdapter() {
               'tokenValue',
               'tokenIdentifier',
               'action',
+              'results',
             ].join(','),
           },
         },
