@@ -1,6 +1,6 @@
 import { UITransactionType, TxActionsEnum, TxActionCategoryEnum } from 'helpers/types';
 
-const getTransactionFunction = (transaction: UITransactionType) => {
+const getTransactionMethod = (transaction: UITransactionType) => {
   let transactionAction = 'Transaction';
   if (transaction.action && transaction.action.name && transaction.action.category) {
     switch (true) {
@@ -8,7 +8,7 @@ const getTransactionFunction = (transaction: UITransactionType) => {
         transaction.action.category === TxActionCategoryEnum.esdtNft &&
           transaction.action.name === TxActionsEnum.transfer
       ):
-        transactionAction = 'ESDTNFTTransfer';
+        transactionAction = 'Transaction';
         break;
       default:
         transactionAction = transaction.action.name;
@@ -19,4 +19,4 @@ const getTransactionFunction = (transaction: UITransactionType) => {
   return transactionAction;
 };
 
-export default getTransactionFunction;
+export default getTransactionMethod;

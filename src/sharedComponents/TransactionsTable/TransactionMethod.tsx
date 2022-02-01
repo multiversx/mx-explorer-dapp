@@ -1,13 +1,13 @@
 import React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { UITransactionType } from 'helpers/types';
-import { getTransactionFunction } from 'helpers';
+import { getTransactionMethod } from 'helpers';
 
-const TransactionFunction = ({ transaction }: { transaction: UITransactionType }) => {
-  const TxFunctionText = (
+const TransactionMethod = ({ transaction }: { transaction: UITransactionType }) => {
+  const TxMethodText = (
     <span className="badge badge-secondary badge-pill font-weight-light">
       <div className="transaction-function-badge text-truncate text-capitalize">
-        {getTransactionFunction(transaction)}
+        {getTransactionMethod(transaction)}
       </div>
     </span>
   );
@@ -21,11 +21,11 @@ const TransactionFunction = ({ transaction }: { transaction: UITransactionType }
         </Tooltip>
       )}
     >
-      {TxFunctionText}
+      {TxMethodText}
     </OverlayTrigger>
   ) : (
-    TxFunctionText
+    TxMethodText
   );
 };
 
-export default TransactionFunction;
+export default TransactionMethod;

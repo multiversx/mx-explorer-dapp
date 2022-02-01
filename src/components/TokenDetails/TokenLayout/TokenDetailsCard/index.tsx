@@ -1,7 +1,7 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
 import { urlBuilder } from 'helpers';
-import { Trim, Denominate, NetworkLink, SocialIcons, PropertyPill } from 'sharedComponents';
+import { Trim, NetworkLink, SocialIcons, PropertyPill } from 'sharedComponents';
 import { useGlobalState } from 'context';
 
 const SmallDetailItem = ({
@@ -13,7 +13,7 @@ const SmallDetailItem = ({
 }) => (
   <div className="row py-3 border-bottom detail-item">
     <div className="col-lg-3 text-secondary pl-lg-spacer pr-lg-0">{title}</div>
-    <div className="col pr-lg-spacer pl-lg-0">{children}</div>
+    <div className="col-lg-9 pr-lg-spacer pl-lg-0">{children}</div>
   </div>
 );
 
@@ -66,14 +66,7 @@ const TokenDetailsCard = () => {
               <div className="container-fluid">
                 <SmallDetailItem title="Token">{identifier}</SmallDetailItem>
 
-                <SmallDetailItem title="Supply">
-                  <Denominate
-                    value={supply}
-                    denomination={decimals}
-                    showLastNonZeroDecimal={true}
-                    showLabel={false}
-                  />
-                </SmallDetailItem>
+                <SmallDetailItem title="Supply">{new BigNumber(supply).toFormat()}</SmallDetailItem>
 
                 <SmallDetailItem title="Holders">
                   {new BigNumber(accounts).toFormat()}
