@@ -13,7 +13,10 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
   const [responseId, setResponseId] = React.useState(-1);
   const [token, setToken] = React.useState('');
   const explorerVersion = process.env.REACT_APP_CACHE_BUST;
-  const ignoreList: string[] = ['https:***REMOVED***'];
+  const ignoreList: string[] = [
+    '***REMOVED***',
+    '//data.elrond.com',
+  ];
 
   if (delegationApi) {
     ignoreList.push(delegationApi);
@@ -51,9 +54,16 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
   const setInterceptors = (newToken: string) => {
     const newRequestId = axios.interceptors.request.use(
       async (config) => {
-        config.headers = {
-          Authorization: `Bearer ${newToken}`,
-        };
+        const isIgnored = ignoreList.filter((url) => {
+          return config.url && config.url.includes(url);
+        });
+
+        if (!isIgnored.length) {
+          config.headers = {
+            Authorization: `Bearer ${newToken}`,
+          };
+        }
+
         return config;
       },
       (error) => {
