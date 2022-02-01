@@ -1,17 +1,18 @@
 import * as React from 'react';
 import axios from 'axios';
 import { analytics } from 'helpers';
-import { useGlobalState } from 'context';
+import { useGlobalState, useGlobalDispatch } from 'context';
 
 const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
   const timeoutRef = React.useRef<any>();
   const {
-    activeNetwork: { extrasApi, accessToken, delegationApi },
+    activeNetwork: { extrasApi, accessToken: hasAccessToken, delegationApi },
+    accessToken,
   } = useGlobalState();
+  const dispatch = useGlobalDispatch();
   const [interceptorsReady, setInterceptorsReady] = React.useState(false);
   const [requestId, setRequestId] = React.useState(-1);
   const [responseId, setResponseId] = React.useState(-1);
-  const [token, setToken] = React.useState('');
   const explorerVersion = process.env.REACT_APP_CACHE_BUST;
   const ignoreList: string[] = [
     '***REMOVED***',
@@ -79,7 +80,10 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
     instance
       .get(`***REMOVED***`)
       .then(({ data: newToken }) => {
-        setToken(newToken);
+        dispatch({
+          type: 'setAccessToken',
+          accessToken: newToken,
+        });
         setInterceptors(newToken);
         setInterceptorsReady(true);
       })
@@ -90,21 +94,30 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
   };
 
   const configureAxios = () => {
-    if (accessToken) {
-      if (!token) {
+    if (hasAccessToken) {
+      if (!accessToken) {
         fetchToken();
       } else {
-        const [, encodedToken] = token.split('.');
+        const [, encodedToken] = accessToken.split('.');
         const jwt = Buffer.from(encodedToken, 'base64').toString();
         const { exp } = JSON.parse(jwt);
         const now = Math.floor(Date.now() / 1000);
         const fetchNextTokenSec = exp - now - 60;
 
-        timeoutRef.current = setTimeout(() => {
+        if (now + 60 < exp) {
+          timeoutRef.current = setTimeout(() => {
+            axios.interceptors.request.eject(requestId);
+            axios.interceptors.request.eject(responseId);
+            fetchToken();
+          }, fetchNextTokenSec * 1000);
+
+          setInterceptors(accessToken);
+          setInterceptorsReady(true);
+        } else {
           axios.interceptors.request.eject(requestId);
           axios.interceptors.request.eject(responseId);
           fetchToken();
-        }, fetchNextTokenSec * 1000);
+        }
       }
     } else {
       setResponseInterceptors();
@@ -117,7 +130,7 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(configureAxios, [token]);
+  React.useEffect(configureAxios, [accessToken]);
 
   return interceptorsReady ? <>{children}</> : null;
 };
