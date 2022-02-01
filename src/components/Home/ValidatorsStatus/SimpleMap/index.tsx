@@ -53,7 +53,7 @@ const MarkerToolTip = ({
       </Tooltip>
     )}
   >
-    {children}
+    <>{children}</>
   </OverlayTrigger>
 );
 

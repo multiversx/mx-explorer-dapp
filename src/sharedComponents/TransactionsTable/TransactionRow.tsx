@@ -5,7 +5,7 @@ import { addressIsBech32, urlBuilder } from 'helpers';
 import { UITransactionType, TxActionsEnum, TxActionCategoryEnum } from 'helpers/types';
 import { ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 import TransactionIcon from '../TransactionsTable/TransactionIcon';
-import TransactionFunction from '../TransactionsTable/TransactionFunction';
+import TransactionMethod from '../TransactionsTable/TransactionMethod';
 import TransactionValue from '../TransactionsTable/TransactionValue';
 
 export interface TransactionRowType {
@@ -120,7 +120,7 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
         </div>
       </td>
       <td className="transaction-function">
-        <TransactionFunction transaction={transaction} />
+        <TransactionMethod transaction={transaction} />
       </td>
       <td>
         <TransactionValue transaction={transaction} />

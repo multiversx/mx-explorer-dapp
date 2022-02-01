@@ -29,8 +29,8 @@ export const adapterSchema = object({
     is: 'api',
     then: string().required(),
   }),
-  extrasApi: string().when('adapter', {
-    is: 'api',
+  extrasApi: string().when('accessToken', {
+    is: true,
     then: string().required(),
   }),
   elasticUrl: string().when('adapter', {

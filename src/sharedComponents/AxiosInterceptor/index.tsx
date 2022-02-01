@@ -6,14 +6,18 @@ import { useGlobalState } from 'context';
 const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
   const timeoutRef = React.useRef<any>();
   const {
-    activeNetwork: { extrasApi, accessToken },
+    activeNetwork: { extrasApi, accessToken, delegationApi },
   } = useGlobalState();
   const [interceptorsReady, setInterceptorsReady] = React.useState(false);
   const [requestId, setRequestId] = React.useState(-1);
   const [responseId, setResponseId] = React.useState(-1);
   const [token, setToken] = React.useState('');
   const explorerVersion = process.env.REACT_APP_CACHE_BUST;
-  const ignoreList: string[] = [];
+  const ignoreList: string[] = ['https:***REMOVED***'];
+
+  if (delegationApi) {
+    ignoreList.push(delegationApi);
+  }
 
   const setResponseInterceptors = () => {
     const newResponseId = axios.interceptors.response.use(

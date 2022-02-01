@@ -115,8 +115,8 @@ const DataDecode = ({
       {value && value !== 'N/A' && (
         <Dropdown
           className="position-absolute dropdown"
-          onSelect={(selectedKey: DecodeMethodType) => {
-            return selectedKey ? setActiveKey(selectedKey) : 'raw';
+          onSelect={(eventKey: any) => {
+            return eventKey ? setActiveKey(eventKey) : 'raw';
           }}
         >
           <Dropdown.Toggle
@@ -125,7 +125,7 @@ const DataDecode = ({
             className={`border text-capitalize py-1`}
             id="decode"
           >
-            {activeKey}
+            {activeKey.replace('/', '')}
           </Dropdown.Toggle>
           <Dropdown.Menu style={{ marginTop: '0.35rem', marginBottom: '0.35rem' }}>
             <Dropdown.Item eventKey="raw" className={`${activeKey === 'raw' ? 'active' : ''}`}>

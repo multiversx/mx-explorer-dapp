@@ -17,7 +17,7 @@ const Overlay = ({ children, title }: { children: React.ReactNode; title: string
       </Tooltip>
     )}
   >
-    {children}
+    <>{children}</>
   </OverlayTrigger>
 );
 
