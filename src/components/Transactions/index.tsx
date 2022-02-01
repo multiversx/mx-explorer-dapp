@@ -31,6 +31,7 @@ const Transactions = () => {
       size,
       senderShard,
       receiverShard,
+      withScResults: true,
     }).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
