@@ -94,10 +94,12 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
       if (!token) {
         fetchToken();
       } else {
-        const timestamp = token.split('-').pop();
-        const tokenTimestamp = timestamp ? parseInt(timestamp) : 0;
+        const [, encodedToken] = token.split('.');
+        const jwt = Buffer.from(encodedToken, 'base64').toString();
+        const { exp } = JSON.parse(jwt);
         const now = Math.floor(Date.now() / 1000);
-        const fetchNextTokenSec = tokenTimestamp - now - 60;
+        const fetchNextTokenSec = exp - now - 60;
+
         timeoutRef.current = setTimeout(() => {
           axios.interceptors.request.eject(requestId);
           axios.interceptors.request.eject(responseId);
