@@ -1,17 +1,16 @@
 import * as React from 'react';
 import axios from 'axios';
 import { analytics } from 'helpers';
-import { useGlobalState, useGlobalDispatch } from 'context';
+import { useGlobalState } from 'context';
 import parseJwt from './parseJwt';
 
 const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
   const timeoutRef = React.useRef<any>();
   const {
-    activeNetwork: { extrasApi, accessToken: hasAccessToken, delegationApi },
-    accessToken,
+    activeNetwork: { extrasApi, accessToken, delegationApi },
   } = useGlobalState();
-  const dispatch = useGlobalDispatch();
   const [interceptorsReady, setInterceptorsReady] = React.useState(false);
+  const [token, setToken] = React.useState('');
   const [requestId, setRequestId] = React.useState(-1);
   const [responseId, setResponseId] = React.useState(-1);
   const explorerVersion = process.env.REACT_APP_CACHE_BUST;
@@ -76,14 +75,10 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
   };
 
   const fetchToken = () => {
-    const instance = axios.create();
-    instance
+    axios
       .get(`***REMOVED***`)
       .then(({ data: newToken }) => {
-        dispatch({
-          type: 'setAccessToken',
-          accessToken: newToken,
-        });
+        setToken(newToken);
         setInterceptors(newToken);
         setInterceptorsReady(true);
       })
@@ -94,16 +89,14 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
   };
 
   const configureAxios = () => {
-    if (hasAccessToken) {
-      if (!accessToken) {
+    if (accessToken) {
+      if (!token) {
         fetchToken();
       } else {
-        const { exp: tokenTimestamp } = parseJwt(accessToken);
+        const { exp: tokenTimestamp } = parseJwt(token);
         if (tokenTimestamp !== undefined) {
           const now = Math.floor(Date.now() / 1000);
           const fetchNextTokenSec = tokenTimestamp - now - 60;
-          setInterceptors(accessToken);
-          setInterceptorsReady(true);
           timeoutRef.current = setTimeout(() => {
             axios.interceptors.request.eject(requestId);
             axios.interceptors.request.eject(responseId);
@@ -122,7 +115,7 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(configureAxios, [accessToken]);
+  React.useEffect(configureAxios, [token]);
 
   return interceptorsReady ? <>{children}</> : null;
 };

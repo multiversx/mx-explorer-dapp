@@ -116,7 +116,6 @@ export interface StateType {
   usd: number | undefined;
   urlBlacklist?: { [key: string]: string };
   notifications: NotificationType[];
-  accessToken: string;
 }
 
 const initialState = (optionalConfig?: ConfigType): StateType => {
@@ -165,7 +164,6 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
     usd: undefined,
     urlBlacklist: undefined,
     notifications: [],
-    accessToken: storage.getFromLocal('accessToken'),
   };
 };
 

@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-type KeyType = 'theme' | 'accessToken';
+type KeyType = 'theme';
 
 const storage = {
   saveToLocal: ({

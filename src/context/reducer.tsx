@@ -29,10 +29,6 @@ export type ActionType =
   | {
       type: 'removeNotification';
       id: NotificationType['id'];
-    }
-  | {
-      type: 'setAccessToken';
-      accessToken: StateType['accessToken'];
     };
 
 export function globalReducer(state: StateType, action: ActionType): StateType {
@@ -110,16 +106,6 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
     }
     case 'removeNotification': {
       return { ...state, notifications: state.notifications.filter((n) => n.id !== action.id) };
-    }
-    case 'setAccessToken': {
-      const newState = { ...state, accessToken: action.accessToken };
-      const in2h = new Date(moment().add(2, 'hours').toDate());
-      storage.saveToLocal({
-        key: 'accessToken',
-        data: action.accessToken,
-        expirationDate: in2h,
-      });
-      return newState;
     }
     default: {
       throw new Error(`Unhandled action type: ${(action as any).type}`);
