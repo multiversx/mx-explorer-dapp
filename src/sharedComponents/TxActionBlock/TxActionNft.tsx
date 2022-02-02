@@ -24,11 +24,13 @@ const TxActionNft = ({ token, showBadge }: { token: TokenArgumentType; showBadge
           )}
           <NetworkLink
             to={urlBuilder.nftDetails(token.identifier)}
-            className={`d-flex ${token.svgUrl ? 'token-link' : ''}`}
+            className={`${token.svgUrl ? 'd-flex token-link' : 'text-truncate'}`}
           >
             <div className="d-flex align-items-center symbol">
               {token.svgUrl && <img src={token.svgUrl} alt=" " className="token-icon mr-1" />}
-              <span>{token.ticker === token.collection ? token.identifier : token.ticker}</span>
+              <span className={token.ticker === token.collection ? 'text-truncate' : ''}>
+                {token.ticker === token.collection ? token.identifier : token.ticker}
+              </span>
             </div>
           </NetworkLink>
         </>
