@@ -5,15 +5,11 @@ import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { faHourglass } from '@fortawesome/pro-regular-svg-icons/faHourglass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { capitalizeFirstLetter } from 'helpers';
 import { UITransactionType, TransactionType } from 'helpers/types';
-
 interface TransactionIconType {
   transaction: UITransactionType;
 }
-
-const capitalizeFirstLetter = (str: string) => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};
 
 const getScResultsMessages = (transaction: TransactionType) => {
   const messages: string[] = [];
@@ -55,8 +51,11 @@ const TransactionIcon = ({ transaction }: TransactionIconType) => {
             {failed && scResultsMessages.length > 0 && (
               <>
                 :{' '}
-                {scResultsMessages.map((message) => (
-                  <span className="text-capitalize">{message}</span>
+                {scResultsMessages.map((message, index) => (
+                  <span>
+                    {capitalizeFirstLetter(message)}
+                    {index > 0 ? ', ' : ''}
+                  </span>
                 ))}
               </>
             )}

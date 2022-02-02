@@ -31,6 +31,7 @@ import useScamFlag from './useScamFlag';
 import useNotifications from './useNotifications';
 import useCheckVersion from './useCheckVersion';
 import getTransactionMethod from './getTransactionMethod';
+import capitalizeFirstLetter from './capitalizeFirstLetter';
 
 export {
   truncate,
@@ -66,4 +67,5 @@ export {
   useNotifications,
   useCheckVersion,
   getTransactionMethod,
+  capitalizeFirstLetter,
 };
