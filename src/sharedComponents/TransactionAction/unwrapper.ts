@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import { TxActionType, TxActionsEnum, TxActionCategoryEnum, UnwrapperType } from 'helpers/types';
 
 const mexUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
@@ -48,11 +49,26 @@ const mexUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
     //   return ['Wrap' /* EGLD value */];
     // case TxActionsEnum.unwrapEgld:
     //   return ['Unwrap' /* EGLD value */];
+    case TxActionsEnum.unlockAssets:
+      return ['Unlock', { token: action.arguments?.transfers }];
+    case TxActionsEnum.mergeLockedAssetTokens:
+      let value = '0';
+      if (action.arguments?.transfers) {
+        const values = action.arguments.transfers.map(({ value }: { value: string }) => value);
+        value = BigNumber.sum(values).toString(10);
+      }
+      return [
+        `Merge ${action.arguments?.transfers.length}`,
+        { tokenNoValue: action.arguments?.transfers },
+        'positions into a single',
+        { tokenNoValue: action.arguments?.transfers },
+        'position of value',
+        { value },
+      ];
     case TxActionsEnum.wrapEgld:
     case TxActionsEnum.unwrapEgld:
-      return action.description ? [action.description] : [];
     default:
-      return [];
+      return action.description ? [action.description] : [];
   }
 };
 
@@ -77,7 +93,7 @@ const stakeUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => 
     case TxActionsEnum.stake:
       return [
         'Delegate',
-        { value: action.arguments?.value },
+        { egldValue: action.arguments?.value },
         'to staking provider',
         {
           providerName: action.arguments?.providerName,
@@ -87,7 +103,7 @@ const stakeUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => 
     case TxActionsEnum.unDelegate:
       return [
         'Undelegate',
-        { value: action.arguments?.value },
+        { egldValue: action.arguments?.value },
         'from staking provider',
         {
           providerName: action.arguments?.providerName,

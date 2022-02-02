@@ -109,6 +109,10 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                 <span className="text-secondary pr-2">Nodes:</span>
                 {identity.validators ? identity.validators : 'N/A'}
               </div>
+              <div className="d-flex mt-2">
+                <span className="text-secondary pr-2">Computed APR:</span>
+                {identity.apr ? `${identity.apr}%` : 'N/A'}
+              </div>
             </div>
             <div className="d-flex flex-column flex-fill mt-4 mt-lg-0 ml-sm-spacer min-w-0">
               <h6 className="mb-3 font-weight-600">Stake Distribution</h6>
@@ -117,10 +121,6 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
               ) : (
                 <span className="text-secondary">N/A</span>
               )}
-              <div className="d-flex mt-2">
-                <span className="text-secondary pr-2">Computed APR:</span>
-                {identity.apr ? `${identity.apr}%` : 'N/A'}
-              </div>
             </div>
           </div>
         </div>

@@ -46,7 +46,6 @@
         color: $secondary;
 
         @include media-breakpoint-up(sm) {
-          max-width: 6.5rem;
           text-align: right;
         }
       }
