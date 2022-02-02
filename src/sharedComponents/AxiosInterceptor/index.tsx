@@ -106,11 +106,6 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
       } else {
         const { exp: tokenTimestamp } = parseJwt(token);
         if (tokenTimestamp !== undefined) {
-          if (!interceptorsReady) {
-            setRequestInterceptors(token);
-            setInterceptorsReady(true);
-          }
-
           const now = Math.floor(Date.now() / 1000);
           const fetchNextTokenSec = tokenTimestamp - now - 60;
 
