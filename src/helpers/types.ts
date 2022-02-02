@@ -177,6 +177,7 @@ export enum TxActionsEnum {
   compoundRewardsProxy = 'compoundRewardsProxy',
   wrapEgld = 'wrapEgld',
   unwrapEgld = 'unwrapEgld',
+  unlockAssets = 'unlockAssets',
 }
 
 export enum TxActionCategoryEnum {

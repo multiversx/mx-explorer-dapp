@@ -48,6 +48,8 @@ const mexUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
     //   return ['Wrap' /* EGLD value */];
     // case TxActionsEnum.unwrapEgld:
     //   return ['Unwrap' /* EGLD value */];
+    case TxActionsEnum.unlockAssets:
+      return ['Unlock', { token: action.arguments?.transfers }];
     case TxActionsEnum.wrapEgld:
     case TxActionsEnum.unwrapEgld:
       return action.description ? [action.description] : [];
