@@ -69,8 +69,8 @@ const ScResultsList = ({
             <div className="detailed-item-content">
               {result.hash && (
                 <div className="row mb-3 d-flex flex-column flex-sm-row">
-                  <div className="col col-left">Hash</div>
-                  <div className="col d-flex align-items-center">
+                  <div className="col-sm-2 col-left">Hash</div>
+                  <div className="col-sm-10 d-flex align-items-center">
                     <Trim text={result.hash} />
 
                     <NetworkLink
@@ -85,8 +85,8 @@ const ScResultsList = ({
 
               {result.sender && (
                 <div className="row mb-3 d-flex flex-column flex-sm-row">
-                  <div className="col col-left">From</div>
-                  <div className="col d-flex align-items-center">
+                  <div className="col-sm-2 col-left">From</div>
+                  <div className="col-sm-10 d-flex align-items-center">
                     <Trim text={result.sender} />
                     <CopyButton text={result.sender} className="side-action ml-2" />
                   </div>
@@ -95,8 +95,8 @@ const ScResultsList = ({
 
               {result.receiver && (
                 <div className="row mb-3 d-flex flex-column flex-sm-row">
-                  <div className="col col-left">To</div>
-                  <div className="col d-flex align-items-center">
+                  <div className="col-sm-2 col-left">To</div>
+                  <div className="col-sm-10 d-flex align-items-center">
                     <Trim text={result.receiver} />
                     <CopyButton text={result.receiver} className="side-action ml-2" />
                   </div>
@@ -105,8 +105,8 @@ const ScResultsList = ({
 
               {result.value !== undefined && (
                 <div className="row mb-3 d-flex flex-column flex-sm-row">
-                  <div className="col col-left">Value</div>
-                  <div className="col text-wrap">
+                  <div className="col-sm-2 col-left">Value</div>
+                  <div className="col-sm-10 text-wrap">
                     <Denominate value={result.value} showLastNonZeroDecimal />
                   </div>
                 </div>
@@ -114,8 +114,8 @@ const ScResultsList = ({
 
               {result.data && (
                 <div className="row d-flex flex-column flex-sm-row">
-                  <div className="col col-left">Data</div>
-                  <div className="col">
+                  <div className="col-sm-2 col-left">Data</div>
+                  <div className="col-sm-10">
                     <DataDecode
                       value={result.data ? decodeData(result.data) : 'N/A'}
                       transactionTokens={transactionTokens}
@@ -127,8 +127,8 @@ const ScResultsList = ({
 
               {result.returnMessage && (
                 <div className="row mt-3 d-flex flex-column flex-sm-row">
-                  <div className="col col-left">Response</div>
-                  <div className="col text-break-all">{result.returnMessage}</div>
+                  <div className="col-sm-2 col-left">Response</div>
+                  <div className="col-sm-10 text-break-all">{result.returnMessage}</div>
                 </div>
               )}
             </div>

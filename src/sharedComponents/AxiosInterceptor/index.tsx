@@ -1,17 +1,19 @@
 import * as React from 'react';
 import axios from 'axios';
-import { analytics } from 'helpers';
+import moment from 'moment';
+import { analytics, storage } from 'helpers';
 import { useGlobalState } from 'context';
 import parseJwt from './parseJwt';
 
 const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
   const timeoutRef = React.useRef<any>();
   const {
-    activeNetwork: { extrasApi, accessToken, delegationApi },
+    activeNetwork: { extrasApi, accessToken: hasAccessToken, delegationApi },
   } = useGlobalState();
+
   const [interceptorsReady, setInterceptorsReady] = React.useState(false);
-  const [token, setToken] = React.useState('');
-  const [requestId, setRequestId] = React.useState(-1);
+  const [token, setToken] = React.useState<string>(storage.getFromLocal('accessToken'));
+  const requestIdRef = React.useRef<number>(-1);
   const [responseId, setResponseId] = React.useState(-1);
   const explorerVersion = process.env.REACT_APP_CACHE_BUST;
   const ignoreList: string[] = [
@@ -52,8 +54,10 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
     setResponseId(newResponseId);
   };
 
-  const setInterceptors = (newToken: string) => {
-    const newRequestId = axios.interceptors.request.use(
+  const setRequestInterceptors = (newToken: string) => {
+    axios.interceptors.request.eject(requestIdRef.current);
+
+    requestIdRef.current = axios.interceptors.request.use(
       async (config) => {
         const isIgnored = ignoreList.filter((url) => {
           return config.url && config.url.includes(url);
@@ -70,16 +74,23 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
         Promise.reject(error);
       }
     );
-    setRequestId(newRequestId);
     setResponseInterceptors();
   };
 
   const fetchToken = () => {
-    axios
+    const instance = axios.create();
+    instance
       .get(`***REMOVED***`)
       .then(({ data: newToken }) => {
+        const in2Hours = new Date(moment().add(2, 'hours').toDate());
+        storage.saveToLocal({
+          key: 'accessToken',
+          data: newToken,
+          expirationDate: in2Hours,
+        });
+
         setToken(newToken);
-        setInterceptors(newToken);
+        setRequestInterceptors(newToken);
         setInterceptorsReady(true);
       })
       .catch((err) => {
@@ -89,7 +100,7 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
   };
 
   const configureAxios = () => {
-    if (accessToken) {
+    if (hasAccessToken) {
       if (!token) {
         fetchToken();
       } else {
@@ -97,11 +108,19 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
         if (tokenTimestamp !== undefined) {
           const now = Math.floor(Date.now() / 1000);
           const fetchNextTokenSec = tokenTimestamp - now - 60;
+
+          if (fetchNextTokenSec > 0 && !interceptorsReady) {
+            setRequestInterceptors(token);
+            setResponseInterceptors();
+            setInterceptorsReady(true);
+          }
+
           timeoutRef.current = setTimeout(() => {
-            axios.interceptors.request.eject(requestId);
             axios.interceptors.request.eject(responseId);
             fetchToken();
           }, fetchNextTokenSec * 1000);
+        } else {
+          fetchToken();
         }
       }
     } else {
