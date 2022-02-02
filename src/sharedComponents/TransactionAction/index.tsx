@@ -6,14 +6,14 @@ import { TokenArgumentType, TransactionTokensType, TransactionType } from 'helpe
 import unwrapper from './unwrapper';
 import { ReactComponent as DefaultAvatar } from 'assets/images/default-avatar.svg';
 
-const ActionToken = ({ token }: { token: TokenArgumentType }) => {
+const ActionToken = ({ token, noValue }: { token: TokenArgumentType; noValue?: boolean }) => {
   if (token.type && ['MetaESDT', 'SemiFungibleESDT', 'NonFungibleESDT'].includes(token.type)) {
     switch (token.type) {
       case NftEnumType.SemiFungibleESDT:
         return (
           <div>
             <span>SFT quantity</span>
-            <TxActionBlock.Nft token={token} />
+            <TxActionBlock.Nft token={token} noValue={noValue} />
             <span>of collection</span>
             <TxActionBlock.Collection token={token} />
           </div>
@@ -22,18 +22,18 @@ const ActionToken = ({ token }: { token: TokenArgumentType }) => {
         return (
           <div>
             <span>NFT</span>
-            <TxActionBlock.Nft token={token} />
+            <TxActionBlock.Nft token={token} noValue={noValue} />
             <span>of collection</span>
             <TxActionBlock.Collection token={token} />
           </div>
         );
       case NftEnumType.MetaESDT:
-        return <TxActionBlock.Nft token={token} />;
+        return <TxActionBlock.Nft token={token} noValue={noValue} />;
       default:
         return null;
     }
   } else {
-    return <TxActionBlock.Token token={token} />;
+    return <TxActionBlock.Token token={token} noValue={noValue} />;
   }
 };
 
@@ -74,10 +74,27 @@ const ActionText = ({
         </div>
       ));
 
+    case Boolean(entry.tokenNoValue && entry.tokenNoValue.length > 0):
+      return entry.tokenNoValue.map((tokenNoValue: TokenArgumentType, index: number) => (
+        <div key={`tx-${tokenNoValue.identifier}-${index}`}>
+          <ActionToken token={tokenNoValue} noValue={true} />
+          {index < entry.tokenNoValue.length - 1 && (
+            <span className="ml-n1 mr-1 d-none d-sm-flex">,</span>
+          )}
+        </div>
+      ));
+
     case Boolean(entry.value):
       return (
         <span>
-          <Denominate value={entry.value} />
+          <Denominate value={entry.value} showLabel={false} />
+        </span>
+      );
+
+    case Boolean(entry.egldValue):
+      return (
+        <span>
+          <Denominate value={entry.egldValue} />
         </span>
       );
 

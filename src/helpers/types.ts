@@ -178,6 +178,7 @@ export enum TxActionsEnum {
   wrapEgld = 'wrapEgld',
   unwrapEgld = 'unwrapEgld',
   unlockAssets = 'unlockAssets',
+  mergeLockedAssetTokens = 'mergeLockedAssetTokens',
 }
 
 export enum TxActionCategoryEnum {
@@ -210,7 +211,9 @@ export interface TxActionType {
 
 export interface UnwrapperType {
   token?: TokenArgumentType[];
+  tokenNoValue?: TokenArgumentType[];
   address?: string;
+  egldValue?: string;
   value?: string;
   providerName?: string;
   providerAvatar?: string;

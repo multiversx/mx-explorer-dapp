@@ -3,7 +3,15 @@ import { Denominate, NetworkLink, NftBadge } from 'sharedComponents';
 import { urlBuilder } from 'helpers';
 import { NftEnumType, TokenArgumentType } from 'helpers/types';
 
-const TxActionNft = ({ token, showBadge }: { token: TokenArgumentType; showBadge?: boolean }) => {
+const TxActionNft = ({
+  token,
+  showBadge,
+  noValue,
+}: {
+  token: TokenArgumentType;
+  showBadge?: boolean;
+  noValue?: boolean;
+}) => {
   const ref = React.useRef(null);
 
   return (
@@ -13,7 +21,7 @@ const TxActionNft = ({ token, showBadge }: { token: TokenArgumentType; showBadge
           {showBadge && token.type !== NftEnumType.MetaESDT && (
             <NftBadge type={token.type} className="mr-1 my-auto" />
           )}
-          {token.value && token.type !== NftEnumType.NonFungibleESDT && (
+          {!noValue && token.value && token.type !== NftEnumType.NonFungibleESDT && (
             <div className="mr-1 text-truncate">
               {token.decimals !== undefined ? (
                 <Denominate value={token.value} showLabel={false} denomination={token.decimals} />
@@ -28,7 +36,7 @@ const TxActionNft = ({ token, showBadge }: { token: TokenArgumentType; showBadge
           >
             <div className="d-flex align-items-center symbol">
               {token.svgUrl && <img src={token.svgUrl} alt=" " className="token-icon mr-1" />}
-              <span className={token.ticker === token.collection ? 'text-truncate' : ''}>
+              <span className={`mr-1 ${token.ticker === token.collection ? 'text-truncate' : ''}`}>
                 {token.ticker === token.collection ? token.identifier : token.ticker}
               </span>
             </div>
