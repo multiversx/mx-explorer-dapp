@@ -4,7 +4,7 @@ import { urlBuilder } from 'helpers';
 import { TokenArgumentType } from 'helpers/types';
 import { denomination as configDenomination } from 'appConfig';
 
-const TxActionToken = ({ token }: { token: TokenArgumentType }) => {
+const TxActionToken = ({ token, noValue }: { token: TokenArgumentType; noValue?: boolean }) => {
   const ref = React.useRef(null);
   const denomination = token.decimals !== undefined ? token.decimals : configDenomination;
 
@@ -12,7 +12,7 @@ const TxActionToken = ({ token }: { token: TokenArgumentType }) => {
     <div ref={ref} className="token-action-block">
       {token && token.token && (
         <>
-          {token.value && (
+          {!noValue && token.value && (
             <div className="mr-1 text-truncate">
               <Denominate value={token.value} showLabel={false} denomination={denomination} />
             </div>
