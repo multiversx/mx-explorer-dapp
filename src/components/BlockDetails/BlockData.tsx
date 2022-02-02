@@ -164,7 +164,7 @@ const BlockData = (props: BlockDataType) => {
           <DetailItem title="Consensus Group" className="hash-group-row">
             <>
               {expanded === false && (
-                <div className="d-flex ml-3 text-break-all">
+                <div className="d-flex text-break-all">
                   <a href="/#" onClick={toggleCollapseClick}>
                     {block.validators.length} validators (See all)
                   </a>
