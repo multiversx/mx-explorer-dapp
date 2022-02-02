@@ -13,13 +13,14 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
+      margin-right: -1rem;
 
       > .hash-item {
         display: flex;
         max-width: 100%;
         overflow: hidden;
         flex: 1 1 40%;
-        margin: 0 1rem;
+        margin-right: 1rem;
       }
     }
 

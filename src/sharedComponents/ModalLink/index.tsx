@@ -12,11 +12,7 @@ const ModalLink = (props: LinkComponentProps) => {
     setShow(true);
   };
 
-  const handleClose = (e: React.MouseEvent) => {
-    if (e) {
-      e.preventDefault();
-    }
-
+  const handleClose = () => {
     setShow(false);
   };
 
@@ -47,9 +43,9 @@ const ModalLink = (props: LinkComponentProps) => {
               </p>
             </div>
             <div className="d-flex align-items-center flex-column mt-spacer">
-              <a href="/#" className="btn btn-primary px-spacer" onClick={handleClose}>
+              <button type="button" className="btn btn-primary px-spacer" onClick={handleClose}>
                 Back to safety
-              </a>
+              </button>
               <a href={props.href} target={`_blank`} className="mt-3" rel="noreferrer noopener">
                 Continue to {link}
               </a>
