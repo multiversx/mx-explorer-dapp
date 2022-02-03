@@ -7,10 +7,12 @@ const TxActionNft = ({
   token,
   showBadge,
   noValue,
+  showLastNonZeroDecimal,
 }: {
   token: TokenArgumentType;
   showBadge?: boolean;
   noValue?: boolean;
+  showLastNonZeroDecimal?: boolean;
 }) => {
   const ref = React.useRef(null);
 
@@ -24,7 +26,12 @@ const TxActionNft = ({
           {!noValue && token.value && token.type !== NftEnumType.NonFungibleESDT && (
             <div className="mr-1 text-truncate">
               {token.decimals !== undefined ? (
-                <Denominate value={token.value} showLabel={false} denomination={token.decimals} />
+                <Denominate
+                  value={token.value}
+                  showLabel={false}
+                  denomination={token.decimals}
+                  showLastNonZeroDecimal={showLastNonZeroDecimal}
+                />
               ) : (
                 Number(token.value).toLocaleString('en')
               )}

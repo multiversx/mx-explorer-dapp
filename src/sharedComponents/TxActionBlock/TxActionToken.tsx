@@ -4,7 +4,15 @@ import { urlBuilder } from 'helpers';
 import { TokenArgumentType } from 'helpers/types';
 import { denomination as configDenomination } from 'appConfig';
 
-const TxActionToken = ({ token, noValue }: { token: TokenArgumentType; noValue?: boolean }) => {
+const TxActionToken = ({
+  token,
+  noValue,
+  showLastNonZeroDecimal,
+}: {
+  token: TokenArgumentType;
+  noValue?: boolean;
+  showLastNonZeroDecimal?: boolean;
+}) => {
   const ref = React.useRef(null);
   const denomination = token.decimals !== undefined ? token.decimals : configDenomination;
 
@@ -14,7 +22,12 @@ const TxActionToken = ({ token, noValue }: { token: TokenArgumentType; noValue?:
         <>
           {!noValue && token.value && (
             <div className="mr-1 text-truncate">
-              <Denominate value={token.value} showLabel={false} denomination={denomination} />
+              <Denominate
+                value={token.value}
+                showLabel={false}
+                denomination={denomination}
+                showLastNonZeroDecimal={showLastNonZeroDecimal}
+              />
             </div>
           )}
           <NetworkLink
