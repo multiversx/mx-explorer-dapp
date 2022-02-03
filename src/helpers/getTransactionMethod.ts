@@ -14,6 +14,10 @@ const getTransactionMethod = (transaction: UITransactionType) => {
         transactionAction = transaction.action.name;
         break;
     }
+
+    if (transaction.action.arguments?.functionName) {
+      transactionAction = transaction.action.arguments?.functionName;
+    }
   }
 
   return transactionAction;

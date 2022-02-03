@@ -2,7 +2,7 @@ import React from 'react';
 import { faArrowRight } from '@fortawesome/pro-regular-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { addressIsBech32, urlBuilder } from 'helpers';
-import { UITransactionType, TxActionsEnum, TxActionCategoryEnum } from 'helpers/types';
+import { UITransactionType } from 'helpers/types';
 import { ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 import TransactionIcon from '../TransactionsTable/TransactionIcon';
 import TransactionMethod from '../TransactionsTable/TransactionMethod';
@@ -16,12 +16,7 @@ export interface TransactionRowType {
 
 const TransactionRow = ({ transaction, address, directionCol }: TransactionRowType) => {
   let receiver = transaction.receiver;
-  if (
-    transaction.action &&
-    transaction.action.category === TxActionCategoryEnum.esdtNft &&
-    transaction.action.name === TxActionsEnum.transfer &&
-    transaction.action.arguments?.receiver
-  ) {
+  if (transaction.action && transaction.action.arguments?.receiver) {
     receiver = transaction.action.arguments.receiver;
   }
   const directionOut = address === transaction.sender;
