@@ -128,6 +128,7 @@ const AccountTokens = () => {
                           showLabel={false}
                           value={balance ? balance : '0'}
                           denomination={decimals}
+                          showLastNonZeroDecimal
                         />
                       </div>
 
@@ -165,6 +166,7 @@ const AccountTokens = () => {
                           showLabel={false}
                           value={balance ? balance : '0'}
                           denomination={decimals}
+                          showLastNonZeroDecimal
                         />
                       </div>
 
