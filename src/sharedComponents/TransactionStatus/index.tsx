@@ -4,15 +4,12 @@ import { faBan } from '@fortawesome/pro-solid-svg-icons/faBan';
 import { faHourglass } from '@fortawesome/pro-solid-svg-icons/faHourglass';
 import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { capitalizeFirstLetter } from 'helpers';
 import txStatus from './txStatus';
 
 interface TransactionStatusType {
   status: string;
 }
-
-export const capitalizeFirstLetter = (str: string) => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};
 
 export const getStatusIconAndColor = (status: TransactionStatusType['status']) => {
   const statusIs = (compareTo: string) => status.toLowerCase() === compareTo.toLowerCase();

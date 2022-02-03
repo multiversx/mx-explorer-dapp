@@ -36,7 +36,9 @@ const TxActionNft = ({
           >
             <div className="d-flex align-items-center symbol">
               {token.svgUrl && <img src={token.svgUrl} alt=" " className="token-icon mr-1" />}
-              <span className={`mr-1 ${token.ticker === token.collection ? 'text-truncate' : ''}`}>
+              <span
+                {...(token.ticker === token.collection ? { className: 'text-truncate mr-1' } : {})}
+              >
                 {token.ticker === token.collection ? token.identifier : token.ticker}
               </span>
             </div>
