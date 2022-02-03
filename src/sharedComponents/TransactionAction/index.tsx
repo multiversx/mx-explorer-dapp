@@ -6,14 +6,26 @@ import { TokenArgumentType, TransactionTokensType, TransactionType } from 'helpe
 import unwrapper from './unwrapper';
 import { ReactComponent as DefaultAvatar } from 'assets/images/default-avatar.svg';
 
-const ActionToken = ({ token, noValue }: { token: TokenArgumentType; noValue?: boolean }) => {
+const ActionToken = ({
+  token,
+  noValue,
+  showLastNonZeroDecimal,
+}: {
+  token: TokenArgumentType;
+  noValue?: boolean;
+  showLastNonZeroDecimal?: boolean;
+}) => {
   if (token.type && ['MetaESDT', 'SemiFungibleESDT', 'NonFungibleESDT'].includes(token.type)) {
     switch (token.type) {
       case NftEnumType.SemiFungibleESDT:
         return (
           <div>
             <span>SFT quantity</span>
-            <TxActionBlock.Nft token={token} noValue={noValue} />
+            <TxActionBlock.Nft
+              token={token}
+              noValue={noValue}
+              showLastNonZeroDecimal={showLastNonZeroDecimal}
+            />
             <span>of collection</span>
             <TxActionBlock.Collection token={token} />
           </div>
@@ -22,18 +34,34 @@ const ActionToken = ({ token, noValue }: { token: TokenArgumentType; noValue?: b
         return (
           <div>
             <span>NFT</span>
-            <TxActionBlock.Nft token={token} noValue={noValue} />
+            <TxActionBlock.Nft
+              token={token}
+              noValue={noValue}
+              showLastNonZeroDecimal={showLastNonZeroDecimal}
+            />
             <span>of collection</span>
             <TxActionBlock.Collection token={token} />
           </div>
         );
       case NftEnumType.MetaESDT:
-        return <TxActionBlock.Nft token={token} noValue={noValue} />;
+        return (
+          <TxActionBlock.Nft
+            token={token}
+            noValue={noValue}
+            showLastNonZeroDecimal={showLastNonZeroDecimal}
+          />
+        );
       default:
         return null;
     }
   } else {
-    return <TxActionBlock.Token token={token} noValue={noValue} />;
+    return (
+      <TxActionBlock.Token
+        token={token}
+        noValue={noValue}
+        showLastNonZeroDecimal={showLastNonZeroDecimal}
+      />
+    );
   }
 };
 
@@ -69,7 +97,7 @@ const ActionText = ({
     case Boolean(entry.token && entry.token.length > 0):
       return entry.token.map((token: TokenArgumentType, index: number) => (
         <div key={`tx-${token.identifier}-${index}`}>
-          <ActionToken token={token} />
+          <ActionToken token={token} showLastNonZeroDecimal />
           {index < entry.token.length - 1 && <span className="ml-n1 mr-1 d-none d-sm-flex">,</span>}
         </div>
       ));
@@ -77,7 +105,7 @@ const ActionText = ({
     case Boolean(entry.tokenNoValue && entry.tokenNoValue.length > 0):
       return entry.tokenNoValue.map((tokenNoValue: TokenArgumentType, index: number) => (
         <div key={`tx-${tokenNoValue.identifier}-${index}`}>
-          <ActionToken token={tokenNoValue} noValue={true} />
+          <ActionToken token={tokenNoValue} noValue showLastNonZeroDecimal />
           {index < entry.tokenNoValue.length - 1 && (
             <span className="ml-n1 mr-1 d-none d-sm-flex">,</span>
           )}
@@ -87,14 +115,14 @@ const ActionText = ({
     case Boolean(entry.value):
       return (
         <span>
-          <Denominate value={entry.value} showLabel={false} />
+          <Denominate value={entry.value} showLabel={false} showLastNonZeroDecimal />
         </span>
       );
 
     case Boolean(entry.egldValue):
       return (
         <span>
-          <Denominate value={entry.egldValue} />
+          <Denominate value={entry.egldValue} showLastNonZeroDecimal />
         </span>
       );
 
