@@ -31,7 +31,7 @@ export interface TokenType {
   owner: string;
   minted: string;
   burnt: string;
-  supply: string;
+  supply: string | number;
   canBurn: boolean;
   canChangeOwner: boolean;
   canFreeze: boolean;
