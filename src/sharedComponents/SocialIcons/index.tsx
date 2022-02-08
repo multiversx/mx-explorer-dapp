@@ -9,6 +9,7 @@ import {
   faTelegramPlane,
   faMediumM,
   faMedium,
+  faDiscord,
 } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe, faEnvelope, faPencil, faFileAlt } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -42,6 +43,8 @@ const getFaIcon = (icon: string) => {
       return faMediumM;
     case 'medium':
       return faMedium;
+    case 'discord':
+      return faDiscord;
     default:
       return faGlobe;
   }
