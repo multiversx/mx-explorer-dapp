@@ -67,12 +67,16 @@ const TokenDetailsCard = () => {
                 <SmallDetailItem title="Token">{identifier}</SmallDetailItem>
 
                 <SmallDetailItem title="Supply">
-                  <Denominate
-                    value={supply}
-                    denomination={decimals}
-                    showLastNonZeroDecimal={true}
-                    showLabel={false}
-                  />
+                  {typeof supply === 'string' ? (
+                    <Denominate
+                      value={supply}
+                      denomination={decimals}
+                      showLastNonZeroDecimal={true}
+                      showLabel={false}
+                    />
+                  ) : (
+                    <>{new BigNumber(supply).toFormat()}</>
+                  )}
                 </SmallDetailItem>
 
                 <SmallDetailItem title="Holders">
