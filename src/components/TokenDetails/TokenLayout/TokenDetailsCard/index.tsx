@@ -66,18 +66,7 @@ const TokenDetailsCard = () => {
               <div className="container-fluid">
                 <SmallDetailItem title="Token">{identifier}</SmallDetailItem>
 
-                <SmallDetailItem title="Supply">
-                  {typeof supply === 'string' ? (
-                    <Denominate
-                      value={supply}
-                      denomination={decimals}
-                      showLastNonZeroDecimal={true}
-                      showLabel={false}
-                    />
-                  ) : (
-                    <>{new BigNumber(supply).toFormat()}</>
-                  )}
-                </SmallDetailItem>
+                <SmallDetailItem title="Supply">{new BigNumber(supply).toFormat()}</SmallDetailItem>
 
                 <SmallDetailItem title="Holders">
                   {new BigNumber(accounts).toFormat()}
