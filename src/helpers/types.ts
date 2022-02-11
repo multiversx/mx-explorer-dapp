@@ -212,6 +212,7 @@ export interface TxActionType {
 export interface UnwrapperType {
   token?: TokenArgumentType[];
   tokenNoValue?: TokenArgumentType[];
+  tokenNoLink?: TokenArgumentType[];
   address?: string;
   egldValue?: string;
   value?: string;
