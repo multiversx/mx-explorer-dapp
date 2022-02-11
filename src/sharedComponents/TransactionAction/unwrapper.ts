@@ -55,13 +55,13 @@ const mexUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
       let value = '0';
       if (action.arguments?.transfers) {
         const values = action.arguments.transfers.map(({ value }: { value: string }) => value);
-        value = BigNumber.sum(values).toString(10);
+        value = BigNumber.sum.apply(null, values).toString(10);
       }
       return [
         `Merge ${action.arguments?.transfers.length}`,
-        { tokenNoValue: action.arguments?.transfers },
+        { tokenNoLink: [action.arguments?.transfers[0]] },
         'positions into a single',
-        { tokenNoValue: action.arguments?.transfers },
+        { tokenNoLink: [action.arguments?.transfers[0]] },
         'position of value',
         { value },
       ];
