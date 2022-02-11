@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { Dropdown } from 'react-bootstrap';
 import { addressIsBech32, bech32, isUtf8 } from 'helpers';
@@ -99,7 +101,9 @@ const DataDecode = ({
             return part;
           } else {
             const hexValidationWarnings = getHexValidationWarnings(part);
-            setValidationWarnings(new Set([...validationWarnings, ...hexValidationWarnings]));
+            setValidationWarnings(
+              Array.from(new Set([...validationWarnings, ...hexValidationWarnings]))
+            );
             return decode(part, activeKey, transactionTokens);
           }
         });
@@ -129,6 +133,8 @@ const DataDecode = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeKey]);
+
+  console.log('---validationWarnings', validationWarnings);
 
   return (
     <div className="position-relative data-decode mt-1">
@@ -169,7 +175,13 @@ const DataDecode = ({
           </Dropdown.Menu>
         </Dropdown>
       )}
-      {validationWarnings && <small className="text-warning mt-1">{validationWarnings}</small>}
+      {validationWarnings.length &&
+        validationWarnings.map((warning: string, i: number) => (
+          <div key={i} className="d-flex align-items-center mt-1 text-break-all">
+            <FontAwesomeIcon icon={faExclamationTriangle} size="xs" className="text-warning mr-1" />
+            <small className="text-warning"> {warning}</small>
+          </div>
+        ))}
     </div>
   );
 };
