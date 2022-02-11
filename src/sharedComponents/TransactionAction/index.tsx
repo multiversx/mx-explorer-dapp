@@ -112,6 +112,16 @@ const ActionText = ({
         </div>
       ));
 
+    case Boolean(entry.tokenNoLink && entry.tokenNoLink.length > 0):
+      return entry.tokenNoLink.map((tokenNoLink: TokenArgumentType, index: number) => (
+        <div key={`tx-${tokenNoLink.identifier}-${index}`}>
+          <span className="mr-1">{tokenNoLink.ticker}</span>
+          {index < entry.tokenNoLink.length - 1 && (
+            <span className="ml-n1 mr-1 d-none d-sm-flex">,</span>
+          )}
+        </div>
+      ));
+
     case Boolean(entry.value):
       return (
         <span>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
 import { urlBuilder } from 'helpers';
-import { Trim, NetworkLink, SocialIcons, PropertyPill, Denominate } from 'sharedComponents';
+import { Trim, NetworkLink, SocialIcons, PropertyPill } from 'sharedComponents';
 import { useGlobalState } from 'context';
 
 const SmallDetailItem = ({

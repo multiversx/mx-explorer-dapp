@@ -6,6 +6,25 @@ import { TransactionTokensType } from 'helpers/types';
 
 type DecodeMethodType = 'raw' | 'text' | 'decimal' | 'smart' | string;
 
+const isHexValidCharacters = (str: string) => {
+  return str.toLowerCase().match(/[0-9a-f]/g);
+};
+const isHexValidLength = (str: string) => {
+  return str.length % 2 === 0;
+};
+
+const getHexValidationWarnings = (str: string) => {
+  const warnings = [];
+  if (str && !isHexValidCharacters(str)) {
+    warnings.push(`Invalid Hex characters on argument @${str}`);
+  }
+  if (str && !isHexValidLength(str)) {
+    warnings.push(`Odd number of Hex characters on argument @${str}`);
+  }
+
+  return warnings;
+};
+
 const decode = (
   part: string,
   decodeMethod: DecodeMethodType,
@@ -69,6 +88,7 @@ const DataDecode = ({
     initialDecodeMethod ? initialDecodeMethod : 'raw'
   );
   const [displayValue, setDisplayValue] = React.useState('');
+  const [validationWarnings, setValidationWarnings] = React.useState<any>([]);
 
   React.useEffect(() => {
     if (value.includes('@') || value.includes('\n')) {
@@ -78,6 +98,8 @@ const DataDecode = ({
           if (parts.length >= 2 && (index === 0 || (index === 1 && !parts[0]))) {
             return part;
           } else {
+            const hexValidationWarnings = getHexValidationWarnings(part);
+            setValidationWarnings(new Set([...validationWarnings, ...hexValidationWarnings]));
             return decode(part, activeKey, transactionTokens);
           }
         });
@@ -98,6 +120,7 @@ const DataDecode = ({
     } else {
       setDisplayValue(decode(value, activeKey, transactionTokens));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeKey, value, transactionTokens]);
 
   React.useEffect(() => {
@@ -146,6 +169,7 @@ const DataDecode = ({
           </Dropdown.Menu>
         </Dropdown>
       )}
+      {validationWarnings && <small className="text-warning mt-1">{validationWarnings}</small>}
     </div>
   );
 };
