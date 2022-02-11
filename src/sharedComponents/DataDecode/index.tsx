@@ -134,8 +134,6 @@ const DataDecode = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeKey]);
 
-  console.log('---validationWarnings', validationWarnings);
-
   return (
     <div className="position-relative data-decode mt-1">
       <div className={`form-control textarea cursor-text ${className ? className : ''}`}>
@@ -175,13 +173,18 @@ const DataDecode = ({
           </Dropdown.Menu>
         </Dropdown>
       )}
-      {validationWarnings.length &&
-        validationWarnings.map((warning: string, i: number) => (
-          <div key={i} className="d-flex align-items-center mt-1 text-break-all">
-            <FontAwesomeIcon icon={faExclamationTriangle} size="xs" className="text-warning mr-1" />
-            <small className="text-warning"> {warning}</small>
-          </div>
-        ))}
+      {validationWarnings.length
+        ? validationWarnings.map((warning: string, i: number) => (
+            <div key={i} className="d-flex align-items-center mt-1 text-break-all">
+              <FontAwesomeIcon
+                icon={faExclamationTriangle}
+                size="xs"
+                className="text-warning mr-1"
+              />
+              <small className="text-warning"> {warning}</small>
+            </div>
+          ))
+        : null}
     </div>
   );
 };
