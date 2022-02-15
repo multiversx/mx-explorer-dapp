@@ -27,6 +27,7 @@ import {
   TransactionAction,
 } from 'sharedComponents';
 import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
+import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import EventsList from '../EventsList';
 import OperationsList from '../OperationsList';
 import ScResultsList from '../ScResultsList';
@@ -263,6 +264,18 @@ const TransactionInfo = ({
                         <small className="text-danger ml-1"> {msg}</small>
                       </div>
                     ))}
+                    {transaction.status === txStatus.rewardReverted && (
+                      <div className="d-flex ml-1 text-break-all">
+                        <FontAwesomeIcon
+                          icon={faAngleDown}
+                          className="text-secondary"
+                          style={{ marginTop: '2px' }}
+                          transform={{ rotate: 45 }}
+                        />
+                        &nbsp;
+                        <small className="text-danger ml-1"> Block Reverted</small>
+                      </div>
+                    )}
                   </div>
                 </DetailItem>
 
