@@ -53,6 +53,7 @@ const TokenDetailsCard = () => {
           {assets && assets.description && <meta name="description" content={assets.description} />}
 
           <meta name="twitter:title" content={title} />
+          <meta name="twitter:card" content="summary" />
           {assets && assets.description && (
             <meta name="twitter:description" content={assets.description} />
           )}
