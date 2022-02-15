@@ -67,7 +67,7 @@ const OperationText = ({ operation }: { operation: types.OperationType }) => {
     case 'ESDTLocalBurn':
       return <OperationSender operation={operation} action="Burn by" />;
     case 'wipe':
-      return <OperationSender operation={operation} action="Wipe by" />;
+      return <OperationReceiver operation={operation} action="Wipe from" />;
     case 'multiTransfer':
       return (
         <>
