@@ -43,23 +43,23 @@ const TokenDetailsCard = () => {
     transactions,
   } = tokenDetails;
 
-  const title = `${name} ${ticker !== name ? `(${ticker})` : ''} Token • Elrond Explorer`;
+  const title = `${assets ? `${name} ${ticker !== name ? `(${ticker})` : ''}` : ticker} Token`;
 
   return identifier !== '' ? (
     <>
       {!isMainnet && (
         <Helmet>
-          <title>{title}</title>
+          <title>{`${title} • Elrond Explorer`}</title>
           {assets && assets.description && <meta name="description" content={assets.description} />}
 
-          <meta name="twitter:title" content={title} />
+          <meta name="twitter:title" content={`${title} • Elrond Explorer`} />
           <meta name="twitter:card" content="summary" />
           {assets && assets.description && (
             <meta name="twitter:description" content={assets.description} />
           )}
           {assets && assets.pngUrl && <meta name="twitter:image" content={assets.pngUrl} />}
 
-          <meta property="og:title" content={title} />
+          <meta property="og:title" content={`${title} • Elrond Explorer`} />
           {assets && assets.description && (
             <meta property="og:description" content={assets.description} />
           )}
@@ -72,18 +72,12 @@ const TokenDetailsCard = () => {
             <div className="card">
               <div className="card-header">
                 <div className="card-header-item d-flex align-items-center">
-                  <h6 className="d-flex align-items-center" data-testid="title">
-                    {assets ? (
-                      <>
-                        {assets.svgUrl && (
-                          <img src={assets.svgUrl} alt={ticker} className="token-icon mr-1" />
-                        )}
-                        <div>{ticker ? ticker : name}</div>
-                      </>
-                    ) : (
-                      <div>{name}</div>
+                  <h1 className="h6 d-flex align-items-center" data-testid="title">
+                    {assets && assets.svgUrl && (
+                      <img src={assets.svgUrl} alt={ticker} className="token-icon mr-1" />
                     )}
-                  </h6>
+                    <span>{title}</span>
+                  </h1>
                 </div>
               </div>
               <div className="card-body p-0">
