@@ -59,15 +59,15 @@ const OperationText = ({ operation }: { operation: types.OperationType }) => {
     case 'create':
     case 'localMint':
     case 'ESDTLocalMint':
-      return <OperationSender operation={operation} action="Mint to" />;
+      return <OperationSender operation={operation} action="Mint by" />;
     case 'addQuantity':
-      return <OperationSender operation={operation} action="Add quantity to" />;
+      return <OperationSender operation={operation} action="Add quantity by" />;
     case 'burn':
     case 'localBurn':
     case 'ESDTLocalBurn':
-      return <OperationSender operation={operation} action="Burn from" />;
+      return <OperationSender operation={operation} action="Burn by" />;
     case 'wipe':
-      return <OperationSender operation={operation} action="Wipe from" />;
+      return <OperationSender operation={operation} action="Wipe by" />;
     case 'multiTransfer':
       return (
         <>
