@@ -10,7 +10,8 @@ export const shardSpanText = (shard: number | string) => {
     shard = shard.replace('Shard', '');
   }
 
-  const isMetachain = metaChainShardId.toString() === String(shard).toString();
+  const isMetachain =
+    metaChainShardId.toString() === String(shard).toString() || String(shard) === 'metachain';
 
   return isMetachain ? 'Metachain' : `Shard ${shard}`;
 };
