@@ -14,7 +14,7 @@ const OperationSender = ({
   return operation.sender ? (
     <div className="col-lg-6 d-flex align-items-center col-xl-3 pr-xl-0">
       <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary mr-2" />
-      <div className="mr-2 text-nowrap">{action ? `${action} from ` : 'From'}</div>
+      <div className="mr-2 text-nowrap">{action ? action : 'From'}</div>
       {addressIsBech32(operation.sender) ? (
         <>
           <NetworkLink to={urlBuilder.accountDetails(operation.sender)} className="trim-wrapper">
@@ -39,8 +39,8 @@ const OperationReceiver = ({
   return operation.receiver ? (
     <div className="col-lg-6 d-flex align-items-center col-xl-3 pr-xl-0">
       {action && <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary mr-2" />}
-      <div className="mr-2 text-nowrap">{action ? `${action} to ` : 'To'}</div>
-      {addressIsBech32(operation.sender) ? (
+      <div className="mr-2 text-nowrap">{action ? action : 'To'}</div>
+      {addressIsBech32(operation.receiver) ? (
         <>
           <NetworkLink to={urlBuilder.accountDetails(operation.receiver)} className="trim-wrapper">
             <Trim text={operation.receiver} color="secondary" />
@@ -59,19 +59,26 @@ const OperationText = ({ operation }: { operation: types.OperationType }) => {
     case 'create':
     case 'localMint':
     case 'ESDTLocalMint':
-      return <OperationReceiver operation={operation} action="Mint" />;
+      return <OperationSender operation={operation} action="Mint by" />;
+    case 'addQuantity':
+      return <OperationSender operation={operation} action="Add quantity by" />;
     case 'burn':
     case 'localBurn':
     case 'ESDTLocalBurn':
-      return <OperationSender operation={operation} action="Burn" />;
-    case 'addQuantity':
-      return <OperationReceiver operation={operation} action="Add quantity" />;
+      return <OperationSender operation={operation} action="Burn by" />;
     case 'wipe':
-      return <OperationSender operation={operation} action="Wipe" />;
+      return <OperationReceiver operation={operation} action="Wipe from" />;
     case 'multiTransfer':
       return (
         <>
-          <OperationSender operation={operation} action="Multi transfer" />{' '}
+          <OperationSender operation={operation} action="Multi transfer from" />{' '}
+          <OperationReceiver operation={operation} />
+        </>
+      );
+    case 'transfer':
+      return (
+        <>
+          <OperationSender operation={operation} action="Transfer from" />{' '}
           <OperationReceiver operation={operation} />
         </>
       );

@@ -97,7 +97,10 @@ const DataDecode = ({
       if (value.includes('@')) {
         const parts = value.split('@');
         const decodedParts = parts.map((part, index) => {
-          if (parts.length >= 2 && (index === 0 || (index === 1 && !parts[0]))) {
+          if (
+            parts.length >= 2 &&
+            ((index === 0 && part.length < 32) || (index === 1 && !parts[0]))
+          ) {
             return part;
           } else {
             const hexValidationWarnings = getHexValidationWarnings(part);
