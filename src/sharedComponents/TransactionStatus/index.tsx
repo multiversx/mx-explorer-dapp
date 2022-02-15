@@ -51,7 +51,7 @@ const TransactionStatus = ({ status }: TransactionStatusType) => {
   return (
     <span className="d-flex align-items-center text-capitalize">
       <Icon />
-      {status.replace('-', ' ')}
+      {status === txStatus.rewardReverted ? txStatus.fail : status}
     </span>
   );
 };
