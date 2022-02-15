@@ -36,7 +36,8 @@ body {
       border-bottom: 1px solid $border-color;
       padding: 1.1rem 1rem;
 
-      h6 {
+      h6,
+      .h6 {
         line-height: 2.5rem;
         @extend .m-0;
       }

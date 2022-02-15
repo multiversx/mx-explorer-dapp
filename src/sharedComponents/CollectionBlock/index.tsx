@@ -13,7 +13,7 @@ const CollectionBlock = ({ nft }: { nft: types.NftType }) => {
           {nft.assets ? (
             <>
               {nft.assets.svgUrl && (
-                <img src={nft.assets.svgUrl} className="token-icon mr-1" alt="" />
+                <img src={nft.assets.svgUrl} className="token-icon mr-1" alt={nft.collection} />
               )}
               <div className="text-truncate">{nft.collection}</div>
             </>
