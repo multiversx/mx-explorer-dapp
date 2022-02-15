@@ -344,7 +344,7 @@ const TransactionInfo = ({
                 </DetailItem>
 
                 <DetailItem title="Gas Used">
-                  {transaction.gasUsed ? (
+                  {transaction.gasUsed !== undefined ? (
                     <>{transaction.gasUsed.toLocaleString('en')}</>
                   ) : (
                     <span className="text-secondary">N/A</span>
@@ -352,7 +352,7 @@ const TransactionInfo = ({
                 </DetailItem>
 
                 <DetailItem title="Gas Price">
-                  {transaction.price !== undefined ? (
+                  {transaction.gasPrice !== undefined ? (
                     <Denominate value={transaction.gasPrice.toString()} showLastNonZeroDecimal />
                   ) : (
                     <span className="text-secondary">N/A</span>
