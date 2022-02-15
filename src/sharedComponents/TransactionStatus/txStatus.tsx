@@ -5,6 +5,7 @@ const txStatus = {
   success: 'Success',
   failed: 'Failed', // TODO: remove when ready
   fail: 'fail',
+  rewardReverted: 'reward-reverted',
 };
 
 export default txStatus;

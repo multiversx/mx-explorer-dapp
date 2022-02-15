@@ -4,7 +4,6 @@ import { faBan } from '@fortawesome/pro-solid-svg-icons/faBan';
 import { faHourglass } from '@fortawesome/pro-solid-svg-icons/faHourglass';
 import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { capitalizeFirstLetter } from 'helpers';
 import txStatus from './txStatus';
 
 interface TransactionStatusType {
@@ -23,6 +22,7 @@ export const getStatusIconAndColor = (status: TransactionStatusType['status']) =
       break;
     case statusIs(txStatus.fail):
     case statusIs(txStatus.failed):
+    case statusIs(txStatus.rewardReverted):
       color = 'text-danger';
       Icon = () => <FontAwesomeIcon icon={faTimes} className={`mr-2 ${color}`} />;
       break;
@@ -49,9 +49,9 @@ const TransactionStatus = ({ status }: TransactionStatusType) => {
   const { Icon } = getStatusIconAndColor(status);
 
   return (
-    <span className="d-flex align-items-center">
+    <span className="d-flex align-items-center text-capitalize">
       <Icon />
-      {capitalizeFirstLetter(status)}
+      {status.replace('-', ' ')}
     </span>
   );
 };
