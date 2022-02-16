@@ -150,44 +150,49 @@ const BlockData = (props: BlockDataType) => {
             {new BigNumber(block.maxGasLimit).toFormat()}
           </DetailItem>
           <DetailItem title="Proposer">
-            <NetworkLink
-              to={`${validatorsRoutes.nodes}/${block.proposer}`}
-              className="trim-wrapper"
-            >
-              {block.proposer ? (
+            {block.proposer ? (
+              <NetworkLink
+                to={`${validatorsRoutes.nodes}/${block.proposer}`}
+                className="trim-wrapper"
+              >
                 <Trim text={block.proposer} />
-              ) : (
-                <span className="text-secondary">N/A</span>
-              )}
-            </NetworkLink>
+              </NetworkLink>
+            ) : (
+              <span className="text-secondary">N/A</span>
+            )}
           </DetailItem>
+
           <DetailItem title="Consensus Group" className="hash-group-row">
-            <>
-              {expanded === false && (
-                <div className="d-flex text-break-all">
-                  <a href="/#" onClick={toggleCollapseClick}>
-                    {block.validators.length} validators (See all)
-                  </a>
-                </div>
-              )}
-              <Collapse in={expanded}>
-                <div>
-                  <div className="hash-group">
-                    {block.validators.map((item, i) => (
-                      <div className="hash-item mb-1" key={`${item}/${i}`}>
-                        <NetworkLink
-                          className="trim-wrapper"
-                          to={`${validatorsRoutes.nodes}/${item}`}
-                        >
-                          <Trim text={item} />
-                        </NetworkLink>
-                      </div>
-                    ))}
-                    {createHashItemIfLengthIsOdd(block.validators.length)}
+            {block.validators ? (
+              <>
+                {expanded === false && (
+                  <div className="d-flex text-break-all">
+                    <a href="/#" onClick={toggleCollapseClick}>
+                      {block.validators.length} validators (See all)
+                    </a>
                   </div>
-                </div>
-              </Collapse>
-            </>
+                )}
+                <Collapse in={expanded}>
+                  <div>
+                    <div className="hash-group">
+                      {block.validators.map((item, i) => (
+                        <div className="hash-item mb-1" key={`${item}/${i}`}>
+                          <NetworkLink
+                            className="trim-wrapper"
+                            to={`${validatorsRoutes.nodes}/${item}`}
+                          >
+                            <Trim text={item} />
+                          </NetworkLink>
+                        </div>
+                      ))}
+                      {createHashItemIfLengthIsOdd(block.validators.length)}
+                    </div>
+                  </div>
+                </Collapse>
+              </>
+            ) : (
+              <span className="text-secondary">N/A</span>
+            )}
           </DetailItem>
           <DetailItem title="State Root Hash">
             {block.stateRootHash ? (
@@ -237,14 +242,12 @@ const BlockData = (props: BlockDataType) => {
             <div className="d-flex align-items-center">
               {isFirstBlock ? (
                 <span className="text-secondary">N/A</span>
-              ) : (
+              ) : block.prevHash ? (
                 <NetworkLink className="trim-wrapper" to={`/blocks/${block.prevHash}`}>
-                  {block.prevHash ? (
-                    <Trim text={block.prevHash} />
-                  ) : (
-                    <span className="text-secondary">N/A</span>
-                  )}
+                  <Trim text={block.prevHash} />
                 </NetworkLink>
+              ) : (
+                <span className="text-secondary">N/A</span>
               )}
             </div>
           </DetailItem>
