@@ -78,7 +78,7 @@ const TokenDetailsCard = () => {
                 </div>
               </div>
               <div className="card-body p-0">
-                <div className="container-fluid">
+                <dl className="container-fluid">
                   <SmallDetailItem title="Token">{identifier}</SmallDetailItem>
 
                   <SmallDetailItem title="Supply">
@@ -105,7 +105,7 @@ const TokenDetailsCard = () => {
                       <PropertyPill name={'Not Paused'} active={!isPaused} />
                     </div>
                   </SmallDetailItem>
-                </div>
+                </dl>
               </div>
             </div>
           </div>
@@ -146,7 +146,7 @@ const TokenDetailsCard = () => {
                   </SmallDetailItem>
                   <SmallDetailItem title="Description">
                     {assets && assets.description ? (
-                      <h2 className="token-description h6" title={assets.description}>
+                      <h2 className="token-description h6 mb-0" title={assets.description}>
                         {assets.description}
                       </h2>
                     ) : (
