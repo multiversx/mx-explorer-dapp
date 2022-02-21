@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import BigNumber from 'bignumber.js';
-import { urlBuilder, useIsMainnet } from 'helpers';
+import { urlBuilder } from 'helpers';
 import { Trim, NetworkLink, SocialIcons, PropertyPill } from 'sharedComponents';
 import { useGlobalState } from 'context';
 
@@ -13,15 +13,14 @@ const SmallDetailItem = ({
   title: string | React.ReactNode;
 }) => (
   <div className="row py-3 border-bottom detail-item">
-    <div className="col-lg-3 text-secondary pl-lg-spacer pr-lg-0">{title}</div>
-    <div className="col-lg-9 pr-lg-spacer pl-lg-0">{children}</div>
+    <dt className="col-lg-3 text-secondary pl-lg-spacer pr-lg-0">{title}</dt>
+    <dd className="col-lg-9 pr-lg-spacer pl-lg-0">{children}</dd>
   </div>
 );
 
 const TokenDetailsCard = () => {
   const ref = React.useRef(null);
   const { tokenDetails } = useGlobalState();
-  const isMainnet = useIsMainnet();
 
   const {
     identifier,
@@ -47,25 +46,23 @@ const TokenDetailsCard = () => {
 
   return identifier !== '' ? (
     <>
-      {!isMainnet && (
-        <Helmet>
-          <title>{`${title} • Elrond Explorer`}</title>
-          {assets && assets.description && <meta name="description" content={assets.description} />}
+      <Helmet>
+        <title>{`${title} • Elrond Explorer`}</title>
+        {assets && assets.description && <meta name="description" content={assets.description} />}
 
-          <meta name="twitter:title" content={`${title} • Elrond Explorer`} />
-          <meta name="twitter:card" content="summary" />
-          {assets && assets.description && (
-            <meta name="twitter:description" content={assets.description} />
-          )}
-          {assets && assets.pngUrl && <meta name="twitter:image" content={assets.pngUrl} />}
+        <meta name="twitter:title" content={`${title} • Elrond Explorer`} />
+        <meta name="twitter:card" content="summary" />
+        {assets && assets.description && (
+          <meta name="twitter:description" content={assets.description} />
+        )}
+        {assets && assets.pngUrl && <meta name="twitter:image" content={assets.pngUrl} />}
 
-          <meta property="og:title" content={`${title} • Elrond Explorer`} />
-          {assets && assets.description && (
-            <meta property="og:description" content={assets.description} />
-          )}
-          {assets && assets.pngUrl && <meta property="og:image" content={assets.pngUrl} />}
-        </Helmet>
-      )}
+        <meta property="og:title" content={`${title} • Elrond Explorer`} />
+        {assets && assets.description && (
+          <meta property="og:description" content={assets.description} />
+        )}
+        {assets && assets.pngUrl && <meta property="og:image" content={assets.pngUrl} />}
+      </Helmet>
       <div ref={ref}>
         <div className="token-details-card row mb-spacer">
           <div className="col-12 col-lg-6 mb-spacer mb-lg-0">
@@ -81,7 +78,7 @@ const TokenDetailsCard = () => {
                 </div>
               </div>
               <div className="card-body p-0">
-                <div className="container-fluid">
+                <dl className="container-fluid">
                   <SmallDetailItem title="Token">{identifier}</SmallDetailItem>
 
                   <SmallDetailItem title="Supply">
@@ -108,7 +105,7 @@ const TokenDetailsCard = () => {
                       <PropertyPill name={'Not Paused'} active={!isPaused} />
                     </div>
                   </SmallDetailItem>
-                </div>
+                </dl>
               </div>
             </div>
           </div>
@@ -120,7 +117,7 @@ const TokenDetailsCard = () => {
                 </div>
               </div>
               <div className="card-body p-0">
-                <div className="container-fluid">
+                <dl className="container-fluid">
                   <SmallDetailItem title="Owner">
                     <div className="d-flex">
                       <NetworkLink to={urlBuilder.accountDetails(owner)} className="trim-wrapper">
@@ -149,14 +146,14 @@ const TokenDetailsCard = () => {
                   </SmallDetailItem>
                   <SmallDetailItem title="Description">
                     {assets && assets.description ? (
-                      <div className="token-description" title={assets.description}>
+                      <h2 className="token-description h6 mb-0" title={assets.description}>
                         {assets.description}
-                      </div>
+                      </h2>
                     ) : (
                       <span className="text-secondary">N/A</span>
                     )}
                   </SmallDetailItem>
-                </div>
+                </dl>
               </div>
             </div>
           </div>
