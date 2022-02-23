@@ -281,7 +281,12 @@ export interface TransactionType {
   scamInfo?: ScamInfoType;
 }
 
-export interface UITransactionType extends TransactionType {
+export interface TransferType extends TransactionType {
+  type?: 'Transaction' | 'SmartContractResult';
+  originalTxHash?: string;
+}
+
+export interface UITransactionType extends TransferType {
   isNew?: boolean; // UI flag
   tokenValue?: string;
   tokenIdentifier?: string;

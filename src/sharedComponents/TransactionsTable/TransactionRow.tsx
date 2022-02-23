@@ -22,6 +22,23 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
   const directionOut = address === transaction.sender;
   const directionIn = address === receiver;
   const directionSelf = directionOut && directionIn;
+  const isScResult = transaction?.type === 'SmartContractResult';
+
+  let direction = '';
+  switch (true) {
+    case isScResult:
+      direction = 'Internal';
+      break;
+    case directionSelf:
+      direction = 'Self';
+      break;
+    case directionOut:
+      direction = 'Out';
+      break;
+    case directionIn:
+      direction = 'In';
+      break;
+  }
 
   return (
     <tr className={`animated-row trim-size-sm ${transaction.isNew ? 'new' : ''}`}>
@@ -29,7 +46,11 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
         <div className="d-flex align-items-center">
           <TransactionIcon transaction={transaction} />
           <NetworkLink
-            to={`/transactions/${transaction.txHash}`}
+            to={`/transactions/${
+              transaction.originalTxHash
+                ? `${transaction.originalTxHash}#${transaction.txHash}`
+                : transaction.txHash
+            }`}
             data-testid="transactionLink"
             className="trim-wrapper"
           >
@@ -82,17 +103,8 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
       {directionCol === true && (
         <td>
           <div className="d-flex">
-            <span
-              className={`direction-badge ${directionSelf ? 'self' : directionOut ? 'out' : 'in'}`}
-            >
-              {directionSelf ? (
-                <>SELF</>
-              ) : (
-                <>
-                  {directionOut && <>OUT</>}
-                  {directionIn && <>IN</>}
-                </>
-              )}
+            <span className={`direction-badge ${direction.toLowerCase()}`}>
+              {direction.toUpperCase()}
             </span>
           </div>
         </td>
