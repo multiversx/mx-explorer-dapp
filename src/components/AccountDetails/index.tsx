@@ -6,12 +6,18 @@ import { TransactionType } from 'sharedComponents/TransactionsTable';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
-import { useSize } from 'helpers';
+import { useSize, useIsTestnet } from 'helpers';
 import AccountTabs from './AccountLayout/AccountTabs';
 
+interface TransactionsResponseType {
+  data?: any;
+  success: boolean;
+}
+
 const AccountDetails = () => {
+  const isTestnet = useIsTestnet();
   const ref = React.useRef(null);
-  const { getTransactions } = adapter();
+  const { getTransactions, getAccountTransfers } = adapter();
   const { size, firstPageTicker } = useSize();
   const { activeNetworkId, accountDetails } = useGlobalState();
   const { hash: address } = useParams() as any;
@@ -20,32 +26,41 @@ const AccountDetails = () => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
 
-  const fetchTransactions = () => {
-    getTransactions({
-      size,
-      address,
-      withScResults: true,
-    }).then((transactionsData) => {
-      const { data, success } = transactionsData;
-      if (ref.current !== null) {
-        if (success) {
-          const existingHashes = transactions.map((b) => b.txHash);
-          const newTransactions = data.map((transaction: TransactionType) => ({
-            ...transaction,
-            isNew: !existingHashes.includes(transaction.txHash),
-          }));
+  const processTransactions = (transactionsData: TransactionsResponseType) => {
+    const { data, success } = transactionsData;
+    if (ref.current !== null) {
+      if (success) {
+        const existingHashes = transactions.map((b) => b.txHash);
+        const newTransactions = data.map((transaction: TransactionType) => ({
+          ...transaction,
+          isNew: !existingHashes.includes(transaction.txHash),
+        }));
 
-          setTransactions(newTransactions);
-          const pending = data.some(
-            (tx: TransactionType) => tx.status.toLowerCase() === txStatus.pending.toLowerCase()
-          );
-          setHasPendingTransaction(pending);
-          setDataReady(true);
-        } else if (transactions.length === 0) {
-          setDataReady(false);
-        }
+        setTransactions(newTransactions);
+        const pending = data.some(
+          (tx: TransactionType) => tx.status.toLowerCase() === txStatus.pending.toLowerCase()
+        );
+        setHasPendingTransaction(pending);
+        setDataReady(true);
+      } else if (transactions.length === 0) {
+        setDataReady(false);
       }
-    });
+    }
+  };
+
+  const fetchTransactions = () => {
+    if (isTestnet) {
+      getAccountTransfers({
+        size,
+        address,
+      }).then((transactionsData) => processTransactions(transactionsData));
+    } else {
+      getTransactions({
+        size,
+        address,
+        withScResults: true,
+      }).then((transactionsData) => processTransactions(transactionsData));
+    }
   };
 
   React.useEffect(() => {

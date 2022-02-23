@@ -164,6 +164,11 @@
     color: $secondary;
     border: 1px solid rgba($secondary, 0.2);
   }
+
+  &.internal {
+    color: $muted;
+    border: 1px solid rgba($muted, 0.2);
+  }
 }
 
 .mr-lg-n1rem {

@@ -203,6 +203,18 @@ export default function useAdapter() {
         },
       }),
 
+    getAccountTransfers: ({ address, size }: { address: string; size: number }) =>
+      provider({
+        url: `/accounts/${address}/transfers`,
+        params: {
+          from: (size - 1) * 25,
+          size: 25,
+        },
+      }),
+
+    getAccountTransfersCount: (address: string) =>
+      provider({ url: `/accounts/${address}/transfers/count` }),
+
     getAccountScResults: ({ address, size }: { address: string; size: number }) =>
       provider({
         url: `/accounts/${address}/sc-results`,
