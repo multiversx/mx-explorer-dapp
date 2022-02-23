@@ -2,7 +2,7 @@ import React from 'react';
 import { faArrowRight } from '@fortawesome/pro-regular-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { addressIsBech32, urlBuilder } from 'helpers';
-import { UITransactionType } from 'helpers/types';
+import { UITransactionType, TransferTypeEnum } from 'helpers/types';
 import { ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 import TransactionIcon from '../TransactionsTable/TransactionIcon';
 import TransactionMethod from '../TransactionsTable/TransactionMethod';
@@ -22,7 +22,7 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
   const directionOut = address === transaction.sender;
   const directionIn = address === receiver;
   const directionSelf = directionOut && directionIn;
-  const isScResult = transaction?.type === 'SmartContractResult';
+  const isScResult = transaction?.type === TransferTypeEnum.SmartContractResult;
 
   let direction = '';
   switch (true) {
