@@ -1,6 +1,7 @@
 import { InferType } from 'yup';
 import config, { defaultNetwork, schema, adapterSchema, networkLink } from './config';
-import { storage, types } from 'helpers';
+import { storage } from 'helpers';
+import { AccountType, TokenType, NetworkIdType } from 'helpers/types';
 
 export type NetworkLinkType = InferType<typeof networkLink>;
 export type NetworkType = InferType<typeof schema>;
@@ -111,8 +112,8 @@ export interface StateType {
   theme: string;
   shards: ShardType[];
   globalStake: GlobalStakeType | undefined;
-  accountDetails: types.AccountType;
-  tokenDetails: types.TokenType;
+  accountDetails: AccountType;
+  tokenDetails: TokenType;
   usd: number | undefined;
   urlBlacklist?: { [key: string]: string };
   notifications: NotificationType[];
@@ -169,7 +170,7 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
 
 const getTheme = (): StateType['theme'] => {
   const defaultNetwork = config.networks.find((network) => network.default);
-  const isMainnet = defaultNetwork && defaultNetwork.id === 'mainnet';
+  const isMainnet = defaultNetwork && defaultNetwork.id === NetworkIdType.mainnet;
 
   let theme = defaultNetwork && defaultNetwork.theme ? defaultNetwork.theme : 'light';
 

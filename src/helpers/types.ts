@@ -1,5 +1,11 @@
 import { IdentityType } from 'context/state';
 
+export enum NetworkIdType {
+  mainnet = 'mainnet',
+  testnet = 'testnet',
+  devnet = 'devnet',
+}
+
 export interface ScamInfoType {
   type: string;
   info: string;
