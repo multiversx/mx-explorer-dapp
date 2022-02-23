@@ -23,7 +23,7 @@ const AccountDetails = () => {
   const { hash: address } = useParams() as any;
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [isDataReady, setIsDataReady] = React.useState<boolean | undefined>();
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
 
   const processTransactions = (transactionsData: TransactionsResponseType) => {
@@ -41,9 +41,9 @@ const AccountDetails = () => {
           (tx: TransactionType) => tx.status.toLowerCase() === txStatus.pending.toLowerCase()
         );
         setHasPendingTransaction(pending);
-        setDataReady(true);
+        setIsDataReady(true);
       } else if (transactions.length === 0) {
-        setDataReady(false);
+        setIsDataReady(false);
       }
     }
   };
@@ -84,8 +84,8 @@ const AccountDetails = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountDetails.txCount, accountDetails.balance]);
 
-  const loading = dataReady === undefined;
-  const showTransactions = dataReady === true && transactions.length > 0;
+  const loading = isDataReady === undefined;
+  const showTransactions = isDataReady === true && transactions.length > 0;
 
   return (
     <div ref={ref}>
@@ -107,9 +107,9 @@ const AccountDetails = () => {
                   <AccountTabs />
                 </div>
               </div>
-              {dataReady === undefined && <Loader />}
-              {dataReady === false && <FailedTransactions />}
-              {dataReady === true && transactions.length === 0 && <NoTransactions />}
+              {isDataReady === undefined && <Loader />}
+              {isDataReady === false && <FailedTransactions />}
+              {isDataReady === true && transactions.length === 0 && <NoTransactions />}
             </div>
           )}
         </div>
