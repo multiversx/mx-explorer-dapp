@@ -282,8 +282,8 @@ export interface TransactionType {
 }
 
 export enum TransferTypeEnum {
-  transaction = 'Transaction',
-  smartContractResult = 'SmartContractResult',
+  Transaction = 'Transaction',
+  SmartContractResult = 'SmartContractResult',
 }
 export interface TransferType extends TransactionType {
   type?: TransferTypeEnum;
