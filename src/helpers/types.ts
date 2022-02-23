@@ -281,8 +281,12 @@ export interface TransactionType {
   scamInfo?: ScamInfoType;
 }
 
+export enum TransferTypeEnum {
+  transaction = 'Transaction',
+  smartContractResult = 'SmartContractResult',
+}
 export interface TransferType extends TransactionType {
-  type?: 'Transaction' | 'SmartContractResult';
+  type?: TransferTypeEnum;
   originalTxHash?: string;
 }
 
