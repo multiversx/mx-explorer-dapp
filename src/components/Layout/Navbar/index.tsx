@@ -10,6 +10,7 @@ import NavLinks from './NavLinks';
 import Logo from './Logo';
 import { ReactComponent as Sun } from 'assets/images/sun.svg';
 import { useGlobalState, useGlobalDispatch } from 'context';
+import { NetworkIdType } from 'helpers/types';
 
 export default function Navbar() {
   const { activeNetwork, theme } = useGlobalState();
@@ -56,7 +57,7 @@ export default function Navbar() {
             </div>
             <div>
               <ul className="flex-row navbar-nav">
-                {activeNetwork.id === 'mainnet' && (
+                {activeNetwork.id === NetworkIdType.mainnet && (
                   <li className="nav-item d-flex align-items-center">
                     <a
                       href="/#"
