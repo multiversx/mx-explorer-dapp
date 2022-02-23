@@ -104,9 +104,12 @@ const DataDecode = ({
             return part;
           } else {
             const hexValidationWarnings = getHexValidationWarnings(part);
-            setValidationWarnings(
-              Array.from(new Set([...validationWarnings, ...hexValidationWarnings]))
-            );
+            if (hexValidationWarnings.length) {
+              setValidationWarnings(
+                Array.from(new Set([...validationWarnings, ...hexValidationWarnings]))
+              );
+            }
+
             return decode(part, activeKey, transactionTokens);
           }
         });
