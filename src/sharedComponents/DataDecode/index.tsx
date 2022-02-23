@@ -164,15 +164,22 @@ const DataDecode = ({
             <Dropdown.Item eventKey="text" className={`${activeKey === 'text' ? 'active' : ''}`}>
               Text
             </Dropdown.Item>
-            <Dropdown.Item
-              eventKey="decimal"
-              className={`${activeKey === 'decimal' ? 'active' : ''}`}
-            >
-              Decimal
-            </Dropdown.Item>
-            <Dropdown.Item eventKey="smart" className={`${activeKey === 'smart' ? 'active' : ''}`}>
-              Smart
-            </Dropdown.Item>
+            {value.length < 60000 && (
+              <>
+                <Dropdown.Item
+                  eventKey="decimal"
+                  className={`${activeKey === 'decimal' ? 'active' : ''}`}
+                >
+                  Decimal
+                </Dropdown.Item>
+                <Dropdown.Item
+                  eventKey="smart"
+                  className={`${activeKey === 'smart' ? 'active' : ''}`}
+                >
+                  Smart
+                </Dropdown.Item>
+              </>
+            )}
           </Dropdown.Menu>
         </Dropdown>
       )}
