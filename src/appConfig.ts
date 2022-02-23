@@ -10,4 +10,4 @@ export const decimals = 2;
 export const numInitCharactersForScAddress = 13;
 export const stakePerValidator = 2500000;
 export const extrasApi = '***REMOVED***';
-export const displayedDataLength: number = 30000;
+export const displayedDataLength: number = 1000000;
