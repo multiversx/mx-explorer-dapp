@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js';
 import { Dropdown } from 'react-bootstrap';
 import { addressIsBech32, bech32, isUtf8 } from 'helpers';
 import { TransactionTokensType } from 'helpers/types';
+import { decodeLimit } from 'appConfig';
 
 export enum DecodeMethodType {
   raw = 'raw',
@@ -180,7 +181,7 @@ const DataDecode = ({
             >
               Text
             </Dropdown.Item>
-            {value.length < 60000 && (
+            {value.length < decodeLimit && (
               <>
                 <Dropdown.Item
                   eventKey={DecodeMethodType.decimal}
