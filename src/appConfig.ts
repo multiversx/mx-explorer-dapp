@@ -11,4 +11,5 @@ export const numInitCharactersForScAddress = 13;
 export const stakePerValidator = 2500000;
 export const extrasApi = '***REMOVED***';
 export const displayedDataLength: number = 1000000;
+export const decodeLimit: number = 60000;
 export const pageSize: number = 25;
