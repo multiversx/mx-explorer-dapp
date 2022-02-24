@@ -26,7 +26,7 @@ const AccountDetails = () => {
   const [isDataReady, setIsDataReady] = React.useState<boolean | undefined>();
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
 
-  const processTransactions = (transactionsData: TransactionsResponseType) => {
+  const handleTransactions = (transactionsData: TransactionsResponseType) => {
     const { data, success } = transactionsData;
     if (ref.current !== null) {
       if (success) {
@@ -53,13 +53,13 @@ const AccountDetails = () => {
       getAccountTransfers({
         size,
         address,
-      }).then((transactionsData) => processTransactions(transactionsData));
+      }).then((transactionsData) => handleTransactions(transactionsData));
     } else {
       getTransactions({
         size,
         address,
         withScResults: true,
-      }).then((transactionsData) => processTransactions(transactionsData));
+      }).then((transactionsData) => handleTransactions(transactionsData));
     }
   };
 
