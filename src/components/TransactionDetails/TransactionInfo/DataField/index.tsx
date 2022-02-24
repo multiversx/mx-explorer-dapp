@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Anchorme } from 'react-anchorme';
 import { DetailItem, ModalLink, DataDecode } from 'sharedComponents';
+import { DecodeMethodType } from 'sharedComponents/DataDecode';
 import { truncate, useScamFlag } from 'helpers';
 import { ScamInfoType } from 'helpers/types';
 import { displayedDataLength } from 'appConfig';
@@ -10,9 +11,9 @@ const DataField = ({ data, scamInfo }: { data?: string; scamInfo?: ScamInfoType 
   const { hash, pathname } = useLocation();
   const hashDecodeMethod = hash.replace('#', '');
   const initialDecodeMethod =
-    hashDecodeMethod && ['raw', 'text', 'decimal', 'smart'].includes(hashDecodeMethod)
+    hashDecodeMethod && Object.values<string>(DecodeMethodType).includes(hashDecodeMethod)
       ? hashDecodeMethod
-      : 'raw';
+      : DecodeMethodType.raw;
   const [decodeMethod, setDecodeMethod] = React.useState<string>(hashDecodeMethod);
   const scamFlag = useScamFlag();
   const [showData, setShowData] = React.useState(false);
@@ -26,7 +27,7 @@ const DataField = ({ data, scamInfo }: { data?: string; scamInfo?: ScamInfoType 
   const { stringWithLinks, output, found } = scamFlag(dataString, scamInfo);
 
   React.useEffect(() => {
-    if (decodeMethod && decodeMethod !== 'raw') {
+    if (decodeMethod && decodeMethod !== DecodeMethodType.raw) {
       window.history.replaceState(null, '', `${pathname}#${decodeMethod}`);
     }
   }, [decodeMethod, pathname]);
