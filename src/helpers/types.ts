@@ -1,5 +1,11 @@
 import { IdentityType } from 'context/state';
 
+export enum NetworkIdType {
+  mainnet = 'mainnet',
+  testnet = 'testnet',
+  devnet = 'devnet',
+}
+
 export interface ScamInfoType {
   type: string;
   info: string;
@@ -281,7 +287,16 @@ export interface TransactionType {
   scamInfo?: ScamInfoType;
 }
 
-export interface UITransactionType extends TransactionType {
+export enum TransferTypeEnum {
+  Transaction = 'Transaction',
+  SmartContractResult = 'SmartContractResult',
+}
+export interface TransferType extends TransactionType {
+  type?: TransferTypeEnum;
+  originalTxHash?: string;
+}
+
+export interface UITransactionType extends TransferType {
   isNew?: boolean; // UI flag
   tokenValue?: string;
   tokenIdentifier?: string;

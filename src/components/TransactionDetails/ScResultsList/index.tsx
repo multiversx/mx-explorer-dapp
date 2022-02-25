@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchange, faSearch } from '@fortawesome/pro-regular-svg-icons';
 import { Denominate, CopyButton, Trim, NetworkLink, DataDecode } from 'sharedComponents';
+import { DecodeMethodType } from 'sharedComponents/DataDecode';
 import { ResultType, TransactionTokensType } from 'helpers/types';
 import { transactionsRoutes } from 'routes';
 import decodePart from './decodePart';
@@ -19,11 +20,14 @@ const ScResultsList = ({
   const formattedHash = hash
     .substring(0, hash.indexOf('/') > 0 ? hash.indexOf('/') : hash.length)
     .replace('#', '');
-  const initialDecodeMethod = hash.indexOf('/') > 0 ? hash.substring(hash.indexOf('/')) : 'raw';
+
+  const initialDecodeMethod =
+    hash.indexOf('/') > 0 ? hash.substring(hash.indexOf('/') + 1) : DecodeMethodType.raw;
+
   const [decodeMethod, setDecodeMethod] = React.useState<string>(
-    initialDecodeMethod && ['raw', 'text', 'decimal', 'smart'].includes(initialDecodeMethod)
+    initialDecodeMethod && Object.values<string>(DecodeMethodType).includes(initialDecodeMethod)
       ? initialDecodeMethod
-      : 'raw'
+      : DecodeMethodType.raw
   );
 
   const decodeData = (data: string) => {
