@@ -226,9 +226,36 @@ export interface UnwrapperType {
   providerAvatar?: string;
 }
 
+export enum TransactionOperationActionType {
+  none = 'none',
+  transfer = 'transfer',
+  burn = 'burn',
+  addQuantity = 'addQuantity',
+  create = 'create',
+  multiTransfer = 'multiTransfer',
+  localMint = 'localMint',
+  localBurn = 'localBurn',
+  wipe = 'wipe',
+  freeze = 'freeze',
+  writeLog = 'writeLog',
+  signalError = 'signalError',
+
+  // to be deprecated ?
+  ESDTLocalMint = 'ESDTLocalMint',
+  ESDTLocalBurn = 'ESDTLocalBurn',
+}
+
+export enum TransactionOperationType {
+  none = 'none',
+  nft = 'nft',
+  esdt = 'esdt',
+  error = 'error',
+  log = 'log',
+}
+
 export interface OperationType {
-  action: string;
-  type: string;
+  action: TransactionOperationActionType | string;
+  type: TransactionOperationType | string;
   collection?: string;
   identifier: string;
   sender: string;
