@@ -1,7 +1,13 @@
 import * as React from 'react';
 import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { addressIsBech32, urlBuilder, types } from 'helpers';
+import { addressIsBech32, urlBuilder } from 'helpers';
+import {
+  OperationType,
+  TransactionTokensType,
+  TransactionOperationActionType,
+  TransactionOperationType,
+} from 'helpers/types';
 import { NetworkLink, Trim, CopyButton, TokenBlock, NftBlock } from 'sharedComponents';
 
 const OperationSender = ({
@@ -9,7 +15,7 @@ const OperationSender = ({
   action,
   isFullSize,
 }: {
-  operation: types.OperationType;
+  operation: OperationType;
   action?: string;
   isFullSize?: boolean;
 }) => {
@@ -38,7 +44,7 @@ const OperationReceiver = ({
   action,
   isFullSize,
 }: {
-  operation: types.OperationType;
+  operation: OperationType;
   action?: string;
   isFullSize?: boolean;
 }) => {
@@ -62,37 +68,37 @@ const OperationReceiver = ({
   ) : null;
 };
 
-const OperationText = ({ operation }: { operation: types.OperationType }) => {
+const OperationText = ({ operation }: { operation: OperationType }) => {
   switch (operation.action) {
-    case 'create':
-    case 'localMint':
-    case 'ESDTLocalMint':
+    case TransactionOperationActionType.create:
+    case TransactionOperationActionType.localMint:
+    case TransactionOperationActionType.ESDTLocalMint:
       return <OperationSender operation={operation} action="Mint by" />;
-    case 'addQuantity':
+    case TransactionOperationActionType.addQuantity:
       return <OperationSender operation={operation} action="Add quantity by" />;
-    case 'burn':
-    case 'localBurn':
-    case 'ESDTLocalBurn':
+    case TransactionOperationActionType.burn:
+    case TransactionOperationActionType.localBurn:
+    case TransactionOperationActionType.ESDTLocalBurn:
       return <OperationSender operation={operation} action="Burn by" />;
-    case 'wipe':
+    case TransactionOperationActionType.wipe:
       return <OperationReceiver operation={operation} action="Wipe from" />;
-    case 'multiTransfer':
+    case TransactionOperationActionType.multiTransfer:
       return (
         <>
           <OperationSender operation={operation} action="Multi transfer from" />{' '}
           <OperationReceiver operation={operation} />
         </>
       );
-    case 'transfer':
+    case TransactionOperationActionType.transfer:
       return (
         <>
           <OperationSender operation={operation} action="Transfer from" />{' '}
           <OperationReceiver operation={operation} />
         </>
       );
-    case 'writeLog':
+    case TransactionOperationActionType.writeLog:
       return <OperationSender operation={operation} action="Write log by" isFullSize />;
-    case 'signalError':
+    case TransactionOperationActionType.signalError:
       return <OperationSender operation={operation} action="Signal error by" isFullSize />;
     default:
       return (
@@ -108,7 +114,7 @@ const DetailedItem = ({
   operation,
 }: {
   children?: React.ReactNode;
-  operation: types.OperationType;
+  operation: OperationType;
 }) => {
   return (
     <div className="detailed-item d-flex row mb-3 mb-xl-2">
@@ -126,21 +132,21 @@ const OperationsList = ({
   operations,
   transactionTokens,
 }: {
-  operations: types.OperationType[];
-  transactionTokens?: types.TransactionTokensType;
+  operations: OperationType[];
+  transactionTokens?: TransactionTokensType;
 }) => {
   return (
     <div className="operations-list d-flex flex-column mb-n2">
-      {operations.map((operation: types.OperationType, i) => {
+      {operations.map((operation: OperationType, index) => {
         switch (operation.type) {
-          case 'nft':
+          case TransactionOperationType.nft:
             if (operation.value !== undefined && operation.identifier !== undefined) {
               const operationNft = transactionTokens?.nfts.filter((token) => {
                 return token.identifier === operation.identifier;
               });
 
               return operationNft?.length ? (
-                <DetailedItem operation={operation} key={i}>
+                <DetailedItem operation={operation} key={index}>
                   <>
                     {operationNft[0].type !== 'NonFungibleESDT' && (
                       <div className="mr-2">Value</div>
@@ -152,13 +158,13 @@ const OperationsList = ({
             }
             return null;
 
-          case 'esdt':
+          case TransactionOperationType.esdt:
             if (operation.value !== undefined && operation.identifier !== undefined) {
               const operationToken = transactionTokens?.esdts.filter((token) => {
                 return token.identifier === operation.identifier;
               });
               return operationToken?.length ? (
-                <DetailedItem operation={operation} key={i}>
+                <DetailedItem operation={operation} key={index}>
                   <>
                     <div className="mr-2">Value</div>
                     <TokenBlock operationToken={operationToken[0]} value={operation.value} />
@@ -168,12 +174,13 @@ const OperationsList = ({
             }
             return null;
 
-          case 'log':
-          case 'error':
-            return <DetailedItem operation={operation} key={i}></DetailedItem>;
-        }
+          case TransactionOperationType.log:
+          case TransactionOperationType.error:
+            return <DetailedItem operation={operation} key={index}></DetailedItem>;
 
-        return null;
+          default:
+            return null;
+        }
       })}
     </div>
   );
