@@ -33,6 +33,8 @@ import useNotifications from './useNotifications';
 import useCheckVersion from './useCheckVersion';
 import getTransactionMethod from './getTransactionMethod';
 import capitalizeFirstLetter from './capitalizeFirstLetter';
+import getScResultsMessages from './getScResultsMessages';
+import getOperationsMessages from './getOperationsMessages';
 
 export {
   truncate,
@@ -70,4 +72,6 @@ export {
   useCheckVersion,
   getTransactionMethod,
   capitalizeFirstLetter,
+  getScResultsMessages,
+  getOperationsMessages,
 };

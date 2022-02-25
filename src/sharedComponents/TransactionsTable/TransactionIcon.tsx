@@ -5,31 +5,20 @@ import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { faHourglass } from '@fortawesome/pro-regular-svg-icons/faHourglass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { capitalizeFirstLetter } from 'helpers';
-import { UITransactionType, TransactionType } from 'helpers/types';
+import { capitalizeFirstLetter, getScResultsMessages, getOperationsMessages } from 'helpers';
+import { UITransactionType } from 'helpers/types';
 interface TransactionIconType {
   transaction: UITransactionType;
 }
-
-const getScResultsMessages = (transaction: TransactionType) => {
-  const messages: string[] = [];
-
-  if (transaction.results) {
-    transaction.results.forEach((result) => {
-      if (result.returnMessage) {
-        messages.push(result.returnMessage);
-      }
-    });
-  }
-
-  return messages;
-};
 
 const TransactionIcon = ({ transaction }: TransactionIconType) => {
   const statusIs = (compareTo: string) =>
     transaction.status.toLowerCase() === compareTo.toLowerCase();
 
-  const scResultsMessages = getScResultsMessages(transaction);
+  const transactionMessages = new Set([
+    ...getScResultsMessages(transaction),
+    ...getOperationsMessages(transaction),
+  ]);
 
   const failed = statusIs(txStatus.failed) || statusIs(txStatus.fail);
   const invalid = statusIs(txStatus.notExecuted) || statusIs(txStatus.invalid);
@@ -48,10 +37,10 @@ const TransactionIcon = ({ transaction }: TransactionIconType) => {
         overlay={(props: any) => (
           <Tooltip {...props} show={props.show.toString()}>
             {capitalizeFirstLetter(transaction.status)}
-            {failed && scResultsMessages.length > 0 && (
+            {failed && transactionMessages && (
               <>
                 :{' '}
-                {scResultsMessages.map((message, index) => (
+                {Array.from(transactionMessages).map((message, index) => (
                   <span>
                     {capitalizeFirstLetter(message)}
                     {index > 0 ? ', ' : ''}

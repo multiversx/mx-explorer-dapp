@@ -234,6 +234,8 @@ export interface OperationType {
   sender: string;
   receiver: string;
   value: string;
+  data?: string;
+  message?: string;
 }
 
 export interface ResultType {
