@@ -59,6 +59,7 @@ const AccountDetails = () => {
         size,
         address,
         withScResults: true,
+        withOperations: true,
       }).then((transactionsData) => handleTransactions(transactionsData));
     }
   };
