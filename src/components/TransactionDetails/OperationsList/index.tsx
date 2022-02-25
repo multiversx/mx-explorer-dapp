@@ -8,7 +8,7 @@ import {
   TransactionOperationActionType,
   TransactionOperationType,
 } from 'helpers/types';
-import { NetworkLink, Trim, CopyButton, TokenBlock, NftBlock } from 'sharedComponents';
+import { NetworkLink, Trim, CopyButton, TokenBlock, NftBlock, Denominate } from 'sharedComponents';
 
 const OperationBlock = ({
   address,
@@ -112,39 +112,42 @@ const OperationsList = ({
       {operations.map((operation: OperationType, index) => {
         switch (operation.type) {
           case TransactionOperationType.nft:
-            if (operation.value !== null && operation.identifier !== null) {
-              const operationNft = transactionTokens?.nfts.filter((token) => {
-                return token.identifier === operation.identifier;
-              });
+            const operationNft = transactionTokens?.nfts.filter((token) => {
+              return token.identifier === operation.identifier;
+            });
 
-              return operationNft?.length ? (
-                <DetailedItem operation={operation} key={index}>
-                  <>
-                    {operationNft[0].type !== 'NonFungibleESDT' && (
-                      <div className="mr-2">Value</div>
-                    )}
-                    <NftBlock operationToken={operationNft[0]} value={operation.value} />
-                  </>
-                </DetailedItem>
-              ) : null;
-            }
-            return null;
+            return operationNft?.length ? (
+              <DetailedItem operation={operation} key={index}>
+                <>
+                  {operationNft[0].type !== 'NonFungibleESDT' && <div className="mr-2">Value</div>}
+                  <NftBlock operationToken={operationNft[0]} value={operation.value} />
+                </>
+              </DetailedItem>
+            ) : null;
 
           case TransactionOperationType.esdt:
-            if (operation.value !== null && operation.identifier !== null) {
-              const operationToken = transactionTokens?.esdts.filter((token) => {
-                return token.identifier === operation.identifier;
-              });
-              return operationToken?.length ? (
-                <DetailedItem operation={operation} key={index}>
-                  <>
-                    <div className="mr-2">Value</div>
-                    <TokenBlock operationToken={operationToken[0]} value={operation.value} />
-                  </>
-                </DetailedItem>
-              ) : null;
-            }
-            return null;
+            const operationToken = transactionTokens?.esdts.filter((token) => {
+              return token.identifier === operation.identifier;
+            });
+
+            return operationToken?.length ? (
+              <DetailedItem operation={operation} key={index}>
+                <>
+                  <div className="mr-2">Value</div>
+                  <TokenBlock operationToken={operationToken[0]} value={operation.value} />
+                </>
+              </DetailedItem>
+            ) : null;
+
+          case TransactionOperationType.egld:
+            return (
+              <DetailedItem operation={operation} key={index}>
+                <>
+                  <div className="mr-2">Value</div>
+                  <Denominate value={operation.value} showLastNonZeroDecimal={true} />
+                </>
+              </DetailedItem>
+            );
 
           default:
             return null;
