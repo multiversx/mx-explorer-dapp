@@ -249,6 +249,7 @@ export enum TransactionOperationType {
   none = 'none',
   nft = 'nft',
   esdt = 'esdt',
+  egld = 'egld',
   error = 'error',
   log = 'log',
 }
