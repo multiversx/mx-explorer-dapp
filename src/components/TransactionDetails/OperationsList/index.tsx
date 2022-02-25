@@ -140,7 +140,7 @@ const OperationsList = ({
       {operations.map((operation: OperationType, index) => {
         switch (operation.type) {
           case TransactionOperationType.nft:
-            if (operation.value !== undefined && operation.identifier !== undefined) {
+            if (operation.value !== null && operation.identifier !== null) {
               const operationNft = transactionTokens?.nfts.filter((token) => {
                 return token.identifier === operation.identifier;
               });
@@ -159,7 +159,7 @@ const OperationsList = ({
             return null;
 
           case TransactionOperationType.esdt:
-            if (operation.value !== undefined && operation.identifier !== undefined) {
+            if (operation.value !== null && operation.identifier !== null) {
               const operationToken = transactionTokens?.esdts.filter((token) => {
                 return token.identifier === operation.identifier;
               });
