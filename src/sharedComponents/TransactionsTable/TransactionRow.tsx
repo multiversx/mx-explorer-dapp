@@ -2,7 +2,7 @@ import React from 'react';
 import { faArrowRight } from '@fortawesome/pro-regular-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { addressIsBech32, urlBuilder } from 'helpers';
-import { UITransactionType } from 'helpers/types';
+import { UITransactionType, TransferTypeEnum } from 'helpers/types';
 import { ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
 import TransactionIcon from '../TransactionsTable/TransactionIcon';
 import TransactionMethod from '../TransactionsTable/TransactionMethod';
@@ -22,6 +22,23 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
   const directionOut = address === transaction.sender;
   const directionIn = address === receiver;
   const directionSelf = directionOut && directionIn;
+  const isScResult = transaction?.type === TransferTypeEnum.SmartContractResult;
+
+  let direction = '';
+  switch (true) {
+    case isScResult:
+      direction = 'Internal';
+      break;
+    case directionSelf:
+      direction = 'Self';
+      break;
+    case directionOut:
+      direction = 'Out';
+      break;
+    case directionIn:
+      direction = 'In';
+      break;
+  }
 
   return (
     <tr className={`animated-row trim-size-sm ${transaction.isNew ? 'new' : ''}`}>
@@ -29,7 +46,11 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
         <div className="d-flex align-items-center">
           <TransactionIcon transaction={transaction} />
           <NetworkLink
-            to={`/transactions/${transaction.txHash}`}
+            to={`/transactions/${
+              transaction.originalTxHash
+                ? `${transaction.originalTxHash}#${transaction.txHash}`
+                : transaction.txHash
+            }`}
             data-testid="transactionLink"
             className="trim-wrapper"
           >
@@ -82,17 +103,8 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
       {directionCol === true && (
         <td>
           <div className="d-flex">
-            <span
-              className={`direction-badge ${directionSelf ? 'self' : directionOut ? 'out' : 'in'}`}
-            >
-              {directionSelf ? (
-                <>SELF</>
-              ) : (
-                <>
-                  {directionOut && <>OUT</>}
-                  {directionIn && <>IN</>}
-                </>
-              )}
+            <span className={`direction-badge ${direction.toLowerCase()}`}>
+              {direction.toUpperCase()}
             </span>
           </div>
         </td>

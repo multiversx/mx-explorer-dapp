@@ -1,3 +1,5 @@
+import { pageSize } from 'appConfig';
+
 export interface GetNodesType {
   search?: string;
   issues?: string;
@@ -84,8 +86,8 @@ export function getTransactionsParams({
   withScResults,
 }: TransactionsParamsType) {
   const params: ProviderPropsType['params'] = {
-    from: (size - 1) * 25,
-    size: 25,
+    from: (size - 1) * pageSize,
+    size: pageSize,
     ...getAccountParams(address),
     ...(senderShard !== undefined ? { senderShard } : {}),
     ...(receiverShard !== undefined ? { receiverShard } : {}),
@@ -136,7 +138,11 @@ export function getNodeParams({
     ...(provider !== undefined ? { provider } : {}),
     ...(sort !== undefined ? { sort } : {}),
     ...(order !== undefined ? { order } : {}),
-    ...(size !== undefined ? (pagination ? { from: (size - 1) * 25, size: 25 } : { size }) : {}),
+    ...(size !== undefined
+      ? pagination
+        ? { from: (size - 1) * pageSize, size: pageSize }
+        : { size }
+      : {}),
   };
 
   return params;
@@ -154,7 +160,7 @@ export function getTokensParam({ search, size, type, identifiers }: GetTokensTyp
     ...(search !== undefined ? { search } : {}),
     ...(type !== undefined ? { type } : {}),
     ...(identifiers !== undefined ? { identifiers } : {}),
-    ...(size !== undefined ? { from: (size - 1) * 25, size: 25 } : {}),
+    ...(size !== undefined ? { from: (size - 1) * pageSize, size: pageSize } : {}),
   };
 
   return params;
@@ -174,7 +180,7 @@ export function getNftsParam({
     ...(type !== undefined ? { type } : {}),
     ...(identifiers !== undefined ? { identifiers } : {}),
     ...(collections !== undefined ? { collections } : {}),
-    ...(size !== undefined ? { from: (size - 1) * 25, size: 25 } : {}),
+    ...(size !== undefined ? { from: (size - 1) * pageSize, size: pageSize } : {}),
     includeFlagged: true,
   };
 

@@ -24,7 +24,7 @@ const TxActionNft = ({
             <NftBadge type={token.type} className="mr-1 my-auto" />
           )}
           {!noValue && token.value && token.type !== NftEnumType.NonFungibleESDT && (
-            <div className="mr-1 text-truncate">
+            <div className={`mr-1 ${token.svgUrl ? 'text-truncate' : ''}`}>
               {token.decimals !== undefined ? (
                 <Denominate
                   value={token.value}

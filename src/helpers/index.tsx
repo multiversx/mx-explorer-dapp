@@ -16,6 +16,7 @@ import useURLSearchParams from './useURLSearchParams';
 import useSize from './useSize';
 import useMatchPath from './useMatchPath';
 import useIsMainnet from './useIsMainnet';
+import useIsTestnet from './useIsTestnet';
 import useNetworkPathname from './useNetworkPathname';
 import analytics from './analytics';
 import isContract from './isContract';
@@ -50,6 +51,7 @@ export {
   useSize,
   useMatchPath,
   useIsMainnet,
+  useIsTestnet,
   useNetworkPathname,
   types,
   analytics,

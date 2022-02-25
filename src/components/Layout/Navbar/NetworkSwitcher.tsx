@@ -4,8 +4,9 @@ import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { NetworkLinkType } from 'context/state';
+import { NetworkIdType } from 'helpers/types';
 
-const networksWithHttps = ['mainnet', 'devnet', 'testnet', 'testnet-azure-all-in-one-maiar'];
+const networksWithHttps = [...Object.values(NetworkIdType), 'testnet-azure-all-in-one-maiar'];
 
 const NetworkUrl = ({
   link,
@@ -19,7 +20,7 @@ const NetworkUrl = ({
   const { activeNetworkId } = useGlobalState();
 
   let internalUrl = `/${link.url}`;
-  if (process.env.NODE_ENV === 'production' && internal) {
+  if (internal) {
     const { protocol: currentProtocol, origin: currentOrigin } = window.location;
     const requiredProtocol = networksWithHttps.includes(link.id) ? 'https:' : 'http:';
     const newOrigin = currentOrigin.replace(currentProtocol, requiredProtocol);
