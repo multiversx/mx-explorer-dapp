@@ -176,7 +176,7 @@ const OperationsList = ({
 
           case TransactionOperationType.log:
           case TransactionOperationType.error:
-            return <DetailedItem operation={operation} key={index}></DetailedItem>;
+            return <DetailedItem operation={operation} key={index} />;
 
           default:
             return null;
