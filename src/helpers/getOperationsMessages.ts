@@ -1,15 +1,11 @@
 import { TransactionType } from 'helpers/types';
 
 export default function getOperationsMessages(transaction: TransactionType) {
-  const messages: string[] = [];
-
   if (transaction.operations) {
-    transaction.operations.forEach((operation) => {
-      if (operation.message) {
-        messages.push(operation.message);
-      }
-    });
+    const messages = transaction.operations.map((result) => result.message);
+
+    return messages.filter((messages): messages is string => Boolean(messages));
   }
 
-  return messages;
+  return [];
 }

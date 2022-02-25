@@ -1,15 +1,11 @@
 import { TransactionType } from 'helpers/types';
 
 export default function getScResultsMessages(transaction: TransactionType) {
-  const messages: string[] = [];
-
   if (transaction.results) {
-    transaction.results.forEach((result) => {
-      if (result.returnMessage) {
-        messages.push(result.returnMessage);
-      }
-    });
+    const messages = transaction.results.map((result) => result.returnMessage);
+
+    return messages.filter((messages): messages is string => Boolean(messages));
   }
 
-  return messages;
+  return [];
 }
