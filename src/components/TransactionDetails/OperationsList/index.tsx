@@ -7,12 +7,16 @@ import { NetworkLink, Trim, CopyButton, TokenBlock, NftBlock } from 'sharedCompo
 const OperationSender = ({
   operation,
   action,
+  isFullSize,
 }: {
   operation: types.OperationType;
   action?: string;
+  isFullSize?: boolean;
 }) => {
   return operation.sender ? (
-    <div className="col-lg-6 d-flex align-items-center col-xl-3 pr-xl-0">
+    <div
+      className={`d-flex align-items-center ${isFullSize ? 'col-12' : 'col-lg-6 col-xl-3 pr-xl-0'}`}
+    >
       <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary mr-2" />
       <div className="mr-2 text-nowrap">{action ? action : 'From'}</div>
       {addressIsBech32(operation.sender) ? (
@@ -32,12 +36,16 @@ const OperationSender = ({
 const OperationReceiver = ({
   operation,
   action,
+  isFullSize,
 }: {
   operation: types.OperationType;
   action?: string;
+  isFullSize?: boolean;
 }) => {
   return operation.receiver ? (
-    <div className="col-lg-6 d-flex align-items-center col-xl-3 pr-xl-0">
+    <div
+      className={`d-flex align-items-center ${isFullSize ? 'col-12' : 'col-lg-6 col-xl-3 pr-xl-0'}`}
+    >
       {action && <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary mr-2" />}
       <div className="mr-2 text-nowrap">{action ? action : 'To'}</div>
       {addressIsBech32(operation.receiver) ? (
@@ -82,6 +90,10 @@ const OperationText = ({ operation }: { operation: types.OperationType }) => {
           <OperationReceiver operation={operation} />
         </>
       );
+    case 'writeLog':
+      return <OperationSender operation={operation} action="Write log by" isFullSize />;
+    case 'signalError':
+      return <OperationSender operation={operation} action="Signal error by" isFullSize />;
     default:
       return (
         <>
@@ -95,15 +107,17 @@ const DetailedItem = ({
   children,
   operation,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   operation: types.OperationType;
 }) => {
   return (
     <div className="detailed-item d-flex row mb-3 mb-xl-2">
       <OperationText operation={operation} />
-      <div className="col-lg-6 col-xl-6 d-flex align-items-center">
-        <div className="d-flex text-truncate">{children}</div>
-      </div>
+      {children && (
+        <div className="col-lg-6 col-xl-6 d-flex align-items-center">
+          <div className="d-flex text-truncate">{children}</div>
+        </div>
+      )}
     </div>
   );
 };
@@ -118,13 +132,9 @@ const OperationsList = ({
   return (
     <div className="operations-list d-flex flex-column mb-n2">
       {operations.map((operation: types.OperationType, i) => {
-        if (
-          operation.value !== undefined &&
-          operation.identifier !== undefined &&
-          operation.type !== undefined
-        ) {
-          switch (operation.type) {
-            case 'nft':
+        switch (operation.type) {
+          case 'nft':
+            if (operation.value !== undefined && operation.identifier !== undefined) {
               const operationNft = transactionTokens?.nfts.filter((token) => {
                 return token.identifier === operation.identifier;
               });
@@ -139,8 +149,11 @@ const OperationsList = ({
                   </>
                 </DetailedItem>
               ) : null;
+            }
+            return null;
 
-            case 'esdt':
+          case 'esdt':
+            if (operation.value !== undefined && operation.identifier !== undefined) {
               const operationToken = transactionTokens?.esdts.filter((token) => {
                 return token.identifier === operation.identifier;
               });
@@ -152,8 +165,14 @@ const OperationsList = ({
                   </>
                 </DetailedItem>
               ) : null;
-          }
+            }
+            return null;
+
+          case 'log':
+          case 'error':
+            return <DetailedItem operation={operation} key={i}></DetailedItem>;
         }
+
         return null;
       })}
     </div>
