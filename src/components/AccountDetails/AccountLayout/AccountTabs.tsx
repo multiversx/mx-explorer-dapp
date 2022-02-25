@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { NetworkLink } from 'sharedComponents';
-import { urlBuilder, useActiveRoute } from 'helpers';
+import { urlBuilder, useActiveRoute, useIsTestnet } from 'helpers';
 import { useGlobalState } from 'context';
 import { accountsRoutes } from 'routes';
 
 const AccountTabs = () => {
+  const isTestnet = useIsTestnet();
   const activeRoute = useActiveRoute();
   const { accountDetails, activeNetwork } = useGlobalState();
   const tokensRouteActive = activeNetwork.adapter === 'api';
@@ -20,14 +21,16 @@ const AccountTabs = () => {
         <h6>Transactions</h6>
       </NetworkLink>
 
-      <NetworkLink
-        to={urlBuilder.accountDetailsScResults(accountDetails.address)}
-        className={`tab-link mr-3 mr-lg-spacer ${
-          activeRoute(accountsRoutes.accountScResults) ? 'active' : ''
-        }`}
-      >
-        <h6>SC Results</h6>
-      </NetworkLink>
+      {!isTestnet && (
+        <NetworkLink
+          to={urlBuilder.accountDetailsScResults(accountDetails.address)}
+          className={`tab-link mr-3 mr-lg-spacer ${
+            activeRoute(accountsRoutes.accountScResults) ? 'active' : ''
+          }`}
+        >
+          <h6>SC Results</h6>
+        </NetworkLink>
+      )}
 
       {tokensRouteActive && (
         <NetworkLink

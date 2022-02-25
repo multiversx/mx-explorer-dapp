@@ -13,6 +13,8 @@ import {
   isContract,
   types,
   getTransactionMethod,
+  getOperationsMessages,
+  getScResultsMessages,
 } from 'helpers';
 import {
   Denominate,
@@ -45,20 +47,6 @@ const getFee = (transaction: types.TransactionType) => {
   return output;
 };
 
-const getScResultsMessages = (transaction: types.TransactionType) => {
-  const messages: string[] = [];
-
-  if (transaction.results) {
-    transaction.results.forEach((result) => {
-      if (result.returnMessage) {
-        messages.push(result.returnMessage);
-      }
-    });
-  }
-
-  return messages;
-};
-
 const TransactionInfo = ({
   transaction,
   transactionTokens,
@@ -85,7 +73,10 @@ const TransactionInfo = ({
     return ` ${parseFloat(amount) > 0 ? '≈' : '='} $${formattedValue}`;
   };
 
-  const scResultsMessages = getScResultsMessages(transaction);
+  const transactionMessages = new Set([
+    ...getScResultsMessages(transaction),
+    ...getOperationsMessages(transaction),
+  ]);
 
   const transactionFee =
     transaction.fee === undefined && transaction.gasUsed === undefined
@@ -252,7 +243,7 @@ const TransactionInfo = ({
                         </NetworkLink>
                       )}
                     </div>
-                    {scResultsMessages.map((msg, i) => (
+                    {Array.from(transactionMessages).map((msg, i) => (
                       <div key={i} className="d-flex ml-1 text-break-all">
                         <FontAwesomeIcon
                           icon={faAngleDown}

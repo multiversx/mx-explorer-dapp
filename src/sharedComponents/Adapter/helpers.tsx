@@ -76,6 +76,7 @@ export interface TransactionsParamsType {
   senderShard?: number;
   receiverShard?: number;
   withScResults?: boolean;
+  withOperations?: boolean;
 }
 
 export function getTransactionsParams({
@@ -84,6 +85,7 @@ export function getTransactionsParams({
   senderShard,
   receiverShard,
   withScResults,
+  withOperations,
 }: TransactionsParamsType) {
   const params: ProviderPropsType['params'] = {
     from: (size - 1) * pageSize,
@@ -92,6 +94,7 @@ export function getTransactionsParams({
     ...(senderShard !== undefined ? { senderShard } : {}),
     ...(receiverShard !== undefined ? { receiverShard } : {}),
     ...(withScResults !== undefined ? { withScResults } : {}),
+    ...(withOperations !== undefined ? { withOperations } : {}),
     ...{
       fields: [
         'txHash',
