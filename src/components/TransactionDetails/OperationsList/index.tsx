@@ -6,7 +6,7 @@ import {
   OperationType,
   TransactionTokensType,
   TransactionOperationActionType,
-  TransactionOperationType,
+  VisibleTransactionOperationType,
 } from 'helpers/types';
 import { NetworkLink, Trim, CopyButton, TokenBlock, NftBlock, Denominate } from 'sharedComponents';
 
@@ -111,7 +111,7 @@ const OperationsList = ({
     <div className="operations-list d-flex flex-column mb-n2">
       {operations.map((operation: OperationType, index) => {
         switch (operation.type) {
-          case TransactionOperationType.nft:
+          case VisibleTransactionOperationType.nft:
             const operationNft = transactionTokens?.nfts.filter((token) => {
               return token.identifier === operation.identifier;
             });
@@ -125,7 +125,7 @@ const OperationsList = ({
               </DetailedItem>
             ) : null;
 
-          case TransactionOperationType.esdt:
+          case VisibleTransactionOperationType.esdt:
             const operationToken = transactionTokens?.esdts.filter((token) => {
               return token.identifier === operation.identifier;
             });
@@ -139,7 +139,7 @@ const OperationsList = ({
               </DetailedItem>
             ) : null;
 
-          case TransactionOperationType.egld:
+          case VisibleTransactionOperationType.egld:
             return (
               <DetailedItem operation={operation} key={index}>
                 <>

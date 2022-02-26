@@ -245,18 +245,19 @@ export enum TransactionOperationActionType {
   ESDTLocalBurn = 'ESDTLocalBurn',
 }
 
-export enum TransactionOperationType {
-  none = 'none',
+export enum VisibleTransactionOperationType {
   nft = 'nft',
   esdt = 'esdt',
   egld = 'egld',
+}
+export enum HiddenTransactionOperationType {
+  none = 'none',
   error = 'error',
   log = 'log',
 }
-
 export interface OperationType {
   action: TransactionOperationActionType | string;
-  type: TransactionOperationType | string;
+  type: VisibleTransactionOperationType | HiddenTransactionOperationType;
   collection?: string;
   identifier: string;
   sender: string;

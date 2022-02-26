@@ -11,11 +11,16 @@ import {
   urlBuilder,
   useNetworkRoute,
   isContract,
-  types,
   getTransactionMethod,
   getOperationsMessages,
   getScResultsMessages,
 } from 'helpers';
+import {
+  TransactionType,
+  TransactionTokensType,
+  TxActionCategoryEnum,
+  VisibleTransactionOperationType,
+} from 'helpers/types';
 import {
   Denominate,
   ScAddressIcon,
@@ -39,7 +44,7 @@ import { useGlobalState } from 'context';
 import { transactionsRoutes } from 'routes';
 import DataField from './DataField';
 
-const getFee = (transaction: types.TransactionType) => {
+const getFee = (transaction: TransactionType) => {
   const bNgasPrice = new BigNumber(transaction.gasPrice);
   const bNgasUsed = new BigNumber(transaction.gasUsed);
   const output = bNgasPrice.times(bNgasUsed).toString();
@@ -47,12 +52,21 @@ const getFee = (transaction: types.TransactionType) => {
   return output;
 };
 
+const getVisibleOperations = (transaction: TransactionType) => {
+  const operations =
+    transaction?.operations?.filter((operation): operation is any =>
+      Object.values<string>(VisibleTransactionOperationType).includes(operation.type)
+    ) ?? [];
+
+  return operations;
+};
+
 const TransactionInfo = ({
   transaction,
   transactionTokens,
 }: {
-  transaction: types.TransactionType;
-  transactionTokens?: types.TransactionTokensType;
+  transaction: TransactionType;
+  transactionTokens?: TransactionTokensType;
 }) => {
   const ref = React.useRef(null);
   const {
@@ -102,6 +116,8 @@ const TransactionInfo = ({
     addCommas: false,
     showLastNonZeroDecimal: true,
   });
+
+  const visibleOperations = getVisibleOperations(transaction);
 
   return (
     <div className="transaction-info card" ref={ref}>
@@ -284,7 +300,7 @@ const TransactionInfo = ({
                 {transaction.action && transaction.action.category && (
                   <>
                     <DetailItem title="Method">{getTransactionMethod(transaction)}</DetailItem>
-                    {transaction.action.category !== types.TxActionCategoryEnum.scCall && (
+                    {transaction.action.category !== TxActionCategoryEnum.scCall && (
                       <DetailItem title="Transaction Action">
                         <TransactionAction transaction={transaction} />
                       </DetailItem>
@@ -292,19 +308,19 @@ const TransactionInfo = ({
                   </>
                 )}
 
-                {transaction.operations && transaction.operations.length > 0 && (
+                {Boolean(visibleOperations.length) && (
                   <DetailItem
                     title={
                       <>
                         <span className="mr-2">Token Operations</span>
                         <span className="badge badge-secondary badge-pill font-weight-light">
-                          {transaction.operations.length}
+                          {visibleOperations.length}
                         </span>
                       </>
                     }
                   >
                     <OperationsList
-                      operations={transaction.operations}
+                      operations={visibleOperations}
                       transactionTokens={transactionTokens}
                     />
                   </DetailItem>
