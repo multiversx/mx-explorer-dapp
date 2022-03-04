@@ -139,7 +139,7 @@ export interface ScResultType {
   prevTxHash: string;
   hash: string;
   originalTxHash: string;
-  receiver?: string;
+  receiver: string;
   sender: string;
   timestamp: number;
   value: string;
