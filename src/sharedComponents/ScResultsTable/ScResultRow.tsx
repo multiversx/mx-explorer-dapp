@@ -6,9 +6,20 @@ import { ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim, Denominate } from
 export interface ScResultRowType {
   scResult: ScResultType;
   address?: string;
-  senderShard?: string | number;
-  receiverShard?: string | number;
 }
+
+const ScAccountLink = ({ address, testId }: { address: string; testId?: string }) =>
+  addressIsBech32(address) ? (
+    <NetworkLink
+      to={urlBuilder.accountDetails(address)}
+      data-testid={testId ? testId : 'addressLink'}
+      className="trim-wrapper"
+    >
+      <Trim text={address} />
+    </NetworkLink>
+  ) : (
+    <ShardSpan shard={address} />
+  );
 
 const ScResultRow = ({ scResult, address }: ScResultRowType) => {
   const directionOut = address === scResult.sender;
@@ -36,19 +47,7 @@ const ScResultRow = ({ scResult, address }: ScResultRowType) => {
           {directionOut ? (
             <Trim text={scResult.sender} />
           ) : (
-            <>
-              {addressIsBech32(scResult.sender) ? (
-                <NetworkLink
-                  to={urlBuilder.accountDetails(scResult.sender)}
-                  data-testid="senderLink"
-                  className="trim-wrapper"
-                >
-                  <Trim text={scResult.sender} />
-                </NetworkLink>
-              ) : (
-                <ShardSpan shard={scResult.sender} />
-              )}
-            </>
+            <ScAccountLink address={scResult.sender} testId="senderLink" />
           )}
         </div>
       </td>
@@ -58,13 +57,7 @@ const ScResultRow = ({ scResult, address }: ScResultRowType) => {
           {directionIn ? (
             <Trim text={scResult.receiver} />
           ) : (
-            <NetworkLink
-              to={urlBuilder.accountDetails(scResult.receiver)}
-              data-testid="receiverLink"
-              className="trim-wrapper"
-            >
-              <Trim text={scResult.receiver} />
-            </NetworkLink>
+            <ScAccountLink address={scResult.receiver} testId="receiverLink" />
           )}
         </div>
       </td>
