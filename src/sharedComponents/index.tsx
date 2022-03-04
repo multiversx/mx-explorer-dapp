@@ -41,6 +41,7 @@ import TransactionAction from './TransactionAction';
 import NotificationsBar from './NotificationsBar';
 import PropertyPill from './PropertyPill';
 import TxActionBlock from './TxActionBlock';
+import ScResultsTable from './ScResultsTable';
 
 export {
   Denominate,
@@ -87,4 +88,5 @@ export {
   NotificationsBar,
   PropertyPill,
   TxActionBlock,
+  ScResultsTable,
 };

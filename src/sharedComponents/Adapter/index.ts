@@ -174,6 +174,16 @@ export default function useAdapter() {
     getMiniBlockTransactionsCount: (miniBlockHash: string) =>
       provider({ url: `/transactions/count`, params: { miniBlockHash } }),
 
+    getMiniBlockScResults: ({ miniBlockHash, size }: { miniBlockHash: string; size: number }) =>
+      provider({
+        url: `/sc-results`,
+        params: {
+          from: (size - 1) * pageSize,
+          size: pageSize,
+          miniBlockHash,
+        },
+      }),
+
     /* Transactions */
 
     getTransactions: ({
