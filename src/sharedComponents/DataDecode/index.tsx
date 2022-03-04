@@ -107,7 +107,7 @@ const DataDecode = ({
         const decodedParts = parts.map((part, index) => {
           if (
             parts.length >= 2 &&
-            ((index === 0 && part.length < 32) || (index === 1 && !parts[0]))
+            ((index === 0 && part.length < 64) || (index === 1 && !parts[0]))
           ) {
             return part;
           } else {
