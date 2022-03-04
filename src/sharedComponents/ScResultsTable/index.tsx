@@ -22,6 +22,9 @@ const ScResultsTable = ({
     </>
   ),
 }: ScResultsTableType) => {
+  const paginationTotalResults =
+    totalScResults !== '...' ? Math.min(totalScResults, 10000) : totalScResults;
+
   return (
     <div className="transactions-table">
       <div className="card">
@@ -32,7 +35,7 @@ const ScResultsTable = ({
               <Pager
                 itemsPerPage={25}
                 page={String(size)}
-                total={totalScResults !== '...' ? Math.min(totalScResults, 10000) : totalScResults}
+                total={paginationTotalResults}
                 show={scResults.length > 0}
                 hasTestId={false}
               />
@@ -65,7 +68,7 @@ const ScResultsTable = ({
           <Pager
             itemsPerPage={25}
             page={String(size)}
-            total={totalScResults !== '...' ? Math.min(totalScResults, 10000) : totalScResults}
+            total={paginationTotalResults}
             show={scResults.length > 0}
           />
         </div>
