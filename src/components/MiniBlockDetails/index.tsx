@@ -207,7 +207,6 @@ const MiniBlockDetails = () => {
                             {showScResults ? (
                               <ScResultsTable
                                 scResults={scResults}
-                                address={undefined}
                                 totalScResults={scResults.length}
                                 size={size}
                               />
