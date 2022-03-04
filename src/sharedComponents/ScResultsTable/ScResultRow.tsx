@@ -14,19 +14,15 @@ const ScResultRow = ({ scResult, address }: ScResultRowType) => {
   const directionOut = address === scResult.sender;
   const directionIn = address === scResult.receiver;
 
+  const transactionLink = `/transactions/${
+    scResult.originalTxHash ? `${scResult.originalTxHash}#${scResult.hash}` : scResult.hash
+  }`;
+
   return (
     <tr className="animated-row trim-size-sm">
       <td>
         <div className="d-flex align-items-center trim-size-xl">
-          <NetworkLink
-            to={`/transactions/${
-              scResult.originalTxHash
-                ? `${scResult.originalTxHash}#${scResult.hash}`
-                : scResult.hash
-            }`}
-            data-testid="transactionLink"
-            className="trim-wrapper"
-          >
+          <NetworkLink to={transactionLink} data-testid="transactionLink" className="trim-wrapper">
             <Trim text={scResult.hash} />
           </NetworkLink>
         </div>
