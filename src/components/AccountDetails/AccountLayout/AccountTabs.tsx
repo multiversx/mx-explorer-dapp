@@ -5,7 +5,8 @@ import { useGlobalState } from 'context';
 import { accountsRoutes } from 'routes';
 
 const AccountTabs = () => {
-  const isTestnet = useIsTestnet();
+  // temporary
+  const isTestnet = false;
   const activeRoute = useActiveRoute();
   const { accountDetails, activeNetwork } = useGlobalState();
   const tokensRouteActive = activeNetwork.adapter === 'api';
