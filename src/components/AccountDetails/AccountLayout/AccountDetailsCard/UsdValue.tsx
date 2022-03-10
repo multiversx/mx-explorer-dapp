@@ -13,28 +13,26 @@ const UsdValue = ({
   usd?: number;
   className?: string;
   dataTestId?: string;
-}) => {
-  return (
-    <span className={className} data-testid={dataTestId}>
-      {!stringIsInteger(input) || !usd ? (
-        '...'
-      ) : (
-        <>
-          $
-          {usdValue({
-            amount: denominate({
-              input,
-              denomination,
-              decimals,
-              showLastNonZeroDecimal: false,
-              addCommas: false,
-            }),
-            usd,
-          })}
-        </>
-      )}
-    </span>
-  );
-};
+}) => (
+  <span className={className} data-testid={dataTestId}>
+    {!stringIsInteger(input) || !usd ? (
+      '...'
+    ) : (
+      <>
+        $
+        {usdValue({
+          amount: denominate({
+            input,
+            denomination,
+            decimals,
+            showLastNonZeroDecimal: true,
+            addCommas: false,
+          }),
+          usd,
+        })}
+      </>
+    )}
+  </span>
+);
 
 export default UsdValue;
