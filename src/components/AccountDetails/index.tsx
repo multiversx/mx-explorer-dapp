@@ -15,7 +15,8 @@ interface TransactionsResponseType {
 }
 
 const AccountDetails = () => {
-  const isTestnet = useIsTestnet();
+  // temporary
+  const isTestnet = false;
   const ref = React.useRef(null);
   const { getTransactions, getAccountTransfers } = adapter();
   const { size, firstPageTicker } = useSize();
