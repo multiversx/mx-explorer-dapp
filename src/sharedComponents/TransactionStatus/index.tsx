@@ -56,7 +56,7 @@ export const getStatusIconAndColor = (
 const getStatusText = ({ status, pendingResults }: TransactionStatusType) => {
   switch (true) {
     case pendingResults:
-      return 'Pending (Waiting for Smart Contract Results)';
+      return 'Pending (Smart Contract Execution)';
     case status === txStatus.rewardReverted:
       return txStatus.fail;
     default:
