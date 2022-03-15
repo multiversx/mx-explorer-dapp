@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Tab, Nav } from 'react-bootstrap';
 import { useRouteMatch } from 'react-router-dom';
+import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -32,6 +33,7 @@ import {
   Trim,
   CopyButton,
   TransactionAction,
+  LoadingDots,
 } from 'sharedComponents';
 import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
@@ -77,6 +79,10 @@ const TransactionInfo = ({
   const match: any = useRouteMatch(networkRoute(transactionsRoutes.transactionDetails));
   const activeSection = match?.params.tab ? match.params.tab : 'details';
   const [activeKey, setActiveKey] = React.useState(activeSection);
+
+  const isTxPending =
+    transaction.status.toLowerCase() === txStatus.pending.toLowerCase() ||
+    transaction.pendingResults;
 
   const formattedUsdValue = (amount: string, usd: number, digits: number) => {
     const sum = (parseFloat(amount) * usd).toFixed(digits);
@@ -163,6 +169,11 @@ const TransactionInfo = ({
                 Logs
               </Nav.Link>
             )}
+            {isTxPending && (
+              <div className="d-flex align-items-center ml-auto">
+                <LoadingDots />
+              </div>
+            )}
           </div>
         </div>
 
@@ -187,7 +198,14 @@ const TransactionInfo = ({
                 <DetailItem title="Age">
                   {transaction.timestamp !== undefined ? (
                     <div className="d-flex align-items-center">
-                      <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
+                      {isTxPending ? (
+                        <FontAwesomeIcon
+                          icon={faSpinner}
+                          className="mr-2 text-secondary fa-spin slow-spin"
+                        />
+                      ) : (
+                        <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
+                      )}
                       <TimeAgo value={transaction.timestamp} />
                       &nbsp;
                       <span className="text-secondary">
