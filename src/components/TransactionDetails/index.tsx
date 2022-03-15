@@ -89,7 +89,8 @@ const TransactionDetails = () => {
   const checkRefetch = () => {
     if (
       transaction &&
-      transaction.status.toLowerCase() === txStatus.pending.toLowerCase() &&
+      (transaction.status.toLowerCase() === txStatus.pending.toLowerCase() ||
+        transaction.pendingResults) &&
       dataReady
     ) {
       fetchTransaction();
