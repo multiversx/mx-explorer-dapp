@@ -128,7 +128,11 @@ const TransactionInfo = ({
           return selectedKey ? setActiveKey(selectedKey) : 'details';
         }}
       >
-        <div className={`card-header status-${getStatusIconAndColor(transaction.status).color}`}>
+        <div
+          className={`card-header status-${
+            getStatusIconAndColor(transaction.status, transaction.pendingResults).color
+          }`}
+        >
           <div className="card-header-item d-flex align-items-center">
             <Nav.Link
               data-testid="title"
@@ -174,7 +178,10 @@ const TransactionInfo = ({
                 </DetailItem>
 
                 <DetailItem title="Status">
-                  <TransactionStatus status={transaction.status} />
+                  <TransactionStatus
+                    status={transaction.status}
+                    pendingResults={transaction.pendingResults}
+                  />
                 </DetailItem>
 
                 <DetailItem title="Age">

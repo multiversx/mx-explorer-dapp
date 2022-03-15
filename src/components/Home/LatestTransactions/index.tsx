@@ -105,7 +105,7 @@ const LatestTransactions = () => {
                   >
                     <div
                       className={`latest-item-card status-${
-                        getStatusIconAndColor(transaction.status).color
+                        getStatusIconAndColor(transaction.status, transaction.pendingResults).color
                       }`}
                     >
                       <div className="d-flex flex-column overflow-hidden min-w-0">

@@ -39,7 +39,8 @@ const AccountDetails = () => {
 
         setTransactions(newTransactions);
         const pending = data.some(
-          (tx: TransactionType) => tx.status.toLowerCase() === txStatus.pending.toLowerCase()
+          (tx: TransactionType) =>
+            tx.status.toLowerCase() === txStatus.pending.toLowerCase() || tx.pendingResults
         );
         setHasPendingTransaction(pending);
         setIsDataReady(true);

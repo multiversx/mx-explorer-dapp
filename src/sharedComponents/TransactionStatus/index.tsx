@@ -2,20 +2,29 @@ import React from 'react';
 import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
 import { faBan } from '@fortawesome/pro-solid-svg-icons/faBan';
 import { faHourglass } from '@fortawesome/pro-solid-svg-icons/faHourglass';
+import { faFileImport } from '@fortawesome/pro-regular-svg-icons/faFileImport';
 import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import txStatus from './txStatus';
 
 interface TransactionStatusType {
   status: string;
+  pendingResults?: boolean;
 }
 
-export const getStatusIconAndColor = (status: TransactionStatusType['status']) => {
+export const getStatusIconAndColor = (
+  status: TransactionStatusType['status'],
+  pendingResults: TransactionStatusType['pendingResults']
+) => {
   const statusIs = (compareTo: string) => status.toLowerCase() === compareTo.toLowerCase();
   let Icon = () => <></>;
   let color = '';
 
   switch (true) {
+    case pendingResults:
+      color = 'text-secondary';
+      Icon = () => <FontAwesomeIcon icon={faFileImport} className={`mr-2 ${color}`} />;
+      break;
     case statusIs(txStatus.notExecuted):
       color = 'text-danger';
       Icon = () => <FontAwesomeIcon icon={faBan} className={`mr-2 ${color}`} />;
@@ -45,13 +54,24 @@ export const getStatusIconAndColor = (status: TransactionStatusType['status']) =
   };
 };
 
-const TransactionStatus = ({ status }: TransactionStatusType) => {
-  const { Icon } = getStatusIconAndColor(status);
+const getStatusText = ({ status, pendingResults }: TransactionStatusType) => {
+  switch (true) {
+    case pendingResults:
+      return 'Pending Smart Contract Results';
+    case status === txStatus.rewardReverted:
+      return txStatus.fail;
+    default:
+      return status;
+  }
+};
+
+const TransactionStatus = ({ status, pendingResults }: TransactionStatusType) => {
+  const { Icon } = getStatusIconAndColor(status, pendingResults);
 
   return (
     <span className="d-flex align-items-center text-capitalize">
       <Icon />
-      {status === txStatus.rewardReverted ? txStatus.fail : status}
+      {getStatusText({ status, pendingResults })}
     </span>
   );
 };
