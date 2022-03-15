@@ -2,7 +2,6 @@ import React from 'react';
 import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
 import { faBan } from '@fortawesome/pro-solid-svg-icons/faBan';
 import { faHourglass } from '@fortawesome/pro-solid-svg-icons/faHourglass';
-import { faFileImport } from '@fortawesome/pro-regular-svg-icons/faFileImport';
 import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import txStatus from './txStatus';
@@ -22,8 +21,8 @@ export const getStatusIconAndColor = (
 
   switch (true) {
     case pendingResults:
-      color = 'text-secondary';
-      Icon = () => <FontAwesomeIcon icon={faFileImport} className={`mr-2 ${color}`} />;
+      color = 'text-warning';
+      Icon = () => <FontAwesomeIcon icon={faHourglass} className={`mr-2 ${color}`} />;
       break;
     case statusIs(txStatus.notExecuted):
       color = 'text-danger';
@@ -57,7 +56,7 @@ export const getStatusIconAndColor = (
 const getStatusText = ({ status, pendingResults }: TransactionStatusType) => {
   switch (true) {
     case pendingResults:
-      return 'Pending Smart Contract Results';
+      return 'Pending (Waiting for Smart Contract Results)';
     case status === txStatus.rewardReverted:
       return txStatus.fail;
     default:
