@@ -28,6 +28,8 @@
     word-wrap: break-word;
     white-space: pre-wrap;
     resize: vertical;
+    scrollbar-width: thin;
+
     &:hover {
       border: 1px solid $border-color;
     }
