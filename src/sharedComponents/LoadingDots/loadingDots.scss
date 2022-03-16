@@ -1,0 +1,53 @@
+.loading-dots {
+  margin-right: 2rem;
+  position: relative;
+  width: 0.825rem;
+  height: 0.825rem;
+  border-radius: 50%;
+  background-color: $muted;
+  color: $muted;
+  animation: dotFlashing 1s infinite linear alternate;
+  animation-delay: 0.5s;
+  left: 0.825rem;
+  top: 0;
+
+  &::before,
+  &::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+  }
+
+  &::before {
+    left: -1.25rem;
+    width: 0.825rem;
+    height: 0.825rem;
+    border-radius: 50%;
+    background-color: $muted;
+    color: $muted;
+    animation: dotFlashing 1s infinite alternate;
+    animation-delay: 0s;
+  }
+
+  &::after {
+    left: 1.25rem;
+    width: 0.825rem;
+    height: 0.825rem;
+    border-radius: 50%;
+    background-color: $muted;
+    color: $muted;
+    animation: dotFlashing 1s infinite alternate;
+    animation-delay: 1s;
+  }
+
+  @keyframes dotFlashing {
+    0% {
+      background-color: transparent;
+    }
+    50%,
+    100% {
+      background-color: $muted;
+    }
+  }
+}
