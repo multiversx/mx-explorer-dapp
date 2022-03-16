@@ -34,7 +34,7 @@
       border: 1px solid $border-color;
     }
 
-    @media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+    @media screen and (-webkit-min-device-pixel-ratio: 0) {
       &:before {
         background: $light;
         content: '';
@@ -62,6 +62,7 @@
           transparent 3px
         );
       }
+
       &::-webkit-scrollbar {
         background-color: $light;
         width: 1rem;
@@ -86,6 +87,13 @@
       }
       &::-webkit-resizer {
         background-color: transparent;
+      }
+    }
+
+    @-moz-document url-prefix() {
+      &:before,
+      &:after {
+        display: none;
       }
     }
   }
