@@ -316,6 +316,7 @@ export interface TransactionType {
     events: EventType[];
   };
   scamInfo?: ScamInfoType;
+  pendingResults?: boolean;
 }
 
 export enum TransferTypeEnum {

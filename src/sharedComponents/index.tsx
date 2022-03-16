@@ -42,6 +42,7 @@ import NotificationsBar from './NotificationsBar';
 import PropertyPill from './PropertyPill';
 import TxActionBlock from './TxActionBlock';
 import ScResultsTable from './ScResultsTable';
+import LoadingDots from './LoadingDots';
 
 export {
   Denominate,
@@ -89,4 +90,5 @@ export {
   PropertyPill,
   TxActionBlock,
   ScResultsTable,
+  LoadingDots,
 };
