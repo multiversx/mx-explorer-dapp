@@ -30,36 +30,71 @@
     resize: vertical;
     scrollbar-width: thin;
 
-    &::-webkit-scrollbar {
-      background-color: $light;
-      width: 1rem;
-    }
-    &::-webkit-scrollbar-track {
-      background-color: $light;
-    }
-    &::-webkit-scrollbar-track:hover {
-      background-color: $light;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: $border-color;
-      border-radius: 1rem;
-      border: 5px solid $light;
-    }
-    &::-webkit-scrollbar-thumb:hover {
-      background-color: #a0a0a5;
-      border: 4px solid $light;
-    }
-    &::-webkit-scrollbar-button {
-      display: none;
-    }
-    &::-webkit-resizer {
-      border-width: 8px;
-      border-style: solid;
-      border-color: $light $border-color $border-color $light;
-    }
-
     &:hover {
       border: 1px solid $border-color;
+    }
+
+    @media screen and (-webkit-min-device-pixel-ratio: 0) {
+      &:before {
+        background: $light;
+        content: '';
+        bottom: 1px;
+        right: 1px;
+        width: 16px;
+        height: 16px;
+        position: absolute;
+      }
+
+      &:after {
+        content: '';
+        bottom: 0;
+        right: 0;
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        -webkit-clip-path: polygon(80% 0, 80% 80%, 0 80%);
+        clip-path: polygon(80% 0, 80% 80%, 0 80%);
+        background: repeating-linear-gradient(
+          135deg,
+          $border-color,
+          $border-color 1px,
+          transparent 0,
+          transparent 3px
+        );
+      }
+
+      &::-webkit-scrollbar {
+        background-color: $light;
+        width: 1rem;
+      }
+      &::-webkit-scrollbar-track {
+        background-color: $light;
+      }
+      &::-webkit-scrollbar-track:hover {
+        background-color: $light;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: $border-color;
+        border-radius: 1rem;
+        border: 5px solid $light;
+      }
+      &::-webkit-scrollbar-thumb:hover {
+        background-color: #a0a0a5;
+        border: 4px solid $light;
+      }
+      &::-webkit-scrollbar-button {
+        display: none;
+      }
+      &::-webkit-resizer {
+        background-color: transparent;
+      }
+    }
+
+    @-moz-document url-prefix() {
+      &:before,
+      &:after {
+        display: none;
+      }
     }
   }
 }
