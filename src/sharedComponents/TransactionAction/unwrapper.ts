@@ -27,12 +27,13 @@ const mexUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
     case TxActionsEnum.swapTokensFixedInput:
     case TxActionsEnum.swapTokensFixedOutput:
     case TxActionsEnum.swap:
-      return [
-        'Swap',
-        { token: [action.arguments?.token1] },
-        'for a minimum of',
-        { token: [action.arguments?.token2] },
-      ];
+      // return [
+      //   'Swap',
+      //   { token: [action.arguments?.token1] },
+      //   'for a minimum of',
+      //   { token: [action.arguments?.token2] },
+      // ];
+      return action.description ? [action.description] : [];
     case TxActionsEnum.addLiquidity:
     case TxActionsEnum.addLiquidityProxy:
       return [
