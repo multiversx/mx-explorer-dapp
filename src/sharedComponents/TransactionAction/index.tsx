@@ -104,7 +104,7 @@ const ActionText = ({
 
     case Boolean(entry.tokenNoValue && entry.tokenNoValue.length > 0):
       return entry.tokenNoValue.map((tokenNoValue: TokenArgumentType, index: number) => (
-        <div key={`tx-${tokenNoValue.identifier}-${index}`}>
+        <div key={`tx-${tokenNoValue.token}-${index}`}>
           <ActionToken token={tokenNoValue} noValue showLastNonZeroDecimal />
           {index < entry.tokenNoValue.length - 1 && (
             <span className="ml-n1 mr-1 d-none d-sm-flex">,</span>
@@ -114,7 +114,7 @@ const ActionText = ({
 
     case Boolean(entry.tokenNoLink && entry.tokenNoLink.length > 0):
       return entry.tokenNoLink.map((tokenNoLink: TokenArgumentType, index: number) => (
-        <div key={`tx-${tokenNoLink.identifier}-${index}`}>
+        <div key={`tx-${tokenNoLink.token}-${index}`}>
           <span className="mr-1">{tokenNoLink.ticker}</span>
           {index < entry.tokenNoLink.length - 1 && (
             <span className="ml-n1 mr-1 d-none d-sm-flex">,</span>
