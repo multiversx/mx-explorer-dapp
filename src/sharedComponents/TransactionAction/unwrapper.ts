@@ -9,42 +9,49 @@ const mexUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
     // farm
     case TxActionsEnum.enterFarm:
     case TxActionsEnum.enterFarmProxy: {
-      return ['Enter farm with', { token: [action.arguments?.token] }];
+      return ['Enter farm with', { token: action.arguments?.transfers }];
     }
     case TxActionsEnum.enterFarmAndLockRewards:
     case TxActionsEnum.enterFarmAndLockRewardsProxy:
-      return ['Enter farm and lock rewards with', { token: [action.arguments?.token] }];
+      return ['Enter farm and lock rewards with', { token: action.arguments?.transfers }];
     case TxActionsEnum.exitFarm:
     case TxActionsEnum.exitFarmProxy:
-      return ['Exit farm with', { token: [action.arguments?.token] }];
+      return ['Exit farm with', { token: action.arguments?.transfers }];
     case TxActionsEnum.claimRewards:
     case TxActionsEnum.claimRewardsProxy:
-      return ['Claim rewards', { token: [action.arguments?.token] }];
+      return ['Claim rewards', { token: action.arguments?.transfers }];
     case TxActionsEnum.compoundRewards:
     case TxActionsEnum.compoundRewardsProxy:
-      return ['Reinvest rewards', { token: [action.arguments?.token] }];
+      return ['Reinvest rewards', { token: action.arguments?.transfers }];
     // pairs
     case TxActionsEnum.swapTokensFixedInput:
-    case TxActionsEnum.swapTokensFixedOutput:
     case TxActionsEnum.swap:
       // return [
       //   'Swap',
-      //   { token: [action.arguments?.token1] },
+      //   { token: [action.arguments?.transfers[0]] },
       //   'for a minimum of',
-      //   { token: [action.arguments?.token2] },
+      //   { token: [action.arguments?.transfers[1]] },
+      // ];
+      return action.description ? [action.description] : [];
+    case TxActionsEnum.swapTokensFixedOutput:
+      // return [
+      //   'Swap',
+      //   { token: [action.arguments?.transfers[0]] },
+      //   'for a maximum of',
+      //   { token: [action.arguments?.transfers[1]] },
       // ];
       return action.description ? [action.description] : [];
     case TxActionsEnum.addLiquidity:
     case TxActionsEnum.addLiquidityProxy:
       return [
         'Added liquidity for',
-        { token: [action.arguments?.token1] },
+        { token: [action.arguments?.transfers[0]] },
         'and',
-        { token: [action.arguments?.token2] },
+        { token: [action.arguments?.transfers[1]] },
       ];
     case TxActionsEnum.removeLiquidity:
     case TxActionsEnum.removeLiquidityProxy:
-      return ['Removed liquidity', { token: [action.arguments?.token] }];
+      return ['Removed liquidity with ', { token: action.arguments?.transfers }];
     // wrap - commented for now until we have the proper tokens from the Api
     // case TxActionsEnum.wrapEgld:
     //   return ['Wrap' /* EGLD value */];
@@ -151,10 +158,10 @@ const unwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
       case TxActionCategoryEnum.stake:
         return stakeUnwrapper(action);
       default:
-        return [];
+        return action.description ? [action.description] : [];
     }
   } else {
-    return [action.name];
+    return action.description ? [action.description] : [action.name];
   }
 };
 
