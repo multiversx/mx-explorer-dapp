@@ -96,7 +96,7 @@ const ActionText = ({
 
     case Boolean(entry.token && entry.token.length > 0):
       return entry.token.map((token: TokenArgumentType, index: number) => (
-        <div key={`tx-${index}`}>
+        <div key={`tx-${token.identifier}-${index}`}>
           <ActionToken token={token} showLastNonZeroDecimal />
           {index < entry.token.length - 1 && <span className="ml-n1 mr-1 d-none d-sm-flex">,</span>}
         </div>
