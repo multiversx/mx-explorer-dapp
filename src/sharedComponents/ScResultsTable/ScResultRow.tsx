@@ -39,7 +39,7 @@ const ScResultRow = ({ scResult, address }: ScResultRowType) => {
         </div>
       </td>
       <td>
-        <TimeAgo value={scResult.timestamp} /> ago &nbsp;
+        <TimeAgo value={scResult.timestamp} tooltip /> ago &nbsp;
       </td>
       <td>
         <div className="d-flex align-items-center">
