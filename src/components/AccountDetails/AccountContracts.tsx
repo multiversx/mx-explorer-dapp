@@ -117,7 +117,7 @@ const AccountContracts = () => {
                         </div>
                       </td>
                       <td>
-                        <TimeAgo value={contract.timestamp} /> ago &nbsp;
+                        <TimeAgo value={contract.timestamp} tooltip /> ago &nbsp;
                       </td>
                       <td>
                         <div className="d-flex align-items-center trim-size-xl">
