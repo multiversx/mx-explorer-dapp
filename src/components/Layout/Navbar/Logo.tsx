@@ -26,7 +26,7 @@ const Logo = () => {
           id === NetworkIdType.mainnet ? 'd-none' : 'd-block d-md-none'
         }`}
       />
-      <span className="text-secondary text-truncate">{explorerTitle}</span>
+      <span className="text-secondary">{explorerTitle}</span>
     </Link>
   );
 };
