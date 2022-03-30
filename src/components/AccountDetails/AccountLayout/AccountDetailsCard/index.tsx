@@ -204,7 +204,7 @@ const AccountDetailsCard = () => {
                       Contract Details
                     </span>
                     {scamInfo && (
-                      <span className="text-warning d-flex align-items-center">
+                      <span className="text-warning d-flex align-items-center ml-2">
                         <FontAwesomeIcon
                           icon={faExclamationTriangle}
                           size="sm"
@@ -339,7 +339,7 @@ const AccountDetailsCard = () => {
                       Address Details
                     </span>
                     {scamInfo && (
-                      <span className="text-warning d-flex align-items-center">
+                      <span className="text-warning d-flex align-items-center ml-2">
                         <FontAwesomeIcon
                           icon={faExclamationTriangle}
                           size="sm"
