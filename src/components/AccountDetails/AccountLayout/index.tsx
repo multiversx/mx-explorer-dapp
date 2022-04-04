@@ -26,27 +26,25 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchBalanceAndCount = () => {
-    if (!document.hidden) {
-      getAccount(address).then((accountDetailsData) => {
-        const details = accountDetailsData.success ? accountDetailsData.data : {};
+    getAccount(address).then((accountDetailsData) => {
+      const details = accountDetailsData.success ? accountDetailsData.data : {};
 
-        if (ref.current !== null) {
-          if (accountDetailsData.success) {
-            dispatch({
-              type: 'setAccountDetails',
-              accountDetails: {
-                ...details,
-              },
-            });
-            setDataReady(true);
-          }
-
-          if (dataReady === undefined) {
-            setDataReady(accountDetailsData.success);
-          }
+      if (ref.current !== null) {
+        if (accountDetailsData.success) {
+          dispatch({
+            type: 'setAccountDetails',
+            accountDetails: {
+              ...details,
+            },
+          });
+          setDataReady(true);
         }
-      });
-    }
+
+        if (dataReady === undefined) {
+          setDataReady(accountDetailsData.success);
+        }
+      }
+    });
   };
 
   React.useEffect(() => {

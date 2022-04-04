@@ -21,27 +21,25 @@ const TokenLayout = ({ children }: { children: React.ReactNode }) => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchTokenDetails = () => {
-    if (!document.hidden) {
-      getToken(tokenId).then((tokenDetailsData) => {
-        const details = tokenDetailsData.success ? tokenDetailsData.data : {};
+    getToken(tokenId).then((tokenDetailsData) => {
+      const details = tokenDetailsData.success ? tokenDetailsData.data : {};
 
-        if (ref.current !== null) {
-          if (tokenDetailsData.success) {
-            dispatch({
-              type: 'setTokenDetails',
-              tokenDetails: {
-                ...details,
-              },
-            });
-            setDataReady(true);
-          }
-
-          if (dataReady === undefined) {
-            setDataReady(tokenDetailsData.success);
-          }
+      if (ref.current !== null) {
+        if (tokenDetailsData.success) {
+          dispatch({
+            type: 'setTokenDetails',
+            tokenDetails: {
+              ...details,
+            },
+          });
+          setDataReady(true);
         }
-      });
-    }
+
+        if (dataReady === undefined) {
+          setDataReady(tokenDetailsData.success);
+        }
+      }
+    });
   };
 
   React.useEffect(() => {
