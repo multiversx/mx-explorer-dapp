@@ -109,6 +109,7 @@ export function getTransactionsParams({
         'tokenIdentifier',
         'action',
         'results',
+        'operations',
       ].join(','),
     },
   };
