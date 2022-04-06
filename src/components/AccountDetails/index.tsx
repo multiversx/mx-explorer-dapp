@@ -16,7 +16,8 @@ interface TransactionsResponseType {
 
 const AccountDetails = () => {
   // temporary
-  const isTestnet = false;
+  const isStaging = process.env.REACT_APP_IS_STAGING;
+  const isTestnet = useIsTestnet();
   const ref = React.useRef(null);
   const { getTransactions, getAccountTransfers } = adapter();
   const { size, firstPageTicker } = useSize();
@@ -51,7 +52,7 @@ const AccountDetails = () => {
   };
 
   const fetchTransactions = () => {
-    if (isTestnet) {
+    if (isTestnet || isStaging) {
       getAccountTransfers({
         size,
         address,
