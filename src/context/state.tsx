@@ -141,6 +141,7 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
       balance: '',
       nonce: 0,
       txCount: 0,
+      scrCount: 0,
       claimableRewards: '',
     },
     tokenDetails: {
