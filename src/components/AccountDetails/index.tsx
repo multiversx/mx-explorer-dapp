@@ -16,7 +16,8 @@ interface TransactionsResponseType {
 
 const AccountDetails = () => {
   // temporary
-  const isTestnet = false;
+  const isStaging = process.env.REACT_APP_IS_STAGING;
+  const isTestnet = useIsTestnet();
   const ref = React.useRef(null);
   const { getTransactions, getAccountTransfers } = adapter();
   const { size, firstPageTicker } = useSize();
@@ -26,6 +27,8 @@ const AccountDetails = () => {
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [isDataReady, setIsDataReady] = React.useState<boolean | undefined>();
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
+
+  const hasTransfersEndpoint = isTestnet || isStaging;
 
   const handleTransactions = (transactionsData: TransactionsResponseType) => {
     const { data, success } = transactionsData;
@@ -51,7 +54,7 @@ const AccountDetails = () => {
   };
 
   const fetchTransactions = () => {
-    if (isTestnet) {
+    if (hasTransfersEndpoint) {
       getAccountTransfers({
         size,
         address,
@@ -85,7 +88,7 @@ const AccountDetails = () => {
       fetchTransactions();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountDetails.txCount, accountDetails.balance]);
+  }, [accountDetails.txCount, accountDetails.scrCount, accountDetails.balance]);
 
   const loading = isDataReady === undefined;
   const showTransactions = isDataReady === true && transactions.length > 0;
@@ -98,7 +101,11 @@ const AccountDetails = () => {
             <TransactionsTable
               transactions={transactions}
               address={address}
-              totalTransactions={accountDetails.txCount}
+              totalTransactions={
+                hasTransfersEndpoint
+                  ? accountDetails.txCount + accountDetails.scrCount
+                  : accountDetails.txCount
+              }
               size={size}
               directionCol={true}
               title={<AccountTabs />}

@@ -15,6 +15,7 @@ export interface AccountType {
   balance: string;
   nonce: number;
   txCount: number;
+  scrCount: number;
   claimableRewards: string;
   code?: string;
   shard?: number;
