@@ -42,7 +42,6 @@ const DataField = ({ data, scamInfo }: { data?: string; scamInfo?: ScamInfoType 
         </div>
       ) : (
         <DataDecode
-          className="col"
           value={truncate(output, displayedDataLength)}
           initialDecodeMethod={initialDecodeMethod}
           setDecodeMethod={setDecodeMethod}
