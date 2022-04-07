@@ -150,9 +150,7 @@ const DataDecode = ({
 
   return (
     <div className="position-relative data-decode mt-1">
-      <div className={`form-control textarea cursor-text ${className ? className : ''}`}>
-        {displayValue}
-      </div>
+      <div className={`form-control textarea ${className ? className : ''}`}>{displayValue}</div>
       {value && value !== 'N/A' && (
         <Dropdown
           className="position-absolute dropdown"
