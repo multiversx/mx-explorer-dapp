@@ -45,7 +45,7 @@ const TransactionIcon = ({ transaction }: TransactionIconType) => {
         overlay={(props: any) => (
           <Tooltip {...props} show={props.show.toString()}>
             {capitalizeFirstLetter(transaction.status)}
-            {(failed || invalid) && transactionMessages.length ? (
+            {(failed || invalid) && transactionMessages.length > 0 ? (
               <>
                 :{' '}
                 {transactionMessages.map((message, messageIndex) => (
