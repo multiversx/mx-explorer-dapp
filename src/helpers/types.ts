@@ -289,6 +289,12 @@ export interface EventType {
   topics: string[];
 }
 
+export interface ReceiptType {
+  value: string;
+  sender: string;
+  data: string;
+}
+
 export interface TransactionType {
   fee?: string;
   blockHash: string;
@@ -318,6 +324,7 @@ export interface TransactionType {
   };
   scamInfo?: ScamInfoType;
   pendingResults?: boolean;
+  receipt?: ReceiptType;
 }
 
 export enum TransferTypeEnum {
