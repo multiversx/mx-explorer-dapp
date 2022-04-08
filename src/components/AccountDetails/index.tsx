@@ -6,7 +6,7 @@ import { TransactionType } from 'sharedComponents/TransactionsTable';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
-import { useSize, useIsTestnet } from 'helpers';
+import { useSize } from 'helpers';
 import AccountTabs from './AccountLayout/AccountTabs';
 
 interface TransactionsResponseType {
@@ -15,11 +15,8 @@ interface TransactionsResponseType {
 }
 
 const AccountDetails = () => {
-  // temporary
-  const isStaging = process.env.REACT_APP_IS_STAGING;
-  const isTestnet = useIsTestnet();
   const ref = React.useRef(null);
-  const { getTransactions, getAccountTransfers } = adapter();
+  const { getAccountTransfers } = adapter();
   const { size, firstPageTicker } = useSize();
   const { activeNetworkId, accountDetails } = useGlobalState();
   const { hash: address } = useParams() as any;
@@ -27,8 +24,6 @@ const AccountDetails = () => {
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [isDataReady, setIsDataReady] = React.useState<boolean | undefined>();
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
-
-  const hasTransfersEndpoint = isTestnet || isStaging;
 
   const handleTransactions = (transactionsData: TransactionsResponseType) => {
     const { data, success } = transactionsData;
@@ -54,19 +49,10 @@ const AccountDetails = () => {
   };
 
   const fetchTransactions = () => {
-    if (hasTransfersEndpoint) {
-      getAccountTransfers({
-        size,
-        address,
-      }).then((transactionsData) => handleTransactions(transactionsData));
-    } else {
-      getTransactions({
-        size,
-        address,
-        withScResults: true,
-        withOperations: true,
-      }).then((transactionsData) => handleTransactions(transactionsData));
-    }
+    getAccountTransfers({
+      size,
+      address,
+    }).then((transactionsData) => handleTransactions(transactionsData));
   };
 
   React.useEffect(() => {
@@ -101,11 +87,7 @@ const AccountDetails = () => {
             <TransactionsTable
               transactions={transactions}
               address={address}
-              totalTransactions={
-                hasTransfersEndpoint
-                  ? accountDetails.txCount + accountDetails.scrCount
-                  : accountDetails.txCount
-              }
+              totalTransactions={accountDetails.txCount + accountDetails.scrCount}
               size={size}
               directionCol={true}
               title={<AccountTabs />}
