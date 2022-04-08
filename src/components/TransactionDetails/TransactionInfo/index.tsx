@@ -15,6 +15,7 @@ import {
   getTransactionMethod,
   getOperationsMessages,
   getScResultsMessages,
+  getReceiptMessages,
 } from 'helpers';
 import {
   TransactionType,
@@ -96,6 +97,7 @@ const TransactionInfo = ({
   const transactionMessages = new Set([
     ...getScResultsMessages(transaction),
     ...getOperationsMessages(transaction),
+    ...getReceiptMessages(transaction),
   ]);
 
   const transactionFee =
@@ -284,8 +286,11 @@ const TransactionInfo = ({
                         </NetworkLink>
                       )}
                     </div>
-                    {Array.from(transactionMessages).map((msg, i) => (
-                      <div key={i} className="d-flex ml-1 text-break-all">
+                    {Array.from(transactionMessages).map((msg, messageIndex) => (
+                      <div
+                        key={`tx-message-${messageIndex}`}
+                        className="d-flex ml-1 text-break-all"
+                      >
                         <FontAwesomeIcon
                           icon={faAngleDown}
                           className="text-secondary"

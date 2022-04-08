@@ -5,7 +5,12 @@ import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { faHourglass } from '@fortawesome/pro-regular-svg-icons/faHourglass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { capitalizeFirstLetter, getScResultsMessages, getOperationsMessages } from 'helpers';
+import {
+  capitalizeFirstLetter,
+  getScResultsMessages,
+  getOperationsMessages,
+  getReceiptMessages,
+} from 'helpers';
 import { UITransactionType } from 'helpers/types';
 interface TransactionIconType {
   transaction: UITransactionType;
@@ -15,10 +20,13 @@ const TransactionIcon = ({ transaction }: TransactionIconType) => {
   const statusIs = (compareTo: string) =>
     transaction.status.toLowerCase() === compareTo.toLowerCase();
 
-  const transactionMessages = new Set([
-    ...getScResultsMessages(transaction),
-    ...getOperationsMessages(transaction),
-  ]);
+  const transactionMessages = Array.from(
+    new Set([
+      ...getScResultsMessages(transaction),
+      ...getOperationsMessages(transaction),
+      ...getReceiptMessages(transaction),
+    ])
+  );
 
   const failed = statusIs(txStatus.failed) || statusIs(txStatus.fail);
   const invalid = statusIs(txStatus.notExecuted) || statusIs(txStatus.invalid);
@@ -37,17 +45,17 @@ const TransactionIcon = ({ transaction }: TransactionIconType) => {
         overlay={(props: any) => (
           <Tooltip {...props} show={props.show.toString()}>
             {capitalizeFirstLetter(transaction.status)}
-            {failed && transactionMessages && (
+            {(failed || invalid) && transactionMessages.length ? (
               <>
                 :{' '}
-                {Array.from(transactionMessages).map((message, index) => (
-                  <span>
+                {transactionMessages.map((message, messageIndex) => (
+                  <span key={`tx-icon-message-${messageIndex}`}>
                     {capitalizeFirstLetter(message)}
-                    {index > 0 ? ', ' : ''}
+                    {messageIndex > 0 ? ', ' : ''}
                   </span>
                 ))}
               </>
-            )}
+            ) : null}
           </Tooltip>
         )}
       >

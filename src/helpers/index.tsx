@@ -35,6 +35,7 @@ import getTransactionMethod from './getTransactionMethod';
 import capitalizeFirstLetter from './capitalizeFirstLetter';
 import getScResultsMessages from './getScResultsMessages';
 import getOperationsMessages from './getOperationsMessages';
+import getReceiptMessages from './getReceiptMessages';
 
 export {
   truncate,
@@ -74,4 +75,5 @@ export {
   capitalizeFirstLetter,
   getScResultsMessages,
   getOperationsMessages,
+  getReceiptMessages,
 };

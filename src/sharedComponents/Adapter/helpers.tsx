@@ -110,6 +110,7 @@ export function getTransactionsParams({
         'action',
         'results',
         'operations',
+        'receipt',
       ].join(','),
     },
   };
