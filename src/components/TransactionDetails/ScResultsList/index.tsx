@@ -76,7 +76,7 @@ const ScResultsList = ({
                   <div className="col-sm-2 col-left">Hash</div>
                   <div className="col-sm-10 d-flex align-items-center">
                     <Trim text={result.hash} />
-                    <CopyButton text={result.hash} className="side-action ml-2" />
+
                     <NetworkLink
                       to={`${transactionsRoutes.transactions}/${result.originalTxHash}#${result.hash}/${decodeMethod}`}
                       className="side-action ml-2"
