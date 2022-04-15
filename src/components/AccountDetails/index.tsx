@@ -6,7 +6,7 @@ import { TransactionType } from 'sharedComponents/TransactionsTable';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
-import { useSize } from 'helpers';
+import { useSize, useIsMainnet } from 'helpers';
 import AccountTabs from './AccountLayout/AccountTabs';
 
 interface TransactionsResponseType {
@@ -16,10 +16,13 @@ interface TransactionsResponseType {
 
 const AccountDetails = () => {
   const ref = React.useRef(null);
-  const { getAccountTransfers } = adapter();
+  const { getAccountTransfers, getTransactions } = adapter();
   const { size, firstPageTicker } = useSize();
   const { activeNetworkId, accountDetails } = useGlobalState();
   const { hash: address } = useParams() as any;
+
+  // TEMP
+  const isMainnet = useIsMainnet();
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [isDataReady, setIsDataReady] = React.useState<boolean | undefined>();
@@ -49,10 +52,19 @@ const AccountDetails = () => {
   };
 
   const fetchTransactions = () => {
-    getAccountTransfers({
-      size,
-      address,
-    }).then((transactionsData) => handleTransactions(transactionsData));
+    if (!isMainnet) {
+      getAccountTransfers({
+        size,
+        address,
+      }).then((transactionsData) => handleTransactions(transactionsData));
+    } else {
+      getTransactions({
+        size,
+        address,
+        withScResults: true,
+        withOperations: true,
+      }).then((transactionsData) => handleTransactions(transactionsData));
+    }
   };
 
   React.useEffect(() => {
@@ -87,7 +99,11 @@ const AccountDetails = () => {
             <TransactionsTable
               transactions={transactions}
               address={address}
-              totalTransactions={accountDetails.txCount + accountDetails.scrCount}
+              totalTransactions={
+                !isMainnet
+                  ? accountDetails.txCount + accountDetails.scrCount
+                  : accountDetails.txCount
+              }
               size={size}
               directionCol={true}
               title={<AccountTabs />}
