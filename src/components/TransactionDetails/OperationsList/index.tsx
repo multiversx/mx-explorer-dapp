@@ -84,11 +84,9 @@ const OperationText = ({ operation }: { operation: OperationType }) => {
 
 const OperationRow = ({
   operation,
-  index,
   transactionTokens,
 }: {
   operation: OperationType;
-  index: number | string;
   transactionTokens?: TransactionTokensType;
 }) => {
   switch (operation.type) {
@@ -98,7 +96,7 @@ const OperationRow = ({
       });
 
       return operationNft?.length ? (
-        <DetailedItem operation={operation} key={index}>
+        <DetailedItem operation={operation}>
           <>
             {operationNft[0].type !== 'NonFungibleESDT' && <div className="mr-2">Value</div>}
             <NftBlock operationToken={operationNft[0]} value={operation.value} />
@@ -112,7 +110,7 @@ const OperationRow = ({
       });
 
       return operationToken?.length ? (
-        <DetailedItem operation={operation} key={index}>
+        <DetailedItem operation={operation}>
           <>
             <div className="mr-2">Value</div>
             <TokenBlock operationToken={operationToken[0]} value={operation.value} />
@@ -122,7 +120,7 @@ const OperationRow = ({
 
     case VisibleTransactionOperationType.egld:
       return (
-        <DetailedItem operation={operation} key={index}>
+        <DetailedItem operation={operation}>
           <>
             <div className="mr-2">Value</div>
             <Denominate value={operation.value} showLastNonZeroDecimal={true} />
@@ -177,11 +175,9 @@ const OperationsList = ({
     <div className="mb-n2">
       <div className="operations-list d-flex flex-column">
         {displayOperations.map((operation: OperationType, index) => (
-          <OperationRow
-            operation={operation}
-            index={`display-${index}`}
-            transactionTokens={transactionTokens}
-          />
+          <div key={`display-${index}`}>
+            <OperationRow operation={operation} transactionTokens={transactionTokens} />
+          </div>
         ))}
       </div>
       {collapsedOperations.length > 0 && (
@@ -190,11 +186,9 @@ const OperationsList = ({
             <div id="operations-list">
               <div className="operations-list d-flex flex-column">
                 {collapsedOperations.map((operation: OperationType, index) => (
-                  <OperationRow
-                    operation={operation}
-                    index={`collapse-${index}`}
-                    transactionTokens={transactionTokens}
-                  />
+                  <div key={`collapse-${index}`}>
+                    <OperationRow operation={operation} transactionTokens={transactionTokens} />
+                  </div>
                 ))}
               </div>
             </div>
