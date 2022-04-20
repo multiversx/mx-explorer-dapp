@@ -11,12 +11,12 @@ import {
   adapter,
   Trim,
   Loader,
-  Denominate,
   LatestItem,
 } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
+import TransactionValue from 'sharedComponents/TransactionsTable/TransactionValue';
 
 const LatestTransactions = () => {
   const ref = React.useRef(null);
@@ -80,7 +80,7 @@ const LatestTransactions = () => {
 
   const Component = () => {
     return (
-      <div className="card" ref={ref}>
+      <div className="card latest-transactions" ref={ref}>
         {transactionsFetched === undefined && <Loader dataTestId="transactionsLoader" />}
         {transactionsFetched === false && <FailedTransactions />}
         {transactionsFetched === true && transactions.length === 0 && <NoTransactions />}
@@ -114,9 +114,7 @@ const LatestTransactions = () => {
                             <div className="latest-item-icon mr-2">
                               <FontAwesomeIcon icon={faExchangeAlt} />
                             </div>
-                            <div className="d-flex">
-                              <Denominate value={transaction.value} decimals={4} />
-                            </div>
+                            <TransactionValue transaction={transaction} hideMultipleBadge />
                           </div>
 
                           <div className="text-secondary flex-shrink-0">
