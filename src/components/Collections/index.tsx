@@ -82,7 +82,7 @@ const Collections = () => {
                             </thead>
                             <tbody data-testid="collectionsTable">
                               {collections.map((collection, i) => (
-                                <tr key={collection.name}>
+                                <tr key={`${collection.name}-${collection.collection}`}>
                                   <td>
                                     <div className="d-flex align-items-center">
                                       <NetworkLink
