@@ -76,7 +76,13 @@ const MultipleTokensBadge = ({ transactionTokens }: { transactionTokens: any[] }
   );
 };
 
-const TransactionValue = ({ transaction }: { transaction: UITransactionType }) => {
+const TransactionValue = ({
+  transaction,
+  hideMultipleBadge,
+}: {
+  transaction: UITransactionType;
+  hideMultipleBadge?: boolean;
+}) => {
   if (transaction.action) {
     if (
       transaction.action.name === TxActionsEnum.wrapEgld ||
@@ -96,7 +102,7 @@ const TransactionValue = ({ transaction }: { transaction: UITransactionType }) =
           ) : (
             <TxActionBlock.Token token={txToken} />
           )}
-          {transactionTokens.length > 1 && (
+          {!hideMultipleBadge && transactionTokens.length > 1 && (
             <MultipleTokensBadge transactionTokens={transactionTokens} />
           )}
         </div>
