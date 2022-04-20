@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGlobalState } from 'context';
 import { stringIsInteger } from 'helpers';
-
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import denominate from './denominate';
 import { denomination as configDenomination, decimals as configDecimals } from 'appConfig';
 
@@ -14,6 +14,26 @@ export interface DenominateType {
   denomination?: number;
   'data-testid'?: string;
 }
+
+const CompleteValueTooltip = ({
+  completeValue,
+  children,
+}: {
+  completeValue: string;
+  children: React.ReactNode;
+}) => (
+  <OverlayTrigger
+    placement="top"
+    delay={{ show: 0, hide: 400 }}
+    overlay={(props: any) => (
+      <Tooltip {...props} show={props.show.toString()}>
+        {completeValue}
+      </Tooltip>
+    )}
+  >
+    <span>{children}</span>
+  </OverlayTrigger>
+);
 
 const denominateInvalid = (props: DenominateType) => {
   return (
@@ -49,10 +69,30 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
     valueParts.push(zeros);
   }
 
-  return (
-    <span data-testid={props['data-testid'] ? props['data-testid'] : 'denominateComponent'}>
+  const completeValue = denominate({
+    input: value,
+    denomination,
+    decimals,
+    showLastNonZeroDecimal: true,
+  });
+
+  const DisplayValue = () => (
+    <>
       <span className="int-amount">{valueParts[0]}</span>
       {valueParts.length > 1 && <span className="decimals">.{valueParts[1]}</span>}
+    </>
+  );
+
+  return (
+    <span data-testid={props['data-testid'] ? props['data-testid'] : 'denominateComponent'}>
+      {completeValue !== denominatedValue ? (
+        <CompleteValueTooltip completeValue={completeValue}>
+          <DisplayValue />
+        </CompleteValueTooltip>
+      ) : (
+        <DisplayValue />
+      )}
+
       {showLabel && (
         <span className={`symbol ${props.token ? 'text-muted' : ''}`}>
           &nbsp;{props.token ? props.token : erdLabel}
