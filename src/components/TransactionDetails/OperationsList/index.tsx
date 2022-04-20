@@ -2,6 +2,7 @@ import * as React from 'react';
 import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { addressIsBech32, urlBuilder } from 'helpers';
+import { Collapse } from 'react-bootstrap';
 import {
   OperationType,
   TransactionTokensType,
@@ -81,6 +82,59 @@ const OperationText = ({ operation }: { operation: OperationType }) => {
   }
 };
 
+const OperationRow = ({
+  operation,
+  index,
+  transactionTokens,
+}: {
+  operation: OperationType;
+  index: number | string;
+  transactionTokens?: TransactionTokensType;
+}) => {
+  switch (operation.type) {
+    case VisibleTransactionOperationType.nft:
+      const operationNft = transactionTokens?.nfts.filter((token) => {
+        return token.identifier === operation.identifier;
+      });
+
+      return operationNft?.length ? (
+        <DetailedItem operation={operation} key={index}>
+          <>
+            {operationNft[0].type !== 'NonFungibleESDT' && <div className="mr-2">Value</div>}
+            <NftBlock operationToken={operationNft[0]} value={operation.value} />
+          </>
+        </DetailedItem>
+      ) : null;
+
+    case VisibleTransactionOperationType.esdt:
+      const operationToken = transactionTokens?.esdts.filter((token) => {
+        return token.identifier === operation.identifier;
+      });
+
+      return operationToken?.length ? (
+        <DetailedItem operation={operation} key={index}>
+          <>
+            <div className="mr-2">Value</div>
+            <TokenBlock operationToken={operationToken[0]} value={operation.value} />
+          </>
+        </DetailedItem>
+      ) : null;
+
+    case VisibleTransactionOperationType.egld:
+      return (
+        <DetailedItem operation={operation} key={index}>
+          <>
+            <div className="mr-2">Value</div>
+            <Denominate value={operation.value} showLastNonZeroDecimal={true} />
+          </>
+        </DetailedItem>
+      );
+
+    default:
+      return null;
+  }
+};
+
 const DetailedItem = ({
   children,
   operation,
@@ -107,52 +161,57 @@ const OperationsList = ({
   operations: OperationType[];
   transactionTokens?: TransactionTokensType;
 }) => {
+  const initialDisplay = 30;
+  const [expanded, setExpanded] = React.useState(false);
+
+  const toggleCollapseClick = (e: React.MouseEvent) => {
+    setExpanded(!expanded);
+  };
+
+  const displayOperations =
+    operations.length > initialDisplay ? operations.slice(0, initialDisplay) : operations;
+  const collapsedOperations =
+    operations.length > initialDisplay ? operations.slice(initialDisplay, operations.length) : [];
+
   return (
-    <div className="operations-list d-flex flex-column mb-n2">
-      {operations.map((operation: OperationType, index) => {
-        switch (operation.type) {
-          case VisibleTransactionOperationType.nft:
-            const operationNft = transactionTokens?.nfts.filter((token) => {
-              return token.identifier === operation.identifier;
-            });
-
-            return operationNft?.length ? (
-              <DetailedItem operation={operation} key={index}>
-                <>
-                  {operationNft[0].type !== 'NonFungibleESDT' && <div className="mr-2">Value</div>}
-                  <NftBlock operationToken={operationNft[0]} value={operation.value} />
-                </>
-              </DetailedItem>
-            ) : null;
-
-          case VisibleTransactionOperationType.esdt:
-            const operationToken = transactionTokens?.esdts.filter((token) => {
-              return token.identifier === operation.identifier;
-            });
-
-            return operationToken?.length ? (
-              <DetailedItem operation={operation} key={index}>
-                <>
-                  <div className="mr-2">Value</div>
-                  <TokenBlock operationToken={operationToken[0]} value={operation.value} />
-                </>
-              </DetailedItem>
-            ) : null;
-
-          case VisibleTransactionOperationType.egld:
-            return (
-              <DetailedItem operation={operation} key={index}>
-                <>
-                  <div className="mr-2">Value</div>
-                  <Denominate value={operation.value} showLastNonZeroDecimal={true} />
-                </>
-              </DetailedItem>
-            );
-
-          default:
-            return null;
-        }
-      })}
+    <div className="mb-n2">
+      <div className="operations-list d-flex flex-column">
+        {displayOperations.map((operation: OperationType, index) => (
+          <OperationRow
+            operation={operation}
+            index={`display-${index}`}
+            transactionTokens={transactionTokens}
+          />
+        ))}
+      </div>
+      {collapsedOperations.length > 0 && (
+        <>
+          <Collapse in={expanded}>
+            <div id="operations-list">
+              <div className="operations-list d-flex flex-column">
+                {collapsedOperations.map((operation: OperationType, index) => (
+                  <OperationRow
+                    operation={operation}
+                    index={`collapse-${index}`}
+                    transactionTokens={transactionTokens}
+                  />
+                ))}
+              </div>
+            </div>
+          </Collapse>
+          {collapsedOperations && !expanded && (
+            <button
+              className="btn btn-link btn-link-base"
+              type="button"
+              onClick={toggleCollapseClick}
+              aria-controls="operations-list"
+              aria-expanded={expanded}
+            >
+              See all
+            </button>
+          )}
+        </>
+      )}
     </div>
   );
 };
