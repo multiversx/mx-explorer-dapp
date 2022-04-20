@@ -1,7 +1,12 @@
 import { TransactionType } from 'helpers/types';
 
 export default function getReceiptMessages(transaction: TransactionType) {
-  const messages = transaction?.receipt?.data ? [transaction?.receipt?.data] : [];
+  if (transaction?.receipt?.data) {
+    const message = transaction.receipt.data;
+    const value = transaction?.receipt?.value ? `: ${transaction.receipt.value}` : '';
 
-  return messages;
+    return [`${message}${value}`];
+  } else {
+    return [];
+  }
 }
