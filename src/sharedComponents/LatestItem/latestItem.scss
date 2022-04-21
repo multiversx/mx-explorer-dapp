@@ -81,9 +81,8 @@
         flex-shrink: 0;
       }
 
-      .symbol {
-        @extend .text-truncate;
-        max-width: 5.5rem;
+      .transaction-value {
+        width: 8.5rem;
       }
     }
   }

@@ -258,3 +258,15 @@
   height: 1.5rem;
   color: transparent;
 }
+
+.btn-link-base {
+  padding: 0;
+  font-size: inherit;
+  outline: 0;
+  border: 0;
+  box-shadow: none;
+  &:focus,
+  &.focus {
+    box-shadow: none;
+  }
+}
