@@ -46,6 +46,7 @@ import { denomination, decimals } from 'appConfig';
 import { useGlobalState } from 'context';
 import { transactionsRoutes } from 'routes';
 import DataField from './DataField';
+import StatusMessage from './StatusMessage';
 
 const getFee = (transaction: TransactionType) => {
   const bNgasPrice = new BigNumber(transaction.gasPrice);
@@ -191,15 +192,18 @@ const TransactionInfo = ({
                 </DetailItem>
 
                 <DetailItem title="Status">
-                  <TransactionStatus
-                    status={transaction.status}
-                    pendingResults={transaction.pendingResults}
-                  />
+                  <div className="d-flex flex-wrap align-items-center">
+                    <TransactionStatus
+                      status={transaction.status}
+                      pendingResults={transaction.pendingResults}
+                    />
+                    <StatusMessage transaction={transaction} />
+                  </div>
                 </DetailItem>
 
                 <DetailItem title="Age">
                   {transaction.timestamp !== undefined ? (
-                    <div className="d-flex align-items-center">
+                    <div className="d-flex flex-wrap align-items-center">
                       {isTxPending ? (
                         <FontAwesomeIcon
                           icon={faSpinner}

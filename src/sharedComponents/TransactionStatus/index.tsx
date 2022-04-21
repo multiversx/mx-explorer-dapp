@@ -68,7 +68,7 @@ const TransactionStatus = ({ status, pendingResults }: TransactionStatusType) =>
   const { Icon } = getStatusIconAndColor(status, pendingResults);
 
   return (
-    <span className="d-flex align-items-center text-capitalize">
+    <span className="d-flex align-items-center text-capitalize mr-2">
       <Icon />
       {getStatusText({ status, pendingResults })}
     </span>
