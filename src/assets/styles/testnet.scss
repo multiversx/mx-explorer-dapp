@@ -29,6 +29,7 @@ $input-hover-border-color: darken($border-color, 15%);
 @import './main';
 
 .main-content-container {
+  button.btn-link-base,
   a:not(.btn-primary-light) {
     text-decoration: none !important;
     position: relative;
