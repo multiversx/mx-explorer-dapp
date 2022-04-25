@@ -6,7 +6,7 @@ import { TransactionType } from 'sharedComponents/TransactionsTable';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
-import { useSize, useIsMainnet } from 'helpers';
+import { useSize } from 'helpers';
 import AccountTabs from './AccountLayout/AccountTabs';
 
 interface TransactionsResponseType {
@@ -22,7 +22,7 @@ const AccountDetails = () => {
   const { hash: address } = useParams() as any;
 
   // TEMP
-  const isMainnet = useIsMainnet();
+  const useTransactionsEndpoint = false; // useIsMainnet();
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
   const [isDataReady, setIsDataReady] = React.useState<boolean | undefined>();
@@ -52,7 +52,7 @@ const AccountDetails = () => {
   };
 
   const fetchTransactions = () => {
-    if (!isMainnet) {
+    if (!useTransactionsEndpoint) {
       getAccountTransfers({
         size,
         address,
@@ -100,7 +100,7 @@ const AccountDetails = () => {
               transactions={transactions}
               address={address}
               totalTransactions={
-                !isMainnet
+                !useTransactionsEndpoint
                   ? accountDetails.txCount + accountDetails.scrCount
                   : accountDetails.txCount
               }

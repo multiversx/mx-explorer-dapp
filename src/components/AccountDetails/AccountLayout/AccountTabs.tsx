@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NetworkLink } from 'sharedComponents';
-import { urlBuilder, useActiveRoute, useIsMainnet } from 'helpers';
+import { urlBuilder, useActiveRoute } from 'helpers';
 import { useGlobalState } from 'context';
 import { accountsRoutes } from 'routes';
 
@@ -10,7 +10,7 @@ const AccountTabs = () => {
   const tokensRouteActive = activeNetwork.adapter === 'api';
 
   // TEMP
-  const isMainnet = useIsMainnet();
+  const useTransactionsEndpoint = false; // useIsMainnet();
 
   return (
     <div className="account-tabs d-flex flex-row flex-wrap">
@@ -23,7 +23,7 @@ const AccountTabs = () => {
         <h6>Transactions</h6>
       </NetworkLink>
 
-      {isMainnet && (
+      {useTransactionsEndpoint && (
         <NetworkLink
           to={urlBuilder.accountDetailsScResults(accountDetails.address)}
           className={`tab-link mr-3 mr-lg-spacer ${
