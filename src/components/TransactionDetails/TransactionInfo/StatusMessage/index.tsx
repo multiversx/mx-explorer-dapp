@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
+import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { adapter } from 'sharedComponents';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
@@ -40,12 +40,18 @@ const StatusMessage = ({ transaction }: { transaction: TransactionType }) => {
   }, [senderAddress, timestamp, isTxPending]);
 
   return (
-    <div ref={ref} className="d-flex align-items-center">
+    <div ref={ref}>
       {isDataReady && hasUnsyncedNonce && (
-        <>
-          <FontAwesomeIcon icon={faExclamationTriangle} size="xs" className="text-warning mr-1" />
-          <span className="text-warning">Probable higher nonce in transaction</span>
-        </>
+        <div className="d-flex ml-1 text-break-all">
+          <FontAwesomeIcon
+            icon={faAngleDown}
+            className="text-secondary"
+            style={{ marginTop: '2px' }}
+            transform={{ rotate: 45 }}
+          />
+          &nbsp;
+          <small className="text-warning ml-1"> Probable higher nonce in transaction</small>
+        </div>
       )}
     </div>
   );
