@@ -85,7 +85,7 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.networkStatus();
       case url.includes('/validators'): // TODO: check
         return requests.validators();
-      case url.includes('/transactions/count'):
+      case url.includes('/transactions/c'):
         return requests.transactionsCount();
       case url.includes('/transactions/'):
         return requests.transaction();
@@ -93,17 +93,17 @@ const mockImplementation = ({ networkRequests }: MockImplementationType) => {
         return requests.transactions();
       case url.includes('/delegation'):
         return requests.delegation();
-      case url.includes('/accounts/') && url.includes('/tokens/count'):
+      case url.includes('/accounts/') && url.includes('/tokens/c'):
         return requests.accountTokensCount();
       case url.includes('/accounts/') && url.includes('/tokens'):
         return requests.accountTokens();
-      case url.includes('/accounts/count'):
+      case url.includes('/accounts/c'):
         return requests.accountsCount();
       case url.includes('/accounts/'):
         return requests.account();
       case url.includes('/accounts'):
         return requests.accounts();
-      case url.includes('/blocks/count'):
+      case url.includes('/blocks/c'):
         return requests.blocksCount();
       case url.includes('/blocks/'):
         return requests.block();

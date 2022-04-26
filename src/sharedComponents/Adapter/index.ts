@@ -151,7 +151,7 @@ export default function useAdapter() {
     },
 
     getBlocksCount: ({ shard, epoch }: GetBlocksType) =>
-      provider({ url: `/blocks/count`, params: getShardAndEpochParam(shard, epoch) }),
+      provider({ url: `/blocks/c`, params: getShardAndEpochParam(shard, epoch) }),
 
     /* Transaction */
 
@@ -172,7 +172,7 @@ export default function useAdapter() {
       }),
 
     getMiniBlockTransactionsCount: (miniBlockHash: string) =>
-      provider({ url: `/transactions/count`, params: { miniBlockHash } }),
+      provider({ url: `/transactions/c`, params: { miniBlockHash } }),
 
     getMiniBlockScResults: ({ miniBlockHash, size }: { miniBlockHash: string; size: number }) =>
       provider({
@@ -208,7 +208,7 @@ export default function useAdapter() {
 
     getTransactionsCount: ({ address, senderShard, receiverShard }: TransactionsParamsType) =>
       provider({
-        url: `/transactions/count`,
+        url: `/transactions/c`,
         params: {
           ...getAccountParams(address),
           ...(senderShard !== undefined ? { senderShard } : {}),
@@ -226,7 +226,7 @@ export default function useAdapter() {
       }),
 
     getAccountTransfersCount: (address: string) =>
-      provider({ url: `/accounts/${address}/transfers/count` }),
+      provider({ url: `/accounts/${address}/transfers/c` }),
 
     getAccountScResults: ({ address, size }: { address: string; size: number }) =>
       provider({
@@ -238,7 +238,7 @@ export default function useAdapter() {
       }),
 
     getAccountScResultsCount: (address: string) =>
-      provider({ url: `/accounts/${address}/sc-results/count` }),
+      provider({ url: `/accounts/${address}/sc-results/c` }),
 
     getAccountContracts: ({ address, size }: { address: string; size: number }) =>
       provider({
@@ -250,7 +250,7 @@ export default function useAdapter() {
       }),
 
     getAccountContractsCount: (address: string) =>
-      provider({ url: `/accounts/${address}/contracts/count` }),
+      provider({ url: `/accounts/${address}/contracts/c` }),
 
     getScResult: (hash: string) => provider({ url: `/sc-results/${hash}` }),
 
@@ -263,7 +263,7 @@ export default function useAdapter() {
         },
       }),
 
-    getScResultsCount: () => provider({ url: `/sc-results/count` }),
+    getScResultsCount: () => provider({ url: `/sc-results/c` }),
 
     /* Stake */
 
@@ -298,7 +298,7 @@ export default function useAdapter() {
       provider,
     }: GetNodesType) =>
       getNodes({
-        url: `/nodes/count`,
+        url: `/nodes/c`,
         params: getNodeParams({
           online,
           issues,
@@ -341,7 +341,7 @@ export default function useAdapter() {
         },
       }),
 
-    getAccountsCount: () => provider({ url: `/accounts/count` }),
+    getAccountsCount: () => provider({ url: `/accounts/c` }),
 
     getGlobalStake: () => provider({ url: `/stake` }),
 
@@ -356,8 +356,7 @@ export default function useAdapter() {
         },
       }),
 
-    getAccountTokensCount: (address: string) =>
-      provider({ url: `/accounts/${address}/tokens/count` }),
+    getAccountTokensCount: (address: string) => provider({ url: `/accounts/${address}/tokens/c` }),
 
     getTokens: (props: GetTokensType) =>
       provider({
@@ -367,7 +366,7 @@ export default function useAdapter() {
 
     getTokensCount: ({ search }: GetTokensType) =>
       provider({
-        url: `/tokens/count`,
+        url: `/tokens/c`,
         params: getTokensParam({ search }),
       }),
 
@@ -381,7 +380,7 @@ export default function useAdapter() {
 
     getTokenTransactionsCount: ({ tokenId }: { tokenId: string }) =>
       provider({
-        url: `/tokens/${tokenId}/transactions/count`,
+        url: `/tokens/${tokenId}/transactions/c`,
       }),
 
     getTokenAccounts: ({ size, tokenId }: { size: number; tokenId: string }) =>
@@ -392,7 +391,7 @@ export default function useAdapter() {
 
     getTokenAccountsCount: ({ tokenId }: { tokenId: string }) =>
       provider({
-        url: `/tokens/${tokenId}/accounts/count`,
+        url: `/tokens/${tokenId}/accounts/c`,
       }),
 
     getTokenRoles: ({ tokenId }: { tokenId: string }) =>
@@ -409,7 +408,7 @@ export default function useAdapter() {
       }),
 
     getAccountNftsCount: ({ address, type }: { address: string; type?: string }) =>
-      provider({ url: `/accounts/${address}/nfts/count`, params: getNftsParam({ type }) }),
+      provider({ url: `/accounts/${address}/nfts/c`, params: getNftsParam({ type }) }),
 
     getCollections: (props: GetNftsType) =>
       provider({
@@ -419,7 +418,7 @@ export default function useAdapter() {
 
     getCollectionsCount: ({ search }: GetNftsType) =>
       provider({
-        url: `/collections/count`,
+        url: `/collections/c`,
         params: getNftsParam({ search }),
       }),
 
@@ -433,7 +432,7 @@ export default function useAdapter() {
 
     getNftsCount: (props: GetNftsType) =>
       provider({
-        url: `/nfts/count`,
+        url: `/nfts/c`,
         params: getNftsParam(props),
       }),
 
@@ -444,7 +443,7 @@ export default function useAdapter() {
       }),
 
     getNftOwnersCount: (props: GetNftsType) =>
-      provider({ url: `/nfts/${props.identifier}/owners/count`, params: getNftsParam(props) }),
+      provider({ url: `/nfts/${props.identifier}/owners/c`, params: getNftsParam(props) }),
 
     getNft: (identifier: string) => provider({ url: `/nfts/${identifier}` }),
 
