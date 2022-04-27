@@ -20,6 +20,7 @@ $link-hover-color: lighten($primary, 7%);
 
 $card-bg: #242526;
 $border-color: $muted;
+$border-color-alt: #1c1c1d;
 
 $input-color: $secondary;
 $input-bg: $card-bg;
@@ -27,10 +28,6 @@ $input-disabled-bg: $muted;
 $input-hover-border-color: lighten($border-color, 15%);
 
 @import './main';
-
-.identity-avatar {
-  border: 1px solid #1c1c1d;
-}
 
 .simple-map {
   .rsm-svg {
