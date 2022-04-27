@@ -197,7 +197,6 @@ const TransactionInfo = ({
                       status={transaction.status}
                       pendingResults={transaction.pendingResults}
                     />
-                    <StatusMessage transaction={transaction} />
                   </div>
                 </DetailItem>
 
@@ -413,7 +412,12 @@ const TransactionInfo = ({
                   )}
                 </DetailItem>
 
-                <DetailItem title="Nonce">{transaction.nonce}</DetailItem>
+                <DetailItem title="Nonce">
+                  <>
+                    {transaction.nonce}
+                    <StatusMessage transaction={transaction} />
+                  </>
+                </DetailItem>
 
                 <DataField data={transaction.data} scamInfo={transaction.scamInfo} />
 
