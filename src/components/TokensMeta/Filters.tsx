@@ -23,7 +23,7 @@ const Filters = () => {
       ...rest,
       ...(searchValue ? { search: searchValue } : {}),
     }).toString();
-    history.push(`/nfts?${nextUrlParams}`);
+    history.push(`/meta-tokens?${nextUrlParams}`);
   };
 
   return (
@@ -42,8 +42,8 @@ const Filters = () => {
                 }
               }}
               placeholder="Search"
-              name="nftsSearch"
-              data-testid="nftsSearch"
+              name="metaEsdtSearch"
+              data-testid="metaEsdtSearch"
             />
             <div className="input-group-append">
               {inputValue ? (
