@@ -11,6 +11,26 @@ import {
 import { NetworkLink, Trim, CopyButton, TokenBlock, NftBlock, Denominate } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 
+export enum OperationDirectionEnum {
+  out = 'out',
+  in = 'in',
+  self = 'self',
+  internal = 'int',
+}
+
+const internalTransactionActions = [
+  TransactionOperationActionType.create,
+  TransactionOperationActionType.localMint,
+  TransactionOperationActionType.ESDTLocalMint,
+  TransactionOperationActionType.addQuantity,
+  TransactionOperationActionType.burn,
+  TransactionOperationActionType.localBurn,
+  TransactionOperationActionType.ESDTLocalBurn,
+  TransactionOperationActionType.wipe,
+  TransactionOperationActionType.writeLog,
+  TransactionOperationActionType.signalError,
+];
+
 export const getOperationDirection = ({
   operation,
   address,
@@ -26,16 +46,16 @@ export const getOperationDirection = ({
   let direction = '';
   switch (true) {
     case directionOut:
-      direction = 'Out';
+      direction = OperationDirectionEnum.out;
       break;
     case directionIn:
-      direction = 'In';
+      direction = OperationDirectionEnum.in;
       break;
     case directionSelf:
-      direction = 'Self';
+      direction = OperationDirectionEnum.self;
       break;
     case directionInternal:
-      direction = 'Int';
+      direction = OperationDirectionEnum.internal;
       break;
   }
 
@@ -87,18 +107,38 @@ const OperationText = ({ operation, sender }: { operation: OperationType; sender
     case TransactionOperationActionType.create:
     case TransactionOperationActionType.localMint:
     case TransactionOperationActionType.ESDTLocalMint:
-      return <OperationBlock address={operation.sender} action="Mint by" direction={direction} />;
+      return (
+        <OperationBlock
+          address={operation.sender}
+          action="Mint by"
+          direction={OperationDirectionEnum.internal}
+        />
+      );
     case TransactionOperationActionType.addQuantity:
       return (
-        <OperationBlock address={operation.sender} action="Add quantity by" direction={direction} />
+        <OperationBlock
+          address={operation.sender}
+          action="Add quantity by"
+          direction={OperationDirectionEnum.internal}
+        />
       );
     case TransactionOperationActionType.burn:
     case TransactionOperationActionType.localBurn:
     case TransactionOperationActionType.ESDTLocalBurn:
-      return <OperationBlock address={operation.sender} action="Burn by" direction={direction} />;
+      return (
+        <OperationBlock
+          address={operation.sender}
+          action="Burn by"
+          direction={OperationDirectionEnum.internal}
+        />
+      );
     case TransactionOperationActionType.wipe:
       return (
-        <OperationBlock address={operation.receiver} action="Wipe from" direction={direction} />
+        <OperationBlock
+          address={operation.receiver}
+          action="Wipe from"
+          direction={OperationDirectionEnum.internal}
+        />
       );
     case TransactionOperationActionType.multiTransfer:
       return (
@@ -123,7 +163,7 @@ const OperationText = ({ operation, sender }: { operation: OperationType; sender
         <OperationBlock
           address={operation.sender}
           action="Write log by"
-          direction={direction}
+          direction={OperationDirectionEnum.internal}
           isFullSize
         />
       );
@@ -132,7 +172,7 @@ const OperationText = ({ operation, sender }: { operation: OperationType; sender
         <OperationBlock
           address={operation.sender}
           action="Signal error by"
-          direction={direction}
+          direction={OperationDirectionEnum.internal}
           isFullSize
         />
       );
@@ -195,7 +235,7 @@ const OperationRow = ({
       );
 
     default:
-      return null;
+      return <></>;
   }
 };
 
@@ -238,7 +278,8 @@ const OperationsList = ({
 
   const filteredOperations = operations.filter(
     (operation) =>
-      operation.sender === transaction.sender || operation.receiver === transaction.sender
+      !internalTransactionActions.includes(operation.action) &&
+      (operation.sender === transaction.sender || operation.receiver === transaction.sender)
   );
   const importantOperations = filteredOperations.length > 0 ? filteredOperations : operations;
 
