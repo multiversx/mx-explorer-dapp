@@ -257,7 +257,7 @@ export enum HiddenTransactionOperationType {
   log = 'log',
 }
 export interface OperationType {
-  action: TransactionOperationActionType | string;
+  action: TransactionOperationActionType;
   type: VisibleTransactionOperationType | HiddenTransactionOperationType;
   collection?: string;
   identifier: string;
