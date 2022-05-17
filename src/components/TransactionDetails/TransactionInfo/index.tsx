@@ -386,6 +386,7 @@ const TransactionInfo = ({
                     }
                   >
                     <OperationsList
+                      transaction={transaction}
                       operations={visibleOperations}
                       transactionTokens={transactionTokens}
                     />
