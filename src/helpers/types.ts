@@ -268,6 +268,33 @@ export interface OperationType {
   message?: string;
 }
 
+export interface LogType {
+  hash: string;
+  callType: string;
+  gasLimit: number;
+  gasPrice: number;
+  nonce: number;
+  prevTxHash: string;
+  receiver?: string;
+  sender: string;
+  value: string;
+  data?: string;
+  originalTxHash: string;
+  returnMessage?: string;
+  logs?: any;
+}
+
+export interface EventType {
+  address: string;
+  identifier: string;
+  topics: string[];
+}
+
+export interface ResultLogType {
+  address: string;
+  events: EventType[];
+}
+
 export interface ResultType {
   hash: string;
   callType: string;
@@ -281,12 +308,7 @@ export interface ResultType {
   data?: string;
   originalTxHash: string;
   returnMessage?: string;
-}
-
-export interface EventType {
-  address: string;
-  identifier: string;
-  topics: string[];
+  logs?: ResultLogType;
 }
 
 export interface ReceiptType {
