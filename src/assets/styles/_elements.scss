@@ -260,6 +260,9 @@
   border-radius: 50%;
   overflow: hidden;
   border: 1px solid $border-color-alt;
+  svg {
+    color: $muted;
+  }
 }
 
 .btn-link-base {
