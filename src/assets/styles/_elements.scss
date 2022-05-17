@@ -165,7 +165,8 @@
     border: 1px solid rgba($secondary, 0.2);
   }
 
-  &.internal {
+  &.internal,
+  &.int {
     color: $muted;
     border: 1px solid rgba($muted, 0.2);
   }
