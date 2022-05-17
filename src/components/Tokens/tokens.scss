@@ -22,6 +22,10 @@
       .token-icon {
         width: 3rem;
         height: 3rem;
+        svg {
+          width: 1.75rem;
+          height: 1.75rem;
+        }
       }
       th:first-child,
       td:first-child {
