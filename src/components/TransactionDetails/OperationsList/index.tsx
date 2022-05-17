@@ -2,7 +2,6 @@ import * as React from 'react';
 import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { addressIsBech32, urlBuilder } from 'helpers';
-import { Collapse } from 'react-bootstrap';
 import {
   OperationType,
   TransactionTokensType,
@@ -10,6 +9,7 @@ import {
   VisibleTransactionOperationType,
 } from 'helpers/types';
 import { NetworkLink, Trim, CopyButton, TokenBlock, NftBlock, Denominate } from 'sharedComponents';
+import { TransactionType } from 'sharedComponents/TransactionsTable';
 
 const OperationBlock = ({
   address,
@@ -153,59 +153,70 @@ const DetailedItem = ({
 };
 
 const OperationsList = ({
+  transaction,
   operations,
   transactionTokens,
 }: {
+  transaction: TransactionType;
   operations: OperationType[];
   transactionTokens?: TransactionTokensType;
 }) => {
-  const initialDisplay = 30;
+  const initialDisplay = 25;
   const [expanded, setExpanded] = React.useState(false);
 
   const toggleCollapseClick = (e: React.MouseEvent) => {
     setExpanded(!expanded);
   };
 
+  const filteredOperations = operations.filter(
+    (operation) =>
+      operation.sender === transaction.sender || operation.receiver === transaction.sender
+  );
+  const importantOperations = filteredOperations.length > 0 ? filteredOperations : operations;
+
   const displayOperations =
-    operations.length > initialDisplay ? operations.slice(0, initialDisplay) : operations;
+    importantOperations.length > initialDisplay
+      ? importantOperations.slice(0, initialDisplay)
+      : importantOperations;
+
   const collapsedOperations =
-    operations.length > initialDisplay ? operations.slice(initialDisplay, operations.length) : [];
+    importantOperations.length > initialDisplay
+      ? importantOperations.slice(initialDisplay, importantOperations.length)
+      : [];
 
   return (
     <div className="mb-n2">
       <div className="operations-list d-flex flex-column">
-        {displayOperations.map((operation: OperationType, index) => (
-          <div key={`display-${index}`}>
-            <OperationRow operation={operation} transactionTokens={transactionTokens} />
-          </div>
-        ))}
-      </div>
-      {collapsedOperations.length > 0 && (
-        <>
-          <Collapse in={expanded}>
-            <div id="operations-list">
-              <div className="operations-list d-flex flex-column">
-                {collapsedOperations.map((operation: OperationType, index) => (
-                  <div key={`collapse-${index}`}>
-                    <OperationRow operation={operation} transactionTokens={transactionTokens} />
-                  </div>
-                ))}
+        {expanded ? (
+          <>
+            {operations.map((operation: OperationType, index) => (
+              <div key={`display-${index}`}>
+                <OperationRow operation={operation} transactionTokens={transactionTokens} />
               </div>
-            </div>
-          </Collapse>
-          {collapsedOperations && !expanded && (
-            <button
-              className="btn btn-link btn-link-base"
-              type="button"
-              onClick={toggleCollapseClick}
-              aria-controls="operations-list"
-              aria-expanded={expanded}
-            >
-              See all
-            </button>
-          )}
-        </>
-      )}
+            ))}
+          </>
+        ) : (
+          <>
+            {displayOperations.map((operation: OperationType, index) => (
+              <div key={`display-${index}`}>
+                <OperationRow operation={operation} transactionTokens={transactionTokens} />
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+      {(filteredOperations.length !== operations.length || collapsedOperations.length > 0) &&
+        !expanded && (
+          <button
+            className="btn btn-link btn-link-base"
+            type="button"
+            onClick={toggleCollapseClick}
+            aria-controls="operations-list"
+            aria-expanded={expanded}
+          >
+            See all
+          </button>
+        )}
     </div>
   );
 };
