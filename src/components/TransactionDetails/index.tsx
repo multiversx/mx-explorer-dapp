@@ -16,7 +16,7 @@ const TransactionDetails = () => {
     refresh: { timestamp },
   } = useGlobalState();
 
-  const { getTransaction, getTokens, getNfts } = adapter();
+  const { getTransaction } = adapter();
 
   const [transaction, setTransaction] = React.useState<TransactionType | undefined>();
   const [transactionTokens, setTransactionTokens] = React.useState<
@@ -31,31 +31,21 @@ const TransactionDetails = () => {
           setTransaction(data);
           if (data && data.operations && data.operations.length > 0) {
             prepareTransactionTokens(data.operations);
-          } else {
-            setDataReady(success);
           }
+          setDataReady(success);
         }
       });
     }
   };
 
   const prepareTransactionTokens = (operations: OperationType[]) => {
-    const promises = [];
-
     const uniqueTokenIdentifiers = Array.from(
       new Set(
         operations
           .filter((operation) => operation.type === 'esdt')
           .map((operation) => operation.identifier)
       )
-    ).join();
-    if (uniqueTokenIdentifiers) {
-      const esdts = getTokens({ identifiers: uniqueTokenIdentifiers }).then((res) => ({
-        res,
-        promise: 'esdts',
-      }));
-      promises.push(esdts);
-    }
+    );
 
     const uniqueNftIdentifiers = Array.from(
       new Set(
@@ -63,26 +53,11 @@ const TransactionDetails = () => {
           .filter((operation) => operation.type === 'nft')
           .map((operation) => operation.identifier)
       )
-    ).join();
-    if (uniqueNftIdentifiers) {
-      const nfts = getNfts({ identifiers: uniqueNftIdentifiers }).then((res) => ({
-        res,
-        promise: 'nfts',
-      }));
-      promises.push(nfts);
-    }
+    );
 
-    Promise.all(promises).then((res) => {
-      if (ref.current !== null) {
-        const esdts = res.filter((res) => res.promise === 'esdts')[0];
-        const nfts = res.filter((res) => res.promise === 'nfts')[0];
-        setTransactionTokens({
-          esdts: esdts ? esdts.res.data : [],
-          nfts: nfts ? nfts.res.data : [],
-        });
-
-        setDataReady((esdts ? esdts.res.success : true) && (nfts ? nfts.res.success : true));
-      }
+    setTransactionTokens({
+      esdts: uniqueTokenIdentifiers,
+      nfts: uniqueNftIdentifiers,
     });
   };
 

@@ -4,11 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { addressIsBech32, urlBuilder } from 'helpers';
 import {
   OperationType,
-  TransactionTokensType,
   TransactionOperationActionType,
   VisibleTransactionOperationType,
 } from 'helpers/types';
-import { NetworkLink, Trim, CopyButton, TokenBlock, NftBlock, Denominate } from 'sharedComponents';
+import { NetworkLink, Trim, CopyButton, TxActionBlock, Denominate } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 
 export enum OperationDirectionEnum {
@@ -30,6 +29,17 @@ const internalTransactionActions = [
   TransactionOperationActionType.writeLog,
   TransactionOperationActionType.signalError,
 ];
+
+const getTicker = (identifier: string) => {
+  if (!identifier) return '';
+
+  const arr = identifier.split('-');
+  if (arr.length > 0) {
+    return arr[0];
+  }
+
+  return identifier;
+};
 
 export const getOperationDirection = ({
   operation,
@@ -62,6 +72,28 @@ export const getOperationDirection = ({
   return {
     direction,
   };
+};
+
+const OperationToken = ({ operation }: { operation: OperationType }) => {
+  const token = {
+    type: operation.esdtType,
+    name: operation.name,
+    ticker: operation.svgUrl ? getTicker(operation.identifier) : operation.identifier,
+    collection: operation.collection,
+    identifier: operation.identifier,
+    token: operation.identifier,
+    decimals: operation.decimals,
+    value: operation.value,
+    svgUrl: operation.svgUrl,
+  };
+  switch (operation.type) {
+    case 'nft':
+      return <TxActionBlock.Nft token={token} />;
+    case 'esdt':
+      return <TxActionBlock.Token token={token} />;
+    default:
+      return <></>;
+  }
 };
 
 const OperationBlock = ({
@@ -188,41 +220,28 @@ const OperationText = ({ operation, sender }: { operation: OperationType; sender
 
 const OperationRow = ({
   operation,
-  transactionTokens,
+
   sender,
 }: {
   operation: OperationType;
-  transactionTokens?: TransactionTokensType;
+
   sender: string;
 }) => {
   switch (operation.type) {
     case VisibleTransactionOperationType.nft:
-      const operationNft = transactionTokens?.nfts.filter((token) => {
-        return token.identifier === operation.identifier;
-      });
-
-      return operationNft?.length ? (
-        <DetailedItem operation={operation} sender={sender}>
-          <>
-            {operationNft[0].type !== 'NonFungibleESDT' && <div className="mr-2">Value</div>}
-            <NftBlock operationToken={operationNft[0]} value={operation.value} />
-          </>
-        </DetailedItem>
-      ) : null;
-
     case VisibleTransactionOperationType.esdt:
-      const operationToken = transactionTokens?.esdts.filter((token) => {
-        return token.identifier === operation.identifier;
-      });
-
-      return operationToken?.length ? (
+      return (
         <DetailedItem operation={operation} sender={sender}>
           <>
-            <div className="mr-2">Value</div>
-            <TokenBlock operationToken={operationToken[0]} value={operation.value} />
+            {operation.esdtType === 'NonFungibleESDT' && <div className="mr-1">NFT</div>}
+            {operation.esdtType === 'SemiFungibleESDT' && <div className="mr-1">SFT quantity</div>}
+            {operation.value && operation.type === VisibleTransactionOperationType.esdt && (
+              <div className="mr-1">Value</div>
+            )}
+            <OperationToken operation={operation} />
           </>
         </DetailedItem>
-      ) : null;
+      );
 
     case VisibleTransactionOperationType.egld:
       return (
@@ -263,11 +282,9 @@ const DetailedItem = ({
 const OperationsList = ({
   transaction,
   operations,
-  transactionTokens,
 }: {
   transaction: TransactionType;
   operations: OperationType[];
-  transactionTokens?: TransactionTokensType;
 }) => {
   const initialDisplay = 25;
   const [expanded, setExpanded] = React.useState(false);
@@ -300,11 +317,7 @@ const OperationsList = ({
           <>
             {operations.map((operation: OperationType, index) => (
               <div key={`display-${index}`}>
-                <OperationRow
-                  operation={operation}
-                  transactionTokens={transactionTokens}
-                  sender={transaction.sender}
-                />
+                <OperationRow operation={operation} sender={transaction.sender} />
               </div>
             ))}
           </>
@@ -312,17 +325,13 @@ const OperationsList = ({
           <>
             {displayOperations.map((operation: OperationType, index) => (
               <div key={`display-${index}`}>
-                <OperationRow
-                  operation={operation}
-                  transactionTokens={transactionTokens}
-                  sender={transaction.sender}
-                />
+                <OperationRow operation={operation} sender={transaction.sender} />
               </div>
             ))}
           </>
         )}
       </div>
-      {(filteredOperations.length !== operations.length || collapsedOperations.length > 0) &&
+      {(displayOperations.length !== operations.length || collapsedOperations.length > 0) &&
         !expanded && (
           <button
             className="btn btn-link btn-link-base"
