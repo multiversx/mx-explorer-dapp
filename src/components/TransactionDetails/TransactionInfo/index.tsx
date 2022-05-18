@@ -4,6 +4,7 @@ import { useRouteMatch } from 'react-router-dom';
 import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
+import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import {
@@ -22,6 +23,7 @@ import {
   TransactionTokensType,
   TxActionCategoryEnum,
   VisibleTransactionOperationType,
+  ResultType,
 } from 'helpers/types';
 import {
   Denominate,
@@ -64,6 +66,37 @@ const getVisibleOperations = (transaction: TransactionType) => {
 
   return operations;
 };
+
+const AddressDetailItem = ({ address }: { address: string }) => (
+  <DetailItem title="Address" noBorder>
+    <div className="d-flex align-items-center">
+      <ScAddressIcon initiator={address} />
+      {addressIsBech32(address) ? (
+        <>
+          <NetworkLink to={urlBuilder.accountDetails(address)} className="trim-wrapper">
+            <Trim text={address} />
+          </NetworkLink>
+          <CopyButton className="mr-2" text={address} />
+        </>
+      ) : null}
+    </div>
+  </DetailItem>
+);
+
+const ScrDetailItem = ({ result }: { result: ResultType }) => (
+  <DetailItem title="SC Result Hash" noBorder>
+    <div className="d-flex align-items-center">
+      <Trim text={result.hash} />
+      <CopyButton className="ml-2" text={result.hash} />
+      <NetworkLink
+        to={`${transactionsRoutes.transactions}/${result.originalTxHash}#${result.hash}`}
+        className="side-action ml-2"
+      >
+        <FontAwesomeIcon icon={faSearch} />
+      </NetworkLink>
+    </div>
+  </DetailItem>
+);
 
 const TransactionInfo = ({
   transaction,
@@ -352,10 +385,7 @@ const TransactionInfo = ({
                       </>
                     }
                   >
-                    <OperationsList
-                      operations={visibleOperations}
-                      transactionTokens={transactionTokens}
-                    />
+                    <OperationsList transaction={transaction} operations={visibleOperations} />
                   </DetailItem>
                 )}
 
@@ -434,27 +464,34 @@ const TransactionInfo = ({
               {transaction.logs && (
                 <Tab.Pane eventKey="logs">
                   {transaction.logs.address !== undefined && (
-                    <DetailItem title="Address">
-                      <div className="d-flex align-items-center">
-                        <ScAddressIcon initiator={transaction.logs.address} />
-                        {addressIsBech32(transaction.logs.address) ? (
-                          <>
-                            <NetworkLink
-                              to={urlBuilder.accountDetails(transaction.logs.address)}
-                              className="trim-wrapper"
-                            >
-                              <Trim text={transaction.logs.address} />
-                            </NetworkLink>
-                            <CopyButton className="mr-2" text={transaction.logs.address} />
-                          </>
-                        ) : null}
-                      </div>
-                    </DetailItem>
+                    <AddressDetailItem address={transaction.logs.address} />
                   )}
                   {transaction.logs.events && transaction.logs.events?.length > 0 && (
                     <DetailItem title="Events">
                       <EventsList events={transaction.logs.events} />
                     </DetailItem>
+                  )}
+                  {transaction.results && transaction.results.length > 0 && (
+                    <div className="row">
+                      {transaction.results.map((result, resultIndex) =>
+                        result.logs ? (
+                          <div
+                            key={`tx-result-log-${resultIndex}`}
+                            className="col-12 border-bottom"
+                          >
+                            <ScrDetailItem result={result} />
+                            {result.logs.address !== undefined && (
+                              <AddressDetailItem address={result.logs.address} />
+                            )}
+                            {result.logs.events && result.logs.events?.length > 0 && (
+                              <DetailItem title="Events">
+                                <EventsList events={result.logs.events} />
+                              </DetailItem>
+                            )}
+                          </div>
+                        ) : null
+                      )}
+                    </div>
                   )}
                 </Tab.Pane>
               )}

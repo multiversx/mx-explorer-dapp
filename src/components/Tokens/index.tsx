@@ -1,5 +1,7 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDiamond } from '@fortawesome/pro-regular-svg-icons/faDiamond';
 import { Loader, adapter, NetworkLink, Trim, Pager } from 'sharedComponents';
 import NoTokens from './NoTokens';
 import FailedTokens from './FailedTokens';
@@ -112,21 +114,25 @@ const Tokens = () => {
                                 <tr key={token.identifier}>
                                   <td>
                                     <div className="token-identity d-flex flex-row">
-                                      {token.assets && token.assets.svgUrl && (
-                                        <div className="d-flex align-items-center mr-3">
-                                          <NetworkLink
-                                            to={urlBuilder.tokenDetails(token.identifier)}
-                                            data-testid={`tokensLink${i}`}
-                                            className="token-link"
-                                          >
+                                      <div className="d-flex align-items-center mr-3">
+                                        <NetworkLink
+                                          to={urlBuilder.tokenDetails(token.identifier)}
+                                          data-testid={`tokensLink${i}`}
+                                          className="token-link"
+                                        >
+                                          {token.assets && token.assets.svgUrl ? (
                                             <img
                                               src={token.assets.svgUrl}
                                               alt={token.name}
                                               className="token-icon"
                                             />
-                                          </NetworkLink>
-                                        </div>
-                                      )}
+                                          ) : (
+                                            <div className="bg-light token-icon d-flex align-items-center justify-content-center">
+                                              <FontAwesomeIcon icon={faDiamond} />
+                                            </div>
+                                          )}
+                                        </NetworkLink>
+                                      </div>
                                       <div className="d-flex flex-column justify-content-center">
                                         <NetworkLink
                                           to={urlBuilder.tokenDetails(token.identifier)}
