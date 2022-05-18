@@ -149,8 +149,8 @@ export interface ScResultType {
 }
 
 export interface TransactionTokensType {
-  esdts: TokenType[];
-  nfts: NftType[];
+  esdts: string[];
+  nfts: string[];
 }
 
 export enum TxActionsEnum {
@@ -259,13 +259,17 @@ export enum HiddenTransactionOperationType {
 export interface OperationType {
   action: TransactionOperationActionType;
   type: VisibleTransactionOperationType | HiddenTransactionOperationType;
+  esdtType: NftEnumType | 'FungibleESDT';
   collection?: string;
+  name: string;
   identifier: string;
   sender: string;
   receiver: string;
   value: string;
+  decimals: number;
   data?: string;
   message?: string;
+  svgUrl?: string;
 }
 
 export interface LogType {

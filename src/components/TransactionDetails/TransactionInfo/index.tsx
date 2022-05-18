@@ -385,11 +385,7 @@ const TransactionInfo = ({
                       </>
                     }
                   >
-                    <OperationsList
-                      transaction={transaction}
-                      operations={visibleOperations}
-                      transactionTokens={transactionTokens}
-                    />
+                    <OperationsList transaction={transaction} operations={visibleOperations} />
                   </DetailItem>
                 )}
 
