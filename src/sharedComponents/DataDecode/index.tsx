@@ -59,10 +59,7 @@ const decode = (
         if (!isUtf8(decoded)) {
           if (transactionTokens) {
             const tokens = [...transactionTokens.esdts, ...transactionTokens.nfts];
-            if (tokens.some((token) => decoded.includes(token.identifier))) {
-              return decoded;
-            }
-            if (transactionTokens.nfts.some((token) => decoded.includes(token.collection))) {
+            if (tokens.some((token) => decoded.includes(token))) {
               return decoded;
             }
           }

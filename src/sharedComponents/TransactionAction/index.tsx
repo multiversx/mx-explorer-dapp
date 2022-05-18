@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ScAddressIcon, NetworkLink, Trim, Denominate, TxActionBlock } from 'sharedComponents';
 import { addressIsBech32, urlBuilder } from 'helpers';
 import { NftEnumType } from 'helpers/types';
-import { TokenArgumentType, TransactionTokensType, TransactionType } from 'helpers/types';
+import { TokenArgumentType, TransactionType } from 'helpers/types';
 import unwrapper from './unwrapper';
 import { ReactComponent as DefaultAvatar } from 'assets/images/default-avatar.svg';
 
@@ -65,15 +65,7 @@ const ActionToken = ({
   }
 };
 
-const ActionText = ({
-  entry,
-  transaction,
-  transactionTokens,
-}: {
-  entry: any;
-  transaction: TransactionType;
-  transactionTokens?: TransactionTokensType;
-}) => {
+const ActionText = ({ entry, transaction }: { entry: any; transaction: TransactionType }) => {
   switch (true) {
     case typeof entry === 'string':
       return <span>{entry.replace('eGLD', 'EGLD')}</span>;
@@ -162,13 +154,7 @@ const ActionText = ({
   }
 };
 
-const TransactionAction = ({
-  transaction,
-  transactionTokens,
-}: {
-  transaction: TransactionType;
-  transactionTokens?: TransactionTokensType;
-}) => {
+const TransactionAction = ({ transaction }: { transaction: TransactionType }) => {
   const [unwrappedResult, setUnwrappedResult] = React.useState<ReturnType<typeof unwrapper>>([]);
 
   React.useEffect(() => {
@@ -182,11 +168,7 @@ const TransactionAction = ({
     <div className="transaction-action d-flex flex-column flex-lg-row flex-lg-wrap">
       {unwrappedResult.map((entry, i) => (
         <div key={JSON.stringify(unwrappedResult) + i} className="action-step">
-          <ActionText
-            entry={entry}
-            transaction={transaction}
-            transactionTokens={transactionTokens}
-          />
+          <ActionText entry={entry} transaction={transaction} />
         </div>
       ))}
     </div>

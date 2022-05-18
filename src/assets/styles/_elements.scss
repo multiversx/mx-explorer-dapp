@@ -165,7 +165,8 @@
     border: 1px solid rgba($secondary, 0.2);
   }
 
-  &.internal {
+  &.internal,
+  &.int {
     color: $muted;
     border: 1px solid rgba($muted, 0.2);
   }
@@ -260,6 +261,9 @@
   border-radius: 50%;
   overflow: hidden;
   border: 1px solid $border-color-alt;
+  svg {
+    color: $muted;
+  }
 }
 
 .btn-link-base {
