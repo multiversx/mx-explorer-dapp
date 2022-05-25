@@ -43,28 +43,39 @@ const CollectionDetails = () => {
   const [nfts, setNfts] = React.useState<NftType[]>([]);
   const [totalNfts, setTotalNfts] = React.useState<number | '...'>('...');
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [isMetaEsdtCollection, setIsMetaEsdtCollection] = React.useState<boolean>(false);
 
-  const fetchCollectionDetails = () => {
-    const queryObject = getQueryObject();
-    const collection = identifier;
-    Promise.all([
-      getCollection(identifier),
-      getNfts({ ...queryObject, size, collection }),
-      getNftsCount({ ...queryObject, collection }),
-    ]).then(([collectionData, nftsData, count]) => {
-      if (ref.current !== null) {
-        if (collectionData.success && nftsData.success && count.success) {
-          setCollectionDetails(collectionData.data);
-          setNfts(nftsData.data);
-          setTotalNfts(Math.min(count.data, 10000));
+  const fetchCollectionDetails = async () => {
+    if (ref.current !== null) {
+      const queryObject = getQueryObject();
+      const collection = identifier;
+
+      const collectionData = await getCollection(identifier);
+      if (collectionData.success) {
+        setCollectionDetails(collectionData.data);
+        if (collectionData?.data?.type === NftEnumType.MetaESDT) {
+          setIsMetaEsdtCollection(true);
+          setDataReady(collectionData.success);
+        } else {
+          Promise.all([
+            getNfts({ ...queryObject, size, collection }),
+            getNftsCount({ ...queryObject, collection }),
+          ]).then(([nftsData, count]) => {
+            if (nftsData.success && count.success) {
+              setNfts(nftsData.data);
+              setTotalNfts(Math.min(count.data, 10000));
+            }
+            setDataReady(nftsData.success && count.success);
+          });
         }
-        setDataReady(collectionData.success && nftsData.success && count.success);
       }
-    });
+    }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchCollectionDetails, [identifier]); // run the operation only once since the parameter does not change
+  React.useEffect(() => {
+    fetchCollectionDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [identifier]); // run the operation only once since the parameter does not change
 
   return (
     <>
@@ -144,7 +155,7 @@ const CollectionDetails = () => {
               </div>
             </div>
 
-            {nfts && (
+            {!isMetaEsdtCollection && nfts && (
               <div className="row mt-spacer">
                 <div className="col-12">
                   <div className="card">
