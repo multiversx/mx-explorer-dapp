@@ -5,9 +5,10 @@ import { faDiamond } from '@fortawesome/pro-regular-svg-icons/faDiamond';
 import { Loader, adapter, NetworkLink, Trim, Pager } from 'sharedComponents';
 import NoTokens from './NoTokens';
 import FailedTokens from './FailedTokens';
-import { urlBuilder, useFilters, useURLSearchParams, types, useActiveRoute } from 'helpers';
+import { urlBuilder, useFilters, useURLSearchParams, useActiveRoute } from 'helpers';
 import Filters from './Filters';
 import { tokensRoutes } from 'routes';
+import { CollectionType } from 'helpers/types';
 
 const TokensMeta = () => {
   const ref = React.useRef(null);
@@ -15,32 +16,32 @@ const TokensMeta = () => {
   const { page } = useURLSearchParams();
   const { search } = useLocation();
   const { getQueryObject, size } = useFilters();
-  const { getNfts, getNftsCount } = adapter();
+  const { getCollections, getCollectionsCount } = adapter();
 
-  const [nfts, setNfts] = React.useState<types.NftType[]>([]);
+  const [metaCollections, setMetaCollections] = React.useState<CollectionType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [totalNfts, setTotalNfts] = React.useState<number | '...'>('...');
+  const [totalMetaCollections, setTotalMetaCollections] = React.useState<number | '...'>('...');
 
-  const fetchNfts = () => {
+  const fetchMetaCollections = () => {
     const queryObject = getQueryObject();
     const type = 'MetaESDT';
 
     Promise.all([
-      getNfts({ ...queryObject, size, type }),
-      getNftsCount({ ...queryObject, type }),
-    ]).then(([nftsData, count]) => {
+      getCollections({ ...queryObject, size, type }),
+      getCollectionsCount({ ...queryObject, type }),
+    ]).then(([collectionsData, count]) => {
       if (ref.current !== null) {
-        if (nftsData.success) {
-          setNfts(nftsData.data);
-          setTotalNfts(Math.min(count.data, 10000));
+        if (collectionsData.success) {
+          setMetaCollections(collectionsData.data);
+          setTotalMetaCollections(Math.min(count.data, 10000));
         }
-        setDataReady(nftsData.success && count.success);
+        setDataReady(collectionsData.success && count.success);
       }
     });
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchNfts, [search]);
+  React.useEffect(fetchMetaCollections, [search]);
 
   return (
     <>
@@ -81,20 +82,24 @@ const TokensMeta = () => {
                         </ul>
                         <Filters />
                       </div>
-                      {nfts && nfts.length > 0 && (
+                      {metaCollections && metaCollections.length > 0 && (
                         <div className="d-none d-sm-flex">
                           <Pager
                             page={String(page)}
-                            total={totalNfts !== '...' ? Math.min(totalNfts, 10000) : totalNfts}
+                            total={
+                              totalMetaCollections !== '...'
+                                ? Math.min(totalMetaCollections, 10000)
+                                : totalMetaCollections
+                            }
                             itemsPerPage={25}
-                            show={nfts.length > 0}
+                            show={metaCollections.length > 0}
                           />
                         </div>
                       )}
                     </div>
                   </div>
 
-                  {nfts && nfts.length > 0 ? (
+                  {metaCollections && metaCollections.length > 0 ? (
                     <>
                       <div className="card-body border-0 p-0">
                         <div className="table-wrapper">
@@ -106,21 +111,23 @@ const TokensMeta = () => {
                                 <th>Owner</th>
                               </tr>
                             </thead>
-                            <tbody data-testid="nftsTable">
-                              {nfts.map((nft, i) => (
-                                <tr key={`${nft.name}-${nft.identifier}`}>
+                            <tbody data-testid="collectionsTable">
+                              {metaCollections.map((metaCollection, i) => (
+                                <tr key={`${metaCollection.name}-${metaCollection.collection}`}>
                                   <td>
                                     <div className="token-identity d-flex flex-row">
                                       <div className="d-flex align-items-center mr-3">
                                         <NetworkLink
-                                          to={urlBuilder.nftDetails(nft.identifier)}
+                                          to={urlBuilder.collectionDetails(
+                                            metaCollection.collection
+                                          )}
                                           data-testid={`nftsLink${i}`}
                                           className="token-link"
                                         >
-                                          {nft.assets && nft.assets.svgUrl ? (
+                                          {metaCollection.assets && metaCollection.assets.svgUrl ? (
                                             <img
-                                              src={nft.assets.svgUrl}
-                                              alt={nft.name}
+                                              src={metaCollection.assets.svgUrl}
+                                              alt={metaCollection.name}
                                               className="token-icon"
                                             />
                                           ) : (
@@ -133,33 +140,41 @@ const TokensMeta = () => {
 
                                       <div className="d-flex flex-column justify-content-center">
                                         <NetworkLink
-                                          to={urlBuilder.nftDetails(nft.identifier)}
+                                          to={urlBuilder.collectionDetails(
+                                            metaCollection.collection
+                                          )}
                                           data-testid={`nftsLink${i}`}
                                           className="d-block token-ticker"
                                         >
-                                          {nft.identifier}
+                                          {metaCollection.ticker}
                                         </NetworkLink>
-                                        {nft.assets && nft.assets.description && (
-                                          <div
-                                            className="token-description text-wrap text-secondary small d-none d-md-block"
-                                            title={nft.assets.description}
-                                          >
-                                            {nft.assets.description}
-                                          </div>
-                                        )}
+                                        {metaCollection.assets &&
+                                          metaCollection.assets.description && (
+                                            <div
+                                              className="token-description text-wrap text-secondary small d-none d-md-block"
+                                              title={metaCollection.assets.description}
+                                            >
+                                              {metaCollection.assets.description}
+                                            </div>
+                                          )}
                                       </div>
                                     </div>
                                   </td>
                                   <td>
-                                    {nft.scamInfo ? `[Hidden - ${nft.scamInfo.info}]` : nft.name}
+                                    {metaCollection.scamInfo
+                                      ? `[Hidden - ${metaCollection.scamInfo.info}]`
+                                      : metaCollection.name}
                                   </td>
                                   <td>
                                     <div className="d-flex trim-size-xl">
                                       <NetworkLink
-                                        to={urlBuilder.accountDetails(nft.creator)}
+                                        to={urlBuilder.accountDetails(metaCollection.owner)}
                                         className="trim-wrapper"
                                       >
-                                        <Trim text={nft.creator} dataTestId={`accountLink${i}`} />
+                                        <Trim
+                                          text={metaCollection.owner}
+                                          dataTestId={`accountLink${i}`}
+                                        />
                                       </NetworkLink>
                                     </div>
                                   </td>
@@ -173,9 +188,13 @@ const TokensMeta = () => {
                       <div className="card-footer d-flex justify-content-end">
                         <Pager
                           page={String(page)}
-                          total={totalNfts !== '...' ? Math.min(totalNfts, 10000) : totalNfts}
+                          total={
+                            totalMetaCollections !== '...'
+                              ? Math.min(totalMetaCollections, 10000)
+                              : totalMetaCollections
+                          }
                           itemsPerPage={25}
-                          show={nfts.length > 0}
+                          show={metaCollections.length > 0}
                         />
                       </div>
                     </>
