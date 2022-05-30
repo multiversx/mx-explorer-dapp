@@ -1,36 +1,53 @@
 import * as React from 'react';
+import { useLocation } from 'react-router-dom';
+
 import { Loader, adapter, NetworkLink, Trim, Pager, NftBadge, TimeAgo } from 'sharedComponents';
 import NoCollections from './NoCollections';
 import FailedCollections from './FailedCollections';
-import { urlBuilder, useFilters, useURLSearchParams, types } from 'helpers';
+import { urlBuilder, useFilters, useURLSearchParams, useActiveRoute } from 'helpers';
 import Filters from './Filters';
-import { useLocation } from 'react-router-dom';
+import { collectionRoutes } from 'routes';
+import { NftEnumType, CollectionType } from 'helpers/types';
 
 const Collections = () => {
   const ref = React.useRef(null);
+  const activeRoute = useActiveRoute();
   const { page } = useURLSearchParams();
   const { search } = useLocation();
   const { getQueryObject, size } = useFilters();
   const { getCollections, getCollectionsCount } = adapter();
 
-  const [collections, setCollections] = React.useState<types.CollectionType[]>([]);
+  const [collections, setCollections] = React.useState<CollectionType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [totalCollections, setTotalCollections] = React.useState<number | '...'>('...');
 
+  const getCollectionType = () => {
+    if (activeRoute(collectionRoutes.collectionsNft)) {
+      return NftEnumType.NonFungibleESDT;
+    }
+    if (activeRoute(collectionRoutes.collectionsSft)) {
+      return NftEnumType.SemiFungibleESDT;
+    }
+
+    return [NftEnumType.NonFungibleESDT, NftEnumType.SemiFungibleESDT].join();
+  };
+
   const fetchCollections = () => {
     const queryObject = getQueryObject();
+    const type = getCollectionType();
 
-    Promise.all([getCollections({ ...queryObject, size }), getCollectionsCount(queryObject)]).then(
-      ([collectionsData, count]) => {
-        if (ref.current !== null) {
-          if (collectionsData.success) {
-            setCollections(collectionsData.data);
-            setTotalCollections(Math.min(count.data, 10000));
-          }
-          setDataReady(collectionsData.success && count.success);
+    Promise.all([
+      getCollections({ ...queryObject, size, type }),
+      getCollectionsCount({ ...queryObject, type }),
+    ]).then(([collectionsData, count]) => {
+      if (ref.current !== null) {
+        if (collectionsData.success) {
+          setCollections(collectionsData.data);
+          setTotalCollections(Math.min(count.data, 10000));
         }
+        setDataReady(collectionsData.success && count.success);
       }
-    );
+    });
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -49,7 +66,29 @@ const Collections = () => {
                 <div className="card">
                   <div className="card-header">
                     <div className="card-header-item d-flex justify-content-between align-items-center">
-                      <Filters />
+                      <div className="nodes-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
+                        <ul className="list-inline m-0">
+                          <li className="list-inline-item my-1 my-md-0">
+                            <NetworkLink
+                              to={collectionRoutes.collectionsNft}
+                              className={`btn btn-sm btn-outline-light btn-pill mr-2 ${
+                                activeRoute(collectionRoutes.collectionsNft) ? 'active' : ''
+                              }`}
+                            >
+                              NFT
+                            </NetworkLink>
+                            <NetworkLink
+                              to={collectionRoutes.collectionsSft}
+                              className={`btn btn-sm btn-outline-light btn-pill mr-2 ${
+                                activeRoute(collectionRoutes.collectionsSft) ? 'active' : ''
+                              }`}
+                            >
+                              SFT
+                            </NetworkLink>
+                          </li>
+                        </ul>
+                        <Filters />
+                      </div>
                       <div className="d-none d-sm-flex">
                         {collections && collections.length > 0 && (
                           <Pager

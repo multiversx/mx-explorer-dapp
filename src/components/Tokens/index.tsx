@@ -1,13 +1,15 @@
 import * as React from 'react';
-import BigNumber from 'bignumber.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiamond } from '@fortawesome/pro-regular-svg-icons/faDiamond';
+import { useLocation } from 'react-router-dom';
+import BigNumber from 'bignumber.js';
+
 import { Loader, adapter, NetworkLink, Trim, Pager } from 'sharedComponents';
 import NoTokens from './NoTokens';
 import FailedTokens from './FailedTokens';
 import { urlBuilder, useFilters, useURLSearchParams, types, useActiveRoute } from 'helpers';
 import Filters from './Filters';
-import { useLocation } from 'react-router-dom';
+
 import { tokensRoutes } from 'routes';
 
 const Tokens = () => {

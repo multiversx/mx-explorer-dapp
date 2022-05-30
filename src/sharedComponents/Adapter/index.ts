@@ -416,10 +416,10 @@ export default function useAdapter() {
         params: getNftsParam(props),
       }),
 
-    getCollectionsCount: ({ search }: GetNftsType) =>
+    getCollectionsCount: ({ search, type }: GetNftsType) =>
       provider({
         url: `/collections/c`,
-        params: getNftsParam({ search }),
+        params: getNftsParam({ search, type }),
       }),
 
     getCollection: (collection: string) => provider({ url: `/collections/${collection}` }),

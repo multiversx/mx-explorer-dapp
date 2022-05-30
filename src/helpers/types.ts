@@ -78,6 +78,7 @@ export interface CollectionType {
     pngUrl?: string;
     svgUrl?: string;
   };
+  scamInfo?: ScamInfoType;
 }
 
 export enum NftEnumType {
