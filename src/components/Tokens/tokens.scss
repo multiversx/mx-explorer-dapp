@@ -27,14 +27,26 @@
           height: 1.75rem;
         }
       }
-      th:first-child,
-      td:first-child {
-        width: 35%;
-      }
       th:last-child,
       td:last-child {
         max-width: 8rem;
       }
+    }
+  }
+}
+.tokens-meta {
+  .table {
+    th:first-child,
+    td:first-child {
+      width: 45%;
+    }
+  }
+}
+.tokens {
+  .table {
+    th:first-child,
+    td:first-child {
+      width: 35%;
     }
   }
 }
