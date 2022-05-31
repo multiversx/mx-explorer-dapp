@@ -404,11 +404,14 @@ export default function useAdapter() {
     getAccountNfts: ({ address, size, type }: { address: string; size: number; type?: string }) =>
       provider({
         url: `/accounts/${address}/nfts`,
-        params: getNftsParam({ size, type }),
+        params: getNftsParam({ size, type, includeFlagged: true }),
       }),
 
     getAccountNftsCount: ({ address, type }: { address: string; type?: string }) =>
-      provider({ url: `/accounts/${address}/nfts/c`, params: getNftsParam({ type }) }),
+      provider({
+        url: `/accounts/${address}/nfts/c`,
+        params: getNftsParam({ type, includeFlagged: true }),
+      }),
 
     getCollections: (props: GetNftsType) =>
       provider({
@@ -427,23 +430,26 @@ export default function useAdapter() {
     getNfts: (props: GetNftsType) =>
       provider({
         url: `/nfts`,
-        params: getNftsParam(props),
+        params: getNftsParam({ ...props, includeFlagged: true }),
       }),
 
     getNftsCount: (props: GetNftsType) =>
       provider({
         url: `/nfts/c`,
-        params: getNftsParam(props),
+        params: getNftsParam({ ...props, includeFlagged: true }),
       }),
 
     getNftOwners: (props: GetNftsType) =>
       provider({
         url: `/nfts/${props.identifier}/owners`,
-        params: getNftsParam(props),
+        params: getNftsParam({ ...props, includeFlagged: true }),
       }),
 
     getNftOwnersCount: (props: GetNftsType) =>
-      provider({ url: `/nfts/${props.identifier}/owners/c`, params: getNftsParam(props) }),
+      provider({
+        url: `/nfts/${props.identifier}/owners/c`,
+        params: getNftsParam({ ...props, includeFlagged: true }),
+      }),
 
     getNft: (identifier: string) => provider({ url: `/nfts/${identifier}` }),
 
