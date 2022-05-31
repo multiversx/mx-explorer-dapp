@@ -70,6 +70,14 @@ const Collections = () => {
                         <ul className="list-inline m-0">
                           <li className="list-inline-item my-1 my-md-0">
                             <NetworkLink
+                              to={collectionRoutes.collections}
+                              className={`btn btn-sm btn-outline-light btn-pill mr-2 ${
+                                activeRoute(collectionRoutes.collections) ? 'active' : ''
+                              }`}
+                            >
+                              All
+                            </NetworkLink>
+                            <NetworkLink
                               to={collectionRoutes.collectionsNft}
                               className={`btn btn-sm btn-outline-light btn-pill mr-2 ${
                                 activeRoute(collectionRoutes.collectionsNft) ? 'active' : ''
