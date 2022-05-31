@@ -178,6 +178,7 @@ export function getNftsParam({
   collection,
   identifiers,
   collections,
+  includeFlagged,
 }: GetNftsType) {
   const params: ProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
@@ -186,7 +187,7 @@ export function getNftsParam({
     ...(identifiers !== undefined ? { identifiers } : {}),
     ...(collections !== undefined ? { collections } : {}),
     ...(size !== undefined ? { from: (size - 1) * pageSize, size: pageSize } : {}),
-    includeFlagged: true,
+    ...(includeFlagged !== undefined ? { includeFlagged } : {}),
   };
 
   return params;
@@ -253,4 +254,5 @@ export interface GetNftsType {
   type?: string;
   collections?: string;
   identifiers?: string;
+  includeFlagged?: boolean;
 }
