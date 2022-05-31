@@ -92,6 +92,8 @@ export const tokensRoutes = {
 
 export const collectionRoutes = {
   collections: '/collections',
+  collectionsNft: '/collections/nft',
+  collectionsSft: '/collections/sft',
   collectionDetails: '/collections/:hash',
 };
 
@@ -239,6 +241,16 @@ const routes: RouteType[] = [
   {
     path: collectionRoutes.collections,
     title: 'Collections',
+    component: Collections,
+  },
+  {
+    path: collectionRoutes.collectionsNft,
+    title: 'NFT Collections',
+    component: Collections,
+  },
+  {
+    path: collectionRoutes.collectionsSft,
+    title: 'SFT Collections',
     component: Collections,
   },
   {
