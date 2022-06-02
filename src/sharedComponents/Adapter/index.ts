@@ -439,15 +439,15 @@ export default function useAdapter() {
         params: getNftsParam({ ...props, includeFlagged: true }),
       }),
 
-    getNftOwners: (props: GetNftsType) =>
+    getNftAccounts: (props: GetNftsType) =>
       provider({
-        url: `/nfts/${props.identifier}/owners`,
+        url: `/nfts/${props.identifier}/accounts`,
         params: getNftsParam({ ...props, includeFlagged: true }),
       }),
 
-    getNftOwnersCount: (props: GetNftsType) =>
+    getNftAccountsCount: (props: GetNftsType) =>
       provider({
-        url: `/nfts/${props.identifier}/owners/c`,
+        url: `/nfts/${props.identifier}/accounts/count`,
         params: getNftsParam({ ...props, includeFlagged: true }),
       }),
 
