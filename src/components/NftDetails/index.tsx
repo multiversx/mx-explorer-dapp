@@ -20,7 +20,7 @@ import {
 import FailedNftDetails from './FailedNftDetails';
 import NftPreview from './NftPreview';
 
-interface NftOwnerType {
+interface NftAccountType {
   address: string;
   balance: string;
 }
@@ -44,10 +44,10 @@ const NftDetails = () => {
   const ref = React.useRef(null);
   const { page } = useURLSearchParams();
   const { getQueryObject, size } = useFilters();
-  const { getNft, getNftOwners, getNftOwnersCount } = adapter();
+  const { getNft, getNftAccounts, getNftAccountsCount } = adapter();
   const [nftDetails, setNftDetails] = React.useState<NftType>();
-  const [nftOwners, setNftOwners] = React.useState<NftOwnerType[]>([]);
-  const [nftOwnersCount, setNftOwnersCount] = React.useState<number | '...'>('...');
+  const [nftAccounts, setNftAccounts] = React.useState<NftAccountType[]>([]);
+  const [nftAccountsCount, setNftAccountsCount] = React.useState<number | '...'>('...');
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [showData, setShowData] = React.useState(false);
 
@@ -60,17 +60,17 @@ const NftDetails = () => {
     const queryObject = getQueryObject();
     Promise.all([
       getNft(identifier),
-      getNftOwners({ ...queryObject, size, identifier }),
-      getNftOwnersCount({ ...queryObject, identifier }),
-    ]).then(([nftData, nftOwners, nftOwnersCount]) => {
+      getNftAccounts({ ...queryObject, size, identifier }),
+      getNftAccountsCount({ ...queryObject, identifier }),
+    ]).then(([nftData, nftAccounts, nftAccountsCount]) => {
       if (ref.current !== null) {
         if (nftData.success) {
           setNftDetails(nftData.data);
           document.title = `${nftText(nftData.data.type)} Details`;
         }
-        if (nftOwners.success && nftOwnersCount.success) {
-          setNftOwners(nftOwners.data);
-          setNftOwnersCount(Math.min(nftOwnersCount.data, 10000));
+        if (nftAccounts.success && nftAccountsCount.success) {
+          setNftAccounts(nftAccounts.data);
+          setNftAccountsCount(Math.min(nftAccountsCount.data, 10000));
         }
         setDataReady(nftData.success);
       }
@@ -218,7 +218,7 @@ const NftDetails = () => {
                 </div>
               </div>
             </div>
-            {nftOwners && nftOwners.length > 0 && nftDetails.type !== 'NonFungibleESDT' && (
+            {nftAccounts && nftAccounts.length > 0 && nftDetails.type !== 'NonFungibleESDT' && (
               <div className="row mt-spacer">
                 <div className="col-12">
                   <div className="card">
@@ -228,9 +228,9 @@ const NftDetails = () => {
                         <div className="d-none d-sm-flex">
                           <Pager
                             page={String(page)}
-                            total={nftOwnersCount}
+                            total={nftAccountsCount}
                             itemsPerPage={25}
-                            show={nftOwners.length > 0}
+                            show={nftAccounts.length > 0}
                           />
                         </div>
                       </div>
@@ -244,7 +244,7 @@ const NftDetails = () => {
                               </tr>
                             </thead>
                             <tbody data-testid="accountsTable">
-                              {nftOwners.map((account, i) => (
+                              {nftAccounts.map((account, i) => (
                                 <tr key={account.address}>
                                   <td>
                                     <div className="d-flex align-items-center">
@@ -280,9 +280,9 @@ const NftDetails = () => {
                       <div className="card-footer d-flex justify-content-end">
                         <Pager
                           page={String(page)}
-                          total={nftOwnersCount}
+                          total={nftAccountsCount}
                           itemsPerPage={25}
-                          show={nftOwners.length > 0}
+                          show={nftAccounts.length > 0}
                         />
                       </div>
                     </div>
