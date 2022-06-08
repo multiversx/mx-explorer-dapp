@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ReactComponent as IdentityGear } from 'assets/images/identity-gear.svg';
 import { IdentityType } from 'context/state';
-import { Denominate, MultilayerPercentageBar, SharedIdentity } from 'sharedComponents';
+import { Denominate, MultilayerPercentageBar, SharedIdentity, Trim } from 'sharedComponents';
 import { ReactComponent as TwitterLogo } from 'assets/images/logos/twitter.svg';
 import { faMapMarkerAlt } from '@fortawesome/pro-solid-svg-icons/faMapMarkerAlt';
 import { faLink } from '@fortawesome/pro-solid-svg-icons/faLink';
@@ -25,6 +25,7 @@ const prepareStakeDistribution = (identity: IdentityType) => {
 
 const IdentityCard = ({ identity }: { identity: IdentityType }) => {
   const distribution = prepareStakeDistribution(identity);
+  const identityName = identity?.name ?? 'N/A';
 
   return identity !== undefined ? (
     <div className="identity-card card">
@@ -37,7 +38,9 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
 
             <div className="d-flex flex-fill flex-column justify-content-center min-w-0">
               <div className="d-flex align-items-center justify-content-center justify-content-sm-start">
-                <h5 className="mb-0">{identity.name}</h5>
+                <h5 className="mb-0 identity-name">
+                  {identityName.length > 70 ? <Trim text={identityName} /> : identityName}
+                </h5>
                 <div className="d-flex flex-shrink-0 bg-success text-white btn-sm rounded-pill ml-2">
                   Rank {identity.rank ? identity.rank : 'N/A'}
                 </div>
