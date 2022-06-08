@@ -25,6 +25,7 @@ const prepareStakeDistribution = (identity: IdentityType) => {
 
 const IdentityCard = ({ identity }: { identity: IdentityType }) => {
   const distribution = prepareStakeDistribution(identity);
+  const identityName = identity.name ? identity.name : 'N/A';
 
   return identity !== undefined ? (
     <div className="identity-card card">
@@ -38,11 +39,7 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
             <div className="d-flex flex-fill flex-column justify-content-center min-w-0">
               <div className="d-flex align-items-center justify-content-center justify-content-sm-start">
                 <h5 className="mb-0 identity-name">
-                  {identity.name && identity.name.length > 70 ? (
-                    <Trim text={identity.name} />
-                  ) : (
-                    <>{identity.name ? identity.name : 'N/A'}</>
-                  )}
+                  {identityName.length > 70 ? <Trim text={identityName} /> : identityName}
                 </h5>
                 <div className="d-flex flex-shrink-0 bg-success text-white btn-sm rounded-pill ml-2">
                   Rank {identity.rank ? identity.rank : 'N/A'}
