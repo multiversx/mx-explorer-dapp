@@ -25,7 +25,7 @@ const prepareStakeDistribution = (identity: IdentityType) => {
 
 const IdentityCard = ({ identity }: { identity: IdentityType }) => {
   const distribution = prepareStakeDistribution(identity);
-  const identityName = identity.name ? identity.name : 'N/A';
+  const identityName = identity?.name ?? 'N/A';
 
   return identity !== undefined ? (
     <div className="identity-card card">
