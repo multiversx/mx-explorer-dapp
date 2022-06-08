@@ -13,6 +13,17 @@
     -webkit-box-orient: vertical;
   }
 
+  .identity-name {
+    max-width: 14rem;
+    .ellipsis,
+    .trim .left span,
+    .trim .right span {
+      font-size: $h5-font-size;
+      line-height: 3rem;
+      margin-bottom: 0;
+    }
+  }
+
   .flex-1 {
     flex: 1;
   }
