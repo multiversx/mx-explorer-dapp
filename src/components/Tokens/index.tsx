@@ -22,8 +22,8 @@ import { tokensRoutes } from 'routes';
 
 // temporary validate price and market cap values to avoid issues like EGLDUSDC-594e5e or LP token issues like ISETEGLDLP-86715a
 export const isValidDisplayPrice = (price: number) => {
-  if (price && stringIsFloat(price.toString()) && price < 10000) {
-    // smaller than $10k for token price
+  if (price && stringIsFloat(price.toString()) && price < 100000) {
+    // smaller than $100k for token price
     return true;
   }
   return false;
