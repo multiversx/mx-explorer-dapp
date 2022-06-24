@@ -49,6 +49,9 @@ export interface TokenType {
   isPaused: boolean;
   transactions: number;
   accounts: number;
+  price?: number;
+  marketCap?: number;
+  valueUsd?: number;
   assets?: {
     website?: string;
     description?: string;

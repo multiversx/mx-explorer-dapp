@@ -2,6 +2,7 @@ import * as types from './types';
 import * as bech32 from './bech32';
 import isHash from './isHash';
 import stringIsInteger from './stringIsInteger';
+import stringIsFloat from './stringIsFloat';
 import addressIsBech32 from './addressIsBech32';
 import copyToClipboard from './copyToClipboard';
 import dateFormatted from './dateFormatted';
@@ -36,6 +37,7 @@ import capitalizeFirstLetter from './capitalizeFirstLetter';
 import getScResultsMessages from './getScResultsMessages';
 import getOperationsMessages from './getOperationsMessages';
 import getReceiptMessages from './getReceiptMessages';
+import amountWithoutRounding from './amountWithoutRounding';
 
 export {
   truncate,
@@ -44,6 +46,7 @@ export {
   isHash,
   urlBuilder,
   stringIsInteger,
+  stringIsFloat,
   addressIsBech32,
   useNetworkRoute,
   copyToClipboard,
@@ -76,4 +79,5 @@ export {
   getScResultsMessages,
   getOperationsMessages,
   getReceiptMessages,
+  amountWithoutRounding,
 };
