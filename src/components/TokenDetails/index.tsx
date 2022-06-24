@@ -9,12 +9,20 @@ import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransac
 import { useSize } from 'helpers';
 import TokenTabs from './TokenLayout/TokenTabs';
 
+interface TransactionsResponseType {
+  data?: TransactionType[];
+  success: boolean;
+}
+
 const TokenDetails = () => {
   const ref = React.useRef(null);
-  const { getTokenTransactions } = adapter();
+  const { getTokenTransactions, getTokenTransfers } = adapter();
   const { size, firstPageTicker } = useSize();
   const { activeNetworkId, tokenDetails } = useGlobalState();
   const { hash: tokenId } = useParams() as any;
+
+  // TEMP
+  const useTransactionsEndpoint = false; // useIsMainnet();
 
   const { transactions: transactionsCount } = tokenDetails;
 
@@ -22,32 +30,41 @@ const TokenDetails = () => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
 
-  const fetchTransactions = () => {
-    getTokenTransactions({
-      size,
-      tokenId,
-    }).then((transactionsData) => {
-      const { data, success } = transactionsData;
-      if (ref.current !== null) {
-        if (success) {
-          const existingHashes = transactions.map((b) => b.txHash);
-          const newTransactions = data.map((transaction: TransactionType) => ({
-            ...transaction,
-            isNew: !existingHashes.includes(transaction.txHash),
-          }));
+  const handleTransactions = (transactionsData: TransactionsResponseType) => {
+    const { data, success } = transactionsData;
+    if (ref.current !== null) {
+      if (success && data) {
+        const existingHashes = transactions.map((b) => b.txHash);
+        const newTransactions = data.map((transaction: TransactionType) => ({
+          ...transaction,
+          isNew: !existingHashes.includes(transaction.txHash),
+        }));
 
-          setTransactions(newTransactions);
-          const pending = data.some(
-            (tx: TransactionType) =>
-              tx.status.toLowerCase() === txStatus.pending.toLowerCase() || tx.pendingResults
-          );
-          setHasPendingTransaction(pending);
-          setDataReady(true);
-        } else if (transactions.length === 0) {
-          setDataReady(false);
-        }
+        setTransactions(newTransactions);
+        const pending = data.some(
+          (tx: TransactionType) =>
+            tx.status.toLowerCase() === txStatus.pending.toLowerCase() || tx.pendingResults
+        );
+        setHasPendingTransaction(pending);
+        setDataReady(true);
+      } else if (transactions.length === 0) {
+        setDataReady(false);
       }
-    });
+    }
+  };
+
+  const fetchTransactions = () => {
+    if (!useTransactionsEndpoint) {
+      getTokenTransfers({
+        size,
+        tokenId,
+      }).then((transactionsData) => handleTransactions(transactionsData));
+    } else {
+      getTokenTransactions({
+        size,
+        tokenId,
+      }).then((transactionsData) => handleTransactions(transactionsData));
+    }
   };
 
   React.useEffect(() => {
@@ -83,7 +100,7 @@ const TokenDetails = () => {
               transactions={transactions}
               totalTransactions={transactionsCount}
               size={size}
-              directionCol={true}
+              directionCol={false}
               title={<TokenTabs />}
             />
           ) : (
