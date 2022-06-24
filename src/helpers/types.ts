@@ -59,6 +59,8 @@ export interface TokenType {
     pngUrl?: string;
     svgUrl?: string;
     social?: any;
+    extraTokens?: string[];
+    lockedAccounts?: { [key: string]: string };
   };
 }
 

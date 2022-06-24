@@ -15,6 +15,7 @@ const urlBuilder = {
   identityDetails: (id: string) => `/identities/${id}`,
   tokenDetails: (tokenId: string) => `/tokens/${tokenId}`,
   tokenDetailsAccounts: (tokenId: string) => `/tokens/${tokenId}/accounts`,
+  tokenDetailsLockedAccounts: (tokenId: string) => `/tokens/${tokenId}/locked-accounts`,
   tokenDetailsRoles: (tokenId: string) => `/tokens/${tokenId}/roles`,
   collectionDetails: (identifier: string) => `/collections/${identifier}`,
   nftDetails: (identifier: string) => `/nfts/${identifier}`,
