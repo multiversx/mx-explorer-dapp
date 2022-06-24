@@ -383,6 +383,17 @@ export default function useAdapter() {
         url: `/tokens/${tokenId}/transactions/c`,
       }),
 
+    getTokenTransfers: ({ size, tokenId }: { size: number; tokenId: string }) =>
+      provider({
+        url: `/tokens/${tokenId}/transfers`,
+        params: getTokensParam({ size }),
+      }),
+
+    getTokenTransfersCount: ({ tokenId }: { tokenId: string }) =>
+      provider({
+        url: `/tokens/${tokenId}/transfers/c`,
+      }),
+
     getTokenAccounts: ({ size, tokenId }: { size: number; tokenId: string }) =>
       provider({
         url: `/tokens/${tokenId}/accounts`,
