@@ -7,10 +7,34 @@ import BigNumber from 'bignumber.js';
 import { Loader, adapter, NetworkLink, Trim, Pager } from 'sharedComponents';
 import NoTokens from './NoTokens';
 import FailedTokens from './FailedTokens';
-import { urlBuilder, useFilters, useURLSearchParams, types, useActiveRoute } from 'helpers';
+import {
+  urlBuilder,
+  useFilters,
+  useURLSearchParams,
+  types,
+  useActiveRoute,
+  amountWithoutRounding,
+  stringIsFloat,
+} from 'helpers';
 import Filters from './Filters';
 
 import { tokensRoutes } from 'routes';
+
+// temporary validate price and market cap values to avoid issues like EGLDUSDC-594e5e or LP token issues like ISETEGLDLP-86715a
+export const isValidDisplayPrice = (price: number) => {
+  if (price && stringIsFloat(price.toString()) && price < 10000) {
+    // smaller than $10k for token price
+    return true;
+  }
+  return false;
+};
+export const isValidDisplayMarketCap = (marketCap: number) => {
+  if (marketCap && stringIsFloat(marketCap.toString()) && marketCap < 10000000000) {
+    // smaller than $10billion marketCap
+    return true;
+  }
+  return false;
+};
 
 const Tokens = () => {
   const ref = React.useRef(null);
@@ -106,6 +130,8 @@ const Tokens = () => {
                               <tr>
                                 <th>Token</th>
                                 <th>Name</th>
+                                <th>Price</th>
+                                <th>Market Cap</th>
                                 <th>Holders</th>
                                 <th>Transactions</th>
                                 <th>Owner</th>
@@ -155,6 +181,20 @@ const Tokens = () => {
                                     </div>
                                   </td>
                                   <td>{token.name}</td>
+                                  {token.price &&
+                                  isValidDisplayPrice(token.price) &&
+                                  token.marketCap &&
+                                  isValidDisplayMarketCap(token.marketCap) ? (
+                                    <>
+                                      <td>${amountWithoutRounding(token.price.toString())}</td>
+                                      <td>${amountWithoutRounding(token.marketCap.toString())}</td>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <td></td>
+                                      <td></td>
+                                    </>
+                                  )}
                                   <td>
                                     {token.accounts ? new BigNumber(token.accounts).toFormat() : 0}
                                   </td>

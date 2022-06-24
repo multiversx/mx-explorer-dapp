@@ -44,9 +44,17 @@
 }
 .tokens {
   .table {
+    th,
+    td {
+      min-width: 8%;
+    }
     th:first-child,
     td:first-child {
-      width: 35%;
+      width: 26%;
+    }
+    th:last-child,
+    td:last-child {
+      width: 20%;
     }
   }
 }
