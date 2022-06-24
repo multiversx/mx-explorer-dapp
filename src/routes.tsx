@@ -17,6 +17,7 @@ import Tokens from './components/Tokens';
 import TokensMeta from './components/TokensMeta';
 import TokenDetails from './components/TokenDetails';
 import TokenDetailsAccounts from './components/TokenDetails/TokenAccounts';
+import TokenDetailsLockedAccounts from './components/TokenDetails/TokenLockedAccounts';
 import TokenDetailsRoles from './components/TokenDetails/TokenRoles';
 import Collections from './components/Collections';
 import CollectionDetails from './components/CollectionDetails';
@@ -87,6 +88,7 @@ export const tokensRoutes = {
   tokensMeta: '/meta-tokens',
   tokenDetails: '/tokens/:hash',
   tokenDetailsAccounts: '/tokens/:hash/accounts',
+  tokenDetailsLockedAccounts: '/tokens/:hash/locked-accounts',
   tokenDetailsRoles: '/tokens/:hash/roles',
 };
 
@@ -232,6 +234,11 @@ const routes: RouteType[] = [
     path: tokensRoutes.tokenDetailsAccounts,
     title: 'Token Holders',
     component: TokenDetailsAccounts,
+  },
+  {
+    path: tokensRoutes.tokenDetailsLockedAccounts,
+    title: 'Locked Token Accounts',
+    component: TokenDetailsLockedAccounts,
   },
   {
     path: tokensRoutes.tokenDetailsRoles,

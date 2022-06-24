@@ -28,6 +28,7 @@ export default function PageLayout({ children }: { children: React.ReactNode }) 
 
     case activeRoute(tokensRoutes.tokenDetails):
     case activeRoute(tokensRoutes.tokenDetailsAccounts):
+    case activeRoute(tokensRoutes.tokenDetailsLockedAccounts):
     case activeRoute(tokensRoutes.tokenDetailsRoles):
       return <TokenLayout>{children}</TokenLayout>;
 
