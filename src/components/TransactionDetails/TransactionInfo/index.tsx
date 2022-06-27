@@ -160,6 +160,7 @@ const TransactionInfo = ({
   });
 
   const visibleOperations = getVisibleOperations(transaction);
+  const showLogs = transaction.logs || (transaction.results && transaction.results.length > 0);
 
   return (
     <div className="transaction-info card" ref={ref}>
@@ -190,7 +191,7 @@ const TransactionInfo = ({
             >
               Transaction Details
             </Nav.Link>
-            {transaction.logs && (
+            {showLogs && (
               <Nav.Link
                 eventKey="logs"
                 className={`tab-link mr-3 ${activeKey === 'logs' ? 'active' : ''}`}
@@ -461,15 +462,20 @@ const TransactionInfo = ({
                 )}
               </Tab.Pane>
 
-              {transaction.logs && (
+              {showLogs && (
                 <Tab.Pane eventKey="logs">
-                  {transaction.logs.address !== undefined && (
-                    <AddressDetailItem address={transaction.logs.address} />
-                  )}
-                  {transaction.logs.events && transaction.logs.events?.length > 0 && (
-                    <DetailItem title="Events">
-                      <EventsList events={transaction.logs.events} />
-                    </DetailItem>
+                  {transaction.logs && (
+                    <>
+                      {' '}
+                      {transaction.logs.address !== undefined && (
+                        <AddressDetailItem address={transaction.logs.address} />
+                      )}
+                      {transaction.logs.events && transaction.logs.events?.length > 0 && (
+                        <DetailItem title="Events">
+                          <EventsList events={transaction.logs.events} />
+                        </DetailItem>
+                      )}
+                    </>
                   )}
                   {transaction.results && transaction.results.length > 0 && (
                     <div className="row">
