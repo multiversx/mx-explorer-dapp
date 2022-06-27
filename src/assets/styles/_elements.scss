@@ -273,7 +273,9 @@
   border: 0;
   box-shadow: none;
   &:focus,
+  &:hover,
   &.focus {
     box-shadow: none;
+    text-decoration: none;
   }
 }
