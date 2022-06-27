@@ -100,7 +100,7 @@ const TokenDetails = () => {
               transactions={transactions}
               totalTransactions={transactionsCount}
               size={size}
-              directionCol={false}
+              directionCol={true}
               title={<TokenTabs />}
             />
           ) : (

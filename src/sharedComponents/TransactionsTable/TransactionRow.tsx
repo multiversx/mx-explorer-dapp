@@ -24,7 +24,7 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
   const directionSelf = directionOut && directionIn;
   const isScResult = transaction?.type === TransferTypeEnum.SmartContractResult;
 
-  let direction = '';
+  let direction = 'Out';
   switch (true) {
     case isScResult:
       direction = 'Internal';
