@@ -1,0 +1,75 @@
+.growth-block {
+  padding-left: $grid-gutter-width / 4;
+  padding-right: $grid-gutter-width / 4;
+  margin-bottom: $grid-gutter-width / 2;
+  .card {
+    padding: 1rem 1rem 0.5rem 1rem;
+    //  border: 1px solid $card-border-color;
+
+    position: relative;
+
+    .value {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: body;
+    }
+    .title,
+    .description {
+      color: $secondary;
+      font-weight: 300;
+    }
+    &-primary,
+    &-success,
+    &-warning,
+    &-danger {
+      overflow: visible;
+      border: none;
+      color: $white;
+      .value {
+        text-shadow: 0px 2px 4px #00000029;
+      }
+      .title,
+      .description {
+        opacity: 90%;
+        color: $white;
+      }
+      &:after {
+        content: '';
+        position: absolute;
+        height: $grid-gutter-width / 4;
+        width: 100%;
+        bottom: 0;
+        opacity: 0.5;
+        filter: blur(10px);
+      }
+    }
+    &-primary {
+      background: radial-gradient(at 50% bottom, #2190ff 0%, #002bff 100%) 0% 0% no-repeat
+        padding-box;
+      &:after {
+        background: #2190ff 0% 0% no-repeat padding-box;
+      }
+    }
+    &-success {
+      background: radial-gradient(at 50% bottom, #37e688 0%, #11ad8e 100%) 0% 0% no-repeat
+        padding-box;
+      &:after {
+        background: #37e688 0% 0% no-repeat padding-box;
+      }
+    }
+    &-warning {
+      background: radial-gradient(at 50% bottom, #ff9f1a 0%, #e64e17 100%) 0% 0% no-repeat
+        padding-box;
+      &:after {
+        background: #ff9f1a 0% 0% no-repeat padding-box;
+      }
+    }
+    &-danger {
+      background: radial-gradient(at 50% bottom, #f2526d 0%, #c72828 100%) 0% 0% no-repeat
+        padding-box;
+      &:after {
+        background: #f2526d 0% 0% no-repeat padding-box;
+      }
+    }
+  }
+}

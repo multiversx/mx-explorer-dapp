@@ -7,6 +7,7 @@ import PriceChart from './PriceChart';
 import StakingChart from './StakingChart';
 import TransactionsChart from './TransactionsChart';
 import AccountsChart from './AccountsChart';
+import GrowthMetrics from './GrowthMetrics';
 import { useIsMainnet } from 'helpers';
 import TestnetGlobalStatsCard from 'components/Layout/TestnetGlobalStatsCard';
 
@@ -25,6 +26,8 @@ const Home = () => {
               <ValidatorsStatus />
             </div>
           </div>
+
+          <GrowthMetrics />
 
           <div className="row">
             <div className="col-12 col-lg-6 mt-spacer">

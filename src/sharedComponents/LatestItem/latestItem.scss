@@ -41,6 +41,12 @@
       }
     }
 
+    // & + .latest-item {
+    //   .latest-item-card:after {
+    //     opacity: 50%;
+    //   }
+    // }
+
     .latest-item-card {
       @extend .p-3;
       @include left-bar($primary);
@@ -51,17 +57,39 @@
       border-radius: 0.3rem;
       border: 1px solid $border-color;
       box-shadow: 0 2px 4px 0 rgba($standard-box-shadow, 0.2);
+      position: relative;
+      &:after {
+        position: absolute;
+        content: '';
+        width: 0.5rem;
+        height: 100%;
+        top: 0;
+        left: -0.5rem;
+        border-top-left-radius: 0.3rem;
+        border-bottom-left-radius: 0.3rem;
+        opacity: 40%;
+        background: linear-gradient(to bottom, #2190ff, #002bff);
+      }
 
       &.status-text-success {
         @include left-bar($success);
+        &:after {
+          background: linear-gradient(to bottom, #37e688, #11ad8e);
+        }
       }
 
       &.status-text-warning {
         @include left-bar($warning);
+        &:after {
+          background: linear-gradient(to bottom, #ff9f1a, #e64e17);
+        }
       }
 
       &.status-text-danger {
         @include left-bar($danger);
+        &:after {
+          background: linear-gradient(to bottom, #f2526d, #c72828);
+        }
       }
 
       .latest-item-icon {
