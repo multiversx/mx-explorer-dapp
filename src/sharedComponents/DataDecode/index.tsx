@@ -41,7 +41,7 @@ const decode = (
   switch (decodeMethod) {
     case DecodeMethodType.text:
       try {
-        return Buffer.from(String(part), 'hex').toString('utf8').trim();
+        return Buffer.from(String(part), 'hex').toString('utf8');
       } catch {}
       return part;
     case DecodeMethodType.decimal:
@@ -55,7 +55,7 @@ const decode = (
         }
       } catch {}
       try {
-        const decoded = Buffer.from(String(part), 'hex').toString('utf8').trim();
+        const decoded = Buffer.from(String(part), 'hex').toString('utf8');
         if (!isUtf8(decoded)) {
           if (transactionTokens) {
             const tokens = [...transactionTokens.esdts, ...transactionTokens.nfts];
@@ -127,7 +127,7 @@ const DataDecode = ({
           if (activeKey === DecodeMethodType.raw) {
             return part;
           } else {
-            return decode(base64Buffer.toString('hex').trim(), activeKey, transactionTokens);
+            return decode(base64Buffer.toString('hex'), activeKey, transactionTokens);
           }
         });
         setDisplayValue(decodedParts.join('\n'));
