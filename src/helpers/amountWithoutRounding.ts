@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { decimals as configDecimals } from 'appConfig';
 import stringIsFloat from './stringIsFloat';
+import stringIsInteger from './stringIsInteger';
 
 const amountWithoutRounding = (amount: string, decimals?: number) => {
   if (stringIsFloat(amount)) {
@@ -11,7 +12,9 @@ const amountWithoutRounding = (amount: string, decimals?: number) => {
       return '0';
     }
 
-    let formattedAmount = new BigNumber(amount).toFormat(decimalsToUse);
+    let formattedAmount = new BigNumber(amount).toFormat(
+      stringIsInteger(amount) ? 0 : decimalsToUse
+    );
 
     formattedAmount =
       parseFloat(formattedAmount) > 0

@@ -3,9 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/pro-solid-svg-icons/faCaretDown';
 import { faCaretUp } from '@fortawesome/pro-solid-svg-icons/faCaretUp';
 import { useGlobalState } from 'context';
+import { amountWithoutRounding } from 'helpers';
 
 export interface GrowthFieldType {
-  text?: string;
+  text?: string | number;
+  prefix?: string;
+  percentageChangeColor?: boolean;
   showPercentage?: boolean;
   showPrefix?: boolean;
   isUsd?: boolean;
@@ -18,10 +21,11 @@ export interface GrowthBlockType {
   value: GrowthFieldType;
   description?: GrowthFieldType;
   color?: string;
+  usePercentageColor?: 'description' | 'value';
   size?: 'sm' | 'md' | 'lg';
 }
 
-const GrowthIcon = ({ text, className }: { text: string; className?: string }) => {
+const GrowthIcon = ({ text, className }: { text: string | number; className?: string }) => {
   if (String(text).startsWith('-')) {
     return <FontAwesomeIcon className={className} icon={faCaretDown} />;
   } else {
@@ -31,6 +35,7 @@ const GrowthIcon = ({ text, className }: { text: string; className?: string }) =
 
 const GrowthField = ({
   text = '',
+  prefix = '',
   showPercentage = false,
   showPrefix = false,
   isUsd = false,
@@ -46,18 +51,31 @@ const GrowthField = ({
   return (
     <span className="d-flex align-items-center">
       {showPercentage ? <GrowthIcon className="small mr-1" text={text} /> : null}
+      {prefix ? prefix : ''}
       {showPrefix ? textPrefix : ''}
       {isUsd ? '$' : ''}
       {isEur ? '€' : ''}
-      {showPercentage ? String(text).replace(/^-+/, '') : text}
+      {showPercentage
+        ? String(text).replace(/^-+/, '')
+        : typeof text === 'number'
+        ? amountWithoutRounding(String(text))
+        : text}
       {isEgld ? ` ${erdLabel}` : ''}
     </span>
   );
 };
 
-const GrowthBlock = ({ title, value, description, color, size }: GrowthBlockType) => {
-  const ref = React.useRef(null);
-  // const { activeNetworkId } = useGlobalState();
+const GrowthBlock = ({
+  title,
+  value,
+  description,
+  color,
+  size,
+  usePercentageColor,
+}: GrowthBlockType) => {
+  if (!title && !value) {
+    return <></>;
+  }
 
   let colSize = '';
   switch (size) {
@@ -75,17 +93,27 @@ const GrowthBlock = ({ title, value, description, color, size }: GrowthBlockType
       break;
   }
 
-  if (!title && !value) {
-    return <></>;
+  let cardColor = color;
+  if (usePercentageColor) {
+    switch (usePercentageColor) {
+      case 'value':
+        cardColor = String(value?.text).startsWith('-') ? 'danger' : 'success';
+        break;
+      case 'description':
+        cardColor = String(description?.text).startsWith('-') ? 'danger' : 'success';
+        break;
+      default:
+        cardColor = color;
+        break;
+    }
   }
 
   return (
     <div className={`growth-block ${colSize}`}>
       <div
         className={`card shadow-sm d-flex align-items-center justify-content-center ${
-          color ? `card-${color}` : ''
+          cardColor ? `card-${cardColor}` : ''
         }`}
-        ref={ref}
       >
         <div className="mb-3 title">{title}</div>
         <div className="mb-3 value">

@@ -110,8 +110,8 @@ export interface GrowthDataType {
   statistics?: {
     [index: string]: string;
   };
-  primaryValue?: string;
-  secondaryValue?: string;
+  primaryValue?: string | number;
+  secondaryValue?: string | number;
   data?: {
     category: string;
     day?: GrowthChartDataType[];
