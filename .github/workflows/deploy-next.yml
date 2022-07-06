@@ -2,7 +2,7 @@ name: deploy-next
 
 on:
   push:
-    branches: [development]
+    branches: [growth-details]
   repository_dispatch:
     types: deploy-next
   workflow_dispatch:
@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: development
+          ref: growth-details
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
