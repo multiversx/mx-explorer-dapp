@@ -29,7 +29,8 @@ export type ActionType =
   | {
       type: 'removeNotification';
       id: NotificationType['id'];
-    };
+    }
+  | { type: 'setGrowthMetrics'; growthMetrics: StateType['growthMetrics'] };
 
 export function globalReducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
@@ -106,6 +107,9 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
     }
     case 'removeNotification': {
       return { ...state, notifications: state.notifications.filter((n) => n.id !== action.id) };
+    }
+    case 'setGrowthMetrics': {
+      return { ...state, growthMetrics: action.growthMetrics };
     }
     default: {
       throw new Error(`Unhandled action type: ${(action as any).type}`);

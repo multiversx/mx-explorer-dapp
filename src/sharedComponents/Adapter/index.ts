@@ -35,6 +35,7 @@ export default function useAdapter() {
     getTransactionsHistory,
     getAccountsHistory,
     delegationApi,
+    getGrowthMetrics,
   } = useAdapterConfig();
 
   return {
@@ -484,5 +485,6 @@ export default function useAdapter() {
     getUsersStaking,
     getTransactionsHistory,
     getAccountsHistory,
+    getGrowthMetrics,
   };
 }

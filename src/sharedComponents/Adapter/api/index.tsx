@@ -80,6 +80,12 @@ const apiAdapter = {
       timeout,
     });
   },
+  getGrowthMetrics: (props: ProviderPropsType) => {
+    const { timeout } = props;
+    return axios.get(`https://tools.elrond.com/growth-api/explorer/charts`, {
+      timeout,
+    });
+  },
 };
 
 export default apiAdapter;

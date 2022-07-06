@@ -74,6 +74,7 @@ export default function useAdapterConfig() {
     getAccountsHistory,
     getProviders,
     getProvider,
+    getGrowthMetrics,
   } = providers[adapter];
 
   const providerProps = { ...providers[adapter], metaChainShardId, timeout };
@@ -111,5 +112,7 @@ export default function useAdapterConfig() {
       wrap(() => getTransactionsHistory({ ...providerProps, ...props })),
     getAccountsHistory: (props = basicProps) =>
       wrap(() => getAccountsHistory({ ...providerProps, ...props })),
+    getGrowthMetrics: (props = basicProps) =>
+      wrap(() => getGrowthMetrics({ ...providerProps, ...props })),
   };
 }

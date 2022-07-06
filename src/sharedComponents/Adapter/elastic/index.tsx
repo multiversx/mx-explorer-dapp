@@ -68,6 +68,9 @@ const elasticAdapter = {
   getAccountsHistory: () => {
     throw new Error('not defined');
   },
+  getGrowthMetrics: () => {
+    throw new Error('not defined');
+  },
 };
 
 export default elasticAdapter;
