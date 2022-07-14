@@ -4,7 +4,6 @@ import BigNumber from 'bignumber.js';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
 import { Trim, NetworkLink, SocialIcons, PropertyPill } from 'sharedComponents';
 import { useGlobalState } from 'context';
-import { isValidDisplayPrice, isValidDisplayMarketCap } from 'components/Tokens';
 
 const SmallDetailItem = ({
   children,
@@ -39,6 +38,7 @@ const TokenDetailsCard = () => {
     isPaused,
     assets,
     supply,
+    circulatingSupply,
     accounts,
     transactions,
     price,
@@ -46,6 +46,14 @@ const TokenDetailsCard = () => {
   } = tokenDetails;
 
   const title = `${assets ? `${name} ${ticker !== name ? `(${ticker})` : ''}` : ticker} Token`;
+  const mergedAssets = {
+    ...(assets?.website
+      ? {
+          website: assets.website,
+        }
+      : {}),
+    ...(assets?.social ? assets.social : {}),
+  };
 
   return identifier !== '' ? (
     <>
@@ -84,10 +92,7 @@ const TokenDetailsCard = () => {
                 <dl className="container-fluid">
                   <SmallDetailItem title="Token">{identifier}</SmallDetailItem>
 
-                  {price &&
-                  isValidDisplayPrice(price) &&
-                  marketCap &&
-                  isValidDisplayMarketCap(marketCap) ? (
+                  {price && marketCap ? (
                     <>
                       <SmallDetailItem title="Price">
                         ${amountWithoutRounding(price.toString())}
@@ -144,31 +149,24 @@ const TokenDetailsCard = () => {
                     </div>
                   </SmallDetailItem>
 
-                  {price &&
-                    isValidDisplayPrice(price) &&
-                    marketCap &&
-                    isValidDisplayMarketCap(marketCap) && (
-                      <SmallDetailItem title="Supply">
-                        {new BigNumber(supply).toFormat()}
-                      </SmallDetailItem>
-                    )}
+                  {supply && (
+                    <SmallDetailItem title="Supply">
+                      {new BigNumber(supply).toFormat()}
+                    </SmallDetailItem>
+                  )}
+
+                  {circulatingSupply && (
+                    <SmallDetailItem title="Circulating">
+                      {new BigNumber(circulatingSupply).toFormat()}
+                    </SmallDetailItem>
+                  )}
 
                   <SmallDetailItem title="Decimals">{decimals}</SmallDetailItem>
 
-                  <SmallDetailItem title="Website">
-                    {assets && assets.website ? (
-                      <a href={assets.website} target={`_blank`} rel={`noreferrer nofollow`}>
-                        {assets.website.replace(/^https?:\/\//i, '')}
-                      </a>
-                    ) : (
-                      <span className="text-secondary">N/A</span>
-                    )}
-                  </SmallDetailItem>
-
                   <SmallDetailItem title="Social">
-                    {assets && assets.social ? (
+                    {Object.keys(mergedAssets).length > 0 ? (
                       <div className="d-flex h-100">
-                        <SocialIcons assets={assets.social} />
+                        <SocialIcons assets={mergedAssets} />
                       </div>
                     ) : (
                       <span className="text-secondary">N/A</span>
