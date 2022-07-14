@@ -27,10 +27,6 @@
           height: 1.75rem;
         }
       }
-      th:last-child,
-      td:last-child {
-        max-width: 8rem;
-      }
     }
   }
 }
@@ -39,6 +35,10 @@
     th:first-child,
     td:first-child {
       width: 45%;
+    }
+    th:last-child,
+    td:last-child {
+      max-width: 8rem;
     }
   }
 }
@@ -51,10 +51,6 @@
     th:first-child,
     td:first-child {
       width: 26%;
-    }
-    th:last-child,
-    td:last-child {
-      width: 20%;
     }
   }
 }
