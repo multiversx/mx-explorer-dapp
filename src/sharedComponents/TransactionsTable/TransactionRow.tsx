@@ -3,7 +3,14 @@ import { faArrowRight } from '@fortawesome/pro-regular-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { addressIsBech32, urlBuilder } from 'helpers';
 import { UITransactionType, TransferTypeEnum } from 'helpers/types';
-import { ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim } from 'sharedComponents';
+import {
+  ScAddressIcon,
+  ShardSpan,
+  NetworkLink,
+  TimeAgo,
+  Trim,
+  LockedTokenAddressIcon,
+} from 'sharedComponents';
 import TransactionIcon from '../TransactionsTable/TransactionIcon';
 import TransactionMethod from '../TransactionsTable/TransactionMethod';
 import TransactionValue from '../TransactionsTable/TransactionValue';
@@ -12,9 +19,15 @@ export interface TransactionRowType {
   transaction: UITransactionType;
   directionCol?: boolean;
   address?: string;
+  showLockedAccounts?: boolean;
 }
 
-const TransactionRow = ({ transaction, address, directionCol }: TransactionRowType) => {
+const TransactionRow = ({
+  transaction,
+  address,
+  directionCol,
+  showLockedAccounts,
+}: TransactionRowType) => {
   let receiver = transaction.receiver;
   if (transaction.action && transaction.action.arguments?.receiver) {
     receiver = transaction.action.arguments.receiver;
@@ -80,6 +93,7 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
       </td>
       <td>
         <div className="d-flex align-items-center">
+          {showLockedAccounts && <LockedTokenAddressIcon address={transaction.sender} />}
           <ScAddressIcon initiator={transaction.sender} />
           {directionOut ? (
             <Trim text={transaction.sender} />
@@ -112,6 +126,7 @@ const TransactionRow = ({ transaction, address, directionCol }: TransactionRowTy
 
       <td>
         <div className="d-flex align-items-center">
+          {showLockedAccounts && <LockedTokenAddressIcon address={receiver} />}
           <ScAddressIcon initiator={receiver} />
           {directionIn ? (
             <Trim text={receiver} />

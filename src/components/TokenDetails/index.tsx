@@ -102,6 +102,7 @@ const TokenDetails = () => {
               size={size}
               directionCol={true}
               title={<TokenTabs />}
+              showLockedAccounts={true}
             />
           ) : (
             <div className="card">
