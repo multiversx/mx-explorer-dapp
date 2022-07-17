@@ -116,7 +116,7 @@ const Tokens = () => {
                                 <th>Holders</th>
                                 <th>Transactions</th>
                                 <th>Price</th>
-                                <th>Supply</th>
+                                <th>Circulating Supply</th>
                                 <th>Market Cap</th>
                               </tr>
                             </thead>
