@@ -1,17 +1,19 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
+import { tokensRoutes } from 'routes';
 import { Loader, adapter, NetworkLink, Pager } from 'sharedComponents';
+import { useGlobalState } from 'context';
+import { useFilters, useURLSearchParams, types, useActiveRoute } from 'helpers';
+
 import NoTokens from './NoTokens';
 import FailedTokens from './FailedTokens';
-import { useFilters, useURLSearchParams, types, useActiveRoute } from 'helpers';
 import Filters from './Filters';
-
-import { tokensRoutes } from 'routes';
 import TokensTable from './TokensTable';
 
 const Tokens = () => {
   const ref = React.useRef(null);
+  const { economics } = useGlobalState();
   const activeRoute = useActiveRoute();
   const { page } = useURLSearchParams();
   const { search } = useLocation();
@@ -54,7 +56,15 @@ const Tokens = () => {
                 <div className="card">
                   <div className="card-header">
                     <div className="card-header-item d-flex align-items-center justify-content-between">
-                      <h6 data-testid="title">Tokens</h6>
+                      <div className="d-flex flex-wrap w-100 align-items-center justify-content-between">
+                        <h6 data-testid="title">Tokens</h6>
+                        <span>
+                          {totalTokens}{' '}
+                          <span className="text-secondary pr-2 border-right mr-2">Tokens</span>{' '}
+                          <span className="text-secondary">Ecosystem Market Cap:</span>{' '}
+                          {economics.ecosystemMarketCap}
+                        </span>
+                      </div>
                     </div>
                     <div className="card-header-item d-flex justify-content-between align-items-center">
                       <div className="nodes-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">

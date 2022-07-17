@@ -42,6 +42,7 @@ export interface EconomicsType {
   baseApr: string;
   tokenMarketCap: string;
   totalStakedPercent: string;
+  ecosystemMarketCap: string;
 }
 
 export interface StatsType {
@@ -204,6 +205,7 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
       baseApr: '',
       tokenMarketCap: '',
       totalStakedPercent: '',
+      ecosystemMarketCap: '',
     },
     stats: {
       shards: '',
