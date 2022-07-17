@@ -11,6 +11,7 @@ import {
   Trim,
   ScAddressIcon,
   PageState,
+  LockedTokenAddressIcon,
 } from 'sharedComponents';
 import { types, urlBuilder, useSize, useURLSearchParams } from 'helpers';
 import TokenTabs from './TokenLayout/TokenTabs';
@@ -77,6 +78,7 @@ const TokenAccounts = () => {
                         <tr key={account.address}>
                           <td>
                             <div className="d-flex align-items-center">
+                              <LockedTokenAddressIcon address={account.address} />
                               <ScAddressIcon initiator={account.address} />
                               <NetworkLink
                                 to={urlBuilder.accountDetails(account.address)}
