@@ -87,6 +87,7 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
               activeRoute(tokensRoutes.tokenDetails) ||
               activeRoute(tokensRoutes.tokenDetailsAccounts) ||
               activeRoute(tokensRoutes.tokenDetailsLockedAccounts) ||
+              activeRoute(tokensRoutes.tokenDetailsRoles) ||
               activeRoute(tokensRoutes.tokensMeta)
                 ? 'active'
                 : ''

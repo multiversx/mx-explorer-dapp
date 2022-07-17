@@ -410,6 +410,11 @@ export default function useAdapter() {
         url: `/tokens/${tokenId}/roles`,
       }),
 
+    getTokenSupply: ({ tokenId }: { tokenId: string }) =>
+      provider({
+        url: `/tokens/${tokenId}/supply`,
+      }),
+
     // Nfts
 
     getAccountNfts: ({ address, size, type }: { address: string; size: number; type?: string }) =>
