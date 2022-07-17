@@ -26,13 +26,36 @@ export interface NodesVersionsType {
 
 export interface GlobalStakeType {
   queueSize: number;
-  staked: number;
-  apr?: number;
-  topUpApr?: number;
-  baseApr?: number;
   waitingList?: number;
   deliquentStake?: number;
   nodesVerions?: NodesVersionsType[];
+}
+
+export interface EconomicsType {
+  totalSupply: string;
+  circulatingSupply: string;
+  staked: string;
+  price: string;
+  marketCap: string;
+  apr: string;
+  topUpApr: string;
+  baseApr: string;
+  tokenMarketCap: string;
+  totalStakedPercent: string;
+}
+
+export interface StatsType {
+  shards: string;
+  blocks: string;
+  accounts: string;
+  transactions: string;
+  epoch: number;
+  epochPercentage: number;
+  epochTotalTime: string;
+  epochTimeElapsed: string;
+  epochTimeRemaining: string;
+  roundsPerEpoch: number;
+  roundsPassed: number;
 }
 
 export interface IdentityType {
@@ -117,6 +140,8 @@ export interface StateType {
   usd: number | undefined;
   urlBlacklist?: { [key: string]: string };
   notifications: NotificationType[];
+  economics: EconomicsType;
+  stats: StatsType;
 }
 
 const initialState = (optionalConfig?: ConfigType): StateType => {
@@ -165,8 +190,34 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
       transactions: 0,
     },
     usd: undefined,
+
     urlBlacklist: undefined,
     notifications: [],
+    economics: {
+      totalSupply: '',
+      circulatingSupply: '',
+      staked: '',
+      price: '',
+      marketCap: '',
+      apr: '',
+      topUpApr: '',
+      baseApr: '',
+      tokenMarketCap: '',
+      totalStakedPercent: '',
+    },
+    stats: {
+      shards: '',
+      blocks: '',
+      accounts: '',
+      transactions: '',
+      epoch: 0,
+      epochPercentage: 0,
+      epochTotalTime: '',
+      epochTimeElapsed: '',
+      epochTimeRemaining: '',
+      roundsPerEpoch: 0,
+      roundsPassed: 0,
+    },
   };
 };
 

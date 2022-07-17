@@ -23,7 +23,7 @@ const prepareNodesVersions = (data: any) => {
 };
 
 const NodesLayout = ({ children }: { children: React.ReactNode }) => {
-  const { getShards, getGlobalStake, getEconomics, getNodesVersions } = adapter();
+  const { getShards, getGlobalStake, getNodesVersions } = adapter();
   const dispatch = useGlobalDispatch();
   const { activeNetworkId } = useGlobalState();
 
@@ -33,20 +33,12 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
 
   const fetchShardsAndGlobalStaking = () => {
     if (dataReadyForNetwork !== activeNetworkId) {
-      Promise.all([getShards(), getGlobalStake(), getEconomics(), getNodesVersions()]).then(
-        ([shards, globalStake, economics, nodesVersions]) => {
+      Promise.all([getShards(), getGlobalStake(), getNodesVersions()]).then(
+        ([shards, globalStake, nodesVersions]) => {
           const newGlobalStake = {
             ...(globalStake.success
               ? {
                   ...globalStake.data,
-                }
-              : {}),
-          };
-
-          const newEconomics = {
-            ...(economics.success
-              ? {
-                  ...economics.data,
                 }
               : {}),
           };
@@ -64,7 +56,6 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
             globalStake: globalStake.success
               ? {
                   ...newGlobalStake,
-                  ...newEconomics,
                   ...newNodesVersions,
                 }
               : undefined,
