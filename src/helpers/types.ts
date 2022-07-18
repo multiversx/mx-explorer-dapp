@@ -293,9 +293,12 @@ export interface EventType {
   address: string;
   identifier: string;
   topics: string[];
+  order: number;
+  data?: string;
 }
 
 export interface ResultLogType {
+  id: string;
   address: string;
   events: EventType[];
 }
@@ -346,6 +349,7 @@ export interface TransactionType {
   operations?: OperationType[];
   action?: TxActionType;
   logs?: {
+    id: string;
     address: string;
     events: EventType[];
   };
