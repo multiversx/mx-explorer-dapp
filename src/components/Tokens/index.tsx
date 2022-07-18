@@ -108,7 +108,7 @@ const Tokens = () => {
                   {tokens && tokens.length > 0 ? (
                     <>
                       <div className="card-body border-0 p-0">
-                        <TokensTable tokens={tokens} />
+                        <TokensTable tokens={tokens} page={page} />
                       </div>
 
                       <div className="card-footer d-flex justify-content-end">
