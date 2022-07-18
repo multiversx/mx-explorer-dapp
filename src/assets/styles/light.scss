@@ -28,4 +28,6 @@ $input-bg: $card-bg;
 $input-disabled-bg: #e9ecef;
 $input-hover-border-color: darken($border-color, 15%);
 
+$image-filter: none;
+
 @import './main';

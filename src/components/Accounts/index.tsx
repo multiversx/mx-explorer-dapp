@@ -8,10 +8,12 @@ import {
   NetworkLink,
   Trim,
   ScAddressIcon,
+  AccountDetailsBlock,
 } from 'sharedComponents';
+import { urlBuilder, useSize, useURLSearchParams } from 'helpers';
+import { AccountType } from 'helpers/types';
 import NoAccounts from './NoAccounts';
 import FailedAccounts from './FailedAccounts';
-import { types, urlBuilder, useSize, useURLSearchParams } from 'helpers';
 
 const Transactions = () => {
   const ref = React.useRef(null);
@@ -20,7 +22,7 @@ const Transactions = () => {
   const { size } = useSize();
   const { getAccounts, getAccountsCount } = adapter();
 
-  const [accounts, setAccounts] = React.useState<types.AccountType[]>([]);
+  const [accounts, setAccounts] = React.useState<AccountType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [totalAccounts, setTotalAccounts] = React.useState<number | '...'>('...');
 
@@ -86,7 +88,8 @@ const Transactions = () => {
                             <thead>
                               <tr>
                                 <th>Address</th>
-                                <th>Balance</th>
+                                <th className="w-25">Balance</th>
+                                <th className="w-25">Details</th>
                               </tr>
                             </thead>
                             <tbody data-testid="accountsTable">
@@ -108,6 +111,11 @@ const Transactions = () => {
                                   </td>
                                   <td>
                                     <Denominate value={account.balance} />
+                                  </td>
+                                  <td>
+                                    {account.assets && (
+                                      <AccountDetailsBlock assets={account.assets} />
+                                    )}
                                   </td>
                                 </tr>
                               ))}

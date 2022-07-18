@@ -28,6 +28,8 @@ $input-bg: $card-bg;
 $input-disabled-bg: $muted;
 $input-hover-border-color: lighten($border-color, 15%);
 
+$image-filter: invert(1) grayscale(1);
+
 @import './main';
 
 .simple-map {
