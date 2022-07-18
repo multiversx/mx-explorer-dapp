@@ -103,7 +103,7 @@ const TokensMeta = () => {
                     <>
                       <div className="card-body border-0 p-0">
                         <div className="table-wrapper">
-                          <table className="table">
+                          <table className="table tokens-table">
                             <thead>
                               <tr>
                                 <th>Token</th>
