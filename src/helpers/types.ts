@@ -10,6 +10,14 @@ export interface ScamInfoType {
   type: string;
   info: string;
 }
+
+export interface AccountAssetType {
+  name: string;
+  description: string;
+  tags: string[];
+  iconPng: string;
+  iconSvg: string;
+}
 export interface AccountType {
   address: string;
   balance: string;
@@ -27,6 +35,7 @@ export interface AccountType {
   isReadable?: boolean;
   isPayable?: boolean;
   isPayableBySmartContract?: boolean;
+  assets?: AccountAssetType;
 }
 
 export interface TokenRolesType {

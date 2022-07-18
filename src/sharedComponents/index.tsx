@@ -44,6 +44,7 @@ import TxActionBlock from './TxActionBlock';
 import ScResultsTable from './ScResultsTable';
 import LoadingDots from './LoadingDots';
 import LockedTokenAddressIcon from './LockedTokenAddressIcon';
+import AccountDetailsBlock from './AccountDetailsBlock';
 
 export {
   Denominate,
@@ -93,4 +94,5 @@ export {
   ScResultsTable,
   LoadingDots,
   LockedTokenAddressIcon,
+  AccountDetailsBlock,
 };
