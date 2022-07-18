@@ -128,11 +128,13 @@ const TransactionInfo = ({
     return ` ${parseFloat(amount) > 0 ? '≈' : '='} $${formattedValue}`;
   };
 
-  const transactionMessages = new Set([
-    ...getScResultsMessages(transaction),
-    ...getOperationsMessages(transaction),
-    ...getReceiptMessages(transaction),
-  ]);
+  const transactionMessages = Array.from(
+    new Set([
+      ...getScResultsMessages(transaction),
+      ...getOperationsMessages(transaction),
+      ...getReceiptMessages(transaction),
+    ])
+  );
 
   const transactionFee =
     transaction.fee === undefined && transaction.gasUsed === undefined
@@ -158,6 +160,13 @@ const TransactionInfo = ({
     addCommas: false,
     showLastNonZeroDecimal: true,
   });
+
+  const internalVMErrorEvents =
+    transaction?.logs?.events?.filter((log) => log.identifier === 'internalVMErrors') ?? [];
+  const logsLink =
+    internalVMErrorEvents.length > 0
+      ? `${transactionsRoutes.transactions}/${transaction.txHash}/logs#${transaction?.logs?.id}/${internalVMErrorEvents[0].order}/text`
+      : '';
 
   const visibleOperations = getVisibleOperations(transaction);
   const showLogs = transaction.logs || (transaction.results && transaction.results.length > 0);
@@ -323,7 +332,7 @@ const TransactionInfo = ({
                         </NetworkLink>
                       )}
                     </div>
-                    {Array.from(transactionMessages).map((msg, messageIndex) => (
+                    {transactionMessages.map((msg, messageIndex) => (
                       <div
                         key={`tx-message-${messageIndex}`}
                         className="d-flex ml-1 text-break-all"
@@ -336,6 +345,11 @@ const TransactionInfo = ({
                         />
                         &nbsp;
                         <small className="text-danger ml-1"> {msg}</small>
+                        {logsLink && messageIndex === transactionMessages.length - 1 && (
+                          <NetworkLink to={logsLink} className="small ml-1">
+                            See logs
+                          </NetworkLink>
+                        )}
                       </div>
                     ))}
                     {transaction.status === txStatus.rewardReverted && (
@@ -472,7 +486,7 @@ const TransactionInfo = ({
                       )}
                       {transaction.logs.events && transaction.logs.events?.length > 0 && (
                         <DetailItem title="Events">
-                          <EventsList events={transaction.logs.events} />
+                          <EventsList events={transaction.logs.events} id={transaction.logs?.id} />
                         </DetailItem>
                       )}
                     </>
@@ -491,7 +505,7 @@ const TransactionInfo = ({
                             )}
                             {result.logs.events && result.logs.events?.length > 0 && (
                               <DetailItem title="Events">
-                                <EventsList events={result.logs.events} />
+                                <EventsList events={result.logs.events} id={result.logs?.id} />
                               </DetailItem>
                             )}
                           </div>
