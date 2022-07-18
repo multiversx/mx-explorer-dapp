@@ -76,7 +76,7 @@ const TokensTable = ({ tokens, page }: { tokens: TokenType[]; page?: number }) =
                 />
               )}
             </td>
-            <td>{token.marketCap && <>${amountWithoutRounding(token.marketCap.toString())}</>}</td>
+            <td>{token.marketCap && <>${new BigNumber(token.marketCap).toFormat(0)}</>}</td>
           </tr>
         ))}
       </tbody>
