@@ -22,7 +22,7 @@ export default function processEconomics(statsData: any) {
     .toFixed(0);
   const ecosystemMarketCap = new BigNumber(data.marketCap)
     .plus(new BigNumber(data.tokenMarketCap))
-    .toFormat();
+    .toFormat(0);
 
   const newEconomics = success
     ? {
@@ -30,11 +30,11 @@ export default function processEconomics(statsData: any) {
         circulatingSupply: new BigNumber(data.circulatingSupply).toFormat(),
         staked: new BigNumber(data.staked).toFormat(),
         price: `$${new BigNumber(data.price).toFormat(2)}`,
-        marketCap: `$${new BigNumber(data.marketCap).toFormat()}`,
+        marketCap: `$${new BigNumber(data.marketCap).toFormat(0)}`,
         apr: `${new BigNumber(data.apr).times(100).toFormat(2)}%`,
         topUpApr: `${new BigNumber(data.topUpApr).times(100).toFormat(2)}%`,
         baseApr: `${new BigNumber(data.baseApr).times(100).toFormat(2)}%`,
-        tokenMarketCap: `$${new BigNumber(data.tokenMarketCap).toFormat()}`,
+        tokenMarketCap: `$${new BigNumber(data.tokenMarketCap).toFormat(0)}`,
         totalStakedPercent: `${totalStakedPercent}%`,
         ecosystemMarketCap: `$${ecosystemMarketCap}`,
       }
