@@ -2,6 +2,7 @@ import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { adapter, Loader, PageState, SharedIdentity } from 'sharedComponents';
 import { useLocation, useParams } from 'react-router-dom';
+import { useGlobalState } from 'context';
 import { IdentityType, NodeType } from 'context/state';
 import NodeInformation from './NodeInformation';
 import NetworkMetrics from './NetworkMetrics';
@@ -23,9 +24,10 @@ const initialState = {
 
 const NodeDetails = () => {
   const ref = React.useRef(null);
+  const { stats } = useGlobalState();
   const { hash: publicKey } = useParams() as any;
   const { search } = useLocation();
-  const { getNode, getIdentity, getRounds, getBlocks, getStats } = adapter();
+  const { getNode, getIdentity, getRounds, getBlocks } = adapter();
   const isMainnet = useIsMainnet();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
@@ -36,14 +38,14 @@ const NodeDetails = () => {
 
   const fetchNodes = () => {
     setDataReady(undefined);
-    Promise.all([getNode(publicKey), getStats()]).then(([nodeData, statsData]) => {
+    getNode(publicKey).then((nodeData) => {
       if (ref.current !== null) {
         if (nodeData.success) {
           const fetchIdentity = isMainnet && nodeData.data.identity !== undefined;
           const hasExtendedInfo =
             nodeData.data.type !== 'observer' && nodeData.data.status !== 'queued';
 
-          const epoch = statsData.success ? statsData.data.epoch : undefined;
+          const epoch = stats.epoch ?? undefined;
           const shard = nodeData.data.shard;
 
           if (hasExtendedInfo) {

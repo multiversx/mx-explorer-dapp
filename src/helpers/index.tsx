@@ -24,7 +24,9 @@ import isContract from './isContract';
 import usdValue from './usdValue';
 import nominate from './nominate';
 import processStats from './processStats';
-import useFetchPrice from './useFetchPrice';
+import processEconomics from './processEconomics';
+import useFetchEconomics from './useFetchEconomics';
+import useFetchStats from './useFetchStats';
 import useNetworkRouter from './useNetworkRouter';
 import useLoopManager from './useLoopManager';
 import useActiveRoute from './useActiveRoute';
@@ -65,7 +67,9 @@ export {
   usdValue,
   nominate,
   processStats,
-  useFetchPrice,
+  processEconomics,
+  useFetchEconomics,
+  useFetchStats,
   useNetworkRouter,
   useLoopManager,
   useActiveRoute,
