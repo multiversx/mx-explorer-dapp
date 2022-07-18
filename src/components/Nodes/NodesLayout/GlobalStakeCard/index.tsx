@@ -7,6 +7,7 @@ import { CardItem, MultilayerPercentageBar, PageState } from 'sharedComponents';
 
 const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
   const {
+    economics,
     globalStake,
     activeNetwork: { erdLabel },
   } = useGlobalState();
@@ -34,29 +35,21 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
               <CardItem className="n3 lg" title="Active Stake" icon={faLock}>
                 <div className="d-flex flex-column w-100">
                   <h5 className="m-0 pb-1">
-                    {globalStake && globalStake.staked ? (
+                    {economics.staked ? (
                       <>
-                        {globalStake.staked.toLocaleString('en')} {erdLabel}
+                        {economics.staked} {erdLabel}
                       </>
                     ) : (
                       'N/A'
                     )}
                   </h5>
-                  {/* <small>
-                    <span className="text-secondary">Deliquent stake:</span>{' '}
-                    {globalStake && globalStake.deliquentStake
-                      ? `${globalStake.deliquentStake}%`
-                      : 'N/A'}
-                  </small> */}
                 </div>
               </CardItem>
 
               <CardItem className="n3 lg" title="Staking APR" icon={faLeaf}>
                 <div className="d-flex flex-column w-100">
                   <h5 className="m-0 pb-1">
-                    {globalStake && globalStake.baseApr
-                      ? `Up to ${(globalStake.baseApr * 100).toFixed(2)}%`
-                      : 'N/A'}
+                    {economics.baseApr ? `Up to ${economics.baseApr}` : 'N/A'}
                   </h5>
                   {/* <small>
                     {globalStake && globalStake.waitingList ? `${globalStake.waitingList}% ` : 'N/A '}

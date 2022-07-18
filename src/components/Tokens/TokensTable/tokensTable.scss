@@ -1,6 +1,6 @@
 .tokens,
 .tokens-meta {
-  .table {
+  .tokens-table {
     .token-ticker {
       width: fit-content;
     }
@@ -31,7 +31,7 @@
   }
 }
 .tokens-meta {
-  .table {
+  .tokens-table {
     th:first-child,
     td:first-child {
       width: 45%;
@@ -43,7 +43,7 @@
   }
 }
 .tokens {
-  .table {
+  .tokens-table {
     th,
     td {
       min-width: 8%;
@@ -51,6 +51,15 @@
     th:first-child,
     td:first-child {
       width: 26%;
+    }
+    .egld-icon svg {
+      fill: $dark;
+      width: 1rem;
+      height: 1rem;
+      @include media-breakpoint-up(md) {
+        width: 2.15rem;
+        height: 2.15rem;
+      }
     }
   }
 }

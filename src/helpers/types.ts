@@ -29,6 +29,25 @@ export interface AccountType {
   isPayableBySmartContract?: boolean;
 }
 
+export interface TokenRolesType {
+  address: string;
+  roles: string[];
+}
+
+export interface TokenLockedAccountType {
+  address: string;
+  name: string;
+  balance: string;
+}
+export interface TokenSupplyType {
+  supply: number;
+  circulatingSupply: number;
+  minted: number;
+  burnt: number;
+  initialMinted: number;
+  lockedAccounts?: TokenLockedAccountType[];
+}
+
 export interface TokenType {
   identifier: string;
   ticker?: string;

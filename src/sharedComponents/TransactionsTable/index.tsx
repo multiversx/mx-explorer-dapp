@@ -12,6 +12,7 @@ interface TransactionsTableType {
   size: number;
   title?: React.ReactNode;
   directionCol?: boolean;
+  showLockedAccounts?: boolean;
 }
 
 const TransactionsTable = ({
@@ -25,6 +26,7 @@ const TransactionsTable = ({
     </>
   ),
   directionCol = false,
+  showLockedAccounts = false,
 }: TransactionsTableType) => {
   return (
     <div className="transactions-table">
@@ -70,6 +72,7 @@ const TransactionsTable = ({
                     key={transaction.txHash}
                     address={address}
                     directionCol={directionCol}
+                    showLockedAccounts={showLockedAccounts}
                   />
                 ))}
               </tbody>

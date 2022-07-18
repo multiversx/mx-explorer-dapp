@@ -4,65 +4,11 @@ import { faUsers } from '@fortawesome/pro-solid-svg-icons/faUsers';
 import { faChartArea } from '@fortawesome/pro-solid-svg-icons/faChartArea';
 import { useGlobalState } from 'context';
 import EpochGear from 'components/Layout/GlobalStatsCard/EpochGear';
-import { adapter, CardItem } from 'sharedComponents';
-
-import { processStats } from 'helpers';
-import { initialStats } from 'helpers/processStats';
-
-const initialState = {
-  ...initialStats,
-  marketCap: '...',
-  circulatingSupply: '...',
-  totalStaked: '...',
-  totalStakedPercent: '...',
-};
+import { CardItem } from 'sharedComponents';
 
 const GlobalStatsCard = () => {
   const ref = React.useRef(null);
-  const { activeNetworkId, usd } = useGlobalState();
-
-  const { getStats, getEconomics } = adapter();
-
-  const [data, setData] = React.useState(initialState);
-
-  const getData = () => {
-    if (ref.current !== null) {
-      Promise.all([getStats(), getEconomics()]).then(([statsData, economicsData]) => {
-        const marketCap = economicsData.success
-          ? `$${parseInt(economicsData.data.marketCap).toLocaleString('en')}`
-          : '...';
-
-        const circulatingSupply = economicsData.success
-          ? parseInt(economicsData.data.circulatingSupply).toLocaleString('en')
-          : '...';
-
-        const totalStaked = economicsData.success
-          ? parseInt(economicsData.data.staked).toLocaleString('en')
-          : '...';
-
-        const totalStakedPercent = economicsData.success
-          ? `${(
-              (parseInt(economicsData.data.staked) /
-                parseInt(economicsData.data.circulatingSupply)) *
-              100
-            ).toFixed()}%`
-          : '...';
-
-        if (ref.current !== null) {
-          setData({
-            ...processStats(statsData),
-            marketCap,
-            circulatingSupply,
-            totalStaked,
-            totalStakedPercent,
-          });
-        }
-      });
-    }
-  };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(getData, [activeNetworkId]);
+  const { usd, stats, economics } = useGlobalState();
 
   return (
     <div ref={ref} className="global-stats-card">
@@ -71,7 +17,7 @@ const GlobalStatsCard = () => {
           <div className="card d-flex flex-column flex-lg-row flex-wrap py-4 px-3 px-lg-spacer">
             <div className="card-body p-0 d-flex flex-column flex-lg-row">
               <div className="d-flex align-items-center justify-content-center">
-                <EpochGear stats={data} />
+                <EpochGear stats={stats} />
               </div>
               <div className="card-item-container w-100">
                 <CardItem className="n3 lg title-bold" title="Market Info" icon={faChartArea}>
@@ -86,7 +32,7 @@ const GlobalStatsCard = () => {
                     </div>
                     <div className="d-flex justify-content-between">
                       <span className="text-secondary mr-3">Market Cap:</span>
-                      {data.marketCap}
+                      {economics.marketCap}
                     </div>
                   </div>
                 </CardItem>
@@ -95,11 +41,11 @@ const GlobalStatsCard = () => {
                   <div className="d-flex flex-column w-100">
                     <div className="d-flex justify-content-between mb-1">
                       <span className="text-secondary mr-1">Circulating Supply:</span>
-                      {data.circulatingSupply}
+                      {economics.circulatingSupply}
                     </div>
                     <div className="d-flex justify-content-between">
                       <span className="text-secondary mr-1">Total Staked:</span>
-                      {data.totalStaked} ({data.totalStakedPercent})
+                      {economics.staked} ({economics.totalStakedPercent})
                     </div>
                   </div>
                 </CardItem>
@@ -108,11 +54,11 @@ const GlobalStatsCard = () => {
                   <div className="d-flex flex-column w-100">
                     <div className="d-flex justify-content-between mb-1">
                       <span className="text-secondary mr-3">Addresses:</span>
-                      {data.accounts}
+                      {stats.accounts}
                     </div>
                     <div className="d-flex justify-content-between">
                       <span className="text-secondary mr-3">Transactions:</span>
-                      {data.transactions}
+                      {stats.transactions}
                     </div>
                   </div>
                 </CardItem>

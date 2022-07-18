@@ -1,26 +1,19 @@
 import * as React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDiamond } from '@fortawesome/pro-regular-svg-icons/faDiamond';
 import { useLocation } from 'react-router-dom';
-import BigNumber from 'bignumber.js';
-
-import { Loader, adapter, NetworkLink, Denominate, Pager } from 'sharedComponents';
-import NoTokens from './NoTokens';
-import FailedTokens from './FailedTokens';
-import {
-  urlBuilder,
-  useFilters,
-  useURLSearchParams,
-  types,
-  useActiveRoute,
-  amountWithoutRounding,
-} from 'helpers';
-import Filters from './Filters';
 
 import { tokensRoutes } from 'routes';
+import { Loader, adapter, NetworkLink, Pager } from 'sharedComponents';
+import { useGlobalState } from 'context';
+import { useFilters, useURLSearchParams, types, useActiveRoute } from 'helpers';
+
+import NoTokens from './NoTokens';
+import FailedTokens from './FailedTokens';
+import Filters from './Filters';
+import TokensTable from './TokensTable';
 
 const Tokens = () => {
   const ref = React.useRef(null);
+  const { economics } = useGlobalState();
   const activeRoute = useActiveRoute();
   const { page } = useURLSearchParams();
   const { search } = useLocation();
@@ -63,7 +56,15 @@ const Tokens = () => {
                 <div className="card">
                   <div className="card-header">
                     <div className="card-header-item d-flex align-items-center justify-content-between">
-                      <h6 data-testid="title">Tokens</h6>
+                      <div className="d-flex flex-wrap w-100 align-items-center justify-content-between">
+                        <h6 data-testid="title">Tokens</h6>
+                        <span>
+                          {totalTokens}{' '}
+                          <span className="text-secondary pr-2 border-right mr-2">Tokens</span>{' '}
+                          <span className="text-secondary">Ecosystem Market Cap:</span>{' '}
+                          {economics.ecosystemMarketCap}
+                        </span>
+                      </div>
                     </div>
                     <div className="card-header-item d-flex justify-content-between align-items-center">
                       <div className="nodes-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
@@ -107,100 +108,7 @@ const Tokens = () => {
                   {tokens && tokens.length > 0 ? (
                     <>
                       <div className="card-body border-0 p-0">
-                        <div className="table-wrapper">
-                          <table className="table">
-                            <thead>
-                              <tr>
-                                <th>Token</th>
-                                <th>Name</th>
-                                <th>Holders</th>
-                                <th>Transactions</th>
-                                <th>Price</th>
-                                <th>Supply</th>
-                                <th>Market Cap</th>
-                              </tr>
-                            </thead>
-                            <tbody data-testid="tokensTable">
-                              {tokens.map((token, i) => (
-                                <tr key={token.identifier}>
-                                  <td>
-                                    <div className="token-identity d-flex flex-row">
-                                      <div className="d-flex align-items-center mr-3">
-                                        <NetworkLink
-                                          to={urlBuilder.tokenDetails(token.identifier)}
-                                          data-testid={`tokensLink${i}`}
-                                          className="token-link"
-                                        >
-                                          {token.assets && token.assets.svgUrl ? (
-                                            <img
-                                              src={token.assets.svgUrl}
-                                              alt={token.name}
-                                              className="token-icon"
-                                            />
-                                          ) : (
-                                            <div className="bg-light token-icon d-flex align-items-center justify-content-center">
-                                              <FontAwesomeIcon icon={faDiamond} />
-                                            </div>
-                                          )}
-                                        </NetworkLink>
-                                      </div>
-                                      <div className="d-flex flex-column justify-content-center">
-                                        <NetworkLink
-                                          to={urlBuilder.tokenDetails(token.identifier)}
-                                          data-testid={`tokensLink${i}`}
-                                          className="d-block token-ticker"
-                                        >
-                                          {token.ticker}
-                                        </NetworkLink>
-                                        {token.assets && token.assets.description && (
-                                          <div
-                                            className="token-description text-wrap text-secondary small d-none d-md-block"
-                                            title={token.assets.description}
-                                          >
-                                            {token.assets.description}
-                                          </div>
-                                        )}
-                                      </div>
-                                    </div>
-                                  </td>
-                                  <td>{token.name}</td>
-                                  <td>
-                                    {token.accounts ? new BigNumber(token.accounts).toFormat() : 0}
-                                  </td>
-                                  <td>
-                                    {token.transactions
-                                      ? new BigNumber(token.transactions).toFormat()
-                                      : 0}
-                                  </td>
-                                  <td>
-                                    {token.price && (
-                                      <>${amountWithoutRounding(token.price.toString())}</>
-                                    )}
-                                  </td>
-                                  <td>
-                                    {token.circulatingSupply && (
-                                      <Denominate
-                                        showLabel={false}
-                                        value={
-                                          token.circulatingSupply
-                                            ? String(token.circulatingSupply)
-                                            : '0'
-                                        }
-                                        denomination={token.decimals}
-                                        decimals={0}
-                                      />
-                                    )}
-                                  </td>
-                                  <td>
-                                    {token.marketCap && (
-                                      <>${amountWithoutRounding(token.marketCap.toString())}</>
-                                    )}
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
+                        <TokensTable tokens={tokens} page={page} />
                       </div>
 
                       <div className="card-footer d-flex justify-content-end">
