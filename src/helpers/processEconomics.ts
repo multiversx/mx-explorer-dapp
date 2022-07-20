@@ -21,7 +21,7 @@ export default function processEconomics(statsData: any) {
     .times(100)
     .toFixed(0);
   const ecosystemMarketCap = new BigNumber(data.marketCap)
-    .plus(new BigNumber(data.tokenMarketCap))
+    .plus(new BigNumber(data.tokenMarketCap ? data.tokenMarketCap : 0))
     .toFormat(0);
 
   const newEconomics = success
