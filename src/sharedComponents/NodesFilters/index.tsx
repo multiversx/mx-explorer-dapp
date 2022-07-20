@@ -12,7 +12,7 @@ const NodesFilters = ({ baseRoute, onlySearch }: { baseRoute: string; onlySearch
   const networkRoute = useNetworkRoute();
   const history = useHistory();
   const urlParams = new URLSearchParams(locationSearch);
-  const { search, status, issues, type } = Object.fromEntries(urlParams);
+  const { search, status, issues, type, fullHistory } = Object.fromEntries(urlParams);
   const [inputValue, setInputValue] = React.useState<string>(search);
 
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -29,7 +29,7 @@ const NodesFilters = ({ baseRoute, onlySearch }: { baseRoute: string; onlySearch
   };
 
   const nodeStatusLink = (statusValue: string) => {
-    const { status, type, issues, page, ...rest } = Object.fromEntries(urlParams);
+    const { status, type, issues, fullHistory, page, ...rest } = Object.fromEntries(urlParams);
     const nextUrlParams = new URLSearchParams({
       ...rest,
       ...(statusValue ? { status: statusValue } : {}),
@@ -38,7 +38,7 @@ const NodesFilters = ({ baseRoute, onlySearch }: { baseRoute: string; onlySearch
   };
 
   const nodeTypeLink = (typeValue: string) => {
-    const { type, status, issues, page, ...rest } = Object.fromEntries(urlParams);
+    const { type, status, issues, fullHistory, page, ...rest } = Object.fromEntries(urlParams);
     const nextUrlParams = new URLSearchParams({
       ...rest,
       ...(typeValue ? { type: typeValue } : {}),
@@ -47,10 +47,19 @@ const NodesFilters = ({ baseRoute, onlySearch }: { baseRoute: string; onlySearch
   };
 
   const issuesLink = (issuesValue: string) => {
-    const { type, status, issues, page, ...rest } = Object.fromEntries(urlParams);
+    const { type, status, issues, fullHistory, page, ...rest } = Object.fromEntries(urlParams);
     const nextUrlParams = new URLSearchParams({
       ...rest,
       ...(issuesValue ? { issues: issuesValue, type: 'validator' } : {}),
+    }).toString();
+    return `${baseRoute}?${nextUrlParams}`;
+  };
+
+  const fullHistoryLink = (fullHistoryValue: string) => {
+    const { type, status, issues, fullHistory, page, ...rest } = Object.fromEntries(urlParams);
+    const nextUrlParams = new URLSearchParams({
+      ...rest,
+      ...(fullHistoryValue ? { fullHistory: fullHistoryValue } : {}),
     }).toString();
     return `${baseRoute}?${nextUrlParams}`;
   };
@@ -88,6 +97,15 @@ const NodesFilters = ({ baseRoute, onlySearch }: { baseRoute: string; onlySearch
               }`}
             >
               Observers
+            </NetworkLink>
+          </li>
+          <li className="list-inline-item my-1 my-md-0">
+            <NetworkLink
+              to={fullHistoryLink('true')}
+              data-testid="filterByFullHistory"
+              className={`btn btn-sm btn-outline-light btn-pill ${fullHistory ? 'active' : ''}`}
+            >
+              Full History
             </NetworkLink>
           </li>
           <li className="list-inline-item my-1 my-md-0">
