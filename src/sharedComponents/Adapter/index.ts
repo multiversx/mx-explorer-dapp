@@ -296,6 +296,7 @@ export default function useAdapter() {
       status,
       identity,
       provider,
+      fullHistory,
     }: GetNodesType) =>
       getNodes({
         url: `/nodes/c`,
@@ -308,6 +309,7 @@ export default function useAdapter() {
           status,
           identity,
           provider,
+          fullHistory,
         }),
       }),
 

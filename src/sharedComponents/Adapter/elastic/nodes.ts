@@ -24,6 +24,7 @@ const nodes = async ({
       type,
       shard,
       issues,
+      fullHistory,
       identity,
       sort,
       order = 'asc',
@@ -73,6 +74,10 @@ const nodes = async ({
         }
 
         if (identity && node.identity !== identity) {
+          return false;
+        }
+
+        if (fullHistory && !node.fullHistory) {
           return false;
         }
 
