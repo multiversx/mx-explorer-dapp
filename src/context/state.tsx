@@ -110,6 +110,7 @@ export interface NodeType {
   validatorFailure?: number;
   validatorIgnoredSignatures?: number;
   position?: number;
+  fullHistory?: boolean;
 
   // TODO check if used
   receivedShardID?: number;

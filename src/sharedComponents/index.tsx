@@ -45,6 +45,7 @@ import ScResultsTable from './ScResultsTable';
 import LoadingDots from './LoadingDots';
 import LockedTokenAddressIcon from './LockedTokenAddressIcon';
 import AccountDetailsBlock from './AccountDetailsBlock';
+import Overlay from './Overlay';
 
 export {
   Denominate,
@@ -95,4 +96,5 @@ export {
   LoadingDots,
   LockedTokenAddressIcon,
   AccountDetailsBlock,
+  Overlay,
 };
