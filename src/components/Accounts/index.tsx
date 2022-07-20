@@ -8,7 +8,6 @@ import {
   NetworkLink,
   Trim,
   ScAddressIcon,
-  AccountDetailsBlock,
 } from 'sharedComponents';
 import { urlBuilder, useSize, useURLSearchParams } from 'helpers';
 import { AccountType } from 'helpers/types';
@@ -88,8 +87,7 @@ const Transactions = () => {
                             <thead>
                               <tr>
                                 <th>Address</th>
-                                <th className="w-25">Balance</th>
-                                <th className="w-25">Details</th>
+                                <th>Balance</th>
                               </tr>
                             </thead>
                             <tbody data-testid="accountsTable">
@@ -111,11 +109,6 @@ const Transactions = () => {
                                   </td>
                                   <td>
                                     <Denominate value={account.balance} />
-                                  </td>
-                                  <td>
-                                    {account.assets && (
-                                      <AccountDetailsBlock assets={account.assets} />
-                                    )}
                                   </td>
                                 </tr>
                               ))}
