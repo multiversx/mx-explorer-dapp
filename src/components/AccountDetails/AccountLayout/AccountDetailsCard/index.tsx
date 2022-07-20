@@ -14,7 +14,6 @@ import {
   Trim,
   TimeAgo,
   PropertyPill,
-  AccountDetailsBlock,
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import { isContract, urlBuilder, dateFormatted } from 'helpers';
@@ -96,7 +95,6 @@ const AccountDetailsCard = () => {
     isReadable,
     isPayable,
     isPayableBySmartContract,
-    assets,
   } = accountDetails;
   const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
 
@@ -214,11 +212,6 @@ const AccountDetailsCard = () => {
                         />
                         {scamInfo.info}
                       </span>
-                    )}
-                    {assets && (
-                      <div className="pl-2 ml-auto">
-                        <AccountDetailsBlock assets={assets} />
-                      </div>
                     )}
                   </div>
                   {isProvider && (
@@ -354,11 +347,6 @@ const AccountDetailsCard = () => {
                         />
                         {scamInfo.info}
                       </span>
-                    )}
-                    {assets && (
-                      <div className="pl-2 ml-auto">
-                        <AccountDetailsBlock assets={assets} />
-                      </div>
                     )}
                   </div>
                 </div>
