@@ -97,6 +97,7 @@ const getNodes = async (args: any & { proxyUrl: () => string }) => {
       peerType,
       isActive,
       validatorStatus,
+      fullHistory,
     } = node;
 
     if (shard === undefined) {
@@ -132,6 +133,7 @@ const getNodes = async (args: any & { proxyUrl: () => string }) => {
       nodeType,
       peerType,
       status: isActive ? 'online' : 'offline',
+      fullHistory,
     };
 
     if (resultNode.totalUpTimeSec === 0 && node.totalDownTimeSec === 0) {

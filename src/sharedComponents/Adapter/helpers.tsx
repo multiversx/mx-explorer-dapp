@@ -14,6 +14,7 @@ export interface GetNodesType {
   order?: string;
   pagination?: boolean;
   provider?: string;
+  fullHistory?: string;
 }
 
 export interface GetProvidersType {
@@ -56,6 +57,7 @@ export interface ProviderPropsType {
     collection?: string;
     identifier?: string;
     includeFlagged?: boolean;
+    fullHistory?: string;
   };
   timeout: number;
   timestamp?: number;
@@ -131,6 +133,7 @@ export function getNodeParams({
   sort,
   order,
   provider,
+  fullHistory,
 }: GetNodesType) {
   const params: ProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
@@ -143,6 +146,7 @@ export function getNodeParams({
     ...(provider !== undefined ? { provider } : {}),
     ...(sort !== undefined ? { sort } : {}),
     ...(order !== undefined ? { order } : {}),
+    ...(fullHistory !== undefined ? { fullHistory } : {}),
     ...(size !== undefined
       ? pagination
         ? { from: (size - 1) * pageSize, size: pageSize }

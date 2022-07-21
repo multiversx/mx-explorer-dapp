@@ -4,12 +4,8 @@ import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import { useGlobalState } from 'context';
 import { Loader, adapter, NetworkLink, Trim, ScAddressIcon, PageState } from 'sharedComponents';
 import { urlBuilder } from 'helpers';
+import { TokenRolesType } from 'helpers/types';
 import TokenTabs from './TokenLayout/TokenTabs';
-
-interface TokenRolesType {
-  address: string;
-  roles: string[];
-}
 
 const TokenRoles = () => {
   const ref = React.useRef(null);

@@ -17,6 +17,7 @@ import { faStream } from '@fortawesome/pro-solid-svg-icons/faStream';
 import { faCogs } from '@fortawesome/pro-solid-svg-icons/faCogs';
 import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
 import { faFlagAlt } from '@fortawesome/pro-regular-svg-icons/faFlagAlt';
+import { faHistory } from '@fortawesome/pro-solid-svg-icons/faHistory';
 
 import Alert from './Alert';
 
@@ -36,6 +37,7 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     stake,
     issues,
     position,
+    fullHistory,
   } = nodeData;
 
   const versionOudated = version === undefined || (issues && issues.includes('versionMismatch'));
@@ -108,6 +110,11 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
                 ]}
               />
             </div>
+          </CardItem>
+        )}
+        {type === 'observer' && (
+          <CardItem title="Full History" icon={faHistory} className="text-capitalize">
+            {Boolean(fullHistory).toString()}
           </CardItem>
         )}
         {provider && (

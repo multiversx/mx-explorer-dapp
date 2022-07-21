@@ -26,6 +26,17 @@ const TokenTabs = () => {
         <h6>Accounts</h6>
       </NetworkLink>
 
+      {tokenDetails.assets?.lockedAccounts && (
+        <NetworkLink
+          to={urlBuilder.tokenDetailsLockedAccounts(tokenDetails.identifier)}
+          className={`tab-link mx-3 ${
+            activeRoute(tokensRoutes.tokenDetailsLockedAccounts) ? 'active' : ''
+          }`}
+        >
+          <h6>Locked Accounts</h6>
+        </NetworkLink>
+      )}
+
       <NetworkLink
         to={urlBuilder.tokenDetailsRoles(tokenDetails.identifier)}
         className={`tab-link mx-3 ${activeRoute(tokensRoutes.tokenDetailsRoles) ? 'active' : ''}`}

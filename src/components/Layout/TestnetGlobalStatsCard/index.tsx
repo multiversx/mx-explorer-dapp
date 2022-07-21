@@ -5,35 +5,11 @@ import { faCube } from '@fortawesome/pro-solid-svg-icons/faCube';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 import { useGlobalState } from 'context';
 import EpochGear from 'components/Layout/GlobalStatsCard/EpochGear';
-import { adapter, CardItem } from 'sharedComponents';
-
-import { processStats } from 'helpers';
-import { initialStats } from 'helpers/processStats';
-
-const initialState = {
-  ...initialStats,
-};
+import { CardItem } from 'sharedComponents';
 
 const TestnetGlobalStatsCard = () => {
   const ref = React.useRef(null);
-  const { activeNetworkId } = useGlobalState();
-  const { getStats } = adapter();
-  const [data, setData] = React.useState(initialState);
-
-  const getData = () => {
-    if (ref.current !== null) {
-      getStats().then((statsData) => {
-        if (ref.current !== null) {
-          setData({
-            ...processStats(statsData),
-          });
-        }
-      });
-    }
-  };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(getData, [activeNetworkId]);
+  const { stats } = useGlobalState();
 
   return (
     <div ref={ref} className="global-stats-card">
@@ -42,23 +18,23 @@ const TestnetGlobalStatsCard = () => {
           <div className="card d-flex flex-column flex-lg-row flex-wrap py-4 px-3 px-lg-spacer">
             <div className="card-body p-0 d-flex flex-column flex-lg-row">
               <div className="d-flex align-items-center justify-content-center">
-                <EpochGear stats={data} showTime />
+                <EpochGear stats={stats} showTime />
               </div>
               <div className="card-item-container w-100">
                 <CardItem className="lg title-bold" title="Shards" icon={faLayerGroup}>
-                  {data.shards}
+                  {stats.shards}
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Blocks" icon={faCube}>
-                  <div data-testid="blocks">{data.blocks}</div>
+                  <div data-testid="blocks">{stats.blocks}</div>
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Accounts" icon={faUser}>
-                  <div data-testid="accounts">{data.accounts}</div>
+                  <div data-testid="accounts">{stats.accounts}</div>
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Transactions" icon={faExchangeAlt}>
-                  <div data-testid="transactions">{data.transactions}</div>
+                  <div data-testid="transactions">{stats.transactions}</div>
                 </CardItem>
               </div>
             </div>

@@ -266,6 +266,15 @@
   }
 }
 
+.account-icon {
+  width: 1.313rem;
+  height: 1.313rem;
+  color: transparent;
+  &.icon-elrond {
+    filter: $image-filter;
+  }
+}
+
 .btn-link-base {
   padding: 0;
   font-size: inherit;
@@ -273,7 +282,9 @@
   border: 0;
   box-shadow: none;
   &:focus,
+  &:hover,
   &.focus {
     box-shadow: none;
+    text-decoration: none;
   }
 }
