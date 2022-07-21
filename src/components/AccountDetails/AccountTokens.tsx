@@ -12,7 +12,7 @@ import {
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import AccountTabs from './AccountLayout/AccountTabs';
-import { urlBuilder, useFilters, useNetworkRoute } from 'helpers';
+import { urlBuilder, useFilters, useNetworkRoute, amountWithoutRounding } from 'helpers';
 import { TokenType, NftType } from 'helpers/types';
 
 const AccountTokens = () => {
@@ -157,40 +157,47 @@ const AccountTokens = () => {
                   </DetailItem>
                 );
               })}
-              {accountTokens.map(({ identifier, name, balance, decimals, assets, ticker }) => {
-                return (
-                  <DetailItem title={name} key={identifier}>
-                    <div className="d-flex align-items-center">
-                      <div className="mr-1">
-                        <Denominate
-                          showLabel={false}
-                          value={balance ? balance : '0'}
-                          denomination={decimals}
-                          showLastNonZeroDecimal
-                        />
-                      </div>
-
-                      <NetworkLink
-                        to={urlBuilder.tokenDetails(identifier)}
-                        className={`d-flex text-truncate ${assets?.svgUrl ? 'token-link' : ''}`}
-                      >
-                        <div className="d-flex align-items-center symbol text-truncate">
-                          {assets ? (
-                            <>
-                              {assets?.svgUrl && (
-                                <img src={assets.svgUrl} alt={name} className="token-icon mr-1" />
-                              )}
-                              <div className="text-truncate">{ticker ? ticker : name}</div>
-                            </>
-                          ) : (
-                            <div className="text-truncate">{identifier}</div>
-                          )}
+              {accountTokens.map(
+                ({ identifier, name, balance, decimals, assets, ticker, valueUsd }) => {
+                  return (
+                    <DetailItem title={name} key={identifier}>
+                      <div className="d-flex align-items-center">
+                        <div className="mr-1">
+                          <Denominate
+                            showLabel={false}
+                            value={balance ? balance : '0'}
+                            denomination={decimals}
+                            showLastNonZeroDecimal
+                          />
                         </div>
-                      </NetworkLink>
-                    </div>
-                  </DetailItem>
-                );
-              })}
+                        {valueUsd && (
+                          <span className="text-secondary mr-1">
+                            (${amountWithoutRounding(valueUsd.toString())})
+                          </span>
+                        )}
+
+                        <NetworkLink
+                          to={urlBuilder.tokenDetails(identifier)}
+                          className={`d-flex text-truncate ${assets?.svgUrl ? 'token-link' : ''}`}
+                        >
+                          <div className="d-flex align-items-center symbol text-truncate">
+                            {assets ? (
+                              <>
+                                {assets?.svgUrl && (
+                                  <img src={assets.svgUrl} alt={name} className="token-icon mr-1" />
+                                )}
+                                <div className="text-truncate">{ticker ? ticker : name}</div>
+                              </>
+                            ) : (
+                              <div className="text-truncate">{identifier}</div>
+                            )}
+                          </div>
+                        </NetworkLink>
+                      </div>
+                    </DetailItem>
+                  );
+                }
+              )}
             </>
           )}
         </div>

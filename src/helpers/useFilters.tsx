@@ -10,6 +10,7 @@ export default function useGetFilters() {
     status,
     type,
     issues,
+    fullHistory,
     shard,
     identity,
     page,
@@ -28,6 +29,7 @@ export default function useGetFilters() {
     ...(sort ? { sort } : {}),
     ...(order ? { order } : {}),
     ...(issues ? { issues: 'true' } : {}),
+    ...(fullHistory ? { fullHistory: 'true' } : {}),
     ...(shard && stringIsInteger(shard) ? { shard } : {}),
   });
 

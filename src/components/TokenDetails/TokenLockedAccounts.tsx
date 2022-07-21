@@ -5,35 +5,34 @@ import { useGlobalState } from 'context';
 import {
   Loader,
   adapter,
-  Pager,
-  Denominate,
   NetworkLink,
   Trim,
   ScAddressIcon,
   PageState,
-  LockedTokenAddressIcon,
+  Denominate,
 } from 'sharedComponents';
-import { types, urlBuilder, useSize, useURLSearchParams } from 'helpers';
+import { urlBuilder } from 'helpers';
+import { TokenLockedAccountType } from 'helpers/types';
 import TokenTabs from './TokenLayout/TokenTabs';
 
-const TokenAccounts = () => {
+const TokenLockedAccounts = () => {
   const ref = React.useRef(null);
   const { activeNetworkId, tokenDetails } = useGlobalState();
-  const { page } = useURLSearchParams();
-  const { size } = useSize();
-  const { getTokenAccounts } = adapter();
+  const { getTokenSupply } = adapter();
+  const { decimals } = tokenDetails;
 
   const { hash: tokenId } = useParams() as any;
-  const { decimals, accounts: totalAccounts } = tokenDetails;
 
-  const [accounts, setAccounts] = React.useState<types.AccountType[]>([]);
+  const [tokenLockedAccounts, setTokenLockedAccounts] = React.useState<TokenLockedAccountType[]>(
+    []
+  );
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
-  const fetchAccounts = () => {
-    getTokenAccounts({ tokenId, size }).then(({ data, success }) => {
+  const fetchTokenLockedAccounts = () => {
+    getTokenSupply({ tokenId }).then(({ data, success }) => {
       if (ref.current !== null) {
-        if (success) {
-          setAccounts(data);
+        if (success && data?.lockedAccounts) {
+          setTokenLockedAccounts(data.lockedAccounts);
         }
         setDataReady(success);
       }
@@ -41,11 +40,11 @@ const TokenAccounts = () => {
   };
 
   React.useEffect(() => {
-    fetchAccounts();
+    fetchTokenLockedAccounts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, size, totalAccounts]);
+  }, [activeNetworkId]);
 
-  const showAccounts = dataReady === true && accounts.length > 0;
+  const showLockedAccounts = dataReady === true && tokenLockedAccounts.length > 0;
 
   return (
     <div ref={ref}>
@@ -53,16 +52,8 @@ const TokenAccounts = () => {
         <div className="card-header">
           <div className="card-header-item d-flex justify-content-between align-items-center">
             <TokenTabs />
-            <div className="d-none d-sm-flex">
-              <Pager
-                page={String(page)}
-                total={totalAccounts ? Math.min(totalAccounts, 10000) : 0}
-                itemsPerPage={25}
-                show={accounts.length > 0}
-              />
-            </div>
           </div>
-          {showAccounts ? (
+          {showLockedAccounts ? (
             <>
               <div className="card-body border-0 p-0">
                 <div className="table-wrapper">
@@ -70,27 +61,31 @@ const TokenAccounts = () => {
                     <thead>
                       <tr>
                         <th>Address</th>
-                        <th>Balance</th>
+                        <th className="w-25">Name</th>
+                        <th className="w-25">Balance</th>
                       </tr>
                     </thead>
-                    <tbody data-testid="accountsTable">
-                      {accounts.map((account, i) => (
-                        <tr key={account.address}>
+                    <tbody data-testid="tokenLockedAccountsTable">
+                      {tokenLockedAccounts.map((lockedAccount, i) => (
+                        <tr key={lockedAccount.address}>
                           <td>
                             <div className="d-flex align-items-center">
-                              <LockedTokenAddressIcon address={account.address} />
-                              <ScAddressIcon initiator={account.address} />
+                              <ScAddressIcon initiator={lockedAccount.address} />
                               <NetworkLink
-                                to={urlBuilder.accountDetails(account.address)}
+                                to={urlBuilder.accountDetails(lockedAccount.address)}
                                 className="trim-only-sm"
                               >
-                                <Trim text={account.address} dataTestId={`accountLink${i}`} />
+                                <Trim
+                                  text={lockedAccount.address}
+                                  dataTestId={`lockedAccountLink${i}`}
+                                />
                               </NetworkLink>
                             </div>
                           </td>
+                          <td>{lockedAccount.name}</td>
                           <td>
                             <Denominate
-                              value={account.balance}
+                              value={lockedAccount.balance}
                               showLastNonZeroDecimal={true}
                               showLabel={false}
                               denomination={decimals}
@@ -103,28 +98,25 @@ const TokenAccounts = () => {
                 </div>
               </div>
 
-              <div className="card-footer d-flex justify-content-end">
-                <Pager
-                  page={String(page)}
-                  total={totalAccounts ? Math.min(totalAccounts, 10000) : 0}
-                  itemsPerPage={25}
-                  show={accounts.length > 0}
-                />
-              </div>
+              <div className="card-footer d-flex justify-content-end"></div>
             </>
           ) : (
             <>
-              {dataReady === undefined && <Loader dataTestId="tokenAccountsLoader" />}
+              {dataReady === undefined && <Loader dataTestId="tokenLockedAccountsLoader" />}
               {dataReady === false && (
                 <PageState
                   icon={faUser}
-                  title="Unable to load Accounts"
+                  title="Unable to loadToken Locked Account"
                   className="py-spacer my-auto"
                   dataTestId="errorScreen"
                 />
               )}
-              {dataReady === true && accounts.length === 0 && (
-                <PageState icon={faUser} title="No Accounts" className="py-spacer my-auto" />
+              {dataReady === true && tokenLockedAccounts.length === 0 && (
+                <PageState
+                  icon={faUser}
+                  title="No Token Locked Account"
+                  className="py-spacer my-auto"
+                />
               )}
             </>
           )}
@@ -134,4 +126,4 @@ const TokenAccounts = () => {
   );
 };
 
-export default TokenAccounts;
+export default TokenLockedAccounts;

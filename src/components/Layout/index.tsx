@@ -9,7 +9,8 @@ import GlobalStatsCard from './GlobalStatsCard';
 import TestnetGlobalStatsCard from './TestnetGlobalStatsCard';
 import Routes, { validatorsRoutes, searchRoutes } from 'routes';
 import {
-  useFetchPrice,
+  useFetchEconomics,
+  useFetchStats,
   useNetworkRouter,
   useLoopManager,
   useActiveRoute,
@@ -52,7 +53,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   useNetworkRouter();
   useLoopManager();
-  useFetchPrice();
+  useFetchEconomics();
+  useFetchStats();
   useCheckVersion();
 
   const offline = !window.navigator.onLine;

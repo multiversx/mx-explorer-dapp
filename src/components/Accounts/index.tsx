@@ -9,9 +9,10 @@ import {
   Trim,
   ScAddressIcon,
 } from 'sharedComponents';
+import { urlBuilder, useSize, useURLSearchParams } from 'helpers';
+import { AccountType } from 'helpers/types';
 import NoAccounts from './NoAccounts';
 import FailedAccounts from './FailedAccounts';
-import { types, urlBuilder, useSize, useURLSearchParams } from 'helpers';
 
 const Transactions = () => {
   const ref = React.useRef(null);
@@ -20,7 +21,7 @@ const Transactions = () => {
   const { size } = useSize();
   const { getAccounts, getAccountsCount } = adapter();
 
-  const [accounts, setAccounts] = React.useState<types.AccountType[]>([]);
+  const [accounts, setAccounts] = React.useState<AccountType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [totalAccounts, setTotalAccounts] = React.useState<number | '...'>('...');
 

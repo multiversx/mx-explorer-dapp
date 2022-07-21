@@ -235,9 +235,6 @@ const OperationRow = ({
           <>
             {operation.esdtType === 'NonFungibleESDT' && <div className="mr-1">NFT</div>}
             {operation.esdtType === 'SemiFungibleESDT' && <div className="mr-1">SFT quantity</div>}
-            {operation.value && operation.type === VisibleTransactionOperationType.esdt && (
-              <div className="mr-1">Value</div>
-            )}
             <OperationToken operation={operation} />
           </>
         </DetailedItem>
@@ -310,6 +307,12 @@ const OperationsList = ({
       ? importantOperations.slice(initialDisplay, importantOperations.length)
       : [];
 
+  const buttonText = expanded
+    ? filteredOperations.length > 0
+      ? 'Show in/out operations'
+      : 'Show fewer operations'
+    : 'Show all operations';
+
   return (
     <div className="mb-n2">
       <div className="operations-list d-flex flex-column">
@@ -331,18 +334,17 @@ const OperationsList = ({
           </>
         )}
       </div>
-      {(displayOperations.length !== operations.length || collapsedOperations.length > 0) &&
-        !expanded && (
-          <button
-            className="btn btn-link btn-link-base"
-            type="button"
-            onClick={toggleCollapseClick}
-            aria-controls="operations-list"
-            aria-expanded={expanded}
-          >
-            Show all operations
-          </button>
-        )}
+      {(displayOperations.length !== operations.length || collapsedOperations.length > 0) && (
+        <button
+          className="btn btn-link btn-link-base"
+          type="button"
+          onClick={toggleCollapseClick}
+          aria-controls="operations-list"
+          aria-expanded={expanded}
+        >
+          {buttonText}
+        </button>
+      )}
     </div>
   );
 };

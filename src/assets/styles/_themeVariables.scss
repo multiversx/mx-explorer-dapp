@@ -4,6 +4,7 @@ $body-bg: red !default; // body background
 $primary: red !default; // btns, links
 $secondary: red !default; // faded text
 $muted: red !default; // strong faded text
+$dark: red !default;
 $light: red !default; // menu items hover
 $success: red !default;
 
@@ -24,6 +25,8 @@ $input-color: red !default;
 $input-bg: red !default;
 $input-disabled-bg: red !default;
 $input-hover-border-color: red !default;
+
+$image-filter: red !default;
 
 // do no copy below code
 :root {

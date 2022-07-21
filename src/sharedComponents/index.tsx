@@ -43,6 +43,9 @@ import PropertyPill from './PropertyPill';
 import TxActionBlock from './TxActionBlock';
 import ScResultsTable from './ScResultsTable';
 import LoadingDots from './LoadingDots';
+import LockedTokenAddressIcon from './LockedTokenAddressIcon';
+import AccountDetailsBlock from './AccountDetailsBlock';
+import Overlay from './Overlay';
 
 export {
   Denominate,
@@ -91,4 +94,7 @@ export {
   TxActionBlock,
   ScResultsTable,
   LoadingDots,
+  LockedTokenAddressIcon,
+  AccountDetailsBlock,
+  Overlay,
 };

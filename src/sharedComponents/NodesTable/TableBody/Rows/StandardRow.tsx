@@ -4,6 +4,7 @@ import { urlBuilder } from 'helpers';
 import { ShardSpan, NetworkLink, Trim, Led } from 'sharedComponents';
 import RowIcon from 'sharedComponents/NodesTable/RowIcon';
 import RowIssueIcon from 'sharedComponents/NodesTable/RowIssueIcon';
+import RowFullHistory from 'sharedComponents/NodesTable/RowFullHistory';
 
 const StandardRow = ({ nodeData, index }: { nodeData: NodeType; index: number }) => {
   return (
@@ -11,6 +12,7 @@ const StandardRow = ({ nodeData, index }: { nodeData: NodeType; index: number })
       <td>
         <div className="d-flex align-items-center">
           <RowIcon node={nodeData} />
+          <RowFullHistory node={nodeData} small={true} />
           <NetworkLink to={urlBuilder.nodeDetails(nodeData.bls)} className="trim-wrapper">
             <Trim text={nodeData.bls} />
           </NetworkLink>

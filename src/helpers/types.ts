@@ -10,6 +10,14 @@ export interface ScamInfoType {
   type: string;
   info: string;
 }
+
+export interface AccountAssetType {
+  name: string;
+  description: string;
+  tags: string[];
+  iconPng: string;
+  iconSvg: string;
+}
 export interface AccountType {
   address: string;
   balance: string;
@@ -27,6 +35,26 @@ export interface AccountType {
   isReadable?: boolean;
   isPayable?: boolean;
   isPayableBySmartContract?: boolean;
+  assets?: AccountAssetType;
+}
+
+export interface TokenRolesType {
+  address: string;
+  roles: string[];
+}
+
+export interface TokenLockedAccountType {
+  address: string;
+  name: string;
+  balance: string;
+}
+export interface TokenSupplyType {
+  supply: number;
+  circulatingSupply: number;
+  minted: number;
+  burnt: number;
+  initialMinted: number;
+  lockedAccounts?: TokenLockedAccountType[];
 }
 
 export interface TokenType {
@@ -39,6 +67,7 @@ export interface TokenType {
   minted: string;
   burnt: string;
   supply: string | number;
+  circulatingSupply: string | number;
   canBurn: boolean;
   canChangeOwner: boolean;
   canFreeze: boolean;
@@ -49,6 +78,9 @@ export interface TokenType {
   isPaused: boolean;
   transactions: number;
   accounts: number;
+  price?: number;
+  marketCap?: number;
+  valueUsd?: number;
   assets?: {
     website?: string;
     description?: string;
@@ -56,6 +88,8 @@ export interface TokenType {
     pngUrl?: string;
     svgUrl?: string;
     social?: any;
+    extraTokens?: string[];
+    lockedAccounts?: { [key: string]: string };
   };
 }
 
@@ -293,9 +327,12 @@ export interface EventType {
   address: string;
   identifier: string;
   topics: string[];
+  order: number;
+  data?: string;
 }
 
 export interface ResultLogType {
+  id: string;
   address: string;
   events: EventType[];
 }
@@ -346,6 +383,7 @@ export interface TransactionType {
   operations?: OperationType[];
   action?: TxActionType;
   logs?: {
+    id: string;
     address: string;
     events: EventType[];
   };
