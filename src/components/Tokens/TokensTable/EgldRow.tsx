@@ -33,11 +33,11 @@ export const EgldRow = () => {
         </div>
       </td>
       <td>Elrond {erdLabel}</td>
-      <td>{stats.accounts}</td>
-      <td>{stats.transactions}</td>
       <td>{economics.price}</td>
       <td>{economics.circulatingSupply}</td>
       <td>{economics.marketCap}</td>
+      <td>{stats.accounts}</td>
+      <td>{stats.transactions}</td>
     </tr>
   );
 };
