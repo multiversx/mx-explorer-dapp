@@ -32,13 +32,14 @@
 }
 .tokens-meta {
   .tokens-table {
-    th:first-child,
-    td:first-child {
-      width: 45%;
-    }
-    th:last-child,
-    td:last-child {
-      max-width: 8rem;
+    th,
+    td {
+      &:first-child {
+        width: 45%;
+      }
+      &:last-child {
+        max-width: 8rem;
+      }
     }
   }
 }
@@ -47,11 +48,14 @@
     th,
     td {
       min-width: 8%;
+      &:first-child {
+        width: 26%;
+      }
+      &:nth-child(n + 3) {
+        text-align: right;
+      }
     }
-    th:first-child,
-    td:first-child {
-      width: 26%;
-    }
+
     .egld-icon svg {
       fill: $dark;
       width: 1rem;

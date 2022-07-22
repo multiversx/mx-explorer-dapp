@@ -15,11 +15,11 @@ const TokensTable = ({ tokens, page }: { tokens: TokenType[]; page?: number }) =
         <tr>
           <th>Token</th>
           <th>Name</th>
-          <th>Holders</th>
-          <th>Transactions</th>
           <th>Price</th>
           <th>Circulating Supply</th>
           <th>Market Cap</th>
+          <th>Holders</th>
+          <th>Transactions</th>
         </tr>
       </thead>
       <tbody data-testid="tokensTable">
@@ -63,8 +63,6 @@ const TokensTable = ({ tokens, page }: { tokens: TokenType[]; page?: number }) =
               </div>
             </td>
             <td>{token.name}</td>
-            <td>{token.accounts ? new BigNumber(token.accounts).toFormat() : 0}</td>
-            <td>{token.transactions ? new BigNumber(token.transactions).toFormat() : 0}</td>
             <td>{token.price && <>${amountWithoutRounding(token.price.toString())}</>}</td>
             <td>
               {token.circulatingSupply && (
@@ -77,6 +75,8 @@ const TokensTable = ({ tokens, page }: { tokens: TokenType[]; page?: number }) =
               )}
             </td>
             <td>{token.marketCap && <>${new BigNumber(token.marketCap).toFormat(0)}</>}</td>
+            <td>{token.accounts ? new BigNumber(token.accounts).toFormat() : 0}</td>
+            <td>{token.transactions ? new BigNumber(token.transactions).toFormat() : 0}</td>
           </tr>
         ))}
       </tbody>
