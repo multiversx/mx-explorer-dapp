@@ -134,7 +134,7 @@ const OperationBlock = ({
       {addressIsBech32(address) ? (
         <>
           <NetworkLink to={urlBuilder.accountDetails(address)} className="trim-wrapper">
-            <AccountName address={address} assets={operationAssets} color="secondary" />
+            <AccountName address={address} assets={operationAssets} />
           </NetworkLink>
           <CopyButton text={address} className="side-action ml-2" />
         </>

@@ -14,19 +14,20 @@ const AccountName = ({
   color?: 'muted' | 'secondary';
 }) => {
   if (assets && assets.name) {
-    const description = `${assets.name} (${address}) ${
-      assets.description ? `(${assets.description})` : ''
-    }`;
+    const name = assets.name.replace(/\p{Emoji}/gu, '');
+    const description = `${name} (${address})`;
     return (
       <Overlay title={description}>
-        <Trim
-          text={assets.name}
+        <span
+          className={`text-truncate ${color ? `text-${color}` : ''}`}
           {...(dataTestId
             ? {
                 dataTestId,
               }
             : {})}
-        />
+        >
+          {name}
+        </span>
       </Overlay>
     );
   }
@@ -34,6 +35,7 @@ const AccountName = ({
   return (
     <Trim
       text={address}
+      color={color}
       {...(dataTestId
         ? {
             dataTestId,

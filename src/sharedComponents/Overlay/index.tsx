@@ -11,7 +11,7 @@ const Overlay = ({ children, title }: { children: React.ReactNode; title: string
       </Tooltip>
     )}
   >
-    <div className="d-flex align-items-center justify-content-center">{children}</div>
+    <div className="d-flex align-items-center justify-content-center text-truncate">{children}</div>
   </OverlayTrigger>
 );
 export default Overlay;
