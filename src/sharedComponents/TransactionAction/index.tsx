@@ -1,5 +1,11 @@
 import * as React from 'react';
-import { ScAddressIcon, NetworkLink, Trim, Denominate, TxActionBlock } from 'sharedComponents';
+import {
+  ScAddressIcon,
+  NetworkLink,
+  AccountName,
+  Denominate,
+  TxActionBlock,
+} from 'sharedComponents';
 import { addressIsBech32, urlBuilder } from 'helpers';
 import { NftEnumType } from 'helpers/types';
 import { TokenArgumentType, TransactionType } from 'helpers/types';
@@ -71,6 +77,13 @@ const ActionText = ({ entry, transaction }: { entry: any; transaction: Transacti
       return <span>{entry.replace('eGLD', 'EGLD')}</span>;
 
     case Boolean(entry.address):
+      let entryAssets;
+      if (entry.address === transaction.sender) {
+        entryAssets = transaction.senderAssets;
+      }
+      if (entry.address === transaction.receiver) {
+        entryAssets = transaction.receiverAssets;
+      }
       return addressIsBech32(entry.address) ? (
         <div className="d-flex align-items-center">
           <ScAddressIcon initiator={entry.address} />
@@ -79,7 +92,7 @@ const ActionText = ({ entry, transaction }: { entry: any; transaction: Transacti
             data-testid="receiverLink"
             className="trim-wrapper"
           >
-            <Trim text={entry.address} />
+            <AccountName address={entry.address} assets={entryAssets} />
           </NetworkLink>
         </div>
       ) : (

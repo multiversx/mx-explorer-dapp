@@ -7,7 +7,7 @@ import {
   TransactionOperationActionType,
   VisibleTransactionOperationType,
 } from 'helpers/types';
-import { NetworkLink, Trim, CopyButton, TxActionBlock, Denominate } from 'sharedComponents';
+import { NetworkLink, AccountName, CopyButton, TxActionBlock, Denominate } from 'sharedComponents';
 import { TransactionType } from 'sharedComponents/TransactionsTable';
 
 export enum OperationDirectionEnum {
@@ -98,18 +98,29 @@ const OperationToken = ({ operation }: { operation: OperationType }) => {
 
 const OperationBlock = ({
   address,
+  transaction,
   action,
   isFullSize,
   direction,
 }: {
   address: string;
+  transaction: TransactionType;
   action?: string;
   isFullSize?: boolean;
   direction?: string;
 }) => {
+  let operationAssets;
+  if (address === transaction.sender) {
+    operationAssets = transaction.senderAssets;
+  }
+  if (address === transaction.receiver) {
+    operationAssets = transaction.receiverAssets;
+  }
   return (
     <div
-      className={`d-flex align-items-center ${isFullSize ? 'col-12' : 'col-lg-6 col-xl-3 pr-xl-0'}`}
+      className={`d-flex align-items-center ${
+        isFullSize ? 'col-12' : ` pr-xl-0 ${operationAssets ? 'pl-3' : 'col-lg-6 col-xl-3'}`
+      }`}
     >
       {direction && (
         <div className={`direction-badge mr-2 ${direction.toLowerCase()}`}>
@@ -121,7 +132,7 @@ const OperationBlock = ({
       {addressIsBech32(address) ? (
         <>
           <NetworkLink to={urlBuilder.accountDetails(address)} className="trim-wrapper">
-            <Trim text={address} color="secondary" />
+            <AccountName address={address} assets={operationAssets} color="secondary" />
           </NetworkLink>
           <CopyButton text={address} className="side-action ml-2" />
         </>
@@ -132,8 +143,14 @@ const OperationBlock = ({
   );
 };
 
-const OperationText = ({ operation, sender }: { operation: OperationType; sender: string }) => {
-  const { direction } = getOperationDirection({ operation, address: sender });
+const OperationText = ({
+  operation,
+  transaction,
+}: {
+  operation: OperationType;
+  transaction: TransactionType;
+}) => {
+  const { direction } = getOperationDirection({ operation, address: transaction.sender });
 
   switch (operation.action) {
     case TransactionOperationActionType.create:
@@ -141,6 +158,7 @@ const OperationText = ({ operation, sender }: { operation: OperationType; sender
     case TransactionOperationActionType.ESDTLocalMint:
       return (
         <OperationBlock
+          transaction={transaction}
           address={operation.sender}
           action="Mint by"
           direction={OperationDirectionEnum.internal}
@@ -149,6 +167,7 @@ const OperationText = ({ operation, sender }: { operation: OperationType; sender
     case TransactionOperationActionType.addQuantity:
       return (
         <OperationBlock
+          transaction={transaction}
           address={operation.sender}
           action="Add quantity by"
           direction={OperationDirectionEnum.internal}
@@ -159,6 +178,7 @@ const OperationText = ({ operation, sender }: { operation: OperationType; sender
     case TransactionOperationActionType.ESDTLocalBurn:
       return (
         <OperationBlock
+          transaction={transaction}
           address={operation.sender}
           action="Burn by"
           direction={OperationDirectionEnum.internal}
@@ -167,6 +187,7 @@ const OperationText = ({ operation, sender }: { operation: OperationType; sender
     case TransactionOperationActionType.wipe:
       return (
         <OperationBlock
+          transaction={transaction}
           address={operation.receiver}
           action="Wipe from"
           direction={OperationDirectionEnum.internal}
@@ -176,23 +197,30 @@ const OperationText = ({ operation, sender }: { operation: OperationType; sender
       return (
         <>
           <OperationBlock
+            transaction={transaction}
             address={operation.sender}
             action="Multi transfer from"
             direction={direction}
           />{' '}
-          <OperationBlock address={operation.receiver} action="To" />
+          <OperationBlock transaction={transaction} address={operation.receiver} action="To" />
         </>
       );
     case TransactionOperationActionType.transfer:
       return (
         <>
-          <OperationBlock address={operation.sender} action="Transfer from" direction={direction} />{' '}
-          <OperationBlock address={operation.receiver} action="To" />
+          <OperationBlock
+            transaction={transaction}
+            address={operation.sender}
+            action="Transfer from"
+            direction={direction}
+          />{' '}
+          <OperationBlock transaction={transaction} address={operation.receiver} action="To" />
         </>
       );
     case TransactionOperationActionType.writeLog:
       return (
         <OperationBlock
+          transaction={transaction}
           address={operation.sender}
           action="Write log by"
           direction={OperationDirectionEnum.internal}
@@ -202,6 +230,7 @@ const OperationText = ({ operation, sender }: { operation: OperationType; sender
     case TransactionOperationActionType.signalError:
       return (
         <OperationBlock
+          transaction={transaction}
           address={operation.sender}
           action="Signal error by"
           direction={OperationDirectionEnum.internal}
@@ -211,8 +240,13 @@ const OperationText = ({ operation, sender }: { operation: OperationType; sender
     default:
       return (
         <>
-          <OperationBlock address={operation.sender} action="From" direction={direction} />{' '}
-          <OperationBlock address={operation.receiver} action="To" />
+          <OperationBlock
+            transaction={transaction}
+            address={operation.sender}
+            action="From"
+            direction={direction}
+          />{' '}
+          <OperationBlock transaction={transaction} address={operation.receiver} action="To" />
         </>
       );
   }
@@ -220,18 +254,16 @@ const OperationText = ({ operation, sender }: { operation: OperationType; sender
 
 const OperationRow = ({
   operation,
-
-  sender,
+  transaction,
 }: {
   operation: OperationType;
-
-  sender: string;
+  transaction: TransactionType;
 }) => {
   switch (operation.type) {
     case VisibleTransactionOperationType.nft:
     case VisibleTransactionOperationType.esdt:
       return (
-        <DetailedItem operation={operation} sender={sender}>
+        <DetailedItem operation={operation} transaction={transaction}>
           <>
             {operation.esdtType === 'NonFungibleESDT' && <div className="mr-1">NFT</div>}
             {operation.esdtType === 'SemiFungibleESDT' && <div className="mr-1">SFT quantity</div>}
@@ -242,7 +274,7 @@ const OperationRow = ({
 
     case VisibleTransactionOperationType.egld:
       return (
-        <DetailedItem operation={operation} sender={sender}>
+        <DetailedItem operation={operation} transaction={transaction}>
           <>
             <div className="mr-2">Value</div>
             <Denominate value={operation.value} showLastNonZeroDecimal={true} />
@@ -258,15 +290,15 @@ const OperationRow = ({
 const DetailedItem = ({
   children,
   operation,
-  sender,
+  transaction,
 }: {
   children?: React.ReactNode;
   operation: OperationType;
-  sender: string;
+  transaction: TransactionType;
 }) => {
   return (
     <div className="detailed-item d-flex row mb-3 mb-xl-2">
-      <OperationText operation={operation} sender={sender} />
+      <OperationText operation={operation} transaction={transaction} />
       {children && (
         <div className="col-lg-6 col-xl-6 d-flex align-items-center">
           <div className="d-flex text-truncate">{children}</div>
@@ -320,7 +352,7 @@ const OperationsList = ({
           <>
             {operations.map((operation: OperationType, index) => (
               <div key={`display-${index}`}>
-                <OperationRow operation={operation} sender={transaction.sender} />
+                <OperationRow operation={operation} transaction={transaction} />
               </div>
             ))}
           </>
@@ -328,7 +360,7 @@ const OperationsList = ({
           <>
             {displayOperations.map((operation: OperationType, index) => (
               <div key={`display-${index}`}>
-                <OperationRow operation={operation} sender={transaction.sender} />
+                <OperationRow operation={operation} transaction={transaction} />
               </div>
             ))}
           </>

@@ -11,7 +11,7 @@ export interface ScamInfoType {
   info: string;
 }
 
-export interface AccountAssetType {
+export interface AssetType {
   name: string;
   description: string;
   tags: string[];
@@ -35,7 +35,7 @@ export interface AccountType {
   isReadable?: boolean;
   isPayable?: boolean;
   isPayableBySmartContract?: boolean;
-  assets?: AccountAssetType;
+  assets?: AssetType;
 }
 
 export interface TokenRolesType {
@@ -351,6 +351,8 @@ export interface ResultType {
   originalTxHash: string;
   returnMessage?: string;
   logs?: ResultLogType;
+  senderAssets?: AssetType;
+  receiverAssets?: AssetType;
 }
 
 export interface ReceiptType {
@@ -390,6 +392,8 @@ export interface TransactionType {
   scamInfo?: ScamInfoType;
   pendingResults?: boolean;
   receipt?: ReceiptType;
+  senderAssets?: AssetType;
+  receiverAssets?: AssetType;
 }
 
 export enum TransferTypeEnum {
