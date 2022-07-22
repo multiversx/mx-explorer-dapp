@@ -46,6 +46,7 @@ import LoadingDots from './LoadingDots';
 import LockedTokenAddressIcon from './LockedTokenAddressIcon';
 import AccountDetailsBlock from './AccountDetailsBlock';
 import Overlay from './Overlay';
+import AccountName from './AccountName';
 
 export {
   Denominate,
@@ -97,4 +98,5 @@ export {
   LockedTokenAddressIcon,
   AccountDetailsBlock,
   Overlay,
+  AccountName,
 };

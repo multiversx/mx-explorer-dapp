@@ -37,6 +37,7 @@ import {
   CopyButton,
   TransactionAction,
   LoadingDots,
+  AccountName,
 } from 'sharedComponents';
 import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
@@ -292,7 +293,10 @@ const TransactionInfo = ({
                           to={urlBuilder.accountDetails(transaction.sender)}
                           className="trim-wrapper"
                         >
-                          <Trim text={transaction.sender} />
+                          <AccountName
+                            address={transaction.sender}
+                            assets={transaction.senderAssets}
+                          />
                         </NetworkLink>
                         <CopyButton className="mr-2" text={transaction.sender} />
                         <NetworkLink
@@ -320,7 +324,10 @@ const TransactionInfo = ({
                         to={urlBuilder.accountDetails(transaction.receiver)}
                         className="trim-wrapper"
                       >
-                        <Trim text={transaction.receiver} />
+                        <AccountName
+                          address={transaction.receiver}
+                          assets={transaction.receiverAssets}
+                        />
                       </NetworkLink>
                       <CopyButton className="mr-2" text={transaction.receiver} />
                       {!isNaN(transaction.receiverShard) && (

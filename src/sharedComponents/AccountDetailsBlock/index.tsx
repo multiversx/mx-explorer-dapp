@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { AccountAssetType } from 'helpers/types';
+import { AssetType } from 'helpers/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/pro-regular-svg-icons/faInfoCircle';
 import { Overlay } from 'sharedComponents';
 
-const AccountDetailsBlock = ({ assets }: { assets: AccountAssetType }) => {
+const AccountDetailsBlock = ({ assets }: { assets: AssetType }) => {
   const dynamicIconColor = assets.iconSvg.includes('elrond.svg');
   return (
     <div className="d-flex align-items-center">
