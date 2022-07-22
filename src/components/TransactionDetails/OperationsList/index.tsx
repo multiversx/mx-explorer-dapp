@@ -119,7 +119,9 @@ const OperationBlock = ({
   return (
     <div
       className={`d-flex align-items-center ${
-        isFullSize ? 'col-12' : ` pr-xl-0 ${operationAssets ? 'pl-3' : 'col-lg-6 col-xl-3'}`
+        isFullSize
+          ? 'col-12'
+          : ` pr-xl-0 ${operationAssets ? 'pl-3 mw-lg-6 mw-xl-3' : 'col-lg-6 col-xl-3'}`
       }`}
     >
       {direction && (
