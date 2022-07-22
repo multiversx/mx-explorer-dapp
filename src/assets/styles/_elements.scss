@@ -288,3 +288,21 @@
     text-decoration: none;
   }
 }
+
+@include media-breakpoint-up(lg) {
+  .mw-lg-6 {
+    max-width: 50%;
+    width: 50%;
+    position: relative;
+    flex: 0 0 25%;
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .mw-xl-3 {
+    max-width: 25%;
+    width: 25%;
+    position: relative;
+    flex: 0 0 25%;
+  }
+}
