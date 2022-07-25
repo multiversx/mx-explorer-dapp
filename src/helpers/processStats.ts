@@ -23,8 +23,8 @@ export default function processStats(statsData: any) {
     ? {
         shards: new BigNumber(data.shards).toFormat(),
         blocks: new BigNumber(data.blocks).toFormat(),
-        accounts: new BigNumber(data.accounts).toFormat(),
-        transactions: new BigNumber(data.transactions).toFormat(),
+        accounts: data.accounts,
+        transactions: data.transactions,
         epoch: data.epoch,
         epochPercentage: check ? (100 * data.roundsPassed) / data.roundsPerEpoch : 0,
         epochTotalTime: check

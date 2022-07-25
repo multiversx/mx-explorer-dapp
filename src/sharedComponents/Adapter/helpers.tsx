@@ -166,11 +166,13 @@ export function getProviderParams({ identity }: GetProvidersType) {
   return params;
 }
 
-export function getTokensParam({ search, size, type, identifiers }: GetTokensType) {
+export function getTokensParam({ search, size, type, identifiers, sort, order }: GetTokensType) {
   const params: ProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
     ...(type !== undefined ? { type } : {}),
     ...(identifiers !== undefined ? { identifiers } : {}),
+    ...(sort !== undefined ? { sort } : {}),
+    ...(order !== undefined ? { order } : {}),
     ...(size !== undefined ? { from: (size - 1) * pageSize, size: pageSize } : {}),
   };
 
@@ -251,6 +253,8 @@ export interface GetTokensType {
   size?: number;
   type?: string;
   identifiers?: string;
+  sort?: string;
+  order?: string;
 }
 export interface GetNftsType {
   collection?: string;

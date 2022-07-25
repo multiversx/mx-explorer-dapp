@@ -22,7 +22,7 @@ const AccountName = ({
           className={`text-truncate ${color ? `text-${color}` : ''}`}
           {...(dataTestId
             ? {
-                dataTestId,
+                datatestid: dataTestId,
               }
             : {})}
         >
