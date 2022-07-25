@@ -17,7 +17,7 @@ const AccountName = ({
     const name = assets.name.replace(/\p{Emoji}/gu, '');
     const description = `${name} (${address})`;
     return (
-      <Overlay title={description}>
+      <Overlay title={description} tooltipClassName={'account-name'}>
         <span
           className={`text-truncate ${color ? `text-${color}` : ''}`}
           {...(dataTestId

@@ -94,7 +94,7 @@ const TransactionRow = ({
         </div>
       </td>
       <td>
-        <div className="d-flex align-items-center">
+        <div className="d-flex align-items-center sender">
           {showLockedAccounts && <LockedTokenAddressIcon address={transaction.sender} />}
           <ScAddressIcon initiator={transaction.sender} />
           {directionOut ? (
@@ -127,7 +127,7 @@ const TransactionRow = ({
       )}
 
       <td>
-        <div className="d-flex align-items-center">
+        <div className="d-flex align-items-center receiver">
           {showLockedAccounts && <LockedTokenAddressIcon address={receiver} />}
           <ScAddressIcon initiator={receiver} />
           {directionIn ? (

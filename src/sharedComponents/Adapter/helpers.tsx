@@ -113,6 +113,8 @@ export function getTransactionsParams({
         'results',
         'operations',
         'receipt',
+        'senderAssets',
+        'receiverAssets',
       ].join(','),
     },
   };
