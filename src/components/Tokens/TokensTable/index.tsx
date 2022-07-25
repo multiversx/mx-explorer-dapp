@@ -3,85 +3,112 @@ import BigNumber from 'bignumber.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiamond } from '@fortawesome/pro-regular-svg-icons/faDiamond';
 
-import { NetworkLink, Denominate } from 'sharedComponents';
-import { urlBuilder, amountWithoutRounding } from 'helpers';
-import { TokenType } from 'helpers/types';
+import { NetworkLink, Denominate, Sort } from 'sharedComponents';
+import { urlBuilder, amountWithoutRounding, useFilters } from 'helpers';
+import { TokenType, TokenSortEnum, SortOrderEnum } from 'helpers/types';
 import EgldRow from './EgldRow';
 
-const TokensTable = ({ tokens, page }: { tokens: TokenType[]; page?: number }) => (
-  <div className="table-wrapper tokens-table">
-    <table className="table">
-      <thead>
-        <tr>
-          <th>Token</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Circulating Supply</th>
-          <th>Market Cap</th>
-          <th>Holders</th>
-          <th>Transactions</th>
-        </tr>
-      </thead>
-      <tbody data-testid="tokensTable">
-        {!page && <EgldRow />}
-        {tokens.map((token, i) => (
-          <tr key={token.identifier}>
-            <td>
-              <div className="token-identity d-flex flex-row">
-                <div className="d-flex align-items-center mr-3">
-                  <NetworkLink
-                    to={urlBuilder.tokenDetails(token.identifier)}
-                    data-testid={`tokensLink${i}`}
-                    className="token-link"
-                  >
-                    {token.assets && token.assets.svgUrl ? (
-                      <img src={token.assets.svgUrl} alt={token.name} className="token-icon" />
-                    ) : (
-                      <div className="bg-light token-icon d-flex align-items-center justify-content-center">
-                        <FontAwesomeIcon icon={faDiamond} />
-                      </div>
-                    )}
-                  </NetworkLink>
-                </div>
-                <div className="d-flex flex-column justify-content-center">
-                  <NetworkLink
-                    to={urlBuilder.tokenDetails(token.identifier)}
-                    data-testid={`tokensLink${i}`}
-                    className="d-block token-ticker"
-                  >
-                    {token.ticker}
-                  </NetworkLink>
-                  {token.assets && token.assets.description && (
-                    <div
-                      className="token-description text-wrap text-secondary small d-none d-md-block"
-                      title={token.assets.description}
-                    >
-                      {token.assets.description}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </td>
-            <td>{token.name}</td>
-            <td>{token.price && <>${amountWithoutRounding(token.price.toString())}</>}</td>
-            <td>
-              {token.circulatingSupply && (
-                <Denominate
-                  showLabel={false}
-                  value={token.circulatingSupply ? String(token.circulatingSupply) : '0'}
-                  denomination={token.decimals}
-                  decimals={0}
-                />
-              )}
-            </td>
-            <td>{token.marketCap && <>${new BigNumber(token.marketCap).toFormat(0)}</>}</td>
-            <td>{token.accounts ? new BigNumber(token.accounts).toFormat() : 0}</td>
-            <td>{token.transactions ? new BigNumber(token.transactions).toFormat() : 0}</td>
+const TokensTable = ({
+  tokens,
+  totalTokens,
+}: {
+  tokens: TokenType[];
+  totalTokens: '...' | number;
+}) => {
+  const { getQueryObject } = useFilters();
+  const queryObject = getQueryObject();
+  const { order } = queryObject;
+
+  return (
+    <div className="table-wrapper tokens-table">
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th>Name</th>
+            <th data-testid={TokenSortEnum.price}>
+              <Sort id={TokenSortEnum.price} field="Price" />
+            </th>
+            <th>Circulating Supply</th>
+            <th data-testid={TokenSortEnum.marketCap}>
+              <Sort id={TokenSortEnum.marketCap} field="Market Cap" />
+            </th>
+            <th data-testid={TokenSortEnum.accounts}>
+              <Sort id={TokenSortEnum.accounts} field="Holders" />
+            </th>
+            <th data-testid={TokenSortEnum.transactions}>
+              <Sort id={TokenSortEnum.transactions} field="Transactions" />
+            </th>
           </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-);
+        </thead>
+        <tbody data-testid="tokensTable">
+          {tokens.map((token, i) => (
+            <React.Fragment key={token.identifier}>
+              {typeof totalTokens === 'number' && (order ? order === SortOrderEnum.desc : true) && (
+                <EgldRow tokens={tokens} index={i} totalTokens={totalTokens} />
+              )}
+              <tr>
+                <td>
+                  <div className="token-identity d-flex flex-row">
+                    <div className="d-flex align-items-center mr-3">
+                      <NetworkLink
+                        to={urlBuilder.tokenDetails(token.identifier)}
+                        data-testid={`tokensLink${i}`}
+                        className="token-link"
+                      >
+                        {token.assets && token.assets.svgUrl ? (
+                          <img src={token.assets.svgUrl} alt={token.name} className="token-icon" />
+                        ) : (
+                          <div className="bg-light token-icon d-flex align-items-center justify-content-center">
+                            <FontAwesomeIcon icon={faDiamond} />
+                          </div>
+                        )}
+                      </NetworkLink>
+                    </div>
+                    <div className="d-flex flex-column justify-content-center">
+                      <NetworkLink
+                        to={urlBuilder.tokenDetails(token.identifier)}
+                        data-testid={`tokensLink${i}`}
+                        className="d-block token-ticker"
+                      >
+                        {token.ticker}
+                      </NetworkLink>
+                      {token.assets && token.assets.description && (
+                        <div
+                          className="token-description text-wrap text-secondary small d-none d-md-block"
+                          title={token.assets.description}
+                        >
+                          {token.assets.description}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </td>
+                <td>{token.name}</td>
+                <td>{token.price && <>${amountWithoutRounding(token.price.toString())}</>}</td>
+                <td>
+                  {token.circulatingSupply && (
+                    <Denominate
+                      showLabel={false}
+                      value={token.circulatingSupply ? String(token.circulatingSupply) : '0'}
+                      denomination={token.decimals}
+                      decimals={0}
+                    />
+                  )}
+                </td>
+                <td>{token.marketCap && <>${new BigNumber(token.marketCap).toFormat(0)}</>}</td>
+                <td>{token.accounts ? new BigNumber(token.accounts).toFormat() : 0}</td>
+                <td>{token.transactions ? new BigNumber(token.transactions).toFormat() : 0}</td>
+              </tr>
+              {typeof totalTokens === 'number' && order === SortOrderEnum.asc && (
+                <EgldRow tokens={tokens} index={i} totalTokens={totalTokens} />
+              )}
+            </React.Fragment>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 export default TokensTable;

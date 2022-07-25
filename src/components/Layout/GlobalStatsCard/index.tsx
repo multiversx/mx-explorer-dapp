@@ -1,4 +1,5 @@
 import * as React from 'react';
+import BigNumber from 'bignumber.js';
 import { faChartPie } from '@fortawesome/pro-solid-svg-icons/faChartPie';
 import { faUsers } from '@fortawesome/pro-solid-svg-icons/faUsers';
 import { faChartArea } from '@fortawesome/pro-solid-svg-icons/faChartArea';
@@ -31,8 +32,8 @@ const GlobalStatsCard = () => {
                         : '...'}
                     </div>
                     <div className="d-flex justify-content-between">
-                      <span className="text-secondary mr-3">Market Cap:</span>
-                      {economics.marketCap}
+                      <span className="text-secondary mr-3">Market Cap:</span>$
+                      {new BigNumber(economics.marketCap).toFormat(0)}
                     </div>
                   </div>
                 </CardItem>
@@ -54,11 +55,11 @@ const GlobalStatsCard = () => {
                   <div className="d-flex flex-column w-100">
                     <div className="d-flex justify-content-between mb-1">
                       <span className="text-secondary mr-3">Addresses:</span>
-                      {stats.accounts}
+                      {new BigNumber(stats.accounts).toFormat()}
                     </div>
                     <div className="d-flex justify-content-between">
                       <span className="text-secondary mr-3">Transactions:</span>
-                      {stats.transactions}
+                      {new BigNumber(stats.transactions).toFormat()}
                     </div>
                   </div>
                 </CardItem>

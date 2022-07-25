@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ShardFilter from '../ShardFilter';
 import StatusFilter from '../StatusFilter';
-import Sort from '../Sort';
+import { Sort } from 'sharedComponents';
 
 const StandardHead = ({ hideFilters }: { hideFilters?: boolean }) => {
   return (

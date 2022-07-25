@@ -6,6 +6,11 @@ export enum NetworkIdType {
   devnet = 'devnet',
 }
 
+export enum SortOrderEnum {
+  asc = 'asc',
+  desc = 'desc',
+}
+
 export interface ScamInfoType {
   type: string;
   info: string;
@@ -36,6 +41,13 @@ export interface AccountType {
   isPayable?: boolean;
   isPayableBySmartContract?: boolean;
   assets?: AssetType;
+}
+
+export enum TokenSortEnum {
+  price = 'price',
+  marketCap = 'marketCap',
+  accounts = 'accounts',
+  transactions = 'transactions',
 }
 
 export interface TokenRolesType {
