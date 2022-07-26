@@ -40,7 +40,7 @@ const NftBlock = ({ value, operationToken }: NftBlockType) => {
                     <img
                       src={operationToken.assets.svgUrl}
                       alt={operationToken.name}
-                      className="token-icon mr-1"
+                      className="side-icon mr-1"
                     />
                   )}
                   <div className="text-truncate">

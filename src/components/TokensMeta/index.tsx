@@ -128,10 +128,10 @@ const TokensMeta = () => {
                                             <img
                                               src={metaCollection.assets.svgUrl}
                                               alt={metaCollection.name}
-                                              className="token-icon"
+                                              className="side-icon"
                                             />
                                           ) : (
-                                            <div className="bg-light token-icon d-flex align-items-center justify-content-center">
+                                            <div className="bg-light side-icon d-flex align-items-center justify-content-center">
                                               <FontAwesomeIcon icon={faDiamond} />
                                             </div>
                                           )}

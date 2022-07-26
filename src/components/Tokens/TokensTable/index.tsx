@@ -57,9 +57,9 @@ const TokensTable = ({
                         className="token-link"
                       >
                         {token.assets && token.assets.svgUrl ? (
-                          <img src={token.assets.svgUrl} alt={token.name} className="token-icon" />
+                          <img src={token.assets.svgUrl} alt={token.name} className="side-icon" />
                         ) : (
-                          <div className="bg-light token-icon d-flex align-items-center justify-content-center">
+                          <div className="bg-light side-icon d-flex align-items-center justify-content-center">
                             <FontAwesomeIcon icon={faDiamond} />
                           </div>
                         )}

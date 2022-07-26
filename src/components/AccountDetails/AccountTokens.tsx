@@ -140,7 +140,7 @@ const AccountTokens = () => {
                           {assets ? (
                             <>
                               {assets.svgUrl && (
-                                <img src={assets.svgUrl} alt={name} className="token-icon mr-1" />
+                                <img src={assets.svgUrl} alt={name} className="side-icon mr-1" />
                               )}
                               <div className="text-truncate">
                                 {ticker ? ticker : name} ({identifier})
@@ -184,7 +184,7 @@ const AccountTokens = () => {
                             {assets ? (
                               <>
                                 {assets?.svgUrl && (
-                                  <img src={assets.svgUrl} alt={name} className="token-icon mr-1" />
+                                  <img src={assets.svgUrl} alt={name} className="side-icon mr-1" />
                                 )}
                                 <div className="text-truncate">{ticker ? ticker : name}</div>
                               </>
