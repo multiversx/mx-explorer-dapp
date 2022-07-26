@@ -36,7 +36,7 @@ const TxActionToken = ({
           >
             <div className="d-flex align-items-center symbol">
               {token.svgUrl && (
-                <img src={token.svgUrl} alt={token.name} className="token-icon mr-1" />
+                <img src={token.svgUrl} alt={token.name} className="side-icon mr-1" />
               )}
               <span>{token.ticker}</span>
             </div>

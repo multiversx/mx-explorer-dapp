@@ -141,7 +141,7 @@ const Collections = () => {
                                             <img
                                               src={collection.assets.svgUrl}
                                               alt={collection.name}
-                                              className="token-icon mr-1"
+                                              className="side-icon mr-1"
                                             />
                                           )}
                                           <div>{collection.collection}</div>

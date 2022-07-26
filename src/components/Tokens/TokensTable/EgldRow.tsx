@@ -98,7 +98,7 @@ export const EgldRow = ({
         <div className="token-identity d-flex flex-row">
           <div className="d-flex align-items-center mr-3">
             <span className="token-link">
-              <div className="egld-icon token-icon d-flex align-items-center justify-content-center">
+              <div className="egld-icon side-icon d-flex align-items-center justify-content-center">
                 <ElrondSymbol />
               </div>
             </span>

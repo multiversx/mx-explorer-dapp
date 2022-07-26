@@ -151,11 +151,11 @@ const ActionText = ({ entry, transaction }: { entry: any; transaction: Transacti
             {entry.providerAvatar ? (
               <img
                 src={entry.providerAvatar}
-                className="token-icon rounded-circle ml-lg-1 mr-2"
+                className="side-icon rounded-circle ml-lg-1 mr-2"
                 alt=" "
               />
             ) : (
-              <DefaultAvatar className="token-icon rounded-circle ml-lg-1 mr-2" />
+              <DefaultAvatar className="side-icon rounded-circle ml-lg-1 mr-2" />
             )}
             {entry.providerName}
           </NetworkLink>
