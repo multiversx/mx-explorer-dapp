@@ -116,7 +116,7 @@ const AccountNfts = () => {
                         <NetworkLink
                           to={urlBuilder.nftDetails(nft.identifier)}
                           className={`d-flex text-truncate ${
-                            nft?.assets?.svgUrl ? 'token-link' : ''
+                            nft?.assets?.svgUrl ? 'side-link' : ''
                           }`}
                         >
                           <div className="d-flex align-items-center symbol text-truncate">

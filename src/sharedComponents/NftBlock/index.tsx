@@ -31,7 +31,7 @@ const NftBlock = ({ value, operationToken }: NftBlockType) => {
           )}
           <NetworkLink
             to={urlBuilder.nftDetails(operationToken.identifier)}
-            className={`d-flex text-truncate ${operationToken?.assets?.svgUrl ? 'token-link' : ''}`}
+            className={`d-flex text-truncate ${operationToken?.assets?.svgUrl ? 'side-link' : ''}`}
           >
             <div className="d-flex align-items-center symbol text-truncate">
               {operationToken.assets ? (
