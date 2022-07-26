@@ -122,7 +122,7 @@ const TokensMeta = () => {
                                             metaCollection.collection
                                           )}
                                           data-testid={`nftsLink${i}`}
-                                          className="token-link"
+                                          className="side-link"
                                         >
                                           {metaCollection.assets && metaCollection.assets.svgUrl ? (
                                             <img

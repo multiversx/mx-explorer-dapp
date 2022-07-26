@@ -95,7 +95,7 @@ const Nfts = () => {
                                         to={urlBuilder.nftDetails(nft.identifier)}
                                         data-testid={`nftsLink${i}`}
                                         className={`d-flex ${
-                                          nft.assets?.svgUrl ? 'token-link' : ''
+                                          nft.assets?.svgUrl ? 'side-link' : ''
                                         }`}
                                       >
                                         <div className="d-flex align-items-center">

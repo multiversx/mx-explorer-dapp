@@ -11,7 +11,7 @@ const TxActionCollection = ({ token }: { token: TokenArgumentType }) => {
       {token && token.collection && (
         <NetworkLink
           to={urlBuilder.collectionDetails(token.collection)}
-          className={`d-flex ${token.svgUrl ? 'token-link' : ''}`}
+          className={`d-flex ${token.svgUrl ? 'side-link' : ''}`}
         >
           <div className="d-flex align-items-center symbol">
             {token.svgUrl && <img src={token.svgUrl} alt={token.name} className="side-icon mr-1" />}

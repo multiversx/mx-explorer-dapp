@@ -54,7 +54,7 @@ const TokensTable = ({
                       <NetworkLink
                         to={urlBuilder.tokenDetails(token.identifier)}
                         data-testid={`tokensLink${i}`}
-                        className="token-link"
+                        className="side-link"
                       >
                         {token.assets && token.assets.svgUrl ? (
                           <img src={token.assets.svgUrl} alt={token.name} className="side-icon" />
