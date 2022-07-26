@@ -14,7 +14,7 @@ const AccountName = ({
   color?: 'muted' | 'secondary';
 }) => {
   if (assets && assets.name) {
-    const name = assets.name.replace(/\p{Emoji}/gu, '');
+    const name = assets.name.replaceAll(/[^\p{L}\p{N}\p{P}\p{Z}\n]/gu, '');
     const description = `${name} (${address})`;
     return (
       <Overlay title={description} tooltipClassName={'account-name'}>
