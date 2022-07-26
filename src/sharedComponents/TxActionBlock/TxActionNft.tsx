@@ -39,7 +39,7 @@ const TxActionNft = ({
           )}
           <NetworkLink
             to={urlBuilder.nftDetails(token.identifier)}
-            className={`${token.svgUrl ? 'd-flex token-link' : 'text-truncate'}`}
+            className={`${token.svgUrl ? 'd-flex side-link' : 'text-truncate'}`}
           >
             <div className="d-flex align-items-center symbol">
               {token.svgUrl && (

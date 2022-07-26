@@ -2,11 +2,18 @@ import * as React from 'react';
 import BigNumber from 'bignumber.js';
 import { sizeFormat, urlBuilder } from 'helpers';
 import { BlockType } from 'helpers/types';
-import { ShardSpan, NetworkLink, TimeAgo, Trim, PercentageBar } from 'sharedComponents';
+import {
+  ShardSpan,
+  NetworkLink,
+  TimeAgo,
+  Trim,
+  PercentageBar,
+  IdentityBlock,
+} from 'sharedComponents';
 
 const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | undefined }) => {
   return (
-    <div className="table-wrapper animated-list">
+    <div className="blocks-table table-wrapper animated-list">
       <table className="table">
         <thead>
           <tr>
@@ -16,7 +23,8 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
             <th>Shard</th>
             <th className="text-right">Size</th>
             <th className="text-right">Gas Used</th>
-            <th className="text-right">Block Hash</th>
+            <th>Block Hash</th>
+            <th>Leader</th>
           </tr>
         </thead>
         <tbody data-testid="blocksTable">
@@ -85,20 +93,21 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
                         </div>
                       </>
                     ) : (
-                      <>N/A</>
+                      <span className="pb-2">N/A</span>
                     )}
                   </div>
                 </td>
                 <td>
-                  <div className="d-flex justify-content-end mr-spacer">
-                    <NetworkLink
-                      to={`/blocks/${block.hash}`}
-                      data-testid={`blockHashLink${i}`}
-                      className="trim-wrapper trim-size-xl mr-xl-n5"
-                    >
-                      <Trim text={block.hash} />
-                    </NetworkLink>
-                  </div>
+                  <NetworkLink
+                    to={`/blocks/${block.hash}`}
+                    data-testid={`blockHashLink${i}`}
+                    className="trim-wrapper trim-size-xl mr-xl-n5"
+                  >
+                    <Trim text={block.hash} />
+                  </NetworkLink>
+                </td>
+                <td className="identity-block">
+                  <IdentityBlock block={block} />
                 </td>
               </tr>
             );
