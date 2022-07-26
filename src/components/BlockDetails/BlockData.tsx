@@ -6,10 +6,10 @@ import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Collapse, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
+import { BlockType } from 'helpers/types';
 import { ShardSpan, NetworkLink, TimeAgo, Trim, DetailItem, CopyButton } from 'sharedComponents';
 import { validatorsRoutes } from 'routes';
 import { metaChainShardId } from 'appConfig';
-import { BlockType } from 'sharedComponents/BlocksTable';
 
 export interface BlockDataType {
   block: BlockType;

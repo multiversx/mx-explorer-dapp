@@ -1,4 +1,4 @@
-import { NodeType } from 'context/state';
+import { NodeType } from 'helpers/types';
 
 export default function nodeIssue(node: NodeType) {
   if (node.issues)

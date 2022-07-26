@@ -1,12 +1,11 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { adapter, Loader, Pager, PageState } from 'sharedComponents';
-import { NodesTable, NodesFilters } from 'sharedComponents';
-import { useFilters } from 'helpers';
 import { useLocation } from 'react-router-dom';
-import NodesTabs from 'components/Nodes/NodesLayout/NodesTabs';
-import { NodeType } from 'context/state';
+import { adapter, Loader, Pager, PageState, NodesTable, NodesFilters } from 'sharedComponents';
 import { validatorsRoutes } from 'routes';
+import { useFilters } from 'helpers';
+import { NodeType } from 'helpers/types';
+import NodesTabs from 'components/Nodes/NodesLayout/NodesTabs';
 
 const Nodes = () => {
   const ref = React.useRef(null);

@@ -220,6 +220,7 @@ export interface GetBlocksType {
   shard?: number;
   epoch?: number;
   proposer?: string;
+  withProposerIdentity?: boolean;
 }
 
 export function processBlocks(blocks: any[]) {

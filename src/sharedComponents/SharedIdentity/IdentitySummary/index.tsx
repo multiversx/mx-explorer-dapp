@@ -4,9 +4,10 @@ import { faAngleRight } from '@fortawesome/pro-regular-svg-icons/faAngleRight';
 import { faCity } from '@fortawesome/pro-regular-svg-icons/faCity';
 import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons/faBadgeCheck';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IdentityType } from 'context/state';
+
 import { Denominate, NetworkLink, PageState, SharedIdentity, Trim } from 'sharedComponents';
 import { urlBuilder } from 'helpers';
+import { IdentityType } from 'helpers/types';
 
 const IdentitySummary = ({
   identity,

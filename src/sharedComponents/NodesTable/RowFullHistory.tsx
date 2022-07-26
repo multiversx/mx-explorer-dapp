@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { faHistory } from '@fortawesome/pro-regular-svg-icons/faHistory';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NodeType } from 'context/state';
+import { NodeType } from 'helpers/types';
 import { Overlay } from 'sharedComponents';
 
 const RowFullHistory = ({ node, small }: { node: NodeType; small?: boolean }) => {
