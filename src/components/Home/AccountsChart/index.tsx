@@ -1,4 +1,5 @@
 import * as React from 'react';
+import BigNumber from 'bignumber.js';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import { StatisticsChart, Loader, PageState, adapter } from 'sharedComponents';
 import { useGlobalState } from 'context';
@@ -60,7 +61,7 @@ const AccountsChart = () => {
           </div>
           <div>
             <small className="text-secondary pr-3">Total Addresses: </small>
-            <span>{data.accounts}</span>
+            <span>{new BigNumber(data.accounts).toFormat()}</span>
           </div>
         </div>
         {dataReady === undefined && <Loader small={true} />}
