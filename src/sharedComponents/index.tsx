@@ -48,6 +48,7 @@ import AccountDetailsBlock from './AccountDetailsBlock';
 import Overlay from './Overlay';
 import AccountName from './AccountName';
 import Sort from './Sort';
+import IdentityBlock from './IdentityBlock';
 
 export {
   Denominate,
@@ -101,4 +102,5 @@ export {
   Overlay,
   AccountName,
   Sort,
+  IdentityBlock,
 };
