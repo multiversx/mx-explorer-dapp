@@ -1,6 +1,6 @@
 import React from 'react';
-import { IdentityType, NodeType } from 'context/state';
-import carretDown from 'assets/images/carret-down.svg';
+import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
+
 import {
   Loader,
   NetworkLink,
@@ -12,8 +12,9 @@ import {
   Denominate,
   PercentageBar,
 } from 'sharedComponents';
-import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { urlBuilder } from 'helpers';
+import { IdentityType, NodeType } from 'helpers/types';
+import carretDown from 'assets/images/carret-down.svg';
 
 export interface IdentityRowType {
   identity: IdentityType;

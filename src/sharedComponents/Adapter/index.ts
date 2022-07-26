@@ -132,6 +132,7 @@ export default function useAdapter() {
               'gasRefunded',
               'gasPenalized',
               'maxGasLimit',
+              'proposerIdentity',
             ].join(','),
           },
         });

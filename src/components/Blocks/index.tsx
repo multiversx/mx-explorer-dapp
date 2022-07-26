@@ -1,9 +1,9 @@
 import { useGlobalState } from 'context';
-import { useNetworkRoute, useURLSearchParams, useSize } from 'helpers';
 import * as React from 'react';
 import { Redirect } from 'react-router-dom';
+import { useNetworkRoute, useURLSearchParams, useSize } from 'helpers';
+import { BlockType } from 'helpers/types';
 import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'sharedComponents';
-import { BlockType } from 'sharedComponents/BlocksTable';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 

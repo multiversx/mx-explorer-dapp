@@ -1,5 +1,3 @@
-import { IdentityType } from 'context/state';
-
 export enum NetworkIdType {
   mainnet = 'mainnet',
   testnet = 'testnet',
@@ -423,6 +421,26 @@ export interface UITransactionType extends TransferType {
   tokenIdentifier?: string;
 }
 
+export interface IdentityType {
+  name: string;
+  score: number;
+  stake: string;
+  locked: string;
+  stakePercent: number;
+  validators: number;
+  rank?: number;
+  overallStakePercent?: number;
+  twitter?: string;
+  website?: string;
+  location?: string;
+  avatar?: string;
+  identity?: string;
+  description?: string;
+  topUp?: string;
+  distribution?: any;
+  apr?: number;
+}
+
 export interface ProviderType {
   provider: string;
   apr: string;
@@ -454,4 +472,78 @@ export interface ProviderType {
   totalUnBondedFromNodes?: string;
   maxDelegateAmountAllowed?: string;
   maxRedelegateAmountAllowed?: string;
+}
+
+export interface ShardType {
+  shard: number;
+  validators: number;
+  activeValidators: number;
+}
+
+export interface NodesVersionsType {
+  name: string;
+  percent: number;
+}
+
+export interface NodeType {
+  bls: string;
+  name: string;
+  type: 'observer' | 'validator';
+  status?: 'waiting' | 'eligible' | 'new' | 'jailed' | 'leaving' | 'inactive' | 'queued';
+  online: false;
+  rating: number;
+  tempRating: number;
+  ratingModifier: number;
+  shard: number;
+  nonce: number;
+  instances: number;
+  version: string;
+  stake: string;
+  topUp: string;
+  uptime: number;
+  uptimeSec: number;
+  downtime: number;
+  downtimeSec: number;
+  locked: string;
+  topup: string;
+  identity?: string;
+  provider?: string;
+  issues?: string[];
+
+  leaderSuccess?: number;
+  leaderFailure?: number;
+  validatorSuccess?: number;
+  validatorFailure?: number;
+  validatorIgnoredSignatures?: number;
+  position?: number;
+  fullHistory?: boolean;
+
+  // TODO check if used
+  receivedShardID?: number;
+  computedShardID?: number;
+}
+
+export interface BlockType {
+  hash: string;
+  nonce: number;
+  shard: number;
+  size: number;
+  sizeTxs: number;
+  timestamp: number;
+  txCount: number;
+  validators: string[];
+  miniBlocksHashes: string[];
+  notarizedBlocksHashes: string[];
+  epoch?: number;
+  prevHash?: string;
+  proposer?: string;
+  pubKeyBitmap?: string;
+  round?: number;
+  stateRootHash?: string;
+  isNew?: boolean; // UI flag
+  gasConsumed: number;
+  gasRefunded: number;
+  gasPenalized: number;
+  maxGasLimit: number;
+  proposerIdentity?: IdentityType;
 }
