@@ -1,6 +1,6 @@
 import * as React from 'react';
 import StatusFilter from '../StatusFilter';
-import Sort from '../Sort';
+import { Sort } from 'sharedComponents';
 
 const QueueHead = ({ hideFilters }: { hideFilters?: boolean }) => {
   return (

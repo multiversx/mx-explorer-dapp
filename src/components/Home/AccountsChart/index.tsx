@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import { StatisticsChart, Loader, PageState, adapter } from 'sharedComponents';
 import { useGlobalState } from 'context';
-import { processStats } from 'helpers';
+import { processStats, validDisplayValue } from 'helpers';
 import { initialStats } from 'helpers/processStats';
 
 type ChartResponseType = { time: string; value: number }[];
@@ -60,7 +60,7 @@ const AccountsChart = () => {
           </div>
           <div>
             <small className="text-secondary pr-3">Total Addresses: </small>
-            <span>{data.accounts}</span>
+            <span>{validDisplayValue(data.accounts)}</span>
           </div>
         </div>
         {dataReady === undefined && <Loader small={true} />}

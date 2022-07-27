@@ -101,7 +101,7 @@ const CollectionDetails = () => {
                             <img
                               src={collectionDetails.assets.svgUrl}
                               alt={collectionDetails.name}
-                              className="token-icon mr-1"
+                              className="side-icon mr-1"
                             />
                           )}
                           <div>{collectionDetails.name}</div>
@@ -194,7 +194,7 @@ const CollectionDetails = () => {
                                           to={urlBuilder.nftDetails(nft.identifier)}
                                           data-testid={`nftsLink${i}`}
                                           className={`d-flex ${
-                                            nft.assets?.svgUrl ? 'token-link' : ''
+                                            nft.assets?.svgUrl ? 'side-link' : ''
                                           }`}
                                         >
                                           <div className="d-flex align-items-center">
@@ -202,7 +202,7 @@ const CollectionDetails = () => {
                                               <img
                                                 src={nft.assets.svgUrl}
                                                 alt={nft.name}
-                                                className="token-icon mr-1"
+                                                className="side-icon mr-1"
                                               />
                                             )}
                                             <div>{nft.identifier}</div>

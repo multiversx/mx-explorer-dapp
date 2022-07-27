@@ -1,7 +1,7 @@
 import { InferType } from 'yup';
 import config, { defaultNetwork, schema, adapterSchema, networkLink } from './config';
 import { storage } from 'helpers';
-import { AccountType, TokenType, NetworkIdType } from 'helpers/types';
+import { AccountType, TokenType, NetworkIdType, NodesVersionsType, ShardType } from 'helpers/types';
 
 export type NetworkLinkType = InferType<typeof networkLink>;
 export type NetworkType = InferType<typeof schema>;
@@ -11,17 +11,6 @@ export interface ConfigType {
   networks: NetworkType[];
   links: NetworkLinkType[];
   elrondApps: NetworkLinkType[];
-}
-
-export interface ShardType {
-  shard: number;
-  validators: number;
-  activeValidators: number;
-}
-
-export interface NodesVersionsType {
-  name: string;
-  percent: number;
 }
 
 export interface GlobalStakeType {
@@ -57,64 +46,6 @@ export interface StatsType {
   epochTimeRemaining: string;
   roundsPerEpoch: number;
   roundsPassed: number;
-}
-
-export interface IdentityType {
-  name: string;
-  score: number;
-  stake: string;
-  locked: string;
-  stakePercent: number;
-  validators: number;
-  rank?: number;
-  overallStakePercent?: number;
-  twitter?: string;
-  website?: string;
-  location?: string;
-  avatar?: string;
-  identity?: string;
-  description?: string;
-  topUp?: string;
-  distribution?: any;
-  apr?: number;
-}
-
-export interface NodeType {
-  bls: string;
-  name: string;
-  type: 'observer' | 'validator';
-  status?: 'waiting' | 'eligible' | 'new' | 'jailed' | 'leaving' | 'inactive' | 'queued';
-  online: false;
-  rating: number;
-  tempRating: number;
-  ratingModifier: number;
-  shard: number;
-  nonce: number;
-  instances: number;
-  version: string;
-  stake: string;
-  topUp: string;
-  uptime: number;
-  uptimeSec: number;
-  downtime: number;
-  downtimeSec: number;
-  locked: string;
-  topup: string;
-  identity?: string;
-  provider?: string;
-  issues?: string[];
-
-  leaderSuccess?: number;
-  leaderFailure?: number;
-  validatorSuccess?: number;
-  validatorFailure?: number;
-  validatorIgnoredSignatures?: number;
-  position?: number;
-  fullHistory?: boolean;
-
-  // TODO check if used
-  receivedShardID?: number;
-  computedShardID?: number;
 }
 
 export interface NotificationType {

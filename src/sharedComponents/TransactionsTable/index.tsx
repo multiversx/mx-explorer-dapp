@@ -29,7 +29,7 @@ const TransactionsTable = ({
   showLockedAccounts = false,
 }: TransactionsTableType) => {
   return (
-    <div className="transactions-table">
+    <div className={`transactions-table ${directionCol ? 'has-direction' : ''}`}>
       <div className="card">
         <div className="card-header">
           <div className="card-header-item d-flex justify-content-between align-items-center">

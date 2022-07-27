@@ -1,4 +1,4 @@
-import { ShardType } from 'context/state';
+import { ShardType } from 'helpers/types';
 
 export default function computeShardStatus(shard: ShardType) {
   const { activeValidators, validators } = shard;

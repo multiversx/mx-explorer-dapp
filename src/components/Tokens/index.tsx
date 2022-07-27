@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
+import { pageSize } from 'appConfig';
 import { tokensRoutes } from 'routes';
 import { Loader, adapter, NetworkLink, Pager } from 'sharedComponents';
 import { useGlobalState } from 'context';
@@ -97,7 +98,7 @@ const Tokens = () => {
                             total={
                               totalTokens !== '...' ? Math.min(totalTokens, 10000) : totalTokens
                             }
-                            itemsPerPage={25}
+                            itemsPerPage={pageSize}
                             show={tokens.length > 0}
                           />
                         </div>
@@ -108,14 +109,14 @@ const Tokens = () => {
                   {tokens && tokens.length > 0 ? (
                     <>
                       <div className="card-body border-0 p-0">
-                        <TokensTable tokens={tokens} page={page} />
+                        <TokensTable tokens={tokens} totalTokens={totalTokens} />
                       </div>
 
                       <div className="card-footer d-flex justify-content-end">
                         <Pager
                           page={String(page)}
                           total={totalTokens !== '...' ? Math.min(totalTokens, 10000) : totalTokens}
-                          itemsPerPage={25}
+                          itemsPerPage={pageSize}
                           show={tokens.length > 0}
                         />
                       </div>

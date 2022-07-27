@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { ReactComponent as IdentityGear } from 'assets/images/identity-gear.svg';
-import { IdentityType } from 'context/state';
-import { Denominate, MultilayerPercentageBar, SharedIdentity, Trim } from 'sharedComponents';
-import { ReactComponent as TwitterLogo } from 'assets/images/logos/twitter.svg';
 import { faMapMarkerAlt } from '@fortawesome/pro-solid-svg-icons/faMapMarkerAlt';
 import { faLink } from '@fortawesome/pro-solid-svg-icons/faLink';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { IdentityType } from 'helpers/types';
+import { Denominate, MultilayerPercentageBar, SharedIdentity, Trim } from 'sharedComponents';
 import { PercentageStepType } from 'sharedComponents/MultilayerPercentageBar';
+
+import { ReactComponent as IdentityGear } from 'assets/images/identity-gear.svg';
+import { ReactComponent as TwitterLogo } from 'assets/images/logos/twitter.svg';
 
 const prepareStakeDistribution = (identity: IdentityType) => {
   const distribution: PercentageStepType[] = [];

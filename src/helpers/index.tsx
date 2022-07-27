@@ -40,6 +40,7 @@ import getScResultsMessages from './getScResultsMessages';
 import getOperationsMessages from './getOperationsMessages';
 import getReceiptMessages from './getReceiptMessages';
 import amountWithoutRounding from './amountWithoutRounding';
+import validDisplayValue from './validDisplayValue';
 
 export {
   truncate,
@@ -84,4 +85,5 @@ export {
   getOperationsMessages,
   getReceiptMessages,
   amountWithoutRounding,
+  validDisplayValue,
 };

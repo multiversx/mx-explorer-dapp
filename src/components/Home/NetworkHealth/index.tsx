@@ -1,4 +1,5 @@
 import * as React from 'react';
+import BigNumber from 'bignumber.js';
 import { useGlobalState } from 'context';
 import { adapter } from 'sharedComponents';
 import { ReactComponent as Gear } from 'assets/images/network-health/gear.svg';
@@ -120,7 +121,7 @@ const NetworkHealth = () => {
               <Gear className="w-100 h-100" />
             </div>
             <div className="gear-content">
-              <span data-testid="accounts">{accounts}</span>
+              <span data-testid="accounts">{new BigNumber(accounts).toFormat()}</span>
               <small>Accounts</small>
             </div>
           </div>
@@ -130,7 +131,7 @@ const NetworkHealth = () => {
               <Gear className="w-100 h-100" />
             </div>
             <div className="gear-content">
-              <span data-testid="transactions">{transactions}</span>
+              <span data-testid="transactions">{new BigNumber(transactions).toFormat()}</span>
               <small>Transactions</small>
             </div>
           </div>

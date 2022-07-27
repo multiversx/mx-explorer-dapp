@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NodeType } from 'context/state';
+
 import RowIssueIcon from 'sharedComponents/NodesTable/RowIssueIcon';
 import { nodeIssue } from 'helpers';
+import { NodeType } from 'helpers/types';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <div className="d-flex align-items-center">{children}</div>

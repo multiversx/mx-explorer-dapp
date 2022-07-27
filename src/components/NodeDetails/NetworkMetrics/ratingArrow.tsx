@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { NodeType } from 'context/state';
+import { NodeType } from 'helpers/types';
 
 const RatingArrow = ({ node, showTemp = false }: { node: NodeType; showTemp?: boolean }) => {
   const arrowsOffset = '0.56rem';

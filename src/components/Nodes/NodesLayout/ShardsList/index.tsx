@@ -1,10 +1,13 @@
 import * as React from 'react';
-import { useGlobalState } from 'context';
-import ShardCard from './ShardCard';
-import { GlobalStakeType, ShardType } from 'context/state';
-import { PageState } from 'sharedComponents';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
+
 import { metaChainShardId } from 'appConfig';
+import { useGlobalState } from 'context';
+import { GlobalStakeType } from 'context/state';
+import { ShardType } from 'helpers/types';
+import { PageState } from 'sharedComponents';
+
+import ShardCard from './ShardCard';
 
 const StakingQueueCard = ({ globalStake }: { globalStake: GlobalStakeType | undefined }) => {
   return (

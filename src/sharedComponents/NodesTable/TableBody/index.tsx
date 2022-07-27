@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NodeType } from 'context/state';
+import { NodeType } from 'helpers/types';
 import { PageState } from 'sharedComponents';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import StandardRow from './Rows/StandardRow';
@@ -10,10 +10,12 @@ const NodesTable = ({
   nodes,
   statistics,
   queue,
+  type,
 }: {
   nodes: NodeType[];
   statistics?: boolean;
   queue?: boolean;
+  type?: NodeType['type'];
 }) => {
   const colSpan = statistics ? 8 : queue ? 6 : 7;
 
@@ -21,7 +23,7 @@ const NodesTable = ({
     <tbody>
       {nodes.map((nodeData, index) => (
         <tr key={nodeData.bls}>
-          {!statistics && !queue && <StandardRow nodeData={nodeData} index={index} />}
+          {!statistics && !queue && <StandardRow nodeData={nodeData} index={index} type={type} />}
           {statistics && <StatisticsRow nodeData={nodeData} />}
           {queue && <QueueRow nodeData={nodeData} />}
         </tr>

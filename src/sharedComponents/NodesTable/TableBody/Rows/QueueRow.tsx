@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { NodeType } from 'context/state';
 import { urlBuilder } from 'helpers';
+import { NodeType } from 'helpers/types';
 import { NetworkLink, Trim, Led } from 'sharedComponents';
 import RowIcon from 'sharedComponents/NodesTable/RowIcon';
 import RowIssueIcon from 'sharedComponents/NodesTable/RowIssueIcon';

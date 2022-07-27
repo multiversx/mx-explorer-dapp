@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Sort from '../Sort';
+import { Sort } from 'sharedComponents';
 
 const StatisticsHead = () => {
   return (

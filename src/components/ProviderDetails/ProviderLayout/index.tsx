@@ -1,12 +1,13 @@
 import React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
-import { adapter, Loader, PageState } from 'sharedComponents';
 import { useRouteMatch } from 'react-router-dom';
-import { SharedIdentity } from 'sharedComponents';
+
 import { types, useIsMainnet, useNetworkRoute } from 'helpers';
-import ProviderDetailsCard from './ProviderDetailsCard';
+import { IdentityType } from 'helpers/types';
 import { validatorsRoutes } from 'routes';
-import { IdentityType } from 'context/state';
+import { adapter, Loader, PageState, SharedIdentity } from 'sharedComponents';
+
+import ProviderDetailsCard from './ProviderDetailsCard';
 
 interface ProviderLayoutType<T> {
   data?: T;

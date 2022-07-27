@@ -122,16 +122,16 @@ const TokensMeta = () => {
                                             metaCollection.collection
                                           )}
                                           data-testid={`nftsLink${i}`}
-                                          className="token-link"
+                                          className="side-link"
                                         >
                                           {metaCollection.assets && metaCollection.assets.svgUrl ? (
                                             <img
                                               src={metaCollection.assets.svgUrl}
                                               alt={metaCollection.name}
-                                              className="token-icon"
+                                              className="side-icon"
                                             />
                                           ) : (
-                                            <div className="bg-light token-icon d-flex align-items-center justify-content-center">
+                                            <div className="bg-light side-icon d-flex align-items-center justify-content-center">
                                               <FontAwesomeIcon icon={faDiamond} />
                                             </div>
                                           )}

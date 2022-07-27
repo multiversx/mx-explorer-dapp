@@ -11,10 +11,10 @@ import {
   Loader,
   LatestItem,
 } from 'sharedComponents';
-import { BlockType } from 'sharedComponents/BlocksTable';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 import { urlBuilder } from 'helpers';
+import { BlockType } from 'helpers/types';
 
 const LatestBlocks = () => {
   const ref = React.useRef(null);

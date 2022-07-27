@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DetailItem, Led } from 'sharedComponents';
 // import PercentegeBar from './PercentegeBar';
 // import getUptimeDowntime from './getUptimeDowntime';
-import { NodeType } from 'context/state';
+import { NodeType } from 'helpers/types';
 import RatingArrow from './ratingArrow';
 
 const NetworkMetrics = ({ node }: { node: NodeType }) => {

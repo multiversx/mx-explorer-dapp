@@ -32,11 +32,11 @@ const TxActionToken = ({
           )}
           <NetworkLink
             to={urlBuilder.tokenDetails(token.token)}
-            className={`d-flex ${token.svgUrl ? 'token-link' : ''}`}
+            className={`d-flex ${token.svgUrl ? 'side-link' : ''}`}
           >
             <div className="d-flex align-items-center symbol">
               {token.svgUrl && (
-                <img src={token.svgUrl} alt={token.name} className="token-icon mr-1" />
+                <img src={token.svgUrl} alt={token.name} className="side-icon mr-1" />
               )}
               <span>{token.ticker}</span>
             </div>

@@ -1,9 +1,10 @@
 import React from 'react';
-import ShardsList from './ShardsList';
-import { adapter, Loader } from 'sharedComponents';
+
 import { useGlobalDispatch, useGlobalState } from 'context';
+import { adapter, Loader } from 'sharedComponents';
+import { NodesVersionsType } from 'helpers/types';
 import GlobalStakeCard from './GlobalStakeCard';
-import { NodesVersionsType } from 'context/state';
+import ShardsList from './ShardsList';
 
 const prepareNodesVersions = (data: any) => {
   const versions: NodesVersionsType[] = [];
