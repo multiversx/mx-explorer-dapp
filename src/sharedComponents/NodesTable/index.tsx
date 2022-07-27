@@ -3,25 +3,27 @@ import TableBody from './TableBody';
 import StandardHead from './Heads/StandardHead';
 import StatisticsHead from './Heads/StatisticsHead';
 import QueueHead from './Heads/QueueHead';
+import { NodeType } from 'helpers/types';
 
 interface NodesTableType {
   children: React.ReactNode;
   hideFilters?: boolean;
   statistics?: boolean;
   queue?: boolean;
+  type?: NodeType['type'];
 }
 
 export default class NodesTable extends React.Component<NodesTableType> {
   static Body = TableBody;
 
   render() {
-    const { statistics, queue, children, hideFilters } = this.props;
+    const { statistics, queue, children, hideFilters, type } = this.props;
 
     return (
       <div className="nodes-table table-wrapper">
         <table className="table">
           <thead>
-            {!statistics && !queue && <StandardHead hideFilters={hideFilters} />}
+            {!statistics && !queue && <StandardHead hideFilters={hideFilters} type={type} />}
             {statistics && <StatisticsHead />}
             {queue && <QueueHead hideFilters={hideFilters} />}
           </thead>

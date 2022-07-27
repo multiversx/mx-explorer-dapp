@@ -7,7 +7,7 @@ const Overlay = ({
   tooltipClassName,
 }: {
   children: React.ReactNode;
-  title: string;
+  title: React.ReactNode | string;
   tooltipClassName?: string;
 }) => (
   <OverlayTrigger
@@ -23,7 +23,7 @@ const Overlay = ({
       </Tooltip>
     )}
   >
-    <div className="d-flex align-items-center justify-content-center text-truncate">{children}</div>
+    <div className="text-truncate">{children}</div>
   </OverlayTrigger>
 );
 export default Overlay;
