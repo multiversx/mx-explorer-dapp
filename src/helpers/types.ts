@@ -1,9 +1,12 @@
-import { IdentityType } from 'context/state';
-
 export enum NetworkIdType {
   mainnet = 'mainnet',
   testnet = 'testnet',
   devnet = 'devnet',
+}
+
+export enum SortOrderEnum {
+  asc = 'asc',
+  desc = 'desc',
 }
 
 export interface ScamInfoType {
@@ -11,7 +14,7 @@ export interface ScamInfoType {
   info: string;
 }
 
-export interface AccountAssetType {
+export interface AssetType {
   name: string;
   description: string;
   tags: string[];
@@ -35,7 +38,14 @@ export interface AccountType {
   isReadable?: boolean;
   isPayable?: boolean;
   isPayableBySmartContract?: boolean;
-  assets?: AccountAssetType;
+  assets?: AssetType;
+}
+
+export enum TokenSortEnum {
+  price = 'price',
+  marketCap = 'marketCap',
+  accounts = 'accounts',
+  transactions = 'transactions',
 }
 
 export interface TokenRolesType {
@@ -351,6 +361,8 @@ export interface ResultType {
   originalTxHash: string;
   returnMessage?: string;
   logs?: ResultLogType;
+  senderAssets?: AssetType;
+  receiverAssets?: AssetType;
 }
 
 export interface ReceiptType {
@@ -390,6 +402,8 @@ export interface TransactionType {
   scamInfo?: ScamInfoType;
   pendingResults?: boolean;
   receipt?: ReceiptType;
+  senderAssets?: AssetType;
+  receiverAssets?: AssetType;
 }
 
 export enum TransferTypeEnum {
@@ -405,6 +419,26 @@ export interface UITransactionType extends TransferType {
   isNew?: boolean; // UI flag
   tokenValue?: string;
   tokenIdentifier?: string;
+}
+
+export interface IdentityType {
+  name: string;
+  score: number;
+  stake: string;
+  locked: string;
+  stakePercent: number;
+  validators: number;
+  rank?: number;
+  overallStakePercent?: number;
+  twitter?: string;
+  website?: string;
+  location?: string;
+  avatar?: string;
+  identity?: string;
+  description?: string;
+  topUp?: string;
+  distribution?: any;
+  apr?: number;
 }
 
 export interface ProviderType {
@@ -438,4 +472,78 @@ export interface ProviderType {
   totalUnBondedFromNodes?: string;
   maxDelegateAmountAllowed?: string;
   maxRedelegateAmountAllowed?: string;
+}
+
+export interface ShardType {
+  shard: number;
+  validators: number;
+  activeValidators: number;
+}
+
+export interface NodesVersionsType {
+  name: string;
+  percent: number;
+}
+
+export interface NodeType {
+  bls: string;
+  name: string;
+  type: 'observer' | 'validator';
+  status?: 'waiting' | 'eligible' | 'new' | 'jailed' | 'leaving' | 'inactive' | 'queued';
+  online: false;
+  rating: number;
+  tempRating: number;
+  ratingModifier: number;
+  shard: number;
+  nonce: number;
+  instances: number;
+  version: string;
+  stake: string;
+  topUp: string;
+  uptime: number;
+  uptimeSec: number;
+  downtime: number;
+  downtimeSec: number;
+  locked: string;
+  topup: string;
+  identity?: string;
+  provider?: string;
+  issues?: string[];
+
+  leaderSuccess?: number;
+  leaderFailure?: number;
+  validatorSuccess?: number;
+  validatorFailure?: number;
+  validatorIgnoredSignatures?: number;
+  position?: number;
+  fullHistory?: boolean;
+
+  // TODO check if used
+  receivedShardID?: number;
+  computedShardID?: number;
+}
+
+export interface BlockType {
+  hash: string;
+  nonce: number;
+  shard: number;
+  size: number;
+  sizeTxs: number;
+  timestamp: number;
+  txCount: number;
+  validators: string[];
+  miniBlocksHashes: string[];
+  notarizedBlocksHashes: string[];
+  epoch?: number;
+  prevHash?: string;
+  proposer?: string;
+  pubKeyBitmap?: string;
+  round?: number;
+  stateRootHash?: string;
+  isNew?: boolean; // UI flag
+  gasConsumed: number;
+  gasRefunded: number;
+  gasPenalized: number;
+  maxGasLimit: number;
+  proposerIdentity?: IdentityType;
 }

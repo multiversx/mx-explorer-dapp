@@ -6,10 +6,17 @@ import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Collapse, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
-import { ShardSpan, NetworkLink, TimeAgo, Trim, DetailItem, CopyButton } from 'sharedComponents';
-import { validatorsRoutes } from 'routes';
+import { BlockType } from 'helpers/types';
+import {
+  ShardSpan,
+  NetworkLink,
+  TimeAgo,
+  Trim,
+  DetailItem,
+  CopyButton,
+  IdentityBlock,
+} from 'sharedComponents';
 import { metaChainShardId } from 'appConfig';
-import { BlockType } from 'sharedComponents/BlocksTable';
 
 export interface BlockDataType {
   block: BlockType;
@@ -59,7 +66,7 @@ const BlockData = (props: BlockDataType) => {
       <div className="card-body p-0">
         <div className="container-fluid">
           <DetailItem title="Block Height">
-            <div className="d-flex justify-content-between">
+            <div className="d-flex justify-content-between align-items-center">
               <div>{block.nonce}</div>
               <ul className="list-inline mb-0">
                 <li className="list-inline-item ml-2 mr-2">
@@ -151,12 +158,7 @@ const BlockData = (props: BlockDataType) => {
           </DetailItem>
           <DetailItem title="Proposer">
             {block.proposer ? (
-              <NetworkLink
-                to={`${validatorsRoutes.nodes}/${block.proposer}`}
-                className="trim-wrapper"
-              >
-                <Trim text={block.proposer} />
-              </NetworkLink>
+              <IdentityBlock block={block} />
             ) : (
               <span className="text-secondary">N/A</span>
             )}
@@ -177,10 +179,7 @@ const BlockData = (props: BlockDataType) => {
                     <div className="hash-group">
                       {block.validators.map((item, i) => (
                         <div className="hash-item mb-1" key={`${item}/${i}`}>
-                          <NetworkLink
-                            className="trim-wrapper"
-                            to={`${validatorsRoutes.nodes}/${item}`}
-                          >
+                          <NetworkLink className="trim-wrapper" to={urlBuilder.nodeDetails(item)}>
                             <Trim text={item} />
                           </NetworkLink>
                         </div>

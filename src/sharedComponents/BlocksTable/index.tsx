@@ -1,35 +1,27 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
 import { sizeFormat, urlBuilder } from 'helpers';
-import { ShardSpan, NetworkLink, TimeAgo, Trim, PercentageBar } from 'sharedComponents';
+import { BlockType } from 'helpers/types';
+import {
+  ShardSpan,
+  NetworkLink,
+  TimeAgo,
+  Trim,
+  PercentageBar,
+  IdentityBlock,
+} from 'sharedComponents';
 
-export interface BlockType {
-  hash: string;
-  nonce: number;
-  shard: number;
-  size: number;
-  sizeTxs: number;
-  timestamp: number;
-  txCount: number;
-  validators: string[];
-  miniBlocksHashes: string[];
-  notarizedBlocksHashes: string[];
-  epoch?: number;
-  prevHash?: string;
-  proposer?: string;
-  pubKeyBitmap?: string;
-  round?: number;
-  stateRootHash?: string;
-  isNew?: boolean; // UI flag
-  gasConsumed: number;
-  gasRefunded: number;
-  gasPenalized: number;
-  maxGasLimit: number;
-}
-
-const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | undefined }) => {
+const BlocksTable = ({
+  blocks,
+  shard,
+  showProposerIdentity,
+}: {
+  blocks: BlockType[];
+  shard: number | undefined;
+  showProposerIdentity?: boolean;
+}) => {
   return (
-    <div className="table-wrapper animated-list">
+    <div className="blocks-table table-wrapper animated-list">
       <table className="table">
         <thead>
           <tr>
@@ -39,7 +31,8 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
             <th>Shard</th>
             <th className="text-right">Size</th>
             <th className="text-right">Gas Used</th>
-            <th className="text-right">Block Hash</th>
+            <th className={showProposerIdentity ? '' : 'text-right'}>Block Hash</th>
+            {showProposerIdentity && <th>Leader</th>}
           </tr>
         </thead>
         <tbody data-testid="blocksTable">
@@ -108,12 +101,14 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
                         </div>
                       </>
                     ) : (
-                      <>N/A</>
+                      <span className="pb-2">N/A</span>
                     )}
                   </div>
                 </td>
                 <td>
-                  <div className="d-flex justify-content-end mr-spacer">
+                  <div
+                    className={showProposerIdentity ? '' : 'd-flex justify-content-end mr-spacer'}
+                  >
                     <NetworkLink
                       to={`/blocks/${block.hash}`}
                       data-testid={`blockHashLink${i}`}
@@ -123,6 +118,11 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
                     </NetworkLink>
                   </div>
                 </td>
+                {showProposerIdentity && (
+                  <td className="identity-block">
+                    <IdentityBlock block={block} />
+                  </td>
+                )}
               </tr>
             );
           })}

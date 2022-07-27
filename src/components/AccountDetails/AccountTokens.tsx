@@ -134,13 +134,13 @@ const AccountTokens = () => {
 
                       <NetworkLink
                         to={urlBuilder.nftDetails(identifier)}
-                        className={`d-flex text-truncate ${assets?.svgUrl ? 'token-link' : ''}`}
+                        className={`d-flex text-truncate ${assets?.svgUrl ? 'side-link' : ''}`}
                       >
                         <div className="d-flex align-items-center symbol text-truncate">
                           {assets ? (
                             <>
                               {assets.svgUrl && (
-                                <img src={assets.svgUrl} alt={name} className="token-icon mr-1" />
+                                <img src={assets.svgUrl} alt={name} className="side-icon mr-1" />
                               )}
                               <div className="text-truncate">
                                 {ticker ? ticker : name} ({identifier})
@@ -178,13 +178,13 @@ const AccountTokens = () => {
 
                         <NetworkLink
                           to={urlBuilder.tokenDetails(identifier)}
-                          className={`d-flex text-truncate ${assets?.svgUrl ? 'token-link' : ''}`}
+                          className={`d-flex text-truncate ${assets?.svgUrl ? 'side-link' : ''}`}
                         >
                           <div className="d-flex align-items-center symbol text-truncate">
                             {assets ? (
                               <>
                                 {assets?.svgUrl && (
-                                  <img src={assets.svgUrl} alt={name} className="token-icon mr-1" />
+                                  <img src={assets.svgUrl} alt={name} className="side-icon mr-1" />
                                 )}
                                 <div className="text-truncate">{ticker ? ticker : name}</div>
                               </>

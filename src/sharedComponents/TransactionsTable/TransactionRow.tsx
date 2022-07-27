@@ -10,6 +10,7 @@ import {
   TimeAgo,
   Trim,
   LockedTokenAddressIcon,
+  AccountName,
 } from 'sharedComponents';
 import TransactionIcon from '../TransactionsTable/TransactionIcon';
 import TransactionMethod from '../TransactionsTable/TransactionMethod';
@@ -36,6 +37,7 @@ const TransactionRow = ({
   const directionIn = address === receiver;
   const directionSelf = directionOut && directionIn;
   const isScResult = transaction?.type === TransferTypeEnum.SmartContractResult;
+  const receiverAssets = transaction.receiver === receiver ? transaction.receiverAssets : undefined;
 
   let direction = 'Out';
   switch (true) {
@@ -92,11 +94,11 @@ const TransactionRow = ({
         </div>
       </td>
       <td>
-        <div className="d-flex align-items-center">
+        <div className="d-flex align-items-center sender">
           {showLockedAccounts && <LockedTokenAddressIcon address={transaction.sender} />}
           <ScAddressIcon initiator={transaction.sender} />
           {directionOut ? (
-            <Trim text={transaction.sender} />
+            <AccountName address={transaction.sender} assets={transaction.senderAssets} />
           ) : (
             <>
               {addressIsBech32(transaction.sender) ? (
@@ -105,7 +107,7 @@ const TransactionRow = ({
                   data-testid="senderLink"
                   className="trim-wrapper"
                 >
-                  <Trim text={transaction.sender} />
+                  <AccountName address={transaction.sender} assets={transaction.senderAssets} />
                 </NetworkLink>
               ) : (
                 <ShardSpan shard={transaction.sender} />
@@ -125,18 +127,18 @@ const TransactionRow = ({
       )}
 
       <td>
-        <div className="d-flex align-items-center">
+        <div className="d-flex align-items-center receiver">
           {showLockedAccounts && <LockedTokenAddressIcon address={receiver} />}
           <ScAddressIcon initiator={receiver} />
           {directionIn ? (
-            <Trim text={receiver} />
+            <AccountName address={receiver} assets={receiverAssets} />
           ) : (
             <NetworkLink
               to={urlBuilder.accountDetails(receiver)}
               data-testid="receiverLink"
               className="trim-wrapper"
             >
-              <Trim text={receiver} />
+              <AccountName address={receiver} assets={receiverAssets} />
             </NetworkLink>
           )}
         </div>

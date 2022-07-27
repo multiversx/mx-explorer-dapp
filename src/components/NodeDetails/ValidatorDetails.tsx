@@ -1,8 +1,8 @@
 import * as React from 'react';
+import { faCheck, faTimes } from '@fortawesome/pro-solid-svg-icons';
 
 import { CardItem } from 'sharedComponents';
-import { NodeType } from 'context/state';
-import { faCheck, faTimes } from '@fortawesome/pro-solid-svg-icons';
+import { NodeType } from 'helpers/types';
 
 const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
   const {

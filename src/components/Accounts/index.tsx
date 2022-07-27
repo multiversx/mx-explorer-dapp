@@ -6,8 +6,8 @@ import {
   Pager,
   Denominate,
   NetworkLink,
-  Trim,
   ScAddressIcon,
+  AccountName,
 } from 'sharedComponents';
 import { urlBuilder, useSize, useURLSearchParams } from 'helpers';
 import { AccountType } from 'helpers/types';
@@ -100,8 +100,9 @@ const Transactions = () => {
                                         to={urlBuilder.accountDetails(account.address)}
                                         className="trim-only-sm"
                                       >
-                                        <Trim
-                                          text={account.address}
+                                        <AccountName
+                                          address={account.address}
+                                          assets={account.assets}
                                           dataTestId={`accountLink${i}`}
                                         />
                                       </NetworkLink>

@@ -29,7 +29,7 @@ const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
       )}
       <NetworkLink
         to={urlBuilder.tokenDetails(operationToken.identifier)}
-        className={`d-flex text-truncate ${operationToken?.assets?.svgUrl ? 'token-link' : ''}`}
+        className={`d-flex text-truncate ${operationToken?.assets?.svgUrl ? 'side-link' : ''}`}
       >
         <div className="d-flex align-items-center symbol text-truncate">
           {operationToken && (
@@ -40,7 +40,7 @@ const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
                     <img
                       src={operationToken.assets.svgUrl}
                       alt={operationToken.name}
-                      className="token-icon mr-1"
+                      className="side-icon mr-1"
                     />
                   )}
                   <div className="text-truncate">

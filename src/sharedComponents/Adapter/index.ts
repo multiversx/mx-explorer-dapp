@@ -111,7 +111,13 @@ export default function useAdapter() {
       }
     },
 
-    getBlocks: async ({ size = 1, shard, epoch, proposer }: GetBlocksType) => {
+    getBlocks: async ({
+      size = 1,
+      shard,
+      epoch,
+      proposer,
+      withProposerIdentity,
+    }: GetBlocksType) => {
       try {
         const { data: blocks, success } = await provider({
           url: `/blocks`,
@@ -119,6 +125,7 @@ export default function useAdapter() {
             from: (size - 1) * pageSize,
             size: pageSize,
             ...(proposer ? { proposer } : {}),
+            ...(withProposerIdentity ? { withProposerIdentity } : {}),
             ...getShardAndEpochParam(shard, epoch),
             fields: [
               'hash',
@@ -132,6 +139,8 @@ export default function useAdapter() {
               'gasRefunded',
               'gasPenalized',
               'maxGasLimit',
+              'proposer',
+              'proposerIdentity',
             ].join(','),
           },
         });

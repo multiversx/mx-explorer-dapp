@@ -2,7 +2,15 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchange, faSearch } from '@fortawesome/pro-regular-svg-icons';
-import { Denominate, CopyButton, Trim, NetworkLink, DataDecode } from 'sharedComponents';
+import {
+  Denominate,
+  CopyButton,
+  Trim,
+  NetworkLink,
+  DataDecode,
+  AccountName,
+  ScAddressIcon,
+} from 'sharedComponents';
 import { DecodeMethodType } from 'sharedComponents/DataDecode';
 import { ResultType, TransactionTokensType } from 'helpers/types';
 import { transactionsRoutes } from 'routes';
@@ -91,7 +99,8 @@ const ScResultsList = ({
                 <div className="row mb-3 d-flex flex-column flex-sm-row">
                   <div className="col-sm-2 col-left">From</div>
                   <div className="col-sm-10 d-flex align-items-center">
-                    <Trim text={result.sender} />
+                    <ScAddressIcon initiator={result.sender} />
+                    <AccountName address={result.sender} assets={result.senderAssets} />
                     <CopyButton text={result.sender} className="side-action ml-2" />
                   </div>
                 </div>
@@ -101,7 +110,8 @@ const ScResultsList = ({
                 <div className="row mb-3 d-flex flex-column flex-sm-row">
                   <div className="col-sm-2 col-left">To</div>
                   <div className="col-sm-10 d-flex align-items-center">
-                    <Trim text={result.receiver} />
+                    <ScAddressIcon initiator={result.receiver} />
+                    <AccountName address={result.receiver} assets={result.receiverAssets} />
                     <CopyButton text={result.receiver} className="side-action ml-2" />
                   </div>
                 </div>

@@ -11,18 +11,35 @@
         max-width: 10rem;
       }
     }
-    th:last-child,
-    td:last-child {
-      padding-right: 1rem !important;
+    th,
+    td {
+      .sender,
+      .receiver {
+        max-width: 10.5rem;
+      }
+      &:last-child {
+        padding-right: 1rem !important;
+      }
     }
     .transaction-value {
-      width: 12rem;
+      width: 11.5rem;
     }
     .transaction-function {
       width: 10.5rem;
       .transaction-function-badge {
         max-width: 9.5rem;
         line-height: 1.2;
+      }
+    }
+  }
+  &.has-direction {
+    .table {
+      th,
+      td {
+        .sender,
+        .receiver {
+          max-width: 10rem;
+        }
       }
     }
   }

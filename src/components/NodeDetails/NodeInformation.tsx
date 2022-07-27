@@ -1,5 +1,14 @@
 import * as React from 'react';
+import { faLock, faServer, faCheck, faCode } from '@fortawesome/pro-solid-svg-icons';
+import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
+import { faStream } from '@fortawesome/pro-solid-svg-icons/faStream';
+import { faCogs } from '@fortawesome/pro-solid-svg-icons/faCogs';
+import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
+import { faFlagAlt } from '@fortawesome/pro-regular-svg-icons/faFlagAlt';
+import { faHistory } from '@fortawesome/pro-solid-svg-icons/faHistory';
+
 import { urlBuilder } from 'helpers';
+import { NodeType } from 'helpers/types';
 import {
   ShardSpan,
   NetworkLink,
@@ -10,14 +19,6 @@ import {
   LockedAmountTooltip,
 } from 'sharedComponents';
 import { getIcon } from 'sharedComponents/NodesTable/RowIcon';
-import { NodeType } from 'context/state';
-import { faLock, faServer, faCheck, faCode } from '@fortawesome/pro-solid-svg-icons';
-import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
-import { faStream } from '@fortawesome/pro-solid-svg-icons/faStream';
-import { faCogs } from '@fortawesome/pro-solid-svg-icons/faCogs';
-import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
-import { faFlagAlt } from '@fortawesome/pro-regular-svg-icons/faFlagAlt';
-import { faHistory } from '@fortawesome/pro-solid-svg-icons/faHistory';
 
 import Alert from './Alert';
 

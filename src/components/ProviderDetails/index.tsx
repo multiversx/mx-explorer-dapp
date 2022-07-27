@@ -1,11 +1,11 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { adapter, Loader, Pager, PageState } from 'sharedComponents';
-import { NodesTable } from 'sharedComponents';
-import { useFilters } from 'helpers';
 import { useLocation, useParams } from 'react-router-dom';
+
+import { adapter, Loader, Pager, PageState, NodesTable } from 'sharedComponents';
+import { useFilters } from 'helpers';
+import { NodeType } from 'helpers/types';
 import ProviderTabs from 'components/ProviderDetails/ProviderLayout/ProviderTabs';
-import { NodeType } from 'context/state';
 
 const Nodes = () => {
   const ref = React.useRef(null);

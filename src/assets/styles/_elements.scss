@@ -254,9 +254,11 @@
   position: unset;
 }
 
-.token-icon {
+.side-icon {
   width: 1.5rem;
   height: 1.5rem;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
   color: transparent;
   border-radius: 50%;
   overflow: hidden;
@@ -286,5 +288,17 @@
   &.focus {
     box-shadow: none;
     text-decoration: none;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .mw-lg-6 {
+    max-width: 50%;
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .mw-xl-3 {
+    max-width: 25%;
   }
 }

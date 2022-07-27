@@ -95,6 +95,7 @@ const AccountDetailsCard = () => {
     isReadable,
     isPayable,
     isPayableBySmartContract,
+    assets,
   } = accountDetails;
   const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
 
@@ -234,6 +235,8 @@ const AccountDetailsCard = () => {
                     </div>
                   </SmallDetailItem>
 
+                  {assets?.name && <SmallDetailItem title="Name">{assets.name}</SmallDetailItem>}
+
                   <SmallDetailItem title="Balance">
                     <div className="d-flex align-items-center">
                       {balance !== '...' ? <Denominate value={balance} decimals={4} /> : balance}
@@ -323,6 +326,14 @@ const AccountDetailsCard = () => {
                       <span className="text-secondary">N/A</span>
                     )}
                   </SmallDetailItem>
+
+                  {assets?.description && (
+                    <SmallDetailItem title="Description">
+                      <span className="account-description" title={assets.description}>
+                        {assets.description}
+                      </span>
+                    </SmallDetailItem>
+                  )}
                 </div>
               </div>
             </div>
@@ -336,7 +347,10 @@ const AccountDetailsCard = () => {
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="d-flex align-items-center w-100">
                     <span className="mr-2 h6 mb-0" data-testid="title">
-                      Address Details
+                      {assets?.name ?? ''} Address Details
+                      {assets?.description && (
+                        <span className="text-secondary ml-2">({assets.description})</span>
+                      )}
                     </span>
                     {scamInfo && (
                       <span className="text-warning d-flex align-items-center ml-2">

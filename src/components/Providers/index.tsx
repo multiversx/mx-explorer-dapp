@@ -1,10 +1,11 @@
 import React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
-import { adapter, ProvidersTable, Loader, PageState } from 'sharedComponents';
+
 import { useGlobalState } from 'context';
-import { IdentityType } from 'context/state';
+import { adapter, ProvidersTable, Loader, PageState } from 'sharedComponents';
 import NodesTabs from 'components/Nodes/NodesLayout/NodesTabs';
 import { types } from 'helpers';
+import { IdentityType } from 'helpers/types';
 
 const Providers = () => {
   const ref = React.useRef(null);

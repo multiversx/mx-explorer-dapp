@@ -12,6 +12,7 @@ export interface DenominateType {
   token?: string | React.ReactNode;
   decimals?: number;
   denomination?: number;
+  showTooltip?: boolean;
   'data-testid'?: string;
 }
 
@@ -44,7 +45,7 @@ const denominateInvalid = (props: DenominateType) => {
 };
 
 const denominateValid = (props: DenominateType, erdLabel: string) => {
-  const { value, showLastNonZeroDecimal = false, showLabel = true } = props;
+  const { value, showLastNonZeroDecimal = false, showLabel = true, showTooltip = true } = props;
   const decimals = props.decimals !== undefined ? props.decimals : configDecimals;
   const denomination = props.denomination !== undefined ? props.denomination : configDenomination;
 
@@ -85,7 +86,7 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
 
   return (
     <span data-testid={props['data-testid'] ? props['data-testid'] : 'denominateComponent'}>
-      {completeValue !== denominatedValue ? (
+      {showTooltip && completeValue !== denominatedValue ? (
         <CompleteValueTooltip completeValue={completeValue}>
           <DisplayValue />
         </CompleteValueTooltip>

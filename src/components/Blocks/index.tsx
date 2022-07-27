@@ -1,9 +1,9 @@
 import { useGlobalState } from 'context';
-import { useNetworkRoute, useURLSearchParams, useSize } from 'helpers';
 import * as React from 'react';
 import { Redirect } from 'react-router-dom';
+import { useNetworkRoute, useURLSearchParams, useSize } from 'helpers';
+import { BlockType } from 'helpers/types';
 import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'sharedComponents';
-import { BlockType } from 'sharedComponents/BlocksTable';
 import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
 import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
 
@@ -35,7 +35,7 @@ const Blocks = () => {
   const { getBlocks, getBlocksCount } = adapter();
 
   React.useEffect(() => {
-    getBlocks({ size, shard }).then(({ success, data }) => {
+    getBlocks({ size, shard, withProposerIdentity: true }).then(({ success, data }) => {
       if (ref.current !== null) {
         if (success && data) {
           const { blocks, endBlockNr, startBlockNr } = data;
@@ -97,7 +97,11 @@ const Blocks = () => {
                       </div>
 
                       <div className="card-body border-0 p-0">
-                        <BlocksTable blocks={state.blocks} shard={shard} />
+                        <BlocksTable
+                          blocks={state.blocks}
+                          shard={shard}
+                          showProposerIdentity={true}
+                        />
                       </div>
 
                       <div className="card-footer d-flex justify-content-end">
