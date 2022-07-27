@@ -100,7 +100,7 @@ const TokensTable = ({
                 <td>{token.accounts ? new BigNumber(token.accounts).toFormat() : 0}</td>
                 <td>{token.transactions ? new BigNumber(token.transactions).toFormat() : 0}</td>
               </tr>
-              {typeof totalTokens === 'number' && order === SortOrderEnum.asc && (
+              {typeof totalTokens === 'number' && order === SortOrderEnum.asc && i !== 0 && (
                 <EgldRow tokens={tokens} index={i} totalTokens={totalTokens} />
               )}
             </React.Fragment>
