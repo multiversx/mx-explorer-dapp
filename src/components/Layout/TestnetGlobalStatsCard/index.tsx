@@ -1,5 +1,4 @@
 import * as React from 'react';
-import BigNumber from 'bignumber.js';
 import { faUser } from '@fortawesome/pro-solid-svg-icons/faUser';
 import { faExchangeAlt } from '@fortawesome/pro-solid-svg-icons/faExchangeAlt';
 import { faCube } from '@fortawesome/pro-solid-svg-icons/faCube';
@@ -7,6 +6,7 @@ import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 import { useGlobalState } from 'context';
 import EpochGear from 'components/Layout/GlobalStatsCard/EpochGear';
 import { CardItem } from 'sharedComponents';
+import { validDisplayValue } from 'helpers';
 
 const TestnetGlobalStatsCard = () => {
   const ref = React.useRef(null);
@@ -31,13 +31,11 @@ const TestnetGlobalStatsCard = () => {
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Accounts" icon={faUser}>
-                  <div data-testid="accounts">{new BigNumber(stats.accounts).toFormat()}</div>
+                  <div data-testid="accounts">{validDisplayValue(stats.accounts)}</div>
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Transactions" icon={faExchangeAlt}>
-                  <div data-testid="transactions">
-                    {new BigNumber(stats.transactions).toFormat()}
-                  </div>
+                  <div data-testid="transactions">{validDisplayValue(stats.transactions)}</div>
                 </CardItem>
               </div>
             </div>

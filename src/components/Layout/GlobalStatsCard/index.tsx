@@ -1,11 +1,11 @@
 import * as React from 'react';
-import BigNumber from 'bignumber.js';
 import { faChartPie } from '@fortawesome/pro-solid-svg-icons/faChartPie';
 import { faUsers } from '@fortawesome/pro-solid-svg-icons/faUsers';
 import { faChartArea } from '@fortawesome/pro-solid-svg-icons/faChartArea';
 import { useGlobalState } from 'context';
 import EpochGear from 'components/Layout/GlobalStatsCard/EpochGear';
 import { CardItem } from 'sharedComponents';
+import { validDisplayValue } from 'helpers';
 
 const GlobalStatsCard = () => {
   const ref = React.useRef(null);
@@ -33,7 +33,7 @@ const GlobalStatsCard = () => {
                     </div>
                     <div className="d-flex justify-content-between">
                       <span className="text-secondary mr-3">Market Cap:</span>$
-                      {new BigNumber(economics.marketCap).toFormat(0)}
+                      {validDisplayValue(economics.marketCap, 0)}
                     </div>
                   </div>
                 </CardItem>
@@ -55,11 +55,11 @@ const GlobalStatsCard = () => {
                   <div className="d-flex flex-column w-100">
                     <div className="d-flex justify-content-between mb-1">
                       <span className="text-secondary mr-3">Addresses:</span>
-                      {new BigNumber(stats.accounts).toFormat()}
+                      {validDisplayValue(stats.accounts)}
                     </div>
                     <div className="d-flex justify-content-between">
                       <span className="text-secondary mr-3">Transactions:</span>
-                      {new BigNumber(stats.transactions).toFormat()}
+                      {validDisplayValue(stats.transactions)}
                     </div>
                   </div>
                 </CardItem>
