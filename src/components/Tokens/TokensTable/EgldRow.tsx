@@ -5,7 +5,7 @@ import { useGlobalState } from 'context';
 import { EconomicsType, StatsType } from 'context/state';
 import pagerHelper from 'sharedComponents/Pager/pagerHelper';
 
-import { useFilters, useURLSearchParams } from 'helpers';
+import { useFilters, useURLSearchParams, validDisplayValue } from 'helpers';
 import { TokenType, SortOrderEnum, TokenSortEnum } from 'helpers/types';
 import { pageSize } from 'appConfig';
 import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol.svg';
@@ -120,11 +120,11 @@ export const EgldRow = ({
         </div>
       </td>
       <td>Elrond {erdLabel}</td>
-      <td>${new BigNumber(economics.price).toFormat(2)}</td>
+      <td>${validDisplayValue(economics.price, 2)}</td>
       <td>{economics.circulatingSupply}</td>
-      <td>${new BigNumber(economics.marketCap).toFormat(0)}</td>
-      <td>{new BigNumber(stats.accounts).toFormat()}</td>
-      <td>{new BigNumber(stats.transactions).toFormat()}</td>
+      <td>${validDisplayValue(economics.marketCap, 0)}</td>
+      <td>{validDisplayValue(stats.accounts)}</td>
+      <td>{validDisplayValue(stats.transactions)}</td>
     </tr>
   );
 };
