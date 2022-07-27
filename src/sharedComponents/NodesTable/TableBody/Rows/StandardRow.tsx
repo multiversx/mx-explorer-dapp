@@ -1,12 +1,41 @@
 import * as React from 'react';
 import { urlBuilder } from 'helpers';
 import { NodeType } from 'helpers/types';
-import { ShardSpan, NetworkLink, Trim, Led } from 'sharedComponents';
+import { ShardSpan, NetworkLink, Trim, Led, Overlay, Denominate } from 'sharedComponents';
 import RowIcon from 'sharedComponents/NodesTable/RowIcon';
 import RowIssueIcon from 'sharedComponents/NodesTable/RowIssueIcon';
 import RowFullHistory from 'sharedComponents/NodesTable/RowFullHistory';
 
-const StandardRow = ({ nodeData, index }: { nodeData: NodeType; index: number }) => {
+const StandardRow = ({
+  nodeData,
+  index,
+  type,
+}: {
+  nodeData: NodeType;
+  index: number;
+  type?: NodeType['type'];
+}) => {
+  const ValidatorLockedStakeTooltip = () => {
+    if ((type === 'validator' && nodeData.locked && nodeData.stake) || nodeData.topUp) {
+      return (
+        <>
+          {nodeData.stake && (
+            <div>
+              Staked: <Denominate value={nodeData.stake} showTooltip={false} />
+            </div>
+          )}
+          {nodeData.topUp && (
+            <div>
+              Top up: <Denominate value={nodeData.topUp} showTooltip={false} />
+            </div>
+          )}
+        </>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <>
       <td>
@@ -60,6 +89,14 @@ const StandardRow = ({ nodeData, index }: { nodeData: NodeType; index: number })
           <span className="text-secondary">N/A</span>
         )}
       </td>
+
+      {type === 'validator' && nodeData.locked && (
+        <td className="text-right">
+          <Overlay title={<ValidatorLockedStakeTooltip />}>
+            <Denominate value={nodeData.locked} showTooltip={false} />
+          </Overlay>
+        </td>
+      )}
     </>
   );
 };
