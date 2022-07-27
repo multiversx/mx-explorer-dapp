@@ -52,7 +52,6 @@ export const EgldRow = ({
     Object.keys(TokenSortEnum).includes(sort) &&
     Object.keys(SortOrderEnum).includes(order)
   ) {
-    showOnFilter = false;
     const statsValue = stats[sort as keyof StatsType];
     const economicsValue = economics[sort as keyof EconomicsType];
     const tokenValue = currentToken[sort as keyof TokenType];
@@ -68,20 +67,26 @@ export const EgldRow = ({
       ((tokenValue !== undefined || previousTokenValue) !== undefined ||
         nextTokenValue !== undefined)
     ) {
+      showOnFilter = false;
       if (order === SortOrderEnum.desc) {
+        const egldIsGreaterThanNext =
+          new BigNumber(egldValue).isGreaterThanOrEqualTo(tokenValue as string | number) &&
+          new BigNumber(egldValue).isGreaterThanOrEqualTo(nextTokenValue as string | number);
+        const egldIsGreater =
+          egldIsGreaterThanNext &&
+          new BigNumber(egldValue).isLessThanOrEqualTo(previousTokenValue as string | number);
         showOnFilter =
-          previousToken === currentToken && !page
-            ? new BigNumber(egldValue).isGreaterThanOrEqualTo(tokenValue as string | number)
-            : new BigNumber(egldValue).isGreaterThanOrEqualTo(nextTokenValue as string | number) &&
-              new BigNumber(egldValue).isLessThanOrEqualTo(previousTokenValue as string | number);
+          previousToken === currentToken && !page ? egldIsGreaterThanNext : egldIsGreater;
       }
       if (order === SortOrderEnum.asc) {
+        const egldIsGreaterThanPrevious =
+          new BigNumber(egldValue).isGreaterThanOrEqualTo(previousTokenValue as string | number) &&
+          new BigNumber(egldValue).isGreaterThanOrEqualTo(tokenValue as string | number);
+        const egldIsLess =
+          new BigNumber(egldValue).isLessThanOrEqualTo(nextTokenValue as string | number) &&
+          egldIsGreaterThanPrevious;
         showOnFilter =
-          nextToken === currentToken && isLastPage
-            ? new BigNumber(egldValue).isGreaterThanOrEqualTo(tokenValue as string | number)
-            : new BigNumber(egldValue).isGreaterThanOrEqualTo(
-                previousTokenValue as string | number
-              ) && new BigNumber(egldValue).isLessThanOrEqualTo(nextTokenValue as string | number);
+          nextToken === currentToken && isLastPage ? egldIsGreaterThanPrevious : egldIsLess;
       }
     }
   }
