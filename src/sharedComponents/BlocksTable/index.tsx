@@ -11,7 +11,15 @@ import {
   IdentityBlock,
 } from 'sharedComponents';
 
-const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | undefined }) => {
+const BlocksTable = ({
+  blocks,
+  shard,
+  showProposerIdentity,
+}: {
+  blocks: BlockType[];
+  shard: number | undefined;
+  showProposerIdentity?: boolean;
+}) => {
   return (
     <div className="blocks-table table-wrapper animated-list">
       <table className="table">
@@ -23,8 +31,8 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
             <th>Shard</th>
             <th className="text-right">Size</th>
             <th className="text-right">Gas Used</th>
-            <th>Block Hash</th>
-            <th>Leader</th>
+            <th className={showProposerIdentity ? '' : 'text-right'}>Block Hash</th>
+            {showProposerIdentity && <th>Leader</th>}
           </tr>
         </thead>
         <tbody data-testid="blocksTable">
@@ -98,17 +106,23 @@ const BlocksTable = ({ blocks, shard }: { blocks: BlockType[]; shard: number | u
                   </div>
                 </td>
                 <td>
-                  <NetworkLink
-                    to={`/blocks/${block.hash}`}
-                    data-testid={`blockHashLink${i}`}
-                    className="trim-wrapper trim-size-xl mr-xl-n5"
+                  <div
+                    className={showProposerIdentity ? '' : 'd-flex justify-content-end mr-spacer'}
                   >
-                    <Trim text={block.hash} />
-                  </NetworkLink>
+                    <NetworkLink
+                      to={`/blocks/${block.hash}`}
+                      data-testid={`blockHashLink${i}`}
+                      className="trim-wrapper trim-size-xl mr-xl-n5"
+                    >
+                      <Trim text={block.hash} />
+                    </NetworkLink>
+                  </div>
                 </td>
-                <td className="identity-block">
-                  <IdentityBlock block={block} />
-                </td>
+                {showProposerIdentity && (
+                  <td className="identity-block">
+                    <IdentityBlock block={block} />
+                  </td>
+                )}
               </tr>
             );
           })}

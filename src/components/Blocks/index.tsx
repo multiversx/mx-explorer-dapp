@@ -97,7 +97,11 @@ const Blocks = () => {
                       </div>
 
                       <div className="card-body border-0 p-0">
-                        <BlocksTable blocks={state.blocks} shard={shard} />
+                        <BlocksTable
+                          blocks={state.blocks}
+                          shard={shard}
+                          showProposerIdentity={true}
+                        />
                       </div>
 
                       <div className="card-footer d-flex justify-content-end">
