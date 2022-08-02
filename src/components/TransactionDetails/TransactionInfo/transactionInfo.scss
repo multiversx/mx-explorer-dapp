@@ -99,3 +99,16 @@
     }
   }
 }
+
+.vm-error-display {
+  .tooltip-inner {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    @include media-breakpoint-up(md) {
+      max-width: 24rem;
+    }
+    @include media-breakpoint-up(xl) {
+      max-width: 30rem;
+    }
+  }
+}
