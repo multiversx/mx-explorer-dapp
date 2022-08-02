@@ -80,7 +80,12 @@ export const decodeForDisplay = ({
           parts.length >= 2 &&
           ((index === 0 && part.length < 64) || (index === 1 && !parts[0]))
         ) {
-          return part;
+          const encodedDisplayValue = /[^a-z0-9]/gi.test(part);
+          if (encodedDisplayValue) {
+            return decode(part, decodeMethod);
+          } else {
+            return part;
+          }
         } else {
           const hexValidationWarnings = getHexValidationWarnings(part);
           if (hexValidationWarnings.length) {
