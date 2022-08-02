@@ -16,18 +16,30 @@ const AccountName = ({
   if (assets && assets.name) {
     const name = assets.name.replaceAll(/[^\p{L}\p{N}\p{P}\p{Z}\n]/gu, '');
     const description = `${name} (${address})`;
+    const dynamicIconColor = assets?.iconSvg && assets.iconSvg.includes('elrond.svg');
     return (
       <Overlay title={description} tooltipClassName={'account-name'}>
-        <span
-          className={`text-truncate ${color ? `text-${color}` : ''}`}
-          {...(dataTestId
-            ? {
-                datatestid: dataTestId,
-              }
-            : {})}
-        >
-          {name}
-        </span>
+        <div className="d-flex align-items-center">
+          {assets?.iconSvg && (
+            <div className="side-icon mr-1">
+              <img
+                src={assets?.iconSvg}
+                alt=" "
+                className={dynamicIconColor ? 'icon-elrond' : ''}
+              />
+            </div>
+          )}
+          <div
+            className={`text-truncate ${color ? `text-${color}` : ''}`}
+            {...(dataTestId
+              ? {
+                  datatestid: dataTestId,
+                }
+              : {})}
+          >
+            {name}
+          </div>
+        </div>
       </Overlay>
     );
   }
