@@ -237,7 +237,22 @@ const AccountDetailsCard = () => {
                     </div>
                   </SmallDetailItem>
 
-                  {assets?.name && <SmallDetailItem title="Name">{assets.name}</SmallDetailItem>}
+                  {assets?.name && (
+                    <SmallDetailItem title="Name">
+                      <div className="d-flex align-items-center">
+                        {assets?.iconSvg && (
+                          <div className="side-icon mr-1">
+                            <img
+                              src={assets?.iconSvg}
+                              alt=" "
+                              className={dynamicIconColor ? 'icon-elrond' : ''}
+                            />
+                          </div>
+                        )}
+                        <div>{assets.name}</div>
+                      </div>
+                    </SmallDetailItem>
+                  )}
 
                   <SmallDetailItem title="Balance">
                     <div className="d-flex align-items-center">
