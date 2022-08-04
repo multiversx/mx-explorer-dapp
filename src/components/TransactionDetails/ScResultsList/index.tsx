@@ -12,17 +12,11 @@ import {
   ScAddressIcon,
 } from 'sharedComponents';
 import { DecodeMethodType } from 'sharedComponents/DataDecode';
-import { ResultType, TransactionTokensType } from 'helpers/types';
+import { ResultType } from 'helpers/types';
 import { transactionsRoutes } from 'routes';
 import decodePart from './decodePart';
 
-const ScResultsList = ({
-  results,
-  transactionTokens,
-}: {
-  results: ResultType[];
-  transactionTokens?: TransactionTokensType;
-}) => {
+const ScResultsList = ({ results }: { results: ResultType[] }) => {
   const { hash } = useLocation();
   const ref = React.useRef<HTMLDivElement>(null);
   const formattedHash = hash
@@ -132,7 +126,6 @@ const ScResultsList = ({
                   <div className="col-sm-10">
                     <DataDecode
                       value={result.data ? decodeData(result.data) : 'N/A'}
-                      transactionTokens={transactionTokens}
                       {...(highlightTx ? { initialDecodeMethod, setDecodeMethod } : {})}
                     />
                   </div>

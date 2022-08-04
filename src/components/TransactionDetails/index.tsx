@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader, adapter, PageState } from 'sharedComponents';
 import TransactionInfo from './TransactionInfo';
-import { TransactionType, TransactionTokensType, OperationType } from 'helpers/types';
+import { TransactionType } from 'helpers/types';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 
 const TransactionDetails = () => {
@@ -19,9 +19,6 @@ const TransactionDetails = () => {
   const { getTransaction } = adapter();
 
   const [transaction, setTransaction] = React.useState<TransactionType | undefined>();
-  const [transactionTokens, setTransactionTokens] = React.useState<
-    TransactionTokensType | undefined
-  >();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchTransaction = () => {
@@ -29,36 +26,10 @@ const TransactionDetails = () => {
       getTransaction(transactionId).then(({ data, success }) => {
         if (ref.current !== null) {
           setTransaction(data);
-          if (data && data.operations && data.operations.length > 0) {
-            prepareTransactionTokens(data.operations);
-          }
           setDataReady(success);
         }
       });
     }
-  };
-
-  const prepareTransactionTokens = (operations: OperationType[]) => {
-    const uniqueTokenIdentifiers = Array.from(
-      new Set(
-        operations
-          .filter((operation) => operation.type === 'esdt')
-          .map((operation) => operation.identifier)
-      )
-    );
-
-    const uniqueNftIdentifiers = Array.from(
-      new Set(
-        operations
-          .filter((operation) => operation.type === 'nft')
-          .map((operation) => operation.identifier)
-      )
-    );
-
-    setTransactionTokens({
-      esdts: uniqueTokenIdentifiers,
-      nfts: uniqueNftIdentifiers,
-    });
   };
 
   const checkRefetch = () => {
@@ -99,7 +70,7 @@ const TransactionDetails = () => {
           <div className="container page-content">
             <div className="row">
               <div className="col-12">
-                <TransactionInfo transaction={transaction} transactionTokens={transactionTokens} />
+                <TransactionInfo transaction={transaction} />
               </div>
             </div>
           </div>

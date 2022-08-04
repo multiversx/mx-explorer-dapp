@@ -14,26 +14,7 @@ export enum DecodeMethodType {
   smart = 'smart',
 }
 
-const isHexValidCharacters = (str: string) => {
-  return str.toLowerCase().match(/[0-9a-f]/g);
-};
-const isHexValidLength = (str: string) => {
-  return str.length % 2 === 0;
-};
-
-const getHexValidationWarnings = (str: string) => {
-  const warnings = [];
-  if (str && !isHexValidCharacters(str)) {
-    warnings.push(`Invalid Hex characters on argument @${str}`);
-  }
-  if (str && !isHexValidLength(str)) {
-    warnings.push(`Odd number of Hex characters on argument @${str}`);
-  }
-
-  return warnings;
-};
-
-const decode = (
+export const decode = (
   part: string,
   decodeMethod: DecodeMethodType | string,
   transactionTokens?: TransactionTokensType
@@ -76,16 +57,94 @@ const decode = (
   }
 };
 
+export const decodeForDisplay = ({
+  input,
+  decodeMethod,
+}: {
+  input: string;
+  decodeMethod: DecodeMethodType;
+}) => {
+  const display: {
+    displayValue: string;
+    validationWarnings: string[];
+  } = {
+    displayValue: '',
+    validationWarnings: [],
+  };
+
+  if (input.includes('@') || input.includes('\n')) {
+    if (input.includes('@')) {
+      const parts = input.split('@');
+      const decodedParts = parts.map((part, index) => {
+        if (
+          parts.length >= 2 &&
+          ((index === 0 && part.length < 64) || (index === 1 && !parts[0]))
+        ) {
+          const encodedDisplayValue = /[^a-z0-9]/gi.test(part);
+          if (encodedDisplayValue) {
+            return decode(part, decodeMethod);
+          } else {
+            return part;
+          }
+        } else {
+          const hexValidationWarnings = getHexValidationWarnings(part);
+          if (hexValidationWarnings.length) {
+            display.validationWarnings = Array.from(
+              new Set([...display.validationWarnings, ...hexValidationWarnings])
+            );
+          }
+
+          return decode(part, decodeMethod);
+        }
+      });
+      display.displayValue = decodedParts.join('@');
+    }
+    if (input.includes('\n')) {
+      const parts = input.split('\n');
+      const decodedParts = parts.map((part, index) => {
+        const base64Buffer = Buffer.from(String(part), 'base64');
+        if (decodeMethod === DecodeMethodType.raw) {
+          return part;
+        } else {
+          return decode(base64Buffer.toString('hex'), decodeMethod);
+        }
+      });
+      display.displayValue = decodedParts.join('\n');
+    }
+  } else {
+    display.displayValue = decode(input, decodeMethod);
+  }
+
+  return display;
+};
+
+const isHexValidCharacters = (str: string) => {
+  return str.toLowerCase().match(/[0-9a-f]/g);
+};
+const isHexValidLength = (str: string) => {
+  return str.length % 2 === 0;
+};
+
+const getHexValidationWarnings = (str: string) => {
+  const warnings = [];
+  if (str && !isHexValidCharacters(str)) {
+    warnings.push(`Invalid Hex characters on argument @${str}`);
+  }
+  if (str && !isHexValidLength(str)) {
+    warnings.push(`Odd number of Hex characters on argument @${str}`);
+  }
+
+  return warnings;
+};
+
 const DataDecode = ({
   value,
   className,
-  transactionTokens,
   initialDecodeMethod,
   setDecodeMethod,
 }: {
   value: string;
   className?: string;
-  transactionTokens?: TransactionTokensType;
   initialDecodeMethod?: DecodeMethodType | string;
   setDecodeMethod?: React.Dispatch<React.SetStateAction<string>>;
 }) => {
@@ -98,45 +157,15 @@ const DataDecode = ({
   const [validationWarnings, setValidationWarnings] = React.useState<any>([]);
 
   React.useEffect(() => {
-    if (value.includes('@') || value.includes('\n')) {
-      if (value.includes('@')) {
-        const parts = value.split('@');
-        const decodedParts = parts.map((part, index) => {
-          if (
-            parts.length >= 2 &&
-            ((index === 0 && part.length < 64) || (index === 1 && !parts[0]))
-          ) {
-            return part;
-          } else {
-            const hexValidationWarnings = getHexValidationWarnings(part);
-            if (hexValidationWarnings.length) {
-              setValidationWarnings(
-                Array.from(new Set([...validationWarnings, ...hexValidationWarnings]))
-              );
-            }
+    const { displayValue, validationWarnings } = decodeForDisplay({
+      input: value,
+      decodeMethod: activeKey as DecodeMethodType,
+    });
+    setDisplayValue(displayValue);
+    setValidationWarnings(validationWarnings);
 
-            return decode(part, activeKey, transactionTokens);
-          }
-        });
-        setDisplayValue(decodedParts.join('@'));
-      }
-      if (value.includes('\n')) {
-        const parts = value.split('\n');
-        const decodedParts = parts.map((part, index) => {
-          const base64Buffer = Buffer.from(String(part), 'base64');
-          if (activeKey === DecodeMethodType.raw) {
-            return part;
-          } else {
-            return decode(base64Buffer.toString('hex'), activeKey, transactionTokens);
-          }
-        });
-        setDisplayValue(decodedParts.join('\n'));
-      }
-    } else {
-      setDisplayValue(decode(value, activeKey, transactionTokens));
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeKey, value, transactionTokens]);
+  }, [activeKey, value]);
 
   React.useEffect(() => {
     if (setDecodeMethod) {

@@ -30,14 +30,15 @@ const TransactionRow = ({
   showLockedAccounts,
 }: TransactionRowType) => {
   let receiver = transaction.receiver;
-  if (transaction.action && transaction.action.arguments?.receiver) {
+  if (transaction?.action?.arguments?.receiver) {
     receiver = transaction.action.arguments.receiver;
   }
   const directionOut = address === transaction.sender;
   const directionIn = address === receiver;
   const directionSelf = directionOut && directionIn;
   const isScResult = transaction?.type === TransferTypeEnum.SmartContractResult;
-  const receiverAssets = transaction.receiver === receiver ? transaction.receiverAssets : undefined;
+  const receiverAssets =
+    transaction?.action?.arguments?.receiverAssets ?? transaction?.receiverAssets;
 
   let direction = 'Out';
   switch (true) {
