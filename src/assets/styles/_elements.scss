@@ -267,14 +267,23 @@
     color: $muted;
   }
 }
+div.side-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    transform: scale(0.75);
+  }
+}
+
+.icon-elrond {
+  filter: $image-filter;
+}
 
 .account-icon {
   width: 1.313rem;
   height: 1.313rem;
   color: transparent;
-  &.icon-elrond {
-    filter: $image-filter;
-  }
 }
 
 .btn-link-base {

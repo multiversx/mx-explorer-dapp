@@ -36,7 +36,7 @@ const StandardHead = ({
     </th>
     {type === 'validator' && (
       <th className="text-right" data-testid="lockedStake">
-        Locked Stake
+        <Sort id="locked" field="Locked Stake" />
       </th>
     )}
   </tr>

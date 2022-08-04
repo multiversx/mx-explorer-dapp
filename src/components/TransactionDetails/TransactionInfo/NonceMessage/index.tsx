@@ -5,7 +5,7 @@ import { adapter } from 'sharedComponents';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import { TransactionType } from 'helpers/types';
 
-const StatusMessage = ({ transaction }: { transaction: TransactionType }) => {
+const NonceMessage = ({ transaction }: { transaction: TransactionType }) => {
   const ref = React.useRef(null);
   const { getAccount } = adapter();
   const { sender: senderAddress, nonce: transactionNonce, timestamp, status } = transaction;
@@ -57,4 +57,4 @@ const StatusMessage = ({ transaction }: { transaction: TransactionType }) => {
   );
 };
 
-export default StatusMessage;
+export default NonceMessage;

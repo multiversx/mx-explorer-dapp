@@ -16,9 +16,10 @@ const AccountName = ({
   if (assets && assets.name) {
     const name = assets.name.replaceAll(/[^\p{L}\p{N}\p{P}\p{Z}\n]/gu, '');
     const description = `${name} (${address})`;
+
     return (
       <Overlay title={description} tooltipClassName={'account-name'}>
-        <span
+        <div
           className={`text-truncate ${color ? `text-${color}` : ''}`}
           {...(dataTestId
             ? {
@@ -27,7 +28,7 @@ const AccountName = ({
             : {})}
         >
           {name}
-        </span>
+        </div>
       </Overlay>
     );
   }

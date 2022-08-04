@@ -192,6 +192,8 @@ const AccountDetailsCard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountDetails.txCount, id, address]);
 
+  const dynamicIconColor = assets?.iconSvg && assets.iconSvg.includes('elrond.svg');
+
   return address !== '' ? (
     <div ref={ref} className="row account-details-card mb-spacer">
       {isContract(address) ? (
@@ -235,7 +237,22 @@ const AccountDetailsCard = () => {
                     </div>
                   </SmallDetailItem>
 
-                  {assets?.name && <SmallDetailItem title="Name">{assets.name}</SmallDetailItem>}
+                  {assets?.name && (
+                    <SmallDetailItem title="Name">
+                      <div className="d-flex align-items-center">
+                        {assets?.iconSvg && (
+                          <div className="side-icon mr-1">
+                            <img
+                              src={assets?.iconSvg}
+                              alt=" "
+                              className={dynamicIconColor ? 'icon-elrond' : ''}
+                            />
+                          </div>
+                        )}
+                        <div>{assets.name}</div>
+                      </div>
+                    </SmallDetailItem>
+                  )}
 
                   <SmallDetailItem title="Balance">
                     <div className="d-flex align-items-center">
@@ -347,10 +364,18 @@ const AccountDetailsCard = () => {
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="d-flex align-items-center w-100">
                     <span className="mr-2 h6 mb-0" data-testid="title">
-                      {assets?.name ?? ''} Address Details
-                      {assets?.description && (
-                        <span className="text-secondary ml-2">({assets.description})</span>
-                      )}
+                      <div className="d-flex align-items-center">
+                        {assets?.iconSvg && (
+                          <div className="side-icon mr-1">
+                            <img
+                              src={assets?.iconSvg}
+                              alt=" "
+                              className={dynamicIconColor ? 'icon-elrond' : ''}
+                            />
+                          </div>
+                        )}
+                        <div>{assets?.name ?? 'Address Details'}</div>
+                      </div>
                     </span>
                     {scamInfo && (
                       <span className="text-warning d-flex align-items-center ml-2">
