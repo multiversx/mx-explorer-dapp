@@ -1,5 +1,4 @@
 import * as React from 'react';
-import BigNumber from 'bignumber.js';
 import { useGlobalState } from 'context';
 import { adapter } from 'sharedComponents';
 import { ReactComponent as Gear } from 'assets/images/network-health/gear.svg';
@@ -8,7 +7,7 @@ import { ReactComponent as CenterGear } from 'assets/images/network-health/cente
 import { ReactComponent as LayoutGear } from 'assets/images/network-health/layout-gear.svg';
 import ProgressRing from './ProgressRing';
 import { refreshRate } from 'appConfig';
-import { processStats } from 'helpers';
+import { processStats, validDisplayValue } from 'helpers';
 import { initialStats } from 'helpers/processStats';
 
 export interface StateType {
@@ -121,7 +120,7 @@ const NetworkHealth = () => {
               <Gear className="w-100 h-100" />
             </div>
             <div className="gear-content">
-              <span data-testid="accounts">{new BigNumber(accounts).toFormat()}</span>
+              <span data-testid="accounts">{validDisplayValue(accounts)}</span>
               <small>Accounts</small>
             </div>
           </div>
@@ -131,7 +130,7 @@ const NetworkHealth = () => {
               <Gear className="w-100 h-100" />
             </div>
             <div className="gear-content">
-              <span data-testid="transactions">{new BigNumber(transactions).toFormat()}</span>
+              <span data-testid="transactions">{validDisplayValue(transactions)}</span>
               <small>Transactions</small>
             </div>
           </div>
