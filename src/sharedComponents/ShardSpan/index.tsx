@@ -1,5 +1,5 @@
 import React from 'react';
-import { metaChainShardId } from 'appConfig';
+import { metaChainShardId, allShardsShardId } from 'appConfig';
 
 interface ShardSpanType {
   shard: number | string;
@@ -12,8 +12,15 @@ export const shardSpanText = (shard: number | string) => {
 
   const isMetachain =
     metaChainShardId.toString() === String(shard).toString() || String(shard) === 'metachain';
+  const isAllShards = allShardsShardId.toString() === String(shard).toString();
 
-  return isMetachain ? 'Metachain' : `Shard ${shard}`;
+  if (isMetachain) {
+    return 'Metachain';
+  }
+  if (isAllShards) {
+    return 'All Shards';
+  }
+  return `Shard ${shard}`;
 };
 
 const ShardSpan = ({ shard }: ShardSpanType) => {

@@ -1,4 +1,5 @@
 export const metaChainShardId = 4294967295;
+export const allShardsShardId = 4294967280;
 export const gasLimit = 50000;
 export const gasPrice = 1000000000;
 export const gasPerDataByte = 1500;
