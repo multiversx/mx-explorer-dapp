@@ -77,8 +77,6 @@ export interface TransactionsParamsType {
   address?: string;
   senderShard?: number;
   receiverShard?: number;
-  withScResults?: boolean;
-  withOperations?: boolean;
 }
 
 export function getTransactionsParams({
@@ -86,8 +84,6 @@ export function getTransactionsParams({
   size = 1,
   senderShard,
   receiverShard,
-  withScResults,
-  withOperations,
 }: TransactionsParamsType) {
   const params: ProviderPropsType['params'] = {
     from: (size - 1) * pageSize,
@@ -95,8 +91,7 @@ export function getTransactionsParams({
     ...getAccountParams(address),
     ...(senderShard !== undefined ? { senderShard } : {}),
     ...(receiverShard !== undefined ? { receiverShard } : {}),
-    ...(withScResults !== undefined ? { withScResults } : {}),
-    ...(withOperations !== undefined ? { withOperations } : {}),
+
     ...{
       fields: [
         'txHash',
@@ -110,8 +105,6 @@ export function getTransactionsParams({
         'tokenValue',
         'tokenIdentifier',
         'action',
-        'results',
-        'operations',
         'receipt',
         'senderAssets',
         'receiverAssets',

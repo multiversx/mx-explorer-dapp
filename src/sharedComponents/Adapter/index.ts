@@ -195,14 +195,7 @@ export default function useAdapter() {
 
     /* Transactions */
 
-    getTransactions: ({
-      size,
-      address,
-      senderShard,
-      receiverShard,
-      withScResults,
-      withOperations,
-    }: TransactionsParamsType) =>
+    getTransactions: ({ size, address, senderShard, receiverShard }: TransactionsParamsType) =>
       provider({
         url: `/transactions`,
         params: getTransactionsParams({
@@ -210,8 +203,6 @@ export default function useAdapter() {
           address,
           senderShard,
           receiverShard,
-          withScResults,
-          withOperations,
         }),
       }),
 

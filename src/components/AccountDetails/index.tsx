@@ -61,8 +61,6 @@ const AccountDetails = () => {
       getTransactions({
         size,
         address,
-        withScResults: true,
-        withOperations: true,
       }).then((transactionsData) => handleTransactions(transactionsData));
     }
   };

@@ -25,8 +25,6 @@ const AccountDetails = () => {
     getTransactions({
       size,
       address,
-      withScResults: true,
-      withOperations: true,
     }).then((transactionsData) => {
       const { data, success } = transactionsData;
       if (success) {
