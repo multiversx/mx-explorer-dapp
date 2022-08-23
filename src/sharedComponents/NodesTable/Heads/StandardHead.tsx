@@ -7,9 +7,11 @@ import { NodeType } from 'helpers/types';
 const StandardHead = ({
   hideFilters,
   type,
+  status,
 }: {
   hideFilters?: boolean;
   type?: NodeType['type'];
+  status?: NodeType['status'];
 }) => (
   <tr>
     <th data-testid="node">Public key</th>
@@ -34,6 +36,11 @@ const StandardHead = ({
     <th className="text-right" data-testid="tempRating">
       <Sort id="tempRating" field="Rating" />
     </th>
+    {status === 'queued' && (
+      <th className="text-right" data-testid="position">
+        <Sort id="position" field="Position" />
+      </th>
+    )}
     {type === 'validator' && (
       <th className="text-right" data-testid="lockedStake">
         <Sort id="locked" field="Locked Stake" />

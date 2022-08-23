@@ -17,7 +17,7 @@ const Nodes = () => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const urlParams = new URLSearchParams(search);
-  const { type } = Object.fromEntries(urlParams);
+  const { type, status } = Object.fromEntries(urlParams);
 
   const fetchNodes = () => {
     const queryObject = getQueryObject();
@@ -66,8 +66,12 @@ const Nodes = () => {
       {dataReady === true && (
         <>
           <div className="card-body p-0">
-            <NodesTable type={type as NodeType['type']}>
-              <NodesTable.Body nodes={nodes} type={type as NodeType['type']} />
+            <NodesTable type={type as NodeType['type']} status={status as NodeType['status']}>
+              <NodesTable.Body
+                nodes={nodes}
+                type={type as NodeType['type']}
+                status={status as NodeType['status']}
+              />
             </NodesTable>
           </div>
           <div className="card-footer d-flex justify-content-end">
