@@ -7,10 +7,16 @@ import { CopyButton, Trim, DataDecode } from 'sharedComponents';
 import { DecodeMethodType } from 'sharedComponents/DataDecode';
 import { EventType } from 'helpers/types';
 
-const EventTopics = ({ topics }: { topics: EventType['topics'] }) => {
+const EventTopics = ({
+  topics,
+  identifier,
+}: {
+  topics: EventType['topics'];
+  identifier?: string;
+}) => {
   const mergedTopics = topics.filter((topic) => topic).join('\n');
 
-  return <DataDecode value={mergedTopics} />;
+  return <DataDecode value={mergedTopics} identifier={identifier} />;
 };
 
 const EventsList = ({ events, id }: { events: EventType[]; id?: string }) => {
@@ -72,7 +78,7 @@ const EventsList = ({ events, id }: { events: EventType[]; id?: string }) => {
                 <div className="row mb-3 d-flex flex-column flex-sm-row">
                   <div className="col-sm-2 col-left">Topics</div>
                   <div className="col-sm-10 d-flex flex-column">
-                    <EventTopics topics={event.topics} />
+                    <EventTopics topics={event.topics} identifier={event.identifier} />
                   </div>
                 </div>
               )}
