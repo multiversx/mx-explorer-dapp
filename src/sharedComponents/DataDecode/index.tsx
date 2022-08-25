@@ -57,12 +57,36 @@ export const decode = (
   }
 };
 
+const treatSmartDecodingCases = ({
+  parts,
+  decodedParts,
+  identifier,
+}: {
+  parts: string[];
+  decodedParts: string[];
+  identifier?: string;
+}) => {
+  const updatedParts = [...decodedParts];
+
+  if (parts[0] === 'ESDTNFTTransfer' && parts[2]) {
+    updatedParts[2] = decode(parts[2], 'decimal');
+  }
+  if (identifier === 'ESDTNFTTransfer' && parts[1]) {
+    const base64Buffer = Buffer.from(String(parts[1]), 'base64');
+    updatedParts[1] = decode(base64Buffer.toString('hex'), 'decimal');
+  }
+
+  return updatedParts;
+};
+
 export const decodeForDisplay = ({
   input,
   decodeMethod,
+  identifier,
 }: {
   input: string;
   decodeMethod: DecodeMethodType;
+  identifier?: string;
 }) => {
   const display: {
     displayValue: string;
@@ -72,36 +96,44 @@ export const decodeForDisplay = ({
     validationWarnings: [],
   };
 
+  const getDecodedParts = (parts: string[]) => {
+    const initialDecodedParts = parts.map((part, index) => {
+      if (parts.length >= 2 && ((index === 0 && part.length < 64) || (index === 1 && !parts[0]))) {
+        const encodedDisplayValue = /[^a-z0-9]/gi.test(part);
+        if (encodedDisplayValue) {
+          return decode(part, decodeMethod);
+        } else {
+          return part;
+        }
+      } else {
+        const hexValidationWarnings = getHexValidationWarnings(part);
+        if (hexValidationWarnings.length) {
+          display.validationWarnings = Array.from(
+            new Set([...display.validationWarnings, ...hexValidationWarnings])
+          );
+        }
+
+        return decode(part, decodeMethod);
+      }
+    });
+
+    const decodedParts =
+      decodeMethod === 'smart'
+        ? treatSmartDecodingCases({ parts, decodedParts: initialDecodedParts, identifier })
+        : initialDecodedParts;
+
+    return decodedParts;
+  };
+
   if (input.includes('@') || input.includes('\n')) {
     if (input.includes('@')) {
       const parts = input.split('@');
-      const decodedParts = parts.map((part, index) => {
-        if (
-          parts.length >= 2 &&
-          ((index === 0 && part.length < 64) || (index === 1 && !parts[0]))
-        ) {
-          const encodedDisplayValue = /[^a-z0-9]/gi.test(part);
-          if (encodedDisplayValue) {
-            return decode(part, decodeMethod);
-          } else {
-            return part;
-          }
-        } else {
-          const hexValidationWarnings = getHexValidationWarnings(part);
-          if (hexValidationWarnings.length) {
-            display.validationWarnings = Array.from(
-              new Set([...display.validationWarnings, ...hexValidationWarnings])
-            );
-          }
-
-          return decode(part, decodeMethod);
-        }
-      });
+      const decodedParts = getDecodedParts(parts);
       display.displayValue = decodedParts.join('@');
     }
     if (input.includes('\n')) {
       const parts = input.split('\n');
-      const decodedParts = parts.map((part, index) => {
+      const initialDecodedParts = parts.map((part, index) => {
         const base64Buffer = Buffer.from(String(part), 'base64');
         if (decodeMethod === DecodeMethodType.raw) {
           return part;
@@ -109,6 +141,12 @@ export const decodeForDisplay = ({
           return decode(base64Buffer.toString('hex'), decodeMethod);
         }
       });
+
+      const decodedParts =
+        decodeMethod === 'smart'
+          ? treatSmartDecodingCases({ parts, decodedParts: initialDecodedParts, identifier })
+          : initialDecodedParts;
+
       display.displayValue = decodedParts.join('\n');
     }
   } else {
@@ -142,11 +180,13 @@ const DataDecode = ({
   className,
   initialDecodeMethod,
   setDecodeMethod,
+  identifier,
 }: {
   value: string;
   className?: string;
   initialDecodeMethod?: DecodeMethodType | string;
   setDecodeMethod?: React.Dispatch<React.SetStateAction<string>>;
+  identifier?: string;
 }) => {
   const [activeKey, setActiveKey] = React.useState(
     initialDecodeMethod && Object.values<string>(DecodeMethodType).includes(initialDecodeMethod)
@@ -160,6 +200,7 @@ const DataDecode = ({
     const { displayValue, validationWarnings } = decodeForDisplay({
       input: value,
       decodeMethod: activeKey as DecodeMethodType,
+      identifier,
     });
     setDisplayValue(displayValue);
     setValidationWarnings(validationWarnings);

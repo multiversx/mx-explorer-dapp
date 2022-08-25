@@ -11,11 +11,13 @@ const NodesTable = ({
   statistics,
   queue,
   type,
+  status,
 }: {
   nodes: NodeType[];
   statistics?: boolean;
   queue?: boolean;
   type?: NodeType['type'];
+  status?: NodeType['status'];
 }) => {
   const colSpan = statistics ? 8 : queue ? 6 : 7;
 
@@ -23,7 +25,9 @@ const NodesTable = ({
     <tbody>
       {nodes.map((nodeData, index) => (
         <tr key={nodeData.bls}>
-          {!statistics && !queue && <StandardRow nodeData={nodeData} index={index} type={type} />}
+          {!statistics && !queue && (
+            <StandardRow nodeData={nodeData} index={index} type={type} status={status} />
+          )}
           {statistics && <StatisticsRow nodeData={nodeData} />}
           {queue && <QueueRow nodeData={nodeData} />}
         </tr>

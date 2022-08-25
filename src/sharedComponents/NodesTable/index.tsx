@@ -11,19 +11,22 @@ interface NodesTableType {
   statistics?: boolean;
   queue?: boolean;
   type?: NodeType['type'];
+  status?: NodeType['status'];
 }
 
 export default class NodesTable extends React.Component<NodesTableType> {
   static Body = TableBody;
 
   render() {
-    const { statistics, queue, children, hideFilters, type } = this.props;
+    const { statistics, queue, children, hideFilters, type, status } = this.props;
 
     return (
       <div className="nodes-table table-wrapper">
         <table className="table">
           <thead>
-            {!statistics && !queue && <StandardHead hideFilters={hideFilters} type={type} />}
+            {!statistics && !queue && (
+              <StandardHead hideFilters={hideFilters} type={type} status={status} />
+            )}
             {statistics && <StatisticsHead />}
             {queue && <QueueHead hideFilters={hideFilters} />}
           </thead>

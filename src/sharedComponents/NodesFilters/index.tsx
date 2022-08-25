@@ -33,6 +33,7 @@ const NodesFilters = ({ baseRoute, onlySearch }: { baseRoute: string; onlySearch
     const nextUrlParams = new URLSearchParams({
       ...rest,
       ...(statusValue ? { status: statusValue } : {}),
+      ...(statusValue && statusValue === 'queued' ? { sort: 'position' } : {}),
     }).toString();
     return `${baseRoute}?${nextUrlParams}`;
   };
