@@ -10,10 +10,12 @@ const StandardRow = ({
   nodeData,
   index,
   type,
+  status,
 }: {
   nodeData: NodeType;
   index: number;
   type?: NodeType['type'];
+  status?: NodeType['status'];
 }) => {
   const ValidatorLockedStakeTooltip = () => {
     if ((type === 'validator' && nodeData.locked && nodeData.stake) || nodeData.topUp) {
@@ -89,6 +91,16 @@ const StandardRow = ({
           <span className="text-secondary">N/A</span>
         )}
       </td>
+
+      {status === 'queued' && (
+        <td className="text-right">
+          {nodeData.position ? (
+            <div className="truncate-item-lg">{nodeData.position}</div>
+          ) : (
+            <span className="text-secondary">N/A</span>
+          )}
+        </td>
+      )}
 
       {type === 'validator' && nodeData.locked && (
         <td className="text-right">
