@@ -29,6 +29,7 @@ export interface AccountType {
   scrCount: number;
   claimableRewards: string;
   code?: string;
+  codeHash?: string;
   shard?: number;
   ownerAddress?: string;
   developerReward?: string;

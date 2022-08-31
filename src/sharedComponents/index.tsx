@@ -50,6 +50,7 @@ import AccountName from './AccountName';
 import Sort from './Sort';
 import IdentityBlock from './IdentityBlock';
 import BlockGasUsed from './BlockGasUsed';
+import SmallDetailItem from './SmallDetailItem';
 
 export {
   Denominate,
@@ -105,4 +106,5 @@ export {
   Sort,
   IdentityBlock,
   BlockGasUsed,
+  SmallDetailItem,
 };

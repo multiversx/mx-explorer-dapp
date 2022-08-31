@@ -49,4 +49,8 @@
     border-color: $primary-light !important;
     // font-size: 0.8rem;
   }
+
+  &.pager-inline {
+    line-height: 1;
+  }
 }
