@@ -41,6 +41,7 @@ import getOperationsMessages from './getOperationsMessages';
 import getReceiptMessages from './getReceiptMessages';
 import amountWithoutRounding from './amountWithoutRounding';
 import validDisplayValue from './validDisplayValue';
+import downloadFile from './downloadFile';
 
 export {
   truncate,
@@ -86,4 +87,5 @@ export {
   getReceiptMessages,
   amountWithoutRounding,
   validDisplayValue,
+  downloadFile,
 };

@@ -3,6 +3,27 @@ import { useGlobalState } from 'context';
 import AccountTabs from './AccountLayout/AccountTabs';
 import { Redirect } from 'react-router-dom';
 import { urlBuilder, useNetworkRoute } from 'helpers';
+import { downloadFile } from 'helpers';
+
+const DownloadContractCode = ({ code, fileName }: { code: string; fileName?: string }) => {
+  const download = (event: any) => {
+    const name = fileName ?? 'contract';
+
+    event.preventDefault();
+    if (code && name) {
+      const codeBuffer = Buffer.from(code, 'hex');
+      downloadFile({ data: [codeBuffer], name, fileType: 'wasm' });
+    }
+  };
+
+  return (
+    <div className="mt-3">
+      <button type="button" onClick={download} className="btn btn-primary-light">
+        Download
+      </button>
+    </div>
+  );
+};
 
 const AccountContractCode = () => {
   const { accountDetails } = useGlobalState();
@@ -34,6 +55,7 @@ const AccountContractCode = () => {
           rows={10}
           defaultValue={accountDetails.code}
         />
+        <DownloadContractCode code={accountDetails.code} fileName={accountDetails.address} />
       </div>
     </div>
   );
