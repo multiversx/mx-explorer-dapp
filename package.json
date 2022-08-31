@@ -13,6 +13,7 @@
     "@types/axios": "0.14.0",
     "@types/bech32": "1.1.2",
     "@types/chart.js": "2.9.31",
+    "@types/file-saver": "2.0.1",
     "@types/jest": "24.0.19",
     "@types/moment": "2.13.0",
     "@types/node": "14.0.13",
@@ -31,6 +32,7 @@
     "bignumber.js": "9.0.0",
     "bootstrap": "4.6.1",
     "chart.js": "2.9.4",
+    "file-saver": "2.0.5",
     "moment": "2.26.0",
     "node-sass": "6.0.1",
     "react": "16.13.1",
@@ -46,7 +48,7 @@
     "yup": "0.29.1"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "PORT=3001 react-app-rewired start",
     "start-testnet": "npm run copy-testnet-config & REACT_APP_THEME=testnet react-app-rewired start",
     "start-internal": "npm run copy-internal-config & REACT_APP_THEME=testnet react-app-rewired start",
     "start-devnet": "npm run copy-devnet-config & REACT_APP_THEME=testnet react-app-rewired start",
