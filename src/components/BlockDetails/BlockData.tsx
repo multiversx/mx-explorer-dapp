@@ -15,6 +15,7 @@ import {
   DetailItem,
   CopyButton,
   IdentityBlock,
+  BlockGasUsed,
 } from 'sharedComponents';
 import { metaChainShardId } from 'appConfig';
 
@@ -43,10 +44,6 @@ const BlockData = (props: BlockDataType) => {
     e.preventDefault();
     setExpanded(true);
   };
-
-  const gasUsedBn = new BigNumber(block.gasConsumed)
-    .minus(block.gasRefunded)
-    .minus(block.gasPenalized);
 
   // Fixes Trim re-render bug
   React.useEffect(() => {
@@ -134,15 +131,9 @@ const BlockData = (props: BlockDataType) => {
             </OverlayTrigger>
           </DetailItem>
           <DetailItem title="Gas Used">
-            {gasUsedBn.isGreaterThan(0) && new BigNumber(block.maxGasLimit).isGreaterThan(0) ? (
-              <>
-                {gasUsedBn.toFormat()}{' '}
-                <span className="text-secondary">
-                  ({gasUsedBn.dividedBy(block.maxGasLimit).times(100).toFormat(2)}
-                  %)
-                </span>
-              </>
-            ) : null}
+            <div className="d-flex flex-column align-items-start">
+              <BlockGasUsed block={block} />
+            </div>
           </DetailItem>
           <DetailItem title="Gas Provided">
             {new BigNumber(block.gasConsumed).toFormat()}{' '}
