@@ -49,6 +49,7 @@ import Overlay from './Overlay';
 import AccountName from './AccountName';
 import Sort from './Sort';
 import IdentityBlock from './IdentityBlock';
+import BlockGasUsed from './BlockGasUsed';
 
 export {
   Denominate,
@@ -103,4 +104,5 @@ export {
   AccountName,
   Sort,
   IdentityBlock,
+  BlockGasUsed,
 };
