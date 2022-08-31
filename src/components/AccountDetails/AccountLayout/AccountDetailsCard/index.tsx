@@ -14,6 +14,7 @@ import {
   Trim,
   TimeAgo,
   PropertyPill,
+  SmallDetailItem,
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import { isContract, urlBuilder, dateFormatted } from 'helpers';
@@ -52,19 +53,6 @@ export interface LockedAmountType {
   delegation?: DelegationType[];
   usd?: number;
 }
-
-const SmallDetailItem = ({
-  children,
-  title,
-}: {
-  children: React.ReactNode;
-  title: string | React.ReactNode;
-}) => (
-  <div className="row py-3 border-bottom detail-item">
-    <div className="col-lg-3 text-secondary pl-lg-spacer pr-lg-0">{title}</div>
-    <div className="col-lg-9 pr-lg-spacer pl-lg-0">{children}</div>
-  </div>
-);
 
 const AccountDetailsCard = () => {
   const ref = React.useRef(null);

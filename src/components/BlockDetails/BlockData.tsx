@@ -67,14 +67,14 @@ const BlockData = (props: BlockDataType) => {
               <div>{block.nonce}</div>
               <ul className="list-inline mb-0">
                 <li className="list-inline-item ml-2 mr-2">
-                  <div className="pager">
+                  <div className="pager pager-inline">
                     <NetworkLink to={`/blocks/${block.prevHash}`} data-testid="previousPageButton">
                       <FontAwesomeIcon icon={faChevronLeft} /> Prev
                     </NetworkLink>
                   </div>
                 </li>
                 <li className="ml-2 list-inline-item">
-                  <div className="pager">
+                  <div className="pager pager-inline">
                     {nextHash !== '' ? (
                       <NetworkLink data-testid="nextPageButton" to={`/blocks/${nextHash}`}>
                         Next <FontAwesomeIcon icon={faChevronRight} />
