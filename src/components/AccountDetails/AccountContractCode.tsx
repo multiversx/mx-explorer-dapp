@@ -17,9 +17,9 @@ const DownloadContractCode = ({ code, fileName }: { code: string; fileName?: str
   };
 
   return (
-    <div className="mt-3">
+    <div className="mt-4">
       <button type="button" onClick={download} className="btn btn-primary-light">
-        Download
+        Download WASM File
       </button>
     </div>
   );
