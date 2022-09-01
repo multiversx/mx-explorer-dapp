@@ -2,21 +2,8 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import BigNumber from 'bignumber.js';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
-import { Trim, NetworkLink, SocialIcons, PropertyPill } from 'sharedComponents';
+import { Trim, NetworkLink, SocialIcons, PropertyPill, SmallDetailItem } from 'sharedComponents';
 import { useGlobalState } from 'context';
-
-const SmallDetailItem = ({
-  children,
-  title,
-}: {
-  children: React.ReactNode;
-  title: string | React.ReactNode;
-}) => (
-  <div className="row py-3 border-bottom detail-item">
-    <dt className="col-lg-3 text-secondary pl-lg-spacer pr-lg-0">{title}</dt>
-    <dd className="col-lg-9 pr-lg-spacer pl-lg-0">{children}</dd>
-  </div>
-);
 
 const TokenDetailsCard = () => {
   const ref = React.useRef(null);

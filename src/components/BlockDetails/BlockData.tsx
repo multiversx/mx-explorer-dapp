@@ -15,6 +15,7 @@ import {
   DetailItem,
   CopyButton,
   IdentityBlock,
+  BlockGasUsed,
 } from 'sharedComponents';
 import { metaChainShardId } from 'appConfig';
 
@@ -44,10 +45,6 @@ const BlockData = (props: BlockDataType) => {
     setExpanded(true);
   };
 
-  const gasUsedBn = new BigNumber(block.gasConsumed)
-    .minus(block.gasRefunded)
-    .minus(block.gasPenalized);
-
   // Fixes Trim re-render bug
   React.useEffect(() => {
     setTimeout(() => {
@@ -70,14 +67,14 @@ const BlockData = (props: BlockDataType) => {
               <div>{block.nonce}</div>
               <ul className="list-inline mb-0">
                 <li className="list-inline-item ml-2 mr-2">
-                  <div className="pager">
+                  <div className="pager pager-inline">
                     <NetworkLink to={`/blocks/${block.prevHash}`} data-testid="previousPageButton">
                       <FontAwesomeIcon icon={faChevronLeft} /> Prev
                     </NetworkLink>
                   </div>
                 </li>
                 <li className="ml-2 list-inline-item">
-                  <div className="pager">
+                  <div className="pager pager-inline">
                     {nextHash !== '' ? (
                       <NetworkLink data-testid="nextPageButton" to={`/blocks/${nextHash}`}>
                         Next <FontAwesomeIcon icon={faChevronRight} />
@@ -134,15 +131,9 @@ const BlockData = (props: BlockDataType) => {
             </OverlayTrigger>
           </DetailItem>
           <DetailItem title="Gas Used">
-            {gasUsedBn.isGreaterThan(0) && new BigNumber(block.maxGasLimit).isGreaterThan(0) ? (
-              <>
-                {gasUsedBn.toFormat()}{' '}
-                <span className="text-secondary">
-                  ({gasUsedBn.dividedBy(block.maxGasLimit).times(100).toFormat(2)}
-                  %)
-                </span>
-              </>
-            ) : null}
+            <div className="d-flex flex-column align-items-start">
+              <BlockGasUsed block={block} />
+            </div>
           </DetailItem>
           <DetailItem title="Gas Provided">
             {new BigNumber(block.gasConsumed).toFormat()}{' '}
