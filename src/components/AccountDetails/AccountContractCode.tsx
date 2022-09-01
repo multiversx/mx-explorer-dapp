@@ -6,10 +6,10 @@ import { urlBuilder, useNetworkRoute } from 'helpers';
 import { downloadFile } from 'helpers';
 
 const DownloadContractCode = ({ code, fileName }: { code: string; fileName?: string }) => {
-  const download = (event: any) => {
+  const download = (e: React.MouseEvent) => {
     const name = fileName ?? 'contract';
 
-    event.preventDefault();
+    e.preventDefault();
     if (code && name) {
       const codeBuffer = Buffer.from(code, 'hex');
       downloadFile({ data: codeBuffer, name, fileType: 'wasm' });
