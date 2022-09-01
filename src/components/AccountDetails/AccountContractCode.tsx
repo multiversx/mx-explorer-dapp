@@ -12,7 +12,7 @@ const DownloadContractCode = ({ code, fileName }: { code: string; fileName?: str
     event.preventDefault();
     if (code && name) {
       const codeBuffer = Buffer.from(code, 'hex');
-      downloadFile({ data: [codeBuffer], name, fileType: 'wasm' });
+      downloadFile({ data: codeBuffer, name, fileType: 'wasm' });
     }
   };
 
