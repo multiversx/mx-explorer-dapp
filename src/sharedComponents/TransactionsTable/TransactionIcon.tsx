@@ -6,12 +6,7 @@ import { faHourglass } from '@fortawesome/pro-regular-svg-icons/faHourglass';
 import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons/faSpinnerThird';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import {
-  capitalizeFirstLetter,
-  getScResultsMessages,
-  getOperationsMessages,
-  getReceiptMessages,
-} from 'helpers';
+import { capitalizeFirstLetter, getTransactionMessages } from 'helpers';
 import { UITransactionType, TransactionType } from 'helpers/types';
 import { adapter } from 'sharedComponents';
 interface TransactionIconType {
@@ -36,13 +31,7 @@ const TransactionIcon = ({ transaction }: TransactionIconType) => {
     if (transaction.txHash && (failed || invalid)) {
       if (transaction.txHash !== transactionDetails?.txHash) {
         getTransaction(transaction.txHash).then(({ data, success }) => {
-          const transactionMessages = Array.from(
-            new Set([
-              ...getScResultsMessages(data),
-              ...getOperationsMessages(data),
-              ...getReceiptMessages(data),
-            ])
-          );
+          const transactionMessages = getTransactionMessages(transaction);
 
           setDataReady(success);
           setTransactionDetails(data);

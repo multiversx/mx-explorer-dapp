@@ -15,9 +15,7 @@ import {
   useNetworkRoute,
   isContract,
   getTransactionMethod,
-  getOperationsMessages,
-  getScResultsMessages,
-  getReceiptMessages,
+  getTransactionMessages,
 } from 'helpers';
 import {
   TransactionType,
@@ -141,13 +139,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
     return ` ${parseFloat(amount) > 0 ? '≈' : '='} $${formattedValue}`;
   };
 
-  const transactionMessages = Array.from(
-    new Set([
-      ...getScResultsMessages(transaction),
-      ...getOperationsMessages(transaction),
-      ...getReceiptMessages(transaction),
-    ])
-  );
+  const transactionMessages = getTransactionMessages(transaction);
 
   const transactionFee =
     transaction.fee === undefined && transaction.gasUsed === undefined
