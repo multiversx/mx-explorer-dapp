@@ -36,11 +36,10 @@ import useNotifications from './useNotifications';
 import useCheckVersion from './useCheckVersion';
 import getTransactionMethod from './getTransactionMethod';
 import capitalizeFirstLetter from './capitalizeFirstLetter';
-import getScResultsMessages from './getScResultsMessages';
-import getOperationsMessages from './getOperationsMessages';
-import getReceiptMessages from './getReceiptMessages';
 import amountWithoutRounding from './amountWithoutRounding';
 import validDisplayValue from './validDisplayValue';
+import downloadFile from './downloadFile';
+import getTransactionMessages from './getTransactionMessages';
 
 export {
   truncate,
@@ -81,9 +80,8 @@ export {
   useCheckVersion,
   getTransactionMethod,
   capitalizeFirstLetter,
-  getScResultsMessages,
-  getOperationsMessages,
-  getReceiptMessages,
   amountWithoutRounding,
   validDisplayValue,
+  downloadFile,
+  getTransactionMessages,
 };
