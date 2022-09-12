@@ -111,6 +111,9 @@ const NftDetails = () => {
                         nftDetails.type === 'MetaESDT' && (
                           <DetailItem title="Ticker">{nftDetails.ticker}</DetailItem>
                         )}
+                      {nftDetails.nonce && (
+                        <DetailItem title="Nonce">{nftDetails.nonce}</DetailItem>
+                      )}
                       <DetailItem title="Type">
                         <NftBadge type={nftDetails.type} />
                       </DetailItem>
