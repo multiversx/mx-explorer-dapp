@@ -60,15 +60,5 @@
         border-bottom: 0;
       }
     }
-
-    .egld-icon svg {
-      fill: $dark;
-      width: 1rem;
-      height: 1rem;
-      @include media-breakpoint-up(md) {
-        width: 2.15rem;
-        height: 2.15rem;
-      }
-    }
   }
 }

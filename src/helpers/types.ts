@@ -422,6 +422,33 @@ export interface UITransactionType extends TransferType {
   tokenIdentifier?: string;
 }
 
+export interface Undelegation {
+  amount: string;
+  seconds: number;
+}
+
+export interface DelegationType {
+  address: string;
+  contract: string;
+  userUnBondable?: string;
+  userActiveStake: string;
+  claimableRewards?: string;
+  userUndelegatedList: Undelegation[];
+}
+export interface DelegationLegacyType {
+  userActiveStake?: string;
+  userDeferredPaymentStake?: string;
+  userUnstakedStake?: string;
+  userWaitingStake?: string;
+  userWithdrawOnlyStake?: string;
+  claimableRewards?: string;
+}
+
+export interface StakeType {
+  totalStaked?: string;
+  unstakedTokens?: { amount: string; expires?: number }[];
+}
+
 export interface IdentityType {
   name: string;
   score: number;
@@ -440,8 +467,8 @@ export interface IdentityType {
   topUp?: string;
   distribution?: any;
   apr?: number;
+  url?: string;
 }
-
 export interface ProviderType {
   provider: string;
   apr: string;
