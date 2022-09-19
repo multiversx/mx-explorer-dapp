@@ -31,6 +31,7 @@ import AccountTokens from 'components/AccountDetails/AccountTokens';
 import AccountNfts from 'components/AccountDetails/AccountNfts';
 import AccountScResults from 'components/AccountDetails/AccountScResults';
 import AccountContracts from 'components/AccountDetails/AccountContracts';
+import AccountStaking from 'components/AccountDetails/AccountStaking';
 import ProviderTransactions from 'components/ProviderDetails/ProviderTransactions';
 import NodesStatistics from 'components/NodesStatistics';
 import NodesQueue from 'components/NodesQueue';
@@ -68,6 +69,7 @@ export const accountsRoutes = {
   accountNfts: `/accounts/:hash/nfts`,
   accountScResults: `/accounts/:hash/sc-results`,
   accountContracts: `/accounts/:hash/contracts`,
+  accountStaking: `/accounts/:hash/staking`,
   oldAccountDetails: `/address/:hash`,
 };
 
@@ -214,6 +216,11 @@ const routes: RouteType[] = [
     path: accountsRoutes.accountContracts,
     title: 'Account Smart Contracts',
     component: AccountContracts,
+  },
+  {
+    path: accountsRoutes.accountStaking,
+    title: 'Account Smart Contract Results',
+    component: AccountStaking,
   },
   {
     path: tokensRoutes.tokens,
