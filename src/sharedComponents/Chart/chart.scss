@@ -1,0 +1,191 @@
+.chart-body {
+  position: relative;
+}
+
+.chart-options {
+  justify-content: center;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+
+  @include media-breakpoint-up(md) {
+    flex-direction: row;
+  }
+
+  .option {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    margin: 5px 0;
+
+    @include media-breakpoint-up(md) {
+      margin: 0 10px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      margin-right: 15px;
+      border-radius: 50%;
+    }
+  }
+}
+
+.chart-controls {
+  justify-content: center;
+  flex-direction: column;
+
+  @include media-breakpoint-up(md) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .categories {
+    display: flex;
+    align-items: center;
+
+    .category {
+      @extend .h6;
+      color: $muted;
+      cursor: pointer;
+      &.active {
+        color: $body;
+      }
+      &:not(:first-child) {
+        padding-left: 1rem;
+      }
+    }
+  }
+
+  .filters {
+    display: flex;
+    align-items: center;
+
+    .filter {
+      background-color: rgba($primary, 0.1);
+      border-radius: 4px;
+      color: $primary;
+      font-size: 12px;
+      padding: 10px 15px;
+      cursor: pointer;
+      text-transform: capitalize;
+
+      &.active {
+        background-color: $primary;
+        color: $white;
+      }
+
+      &:not(:last-child) {
+        margin-right: 1px;
+      }
+    }
+  }
+}
+
+.stacked-chart,
+.chart-area,
+.chart-bar {
+  height: 17rem;
+  padding: 0;
+  margin-right: -2rem;
+
+  .recharts-cartesian-axis-tick {
+    &:first-of-type .recharts-cartesian-axis-tick-value {
+      display: none;
+    }
+  }
+  .recharts-cartesian-axis-tick,
+  .recharts-cartesian-axis-tick-value {
+    tspan {
+      font-size: 0.75rem;
+      font-weight: 300;
+      fill: $muted;
+    }
+  }
+}
+
+.chart-metrics {
+  background-color: rgba($card-bg, 0.9);
+  border-radius: $border-radius;
+  pointer-events: none;
+}
+
+.chart-icon {
+  font-size: 1.5rem;
+  height: 1.5rem;
+}
+
+.recharts-tooltip-wrapper {
+  outline: none !important;
+  color: $secondary;
+  background-color: $card-bg;
+  font-size: 12px;
+  font-weight: 400;
+  text-align: center;
+  .custom-tooltip,
+  .recharts-default-tooltip {
+    outline: none !important;
+    padding: 1rem;
+    border: 1px solid $border-color !important;
+    background-color: $card-bg !important;
+    border-radius: $border-radius;
+    overflow: hidden;
+  }
+  .recharts-tooltip-label {
+    font-size: 9px;
+  }
+  .recharts-tooltip-item-list {
+    margin-bottom: 0;
+    list-style: none;
+    li {
+      padding-left: 0;
+      padding-bottom: 0;
+      .item-value {
+        font-weight: 400;
+        font-size: 12px;
+        margin-bottom: 0;
+      }
+    }
+  }
+  &-right,
+  &-left {
+    &:before,
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-style: solid;
+    }
+  }
+  &-right {
+    &:before {
+      left: -15.5px;
+      bottom: calc(50% - 8px);
+      border-width: 8px;
+      border-color: transparent $border-color transparent transparent;
+    }
+    &:after {
+      left: -13px;
+      bottom: calc(50% - 7px);
+      border-width: 7px;
+      border-color: transparent $card-bg transparent transparent;
+    }
+  }
+  &-left {
+    &:before {
+      right: -15.5px;
+      bottom: calc(50% - 8px);
+      border-width: 8px;
+      border-color: transparent transparent transparent $border-color;
+    }
+    &:after {
+      right: -13px;
+      bottom: calc(50% - 7px);
+      border-width: 7px;
+      border-color: transparent transparent transparent $card-bg;
+    }
+  }
+}

@@ -1,79 +1,62 @@
-import * as React from 'react';
+import React from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
-import { StatisticsChart, Loader, PageState, adapter } from 'sharedComponents';
+import BigNumber from 'bignumber.js';
+
+import { Chart, Loader, PageState, adapter } from 'sharedComponents';
+import { ChartDataType, ChartConfigType } from 'sharedComponents/Chart/helpers/types';
+
 import { useGlobalState } from 'context';
 
-type ChartResponseType = { time: string; value: number }[];
-
-const initialState = {
-  usersStaking: '...',
-  totalStaked: '...',
-  percentageStaked: '...',
-};
-
 const StakingChart = () => {
-  const ref = React.useRef(null);
-  const { activeNetworkId } = useGlobalState();
-  const { getTotalStakedHistory, getUsersStaking, getEconomics } = adapter();
+  const { activeNetworkId, economics } = useGlobalState();
+  const { getTotalStakedHistory, getUsersStaking } = adapter();
 
-  const [data, setData] = React.useState(initialState);
+  const [usersStaking, setUsersStaking] = React.useState('...');
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [chartData, setChartData] = React.useState<ChartResponseType>([]);
+  const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
 
   const getData = () => {
-    if (ref.current !== null) {
-      Promise.all([getTotalStakedHistory(), getUsersStaking(), getEconomics()]).then(
-        ([totalStakedData, usersStakingData, economicsData]) => {
-          const usersStaking = usersStakingData.success
-            ? parseInt(usersStakingData.data).toLocaleString('en')
-            : '...';
-          const totalStaked = economicsData.success
-            ? parseInt(economicsData.data.staked).toLocaleString('en')
-            : '...';
-          const percentageStaked = economicsData.success
-            ? `${(
-                (parseInt(economicsData.data.staked) /
-                  parseInt(economicsData.data.circulatingSupply)) *
-                100
-              ).toFixed()}%`
-            : '...';
-
-          if (ref.current !== null) {
-            setData({ usersStaking, totalStaked, percentageStaked });
-            setDataReady(totalStakedData.success);
-            if (totalStakedData.success) {
-              setChartData(totalStakedData.data);
-            }
-          }
+    Promise.all([getTotalStakedHistory(), getUsersStaking()]).then(
+      ([totalStakedData, usersStakingData]) => {
+        if (usersStakingData.success) {
+          setUsersStaking(usersStakingData.data);
         }
-      );
-    }
+        if (totalStakedData.success) {
+          setChartData(totalStakedData.data);
+        }
+
+        setDataReady(usersStakingData.success && totalStakedData.success);
+      }
+    );
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(getData, [activeNetworkId]);
 
+  const percentage = economics.totalStakedPercent;
+  const total = economics.staked;
+  const users = usersStaking !== '...' ? new BigNumber(usersStaking).toFormat(0) : '...';
+
+  const config: ChartConfigType[] = [
+    {
+      id: 'totalStaked',
+      label: 'totalStaked',
+      gradient: 'defaultGradient',
+      data: chartData,
+    },
+  ];
+
+  const metrics = [
+    { label: 'Total Staked', value: `${total} / ${percentage}` },
+    { label: 'Users Staking', value: users },
+  ];
+
   return (
-    <div className="card staking-chart" ref={ref}>
-      <div className="card-header">
-        <div className="card-header-item d-flex align-items-center">
-          <h6 className="mb-0">Staking Metrics</h6>
-        </div>
-      </div>
-      <div className="card-body pr-1 pr-sm-3 pb-3">
-        <div className="card-details pl-3">
-          <div>
-            <small className="text-secondary pr-3">Total Staked: </small>
-            <span>
-              {data.totalStaked} / {data.percentageStaked}
-            </span>
-          </div>
-          <div>
-            <small className="text-secondary pr-3">Users Staking: </small>
-            <span>{data.usersStaking}</span>
-          </div>
-        </div>
-        {dataReady === undefined && <Loader small={true} />}
+    <section id="staking" className="staking card">
+      <Chart.Heading title="Staking Metrics"></Chart.Heading>
+
+      <Chart.Body>
+        {dataReady === undefined && <Loader />}
         {dataReady === false && (
           <PageState
             icon={faChartBar}
@@ -84,18 +67,13 @@ const StakingChart = () => {
           />
         )}
         {dataReady === true && chartData.length > 0 && (
-          <div className="ml-n3">
-            <StatisticsChart
-              chartData={chartData}
-              label="Total Staked"
-              showYaxis={true}
-              type="lineWithVertical"
-              aspectRatio={2.5}
-            />
-          </div>
+          <>
+            <Chart.Metrics {...{ metrics }} />
+            <Chart.Area {...{ config }}></Chart.Area>
+          </>
         )}
-      </div>
-    </div>
+      </Chart.Body>
+    </section>
   );
 };
 

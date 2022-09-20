@@ -1,0 +1,17 @@
+.price {
+  z-index: 1;
+  position: relative;
+  .card-body {
+    padding-bottom: 0;
+  }
+  .stacked-chart {
+    .recharts-responsive-container:last-of-type {
+      .recharts-cartesian-axis {
+        visibility: hidden;
+      }
+    }
+    .chart-metrics {
+      margin-bottom: -1rem;
+    }
+  }
+}

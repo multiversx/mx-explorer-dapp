@@ -446,13 +446,9 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
                   )}
                 </DetailItem>
 
-                <DetailItem title="EGLD Price">
+                <DetailItem title={`${erdLabel} Price`}>
                   {transaction.price !== undefined ? (
-                    <>
-                      {`$${Number(transaction.price).toLocaleString('en', {
-                        minimumFractionDigits: 2,
-                      })}`}
-                    </>
+                    <>{`$${new BigNumber(transaction.price).toFormat(2)}`}</>
                   ) : (
                     <span className="text-secondary">N/A</span>
                   )}
