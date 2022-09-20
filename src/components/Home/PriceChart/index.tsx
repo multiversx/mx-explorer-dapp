@@ -1,104 +1,124 @@
-import * as React from 'react';
+import React, { useState, useCallback } from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
-import { StatisticsChart, Loader, PageState, adapter } from 'sharedComponents';
+import BigNumber from 'bignumber.js';
+import moment from 'moment';
+import {
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+  Area,
+  AreaChart,
+  Bar,
+  Cell,
+  BarChart,
+  Tooltip,
+} from 'recharts';
+
+import { Chart, Loader, PageState, adapter } from 'sharedComponents';
+import CustomTooltip from 'sharedComponents/Chart/helpers/CustomTooltip';
+import formatYAxis from 'sharedComponents/Chart/helpers/formatYAxis';
+import StartEndTick from 'sharedComponents/Chart/helpers/StartEndTick';
+import { ControlType, CurrencyEnum, ChartDataType } from 'sharedComponents/Chart/helpers/types';
+
 import { useGlobalState } from 'context';
 
-type ActiveChartType = 'price' | 'marketcap';
-type ChartResponseType = { time: string; value: number }[];
+const getCurrentValue = (chartData: ChartDataType[]) => {
+  if (chartData.length >= 1) {
+    return chartData[chartData.length - 1].value;
+  }
+  return '...';
+};
 
-const PriceChart = () => {
-  const ref = React.useRef(null);
+const Price = () => {
   const { activeNetworkId } = useGlobalState();
 
   const { getEgldPriceHistory, getEgldMarketCapHistory, getEgldVolumeHistory } = adapter();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [chartData, setChartData] = React.useState<ChartResponseType>([]);
-  const [priceChartData, setPriceChartData] = React.useState<ChartResponseType>([]);
-  const [marketCapChartData, setMarketCapChartData] = React.useState<ChartResponseType>([]);
-  const [volumeChartData, setVolumeChartData] = React.useState<ChartResponseType>([]);
-  const [activeChart, setActiveChart] = React.useState<ActiveChartType>('price');
+  const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
+  const [priceChartData, setPriceChartData] = React.useState<ChartDataType[]>([]);
+  const [marketCapChartData, setMarketCapChartData] = React.useState<ChartDataType[]>([]);
+  const [volumeChartData, setVolumeChartData] = React.useState<ChartDataType[]>([]);
+
+  const [focusBar, setFocusBar] = useState<any>(null);
+  const [category, setCategory] = useState<string>('price');
+
+  const docStyle = window.getComputedStyle(document.documentElement);
+  const primaryColor = docStyle.getPropertyValue('--primary');
+  const mutedColor = docStyle.getPropertyValue('--muted');
+  const fadedBackground = docStyle.getPropertyValue('--chart-faded-bg');
+
+  const format = useCallback(
+    (data) =>
+      data.map((item: ChartDataType) => ({
+        ...item,
+        time: moment(item.time).format('D MMM YYYY'),
+      })),
+    []
+  );
 
   const getData = () => {
-    if (ref.current !== null) {
-      Promise.all([getEgldPriceHistory(), getEgldMarketCapHistory(), getEgldVolumeHistory()]).then(
-        ([priceHistoryData, marketCapHistoryData, volumeHistoryData]) => {
-          if (ref.current !== null) {
-            setDataReady(priceHistoryData.success);
-            if (priceHistoryData.success) {
-              setPriceChartData(priceHistoryData.data);
-            }
-            marketCapHistoryData.success
-              ? setMarketCapChartData(marketCapHistoryData.data)
-              : setMarketCapChartData([]);
+    Promise.all([getEgldPriceHistory(), getEgldMarketCapHistory(), getEgldVolumeHistory()]).then(
+      ([priceHistoryData, marketCapHistoryData, volumeHistoryData]) => {
+        priceHistoryData.success
+          ? setPriceChartData(format(priceHistoryData.data))
+          : setPriceChartData([]);
 
-            volumeHistoryData.success
-              ? setVolumeChartData(volumeHistoryData.data)
-              : setVolumeChartData([]);
-          }
-        }
-      );
-    }
+        marketCapHistoryData.success
+          ? setMarketCapChartData(format(marketCapHistoryData.data))
+          : setMarketCapChartData([]);
+
+        volumeHistoryData.success
+          ? setVolumeChartData(format(volumeHistoryData.data))
+          : setVolumeChartData([]);
+
+        setDataReady(
+          priceHistoryData.success && marketCapHistoryData.success && volumeHistoryData.success
+        );
+      }
+    );
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(getData, [activeNetworkId]);
 
   React.useEffect(() => {
-    if (activeChart === 'price' && priceChartData.length > 0) {
+    if (category === 'price' && priceChartData.length > 0) {
       setChartData(priceChartData);
     }
-    if (activeChart === 'marketcap' && marketCapChartData.length > 0) {
+    if (category === 'marketCap' && marketCapChartData.length > 0) {
       setChartData(marketCapChartData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeChart, priceChartData]);
+  }, [category, priceChartData]);
 
-  const getCurrentValue = (chartData: ChartResponseType) => {
-    if (chartData.length >= 1) {
-      const value = chartData[chartData.length - 1].value;
-      return `$${value.toLocaleString('en', {
-        maximumFractionDigits: value > 1000 ? 0 : 2,
-      })}`;
-    }
-    return '...';
-  };
+  const controls: ControlType[] = [
+    {
+      comparison: category,
+      callback: setCategory,
+      singular: 'category',
+      plural: 'categories',
+      data: {
+        price: 'Price',
+        marketCap: 'Market Cap',
+      },
+    },
+  ];
+
+  const value = getCurrentValue(priceChartData);
+  const volume = getCurrentValue(volumeChartData);
+
+  const metrics = [
+    { label: 'Current Price', value: `$${new BigNumber(value).toFormat()}` },
+    { label: 'Volume 24h', value: `$${new BigNumber(volume).toFormat(0)}` },
+  ];
 
   return (
-    <div className="card price-chart" ref={ref}>
-      <div className="card-header">
-        <div className="card-header-item d-flex align-items-center">
-          <h6
-            className={`mb-0 ${activeChart === 'price' ? '' : 'text-muted'}`}
-            onClick={() => {
-              setActiveChart('price');
-            }}
-            style={{ cursor: 'pointer' }}
-          >
-            Price
-          </h6>
-          <h6
-            className={`pl-3 mb-0 ${activeChart === 'marketcap' ? '' : 'text-muted'}`}
-            onClick={() => {
-              setActiveChart('marketcap');
-            }}
-            style={{ cursor: 'pointer' }}
-          >
-            Market Cap
-          </h6>
-        </div>
-      </div>
-      <div className="card-body pr-1 pr-sm-3 pb-3">
-        <div className="card-details pl-3">
-          <div>
-            <small className="text-secondary pr-3">Current Price: </small>
-            <span>{getCurrentValue(priceChartData)}</span>
-          </div>
-          <div>
-            <small className="text-secondary pr-3">Volume 24h: </small>
-            <span>{getCurrentValue(volumeChartData)}</span>
-          </div>
-        </div>
-        {dataReady === undefined && <Loader small={true} />}
+    <section id="price" className="price card">
+      <Chart.Heading>
+        <Chart.Controls controls={controls} />
+      </Chart.Heading>
+      <Chart.Body>
+        {dataReady === undefined && <Loader />}
         {dataReady === false && (
           <PageState
             icon={faChartBar}
@@ -109,34 +129,90 @@ const PriceChart = () => {
           />
         )}
         {dataReady === true && chartData.length > 0 && (
-          <div className="ml-n3 mb-n1">
-            <StatisticsChart
-              chartData={chartData}
-              displayType="price"
-              type="lineWithVertical"
-              label="USD"
-              formatMoney={true}
-              showYaxis={true}
-              aspectRatio={3.43}
-            />
-          </div>
+          <>
+            <Chart.Metrics metrics={metrics} />
+            <div className="stacked-chart">
+              <ResponsiveContainer width="100%" height="70%" className="mb-n3">
+                <AreaChart data={chartData} syncId="priceChart">
+                  <defs>
+                    <linearGradient id="defaultGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={primaryColor} stopOpacity={0.25} />
+                      <stop offset="35%" stopColor={primaryColor} stopOpacity={0.4} />
+                      <stop offset="95%" stopColor={primaryColor} stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+
+                  <XAxis
+                    dataKey="time"
+                    tickLine={false}
+                    tick={StartEndTick as any}
+                    interval={0}
+                    strokeWidth={0.3}
+                  />
+                  <YAxis
+                    orientation="right"
+                    tickFormatter={(tick) => formatYAxis(tick, CurrencyEnum.USD)}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="value"
+                    fill="url(#defaultGradient)"
+                    stroke={primaryColor}
+                    strokeWidth={1.5}
+                  />
+                  <Tooltip
+                    content={(props) => <CustomTooltip {...props} isUsd={true} />}
+                    cursor={{
+                      strokeDasharray: '3 5',
+                      stroke: mutedColor,
+                    }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+              <ResponsiveContainer width="100%" height="30%">
+                <BarChart
+                  data={volumeChartData}
+                  onMouseMove={(state) => {
+                    if (state.isTooltipActive) {
+                      setFocusBar(state.activeTooltipIndex);
+                    } else {
+                      setFocusBar(null);
+                    }
+                  }}
+                  syncId="priceChart"
+                >
+                  <YAxis
+                    orientation="right"
+                    tickFormatter={(tick) => formatYAxis(tick, CurrencyEnum.USD)}
+                    axisLine={false}
+                    tickLine={false}
+                    tickCount={5}
+                  />
+
+                  <Bar dataKey="value">
+                    {volumeChartData.map((entry: any, index: number) => (
+                      <Cell
+                        fill={focusBar === index ? primaryColor : fadedBackground}
+                        key={index}
+                      />
+                    ))}
+                  </Bar>
+                  <Tooltip
+                    content={(props) => (
+                      <CustomTooltip {...props} isUsd={true} customLabel="volume" />
+                    )}
+                    cursor={false}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </>
         )}
-        {volumeChartData.length > 0 && (
-          <div className="pl-3">
-            <StatisticsChart
-              chartData={volumeChartData}
-              displayType="small"
-              type="bar"
-              label="Volume 24h"
-              formatMoney={true}
-              showYaxis={false}
-              aspectRatio={9}
-            />
-          </div>
-        )}
-      </div>
-    </div>
+      </Chart.Body>
+    </section>
   );
 };
 
-export default PriceChart;
+export default Price;

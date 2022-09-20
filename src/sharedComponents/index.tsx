@@ -27,7 +27,6 @@ import MultilayerPercentageBar from './MultilayerPercentageBar';
 import CardItem from './CardItem';
 import LatestItem from './LatestItem';
 import LockedAmountTooltip from './LockedAmountTooltip';
-import StatisticsChart from './StatisticsChart';
 import NodesFilters from './NodesFilters';
 import TokenBlock from './TokenBlock';
 import CollectionBlock from './CollectionBlock';
@@ -51,6 +50,7 @@ import Sort from './Sort';
 import IdentityBlock from './IdentityBlock';
 import BlockGasUsed from './BlockGasUsed';
 import SmallDetailItem from './SmallDetailItem';
+import Chart from './Chart';
 
 export {
   Denominate,
@@ -83,7 +83,6 @@ export {
   CardItem,
   LatestItem,
   LockedAmountTooltip,
-  StatisticsChart,
   NodesFilters,
   TokenBlock,
   CollectionBlock,
@@ -107,4 +106,5 @@ export {
   IdentityBlock,
   BlockGasUsed,
   SmallDetailItem,
+  Chart,
 };
