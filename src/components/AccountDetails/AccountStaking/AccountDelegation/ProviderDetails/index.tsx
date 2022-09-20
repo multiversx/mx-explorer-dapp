@@ -7,7 +7,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { ProviderType } from 'helpers/types';
 import { getPercentage, stringIsFloat } from 'helpers';
-import { Trim, PercentageChart } from 'sharedComponents';
+import { Trim, PercentageLed } from 'sharedComponents';
 import ProviderImage from './ProviderImage';
 
 const minDelegation = '1000000000000000000';
@@ -76,7 +76,7 @@ const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
               stringIsFloat(provider.delegationCap) &&
               provider.delegationCap !== '0' ? (
                 <>
-                  <PercentageChart
+                  <PercentageLed
                     percentage={getPercentage({
                       amountOutOfTotal: provider.locked,
                       total: provider.delegationCap,

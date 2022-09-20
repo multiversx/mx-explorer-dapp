@@ -51,7 +51,7 @@ import Sort from './Sort';
 import IdentityBlock from './IdentityBlock';
 import BlockGasUsed from './BlockGasUsed';
 import SmallDetailItem from './SmallDetailItem';
-import PercentageChart from './PercentageChart';
+import PercentageLed from './PercentageLed';
 
 export {
   Denominate,
@@ -108,5 +108,5 @@ export {
   IdentityBlock,
   BlockGasUsed,
   SmallDetailItem,
-  PercentageChart,
+  PercentageLed,
 };
