@@ -1,4 +1,8 @@
 import React from 'react';
+import BigNumber from 'bignumber.js';
+import { usdValue } from 'helpers';
+import { useGlobalState } from 'context';
+import moment from 'moment';
 
 const getTooltipLabel = (label: string) => {
   const capitalize = (string: string) =>
@@ -32,17 +36,21 @@ const CustomTooltip = ({
   active,
   payload,
   label,
-  isUsd,
+  currency,
   customLabel,
-  isEGLD,
+  showUsdValue,
+  dateFormat,
 }: {
   active?: boolean;
   payload?: any;
   label?: any;
-  isUsd?: boolean;
-  isEGLD?: boolean;
+  currency?: string;
   customLabel?: string;
+  showUsdValue?: boolean;
+  dateFormat?: string;
 }) => {
+  const { usd } = useGlobalState();
+
   if (active && payload && payload.length) {
     return (
       <div className="custom-tooltip">
@@ -55,15 +63,21 @@ const CustomTooltip = ({
                 ? `${getTooltipLabel(customLabel)}: `
                 : ''}
               <span style={{ color: payload.length > 1 ? entry.color : '' }} className="item-value">
-                {isUsd ? '$' : ''}
-                {Number(entry.value).toLocaleString(undefined)}
-                {isEGLD ? ' EGLD' : ''}
+                {currency === '$' ? '$' : ''}
+                {new BigNumber(entry.value).toFormat()} {currency !== '$' ? currency : ''}
               </span>
+              {showUsdValue && (
+                <p className="text-secondary small mb-0">
+                  {usdValue({ amount: entry.value, usd, showPrefix: true })}
+                </p>
+              )}
             </li>
           ))}
         </ul>
         <div className="recharts-tooltip-label">
-          {payload[0]?.payload?.time ? payload[0].payload.time : label}
+          {payload[0]?.payload?.time
+            ? moment.utc(payload[0].payload.time).format(dateFormat ?? 'D MMM YYYY')
+            : label}
         </div>
       </div>
     );

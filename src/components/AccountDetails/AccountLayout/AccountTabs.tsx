@@ -65,6 +65,15 @@ const AccountTabs = () => {
         </NetworkLink>
       )}
 
+      <NetworkLink
+        to={urlBuilder.accountDetailsAnalytics(accountDetails.address)}
+        className={`tab-link mr-3 mr-lg-spacer ${
+          activeRoute(accountsRoutes.accountAnalytics) ? 'active' : ''
+        }`}
+      >
+        <h6>Analytics</h6>
+      </NetworkLink>
+
       {!accountDetails.code && (
         <NetworkLink
           to={urlBuilder.accountDetailsContracts(accountDetails.address)}

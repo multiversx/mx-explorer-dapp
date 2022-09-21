@@ -32,6 +32,7 @@ import AccountNfts from 'components/AccountDetails/AccountNfts';
 import AccountScResults from 'components/AccountDetails/AccountScResults';
 import AccountContracts from 'components/AccountDetails/AccountContracts';
 import AccountStaking from 'components/AccountDetails/AccountStaking';
+import AccountAnalytics from 'components/AccountDetails/AccountAnalytics';
 import ProviderTransactions from 'components/ProviderDetails/ProviderTransactions';
 import NodesStatistics from 'components/NodesStatistics';
 import NodesQueue from 'components/NodesQueue';
@@ -70,6 +71,7 @@ export const accountsRoutes = {
   accountScResults: `/accounts/:hash/sc-results`,
   accountContracts: `/accounts/:hash/contracts`,
   accountStaking: `/accounts/:hash/staking`,
+  accountAnalytics: `/accounts/:hash/analytics`,
   oldAccountDetails: `/address/:hash`,
 };
 
@@ -208,6 +210,16 @@ const routes: RouteType[] = [
     component: AccountNfts,
   },
   {
+    path: accountsRoutes.accountStaking,
+    title: 'Account Staking Details',
+    component: AccountStaking,
+  },
+  {
+    path: accountsRoutes.accountAnalytics,
+    title: 'Account Analytics',
+    component: AccountAnalytics,
+  },
+  {
     path: accountsRoutes.accountScResults,
     title: 'Account Smart Contract Results',
     component: AccountScResults,
@@ -216,11 +228,6 @@ const routes: RouteType[] = [
     path: accountsRoutes.accountContracts,
     title: 'Account Smart Contracts',
     component: AccountContracts,
-  },
-  {
-    path: accountsRoutes.accountStaking,
-    title: 'Account Smart Contract Results',
-    component: AccountStaking,
   },
   {
     path: tokensRoutes.tokens,
@@ -304,10 +311,10 @@ const wrappedRoutes = () =>
     const title = route.title ? `${route.title} • Elrond Explorer` : 'Elrond Explorer';
     return {
       path: route.path,
-      component: (withPageTitle(
+      component: withPageTitle(
         title,
         withNetworkReady(route.component)
-      ) as any) as React.ComponentClass<{}, any>,
+      ) as any as React.ComponentClass<{}, any>,
     };
   });
 

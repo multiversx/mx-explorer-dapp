@@ -1,5 +1,5 @@
 export interface ChartDataType {
-  time: number;
+  time: string;
   value: string;
 }
 
@@ -54,6 +54,7 @@ export interface ChartConfigType {
   strokeDasharray?: string;
   tooltipStrokeDasharray?: string;
   zero?: boolean;
+  showUsdValue?: boolean;
 }
 
 export enum DateFilterEnum {
@@ -63,13 +64,22 @@ export enum DateFilterEnum {
   all = 'all',
 }
 
-export enum CurrencyEnum {
-  EGLD = 'EGLD',
-  USD = '$',
-}
-
 export enum ChartSizeEnum {
   sm = 'sm',
   md = 'md',
   lg = 'lg',
+}
+
+export interface ChartProps {
+  config: ChartConfigType[];
+  data?: any;
+  dateFormat?: string;
+  filter?: string;
+  category?: string;
+  currency?: string;
+  size?: ChartSizeEnum;
+  tooltip?: {
+    showUsdValue?: boolean;
+    dateFormat?: string;
+  };
 }

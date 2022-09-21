@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 const StartEndTick = (props: any) => {
   const extractables = ['tickFormatter', 'verticalAnchor', 'visibleTicksCount'];
@@ -15,7 +16,7 @@ const StartEndTick = (props: any) => {
       <g className="recharts-layer recharts-cartesian-axis-tick">
         <text {...args}>
           <tspan x={args.x + (isFirst ? 20 : 10)} dy="0.71em">
-            {args.payload.value}
+            {moment.utc(args.payload.value).format(props?.dateformat ?? 'D MMM YYYY')}
           </tspan>
         </text>
       </g>

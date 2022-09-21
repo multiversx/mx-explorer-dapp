@@ -18,7 +18,7 @@ import { Chart, Loader, PageState, adapter } from 'sharedComponents';
 import CustomTooltip from 'sharedComponents/Chart/helpers/CustomTooltip';
 import formatYAxis from 'sharedComponents/Chart/helpers/formatYAxis';
 import StartEndTick from 'sharedComponents/Chart/helpers/StartEndTick';
-import { ControlType, CurrencyEnum, ChartDataType } from 'sharedComponents/Chart/helpers/types';
+import { ControlType, ChartDataType } from 'sharedComponents/Chart/helpers/types';
 
 import { useGlobalState } from 'context';
 
@@ -151,7 +151,7 @@ const Price = () => {
                   />
                   <YAxis
                     orientation="right"
-                    tickFormatter={(tick) => formatYAxis(tick, CurrencyEnum.USD)}
+                    tickFormatter={(tick) => formatYAxis(tick, '$')}
                     axisLine={false}
                     tickLine={false}
                   />
@@ -163,7 +163,7 @@ const Price = () => {
                     strokeWidth={1.5}
                   />
                   <Tooltip
-                    content={(props) => <CustomTooltip {...props} isUsd={true} />}
+                    content={(props) => <CustomTooltip {...props} currency="$" />}
                     cursor={{
                       strokeDasharray: '3 5',
                       stroke: mutedColor,
@@ -185,7 +185,7 @@ const Price = () => {
                 >
                   <YAxis
                     orientation="right"
-                    tickFormatter={(tick) => formatYAxis(tick, CurrencyEnum.USD)}
+                    tickFormatter={(tick) => formatYAxis(tick, '$')}
                     axisLine={false}
                     tickLine={false}
                     tickCount={5}
@@ -201,7 +201,7 @@ const Price = () => {
                   </Bar>
                   <Tooltip
                     content={(props) => (
-                      <CustomTooltip {...props} isUsd={true} customLabel="volume" />
+                      <CustomTooltip {...props} currency="$" customLabel="volume" />
                     )}
                     cursor={false}
                   />

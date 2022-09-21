@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer } from 'recharts';
 
-import { ChartConfigType, CurrencyEnum, ChartSizeEnum } from './helpers/types';
+import { ChartProps } from './helpers/types';
 import CustomTooltip from './helpers/CustomTooltip';
 import formatYAxis from './helpers/formatYAxis';
 import getChartMergedData from './helpers/getChartMergedData';
@@ -16,26 +16,11 @@ const ChartBar = ({
   category,
   currency,
   size,
-}: {
-  config: ChartConfigType[];
-  data?: any;
-  dateFormat?: string;
-  filter?: string;
-  category?: string;
-  currency?: CurrencyEnum;
-  size?: ChartSizeEnum;
-}) => {
+  tooltip,
+}: ChartProps) => {
   const [focusBar, setFocusBar] = useState<any>(null);
-  const format = useCallback(
-    (data) =>
-      data.map((item: any) => ({
-        ...item,
-        time: moment(item.time).format(dateFormat ?? 'D MMM YYYY'),
-      })),
-    [dateFormat]
-  );
+
   const chartData = getChartMergedData({ config, data, filter, category });
-  const formattedData = format(chartData);
 
   const docStyle = window.getComputedStyle(document.documentElement);
   const primaryColor = docStyle.getPropertyValue('--primary');
@@ -44,7 +29,7 @@ const ChartBar = ({
     <div className={`chart-bar mb-n3 ${size ? `chart-bar-${size}` : ''}`}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
-          data={formattedData}
+          data={chartData}
           onMouseMove={(state) => {
             if (state.isTooltipActive) {
               setFocusBar(state.activeTooltipIndex);
@@ -85,7 +70,8 @@ const ChartBar = ({
           <XAxis
             dataKey="time"
             tickLine={false}
-            tick={StartEndTick as any}
+            tick={<StartEndTick dateformat={dateFormat} />}
+            tickFormatter={(tick) => moment(tick).format(dateFormat ?? 'D MMM YYYY')}
             interval={0}
             strokeWidth={0.3}
           />
@@ -111,7 +97,7 @@ const ChartBar = ({
                 ? { strokeDasharray: chartConfig.strokeDasharray }
                 : {})}
             >
-              {formattedData.map((entry: any, index: string) => (
+              {chartData.map((entry: any, index: number) => (
                 <Cell
                   fill={
                     focusBar === index
@@ -125,7 +111,10 @@ const ChartBar = ({
               ))}
             </Bar>
           ))}
-          <Tooltip content={CustomTooltip} cursor={false} />
+          <Tooltip
+            content={(props) => <CustomTooltip {...props} currency={currency} {...tooltip} />}
+            cursor={false}
+          />
         </BarChart>
       </ResponsiveContainer>
     </div>

@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import moment from 'moment';
 
 import { ResponsiveContainer, XAxis, YAxis, Area, AreaChart, Tooltip } from 'recharts';
 
-import { ChartConfigType, CurrencyEnum, ChartSizeEnum } from './helpers/types';
+import { ChartProps } from './helpers/types';
 import CustomTooltip from './helpers/CustomTooltip';
 import formatYAxis from './helpers/formatYAxis';
 import getChartMergedData from './helpers/getChartMergedData';
@@ -17,27 +17,8 @@ const ChartArea = ({
   category,
   currency,
   size,
-  tooltip = {},
-}: {
-  config: ChartConfigType[];
-  data?: any;
-  dateFormat?: string;
-  filter?: string;
-  category?: string;
-  currency?: CurrencyEnum;
-  size?: ChartSizeEnum;
-  tooltip?: {
-    isEGLD?: boolean;
-  };
-}) => {
-  const format = useCallback(
-    (data) =>
-      data.map((item: any) => ({
-        ...item,
-        time: moment(item.time).format(dateFormat ?? 'D MMM YYYY'),
-      })),
-    [dateFormat]
-  );
+  tooltip,
+}: ChartProps) => {
   const chartData = getChartMergedData({ config, data, filter, category });
 
   const docStyle = window.getComputedStyle(document.documentElement);
@@ -47,7 +28,7 @@ const ChartArea = ({
   return (
     <div className={`chart-area mb-n3 ${size ? `chart-area-${size}` : ''}`}>
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={format(chartData)}>
+        <AreaChart data={chartData}>
           <defs>
             <linearGradient id="transparent" x1="0" y1="0" x2="0" y2="1">
               <stop offset="100%" stopColor="transparent" stopOpacity={0} />
@@ -81,7 +62,8 @@ const ChartArea = ({
           <XAxis
             dataKey="time"
             tickLine={false}
-            tick={StartEndTick as any}
+            tick={<StartEndTick dateformat={dateFormat} />}
+            tickFormatter={(tick) => moment.utc(tick).format(dateFormat ?? 'D MMM YYYY')}
             interval={0}
             strokeWidth={0.3}
           />
@@ -109,7 +91,7 @@ const ChartArea = ({
             />
           ))}
           <Tooltip
-            content={(props) => <CustomTooltip {...props} {...tooltip} />}
+            content={(props) => <CustomTooltip {...props} currency={currency} {...tooltip} />}
             cursor={{
               strokeDasharray: '3 5',
               stroke: mutedColor,

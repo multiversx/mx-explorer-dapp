@@ -3,7 +3,6 @@ import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import BigNumber from 'bignumber.js';
 
 import { Chart, Loader, PageState, adapter } from 'sharedComponents';
-import getLastDayValue from 'sharedComponents/Chart/helpers/getLastDayValue';
 import { ChartDataType, ChartConfigType } from 'sharedComponents/Chart/helpers/types';
 
 import { useGlobalState } from 'context';
@@ -37,8 +36,10 @@ const TransactionsChart = () => {
 
   const totalTransactions =
     stats.transactions !== '...' ? new BigNumber(stats.transactions).toFormat(0) : '...';
+  const transactionsToday =
+    chartData.length > 0 ? new BigNumber(chartData[chartData.length - 1].value).toFormat(0) : '...';
   const metrics = [
-    { label: 'Transactions Today', value: getLastDayValue(chartData) },
+    { label: 'Transactions Today', value: transactionsToday },
     { label: 'Total Transactions', value: totalTransactions },
   ];
 
