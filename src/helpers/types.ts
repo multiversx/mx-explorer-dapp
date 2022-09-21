@@ -430,9 +430,9 @@ export interface Undelegation {
 export interface DelegationType {
   address: string;
   contract: string;
-  userUnBondable?: string;
+  userUnBondable: string;
   userActiveStake: string;
-  claimableRewards?: string;
+  claimableRewards: string;
   userUndelegatedList: Undelegation[];
 }
 export interface DelegationLegacyType {

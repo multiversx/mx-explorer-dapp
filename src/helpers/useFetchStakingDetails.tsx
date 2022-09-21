@@ -6,15 +6,18 @@ import { useGlobalState } from 'context';
 import { DelegationLegacyType, DelegationType, StakeType } from 'helpers/types';
 
 export interface StakingDetailsType {
-  show: boolean;
+  dataFetched: boolean;
   bNtotalStaked: BigNumber;
   bNtotalDelegation: BigNumber;
   bNtotalLegacyDelegation: BigNumber;
   bNtotalLocked: BigNumber;
   bNtotalClaimable: BigNumber;
   stake?: StakeType;
+  showStake: boolean;
   delegationLegacy?: DelegationLegacyType;
+  showDelegationLegacy: boolean;
   delegation?: DelegationType[];
+  showDelegation: boolean;
 }
 
 const useFetchStakingDetails = () => {
@@ -29,7 +32,10 @@ const useFetchStakingDetails = () => {
   let bNtotalClaimable = new BigNumber(0);
 
   const [stakingDetails, setStakingDetails] = React.useState<StakingDetailsType>({
-    show: false,
+    dataFetched: false,
+    showDelegation: false,
+    showDelegationLegacy: false,
+    showStake: false,
     bNtotalStaked,
     bNtotalDelegation,
     bNtotalLegacyDelegation,
@@ -54,22 +60,17 @@ const useFetchStakingDetails = () => {
         const stake = stakeFetched ? stakeData.data : {};
         const delegationLegacy = delegationLegacyFetched ? delegationLegacyData.data : {};
 
-        const bNClaimableRewards = new BigNumber(
-          accountDetails.claimableRewards ? accountDetails.claimableRewards : 0
-        );
-        bNtotalClaimable = bNClaimableRewards;
-
         if (stake) {
           bNtotalStaked = new BigNumber(stake.totalStaked ? stake.totalStaked : 0);
         }
         if (delegationLegacy) {
-          const bNuserActiveStake = new BigNumber(
-            delegationLegacy.userActiveStake ? delegationLegacy.userActiveStake : 0
+          const bNuserActiveStake = new BigNumber(delegationLegacy.userActiveStake);
+          const bNuserWaitingStake = new BigNumber(delegationLegacy.userWaitingStake);
+          const bNClaimableRewardsLegacy = new BigNumber(delegationLegacy.claimableRewards);
+          bNtotalClaimable = bNtotalClaimable.plus(bNClaimableRewardsLegacy);
+          bNtotalLegacyDelegation = new BigNumber(
+            bNuserActiveStake.plus(bNuserWaitingStake).plus(bNClaimableRewardsLegacy)
           );
-          const bNuserWaitingStake = new BigNumber(
-            delegationLegacy.userWaitingStake ? delegationLegacy.userWaitingStake : 0
-          );
-          bNtotalLegacyDelegation = new BigNumber(bNuserActiveStake.plus(bNuserWaitingStake));
         }
 
         if (delegation && delegation.length > 0) {
@@ -90,19 +91,40 @@ const useFetchStakingDetails = () => {
           bNtotalDelegation = bNtotalClaimableRewards.plus(activePlusUnStaked);
           bNtotalClaimable = bNtotalClaimable.plus(bNtotalClaimableRewards);
         }
-        if (stake && delegationLegacy && delegationLegacy) {
-          bNtotalLocked = bNClaimableRewards
-            .plus(bNtotalStaked)
-            .plus(bNtotalLegacyDelegation)
-            .plus(bNtotalDelegation);
+        if (stake && delegation && delegationLegacy) {
+          bNtotalLocked = bNtotalStaked.plus(bNtotalLegacyDelegation).plus(bNtotalDelegation);
         }
-        const show = stakeFetched && delegationLegacyFetched && delegationFetched;
+
+        const showDelegation = delegation
+          ? delegation.filter(
+              (delegation) =>
+                delegation.userActiveStake !== '0' ||
+                delegation.claimableRewards !== '0' ||
+                delegation.userUndelegatedList?.length > 0
+            ).length > 0
+          : false;
+
+        const showDelegationLegacy =
+          delegationLegacy &&
+          (delegationLegacy.claimableRewards !== '0' ||
+            delegationLegacy.userWaitingStake !== '0' ||
+            delegationLegacy.userActiveStake !== '0');
+
+        const showStake =
+          stake &&
+          (stake?.totalStaked !== '0' ||
+            (stake?.unstakedTokens && stake.unstakedTokens.length > 0));
+
+        const dataFetched = stakeFetched && delegationLegacyFetched && delegationFetched;
 
         setStakingDetails({
-          show,
+          dataFetched,
           delegation,
+          showDelegation,
           stake,
+          showStake,
           delegationLegacy,
+          showDelegationLegacy,
           bNtotalStaked,
           bNtotalDelegation,
           bNtotalLegacyDelegation,

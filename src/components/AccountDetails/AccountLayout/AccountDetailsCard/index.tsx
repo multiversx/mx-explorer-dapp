@@ -15,20 +15,19 @@ import {
   TimeAgo,
   PropertyPill,
   SmallDetailItem,
+  UsdValue,
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import { isContract, urlBuilder, dateFormatted } from 'helpers';
 import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
 
-import LockedAmountCardItem from './LockedAmountCardItem';
-import UsdValue from './UsdValue';
+// import LockedAmountCardItem from './LockedAmountCardItem';
 
 const AccountDetailsCard = () => {
   const ref = React.useRef(null);
   const {
     activeNetwork: { id, adapter: networkAdapter },
     accountDetails,
-    usd,
   } = useGlobalState();
   const {
     getProvider,
@@ -168,7 +167,7 @@ const AccountDetailsCard = () => {
                   </SmallDetailItem>
 
                   <SmallDetailItem title="Value">
-                    <UsdValue input={balance} usd={usd} />
+                    <UsdValue input={balance} />
                   </SmallDetailItem>
 
                   <SmallDetailItem title="Properties">
@@ -312,7 +311,7 @@ const AccountDetailsCard = () => {
                 </div>
               </CardItem>
               <CardItem className={cardItemClass} title="Value" icon={faDollarSign}>
-                <UsdValue input={balance} usd={usd} />
+                <UsdValue input={balance} />
               </CardItem>
               <CardItem className={cardItemClass} title="Nonce" icon={faUser}>
                 {nonce !== undefined ? nonce.toLocaleString('en') : '...'}
@@ -331,7 +330,7 @@ const AccountDetailsCard = () => {
                   <>N/A</>
                 )}
               </CardItem>
-              <LockedAmountCardItem cardItemClass={cardItemClass} />
+              {/* <LockedAmountCardItem cardItemClass={cardItemClass} /> */}
             </div>
           </div>
         </div>

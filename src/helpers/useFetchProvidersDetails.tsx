@@ -5,7 +5,17 @@ import { IdentityType, ProviderType } from 'helpers/types';
 
 const ELROND_NODES_IDENTITY = 'elrondcom';
 
-const useFetchProvidersDetails = () => {
+export interface ProvidersDetailsType {
+  dataReady: boolean;
+  providers: ProviderType[];
+  elrondNodes?: ProviderType;
+}
+
+const useFetchProvidersDetails = ({
+  includeElrondNodes,
+}: {
+  includeElrondNodes?: boolean;
+}): ProvidersDetailsType => {
   const { getProviders, getIdentities } = adapter();
   const {
     activeNetwork: { id },
@@ -36,7 +46,7 @@ const useFetchProvidersDetails = () => {
           .filter((item) => item.identity)
           .map((item) => item.identity);
 
-        if (!providerIdentitiesList.includes(ELROND_NODES_IDENTITY)) {
+        if (includeElrondNodes && !providerIdentitiesList.includes(ELROND_NODES_IDENTITY)) {
           providerIdentitiesList.push(ELROND_NODES_IDENTITY);
         }
 

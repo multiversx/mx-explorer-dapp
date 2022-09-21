@@ -5,6 +5,7 @@ import AccountTabs from '../AccountLayout/AccountTabs';
 import AccountDelegation from './AccountDelegation';
 import AccountLegacyDelegation from './AccountLegacyDelegation';
 import AccountStake from './AccountStake';
+import DonutChart from './DonutChart';
 
 import { Loader, PageState } from 'sharedComponents';
 
@@ -12,10 +13,23 @@ import useFetchProvidersDetails from 'helpers/useFetchProvidersDetails';
 import useFetchStakingDetails from 'helpers/useFetchStakingDetails';
 
 const AccountStaking = () => {
-  const { show, delegation, stake, delegationLegacy } = useFetchStakingDetails();
-  const { providers, elrondNodes, dataReady } = useFetchProvidersDetails();
+  const stakingDetails = useFetchStakingDetails();
+  const providersDetails = useFetchProvidersDetails({ includeElrondNodes: true });
+  const {
+    dataFetched,
+    delegation,
+    stake,
+    delegationLegacy,
+    showDelegation,
+    showDelegationLegacy,
+    showStake,
+  } = stakingDetails;
+  const { providers, elrondNodes, dataReady } = providersDetails;
 
-  const shownDelegations = delegation
+  const isReady = dataFetched && dataReady;
+  const hasStaking = showDelegation || showDelegationLegacy || showStake;
+
+  const displayDelegation = delegation
     ? delegation.filter(
         (delegation) =>
           delegation.userActiveStake !== '0' ||
@@ -23,19 +37,6 @@ const AccountStaking = () => {
           delegation.userUndelegatedList?.length > 0
       )
     : [];
-
-  const showLegacyDelegation =
-    delegationLegacy &&
-    (delegationLegacy.claimableRewards !== '0' ||
-      delegationLegacy.userWaitingStake !== '0' ||
-      delegationLegacy.userActiveStake !== '0');
-
-  const showStake =
-    stake &&
-    (stake?.totalStaked !== '0' || (stake?.unstakedTokens && stake.unstakedTokens.length > 0));
-
-  const isReady = show && dataReady;
-  const hasStaking = shownDelegations.length > 0 || showLegacyDelegation || showStake;
 
   return (
     <div className="card">
@@ -51,10 +52,10 @@ const AccountStaking = () => {
             <div className="col-lg-7 pr-lg-0 border-right">
               {hasStaking ? (
                 <>
-                  {shownDelegations.length > 0 && (
+                  {displayDelegation.length > 0 && (
                     <div className="account-delegation">
                       <div className="px-spacer py-3 border-bottom bg-light">Staking</div>
-                      {shownDelegations.map((delegation, i) => {
+                      {displayDelegation.map((delegation, i) => {
                         const provider = providers.find(
                           ({ provider }) => delegation.contract === provider
                         );
@@ -64,10 +65,10 @@ const AccountStaking = () => {
                       })}
                     </div>
                   )}
-                  {delegationLegacy && showLegacyDelegation && (
+                  {delegationLegacy && showDelegationLegacy && (
                     <div
                       className={`account-legacy-delegation ${
-                        shownDelegations.length > 0 ? 'border-top' : ''
+                        displayDelegation.length > 0 ? 'border-top' : ''
                       }`}
                     >
                       <div className="px-spacer py-3 border-bottom bg-light">Legacy Delegation</div>
@@ -96,7 +97,9 @@ const AccountStaking = () => {
                 />
               )}
             </div>
-            <div className="col-lg-5"></div>
+            <div className="col-lg-5 pl-0 staking-chart-holder">
+              <DonutChart stakingDetails={stakingDetails} providersDetails={providersDetails} />
+            </div>
           </div>
         )}
       </div>

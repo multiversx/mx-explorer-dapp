@@ -5,7 +5,7 @@ import useFetchStakingDetails from 'helpers/useFetchStakingDetails';
 
 const LockedDetails = ({ cardItemClass }: { cardItemClass: string }) => {
   const {
-    show,
+    dataFetched,
     bNtotalStaked,
     bNtotalDelegation,
     bNtotalLegacyDelegation,
@@ -16,14 +16,14 @@ const LockedDetails = ({ cardItemClass }: { cardItemClass: string }) => {
   return (
     <CardItem className={cardItemClass} title="Stake" icon={faLock}>
       <div className="d-flex align-items-center">
-        {show ? (
+        {dataFetched ? (
           <span className="mr-2">
             <Denominate value={bNtotalLocked.toString(10)} />
           </span>
         ) : (
           <>...</>
         )}
-        {show && (
+        {dataFetched && (
           <LockedAmountTooltip
             lockedDetails={[
               {

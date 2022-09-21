@@ -136,7 +136,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
       maximumFractionDigits: digits,
       minimumFractionDigits: digits,
     });
-    return ` ${parseFloat(amount) > 0 ? '≈' : '='} $${formattedValue}`;
+    return `${parseFloat(amount) > 0 ? '≈' : '='} $${formattedValue}`;
   };
 
   const transactionMessages = getTransactionMessages(transaction);
