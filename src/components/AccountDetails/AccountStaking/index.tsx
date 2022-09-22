@@ -49,9 +49,9 @@ const AccountStaking = () => {
         {!isReady && <Loader dataTestId="stakingLoader" />}
         {isReady && (
           <div className="row">
-            <div className="col-lg-7 pr-lg-0 border-right">
-              {hasStaking ? (
-                <>
+            {hasStaking ? (
+              <>
+                <div className="col-lg-7 pr-lg-0 border-right">
                   {displayDelegation.length > 0 && (
                     <div className="account-delegation">
                       <div className="px-spacer py-3 border-bottom bg-light">Staking</div>
@@ -87,19 +87,21 @@ const AccountStaking = () => {
                       <AccountStake stake={stake} />
                     </div>
                   )}
-                </>
-              ) : (
+                </div>
+                <div className="col-lg-5 pl-0 staking-chart-holder chart-right-panel">
+                  <DonutChart stakingDetails={stakingDetails} providersDetails={providersDetails} />
+                </div>
+              </>
+            ) : (
+              <div className="col-12">
                 <PageState
                   icon={faChartPie}
                   title="No Staking"
                   className="py-spacer my-auto"
                   dataTestId="errorScreen"
                 />
-              )}
-            </div>
-            <div className="col-lg-5 pl-0 staking-chart-holder">
-              <DonutChart stakingDetails={stakingDetails} providersDetails={providersDetails} />
-            </div>
+              </div>
+            )}
           </div>
         )}
       </div>

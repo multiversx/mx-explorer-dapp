@@ -127,8 +127,8 @@ const DonutChart = ({
 
   return (
     <>
-      <div className="staking-details-center ml-n3">
-        <h5 className="mb-1 h6">Total Staked</h5>
+      <div className="staking-details-center">
+        <h5 className="mb-1 h6">{bNtotalLocked.isEqualTo(0) ? 'No staking' : 'Total Staked'}</h5>
         <h6 className="mb-1 h5">
           <Denominate value={bNtotalLocked.toString(10)} decimals={2} />
         </h6>

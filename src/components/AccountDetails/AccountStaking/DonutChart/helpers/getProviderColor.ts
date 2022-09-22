@@ -21,8 +21,11 @@ const DEFAULT_PROVIDER_COLORS: {
 };
 
 const getPastelColor = ({ currentIndex, total }: PastelColorType) => {
-  const colors = (360 / total).toFixed();
-  return total === 1 ? '#3d5170' : `hsl(${(currentIndex + 1) * Number(colors)},80%,80%)`;
+  const colors = (260 / total).toFixed();
+
+  const pastelColor = total === 1 ? '#3d5170' : `hsl(${currentIndex * Number(colors)},50%,50%)`;
+
+  return pastelColor;
 };
 
 const getProviderColor = ({ name, currentIndex, total }: ProviderColorType) => {
