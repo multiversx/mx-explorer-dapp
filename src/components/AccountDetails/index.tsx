@@ -6,7 +6,7 @@ import { TransactionType } from 'sharedComponents/TransactionsTable';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
-import { useSize } from 'helpers';
+import { useSize, urlBuilder, useURLSearchParams } from 'helpers';
 import AccountTabs from './AccountLayout/AccountTabs';
 
 interface TransactionsResponseType {
@@ -16,8 +16,10 @@ interface TransactionsResponseType {
 
 const AccountDetails = () => {
   const ref = React.useRef(null);
-  const { getAccountTransfers, getTransactions } = adapter();
+  const { getAccountTransfers, getAccountTransfersCount, getTransactions, getTransactionsCount } =
+    adapter();
   const { size, firstPageTicker } = useSize();
+  const { method } = useURLSearchParams();
   const { activeNetworkId, accountDetails } = useGlobalState();
   const { hash: address } = useParams() as any;
 
@@ -25,13 +27,17 @@ const AccountDetails = () => {
   const useTransactionsEndpoint = false; // useIsMainnet();
 
   const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
+  const [accountTransactionsCount, setAccountTransactionsCount] = React.useState(0);
   const [isDataReady, setIsDataReady] = React.useState<boolean | undefined>();
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
 
-  const handleTransactions = (transactionsData: TransactionsResponseType) => {
+  const handleTransactions = (
+    transactionsData: TransactionsResponseType,
+    countData: TransactionsResponseType
+  ) => {
     const { data, success } = transactionsData;
     if (ref.current !== null) {
-      if (success) {
+      if (success && countData.success) {
         const existingHashes = transactions.map((b) => b.txHash);
         const newTransactions = data.map((transaction: TransactionType) => ({
           ...transaction,
@@ -39,6 +45,7 @@ const AccountDetails = () => {
         }));
 
         setTransactions(newTransactions);
+        setAccountTransactionsCount(countData.data);
         const pending = data.some(
           (tx: TransactionType) =>
             tx.status.toLowerCase() === txStatus.pending.toLowerCase() || tx.pendingResults
@@ -53,15 +60,35 @@ const AccountDetails = () => {
 
   const fetchTransactions = () => {
     if (!useTransactionsEndpoint) {
-      getAccountTransfers({
-        size,
-        address,
-      }).then((transactionsData) => handleTransactions(transactionsData));
+      Promise.all([
+        getAccountTransfers({
+          size,
+          address,
+          method,
+        }),
+        getAccountTransfersCount({
+          size,
+          address,
+          method,
+        }),
+      ]).then(([accountTransfersData, accountTransfersCountData]) => {
+        handleTransactions(accountTransfersData, accountTransfersCountData);
+      });
     } else {
-      getTransactions({
-        size,
-        address,
-      }).then((transactionsData) => handleTransactions(transactionsData));
+      Promise.all([
+        getTransactions({
+          size,
+          address,
+          method,
+        }),
+        getTransactionsCount({
+          size,
+          address,
+          method,
+        }),
+      ]).then(([accountTransactionsData, accountTransactionsCountData]) => {
+        handleTransactions(accountTransactionsData, accountTransactionsCountData);
+      });
     }
   };
 
@@ -77,14 +104,7 @@ const AccountDetails = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker]);
-
-  React.useEffect(() => {
-    if (!loading) {
-      fetchTransactions();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountDetails.txCount, accountDetails.scrCount, accountDetails.balance]);
+  }, [firstPageTicker, accountDetails.txCount, accountDetails.scrCount, accountDetails.balance]);
 
   const loading = isDataReady === undefined;
   const showTransactions = isDataReady === true && transactions.length > 0;
@@ -97,14 +117,12 @@ const AccountDetails = () => {
             <TransactionsTable
               transactions={transactions}
               address={address}
-              totalTransactions={
-                !useTransactionsEndpoint
-                  ? accountDetails.txCount + accountDetails.scrCount
-                  : accountDetails.txCount
-              }
+              totalTransactions={accountTransactionsCount}
               size={size}
               directionCol={true}
               title={<AccountTabs />}
+              allowFilters={true}
+              baseRoute={urlBuilder.accountDetails(address)}
             />
           ) : (
             <div className="card">

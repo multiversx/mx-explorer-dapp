@@ -395,6 +395,7 @@ export interface TransactionType {
   results?: ResultType[];
   operations?: OperationType[];
   action?: TxActionType;
+  function?: string;
   logs?: {
     id: string;
     address: string;
