@@ -80,6 +80,9 @@ const AccountAnalytics = () => {
         <div className="card-header-item d-flex justify-content-between align-items-center">
           <AccountTabs />
         </div>
+        <div className="card-header-item d-flex align-items-center bg-light">
+          Account {erdLabel} Balance ( last 100 entries )
+        </div>
       </div>
       <div className="card-body px-lg-spacer py-lg-4">
         <Chart.Body>

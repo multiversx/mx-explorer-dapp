@@ -54,7 +54,7 @@ const AccountStaking = () => {
                 <div className="col-lg-7 pr-lg-0 border-right">
                   {displayDelegation.length > 0 && (
                     <div className="account-delegation">
-                      <div className="px-spacer py-3 border-bottom bg-light">Staking</div>
+                      <div className="px-spacer py-3 border-bottom bg-light">Staking List</div>
                       {displayDelegation.map((delegation, i) => {
                         const provider = providers.find(
                           ({ provider }) => delegation.contract === provider
@@ -88,8 +88,16 @@ const AccountStaking = () => {
                     </div>
                   )}
                 </div>
-                <div className="col-lg-5 pl-0 staking-chart-holder chart-right-panel">
-                  <DonutChart stakingDetails={stakingDetails} providersDetails={providersDetails} />
+                <div className="col-lg-5 pl-0 d-flex flex-column">
+                  <div className="px-spacer py-3 border-bottom bg-light staking-chart-title">
+                    Staking Chart
+                  </div>
+                  <div className="staking-chart-holder">
+                    <DonutChart
+                      stakingDetails={stakingDetails}
+                      providersDetails={providersDetails}
+                    />
+                  </div>
                 </div>
               </>
             ) : (

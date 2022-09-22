@@ -137,7 +137,7 @@ const DonutChart = ({
         </p>
       </div>
       <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={800} height={800}>
+        <PieChart>
           <Pie
             activeIndex={activeIndex}
             activeShape={<RenderActiveShape />}
@@ -148,6 +148,7 @@ const DonutChart = ({
             outerRadius={100}
             dataKey="value"
             onMouseEnter={onPieEnter}
+            onClick={onPieEnter}
             strokeWidth={chartData.length > 1 ? 3 : 0}
             stroke={cardBgColor}
           >

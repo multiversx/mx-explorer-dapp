@@ -2,8 +2,20 @@
   .delegation-row + .delegation-row {
     border-top: 1px solid $border-color !important;
   }
+  .staking-chart-title {
+    border-top: 1px solid $border-color;
+    @include media-breakpoint-up(lg) {
+      border-top: 0;
+    }
+  }
   .staking-chart-holder {
-    min-height: 26rem;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-height: 22rem;
+    @include media-breakpoint-up(md) {
+      min-height: 26rem;
+    }
     position: relative;
     &.chart-right-panel .staking-details-center {
       margin-left: -1rem;
