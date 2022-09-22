@@ -61,7 +61,7 @@ const TransactionsChart = () => {
         {dataReady === true && chartData.length > 0 && (
           <>
             <Chart.Metrics {...{ metrics }} />
-            <Chart.Bar {...{ config }}></Chart.Bar>
+            <Chart.Bar {...{ config }} hasOnlyStartEndTick></Chart.Bar>
           </>
         )}
       </Chart.Body>

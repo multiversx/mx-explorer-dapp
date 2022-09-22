@@ -69,7 +69,7 @@ const StakingChart = () => {
         {dataReady === true && chartData.length > 0 && (
           <>
             <Chart.Metrics {...{ metrics }} />
-            <Chart.Area {...{ config }}></Chart.Area>
+            <Chart.Area {...{ config }} hasOnlyStartEndTick></Chart.Area>
           </>
         )}
       </Chart.Body>

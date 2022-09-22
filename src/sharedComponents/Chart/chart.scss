@@ -90,9 +90,11 @@
   padding: 0;
   margin-right: -2rem;
 
-  .recharts-cartesian-axis-tick {
-    &:first-of-type .recharts-cartesian-axis-tick-value {
-      display: none;
+  &.has-only-start-end-tick {
+    .recharts-cartesian-axis-tick {
+      &:first-of-type .recharts-cartesian-axis-tick-value {
+        display: none;
+      }
     }
   }
   .recharts-cartesian-axis-tick,

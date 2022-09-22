@@ -17,6 +17,7 @@ const ChartBar = ({
   currency,
   size,
   tooltip,
+  hasOnlyStartEndTick,
 }: ChartProps) => {
   const [focusBar, setFocusBar] = useState<any>(null);
 
@@ -26,7 +27,11 @@ const ChartBar = ({
   const primaryColor = docStyle.getPropertyValue('--primary');
 
   return (
-    <div className={`chart-bar mb-n3 ${size ? `chart-bar-${size}` : ''}`}>
+    <div
+      className={`chart-bar mb-n3 ${size ? `chart-bar-${size}` : ''} ${
+        hasOnlyStartEndTick ? 'has-only-start-end-tick' : ''
+      }`}
+    >
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={chartData}
@@ -70,10 +75,10 @@ const ChartBar = ({
           <XAxis
             dataKey="time"
             tickLine={false}
-            tick={<StartEndTick dateformat={dateFormat} />}
             tickFormatter={(tick) => moment(tick).format(dateFormat ?? 'D MMM YYYY')}
-            interval={0}
             strokeWidth={0.3}
+            {...(hasOnlyStartEndTick ? { tick: <StartEndTick dateformat={dateFormat} /> } : {})}
+            {...(hasOnlyStartEndTick ? { interval: 0 } : {})}
           />
 
           <YAxis

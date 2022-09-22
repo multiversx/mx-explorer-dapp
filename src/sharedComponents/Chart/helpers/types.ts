@@ -78,6 +78,7 @@ export interface ChartProps {
   category?: string;
   currency?: string;
   size?: ChartSizeEnum;
+  hasOnlyStartEndTick?: boolean;
   tooltip?: {
     showUsdValue?: boolean;
     dateFormat?: string;

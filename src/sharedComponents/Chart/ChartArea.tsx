@@ -18,6 +18,7 @@ const ChartArea = ({
   currency,
   size,
   tooltip,
+  hasOnlyStartEndTick,
 }: ChartProps) => {
   const chartData = getChartMergedData({ config, data, filter, category });
 
@@ -26,7 +27,11 @@ const ChartArea = ({
   const primaryColor = docStyle.getPropertyValue('--primary');
 
   return (
-    <div className={`chart-area mb-n3 ${size ? `chart-area-${size}` : ''}`}>
+    <div
+      className={`chart-area mb-n3 ${size ? `chart-area-${size}` : ''} ${
+        hasOnlyStartEndTick ? 'has-only-start-end-tick' : ''
+      }`}
+    >
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={chartData}>
           <defs>
@@ -62,10 +67,10 @@ const ChartArea = ({
           <XAxis
             dataKey="time"
             tickLine={false}
-            tick={<StartEndTick dateformat={dateFormat} />}
             tickFormatter={(tick) => moment.utc(tick).format(dateFormat ?? 'D MMM YYYY')}
-            interval={0}
             strokeWidth={0.3}
+            {...(hasOnlyStartEndTick ? { tick: <StartEndTick dateformat={dateFormat} /> } : {})}
+            {...(hasOnlyStartEndTick ? { interval: 0 } : {})}
           />
 
           <YAxis

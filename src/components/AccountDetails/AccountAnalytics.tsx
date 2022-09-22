@@ -93,22 +93,26 @@ const AccountAnalytics = () => {
               dataTestId="accountChartError"
             />
           )}
-          {dataReady === true && chartData.length > 1 ? (
-            <div className="mx-n4">
-              <Chart.Area
-                config={config}
-                currency={erdLabel}
-                tooltip={{ showUsdValue: true, dateFormat: 'MMM DD, YYYY HH:mm:ss UTC' }}
-              ></Chart.Area>
-            </div>
-          ) : (
-            <PageState
-              icon={faChartBar}
-              title="Not enough entries to display the chart"
-              className="my-auto"
-              titleClassName="mt-0"
-              dataTestId="accountChartSmall"
-            />
+          {dataReady === true && (
+            <>
+              {chartData.length > 1 ? (
+                <div className="mx-n4">
+                  <Chart.Area
+                    config={config}
+                    currency={erdLabel}
+                    tooltip={{ showUsdValue: true, dateFormat: 'MMM DD, YYYY HH:mm:ss UTC' }}
+                  ></Chart.Area>
+                </div>
+              ) : (
+                <PageState
+                  icon={faChartBar}
+                  title="Not enough entries to display the chart"
+                  className="my-auto"
+                  titleClassName="mt-0"
+                  dataTestId="accountChartSmall"
+                />
+              )}
+            </>
           )}
         </Chart.Body>
       </div>
