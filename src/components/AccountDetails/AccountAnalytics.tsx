@@ -49,12 +49,19 @@ const AccountAnalytics = () => {
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
+  const [startDate, setStartDate] = React.useState<string>('...');
+  const [endDate, setEndDate] = React.useState<string>('...');
 
   const getData = () => {
     getAccountHistory({ address: accountDetails.address, size: 100 }).then(
       (accountsHistoryData) => {
         if (accountsHistoryData.success) {
-          setChartData(processBalanceHistory({ data: accountsHistoryData.data }));
+          const reversedData = accountsHistoryData.data.reverse();
+          const startTimestamp = reversedData[0].timestamp;
+          const endTimestamp = reversedData[reversedData.length - 1].timestamp;
+          setChartData(processBalanceHistory({ data: reversedData }));
+          setStartDate(moment.unix(startTimestamp).utc().format('MMM DD, YYYY HH:mm:ss UTC'));
+          setEndDate(moment.unix(endTimestamp).utc().format('MMM DD, YYYY HH:mm:ss UTC'));
         }
         setDataReady(accountsHistoryData.success);
       }
@@ -81,7 +88,7 @@ const AccountAnalytics = () => {
           <AccountTabs />
         </div>
         <div className="card-header-item d-flex align-items-center bg-light">
-          Account {erdLabel} Balance ( last 100 entries )
+          Account {erdLabel} Balance ( from {startDate} to {endDate} )
         </div>
       </div>
       <div className="card-body px-lg-spacer py-lg-4">
