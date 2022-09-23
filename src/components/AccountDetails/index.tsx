@@ -16,8 +16,12 @@ interface TransactionsResponseType {
 
 const AccountDetails = () => {
   const ref = React.useRef(null);
-  const { getAccountTransfers, getAccountTransfersCount, getTransactions, getTransactionsCount } =
-    adapter();
+  const {
+    getAccountTransfers,
+    getAccountTransfersCount,
+    getTransactions,
+    getTransactionsCount,
+  } = adapter();
   const { size, firstPageTicker } = useSize();
   const { method } = useURLSearchParams();
   const { activeNetworkId, accountDetails } = useGlobalState();
@@ -121,7 +125,7 @@ const AccountDetails = () => {
               size={size}
               directionCol={true}
               title={<AccountTabs />}
-              allowFilters={true}
+              // allowFilters={true}
               baseRoute={urlBuilder.accountDetails(address)}
             />
           ) : (
