@@ -6,7 +6,7 @@ const StartEndTick = (props: any) => {
 
   const args = Object.keys(props).reduce(
     (total, key) => (extractables.includes(key) ? total : { ...total, [key]: props[key] }),
-    { x: 30, index: 0, payload: { value: {} } }
+    { x: 30, index: 0, payload: { value: 0 } }
   );
 
   const isFirst = props?.payload?.index === 0;
@@ -16,7 +16,10 @@ const StartEndTick = (props: any) => {
       <g className="recharts-layer recharts-cartesian-axis-tick">
         <text {...args}>
           <tspan x={args.x + (isFirst ? 20 : 10)} dy="0.71em">
-            {moment.utc(args.payload.value).format(props?.dateformat ?? 'D MMM YYYY')}
+            {moment
+              .unix(args.payload.value)
+              .utc()
+              .format(props?.dateformat ?? 'D MMM YYYY')}
           </tspan>
         </text>
       </g>

@@ -75,8 +75,11 @@ const CustomTooltip = ({
           ))}
         </ul>
         <div className="recharts-tooltip-label">
-          {payload[0]?.payload?.time
-            ? moment.utc(payload[0].payload.time).format(dateFormat ?? 'D MMM YYYY')
+          {payload[0]?.payload?.timestamp
+            ? moment
+                .unix(payload[0].payload.timestamp)
+                .utc()
+                .format(dateFormat ?? 'D MMM YYYY')
             : label}
         </div>
       </div>

@@ -1,7 +1,6 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import BigNumber from 'bignumber.js';
-import moment from 'moment';
 import {
   ResponsiveContainer,
   XAxis,
@@ -16,6 +15,7 @@ import {
 
 import { Chart, Loader, PageState, adapter } from 'sharedComponents';
 import CustomTooltip from 'sharedComponents/Chart/helpers/CustomTooltip';
+import formatDataCharts from 'sharedComponents/Chart/helpers/formatDataCharts';
 import formatYAxis from 'sharedComponents/Chart/helpers/formatYAxis';
 import StartEndTick from 'sharedComponents/Chart/helpers/StartEndTick';
 import { ControlType, ChartDataType } from 'sharedComponents/Chart/helpers/types';
@@ -47,28 +47,19 @@ const Price = () => {
   const mutedColor = docStyle.getPropertyValue('--muted');
   const fadedBackground = docStyle.getPropertyValue('--chart-faded-bg');
 
-  const format = useCallback(
-    (data) =>
-      data.map((item: ChartDataType) => ({
-        ...item,
-        time: moment(item.time).format('D MMM YYYY'),
-      })),
-    []
-  );
-
   const getData = () => {
     Promise.all([getEgldPriceHistory(), getEgldMarketCapHistory(), getEgldVolumeHistory()]).then(
       ([priceHistoryData, marketCapHistoryData, volumeHistoryData]) => {
         priceHistoryData.success
-          ? setPriceChartData(format(priceHistoryData.data))
+          ? setPriceChartData(formatDataCharts(priceHistoryData.data))
           : setPriceChartData([]);
 
         marketCapHistoryData.success
-          ? setMarketCapChartData(format(marketCapHistoryData.data))
+          ? setMarketCapChartData(formatDataCharts(marketCapHistoryData.data))
           : setMarketCapChartData([]);
 
         volumeHistoryData.success
-          ? setVolumeChartData(format(volumeHistoryData.data))
+          ? setVolumeChartData(formatDataCharts(volumeHistoryData.data))
           : setVolumeChartData([]);
 
         setDataReady(
@@ -143,7 +134,7 @@ const Price = () => {
                   </defs>
 
                   <XAxis
-                    dataKey="time"
+                    dataKey="timestamp"
                     tickLine={false}
                     tick={StartEndTick as any}
                     interval={0}

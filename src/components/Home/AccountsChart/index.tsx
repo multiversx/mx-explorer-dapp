@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js';
 import { Chart, Loader, PageState, adapter } from 'sharedComponents';
 import getLastDayValue from 'sharedComponents/Chart/helpers/getLastDayValue';
 import { ChartDataType, ChartConfigType } from 'sharedComponents/Chart/helpers/types';
+import formatDataCharts from 'sharedComponents/Chart/helpers/formatDataCharts';
 
 import { useGlobalState } from 'context';
 
@@ -18,7 +19,7 @@ const AccountsChart = () => {
   const getData = () => {
     getAccountsHistory().then((accountsHistoryData) => {
       if (accountsHistoryData.success) {
-        setChartData(accountsHistoryData.data);
+        setChartData(formatDataCharts(accountsHistoryData.data));
       }
       setDataReady(accountsHistoryData.success);
     });

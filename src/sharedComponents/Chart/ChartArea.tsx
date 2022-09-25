@@ -21,6 +21,7 @@ const ChartArea = ({
   hasOnlyStartEndTick,
 }: ChartProps) => {
   const chartData = getChartMergedData({ config, data, filter, category });
+  const domain = [chartData[0].timestamp, chartData[chartData.length - 1].timestamp];
 
   const docStyle = window.getComputedStyle(document.documentElement);
   const mutedColor = docStyle.getPropertyValue('--muted');
@@ -65,12 +66,21 @@ const ChartArea = ({
             })}
           </defs>
           <XAxis
-            dataKey="time"
+            minTickGap={40}
+            tickCount={10}
+            dataKey="timestamp"
             tickLine={false}
-            tickFormatter={(tick) => moment.utc(tick).format(dateFormat ?? 'D MMM YYYY')}
+            domain={domain}
+            tickFormatter={(tick) =>
+              moment
+                .unix(tick)
+                .utc()
+                .format(dateFormat ?? 'D MMM YYYY')
+            }
             strokeWidth={0.3}
             {...(hasOnlyStartEndTick ? { tick: <StartEndTick dateformat={dateFormat} /> } : {})}
             {...(hasOnlyStartEndTick ? { interval: 0 } : {})}
+            {...(chartData.length > 3 ? { scale: 'time' } : {})}
           />
 
           <YAxis

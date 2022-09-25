@@ -1,6 +1,7 @@
 export interface ChartDataType {
-  time: string;
+  timestamp: number;
   value: string;
+  isBinnedData?: boolean;
 }
 
 export interface MergedChartDataType {

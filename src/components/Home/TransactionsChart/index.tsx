@@ -4,6 +4,7 @@ import BigNumber from 'bignumber.js';
 
 import { Chart, Loader, PageState, adapter } from 'sharedComponents';
 import { ChartDataType, ChartConfigType } from 'sharedComponents/Chart/helpers/types';
+import formatDataCharts from 'sharedComponents/Chart/helpers/formatDataCharts';
 
 import { useGlobalState } from 'context';
 
@@ -17,7 +18,7 @@ const TransactionsChart = () => {
   const getData = () => {
     getTransactionsHistory().then((transactionsHistoryData) => {
       if (transactionsHistoryData.success) {
-        setChartData(transactionsHistoryData.data);
+        setChartData(formatDataCharts(transactionsHistoryData.data));
       }
       setDataReady(transactionsHistoryData.success);
     });

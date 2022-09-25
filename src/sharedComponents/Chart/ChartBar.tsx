@@ -73,12 +73,20 @@ const ChartBar = ({
             })}
           </defs>
           <XAxis
-            dataKey="time"
+            minTickGap={40}
+            tickCount={10}
+            dataKey="timestamp"
             tickLine={false}
-            tickFormatter={(tick) => moment(tick).format(dateFormat ?? 'D MMM YYYY')}
+            tickFormatter={(tick) =>
+              moment
+                .unix(tick)
+                .utc()
+                .format(dateFormat ?? 'D MMM YYYY')
+            }
             strokeWidth={0.3}
             {...(hasOnlyStartEndTick ? { tick: <StartEndTick dateformat={dateFormat} /> } : {})}
             {...(hasOnlyStartEndTick ? { interval: 0 } : {})}
+            {...(chartData.length > 3 ? { scale: 'time' } : {})}
           />
 
           <YAxis

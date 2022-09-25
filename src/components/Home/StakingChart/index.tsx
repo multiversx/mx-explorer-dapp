@@ -4,6 +4,7 @@ import BigNumber from 'bignumber.js';
 
 import { Chart, Loader, PageState, adapter } from 'sharedComponents';
 import { ChartDataType, ChartConfigType } from 'sharedComponents/Chart/helpers/types';
+import formatDataCharts from 'sharedComponents/Chart/helpers/formatDataCharts';
 
 import { useGlobalState } from 'context';
 
@@ -22,7 +23,7 @@ const StakingChart = () => {
           setUsersStaking(usersStakingData.data);
         }
         if (totalStakedData.success) {
-          setChartData(totalStakedData.data);
+          setChartData(formatDataCharts(totalStakedData.data));
         }
 
         setDataReady(usersStakingData.success && totalStakedData.success);
