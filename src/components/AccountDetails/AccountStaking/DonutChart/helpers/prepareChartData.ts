@@ -90,7 +90,7 @@ const prepareChartData = ({
         addCommas: false,
       });
       chartData.push({
-        name: 'Staked',
+        name: 'Staked Validator Nodes',
         identifier: 'defaultstaked',
         value: Number(amount),
       });
