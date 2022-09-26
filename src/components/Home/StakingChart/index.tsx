@@ -62,7 +62,7 @@ const StakingChart = () => {
           <PageState
             icon={faChartBar}
             title="Unable to load chart"
-            className="my-auto"
+            className="py-spacer my-auto"
             titleClassName="mt-0"
             dataTestId="stakingChartError"
           />

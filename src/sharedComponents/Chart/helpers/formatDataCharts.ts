@@ -4,7 +4,7 @@ import { ChartDataType } from './types';
 const formatDataCharts = (data: { value: number; time: string }[]): ChartDataType[] => {
   const formattedData = data.map((entry) => {
     return {
-      value: entry.value.toString(),
+      value: entry.value,
       timestamp: Number(moment(entry.time).format('X')),
     };
   });
