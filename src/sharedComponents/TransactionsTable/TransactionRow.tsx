@@ -21,6 +21,8 @@ export interface TransactionRowType {
   directionCol?: boolean;
   address?: string;
   showLockedAccounts?: boolean;
+  baseRoute?: string;
+  allowFilters?: boolean;
 }
 
 const TransactionRow = ({
@@ -28,6 +30,8 @@ const TransactionRow = ({
   address,
   directionCol,
   showLockedAccounts,
+  baseRoute,
+  allowFilters,
 }: TransactionRowType) => {
   let receiver = transaction.receiver;
   if (transaction?.action?.arguments?.receiver) {
@@ -62,11 +66,11 @@ const TransactionRow = ({
         <div className="d-flex align-items-center">
           <TransactionIcon transaction={transaction} />
           <NetworkLink
-            to={`/transactions/${
+            to={urlBuilder.transactionDetails(
               transaction.originalTxHash
                 ? `${transaction.originalTxHash}#${transaction.txHash}`
                 : transaction.txHash
-            }`}
+            )}
             data-testid="transactionLink"
             className="trim-wrapper"
           >
@@ -145,7 +149,11 @@ const TransactionRow = ({
         </div>
       </td>
       <td className="transaction-function">
-        <TransactionMethod transaction={transaction} />
+        <TransactionMethod
+          transaction={transaction}
+          baseRoute={baseRoute}
+          allowFilters={allowFilters}
+        />
       </td>
       <td>
         <TransactionValue transaction={transaction} />

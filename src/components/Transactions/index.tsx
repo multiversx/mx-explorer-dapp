@@ -6,12 +6,13 @@ import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import { useSize, useURLSearchParams } from 'helpers';
 import { shardSpanText } from 'sharedComponents/ShardSpan';
+import { transactionsRoutes } from 'routes';
 
 const Transactions = () => {
   const ref = React.useRef(null);
   const { activeNetworkId } = useGlobalState();
 
-  const { senderShard, receiverShard } = useURLSearchParams();
+  const { senderShard, receiverShard, method } = useURLSearchParams();
   const { size, firstPageTicker } = useSize();
 
   React.useEffect(() => {
@@ -31,6 +32,7 @@ const Transactions = () => {
       size,
       senderShard,
       receiverShard,
+      method,
     }).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
@@ -47,6 +49,7 @@ const Transactions = () => {
     getTransactionsCount({
       senderShard,
       receiverShard,
+      method,
     }).then(({ data: count, success }) => {
       if (ref.current !== null && success) {
         setTotalTransactions(Math.min(count, 10000));
@@ -70,6 +73,8 @@ const Transactions = () => {
                     transactions={transactions}
                     totalTransactions={totalTransactions}
                     size={size}
+                    allowFilters={true}
+                    baseRoute={transactionsRoutes.transactions}
                     title={
                       <h6 data-testid="title">
                         Transactions

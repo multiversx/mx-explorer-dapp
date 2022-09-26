@@ -310,6 +310,18 @@ div.side-icon {
   }
 }
 
+.filters {
+  .btn-pill {
+    font-size: 0.8125rem;
+  }
+
+  #more {
+    &:after {
+      vertical-align: 1px;
+    }
+  }
+}
+
 @include media-breakpoint-up(lg) {
   .mw-lg-6 {
     max-width: 50%;

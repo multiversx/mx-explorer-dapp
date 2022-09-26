@@ -68,7 +68,7 @@ const Tokens = () => {
                       </div>
                     </div>
                     <div className="card-header-item d-flex justify-content-between align-items-center">
-                      <div className="nodes-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
+                      <div className="filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
                         <ul className="list-inline m-0">
                           <li className="list-inline-item my-1 my-md-0">
                             <NetworkLink

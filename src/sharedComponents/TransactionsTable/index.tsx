@@ -1,5 +1,6 @@
 import * as React from 'react';
 import TransactionRow from './TransactionRow';
+import TransactionsFilters from './TransactionsFilters';
 import Pager from '../Pager';
 import { UITransactionType as TransacionInterface } from 'helpers/types';
 
@@ -13,6 +14,8 @@ interface TransactionsTableType {
   title?: React.ReactNode;
   directionCol?: boolean;
   showLockedAccounts?: boolean;
+  baseRoute?: string;
+  allowFilters?: boolean;
 }
 
 const TransactionsTable = ({
@@ -27,6 +30,8 @@ const TransactionsTable = ({
   ),
   directionCol = false,
   showLockedAccounts = false,
+  baseRoute,
+  allowFilters,
 }: TransactionsTableType) => {
   return (
     <div className={`transactions-table ${directionCol ? 'has-direction' : ''}`}>
@@ -34,6 +39,7 @@ const TransactionsTable = ({
         <div className="card-header">
           <div className="card-header-item d-flex justify-content-between align-items-center">
             <div>{title}</div>
+
             <div className="d-none d-sm-flex">
               <Pager
                 itemsPerPage={25}
@@ -48,6 +54,7 @@ const TransactionsTable = ({
               />
             </div>
           </div>
+          {allowFilters && baseRoute && <TransactionsFilters baseRoute={baseRoute} />}
         </div>
 
         <div className="card-body p-0">
@@ -73,6 +80,8 @@ const TransactionsTable = ({
                     address={address}
                     directionCol={directionCol}
                     showLockedAccounts={showLockedAccounts}
+                    allowFilters={allowFilters}
+                    baseRoute={baseRoute}
                   />
                 ))}
               </tbody>
