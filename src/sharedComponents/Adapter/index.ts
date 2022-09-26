@@ -252,6 +252,14 @@ export default function useAdapter() {
     getAccountContractsCount: (address: string) =>
       provider({ url: `/accounts/${address}/contracts/c` }),
 
+    getAccountHistory: ({ address, size }: { address: string; size?: number }) =>
+      provider({
+        url: `/accounts/${address}/history`,
+        params: {
+          ...(size !== undefined ? { size } : {}),
+        },
+      }),
+
     getScResult: (hash: string) => provider({ url: `/sc-results/${hash}` }),
 
     getScResults: (size = 1) =>

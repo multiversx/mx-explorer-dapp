@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NetworkLink } from 'sharedComponents';
-import { urlBuilder, useActiveRoute } from 'helpers';
+import { urlBuilder, useActiveRoute, isContract } from 'helpers';
 import { useGlobalState } from 'context';
 import { accountsRoutes } from 'routes';
 
@@ -52,6 +52,26 @@ const AccountTabs = () => {
         }`}
       >
         <h6>NFTs</h6>
+      </NetworkLink>
+
+      {!isContract(accountDetails.address) && (
+        <NetworkLink
+          to={urlBuilder.accountDetailsStaking(accountDetails.address)}
+          className={`tab-link mr-3 mr-lg-spacer ${
+            activeRoute(accountsRoutes.accountStaking) ? 'active' : ''
+          }`}
+        >
+          <h6>Staking</h6>
+        </NetworkLink>
+      )}
+
+      <NetworkLink
+        to={urlBuilder.accountDetailsAnalytics(accountDetails.address)}
+        className={`tab-link mr-3 mr-lg-spacer ${
+          activeRoute(accountsRoutes.accountAnalytics) ? 'active' : ''
+        }`}
+      >
+        <h6>Analytics</h6>
       </NetworkLink>
 
       {!accountDetails.code && (

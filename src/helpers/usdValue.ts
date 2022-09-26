@@ -1,9 +1,22 @@
-const usdValue = ({ amount, usd }: { amount: string; usd: number }) => {
-  const sum = (parseFloat(amount) * usd).toFixed(2);
-  return parseFloat(sum).toLocaleString('en', {
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 2,
-  });
+import BigNumber from 'bignumber.js';
+
+const usdValue = ({
+  amount,
+  usd,
+  showPrefix,
+  decimals,
+}: {
+  amount: string;
+  usd?: number;
+  showPrefix?: boolean;
+  decimals?: number;
+}) => {
+  if (!usd) {
+    return '...';
+  }
+
+  const value = new BigNumber(amount).times(usd);
+  return `${showPrefix ? (value.isEqualTo(0) ? '= ' : '≈ ') : ''}$${value.toFormat(decimals ?? 2)}`;
 };
 
 export default usdValue;

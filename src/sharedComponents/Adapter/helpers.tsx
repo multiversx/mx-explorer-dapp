@@ -19,6 +19,7 @@ export interface GetNodesType {
 
 export interface GetProvidersType {
   identity?: string;
+  providers?: string;
   fields?: string;
 }
 
@@ -152,9 +153,10 @@ export function getNodeParams({
   return params;
 }
 
-export function getProviderParams({ identity }: GetProvidersType) {
+export function getProviderParams({ identity, providers }: GetProvidersType) {
   const params: ProviderPropsType['params'] = {
     ...(identity !== undefined ? { identity } : {}),
+    ...(providers !== undefined ? { providers } : {}),
   };
   return params;
 }
