@@ -1,6 +1,6 @@
 export interface ChartDataType {
   timestamp: number;
-  value: string;
+  value: string | number;
   isBinnedData?: boolean;
 }
 

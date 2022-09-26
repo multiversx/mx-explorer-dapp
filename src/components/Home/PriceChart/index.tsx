@@ -114,7 +114,7 @@ const Price = () => {
           <PageState
             icon={faChartBar}
             title="Unable to load chart"
-            className="my-auto"
+            className="py-spacer my-auto"
             titleClassName="mt-0"
             dataTestId="priceChartError"
           />
@@ -145,6 +145,7 @@ const Price = () => {
                     tickFormatter={(tick) => formatYAxis(tick, '$')}
                     axisLine={false}
                     tickLine={false}
+                    type="number"
                   />
                   <Area
                     type="monotone"
@@ -162,7 +163,7 @@ const Price = () => {
                   />
                 </AreaChart>
               </ResponsiveContainer>
-              <ResponsiveContainer width="100%" height="30%">
+              <ResponsiveContainer width="100%" height={100}>
                 <BarChart
                   data={volumeChartData}
                   onMouseMove={(state) => {
@@ -174,12 +175,13 @@ const Price = () => {
                   }}
                   syncId="priceChart"
                 >
+                  <XAxis dataKey="timestamp" tickLine={false} tick={false} strokeWidth={0.3} />
                   <YAxis
                     orientation="right"
                     tickFormatter={(tick) => formatYAxis(tick, '$')}
                     axisLine={false}
                     tickLine={false}
-                    tickCount={5}
+                    tick={false}
                   />
 
                   <Bar dataKey="value">
