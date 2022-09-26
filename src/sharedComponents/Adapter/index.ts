@@ -195,7 +195,13 @@ export default function useAdapter() {
 
     /* Transactions */
 
-    getTransactions: ({ size, address, senderShard, receiverShard }: TransactionsParamsType) =>
+    getTransactions: ({
+      size,
+      address,
+      senderShard,
+      receiverShard,
+      method,
+    }: TransactionsParamsType) =>
       provider({
         url: `/transactions`,
         params: getTransactionsParams({
@@ -203,30 +209,57 @@ export default function useAdapter() {
           address,
           senderShard,
           receiverShard,
+          method,
         }),
       }),
 
-    getTransactionsCount: ({ address, senderShard, receiverShard }: TransactionsParamsType) =>
+    getTransactionsCount: ({
+      address,
+      senderShard,
+      receiverShard,
+      method,
+    }: TransactionsParamsType) =>
       provider({
         url: `/transactions/c`,
         params: {
           ...getAccountParams(address),
           ...(senderShard !== undefined ? { senderShard } : {}),
           ...(receiverShard !== undefined ? { receiverShard } : {}),
+          ...(method ? { function: method } : {}),
         },
       }),
 
-    getAccountTransfers: ({ address, size }: { address: string; size: number }) =>
+    getAccountTransfers: ({
+      size,
+      address,
+      senderShard,
+      receiverShard,
+      method,
+    }: TransactionsParamsType) =>
       provider({
         url: `/accounts/${address}/transfers`,
-        params: {
-          from: (size - 1) * pageSize,
-          size: pageSize,
-        },
+        params: getTransactionsParams({
+          size,
+          senderShard,
+          receiverShard,
+          method,
+        }),
       }),
 
-    getAccountTransfersCount: (address: string) =>
-      provider({ url: `/accounts/${address}/transfers/c` }),
+    getAccountTransfersCount: ({
+      address,
+      senderShard,
+      receiverShard,
+      method,
+    }: TransactionsParamsType) =>
+      provider({
+        url: `/accounts/${address}/transfers/c`,
+        params: {
+          ...(senderShard !== undefined ? { senderShard } : {}),
+          ...(receiverShard !== undefined ? { receiverShard } : {}),
+          ...(method ? { function: method } : {}),
+        },
+      }),
 
     getAccountScResults: ({ address, size }: { address: string; size: number }) =>
       provider({
