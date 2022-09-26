@@ -33,7 +33,7 @@ const TxActionNft = ({
                   showLastNonZeroDecimal={showLastNonZeroDecimal}
                 />
               ) : (
-                Number(token.value).toLocaleString('en')
+                Number(token.value).toLocaleString('en') !== '∞' ?? ''
               )}
             </div>
           )}

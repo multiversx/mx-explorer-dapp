@@ -29,17 +29,11 @@ const AccountDetailsCard = () => {
     activeNetwork: { id, adapter: networkAdapter },
     accountDetails,
   } = useGlobalState();
-  const {
-    getProvider,
-
-    getAccountTokensCount,
-    getAccountNftsCount,
-  } = adapter();
+  const { getProvider, getAccountTokensCount, getAccountNftsCount } = adapter();
   const {
     address,
     balance,
     nonce,
-
     shard,
     ownerAddress,
     developerReward,
