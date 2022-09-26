@@ -2,20 +2,20 @@ import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLeaf } from '@fortawesome/pro-regular-svg-icons';
 import BigNumber from 'bignumber.js';
-import { Denominate } from 'sharedComponents';
-import { DelegationLegacyType, ProviderType } from 'helpers/types';
-import { useGlobalState } from 'context';
 
 import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol.svg';
+import { useGlobalState } from 'context';
+import { DelegationLegacyType, IdentityType } from 'helpers/types';
+import { Denominate } from 'sharedComponents';
 
 import DetailsBlock from '../DetailsBlock';
 
 const AccountLegacyDelegation = ({
   delegationLegacy,
-  elrondNodes,
+  identity,
 }: {
   delegationLegacy: DelegationLegacyType;
-  elrondNodes?: ProviderType;
+  identity?: IdentityType;
 }) => {
   const {
     activeNetwork: { erdLabel },
@@ -35,14 +35,14 @@ const AccountLegacyDelegation = ({
     if (
       economics.baseApr !== '...' &&
       economics.topUpApr !== '...' &&
-      elrondNodes?.stake &&
-      elrondNodes?.topUp &&
-      elrondNodes?.locked
+      identity?.stake &&
+      identity?.topUp &&
+      identity?.locked
     ) {
-      const legacyDelegationBN = new BigNumber(elrondNodes.stake)
+      const legacyDelegationBN = new BigNumber(identity.stake)
         .times(new BigNumber(economics.baseApr))
-        .plus(new BigNumber(elrondNodes.topUp).times(economics.topUpApr))
-        .dividedBy(new BigNumber(elrondNodes.locked))
+        .plus(new BigNumber(identity.topUp).times(economics.topUpApr))
+        .dividedBy(new BigNumber(identity.locked))
         .times(new BigNumber(100));
 
       setLegacyDelegationApr(`${legacyDelegationBN.toNumber().toFixed(2)}%`);
@@ -51,7 +51,7 @@ const AccountLegacyDelegation = ({
     }
   };
 
-  useEffect(getLegacyDelegationApr, [economics, elrondNodes]);
+  useEffect(getLegacyDelegationApr, [economics, identity]);
 
   return (
     <div className="delegation-row d-flex flex-wrap align-items-center justify-content-between p-3 px-md-4">

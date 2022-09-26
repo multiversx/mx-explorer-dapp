@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js';
 import { StakingDetailsType } from 'helpers/useFetchStakingDetails';
-import { ProvidersDetailsType } from 'helpers/useFetchProvidersDetails';
 import denominate from 'sharedComponents/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
+import { ProviderType } from 'helpers/types';
 
 interface DonutChartDataType {
   name: string;
@@ -13,13 +13,13 @@ interface DonutChartDataType {
 
 const prepareChartData = ({
   stakingDetails,
-  providersDetails,
+  providers,
 }: {
   stakingDetails: StakingDetailsType;
-  providersDetails: ProvidersDetailsType;
+  providers: ProviderType[];
 }): DonutChartDataType[] => {
   const {
-    dataFetched,
+    stakingDataReady,
     delegation,
     stake,
     delegationLegacy,
@@ -28,11 +28,10 @@ const prepareChartData = ({
     bNtotalLegacyDelegation,
     bNtotalStaked,
   } = stakingDetails;
-  const { providers, dataReady } = providersDetails;
 
   const defaultData = [{ name: 'No Staking', value: 1, displayValue: 0 }];
 
-  if (dataFetched && dataReady) {
+  if (stakingDataReady) {
     const chartData: DonutChartDataType[] = [];
     const displayDelegations = delegation
       ? delegation.filter(

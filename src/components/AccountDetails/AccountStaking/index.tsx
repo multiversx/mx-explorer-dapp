@@ -9,25 +9,23 @@ import DonutChart from './DonutChart';
 
 import { Loader, PageState } from 'sharedComponents';
 
-import useFetchProvidersDetails from 'helpers/useFetchProvidersDetails';
 import useFetchStakingDetails from 'helpers/useFetchStakingDetails';
 
 const AccountStaking = () => {
   const stakingDetails = useFetchStakingDetails();
-  const providersDetails = useFetchProvidersDetails({ includeElrondNodes: true });
+
   const {
-    dataFetched,
+    providerDataReady,
+    stakingDataReady,
     delegation,
+    delegationProviders,
     stake,
     delegationLegacy,
+    delegationLegacyIdentity,
     showDelegation,
     showDelegationLegacy,
     showStake,
   } = stakingDetails;
-  const { providers, elrondNodes, dataReady } = providersDetails;
-
-  const isReady = dataFetched && dataReady;
-  const hasStaking = showDelegation || showDelegationLegacy || showStake;
 
   const displayDelegation = delegation
     ? delegation.filter(
@@ -38,6 +36,9 @@ const AccountStaking = () => {
       )
     : [];
 
+  const hasStaking = showDelegation || showDelegationLegacy || showStake;
+  const isReady = providerDataReady && stakingDataReady;
+
   return (
     <div className="card">
       <div className="card-header">
@@ -46,8 +47,7 @@ const AccountStaking = () => {
         </div>
       </div>
       <div className="account-staking card-body p-0">
-        {!isReady && <Loader dataTestId="stakingLoader" />}
-        {isReady && (
+        {isReady ? (
           <div className="row">
             {hasStaking ? (
               <>
@@ -56,7 +56,7 @@ const AccountStaking = () => {
                     <div className="account-delegation">
                       <div className="px-spacer py-3 border-bottom bg-light">Staking List</div>
                       {displayDelegation.map((delegation, i) => {
-                        const provider = providers.find(
+                        const provider = delegationProviders?.find(
                           ({ provider }) => delegation.contract === provider
                         );
                         return provider ? (
@@ -75,7 +75,7 @@ const AccountStaking = () => {
 
                       <AccountLegacyDelegation
                         delegationLegacy={delegationLegacy}
-                        elrondNodes={elrondNodes}
+                        identity={delegationLegacyIdentity}
                       />
                     </div>
                   )}
@@ -93,10 +93,7 @@ const AccountStaking = () => {
                     Staking Chart
                   </div>
                   <div className="staking-chart-holder">
-                    <DonutChart
-                      stakingDetails={stakingDetails}
-                      providersDetails={providersDetails}
-                    />
+                    <DonutChart stakingDetails={stakingDetails} providers={delegationProviders} />
                   </div>
                 </div>
               </>
@@ -111,6 +108,8 @@ const AccountStaking = () => {
               </div>
             )}
           </div>
+        ) : (
+          <Loader dataTestId="stakingLoader" />
         )}
       </div>
     </div>

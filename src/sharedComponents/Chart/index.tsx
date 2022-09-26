@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import ChartArea from './ChartArea';
 import ChartBar from './ChartBar';
+import ChartDonut from './ChartDonut';
 import ChartBody from './ChartBody';
 import ChartControls from './ChartControls';
 import ChartHeading from './ChartHeading';
@@ -13,6 +14,7 @@ export default class Chart extends React.Component<{
 }> {
   static Area = ChartArea;
   static Bar = ChartBar;
+  static Donut = ChartDonut;
   static Options = ChartOptions;
   static Heading = ChartHeading;
   static Controls = ChartControls;

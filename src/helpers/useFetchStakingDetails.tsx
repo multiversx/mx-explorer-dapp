@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BigNumber from 'bignumber.js';
 
 import { adapter } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import { DelegationLegacyType, DelegationType, StakeType } from 'helpers/types';
+import { IdentityType, ProviderType } from 'helpers/types';
 
 export interface StakingDetailsType {
-  dataFetched: boolean;
+  stakingDataReady: boolean | undefined;
   bNtotalStaked: BigNumber;
   bNtotalDelegation: BigNumber;
   bNtotalLegacyDelegation: BigNumber;
@@ -20,9 +21,17 @@ export interface StakingDetailsType {
   showDelegation: boolean;
 }
 
+const ELROND_NODES_IDENTITY = 'elrondcom';
+
 const useFetchStakingDetails = () => {
   const { accountDetails } = useGlobalState();
-  const { getAccountDelegationLegacy, getAccountDelegation, getAccountStake } = adapter();
+  const {
+    getAccountDelegationLegacy,
+    getAccountDelegation,
+    getAccountStake,
+    getProviders,
+    getIdentities,
+  } = adapter();
   const { address, txCount } = accountDetails;
 
   let bNtotalStaked = new BigNumber(0);
@@ -31,8 +40,8 @@ const useFetchStakingDetails = () => {
   let bNtotalLocked = new BigNumber(0);
   let bNtotalClaimable = new BigNumber(0);
 
-  const [stakingDetails, setStakingDetails] = React.useState<StakingDetailsType>({
-    dataFetched: false,
+  const [stakingDetails, setStakingDetails] = useState<StakingDetailsType>({
+    stakingDataReady: undefined,
     showDelegation: false,
     showDelegationLegacy: false,
     showStake: false,
@@ -42,6 +51,10 @@ const useFetchStakingDetails = () => {
     bNtotalLocked,
     bNtotalClaimable,
   });
+
+  const [providerDataReady, setProviderDataReady] = useState<boolean | undefined>(undefined);
+  const [delegationProviders, setDelegationProviders] = useState<ProviderType[]>([]);
+  const [delegationLegacyIdentity, setDelegationLegacyIdentity] = useState<IdentityType>();
 
   const fetchStakingDetailsAndPrice = () => {
     if (!document.hidden) {
@@ -95,14 +108,13 @@ const useFetchStakingDetails = () => {
           bNtotalLocked = bNtotalStaked.plus(bNtotalLegacyDelegation).plus(bNtotalDelegation);
         }
 
-        const showDelegation = delegation
-          ? delegation.filter(
-              (delegation) =>
-                delegation.userActiveStake !== '0' ||
-                delegation.claimableRewards !== '0' ||
-                delegation.userUndelegatedList?.length > 0
-            ).length > 0
-          : false;
+        const visibleDelegation = delegation.filter(
+          (delegation) =>
+            delegation.userActiveStake !== '0' ||
+            delegation.claimableRewards !== '0' ||
+            delegation.userUndelegatedList?.length > 0
+        );
+        const showDelegation = visibleDelegation.length > 0;
 
         const showDelegationLegacy =
           delegationLegacy &&
@@ -115,10 +127,77 @@ const useFetchStakingDetails = () => {
           (stake?.totalStaked !== '0' ||
             (stake?.unstakedTokens && stake.unstakedTokens.length > 0));
 
-        const dataFetched = stakeFetched && delegationLegacyFetched && delegationFetched;
+        //const updatedContracts = contracts ? contracts.join(',') : undefined;
+        const fields = [
+          'identity',
+          'provider',
+          'stake',
+          'numNodes',
+          'apr',
+          'serviceFee',
+          'delegationCap',
+        ].join(',');
+        const contracts = visibleDelegation.map((delegation) => delegation?.contract).join(',');
+
+        if (showDelegation || showDelegationLegacy) {
+          getProviders({
+            fields,
+            ...(contracts ? { providers: contracts } : {}),
+          }).then((providersData) => {
+            if (providersData.success) {
+              let newProvidersData: ProviderType[] = providersData.data;
+
+              const providerIdentitiesList = newProvidersData
+                .filter((item) => item.identity)
+                .map((item) => item.identity);
+
+              if (showDelegationLegacy && !providerIdentitiesList.includes(ELROND_NODES_IDENTITY)) {
+                providerIdentitiesList.push(ELROND_NODES_IDENTITY);
+              }
+
+              const identities = providerIdentitiesList.join(',');
+
+              if (identities) {
+                getIdentities(identities).then((identitiesData) => {
+                  if (identitiesData.success) {
+                    newProvidersData.forEach((provider) => {
+                      if (provider.identity) {
+                        const identityDetails = identitiesData.data.find(
+                          (identity: IdentityType) => identity.identity === provider.identity
+                        );
+
+                        const elrondNodes = identitiesData.data.filter((identity: IdentityType) => {
+                          return identity.identity === ELROND_NODES_IDENTITY;
+                        });
+                        if (elrondNodes.length > 0) {
+                          setDelegationLegacyIdentity(elrondNodes[0]);
+                        }
+
+                        if (identityDetails) {
+                          provider.identityDetails = identityDetails;
+                        }
+                      }
+                    });
+                  }
+
+                  setDelegationProviders(newProvidersData);
+                });
+              } else {
+                setDelegationProviders(providersData.data);
+              }
+              setProviderDataReady(true);
+            } else {
+              setProviderDataReady(providersData.success);
+            }
+          });
+        } else {
+          setProviderDataReady(true);
+        }
+
+        const stakingDataReady = stakeFetched && delegationFetched && delegationLegacyFetched;
 
         setStakingDetails({
-          dataFetched,
+          stakingDataReady,
           delegation,
           showDelegation,
           stake,
@@ -140,7 +219,12 @@ const useFetchStakingDetails = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txCount, address]);
 
-  return stakingDetails;
+  return {
+    ...stakingDetails,
+    providerDataReady,
+    delegationProviders,
+    delegationLegacyIdentity,
+  };
 };
 
 export default useFetchStakingDetails;
