@@ -14,7 +14,9 @@ const getMoment = (timestamp: string | number): Moment => {
   return typeof timestamp === 'number' ? moment.unix(timestamp) : moment(timestamp);
 };
 
-export const getFrequency = (data: any[]): unitOfTime.DurationConstructor => {
+export const getFrequency = (
+  data: ChartDataType[] | AccountBalanceHistoryType[]
+): unitOfTime.DurationConstructor => {
   const startDate = data[0].timestamp;
   const endDate = data[data.length - 1].timestamp;
   const momentStart = getMoment(startDate);
@@ -66,7 +68,7 @@ export const formatEntry = (entry: AccountBalanceHistoryType) => {
 };
 
 export const getNormalizedTimeEntries = (
-  data: any,
+  data: AccountBalanceHistoryType[],
   frequency: unitOfTime.DurationConstructor
 ): any[] => {
   const normalizedEntries: { [key: string]: any } = {};

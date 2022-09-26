@@ -1,7 +1,8 @@
 import moment from 'moment';
-import { getFrequency, getIntervalDates } from 'sharedComponents/Chart/helpers/getChartBinnedData';
+import { getFrequency, getIntervalDates } from './getChartBinnedData';
+import { ChartDataType } from './types';
 
-const getTimeTicks = (data: any, total: number) => {
+const getTimeTicks = (data: ChartDataType[], total: number) => {
   const frequency = getFrequency(data);
   const intervalDates = getIntervalDates(
     data[0].timestamp,

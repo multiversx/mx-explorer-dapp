@@ -21,8 +21,6 @@ import { useGlobalState } from 'context';
 import { isContract, urlBuilder, dateFormatted } from 'helpers';
 import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
 
-// import LockedAmountCardItem from './LockedAmountCardItem';
-
 const AccountDetailsCard = () => {
   const ref = React.useRef(null);
   const {
@@ -324,7 +322,6 @@ const AccountDetailsCard = () => {
                   <>N/A</>
                 )}
               </CardItem>
-              {/* <LockedAmountCardItem cardItemClass={cardItemClass} /> */}
             </div>
           </div>
         </div>
