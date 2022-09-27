@@ -280,6 +280,16 @@ div.side-icon {
   filter: $image-filter;
 }
 
+.egld-icon svg {
+  fill: $dark;
+  width: 1rem;
+  height: 1rem;
+  @include media-breakpoint-up(md) {
+    width: 2.15rem;
+    height: 2.15rem;
+  }
+}
+
 .account-icon {
   width: 1.313rem;
   height: 1.313rem;
@@ -297,6 +307,18 @@ div.side-icon {
   &.focus {
     box-shadow: none;
     text-decoration: none;
+  }
+}
+
+.filters {
+  .btn-pill {
+    font-size: 0.8125rem;
+  }
+
+  #more {
+    &:after {
+      vertical-align: 1px;
+    }
   }
 }
 

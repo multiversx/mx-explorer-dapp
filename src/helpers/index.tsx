@@ -40,6 +40,7 @@ import amountWithoutRounding from './amountWithoutRounding';
 import validDisplayValue from './validDisplayValue';
 import downloadFile from './downloadFile';
 import getTransactionMessages from './getTransactionMessages';
+import getPercentage from './getPercentage';
 
 export {
   truncate,
@@ -84,4 +85,5 @@ export {
   validDisplayValue,
   downloadFile,
   getTransactionMessages,
+  getPercentage,
 };

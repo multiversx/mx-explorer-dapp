@@ -1,0 +1,77 @@
+.provider-details {
+  width: 100%;
+  margin-bottom: 1rem;
+  @include media-breakpoint-up(md) {
+    width: auto;
+    margin-bottom: 0;
+  }
+  text-align: left;
+  font-weight: 400;
+  .provider-image {
+    img,
+    .default-image {
+      width: 2.625rem;
+      height: 2.625rem;
+    }
+    font-size: 0.425rem;
+    text-align: center;
+    border: 1px solid $muted;
+    .default-image {
+      fill: $muted;
+    }
+    &.egld-icon {
+      svg {
+        padding: 0.425rem;
+        width: 2.625rem;
+        height: 2.625rem;
+      }
+    }
+  }
+  .provider-title {
+    font-weight: 500;
+    width: 16rem;
+    @include media-breakpoint-up(sm) {
+      width: 18rem;
+    }
+  }
+  .provider-website {
+    font-size: 0.825rem;
+    width: max-content;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  .provider-metrics {
+    > div {
+      display: flex;
+      align-items: center;
+      padding: 0.1875rem 0.5rem 0 0;
+      svg {
+        color: $muted;
+      }
+      .percentage-led svg {
+        width: 0.75rem !important;
+        height: 0.75rem !important;
+      }
+    }
+  }
+  .badge {
+    transition: none;
+  }
+  .provider-image svg,
+  .provider-title svg {
+    color: $muted;
+  }
+  .trim .left span,
+  .trim .right span,
+  .ellipsis {
+    font-size: 1rem;
+  }
+}
+
+.provider-info-tooltip {
+  .tooltip-inner {
+    white-space: nowrap;
+    max-width: none;
+  }
+}

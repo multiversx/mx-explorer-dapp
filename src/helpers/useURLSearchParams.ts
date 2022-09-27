@@ -7,6 +7,7 @@ export default function useURLSearchParams() {
   const query = new URLSearchParams(useLocation().search);
   const page = query.get('page') ? String(query.get('page')) : '';
   const shard = query.get('shard') ? String(query.get('shard')) : '';
+  const method = query.get('function') ? String(query.get('function')) : '';
 
   let senderShard = query.get('senderShard') ? String(query.get('senderShard')) : '';
   senderShard = query.get('sendershard') ? String(query.get('sendershard')) : senderShard;
@@ -18,5 +19,6 @@ export default function useURLSearchParams() {
     shard: checkValue(shard),
     senderShard: checkValue(senderShard),
     receiverShard: checkValue(receiverShard),
+    method,
   };
 }
