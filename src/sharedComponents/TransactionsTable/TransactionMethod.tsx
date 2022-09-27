@@ -37,6 +37,7 @@ const TransactionMethod = ({ transaction, baseRoute, allowFilters }: Transaction
           <NetworkLink
             to={methodLink(getTransactionMethod(transaction))}
             data-testid="filterByTransactionMethod"
+            className="text-decoration-none"
           >
             {children}
           </NetworkLink>
