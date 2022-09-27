@@ -82,11 +82,11 @@ const TokenDetailsCard = () => {
                   {price && marketCap ? (
                     <>
                       <SmallDetailItem title="Price">
-                        ${amountWithoutRounding(price.toString())}
+                        ${amountWithoutRounding(price.toString(), 4)}
                       </SmallDetailItem>
 
                       <SmallDetailItem title="Market Cap">
-                        ${amountWithoutRounding(marketCap.toString())}
+                        ${new BigNumber(marketCap).toFormat(0)}
                       </SmallDetailItem>
                     </>
                   ) : (

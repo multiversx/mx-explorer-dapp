@@ -19,6 +19,7 @@ export interface GetNodesType {
 
 export interface GetProvidersType {
   identity?: string;
+  providers?: string;
   fields?: string;
 }
 
@@ -77,6 +78,7 @@ export interface TransactionsParamsType {
   address?: string;
   senderShard?: number;
   receiverShard?: number;
+  method?: string;
 }
 
 export function getTransactionsParams({
@@ -84,6 +86,7 @@ export function getTransactionsParams({
   size = 1,
   senderShard,
   receiverShard,
+  method,
 }: TransactionsParamsType) {
   const params: ProviderPropsType['params'] = {
     from: (size - 1) * pageSize,
@@ -91,25 +94,7 @@ export function getTransactionsParams({
     ...getAccountParams(address),
     ...(senderShard !== undefined ? { senderShard } : {}),
     ...(receiverShard !== undefined ? { receiverShard } : {}),
-
-    ...{
-      fields: [
-        'txHash',
-        'receiver',
-        'receiverShard',
-        'sender',
-        'senderShard',
-        'status',
-        'timestamp',
-        'value',
-        'tokenValue',
-        'tokenIdentifier',
-        'action',
-        'receipt',
-        'senderAssets',
-        'receiverAssets',
-      ].join(','),
-    },
+    ...(method ? { function: method } : {}),
   };
 
   return params;
@@ -152,9 +137,10 @@ export function getNodeParams({
   return params;
 }
 
-export function getProviderParams({ identity }: GetProvidersType) {
+export function getProviderParams({ identity, providers }: GetProvidersType) {
   const params: ProviderPropsType['params'] = {
     ...(identity !== undefined ? { identity } : {}),
+    ...(providers !== undefined ? { providers } : {}),
   };
   return params;
 }
