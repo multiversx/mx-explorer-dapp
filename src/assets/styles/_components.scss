@@ -6,6 +6,7 @@
 @import '../../components/Home/NetworkHealth/networkHealth.scss';
 @import '../../components/Home/NetworkHealth/ProgressRing/progressRing.scss';
 @import '../../components/Home/ValidatorsStatus/SimpleMap/simpleMap.scss';
+@import '../../components/Home/PriceChart/price.scss';
 @import '../../components/BlockDetails/blockDetails.scss';
 @import '../../components/AccountDetails/AccountLayout/AccountDetailsCard/accountDetailsCard.scss';
 @import '../../components/TransactionDetails/TransactionInfo/DataField/dataField.scss';
@@ -16,3 +17,4 @@
 @import '../../components/NftDetails/NftPreview/nftPreview.scss';
 @import '../../components/Tokens/TokensTable/tokensTable.scss';
 @import '../../components/TokenDetails/TokenLayout/TokenDetailsCard/tokenDetailsCard.scss';
+@import '../../components/AccountDetails/AccountStaking/accountStaking.scss';

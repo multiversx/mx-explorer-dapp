@@ -27,7 +27,7 @@ const Filters = () => {
   };
 
   return (
-    <div className="nfts-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
+    <div className="filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
       <div className="my-1 my-md-0">
         <div role="search">
           <div className="input-group input-group-seamless">

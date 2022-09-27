@@ -1,90 +1,72 @@
-import * as React from 'react';
+import React from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
-import { StatisticsChart, Loader, PageState, adapter } from 'sharedComponents';
-import { useGlobalState } from 'context';
-import { processStats, validDisplayValue } from 'helpers';
-import { initialStats } from 'helpers/processStats';
+import BigNumber from 'bignumber.js';
 
-type ChartResponseType = { time: string; value: number }[];
-const initialState = {
-  ...initialStats,
-};
+import { Chart, Loader, PageState, adapter } from 'sharedComponents';
+import getLastDayValue from 'sharedComponents/Chart/helpers/getLastDayValue';
+import { ChartDataType, ChartConfigType } from 'sharedComponents/Chart/helpers/types';
+import formatDataCharts from 'sharedComponents/Chart/helpers/formatDataCharts';
+
+import { useGlobalState } from 'context';
 
 const AccountsChart = () => {
-  const ref = React.useRef(null);
-  const { activeNetworkId } = useGlobalState();
-  const { getStats, getAccountsHistory } = adapter();
+  const { activeNetworkId, stats } = useGlobalState();
+  const { getAccountsHistory } = adapter();
 
-  const [data, setData] = React.useState(initialState);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [chartData, setChartData] = React.useState<ChartResponseType>([]);
+  const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
 
   const getData = () => {
-    if (ref.current !== null) {
-      Promise.all([getStats(), getAccountsHistory()]).then(([statsData, accountsHistoryData]) => {
-        if (ref.current !== null) {
-          setData(processStats(statsData));
-          setDataReady(accountsHistoryData.success);
-          if (accountsHistoryData.success) {
-            setChartData(accountsHistoryData.data);
-          }
-        }
-      });
-    }
-  };
-  const getDailyAccounts = (chartData: ChartResponseType) => {
-    if (chartData.length >= 2) {
-      const lastDayAccounts = chartData[chartData.length - 1].value;
-      const penultimateDayAccounts = chartData[chartData.length - 2].value;
-
-      return (lastDayAccounts - penultimateDayAccounts).toLocaleString('en');
-    }
-    return '...';
+    getAccountsHistory().then((accountsHistoryData) => {
+      if (accountsHistoryData.success) {
+        setChartData(formatDataCharts(accountsHistoryData.data));
+      }
+      setDataReady(accountsHistoryData.success);
+    });
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(getData, [activeNetworkId]);
 
+  const config: ChartConfigType[] = [
+    {
+      id: 'totalAddresses',
+      label: 'totalAddresses',
+      gradient: 'defaultGradient',
+      data: chartData,
+    },
+  ];
+
+  const totalAccounts =
+    stats.accounts !== '...' ? new BigNumber(stats.accounts).toFormat(0) : '...';
+  const metrics = [
+    { label: 'New Addresses Today', value: getLastDayValue(chartData) },
+    { label: 'Total Addresses', value: totalAccounts },
+  ];
+
   return (
-    <div className="card accounts-chart" ref={ref}>
-      <div className="card-header">
-        <div className="card-header-item d-flex align-items-center">
-          <h6 className="mb-0">Address Metrics</h6>
-        </div>
-      </div>
-      <div className="card-body pr-1 pr-sm-3 pb-3">
-        <div className="card-details pl-3">
-          <div>
-            <small className="text-secondary pr-3">New Addresses Today: </small>
-            <span>{getDailyAccounts(chartData)}</span>
-          </div>
-          <div>
-            <small className="text-secondary pr-3">Total Addresses: </small>
-            <span>{validDisplayValue(data.accounts)}</span>
-          </div>
-        </div>
-        {dataReady === undefined && <Loader small={true} />}
+    <section id="accounts" className="accounts card">
+      <Chart.Heading title="Address Metrics"></Chart.Heading>
+
+      <Chart.Body>
+        {dataReady === undefined && <Loader />}
         {dataReady === false && (
           <PageState
             icon={faChartBar}
             title="Unable to load chart"
-            className="my-auto"
+            className="py-spacer my-auto"
             titleClassName="mt-0"
             dataTestId="accountsChartError"
           />
         )}
         {dataReady === true && chartData.length > 0 && (
-          <div className="ml-n3">
-            <StatisticsChart
-              chartData={chartData}
-              label="Total Addresses"
-              showYaxis={true}
-              type="lineWithVertical"
-            />
-          </div>
+          <>
+            <Chart.Metrics {...{ metrics }} />
+            <Chart.Area {...{ config }} hasOnlyStartEndTick></Chart.Area>
+          </>
         )}
-      </div>
-    </div>
+      </Chart.Body>
+    </section>
   );
 };
 
