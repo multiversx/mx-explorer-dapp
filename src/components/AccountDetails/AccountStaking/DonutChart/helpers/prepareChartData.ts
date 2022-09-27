@@ -11,6 +11,22 @@ interface DonutChartDataType {
   displayValue?: number;
 }
 
+// hardcoded truncate, to be used in elements that are non responsive ( eg: svg elements )
+const truncateMiddle = (fullStr: string, strLen: number, separator?: string) => {
+  if (fullStr.length <= strLen) return fullStr;
+
+  separator = separator || '...';
+
+  var sepLen = separator.length,
+    charsToShow = strLen - sepLen,
+    frontChars = Math.ceil(charsToShow / 2),
+    backChars = Math.floor(charsToShow / 2);
+
+  return (
+    fullStr.substring(0, frontChars) + separator + fullStr.substring(fullStr.length - backChars)
+  );
+};
+
 const prepareChartData = ({
   stakingDetails,
   providers,
@@ -59,7 +75,7 @@ const prepareChartData = ({
           });
 
           chartData.push({
-            name: provider?.identityDetails?.name ?? provider.provider,
+            name: provider?.identityDetails?.name ?? truncateMiddle(provider.provider, 20),
             identifier: provider?.identity ?? provider.provider,
             value: Number(amount),
           });

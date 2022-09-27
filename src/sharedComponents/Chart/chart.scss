@@ -93,7 +93,7 @@
   &.has-only-start-end-tick {
     .recharts-cartesian-axis-tick {
       &:first-of-type .recharts-cartesian-axis-tick-value {
-        display: none;
+        visibility: hidden;
       }
     }
   }
