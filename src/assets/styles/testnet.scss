@@ -82,7 +82,8 @@ $image-filter: none;
   .filters a,
   .nodes-table thead a,
   .pager a,
-  .side-action {
+  .side-action,
+  .text-decoration-none {
     &::after {
       content: none !important;
     }
