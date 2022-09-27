@@ -85,7 +85,7 @@ const TokensTable = ({
                   </div>
                 </td>
                 <td>{token.name}</td>
-                <td>{token.price && <>${amountWithoutRounding(token.price.toString())}</>}</td>
+                <td>{token.price && <>${amountWithoutRounding(token.price.toString(), 2)}</>}</td>
                 <td>
                   {token.circulatingSupply && (
                     <Denominate

@@ -30,6 +30,7 @@ $image-filter: red !default;
 
 // do no copy below code
 :root {
+  --body: #{$body};
   --muted: #{$muted};
   --card-bg: #{$card-bg};
   --border-color: #{$border-color};

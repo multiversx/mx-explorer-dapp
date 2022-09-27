@@ -15,65 +15,23 @@ import {
   TimeAgo,
   PropertyPill,
   SmallDetailItem,
+  UsdValue,
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import { isContract, urlBuilder, dateFormatted } from 'helpers';
 import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
-
-// import LockedAmountCardItem from './LockedAmountCardItem';
-import UsdValue from './UsdValue';
-
-interface Undelegation {
-  amount: string;
-  seconds: number;
-}
-interface DelegationType {
-  address: string;
-  contract: string;
-  userUnBondable?: string;
-  userActiveStake: string;
-  claimableRewards?: string;
-  userUndelegatedList: Undelegation[];
-}
-export interface LockedAmountType {
-  stakeFetched: boolean | undefined;
-  delegationLegacyFetched: boolean | undefined;
-  delegationFetched: boolean | undefined;
-  stake?: {
-    totalStaked?: string;
-  };
-  delegationLegacy?: {
-    userActiveStake?: string;
-    userDeferredPaymentStake?: string;
-    userUnstakedStake?: string;
-    userWaitingStake?: string;
-    userWithdrawOnlyStake?: string;
-    claimableRewards?: string;
-  };
-  delegation?: DelegationType[];
-  usd?: number;
-}
 
 const AccountDetailsCard = () => {
   const ref = React.useRef(null);
   const {
     activeNetwork: { id, adapter: networkAdapter },
     accountDetails,
-    usd,
   } = useGlobalState();
-  const {
-    getProvider,
-    // getAccountDelegationLegacy,
-    // getAccountDelegation,
-    // getAccountStake,
-    getAccountTokensCount,
-    getAccountNftsCount,
-  } = adapter();
+  const { getProvider, getAccountTokensCount, getAccountNftsCount } = adapter();
   const {
     address,
     balance,
     nonce,
-    // txCount,
     shard,
     ownerAddress,
     developerReward,
@@ -89,54 +47,6 @@ const AccountDetailsCard = () => {
 
   const tokensActive = networkAdapter === 'api';
   const cardItemClass = tokensActive ? 'n5' : '';
-
-  // const [lockedAmount, setLockedAmount] = React.useState<LockedAmountType>({
-  //   stakeFetched: undefined,
-  //   delegationLegacyFetched: undefined,
-  //   delegationFetched: undefined,
-  //   stake: undefined,
-  //   delegationLegacy: undefined,
-  //   delegation: undefined,
-  // });
-
-  // const fetchLockedAmountAndPrice = () => {
-  //   if (!document.hidden) {
-  //     Promise.all([
-  //       getAccountDelegation(address),
-  //       getAccountStake(address),
-  //       getAccountDelegationLegacy(address),
-  //     ]).then(([delegationData, stakeData, delegationLegacyData]) => {
-  //       if (ref.current !== null) {
-  //         const delegationFetched = delegationData.success ? delegationData.data : {};
-  //         const stakeFetched = stakeData.success ? stakeData.data : {};
-  //         const delegationLegacyFetched = delegationLegacyData.success
-  //           ? delegationLegacyData.data
-  //           : {};
-
-  //         const delegation = delegationFetched ? delegationData.data : [];
-  //         const stake = stakeFetched ? stakeData.data : {};
-  //         const delegationLegacy = delegationLegacyFetched ? delegationLegacyData.data : {};
-
-  //         setLockedAmount({
-  //           delegation,
-  //           stake,
-  //           delegationLegacy,
-  //           delegationFetched,
-  //           stakeFetched,
-  //           delegationLegacyFetched,
-  //         });
-  //       }
-  //     });
-  //   }
-  // };
-
-  // React.useEffect(() => {
-  //   if (!isContract(address)) {
-  //     fetchLockedAmountAndPrice();
-  //   }
-
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [txCount, id, address]);
 
   const [isProvider, setIsProvider] = React.useState(false);
   const fetchProviderDetails = () => {
@@ -249,7 +159,7 @@ const AccountDetailsCard = () => {
                   </SmallDetailItem>
 
                   <SmallDetailItem title="Value">
-                    <UsdValue input={balance} usd={usd} />
+                    <UsdValue input={balance} />
                   </SmallDetailItem>
 
                   <SmallDetailItem title="Properties">
@@ -393,7 +303,7 @@ const AccountDetailsCard = () => {
                 </div>
               </CardItem>
               <CardItem className={cardItemClass} title="Value" icon={faDollarSign}>
-                <UsdValue input={balance} usd={usd} />
+                <UsdValue input={balance} />
               </CardItem>
               <CardItem className={cardItemClass} title="Nonce" icon={faUser}>
                 {nonce !== undefined ? nonce.toLocaleString('en') : '...'}
@@ -412,7 +322,6 @@ const AccountDetailsCard = () => {
                   <>N/A</>
                 )}
               </CardItem>
-              {/* <LockedAmountCardItem lockedAmount={lockedAmount} cardItemClass={cardItemClass} /> */}
             </div>
           </div>
         </div>

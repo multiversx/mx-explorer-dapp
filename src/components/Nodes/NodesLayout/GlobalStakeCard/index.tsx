@@ -1,4 +1,5 @@
 import * as React from 'react';
+import BigNumber from 'bignumber.js';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { faLeaf } from '@fortawesome/pro-solid-svg-icons/faLeaf';
 import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
@@ -11,6 +12,10 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
     globalStake,
     activeNetwork: { erdLabel },
   } = useGlobalState();
+
+  const baseApr = economics.baseApr
+    ? `Up to ${new BigNumber(economics.baseApr).times(100).toFormat(2)}%`
+    : 'N/A';
 
   return stakeFetched === false ? (
     <div className="row">
@@ -49,7 +54,7 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
               <CardItem className="n3 lg" title="Staking APR" icon={faLeaf}>
                 <div className="d-flex flex-column w-100">
                   <h5 className="m-0 pb-1">
-                    {economics.baseApr ? `Up to ${economics.baseApr}` : 'N/A'}
+                    {economics.baseApr !== '...' ? baseApr : economics.baseApr}
                   </h5>
                   {/* <small>
                     {globalStake && globalStake.waitingList ? `${globalStake.waitingList}% ` : 'N/A '}
