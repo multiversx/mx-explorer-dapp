@@ -333,3 +333,9 @@ div.side-icon {
     max-width: 25%;
   }
 }
+
+@include media-breakpoint-up(xl) {
+  .mw-xl-4 {
+    max-width: 33.33333%;
+  }
+}
