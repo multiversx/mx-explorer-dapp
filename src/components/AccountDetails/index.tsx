@@ -125,7 +125,7 @@ const AccountDetails = () => {
               size={size}
               directionCol={true}
               title={<AccountTabs />}
-              // allowFilters={true}
+              allowFilters={true}
               baseRoute={urlBuilder.accountDetails(address)}
             />
           ) : (

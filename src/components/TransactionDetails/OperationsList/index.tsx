@@ -121,7 +121,7 @@ const OperationBlock = ({
       className={`d-flex align-items-center ${
         isFullSize
           ? 'col-12'
-          : ` pr-xl-0 ${operationAssets ? 'pl-3 mw-lg-6 mw-xl-3' : 'col-lg-6 col-xl-3'}`
+          : ` pr-xl-0 ${operationAssets ? 'pl-3 mw-lg-6 mw-xl-4' : 'col-lg-6 col-xl-4'}`
       }`}
     >
       {direction && (
@@ -302,7 +302,7 @@ const DetailedItem = ({
     <div className="detailed-item d-flex row mb-3 mb-xl-2">
       <OperationText operation={operation} transaction={transaction} />
       {children && (
-        <div className="col-lg-6 col-xl-6 d-flex align-items-center">
+        <div className="col d-flex align-items-center">
           <div className="d-flex text-truncate">{children}</div>
         </div>
       )}
