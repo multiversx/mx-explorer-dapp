@@ -36,10 +36,7 @@ const TransactionErrorDisplay = ({ transaction }: { transaction: TransactionType
   return (
     <>
       {transactionMessages.map((msg, messageIndex) => (
-        <div
-          key={`tx-message-${messageIndex}`}
-          className="d-flex ml-1 text-break-all align-items-center"
-        >
+        <div key={`tx-message-${messageIndex}`} className="d-flex ml-1 align-items-center">
           <FontAwesomeIcon
             icon={faAngleDown}
             className="text-secondary"
@@ -47,36 +44,28 @@ const TransactionErrorDisplay = ({ transaction }: { transaction: TransactionType
             transform={{ rotate: 45 }}
           />
           &nbsp;
-          <small className="text-danger ml-1"> {msg}</small>
-          {/* TEMPORARY */}
-          {msg === 'invalid liquidity for ESDT' && (
-            <Overlay
-              title="One of the selected tokens is temporarily immovable due to a pending ESDT protocol upgrade being deployed end of this week. Please check again later."
-              className="d-flex"
-              tooltipClassName="vm-error-display"
-            >
-              <FontAwesomeIcon icon={faInfoCircle} className="small text-secondary ml-1" />
-            </Overlay>
-          )}
-          {/* VM ERRORS */}
-          {logsLink && messageIndex === transactionMessages.length - 1 && (
-            <div className="d-flex align-items-center justify-content-center">
-              <NetworkLink to={logsLink} className="small ml-1">
-                See logs
-              </NetworkLink>
-              {internalVMErrorEvent?.data && (
-                <div className="ml-1">
-                  <Overlay
-                    title={<InternalErrorDisplay data={internalVMErrorEvent.data} />}
-                    className="d-flex"
-                    tooltipClassName="vm-error-display"
-                  >
-                    <FontAwesomeIcon icon={faInfoCircle} className="small text-secondary ml-1" />
-                  </Overlay>
-                </div>
-              )}
-            </div>
-          )}
+          <div className="d-flex flex-wrap">
+            <small className="text-danger ml-1"> {msg}</small>
+            {/* VM ERRORS */}
+            {logsLink && messageIndex === transactionMessages.length - 1 && (
+              <div className="d-flex align-items-center justify-content-center">
+                <NetworkLink to={logsLink} className="small ml-1">
+                  See logs
+                </NetworkLink>
+                {internalVMErrorEvent?.data && (
+                  <div className="ml-1">
+                    <Overlay
+                      title={<InternalErrorDisplay data={internalVMErrorEvent.data} />}
+                      className="d-flex"
+                      tooltipClassName="vm-error-display"
+                    >
+                      <FontAwesomeIcon icon={faInfoCircle} className="small text-secondary ml-1" />
+                    </Overlay>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       ))}
     </>

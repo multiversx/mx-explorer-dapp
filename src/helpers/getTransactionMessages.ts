@@ -4,7 +4,8 @@ import denominate from 'sharedComponents/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
 
 enum TransactionMessagesEnum {
-  'newNFTData' = 'new NFT data on sender',
+  newNFTData = 'new NFT data on sender',
+  invalidLiquidity = 'invalid liquidity for ESDT',
 }
 
 // Temporarily show more meaningful error messages
@@ -24,6 +25,9 @@ const getDisplayMessages = ({
         }`;
       }
       return 'Not enough balance of transferred token';
+    // Temporary ?
+    case TransactionMessagesEnum.invalidLiquidity:
+      return 'One of the selected tokens is temporarily immovable due to a pending ESDT protocol upgrade being deployed end of this week. Please check again later.';
     default:
       return message;
   }
