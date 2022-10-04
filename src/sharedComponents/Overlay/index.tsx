@@ -4,10 +4,12 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 const Overlay = ({
   children,
   title,
+  className,
   tooltipClassName,
 }: {
   children: React.ReactNode;
   title: React.ReactNode | string;
+  className?: string;
   tooltipClassName?: string;
 }) => (
   <OverlayTrigger
@@ -23,7 +25,7 @@ const Overlay = ({
       </Tooltip>
     )}
   >
-    <div className="text-truncate">{children}</div>
+    <div className={className ?? 'text-truncate'}>{children}</div>
   </OverlayTrigger>
 );
 export default Overlay;

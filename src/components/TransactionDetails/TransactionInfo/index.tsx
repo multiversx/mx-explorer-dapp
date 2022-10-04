@@ -5,7 +5,6 @@ import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
-import { faInfoCircle } from '@fortawesome/pro-regular-svg-icons/faInfoCircle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import {
@@ -15,7 +14,6 @@ import {
   useNetworkRoute,
   isContract,
   getTransactionMethod,
-  getTransactionMessages,
 } from 'helpers';
 import {
   TransactionType,
@@ -36,10 +34,8 @@ import {
   TransactionAction,
   LoadingDots,
   AccountName,
-  Overlay,
 } from 'sharedComponents';
 import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
-import { decodeForDisplay, DecodeMethodType } from 'sharedComponents/DataDecode';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import EventsList from '../EventsList';
 import OperationsList from '../OperationsList';
@@ -50,6 +46,7 @@ import { useGlobalState } from 'context';
 import { transactionsRoutes } from 'routes';
 import DataField from './DataField';
 import NonceMessage from './NonceMessage';
+import TransactionErrorDisplay from './TransactionErrorDisplay';
 
 const getFee = (transaction: TransactionType) => {
   const bNgasPrice = new BigNumber(transaction.gasPrice);
@@ -99,22 +96,6 @@ const ScrDetailItem = ({ result }: { result: ResultType }) => (
   </DetailItem>
 );
 
-const InternalErrorDisplay = ({ data }: { data: string }) => {
-  if (data) {
-    const dataBase64Buffer = Buffer.from(String(data), 'base64');
-    const dataHexValue = dataBase64Buffer.toString('hex');
-    const decodedDisplay = decodeForDisplay({
-      input: dataHexValue,
-      decodeMethod: DecodeMethodType.smart,
-    });
-    if (decodedDisplay.displayValue) {
-      return <p className="text-left">{decodedDisplay.displayValue}</p>;
-    }
-  }
-
-  return null;
-};
-
 const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
   const ref = React.useRef(null);
   const {
@@ -138,8 +119,6 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
     });
     return `${parseFloat(amount) > 0 ? '≈' : '='} $${formattedValue}`;
   };
-
-  const transactionMessages = getTransactionMessages(transaction);
 
   const transactionFee =
     transaction.fee === undefined && transaction.gasUsed === undefined
@@ -165,12 +144,6 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
     addCommas: false,
     showLastNonZeroDecimal: true,
   });
-
-  const internalVMErrorEvent =
-    transaction?.logs?.events?.filter((log) => log.identifier === 'internalVMErrors')[0] ?? null;
-  const logsLink = internalVMErrorEvent
-    ? `${transactionsRoutes.transactions}/${transaction.txHash}/logs#${transaction?.logs?.id}/${internalVMErrorEvent.order}/text`
-    : '';
 
   const visibleOperations = getVisibleOperations(transaction);
   const showLogs = transaction.logs || (transaction.results && transaction.results.length > 0);
@@ -342,41 +315,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
                         </NetworkLink>
                       )}
                     </div>
-                    {transactionMessages.map((msg, messageIndex) => (
-                      <div
-                        key={`tx-message-${messageIndex}`}
-                        className="d-flex ml-1 text-break-all align-items-center"
-                      >
-                        <FontAwesomeIcon
-                          icon={faAngleDown}
-                          className="text-secondary"
-                          style={{ marginTop: '2px' }}
-                          transform={{ rotate: 45 }}
-                        />
-                        &nbsp;
-                        <small className="text-danger ml-1"> {msg}</small>
-                        {logsLink && messageIndex === transactionMessages.length - 1 && (
-                          <div className="d-flex align-items-center justify-content-center">
-                            <NetworkLink to={logsLink} className="small ml-1">
-                              See logs
-                            </NetworkLink>
-                            {internalVMErrorEvent?.data && (
-                              <div className="ml-1">
-                                <Overlay
-                                  title={<InternalErrorDisplay data={internalVMErrorEvent.data} />}
-                                  tooltipClassName="vm-error-display"
-                                >
-                                  <FontAwesomeIcon
-                                    icon={faInfoCircle}
-                                    className="small text-secondary ml-1"
-                                  />
-                                </Overlay>
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    ))}
+                    <TransactionErrorDisplay transaction={transaction} />
                     {transaction.status === txStatus.rewardReverted && (
                       <div className="d-flex ml-1 text-break-all">
                         <FontAwesomeIcon
