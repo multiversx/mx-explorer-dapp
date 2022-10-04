@@ -36,34 +36,11 @@ const ChartArea = ({
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={chartData}>
           <defs>
-            <linearGradient id="transparent" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="100%" stopColor="transparent" stopOpacity={0} />
-            </linearGradient>
             <linearGradient id="defaultGradient" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor={primaryColor} stopOpacity={0.25} />
               <stop offset="35%" stopColor={primaryColor} stopOpacity={0.4} />
               <stop offset="95%" stopColor={primaryColor} stopOpacity={0} />
             </linearGradient>
-            {config.map((chartConfig) => {
-              if (chartConfig.gradient) {
-                return (
-                  <linearGradient
-                    key={chartConfig.gradient}
-                    id={chartConfig.gradient}
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop offset="5%" stopColor={chartConfig.gradient} stopOpacity={0.25} />
-                    <stop offset="35%" stopColor={chartConfig.gradient} stopOpacity={0.4} />
-                    <stop offset="95%" stopColor={chartConfig.gradient} stopOpacity={0} />
-                  </linearGradient>
-                );
-              }
-
-              return null;
-            })}
           </defs>
           <XAxis
             minTickGap={40}

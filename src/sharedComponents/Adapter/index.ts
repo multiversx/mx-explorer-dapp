@@ -201,6 +201,9 @@ export default function useAdapter() {
       senderShard,
       receiverShard,
       method,
+      before,
+      after,
+      status,
     }: TransactionsParamsType) =>
       provider({
         url: `/transactions`,
@@ -210,6 +213,9 @@ export default function useAdapter() {
           senderShard,
           receiverShard,
           method,
+          before,
+          after,
+          status,
         }),
       }),
 
@@ -218,6 +224,9 @@ export default function useAdapter() {
       senderShard,
       receiverShard,
       method,
+      before,
+      after,
+      status,
     }: TransactionsParamsType) =>
       provider({
         url: `/transactions/c`,
@@ -226,6 +235,9 @@ export default function useAdapter() {
           ...(senderShard !== undefined ? { senderShard } : {}),
           ...(receiverShard !== undefined ? { receiverShard } : {}),
           ...(method ? { function: method } : {}),
+          ...(before !== undefined ? { before } : {}),
+          ...(after !== undefined ? { after } : {}),
+          ...(status !== undefined ? { status } : {}),
         },
       }),
 
@@ -235,6 +247,9 @@ export default function useAdapter() {
       senderShard,
       receiverShard,
       method,
+      before,
+      after,
+      status,
     }: TransactionsParamsType) =>
       provider({
         url: `/accounts/${address}/transfers`,
@@ -243,6 +258,9 @@ export default function useAdapter() {
           senderShard,
           receiverShard,
           method,
+          before,
+          after,
+          status,
         }),
       }),
 
@@ -251,6 +269,9 @@ export default function useAdapter() {
       senderShard,
       receiverShard,
       method,
+      before,
+      after,
+      status,
     }: TransactionsParamsType) =>
       provider({
         url: `/accounts/${address}/transfers/c`,
@@ -258,6 +279,9 @@ export default function useAdapter() {
           ...(senderShard !== undefined ? { senderShard } : {}),
           ...(receiverShard !== undefined ? { receiverShard } : {}),
           ...(method ? { function: method } : {}),
+          ...(before !== undefined ? { before } : {}),
+          ...(after !== undefined ? { after } : {}),
+          ...(status !== undefined ? { status } : {}),
         },
       }),
 

@@ -79,6 +79,9 @@ export interface TransactionsParamsType {
   senderShard?: number;
   receiverShard?: number;
   method?: string;
+  before?: number;
+  after?: number;
+  status?: string;
 }
 
 export function getTransactionsParams({
@@ -87,6 +90,9 @@ export function getTransactionsParams({
   senderShard,
   receiverShard,
   method,
+  before,
+  after,
+  status,
 }: TransactionsParamsType) {
   const params: ProviderPropsType['params'] = {
     from: (size - 1) * pageSize,
@@ -95,6 +101,9 @@ export function getTransactionsParams({
     ...(senderShard !== undefined ? { senderShard } : {}),
     ...(receiverShard !== undefined ? { receiverShard } : {}),
     ...(method ? { function: method } : {}),
+    ...(before !== undefined ? { before } : {}),
+    ...(after !== undefined ? { after } : {}),
+    ...(status !== undefined ? { status } : {}),
   };
 
   return params;
