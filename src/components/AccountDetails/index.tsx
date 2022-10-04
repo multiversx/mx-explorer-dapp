@@ -23,7 +23,7 @@ const AccountDetails = () => {
     getTransactionsCount,
   } = adapter();
   const { size, firstPageTicker } = useSize();
-  const { method } = useURLSearchParams();
+  const { method, before, after, status } = useURLSearchParams();
   const { activeNetworkId, accountDetails } = useGlobalState();
   const { hash: address } = useParams() as any;
 
@@ -69,11 +69,17 @@ const AccountDetails = () => {
           size,
           address,
           method,
+          before,
+          after,
+          status,
         }),
         getAccountTransfersCount({
           size,
           address,
           method,
+          before,
+          after,
+          status,
         }),
       ]).then(([accountTransfersData, accountTransfersCountData]) => {
         handleTransactions(accountTransfersData, accountTransfersCountData);
