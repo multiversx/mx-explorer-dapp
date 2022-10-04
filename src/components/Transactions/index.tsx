@@ -12,7 +12,7 @@ const Transactions = () => {
   const ref = React.useRef(null);
   const { activeNetworkId } = useGlobalState();
 
-  const { senderShard, receiverShard, method } = useURLSearchParams();
+  const { senderShard, receiverShard, method, before, after, status } = useURLSearchParams();
   const { size, firstPageTicker } = useSize();
 
   React.useEffect(() => {
@@ -33,6 +33,9 @@ const Transactions = () => {
       senderShard,
       receiverShard,
       method,
+      before,
+      after,
+      status,
     }).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
@@ -50,6 +53,9 @@ const Transactions = () => {
       senderShard,
       receiverShard,
       method,
+      before,
+      after,
+      status,
     }).then(({ data: count, success }) => {
       if (ref.current !== null && success) {
         setTotalTransactions(Math.min(count, 10000));
