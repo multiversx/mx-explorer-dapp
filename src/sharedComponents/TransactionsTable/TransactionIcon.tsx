@@ -31,10 +31,10 @@ const TransactionIcon = ({ transaction }: TransactionIconType) => {
     if (transaction.txHash && (failed || invalid)) {
       if (transaction.txHash !== transactionDetails?.txHash) {
         getTransaction(transaction.txHash).then(({ data, success }) => {
-          const transactionMessages = getTransactionMessages(transaction);
-
           setDataReady(success);
           setTransactionDetails(data);
+
+          const transactionMessages = getTransactionMessages(data);
           setTransactionMessages(transactionMessages);
         });
       }
