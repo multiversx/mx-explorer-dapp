@@ -16,8 +16,8 @@ const getDisplayMessages = ({
   message?: string;
   transaction: TransactionType;
 }) => {
-  switch (message) {
-    case TransactionMessagesEnum.newNFTData:
+  switch (true) {
+    case message === TransactionMessagesEnum.newNFTData:
       const transactionActionTransfers = transaction?.action?.arguments?.transfers ?? [];
       if (transactionActionTransfers.length === 1) {
         return `Not enough balance of ${getTokenDisplayType(transactionActionTransfers[0].type)} ${
@@ -26,7 +26,7 @@ const getDisplayMessages = ({
       }
       return 'Not enough balance of transferred token';
     // Temporary ?
-    case TransactionMessagesEnum.invalidLiquidity:
+    case message?.includes(TransactionMessagesEnum.invalidLiquidity):
       return 'One of the selected tokens is temporarily immovable due to a pending ESDT protocol upgrade being deployed end of this week. Please check again later.';
     default:
       return message;
