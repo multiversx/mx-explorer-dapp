@@ -68,6 +68,7 @@ const TransactionErrorDisplay = ({ transaction }: { transaction: TransactionType
                 <div className="ml-1">
                   <Overlay
                     title={<InternalErrorDisplay data={internalVMErrorEvent.data} />}
+                    className="d-flex"
                     tooltipClassName="vm-error-display"
                   >
                     <FontAwesomeIcon icon={faInfoCircle} className="small text-secondary ml-1" />
