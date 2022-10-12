@@ -1,13 +1,4 @@
 import * as React from 'react';
-import { types, urlBuilder } from 'helpers';
-import {
-  CardItem,
-  CopyButton,
-  Denominate,
-  LockedAmountTooltip,
-  NetworkLink,
-} from 'sharedComponents';
-import { useGlobalState } from 'context';
 import {
   faServer,
   faLock,
@@ -17,12 +8,25 @@ import {
   faReceipt,
   faLeaf,
   faUserFriends,
+  faUser,
 } from '@fortawesome/pro-solid-svg-icons';
+
+import { urlBuilder } from 'helpers';
+import { ProviderType } from 'helpers/types';
+import {
+  CardItem,
+  CopyButton,
+  Denominate,
+  LockedAmountTooltip,
+  NetworkLink,
+  Trim,
+} from 'sharedComponents';
+import { useGlobalState } from 'context';
 import DelegationCap from 'sharedComponents/ProvidersTable/DelegationCap';
 import PercentageFilled from 'sharedComponents/ProvidersTable/PercentageFilled';
 import { hasDelegationCap } from 'sharedComponents/ProvidersTable/PercentageFilled';
 
-const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | undefined }) => {
+const ProviderDetailsCard = ({ provider }: { provider?: ProviderType }) => {
   const {
     activeNetwork: { walletAddress },
   } = useGlobalState();
@@ -75,11 +79,7 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
         </CardItem>
 
         <CardItem title="Service fee" icon={faReceipt}>
-          {provider.serviceFee ? (
-            <>{(provider.serviceFee * 100).toFixed(2)}%</>
-          ) : (
-            <>N/A</>
-          )}
+          {provider.serviceFee ? <>{(provider.serviceFee * 100).toFixed(2)}%</> : <>N/A</>}
         </CardItem>
 
         <CardItem title="Locked" icon={faLock}>
@@ -124,6 +124,17 @@ const ProviderDetailsCard = ({ provider }: { provider: types.ProviderType | unde
         {hasDelegationCap(provider.delegationCap) && (
           <CardItem title="Filled" icon={faChartPieAlt}>
             <PercentageFilled locked={provider.locked} delegationCap={provider.delegationCap} />
+          </CardItem>
+        )}
+
+        {provider?.owner && (
+          <CardItem title="Owner" icon={faUser}>
+            <div className="d-flex align-items-center min-w-0">
+              <NetworkLink to={urlBuilder.accountDetails(provider.owner)} className="trim-wrapper">
+                <Trim text={provider.owner} />
+              </NetworkLink>
+              <CopyButton text={provider.owner} />
+            </div>
           </CardItem>
         )}
       </div>
