@@ -27,7 +27,7 @@ const getDisplayMessages = ({
       return 'Not enough balance of transferred token';
     // Temporary ?
     case message?.includes(TransactionMessagesEnum.invalidLiquidity):
-      return 'One of the selected tokens is temporarily immovable due to a pending ESDT protocol upgrade being deployed end of this week. Please check again later.';
+      return 'One of the selected tokens is temporarily immovable due to a pending ESDT protocol upgrade being deployed on October 19th. Please check again later.';
     default:
       return message;
   }
