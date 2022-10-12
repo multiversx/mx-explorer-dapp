@@ -364,6 +364,7 @@ export interface ResultType {
   logs?: ResultLogType;
   senderAssets?: AssetType;
   receiverAssets?: AssetType;
+  miniBlockHash?: string;
 }
 
 export interface ReceiptType {
@@ -434,7 +435,7 @@ export interface DelegationType {
   userUnBondable: string;
   userActiveStake: string;
   claimableRewards: string;
-  userUndelegatedList: Undelegation[];
+  userUndelegatedList?: Undelegation[];
 }
 export interface DelegationLegacyType {
   userActiveStake?: string;
@@ -527,6 +528,7 @@ export interface NodeType {
   nonce: number;
   instances: number;
   version: string;
+  owner: string;
   stake: string;
   topUp: string;
   uptime: number;

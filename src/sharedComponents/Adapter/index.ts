@@ -34,7 +34,6 @@ export default function useAdapter() {
     getUsersStaking,
     getTransactionsHistory,
     getAccountsHistory,
-    delegationApi,
   } = useAdapterConfig();
 
   return {
@@ -332,8 +331,7 @@ export default function useAdapter() {
 
     /* Stake */
 
-    getAccountDelegation: (address: string) =>
-      provider({ url: `/accounts/${address}/delegations`, baseUrl: delegationApi }),
+    getAccountDelegation: (address: string) => provider({ url: `/accounts/${address}/delegation` }),
 
     getAccountDelegationLegacy: (address: string) =>
       provider({ url: `/accounts/${address}/delegation-legacy` }),

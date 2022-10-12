@@ -2,6 +2,7 @@ import moment from 'moment';
 import BigNumber from 'bignumber.js';
 
 export const initialStats = {
+  statsFetched: false,
   shards: '...',
   blocks: '...',
   accounts: '...',
@@ -21,6 +22,7 @@ export default function processStats(statsData: any) {
 
   const newStats = success
     ? {
+        statsFetched: true,
         shards: new BigNumber(data.shards).toFormat(),
         blocks: new BigNumber(data.blocks).toFormat(),
         accounts: data.accounts,
