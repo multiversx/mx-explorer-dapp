@@ -99,12 +99,14 @@ const OperationToken = ({ operation }: { operation: OperationType }) => {
 const OperationBlock = ({
   address,
   transaction,
+  operation,
   action,
   isFullSize,
   direction,
 }: {
   address: string;
   transaction: TransactionType;
+  operation: OperationType;
   action?: string;
   isFullSize?: boolean;
   direction?: string;
@@ -116,6 +118,15 @@ const OperationBlock = ({
   if (address === transaction.receiver) {
     operationAssets = transaction.receiverAssets;
   }
+  if (operation) {
+    if (address === operation.sender) {
+      operationAssets = operation.senderAssets;
+    }
+    if (address === operation.receiver) {
+      operationAssets = operation.receiverAssets;
+    }
+  }
+
   return (
     <div
       className={`d-flex align-items-center ${
@@ -161,6 +172,7 @@ const OperationText = ({
       return (
         <OperationBlock
           transaction={transaction}
+          operation={operation}
           address={operation.sender}
           action="Mint by"
           direction={OperationDirectionEnum.internal}
@@ -170,6 +182,7 @@ const OperationText = ({
       return (
         <OperationBlock
           transaction={transaction}
+          operation={operation}
           address={operation.sender}
           action="Add quantity by"
           direction={OperationDirectionEnum.internal}
@@ -181,6 +194,7 @@ const OperationText = ({
       return (
         <OperationBlock
           transaction={transaction}
+          operation={operation}
           address={operation.sender}
           action="Burn by"
           direction={OperationDirectionEnum.internal}
@@ -190,6 +204,7 @@ const OperationText = ({
       return (
         <OperationBlock
           transaction={transaction}
+          operation={operation}
           address={operation.receiver}
           action="Wipe from"
           direction={OperationDirectionEnum.internal}
@@ -200,11 +215,17 @@ const OperationText = ({
         <>
           <OperationBlock
             transaction={transaction}
+            operation={operation}
             address={operation.sender}
             action="Multi transfer from"
             direction={direction}
           />{' '}
-          <OperationBlock transaction={transaction} address={operation.receiver} action="To" />
+          <OperationBlock
+            transaction={transaction}
+            operation={operation}
+            address={operation.receiver}
+            action="To"
+          />
         </>
       );
     case TransactionOperationActionType.transfer:
@@ -212,17 +233,24 @@ const OperationText = ({
         <>
           <OperationBlock
             transaction={transaction}
+            operation={operation}
             address={operation.sender}
             action="Transfer from"
             direction={direction}
           />{' '}
-          <OperationBlock transaction={transaction} address={operation.receiver} action="To" />
+          <OperationBlock
+            transaction={transaction}
+            operation={operation}
+            address={operation.receiver}
+            action="To"
+          />
         </>
       );
     case TransactionOperationActionType.writeLog:
       return (
         <OperationBlock
           transaction={transaction}
+          operation={operation}
           address={operation.sender}
           action="Write log by"
           direction={OperationDirectionEnum.internal}
@@ -233,6 +261,7 @@ const OperationText = ({
       return (
         <OperationBlock
           transaction={transaction}
+          operation={operation}
           address={operation.sender}
           action="Signal error by"
           direction={OperationDirectionEnum.internal}
@@ -244,11 +273,17 @@ const OperationText = ({
         <>
           <OperationBlock
             transaction={transaction}
+            operation={operation}
             address={operation.sender}
             action="From"
             direction={direction}
           />{' '}
-          <OperationBlock transaction={transaction} address={operation.receiver} action="To" />
+          <OperationBlock
+            transaction={transaction}
+            operation={operation}
+            address={operation.receiver}
+            action="To"
+          />
         </>
       );
   }

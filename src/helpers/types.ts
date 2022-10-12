@@ -316,6 +316,8 @@ export interface OperationType {
   data?: string;
   message?: string;
   svgUrl?: string;
+  senderAssets?: AssetType;
+  receiverAssets?: AssetType;
 }
 
 export interface LogType {
