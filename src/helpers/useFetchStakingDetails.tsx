@@ -94,7 +94,9 @@ const useFetchStakingDetails = () => {
             .map(({ claimableRewards }) => claimableRewards || '0')
             .reduce((a, b) => new BigNumber(a).plus(b), new BigNumber('0'));
           const undelegatedAmounts = delegation
-            .map(({ userUndelegatedList }) => userUndelegatedList.map(({ amount }) => amount))
+            .map(
+              ({ userUndelegatedList }) => userUndelegatedList?.map(({ amount }) => amount) ?? []
+            )
             .reduce((a, b) => a.concat(b), []);
           const bNtotalUserUnStakedValue = undelegatedAmounts.reduce(
             (a, b) => new BigNumber(a).plus(b),
@@ -112,7 +114,7 @@ const useFetchStakingDetails = () => {
           (delegation) =>
             delegation.userActiveStake !== '0' ||
             delegation.claimableRewards !== '0' ||
-            delegation.userUndelegatedList?.length > 0
+            (delegation.userUndelegatedList && delegation.userUndelegatedList.length > 0)
         );
         const showDelegation = visibleDelegation.length > 0;
 

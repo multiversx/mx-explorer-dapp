@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { faLock, faServer, faCheck, faCode } from '@fortawesome/pro-solid-svg-icons';
+import { faLock, faServer, faCheck, faCode, faUser } from '@fortawesome/pro-solid-svg-icons';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 import { faStream } from '@fortawesome/pro-solid-svg-icons/faStream';
 import { faCogs } from '@fortawesome/pro-solid-svg-icons/faCogs';
@@ -39,6 +39,7 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     issues,
     position,
     fullHistory,
+    owner,
   } = nodeData;
 
   const versionOudated = version === undefined || (issues && issues.includes('versionMismatch'));
@@ -118,7 +119,12 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             {Boolean(fullHistory).toString()}
           </CardItem>
         )}
-        {provider && (
+        {position !== undefined && position > 0 && (
+          <CardItem title="Queue Position" icon={faFlagAlt}>
+            {position.toLocaleString('en')}
+          </CardItem>
+        )}
+        {provider ? (
           <CardItem title="Provider" icon={faCode}>
             <div className="d-flex align-items-center min-w-0">
               <NetworkLink to={urlBuilder.providerDetails(provider)} className="trim-wrapper">
@@ -127,10 +133,14 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
               <CopyButton text={provider} />
             </div>
           </CardItem>
-        )}
-        {position !== undefined && position > 0 && (
-          <CardItem title="Queue Position" icon={faFlagAlt}>
-            {position.toLocaleString('en')}
+        ) : (
+          <CardItem title="Owner" icon={faUser}>
+            <div className="d-flex align-items-center min-w-0">
+              <NetworkLink to={urlBuilder.accountDetails(owner)} className="trim-wrapper">
+                <Trim text={owner} />
+              </NetworkLink>
+              <CopyButton text={owner} />
+            </div>
           </CardItem>
         )}
       </div>

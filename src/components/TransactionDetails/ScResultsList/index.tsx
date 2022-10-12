@@ -89,6 +89,16 @@ const ScResultsList = ({ results }: { results: ResultType[] }) => {
                 </div>
               )}
 
+              {result.miniBlockHash && (
+                <div className="row mb-3 d-flex flex-column flex-sm-row">
+                  <div className="col-sm-2 col-left">Miniblock Hash</div>
+                  <div className="col-sm-10 d-flex align-items-center">
+                    <Trim text={result.miniBlockHash} />
+                    <CopyButton text={result.miniBlockHash} className="side-action ml-2" />
+                  </div>
+                </div>
+              )}
+
               {result.sender && (
                 <div className="row mb-3 d-flex flex-column flex-sm-row">
                   <div className="col-sm-2 col-left">From</div>
