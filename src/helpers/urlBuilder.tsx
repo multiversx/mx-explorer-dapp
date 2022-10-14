@@ -23,6 +23,7 @@ const urlBuilder = {
   nftDetails: (identifier: string) => `/nfts/${identifier}`,
   providerDetails: (address: string) => `/providers/${address}`,
   providerDetailsTransactions: (address: string) => `/providers/${address}/transactions`,
+  miniblockDetails: (hash: string) => `/miniblocks/${hash}`,
 };
 
 export default urlBuilder;

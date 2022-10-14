@@ -54,7 +54,7 @@ const prepareChartData = ({
           (delegation) =>
             delegation.userActiveStake !== '0' ||
             delegation.claimableRewards !== '0' ||
-            delegation.userUndelegatedList?.length > 0
+            (delegation.userUndelegatedList && delegation.userUndelegatedList.length > 0)
         )
       : [];
     if (displayDelegations.length > 0) {

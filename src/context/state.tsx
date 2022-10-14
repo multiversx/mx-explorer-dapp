@@ -21,6 +21,7 @@ export interface GlobalStakeType {
 }
 
 export interface EconomicsType {
+  economicsFetched?: boolean;
   totalSupply: string;
   circulatingSupply: string;
   staked: string;
@@ -35,6 +36,7 @@ export interface EconomicsType {
 }
 
 export interface StatsType {
+  statsFetched?: boolean;
   shards: string;
   blocks: string;
   accounts: string;
@@ -140,6 +142,7 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
       ecosystemMarketCap: '',
     },
     stats: {
+      statsFetched: false,
       shards: '',
       blocks: '',
       accounts: '',
