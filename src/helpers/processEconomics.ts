@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js';
 
 export const initialEconomics = {
+  economicsFetched: false,
   totalSupply: '...',
   circulatingSupply: '...',
   staked: '...',
@@ -26,6 +27,7 @@ export default function processEconomics(statsData: any) {
 
   const newEconomics = success
     ? {
+        economicsFetched: true,
         totalSupply: new BigNumber(data.totalSupply).toFormat(),
         circulatingSupply: new BigNumber(data.circulatingSupply).toFormat(),
         staked: new BigNumber(data.staked).toFormat(),

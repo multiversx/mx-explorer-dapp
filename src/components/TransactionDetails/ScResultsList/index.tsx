@@ -13,6 +13,7 @@ import {
 } from 'sharedComponents';
 import { DecodeMethodType } from 'sharedComponents/DataDecode';
 import { ResultType } from 'helpers/types';
+import { urlBuilder } from 'helpers';
 import { transactionsRoutes } from 'routes';
 import decodePart from './decodePart';
 
@@ -81,6 +82,22 @@ const ScResultsList = ({ results }: { results: ResultType[] }) => {
                     <CopyButton text={result.hash} className="side-action ml-2" />
                     <NetworkLink
                       to={`${transactionsRoutes.transactions}/${result.originalTxHash}#${result.hash}/${decodeMethod}`}
+                      className="side-action ml-2"
+                    >
+                      <FontAwesomeIcon icon={faSearch} />
+                    </NetworkLink>
+                  </div>
+                </div>
+              )}
+
+              {result?.miniBlockHash && (
+                <div className="row mb-3 d-flex flex-column flex-sm-row">
+                  <div className="col-sm-2 col-left">Miniblock Hash</div>
+                  <div className="col-sm-10 d-flex align-items-center">
+                    <Trim text={result.miniBlockHash} />
+                    <CopyButton text={result.miniBlockHash} className="side-action ml-2" />
+                    <NetworkLink
+                      to={urlBuilder.miniblockDetails(result.miniBlockHash)}
                       className="side-action ml-2"
                     >
                       <FontAwesomeIcon icon={faSearch} />
