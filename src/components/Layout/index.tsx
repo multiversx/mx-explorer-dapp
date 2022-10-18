@@ -10,7 +10,6 @@ import TestnetGlobalStatsCard from './TestnetGlobalStatsCard';
 import Routes, { validatorsRoutes, searchRoutes } from 'routes';
 import {
   useFetchEconomics,
-  useFetchStats,
   useNetworkRouter,
   useLoopManager,
   useActiveRoute,
@@ -54,7 +53,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   useNetworkRouter();
   useLoopManager();
   useFetchEconomics();
-  useFetchStats();
   useCheckVersion();
 
   const offline = !window.navigator.onLine;
