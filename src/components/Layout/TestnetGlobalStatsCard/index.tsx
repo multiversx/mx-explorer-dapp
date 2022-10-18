@@ -6,9 +6,10 @@ import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 import { useGlobalState } from 'context';
 import EpochGear from 'components/Layout/GlobalStatsCard/EpochGear';
 import { CardItem } from 'sharedComponents';
-import { validDisplayValue } from 'helpers';
+import { validDisplayValue, useFetchStats } from 'helpers';
 
 const TestnetGlobalStatsCard = () => {
+  useFetchStats();
   const ref = React.useRef(null);
   const { stats } = useGlobalState();
 
