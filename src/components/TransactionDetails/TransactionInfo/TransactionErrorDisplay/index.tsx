@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { faInfoCircle } from '@fortawesome/pro-regular-svg-icons/faInfoCircle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getTransactionMessages } from 'helpers';
+import { getTransactionMessages, capitalizeFirstLetter } from 'helpers';
 import { TransactionType } from 'helpers/types';
 import { NetworkLink, Overlay } from 'sharedComponents';
 import { decodeForDisplay, DecodeMethodType } from 'sharedComponents/DataDecode';
@@ -46,7 +46,10 @@ const TransactionErrorDisplay = ({ transaction }: { transaction: TransactionType
           />
           &nbsp;
           <div className="d-flex flex-wrap">
-            <small className="text-danger ml-1"> {transactionMessage}</small>
+            <small className="text-danger ml-1">
+              {' '}
+              {capitalizeFirstLetter(transactionMessage.toString().trim())}
+            </small>
             <div className="d-flex align-items-center justify-content-center">
               {/* VM ERRORS */}
               {logsLink && messageIndex === transactionMessages.length - 1 && (
