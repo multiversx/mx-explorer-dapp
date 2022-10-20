@@ -5,10 +5,9 @@ import { faChartArea } from '@fortawesome/pro-solid-svg-icons/faChartArea';
 import { useGlobalState } from 'context';
 import EpochGear from 'components/Layout/GlobalStatsCard/EpochGear';
 import { CardItem } from 'sharedComponents';
-import { validDisplayValue, useFetchStats } from 'helpers';
+import { validDisplayValue } from 'helpers';
 
 const GlobalStatsCard = () => {
-  useFetchStats();
   const ref = React.useRef(null);
   const { usd, stats, economics } = useGlobalState();
 
