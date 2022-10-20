@@ -406,6 +406,11 @@ export default function useAdapter() {
         },
       }),
 
+    getUsername: (username: string) =>
+      provider({
+        url: `/usernames/${username}`,
+      }),
+
     getAccountsCount: () => provider({ url: `/accounts/c` }),
 
     getGlobalStake: () => provider({ url: `/stake` }),
