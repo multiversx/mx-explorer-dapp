@@ -149,8 +149,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
               : notFoundRoute;
             setRoute(newRoute);
           });
-          setExpanded(false);
-          setRoute(notFoundRoute);
+
           break;
       }
     }
