@@ -155,7 +155,7 @@ const TransactionRow = ({
           allowFilters={allowFilters}
         />
       </td>
-      <td>
+      <td className="transaction-value">
         <TransactionValue transaction={transaction} />
       </td>
     </tr>
