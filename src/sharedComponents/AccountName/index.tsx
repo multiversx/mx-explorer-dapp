@@ -24,13 +24,11 @@ const AccountName = ({
 
     return (
       <>
-        <>
-          {cleanName.endsWith('.elrond') && (
-            <Overlay title="Maiar Herotag" className="herotag" tooltipClassName="account-name">
-              <FontAwesomeIcon icon={faUserTag} className="mr-1 text-secondary" size="xs" />
-            </Overlay>
-          )}
-        </>
+        {cleanName.endsWith('.elrond') && (
+          <Overlay title="Maiar Herotag" className="herotag" tooltipClassName="account-name">
+            <FontAwesomeIcon icon={faUserTag} className="mr-1 text-secondary" size="xs" />
+          </Overlay>
+        )}
         <Overlay title={description} tooltipClassName="account-name">
           <div
             className={`text-truncate ${color ? `text-${color}` : ''}`}
