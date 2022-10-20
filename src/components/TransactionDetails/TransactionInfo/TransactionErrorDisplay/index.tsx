@@ -7,6 +7,7 @@ import { TransactionType } from 'helpers/types';
 import { NetworkLink, Overlay } from 'sharedComponents';
 import { decodeForDisplay, DecodeMethodType } from 'sharedComponents/DataDecode';
 import { transactionsRoutes } from 'routes';
+import TransactionErrorDescription from './TransactionErrorDescription';
 
 const InternalErrorDisplay = ({ data }: { data: string }) => {
   if (data) {
@@ -35,7 +36,7 @@ const TransactionErrorDisplay = ({ transaction }: { transaction: TransactionType
 
   return (
     <>
-      {transactionMessages.map((msg, messageIndex) => (
+      {transactionMessages.map((transactionMessage, messageIndex) => (
         <div key={`tx-message-${messageIndex}`} className="d-flex ml-1 align-items-center">
           <FontAwesomeIcon
             icon={faAngleDown}
@@ -45,26 +46,37 @@ const TransactionErrorDisplay = ({ transaction }: { transaction: TransactionType
           />
           &nbsp;
           <div className="d-flex flex-wrap">
-            <small className="text-danger ml-1"> {msg}</small>
-            {/* VM ERRORS */}
-            {logsLink && messageIndex === transactionMessages.length - 1 && (
-              <div className="d-flex align-items-center justify-content-center">
-                <NetworkLink to={logsLink} className="small ml-1">
-                  See logs
-                </NetworkLink>
-                {internalVMErrorEvent?.data && (
-                  <div className="ml-1">
-                    <Overlay
-                      title={<InternalErrorDisplay data={internalVMErrorEvent.data} />}
-                      className="d-flex"
-                      tooltipClassName="vm-error-display"
-                    >
-                      <FontAwesomeIcon icon={faInfoCircle} className="small text-secondary ml-1" />
-                    </Overlay>
-                  </div>
-                )}
-              </div>
-            )}
+            <small className="text-danger ml-1"> {transactionMessage}</small>
+            <div className="d-flex align-items-center justify-content-center">
+              {/* VM ERRORS */}
+              {logsLink && messageIndex === transactionMessages.length - 1 && (
+                <>
+                  <NetworkLink to={logsLink} className="small ml-1">
+                    See logs
+                  </NetworkLink>
+                  {internalVMErrorEvent?.data && (
+                    <div className="ml-1">
+                      <Overlay
+                        title={<InternalErrorDisplay data={internalVMErrorEvent.data} />}
+                        className="d-flex"
+                        tooltipClassName="vm-error-display"
+                      >
+                        <FontAwesomeIcon
+                          icon={faInfoCircle}
+                          className="small text-secondary ml-1"
+                        />
+                      </Overlay>
+                    </div>
+                  )}
+                </>
+              )}
+              {transactionMessage && (
+                <TransactionErrorDescription
+                  message={transactionMessage}
+                  transaction={transaction}
+                />
+              )}
+            </div>
           </div>
         </div>
       ))}
