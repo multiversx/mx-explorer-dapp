@@ -6,6 +6,7 @@ import { denomination, decimals } from 'appConfig';
 enum TransactionMessagesEnum {
   newNFTData = 'new NFT data on sender',
   invalidLiquidity = 'invalid liquidity for ESDT',
+  nilUserAccount = 'nil user account',
 }
 
 // Temporarily show more meaningful error messages
@@ -25,9 +26,10 @@ const getDisplayMessages = ({
         }`;
       }
       return 'Not enough balance of transferred token';
-    // Temporary ?
     case message?.includes(TransactionMessagesEnum.invalidLiquidity):
-      return 'One of the selected tokens is temporarily immovable due to a pending ESDT protocol upgrade being deployed on October 19th. Please check again later.';
+      return 'One of the selected tokens was temporarily immovable due to a pending ESDT protocol upgrade. Protocol update has been successfully deployed at epoch 811.';
+    case message?.includes(TransactionMessagesEnum.nilUserAccount):
+      return 'Transfer role is active on token: Transaction sender or receiver is not whitelisted.';
     default:
       return message;
   }
