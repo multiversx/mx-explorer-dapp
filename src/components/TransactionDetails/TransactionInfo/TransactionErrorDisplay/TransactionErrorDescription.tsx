@@ -18,7 +18,7 @@ const getErrorDescription = ({
 }) => {
   switch (true) {
     case message === ErrorDescriptionEnum.nonPayableContract:
-      return `Error is received when calling an endpoint that requires ESDT transfers, indicates the fact that the endpoint call wasn't performed for some reason (most likely due to something being invalid in the field, either stray spaces/newlines, invalid values like -1 in this example), so the contract has interpreted this only as an ESDT transfer without endpoint calls. Due to the fact that the contract is non-payable by default, it denied the transfer.`;
+      return `Token transfers to a non-payable contract without calling an endpoint that accepts the tokens, will be rejected. You either tried to transfer some tokens to a non-payable smart contract without calling an endpoint or the endpoint you attempted to call along with the transfer has been ignored due to malformed call data contents. Possible reasons for malformed endpoint call data would be: uneven hex value padding, stray spaces/newlines, invalid values (e.g. -1, non-hex strings, etc)`;
     case message === ErrorDescriptionEnum.protectedKey:
       return `The SC you're calling tries to create keys in the account state which are prefixed with protected keywords, like elrond.`;
     default:
