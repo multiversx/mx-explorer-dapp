@@ -23,6 +23,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
     getNft,
     getScResult,
     getCollection,
+    getUsername,
   } = adapter();
   const [route, setRoute] = React.useState('');
   const [searching, setSearching] = React.useState(false);
@@ -141,6 +142,13 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
           break;
 
         default:
+          getUsername(hash.replaceAll('.elrond', '')).then((account) => {
+            setExpanded(false);
+            const newRoute = account.success
+              ? networkRoute(urlBuilder.accountDetails(account?.data?.address))
+              : notFoundRoute;
+            setRoute(newRoute);
+          });
           setExpanded(false);
           setRoute(notFoundRoute);
           break;
