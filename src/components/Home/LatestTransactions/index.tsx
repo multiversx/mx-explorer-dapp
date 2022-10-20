@@ -114,7 +114,9 @@ const LatestTransactions = () => {
                             <div className="latest-item-icon mr-2">
                               <FontAwesomeIcon icon={faExchangeAlt} />
                             </div>
-                            <TransactionValue transaction={transaction} hideMultipleBadge />
+                            <div className="transaction-value">
+                              <TransactionValue transaction={transaction} hideMultipleBadge />
+                            </div>
                           </div>
 
                           <div className="text-secondary flex-shrink-0">
