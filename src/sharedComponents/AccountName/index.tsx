@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { formatHerotag } from 'helpers';
 import { AssetType } from 'helpers/types';
 import { Trim, Overlay } from 'sharedComponents';
 import { faUserTag } from '@fortawesome/pro-regular-svg-icons/faUserTag';
@@ -17,9 +18,7 @@ const AccountName = ({
 }) => {
   if (assets && assets.name) {
     const cleanName = assets.name.replaceAll(/[^\p{L}\p{N}\p{P}\p{Z}\n]/gu, '');
-    const name = cleanName.endsWith('.elrond')
-      ? `@${cleanName.replaceAll('.elrond', '')}`
-      : cleanName;
+    const name = formatHerotag(cleanName);
     const description = `${cleanName} (${address})`;
 
     return (
