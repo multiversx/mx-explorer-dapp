@@ -86,6 +86,7 @@ const MiniBlockDetails = () => {
         getMiniBlockTransactions({
           size,
           miniBlockHash,
+          withUsername: true,
         }),
       ]).then(([miniBlockData, miniBlockTransactionsData]) => {
         if (ref.current !== null) {
