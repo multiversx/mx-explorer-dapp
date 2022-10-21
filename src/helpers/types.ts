@@ -40,6 +40,7 @@ export interface AccountType {
   isPayable?: boolean;
   isPayableBySmartContract?: boolean;
   assets?: AssetType;
+  username?: string;
 }
 
 export enum TokenSortEnum {

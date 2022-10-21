@@ -18,7 +18,7 @@ import {
   UsdValue,
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
-import { isContract, urlBuilder, dateFormatted } from 'helpers';
+import { isContract, urlBuilder, dateFormatted, formatHerotag } from 'helpers';
 import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
 
 const AccountDetailsCard = () => {
@@ -42,6 +42,7 @@ const AccountDetailsCard = () => {
     isPayable,
     isPayableBySmartContract,
     assets,
+    username,
   } = accountDetails;
   const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
 
@@ -295,6 +296,15 @@ const AccountDetailsCard = () => {
                   <CopyButton text={address} />
                 </div>
               </div>
+              {username && (
+                <div className="card-header-item compact d-flex">
+                  <span className="text-secondary">Maiar Herotag:</span>
+                  <div className="d-flex align-items-center text-break-all ml-2">
+                    <span data-testid="address">{formatHerotag(username)}</span>
+                    <CopyButton text={formatHerotag(username)} />
+                  </div>
+                </div>
+              )}
             </div>
             <div className="card-body card-item-container mx-spacing">
               <CardItem className={cardItemClass} title="Balance" customIcon={<ElrondSymbol />}>
