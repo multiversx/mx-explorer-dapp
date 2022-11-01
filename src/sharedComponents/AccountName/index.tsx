@@ -2,8 +2,7 @@ import * as React from 'react';
 import { formatHerotag } from 'helpers';
 import { AssetType } from 'helpers/types';
 import { Trim, Overlay } from 'sharedComponents';
-import { faUserTag } from '@fortawesome/pro-regular-svg-icons/faUserTag';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ReactComponent as MaiarLogo } from 'assets/images/logos/logo.svg';
 
 const AccountName = ({
   address,
@@ -25,7 +24,7 @@ const AccountName = ({
       <>
         {cleanName.endsWith('.elrond') && (
           <Overlay title="Maiar Herotag" className="herotag" tooltipClassName="account-name">
-            <FontAwesomeIcon icon={faUserTag} className="mr-1 text-secondary" size="xs" />
+            <MaiarLogo className="herotag-logo" />
           </Overlay>
         )}
         <Overlay title={description} tooltipClassName="account-name">
