@@ -16,6 +16,7 @@ export type ActionType =
     }
   | { type: 'setGlobalStake'; globalStake: StateType['globalStake'] }
   | { type: 'setAccountDetails'; accountDetails: StateType['accountDetails'] }
+  | { type: 'setAccountStakingDetails'; accountStakingDetails: StateType['accountStakingDetails'] }
   | { type: 'setTokenDetails'; tokenDetails: StateType['tokenDetails'] }
   | { type: 'setUsd'; usd: StateType['usd'] }
   | { type: 'setEconomics'; economics: StateType['economics'] }
@@ -86,6 +87,12 @@ export function globalReducer(state: StateType, action: ActionType): StateType {
       return {
         ...state,
         accountDetails: action.accountDetails,
+      };
+    }
+    case 'setAccountStakingDetails': {
+      return {
+        ...state,
+        accountStakingDetails: action.accountStakingDetails,
       };
     }
     case 'setTokenDetails': {

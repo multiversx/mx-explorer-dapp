@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons';
-import { faDollarSign, faUser, faCoins, faLayerGroup } from '@fortawesome/pro-solid-svg-icons';
+import { faUser, faCoins, faLayerGroup } from '@fortawesome/pro-solid-svg-icons';
 import {
   CardItem,
   CopyButton,
@@ -20,6 +20,9 @@ import {
 import { useGlobalState } from 'context';
 import { isContract, urlBuilder, dateFormatted, formatHerotag } from 'helpers';
 import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
+
+import LockedAmountCardItem from './LockedAmountCardItem';
+import AccountUsdValueCardItem from './AccountUsdValueCardItem';
 
 const AccountDetailsCard = () => {
   const ref = React.useRef(null);
@@ -312,9 +315,8 @@ const AccountDetailsCard = () => {
                   {balance !== '...' ? <Denominate value={balance} decimals={4} /> : balance}
                 </div>
               </CardItem>
-              <CardItem className={cardItemClass} title="Value" icon={faDollarSign}>
-                <UsdValue input={balance} />
-              </CardItem>
+              <LockedAmountCardItem cardItemClass={cardItemClass} />
+              <AccountUsdValueCardItem cardItemClass={cardItemClass} />
               <CardItem className={cardItemClass} title="Nonce" icon={faUser}>
                 {nonce !== undefined ? nonce.toLocaleString('en') : '...'}
               </CardItem>

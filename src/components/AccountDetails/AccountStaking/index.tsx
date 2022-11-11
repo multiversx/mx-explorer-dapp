@@ -7,12 +7,11 @@ import AccountLegacyDelegation from './AccountLegacyDelegation';
 import AccountStake from './AccountStake';
 import DonutChart from './DonutChart';
 
+import { useGlobalState } from 'context';
 import { Loader, PageState } from 'sharedComponents';
 
-import useFetchStakingDetails from 'helpers/useFetchStakingDetails';
-
 const AccountStaking = () => {
-  const stakingDetails = useFetchStakingDetails();
+  const { accountStakingDetails } = useGlobalState();
 
   const {
     providerDataReady,
@@ -25,14 +24,14 @@ const AccountStaking = () => {
     showDelegation,
     showDelegationLegacy,
     showStake,
-  } = stakingDetails;
+  } = accountStakingDetails;
 
   const displayDelegation = delegation
     ? delegation.filter(
         (delegation) =>
           delegation.userActiveStake !== '0' ||
           delegation.claimableRewards !== '0' ||
-          delegation.userUndelegatedList?.length > 0
+          (delegation.userUndelegatedList && delegation.userUndelegatedList?.length > 0)
       )
     : [];
 
@@ -93,7 +92,10 @@ const AccountStaking = () => {
                     Staking Chart
                   </div>
                   <div className="staking-chart-holder">
-                    <DonutChart stakingDetails={stakingDetails} providers={delegationProviders} />
+                    <DonutChart
+                      stakingDetails={accountStakingDetails}
+                      providers={delegationProviders}
+                    />
                   </div>
                 </div>
               </>
