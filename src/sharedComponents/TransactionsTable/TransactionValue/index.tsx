@@ -96,7 +96,7 @@ const TransactionValue = ({
     if (transactionTokens.length) {
       const txToken = transactionTokens[0];
       return (
-        <div className="transaction-value d-flex align-items-center">
+        <div className="d-flex align-items-center">
           {Object.values(NftEnumType).includes(txToken.type) ? (
             <TxActionBlock.Nft token={txToken} showBadge />
           ) : (

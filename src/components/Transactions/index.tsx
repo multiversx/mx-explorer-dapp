@@ -36,6 +36,7 @@ const Transactions = () => {
       before,
       after,
       status,
+      withUsername: true,
     }).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
