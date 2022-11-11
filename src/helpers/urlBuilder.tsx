@@ -20,6 +20,7 @@ const urlBuilder = {
   tokenDetailsLockedAccounts: (tokenId: string) => `/tokens/${tokenId}/locked-accounts`,
   tokenDetailsRoles: (tokenId: string) => `/tokens/${tokenId}/roles`,
   collectionDetails: (identifier: string) => `/collections/${identifier}`,
+  collectionDetailsRoles: (identifier: string) => `/collections/${identifier}/roles`,
   nftDetails: (identifier: string) => `/nfts/${identifier}`,
   providerDetails: (address: string) => `/providers/${address}`,
   providerDetailsTransactions: (address: string) => `/providers/${address}/transactions`,
