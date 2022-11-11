@@ -50,7 +50,7 @@ const AccountDetailsCard = () => {
   const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
 
   const tokensActive = networkAdapter === 'api';
-  const cardItemClass = tokensActive ? 'n5' : '';
+  const cardItemClass = tokensActive ? 'n4' : '';
 
   const [isProvider, setIsProvider] = React.useState(false);
   const fetchProviderDetails = () => {
