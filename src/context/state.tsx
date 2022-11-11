@@ -13,6 +13,8 @@ import {
   StakeType,
   IdentityType,
   ProviderType,
+  CollectionType,
+  NftEnumType,
 } from 'helpers/types';
 
 export type NetworkLinkType = InferType<typeof networkLink>;
@@ -103,6 +105,7 @@ export interface StateType {
   accountDetails: AccountType;
   accountStakingDetails: AccountStakingDetailsType;
   tokenDetails: TokenType;
+  collectionDetails: CollectionType;
   usd: number | undefined;
   urlBlacklist?: { [key: string]: string };
   notifications: NotificationType[];
@@ -168,6 +171,18 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
       isPaused: false,
       accounts: 0,
       transactions: 0,
+    },
+    collectionDetails: {
+      collection: '',
+      type: NftEnumType.NonFungibleESDT,
+      name: '',
+      ticker: '',
+      timestamp: 0,
+      canFreeze: false,
+      canWipe: false,
+      canPause: false,
+      canTransferRole: false,
+      owner: '',
     },
     usd: undefined,
 

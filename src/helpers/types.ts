@@ -50,9 +50,23 @@ export enum TokenSortEnum {
   transactions = 'transactions',
 }
 
-export interface TokenRolesType {
+export interface RolesType {
   address: string;
   roles: string[];
+}
+
+export interface TokenRolesType extends RolesType {
+  canLocalMint: boolean;
+  canLocalBurn: boolean;
+}
+
+export interface CollectionRolesType extends RolesType {
+  canCreate: boolean;
+  canBurn: boolean;
+  canAddQuantity: boolean;
+  canUpdateAttributes: boolean;
+  canAddUri: boolean;
+  canTransfer: boolean;
 }
 
 export interface TokenLockedAccountType {
@@ -103,6 +117,7 @@ export interface TokenType {
     extraTokens?: string[];
     lockedAccounts?: { [key: string]: string };
   };
+  roles?: TokenRolesType[];
 }
 
 export interface CollectionType {
@@ -125,6 +140,8 @@ export interface CollectionType {
     svgUrl?: string;
   };
   scamInfo?: ScamInfoType;
+  roles?: CollectionRolesType[];
+  canTransfer?: boolean;
 }
 
 export enum NftEnumType {
