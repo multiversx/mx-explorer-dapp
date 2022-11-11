@@ -491,11 +491,6 @@ export default function useAdapter() {
         url: `/tokens/${tokenId}/accounts/c`,
       }),
 
-    getTokenRoles: ({ tokenId }: { tokenId: string }) =>
-      provider({
-        url: `/tokens/${tokenId}/roles`,
-      }),
-
     getTokenSupply: ({ tokenId }: { tokenId: string }) =>
       provider({
         url: `/tokens/${tokenId}/supply`,
