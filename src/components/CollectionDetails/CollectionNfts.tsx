@@ -141,7 +141,7 @@ const CollectionNfts = () => {
               {dataReady === true && collectionNfts.length === 0 && (
                 <PageState
                   icon={faUser}
-                  title={`No ${nftText(collectionDetails.type)}`}
+                  title={`No ${nftText(collectionDetails.type)}s`}
                   className="py-spacer my-auto"
                 />
               )}
