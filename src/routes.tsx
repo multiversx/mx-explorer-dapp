@@ -21,6 +21,7 @@ import TokenDetailsLockedAccounts from './components/TokenDetails/TokenLockedAcc
 import TokenDetailsRoles from './components/TokenDetails/TokenRoles';
 import Collections from './components/Collections';
 import CollectionDetails from './components/CollectionDetails';
+import CollectionDetailsRoles from './components/CollectionDetails/CollectionRoles';
 import Nfts from './components/Nfts';
 import NftDetails from './components/NftDetails';
 import { withPageTitle, withNetworkReady } from './sharedComponents';
@@ -101,6 +102,7 @@ export const collectionRoutes = {
   collectionsNft: '/collections/nft',
   collectionsSft: '/collections/sft',
   collectionDetails: '/collections/:hash',
+  collectionDetailsRoles: '/collections/:hash/roles',
 };
 
 export const nftRoutes = {
@@ -280,6 +282,11 @@ const routes: RouteType[] = [
     component: CollectionDetails,
   },
   {
+    path: collectionRoutes.collectionDetailsRoles,
+    title: 'Collection Details Roles',
+    component: CollectionDetailsRoles,
+  },
+  {
     path: nftRoutes.nfts,
     title: 'NFTs',
     component: Nfts,
@@ -311,10 +318,10 @@ const wrappedRoutes = () =>
     const title = route.title ? `${route.title} • Elrond Explorer` : 'Elrond Explorer';
     return {
       path: route.path,
-      component: withPageTitle(
+      component: (withPageTitle(
         title,
         withNetworkReady(route.component)
-      ) as any as React.ComponentClass<{}, any>,
+      ) as any) as React.ComponentClass<{}, any>,
     };
   });
 

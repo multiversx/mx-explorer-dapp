@@ -1,10 +1,11 @@
 import React from 'react';
 import { useActiveRoute } from 'helpers';
-import { validatorsRoutes, accountsRoutes, tokensRoutes } from 'routes';
+import { validatorsRoutes, accountsRoutes, tokensRoutes, collectionRoutes } from 'routes';
 import NodesLayout from 'components/Nodes/NodesLayout';
 import AccountLayout from 'components/AccountDetails/AccountLayout';
 import ProviderLayout from 'components/ProviderDetails/ProviderLayout';
 import TokenLayout from 'components/TokenDetails/TokenLayout';
+import CollectionLayout from 'components/CollectionDetails/CollectionLayout';
 
 export default function PageLayout({ children }: { children: React.ReactNode }) {
   const activeRoute = useActiveRoute();
@@ -33,6 +34,10 @@ export default function PageLayout({ children }: { children: React.ReactNode }) 
     case activeRoute(tokensRoutes.tokenDetailsLockedAccounts):
     case activeRoute(tokensRoutes.tokenDetailsRoles):
       return <TokenLayout>{children}</TokenLayout>;
+
+    case activeRoute(collectionRoutes.collectionDetails):
+    case activeRoute(collectionRoutes.collectionDetailsRoles):
+      return <CollectionLayout>{children}</CollectionLayout>;
 
     case activeRoute(validatorsRoutes.providerDetails):
     case activeRoute(validatorsRoutes.providerTransactions):
