@@ -301,7 +301,7 @@ const AccountDetailsCard = () => {
               </div>
               {username && (
                 <div className="card-header-item compact d-flex">
-                  <span className="text-secondary">Maiar Herotag:</span>
+                  <span className="text-secondary">Herotag:</span>
                   <div className="d-flex align-items-center text-break-all ml-2">
                     <span data-testid="address">{formatHerotag(username)}</span>
                     <CopyButton text={formatHerotag(username)} />
