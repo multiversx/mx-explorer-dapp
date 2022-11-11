@@ -2,7 +2,7 @@ import * as React from 'react';
 import { formatHerotag } from 'helpers';
 import { AssetType } from 'helpers/types';
 import { Trim, Overlay } from 'sharedComponents';
-import { ReactComponent as MaiarLogo } from 'assets/images/logos/logo.svg';
+import { ReactComponent as IdentityLogo } from 'assets/images/logos/identity.svg';
 
 const AccountName = ({
   address,
@@ -23,8 +23,8 @@ const AccountName = ({
     return (
       <>
         {cleanName.endsWith('.elrond') && (
-          <Overlay title="Maiar Herotag" className="herotag" tooltipClassName="account-name">
-            <MaiarLogo className="herotag-logo" />
+          <Overlay title="Herotag" className="herotag" tooltipClassName="account-name">
+            <IdentityLogo className="herotag-logo" />
           </Overlay>
         )}
         <Overlay title={description} tooltipClassName="account-name">
