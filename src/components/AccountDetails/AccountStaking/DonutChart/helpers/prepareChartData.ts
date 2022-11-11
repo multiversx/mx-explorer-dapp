@@ -1,5 +1,7 @@
 import BigNumber from 'bignumber.js';
-import { StakingDetailsType } from 'helpers/useFetchStakingDetails';
+
+import { AccountStakingDetailsType } from 'context/state';
+
 import denominate from 'sharedComponents/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
 import { ProviderType } from 'helpers/types';
@@ -31,7 +33,7 @@ const prepareChartData = ({
   stakingDetails,
   providers,
 }: {
-  stakingDetails: StakingDetailsType;
+  stakingDetails: AccountStakingDetailsType;
   providers: ProviderType[];
 }): DonutChartDataType[] => {
   const {

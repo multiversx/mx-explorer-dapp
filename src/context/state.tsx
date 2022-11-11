@@ -1,7 +1,19 @@
+import BigNumber from 'bignumber.js';
 import { InferType } from 'yup';
 import config, { defaultNetwork, schema, adapterSchema, networkLink } from './config';
 import { storage } from 'helpers';
-import { AccountType, TokenType, NetworkIdType, NodesVersionsType, ShardType } from 'helpers/types';
+import {
+  AccountType,
+  TokenType,
+  NetworkIdType,
+  NodesVersionsType,
+  ShardType,
+  DelegationLegacyType,
+  DelegationType,
+  StakeType,
+  IdentityType,
+  ProviderType,
+} from 'helpers/types';
 
 export type NetworkLinkType = InferType<typeof networkLink>;
 export type NetworkType = InferType<typeof schema>;
@@ -58,6 +70,24 @@ export interface NotificationType {
   dismissable: boolean;
 }
 
+export interface AccountStakingDetailsType {
+  stakingDataReady: boolean | undefined;
+  bNtotalStaked: BigNumber;
+  bNtotalDelegation: BigNumber;
+  bNtotalLegacyDelegation: BigNumber;
+  bNtotalLocked: BigNumber;
+  bNtotalClaimable: BigNumber;
+  stake?: StakeType;
+  showStake: boolean;
+  delegationLegacy?: DelegationLegacyType;
+  showDelegationLegacy: boolean;
+  delegation?: DelegationType[];
+  showDelegation: boolean;
+  providerDataReady: undefined | boolean;
+  delegationProviders: ProviderType[];
+  delegationLegacyIdentity: IdentityType | undefined;
+}
+
 export interface StateType {
   config: ConfigType;
   defaultNetwork: NetworkType;
@@ -71,6 +101,7 @@ export interface StateType {
   shards: ShardType[];
   globalStake: GlobalStakeType | undefined;
   accountDetails: AccountType;
+  accountStakingDetails: AccountStakingDetailsType;
   tokenDetails: TokenType;
   usd: number | undefined;
   urlBlacklist?: { [key: string]: string };
@@ -103,6 +134,20 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
       txCount: 0,
       scrCount: 0,
       claimableRewards: '',
+    },
+    accountStakingDetails: {
+      stakingDataReady: undefined,
+      showDelegation: false,
+      showDelegationLegacy: false,
+      showStake: false,
+      bNtotalStaked: new BigNumber(0),
+      bNtotalDelegation: new BigNumber(0),
+      bNtotalLegacyDelegation: new BigNumber(0),
+      bNtotalLocked: new BigNumber(0),
+      bNtotalClaimable: new BigNumber(0),
+      providerDataReady: undefined,
+      delegationProviders: [],
+      delegationLegacyIdentity: undefined,
     },
     tokenDetails: {
       identifier: '',
