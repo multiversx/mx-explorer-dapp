@@ -99,8 +99,8 @@ export const tokensRoutes = {
 
 export const collectionRoutes = {
   collections: '/collections',
-  collectionsNft: '/collections/nft',
-  collectionsSft: '/collections/sft',
+  collectionsNft: '/nft-collections',
+  collectionsSft: '/sft-collections',
   collectionDetails: '/collections/:hash',
   collectionDetailsRoles: '/collections/:hash/roles',
 };
