@@ -1,7 +1,8 @@
 import React from 'react';
 
+import { AccountStakingDetailsType } from 'context/state';
+
 import prepareChartData from './helpers/prepareChartData';
-import { StakingDetailsType } from 'helpers/useFetchStakingDetails';
 import { ProviderType } from 'helpers/types';
 import { Denominate, UsdValue, Chart } from 'sharedComponents';
 import { ChartConfigType } from 'sharedComponents/Chart/helpers/types';
@@ -10,7 +11,7 @@ const DonutChart = ({
   stakingDetails,
   providers,
 }: {
-  stakingDetails: StakingDetailsType;
+  stakingDetails: AccountStakingDetailsType;
   providers?: ProviderType[];
 }) => {
   const chartData = providers ? prepareChartData({ stakingDetails, providers }) : [];
