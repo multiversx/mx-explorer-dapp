@@ -3,12 +3,12 @@ import * as React from 'react';
 import { useGlobalState } from 'context';
 import { Loader, NetworkLink, Trim, ScAddressIcon } from 'sharedComponents';
 import { urlBuilder } from 'helpers';
-import TokenTabs from './TokenLayout/TokenTabs';
+import CollectionTabs from './CollectionLayout/CollectionTabs';
 
-const TokenRoles = () => {
+const CollectionRoles = () => {
   const ref = React.useRef(null);
   const {
-    tokenDetails: { roles },
+    collectionDetails: { roles },
   } = useGlobalState();
 
   return (
@@ -16,7 +16,7 @@ const TokenRoles = () => {
       <div className="card">
         <div className="card-header">
           <div className="card-header-item d-flex justify-content-between align-items-center">
-            <TokenTabs />
+            <CollectionTabs />
           </div>
           {roles ? (
             <>
@@ -71,4 +71,4 @@ const TokenRoles = () => {
   );
 };
 
-export default TokenRoles;
+export default CollectionRoles;

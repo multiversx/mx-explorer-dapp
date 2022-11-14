@@ -25,6 +25,7 @@ const AccountDetails = () => {
     getTransactions({
       size,
       address,
+      withUsername: true,
     }).then((transactionsData) => {
       const { data, success } = transactionsData;
       if (success) {

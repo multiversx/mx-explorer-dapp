@@ -59,6 +59,7 @@ export interface ProviderPropsType {
     identifier?: string;
     includeFlagged?: boolean;
     fullHistory?: string;
+    withUsername?: boolean;
   };
   timeout: number;
   timestamp?: number;
@@ -82,6 +83,7 @@ export interface TransactionsParamsType {
   before?: number;
   after?: number;
   status?: string;
+  withUsername?: boolean;
 }
 
 export function getTransactionsParams({
@@ -93,6 +95,7 @@ export function getTransactionsParams({
   before,
   after,
   status,
+  withUsername,
 }: TransactionsParamsType) {
   const params: ProviderPropsType['params'] = {
     from: (size - 1) * pageSize,
@@ -104,6 +107,7 @@ export function getTransactionsParams({
     ...(before !== undefined ? { before } : {}),
     ...(after !== undefined ? { after } : {}),
     ...(status !== undefined ? { status } : {}),
+    ...(withUsername !== undefined ? { withUsername } : {}),
   };
 
   return params;
@@ -154,13 +158,22 @@ export function getProviderParams({ identity, providers }: GetProvidersType) {
   return params;
 }
 
-export function getTokensParam({ search, size, type, identifiers, sort, order }: GetTokensType) {
+export function getTokensParam({
+  search,
+  size,
+  type,
+  identifiers,
+  sort,
+  order,
+  withUsername,
+}: GetTokensType) {
   const params: ProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
     ...(type !== undefined ? { type } : {}),
     ...(identifiers !== undefined ? { identifiers } : {}),
     ...(sort !== undefined ? { sort } : {}),
     ...(order !== undefined ? { order } : {}),
+    ...(withUsername !== undefined ? { withUsername } : {}),
     ...(size !== undefined ? { from: (size - 1) * pageSize, size: pageSize } : {}),
   };
 
@@ -244,6 +257,7 @@ export interface GetTokensType {
   identifiers?: string;
   sort?: string;
   order?: string;
+  withUsername?: boolean;
 }
 export interface GetNftsType {
   collection?: string;

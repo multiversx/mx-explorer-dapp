@@ -1,17 +1,19 @@
 import React from 'react';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { CardItem, Denominate, LockedAmountTooltip } from 'sharedComponents';
-import useFetchStakingDetails from 'helpers/useFetchStakingDetails';
+import { useGlobalState } from 'context';
 
-const LockedDetails = ({ cardItemClass }: { cardItemClass: string }) => {
+const LockedAmountCardItem = ({ cardItemClass }: { cardItemClass: string }) => {
   const {
-    stakingDataReady,
-    bNtotalStaked,
-    bNtotalDelegation,
-    bNtotalLegacyDelegation,
-    bNtotalLocked,
-    bNtotalClaimable,
-  } = useFetchStakingDetails();
+    accountStakingDetails: {
+      stakingDataReady,
+      bNtotalStaked,
+      bNtotalDelegation,
+      bNtotalLegacyDelegation,
+      bNtotalLocked,
+      bNtotalClaimable,
+    },
+  } = useGlobalState();
 
   return (
     <CardItem className={cardItemClass} title="Stake" icon={faLock}>
@@ -50,4 +52,4 @@ const LockedDetails = ({ cardItemClass }: { cardItemClass: string }) => {
   );
 };
 
-export default LockedDetails;
+export default LockedAmountCardItem;

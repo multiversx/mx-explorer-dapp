@@ -41,6 +41,8 @@ import validDisplayValue from './validDisplayValue';
 import downloadFile from './downloadFile';
 import getTransactionMessages from './getTransactionMessages';
 import getPercentage from './getPercentage';
+import formatHerotag from './formatHerotag';
+import nftText from './nftText';
 
 export {
   truncate,
@@ -86,4 +88,6 @@ export {
   downloadFile,
   getTransactionMessages,
   getPercentage,
+  formatHerotag,
+  nftText,
 };
