@@ -72,6 +72,7 @@ const AccountDetails = () => {
           before,
           after,
           status,
+          withUsername: true,
         }),
         getAccountTransfersCount({
           size,
@@ -90,6 +91,7 @@ const AccountDetails = () => {
           size,
           address,
           method,
+          withUsername: true,
         }),
         getTransactionsCount({
           size,

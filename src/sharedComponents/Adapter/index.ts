@@ -51,18 +51,21 @@ export default function useAdapter() {
           },
         },
       }),
-    getLatestTransactions: ({ size = 5 }: TransactionsParamsType) =>
+    getLatestTransactions: ({ size = 5, withUsername }: TransactionsParamsType) =>
       provider({
         url: `/transactions`,
         params: {
           size,
+          withUsername,
           ...{
             fields: [
               'txHash',
               'receiver',
               'receiverShard',
+              'receiverAssets',
               'sender',
               'senderShard',
+              'senderAssets',
               'status',
               'timestamp',
               'value',
@@ -169,13 +172,22 @@ export default function useAdapter() {
 
     getMiniBlock: (miniBlockHash: string) => provider({ url: `/miniblocks/${miniBlockHash}` }),
 
-    getMiniBlockTransactions: ({ miniBlockHash, size }: { miniBlockHash: string; size: number }) =>
+    getMiniBlockTransactions: ({
+      miniBlockHash,
+      size,
+      withUsername,
+    }: {
+      miniBlockHash: string;
+      size: number;
+      withUsername?: boolean;
+    }) =>
       provider({
         url: `/transactions`,
         params: {
           from: (size - 1) * pageSize,
           size: pageSize,
           miniBlockHash,
+          withUsername,
         },
       }),
 
@@ -203,6 +215,7 @@ export default function useAdapter() {
       before,
       after,
       status,
+      withUsername,
     }: TransactionsParamsType) =>
       provider({
         url: `/transactions`,
@@ -215,6 +228,7 @@ export default function useAdapter() {
           before,
           after,
           status,
+          withUsername,
         }),
       }),
 
@@ -249,6 +263,7 @@ export default function useAdapter() {
       before,
       after,
       status,
+      withUsername,
     }: TransactionsParamsType) =>
       provider({
         url: `/accounts/${address}/transfers`,
@@ -260,6 +275,7 @@ export default function useAdapter() {
           before,
           after,
           status,
+          withUsername,
         }),
       }),
 
@@ -406,6 +422,11 @@ export default function useAdapter() {
         },
       }),
 
+    getUsername: (username: string) =>
+      provider({
+        url: `/usernames/${username}`,
+      }),
+
     getAccountsCount: () => provider({ url: `/accounts/c` }),
 
     getGlobalStake: () => provider({ url: `/stake` }),
@@ -468,11 +489,6 @@ export default function useAdapter() {
     getTokenAccountsCount: ({ tokenId }: { tokenId: string }) =>
       provider({
         url: `/tokens/${tokenId}/accounts/c`,
-      }),
-
-    getTokenRoles: ({ tokenId }: { tokenId: string }) =>
-      provider({
-        url: `/tokens/${tokenId}/roles`,
       }),
 
     getTokenSupply: ({ tokenId }: { tokenId: string }) =>

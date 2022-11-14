@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons';
-import { faDollarSign, faUser, faCoins, faLayerGroup } from '@fortawesome/pro-solid-svg-icons';
+import { faUser, faCoins, faLayerGroup } from '@fortawesome/pro-solid-svg-icons';
 import {
   CardItem,
   CopyButton,
@@ -18,8 +18,11 @@ import {
   UsdValue,
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
-import { isContract, urlBuilder, dateFormatted } from 'helpers';
+import { isContract, urlBuilder, dateFormatted, formatHerotag } from 'helpers';
 import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
+
+import LockedAmountCardItem from './LockedAmountCardItem';
+import AccountUsdValueCardItem from './AccountUsdValueCardItem';
 
 const AccountDetailsCard = () => {
   const ref = React.useRef(null);
@@ -42,11 +45,12 @@ const AccountDetailsCard = () => {
     isPayable,
     isPayableBySmartContract,
     assets,
+    username,
   } = accountDetails;
   const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
 
   const tokensActive = networkAdapter === 'api';
-  const cardItemClass = tokensActive ? 'n5' : '';
+  const cardItemClass = tokensActive ? 'n4' : '';
 
   const [isProvider, setIsProvider] = React.useState(false);
   const fetchProviderDetails = () => {
@@ -295,6 +299,15 @@ const AccountDetailsCard = () => {
                   <CopyButton text={address} />
                 </div>
               </div>
+              {username && (
+                <div className="card-header-item compact d-flex">
+                  <span className="text-secondary">Herotag:</span>
+                  <div className="d-flex align-items-center text-break-all ml-2">
+                    <span data-testid="address">{formatHerotag(username)}</span>
+                    <CopyButton text={formatHerotag(username)} />
+                  </div>
+                </div>
+              )}
             </div>
             <div className="card-body card-item-container mx-spacing">
               <CardItem className={cardItemClass} title="Balance" customIcon={<ElrondSymbol />}>
@@ -302,9 +315,8 @@ const AccountDetailsCard = () => {
                   {balance !== '...' ? <Denominate value={balance} decimals={4} /> : balance}
                 </div>
               </CardItem>
-              <CardItem className={cardItemClass} title="Value" icon={faDollarSign}>
-                <UsdValue input={balance} />
-              </CardItem>
+              <LockedAmountCardItem cardItemClass={cardItemClass} />
+              <AccountUsdValueCardItem cardItemClass={cardItemClass} />
               <CardItem className={cardItemClass} title="Nonce" icon={faUser}>
                 {nonce !== undefined ? nonce.toLocaleString('en') : '...'}
               </CardItem>
