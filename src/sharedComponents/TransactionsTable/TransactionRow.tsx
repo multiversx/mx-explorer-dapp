@@ -1,7 +1,7 @@
 import React from 'react';
 import { faArrowRight } from '@fortawesome/pro-regular-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { addressIsBech32, urlBuilder } from 'helpers';
+import { addressIsBech32, urlBuilder, getReceiverAssets } from 'helpers';
 import { UITransactionType, TransferTypeEnum } from 'helpers/types';
 import {
   ScAddressIcon,
@@ -41,8 +41,7 @@ const TransactionRow = ({
   const directionIn = address === receiver;
   const directionSelf = directionOut && directionIn;
   const isScResult = transaction?.type === TransferTypeEnum.SmartContractResult;
-  const receiverAssets =
-    transaction?.action?.arguments?.receiverAssets ?? transaction?.receiverAssets;
+  const receiverAssets = getReceiverAssets(transaction);
 
   let direction = 'Out';
   switch (true) {
