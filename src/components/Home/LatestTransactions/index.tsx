@@ -1,7 +1,7 @@
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { addressIsBech32, urlBuilder } from 'helpers';
+import { addressIsBech32, urlBuilder, getReceiverAssets } from 'helpers';
 import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
 import * as React from 'react';
 import {
@@ -103,8 +103,8 @@ const LatestTransactions = () => {
                   if (transaction?.action?.arguments?.receiver) {
                     receiver = transaction.action.arguments.receiver;
                   }
-                  const receiverAssets =
-                    transaction?.action?.arguments?.receiverAssets ?? transaction?.receiverAssets;
+
+                  const receiverAssets = getReceiverAssets(transaction);
 
                   return (
                     <LatestItem

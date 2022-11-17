@@ -43,6 +43,7 @@ import getTransactionMessages from './getTransactionMessages';
 import getPercentage from './getPercentage';
 import formatHerotag from './formatHerotag';
 import nftText from './nftText';
+import getReceiverAssets from './getReceiverAssets';
 
 export {
   truncate,
@@ -90,4 +91,5 @@ export {
   getPercentage,
   formatHerotag,
   nftText,
+  getReceiverAssets,
 };
