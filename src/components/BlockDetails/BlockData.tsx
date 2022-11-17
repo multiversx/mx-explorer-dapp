@@ -95,7 +95,10 @@ const BlockData = (props: BlockDataType) => {
               <CopyButton text={block.hash} />
             </div>
           </DetailItem>
+
+          <DetailItem title="Round">{block.round}</DetailItem>
           <DetailItem title="Epoch">{block.epoch}</DetailItem>
+
           <DetailItem title="Age">
             <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
             <TimeAgo value={block.timestamp} />
