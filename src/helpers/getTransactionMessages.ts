@@ -4,8 +4,8 @@ import denominate from 'sharedComponents/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
 
 enum TransactionMessagesEnum {
-  newNFTData = 'new NFT data on sender',
-  invalidLiquidity = 'invalid liquidity for ESDT',
+  newNFTData = 'new nft data on sender',
+  invalidLiquidity = 'invalid liquidity for esdt',
   nilUserAccount = 'nil user account',
 }
 
@@ -17,8 +17,9 @@ const getDisplayMessages = ({
   message?: string;
   transaction: TransactionType;
 }) => {
+  const compareMessage = message?.toLowerCase();
   switch (true) {
-    case message === TransactionMessagesEnum.newNFTData:
+    case compareMessage?.includes(TransactionMessagesEnum.newNFTData):
       const transactionActionTransfers = transaction?.action?.arguments?.transfers ?? [];
       if (transactionActionTransfers.length === 1) {
         return `Not enough balance of ${getTokenDisplayType(transactionActionTransfers[0].type)} ${
@@ -26,9 +27,9 @@ const getDisplayMessages = ({
         }`;
       }
       return 'Not enough balance of transferred token';
-    case message?.includes(TransactionMessagesEnum.invalidLiquidity):
+    case compareMessage?.includes(TransactionMessagesEnum.invalidLiquidity):
       return 'One of the selected tokens was temporarily immovable due to a pending ESDT protocol upgrade. Protocol update has been successfully deployed at epoch 811.';
-    case message?.includes(TransactionMessagesEnum.nilUserAccount):
+    case compareMessage?.includes(TransactionMessagesEnum.nilUserAccount):
       return 'Transfer role is active on token: Transaction sender or receiver is not whitelisted.';
     default:
       return message;
