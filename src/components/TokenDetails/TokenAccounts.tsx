@@ -21,12 +21,13 @@ const TokenAccounts = () => {
   const { activeNetworkId, tokenDetails } = useGlobalState();
   const { page } = useURLSearchParams();
   const { size } = useSize();
-  const { getTokenAccounts } = adapter();
+  const { getTokenAccounts, getTokenAccountsCount } = adapter();
 
   const { hash: tokenId } = useParams() as any;
   const { decimals, accounts: totalAccounts } = tokenDetails;
 
   const [accounts, setAccounts] = React.useState<types.AccountType[]>([]);
+  const [accountsCount, setAccountsCount] = React.useState(0);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchAccounts = () => {
@@ -38,6 +39,18 @@ const TokenAccounts = () => {
         setDataReady(success);
       }
     });
+
+    Promise.all([getTokenAccounts({ tokenId, size }), getTokenAccountsCount({ tokenId })]).then(
+      ([tokenAccountsData, tokenAccountsCountData]) => {
+        if (ref.current !== null) {
+          if (tokenAccountsData.success && tokenAccountsCountData.success) {
+            setAccounts(tokenAccountsData.data);
+            setAccountsCount(tokenAccountsCountData.data);
+            setDataReady(true);
+          }
+        }
+      }
+    );
   };
 
   React.useEffect(() => {
@@ -56,7 +69,7 @@ const TokenAccounts = () => {
             <div className="d-none d-sm-flex">
               <Pager
                 page={String(page)}
-                total={totalAccounts ? Math.min(totalAccounts, 10000) : 0}
+                total={accountsCount ? Math.min(accountsCount, 10000) : 0}
                 itemsPerPage={25}
                 show={accounts.length > 0}
               />
@@ -106,7 +119,7 @@ const TokenAccounts = () => {
               <div className="card-footer d-flex justify-content-end">
                 <Pager
                   page={String(page)}
-                  total={totalAccounts ? Math.min(totalAccounts, 10000) : 0}
+                  total={accountsCount ? Math.min(accountsCount, 10000) : 0}
                   itemsPerPage={25}
                   show={accounts.length > 0}
                 />
