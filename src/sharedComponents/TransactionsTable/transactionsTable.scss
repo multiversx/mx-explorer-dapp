@@ -22,7 +22,8 @@
       }
     }
     .transaction-value {
-      width: 11.5rem;
+      max-width: 11.5rem;
+      min-width: 11.5rem;
     }
     .transaction-function {
       width: 10.5rem;
