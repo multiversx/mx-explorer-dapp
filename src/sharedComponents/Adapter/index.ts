@@ -488,7 +488,7 @@ export default function useAdapter() {
 
     getTokenAccountsCount: ({ tokenId }: { tokenId: string }) =>
       provider({
-        url: `/tokens/${tokenId}/accounts/c`,
+        url: `/tokens/${tokenId}/accounts/count`,
       }),
 
     getTokenSupply: ({ tokenId }: { tokenId: string }) =>
