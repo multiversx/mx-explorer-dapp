@@ -48,11 +48,11 @@ const TxActionNft = ({
               {token.svgUrl && (
                 <img src={token.svgUrl} alt={token.name} className="side-icon mr-1" />
               )}
-              <span
+              <div
                 {...(token.ticker === token.collection ? { className: 'text-truncate mr-1' } : {})}
               >
                 {token.ticker === token.collection ? token.identifier : token.ticker}
-              </span>
+              </div>
             </div>
           </NetworkLink>
         </>
