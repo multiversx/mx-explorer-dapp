@@ -26,7 +26,7 @@ const AccountAnalytics = () => {
   const getData = () => {
     getAccountHistory({ address: accountDetails.address, size: 100 }).then(
       (accountsHistoryData) => {
-        if (accountsHistoryData.success) {
+        if (accountsHistoryData.success && accountsHistoryData?.data?.length > 0) {
           const reversedData = accountsHistoryData.data.reverse();
           const startTimestamp = reversedData[0].timestamp;
           const endTimestamp = reversedData[reversedData.length - 1].timestamp;
@@ -64,9 +64,11 @@ const AccountAnalytics = () => {
         </div>
         <div className="card-header-item d-flex align-items-center bg-light">
           Account {erdLabel} Balance{' '}
-          <span className="text-secondary ml-1">
-            ( from {startDate} to {endDate} )
-          </span>
+          {chartData.length > 1 && (
+            <span className="text-secondary ml-1">
+              ( from {startDate} to {endDate} )
+            </span>
+          )}
         </div>
       </div>
       <div className="card-body px-lg-spacer py-lg-4">
@@ -94,7 +96,11 @@ const AccountAnalytics = () => {
               ) : (
                 <PageState
                   icon={faChartBar}
-                  title="Not enough entries to display the chart"
+                  title={
+                    chartData.length === 0
+                      ? 'No account balance history'
+                      : 'Not enough entries to display the chart'
+                  }
                   className="my-auto"
                   titleClassName="mt-0"
                   dataTestId="accountChartSmall"
