@@ -1,9 +1,8 @@
 .main-navbar {
   .main-symbol,
-  .main-logo {
-    g {
-      fill: $body;
-    }
+  .main-logo,
+  .main-logo-short {
+    fill: $body;
   }
 
   .dropdown-toggle {
