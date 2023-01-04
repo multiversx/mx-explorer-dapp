@@ -3,7 +3,7 @@ import React from 'react';
 import BigNumber from 'bignumber.js';
 import { Denominate } from 'sharedComponents';
 import { StakeType } from 'helpers/types';
-import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol.svg';
+import { ReactComponent as EgldSymbol } from 'assets/images/egld-symbol.svg';
 
 import DetailsBlock from '../DetailsBlock';
 
@@ -21,7 +21,7 @@ const AccountStake = ({ stake }: { stake: StakeType }) => {
       <div className="provider-details">
         <div className="d-flex flex-row align-items-center">
           <div className="egld-icon provider-image has-avatar rounded-circle d-flex mr-3">
-            <ElrondSymbol />
+            <EgldSymbol />
           </div>
           <div className="d-flex flex-column w-100">
             <div className="provider-title d-flex align-items-center">Staked Validator Nodes</div>
