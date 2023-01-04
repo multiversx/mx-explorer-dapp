@@ -10,7 +10,7 @@ describe('Tokens Page', () => {
   //   const render = beforeAll({
   //     route: '/tokens',
   //   });
-  //   expect(document.title).toEqual('Tokens • Elrond Explorer');
+  //   expect(document.title).toEqual('Tokens • MultiversX Explorer');
   //   await wait(async () => {
   //     expect(render.queryByTestId('title')!.innerHTML).toBe('Tokens');
   //     const table = await render.findByTestId('tokensTable');
@@ -47,7 +47,7 @@ describe('Tokens Page', () => {
 
 //     fireEvent.click(link);
 //     await wait(async () => {
-//       expect(document.title).toEqual('Token Details • Elrond Explorer');
+//       expect(document.title).toEqual('Token Details • MultiversX Explorer');
 //     });
 //   });
 // });
