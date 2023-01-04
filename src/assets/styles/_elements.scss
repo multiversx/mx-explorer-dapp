@@ -263,6 +263,10 @@
   border-radius: 50%;
   overflow: hidden;
   border: 1px solid $border-color-alt;
+  svg,
+  img {
+    max-width: 0.875rem;
+  }
   svg {
     color: $muted;
   }
@@ -271,9 +275,6 @@ div.side-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  img {
-    transform: scale(0.75);
-  }
 }
 
 .icon-elrond {
