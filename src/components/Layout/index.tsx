@@ -21,7 +21,7 @@ import {
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const {
     theme,
-    config: { elrondApps },
+    config: { multiversXApps },
   } = useGlobalState();
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
@@ -91,7 +91,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   const isHome = activeRoute('/');
 
-  const explorerApp = elrondApps.find((app) => app.id === 'explorer');
+  const explorerApp = multiversXApps.find((app) => app.id === 'explorer');
   const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
 
   return (

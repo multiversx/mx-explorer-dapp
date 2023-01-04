@@ -40,11 +40,11 @@ const CONFIG = {
       theme: 'testnet',
     },
   ],
-  elrondApps: [
+  multiversXApps: [
     {
       id: 'main-site',
-      name: 'Main site',
-      url: 'https://elrond.com/',
+      name: 'MultiversX',
+      url: 'https://multiversx.com/',
     },
     {
       id: 'wallet',
@@ -72,14 +72,14 @@ const CONFIG = {
       url: 'https://growth.elrond.com/',
     },
     {
-      id: 'maiar',
-      name: 'Maiar',
-      url: 'https://maiar.com/',
+      id: 'xexchange',
+      name: 'xExchange',
+      url: 'https://xexchange.com/',
     },
     {
-      id: 'maiar-exchange',
-      name: 'Maiar Exchange',
-      url: 'https://maiar.exchange/',
+      id: 'xlaunchpad',
+      name: 'xLaunchpad',
+      url: 'https://xlaunchpad.com/',
     },
   ],
 };

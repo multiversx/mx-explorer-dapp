@@ -24,7 +24,7 @@ export type AdapterType = InferType<typeof adapterSchema>;
 export interface ConfigType {
   networks: NetworkType[];
   links: NetworkLinkType[];
-  elrondApps: NetworkLinkType[];
+  multiversXApps: NetworkLinkType[];
 }
 
 export interface GlobalStakeType {
