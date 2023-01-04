@@ -7,7 +7,7 @@ import { NavDropdown } from 'react-bootstrap';
 
 export default function AppSwitcher({ onToggle }: { onToggle?: () => void }) {
   const {
-    config: { elrondApps },
+    config: { multiversXApps },
   } = useGlobalState();
 
   const hidePopover = () => {
@@ -33,7 +33,7 @@ export default function AppSwitcher({ onToggle }: { onToggle?: () => void }) {
       id="app-switcher-dropdown"
       alignRight
     >
-      {elrondApps.map(({ name, url, id }) => {
+      {multiversXApps.map(({ name, url, id }) => {
         const active = id === 'explorer';
         return (
           <a

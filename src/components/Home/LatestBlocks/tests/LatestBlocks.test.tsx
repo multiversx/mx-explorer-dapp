@@ -48,7 +48,7 @@ describe('Latest Blocks Links', () => {
 
     fireEvent.click(allBlocksLink);
     await wait(async () => {
-      expect(document.title).toEqual('Blocks • Elrond Explorer');
+      expect(document.title).toEqual('Blocks • MultiversX Explorer');
     });
   });
   test('Block Link', async () => {
@@ -62,7 +62,7 @@ describe('Latest Blocks Links', () => {
     expect(blockLink.innerHTML).toBe(blocks[0].nonce.toString());
     fireEvent.click(blockLink);
     await wait(async () => {
-      expect(document.title).toEqual('Block Details • Elrond Explorer');
+      expect(document.title).toEqual('Block Details • MultiversX Explorer');
     });
   });
   test('Latest Blocks Hash Link', async () => {
@@ -78,7 +78,7 @@ describe('Latest Blocks Links', () => {
     );
     fireEvent.click(blockHashLink);
     await wait(async () => {
-      expect(document.title).toEqual('Block Details • Elrond Explorer');
+      expect(document.title).toEqual('Block Details • MultiversX Explorer');
     });
   });
 });

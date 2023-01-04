@@ -12,7 +12,7 @@
     </defs>
     <g id="ERDs" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="bottom-layer" opacity=".8" transform="translate(28.000000, 168.000000)">
-            <g id="coin-elrond" transform="translate(116.000000, 204.000000)">
+            <g id="coin-egld" transform="translate(116.000000, 204.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -32,7 +32,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(480.000000, 400.000000)">
+            <g id="coin-egld" transform="translate(480.000000, 400.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -52,7 +52,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(248.000000, 1260.000000)">
+            <g id="coin-egld" transform="translate(248.000000, 1260.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -72,7 +72,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(232.000000, 532.000000)">
+            <g id="coin-egld" transform="translate(232.000000, 532.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -92,7 +92,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(360.000000, 2828.000000)">
+            <g id="coin-egld" transform="translate(360.000000, 2828.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -112,7 +112,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(748.000000, 2696.000000)">
+            <g id="coin-egld" transform="translate(748.000000, 2696.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -132,7 +132,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(716.000000, 2100.000000)">
+            <g id="coin-egld" transform="translate(716.000000, 2100.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -152,7 +152,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(196.000000, 2156.000000)">
+            <g id="coin-egld" transform="translate(196.000000, 2156.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -172,7 +172,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(268.000000, 788.000000)">
+            <g id="coin-egld" transform="translate(268.000000, 788.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -192,7 +192,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1584.000000, 44.000000)">
+            <g id="coin-egld" transform="translate(1584.000000, 44.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -212,7 +212,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(692.000000, 3072.000000)">
+            <g id="coin-egld" transform="translate(692.000000, 3072.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -232,7 +232,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(832.000000, 508.000000)">
+            <g id="coin-egld" transform="translate(832.000000, 508.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -252,7 +252,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(936.000000, 2968.000000)">
+            <g id="coin-egld" transform="translate(936.000000, 2968.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -272,7 +272,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(804.000000, 0.000000)">
+            <g id="coin-egld" transform="translate(804.000000, 0.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -292,7 +292,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1116.000000, 1156.000000)">
+            <g id="coin-egld" transform="translate(1116.000000, 1156.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -312,7 +312,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1120.000000, 2704.000000)">
+            <g id="coin-egld" transform="translate(1120.000000, 2704.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -332,7 +332,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1304.000000, 1980.000000)">
+            <g id="coin-egld" transform="translate(1304.000000, 1980.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -352,7 +352,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1708.000000, 1992.000000)">
+            <g id="coin-egld" transform="translate(1708.000000, 1992.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -372,7 +372,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1540.000000, 620.000000)">
+            <g id="coin-egld" transform="translate(1540.000000, 620.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -392,7 +392,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1244.000000, 2356.000000)">
+            <g id="coin-egld" transform="translate(1244.000000, 2356.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -412,7 +412,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1412.000000, 1700.000000)">
+            <g id="coin-egld" transform="translate(1412.000000, 1700.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -432,7 +432,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(904.000000, 1532.000000)">
+            <g id="coin-egld" transform="translate(904.000000, 1532.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -452,7 +452,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(328.000000, 1636.000000)">
+            <g id="coin-egld" transform="translate(328.000000, 1636.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -472,7 +472,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1576.000000, 352.000000)">
+            <g id="coin-egld" transform="translate(1576.000000, 352.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -492,7 +492,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1648.000000, 900.000000)">
+            <g id="coin-egld" transform="translate(1648.000000, 900.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -512,7 +512,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1516.000000, 2720.000000)">
+            <g id="coin-egld" transform="translate(1516.000000, 2720.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -532,7 +532,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1516.000000, 3024.000000)">
+            <g id="coin-egld" transform="translate(1516.000000, 3024.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -552,7 +552,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(0.000000, 2956.000000)">
+            <g id="coin-egld" transform="translate(0.000000, 2956.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="19.9817247" cy="20.2210166" r="18.8235294"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="20.2215877" cy="19.9811536" r="16.7104512"></circle>
@@ -574,7 +574,7 @@
             </g>
         </g>
         <g id="top-layer" transform="translate(156.000000, 236.000000)">
-            <g id="coin-elrond" transform="translate(120.000000, 64.000000)">
+            <g id="coin-egld" transform="translate(120.000000, 64.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -594,7 +594,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1512.000000, 1768.000000)">
+            <g id="coin-egld" transform="translate(1512.000000, 1768.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -614,7 +614,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(376.000000, 1244.000000)">
+            <g id="coin-egld" transform="translate(376.000000, 1244.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -634,7 +634,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(696.000000, 664.000000)">
+            <g id="coin-egld" transform="translate(696.000000, 664.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -654,7 +654,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(556.000000, 2524.000000)">
+            <g id="coin-egld" transform="translate(556.000000, 2524.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -674,7 +674,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(324.000000, 1840.000000)">
+            <g id="coin-egld" transform="translate(324.000000, 1840.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -694,7 +694,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(216.000000, 2268.000000)">
+            <g id="coin-egld" transform="translate(216.000000, 2268.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -714,7 +714,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(424.000000, 872.000000)">
+            <g id="coin-egld" transform="translate(424.000000, 872.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -734,7 +734,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(0.000000, 776.000000)">
+            <g id="coin-egld" transform="translate(0.000000, 776.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -754,7 +754,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1028.000000, 584.000000)">
+            <g id="coin-egld" transform="translate(1028.000000, 584.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -774,7 +774,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(824.000000, 112.000000)">
+            <g id="coin-egld" transform="translate(824.000000, 112.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -794,7 +794,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1144.000000, 1508.000000)">
+            <g id="coin-egld" transform="translate(1144.000000, 1508.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -814,7 +814,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(960.000000, 2968.000000)">
+            <g id="coin-egld" transform="translate(960.000000, 2968.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -834,7 +834,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1592.000000, 2412.000000)">
+            <g id="coin-egld" transform="translate(1592.000000, 2412.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -854,7 +854,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(136.000000, 3004.000000)">
+            <g id="coin-egld" transform="translate(136.000000, 3004.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -874,7 +874,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(44.000000, 2596.000000)">
+            <g id="coin-egld" transform="translate(44.000000, 2596.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -894,7 +894,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(968.000000, 916.000000)">
+            <g id="coin-egld" transform="translate(968.000000, 916.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -914,7 +914,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1432.000000, 892.000000)">
+            <g id="coin-egld" transform="translate(1432.000000, 892.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -934,7 +934,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(964.000000, 2224.000000)">
+            <g id="coin-egld" transform="translate(964.000000, 2224.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -954,7 +954,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1056.000000, 1932.000000)">
+            <g id="coin-egld" transform="translate(1056.000000, 1932.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -974,7 +974,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(56.000000, 1484.000000)">
+            <g id="coin-egld" transform="translate(56.000000, 1484.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -994,7 +994,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(680.000000, 1540.000000)">
+            <g id="coin-egld" transform="translate(680.000000, 1540.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -1014,7 +1014,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1240.000000, 224.000000)">
+            <g id="coin-egld" transform="translate(1240.000000, 224.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -1034,7 +1034,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1636.000000, 0.000000)">
+            <g id="coin-egld" transform="translate(1636.000000, 0.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -1054,7 +1054,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1328.000000, 1240.000000)">
+            <g id="coin-egld" transform="translate(1328.000000, 1240.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>
@@ -1074,7 +1074,7 @@
                     </g>
                 </g>
             </g>
-            <g id="coin-elrond" transform="translate(1296.000000, 2572.000000)">
+            <g id="coin-egld" transform="translate(1296.000000, 2572.000000)">
                 <g id="coins">
                     <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="33.968932" cy="34.3757282" r="32"></circle>
                     <circle id="Oval" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="34.376699" cy="33.9679612" r="28.407767"></circle>

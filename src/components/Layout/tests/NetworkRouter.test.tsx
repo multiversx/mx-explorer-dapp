@@ -3,7 +3,7 @@ import { ConfigType } from 'context/state';
 
 const optionalConfig: ConfigType = {
   links: [],
-  elrondApps: [
+  multiversXApps: [
     {
       id: 'explorer',
       name: 'Explorer', // navbar title
