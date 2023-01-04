@@ -61,7 +61,9 @@ const AccountLegacyDelegation = ({
             <EgldSymbol />
           </div>
           <div className="d-flex flex-column w-100">
-            <div className="provider-title d-flex align-items-center">Elrond Legacy Delegation</div>
+            <div className="provider-title d-flex align-items-center">
+              MultiversX Legacy Delegation
+            </div>
 
             <div className="d-flex flex-wrap provider-metrics">
               <div>

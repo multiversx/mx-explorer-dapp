@@ -94,7 +94,9 @@ const AccountDetailsCard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountDetails.txCount, id, address]);
 
-  const dynamicIconColor = assets?.iconSvg && assets.iconSvg.includes('elrond.svg');
+  const dynamicIconColor =
+    assets?.iconSvg &&
+    (assets.iconSvg.includes('elrond.svg') || assets.iconSvg.includes('egld.svg'));
 
   return address !== '' ? (
     <div ref={ref} className="row account-details-card mb-spacer">
@@ -147,7 +149,7 @@ const AccountDetailsCard = () => {
                             <img
                               src={assets?.iconSvg}
                               alt=" "
-                              className={dynamicIconColor ? 'icon-elrond' : ''}
+                              className={dynamicIconColor ? 'icon-egld' : ''}
                             />
                           </div>
                         )}
@@ -272,7 +274,7 @@ const AccountDetailsCard = () => {
                             <img
                               src={assets?.iconSvg}
                               alt=" "
-                              className={dynamicIconColor ? 'icon-elrond' : ''}
+                              className={dynamicIconColor ? 'icon-egld' : ''}
                             />
                           </div>
                         )}
