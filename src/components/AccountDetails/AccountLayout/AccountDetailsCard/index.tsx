@@ -19,7 +19,7 @@ import {
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import { isContract, urlBuilder, dateFormatted, formatHerotag } from 'helpers';
-import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
+import { ReactComponent as EgldSymbol } from 'assets/images/egld-symbol-chart.svg';
 
 import LockedAmountCardItem from './LockedAmountCardItem';
 import AccountUsdValueCardItem from './AccountUsdValueCardItem';
@@ -310,7 +310,7 @@ const AccountDetailsCard = () => {
               )}
             </div>
             <div className="card-body card-item-container mx-spacing">
-              <CardItem className={cardItemClass} title="Balance" customIcon={<ElrondSymbol />}>
+              <CardItem className={cardItemClass} title="Balance" customIcon={<EgldSymbol />}>
                 <div className="d-flex align-items-center">
                   {balance !== '...' ? <Denominate value={balance} decimals={4} /> : balance}
                 </div>

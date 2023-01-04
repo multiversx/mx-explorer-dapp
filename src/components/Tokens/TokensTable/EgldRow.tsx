@@ -8,7 +8,7 @@ import pagerHelper from 'sharedComponents/Pager/pagerHelper';
 import { useFilters, useURLSearchParams, validDisplayValue } from 'helpers';
 import { TokenType, SortOrderEnum, TokenSortEnum } from 'helpers/types';
 import { pageSize } from 'appConfig';
-import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol.svg';
+import { ReactComponent as EgldSymbol } from 'assets/images/egld-symbol.svg';
 
 export const EgldRow = ({
   tokens,
@@ -104,7 +104,7 @@ export const EgldRow = ({
           <div className="d-flex align-items-center mr-3">
             <span className="side-link">
               <div className="egld-icon side-icon d-flex align-items-center justify-content-center">
-                <ElrondSymbol />
+                <EgldSymbol />
               </div>
             </span>
           </div>
