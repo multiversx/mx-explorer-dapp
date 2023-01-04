@@ -2,11 +2,11 @@ import { ConfigType } from 'context/state';
 
 const config: ConfigType = {
   links: [],
-  elrondApps: [
+  multiversXApps: [
     {
       id: 'main-site',
-      name: 'Main site',
-      url: 'https://elrond.com/',
+      name: 'MultiversX',
+      url: 'https://multiversx.com/',
     },
     {
       id: 'wallet',
@@ -27,6 +27,21 @@ const config: ConfigType = {
       id: 'docs',
       name: 'Docs',
       url: 'https://docs.elrond.com/',
+    },
+    {
+      id: 'growth',
+      name: 'Growth',
+      url: 'https://growth.elrond.com/',
+    },
+    {
+      id: 'xexchange',
+      name: 'xExchange',
+      url: 'https://xexchange.com/',
+    },
+    {
+      id: 'xlaunchpad',
+      name: 'xLaunchpad',
+      url: 'https://xlaunchpad.com/',
     },
   ],
   networks: [

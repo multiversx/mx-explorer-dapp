@@ -8,10 +8,10 @@ import { ReactComponent as ElrondSymbol } from 'assets/images/symbol.svg';
 const Logo = () => {
   const {
     activeNetwork: { id },
-    config: { elrondApps },
+    config: { multiversXApps },
   } = useGlobalState();
 
-  const explorerApp = elrondApps.find((app) => app.id === 'explorer');
+  const explorerApp = multiversXApps.find((app) => app.id === 'explorer');
   const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
 
   return (
