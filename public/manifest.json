@@ -1,6 +1,6 @@
 {
-  "short_name": "Elrond Explorer",
-  "name": "An Elrond Block Explorer",
+  "short_name": "MultiversX Explorer",
+  "name": "A MultiversX (previously Elrond) Block Explorer",
   "icons": [
     {
       "src": "favicon-16x16.png",
