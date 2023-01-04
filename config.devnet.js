@@ -11,17 +11,17 @@ const CONFIG = {
     {
       id: 'mainnet',
       name: 'Mainnet',
-      url: 'https://explorer.elrond.com/',
+      url: 'https://explorer.multiversx.com/',
     },
     {
       id: 'testnet',
       name: 'Testnet',
-      url: 'https://testnet-explorer.elrond.com/',
+      url: 'https://testnet-explorer.multiversx.com/',
     },
     {
       id: 'devnet',
       name: 'Devnet',
-      url: 'https://devnet-explorer.elrond.com/',
+      url: 'https://devnet-explorer.multiversx.com/',
     },
   ],
   networks: [
@@ -34,7 +34,7 @@ const CONFIG = {
       validatorDetails: true,
       erdLabel: 'XeGLD',
       walletAddress: 'https://devnet-wallet.elrond.com/',
-      explorerAddress: 'https://devnet-explorer.elrond.com/',
+      explorerAddress: 'https://devnet-explorer.multiversx.com/',
       delegationApi: 'https://devnet-delegation-api.elrond.com',
       extrasApi: 'https://devnet-extras-api.elrond.com',
       theme: 'testnet',
@@ -54,7 +54,7 @@ const CONFIG = {
     {
       id: 'explorer',
       name: 'Devnet Explorer', // navbar title
-      url: 'http://devnet-explorer.elrond.com',
+      url: 'http://devnet-explorer.multiversx.com',
     },
     {
       id: 'bridge',

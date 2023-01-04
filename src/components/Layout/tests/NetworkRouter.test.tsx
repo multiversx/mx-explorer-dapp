@@ -7,7 +7,7 @@ const optionalConfig: ConfigType = {
     {
       id: 'explorer',
       name: 'Explorer', // navbar title
-      url: 'https://explorer.elrond.com/',
+      url: 'https://explorer.multiversx.com/',
     },
   ],
   networks: [

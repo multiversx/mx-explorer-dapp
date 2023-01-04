@@ -90,6 +90,9 @@
     height: 1.5rem;
     width: auto;
     margin-right: 0.8rem;
+    &.main-logo {
+      margin-top: -0.125rem;
+    }
   }
 
   span {
