@@ -16,7 +16,7 @@ const config: ConfigType = {
     {
       id: 'explorer',
       name: 'Devnet Explorer', // navbar title
-      url: 'http://devnet-explorer.elrond.com',
+      url: 'http://devnet-explorer.multiversx.com',
     },
     {
       id: 'bridge',

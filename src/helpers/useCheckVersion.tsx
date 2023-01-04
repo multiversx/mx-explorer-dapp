@@ -11,7 +11,7 @@ export default function useCheckVersion() {
   const refreshRate = 60 * 1000;
   const { addNotification } = useNotifications();
 
-  const isMainnetExplorer = window.location.origin === 'https://explorer.elrond.com';
+  const isMainnetExplorer = window.location.origin === 'https://explorer.multiversx.com';
   const explorerVersion = process.env.REACT_APP_CACHE_BUST;
 
   const withinInterval = moment().subtract(refreshRate, 'ms').isAfter(moment(timestamp));
