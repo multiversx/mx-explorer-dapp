@@ -47,7 +47,7 @@ export const schema = networkBaseSchema.concat(adapterSchema);
 
 export const configSchema = object({
   links: array().of(networkLink),
-  elrondApps: array().of(networkLink).required(),
+  multiversXApps: array().of(networkLink).required(),
   networks: array().of(schema).required(),
 }).required();
 
@@ -73,7 +73,7 @@ export const buildInitialConfig = (config: ImportedConfigType): ConfigType => {
 
   return {
     links: config.links || [],
-    elrondApps: config.elrondApps,
+    multiversXApps: config.multiversXApps,
     networks: config.networks.map((network: any) => ({ ...defaultNetwork, ...network })),
   };
 };

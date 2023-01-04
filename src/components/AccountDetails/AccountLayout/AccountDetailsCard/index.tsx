@@ -19,7 +19,7 @@ import {
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import { isContract, urlBuilder, dateFormatted, formatHerotag } from 'helpers';
-import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol-chart.svg';
+import { ReactComponent as EgldSymbol } from 'assets/images/egld-symbol-chart.svg';
 
 import LockedAmountCardItem from './LockedAmountCardItem';
 import AccountUsdValueCardItem from './AccountUsdValueCardItem';
@@ -94,7 +94,9 @@ const AccountDetailsCard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountDetails.txCount, id, address]);
 
-  const dynamicIconColor = assets?.iconSvg && assets.iconSvg.includes('elrond.svg');
+  const dynamicIconColor =
+    assets?.iconSvg &&
+    (assets.iconSvg.includes('elrond.svg') || assets.iconSvg.includes('egld.svg'));
 
   return address !== '' ? (
     <div ref={ref} className="row account-details-card mb-spacer">
@@ -147,7 +149,7 @@ const AccountDetailsCard = () => {
                             <img
                               src={assets?.iconSvg}
                               alt=" "
-                              className={dynamicIconColor ? 'icon-elrond' : ''}
+                              className={dynamicIconColor ? 'icon-egld' : ''}
                             />
                           </div>
                         )}
@@ -272,7 +274,7 @@ const AccountDetailsCard = () => {
                             <img
                               src={assets?.iconSvg}
                               alt=" "
-                              className={dynamicIconColor ? 'icon-elrond' : ''}
+                              className={dynamicIconColor ? 'icon-egld' : ''}
                             />
                           </div>
                         )}
@@ -310,7 +312,7 @@ const AccountDetailsCard = () => {
               )}
             </div>
             <div className="card-body card-item-container mx-spacing">
-              <CardItem className={cardItemClass} title="Balance" customIcon={<ElrondSymbol />}>
+              <CardItem className={cardItemClass} title="Balance" customIcon={<EgldSymbol />}>
                 <div className="d-flex align-items-center">
                   {balance !== '...' ? <Denominate value={balance} decimals={4} /> : balance}
                 </div>

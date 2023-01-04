@@ -9,7 +9,9 @@ describe('Search input', () => {
 
     const search = render.getAllByTestId('search')[0];
     const data = {
-      target: { value: 'c51471d4b6a439af44c51bff7372c4f02a8c98ba3bf81e7e080fe461c074d1c1' },
+      target: {
+        value: 'c51471d4b6a439af44c51bff7372c4f02a8c98ba3bf81e7e080fe461c074d1c1',
+      },
     };
     fireEvent.change(search, data);
 
@@ -20,7 +22,7 @@ describe('Search input', () => {
     fireEvent.click(searchButton);
 
     await wait(async () => {
-      expect(document.title).toEqual('Block Details • Elrond Explorer');
+      expect(document.title).toEqual('Block Details • MultiversX Explorer');
     });
   });
   test('Search finds transaction', async () => {
@@ -33,7 +35,9 @@ describe('Search input', () => {
 
     const search = render.getAllByTestId('search')[0];
     const data = {
-      target: { value: '41fa1461ac134ee095dbee60c3cc2848255181aaa2bdd6f5aae386d58e0d4a80' },
+      target: {
+        value: '41fa1461ac134ee095dbee60c3cc2848255181aaa2bdd6f5aae386d58e0d4a80',
+      },
     };
     fireEvent.change(search, data);
 
@@ -41,7 +45,7 @@ describe('Search input', () => {
     fireEvent.click(searchButton);
 
     await wait(async () => {
-      expect(document.title).toEqual('Transaction Details • Elrond Explorer');
+      expect(document.title).toEqual('Transaction Details • MultiversX Explorer');
     });
   });
   test('Search finds miniblock', async () => {
@@ -63,7 +67,7 @@ describe('Search input', () => {
     fireEvent.click(searchButton);
 
     await wait(async () => {
-      expect(document.title).toEqual('Miniblock Details • Elrond Explorer');
+      expect(document.title).toEqual('Miniblock Details • MultiversX Explorer');
     });
   });
   test('Search finds account', async () => {
@@ -81,7 +85,7 @@ describe('Search input', () => {
     fireEvent.click(searchButton);
 
     await wait(async () => {
-      expect(document.title).toEqual('Account Details • Elrond Explorer');
+      expect(document.title).toEqual('Account Details • MultiversX Explorer');
     });
   });
   test('Search finds node', async () => {
@@ -99,7 +103,7 @@ describe('Search input', () => {
     fireEvent.click(searchButton);
 
     await wait(async () => {
-      expect(document.title).toEqual('Node Details • Elrond Explorer');
+      expect(document.title).toEqual('Node Details • MultiversX Explorer');
     });
   });
   // TODO enable when tokens go live
@@ -118,7 +122,7 @@ describe('Search input', () => {
   //   fireEvent.click(searchButton);
 
   //   await wait(async () => {
-  //     expect(document.title).toEqual('Token Details • Elrond Explorer');
+  //     expect(document.title).toEqual('Token Details • MultiversX Explorer');
   //   });
   // });
   test('Search does not find anything', async () => {

@@ -93,7 +93,7 @@ const prepareChartData = ({
         addCommas: false,
       });
       chartData.push({
-        name: 'Elrond Legacy Delegation',
+        name: 'MultiversX Legacy Delegation',
         identifier: 'elrondcom',
         value: Number(amount),
       });
