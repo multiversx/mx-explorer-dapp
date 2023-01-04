@@ -2,7 +2,7 @@ import * as React from 'react';
 import BigNumber from 'bignumber.js';
 import { Redirect, useLocation, useRouteMatch } from 'react-router-dom';
 
-import { elrondNodesIdentity } from 'appConfig';
+import { multiversXNodesIdentity } from 'appConfig';
 import { useGlobalDispatch, useGlobalState } from 'context';
 
 import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
@@ -175,8 +175,8 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
               .filter((item) => item.identity)
               .map((item) => item.identity);
 
-            if (showDelegationLegacy && !providerIdentitiesList.includes(elrondNodesIdentity)) {
-              providerIdentitiesList.push(elrondNodesIdentity);
+            if (showDelegationLegacy && !providerIdentitiesList.includes(multiversXNodesIdentity)) {
+              providerIdentitiesList.push(multiversXNodesIdentity);
             }
 
             const identities = providerIdentitiesList.join(',');
@@ -190,11 +190,13 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
                         (identity: IdentityType) => identity.identity === provider.identity
                       );
 
-                      const elrondNodes = identitiesData.data.filter((identity: IdentityType) => {
-                        return identity.identity === elrondNodesIdentity;
-                      });
-                      if (elrondNodes.length > 0) {
-                        delegationLegacyIdentity = elrondNodes[0];
+                      const multiversXNodes = identitiesData.data.filter(
+                        (identity: IdentityType) => {
+                          return identity.identity === multiversXNodesIdentity;
+                        }
+                      );
+                      if (multiversXNodes.length > 0) {
+                        delegationLegacyIdentity = multiversXNodes[0];
                       }
 
                       if (identityDetails) {

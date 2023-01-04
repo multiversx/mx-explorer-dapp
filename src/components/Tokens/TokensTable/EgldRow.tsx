@@ -28,11 +28,12 @@ export const EgldRow = ({
   const { page } = useURLSearchParams();
   const { getQueryObject } = useFilters();
   const queryObject = getQueryObject();
-  const description = `The Elrond eGold (${erdLabel}) Token is native to the Elrond Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
+  const description = `The MultiversX (Elrond) eGold (${erdLabel}) Token is native to the MultiversX (previously Elrond) Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
 
   const { search, sort, order } = queryObject;
 
-  const showOnSearch = search && ['egld', 'elrond', erdLabel].includes(search.toLowerCase());
+  const showOnSearch =
+    search && ['egld', 'elrond', 'multiversx', erdLabel].includes(search.toLowerCase());
   let showOnFilter = !page && index === 0;
 
   const previousToken = tokens[index > 0 ? index - 1 : 0];
@@ -119,7 +120,7 @@ export const EgldRow = ({
           </div>
         </div>
       </td>
-      <td>Elrond {erdLabel}</td>
+      <td>MultiversX (Elrond) {erdLabel}</td>
       <td>${validDisplayValue(economics.price, 2)}</td>
       <td>{economics.circulatingSupply}</td>
       <td>${validDisplayValue(economics.marketCap, 0)}</td>

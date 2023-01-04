@@ -5,14 +5,15 @@ import { faInfoCircle } from '@fortawesome/pro-regular-svg-icons/faInfoCircle';
 import { Overlay } from 'sharedComponents';
 
 const AccountDetailsBlock = ({ assets }: { assets: AssetType }) => {
-  const dynamicIconColor = assets.iconSvg.includes('elrond.svg');
+  const dynamicIconColor =
+    assets.iconSvg.includes('elrond.svg') || assets.iconSvg.includes('egld.svg');
   return (
     <div className="d-flex align-items-center">
       {assets.iconSvg && (
         <img
           src={assets.iconSvg}
           alt={assets.name}
-          className={`account-icon mr-2 ${dynamicIconColor ? 'icon-elrond' : ''}`}
+          className={`account-icon mr-2 ${dynamicIconColor ? 'icon-egld' : ''}`}
         />
       )}
       <div>{assets.name}</div>
