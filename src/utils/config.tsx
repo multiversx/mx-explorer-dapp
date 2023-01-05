@@ -49,9 +49,9 @@ const config: ConfigType = {
       default: true,
       id: 'zero-to-one',
       name: 'Zero to One',
-      apiUrl: 'https://api.elrond.com',
+      apiUrl: 'https://api.multiversx.com',
       // TODO: check axios not working inf wrong address ex: api-facade
-      elasticUrl: 'https://api.elrond.com',
+      elasticUrl: 'https://api.multiversx.com',
       adapter: 'api',
       erdLabel: 'EGLD',
       theme: 'default',
