@@ -45,17 +45,17 @@ const TokenDetailsCard = () => {
   return identifier !== '' ? (
     <>
       <Helmet>
-        <title>{`${title} • MultiversX Explorer`}</title>
+        <title>{`${title} • MultiversX (Elrond) Explorer`}</title>
         {assets && assets.description && <meta name="description" content={assets.description} />}
 
-        <meta name="twitter:title" content={`${title} • MultiversX Explorer`} />
+        <meta name="twitter:title" content={`${title} • MultiversX (Elrond) Explorer`} />
         <meta name="twitter:card" content="summary" />
         {assets && assets.description && (
           <meta name="twitter:description" content={assets.description} />
         )}
         {assets && assets.pngUrl && <meta name="twitter:image" content={assets.pngUrl} />}
 
-        <meta property="og:title" content={`${title} • MultiversX Explorer`} />
+        <meta property="og:title" content={`${title} • MultiversX (Elrond) Explorer`} />
         {assets && assets.description && (
           <meta property="og:description" content={assets.description} />
         )}

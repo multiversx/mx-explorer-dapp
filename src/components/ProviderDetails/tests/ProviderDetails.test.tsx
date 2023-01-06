@@ -9,7 +9,7 @@ describe('Provider Details Page', () => {
     });
 
     await wait(async () => {
-      expect(document.title).toEqual('Provider Details • MultiversX Explorer');
+      expect(document.title).toEqual('Provider Details • MultiversX (Elrond) Explorer');
 
       const address = await render.findByTestId('address');
       expect(address.textContent).toBe(provider.provider);

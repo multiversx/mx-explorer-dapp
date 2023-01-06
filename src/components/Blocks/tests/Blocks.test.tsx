@@ -6,7 +6,7 @@ describe('Blocks Page', () => {
       route: '/blocks',
     });
 
-    expect(document.title).toEqual('Blocks • MultiversX Explorer');
+    expect(document.title).toEqual('Blocks • MultiversX (Elrond) Explorer');
 
     await wait(async () => {
       expect(render.queryByTestId('title')!.innerHTML).toBe('Blocks');
@@ -48,7 +48,7 @@ describe('Blocks Page Links', () => {
 
     fireEvent.click(link);
     await wait(async () => {
-      expect(document.title).toEqual('Block Details • MultiversX Explorer');
+      expect(document.title).toEqual('Block Details • MultiversX (Elrond) Explorer');
     });
   });
 
@@ -62,7 +62,7 @@ describe('Blocks Page Links', () => {
 
     fireEvent.click(link);
     await wait(async () => {
-      expect(document.title).toEqual('Shard Details • MultiversX Explorer');
+      expect(document.title).toEqual('Shard Details • MultiversX (Elrond) Explorer');
     });
   });
 
@@ -78,7 +78,7 @@ describe('Blocks Page Links', () => {
 
     fireEvent.click(link);
     await wait(async () => {
-      expect(document.title).toEqual('Block Details • MultiversX Explorer');
+      expect(document.title).toEqual('Block Details • MultiversX (Elrond) Explorer');
     });
   });
 });

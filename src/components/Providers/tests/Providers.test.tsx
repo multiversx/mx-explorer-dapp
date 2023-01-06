@@ -7,7 +7,7 @@ describe('Providers Page', () => {
     });
 
     await wait(async () => {
-      expect(document.title).toEqual('Providers • MultiversX Explorer');
+      expect(document.title).toEqual('Providers • MultiversX (Elrond) Explorer');
       const table = await render.findByTestId('providersTable');
       expect(table.childElementCount).toBe(8);
     });
@@ -46,7 +46,7 @@ describe('Providers Page Links', () => {
 
     fireEvent.click(link);
     await wait(async () => {
-      expect(document.title).toEqual('Provider Details • MultiversX Explorer');
+      expect(document.title).toEqual('Provider Details • MultiversX (Elrond) Explorer');
     });
   });
 });
