@@ -2,7 +2,7 @@ import * as React from 'react';
 import BigNumber from 'bignumber.js';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { faLeaf } from '@fortawesome/pro-solid-svg-icons/faLeaf';
-import { ReactComponent as EgldSymbol } from 'assets/images/egld-symbol-chart.svg';
+import { ReactComponent as MultiversXSymbol } from 'assets/images/symbol.svg';
 import { useGlobalState } from 'context';
 import { CardItem, MultilayerPercentageBar, PageState } from 'sharedComponents';
 
@@ -66,7 +66,7 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
               <CardItem
                 className="n3 lg"
                 title="Stake Weighted Node Version"
-                customIcon={<EgldSymbol />}
+                customIcon={<MultiversXSymbol />}
               >
                 <div className="d-flex flex-column flex-fill">
                   {globalStake && globalStake.nodesVerions ? (
