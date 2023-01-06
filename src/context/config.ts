@@ -58,7 +58,7 @@ export const defaultNetwork: NetworkType = {
   adapter: 'api',
   erdLabel: '',
   apiUrl: 'https://api.multiversx.com',
-  delegationApi: 'https://delegation-api.elrond.com',
+  delegationApi: 'https://delegation-api.multiversx.com',
   extrasApi: '***REMOVED***',
   theme: 'default',
   accessToken: false,

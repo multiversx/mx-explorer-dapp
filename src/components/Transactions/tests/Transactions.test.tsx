@@ -47,7 +47,7 @@ describe('Transactions Page Links', () => {
     fireEvent.click(links[0]);
     await act(async () => {
       await wait(async () => {
-        expect(document.title).toEqual('Transaction Details • MultiversX Explorer');
+        expect(document.title).toEqual('Transaction Details • MultiversX (Elrond) Explorer');
       });
     });
   });
@@ -61,7 +61,7 @@ describe('Transactions Page Links', () => {
 
     fireEvent.click(links[0]);
     await wait(async () => {
-      expect(document.title).toEqual('Shard Details • MultiversX Explorer');
+      expect(document.title).toEqual('Shard Details • MultiversX (Elrond) Explorer');
     });
   });
   test('Shard to link', async () => {
@@ -74,7 +74,7 @@ describe('Transactions Page Links', () => {
 
     fireEvent.click(links[0]);
     await wait(async () => {
-      expect(document.title).toEqual('Shard Details • MultiversX Explorer');
+      expect(document.title).toEqual('Shard Details • MultiversX (Elrond) Explorer');
     });
   });
   test('Receiver link', async () => {
@@ -89,7 +89,7 @@ describe('Transactions Page Links', () => {
 
     fireEvent.click(links[0]);
     await wait(async () => {
-      expect(document.title).toEqual('Account Details • MultiversX Explorer');
+      expect(document.title).toEqual('Account Details • MultiversX (Elrond) Explorer');
     });
   });
 });
