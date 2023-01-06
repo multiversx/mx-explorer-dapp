@@ -57,6 +57,16 @@ const CONFIG = {
       url: 'http://devnet-explorer.multiversx.com',
     },
     {
+      id: 'xexchange',
+      name: 'xExchange',
+      url: 'https://xexchange.com/',
+    },
+    {
+      id: 'xlaunchpad',
+      name: 'xLaunchpad',
+      url: 'https://xlaunchpad.com/',
+    },
+    {
       id: 'bridge',
       name: 'Bridge',
       url: 'https://bridge.elrond.com/',
@@ -70,16 +80,6 @@ const CONFIG = {
       id: 'growth',
       name: 'Growth',
       url: 'https://growth.elrond.com/',
-    },
-    {
-      id: 'xexchange',
-      name: 'xExchange',
-      url: 'https://xexchange.com/',
-    },
-    {
-      id: 'xlaunchpad',
-      name: 'xLaunchpad',
-      url: 'https://xlaunchpad.com/',
     },
   ],
 };
