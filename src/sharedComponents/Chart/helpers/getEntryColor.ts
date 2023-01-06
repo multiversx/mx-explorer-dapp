@@ -9,7 +9,7 @@ interface ProviderColorType extends PastelColorType {
 const DEFAULT_PROVIDER_COLORS: {
   [index: string]: string;
 } = {
-  elrondcom: '#3d5170',
+  elrondcom: '#23f7dd',
   binance_staking: '#f2b92e',
   justminingfr: '#f99a28',
   validblocks: '#5e20e5',

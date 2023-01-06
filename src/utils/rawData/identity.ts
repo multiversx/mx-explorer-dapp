@@ -1,5 +1,5 @@
 export default {
-  name: 'Elrond Community Delegation 🎖',
+  name: 'MultiversX (Elrond) Community Delegation 🎖',
   avatar:
     'https://s3.amazonaws.com/keybase_processed_uploads/0300ffbfa1a598da0a666f7e22990405_360_360.jpg',
   identity: 'elrondcom',

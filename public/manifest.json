@@ -1,20 +1,28 @@
 {
-  "short_name": "Elrond Explorer",
-  "name": "An Elrond Block Explorer",
+  "short_name": "MultiversX Explorer",
+  "name": "A MultiversX (previously Elrond) Block Explorer",
   "icons": [
     {
-      "src": "favicon-16x16.png",
-      "sizes": "16x16",
-      "type": "image/x-icon"
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "favicon-32x32",
-      "sizes": "64x64 32x32 24x24",
-      "type": "image/x-icon"
+      "src": "android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#18191a",
+  "background_color": "#18191a"
 }

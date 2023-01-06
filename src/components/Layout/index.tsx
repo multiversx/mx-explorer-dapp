@@ -21,7 +21,7 @@ import {
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const {
     theme,
-    config: { elrondApps },
+    config: { multiversXApps },
   } = useGlobalState();
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
@@ -60,38 +60,44 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const offline = !window.navigator.onLine;
 
   React.useEffect(() => {
-    const stylesheet = document.getElementById('stylesheet');
-
-    if (stylesheet) {
-      const href: string = (stylesheet as any).href;
-
-      if (process.env.NODE_ENV === 'development') {
-        (stylesheet as any).href = '';
-        switch (theme) {
-          case 'dark':
-            require('assets/styles/dark.scss');
-            break;
-          case 'testnet':
-            require('assets/styles/testnet.scss');
-            break;
-          default:
-            require('assets/styles/light.scss');
-            break;
-        }
-      } else {
-        const secondHrefPart = href.slice(href.lastIndexOf('/') + 1);
-        const currentTheme = secondHrefPart.slice(0, secondHrefPart.indexOf('.css'));
-
-        if (currentTheme !== theme) {
-          (stylesheet as any).href = href.replace(currentTheme, theme);
-        }
-      }
+    // temoporary always use the dark theme
+    if (process.env.NODE_ENV === 'development') {
+      require('assets/styles/dark.scss');
     }
+    // temoporary always use the dark theme
+
+    // const stylesheet = document.getElementById('stylesheet');
+
+    // if (stylesheet) {
+    //   const href: string = (stylesheet as any).href;
+
+    //   if (process.env.NODE_ENV === 'development') {
+    //     (stylesheet as any).href = '';
+    //     switch (theme) {
+    //       case 'dark':
+    //         require('assets/styles/dark.scss');
+    //         break;
+    //       case 'testnet':
+    //         require('assets/styles/testnet.scss');
+    //         break;
+    //       default:
+    //         require('assets/styles/light.scss');
+    //         break;
+    //     }
+    //   } else {
+    //     const secondHrefPart = href.slice(href.lastIndexOf('/') + 1);
+    //     const currentTheme = secondHrefPart.slice(0, secondHrefPart.indexOf('.css'));
+
+    //     if (currentTheme !== theme) {
+    //       (stylesheet as any).href = href.replace(currentTheme, theme);
+    //     }
+    //   }
+    // }
   }, [theme]);
 
   const isHome = activeRoute('/');
 
-  const explorerApp = elrondApps.find((app) => app.id === 'explorer');
+  const explorerApp = multiversXApps.find((app) => app.id === 'explorer');
   const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
 
   return (
@@ -110,7 +116,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     {isHome && (
                       <div className="row">
                         <div className="col-12 text-center">
-                          <h1 className="mb-4">The Elrond Blockchain {explorerTitle}</h1>
+                          <h1 className="mb-4">
+                            The MultiversX (Elrond) Blockchain {explorerTitle}
+                          </h1>
                         </div>
                       </div>
                     )}

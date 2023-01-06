@@ -1,11 +1,11 @@
 import BigNumber from 'bignumber.js';
 import { InferType } from 'yup';
 import config, { defaultNetwork, schema, adapterSchema, networkLink } from './config';
-import { storage } from 'helpers';
+// import { storage } from 'helpers';
 import {
   AccountType,
   TokenType,
-  NetworkIdType,
+  // NetworkIdType,
   NodesVersionsType,
   ShardType,
   DelegationLegacyType,
@@ -24,7 +24,7 @@ export type AdapterType = InferType<typeof adapterSchema>;
 export interface ConfigType {
   networks: NetworkType[];
   links: NetworkLinkType[];
-  elrondApps: NetworkLinkType[];
+  multiversXApps: NetworkLinkType[];
 }
 
 export interface GlobalStakeType {
@@ -219,22 +219,25 @@ const initialState = (optionalConfig?: ConfigType): StateType => {
 };
 
 const getTheme = (): StateType['theme'] => {
-  const defaultNetwork = config.networks.find((network) => network.default);
-  const isMainnet = defaultNetwork && defaultNetwork.id === NetworkIdType.mainnet;
+  // temoporary always use the dark theme
 
-  let theme = defaultNetwork && defaultNetwork.theme ? defaultNetwork.theme : 'light';
+  // const defaultNetwork = config.networks.find((network) => network.default);
+  // const isMainnet = defaultNetwork && defaultNetwork.id === NetworkIdType.mainnet;
 
-  if (isMainnet) {
-    const savedTheme = storage.getFromLocal('theme');
-    const systemDarkThemeOn = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  // let theme = defaultNetwork && defaultNetwork.theme ? defaultNetwork.theme : 'light';
 
-    if (!savedTheme && systemDarkThemeOn) {
-      theme = 'dark';
-    } else {
-      theme = savedTheme === 'dark' ? 'dark' : theme;
-    }
-  }
-  return theme;
+  // if (isMainnet) {
+  //   const savedTheme = storage.getFromLocal('theme');
+  //   const systemDarkThemeOn = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  //   if (!savedTheme && systemDarkThemeOn) {
+  //     theme = 'dark';
+  //   } else {
+  //     theme = savedTheme === 'dark' ? 'dark' : theme;
+  //   }
+  // }
+
+  return 'dark'; // theme;
 };
 
 export default initialState;

@@ -2,11 +2,11 @@ import { ConfigType } from 'context/state';
 
 const config: ConfigType = {
   links: [],
-  elrondApps: [
+  multiversXApps: [
     {
       id: 'main-site',
-      name: 'Main site',
-      url: 'https://elrond.com/',
+      name: 'MultiversX',
+      url: 'https://multiversx.com/',
     },
     {
       id: 'wallet',
@@ -16,7 +16,7 @@ const config: ConfigType = {
     {
       id: 'explorer',
       name: 'Devnet Explorer', // navbar title
-      url: 'http://devnet-explorer.elrond.com',
+      url: 'http://devnet-explorer.multiversx.com',
     },
     {
       id: 'bridge',
@@ -28,15 +28,30 @@ const config: ConfigType = {
       name: 'Docs',
       url: 'https://docs.elrond.com/',
     },
+    {
+      id: 'growth',
+      name: 'Growth',
+      url: 'https://growth.elrond.com/',
+    },
+    {
+      id: 'xexchange',
+      name: 'xExchange',
+      url: 'https://xexchange.com/',
+    },
+    {
+      id: 'xlaunchpad',
+      name: 'xLaunchpad',
+      url: 'https://xlaunchpad.com/',
+    },
   ],
   networks: [
     {
       default: true,
       id: 'zero-to-one',
       name: 'Zero to One',
-      apiUrl: 'https://api.elrond.com',
+      apiUrl: 'https://api.multiversx.com',
       // TODO: check axios not working inf wrong address ex: api-facade
-      elasticUrl: 'https://api.elrond.com',
+      elasticUrl: 'https://api.multiversx.com',
       adapter: 'api',
       erdLabel: 'EGLD',
       theme: 'default',

@@ -15,7 +15,9 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
 
   const ignoreList: string[] = [
     '***REMOVED***',
+    '***REMOVED***',
     '//data.elrond.com',
+    '//data.multiversx.com',
   ];
 
   if (delegationApi) {

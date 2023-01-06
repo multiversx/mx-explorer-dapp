@@ -3,11 +3,11 @@ import { ConfigType } from 'context/state';
 
 const optionalConfig: ConfigType = {
   links: [],
-  elrondApps: [
+  multiversXApps: [
     {
       id: 'explorer',
       name: 'Explorer', // navbar title
-      url: 'https://explorer.elrond.com/',
+      url: 'https://explorer.multiversx.com/',
     },
   ],
   networks: [
@@ -15,7 +15,7 @@ const optionalConfig: ConfigType = {
       default: true,
       id: 'zero-to-one',
       name: 'Zero to One',
-      apiUrl: 'https://api.elrond.com',
+      apiUrl: 'https://api.multiversx.com',
       adapter: 'api',
       erdLabel: 'EGLD',
     },
@@ -23,7 +23,7 @@ const optionalConfig: ConfigType = {
       default: false,
       id: 'testnet-do-toronto',
       name: 'DigitalOcean TOR Testnet',
-      apiUrl: 'https://api.elrond.com',
+      apiUrl: 'https://api.multiversx.com',
       adapter: 'api',
       erdLabel: 'EGLD',
     },

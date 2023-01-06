@@ -90,10 +90,20 @@
     height: 1.5rem;
     width: auto;
     margin-right: 0.8rem;
+    margin-top: 0.313rem;
+    @include media-breakpoint-up(md) {
+      margin-top: 0.125rem;
+    }
+    &.main-logo {
+      height: 1.65rem;
+    }
   }
 
   span {
-    font-size: 1.2rem;
+    font-size: 1.688rem;
+    @include media-breakpoint-up(md) {
+      font-size: 1.563rem;
+    }
     font-weight: 300;
     border-left: 1px solid $border-color;
     padding-left: 0.7rem;
@@ -277,10 +287,11 @@ div.side-icon {
   justify-content: center;
 }
 
-.icon-elrond {
+.icon-egld {
   filter: $image-filter;
 }
 
+.multiversx-icon svg,
 .egld-icon svg {
   fill: $dark;
   width: 1rem;

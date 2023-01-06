@@ -40,7 +40,7 @@ describe('Latest Transactions Links', () => {
     const link = await render.findByText('View All Transactions');
     fireEvent.click(link);
     await wait(async () => {
-      expect(document.title).toEqual('Transactions • Elrond Explorer');
+      expect(document.title).toEqual('Transactions • MultiversX Explorer');
     });
   });
   test('TxHash link', async () => {
@@ -52,7 +52,7 @@ describe('Latest Transactions Links', () => {
 
     fireEvent.click(link);
     await wait(async () => {
-      expect(document.title).toEqual('Transaction Details • Elrond Explorer');
+      expect(document.title).toEqual('Transaction Details • MultiversX Explorer');
     });
   });
   test('Tx To link', async () => {
@@ -64,7 +64,7 @@ describe('Latest Transactions Links', () => {
 
     fireEvent.click(link);
     await wait(async () => {
-      expect(document.title).toEqual('Account Details • Elrond Explorer');
+      expect(document.title).toEqual('Account Details • MultiversX Explorer');
     });
   });
 });

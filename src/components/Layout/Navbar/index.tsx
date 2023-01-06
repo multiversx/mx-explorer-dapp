@@ -4,17 +4,17 @@ import AppSwitcher from './AppSwitcher';
 import NetworkSwitcher from './NetworkSwitcher';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars';
-import { faMoon } from '@fortawesome/pro-regular-svg-icons/faMoon';
+// import { faMoon } from '@fortawesome/pro-regular-svg-icons/faMoon';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import NavLinks from './NavLinks';
 import Logo from './Logo';
-import { ReactComponent as Sun } from 'assets/images/sun.svg';
-import { useGlobalState, useGlobalDispatch } from 'context';
-import { NetworkIdType } from 'helpers/types';
+// import { ReactComponent as Sun } from 'assets/images/sun.svg';
+// import { useGlobalState, useGlobalDispatch } from 'context';
+// import { NetworkIdType } from 'helpers/types';
 
 export default function Navbar() {
-  const { activeNetwork, theme } = useGlobalState();
-  const dispatch = useGlobalDispatch();
+  // const { activeNetwork, theme } = useGlobalState();
+  // const dispatch = useGlobalDispatch();
 
   const toggleState = () => {
     const collapsed = !headerNavCollapsed;
@@ -36,13 +36,13 @@ export default function Navbar() {
     toggleState();
   };
 
-  const handleThemeToggleChange = (e: React.MouseEvent) => {
-    e.preventDefault();
-    dispatch({
-      type: 'changeTheme',
-      theme: theme === 'dark' ? String(activeNetwork.theme) : 'dark',
-    });
-  };
+  // const handleThemeToggleChange = (e: React.MouseEvent) => {
+  //   e.preventDefault();
+  //   dispatch({
+  //     type: 'changeTheme',
+  //     theme: theme === 'dark' ? String(activeNetwork.theme) : 'dark',
+  //   });
+  // };
 
   return (
     <>
@@ -57,7 +57,7 @@ export default function Navbar() {
             </div>
             <div>
               <ul className="flex-row navbar-nav">
-                {activeNetwork.id === NetworkIdType.mainnet && (
+                {/* {activeNetwork.id === NetworkIdType.mainnet && (
                   <li className="nav-item d-flex align-items-center">
                     <a
                       href="/#"
@@ -73,7 +73,7 @@ export default function Navbar() {
                       </i>
                     </a>
                   </li>
-                )}
+                )} */}
                 <li className="nav-item d-none d-lg-flex">
                   <AppSwitcher />
                 </li>

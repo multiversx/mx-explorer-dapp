@@ -11,17 +11,17 @@ const CONFIG = {
     {
       id: 'mainnet',
       name: 'Mainnet',
-      url: 'https://explorer.elrond.com/',
+      url: 'https://explorer.multiversx.com/',
     },
     {
       id: 'testnet',
       name: 'Testnet',
-      url: 'https://testnet-explorer.elrond.com/',
+      url: 'https://testnet-explorer.multiversx.com/',
     },
     {
       id: 'devnet',
       name: 'Devnet',
-      url: 'https://devnet-explorer.elrond.com/',
+      url: 'https://devnet-explorer.multiversx.com/',
     },
   ],
   networks: [
@@ -30,21 +30,21 @@ const CONFIG = {
       id: 'devnet',
       name: 'Devnet',
       adapter: 'api',
-      apiUrl: 'https://devnet-api.elrond.com',
+      apiUrl: 'https://devnet-api.multiversx.com',
       validatorDetails: true,
       erdLabel: 'XeGLD',
       walletAddress: 'https://devnet-wallet.elrond.com/',
-      explorerAddress: 'https://devnet-explorer.elrond.com/',
-      delegationApi: 'https://devnet-delegation-api.elrond.com',
+      explorerAddress: 'https://devnet-explorer.multiversx.com/',
+      delegationApi: 'https://devnet-delegation-api.multiversx.com',
       extrasApi: 'https://devnet-extras-api.multiversx.com',
       theme: 'testnet',
     },
   ],
-  elrondApps: [
+  multiversXApps: [
     {
       id: 'main-site',
-      name: 'Main site',
-      url: 'https://elrond.com/',
+      name: 'MultiversX',
+      url: 'https://multiversx.com/',
     },
     {
       id: 'wallet',
@@ -54,7 +54,17 @@ const CONFIG = {
     {
       id: 'explorer',
       name: 'Devnet Explorer', // navbar title
-      url: 'http://devnet-explorer.elrond.com',
+      url: 'http://devnet-explorer.multiversx.com',
+    },
+    {
+      id: 'xexchange',
+      name: 'xExchange',
+      url: 'https://xexchange.com/',
+    },
+    {
+      id: 'xlaunchpad',
+      name: 'xLaunchpad',
+      url: 'https://xlaunchpad.com/',
     },
     {
       id: 'bridge',
@@ -70,16 +80,6 @@ const CONFIG = {
       id: 'growth',
       name: 'Growth',
       url: 'https://growth.elrond.com/',
-    },
-    {
-      id: 'maiar',
-      name: 'Maiar',
-      url: 'https://maiar.com/',
-    },
-    {
-      id: 'maiar-exchange',
-      name: 'Maiar Exchange',
-      url: 'https://maiar.exchange/',
     },
   ],
 };

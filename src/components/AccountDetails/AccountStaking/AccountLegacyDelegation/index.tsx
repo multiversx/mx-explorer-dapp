@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLeaf } from '@fortawesome/pro-regular-svg-icons';
 import BigNumber from 'bignumber.js';
 
-import { ReactComponent as ElrondSymbol } from 'assets/images/elrond-symbol.svg';
+import { ReactComponent as MultiversXSymbol } from 'assets/images/symbol.svg';
 import { useGlobalState } from 'context';
 import { DelegationLegacyType, IdentityType } from 'helpers/types';
 import { Denominate } from 'sharedComponents';
@@ -57,11 +57,13 @@ const AccountLegacyDelegation = ({
     <div className="delegation-row d-flex flex-wrap align-items-center justify-content-between p-3 px-md-4">
       <div className="provider-details">
         <div className="d-flex flex-row align-items-center">
-          <div className="egld-icon provider-image has-avatar rounded-circle d-flex mr-3">
-            <ElrondSymbol />
+          <div className="multiversx-icon provider-image has-avatar rounded-circle d-flex mr-3">
+            <MultiversXSymbol />
           </div>
           <div className="d-flex flex-column w-100">
-            <div className="provider-title d-flex align-items-center">Elrond Legacy Delegation</div>
+            <div className="provider-title d-flex align-items-center">
+              MultiversX Legacy Delegation
+            </div>
 
             <div className="d-flex flex-wrap provider-metrics">
               <div>

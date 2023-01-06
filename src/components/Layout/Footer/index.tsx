@@ -13,14 +13,13 @@ const Footer = () => {
     >
       <div className="footer-inner">
         <a
-          {...{
-            target: '_blank',
-          }}
+          rel="noopener noreferrer nofollow"
+          target="_blank"
           className="d-flex align-items-center text-secondary"
-          href="https://elrond.com/"
+          href="https://multiversx.com/"
         >
           Made with <FontAwesomeIcon icon={faHeart} className="text-danger mx-1" />
-          by the Elrond team
+          by the MultiversX team
         </a>
       </div>
       {explorerVersion && (
