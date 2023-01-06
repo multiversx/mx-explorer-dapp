@@ -73,7 +73,7 @@ const RenderActiveShape = (props: any) => {
         y={ey}
         textAnchor={textAnchor}
         fill={bodyColor}
-        fontSize={10}
+        fontSize={payload.name === 'MultiversX Legacy Delegation' ? 8.5 : 10}
       >
         {payload.name}
       </text>
