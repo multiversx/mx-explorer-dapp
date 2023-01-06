@@ -31,6 +31,8 @@ jobs:
           aws-region: 'us-east-1'
       - name: Deploy to S3 bucket
         run: aws s3 sync ./build/ s3://${{ secrets.AWS_S3_BUCKET_STAGING }} --delete
+      - name: No-cache index.html
+        run: aws s3 cp s3://${{ secrets.AWS_S3_BUCKET_STAGING }}/index.html s3://${{ secrets.AWS_S3_BUCKET_STAGING }}/index.html --metadata-directive REPLACE --cache-control max-age=0 --content-type "text/html"
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@master
         env:
