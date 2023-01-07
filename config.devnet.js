@@ -33,7 +33,7 @@ const CONFIG = {
       apiUrl: 'https://devnet-api.multiversx.com',
       validatorDetails: true,
       erdLabel: 'XeGLD',
-      walletAddress: 'https://devnet-wallet.elrond.com/',
+      walletAddress: 'https://devnet-wallet.multiversx.com/',
       explorerAddress: 'https://devnet-explorer.multiversx.com/',
       delegationApi: 'https://devnet-delegation-api.multiversx.com',
       extrasApi: 'https://devnet-extras-api.multiversx.com',
@@ -49,7 +49,7 @@ const CONFIG = {
     {
       id: 'wallet',
       name: 'Devnet Wallet',
-      url: 'https://devnet-wallet.elrond.com',
+      url: 'https://devnet-wallet.multiversx.com',
     },
     {
       id: 'explorer',
@@ -69,17 +69,17 @@ const CONFIG = {
     {
       id: 'bridge',
       name: 'Bridge',
-      url: 'https://bridge.elrond.com/',
+      url: 'https://ad-astra.multiversx.com/',
     },
     {
       id: 'docs',
       name: 'Docs',
-      url: 'https://docs.elrond.com/',
+      url: 'https://docs.multiversx.com/',
     },
     {
       id: 'growth',
       name: 'Growth',
-      url: 'https://growth.elrond.com/',
+      url: 'https://growth.multiversx.com/',
     },
   ],
 };
