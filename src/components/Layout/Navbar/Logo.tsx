@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { NetworkIdType } from 'helpers/types';
 import { ReactComponent as MultiversXLogo } from 'assets/images/logo-full.svg';
-import { ReactComponent as MultiversXLogoShort } from 'assets/images/logo-short.svg';
 import { ReactComponent as MultiversXSymbol } from 'assets/images/symbol.svg';
 
 const Logo = () => {
@@ -19,10 +18,7 @@ const Logo = () => {
           <span className="text-capitalize text-truncate">{id} Explorer</span>
         </>
       ) : (
-        <>
-          <MultiversXLogo className="main-logo flex-shrink-0 d-none d-md-block" />
-          <MultiversXLogoShort className="main-logo-short flex-shrink-0 d-block d-md-none" />
-        </>
+        <MultiversXLogo className="main-logo flex-shrink-0" />
       )}
     </Link>
   );
