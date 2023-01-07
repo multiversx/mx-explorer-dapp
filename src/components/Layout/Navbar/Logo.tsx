@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { NetworkIdType } from 'helpers/types';
 import { ReactComponent as MultiversXLogo } from 'assets/images/logo-full.svg';
-import { ReactComponent as MultiversXLogoShort } from 'assets/images/logo-short.svg';
 import { ReactComponent as MultiversXSymbol } from 'assets/images/symbol.svg';
 
 const Logo = () => {
