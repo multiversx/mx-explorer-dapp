@@ -11,7 +11,7 @@ const config: ConfigType = {
     {
       id: 'wallet',
       name: 'Devnet Wallet',
-      url: 'https://devnet-wallet.elrond.com',
+      url: 'https://devnet-wallet.multiversx.com',
     },
     {
       id: 'explorer',
@@ -21,17 +21,17 @@ const config: ConfigType = {
     {
       id: 'bridge',
       name: 'Bridge',
-      url: 'https://bridge.elrond.com/',
+      url: 'https://bridge.multiversx.com/',
     },
     {
       id: 'docs',
       name: 'Docs',
-      url: 'https://docs.elrond.com/',
+      url: 'https://docs.multiversx.com/',
     },
     {
       id: 'growth',
       name: 'Growth',
-      url: 'https://growth.elrond.com/',
+      url: 'https://growth.multiversx.com/',
     },
     {
       id: 'xexchange',
