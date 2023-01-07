@@ -19,10 +19,7 @@ const Logo = () => {
           <span className="text-capitalize text-truncate">{id} Explorer</span>
         </>
       ) : (
-        <>
-          <MultiversXLogo className="main-logo flex-shrink-0 d-none d-md-block" />
-          <MultiversXLogoShort className="main-logo-short flex-shrink-0 d-block d-md-none" />
-        </>
+        <MultiversXLogo className="main-logo flex-shrink-0" />
       )}
     </Link>
   );
