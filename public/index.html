@@ -29,7 +29,7 @@
     <meta name="twitter:card" content="summary_large_image" data-react-helmet="true"/>
     <meta name="twitter:site" content="@MultiversX" />
     <meta name="twitter:creator" content="@MultiversX" />
-    <meta name="twitter:title" content="MultiversX (Elrond) | Explorer" data-react-helmet="true"/>
+    <meta name="twitter:title" content="MultiversX (Elrond) Explorer" data-react-helmet="true"/>
     <meta
       name="twitter:description"
       content="A highly scalable, fast and secure blockchain platform for distributed apps, enterprise use cases and the new internet economy." 
@@ -43,7 +43,7 @@
 
     <!-- Other Cards -->
     <meta property="og:url" content="https://%REACT_APP_SHARE_PREFIX%explorer.multiversx.com" />
-    <meta property="og:title" content="MultiversX (Elrond) | Explorer" data-react-helmet="true" />
+    <meta property="og:title" content="MultiversX (Elrond) Explorer" data-react-helmet="true" />
     <meta
       property="og:description"
       content="A highly scalable, fast and secure blockchain platform for distributed apps, enterprise use cases and the new internet economy." 
@@ -66,18 +66,16 @@
       }
     </script>
 
-
-    <!-- Google Analytics -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=%REACT_APP_GA_ID%"></script>
     <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-      ga('create', '%REACT_APP_GA_ID%', 'auto');
-      ga('send', 'pageview');
+      gtag('config', '%REACT_APP_GA_ID%');
     </script>
-    <!-- End Google Analytics -->
+      
     <!-- Website configuration file -->
     <script src="%PUBLIC_URL%/config.js?cachebust=%REACT_APP_CACHE_BUST%"></script>
   </head>
