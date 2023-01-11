@@ -67,7 +67,6 @@ export default function useAdapterConfig() {
     getShards,
     getEgldPriceHistory,
     getEgldMarketCapHistory,
-    getEgldVolumeHistory,
     getTotalStakedHistory,
     getUsersStaking,
     getTransactionsHistory,
@@ -101,8 +100,6 @@ export default function useAdapterConfig() {
       wrap(() => getEgldPriceHistory({ ...providerProps, ...props })),
     getEgldMarketCapHistory: (props = basicProps) =>
       wrap(() => getEgldMarketCapHistory({ ...providerProps, ...props })),
-    getEgldVolumeHistory: (props = basicProps) =>
-      wrap(() => getEgldVolumeHistory({ ...providerProps, ...props })),
     getTotalStakedHistory: (props = basicProps) =>
       wrap(() => getTotalStakedHistory({ ...providerProps, ...props })),
     getUsersStaking: (props = basicProps) =>

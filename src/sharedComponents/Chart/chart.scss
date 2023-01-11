@@ -47,7 +47,7 @@
 
     .category {
       @extend .h6;
-      color: $muted;
+      color: $secondary;
       cursor: pointer;
       &.active {
         color: $body;
@@ -102,7 +102,7 @@
     tspan {
       font-size: 0.75rem;
       font-weight: 300;
-      fill: $muted;
+      fill: $secondary;
     }
   }
 }
