@@ -94,7 +94,7 @@ const prepareChartData = ({
       });
       chartData.push({
         name: 'MultiversX Legacy Delegation',
-        identifier: 'elrondcom',
+        identifier: 'multiversx',
         value: Number(amount),
       });
     }

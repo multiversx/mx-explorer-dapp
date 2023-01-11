@@ -15,4 +15,4 @@ export const displayedDataLength: number = 1000000;
 export const decodeLimit: number = 60000;
 export const pageSize: number = 25;
 
-export const multiversXNodesIdentity = 'elrondcom';
+export const multiversXNodesIdentity = 'multiversx';
