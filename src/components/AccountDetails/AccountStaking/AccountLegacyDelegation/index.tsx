@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLeaf } from '@fortawesome/pro-regular-svg-icons';
 import BigNumber from 'bignumber.js';
 
-import { ReactComponent as MultiversXSymbol } from 'assets/images/symbol.svg';
+import { ReactComponent as MultiversXSymbol } from 'assets/images/multiversx-legacy-delegation.svg';
 import { useGlobalState } from 'context';
 import { DelegationLegacyType, IdentityType } from 'helpers/types';
 import { Denominate } from 'sharedComponents';
