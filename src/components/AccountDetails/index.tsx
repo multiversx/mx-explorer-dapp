@@ -105,19 +105,18 @@ const AccountDetails = () => {
   };
 
   React.useEffect(() => {
-    console.log('-----------');
     fetchTransactions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [activeNetworkId, size, address]);
 
-  // React.useEffect(() => {
-  //   if (!loading) {
-  //     if (hasPendingTransaction) {
-  //       fetchTransactions();
-  //     }
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [firstPageTicker, accountDetails.txCount, accountDetails.scrCount, accountDetails.balance]);
+  React.useEffect(() => {
+    if (!loading) {
+      if (hasPendingTransaction) {
+        fetchTransactions();
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [firstPageTicker, accountDetails.txCount, accountDetails.scrCount, accountDetails.balance]);
 
   const loading = isDataReady === undefined;
   const showTransactions = isDataReady === true && transactions.length > 0;
