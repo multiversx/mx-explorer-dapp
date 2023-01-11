@@ -37,46 +37,37 @@ const apiAdapter = {
   getEconomics: api,
   getEgldPriceHistory: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latestcomplete/quoteshistorical/egld/price`, {
+    return axios.get(`https://tools.multiversx.com/growth-api/charts?types=price`, {
       timeout,
     });
   },
   getEgldMarketCapHistory: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latestcomplete/quoteshistorical/egld/market_cap`, {
-      timeout,
-    });
-  },
-  getEgldVolumeHistory: (props: ProviderPropsType) => {
-    const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latestcomplete/quoteshistorical/egld/volume_24h`, {
+    return axios.get(`https://tools.multiversx.com/growth-api/charts?types=market-cap`, {
       timeout,
     });
   },
   getTotalStakedHistory: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latestcomplete/stakinghistorical/total/value`, {
+    return axios.get(`https://tools.multiversx.com/growth-api/charts?types=staking-metrics`, {
       timeout,
     });
   },
   getUsersStaking: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latest/stakinghistorical/total/users`, {
+    return axios.get(`https://tools.multiversx.com/growth-api/charts?types=staking-metric`, {
       timeout,
     });
   },
   getTransactionsHistory: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(
-      `https://data.elrond.com/latestcomplete/transactionshistorical/transactions/count_24h`,
-      {
-        timeout,
-      }
-    );
+    return axios.get(`https://tools.multiversx.com/growth-api/charts?types=transaction-metrics`, {
+      timeout,
+    });
   },
   getAccountsHistory: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://data.elrond.com/latestcomplete/accountshistorical/accounts/count`, {
+    return axios.get(`https://tools.multiversx.com/growth-api/charts?types=address-metrics`, {
       timeout,
     });
   },

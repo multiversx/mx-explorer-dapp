@@ -94,10 +94,6 @@ const AccountDetailsCard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountDetails.txCount, id, address]);
 
-  const dynamicIconColor =
-    assets?.iconSvg &&
-    (assets.iconSvg.includes('elrond.svg') || assets.iconSvg.includes('egld.svg'));
-
   return address !== '' ? (
     <div ref={ref} className="row account-details-card mb-spacer">
       {isContract(address) ? (
@@ -146,11 +142,7 @@ const AccountDetailsCard = () => {
                       <div className="d-flex align-items-center">
                         {assets?.iconSvg && (
                           <div className="side-icon mr-1">
-                            <img
-                              src={assets?.iconSvg}
-                              alt=" "
-                              className={dynamicIconColor ? 'icon-egld' : ''}
-                            />
+                            <img src={assets?.iconSvg} alt=" " />
                           </div>
                         )}
                         <div>{assets.name}</div>
@@ -271,11 +263,7 @@ const AccountDetailsCard = () => {
                       <div className="d-flex align-items-center">
                         {assets?.iconSvg && (
                           <div className="side-icon mr-1">
-                            <img
-                              src={assets?.iconSvg}
-                              alt=" "
-                              className={dynamicIconColor ? 'icon-egld' : ''}
-                            />
+                            <img src={assets?.iconSvg} alt=" " />
                           </div>
                         )}
                         <div>{assets?.name ?? 'Address Details'}</div>

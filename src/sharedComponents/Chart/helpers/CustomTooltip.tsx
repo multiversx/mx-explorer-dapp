@@ -64,7 +64,10 @@ const CustomTooltip = ({
                 : ''}
               <span style={{ color: payload.length > 1 ? entry.color : '' }} className="item-value">
                 {currency === '$' ? '$' : ''}
-                {new BigNumber(entry.value).toFormat()} {currency !== '$' ? currency : ''}
+                {currency === '$'
+                  ? new BigNumber(entry.value).toFormat(2)
+                  : new BigNumber(entry.value).toFormat()}{' '}
+                {currency !== '$' ? currency : ''}
               </span>
               {showUsdValue && (
                 <p className="text-secondary small mb-0">

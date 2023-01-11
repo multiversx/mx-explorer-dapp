@@ -19,7 +19,11 @@ const AccountsChart = () => {
   const getData = () => {
     getAccountsHistory().then((accountsHistoryData) => {
       if (accountsHistoryData.success) {
-        setChartData(formatDataCharts(accountsHistoryData.data));
+        const accountsChart = accountsHistoryData.data?.[0]?.data?.[0]?.all;
+
+        if (accountsChart) {
+          setChartData(formatDataCharts(accountsChart));
+        }
       }
       setDataReady(accountsHistoryData.success);
     });
