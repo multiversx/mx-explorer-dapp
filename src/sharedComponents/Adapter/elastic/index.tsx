@@ -53,9 +53,6 @@ const elasticAdapter = {
   getEgldMarketCapHistory: () => {
     throw new Error('not defined');
   },
-  getEgldVolumeHistory: () => {
-    throw new Error('not defined');
-  },
   getTotalStakedHistory: () => {
     throw new Error('not defined');
   },

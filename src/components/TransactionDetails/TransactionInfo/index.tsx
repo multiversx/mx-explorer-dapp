@@ -358,7 +358,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
                     title={
                       <>
                         <span className="mr-2">Token Operations</span>
-                        <span className="badge badge-secondary badge-pill font-weight-light">
+                        <span className="badge badge-secondary badge-pill font-weight-normal">
                           {visibleOperations.length}
                         </span>
                       </>

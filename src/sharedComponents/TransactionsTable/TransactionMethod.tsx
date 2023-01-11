@@ -51,7 +51,7 @@ const TransactionMethod = ({ transaction, baseRoute, allowFilters }: Transaction
   const TxMethodBadge = (
     <div className="d-inline-block">
       <TxMethodText>
-        <span className="badge badge-secondary badge-pill font-weight-light">
+        <span className="badge badge-secondary badge-pill font-weight-normal">
           <div className="transaction-function-badge text-truncate text-capitalize">
             {getTransactionMethod(transaction)}
           </div>

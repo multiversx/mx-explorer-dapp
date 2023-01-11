@@ -70,7 +70,7 @@ const CollectionDetailsCard = () => {
                   <DetailItem title="Properties">
                     <div className="d-flex alig-items-center flex-wrap col-lg-7 ml-n3">
                       <PropertyPill
-                        name={'Can Transfer Role'}
+                        name={'Can Transfer NFT Create Role'}
                         active={collectionDetails.canTransferRole}
                       />
                       <PropertyPill name={'Can Pause'} active={collectionDetails.canPause} />
