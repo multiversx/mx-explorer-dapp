@@ -18,7 +18,11 @@ const TransactionsChart = () => {
   const getData = () => {
     getTransactionsHistory().then((transactionsHistoryData) => {
       if (transactionsHistoryData.success) {
-        setChartData(formatDataCharts(transactionsHistoryData.data));
+        const transactionsChart = transactionsHistoryData.data?.[0]?.data?.[0]?.all;
+
+        if (transactionsChart) {
+          setChartData(formatDataCharts(transactionsHistoryData.data?.[0]?.data?.[0]?.all));
+        }
       }
       setDataReady(transactionsHistoryData.success);
     });

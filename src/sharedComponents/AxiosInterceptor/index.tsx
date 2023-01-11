@@ -13,11 +13,7 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
     activeNetwork: { extrasApi, accessToken: hasAccessToken, delegationApi },
   } = useGlobalState();
 
-  const ignoreList: string[] = [
-    '***REMOVED***',
-    '//data.elrond.com',
-    '//data.multiversx.com',
-  ];
+  const ignoreList: string[] = ['***REMOVED***'];
 
   if (delegationApi) {
     ignoreList.push(delegationApi);

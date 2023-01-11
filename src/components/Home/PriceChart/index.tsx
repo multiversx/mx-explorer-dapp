@@ -32,7 +32,7 @@ const getCurrentValue = (chartData: ChartDataType[]) => {
 const Price = () => {
   const { activeNetworkId } = useGlobalState();
 
-  const { getEgldPriceHistory, getEgldMarketCapHistory, getEgldVolumeHistory } = adapter();
+  const { getEgldPriceHistory, getEgldMarketCapHistory } = adapter();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
   const [priceChartData, setPriceChartData] = React.useState<ChartDataType[]>([]);
@@ -48,23 +48,23 @@ const Price = () => {
   const fadedBackground = docStyle.getPropertyValue('--chart-faded-bg');
 
   const getData = () => {
-    Promise.all([getEgldPriceHistory(), getEgldMarketCapHistory(), getEgldVolumeHistory()]).then(
-      ([priceHistoryData, marketCapHistoryData, volumeHistoryData]) => {
-        priceHistoryData.success
-          ? setPriceChartData(formatDataCharts(priceHistoryData.data))
-          : setPriceChartData([]);
+    Promise.all([getEgldPriceHistory(), getEgldMarketCapHistory()]).then(
+      ([priceHistoryData, marketCapHistoryData]) => {
+        const priceChart = priceHistoryData.data?.[0]?.data?.[0]?.all;
+        const volumeChart = priceHistoryData.data?.[0]?.data?.[1]?.all;
+        const marketCapChart = marketCapHistoryData.data?.[0]?.data?.[0]?.all;
 
-        marketCapHistoryData.success
-          ? setMarketCapChartData(formatDataCharts(marketCapHistoryData.data))
-          : setMarketCapChartData([]);
+        if (priceHistoryData.success && priceChart) {
+          setPriceChartData(formatDataCharts(priceChart));
+        }
+        if (priceHistoryData.success && volumeChart) {
+          setVolumeChartData(formatDataCharts(volumeChart));
+        }
+        if (marketCapHistoryData.success && marketCapChart) {
+          setMarketCapChartData(formatDataCharts(marketCapChart));
+        }
 
-        volumeHistoryData.success
-          ? setVolumeChartData(formatDataCharts(volumeHistoryData.data))
-          : setVolumeChartData([]);
-
-        setDataReady(
-          priceHistoryData.success && marketCapHistoryData.success && volumeHistoryData.success
-        );
+        setDataReady(priceHistoryData.success && marketCapHistoryData.success);
       }
     );
   };
