@@ -9,6 +9,7 @@
   font-weight: 400;
   .provider-image {
     img,
+    svg,
     .default-image {
       width: 2.625rem;
       height: 2.625rem;
@@ -18,14 +19,6 @@
     border: 1px solid $muted;
     .default-image {
       fill: $muted;
-    }
-    &.multiversx-icon,
-    &.egld-icon {
-      svg {
-        padding: 0.425rem;
-        width: 2.625rem;
-        height: 2.625rem;
-      }
     }
   }
   .provider-title {
