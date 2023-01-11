@@ -99,7 +99,7 @@ const Price = () => {
   const volume = getCurrentValue(volumeChartData);
 
   const metrics = [
-    { label: 'Current Price', value: `$${new BigNumber(value).toFormat()}` },
+    { label: 'Current Price', value: `$${new BigNumber(value).toFormat(2)}` },
     { label: 'Volume 24h', value: `$${new BigNumber(volume).toFormat(0)}` },
   ];
 
