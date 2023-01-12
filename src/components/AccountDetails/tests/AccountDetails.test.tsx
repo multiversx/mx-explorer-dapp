@@ -9,7 +9,7 @@ describe('Account Details Page', () => {
     });
 
     await wait(async () => {
-      expect(document.title).toEqual('Account Details • MultiversX (Elrond) Explorer');
+      expect(document.title).toEqual('Account Details • MultiversX (previously Elrond) Explorer');
 
       const pageInterval = render.getByTestId('pageInterval');
       expect(pageInterval!.innerHTML).toBe('1');
