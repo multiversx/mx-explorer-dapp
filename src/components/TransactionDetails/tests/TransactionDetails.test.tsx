@@ -6,7 +6,7 @@ describe('Transaction Details Page', () => {
     const render = beforeAll({
       route: `/transactions/${doc.txHash}`,
     });
-    expect(document.title).toEqual('Transaction Details • MultiversX (Elrond) Explorer');
+    expect(document.title).toEqual('Transaction Details • MultiversX (previously Elrond) Explorer');
     await wait(async () => {
       expect(render.getByText(doc.txHash)).toBeInTheDocument();
     });
