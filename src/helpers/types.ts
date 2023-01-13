@@ -126,11 +126,14 @@ export interface CollectionType {
   name: string;
   ticker: string;
   timestamp: number;
+  owner: string;
   canFreeze: boolean;
   canWipe: boolean;
   canPause: boolean;
-  canTransferRole: boolean;
-  owner: string;
+  canTransferNftCreateRole: boolean;
+  canChangeOwner: boolean;
+  canUpgrade: boolean;
+  canAddSpecialRoles: boolean;
   decimals?: number;
   assets?: {
     website?: string;
@@ -142,6 +145,11 @@ export interface CollectionType {
   scamInfo?: ScamInfoType;
   roles?: CollectionRolesType[];
   canTransfer?: boolean;
+  canCreate?: boolean;
+  canBurn?: boolean;
+  canAddQuantity?: boolean;
+  canUpdateAttributes?: boolean;
+  canAddUri?: boolean;
 }
 
 export enum NftEnumType {

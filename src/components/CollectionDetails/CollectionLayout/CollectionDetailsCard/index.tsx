@@ -68,14 +68,27 @@ const CollectionDetailsCard = () => {
                     <DetailItem title="Decimals">{collectionDetails.decimals}</DetailItem>
                   )}
                   <DetailItem title="Properties">
-                    <div className="d-flex alig-items-center flex-wrap col-lg-7 ml-n3">
-                      <PropertyPill
-                        name={'Can Transfer NFT Create Role'}
-                        active={collectionDetails.canTransferRole}
-                      />
+                    <div className="d-flex alig-items-center flex-wrap">
                       <PropertyPill name={'Can Pause'} active={collectionDetails.canPause} />
                       <PropertyPill name={'Can Freeze'} active={collectionDetails.canFreeze} />
                       <PropertyPill name={'Can Wipe'} active={collectionDetails.canWipe} />
+                      <PropertyPill
+                        name={'Can Transfer NFT Create Role'}
+                        active={collectionDetails.canTransferNftCreateRole}
+                      />
+                      <PropertyPill
+                        name={'Can Change Owner'}
+                        active={collectionDetails.canChangeOwner}
+                      />
+                      <PropertyPill name={'Can Upgrade'} active={collectionDetails.canUpgrade} />
+                      <PropertyPill
+                        name={'Can Add Special Roles'}
+                        active={collectionDetails.canAddSpecialRoles}
+                      />
+                      <PropertyPill
+                        name={'Can Transfer'}
+                        active={Boolean(collectionDetails?.canTransfer)}
+                      />
                     </div>
                   </DetailItem>
                 </div>
