@@ -91,6 +91,9 @@ const StandardRow = ({
           <span className="text-secondary">N/A</span>
         )}
       </td>
+      <td className="text-right">
+        {nodeData.nonce ? nodeData.nonce : <span className="text-secondary">N/A</span>}
+      </td>
 
       {status === 'queued' && (
         <td className="text-right">
