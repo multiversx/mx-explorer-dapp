@@ -36,6 +36,9 @@ const StandardHead = ({
     <th className="text-right" data-testid="tempRating">
       <Sort id="tempRating" field="Rating" />
     </th>
+    <th className="text-right" data-testid="nonce">
+      Nonce
+    </th>
     {status === 'queued' && (
       <th className="text-right" data-testid="position">
         <Sort id="position" field="Position" />

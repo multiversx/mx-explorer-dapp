@@ -125,7 +125,17 @@ const NodesFilters = ({ baseRoute, onlySearch }: { baseRoute: string; onlySearch
                 variant="outline-light"
                 size="sm"
                 className={`btn-pill mr-2 ${
-                  ['eligible', 'waiting', 'new', 'jailed'].includes(status) ? 'active' : ''
+                  [
+                    'eligible',
+                    'waiting',
+                    'new',
+                    'jailed',
+                    'leaving',
+                    'queued',
+                    'inactive',
+                  ].includes(status)
+                    ? 'active'
+                    : ''
                 }`}
                 id="more"
               >
@@ -174,6 +184,13 @@ const NodesFilters = ({ baseRoute, onlySearch }: { baseRoute: string; onlySearch
                   to={nodeStatusLink('queued')}
                 >
                   Queued
+                </NetworkLink>
+                <NetworkLink
+                  className={`dropdown-item ${status === 'inactive' ? 'active' : ''}`}
+                  data-testid="filterByValidators"
+                  to={nodeStatusLink('inactive')}
+                >
+                  Inactive
                 </NetworkLink>
               </Dropdown.Menu>
             </Dropdown>
