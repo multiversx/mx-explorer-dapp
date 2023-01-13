@@ -8,7 +8,9 @@
   .token-block,
   .collection-block,
   .nft-block,
-  .nft-action-block div:not([class]):not([data-testid]),
+  .nft-action-block a,
+  .token-action-block a,
+  .collection-action-block a,
   span:not([class]):not([data-testid]) {
     margin-right: 0.25rem;
     margin-left: 0;

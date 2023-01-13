@@ -11,11 +11,11 @@ const TxActionCollection = ({ token }: { token: TokenArgumentType }) => {
       {token && token.collection && (
         <NetworkLink
           to={urlBuilder.collectionDetails(token.collection)}
-          className={`d-flex ${token.svgUrl ? 'side-link' : ''}`}
+          className={`d-flex ${token.svgUrl ? 'side-link' : 'text-truncate'}`}
         >
-          <div className="d-flex align-items-center symbol">
+          <div className="d-flex align-items-center symbol text-truncate">
             {token.svgUrl && <img src={token.svgUrl} alt={token.name} className="side-icon mr-1" />}
-            <span>{token.ticker}</span>
+            <span className="text-truncate">{token.ticker}</span>
           </div>
         </NetworkLink>
       )}

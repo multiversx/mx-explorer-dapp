@@ -42,17 +42,15 @@ const TxActionNft = ({
           )}
           <NetworkLink
             to={urlBuilder.nftDetails(token.identifier)}
-            className={`${token.svgUrl ? 'd-flex side-link' : 'text-truncate'}`}
+            className={`d-flex ${token.svgUrl ? 'side-link' : 'text-truncate'}`}
           >
-            <div className="d-flex align-items-center symbol">
+            <div className="d-flex align-items-center symbol text-truncate">
               {token.svgUrl && (
                 <img src={token.svgUrl} alt={token.name} className="side-icon mr-1" />
               )}
-              <div
-                {...(token.ticker === token.collection ? { className: 'text-truncate mr-1' } : {})}
-              >
+              <span className="text-truncate">
                 {token.ticker === token.collection ? token.identifier : token.ticker}
-              </div>
+              </span>
             </div>
           </NetworkLink>
         </>
