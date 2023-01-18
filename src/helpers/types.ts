@@ -141,6 +141,7 @@ export interface CollectionType {
     status?: string;
     pngUrl?: string;
     svgUrl?: string;
+    social?: any;
   };
   scamInfo?: ScamInfoType;
   roles?: CollectionRolesType[];

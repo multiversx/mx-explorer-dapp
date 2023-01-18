@@ -1,7 +1,15 @@
 import * as React from 'react';
 
 import { urlBuilder, dateFormatted } from 'helpers';
-import { Trim, NetworkLink, PropertyPill, DetailItem, NftBadge, TimeAgo } from 'sharedComponents';
+import {
+  Trim,
+  NetworkLink,
+  PropertyPill,
+  DetailItem,
+  NftBadge,
+  TimeAgo,
+  SocialIcons,
+} from 'sharedComponents';
 import { useGlobalState } from 'context';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,6 +18,15 @@ import { faClock } from '@fortawesome/pro-regular-svg-icons';
 const CollectionDetailsCard = () => {
   const ref = React.useRef(null);
   const { collectionDetails } = useGlobalState();
+
+  const mergedAssets = {
+    ...(collectionDetails?.assets?.website
+      ? {
+          website: collectionDetails.assets.website,
+        }
+      : {}),
+    ...(collectionDetails?.assets?.social ? collectionDetails.assets.social : {}),
+  };
 
   return collectionDetails ? (
     <>
@@ -90,6 +107,27 @@ const CollectionDetailsCard = () => {
                         active={Boolean(collectionDetails?.canTransfer)}
                       />
                     </div>
+                  </DetailItem>
+                  <DetailItem title="Social">
+                    {Object.keys(mergedAssets).length > 0 ? (
+                      <div className="d-flex h-100">
+                        <SocialIcons assets={mergedAssets} />
+                      </div>
+                    ) : (
+                      <span className="text-secondary">N/A</span>
+                    )}
+                  </DetailItem>
+                  <DetailItem title="Description">
+                    {collectionDetails?.assets?.description ? (
+                      <h2
+                        className="token-description h6 mb-0"
+                        title={collectionDetails.assets.description}
+                      >
+                        {collectionDetails.assets.description}
+                      </h2>
+                    ) : (
+                      <span className="text-secondary">N/A</span>
+                    )}
                   </DetailItem>
                 </div>
               </div>
