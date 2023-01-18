@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { TransactionsTableType } from 'sharedComponents/TransactionsTable';
 import {
+  AgeColumnFilters,
   FromColumnFilters,
   ShardColumnFilters,
   StatusColumnFilters,
@@ -13,7 +14,7 @@ export const Header = ({ directionCol = false, allowFilters }: TransactionsTable
     <thead>
       <tr>
         <th scope="col">Txn Hash {allowFilters && <StatusColumnFilters />}</th>
-        <th scope="col">Age</th>
+        <th scope="col">Age {allowFilters && <AgeColumnFilters />}</th>
         <th scope="col">Shard {allowFilters && <ShardColumnFilters />}</th>
         <th scope="col">From {allowFilters && <FromColumnFilters />}</th>
         {directionCol && <th scope="col" />}
