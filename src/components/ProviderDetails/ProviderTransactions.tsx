@@ -6,7 +6,7 @@ import { Loader, TransactionsTable, adapter } from 'sharedComponents';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
-import { useSize } from 'helpers';
+import { useSize, useURLSearchParams } from 'helpers';
 import { UITransactionType } from 'helpers/types';
 import ProviderTabs from './ProviderLayout/ProviderTabs';
 
@@ -16,6 +16,18 @@ const AccountDetails = () => {
   const { size, firstPageTicker } = useSize();
   const { activeNetworkId } = useGlobalState();
   const { hash: address } = useParams() as any;
+  const {
+    senderShard,
+    receiverShard,
+    sender,
+    receiver,
+    method,
+    before,
+    after,
+    status,
+    miniBlockHash,
+    search,
+  } = useURLSearchParams();
 
   const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -26,6 +38,17 @@ const AccountDetails = () => {
     getTransactions({
       size,
       address,
+
+      senderShard,
+      receiverShard,
+      sender,
+      receiver,
+      method,
+      before,
+      after,
+      status,
+      miniBlockHash,
+      search,
       withUsername: true,
     }).then((transactionsData) => {
       const { data, success } = transactionsData;
@@ -53,7 +76,21 @@ const AccountDetails = () => {
   };
 
   const fetchTransactionsCount = () => {
-    getTransactionsCount({ address }).then(({ data: count, success }) => {
+    getTransactionsCount({
+      size,
+      address,
+
+      senderShard,
+      receiverShard,
+      sender,
+      receiver,
+      method,
+      before,
+      after,
+      status,
+      miniBlockHash,
+      search,
+    }).then(({ data: count, success }) => {
       if (ref.current !== null && success) {
         setTransactionsCount(count);
       }

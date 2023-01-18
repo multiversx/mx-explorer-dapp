@@ -7,22 +7,16 @@ import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import { useSize, urlBuilder, useURLSearchParams } from 'helpers';
-import { UITransactionType } from 'helpers/types';
+import {
+  UITransactionType,
+  TransactionsResponseType,
+  TransactionsCountResponseType,
+} from 'helpers/types';
 import AccountTabs from './AccountLayout/AccountTabs';
-
-interface TransactionsResponseType {
-  data?: any;
-  success: boolean;
-}
 
 const AccountDetails = () => {
   const ref = React.useRef(null);
-  const {
-    getAccountTransfers,
-    getAccountTransfersCount,
-    getTransactions,
-    getTransactionsCount,
-  } = adapter();
+  const { getAccountTransfers, getAccountTransfersCount } = adapter();
   const { size, firstPageTicker } = useSize();
   const {
     senderShard,
@@ -39,21 +33,20 @@ const AccountDetails = () => {
   const { activeNetworkId, accountDetails } = useGlobalState();
   const { hash: address } = useParams() as any;
 
-  // TEMP
-  const useTransactionsEndpoint = false; // useIsMainnet();
-
   const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
-  const [accountTransactionsCount, setAccountTransactionsCount] = React.useState(0);
+  const [accountTransactionsCount, setAccountTransactionsCount] = React.useState<number | '...'>(
+    '...'
+  );
   const [isDataReady, setIsDataReady] = React.useState<boolean | undefined>();
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
 
   const handleTransactions = (
     transactionsData: TransactionsResponseType,
-    countData: TransactionsResponseType
+    countData: TransactionsCountResponseType
   ) => {
     const { data, success } = transactionsData;
     if (ref.current !== null) {
-      if (success && countData.success) {
+      if (success && data && countData.success) {
         const existingHashes = transactions.map((b) => b.txHash);
         const newTransactions = data.map((transaction: UITransactionType) => ({
           ...transaction,
@@ -61,7 +54,7 @@ const AccountDetails = () => {
         }));
 
         setTransactions(newTransactions);
-        setAccountTransactionsCount(countData.data);
+        setAccountTransactionsCount(countData?.data ?? '...');
         const pending = data.some(
           (tx: UITransactionType) =>
             tx.status.toLowerCase() === txStatus.pending.toLowerCase() || tx.pendingResults
@@ -75,79 +68,41 @@ const AccountDetails = () => {
   };
 
   const fetchTransactions = () => {
-    if (!useTransactionsEndpoint) {
-      Promise.all([
-        getAccountTransfers({
-          size,
-          address,
+    Promise.all([
+      getAccountTransfers({
+        size,
+        address,
 
-          senderShard,
-          receiverShard,
-          sender,
-          receiver,
-          method,
-          before,
-          after,
-          status,
-          miniBlockHash,
-          search,
-          withUsername: true,
-        }),
-        getAccountTransfersCount({
-          size,
-          address,
+        senderShard,
+        receiverShard,
+        sender,
+        receiver,
+        method,
+        before,
+        after,
+        status,
+        miniBlockHash,
+        search,
+        withUsername: true,
+      }),
+      getAccountTransfersCount({
+        size,
+        address,
 
-          senderShard,
-          receiverShard,
-          sender,
-          receiver,
-          method,
-          before,
-          after,
-          status,
-          miniBlockHash,
-          search,
-        }),
-      ]).then(([accountTransfersData, accountTransfersCountData]) => {
-        handleTransactions(accountTransfersData, accountTransfersCountData);
-      });
-    } else {
-      Promise.all([
-        getTransactions({
-          size,
-          address,
-
-          senderShard,
-          receiverShard,
-          sender,
-          receiver,
-          method,
-          before,
-          after,
-          status,
-          miniBlockHash,
-          search,
-          withUsername: true,
-        }),
-        getTransactionsCount({
-          size,
-          address,
-
-          senderShard,
-          receiverShard,
-          sender,
-          receiver,
-          method,
-          before,
-          after,
-          status,
-          miniBlockHash,
-          search,
-        }),
-      ]).then(([accountTransactionsData, accountTransactionsCountData]) => {
-        handleTransactions(accountTransactionsData, accountTransactionsCountData);
-      });
-    }
+        senderShard,
+        receiverShard,
+        sender,
+        receiver,
+        method,
+        before,
+        after,
+        status,
+        miniBlockHash,
+        search,
+      }),
+    ]).then(([accountTransfersData, accountTransfersCountData]) => {
+      handleTransactions(accountTransfersData, accountTransfersCountData);
+    });
   };
 
   React.useEffect(() => {
@@ -162,7 +117,7 @@ const AccountDetails = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, accountDetails.txCount, accountDetails.scrCount, accountDetails.balance]);
+  }, [firstPageTicker, accountDetails.txCount, accountDetails.balance]);
 
   const loading = isDataReady === undefined;
   const showTransactions = isDataReady === true && transactions.length > 0;
