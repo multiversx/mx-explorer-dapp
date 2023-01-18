@@ -21,7 +21,6 @@ export interface TransactionRowType {
   directionCol?: boolean;
   address?: string;
   showLockedAccounts?: boolean;
-  baseRoute?: string;
 }
 
 const TransactionRow = ({
@@ -29,7 +28,6 @@ const TransactionRow = ({
   address,
   directionCol,
   showLockedAccounts,
-  baseRoute,
 }: TransactionRowType) => {
   let receiver = transaction.receiver;
   if (transaction?.action?.arguments?.receiver) {
@@ -146,7 +144,7 @@ const TransactionRow = ({
         </div>
       </td>
       <td className="transaction-function">
-        <TransactionMethod transaction={transaction} baseRoute={baseRoute} />
+        <TransactionMethod transaction={transaction} />
       </td>
       <td className="transaction-value">
         <TransactionValue transaction={transaction} />

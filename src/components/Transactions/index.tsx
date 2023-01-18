@@ -96,7 +96,6 @@ const Transactions = () => {
                     transactions={transactions}
                     totalTransactions={totalTransactions}
                     size={size}
-                    baseRoute={transactionsRoutes.transactions}
                     title={
                       <h6 data-testid="title">
                         Transactions

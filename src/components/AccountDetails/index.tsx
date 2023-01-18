@@ -134,7 +134,6 @@ const AccountDetails = () => {
               size={size}
               directionCol={true}
               title={<AccountTabs />}
-              baseRoute={urlBuilder.accountDetails(address)}
             />
           ) : (
             <div className="card">
