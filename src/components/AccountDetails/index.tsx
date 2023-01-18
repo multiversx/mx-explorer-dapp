@@ -23,7 +23,18 @@ const AccountDetails = () => {
     getTransactionsCount,
   } = adapter();
   const { size, firstPageTicker } = useSize();
-  const { method, before, after, status } = useURLSearchParams();
+  const {
+    senderShard,
+    receiverShard,
+    sender,
+    receiver,
+    method,
+    before,
+    after,
+    status,
+    miniBlockHash,
+    search,
+  } = useURLSearchParams();
   const { activeNetworkId, accountDetails } = useGlobalState();
   const { hash: address } = useParams() as any;
 
@@ -68,19 +79,33 @@ const AccountDetails = () => {
         getAccountTransfers({
           size,
           address,
+
+          senderShard,
+          receiverShard,
+          sender,
+          receiver,
           method,
           before,
           after,
           status,
+          miniBlockHash,
+          search,
           withUsername: true,
         }),
         getAccountTransfersCount({
           size,
           address,
+
+          senderShard,
+          receiverShard,
+          sender,
+          receiver,
           method,
           before,
           after,
           status,
+          miniBlockHash,
+          search,
         }),
       ]).then(([accountTransfersData, accountTransfersCountData]) => {
         handleTransactions(accountTransfersData, accountTransfersCountData);
@@ -90,13 +115,33 @@ const AccountDetails = () => {
         getTransactions({
           size,
           address,
+
+          senderShard,
+          receiverShard,
+          sender,
+          receiver,
           method,
+          before,
+          after,
+          status,
+          miniBlockHash,
+          search,
           withUsername: true,
         }),
         getTransactionsCount({
           size,
           address,
+
+          senderShard,
+          receiverShard,
+          sender,
+          receiver,
           method,
+          before,
+          after,
+          status,
+          miniBlockHash,
+          search,
         }),
       ]).then(([accountTransactionsData, accountTransactionsCountData]) => {
         handleTransactions(accountTransactionsData, accountTransactionsCountData);
