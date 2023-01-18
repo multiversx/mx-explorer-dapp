@@ -54,6 +54,8 @@ import PercentageLed from './PercentageLed';
 import Chart from './Chart';
 import UsdValue from './UsdValue';
 
+export * from './Filters';
+
 export {
   Denominate,
   Pager,

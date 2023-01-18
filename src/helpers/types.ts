@@ -452,6 +452,21 @@ export interface UITransactionType extends TransferType {
   tokenIdentifier?: string;
 }
 
+export enum ApiTxStatusEnum {
+  success = 'Success',
+  pending = 'Pending',
+  invalid = 'Invalid',
+  fail = 'Fail',
+}
+
+export enum ExtraTxStatusEnum {
+  notExecuted = 'Not Executed',
+  failed = 'Failed', // TODO: remove when ready
+  rewardReverted = 'reward-reverted',
+}
+
+export type TxStatusEnum = ApiTxStatusEnum | ExtraTxStatusEnum;
+
 export interface Undelegation {
   amount: string;
   seconds: number;

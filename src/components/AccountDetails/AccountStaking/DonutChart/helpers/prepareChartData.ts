@@ -4,6 +4,7 @@ import { AccountStakingDetailsType } from 'context/state';
 
 import denominate from 'sharedComponents/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
+import { truncateMiddle } from 'helpers';
 import { ProviderType } from 'helpers/types';
 
 interface DonutChartDataType {
@@ -12,22 +13,6 @@ interface DonutChartDataType {
   identifier?: string;
   displayValue?: number;
 }
-
-// hardcoded truncate, to be used in elements that are non responsive ( eg: svg elements )
-const truncateMiddle = (fullStr: string, strLen: number, separator?: string) => {
-  if (fullStr.length <= strLen) return fullStr;
-
-  separator = separator || '...';
-
-  var sepLen = separator.length,
-    charsToShow = strLen - sepLen,
-    frontChars = Math.ceil(charsToShow / 2),
-    backChars = Math.floor(charsToShow / 2);
-
-  return (
-    fullStr.substring(0, frontChars) + separator + fullStr.substring(fullStr.length - backChars)
-  );
-};
 
 const prepareChartData = ({
   stakingDetails,
