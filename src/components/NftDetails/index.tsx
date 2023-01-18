@@ -251,8 +251,12 @@ const NftDetails = () => {
                           <div className="attributes-holder">
                             {nftDetails.metadata.attributes.map(({ value, trait_type }) => (
                               <div className="attribute" key={`${trait_type}-${value}`}>
-                                <p className="trait">{trait_type}</p>
-                                <p className="value">{value}</p>
+                                <p className="trait" title={trait_type}>
+                                  {trait_type}
+                                </p>
+                                <p className="value" title={value}>
+                                  {value}
+                                </p>
                               </div>
                             ))}
                           </div>
