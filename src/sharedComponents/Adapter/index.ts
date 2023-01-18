@@ -205,130 +205,32 @@ export default function useAdapter() {
 
     /* Transactions */
 
-    getTransactions: ({
-      size,
-      address,
-      senderShard,
-      receiverShard,
-      sender,
-      receiver,
-      method,
-      before,
-      after,
-      status,
-      miniBlockHash,
-      search,
-      withUsername,
-    }: TransactionsParamsType) =>
+    getTransactions: (params: TransactionsParamsType) =>
       provider({
         url: `/transactions`,
-        params: getTransactionsParams({
-          size,
-          address,
-          senderShard,
-          receiverShard,
-          sender,
-          receiver,
-          method,
-          before,
-          after,
-          status,
-          miniBlockHash,
-          search,
-          withUsername,
-        }),
+        params: getTransactionsParams(params),
       }),
 
-    getTransactionsCount: ({
-      address,
-      senderShard,
-      receiverShard,
-      sender,
-      receiver,
-      method,
-      before,
-      after,
-      status,
-      miniBlockHash,
-      search,
-    }: TransactionsParamsType) =>
+    getTransactionsCount: (params: TransactionsParamsType) =>
       provider({
         url: `/transactions/c`,
-        params: {
-          ...getAccountParams(address),
-          ...(senderShard !== undefined ? { senderShard } : {}),
-          ...(receiverShard !== undefined ? { receiverShard } : {}),
-          ...(sender ? { sender } : {}),
-          ...(receiver ? { receiver } : {}),
-          ...(method ? { function: method } : {}),
-          ...(before ? { before } : {}),
-          ...(after ? { after } : {}),
-          ...(status ? { status } : {}),
-          ...(miniBlockHash ? { miniBlockHash } : {}),
-          ...(search ? { search } : {}),
-        },
+        params: getTransactionsParams(params),
       }),
 
-    getAccountTransfers: ({
-      size,
-      address,
-      senderShard,
-      receiverShard,
-      sender,
-      receiver,
-      method,
-      before,
-      after,
-      status,
-      miniBlockHash,
-      search,
-      withUsername,
-    }: TransactionsParamsType) =>
+    getAccountTransfers: ({ address, ...rest }: TransactionsParamsType) =>
       provider({
         url: `/accounts/${address}/transfers`,
         params: getTransactionsParams({
-          size,
-          senderShard,
-          receiverShard,
-          sender,
-          receiver,
-          method,
-          before,
-          after,
-          status,
-          miniBlockHash,
-          search,
-          withUsername,
+          ...rest,
         }),
       }),
 
-    getAccountTransfersCount: ({
-      address,
-      senderShard,
-      receiverShard,
-      sender,
-      receiver,
-      method,
-      before,
-      after,
-      status,
-      miniBlockHash,
-      search,
-    }: TransactionsParamsType) =>
+    getAccountTransfersCount: ({ address, ...rest }: TransactionsParamsType) =>
       provider({
         url: `/accounts/${address}/transfers/c`,
-        params: {
-          ...(senderShard !== undefined ? { senderShard } : {}),
-          ...(receiverShard !== undefined ? { receiverShard } : {}),
-          ...(sender ? { sender } : {}),
-          ...(receiver ? { receiver } : {}),
-          ...(method ? { function: method } : {}),
-          ...(before ? { before } : {}),
-          ...(after ? { after } : {}),
-          ...(status ? { status } : {}),
-          ...(miniBlockHash ? { miniBlockHash } : {}),
-          ...(search ? { search } : {}),
-        },
+        params: getTransactionsParams({
+          ...rest,
+        }),
       }),
 
     getAccountScResults: ({ address, size }: { address: string; size: number }) =>
@@ -489,26 +391,39 @@ export default function useAdapter() {
 
     getToken: (tokenId: string) => provider({ url: `/tokens/${tokenId}` }),
 
-    getTokenTransactions: ({ size, tokenId }: { size: number; tokenId: string }) =>
+    getTokenTransactions: ({ tokenId, ...rest }: TransactionsParamsType & { tokenId: string }) =>
       provider({
         url: `/tokens/${tokenId}/transactions`,
-        params: getTokensParam({ size }),
+        params: getTransactionsParams({
+          ...rest,
+        }),
       }),
 
-    getTokenTransactionsCount: ({ tokenId }: { tokenId: string }) =>
+    getTokenTransactionsCount: ({
+      tokenId,
+      ...rest
+    }: TransactionsParamsType & { tokenId: string }) =>
       provider({
         url: `/tokens/${tokenId}/transactions/c`,
+        params: getTransactionsParams({
+          ...rest,
+        }),
       }),
 
-    getTokenTransfers: ({ size, tokenId }: { size: number; tokenId: string }) =>
+    getTokenTransfers: ({ tokenId, ...rest }: TransactionsParamsType & { tokenId: string }) =>
       provider({
         url: `/tokens/${tokenId}/transfers`,
-        params: getTokensParam({ size }),
+        params: getTransactionsParams({
+          ...rest,
+        }),
       }),
 
-    getTokenTransfersCount: ({ tokenId }: { tokenId: string }) =>
+    getTokenTransfersCount: ({ tokenId, ...rest }: TransactionsParamsType & { tokenId: string }) =>
       provider({
         url: `/tokens/${tokenId}/transfers/c`,
+        params: getTransactionsParams({
+          ...rest,
+        }),
       }),
 
     getTokenAccounts: ({ size, tokenId }: { size: number; tokenId: string }) =>

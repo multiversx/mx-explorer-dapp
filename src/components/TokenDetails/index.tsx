@@ -6,7 +6,7 @@ import { TransactionType } from 'sharedComponents/TransactionsTable';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
-import { useSize } from 'helpers';
+import { useSize, useURLSearchParams } from 'helpers';
 import TokenTabs from './TokenLayout/TokenTabs';
 
 interface TransactionsResponseType {
@@ -20,6 +20,18 @@ const TokenDetails = () => {
   const { size, firstPageTicker } = useSize();
   const { activeNetworkId, tokenDetails } = useGlobalState();
   const { hash: tokenId } = useParams() as any;
+  const {
+    senderShard,
+    receiverShard,
+    sender,
+    receiver,
+    method,
+    before,
+    after,
+    status,
+    miniBlockHash,
+    search,
+  } = useURLSearchParams();
 
   // TEMP
   const useTransactionsEndpoint = false; // useIsMainnet();
@@ -58,11 +70,35 @@ const TokenDetails = () => {
       getTokenTransfers({
         size,
         tokenId,
+
+        senderShard,
+        receiverShard,
+        sender,
+        receiver,
+        method,
+        before,
+        after,
+        status,
+        miniBlockHash,
+        search,
+        withUsername: true,
       }).then((transactionsData) => handleTransactions(transactionsData));
     } else {
       getTokenTransactions({
         size,
         tokenId,
+
+        senderShard,
+        receiverShard,
+        sender,
+        receiver,
+        method,
+        before,
+        after,
+        status,
+        miniBlockHash,
+        search,
+        withUsername: true,
       }).then((transactionsData) => handleTransactions(transactionsData));
     }
   };
@@ -103,6 +139,7 @@ const TokenDetails = () => {
               directionCol={true}
               title={<TokenTabs />}
               showLockedAccounts={true}
+              allowFilters={true}
             />
           ) : (
             <div className="card">

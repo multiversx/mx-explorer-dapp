@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { isHash, useNetworkRoute, urlBuilder, useSize } from 'helpers';
+import { isHash, useNetworkRoute, urlBuilder, useSize, useURLSearchParams } from 'helpers';
 import { ScResultType } from 'helpers/types';
 import { Redirect, useParams } from 'react-router-dom';
 import {
@@ -38,11 +38,18 @@ const MiniBlockDetails = () => {
   const networkRoute = useNetworkRoute();
 
   const {
-    getMiniBlockTransactions,
-    getMiniBlockTransactionsCount,
-    getMiniBlock,
-    getMiniBlockScResults,
-  } = adapter();
+    senderShard,
+    receiverShard,
+    sender,
+    receiver,
+    method,
+    before,
+    after,
+    status,
+    search,
+  } = useURLSearchParams();
+
+  const { getTransactions, getTransactionsCount, getMiniBlock, getMiniBlockScResults } = adapter();
 
   const { activeNetworkId } = useGlobalState();
 
@@ -83,9 +90,19 @@ const MiniBlockDetails = () => {
     if (!invalid) {
       Promise.all([
         getMiniBlock(miniBlockHash),
-        getMiniBlockTransactions({
+        getTransactions({
           size,
           miniBlockHash,
+
+          senderShard,
+          receiverShard,
+          sender,
+          receiver,
+          method,
+          before,
+          after,
+          status,
+          search,
           withUsername: true,
         }),
       ]).then(([miniBlockData, miniBlockTransactionsData]) => {
@@ -100,7 +117,20 @@ const MiniBlockDetails = () => {
           setMiniBlockFetched(miniBlockData.success);
         }
       });
-      getMiniBlockTransactionsCount(miniBlockHash).then(({ data: count, success }) => {
+      getTransactionsCount({
+        size,
+        miniBlockHash,
+
+        senderShard,
+        receiverShard,
+        sender,
+        receiver,
+        method,
+        before,
+        after,
+        status,
+        search,
+      }).then(({ data: count, success }) => {
         if (ref.current !== null && success) {
           setTotalTransactions(count);
         }
