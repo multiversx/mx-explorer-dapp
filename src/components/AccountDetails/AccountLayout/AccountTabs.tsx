@@ -9,9 +9,6 @@ const AccountTabs = () => {
   const { accountDetails, activeNetwork } = useGlobalState();
   const tokensRouteActive = activeNetwork.adapter === 'api';
 
-  // TEMP
-  const useTransactionsEndpoint = false; // useIsMainnet();
-
   return (
     <div className="account-tabs d-flex flex-row flex-wrap">
       <NetworkLink
@@ -22,17 +19,6 @@ const AccountTabs = () => {
       >
         <h6>Transactions</h6>
       </NetworkLink>
-
-      {useTransactionsEndpoint && (
-        <NetworkLink
-          to={urlBuilder.accountDetailsScResults(accountDetails.address)}
-          className={`tab-link mr-3 mr-lg-spacer ${
-            activeRoute(accountsRoutes.accountScResults) ? 'active' : ''
-          }`}
-        >
-          <h6>SC Results</h6>
-        </NetworkLink>
-      )}
 
       {tokensRouteActive && (
         <NetworkLink

@@ -454,6 +454,16 @@ export enum TransferTypeEnum {
   Transaction = 'Transaction',
   SmartContractResult = 'SmartContractResult',
 }
+
+export interface TransactionsResponseType {
+  data?: UITransactionType[];
+  success: boolean | undefined;
+}
+
+export interface TransactionsCountResponseType {
+  data?: number;
+  success: boolean | undefined;
+}
 export interface TransferType extends TransactionType {
   type?: TransferTypeEnum;
   originalTxHash?: string;
