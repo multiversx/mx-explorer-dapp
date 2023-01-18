@@ -39,6 +39,7 @@
     "react-helmet": "6.1.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.3",
+    "react-select": "5.7.0",
     "react-simple-maps": "2.3.0",
     "recharts": "2.1.14",
     "shards-ui": "3.0.0",
