@@ -6,13 +6,17 @@ import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { TxActionsEnum } from 'helpers/types';
+import { TxActionsEnum, TxFiltersEnum, TransactionsTableType } from 'helpers/types';
 import { SelectFilter } from 'sharedComponents';
 
-export const MethodColumnFilters = () => {
+export const MethodColumnFilters = ({
+  inactiveFilters = [],
+}: {
+  inactiveFilters?: TransactionsTableType['inactiveFilters'];
+}) => {
   const { search: locationSearch } = useLocation();
   const urlParams = new URLSearchParams(locationSearch);
-  const { search, function: method } = Object.fromEntries(urlParams);
+  const { function: method } = Object.fromEntries(urlParams);
 
   const capitalize = (string: string) =>
     (string && string[0].toUpperCase() + string.slice(1)) || '';
@@ -25,6 +29,10 @@ export const MethodColumnFilters = () => {
       };
     }
   );
+
+  if (inactiveFilters && inactiveFilters.includes(TxFiltersEnum.method)) {
+    return null;
+  }
 
   return (
     <OverlayTrigger
@@ -42,20 +50,12 @@ export const MethodColumnFilters = () => {
                   <SelectFilter
                     name="function-filter"
                     options={searchMethods}
-                    filter="function"
+                    filter={TxFiltersEnum.method}
                     placeholder="Search"
                     hasCustomSearch
                   />
                 </div>
               )}
-              {/* <div className="filter-block">
-                <div className="mb-1">Data</div>
-                 <SearchFilter
-                  name="search-data"
-                  filter="search"
-                  placeholder="Search in transaction data"
-                /> 
-              </div> */}
             </div>
           </Popover.Content>
         </Popover>
@@ -63,8 +63,8 @@ export const MethodColumnFilters = () => {
     >
       <div className="d-inline-block side-action cursor-pointer" data-testid="StatusFilterButton">
         <FontAwesomeIcon
-          icon={search !== undefined || method !== undefined ? faFilterSolid : faFilter}
-          className={search !== undefined || method !== undefined ? 'text-primary' : ''}
+          icon={method !== undefined ? faFilterSolid : faFilter}
+          className={method !== undefined ? 'text-primary' : ''}
         />
       </div>
     </OverlayTrigger>

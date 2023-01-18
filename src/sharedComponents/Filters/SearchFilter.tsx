@@ -4,10 +4,11 @@ import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNetworkPathname, isHash, addressIsBech32 } from 'helpers';
+import { TxFiltersEnum } from 'helpers/types';
 
 export interface SearchFilterType {
   name: string;
-  filter: string;
+  filter: TxFiltersEnum;
   placeholder?: string;
   className?: string;
   validation?: 'address' | 'hash';

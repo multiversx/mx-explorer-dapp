@@ -6,13 +6,22 @@ import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { TxFiltersEnum, TransactionsTableType } from 'helpers/types';
 import { SearchFilter } from 'sharedComponents';
 
-export const FromColumnFilters = () => {
+export const FromColumnFilters = ({
+  inactiveFilters = [],
+}: {
+  inactiveFilters?: TransactionsTableType['inactiveFilters'];
+}) => {
   const { search: locationSearch } = useLocation();
   const urlParams = new URLSearchParams(locationSearch);
 
   const { sender } = Object.fromEntries(urlParams);
+
+  if (inactiveFilters && inactiveFilters.includes(TxFiltersEnum.sender)) {
+    return null;
+  }
 
   return (
     <OverlayTrigger
@@ -28,7 +37,7 @@ export const FromColumnFilters = () => {
                 <div className="mb-1">From</div>
                 <SearchFilter
                   name="sender-filter"
-                  filter="sender"
+                  filter={TxFiltersEnum.sender}
                   placeholder="Address"
                   validation="address"
                 />

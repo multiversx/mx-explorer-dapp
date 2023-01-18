@@ -6,10 +6,15 @@ import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { TxFiltersEnum, TransactionsTableType } from 'helpers/types';
 import { SelectFilter, SelectFilterType } from 'sharedComponents';
 import { truncateMiddle } from 'helpers';
 
-export const ToColumnFilters = () => {
+export const ToColumnFilters = ({
+  inactiveFilters = [],
+}: {
+  inactiveFilters?: TransactionsTableType['inactiveFilters'];
+}) => {
   const { search: locationSearch } = useLocation();
   const urlParams = new URLSearchParams(locationSearch);
 
@@ -19,6 +24,10 @@ export const ToColumnFilters = () => {
     receiver?.split(',').map((receiver) => {
       return { value: receiver, label: truncateMiddle(receiver, 9) };
     }) ?? [];
+
+  if (inactiveFilters && inactiveFilters.includes(TxFiltersEnum.receiver)) {
+    return null;
+  }
 
   return (
     <OverlayTrigger
@@ -35,7 +44,7 @@ export const ToColumnFilters = () => {
                 <SelectFilter
                   name="receiver-filter"
                   options={existingValues}
-                  filter="receiver"
+                  filter={TxFiltersEnum.receiver}
                   placeholder="Search for multiple addresses"
                   validation="address"
                   noOptionsMessage="Invalid Address"

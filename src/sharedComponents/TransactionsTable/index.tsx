@@ -2,23 +2,9 @@ import * as React from 'react';
 import TransactionRow from './TransactionRow';
 import { MethodList } from './TransactionsFilters';
 import Pager from '../Pager';
-import { UITransactionType as TransacionInterface } from 'helpers/types';
+import { TransactionsTableType } from 'helpers/types';
 
 import { Header } from './Header';
-
-export type TransactionType = TransacionInterface;
-
-export interface TransactionsTableType {
-  transactions: TransactionType[];
-  address?: string;
-  totalTransactions: number | '...';
-  size: number;
-  title?: React.ReactNode;
-  directionCol?: boolean;
-  showLockedAccounts?: boolean;
-  baseRoute?: string;
-  allowFilters?: boolean;
-}
 
 const TransactionsTable = ({
   transactions,
@@ -33,7 +19,7 @@ const TransactionsTable = ({
   directionCol = false,
   showLockedAccounts = false,
   baseRoute,
-  allowFilters,
+  inactiveFilters,
 }: TransactionsTableType) => {
   return (
     <div className={`transactions-table ${directionCol ? 'has-direction' : ''}`}>
@@ -56,7 +42,7 @@ const TransactionsTable = ({
               />
             </div>
           </div>
-          {allowFilters && baseRoute && <MethodList baseRoute={baseRoute} />}
+          {baseRoute && <MethodList baseRoute={baseRoute} />}
         </div>
 
         <div className="card-body p-0">
@@ -68,8 +54,8 @@ const TransactionsTable = ({
                 size={size}
                 directionCol={directionCol}
                 showLockedAccounts={showLockedAccounts}
-                allowFilters={allowFilters}
                 baseRoute={baseRoute}
+                inactiveFilters={inactiveFilters}
               />
               <tbody>
                 {transactions.map((transaction) => (
@@ -79,7 +65,6 @@ const TransactionsTable = ({
                     address={address}
                     directionCol={directionCol}
                     showLockedAccounts={showLockedAccounts}
-                    allowFilters={allowFilters}
                     baseRoute={baseRoute}
                   />
                 ))}

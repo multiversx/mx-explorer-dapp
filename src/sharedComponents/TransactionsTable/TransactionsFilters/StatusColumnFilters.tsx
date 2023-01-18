@@ -6,10 +6,14 @@ import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { ApiTxStatusEnum } from 'helpers/types';
+import { ApiTxStatusEnum, TxFiltersEnum, TransactionsTableType } from 'helpers/types';
 import { SelectFilter, SearchFilter } from 'sharedComponents';
 
-export const StatusColumnFilters = () => {
+export const StatusColumnFilters = ({
+  inactiveFilters = [],
+}: {
+  inactiveFilters?: TransactionsTableType['inactiveFilters'];
+}) => {
   const { search: locationSearch } = useLocation();
   const urlParams = new URLSearchParams(locationSearch);
 
@@ -24,6 +28,14 @@ export const StatusColumnFilters = () => {
     }
   );
 
+  if (
+    inactiveFilters &&
+    inactiveFilters.includes(TxFiltersEnum.status) &&
+    inactiveFilters.includes(TxFiltersEnum.miniBlockHash)
+  ) {
+    return null;
+  }
+
   return (
     <OverlayTrigger
       trigger="click"
@@ -34,21 +46,32 @@ export const StatusColumnFilters = () => {
         <Popover id="popover-positioned-bottom" className="border popover-xs bg-light">
           <Popover.Content>
             <div className="p-3 text-dark">
-              {searchStatuses.length > 0 && (
+              {!inactiveFilters.includes(TxFiltersEnum.status) && (
+                <>
+                  {searchStatuses.length > 0 && (
+                    <div className="filter-block">
+                      <div className="mb-1">Status</div>
+                      <SelectFilter
+                        name="status-filter"
+                        options={searchStatuses}
+                        filter={TxFiltersEnum.status}
+                      />
+                    </div>
+                  )}
+                </>
+              )}
+
+              {!inactiveFilters.includes(TxFiltersEnum.miniBlockHash) && (
                 <div className="filter-block">
-                  <div className="mb-1">Status</div>
-                  <SelectFilter name="status-filter" options={searchStatuses} filter="status" />
+                  <div className="mb-1">Miniblock Hash</div>
+                  <SearchFilter
+                    name="miniBlockHash-filter"
+                    filter={TxFiltersEnum.miniBlockHash}
+                    placeholder="Hash"
+                    validation="hash"
+                  />
                 </div>
               )}
-              <div className="filter-block">
-                <div className="mb-1">Miniblock Hash</div>
-                <SearchFilter
-                  name="miniBlockHash-filter"
-                  filter="miniBlockHash"
-                  placeholder="Hash"
-                  validation="hash"
-                />
-              </div>
             </div>
           </Popover.Content>
         </Popover>
