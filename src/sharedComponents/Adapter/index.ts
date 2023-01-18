@@ -216,6 +216,18 @@ export default function useAdapter() {
         params: getTransactionsParams(params),
       }),
 
+    getTransfers: (params: TransactionsParamsType) =>
+      provider({
+        url: `/transfers`,
+        params: getTransactionsParams(params),
+      }),
+
+    getTransfersCount: (params: TransactionsParamsType) =>
+      provider({
+        url: `/transfers/c`,
+        params: getTransactionsParams(params),
+      }),
+
     getAccountTransfers: ({ address, ...rest }: TransactionsParamsType) =>
       provider({
         url: `/accounts/${address}/transfers`,
