@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TransactionsTableType } from 'sharedComponents/TransactionsTable';
+import { TransactionsTableType } from 'helpers/types';
 import {
   AgeColumnFilters,
   FromColumnFilters,
@@ -9,17 +9,29 @@ import {
   ToColumnFilters,
 } from '../TransactionsFilters';
 
-export const Header = ({ directionCol = false, allowFilters }: TransactionsTableType) => {
+export const Header = ({ directionCol = false, inactiveFilters }: TransactionsTableType) => {
   return (
     <thead>
       <tr>
-        <th scope="col">Txn Hash {allowFilters && <StatusColumnFilters />}</th>
-        <th scope="col">Age {allowFilters && <AgeColumnFilters />}</th>
-        <th scope="col">Shard {allowFilters && <ShardColumnFilters />}</th>
-        <th scope="col">From {allowFilters && <FromColumnFilters />}</th>
+        <th scope="col">
+          Txn Hash <StatusColumnFilters inactiveFilters={inactiveFilters} />
+        </th>
+        <th scope="col">
+          Age <AgeColumnFilters inactiveFilters={inactiveFilters} />
+        </th>
+        <th scope="col">
+          Shard <ShardColumnFilters inactiveFilters={inactiveFilters} />
+        </th>
+        <th scope="col">
+          From <FromColumnFilters inactiveFilters={inactiveFilters} />
+        </th>
         {directionCol && <th scope="col" />}
-        <th scope="col">To {allowFilters && <ToColumnFilters />}</th>
-        <th scope="col">Method {allowFilters && <MethodColumnFilters />}</th>
+        <th scope="col">
+          To <ToColumnFilters inactiveFilters={inactiveFilters} />
+        </th>
+        <th scope="col">
+          Method <MethodColumnFilters inactiveFilters={inactiveFilters} />
+        </th>
         <th scope="col">Value</th>
       </tr>
     </thead>

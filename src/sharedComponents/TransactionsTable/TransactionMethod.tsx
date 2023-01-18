@@ -9,10 +9,9 @@ import { NetworkLink } from 'sharedComponents';
 export interface TransactionMethodType {
   transaction: UITransactionType;
   baseRoute?: string;
-  allowFilters?: boolean;
 }
 
-const TransactionMethod = ({ transaction, baseRoute, allowFilters }: TransactionMethodType) => {
+const TransactionMethod = ({ transaction, baseRoute }: TransactionMethodType) => {
   const { search: locationSearch } = useLocation();
   const urlParams = new URLSearchParams(locationSearch);
 
@@ -33,7 +32,7 @@ const TransactionMethod = ({ transaction, baseRoute, allowFilters }: Transaction
 
     return (
       <span>
-        {allowFilters && baseRoute && method !== 'transaction' ? (
+        {baseRoute && method !== 'transaction' ? (
           <NetworkLink
             to={methodLink(getTransactionMethod(transaction))}
             data-testid="filterByTransactionMethod"

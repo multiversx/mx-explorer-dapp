@@ -220,6 +220,19 @@ export interface ScResultType {
   returnMessage?: string;
 }
 
+export enum TxFiltersEnum {
+  miniBlockHash = 'miniBlockHash',
+  senderShard = 'senderShard',
+  receiverShard = 'receiverShard',
+  sender = 'sender',
+  receiver = 'receiver',
+  method = 'filter',
+  before = 'before',
+  after = 'after',
+  status = 'status',
+  search = 'search',
+}
+
 export interface TransactionTokensType {
   esdts: string[];
   nfts: string[];
@@ -450,6 +463,18 @@ export interface UITransactionType extends TransferType {
   isNew?: boolean; // UI flag
   tokenValue?: string;
   tokenIdentifier?: string;
+}
+
+export interface TransactionsTableType {
+  transactions: UITransactionType[];
+  address?: string;
+  totalTransactions: number | '...';
+  size: number;
+  title?: React.ReactNode;
+  directionCol?: boolean;
+  showLockedAccounts?: boolean;
+  baseRoute?: string;
+  inactiveFilters?: TxFiltersEnum[];
 }
 
 export enum ApiTxStatusEnum {

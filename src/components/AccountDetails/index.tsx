@@ -2,11 +2,12 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { Loader, TransactionsTable, adapter } from 'sharedComponents';
-import { TransactionType } from 'sharedComponents/TransactionsTable';
+
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import { useSize, urlBuilder, useURLSearchParams } from 'helpers';
+import { UITransactionType } from 'helpers/types';
 import AccountTabs from './AccountLayout/AccountTabs';
 
 interface TransactionsResponseType {
@@ -41,7 +42,7 @@ const AccountDetails = () => {
   // TEMP
   const useTransactionsEndpoint = false; // useIsMainnet();
 
-  const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
+  const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
   const [accountTransactionsCount, setAccountTransactionsCount] = React.useState(0);
   const [isDataReady, setIsDataReady] = React.useState<boolean | undefined>();
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
@@ -54,7 +55,7 @@ const AccountDetails = () => {
     if (ref.current !== null) {
       if (success && countData.success) {
         const existingHashes = transactions.map((b) => b.txHash);
-        const newTransactions = data.map((transaction: TransactionType) => ({
+        const newTransactions = data.map((transaction: UITransactionType) => ({
           ...transaction,
           isNew: !existingHashes.includes(transaction.txHash),
         }));
@@ -62,7 +63,7 @@ const AccountDetails = () => {
         setTransactions(newTransactions);
         setAccountTransactionsCount(countData.data);
         const pending = data.some(
-          (tx: TransactionType) =>
+          (tx: UITransactionType) =>
             tx.status.toLowerCase() === txStatus.pending.toLowerCase() || tx.pendingResults
         );
         setHasPendingTransaction(pending);
@@ -178,7 +179,6 @@ const AccountDetails = () => {
               size={size}
               directionCol={true}
               title={<AccountTabs />}
-              allowFilters={true}
               baseRoute={urlBuilder.accountDetails(address)}
             />
           ) : (

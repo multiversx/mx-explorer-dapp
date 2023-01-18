@@ -22,7 +22,6 @@ export interface TransactionRowType {
   address?: string;
   showLockedAccounts?: boolean;
   baseRoute?: string;
-  allowFilters?: boolean;
 }
 
 const TransactionRow = ({
@@ -31,7 +30,6 @@ const TransactionRow = ({
   directionCol,
   showLockedAccounts,
   baseRoute,
-  allowFilters,
 }: TransactionRowType) => {
   let receiver = transaction.receiver;
   if (transaction?.action?.arguments?.receiver) {
@@ -148,11 +146,7 @@ const TransactionRow = ({
         </div>
       </td>
       <td className="transaction-function">
-        <TransactionMethod
-          transaction={transaction}
-          baseRoute={baseRoute}
-          allowFilters={allowFilters}
-        />
+        <TransactionMethod transaction={transaction} baseRoute={baseRoute} />
       </td>
       <td className="transaction-value">
         <TransactionValue transaction={transaction} />

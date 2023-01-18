@@ -4,6 +4,7 @@ import Select from 'react-select';
 import Creatable from 'react-select/creatable';
 
 import { useNetworkPathname, isHash, addressIsBech32 } from 'helpers';
+import { TxFiltersEnum } from 'helpers/types';
 
 interface SelectOptionType {
   value: string;
@@ -12,7 +13,7 @@ interface SelectOptionType {
 
 export interface SelectFilterType {
   name: string;
-  filter: string;
+  filter: TxFiltersEnum;
   options: SelectOptionType[];
   placeholder?: string;
   hasCustomSearch?: boolean;

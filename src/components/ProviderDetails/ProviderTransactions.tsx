@@ -2,11 +2,12 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { Loader, TransactionsTable, adapter } from 'sharedComponents';
-import { TransactionType } from 'sharedComponents/TransactionsTable';
+
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import { useSize } from 'helpers';
+import { UITransactionType } from 'helpers/types';
 import ProviderTabs from './ProviderLayout/ProviderTabs';
 
 const AccountDetails = () => {
@@ -16,7 +17,7 @@ const AccountDetails = () => {
   const { activeNetworkId } = useGlobalState();
   const { hash: address } = useParams() as any;
 
-  const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
+  const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [transactionsCount, setTransactionsCount] = React.useState(0);
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
@@ -30,14 +31,14 @@ const AccountDetails = () => {
       const { data, success } = transactionsData;
       if (success) {
         const existingHashes = transactions.map((b) => b.txHash);
-        const newTransactions = data.map((transaction: TransactionType) => ({
+        const newTransactions = data.map((transaction: UITransactionType) => ({
           ...transaction,
           isNew: !existingHashes.includes(transaction.txHash),
         }));
         if (ref.current !== null) {
           setTransactions(newTransactions);
           const pending = data.some(
-            (tx: TransactionType) =>
+            (tx: UITransactionType) =>
               tx.status.toLowerCase() === txStatus.pending.toLowerCase() || tx.pendingResults
           );
           setHasPendingTransaction(pending);

@@ -7,10 +7,15 @@ import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFi
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalDispatch, useGlobalState } from 'context';
 
+import { TxFiltersEnum, TransactionsTableType } from 'helpers/types';
 import { adapter, SelectFilter } from 'sharedComponents';
 import { shardSpanText } from 'sharedComponents/ShardSpan';
 
-export const ShardColumnFilters = () => {
+export const ShardColumnFilters = ({
+  inactiveFilters = [],
+}: {
+  inactiveFilters?: TransactionsTableType['inactiveFilters'];
+}) => {
   const dispatch = useGlobalDispatch();
   const { search: locationSearch } = useLocation();
   const urlParams = new URLSearchParams(locationSearch);
@@ -38,6 +43,14 @@ export const ShardColumnFilters = () => {
     return { value: shard.shard.toString(), label: shardSpanText(shard.shard.toString()) };
   });
 
+  if (
+    inactiveFilters &&
+    inactiveFilters.includes(TxFiltersEnum.senderShard) &&
+    inactiveFilters.includes(TxFiltersEnum.receiverShard)
+  ) {
+    return null;
+  }
+
   return (
     <OverlayTrigger
       trigger="click"
@@ -49,22 +62,27 @@ export const ShardColumnFilters = () => {
           {stateShards.length > 0 && (
             <Popover.Content>
               <div className="p-3 text-dark">
-                <div className="filter-block">
-                  <div className="mb-1">Sender Shard</div>
-                  <SelectFilter
-                    name="senderShard-filter"
-                    options={searchShards}
-                    filter="senderShard"
-                  />
-                </div>
-                <div className="filter-block">
-                  <div className="mb-1">Receiver Shard</div>
-                  <SelectFilter
-                    name="receiverShard-filter"
-                    options={searchShards}
-                    filter="receiverShard"
-                  />
-                </div>
+                {!inactiveFilters.includes(TxFiltersEnum.senderShard) && (
+                  <div className="filter-block">
+                    <div className="mb-1">Sender Shard</div>
+                    <SelectFilter
+                      name="senderShard-filter"
+                      options={searchShards}
+                      filter={TxFiltersEnum.senderShard}
+                    />
+                  </div>
+                )}
+
+                {!inactiveFilters.includes(TxFiltersEnum.receiverShard) && (
+                  <div className="filter-block">
+                    <div className="mb-1">Receiver Shard</div>
+                    <SelectFilter
+                      name="receiverShard-filter"
+                      options={searchShards}
+                      filter={TxFiltersEnum.receiverShard}
+                    />
+                  </div>
+                )}
               </div>
             </Popover.Content>
           )}
