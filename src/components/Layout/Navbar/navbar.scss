@@ -1,4 +1,7 @@
 .main-navbar {
+  &.sticky-top {
+    z-index: 2000;
+  }
   .main-symbol,
   .main-logo,
   .main-logo-short {

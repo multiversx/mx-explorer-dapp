@@ -15,6 +15,10 @@ export default function useURLSearchParams() {
   const before = query.get('before') ? String(query.get('before')) : '';
   const after = query.get('after') ? String(query.get('after')) : '';
   const status = query.get('status') ? String(query.get('status')) : '';
+  const miniBlockHash = query.get('miniBlockHash') ? String(query.get('miniBlockHash')) : '';
+  const search = query.get('search') ? String(query.get('search')) : '';
+  const sender = query.get('sender') ? String(query.get('sender')) : '';
+  const receiver = query.get('receiver') ? String(query.get('receiver')) : '';
 
   let senderShard = query.get('senderShard') ? String(query.get('senderShard')) : '';
   senderShard = query.get('sendershard') ? String(query.get('sendershard')) : senderShard;
@@ -26,9 +30,13 @@ export default function useURLSearchParams() {
     shard: checkValue(shard),
     senderShard: checkValue(senderShard),
     receiverShard: checkValue(receiverShard),
+    sender,
+    receiver,
     before: checkValue(before),
     after: checkValue(after),
     status: checkStatus(status),
+    miniBlockHash,
+    search,
     method,
   };
 }
