@@ -6,7 +6,6 @@ import {
   getShardAndEpochParam,
   getTransactionsParams,
   TransactionsParamsType,
-  getAccountParams,
   GetNodesType,
   getNodeParams,
   GetProvidersType,
