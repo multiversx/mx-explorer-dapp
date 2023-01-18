@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { NetworkLink } from 'sharedComponents';
+import { useNetworkPathname } from 'helpers';
 
-export const MethodList = ({ baseRoute }: { baseRoute?: string }) => {
+export const MethodList = () => {
   const { search: locationSearch } = useLocation();
   const urlParams = new URLSearchParams(locationSearch);
   const { function: method } = Object.fromEntries(urlParams);
+  const networkPathname = useNetworkPathname();
 
   const methodLink = (method: string) => {
     const { ...rest } = Object.fromEntries(urlParams);
@@ -17,10 +19,10 @@ export const MethodList = ({ baseRoute }: { baseRoute?: string }) => {
       ...rest,
       ...(method ? { function: method } : {}),
     }).toString();
-    return `${baseRoute}?${nextUrlParams}`;
+    return `${networkPathname}?${nextUrlParams}`;
   };
 
-  if (!method || !baseRoute) {
+  if (!method) {
     return null;
   }
 

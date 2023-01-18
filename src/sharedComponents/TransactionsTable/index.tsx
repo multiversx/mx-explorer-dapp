@@ -18,7 +18,6 @@ const TransactionsTable = ({
   ),
   directionCol = false,
   showLockedAccounts = false,
-  baseRoute,
   inactiveFilters,
 }: TransactionsTableType) => {
   return (
@@ -42,7 +41,7 @@ const TransactionsTable = ({
               />
             </div>
           </div>
-          {baseRoute && <MethodList baseRoute={baseRoute} />}
+          <MethodList />
         </div>
 
         <div className="card-body p-0">
@@ -54,7 +53,6 @@ const TransactionsTable = ({
                 size={size}
                 directionCol={directionCol}
                 showLockedAccounts={showLockedAccounts}
-                baseRoute={baseRoute}
                 inactiveFilters={inactiveFilters}
               />
               <tbody>
@@ -65,7 +63,6 @@ const TransactionsTable = ({
                     address={address}
                     directionCol={directionCol}
                     showLockedAccounts={showLockedAccounts}
-                    baseRoute={baseRoute}
                   />
                 ))}
               </tbody>
