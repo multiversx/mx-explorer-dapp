@@ -3,7 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import Select from 'react-select';
 import Creatable from 'react-select/creatable';
 
-import { useNetworkPathname } from 'helpers';
+import { useNetworkPathname, isHash, addressIsBech32 } from 'helpers';
 
 interface SelectOptionType {
   value: string;
@@ -20,6 +20,8 @@ export interface SelectFilterType {
   showAllPlaceholder?: string;
   className?: string;
   isMulti?: boolean;
+  validation?: 'address' | 'hash';
+  noOptionsMessage?: string;
 }
 
 export const SelectFilter = ({
@@ -32,6 +34,8 @@ export const SelectFilter = ({
   hasShowAllOption = true,
   isMulti = false,
   showAllPlaceholder = 'Show All',
+  validation,
+  noOptionsMessage,
 }: SelectFilterType) => {
   const history = useHistory();
   const { search: locationSearch } = useLocation();
@@ -81,7 +85,21 @@ export const SelectFilter = ({
       defaultValue={options.filter(
         (option) => existingValue.includes(option.value) && existingValue
       )}
+      isValidNewOption={(option) => {
+        if (validation && option) {
+          if (validation === 'address') {
+            return addressIsBech32(option);
+          }
+          if (validation === 'hash') {
+            return isHash(option);
+          }
+        }
+        return true;
+      }}
       {...(isMulti ? { isMulti: true } : {})}
+      noOptionsMessage={(message) => {
+        return noOptionsMessage ? noOptionsMessage : message;
+      }}
     />
   ) : (
     <Select

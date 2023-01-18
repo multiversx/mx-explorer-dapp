@@ -37,6 +37,8 @@ export const ToColumnFilters = () => {
                   options={existingValues}
                   filter="receiver"
                   placeholder="Search for multiple addresses"
+                  validation="address"
+                  noOptionsMessage="Invalid Address"
                   hasCustomSearch
                   isMulti
                 />
