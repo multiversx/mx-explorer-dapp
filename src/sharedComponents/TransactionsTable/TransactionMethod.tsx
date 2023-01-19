@@ -3,18 +3,17 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 
 import { UITransactionType } from 'helpers/types';
-import { getTransactionMethod } from 'helpers';
+import { getTransactionMethod, useNetworkPathname } from 'helpers';
 import { NetworkLink } from 'sharedComponents';
 
 export interface TransactionMethodType {
   transaction: UITransactionType;
-  baseRoute?: string;
-  allowFilters?: boolean;
 }
 
-const TransactionMethod = ({ transaction, baseRoute, allowFilters }: TransactionMethodType) => {
+const TransactionMethod = ({ transaction }: TransactionMethodType) => {
   const { search: locationSearch } = useLocation();
   const urlParams = new URLSearchParams(locationSearch);
+  const networkPathname = useNetworkPathname();
 
   const methodLink = (method: string) => {
     const { ...rest } = Object.fromEntries(urlParams);
@@ -25,7 +24,7 @@ const TransactionMethod = ({ transaction, baseRoute, allowFilters }: Transaction
       ...rest,
       ...(method ? { function: method } : {}),
     }).toString();
-    return `${baseRoute}?${nextUrlParams}`;
+    return `${networkPathname}?${nextUrlParams}`;
   };
 
   const TxMethodText = ({ children }: { children: React.ReactNode }) => {
@@ -33,7 +32,7 @@ const TransactionMethod = ({ transaction, baseRoute, allowFilters }: Transaction
 
     return (
       <span>
-        {allowFilters && baseRoute && method !== 'transaction' ? (
+        {networkPathname && method !== 'transaction' ? (
           <NetworkLink
             to={methodLink(getTransactionMethod(transaction))}
             data-testid="filterByTransactionMethod"

@@ -1,0 +1,41 @@
+@import './../../../../node_modules/react-datepicker/src/stylesheets/datepicker.scss';
+
+.transactions-datepicker {
+  #dates-dropdown {
+    &::after {
+      content: none;
+    }
+  }
+
+  .dropdown-menu {
+    padding: 0;
+    z-index: 1;
+  }
+
+  .react-datepicker {
+    background-color: $light;
+
+    .react-datepicker__navigation {
+      outline: none;
+    }
+
+    .react-datepicker__day--outside-month {
+      &:not(.react-datepicker__day--in-range) {
+        color: $muted;
+      }
+    }
+
+    .react-datepicker__day--keyboard-selected {
+      background-color: $primary;
+
+      &:not(.react-datepicker__day--in-range) {
+        background-color: $light;
+        color: $body;
+      }
+    }
+  }
+
+  .filter-text {
+    margin-top: 0.125rem;
+  }
+}

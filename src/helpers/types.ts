@@ -244,6 +244,19 @@ export interface ScResultType {
   returnMessage?: string;
 }
 
+export enum TxFiltersEnum {
+  miniBlockHash = 'miniBlockHash',
+  senderShard = 'senderShard',
+  receiverShard = 'receiverShard',
+  sender = 'sender',
+  receiver = 'receiver',
+  method = 'filter',
+  before = 'before',
+  after = 'after',
+  status = 'status',
+  search = 'search',
+}
+
 export interface TransactionTokensType {
   esdts: string[];
   nfts: string[];
@@ -465,6 +478,16 @@ export enum TransferTypeEnum {
   Transaction = 'Transaction',
   SmartContractResult = 'SmartContractResult',
 }
+
+export interface TransactionsResponseType {
+  data?: UITransactionType[];
+  success: boolean | undefined;
+}
+
+export interface TransactionsCountResponseType {
+  data?: number;
+  success: boolean | undefined;
+}
 export interface TransferType extends TransactionType {
   type?: TransferTypeEnum;
   originalTxHash?: string;
@@ -475,6 +498,32 @@ export interface UITransactionType extends TransferType {
   tokenValue?: string;
   tokenIdentifier?: string;
 }
+
+export interface TransactionsTableType {
+  transactions: UITransactionType[];
+  address?: string;
+  totalTransactions: number | '...';
+  size: number;
+  title?: React.ReactNode;
+  directionCol?: boolean;
+  showLockedAccounts?: boolean;
+  inactiveFilters?: TxFiltersEnum[];
+}
+
+export enum ApiTxStatusEnum {
+  success = 'Success',
+  pending = 'Pending',
+  invalid = 'Invalid',
+  fail = 'Fail',
+}
+
+export enum ExtraTxStatusEnum {
+  notExecuted = 'Not Executed',
+  failed = 'Failed', // TODO: remove when ready
+  rewardReverted = 'reward-reverted',
+}
+
+export type TxStatusEnum = ApiTxStatusEnum | ExtraTxStatusEnum;
 
 export interface Undelegation {
   amount: string;

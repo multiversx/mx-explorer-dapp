@@ -35,6 +35,10 @@
   cursor: text !important;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .text-break-all {
   word-break: break-all;
 }
@@ -108,6 +112,13 @@
 
 .min-w-0 {
   min-width: 0;
+}
+
+.bg-body {
+  background-color: $body-bg;
+}
+.bg-card {
+  background-color: $card-bg;
 }
 
 .page-state-sm {
@@ -317,6 +328,27 @@ div.side-icon {
       vertical-align: 1px;
     }
   }
+}
+
+@include media-breakpoint-up(lg) {
+  .popover-xs {
+    width: 240px;
+  }
+  .popover-sm {
+    width: 320px;
+  }
+  .popover-md {
+    width: 480px;
+  }
+}
+
+.bg-light.bs-popover-bottom .arrow::after,
+.bg-light.bs-popover-auto[x-placement^='bottom'] .arrow::after {
+  border-bottom-color: $light;
+}
+.bg-light.bs-popover-top .arrow::after,
+.bg-light.bs-popover-auto[x-placement^='top'] .arrow::after {
+  border-top-color: $light;
 }
 
 @include media-breakpoint-up(lg) {

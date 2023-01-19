@@ -45,3 +45,49 @@
     }
   }
 }
+
+.filter-block {
+  margin-bottom: 1rem;
+  .form-control {
+    background-color: $body-bg;
+    &:hover {
+      border-color: $primary;
+    }
+  }
+  .input-group-seamless.input-group.has-validation > .form-control {
+    border-top-right-radius: $border-radius !important;
+    border-bottom-right-radius: $border-radius !important;
+  }
+
+  .input-group.input-group-seamless > .input-group-append,
+  .input-group.input-group-seamless > .input-group-prepend {
+    bottom: auto;
+  }
+
+  .input-group.input-group-seamless > .form-control:not(:last-child),
+  .input-group.input-group-seamless > .custom-select:not(:last-child) {
+    padding-right: 50px;
+  }
+
+  .input-group.input-group-seamless > .input-group-append .input-group-text,
+  .input-group.input-group-seamless > .input-group-prepend .input-group-text {
+    padding: 10px 8px;
+    color: $muted;
+    font-size: 0.75rem;
+    &:hover {
+      color: $primary;
+    }
+  }
+
+  .group-separator {
+    align-self: stretch;
+    width: 1px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    box-sizing: border-box;
+    background-color: $muted;
+  }
+}
+.filter-block:last-of-type {
+  margin-bottom: 0;
+}

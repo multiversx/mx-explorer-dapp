@@ -1,7 +1,7 @@
 const urlBuilder = {
   shard: (shard: number | string) => `/blocks?shard=${shard}`,
-  receiverShard: (shard: number | string) => `/transactions?receivershard=${shard}`,
-  senderShard: (shard: number | string) => `/transactions?sendershard=${shard}`,
+  receiverShard: (shard: number | string) => `/transactions?receiverShard=${shard}`,
+  senderShard: (shard: number | string) => `/transactions?senderShard=${shard}`,
   transactionDetails: (hash: number | string) => `/transactions/${hash}`,
   transactionDetailsScResults: (hash: string) => `/transactions/${hash}/sc-results`,
   transactionDetailsLogs: (hash: string) => `/transactions/${hash}/logs`,

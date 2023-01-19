@@ -92,3 +92,12 @@ $popover-arrow-outer-color: $border-color;
 
 // PROGRESSBAR
 $progress-bg: $muted;
+
+// REACT DATEPICKER
+$datepicker__border-radius: $border-radius;
+$datepicker__border-color: transparent;
+$datepicker__background-color: $light; // popup header bg, hover on cell, hover over selected range
+$datepicker__header-color: $body; // popup header text
+$datepicker__text-color: $body;
+$datepicker__muted-color: $muted;
+$datepicker__selected-color: $primary;

@@ -79,10 +79,14 @@ export interface TransactionsParamsType {
   address?: string;
   senderShard?: number;
   receiverShard?: number;
+  sender?: string;
+  receiver?: string;
   method?: string;
   before?: number;
   after?: number;
   status?: string;
+  miniBlockHash?: string;
+  search?: string;
   withUsername?: boolean;
 }
 
@@ -91,10 +95,14 @@ export function getTransactionsParams({
   size = 1,
   senderShard,
   receiverShard,
+  sender,
+  receiver,
   method,
   before,
   after,
   status,
+  miniBlockHash,
+  search,
   withUsername,
 }: TransactionsParamsType) {
   const params: ProviderPropsType['params'] = {
@@ -103,10 +111,14 @@ export function getTransactionsParams({
     ...getAccountParams(address),
     ...(senderShard !== undefined ? { senderShard } : {}),
     ...(receiverShard !== undefined ? { receiverShard } : {}),
+    ...(sender ? { sender } : {}),
+    ...(receiver ? { receiver } : {}),
     ...(method ? { function: method } : {}),
-    ...(before !== undefined ? { before } : {}),
-    ...(after !== undefined ? { after } : {}),
-    ...(status !== undefined ? { status } : {}),
+    ...(before ? { before } : {}),
+    ...(after ? { after } : {}),
+    ...(status ? { status } : {}),
+    ...(miniBlockHash ? { miniBlockHash } : {}),
+    ...(search ? { search } : {}),
     ...(withUsername !== undefined ? { withUsername } : {}),
   };
 
