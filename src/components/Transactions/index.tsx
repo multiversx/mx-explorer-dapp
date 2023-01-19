@@ -7,7 +7,6 @@ import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransac
 import { useSize, useURLSearchParams } from 'helpers';
 import { UITransactionType } from 'helpers/types';
 import { shardSpanText } from 'sharedComponents/ShardSpan';
-import { transactionsRoutes } from 'routes';
 
 const Transactions = () => {
   const ref = React.useRef(null);
