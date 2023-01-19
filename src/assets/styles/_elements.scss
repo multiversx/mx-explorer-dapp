@@ -143,9 +143,25 @@
   outline: 0 !important;
 }
 
+.truncate-item-md {
+  @extend .text-truncate;
+  max-width: 10rem;
+}
+
 .truncate-item-lg {
   @extend .text-truncate;
   max-width: 13rem;
+}
+
+.truncate-item-xl {
+  @extend .text-truncate;
+  max-width: 10rem;
+  @include media-breakpoint-up(lg) {
+    max-width: 15rem;
+  }
+  @include media-breakpoint-up(xl) {
+    max-width: 24rem;
+  }
 }
 
 .text-body {
