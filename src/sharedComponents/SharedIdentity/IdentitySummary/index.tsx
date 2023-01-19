@@ -30,7 +30,9 @@ const IdentitySummary = ({
                     {identity.identity ? (
                       <>
                         <NetworkLink to={urlBuilder.identityDetails(identity.identity)}>
-                          {identity.name ? identity.name : 'N/A'}
+                          <span className="truncate-item-xl d-block">
+                            {identity.name ? identity.name : 'N/A'}
+                          </span>
                         </NetworkLink>
                         {featured && (
                           <OverlayTrigger
