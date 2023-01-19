@@ -71,6 +71,12 @@ const apiAdapter = {
       timeout,
     });
   },
+  getAnalyticsChartList: (props: ProviderPropsType) => {
+    const { timeout } = props;
+    return axios.get(`https://tools.elrond.com/growth-api/explorer/analytics`, {
+      timeout,
+    });
+  },
 };
 
 export default apiAdapter;
