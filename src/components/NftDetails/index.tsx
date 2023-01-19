@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
+import { faClock, faTrophy } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams } from 'react-router-dom';
 import { urlBuilder, dateFormatted, useFilters, useURLSearchParams } from 'helpers';
@@ -16,6 +16,7 @@ import {
   TimeAgo,
   ScAddressIcon,
   Pager,
+  CardItem,
 } from 'sharedComponents';
 import FailedNftDetails from './FailedNftDetails';
 import NftPreview from './NftPreview';
@@ -191,7 +192,7 @@ const NftDetails = () => {
                               key={tag}
                               className="badge badge-light p-2 mr-2 font-weight-normal"
                             >
-                              {tag}
+                              #{tag}
                             </div>
                           ))}
                         </DetailItem>
@@ -203,19 +204,64 @@ const NftDetails = () => {
                           </a>
                         </DetailItem>
                       )}
-                      {/* {nftDetails.attributes !== undefined && (
-                        <DetailItem title="Attributes">
-                          <textarea
-                            readOnly
-                            className="form-control col cursor-text"
-                            rows={2}
-                            defaultValue={Buffer.from(
-                              String(nftDetails.attributes),
-                              'base64'
-                            ).toString()}
-                          />
+                      {nftDetails?.rarities && Object.keys(nftDetails.rarities).length > 0 && (
+                        <DetailItem title="Rarities">
+                          <div className="card-item-container my-n2">
+                            {nftDetails?.rarities?.openRarity?.rank && (
+                              <CardItem
+                                title="Open Rarity Rank"
+                                icon={faTrophy}
+                                className="nft-card-item"
+                              >
+                                {nftDetails.rarities.openRarity.rank}
+                              </CardItem>
+                            )}
+                            {nftDetails?.rarities?.statistical?.rank && (
+                              <CardItem
+                                title="Statistical Rank"
+                                icon={faTrophy}
+                                className="nft-card-item"
+                              >
+                                {nftDetails.rarities.statistical.rank}
+                              </CardItem>
+                            )}
+                            {nftDetails?.rarities?.jaccardDistances?.rank && (
+                              <CardItem
+                                title="Jaccard Distances Rank"
+                                icon={faTrophy}
+                                className="nft-card-item"
+                              >
+                                {nftDetails.rarities.jaccardDistances.rank}
+                              </CardItem>
+                            )}
+                            {nftDetails?.rarities?.trait?.rank && (
+                              <CardItem
+                                title="Trait Rank"
+                                icon={faTrophy}
+                                className="nft-card-item"
+                              >
+                                {nftDetails.rarities.trait.rank}
+                              </CardItem>
+                            )}
+                          </div>
                         </DetailItem>
-                      )} */}
+                      )}
+                      {nftDetails?.metadata?.attributes && (
+                        <DetailItem title="Attributes">
+                          <div className="attributes-holder">
+                            {nftDetails.metadata.attributes.map(({ value, trait_type }) => (
+                              <div className="attribute" key={`${trait_type}-${value}`}>
+                                <p className="trait" title={trait_type}>
+                                  {trait_type}
+                                </p>
+                                <p className="value" title={value}>
+                                  {value}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </DetailItem>
+                      )}
                     </div>
                   </div>
                 </div>
