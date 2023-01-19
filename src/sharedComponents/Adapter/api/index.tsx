@@ -42,6 +42,7 @@ const apiAdapter = {
   getTransactionsHistory: api,
   getAccountsHistory: api,
   getAnalyticsChartList: api,
+  getAnalyticsChart: api,
 };
 
 export default apiAdapter;

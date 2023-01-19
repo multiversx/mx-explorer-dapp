@@ -15,6 +15,8 @@ const ChartBar = ({
   filter,
   category,
   currency,
+  percentageMultiplier,
+  denomination,
   size,
   tooltip,
   hasOnlyStartEndTick,
@@ -91,7 +93,9 @@ const ChartBar = ({
 
           <YAxis
             orientation="right"
-            tickFormatter={(tick) => formatYAxis(tick, currency)}
+            tickFormatter={(tick) =>
+              formatYAxis({ tick, currency, percentageMultiplier, denomination })
+            }
             axisLine={false}
             tickLine={false}
             tickCount={5}
@@ -125,7 +129,15 @@ const ChartBar = ({
             </Bar>
           ))}
           <Tooltip
-            content={(props) => <CustomTooltip {...props} currency={currency} {...tooltip} />}
+            content={(props) => (
+              <CustomTooltip
+                {...props}
+                currency={currency}
+                percentageMultiplier={percentageMultiplier}
+                denomination={denomination}
+                {...tooltip}
+              />
+            )}
             cursor={false}
           />
         </BarChart>
