@@ -45,6 +45,8 @@ import formatHerotag from './formatHerotag';
 import nftText from './nftText';
 import getReceiverAssets from './getReceiverAssets';
 
+export * from './truncateMiddle';
+
 export {
   truncate,
   sizeFormat,

@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
 import { Loader, TransactionsTable, adapter } from 'sharedComponents';
-import { TransactionType } from 'sharedComponents/TransactionsTable';
+
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import { useSize, useURLSearchParams } from 'helpers';
+import { UITransactionType } from 'helpers/types';
 import { shardSpanText } from 'sharedComponents/ShardSpan';
 import { transactionsRoutes } from 'routes';
 
@@ -12,7 +13,18 @@ const Transactions = () => {
   const ref = React.useRef(null);
   const { activeNetworkId } = useGlobalState();
 
-  const { senderShard, receiverShard, method, before, after, status } = useURLSearchParams();
+  const {
+    senderShard,
+    receiverShard,
+    sender,
+    receiver,
+    method,
+    before,
+    after,
+    status,
+    miniBlockHash,
+    search,
+  } = useURLSearchParams();
   const { size, firstPageTicker } = useSize();
 
   React.useEffect(() => {
@@ -23,7 +35,7 @@ const Transactions = () => {
 
   const { getTransactionsCount, getTransactions } = adapter();
 
-  const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
+  const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
 
@@ -32,16 +44,20 @@ const Transactions = () => {
       size,
       senderShard,
       receiverShard,
+      sender,
+      receiver,
       method,
       before,
       after,
       status,
+      miniBlockHash,
+      search,
       withUsername: true,
     }).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
           const existingHashes = transactions.map((b) => b.txHash);
-          const newTransactions = data.map((transaction: TransactionType) => ({
+          const newTransactions = data.map((transaction: UITransactionType) => ({
             ...transaction,
             isNew: !existingHashes.includes(transaction.txHash),
           }));
@@ -80,8 +96,6 @@ const Transactions = () => {
                     transactions={transactions}
                     totalTransactions={totalTransactions}
                     size={size}
-                    allowFilters={true}
-                    baseRoute={transactionsRoutes.transactions}
                     title={
                       <h6 data-testid="title">
                         Transactions

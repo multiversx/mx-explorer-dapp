@@ -8,7 +8,7 @@ import {
   VisibleTransactionOperationType,
 } from 'helpers/types';
 import { NetworkLink, AccountName, CopyButton, TxActionBlock, Denominate } from 'sharedComponents';
-import { TransactionType } from 'sharedComponents/TransactionsTable';
+import { UITransactionType } from 'helpers/types';
 
 export enum OperationDirectionEnum {
   out = 'out',
@@ -105,7 +105,7 @@ const OperationBlock = ({
   direction,
 }: {
   address: string;
-  transaction: TransactionType;
+  transaction: UITransactionType;
   operation: OperationType;
   action?: string;
   isFullSize?: boolean;
@@ -161,7 +161,7 @@ const OperationText = ({
   transaction,
 }: {
   operation: OperationType;
-  transaction: TransactionType;
+  transaction: UITransactionType;
 }) => {
   const { direction } = getOperationDirection({ operation, address: transaction.sender });
 
@@ -294,7 +294,7 @@ const OperationRow = ({
   transaction,
 }: {
   operation: OperationType;
-  transaction: TransactionType;
+  transaction: UITransactionType;
 }) => {
   switch (operation.type) {
     case VisibleTransactionOperationType.nft:
@@ -331,7 +331,7 @@ const DetailedItem = ({
 }: {
   children?: React.ReactNode;
   operation: OperationType;
-  transaction: TransactionType;
+  transaction: UITransactionType;
 }) => {
   return (
     <div className="detailed-item d-flex row mb-3 mb-xl-2">
@@ -349,7 +349,7 @@ const OperationsList = ({
   transaction,
   operations,
 }: {
-  transaction: TransactionType;
+  transaction: UITransactionType;
   operations: OperationType[];
 }) => {
   const initialDisplay = 25;

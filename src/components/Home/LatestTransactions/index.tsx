@@ -15,10 +15,12 @@ import {
   AccountName,
   ScAddressIcon,
 } from 'sharedComponents';
-import { TransactionType } from 'sharedComponents/TransactionsTable';
+
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import TransactionValue from 'sharedComponents/TransactionsTable/TransactionValue';
+
+import { UITransactionType } from 'helpers/types';
 
 const LatestTransactions = () => {
   const ref = React.useRef(null);
@@ -26,7 +28,7 @@ const LatestTransactions = () => {
     activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
-  const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
+  const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const { getLatestTransactions } = adapter();
   const size = 5;
@@ -38,20 +40,20 @@ const LatestTransactions = () => {
           const existingHashes = transactions.map((b) => b.txHash);
 
           // keep previous transactions, reset isNew and update status
-          let oldTransactions: TransactionType[] = [...transactions.slice(0, size)];
+          let oldTransactions: UITransactionType[] = [...transactions.slice(0, size)];
           oldTransactions.forEach((oldTx) => {
             oldTx.isNew = false;
 
             if (oldTx.status === 'pending') {
-              const newStatusTx = (data as TransactionType[]).find(
+              const newStatusTx = (data as UITransactionType[]).find(
                 (newStatusTx) => newStatusTx.txHash === oldTx.txHash
               );
               oldTx.status = newStatusTx ? newStatusTx.status : oldTx.status;
             }
           });
 
-          let newTransactions: TransactionType[] = [];
-          data.forEach((transaction: TransactionType) => {
+          let newTransactions: UITransactionType[] = [];
+          data.forEach((transaction: UITransactionType) => {
             const isNew = !existingHashes.includes(transaction.txHash);
             if (isNew) {
               newTransactions.push({

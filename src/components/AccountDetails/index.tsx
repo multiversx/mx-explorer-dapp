@@ -2,56 +2,61 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { Loader, TransactionsTable, adapter } from 'sharedComponents';
-import { TransactionType } from 'sharedComponents/TransactionsTable';
+
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import { useSize, urlBuilder, useURLSearchParams } from 'helpers';
+import {
+  UITransactionType,
+  TransactionsResponseType,
+  TransactionsCountResponseType,
+} from 'helpers/types';
 import AccountTabs from './AccountLayout/AccountTabs';
-
-interface TransactionsResponseType {
-  data?: any;
-  success: boolean;
-}
 
 const AccountDetails = () => {
   const ref = React.useRef(null);
-  const {
-    getAccountTransfers,
-    getAccountTransfersCount,
-    getTransactions,
-    getTransactionsCount,
-  } = adapter();
+  const { getAccountTransfers, getAccountTransfersCount } = adapter();
   const { size, firstPageTicker } = useSize();
-  const { method, before, after, status } = useURLSearchParams();
+  const {
+    senderShard,
+    receiverShard,
+    sender,
+    receiver,
+    method,
+    before,
+    after,
+    status,
+    miniBlockHash,
+    search,
+  } = useURLSearchParams();
   const { activeNetworkId, accountDetails } = useGlobalState();
   const { hash: address } = useParams() as any;
 
-  // TEMP
-  const useTransactionsEndpoint = false; // useIsMainnet();
-
-  const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
-  const [accountTransactionsCount, setAccountTransactionsCount] = React.useState(0);
+  const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
+  const [accountTransactionsCount, setAccountTransactionsCount] = React.useState<number | '...'>(
+    '...'
+  );
   const [isDataReady, setIsDataReady] = React.useState<boolean | undefined>();
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
 
   const handleTransactions = (
     transactionsData: TransactionsResponseType,
-    countData: TransactionsResponseType
+    countData: TransactionsCountResponseType
   ) => {
     const { data, success } = transactionsData;
     if (ref.current !== null) {
-      if (success && countData.success) {
+      if (success && data && countData.success) {
         const existingHashes = transactions.map((b) => b.txHash);
-        const newTransactions = data.map((transaction: TransactionType) => ({
+        const newTransactions = data.map((transaction: UITransactionType) => ({
           ...transaction,
           isNew: !existingHashes.includes(transaction.txHash),
         }));
 
         setTransactions(newTransactions);
-        setAccountTransactionsCount(countData.data);
+        setAccountTransactionsCount(countData?.data ?? '...');
         const pending = data.some(
-          (tx: TransactionType) =>
+          (tx: UITransactionType) =>
             tx.status.toLowerCase() === txStatus.pending.toLowerCase() || tx.pendingResults
         );
         setHasPendingTransaction(pending);
@@ -63,45 +68,41 @@ const AccountDetails = () => {
   };
 
   const fetchTransactions = () => {
-    if (!useTransactionsEndpoint) {
-      Promise.all([
-        getAccountTransfers({
-          size,
-          address,
-          method,
-          before,
-          after,
-          status,
-          withUsername: true,
-        }),
-        getAccountTransfersCount({
-          size,
-          address,
-          method,
-          before,
-          after,
-          status,
-        }),
-      ]).then(([accountTransfersData, accountTransfersCountData]) => {
-        handleTransactions(accountTransfersData, accountTransfersCountData);
-      });
-    } else {
-      Promise.all([
-        getTransactions({
-          size,
-          address,
-          method,
-          withUsername: true,
-        }),
-        getTransactionsCount({
-          size,
-          address,
-          method,
-        }),
-      ]).then(([accountTransactionsData, accountTransactionsCountData]) => {
-        handleTransactions(accountTransactionsData, accountTransactionsCountData);
-      });
-    }
+    Promise.all([
+      getAccountTransfers({
+        size,
+        address,
+
+        senderShard,
+        receiverShard,
+        sender,
+        receiver,
+        method,
+        before,
+        after,
+        status,
+        miniBlockHash,
+        search,
+        withUsername: true,
+      }),
+      getAccountTransfersCount({
+        size,
+        address,
+
+        senderShard,
+        receiverShard,
+        sender,
+        receiver,
+        method,
+        before,
+        after,
+        status,
+        miniBlockHash,
+        search,
+      }),
+    ]).then(([accountTransfersData, accountTransfersCountData]) => {
+      handleTransactions(accountTransfersData, accountTransfersCountData);
+    });
   };
 
   React.useEffect(() => {
@@ -116,7 +117,7 @@ const AccountDetails = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, accountDetails.txCount, accountDetails.scrCount, accountDetails.balance]);
+  }, [firstPageTicker, accountDetails.txCount, accountDetails.balance]);
 
   const loading = isDataReady === undefined;
   const showTransactions = isDataReady === true && transactions.length > 0;
@@ -133,8 +134,6 @@ const AccountDetails = () => {
               size={size}
               directionCol={true}
               title={<AccountTabs />}
-              allowFilters={true}
-              baseRoute={urlBuilder.accountDetails(address)}
             />
           ) : (
             <div className="card">

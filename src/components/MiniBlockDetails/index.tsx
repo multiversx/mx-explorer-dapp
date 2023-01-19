@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { isHash, useNetworkRoute, urlBuilder, useSize } from 'helpers';
-import { ScResultType } from 'helpers/types';
+import { isHash, useNetworkRoute, urlBuilder, useSize, useURLSearchParams } from 'helpers';
 import { Redirect, useParams } from 'react-router-dom';
 import {
   Loader,
@@ -12,14 +11,15 @@ import {
   DetailItem,
   Trim,
   CopyButton,
-  ScResultsTable,
 } from 'sharedComponents';
-import { TransactionType } from 'sharedComponents/TransactionsTable';
+
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
 import NoScResults from 'sharedComponents/ScResultsTable/NoScResults';
 import FailedScResults from 'sharedComponents/ScResultsTable/FailedScResults';
 import MiniBlockNotFound from './MiniBlockNotFound';
+
+import { UITransactionType, TxFiltersEnum } from 'helpers/types';
 
 interface MiniBlockType {
   senderShard: number;
@@ -38,57 +38,64 @@ const MiniBlockDetails = () => {
   const networkRoute = useNetworkRoute();
 
   const {
-    getMiniBlockTransactions,
-    getMiniBlockTransactionsCount,
-    getMiniBlock,
-    getMiniBlockScResults,
-  } = adapter();
+    senderShard,
+    receiverShard,
+    sender,
+    receiver,
+    method,
+    before,
+    after,
+    status,
+    search,
+  } = useURLSearchParams();
+
+  const { getTransfers, getTransfersCount, getMiniBlock } = adapter();
 
   const { activeNetworkId } = useGlobalState();
 
   const [miniBlock, setMiniBlock] = React.useState<MiniBlockType>();
   const [miniBlockFetched, setMiniBlockFetched] = React.useState<boolean | undefined>();
 
-  const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
+  const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
 
-  const [scResults, setScResults] = React.useState<ScResultType[]>([]);
-  const [scResultsFetched, setScResultsFetched] = React.useState<boolean | undefined>();
-
   const invalid = miniBlockHash && !isHash(miniBlockHash);
-
   const isScResult = miniBlockFetched && miniBlock && miniBlock.type === 'SmartContractResultBlock';
-
-  const showTransactions = transactionsFetched === true && transactions.length > 0 && !isScResult;
-  const showScResults = scResultsFetched === true && scResults.length > 0 && isScResult;
-
-  const fetchScResultData = () => {
-    if (!invalid) {
-      getMiniBlockScResults({
-        size,
-        miniBlockHash,
-      }).then((miniBlockScResultsData) => {
-        if (ref.current !== null) {
-          if (miniBlockScResultsData.success) {
-            setScResults(miniBlockScResultsData.data);
-          }
-          setScResultsFetched(miniBlockScResultsData.success);
-        }
-      });
-    }
-  };
+  const showTransactions = transactionsFetched === true && transactions.length > 0;
 
   const fetchMiniBlockData = () => {
     if (!invalid) {
       Promise.all([
         getMiniBlock(miniBlockHash),
-        getMiniBlockTransactions({
+        getTransfers({
           size,
           miniBlockHash,
+          senderShard,
+          receiverShard,
+          sender,
+          receiver,
+          method,
+          before,
+          after,
+          status,
+          search,
           withUsername: true,
         }),
-      ]).then(([miniBlockData, miniBlockTransactionsData]) => {
+        getTransfersCount({
+          size,
+          miniBlockHash,
+          senderShard,
+          receiverShard,
+          sender,
+          receiver,
+          method,
+          before,
+          after,
+          status,
+          search,
+        }),
+      ]).then(([miniBlockData, miniBlockTransactionsData, miniBlockTransactionsCount]) => {
         if (ref.current !== null) {
           if (miniBlockTransactionsData.success) {
             setTransactions(miniBlockTransactionsData.data);
@@ -98,11 +105,9 @@ const MiniBlockDetails = () => {
             setMiniBlock(miniBlockData.data);
           }
           setMiniBlockFetched(miniBlockData.success);
-        }
-      });
-      getMiniBlockTransactionsCount(miniBlockHash).then(({ data: count, success }) => {
-        if (ref.current !== null && success) {
-          setTotalTransactions(count);
+          if (miniBlockTransactionsCount.success) {
+            setTotalTransactions(miniBlockTransactionsCount.data);
+          }
         }
       });
     }
@@ -110,9 +115,6 @@ const MiniBlockDetails = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchMiniBlockData, [activeNetworkId, size, miniBlockHash]);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchScResultData, [isScResult]);
 
   return invalid ? (
     <Redirect to={networkRoute(`/not-found`)} />
@@ -198,46 +200,31 @@ const MiniBlockDetails = () => {
 
                 <div className="row">
                   <div className="col-12 mt-spacer">
-                    {transactionsFetched === undefined ||
-                    (isScResult && scResultsFetched === undefined) ? (
+                    {transactionsFetched === undefined ? (
                       <Loader />
                     ) : (
                       <>
-                        {isScResult ? (
-                          <>
-                            {showScResults ? (
-                              <ScResultsTable
-                                scResults={scResults}
-                                totalScResults={scResults.length}
-                                size={size}
-                              />
-                            ) : (
-                              <div className="card">
-                                {scResultsFetched === false && <FailedScResults />}
-                                {scResultsFetched === true && scResults.length === 0 && (
-                                  <NoScResults />
-                                )}
-                              </div>
-                            )}
-                          </>
+                        {showTransactions ? (
+                          <TransactionsTable
+                            transactions={transactions}
+                            address={undefined}
+                            totalTransactions={totalTransactions}
+                            size={size}
+                            title={
+                              <h6 data-testid="title">
+                                {isScResult ? 'SC Results' : 'Transactions'}
+                              </h6>
+                            }
+                            inactiveFilters={[TxFiltersEnum.miniBlockHash]}
+                          />
                         ) : (
-                          <>
-                            {showTransactions ? (
-                              <TransactionsTable
-                                transactions={transactions}
-                                address={undefined}
-                                totalTransactions={totalTransactions}
-                                size={size}
-                              />
-                            ) : (
-                              <div className="card">
-                                {transactionsFetched === false && <FailedTransactions />}
-                                {transactionsFetched === true && transactions.length === 0 && (
-                                  <NoTransactions />
-                                )}
-                              </div>
-                            )}
-                          </>
+                          <div className="card">
+                            {transactionsFetched === false &&
+                              (isScResult ? <FailedScResults /> : <FailedTransactions />)}
+                            {transactionsFetched === true &&
+                              transactions.length === 0 &&
+                              (isScResult ? <NoScResults /> : <NoTransactions />)}
+                          </div>
                         )}
                       </>
                     )}

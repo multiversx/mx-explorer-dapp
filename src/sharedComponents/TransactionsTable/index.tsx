@@ -1,22 +1,10 @@
 import * as React from 'react';
 import TransactionRow from './TransactionRow';
-import TransactionsFilters from './TransactionsFilters';
+import { MethodList } from './TransactionsFilters';
 import Pager from '../Pager';
-import { UITransactionType as TransacionInterface } from 'helpers/types';
+import { TransactionsTableType } from 'helpers/types';
 
-export type TransactionType = TransacionInterface;
-
-interface TransactionsTableType {
-  transactions: TransactionType[];
-  address?: string;
-  totalTransactions: number | '...';
-  size: number;
-  title?: React.ReactNode;
-  directionCol?: boolean;
-  showLockedAccounts?: boolean;
-  baseRoute?: string;
-  allowFilters?: boolean;
-}
+import { Header } from './Header';
 
 const TransactionsTable = ({
   transactions,
@@ -30,8 +18,7 @@ const TransactionsTable = ({
   ),
   directionCol = false,
   showLockedAccounts = false,
-  baseRoute,
-  allowFilters,
+  inactiveFilters,
 }: TransactionsTableType) => {
   return (
     <div className={`transactions-table ${directionCol ? 'has-direction' : ''}`}>
@@ -54,24 +41,20 @@ const TransactionsTable = ({
               />
             </div>
           </div>
-          {allowFilters && baseRoute && <TransactionsFilters baseRoute={baseRoute} />}
+          <MethodList />
         </div>
 
         <div className="card-body p-0">
           <div className="table-wrapper animated-list">
             <table className="table trim-size-sm" data-testid="transactionsTable">
-              <thead>
-                <tr>
-                  <th scope="col">Txn Hash</th>
-                  <th scope="col">Age</th>
-                  <th scope="col">Shard</th>
-                  <th scope="col">From</th>
-                  {directionCol && <th scope="col" />}
-                  <th scope="col">To</th>
-                  <th scope="col">Method</th>
-                  <th scope="col">Value</th>
-                </tr>
-              </thead>
+              <Header
+                transactions={transactions}
+                totalTransactions={totalTransactions}
+                size={size}
+                directionCol={directionCol}
+                showLockedAccounts={showLockedAccounts}
+                inactiveFilters={inactiveFilters}
+              />
               <tbody>
                 {transactions.map((transaction) => (
                   <TransactionRow
@@ -80,8 +63,6 @@ const TransactionsTable = ({
                     address={address}
                     directionCol={directionCol}
                     showLockedAccounts={showLockedAccounts}
-                    allowFilters={allowFilters}
-                    baseRoute={baseRoute}
                   />
                 ))}
               </tbody>

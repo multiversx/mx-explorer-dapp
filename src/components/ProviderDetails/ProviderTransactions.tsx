@@ -2,11 +2,12 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { Loader, TransactionsTable, adapter } from 'sharedComponents';
-import { TransactionType } from 'sharedComponents/TransactionsTable';
+
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
-import { useSize } from 'helpers';
+import { useSize, useURLSearchParams } from 'helpers';
+import { UITransactionType } from 'helpers/types';
 import ProviderTabs from './ProviderLayout/ProviderTabs';
 
 const AccountDetails = () => {
@@ -15,8 +16,20 @@ const AccountDetails = () => {
   const { size, firstPageTicker } = useSize();
   const { activeNetworkId } = useGlobalState();
   const { hash: address } = useParams() as any;
+  const {
+    senderShard,
+    receiverShard,
+    sender,
+    receiver,
+    method,
+    before,
+    after,
+    status,
+    miniBlockHash,
+    search,
+  } = useURLSearchParams();
 
-  const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
+  const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [transactionsCount, setTransactionsCount] = React.useState(0);
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
@@ -25,19 +38,30 @@ const AccountDetails = () => {
     getTransactions({
       size,
       address,
+
+      senderShard,
+      receiverShard,
+      sender,
+      receiver,
+      method,
+      before,
+      after,
+      status,
+      miniBlockHash,
+      search,
       withUsername: true,
     }).then((transactionsData) => {
       const { data, success } = transactionsData;
       if (success) {
         const existingHashes = transactions.map((b) => b.txHash);
-        const newTransactions = data.map((transaction: TransactionType) => ({
+        const newTransactions = data.map((transaction: UITransactionType) => ({
           ...transaction,
           isNew: !existingHashes.includes(transaction.txHash),
         }));
         if (ref.current !== null) {
           setTransactions(newTransactions);
           const pending = data.some(
-            (tx: TransactionType) =>
+            (tx: UITransactionType) =>
               tx.status.toLowerCase() === txStatus.pending.toLowerCase() || tx.pendingResults
           );
           setHasPendingTransaction(pending);
@@ -52,7 +76,21 @@ const AccountDetails = () => {
   };
 
   const fetchTransactionsCount = () => {
-    getTransactionsCount({ address }).then(({ data: count, success }) => {
+    getTransactionsCount({
+      size,
+      address,
+
+      senderShard,
+      receiverShard,
+      sender,
+      receiver,
+      method,
+      before,
+      after,
+      status,
+      miniBlockHash,
+      search,
+    }).then(({ data: count, success }) => {
       if (ref.current !== null && success) {
         setTransactionsCount(count);
       }

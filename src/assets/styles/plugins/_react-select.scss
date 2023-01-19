@@ -1,0 +1,68 @@
+.styled-select .styled-select {
+  &__control {
+    background-color: $body-bg;
+    color: $input-color;
+    border-color: $border-color;
+    border-radius: $border-radius;
+    font-size: 0.8125rem;
+    min-height: 1.875rem;
+
+    &:hover,
+    &--is-focused,
+    &--menu-is-open {
+      border-color: $primary;
+    }
+    &--is-focused {
+      box-shadow: 0 0 0 0.2rem rgba(35, 247, 221, 0.25);
+    }
+  }
+
+  &__menu {
+    background-color: $body-bg;
+    z-index: 5;
+    max-height: 200px;
+  }
+  &__option {
+    &--is-focused {
+      background-color: $card-bg;
+      color: $primary;
+    }
+    &--is-selected {
+      background-color: $primary;
+      color: $card-bg;
+    }
+  }
+
+  &__clear-indicator,
+  &__dropdown-indicator {
+    padding: 0.125rem 0.325rem;
+    svg {
+      fill: $muted;
+      width: 1rem;
+      height: 1rem;
+      &:hover {
+        fill: $primary;
+      }
+    }
+  }
+
+  &__multi-value {
+    background-color: $card-bg;
+    border: 1px solid $border-color;
+  }
+  &__multi-value__label {
+    max-width: 44px;
+    color: $body;
+    text-overflow: clip;
+  }
+
+  &__indicator-separator {
+    background-color: $border-color;
+  }
+
+  &__single-value,
+  &__input-container,
+  &__input {
+    color: $input-color;
+  }
+}

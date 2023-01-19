@@ -2,69 +2,107 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { Loader, TransactionsTable, adapter } from 'sharedComponents';
-import { TransactionType } from 'sharedComponents/TransactionsTable';
+
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
-import { useSize } from 'helpers';
+import { useSize, useURLSearchParams } from 'helpers';
+import {
+  UITransactionType,
+  TransactionsResponseType,
+  TransactionsCountResponseType,
+} from 'helpers/types';
 import TokenTabs from './TokenLayout/TokenTabs';
-
-interface TransactionsResponseType {
-  data?: TransactionType[];
-  success: boolean;
-}
 
 const TokenDetails = () => {
   const ref = React.useRef(null);
-  const { getTokenTransactions, getTokenTransfers } = adapter();
+  const { getTokenTransfers, getTokenTransfersCount } = adapter();
   const { size, firstPageTicker } = useSize();
+  const {
+    senderShard,
+    receiverShard,
+    sender,
+    receiver,
+    method,
+    before,
+    after,
+    status,
+    miniBlockHash,
+    search,
+  } = useURLSearchParams();
   const { activeNetworkId, tokenDetails } = useGlobalState();
   const { hash: tokenId } = useParams() as any;
 
-  // TEMP
-  const useTransactionsEndpoint = false; // useIsMainnet();
-
   const { transactions: transactionsCount } = tokenDetails;
 
-  const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
+  const [tokenTransactionsCount, setTokenTransactionsCount] = React.useState<number | '...'>('...');
+  const [isDataReady, setIsDataReady] = React.useState<boolean | undefined>();
   const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
 
-  const handleTransactions = (transactionsData: TransactionsResponseType) => {
+  const handleTransactions = (
+    transactionsData: TransactionsResponseType,
+    countData: TransactionsCountResponseType
+  ) => {
     const { data, success } = transactionsData;
     if (ref.current !== null) {
-      if (success && data) {
+      if (success && data && countData.success) {
         const existingHashes = transactions.map((b) => b.txHash);
-        const newTransactions = data.map((transaction: TransactionType) => ({
+        const newTransactions = data.map((transaction: UITransactionType) => ({
           ...transaction,
           isNew: !existingHashes.includes(transaction.txHash),
         }));
 
         setTransactions(newTransactions);
+        setTokenTransactionsCount(countData?.data ?? '...');
         const pending = data.some(
-          (tx: TransactionType) =>
+          (tx: UITransactionType) =>
             tx.status.toLowerCase() === txStatus.pending.toLowerCase() || tx.pendingResults
         );
         setHasPendingTransaction(pending);
-        setDataReady(true);
+        setIsDataReady(true);
       } else if (transactions.length === 0) {
-        setDataReady(false);
+        setIsDataReady(false);
       }
     }
   };
 
   const fetchTransactions = () => {
-    if (!useTransactionsEndpoint) {
+    Promise.all([
       getTokenTransfers({
         size,
         tokenId,
-      }).then((transactionsData) => handleTransactions(transactionsData));
-    } else {
-      getTokenTransactions({
+
+        senderShard,
+        receiverShard,
+        sender,
+        receiver,
+        method,
+        before,
+        after,
+        status,
+        miniBlockHash,
+        search,
+        withUsername: true,
+      }),
+      getTokenTransfersCount({
         size,
         tokenId,
-      }).then((transactionsData) => handleTransactions(transactionsData));
-    }
+
+        senderShard,
+        receiverShard,
+        sender,
+        receiver,
+        method,
+        before,
+        after,
+        status,
+        miniBlockHash,
+        search,
+      }),
+    ]).then(([tokenTransfersData, tokenTransfersCountData]) => {
+      handleTransactions(tokenTransfersData, tokenTransfersCountData);
+    });
   };
 
   React.useEffect(() => {
@@ -86,10 +124,10 @@ const TokenDetails = () => {
       fetchTransactions();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transactionsCount]);
+  }, [transactionsCount, transactionsCount]);
 
-  const loading = dataReady === undefined;
-  const showTransactions = dataReady === true && transactions.length > 0;
+  const loading = isDataReady === undefined;
+  const showTransactions = isDataReady === true && transactions.length > 0;
 
   return (
     <div ref={ref}>
@@ -98,11 +136,10 @@ const TokenDetails = () => {
           {showTransactions ? (
             <TransactionsTable
               transactions={transactions}
-              totalTransactions={transactionsCount}
+              totalTransactions={tokenTransactionsCount}
               size={size}
               directionCol={true}
               title={<TokenTabs />}
-              showLockedAccounts={true}
             />
           ) : (
             <div className="card">
@@ -111,9 +148,9 @@ const TokenDetails = () => {
                   <TokenTabs />
                 </div>
               </div>
-              {dataReady === undefined && <Loader />}
-              {dataReady === false && <FailedTransactions />}
-              {dataReady === true && transactions.length === 0 && <NoTransactions />}
+              {isDataReady === undefined && <Loader />}
+              {isDataReady === false && <FailedTransactions />}
+              {isDataReady === true && transactions.length === 0 && <NoTransactions />}
             </div>
           )}
         </div>
