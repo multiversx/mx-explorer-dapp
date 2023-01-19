@@ -32,6 +32,7 @@ export default function useAdapter() {
     getUsersStaking,
     getTransactionsHistory,
     getAccountsHistory,
+    getAnalyticsChartList,
   } = useAdapterConfig();
 
   return {
@@ -526,5 +527,6 @@ export default function useAdapter() {
     getUsersStaking,
     getTransactionsHistory,
     getAccountsHistory,
+    getAnalyticsChartList,
   };
 }
