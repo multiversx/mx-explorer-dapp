@@ -37,6 +37,7 @@ const CONFIG = {
       explorerAddress: 'https://devnet-explorer.multiversx.com/',
       delegationApi: 'https://devnet-delegation-api.multiversx.com',
       extrasApi: 'https://devnet-extras-api.multiversx.com',
+      growthApi: 'https://tools.multiversx.com/growth-api',
       theme: 'testnet',
     },
   ],
@@ -75,11 +76,6 @@ const CONFIG = {
       id: 'docs',
       name: 'Docs',
       url: 'https://docs.multiversx.com/',
-    },
-    {
-      id: 'growth',
-      name: 'Growth',
-      url: 'https://growth.multiversx.com/',
     },
   ],
 };
