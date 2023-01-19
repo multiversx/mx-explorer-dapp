@@ -91,8 +91,9 @@ const CustomTooltip = ({
                   {currency === '$' ? '$' : ''}
                   {currency === '$'
                     ? new BigNumber(displayValue).toFormat(2)
-                    : new BigNumber(displayValue).toFormat()}{' '}
-                  {currency !== '$' ? currency : ''}
+                    : new BigNumber(displayValue).toFormat()}
+                  {currency && currency !== '$' ? ` ${currency}` : ''}
+                  {percentageMultiplier ? '%' : ''}
                 </span>
                 {showUsdValue && (
                   <p className="text-secondary small mb-0">

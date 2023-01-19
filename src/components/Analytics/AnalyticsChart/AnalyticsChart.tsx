@@ -31,11 +31,47 @@ export const AnalyticsChart = ({ id, path }: ChartListType) => {
 
     return normalizedName;
   };
-
   const formatChartLabelFomId = (id: string) => {
     const normalizedName = id.replace('-monthly', '').replace('daily-', '').replaceAll('-', ' ');
 
     return normalizedName;
+  };
+  const getChartPropsFromId = (id: string) => {
+    switch (id) {
+      case 'daily-total-staked-egld-monthly':
+      case 'total-value-locked-plus-staking-monthly':
+      case 'daily-fees-captured-monthly':
+        return {
+          currency: 'EGLD',
+        };
+      case 'daily-average-apr-monthly':
+      case 'daily-base-apr-monthly':
+      case 'daily-topup-apr-monthly':
+        return {
+          percentageMultiplier: 100,
+        };
+      case 'daily-developer-rewards-monthly':
+      case 'daily-inflation-monthly':
+        return {
+          denomination: 18,
+          currency: 'EGLD',
+        };
+      case 'daily-new-smart-contracts-monthly':
+      case 'daily-new-fungible-esdts-monthly':
+      case 'daily-new-nonfungible-esdts-monthly':
+      case 'daily-new-semifungible-esdts-monthly':
+      case 'daily-new-meta-esdts-monthly':
+      case 'daily-new-nfts-monthly':
+      case 'number-of-blocks-created-per-day-monthly':
+      case 'daily-number-of-active-users-monthly':
+      case 'daily-number-of-address-to-address-transactions-monthly':
+      case 'daily-number-of-address-to-contract-transactions-monthly':
+      case 'daily-number-of-contract-to-address-transactions-monthly':
+      case 'daily-number-of-contract-to-contract-transactions-monthly':
+      case 'daily-number-of-token-transfers-monthly':
+      default:
+        return {};
+    }
   };
 
   const config: ChartConfigType[] = [
@@ -89,7 +125,7 @@ export const AnalyticsChart = ({ id, path }: ChartListType) => {
           )}
 
           {dataReady === true && chart.length > 0 && (
-            <Chart.Bar {...{ config }} hasOnlyStartEndTick></Chart.Bar>
+            <Chart.Bar {...{ config }} hasOnlyStartEndTick {...getChartPropsFromId(id)}></Chart.Bar>
           )}
         </Chart.Body>
       </section>
