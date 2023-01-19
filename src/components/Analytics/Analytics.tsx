@@ -52,7 +52,7 @@ export const Analytics = () => {
 
       <div ref={ref}>
         {dataReady === true && (
-          <div className="container page-content">
+          <div className="analytics container page-content">
             <div className="row">
               {chartList.map((chart) => (
                 <div className="col-12 col-lg-6 mt-spacer" key={chart.id}>

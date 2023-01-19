@@ -78,10 +78,19 @@ export interface ChartProps {
   filter?: string;
   category?: string;
   currency?: string;
+  percentageMultiplier?: number;
+  denomination?: number;
   size?: ChartSizeEnum;
   hasOnlyStartEndTick?: boolean;
   tooltip?: {
     showUsdValue?: boolean;
     dateFormat?: string;
   };
+}
+
+export interface ChartAxisType {
+  tick: string;
+  currency?: string;
+  percentageMultiplier?: number;
+  denomination?: number;
 }

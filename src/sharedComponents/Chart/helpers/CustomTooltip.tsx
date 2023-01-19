@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js';
 import { usdValue } from 'helpers';
 import { useGlobalState } from 'context';
 import moment from 'moment';
+import denominate from 'sharedComponents/Denominate/denominate';
 
 const getTooltipLabel = (label: string) => {
   const capitalize = (string: string) =>
@@ -37,6 +38,8 @@ const CustomTooltip = ({
   payload,
   label,
   currency,
+  percentageMultiplier,
+  denomination,
   customLabel,
   showUsdValue,
   dateFormat,
@@ -45,6 +48,8 @@ const CustomTooltip = ({
   payload?: any;
   label?: any;
   currency?: string;
+  percentageMultiplier?: number;
+  denomination?: number;
   customLabel?: string;
   showUsdValue?: boolean;
   dateFormat?: string;
@@ -55,27 +60,48 @@ const CustomTooltip = ({
     return (
       <div className="custom-tooltip">
         <ul className="recharts-tooltip-item-list list-unstyled">
-          {payload.map((entry: any) => (
-            <li key={entry.name}>
-              {getTooltipLabel(entry.name)
-                ? `${getTooltipLabel(entry.name)}: `
-                : customLabel
-                ? `${getTooltipLabel(customLabel)}: `
-                : ''}
-              <span style={{ color: payload.length > 1 ? entry.color : '' }} className="item-value">
-                {currency === '$' ? '$' : ''}
-                {currency === '$'
-                  ? new BigNumber(entry.value).toFormat(2)
-                  : new BigNumber(entry.value).toFormat()}{' '}
-                {currency !== '$' ? currency : ''}
-              </span>
-              {showUsdValue && (
-                <p className="text-secondary small mb-0">
-                  {usdValue({ amount: entry.value, usd, showPrefix: true })}
-                </p>
-              )}
-            </li>
-          ))}
+          {payload.map((entry: any) => {
+            let displayValue = entry.value;
+            if (denomination) {
+              const denominatedValue = denominate({
+                input: new BigNumber(displayValue).toString(10),
+                denomination,
+                decimals: 2,
+                showLastNonZeroDecimal: false,
+                addCommas: false,
+              });
+
+              displayValue = denominatedValue;
+            }
+            if (percentageMultiplier) {
+              displayValue = Number(displayValue) * percentageMultiplier;
+            }
+
+            return (
+              <li key={entry.name}>
+                {getTooltipLabel(entry.name)
+                  ? `${getTooltipLabel(entry.name)}: `
+                  : customLabel
+                  ? `${getTooltipLabel(customLabel)}: `
+                  : ''}
+                <span
+                  style={{ color: payload.length > 1 ? entry.color : '' }}
+                  className="item-value"
+                >
+                  {currency === '$' ? '$' : ''}
+                  {currency === '$'
+                    ? new BigNumber(displayValue).toFormat(2)
+                    : new BigNumber(displayValue).toFormat()}{' '}
+                  {currency !== '$' ? currency : ''}
+                </span>
+                {showUsdValue && (
+                  <p className="text-secondary small mb-0">
+                    {usdValue({ amount: displayValue, usd, showPrefix: true })}
+                  </p>
+                )}
+              </li>
+            );
+          })}
         </ul>
         <div className="recharts-tooltip-label">
           {payload[0]?.payload?.timestamp

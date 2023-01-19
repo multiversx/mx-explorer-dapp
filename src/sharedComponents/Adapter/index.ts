@@ -515,6 +515,8 @@ export default function useAdapter() {
 
     getEconomics: () => getEconomics({ url: `/economics` }),
 
+    // Growth Charts
+
     getEgldPriceHistory: () => provider({ baseUrl: growthApi, url: '/charts?types=price' }),
     getEgldMarketCapHistory: () =>
       provider({ baseUrl: growthApi, url: '/charts?types=market-cap' }),
@@ -526,5 +528,7 @@ export default function useAdapter() {
     getAccountsHistory: () =>
       provider({ baseUrl: growthApi, url: '/charts?types=address-metrics' }),
     getAnalyticsChartList: () => provider({ baseUrl: growthApi, url: '/explorer/analytics' }),
+
+    getAnalyticsChart: (url: string) => provider({ baseUrl: growthApi, url }),
   };
 }

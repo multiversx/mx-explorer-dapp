@@ -68,6 +68,9 @@ const elasticAdapter = {
   getAnalyticsChartList: () => {
     throw new Error('not defined');
   },
+  getAnalyticsChart: () => {
+    throw new Error('not defined');
+  },
 };
 
 export default elasticAdapter;
