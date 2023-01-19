@@ -6,7 +6,7 @@ import { Loader, TransactionsTable, adapter } from 'sharedComponents';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
 import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
 import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
-import { useSize, urlBuilder, useURLSearchParams } from 'helpers';
+import { useSize, useURLSearchParams } from 'helpers';
 import {
   UITransactionType,
   TransactionsResponseType,
