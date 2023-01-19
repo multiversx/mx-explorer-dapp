@@ -141,6 +141,7 @@ export interface CollectionType {
     status?: string;
     pngUrl?: string;
     svgUrl?: string;
+    social?: any;
   };
   scamInfo?: ScamInfoType;
   roles?: CollectionRolesType[];
@@ -193,6 +194,7 @@ export interface NftType {
     fileType?: string;
     fileUri?: string;
     fileName?: string;
+    attributes?: { value?: string; trait_type?: string }[];
   };
   media?: {
     url: string;
@@ -201,6 +203,28 @@ export interface NftType {
     fileType: string;
     fileSize: number;
   }[];
+  rarities?: {
+    statistical?: {
+      rank?: number;
+      score?: number;
+    };
+    trait?: {
+      rank?: number;
+      score?: number;
+    };
+    jaccardDistances?: {
+      rank?: number;
+      score?: number;
+    };
+    openRarity?: {
+      rank?: number;
+      score?: number;
+    };
+    custom?: {
+      rank?: number;
+      score?: number;
+    };
+  };
   scamInfo?: ScamInfoType;
 }
 

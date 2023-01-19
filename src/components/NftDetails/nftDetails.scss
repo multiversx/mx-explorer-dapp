@@ -1,0 +1,37 @@
+.attributes-holder {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 2rem;
+  .attribute {
+    p {
+      margin-bottom: 0;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      &.value {
+        font-weight: 600;
+      }
+      &.trait {
+        font-size: 90%;
+        margin-bottom: 0.25rem;
+        color: $secondary;
+      }
+    }
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-basis: 11.75rem;
+    overflow: hidden;
+    flex-grow: 0;
+    flex-shrink: 0;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    background-color: $light;
+    padding: 1rem;
+  }
+}
+
+.nft-card-item {
+  padding: 0.75rem 0.125rem !important;
+}
