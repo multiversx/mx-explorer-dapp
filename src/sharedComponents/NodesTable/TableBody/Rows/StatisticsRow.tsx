@@ -19,7 +19,7 @@ const StatisticsRow = ({ nodeData }: { nodeData: NodeType }) => {
       </td>
       <td>
         {nodeData.name ? (
-          <div className="truncate-item-lg">{nodeData.name}</div>
+          <div className="truncate-item-md">{nodeData.name}</div>
         ) : (
           <span className="text-secondary">N/A</span>
         )}

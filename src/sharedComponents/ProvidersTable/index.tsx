@@ -174,7 +174,7 @@ const ProvidersTable = ({
                       data-testid={`providerLink${i}`}
                     >
                       {provider.identityDetails && provider.identityDetails.name ? (
-                        <>{provider.identityDetails.name}</>
+                        <span className="text-truncate">{provider.identityDetails.name}</span>
                       ) : (
                         <Trim text={provider.provider} />
                       )}
