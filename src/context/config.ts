@@ -41,6 +41,10 @@ export const adapterSchema = object({
     is: 'elastic',
     then: string().required(),
   }),
+  growthApi: string().when('adapter', {
+    is: 'api',
+    then: string().required(),
+  }),
 }).required();
 
 export const schema = networkBaseSchema.concat(adapterSchema);
@@ -60,6 +64,7 @@ export const defaultNetwork: NetworkType = {
   apiUrl: 'https://api.multiversx.com',
   delegationApi: 'https://delegation-api.multiversx.com',
   extrasApi: '***REMOVED***',
+  growthApi: 'https://tools.multiversx.com/growth-api',
   theme: 'default',
   accessToken: false,
 };

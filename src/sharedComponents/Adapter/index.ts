@@ -26,13 +26,7 @@ export default function useAdapter() {
     getEconomics,
     getProviders,
     getProvider,
-    getEgldPriceHistory,
-    getEgldMarketCapHistory,
-    getTotalStakedHistory,
-    getUsersStaking,
-    getTransactionsHistory,
-    getAccountsHistory,
-    getAnalyticsChartList,
+    growthApi,
   } = useAdapterConfig();
 
   return {
@@ -521,12 +515,16 @@ export default function useAdapter() {
 
     getEconomics: () => getEconomics({ url: `/economics` }),
 
-    getEgldPriceHistory,
-    getEgldMarketCapHistory,
-    getTotalStakedHistory,
-    getUsersStaking,
-    getTransactionsHistory,
-    getAccountsHistory,
-    getAnalyticsChartList,
+    getEgldPriceHistory: () => provider({ baseUrl: growthApi, url: '/charts?types=price' }),
+    getEgldMarketCapHistory: () =>
+      provider({ baseUrl: growthApi, url: '/charts?types=market-cap' }),
+    getTotalStakedHistory: () =>
+      provider({ baseUrl: growthApi, url: '/charts?types=staking-metrics' }),
+    getUsersStaking: () => provider({ baseUrl: growthApi, url: '/charts?types=staking-metric' }),
+    getTransactionsHistory: () =>
+      provider({ baseUrl: growthApi, url: '/charts?types=transaction-metrics' }),
+    getAccountsHistory: () =>
+      provider({ baseUrl: growthApi, url: '/charts?types=address-metrics' }),
+    getAnalyticsChartList: () => provider({ baseUrl: growthApi, url: '/explorer/analytics' }),
   };
 }
