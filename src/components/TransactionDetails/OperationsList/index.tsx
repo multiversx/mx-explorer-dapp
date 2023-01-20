@@ -85,6 +85,7 @@ const OperationToken = ({ operation }: { operation: OperationType }) => {
     decimals: operation.decimals,
     value: operation.value,
     svgUrl: operation.svgUrl,
+    valueUSD: operation.valueUSD,
   };
   switch (operation.type) {
     case 'nft':
