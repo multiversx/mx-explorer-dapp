@@ -47,15 +47,27 @@ const apiAdapter = {
       timeout,
     });
   },
+  // getTotalStakedHistory: (props: ProviderPropsType) => {
+  //   const { timeout } = props;
+  //   return axios.get(`https://tools.multiversx.com/growth-api/charts?types=staking-metrics`, {
+  //     timeout,
+  //   });
+  // },
+  // getUsersStaking: (props: ProviderPropsType) => {
+  //   const { timeout } = props;
+  //   return axios.get(`https://tools.multiversx.com/growth-api/charts?types=staking-metric`, {
+  //     timeout,
+  //   });
+  // },
   getTotalStakedHistory: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://tools.multiversx.com/growth-api/charts?types=staking-metrics`, {
+    return axios.get(`https://data.multiversx.com/latestcomplete/stakinghistorical/total/value`, {
       timeout,
     });
   },
   getUsersStaking: (props: ProviderPropsType) => {
     const { timeout } = props;
-    return axios.get(`https://tools.multiversx.com/growth-api/charts?types=staking-metric`, {
+    return axios.get(`https://data.multiversx.com/latest/stakinghistorical/total/users`, {
       timeout,
     });
   },
