@@ -10,28 +10,25 @@ import { useGlobalState } from 'context';
 
 const StakingChart = () => {
   const { activeNetworkId, economics } = useGlobalState();
-  const { getTotalStakedHistory } = adapter();
+  const { getTotalStakedHistory, getUsersStaking } = adapter();
 
   const [usersStaking, setUsersStaking] = React.useState('...');
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
 
   const getData = () => {
-    getTotalStakedHistory().then((totalStakedData) => {
-      if (totalStakedData.success) {
-        const stakedChart = totalStakedData.data?.[0]?.data?.[0]?.all;
-        const usersStakingStatistics = totalStakedData.data?.[0]?.statistics?.usersStaking;
+    Promise.all([getTotalStakedHistory(), getUsersStaking()]).then(
+      ([totalStakedData, usersStakingData]) => {
+        if (usersStakingData.success) {
+          setUsersStaking(usersStakingData.data);
+        }
+        if (totalStakedData.success) {
+          setChartData(formatDataCharts(totalStakedData.data));
+        }
 
-        if (usersStakingStatistics) {
-          setUsersStaking(usersStakingStatistics);
-        }
-        if (stakedChart) {
-          setChartData(formatDataCharts(stakedChart));
-        }
+        setDataReady(usersStakingData.success && totalStakedData.success);
       }
-
-      setDataReady(totalStakedData.success);
-    });
+    );
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
