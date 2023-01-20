@@ -3,7 +3,7 @@ import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { IdentityType } from 'helpers/types';
 import { adapter, Loader, PageState } from 'sharedComponents';
 import IdentityRow from './IdentityRow';
-import NodesTabs from 'components/Nodes/NodesLayout/NodesTabs';
+import NodesTabs from 'pages/Nodes/NodesLayout/NodesTabs';
 
 const Identities = () => {
   const ref = React.useRef(null);

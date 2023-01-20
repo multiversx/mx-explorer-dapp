@@ -3,7 +3,7 @@ import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 
 import { useGlobalState } from 'context';
 import { adapter, ProvidersTable, Loader, PageState } from 'sharedComponents';
-import NodesTabs from 'components/Nodes/NodesLayout/NodesTabs';
+import NodesTabs from 'pages/Nodes/NodesLayout/NodesTabs';
 import { types } from 'helpers';
 import { IdentityType } from 'helpers/types';
 

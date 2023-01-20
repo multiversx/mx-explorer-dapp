@@ -1,11 +1,11 @@
 import React from 'react';
 import { useActiveRoute } from 'helpers';
 import { validatorsRoutes, accountsRoutes, tokensRoutes, collectionRoutes } from 'routes';
-import NodesLayout from 'components/Nodes/NodesLayout';
-import AccountLayout from 'components/AccountDetails/AccountLayout';
-import ProviderLayout from 'components/ProviderDetails/ProviderLayout';
-import TokenLayout from 'components/TokenDetails/TokenLayout';
-import CollectionLayout from 'components/CollectionDetails/CollectionLayout';
+import NodesLayout from 'pages/Nodes/NodesLayout';
+import AccountLayout from 'pages/AccountDetails/AccountLayout';
+import ProviderLayout from 'pages/ProviderDetails/ProviderLayout';
+import TokenLayout from 'pages/TokenDetails/TokenLayout';
+import CollectionLayout from 'pages/CollectionDetails/CollectionLayout';
 
 export default function PageLayout({ children }: { children: React.ReactNode }) {
   const activeRoute = useActiveRoute();
