@@ -5,9 +5,9 @@ import { adapter, Loader, Pager, PageState, NodesTable, NodesFilters } from 'sha
 import { validatorsRoutes } from 'routes';
 import { useFilters } from 'helpers';
 import { NodeType } from 'helpers/types';
-import NodesTabs from 'components/Nodes/NodesLayout/NodesTabs';
+import NodesTabs from 'pages/Nodes/NodesLayout/NodesTabs';
 
-const NodesStatistics = () => {
+const Nodes = () => {
   const ref = React.useRef(null);
   const { search } = useLocation();
   const { getNodes, getNodesCount } = adapter();
@@ -16,18 +16,11 @@ const NodesStatistics = () => {
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
-  const queryParams = getQueryObject();
-  if (!queryParams.sort) {
-    queryParams.sort = 'position';
-    queryParams.order = 'asc';
-  }
+  const urlParams = new URLSearchParams(search);
+  const { type, status } = Object.fromEntries(urlParams);
 
   const fetchNodes = () => {
-    const queryObject = {
-      ...queryParams,
-      type: 'validator',
-      status: 'queued',
-    };
+    const queryObject = getQueryObject();
     setDataReady(undefined);
 
     Promise.all([getNodes({ ...queryObject, size }), getNodesCount(queryObject)]).then(
@@ -51,9 +44,9 @@ const NodesStatistics = () => {
         <NodesTabs />
 
         <div className="card-header-item d-flex justify-content-between align-items-center">
-          <NodesFilters baseRoute={validatorsRoutes.queue} onlySearch />
+          <NodesFilters baseRoute={validatorsRoutes.nodes} />
           {dataReady === true && (
-            <div className="d-none d-sm-flex">
+            <div className="d-none d-lg-flex">
               <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
             </div>
           )}
@@ -73,8 +66,12 @@ const NodesStatistics = () => {
       {dataReady === true && (
         <>
           <div className="card-body p-0">
-            <NodesTable queue>
-              <NodesTable.Body nodes={nodes} queue />
+            <NodesTable type={type as NodeType['type']} status={status as NodeType['status']}>
+              <NodesTable.Body
+                nodes={nodes}
+                type={type as NodeType['type']}
+                status={status as NodeType['status']}
+              />
             </NodesTable>
           </div>
           <div className="card-footer d-flex justify-content-end">
@@ -86,4 +83,4 @@ const NodesStatistics = () => {
   );
 };
 
-export default NodesStatistics;
+export default Nodes;

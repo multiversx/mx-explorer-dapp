@@ -3,7 +3,7 @@ import { faChartPie } from '@fortawesome/pro-solid-svg-icons/faChartPie';
 import { faUsers } from '@fortawesome/pro-solid-svg-icons/faUsers';
 import { faChartArea } from '@fortawesome/pro-solid-svg-icons/faChartArea';
 import { useGlobalState } from 'context';
-import EpochGear from 'components/Layout/GlobalStatsCard/EpochGear';
+import EpochGear from 'pages/Layout/GlobalStatsCard/EpochGear';
 import { CardItem } from 'sharedComponents';
 import { validDisplayValue } from 'helpers';
 

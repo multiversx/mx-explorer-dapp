@@ -5,7 +5,7 @@ import { adapter, Loader, Pager, PageState, NodesTable, NodesFilters } from 'sha
 import { useFilters } from 'helpers';
 import { NodeType } from 'helpers/types';
 import { validatorsRoutes } from 'routes';
-import NodesTabs from 'components/Nodes/NodesLayout/NodesTabs';
+import NodesTabs from 'pages/Nodes/NodesLayout/NodesTabs';
 
 const NodesStatistics = () => {
   const ref = React.useRef(null);

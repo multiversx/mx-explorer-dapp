@@ -5,7 +5,7 @@ import { DelegationType, ProviderType } from 'helpers/types';
 import { useGlobalState } from 'context';
 
 import ProviderDetails from './ProviderDetails';
-import DetailsBlock from 'components/AccountDetails/AccountStaking/DetailsBlock';
+import DetailsBlock from 'pages/AccountDetails/AccountStaking/DetailsBlock';
 
 const AccountDelegation = ({
   delegation,

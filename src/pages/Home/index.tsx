@@ -8,7 +8,7 @@ import StakingChart from './StakingChart';
 import TransactionsChart from './TransactionsChart';
 import AccountsChart from './AccountsChart';
 import { useIsMainnet } from 'helpers';
-import TestnetGlobalStatsCard from 'components/Layout/TestnetGlobalStatsCard';
+import TestnetGlobalStatsCard from 'pages/Layout/TestnetGlobalStatsCard';
 
 const Home = () => {
   const isMainnet = useIsMainnet();

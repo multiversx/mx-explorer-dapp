@@ -1,43 +1,43 @@
 import React from 'react';
-import BlockDetails from './components/BlockDetails';
-import Blocks from './components/Blocks';
-import EmptySearch from './components/EmptySearch';
-import HashSearch from './components/HashSearch';
-import Home from './components/Home';
-import MiniBlockDetails from './components/MiniBlockDetails';
-import TransactionDetails from './components/TransactionDetails';
-import Transactions from './components/Transactions';
-import AccountDetails from './components/AccountDetails';
-import Accounts from './components/Accounts';
-import Nodes from './components/Nodes';
-import Identities from './components/Identities';
-import IdentityDetails from './components/IdentityDetails';
-import NodeDetails from './components/NodeDetails';
-import Tokens from './components/Tokens';
-import TokensMeta from './components/TokensMeta';
-import TokenDetails from './components/TokenDetails';
-import TokenDetailsAccounts from './components/TokenDetails/TokenAccounts';
-import TokenDetailsLockedAccounts from './components/TokenDetails/TokenLockedAccounts';
-import TokenDetailsRoles from './components/TokenDetails/TokenRoles';
-import Collections from './components/Collections';
-import CollectionDetails from './components/CollectionDetails';
-import CollectionDetailsRoles from './components/CollectionDetails/CollectionRoles';
-import Nfts from './components/Nfts';
-import NftDetails from './components/NftDetails';
+import BlockDetails from './pages/BlockDetails';
+import Blocks from './pages/Blocks';
+import EmptySearch from './pages/EmptySearch';
+import HashSearch from './pages/HashSearch';
+import Home from './pages/Home';
+import MiniBlockDetails from './pages/MiniBlockDetails';
+import TransactionDetails from './pages/TransactionDetails';
+import Transactions from './pages/Transactions';
+import AccountDetails from './pages/AccountDetails';
+import Accounts from './pages/Accounts';
+import Nodes from './pages/Nodes';
+import Identities from './pages/Identities';
+import IdentityDetails from './pages/IdentityDetails';
+import NodeDetails from './pages/NodeDetails';
+import Tokens from './pages/Tokens';
+import TokensMeta from './pages/TokensMeta';
+import TokenDetails from './pages/TokenDetails';
+import TokenDetailsAccounts from './pages/TokenDetails/TokenAccounts';
+import TokenDetailsLockedAccounts from './pages/TokenDetails/TokenLockedAccounts';
+import TokenDetailsRoles from './pages/TokenDetails/TokenRoles';
+import Collections from './pages/Collections';
+import CollectionDetails from './pages/CollectionDetails';
+import CollectionDetailsRoles from './pages/CollectionDetails/CollectionRoles';
+import Nfts from './pages/Nfts';
+import NftDetails from './pages/NftDetails';
 import { withPageTitle, withNetworkReady } from './sharedComponents';
-import Providers from 'components/Providers';
-import ProviderDetails from 'components/ProviderDetails';
-import AccountContractCode from './components/AccountDetails/AccountContractCode';
-import AccountTokens from 'components/AccountDetails/AccountTokens';
-import AccountNfts from 'components/AccountDetails/AccountNfts';
-import AccountScResults from 'components/AccountDetails/AccountScResults';
-import AccountContracts from 'components/AccountDetails/AccountContracts';
-import AccountStaking from 'components/AccountDetails/AccountStaking';
-import AccountAnalytics from 'components/AccountDetails/AccountAnalytics';
-import ProviderTransactions from 'components/ProviderDetails/ProviderTransactions';
-import NodesStatistics from 'components/NodesStatistics';
-import NodesQueue from 'components/NodesQueue';
-import { Analytics } from 'components/Analytics';
+import Providers from 'pages/Providers';
+import ProviderDetails from 'pages/ProviderDetails';
+import AccountContractCode from './pages/AccountDetails/AccountContractCode';
+import AccountTokens from 'pages/AccountDetails/AccountTokens';
+import AccountNfts from 'pages/AccountDetails/AccountNfts';
+import AccountScResults from 'pages/AccountDetails/AccountScResults';
+import AccountContracts from 'pages/AccountDetails/AccountContracts';
+import AccountStaking from 'pages/AccountDetails/AccountStaking';
+import AccountAnalytics from 'pages/AccountDetails/AccountAnalytics';
+import ProviderTransactions from 'pages/ProviderDetails/ProviderTransactions';
+import NodesStatistics from 'pages/NodesStatistics';
+import NodesQueue from 'pages/NodesQueue';
+import { Analytics } from 'pages/Analytics';
 
 interface RouteType {
   path: string;
@@ -46,7 +46,7 @@ interface RouteType {
 }
 
 // INFO: to split the app in chunks use:
-// component: React.lazy(() => import('./components/Validators')),
+// component: React.lazy(() => import('./pages/Validators')),
 
 export const searchRoutes = {
   index: '/search/',
