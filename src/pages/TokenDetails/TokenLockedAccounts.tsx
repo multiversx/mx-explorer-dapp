@@ -10,7 +10,7 @@ import {
   ScAddressIcon,
   PageState,
   Denominate,
-} from 'sharedComponents';
+} from 'components';
 import { urlBuilder } from 'helpers';
 import { TokenLockedAccountType } from 'helpers/types';
 import TokenTabs from './TokenLayout/TokenTabs';

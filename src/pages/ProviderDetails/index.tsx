@@ -2,7 +2,7 @@ import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { useLocation, useParams } from 'react-router-dom';
 
-import { adapter, Loader, Pager, PageState, NodesTable } from 'sharedComponents';
+import { adapter, Loader, Pager, PageState, NodesTable } from 'components';
 import { useFilters } from 'helpers';
 import { NodeType } from 'helpers/types';
 import ProviderTabs from 'pages/ProviderDetails/ProviderLayout/ProviderTabs';

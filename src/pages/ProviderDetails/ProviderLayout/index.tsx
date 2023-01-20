@@ -5,7 +5,7 @@ import { useRouteMatch } from 'react-router-dom';
 import { types, useIsMainnet, useNetworkRoute } from 'helpers';
 import { IdentityType } from 'helpers/types';
 import { validatorsRoutes } from 'routes';
-import { adapter, Loader, PageState, SharedIdentity } from 'sharedComponents';
+import { adapter, Loader, PageState, SharedIdentity } from 'components';
 
 import ProviderDetailsCard from './ProviderDetailsCard';
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PageState } from 'sharedComponents';
+import { PageState } from 'components';
 import { faCoins } from '@fortawesome/pro-regular-svg-icons/faCoins';
 
 export default function FailedTokenDetails({ tokenId }: { tokenId: string | undefined }) {

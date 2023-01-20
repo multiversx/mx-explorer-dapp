@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
-import { Loader, TransactionsTable, adapter } from 'sharedComponents';
+import { Loader, TransactionsTable, adapter } from 'components';
 
-import txStatus from 'sharedComponents/TransactionStatus/txStatus';
-import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
-import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
+import txStatus from 'components/TransactionStatus/txStatus';
+import NoTransactions from 'components/TransactionsTable/NoTransactions';
+import FailedTransactions from 'components/TransactionsTable/FailedTransactions';
 import { useSize, useURLSearchParams } from 'helpers';
 import {
   UITransactionType,

@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy-delegation.svg';
 import { useGlobalState } from 'context';
 import { DelegationLegacyType, IdentityType } from 'helpers/types';
-import { Denominate } from 'sharedComponents';
+import { Denominate } from 'components';
 
 import DetailsBlock from '../DetailsBlock';
 

@@ -17,8 +17,8 @@ import {
   CardItem,
   Denominate,
   LockedAmountTooltip,
-} from 'sharedComponents';
-import { getIcon } from 'sharedComponents/NodesTable/RowIcon';
+} from 'components';
+import { getIcon } from 'components/NodesTable/RowIcon';
 
 import Alert from './Alert';
 

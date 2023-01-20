@@ -2,7 +2,7 @@ import React from 'react';
 import { useGlobalState } from 'context';
 import Navbar from './Navbar/index';
 import Footer from './Footer/index';
-import { Search, NotificationsBar } from 'sharedComponents';
+import { Search, NotificationsBar } from 'components';
 import Unavailable from './Unavailable';
 import PageLayout from './PageLayout';
 import GlobalStatsCard from './GlobalStatsCard';

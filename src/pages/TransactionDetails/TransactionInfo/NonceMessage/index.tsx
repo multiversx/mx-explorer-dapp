@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { adapter } from 'sharedComponents';
-import txStatus from 'sharedComponents/TransactionStatus/txStatus';
+import { adapter } from 'components';
+import txStatus from 'components/TransactionStatus/txStatus';
 import { TransactionType } from 'helpers/types';
 
 const NonceMessage = ({ transaction }: { transaction: TransactionType }) => {

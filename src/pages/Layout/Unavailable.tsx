@@ -1,7 +1,7 @@
 import React from 'react';
 import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
 import { faWifiSlash } from '@fortawesome/pro-regular-svg-icons/faWifiSlash';
-import { PageState } from 'sharedComponents';
+import { PageState } from 'components';
 import { useGlobalState } from 'context';
 
 const Unavailable = () => {

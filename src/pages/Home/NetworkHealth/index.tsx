@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { adapter } from 'sharedComponents';
+import { adapter } from 'components';
 import { ReactComponent as Gear } from 'assets/img/network-health/gear.svg';
 import { ReactComponent as BigGear } from 'assets/img/network-health/big-gear.svg';
 import { ReactComponent as CenterGear } from 'assets/img/network-health/center-gear.svg';

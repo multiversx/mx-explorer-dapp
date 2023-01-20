@@ -11,7 +11,7 @@ import {
   Denominate,
   NftBadge,
   NetworkLink,
-} from 'sharedComponents';
+} from 'components';
 import { useGlobalState } from 'context';
 import AccountTabs from './AccountLayout/AccountTabs';
 import { urlBuilder, useFilters, useNetworkRoute } from 'helpers';

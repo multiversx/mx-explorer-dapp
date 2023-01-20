@@ -2,7 +2,7 @@ import { useIsMainnet } from 'helpers';
 import React, { useMemo } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { AxiosInterceptor } from 'sharedComponents';
+import { AxiosInterceptor } from 'components';
 import Layout from './pages/Layout';
 import PageNotFoud from './pages/PageNotFoud';
 import { GlobalProvider, useGlobalState } from './context';

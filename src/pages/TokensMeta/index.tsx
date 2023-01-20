@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiamond } from '@fortawesome/pro-regular-svg-icons/faDiamond';
-import { Loader, adapter, NetworkLink, Trim, Pager } from 'sharedComponents';
+import { Loader, adapter, NetworkLink, Trim, Pager } from 'components';
 import NoTokens from './NoTokens';
 import FailedTokens from './FailedTokens';
 import { urlBuilder, useFilters, useURLSearchParams, useActiveRoute } from 'helpers';

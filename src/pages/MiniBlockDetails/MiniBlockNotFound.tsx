@@ -1,6 +1,6 @@
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import React from 'react';
-import { PageState } from 'sharedComponents';
+import { PageState } from 'components';
 
 interface MiniBlockNotFoundType {
   miniBlockHash: string | undefined;

@@ -20,11 +20,11 @@ import {
   LockedAmountTooltip,
   NetworkLink,
   Trim,
-} from 'sharedComponents';
+} from 'components';
 import { useGlobalState } from 'context';
-import DelegationCap from 'sharedComponents/ProvidersTable/DelegationCap';
-import PercentageFilled from 'sharedComponents/ProvidersTable/PercentageFilled';
-import { hasDelegationCap } from 'sharedComponents/ProvidersTable/PercentageFilled';
+import DelegationCap from 'components/ProvidersTable/DelegationCap';
+import PercentageFilled from 'components/ProvidersTable/PercentageFilled';
+import { hasDelegationCap } from 'components/ProvidersTable/PercentageFilled';
 
 const ProviderDetailsCard = ({ provider }: { provider?: ProviderType }) => {
   const {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NetworkLink } from 'sharedComponents';
+import { NetworkLink } from 'components';
 import {
   blocksRoutes,
   transactionsRoutes,

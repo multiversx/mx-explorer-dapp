@@ -2,12 +2,12 @@ import React from 'react';
 import moment from 'moment';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import { useGlobalState } from 'context';
-import { adapter, Loader, PageState, Chart } from 'sharedComponents';
-import { ChartDataType, ChartConfigType } from 'sharedComponents/Chart/helpers/types';
+import { adapter, Loader, PageState, Chart } from 'components';
+import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
 import {
   getNormalizedTimeEntries,
   getFrequency,
-} from 'sharedComponents/Chart/helpers/getChartBinnedData';
+} from 'components/Chart/helpers/getChartBinnedData';
 import AccountTabs from './AccountLayout/AccountTabs';
 
 const AccountAnalytics = () => {

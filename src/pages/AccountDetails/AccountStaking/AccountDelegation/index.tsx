@@ -1,6 +1,6 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
-import { Denominate } from 'sharedComponents';
+import { Denominate } from 'components';
 import { DelegationType, ProviderType } from 'helpers/types';
 import { useGlobalState } from 'context';
 

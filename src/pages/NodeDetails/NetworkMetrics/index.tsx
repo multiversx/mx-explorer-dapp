@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DetailItem, Led } from 'sharedComponents';
+import { DetailItem, Led } from 'components';
 // import PercentegeBar from './PercentegeBar';
 // import getUptimeDowntime from './getUptimeDowntime';
 import { NodeType } from 'helpers/types';

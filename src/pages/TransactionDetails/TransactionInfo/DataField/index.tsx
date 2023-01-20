@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Anchorme } from 'react-anchorme';
-import { DetailItem, ModalLink, DataDecode } from 'sharedComponents';
-import { DecodeMethodType } from 'sharedComponents/DataDecode';
+import { DetailItem, ModalLink, DataDecode } from 'components';
+import { DecodeMethodType } from 'components/DataDecode';
 import { truncate, useScamFlag } from 'helpers';
 import { ScamInfoType } from 'helpers/types';
 import { displayedDataLength } from 'appConfig';

@@ -16,7 +16,7 @@ import {
   PropertyPill,
   SmallDetailItem,
   UsdValue,
-} from 'sharedComponents';
+} from 'components';
 import { useGlobalState } from 'context';
 import { isContract, urlBuilder, dateFormatted, formatHerotag } from 'helpers';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';

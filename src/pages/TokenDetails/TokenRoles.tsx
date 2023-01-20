@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { useGlobalState } from 'context';
-import { Loader, NetworkLink, Trim, ScAddressIcon } from 'sharedComponents';
+import { Loader, NetworkLink, Trim, ScAddressIcon } from 'components';
 import { urlBuilder } from 'helpers';
 import TokenTabs from './TokenLayout/TokenTabs';
 

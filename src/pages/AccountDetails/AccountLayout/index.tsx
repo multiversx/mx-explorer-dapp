@@ -8,7 +8,7 @@ import { useGlobalDispatch, useGlobalState } from 'context';
 import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
 import { IdentityType, ProviderType, DelegationType } from 'helpers/types';
 import { accountsRoutes } from 'routes';
-import { Loader, adapter } from 'sharedComponents';
+import { Loader, adapter } from 'components';
 
 import AccountDetailsCard from './AccountDetailsCard';
 import FailedAccount from './FailedAccount';

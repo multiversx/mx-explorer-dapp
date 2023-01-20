@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import BigNumber from 'bignumber.js';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
-import { Trim, NetworkLink, SocialIcons, PropertyPill, SmallDetailItem } from 'sharedComponents';
+import { Trim, NetworkLink, SocialIcons, PropertyPill, SmallDetailItem } from 'components';
 import { useGlobalState } from 'context';
 
 const TokenDetailsCard = () => {

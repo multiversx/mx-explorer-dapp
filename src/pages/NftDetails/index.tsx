@@ -17,7 +17,7 @@ import {
   ScAddressIcon,
   Pager,
   CardItem,
-} from 'sharedComponents';
+} from 'components';
 import FailedNftDetails from './FailedNftDetails';
 import NftPreview from './NftPreview';
 

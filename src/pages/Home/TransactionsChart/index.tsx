@@ -2,9 +2,9 @@ import React from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import BigNumber from 'bignumber.js';
 
-import { Chart, Loader, PageState, adapter } from 'sharedComponents';
-import { ChartDataType, ChartConfigType } from 'sharedComponents/Chart/helpers/types';
-import formatDataCharts from 'sharedComponents/Chart/helpers/formatDataCharts';
+import { Chart, Loader, PageState, adapter } from 'components';
+import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
+import formatDataCharts from 'components/Chart/helpers/formatDataCharts';
 
 import { useGlobalState } from 'context';
 

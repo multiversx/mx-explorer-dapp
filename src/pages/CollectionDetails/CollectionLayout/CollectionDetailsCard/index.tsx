@@ -9,7 +9,7 @@ import {
   NftBadge,
   TimeAgo,
   SocialIcons,
-} from 'sharedComponents';
+} from 'components';
 import { useGlobalState } from 'context';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

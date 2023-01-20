@@ -12,7 +12,7 @@ import {
   ScAddressIcon,
   PageState,
   LockedTokenAddressIcon,
-} from 'sharedComponents';
+} from 'components';
 import { types, urlBuilder, useSize, useURLSearchParams } from 'helpers';
 import TokenTabs from './TokenLayout/TokenTabs';
 

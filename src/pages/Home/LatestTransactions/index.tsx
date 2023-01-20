@@ -2,7 +2,7 @@ import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { addressIsBech32, urlBuilder, getReceiverAssets } from 'helpers';
-import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
+import { getStatusIconAndColor } from 'components/TransactionStatus';
 import * as React from 'react';
 import {
   ShardSpan,
@@ -14,11 +14,11 @@ import {
   LatestItem,
   AccountName,
   ScAddressIcon,
-} from 'sharedComponents';
+} from 'components';
 
-import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
-import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
-import TransactionValue from 'sharedComponents/TransactionsTable/TransactionValue';
+import FailedTransactions from 'components/TransactionsTable/FailedTransactions';
+import NoTransactions from 'components/TransactionsTable/NoTransactions';
+import TransactionValue from 'components/TransactionsTable/TransactionValue';
 
 import { UITransactionType } from 'helpers/types';
 

@@ -7,7 +7,7 @@ import {
   TransactionOperationActionType,
   VisibleTransactionOperationType,
 } from 'helpers/types';
-import { NetworkLink, AccountName, CopyButton, TxActionBlock, Denominate } from 'sharedComponents';
+import { NetworkLink, AccountName, CopyButton, TxActionBlock, Denominate } from 'components';
 import { UITransactionType } from 'helpers/types';
 
 export enum OperationDirectionEnum {

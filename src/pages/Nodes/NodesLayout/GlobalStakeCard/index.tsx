@@ -4,7 +4,7 @@ import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { faLeaf } from '@fortawesome/pro-solid-svg-icons/faLeaf';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { useGlobalState } from 'context';
-import { CardItem, MultilayerPercentageBar, PageState } from 'sharedComponents';
+import { CardItem, MultilayerPercentageBar, PageState } from 'components';
 
 const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
   const {

@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiamond } from '@fortawesome/pro-regular-svg-icons/faDiamond';
 
-import { NetworkLink, Denominate, Sort } from 'sharedComponents';
+import { NetworkLink, Denominate, Sort } from 'components';
 import { urlBuilder, amountWithoutRounding, useFilters } from 'helpers';
 import { TokenType, TokenSortEnum, SortOrderEnum } from 'helpers/types';
 import EgldRow from './EgldRow';

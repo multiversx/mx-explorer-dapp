@@ -5,7 +5,7 @@ import { faCube } from '@fortawesome/pro-solid-svg-icons/faCube';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 import { useGlobalState } from 'context';
 import EpochGear from 'pages/Layout/GlobalStatsCard/EpochGear';
-import { CardItem } from 'sharedComponents';
+import { CardItem } from 'components';
 import { validDisplayValue, useFetchStats } from 'helpers';
 
 const TestnetGlobalStatsCard = () => {

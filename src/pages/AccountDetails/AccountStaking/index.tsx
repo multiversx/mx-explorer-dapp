@@ -8,7 +8,7 @@ import AccountStake from './AccountStake';
 import DonutChart from './DonutChart';
 
 import { useGlobalState } from 'context';
-import { Loader, PageState } from 'sharedComponents';
+import { Loader, PageState } from 'components';
 
 const AccountStaking = () => {
   const { accountStakingDetails } = useGlobalState();

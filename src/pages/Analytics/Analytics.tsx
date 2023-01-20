@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useIsMainnet } from 'helpers';
-import { Loader, adapter } from 'sharedComponents';
+import { Loader, adapter } from 'components';
 
 import { FailedAnalytics } from './FailedAnalytics';
 import { NoAnalytics } from './NoAnalytics';

@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 
 import { useGlobalState } from 'context';
 import { EconomicsType, StatsType } from 'context/state';
-import pagerHelper from 'sharedComponents/Pager/pagerHelper';
+import pagerHelper from 'components/Pager/pagerHelper';
 
 import { useFilters, useURLSearchParams, validDisplayValue } from 'helpers';
 import { TokenType, SortOrderEnum, TokenSortEnum } from 'helpers/types';

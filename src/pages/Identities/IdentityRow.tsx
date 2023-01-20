@@ -11,7 +11,7 @@ import {
   SharedIdentity,
   Denominate,
   PercentageBar,
-} from 'sharedComponents';
+} from 'components';
 import { urlBuilder } from 'helpers';
 import { IdentityType, NodeType } from 'helpers/types';
 import carretDown from 'assets/img/carret-down.svg';
