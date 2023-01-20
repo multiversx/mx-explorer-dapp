@@ -1,6 +1,6 @@
 import React from 'react';
 import { Denominate, NetworkLink } from 'sharedComponents';
-import { urlBuilder } from 'helpers';
+import { urlBuilder, formatUSD } from 'helpers';
 import { TokenArgumentType } from 'helpers/types';
 import { denomination as configDenomination } from 'appConfig';
 
@@ -41,6 +41,11 @@ const TxActionToken = ({
               <span className="text-truncate">{token.ticker}</span>
             </div>
           </NetworkLink>
+          {token?.valueUSD && (
+            <div className="mr-1 text-truncate text-secondary ml-1">
+              ({formatUSD({ amount: token.valueUSD, digits: 2 })})
+            </div>
+          )}
         </>
       )}
     </div>

@@ -316,6 +316,7 @@ export interface TokenArgumentType {
   providerName?: string;
   providerAvatar?: string;
   svgUrl?: string;
+  valueUSD?: number;
 }
 
 export interface TxActionType {
@@ -381,6 +382,7 @@ export interface OperationType {
   svgUrl?: string;
   senderAssets?: AssetType;
   receiverAssets?: AssetType;
+  valueUSD?: number;
 }
 
 export interface LogType {
