@@ -10,7 +10,7 @@ import { addressIsBech32, urlBuilder } from 'helpers';
 import { NftEnumType } from 'helpers/types';
 import { TokenArgumentType, TransactionType } from 'helpers/types';
 import unwrapper from './unwrapper';
-import { ReactComponent as DefaultAvatar } from 'assets/images/default-avatar.svg';
+import { ReactComponent as DefaultAvatar } from 'assets/img/default-avatar.svg';
 
 const ActionToken = ({
   token,

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { ReactComponent as CenterGear } from 'assets/images/network-health/center-gear.svg';
-import { ReactComponent as EpochGearBg } from 'assets/images/epoch-gear-bg.svg';
+import { ReactComponent as CenterGear } from 'assets/img/network-health/center-gear.svg';
+import { ReactComponent as EpochGearBg } from 'assets/img/epoch-gear-bg.svg';
 import ProgressRing from '../../Home/NetworkHealth/ProgressRing';
 import { initialStats } from 'helpers/processStats';
 import moment from 'moment';

@@ -14,8 +14,8 @@ import {
 import { faGlobe, faEnvelope, faPencil, faFileAlt } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { ReactComponent as CoinMarketCap } from 'assets/images/logos/coinmarketcap.svg';
-import { ReactComponent as CoinGecko } from 'assets/images/logos/coingecko.svg';
+import { ReactComponent as CoinMarketCap } from 'assets/img/logos/coinmarketcap.svg';
+import { ReactComponent as CoinGecko } from 'assets/img/logos/coingecko.svg';
 
 const getFaIcon = (icon: string) => {
   switch (icon) {

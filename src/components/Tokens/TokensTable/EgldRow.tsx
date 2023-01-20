@@ -8,7 +8,7 @@ import pagerHelper from 'sharedComponents/Pager/pagerHelper';
 import { useFilters, useURLSearchParams, validDisplayValue } from 'helpers';
 import { TokenType, SortOrderEnum, TokenSortEnum } from 'helpers/types';
 import { pageSize } from 'appConfig';
-import { ReactComponent as EgldSymbol } from 'assets/images/egld-token-logo.svg';
+import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
 
 export const EgldRow = ({
   tokens,
