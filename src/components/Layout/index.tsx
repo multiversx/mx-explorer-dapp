@@ -62,7 +62,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   React.useEffect(() => {
     // temoporary always use the dark theme
     if (process.env.NODE_ENV === 'development') {
-      require('assets/styles/dark.scss');
+      require('assets/sass/dark.scss');
     }
     // temoporary always use the dark theme
 
@@ -75,13 +75,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     //     (stylesheet as any).href = '';
     //     switch (theme) {
     //       case 'dark':
-    //         require('assets/styles/dark.scss');
+    //         require('assets/sass/dark.scss');
     //         break;
     //       case 'testnet':
-    //         require('assets/styles/testnet.scss');
+    //         require('assets/sass/testnet.scss');
     //         break;
     //       default:
-    //         require('assets/styles/light.scss');
+    //         require('assets/sass/light.scss');
     //         break;
     //     }
     //   } else {
