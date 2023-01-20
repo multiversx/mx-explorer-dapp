@@ -7,15 +7,17 @@ const ChartHeading = ({
   icon,
   svgIcon,
   iconClass,
+  className,
   children,
 }: {
   title?: string;
   icon?: IconProp;
   svgIcon?: ReactElement;
   iconClass?: string;
+  className?: string;
   children?: React.ReactNode;
 }) => (
-  <div className="chart-heading card-header">
+  <div className={`chart-heading card-header ${className ?? ''}`}>
     <div className="card-header-item d-flex align-items-center">
       {icon && (
         <FontAwesomeIcon icon={icon} className={`chart-icon mr-3 ${iconClass ? iconClass : ''}`} />

@@ -36,6 +36,7 @@ export default function useAdapterConfig() {
       proxyUrl: nodeUrl,
       apiUrl,
       delegationApi,
+      growthApi,
     },
     timeout,
   } = useGlobalState();
@@ -65,12 +66,6 @@ export default function useAdapterConfig() {
     getAccountDelegation,
     getEconomics,
     getShards,
-    getEgldPriceHistory,
-    getEgldMarketCapHistory,
-    getTotalStakedHistory,
-    getUsersStaking,
-    getTransactionsHistory,
-    getAccountsHistory,
     getProviders,
     getProvider,
   } = providers[adapter];
@@ -81,6 +76,7 @@ export default function useAdapterConfig() {
 
   return {
     delegationApi,
+    growthApi,
     provider: (props = basicProps) => wrap(() => provider({ ...providerProps, ...props })),
     getStats: (props = basicProps) => wrap(() => getStats({ ...providerProps, ...props })),
     getNodes: (props = basicProps) => wrap(() => getNodes({ ...providerProps, ...props })),
@@ -96,17 +92,5 @@ export default function useAdapterConfig() {
     getEconomics: (props = basicProps) => wrap(() => getEconomics({ ...providerProps, ...props })),
     getProviders: (props = basicProps) => wrap(() => getProviders({ ...providerProps, ...props })),
     getProvider: (props = basicProps) => wrap(() => getProvider({ ...providerProps, ...props })),
-    getEgldPriceHistory: (props = basicProps) =>
-      wrap(() => getEgldPriceHistory({ ...providerProps, ...props })),
-    getEgldMarketCapHistory: (props = basicProps) =>
-      wrap(() => getEgldMarketCapHistory({ ...providerProps, ...props })),
-    getTotalStakedHistory: (props = basicProps) =>
-      wrap(() => getTotalStakedHistory({ ...providerProps, ...props })),
-    getUsersStaking: (props = basicProps) =>
-      wrap(() => getUsersStaking({ ...providerProps, ...props })),
-    getTransactionsHistory: (props = basicProps) =>
-      wrap(() => getTransactionsHistory({ ...providerProps, ...props })),
-    getAccountsHistory: (props = basicProps) =>
-      wrap(() => getAccountsHistory({ ...providerProps, ...props })),
   };
 }

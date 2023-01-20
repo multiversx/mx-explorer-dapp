@@ -37,6 +37,7 @@ import AccountAnalytics from 'components/AccountDetails/AccountAnalytics';
 import ProviderTransactions from 'components/ProviderDetails/ProviderTransactions';
 import NodesStatistics from 'components/NodesStatistics';
 import NodesQueue from 'components/NodesQueue';
+import { Analytics } from 'components/Analytics';
 
 interface RouteType {
   path: string;
@@ -108,6 +109,10 @@ export const collectionRoutes = {
 export const nftRoutes = {
   nfts: '/nfts',
   nftDetails: '/nfts/:hash',
+};
+
+export const analyticsRoutes = {
+  analytics: '/analytics',
 };
 
 const routes: RouteType[] = [
@@ -310,6 +315,11 @@ const routes: RouteType[] = [
     path: validatorsRoutes.providerTransactions,
     title: 'Provider Details',
     component: ProviderTransactions,
+  },
+  {
+    path: analyticsRoutes.analytics,
+    title: 'Analytics',
+    component: Analytics,
   },
 ];
 

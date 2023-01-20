@@ -8,6 +8,7 @@ import {
   tokensRoutes,
   nftRoutes,
   collectionRoutes,
+  analyticsRoutes,
 } from 'routes';
 import { useIsMainnet, useActiveRoute } from 'helpers';
 import { useGlobalState } from 'context';
@@ -130,6 +131,16 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
           >
             Validators
           </NetworkLink>
+
+          {isMainnet && (
+            <NetworkLink
+              className={`nav-link ${activeRoute(analyticsRoutes.analytics) ? 'active' : ''}`}
+              to={analyticsRoutes.analytics}
+              onClick={() => onToggle(false)}
+            >
+              Analytics
+            </NetworkLink>
+          )}
         </>
       )}
     </>

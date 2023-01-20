@@ -142,7 +142,7 @@ const Price = () => {
                   />
                   <YAxis
                     orientation="right"
-                    tickFormatter={(tick) => formatYAxis(tick, '$')}
+                    tickFormatter={(tick) => formatYAxis({ tick, currency: '$' })}
                     axisLine={false}
                     tickLine={false}
                     type="number"
@@ -178,7 +178,7 @@ const Price = () => {
                   <XAxis dataKey="timestamp" tickLine={false} tick={false} strokeWidth={0.3} />
                   <YAxis
                     orientation="right"
-                    tickFormatter={(tick) => formatYAxis(tick, '$')}
+                    tickFormatter={(tick) => formatYAxis({ tick, currency: '$' })}
                     axisLine={false}
                     tickLine={false}
                     tick={false}

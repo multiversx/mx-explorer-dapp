@@ -1,0 +1,12 @@
+.analytics {
+  .recharts-wrapper {
+    .recharts-cartesian-axis.recharts-yAxis {
+      transform: translateX(12px);
+    }
+  }
+  .stacked-chart,
+  .chart-area,
+  .chart-bar {
+    margin-right: -1rem;
+  }
+}
