@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
 import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons';
 import { types, useScamFlag } from 'helpers';
-import { ModalLink } from 'sharedComponents';
+import { ModalLink } from 'components';
 
 const Thumbnail = ({
   token,

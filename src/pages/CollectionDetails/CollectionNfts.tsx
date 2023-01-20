@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import { useGlobalState } from 'context';
-import { Loader, adapter, Pager, NetworkLink, Trim, PageState, NftBadge } from 'sharedComponents';
+import { Loader, adapter, Pager, NetworkLink, Trim, PageState, NftBadge } from 'components';
 import { urlBuilder, useURLSearchParams, useFilters, nftText } from 'helpers';
 import { NftType } from 'helpers/types';
 import CollectionTabs from './CollectionLayout/CollectionTabs';

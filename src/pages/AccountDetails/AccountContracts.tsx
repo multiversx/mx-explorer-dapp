@@ -10,7 +10,7 @@ import {
   TimeAgo,
   Trim,
   ShardSpan,
-} from 'sharedComponents';
+} from 'components';
 import { useGlobalState } from 'context';
 import AccountTabs from './AccountLayout/AccountTabs';
 import { urlBuilder, useFilters, addressIsBech32 } from 'helpers';

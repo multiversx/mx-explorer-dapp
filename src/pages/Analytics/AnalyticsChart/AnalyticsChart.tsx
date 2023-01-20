@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { PageState, Chart, Loader, adapter } from 'sharedComponents';
+import { PageState, Chart, Loader, adapter } from 'components';
 import { useGlobalState } from 'context';
 
 import { ChartListType } from '../Analytics';
 
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
-import { ChartConfigType } from 'sharedComponents/Chart/helpers/types';
+import { ChartConfigType } from 'components/Chart/helpers/types';
 
 export interface AnalyticsChartDataType {
   value: string;

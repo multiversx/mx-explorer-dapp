@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 import { pageSize } from 'appConfig';
 import { tokensRoutes } from 'routes';
-import { Loader, adapter, NetworkLink, Pager } from 'sharedComponents';
+import { Loader, adapter, NetworkLink, Pager } from 'components';
 import { useGlobalState } from 'context';
 import { useFilters, useURLSearchParams, types, useActiveRoute } from 'helpers';
 

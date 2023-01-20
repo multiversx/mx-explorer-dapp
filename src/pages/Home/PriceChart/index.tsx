@@ -13,12 +13,12 @@ import {
   Tooltip,
 } from 'recharts';
 
-import { Chart, Loader, PageState, adapter } from 'sharedComponents';
-import CustomTooltip from 'sharedComponents/Chart/helpers/CustomTooltip';
-import formatDataCharts from 'sharedComponents/Chart/helpers/formatDataCharts';
-import formatYAxis from 'sharedComponents/Chart/helpers/formatYAxis';
-import StartEndTick from 'sharedComponents/Chart/helpers/StartEndTick';
-import { ControlType, ChartDataType } from 'sharedComponents/Chart/helpers/types';
+import { Chart, Loader, PageState, adapter } from 'components';
+import CustomTooltip from 'components/Chart/helpers/CustomTooltip';
+import formatDataCharts from 'components/Chart/helpers/formatDataCharts';
+import formatYAxis from 'components/Chart/helpers/formatYAxis';
+import StartEndTick from 'components/Chart/helpers/StartEndTick';
+import { ControlType, ChartDataType } from 'components/Chart/helpers/types';
 
 import { useGlobalState } from 'context';
 

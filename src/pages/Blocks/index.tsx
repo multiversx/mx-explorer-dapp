@@ -3,9 +3,9 @@ import * as React from 'react';
 import { Redirect } from 'react-router-dom';
 import { useNetworkRoute, useURLSearchParams, useSize } from 'helpers';
 import { BlockType } from 'helpers/types';
-import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'sharedComponents';
-import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
-import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
+import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'components';
+import FailedBlocks from 'components/BlocksTable/FailedBlocks';
+import NoBlocks from 'components/BlocksTable/NoBlocks';
 
 interface StateType {
   blocks: BlockType[];

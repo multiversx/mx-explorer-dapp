@@ -1,6 +1,6 @@
 import React from 'react';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
-import { CardItem, Denominate, LockedAmountTooltip } from 'sharedComponents';
+import { CardItem, Denominate, LockedAmountTooltip } from 'components';
 import { useGlobalState } from 'context';
 
 const LockedAmountCardItem = ({ cardItemClass }: { cardItemClass: string }) => {

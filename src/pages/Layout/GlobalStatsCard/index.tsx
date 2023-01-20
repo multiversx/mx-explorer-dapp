@@ -4,7 +4,7 @@ import { faUsers } from '@fortawesome/pro-solid-svg-icons/faUsers';
 import { faChartArea } from '@fortawesome/pro-solid-svg-icons/faChartArea';
 import { useGlobalState } from 'context';
 import EpochGear from 'pages/Layout/GlobalStatsCard/EpochGear';
-import { CardItem } from 'sharedComponents';
+import { CardItem } from 'components';
 import { validDisplayValue } from 'helpers';
 
 const GlobalStatsCard = () => {

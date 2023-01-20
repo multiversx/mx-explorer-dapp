@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { faCheck, faTimes } from '@fortawesome/pro-solid-svg-icons';
 
-import { CardItem } from 'sharedComponents';
+import { CardItem } from 'components';
 import { NodeType } from 'helpers/types';
 
 const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {

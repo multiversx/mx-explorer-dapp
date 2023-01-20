@@ -2,9 +2,9 @@ import React from 'react';
 import { faCity } from '@fortawesome/pro-regular-svg-icons/faCity';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 
-import { adapter, Loader, Pager, PageState, ProvidersTable } from 'sharedComponents';
+import { adapter, Loader, Pager, PageState, ProvidersTable } from 'components';
 import { useParams } from 'react-router-dom';
-import { NodesTable, SharedIdentity } from 'sharedComponents';
+import { NodesTable, SharedIdentity } from 'components';
 import { useFilters, types } from 'helpers';
 import { IdentityType, NodeType } from 'helpers/types';
 import { useGlobalState } from 'context';

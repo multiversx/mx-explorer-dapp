@@ -1,7 +1,7 @@
 import { useIsMainnet, useActiveRoute } from 'helpers';
 import * as React from 'react';
 import { validatorsRoutes } from 'routes';
-import { NetworkLink } from 'sharedComponents';
+import { NetworkLink } from 'components';
 
 const NodesTabs = () => {
   const isMainnet = useIsMainnet();

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { processEconomics } from 'helpers';
 import { useGlobalDispatch } from 'context';
-import { adapter } from 'sharedComponents';
+import { adapter } from 'components';
 
 export default function useFetchEconomics() {
   const dispatch = useGlobalDispatch();

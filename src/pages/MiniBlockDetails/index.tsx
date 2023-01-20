@@ -11,12 +11,12 @@ import {
   DetailItem,
   Trim,
   CopyButton,
-} from 'sharedComponents';
+} from 'components';
 
-import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
-import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
-import NoScResults from 'sharedComponents/ScResultsTable/NoScResults';
-import FailedScResults from 'sharedComponents/ScResultsTable/FailedScResults';
+import NoTransactions from 'components/TransactionsTable/NoTransactions';
+import FailedTransactions from 'components/TransactionsTable/FailedTransactions';
+import NoScResults from 'components/ScResultsTable/NoScResults';
+import FailedScResults from 'components/ScResultsTable/FailedScResults';
 import MiniBlockNotFound from './MiniBlockNotFound';
 
 import { UITransactionType, TxFiltersEnum } from 'helpers/types';

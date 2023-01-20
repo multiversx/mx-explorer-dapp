@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons/faQuestionCircle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TransactionType } from 'helpers/types';
-import { Overlay } from 'sharedComponents';
+import { Overlay } from 'components';
 
 enum ErrorDescriptionEnum {
   nonPayableContract = 'sending value to non payable contract',

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { collectionRoutes } from 'routes';
 import { useGlobalDispatch, useGlobalState } from 'context';
-import { Loader, adapter } from 'sharedComponents';
+import { Loader, adapter } from 'components';
 import { useSize, useNetworkRoute } from 'helpers';
 import FailedCollectionDetails from './FailedCollectionDetails';
 import CollectionDetailsCard from './CollectionDetailsCard';

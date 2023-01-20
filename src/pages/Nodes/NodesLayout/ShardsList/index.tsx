@@ -5,7 +5,7 @@ import { metaChainShardId } from 'appConfig';
 import { useGlobalState } from 'context';
 import { GlobalStakeType } from 'context/state';
 import { ShardType } from 'helpers/types';
-import { PageState } from 'sharedComponents';
+import { PageState } from 'components';
 
 import ShardCard from './ShardCard';
 

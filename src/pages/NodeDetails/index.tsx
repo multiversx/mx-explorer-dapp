@@ -1,6 +1,6 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { adapter, Loader, PageState, SharedIdentity } from 'sharedComponents';
+import { adapter, Loader, PageState, SharedIdentity } from 'components';
 import { useLocation, useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { useIsMainnet } from 'helpers';
@@ -8,9 +8,9 @@ import { BlockType, IdentityType, NodeType } from 'helpers/types';
 import NodeInformation from './NodeInformation';
 import NetworkMetrics from './NetworkMetrics';
 import Rounds, { RoundType } from './Rounds';
-import BlocksTable from 'sharedComponents/BlocksTable';
-import FailedBlocks from 'sharedComponents/BlocksTable/FailedBlocks';
-import NoBlocks from 'sharedComponents/BlocksTable/NoBlocks';
+import BlocksTable from 'components/BlocksTable';
+import FailedBlocks from 'components/BlocksTable/FailedBlocks';
+import NoBlocks from 'components/BlocksTable/NoBlocks';
 import ValidatorDetails from './ValidatorDetails';
 
 interface NodeDetailType<T> {

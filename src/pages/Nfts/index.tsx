@@ -1,13 +1,5 @@
 import * as React from 'react';
-import {
-  Loader,
-  adapter,
-  NetworkLink,
-  Trim,
-  Pager,
-  CollectionBlock,
-  NftBadge,
-} from 'sharedComponents';
+import { Loader, adapter, NetworkLink, Trim, Pager, CollectionBlock, NftBadge } from 'components';
 import NoNfts from './NoNfts';
 import FailedNfts from './FailedNfts';
 import { urlBuilder, useFilters, useURLSearchParams, types } from 'helpers';

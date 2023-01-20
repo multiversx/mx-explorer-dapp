@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PageState } from 'sharedComponents';
+import { PageState } from 'components';
 import { faPalette } from '@fortawesome/pro-regular-svg-icons/faPalette';
 
 export default function FailedNftDetails({ identifier }: { identifier: string | undefined }) {

@@ -24,7 +24,7 @@ import CollectionDetails from './pages/CollectionDetails';
 import CollectionDetailsRoles from './pages/CollectionDetails/CollectionRoles';
 import Nfts from './pages/Nfts';
 import NftDetails from './pages/NftDetails';
-import { withPageTitle, withNetworkReady } from './sharedComponents';
+import { withPageTitle, withNetworkReady } from './components';
 import Providers from 'pages/Providers';
 import ProviderDetails from 'pages/ProviderDetails';
 import AccountContractCode from './pages/AccountDetails/AccountContractCode';

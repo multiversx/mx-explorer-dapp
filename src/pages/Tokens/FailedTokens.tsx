@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { faCoins } from '@fortawesome/pro-regular-svg-icons/faCoins';
-import { PageState } from 'sharedComponents';
+import { PageState } from 'components';
 
 export default function FailedTokens() {
   return (

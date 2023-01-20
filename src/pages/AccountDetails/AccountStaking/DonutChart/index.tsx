@@ -4,8 +4,8 @@ import { AccountStakingDetailsType } from 'context/state';
 
 import prepareChartData from './helpers/prepareChartData';
 import { ProviderType } from 'helpers/types';
-import { Denominate, UsdValue, Chart } from 'sharedComponents';
-import { ChartConfigType } from 'sharedComponents/Chart/helpers/types';
+import { Denominate, UsdValue, Chart } from 'components';
+import { ChartConfigType } from 'components/Chart/helpers/types';
 
 const DonutChart = ({
   stakingDetails,

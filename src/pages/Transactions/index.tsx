@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { Loader, TransactionsTable, adapter } from 'sharedComponents';
+import { Loader, TransactionsTable, adapter } from 'components';
 
-import NoTransactions from 'sharedComponents/TransactionsTable/NoTransactions';
-import FailedTransactions from 'sharedComponents/TransactionsTable/FailedTransactions';
+import NoTransactions from 'components/TransactionsTable/NoTransactions';
+import FailedTransactions from 'components/TransactionsTable/FailedTransactions';
 import { useSize, useURLSearchParams } from 'helpers';
 import { UITransactionType } from 'helpers/types';
-import { shardSpanText } from 'sharedComponents/ShardSpan';
+import { shardSpanText } from 'components/ShardSpan';
 
 const Transactions = () => {
   const ref = React.useRef(null);

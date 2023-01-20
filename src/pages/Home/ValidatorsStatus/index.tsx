@@ -3,7 +3,7 @@ import { useGlobalState } from 'context';
 import SimpleMap from './SimpleMap';
 import { getMarkers, MarkerType } from './helpers/asyncRequests';
 import calcContinentRank, { RankType } from './helpers/calcContinentRank';
-import { adapter } from 'sharedComponents';
+import { adapter } from 'components';
 
 const placeHolderRank = [
   {

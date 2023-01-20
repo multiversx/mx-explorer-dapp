@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NetworkLink } from 'sharedComponents';
+import { NetworkLink } from 'components';
 import { urlBuilder, useActiveRoute, isContract } from 'helpers';
 import { useGlobalState } from 'context';
 import { accountsRoutes } from 'routes';

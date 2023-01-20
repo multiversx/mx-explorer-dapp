@@ -35,13 +35,13 @@ import {
   TransactionAction,
   LoadingDots,
   AccountName,
-} from 'sharedComponents';
-import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
-import txStatus from 'sharedComponents/TransactionStatus/txStatus';
+} from 'components';
+import { getStatusIconAndColor } from 'components/TransactionStatus';
+import txStatus from 'components/TransactionStatus/txStatus';
 import EventsList from '../EventsList';
 import OperationsList from '../OperationsList';
 import ScResultsList from '../ScResultsList';
-import denominate from 'sharedComponents/Denominate/denominate';
+import denominate from 'components/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
 import { useGlobalState } from 'context';
 import { transactionsRoutes } from 'routes';

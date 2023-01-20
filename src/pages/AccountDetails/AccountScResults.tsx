@@ -1,10 +1,10 @@
 import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
-import { adapter, Loader, ScResultsTable } from 'sharedComponents';
+import { adapter, Loader, ScResultsTable } from 'components';
 import { useGlobalState } from 'context';
 import AccountTabs from './AccountLayout/AccountTabs';
-import NoScResults from 'sharedComponents/ScResultsTable/NoScResults';
-import FailedScResults from 'sharedComponents/ScResultsTable/FailedScResults';
+import NoScResults from 'components/ScResultsTable/NoScResults';
+import FailedScResults from 'components/ScResultsTable/FailedScResults';
 import { urlBuilder, useFilters, useNetworkRoute } from 'helpers';
 import { ScResultType } from 'helpers/types';
 

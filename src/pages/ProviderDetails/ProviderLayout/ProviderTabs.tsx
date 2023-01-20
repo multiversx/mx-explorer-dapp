@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { NetworkLink } from 'sharedComponents';
+import { NetworkLink } from 'components';
 import { urlBuilder, useActiveRoute } from 'helpers';
 import { validatorsRoutes } from 'routes';
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NetworkLink } from 'sharedComponents';
+import { NetworkLink } from 'components';
 import { urlBuilder, useActiveRoute, nftText } from 'helpers';
 import { NftEnumType } from 'helpers/types';
 import { useGlobalState } from 'context';

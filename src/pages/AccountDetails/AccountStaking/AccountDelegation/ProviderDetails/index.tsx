@@ -7,7 +7,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { ProviderType } from 'helpers/types';
 import { getPercentage, stringIsFloat } from 'helpers';
-import { Trim, PercentageLed } from 'sharedComponents';
+import { Trim, PercentageLed } from 'components';
 import ProviderImage from './ProviderImage';
 
 const minDelegation = '1000000000000000000';

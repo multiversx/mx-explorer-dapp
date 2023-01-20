@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { stringIsInteger } from 'helpers';
-import txStatus from 'sharedComponents/TransactionStatus/txStatus';
+import txStatus from 'components/TransactionStatus/txStatus';
 
 const checkValue = (value: string) => (stringIsInteger(value) ? parseInt(value) : undefined);
 

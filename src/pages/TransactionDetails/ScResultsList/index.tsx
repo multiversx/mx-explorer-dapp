@@ -10,8 +10,8 @@ import {
   DataDecode,
   AccountName,
   ScAddressIcon,
-} from 'sharedComponents';
-import { DecodeMethodType } from 'sharedComponents/DataDecode';
+} from 'components';
+import { DecodeMethodType } from 'components/DataDecode';
 import { ResultType } from 'helpers/types';
 import { urlBuilder } from 'helpers';
 import { transactionsRoutes } from 'routes';

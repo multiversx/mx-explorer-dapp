@@ -16,7 +16,7 @@ import {
   CopyButton,
   IdentityBlock,
   BlockGasUsed,
-} from 'sharedComponents';
+} from 'components';
 import { metaChainShardId } from 'appConfig';
 
 export interface BlockDataType {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { faDollarSign } from '@fortawesome/pro-solid-svg-icons/faDollarSign';
-import { CardItem, LockedAmountTooltip, UsdValue } from 'sharedComponents';
+import { CardItem, LockedAmountTooltip, UsdValue } from 'components';
 import { useGlobalState } from 'context';
 import BigNumber from 'bignumber.js';
 

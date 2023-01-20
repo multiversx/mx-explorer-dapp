@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { Loader, adapter, NetworkLink, Trim, Pager, NftBadge, TimeAgo } from 'sharedComponents';
+import { Loader, adapter, NetworkLink, Trim, Pager, NftBadge, TimeAgo } from 'components';
 import NoCollections from './NoCollections';
 import FailedCollections from './FailedCollections';
 import { urlBuilder, useFilters, useURLSearchParams, useActiveRoute } from 'helpers';

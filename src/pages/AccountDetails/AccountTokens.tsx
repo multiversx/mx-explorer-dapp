@@ -1,15 +1,7 @@
 import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
-import {
-  adapter,
-  DetailItem,
-  Loader,
-  Pager,
-  PageState,
-  Denominate,
-  NetworkLink,
-} from 'sharedComponents';
+import { adapter, DetailItem, Loader, Pager, PageState, Denominate, NetworkLink } from 'components';
 import { useGlobalState } from 'context';
 import AccountTabs from './AccountLayout/AccountTabs';
 import { urlBuilder, useFilters, useNetworkRoute, amountWithoutRounding } from 'helpers';

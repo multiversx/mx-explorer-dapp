@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
-import { PageState } from 'sharedComponents';
+import { PageState } from 'components';
 import { analytics } from 'helpers';
 
 const PageNotFound = () => {

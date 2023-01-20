@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchange } from '@fortawesome/pro-regular-svg-icons/faExchange';
 import { useLocation } from 'react-router-dom';
 
-import { CopyButton, Trim, DataDecode } from 'sharedComponents';
-import { DecodeMethodType } from 'sharedComponents/DataDecode';
+import { CopyButton, Trim, DataDecode } from 'components';
+import { DecodeMethodType } from 'components/DataDecode';
 import { EventType } from 'helpers/types';
 
 const EventTopics = ({

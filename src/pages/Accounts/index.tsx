@@ -8,7 +8,7 @@ import {
   NetworkLink,
   ScAddressIcon,
   AccountName,
-} from 'sharedComponents';
+} from 'components';
 import { urlBuilder, useSize, useURLSearchParams } from 'helpers';
 import { AccountType } from 'helpers/types';
 import NoAccounts from './NoAccounts';

@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { TransactionType, TokenArgumentType, NftEnumType } from 'helpers/types';
-import denominate from 'sharedComponents/Denominate/denominate';
+import denominate from 'components/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
 
 enum TransactionMessagesEnum {

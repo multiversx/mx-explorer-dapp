@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useGlobalDispatch, useGlobalState } from 'context';
-import { adapter, Loader } from 'sharedComponents';
+import { adapter, Loader } from 'components';
 import { NodesVersionsType } from 'helpers/types';
 import GlobalStakeCard from './GlobalStakeCard';
 import ShardsList from './ShardsList';

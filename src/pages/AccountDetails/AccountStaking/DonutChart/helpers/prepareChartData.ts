@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 
 import { AccountStakingDetailsType } from 'context/state';
 
-import denominate from 'sharedComponents/Denominate/denominate';
+import denominate from 'components/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
 import { truncateMiddle } from 'helpers';
 import { ProviderType } from 'helpers/types';

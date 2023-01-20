@@ -2,7 +2,7 @@ import React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 
 import { useGlobalState } from 'context';
-import { adapter, ProvidersTable, Loader, PageState } from 'sharedComponents';
+import { adapter, ProvidersTable, Loader, PageState } from 'components';
 import NodesTabs from 'pages/Nodes/NodesLayout/NodesTabs';
 import { types } from 'helpers';
 import { IdentityType } from 'helpers/types';
