@@ -14,6 +14,7 @@ import {
   useNetworkRoute,
   isContract,
   getTransactionMethod,
+  formatUSD,
 } from 'helpers';
 import {
   TransactionType,
@@ -110,15 +111,6 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
   const isTxPending =
     transaction.status.toLowerCase() === txStatus.pending.toLowerCase() ||
     transaction.pendingResults;
-
-  const formattedUsdValue = (amount: string, usd: number, digits: number) => {
-    const sum = (parseFloat(amount) * usd).toFixed(digits);
-    const formattedValue = parseFloat(sum).toLocaleString('en', {
-      maximumFractionDigits: digits,
-      minimumFractionDigits: digits,
-    });
-    return `${parseFloat(amount) > 0 ? '≈' : '='} $${formattedValue}`;
-  };
 
   const transactionFee =
     transaction.fee === undefined && transaction.gasUsed === undefined
@@ -335,7 +327,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
                   {formattedTxValue} {erdLabel}{' '}
                   <span className="text-secondary">
                     {transaction.price !== undefined ? (
-                      <>({formattedUsdValue(txValue, transaction.price, 2)})</>
+                      <>({formatUSD({ amount: txValue, usd: transaction.price, digits: 2 })})</>
                     ) : (
                       <>N/A</>
                     )}
@@ -374,7 +366,15 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
                       {transactionFee} {erdLabel}{' '}
                       <span className="text-secondary">
                         {transaction.price !== undefined ? (
-                          <>({formattedUsdValue(transactionFee, transaction.price, 4)})</>
+                          <>
+                            (
+                            {formatUSD({
+                              amount: transactionFee,
+                              usd: transaction.price,
+                              digits: 4,
+                            })}
+                            )
+                          </>
                         ) : (
                           <>N/A</>
                         )}
