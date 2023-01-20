@@ -46,6 +46,7 @@ import nftText from './nftText';
 import getReceiverAssets from './getReceiverAssets';
 
 export * from './truncateMiddle';
+export * from './formatUSD';
 
 export {
   truncate,
