@@ -35,42 +35,14 @@ const apiAdapter = {
   getProviders: api,
   getProvider: api,
   getEconomics: api,
-  getEgldPriceHistory: (props: ProviderPropsType) => {
-    const { timeout } = props;
-    return axios.get(`https://tools.multiversx.com/growth-api/charts?types=price`, {
-      timeout,
-    });
-  },
-  getEgldMarketCapHistory: (props: ProviderPropsType) => {
-    const { timeout } = props;
-    return axios.get(`https://tools.multiversx.com/growth-api/charts?types=market-cap`, {
-      timeout,
-    });
-  },
-  getTotalStakedHistory: (props: ProviderPropsType) => {
-    const { timeout } = props;
-    return axios.get(`https://tools.multiversx.com/growth-api/charts?types=staking-metrics`, {
-      timeout,
-    });
-  },
-  getUsersStaking: (props: ProviderPropsType) => {
-    const { timeout } = props;
-    return axios.get(`https://tools.multiversx.com/growth-api/charts?types=staking-metric`, {
-      timeout,
-    });
-  },
-  getTransactionsHistory: (props: ProviderPropsType) => {
-    const { timeout } = props;
-    return axios.get(`https://tools.multiversx.com/growth-api/charts?types=transaction-metrics`, {
-      timeout,
-    });
-  },
-  getAccountsHistory: (props: ProviderPropsType) => {
-    const { timeout } = props;
-    return axios.get(`https://tools.multiversx.com/growth-api/charts?types=address-metrics`, {
-      timeout,
-    });
-  },
+  getEgldPriceHistory: api,
+  getEgldMarketCapHistory: api,
+  getTotalStakedHistory: api,
+  getUsersStaking: api,
+  getTransactionsHistory: api,
+  getAccountsHistory: api,
+  getAnalyticsChartList: api,
+  getAnalyticsChart: api,
 };
 
 export default apiAdapter;

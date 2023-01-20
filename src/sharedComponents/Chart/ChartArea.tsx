@@ -16,6 +16,8 @@ const ChartArea = ({
   filter,
   category,
   currency,
+  percentageMultiplier,
+  denomination,
   size,
   tooltip,
   hasOnlyStartEndTick,
@@ -62,7 +64,9 @@ const ChartArea = ({
 
           <YAxis
             orientation="right"
-            tickFormatter={(tick) => formatYAxis(tick, currency)}
+            tickFormatter={(tick) =>
+              formatYAxis({ tick, currency, percentageMultiplier, denomination })
+            }
             axisLine={false}
             tickLine={false}
             tickCount={5}
@@ -83,7 +87,15 @@ const ChartArea = ({
             />
           ))}
           <Tooltip
-            content={(props) => <CustomTooltip {...props} currency={currency} {...tooltip} />}
+            content={(props) => (
+              <CustomTooltip
+                {...props}
+                currency={currency}
+                percentageMultiplier={percentageMultiplier}
+                denomination={denomination}
+                {...tooltip}
+              />
+            )}
             cursor={{
               strokeDasharray: '3 5',
               stroke: mutedColor,

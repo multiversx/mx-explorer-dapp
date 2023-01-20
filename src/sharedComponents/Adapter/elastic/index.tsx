@@ -65,6 +65,12 @@ const elasticAdapter = {
   getAccountsHistory: () => {
     throw new Error('not defined');
   },
+  getAnalyticsChartList: () => {
+    throw new Error('not defined');
+  },
+  getAnalyticsChart: () => {
+    throw new Error('not defined');
+  },
 };
 
 export default elasticAdapter;
