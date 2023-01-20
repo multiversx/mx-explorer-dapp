@@ -1,6 +1,6 @@
 import React from 'react';
 import { ProviderType } from 'helpers/types';
-import { ReactComponent as DefaultAvatar } from 'assets/images/default-avatar.svg';
+import { ReactComponent as DefaultAvatar } from 'assets/img/default-avatar.svg';
 
 const ProviderImage = ({ provider }: { provider: ProviderType }) => (
   <div

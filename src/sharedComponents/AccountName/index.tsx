@@ -2,7 +2,7 @@ import * as React from 'react';
 import { formatHerotag } from 'helpers';
 import { AssetType } from 'helpers/types';
 import { Trim, Overlay } from 'sharedComponents';
-import { ReactComponent as IdentityLogo } from 'assets/images/logos/identity.svg';
+import { ReactComponent as IdentityLogo } from 'assets/img/logos/identity.svg';
 
 const AccountName = ({
   address,

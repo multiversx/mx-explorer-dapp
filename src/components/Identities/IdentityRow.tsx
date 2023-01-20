@@ -14,7 +14,7 @@ import {
 } from 'sharedComponents';
 import { urlBuilder } from 'helpers';
 import { IdentityType, NodeType } from 'helpers/types';
-import carretDown from 'assets/images/carret-down.svg';
+import carretDown from 'assets/img/carret-down.svg';
 
 export interface IdentityRowType {
   identity: IdentityType;

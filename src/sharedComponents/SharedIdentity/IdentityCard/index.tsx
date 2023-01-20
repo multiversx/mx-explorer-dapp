@@ -7,8 +7,8 @@ import { IdentityType } from 'helpers/types';
 import { Denominate, MultilayerPercentageBar, SharedIdentity, Trim } from 'sharedComponents';
 import { PercentageStepType } from 'sharedComponents/MultilayerPercentageBar';
 
-import { ReactComponent as IdentityGear } from 'assets/images/identity-gear.svg';
-import { ReactComponent as TwitterLogo } from 'assets/images/logos/twitter.svg';
+import { ReactComponent as IdentityGear } from 'assets/img/identity-gear.svg';
+import { ReactComponent as TwitterLogo } from 'assets/img/logos/twitter.svg';
 
 const prepareStakeDistribution = (identity: IdentityType) => {
   const distribution: PercentageStepType[] = [];

@@ -2,7 +2,7 @@ import * as React from 'react';
 import BigNumber from 'bignumber.js';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { faLeaf } from '@fortawesome/pro-solid-svg-icons/faLeaf';
-import { ReactComponent as MultiversXSymbol } from 'assets/images/symbol.svg';
+import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { useGlobalState } from 'context';
 import { CardItem, MultilayerPercentageBar, PageState } from 'sharedComponents';
 

@@ -8,7 +8,7 @@ import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import NavLinks from './NavLinks';
 import Logo from './Logo';
-// import { ReactComponent as Sun } from 'assets/images/sun.svg';
+// import { ReactComponent as Sun } from 'assets/img/sun.svg';
 // import { useGlobalState, useGlobalDispatch } from 'context';
 // import { NetworkIdType } from 'helpers/types';
 

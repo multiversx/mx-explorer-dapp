@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
 import { adapter } from 'sharedComponents';
-import { ReactComponent as Gear } from 'assets/images/network-health/gear.svg';
-import { ReactComponent as BigGear } from 'assets/images/network-health/big-gear.svg';
-import { ReactComponent as CenterGear } from 'assets/images/network-health/center-gear.svg';
-import { ReactComponent as LayoutGear } from 'assets/images/network-health/layout-gear.svg';
+import { ReactComponent as Gear } from 'assets/img/network-health/gear.svg';
+import { ReactComponent as BigGear } from 'assets/img/network-health/big-gear.svg';
+import { ReactComponent as CenterGear } from 'assets/img/network-health/center-gear.svg';
+import { ReactComponent as LayoutGear } from 'assets/img/network-health/layout-gear.svg';
 import ProgressRing from './ProgressRing';
 import { refreshRate } from 'appConfig';
 import { processStats, validDisplayValue } from 'helpers';

@@ -19,7 +19,7 @@ import {
 } from 'sharedComponents';
 import { useGlobalState } from 'context';
 import { isContract, urlBuilder, dateFormatted, formatHerotag } from 'helpers';
-import { ReactComponent as MultiversXSymbol } from 'assets/images/symbol.svg';
+import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 
 import LockedAmountCardItem from './LockedAmountCardItem';
 import AccountUsdValueCardItem from './AccountUsdValueCardItem';
