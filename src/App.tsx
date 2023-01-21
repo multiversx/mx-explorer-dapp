@@ -71,7 +71,7 @@ export const Routes = ({
   );
 };
 
-export const App = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
+export const ProviderApp = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
   return (
     <GlobalProvider optionalConfig={optionalConfig}>
       <AxiosInterceptor>
@@ -86,9 +86,9 @@ export const App = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
 const RoutedApp = () => {
   return (
     <Router>
-      <App />
+      <ProviderApp />
     </Router>
   );
 };
 
-export default hot(RoutedApp);
+export const App = hot(RoutedApp);
