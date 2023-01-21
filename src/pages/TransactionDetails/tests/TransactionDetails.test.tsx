@@ -1,5 +1,5 @@
-import { wait, beforeAll } from 'utils/test-utils';
-import { transactions as doc } from 'utils/rawData';
+import { wait, beforeAll } from '__mocks__/test-utils';
+import { transactions as doc } from '__mocks__';
 
 describe('Transaction Details Page', () => {
   test('Transaction Details page is displaying', async () => {

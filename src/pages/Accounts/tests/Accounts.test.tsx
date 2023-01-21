@@ -1,4 +1,4 @@
-import { fireEvent, wait, beforeAll } from 'utils/test-utils';
+import { fireEvent, wait, beforeAll } from '__mocks__/test-utils';
 
 describe('Accounts Page', () => {
   test('Accounts page is displaying', async () => {

@@ -1,6 +1,6 @@
-import { wait, beforeAll } from 'utils/test-utils';
+import { wait, beforeAll } from '__mocks__/test-utils';
 
-import { validatorsdoc, block as doc } from 'utils/rawData';
+import { validatorsdoc, block as doc } from '__mocks__';
 
 describe('Block Details Page', () => {
   test('Block Details page is displaying', async () => {

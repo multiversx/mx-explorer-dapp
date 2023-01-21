@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
-import { wait, beforeAll } from 'utils/test-utils';
-import { account } from 'utils/rawData';
+import { wait, beforeAll } from '__mocks__/test-utils';
+import { account } from '__mocks__';
 
 describe('Account Details Page', () => {
   test('Account Details page is displaying', async () => {
