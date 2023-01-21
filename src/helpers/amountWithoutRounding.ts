@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js';
 import { decimals as configDecimals } from 'appConfig';
-import stringIsFloat from './stringIsFloat';
+import { stringIsFloat } from './stringIsFloat';
 
-const amountWithoutRounding = (
+export const amountWithoutRounding = (
   amount: string,
   minNonZeroDecimals?: number,
   maxDecimals?: number
@@ -31,5 +31,3 @@ const amountWithoutRounding = (
 
   return '0';
 };
-
-export default amountWithoutRounding;

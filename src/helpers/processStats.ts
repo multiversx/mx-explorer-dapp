@@ -16,7 +16,7 @@ export const initialStats = {
   roundsPassed: 0,
 };
 
-export default function processStats(statsData: any) {
+export const processStats = (statsData: any) => {
   const { data, success } = statsData;
   const check = success ? data.roundsPerEpoch >= data.roundsPassed : false;
 
@@ -44,4 +44,4 @@ export default function processStats(statsData: any) {
     : initialStats;
 
   return newStats;
-}
+};

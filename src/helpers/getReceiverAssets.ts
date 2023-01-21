@@ -1,6 +1,6 @@
 import { UITransactionType } from 'helpers/types';
 
-const getReceiverAssets = (transaction: UITransactionType) => {
+export const getReceiverAssets = (transaction: UITransactionType) => {
   if (
     transaction.sender === transaction.receiver &&
     transaction?.action?.arguments?.receiver !== transaction.receiver
@@ -10,5 +10,3 @@ const getReceiverAssets = (transaction: UITransactionType) => {
 
   return transaction.receiverAssets;
 };
-
-export default getReceiverAssets;

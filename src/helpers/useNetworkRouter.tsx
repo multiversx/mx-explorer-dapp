@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useGlobalDispatch, useGlobalState } from 'context';
 
-export default function useNetworkRouter() {
+export const useNetworkRouter = () => {
   const {
     config,
     activeNetworkId,
@@ -48,4 +48,4 @@ export default function useNetworkRouter() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(changeNetwork, [networkId, activeNetworkId]);
-}
+};

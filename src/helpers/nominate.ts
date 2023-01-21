@@ -1,6 +1,6 @@
 import { denomination as configDenomination } from 'appConfig';
 
-export default function nominate(input: string, customDenomination?: number) {
+export const nominate = (input: string, customDenomination?: number) => {
   const parts = input.toString().split('.');
   const denomination = customDenomination !== undefined ? customDenomination : configDenomination;
 
@@ -23,4 +23,4 @@ export default function nominate(input: string, customDenomination?: number) {
   }
 
   return transformed;
-}
+};

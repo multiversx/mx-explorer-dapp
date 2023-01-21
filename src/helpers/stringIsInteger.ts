@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 
-const stringIsInteger = (integer: string, positiveNumbersOnly = true) => {
+export const stringIsInteger = (integer: string, positiveNumbersOnly = true) => {
   const stringInteger = String(integer);
   if (!stringInteger.match(/^[-]?\d+$/)) {
     return false;
@@ -9,5 +9,3 @@ const stringIsInteger = (integer: string, positiveNumbersOnly = true) => {
   const limit = positiveNumbersOnly ? 0 : -1;
   return bNparsed.toString(10) === stringInteger && bNparsed.comparedTo(0) >= limit;
 };
-
-export default stringIsInteger;

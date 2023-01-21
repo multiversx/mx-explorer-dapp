@@ -1,6 +1,6 @@
 import { object, string, array, boolean, InferType } from 'yup';
 import { ConfigType, NetworkType } from './state';
-import localTestnets from './localTestnets';
+import { localTestnets } from './localTestnets';
 
 export const networkLink = object({
   id: string().defined().required(),

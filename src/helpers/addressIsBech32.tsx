@@ -1,4 +1,4 @@
-export default function addressIsBech32(destinationAddress = '') {
+export const addressIsBech32 = (destinationAddress = '') => {
   const isValidBach = !(
     !destinationAddress ||
     !destinationAddress.startsWith('erd') ||
@@ -6,4 +6,4 @@ export default function addressIsBech32(destinationAddress = '') {
     /^\w+$/.test(destinationAddress) !== true
   );
   return isValidBach;
-}
+};

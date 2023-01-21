@@ -15,7 +15,7 @@ export const initialEconomics = {
   ecosystemMarketCap: '...',
 };
 
-export default function processEconomics(statsData: any) {
+export const processEconomics = (statsData: any) => {
   const { data, success } = statsData;
   const totalStakedPercent = new BigNumber(data.staked)
     .dividedBy(new BigNumber(data.circulatingSupply))
@@ -43,4 +43,4 @@ export default function processEconomics(statsData: any) {
     : initialEconomics;
 
   return newEconomics;
-}
+};

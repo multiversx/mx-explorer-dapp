@@ -1,4 +1,4 @@
-const analytics = {
+export const analytics = {
   sendEvent: ({
     action,
     label,
@@ -23,5 +23,3 @@ const analytics = {
     }
   },
 };
-
-export default analytics;

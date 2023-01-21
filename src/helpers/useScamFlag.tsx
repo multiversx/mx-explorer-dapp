@@ -1,10 +1,6 @@
 import anchorme from 'anchorme';
 import { ScamInfoType } from 'helpers/types';
 
-const useScamFlag = () => {
-  return scamFlag();
-};
-
 // eslint-disable-next-line
 const cleanLink = (input: string) => input.toLocaleLowerCase().replace(/[^\x00-\x7F]/g, '');
 
@@ -64,4 +60,6 @@ export const scamFlag = () => (
   }
 };
 
-export default useScamFlag;
+export const useScamFlag = () => {
+  return scamFlag();
+};

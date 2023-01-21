@@ -1,7 +1,7 @@
 import { useGlobalState } from 'context';
 import { useURLSearchParams } from 'helpers';
 
-export default function useSize() {
+export const useSize = () => {
   const {
     refresh: { timestamp },
   } = useGlobalState();
@@ -13,4 +13,4 @@ export default function useSize() {
     size,
     firstPageTicker,
   };
-}
+};
