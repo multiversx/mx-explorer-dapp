@@ -1,37 +1,24 @@
 {
-  "name": "blockchain-explorer",
-  "version": "0.1.0",
+  "name": "mx-explorer-dapp",
+  "version": "2.0.0",
   "private": true,
+  "author": "MultiversX",
+  "repository": "multiversx/mx-explorer-dapp",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "1.2.28",
-    "@fortawesome/free-brands-svg-icons": "5.15.4",
-    "@fortawesome/pro-duotone-svg-icons": "5.15.4",
-    "@fortawesome/pro-light-svg-icons": "5.15.4",
-    "@fortawesome/pro-regular-svg-icons": "5.15.4",
-    "@fortawesome/pro-solid-svg-icons": "5.15.4",
+    "@fortawesome/fontawesome-svg-core": "6.2.1",
+    "@fortawesome/free-brands-svg-icons": "6.2.1",
+    "@fortawesome/pro-duotone-svg-icons": "6.2.1",
+    "@fortawesome/pro-light-svg-icons": "6.2.1",
+    "@fortawesome/pro-regular-svg-icons": "6.2.1",
+    "@fortawesome/pro-solid-svg-icons": "6.2.1",
     "@fortawesome/react-fontawesome": "0.2.0",
-    "@types/axios": "0.14.0",
-    "@types/bech32": "1.1.2",
-    "@types/file-saver": "2.0.1",
-    "@types/jest": "24.0.19",
-    "@types/moment": "2.13.0",
-    "@types/node": "14.0.13",
-    "@types/papaparse": "5.2.5",
-    "@types/react": "16.9.36",
-    "@types/react-bootstrap": "1.0.1",
-    "@types/react-datepicker": "3.1.2",
-    "@types/react-dom": "16.9.8",
-    "@types/react-helmet": "6.1.5",
-    "@types/react-router-dom": "5.1.5",
-    "@types/react-simple-maps": "1.0.3",
-    "@types/yup": "0.29.3",
     "anchorme": "2.1.2",
-    "axios": "0.22.0",
-    "bech32": "1.1.4",
-    "bignumber.js": "9.0.0",
-    "bootstrap": "4.6.1",
+    "axios": "0.24.0",
+    "bech32": "2.0.0",
+    "bignumber.js": "9.1.1",
+    "bootstrap": "4.6.2",
     "file-saver": "2.0.5",
-    "moment": "2.26.0",
+    "moment": "2.29.4",
     "numeral": "2.0.6",
     "react": "16.13.1",
     "react-anchorme": "2.2.1",
@@ -45,8 +32,7 @@
     "react-simple-maps": "2.3.0",
     "recharts": "2.1.14",
     "shards-ui": "3.0.0",
-    "typescript": "3.9.5",
-    "yup": "0.29.1"
+    "yup": "0.32.11"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -84,18 +70,11 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "resolutions": {
     "react-error-overlay": "6.0.9"
   },
@@ -107,6 +86,21 @@
     "@hot-loader/react-dom": "16.13.0",
     "@testing-library/jest-dom": "4.2.0",
     "@testing-library/react": "9.3.0",
+    "@types/axios": "0.14.0",
+    "@types/bech32": "1.1.2",
+    "@types/file-saver": "2.0.1",
+    "@types/jest": "24.0.19",
+    "@types/moment": "2.13.0",
+    "@types/node": "14.0.13",
+    "@types/papaparse": "5.2.5",
+    "@types/react": "16.9.36",
+    "@types/react-bootstrap": "1.0.1",
+    "@types/react-datepicker": "3.1.2",
+    "@types/react-dom": "16.9.8",
+    "@types/react-helmet": "6.1.5",
+    "@types/react-router-dom": "5.1.5",
+    "@types/react-simple-maps": "1.0.3",
+    "@types/yup": "0.29.3",
     "@types/numeral": "2.0.2",
     "@welldone-software/why-did-you-render": "4.2.5",
     "husky": "7.0.2",
@@ -121,6 +115,7 @@
     "tslint": "6.1.2",
     "tslint-config-prettier": "1.18.0",
     "tslint-plugin-prettier": "2.3.0",
-    "tslint-react": "5.0.0"
+    "tslint-react": "5.0.0",
+    "typescript": "3.9.5"
   }
 }
