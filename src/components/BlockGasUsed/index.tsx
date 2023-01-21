@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { BlockType } from 'helpers/types';
 import { PercentageBar } from 'components';
 
-const BlockGasUsed = ({ block }: { block: BlockType }) => {
+export const BlockGasUsed = ({ block }: { block: BlockType }) => {
   const gasUsedBn = new BigNumber(block.gasConsumed)
     .minus(block.gasRefunded)
     .minus(block.gasPenalized);
@@ -36,5 +36,3 @@ const BlockGasUsed = ({ block }: { block: BlockType }) => {
     </>
   );
 };
-
-export default BlockGasUsed;

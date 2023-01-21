@@ -3,11 +3,11 @@ import React, { useMemo } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { AxiosInterceptor } from 'components';
-import Layout from './pages/Layout';
-import PageNotFoud from './pages/PageNotFoud';
+import { Layout } from './pages/Layout';
+import { PageNotFound } from './pages/PageNotFound';
 import { GlobalProvider, useGlobalState } from './context';
 import { ConfigType, NetworkType } from './context/state';
-import routes, { validatorsRoutes } from './routes';
+import { Routes as WrappedRoutes, validatorsRoutes } from './routes';
 
 export const Routes = ({
   routes,
@@ -50,7 +50,7 @@ export const Routes = ({
           path={`${activeNetwork.id}/:any`}
           key={activeNetwork.id + '404'}
           exact={true}
-          component={PageNotFoud}
+          component={PageNotFound}
         />
         ,
         {restrictedRoutes.map((route, i) => {
@@ -63,7 +63,7 @@ export const Routes = ({
             />
           );
         })}
-        <Route component={PageNotFoud} />
+        <Route component={PageNotFound} />
       </Switch>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -76,7 +76,7 @@ export const App = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
     <GlobalProvider optionalConfig={optionalConfig}>
       <AxiosInterceptor>
         <Layout>
-          <Routes routes={routes} />
+          <Routes routes={WrappedRoutes} />
         </Layout>
       </AxiosInterceptor>
     </GlobalProvider>

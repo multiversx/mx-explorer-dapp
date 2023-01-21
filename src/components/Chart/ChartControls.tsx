@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { ControlType } from './helpers/types';
 
-const ChartControls = ({ controls }: { controls: ControlType[] }) => (
+export const ChartControls = ({ controls }: { controls: ControlType[] }) => (
   <div
     className={`chart-controls d-flex flex-wrap align-items-center ${
       controls.length > 1 ? 'flex-grow-1' : ''
@@ -26,5 +26,3 @@ const ChartControls = ({ controls }: { controls: ControlType[] }) => (
     ))}
   </div>
 );
-
-export default ChartControls;

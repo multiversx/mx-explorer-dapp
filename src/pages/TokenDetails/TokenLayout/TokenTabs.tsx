@@ -4,7 +4,7 @@ import { urlBuilder, useActiveRoute } from 'helpers';
 import { useGlobalState } from 'context';
 import { tokensRoutes } from 'routes';
 
-const TokenTabs = () => {
+export const TokenTabs = () => {
   const activeRoute = useActiveRoute();
   const { tokenDetails } = useGlobalState();
 
@@ -48,5 +48,3 @@ const TokenTabs = () => {
     </div>
   );
 };
-
-export default TokenTabs;

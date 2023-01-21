@@ -1,10 +1,10 @@
 import * as React from 'react';
-import ShardFilter from '../ShardFilter';
-import StatusFilter from '../StatusFilter';
+import { ShardFilter } from '../ShardFilter';
+import { StatusFilter } from '../StatusFilter';
 import { Sort } from 'components';
 import { NodeType } from 'helpers/types';
 
-const StandardHead = ({
+export const StandardHead = ({
   hideFilters,
   type,
   status,
@@ -51,5 +51,3 @@ const StandardHead = ({
     )}
   </tr>
 );
-
-export default StandardHead;

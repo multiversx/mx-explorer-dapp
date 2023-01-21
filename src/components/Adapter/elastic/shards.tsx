@@ -1,6 +1,6 @@
-import getNodes from './helpers/getNodes';
+import { getNodes } from './helpers/getNodes';
 
-const shards = async ({ proxyUrl: nodeUrl }: { proxyUrl: string }) => {
+export const shards = async ({ proxyUrl: nodeUrl }: { proxyUrl: string }) => {
   const proxyUrl = () => nodeUrl;
   try {
     const data = await getNodes({ proxyUrl });
@@ -32,5 +32,3 @@ const shards = async ({ proxyUrl: nodeUrl }: { proxyUrl: string }) => {
     throw new Error(error);
   }
 };
-
-export default shards;

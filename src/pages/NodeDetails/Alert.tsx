@@ -2,15 +2,15 @@ import * as React from 'react';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import RowIssueIcon from 'components/NodesTable/RowIssueIcon';
+import { RowIssueIcon } from 'components/NodesTable/RowIssueIcon';
 import { nodeIssue } from 'helpers';
 import { NodeType } from 'helpers/types';
 
-const Container = ({ children }: { children: React.ReactNode }) => (
+export const Container = ({ children }: { children: React.ReactNode }) => (
   <div className="d-flex align-items-center">{children}</div>
 );
 
-const Alert = ({ node }: { node: NodeType }) => {
+export const Alert = ({ node }: { node: NodeType }) => {
   switch (true) {
     case node.status === 'jailed':
       return (
@@ -40,4 +40,3 @@ const Alert = ({ node }: { node: NodeType }) => {
       return null;
   }
 };
-export default Alert;

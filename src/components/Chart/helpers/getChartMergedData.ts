@@ -1,8 +1,8 @@
 import moment from 'moment';
 import { MergedChartDataType, ChartConfigType } from './types';
-import getChartFilteredData from './getChartFilteredData';
+import { getChartFilteredData } from './getChartFilteredData';
 
-const getChartMergedData = ({
+export const getChartMergedData = ({
   config,
   data,
   filter,
@@ -62,5 +62,3 @@ const getChartMergedData = ({
 
   return [];
 };
-
-export default getChartMergedData;

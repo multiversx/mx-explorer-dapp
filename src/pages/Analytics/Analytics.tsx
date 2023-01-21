@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useIsMainnet } from 'helpers';
-import { Loader, adapter } from 'components';
+import { Loader, useAdapter } from 'components';
 
 import { FailedAnalytics } from './FailedAnalytics';
 import { NoAnalytics } from './NoAnalytics';
@@ -19,7 +19,7 @@ export const Analytics = () => {
   const isMainnet = useIsMainnet();
 
   const { activeNetworkId } = useGlobalState();
-  const { getAnalyticsChartList } = adapter();
+  const { getAnalyticsChartList } = useAdapter();
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();
   const [chartList, setChartList] = useState<ChartListType[]>([]);
@@ -66,5 +66,3 @@ export const Analytics = () => {
     </>
   );
 };
-
-export default Analytics;

@@ -8,12 +8,12 @@ import { useGlobalDispatch, useGlobalState } from 'context';
 import { addressIsBech32, useNetworkRoute, useSize } from 'helpers';
 import { IdentityType, ProviderType, DelegationType } from 'helpers/types';
 import { accountsRoutes } from 'routes';
-import { Loader, adapter } from 'components';
+import { Loader, useAdapter } from 'components';
 
-import AccountDetailsCard from './AccountDetailsCard';
-import FailedAccount from './FailedAccount';
+import { AccountDetailsCard } from './AccountDetailsCard';
+import { FailedAccount } from './FailedAccount';
 
-const AccountLayout = ({ children }: { children: React.ReactNode }) => {
+export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { pathname } = useLocation();
   const { firstPageTicker } = useSize();
@@ -26,7 +26,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     getAccountStake,
     getProviders,
     getIdentities,
-  } = adapter();
+  } = useAdapter();
   const networkRoute = useNetworkRoute();
 
   const isOldAddressRoute = pathname.includes('/address/');
@@ -304,5 +304,3 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     </>
   );
 };
-
-export default AccountLayout;

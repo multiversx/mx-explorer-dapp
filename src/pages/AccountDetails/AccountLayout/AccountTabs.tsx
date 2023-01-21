@@ -4,7 +4,7 @@ import { urlBuilder, useActiveRoute, isContract } from 'helpers';
 import { useGlobalState } from 'context';
 import { accountsRoutes } from 'routes';
 
-const AccountTabs = () => {
+export const AccountTabs = () => {
   const activeRoute = useActiveRoute();
   const { accountDetails, activeNetwork } = useGlobalState();
   const tokensRouteActive = activeNetwork.adapter === 'api';
@@ -82,5 +82,3 @@ const AccountTabs = () => {
     </div>
   );
 };
-
-export default AccountTabs;

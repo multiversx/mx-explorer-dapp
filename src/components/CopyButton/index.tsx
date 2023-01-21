@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClone } from '@fortawesome/pro-regular-svg-icons/faClone';
 import { faCheck } from '@fortawesome/pro-regular-svg-icons/faCheck';
-import copyTextToClipboard from './helpers/copyToClipboard';
+import { copyTextToClipboard } from './helpers/copyToClipboard';
 
 interface CopyButtonType {
   text: string;
@@ -10,7 +10,7 @@ interface CopyButtonType {
   icon?: any;
 }
 
-const CopyButton = ({ text, icon, className = '' }: CopyButtonType) => {
+export const CopyButton = ({ text, icon, className = '' }: CopyButtonType) => {
   const [copyResult, setCopyResut] = React.useState({
     default: true,
     success: false,
@@ -44,5 +44,3 @@ const CopyButton = ({ text, icon, className = '' }: CopyButtonType) => {
     </a>
   );
 };
-
-export default CopyButton;

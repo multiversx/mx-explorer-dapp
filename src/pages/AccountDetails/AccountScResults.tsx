@@ -1,20 +1,20 @@
 import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
-import { adapter, Loader, ScResultsTable } from 'components';
+import { useAdapter, Loader, ScResultsTable } from 'components';
 import { useGlobalState } from 'context';
-import AccountTabs from './AccountLayout/AccountTabs';
-import NoScResults from 'components/ScResultsTable/NoScResults';
-import FailedScResults from 'components/ScResultsTable/FailedScResults';
-import { urlBuilder, useFilters, useNetworkRoute } from 'helpers';
+import { AccountTabs } from './AccountLayout/AccountTabs';
+import { NoScResults } from 'components/ScResultsTable/NoScResults';
+import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
+import { urlBuilder, useGetFilters, useNetworkRoute } from 'helpers';
 import { ScResultType } from 'helpers/types';
 
-const AccountScResults = () => {
+export const AccountScResults = () => {
   const ref = React.useRef(null);
   const { activeNetwork, accountDetails } = useGlobalState();
-  const { size } = useFilters();
+  const { size } = useGetFilters();
   const networkRoute = useNetworkRoute();
 
-  const { getAccountScResults, getAccountScResultsCount } = adapter();
+  const { getAccountScResults, getAccountScResultsCount } = useAdapter();
 
   const { hash: address } = useParams() as any;
   const scResultsActive = activeNetwork.adapter === 'api';
@@ -79,5 +79,3 @@ const AccountScResults = () => {
     </div>
   );
 };
-
-export default AccountScResults;

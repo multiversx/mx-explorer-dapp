@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { PageState, Chart, Loader, adapter } from 'components';
+import { PageState, Chart, Loader, useAdapter } from 'components';
 import { useGlobalState } from 'context';
 
 import { ChartListType } from '../Analytics';
@@ -20,7 +20,7 @@ export const AnalyticsChart = ({ id, path }: ChartListType) => {
   const ref = useRef(null);
 
   const { activeNetworkId } = useGlobalState();
-  const { getAnalyticsChart } = adapter();
+  const { getAnalyticsChart } = useAdapter();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chart, setChart] = useState<AnalyticsChartDataType[]>([]);

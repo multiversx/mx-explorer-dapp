@@ -4,7 +4,7 @@ import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { PageState } from 'components';
 import { analytics } from 'helpers';
 
-const PageNotFound = () => {
+export const PageNotFound = () => {
   const { pathname } = useLocation();
   const explorerVersion = process.env.REACT_APP_CACHE_BUST;
 
@@ -26,5 +26,3 @@ const PageNotFound = () => {
     />
   );
 };
-
-export default PageNotFound;

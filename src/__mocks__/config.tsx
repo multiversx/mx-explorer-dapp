@@ -1,6 +1,6 @@
 import { ConfigType } from 'context/state';
 
-const config: ConfigType = {
+export const config: ConfigType = {
   links: [],
   multiversXApps: [
     {
@@ -58,5 +58,3 @@ const config: ConfigType = {
     },
   ],
 };
-
-export default config;

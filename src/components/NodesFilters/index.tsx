@@ -7,7 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NetworkLink } from 'components';
 import { useNetworkRoute } from 'helpers';
 
-const NodesFilters = ({ baseRoute, onlySearch }: { baseRoute: string; onlySearch?: boolean }) => {
+export const NodesFilters = ({
+  baseRoute,
+  onlySearch,
+}: {
+  baseRoute: string;
+  onlySearch?: boolean;
+}) => {
   const { search: locationSearch } = useLocation();
   const networkRoute = useNetworkRoute();
   const history = useHistory();
@@ -239,5 +245,3 @@ const NodesFilters = ({ baseRoute, onlySearch }: { baseRoute: string; onlySearch
     </div>
   );
 };
-
-export default NodesFilters;

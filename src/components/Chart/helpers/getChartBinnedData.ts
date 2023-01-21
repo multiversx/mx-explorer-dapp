@@ -1,5 +1,5 @@
 import moment, { Moment, unitOfTime } from 'moment';
-import denominate from 'components/Denominate/denominate';
+import { denominate } from 'components/Denominate/denominate';
 import { ChartDataType } from 'components/Chart/helpers/types';
 import { denomination, decimals } from 'appConfig';
 
@@ -79,7 +79,7 @@ export const getNormalizedTimeEntries = (
   return Object.values(normalizedEntries);
 };
 
-const getChartBinnedData = (data: AccountBalanceHistoryType[]) => {
+export const getChartBinnedData = (data: AccountBalanceHistoryType[]) => {
   const frequency = getFrequency(data);
   const normalizedEntries = getNormalizedTimeEntries(data, frequency);
 
@@ -121,5 +121,3 @@ const getChartBinnedData = (data: AccountBalanceHistoryType[]) => {
 
   return chartBinnedData;
 };
-
-export default getChartBinnedData;

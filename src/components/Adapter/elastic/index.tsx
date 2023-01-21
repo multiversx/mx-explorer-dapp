@@ -1,10 +1,10 @@
-import stats from './stats';
-import nodes from './nodes';
-import shards from './shards';
-import elastic from './helpers';
+import { getStats as stats } from './stats';
+import { nodes } from './nodes';
+import { shards } from './shards';
+import { elastic } from './helpers';
 import { ProviderPropsType } from '../helpers';
 
-const elasticAdapter = {
+export const elasticAdapter = {
   provider: elastic,
   getStats: (props: ProviderPropsType & { proxyUrl: string }) => {
     const { proxyUrl, baseUrl: elasticUrl, metaChainShardId } = props;
@@ -72,5 +72,3 @@ const elasticAdapter = {
     throw new Error('not defined');
   },
 };
-
-export default elasticAdapter;

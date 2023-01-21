@@ -3,10 +3,10 @@ import { ScAddressIcon, NetworkLink, AccountName, Denominate, TxActionBlock } fr
 import { addressIsBech32, urlBuilder } from 'helpers';
 import { NftEnumType } from 'helpers/types';
 import { TokenArgumentType, TransactionType } from 'helpers/types';
-import unwrapper from './unwrapper';
+import { unwrapper } from './unwrapper';
 import { ReactComponent as DefaultAvatar } from 'assets/img/default-avatar.svg';
 
-const ActionToken = ({
+export const ActionToken = ({
   token,
   noValue,
   showLastNonZeroDecimal,
@@ -161,7 +161,7 @@ const ActionText = ({ entry, transaction }: { entry: any; transaction: Transacti
   }
 };
 
-const TransactionAction = ({ transaction }: { transaction: TransactionType }) => {
+export const TransactionAction = ({ transaction }: { transaction: TransactionType }) => {
   const [unwrappedResult, setUnwrappedResult] = React.useState<ReturnType<typeof unwrapper>>([]);
 
   React.useEffect(() => {
@@ -181,4 +181,3 @@ const TransactionAction = ({ transaction }: { transaction: TransactionType }) =>
     </div>
   );
 };
-export default TransactionAction;

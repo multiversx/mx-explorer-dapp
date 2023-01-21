@@ -3,14 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 import { ShardSpan, Led } from 'components';
 import { ShardType } from 'helpers/types';
-import computeShardStatus from './computeShardStatus';
+import { computeShardStatus } from './computeShardStatus';
 
 interface ShardCardType {
   shard: ShardType;
   isOverall?: boolean;
 }
 
-const ShardCard = ({ shard, isOverall }: ShardCardType) => {
+export const ShardCard = ({ shard, isOverall }: ShardCardType) => {
   const status = computeShardStatus(shard);
 
   return (
@@ -32,5 +32,3 @@ const ShardCard = ({ shard, isOverall }: ShardCardType) => {
     </div>
   );
 };
-
-export default ShardCard;

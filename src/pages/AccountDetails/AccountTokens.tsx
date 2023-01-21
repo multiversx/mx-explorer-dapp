@@ -1,16 +1,24 @@
 import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
-import { adapter, DetailItem, Loader, Pager, PageState, Denominate, NetworkLink } from 'components';
+import {
+  useAdapter,
+  DetailItem,
+  Loader,
+  Pager,
+  PageState,
+  Denominate,
+  NetworkLink,
+} from 'components';
 import { useGlobalState } from 'context';
-import AccountTabs from './AccountLayout/AccountTabs';
-import { urlBuilder, useFilters, useNetworkRoute, amountWithoutRounding } from 'helpers';
+import { AccountTabs } from './AccountLayout/AccountTabs';
+import { urlBuilder, useGetFilters, useNetworkRoute, amountWithoutRounding } from 'helpers';
 import { TokenType, NftType } from 'helpers/types';
 
-const AccountTokens = () => {
+export const AccountTokens = () => {
   const ref = React.useRef(null);
   const { activeNetwork, accountDetails } = useGlobalState();
-  const { size } = useFilters();
+  const { size } = useGetFilters();
   const networkRoute = useNetworkRoute();
 
   const {
@@ -18,7 +26,7 @@ const AccountTokens = () => {
     getAccountTokensCount,
     getAccountNfts,
     getAccountNftsCount,
-  } = adapter();
+  } = useAdapter();
 
   const { hash: address } = useParams() as any;
   const tokensActive = activeNetwork.adapter === 'api';
@@ -208,5 +216,3 @@ const AccountTokens = () => {
     </div>
   );
 };
-
-export default AccountTokens;

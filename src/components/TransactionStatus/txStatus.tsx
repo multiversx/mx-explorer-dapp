@@ -1,4 +1,4 @@
-const txStatus = {
+export const txStatus = {
   pending: 'Pending',
   notExecuted: 'Not Executed',
   invalid: 'Invalid',
@@ -7,5 +7,3 @@ const txStatus = {
   fail: 'fail',
   rewardReverted: 'reward-reverted',
 };
-
-export default txStatus;

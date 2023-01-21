@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const LatestItem = ({
+export const LatestItem = ({
   children,
   isNew,
   index,
@@ -38,5 +38,3 @@ const LatestItem = ({
     </div>
   );
 };
-
-export default LatestItem;

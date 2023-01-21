@@ -8,9 +8,9 @@ import { useGlobalState } from 'context';
 import { DelegationLegacyType, IdentityType } from 'helpers/types';
 import { Denominate } from 'components';
 
-import DetailsBlock from '../DetailsBlock';
+import { DetailsBlock } from '../DetailsBlock';
 
-const AccountLegacyDelegation = ({
+export const AccountLegacyDelegation = ({
   delegationLegacy,
   identity,
 }: {
@@ -116,5 +116,3 @@ const AccountLegacyDelegation = ({
     </div>
   );
 };
-
-export default AccountLegacyDelegation;

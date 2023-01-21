@@ -4,13 +4,13 @@ import { faCircleNotch } from '@fortawesome/pro-regular-svg-icons/faCircleNotch'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNetworkRoute, urlBuilder, isHash, isContract, addressIsBech32, bech32 } from 'helpers';
 import { Redirect, useLocation } from 'react-router-dom';
-import { adapter } from 'components';
+import { useAdapter } from 'components';
 
 interface SearchType {
   setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Search = ({ setExpanded = () => null }: SearchType) => {
+export const Search = ({ setExpanded = () => null }: SearchType) => {
   const { pathname } = useLocation();
   const networkRoute = useNetworkRoute();
   const {
@@ -24,7 +24,7 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
     getScResult,
     getCollection,
     getUsername,
-  } = adapter();
+  } = useAdapter();
   const [route, setRoute] = React.useState('');
   const [searching, setSearching] = React.useState(false);
   const [hash, setHash] = React.useState<string>('');
@@ -213,5 +213,3 @@ const Search = ({ setExpanded = () => null }: SearchType) => {
     </form>
   );
 };
-
-export default Search;

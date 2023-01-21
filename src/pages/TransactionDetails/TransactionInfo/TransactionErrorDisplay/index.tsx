@@ -7,9 +7,9 @@ import { TransactionType } from 'helpers/types';
 import { NetworkLink, Overlay } from 'components';
 import { decodeForDisplay, DecodeMethodType } from 'components/DataDecode';
 import { transactionsRoutes } from 'routes';
-import TransactionErrorDescription from './TransactionErrorDescription';
+import { TransactionErrorDescription } from './TransactionErrorDescription';
 
-const InternalErrorDisplay = ({ data }: { data: string }) => {
+export const InternalErrorDisplay = ({ data }: { data: string }) => {
   if (data) {
     const dataBase64Buffer = Buffer.from(String(data), 'base64');
     const dataHexValue = dataBase64Buffer.toString('hex');
@@ -25,7 +25,7 @@ const InternalErrorDisplay = ({ data }: { data: string }) => {
   return null;
 };
 
-const TransactionErrorDisplay = ({ transaction }: { transaction: TransactionType }) => {
+export const TransactionErrorDisplay = ({ transaction }: { transaction: TransactionType }) => {
   const transactionMessages = getTransactionMessages(transaction);
 
   const internalVMErrorEvent =
@@ -86,5 +86,3 @@ const TransactionErrorDisplay = ({ transaction }: { transaction: TransactionType
     </>
   );
 };
-
-export default TransactionErrorDisplay;

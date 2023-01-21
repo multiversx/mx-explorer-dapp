@@ -4,11 +4,11 @@ import { faExchangeAlt } from '@fortawesome/pro-solid-svg-icons/faExchangeAlt';
 import { faCube } from '@fortawesome/pro-solid-svg-icons/faCube';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 import { useGlobalState } from 'context';
-import EpochGear from 'pages/Layout/GlobalStatsCard/EpochGear';
+import { EpochGear } from 'pages/Layout/GlobalStatsCard/EpochGear';
 import { CardItem } from 'components';
 import { validDisplayValue, useFetchStats } from 'helpers';
 
-const TestnetGlobalStatsCard = () => {
+export const TestnetGlobalStatsCard = () => {
   useFetchStats();
   const ref = React.useRef(null);
   const { stats } = useGlobalState();
@@ -46,5 +46,3 @@ const TestnetGlobalStatsCard = () => {
     </div>
   );
 };
-
-export default TestnetGlobalStatsCard;

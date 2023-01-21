@@ -3,11 +3,11 @@ import { faChartPie } from '@fortawesome/pro-solid-svg-icons/faChartPie';
 import { faUsers } from '@fortawesome/pro-solid-svg-icons/faUsers';
 import { faChartArea } from '@fortawesome/pro-solid-svg-icons/faChartArea';
 import { useGlobalState } from 'context';
-import EpochGear from 'pages/Layout/GlobalStatsCard/EpochGear';
+import { EpochGear } from 'pages/Layout/GlobalStatsCard/EpochGear';
 import { CardItem } from 'components';
 import { validDisplayValue } from 'helpers';
 
-const GlobalStatsCard = () => {
+export const GlobalStatsCard = () => {
   const ref = React.useRef(null);
   const { usd, stats, economics } = useGlobalState();
 
@@ -71,5 +71,3 @@ const GlobalStatsCard = () => {
     </div>
   );
 };
-
-export default GlobalStatsCard;

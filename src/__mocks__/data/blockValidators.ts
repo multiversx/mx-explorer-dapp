@@ -1,4 +1,4 @@
-export default {
+export const blockValidators = {
   _index: 'validators',
   _type: '_doc',
   _id: '0_16',

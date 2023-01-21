@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 
-const getPercentage = ({
+export const getPercentage = ({
   amountOutOfTotal,
   total,
   minDelegation,
@@ -18,5 +18,3 @@ const getPercentage = ({
 
   return isOverMinimum || !percentage.isFinite() ? displayPercentage : '100';
 };
-
-export default getPercentage;

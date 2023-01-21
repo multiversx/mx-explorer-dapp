@@ -1,9 +1,9 @@
 import React from 'react';
-import onlyText from './onlyText';
-import PopoverStickOnHover from './PopoverStickOnHover';
+import { onlyText } from './onlyText';
+import { PopoverStickOnHover } from './PopoverStickOnHover';
 import { CopyButton } from 'components';
 
-const TooltipWithCopy = ({
+export const TooltipWithCopy = ({
   children,
   textToCopy,
 }: {
@@ -28,5 +28,3 @@ const TooltipWithCopy = ({
     </PopoverStickOnHover>
   );
 };
-
-export default TooltipWithCopy;

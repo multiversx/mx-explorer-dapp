@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation, Link } from 'react-router-dom';
 import { SortOrderEnum } from 'helpers/types';
 
-const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {
+export const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {
   const { search, pathname } = useLocation();
   const urlParams = new URLSearchParams(search);
   const { order, sort, ...rest } = Object.fromEntries(urlParams);
@@ -44,5 +44,3 @@ const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {
     </Link>
   );
 };
-
-export default Sort;

@@ -4,7 +4,7 @@ import * as React from 'react';
 import { numInitCharactersForScAddress } from 'appConfig';
 import { PageState } from 'components';
 
-export default function FailedAccounts({ address }: { address: string | undefined }) {
+export const FailedAccount = ({ address }: { address: string | undefined }) => {
   const showIcon =
     numInitCharactersForScAddress > 0 &&
     String(address).startsWith('0'.repeat(numInitCharactersForScAddress));
@@ -22,4 +22,4 @@ export default function FailedAccounts({ address }: { address: string | undefine
       dataTestId="errorScreen"
     />
   );
-}
+};

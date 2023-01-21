@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
 import {
-  adapter,
+  useAdapter,
   DetailItem,
   Loader,
   Pager,
@@ -13,17 +13,17 @@ import {
   NetworkLink,
 } from 'components';
 import { useGlobalState } from 'context';
-import AccountTabs from './AccountLayout/AccountTabs';
-import { urlBuilder, useFilters, useNetworkRoute } from 'helpers';
+import { AccountTabs } from './AccountLayout/AccountTabs';
+import { urlBuilder, useGetFilters, useNetworkRoute } from 'helpers';
 import { NftType } from 'helpers/types';
 
-const AccountNfts = () => {
+export const AccountNfts = () => {
   const ref = React.useRef(null);
   const { activeNetwork, accountDetails } = useGlobalState();
-  const { size } = useFilters();
+  const { size } = useGetFilters();
   const networkRoute = useNetworkRoute();
 
-  const { getAccountNfts, getAccountNftsCount } = adapter();
+  const { getAccountNfts, getAccountNftsCount } = useAdapter();
 
   const { hash: address } = useParams() as any;
   const nftsActive = activeNetwork.adapter === 'api';
@@ -154,5 +154,3 @@ const AccountNfts = () => {
     </div>
   );
 };
-
-export default AccountNfts;

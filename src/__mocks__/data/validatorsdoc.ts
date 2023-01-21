@@ -1,4 +1,4 @@
-export default {
+export const validatorsdoc = {
   id: '0_170',
   publicKeys: [
     '882d395571f39b2c9c3f7cc65ac4fee45499229cafe58a1d5d19e26568c4497f88a8b784a80bd30a87bf4d4100951f1944d74b942951edcbad3ae2c3573cda7966d522a6bd3ceea6ef0d9f3a6256c4c8c0c71d373dc93808b74cbce4b6d73e80',

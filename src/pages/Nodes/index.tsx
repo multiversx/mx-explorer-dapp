@@ -1,17 +1,17 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { useLocation } from 'react-router-dom';
-import { adapter, Loader, Pager, PageState, NodesTable, NodesFilters } from 'components';
+import { useAdapter, Loader, Pager, PageState, NodesTable, NodesFilters } from 'components';
 import { validatorsRoutes } from 'routes';
-import { useFilters } from 'helpers';
+import { useGetFilters } from 'helpers';
 import { NodeType } from 'helpers/types';
-import NodesTabs from 'pages/Nodes/NodesLayout/NodesTabs';
+import { NodesTabs } from 'pages/Nodes/NodesLayout/NodesTabs';
 
-const Nodes = () => {
+export const Nodes = () => {
   const ref = React.useRef(null);
   const { search } = useLocation();
-  const { getNodes, getNodesCount } = adapter();
-  const { getQueryObject, size } = useFilters();
+  const { getNodes, getNodesCount } = useAdapter();
+  const { getQueryObject, size } = useGetFilters();
   const [nodes, setNodes] = React.useState<NodeType[]>([]);
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -82,5 +82,3 @@ const Nodes = () => {
     </div>
   );
 };
-
-export default Nodes;

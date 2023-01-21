@@ -2,7 +2,7 @@ import * as React from 'react';
 import { PageState } from 'components';
 import { faPalette } from '@fortawesome/pro-regular-svg-icons/faPalette';
 
-export default function FailedNftDetails({ identifier }: { identifier: string | undefined }) {
+export const FailedNftDetails = ({ identifier }: { identifier: string | undefined }) => {
   return (
     <PageState
       icon={faPalette}
@@ -16,4 +16,4 @@ export default function FailedNftDetails({ identifier }: { identifier: string | 
       dataTestId="errorScreen"
     />
   );
-}
+};

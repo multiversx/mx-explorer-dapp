@@ -1,7 +1,7 @@
 import * as React from 'react';
-import IdentityCard from './IdentityCard';
-import IdentityAvatar from './IdentityAvatar';
-import IdentitySummary from './IdentitySummary';
+import { IdentityCard } from './IdentityCard';
+import { IdentityAvatar } from './IdentityAvatar';
+import { IdentitySummary } from './IdentitySummary';
 
 export default class SharedIdentity extends React.Component<{
   children: React.ReactNode;

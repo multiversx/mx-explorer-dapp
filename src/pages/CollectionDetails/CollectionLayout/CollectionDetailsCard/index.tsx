@@ -15,7 +15,7 @@ import { useGlobalState } from 'context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/pro-regular-svg-icons';
 
-const CollectionDetailsCard = () => {
+export const CollectionDetailsCard = () => {
   const ref = React.useRef(null);
   const { collectionDetails } = useGlobalState();
 
@@ -138,5 +138,3 @@ const CollectionDetailsCard = () => {
     </>
   ) : null;
 };
-
-export default CollectionDetailsCard;

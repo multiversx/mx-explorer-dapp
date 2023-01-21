@@ -1,4 +1,4 @@
-export default {
+export const provider = {
   apr: 'N/A',
   delegationCap: '85000000000000000000000',
   identity: 'metastakeio',

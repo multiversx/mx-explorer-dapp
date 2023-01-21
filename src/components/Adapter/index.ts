@@ -1,5 +1,5 @@
 import { pageSize } from 'appConfig';
-import useAdapterConfig from './useAdapterConfig';
+import { useAdapterConfig } from './useAdapterConfig';
 import {
   GetBlocksType,
   processBlocks,
@@ -16,7 +16,7 @@ import {
   getNftsParam,
 } from './helpers';
 
-export default function useAdapter() {
+export const useAdapter = () => {
   const {
     provider,
     getStats,
@@ -531,4 +531,4 @@ export default function useAdapter() {
 
     getAnalyticsChart: (url: string) => provider({ baseUrl: growthApi, url }),
   };
-}
+};

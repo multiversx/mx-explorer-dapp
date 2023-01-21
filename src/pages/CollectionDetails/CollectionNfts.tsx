@@ -2,18 +2,18 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import { useGlobalState } from 'context';
-import { Loader, adapter, Pager, NetworkLink, Trim, PageState, NftBadge } from 'components';
-import { urlBuilder, useURLSearchParams, useFilters, nftText } from 'helpers';
+import { Loader, useAdapter, Pager, NetworkLink, Trim, PageState, NftBadge } from 'components';
+import { urlBuilder, useURLSearchParams, useGetFilters, nftText } from 'helpers';
 import { NftType } from 'helpers/types';
-import CollectionTabs from './CollectionLayout/CollectionTabs';
+import { CollectionTabs } from './CollectionLayout/CollectionTabs';
 
-const CollectionNfts = () => {
+export const CollectionNfts = () => {
   const ref = React.useRef(null);
   const { activeNetworkId, collectionDetails } = useGlobalState();
-  const { getNfts, getNftsCount } = adapter();
+  const { getNfts, getNftsCount } = useAdapter();
   const { page } = useURLSearchParams();
 
-  const { getQueryObject, size } = useFilters();
+  const { getQueryObject, size } = useGetFilters();
 
   const { hash: collection } = useParams() as any;
 
@@ -152,5 +152,3 @@ const CollectionNfts = () => {
     </div>
   );
 };
-
-export default CollectionNfts;

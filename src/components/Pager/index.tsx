@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { NetworkLink } from 'components';
-import pagerHelper from './pagerHelper';
+import { pagerHelper } from './pagerHelper';
 import { useGlobalState } from 'context';
 
-const Pager = ({
+export const Pager = ({
   total,
   show,
   page,
@@ -149,5 +149,3 @@ const Pager = ({
     </div>
   ) : null;
 };
-
-export default Pager;

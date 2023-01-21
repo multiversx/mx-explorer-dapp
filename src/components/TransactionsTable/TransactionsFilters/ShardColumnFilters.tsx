@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalDispatch, useGlobalState } from 'context';
 
 import { TxFiltersEnum, TransactionsTableType } from 'helpers/types';
-import { adapter, SelectFilter } from 'components';
+import { useAdapter, SelectFilter } from 'components';
 import { shardSpanText } from 'components/ShardSpan';
 
 export const ShardColumnFilters = ({
@@ -20,7 +20,7 @@ export const ShardColumnFilters = ({
   const { search: locationSearch } = useLocation();
   const urlParams = new URLSearchParams(locationSearch);
   const { senderShard, receiverShard } = Object.fromEntries(urlParams);
-  const { getShards } = adapter();
+  const { getShards } = useAdapter();
   const { shards: stateShards } = useGlobalState();
 
   const fetchShards = () => {

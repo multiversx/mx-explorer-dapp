@@ -2,18 +2,18 @@ import React from 'react';
 import { faCity } from '@fortawesome/pro-regular-svg-icons/faCity';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 
-import { adapter, Loader, Pager, PageState, ProvidersTable } from 'components';
+import { useAdapter, Loader, Pager, PageState, ProvidersTable } from 'components';
 import { useParams } from 'react-router-dom';
 import { NodesTable, SharedIdentity } from 'components';
-import { useFilters, types } from 'helpers';
+import { useGetFilters, types } from 'helpers';
 import { IdentityType, NodeType } from 'helpers/types';
 import { useGlobalState } from 'context';
 
-const IdentityDetails = () => {
+export const IdentityDetails = () => {
   const ref = React.useRef(null);
   const { hash: id } = useParams() as any;
-  const { getIdentity, getNodes, getNodesCount, getProviders } = adapter();
-  const { getQueryObject, size } = useFilters();
+  const { getIdentity, getNodes, getNodesCount, getProviders } = useAdapter();
+  const { getQueryObject, size } = useGetFilters();
   const {
     activeNetwork: { walletAddress },
   } = useGlobalState();
@@ -145,5 +145,3 @@ const IdentityDetails = () => {
     </>
   );
 };
-
-export default IdentityDetails;

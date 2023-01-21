@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-const PercentegeBar = ({
+export const PercentageBar = ({
   overallPercent,
   fillPercent,
   fillPercentLabel,
@@ -48,4 +48,3 @@ const PercentegeBar = ({
     )}
   </div>
 );
-export default PercentegeBar;

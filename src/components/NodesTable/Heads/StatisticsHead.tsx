@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Sort } from 'components';
 
-const StatisticsHead = () => {
+export const StatisticsHead = () => {
   return (
     <tr>
       <th data-testid="node">Public key</th>
@@ -30,5 +30,3 @@ const StatisticsHead = () => {
     </tr>
   );
 };
-
-export default StatisticsHead;

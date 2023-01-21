@@ -1,9 +1,14 @@
 import numeral from 'numeral';
 import BigNumber from 'bignumber.js';
 import { ChartAxisType } from './types';
-import denominate from 'components/Denominate/denominate';
+import { denominate } from 'components/Denominate/denominate';
 
-const formatYAxis = ({ tick, currency, percentageMultiplier, denomination }: ChartAxisType) => {
+export const formatYAxis = ({
+  tick,
+  currency,
+  percentageMultiplier,
+  denomination,
+}: ChartAxisType) => {
   if (percentageMultiplier) {
     return `${numeral(Number(tick) * 100).format('0.0')}%`;
   } else if (denomination) {
@@ -35,5 +40,3 @@ const formatYAxis = ({ tick, currency, percentageMultiplier, denomination }: Cha
 
   return numeral(tick).format('0');
 };
-
-export default formatYAxis;

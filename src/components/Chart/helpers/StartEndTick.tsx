@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-const StartEndTick = (props: any) => {
+export const StartEndTick = (props: any) => {
   const extractables = ['tickFormatter', 'verticalAnchor', 'visibleTicksCount'];
 
   const args = Object.keys(props).reduce(
@@ -28,5 +28,3 @@ const StartEndTick = (props: any) => {
 
   return null;
 };
-
-export default StartEndTick;

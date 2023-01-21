@@ -2,11 +2,7 @@ import * as React from 'react';
 import { PageState } from 'components';
 import { faCoins } from '@fortawesome/pro-regular-svg-icons/faCoins';
 
-export default function FailedCollectionDetails({
-  collection,
-}: {
-  collection: string | undefined;
-}) {
+export const FailedCollectionDetails = ({ collection }: { collection: string | undefined }) => {
   return (
     <PageState
       icon={faCoins}
@@ -20,4 +16,4 @@ export default function FailedCollectionDetails({
       dataTestId="errorScreen"
     />
   );
-}
+};

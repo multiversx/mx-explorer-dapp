@@ -1,4 +1,4 @@
-export default [
+export const validators = [
   {
     identity: 'aynelis',
     name: 'aynelis',

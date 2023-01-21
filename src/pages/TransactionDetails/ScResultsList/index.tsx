@@ -15,9 +15,9 @@ import { DecodeMethodType } from 'components/DataDecode';
 import { ResultType } from 'helpers/types';
 import { urlBuilder } from 'helpers';
 import { transactionsRoutes } from 'routes';
-import decodePart from './decodePart';
+import { decodePart } from './decodePart';
 
-const ScResultsList = ({ results }: { results: ResultType[] }) => {
+export const ScResultsList = ({ results }: { results: ResultType[] }) => {
   const { hash } = useLocation();
   const ref = React.useRef<HTMLDivElement>(null);
   const formattedHash = hash
@@ -162,5 +162,3 @@ const ScResultsList = ({ results }: { results: ResultType[] }) => {
     </div>
   );
 };
-
-export default ScResultsList;

@@ -61,7 +61,7 @@ const Icon = ({ icon }: { icon: string }) => {
   }
 };
 
-const SocialIcons = ({ assets }: { assets: any }) => {
+export const SocialIcons = ({ assets }: { assets: any }) => {
   return (
     <div className="social-icons d-flex align-items-center ml-n2 mt-2 mt-lg-0">
       {Object.keys(assets).map((social, i) => (
@@ -99,5 +99,3 @@ const SocialIcons = ({ assets }: { assets: any }) => {
     </div>
   );
 };
-
-export default SocialIcons;

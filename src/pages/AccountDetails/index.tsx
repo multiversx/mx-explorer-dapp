@@ -1,22 +1,22 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
-import { Loader, TransactionsTable, adapter } from 'components';
+import { Loader, TransactionsTable, useAdapter } from 'components';
 
-import txStatus from 'components/TransactionStatus/txStatus';
-import NoTransactions from 'components/TransactionsTable/NoTransactions';
-import FailedTransactions from 'components/TransactionsTable/FailedTransactions';
+import { txStatus } from 'components/TransactionStatus/txStatus';
+import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
+import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { useSize, useURLSearchParams } from 'helpers';
 import {
   UITransactionType,
   TransactionsResponseType,
   TransactionsCountResponseType,
 } from 'helpers/types';
-import AccountTabs from './AccountLayout/AccountTabs';
+import { AccountTabs } from './AccountLayout/AccountTabs';
 
-const AccountDetails = () => {
+export const AccountDetails = () => {
   const ref = React.useRef(null);
-  const { getAccountTransfers, getAccountTransfersCount } = adapter();
+  const { getAccountTransfers, getAccountTransfersCount } = useAdapter();
   const { size, firstPageTicker } = useSize();
   const {
     senderShard,
@@ -152,5 +152,3 @@ const AccountDetails = () => {
     </div>
   );
 };
-
-export default AccountDetails;

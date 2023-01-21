@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { stringIsInteger } from 'helpers';
 
-export default function useGetFilters() {
+export const useGetFilters = () => {
   const { search: urlSearch } = useLocation();
   const urlParams = new URLSearchParams(urlSearch);
   const {
@@ -37,4 +37,4 @@ export default function useGetFilters() {
     getQueryObject,
     size,
   };
-}
+};

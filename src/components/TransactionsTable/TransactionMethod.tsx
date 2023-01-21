@@ -10,7 +10,7 @@ export interface TransactionMethodType {
   transaction: UITransactionType;
 }
 
-const TransactionMethod = ({ transaction }: TransactionMethodType) => {
+export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
   const { search: locationSearch } = useLocation();
   const urlParams = new URLSearchParams(locationSearch);
   const networkPathname = useNetworkPathname();
@@ -75,5 +75,3 @@ const TransactionMethod = ({ transaction }: TransactionMethodType) => {
     TxMethodBadge
   );
 };
-
-export default TransactionMethod;

@@ -9,10 +9,10 @@ interface ScAddressIconType {
   secondInitiator?: string;
 }
 
-const isContract = (initiator: string | undefined, charNum: number) =>
+export const isContract = (initiator: string | undefined, charNum: number) =>
   initiator && charNum > 0 && initiator.substr('erd1'.length).startsWith('q'.repeat(charNum));
 
-const ScAddressIcon = ({ initiator, secondInitiator }: ScAddressIconType) => {
+export const ScAddressIcon = ({ initiator, secondInitiator }: ScAddressIconType) => {
   const showIcon = isContract(initiator, charNum) || isContract(secondInitiator, charNum);
 
   return showIcon ? (
@@ -29,5 +29,3 @@ const ScAddressIcon = ({ initiator, secondInitiator }: ScAddressIconType) => {
     </OverlayTrigger>
   ) : null;
 };
-
-export default ScAddressIcon;

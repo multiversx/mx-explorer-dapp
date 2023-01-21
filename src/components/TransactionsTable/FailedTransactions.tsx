@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
 import { PageState } from 'components';
 
-export default function FailedTransactions() {
+export const FailedTransactions = () => {
   return (
     <PageState
       icon={faExchangeAlt}
@@ -11,4 +11,4 @@ export default function FailedTransactions() {
       dataTestId="errorScreen"
     />
   );
-}
+};

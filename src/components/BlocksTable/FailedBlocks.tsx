@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { PageState } from 'components';
 
-export default function FailedBlocks() {
+export const FailedBlocks = () => {
   return (
     <PageState
       icon={faCube}
@@ -11,4 +11,4 @@ export default function FailedBlocks() {
       dataTestId="errorScreen"
     />
   );
-}
+};

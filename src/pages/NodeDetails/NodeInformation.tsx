@@ -20,9 +20,9 @@ import {
 } from 'components';
 import { getIcon } from 'components/NodesTable/RowIcon';
 
-import Alert from './Alert';
+import { Alert } from './Alert';
 
-const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
+export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
   const {
     bls,
     type,
@@ -147,5 +147,3 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     </div>
   );
 };
-
-export default NodeInformation;

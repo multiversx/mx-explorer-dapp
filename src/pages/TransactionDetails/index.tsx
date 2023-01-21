@@ -2,12 +2,12 @@ import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt'
 import { useGlobalState } from 'context';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { Loader, adapter, PageState } from 'components';
-import TransactionInfo from './TransactionInfo';
+import { Loader, useAdapter, PageState } from 'components';
+import { TransactionInfo } from './TransactionInfo';
 import { TransactionType } from 'helpers/types';
-import txStatus from 'components/TransactionStatus/txStatus';
+import { txStatus } from 'components/TransactionStatus/txStatus';
 
-const TransactionDetails = () => {
+export const TransactionDetails = () => {
   const params: any = useParams();
   const { hash: transactionId } = params;
   const ref = React.useRef(null);
@@ -16,7 +16,7 @@ const TransactionDetails = () => {
     refresh: { timestamp },
   } = useGlobalState();
 
-  const { getTransaction } = adapter();
+  const { getTransaction } = useAdapter();
 
   const [transaction, setTransaction] = React.useState<TransactionType | undefined>();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -79,5 +79,3 @@ const TransactionDetails = () => {
     </>
   );
 };
-
-export default TransactionDetails;

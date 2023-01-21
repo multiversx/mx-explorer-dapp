@@ -26,7 +26,7 @@ const getErrorDescription = ({
   }
 };
 
-const TransactionErrorDescription = ({
+export const TransactionErrorDescription = ({
   message,
   transaction,
 }: {
@@ -47,5 +47,3 @@ const TransactionErrorDescription = ({
     </div>
   );
 };
-
-export default TransactionErrorDescription;

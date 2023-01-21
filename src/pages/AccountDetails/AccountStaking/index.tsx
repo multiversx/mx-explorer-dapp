@@ -1,16 +1,16 @@
 import React from 'react';
 import { faChartPie } from '@fortawesome/pro-solid-svg-icons/faChartPie';
 
-import AccountTabs from '../AccountLayout/AccountTabs';
-import AccountDelegation from './AccountDelegation';
-import AccountLegacyDelegation from './AccountLegacyDelegation';
-import AccountStake from './AccountStake';
-import DonutChart from './DonutChart';
+import { AccountTabs } from '../AccountLayout/AccountTabs';
+import { AccountDelegation } from './AccountDelegation';
+import { AccountLegacyDelegation } from './AccountLegacyDelegation';
+import { AccountStake } from './AccountStake';
+import { DonutChart } from './DonutChart';
 
 import { useGlobalState } from 'context';
 import { Loader, PageState } from 'components';
 
-const AccountStaking = () => {
+export const AccountStaking = () => {
   const { accountStakingDetails } = useGlobalState();
 
   const {
@@ -117,5 +117,3 @@ const AccountStaking = () => {
     </div>
   );
 };
-
-export default AccountStaking;

@@ -2,11 +2,11 @@ import * as React from 'react';
 import { urlBuilder } from 'helpers';
 import { NodeType } from 'helpers/types';
 import { ShardSpan, NetworkLink, Trim, Led, Overlay, Denominate } from 'components';
-import RowIcon from 'components/NodesTable/RowIcon';
-import RowIssueIcon from 'components/NodesTable/RowIssueIcon';
-import RowFullHistory from 'components/NodesTable/RowFullHistory';
+import { RowIcon } from 'components/NodesTable/RowIcon';
+import { RowIssueIcon } from 'components/NodesTable/RowIssueIcon';
+import { RowFullHistory } from 'components/NodesTable/RowFullHistory';
 
-const StandardRow = ({
+export const StandardRow = ({
   nodeData,
   index,
   type,
@@ -115,5 +115,3 @@ const StandardRow = ({
     </>
   );
 };
-
-export default StandardRow;

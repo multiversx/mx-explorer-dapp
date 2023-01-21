@@ -3,12 +3,12 @@ import moment from 'moment';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer } from 'recharts';
 
 import { ChartProps } from './helpers/types';
-import CustomTooltip from './helpers/CustomTooltip';
-import formatYAxis from './helpers/formatYAxis';
-import getChartMergedData from './helpers/getChartMergedData';
-import StartEndTick from './helpers/StartEndTick';
+import { CustomTooltip } from './helpers/CustomTooltip';
+import { formatYAxis } from './helpers/formatYAxis';
+import { getChartMergedData } from './helpers/getChartMergedData';
+import { StartEndTick } from './helpers/StartEndTick';
 
-const ChartBar = ({
+export const ChartBar = ({
   config,
   data,
   dateFormat,
@@ -145,5 +145,3 @@ const ChartBar = ({
     </div>
   );
 };
-
-export default ChartBar;

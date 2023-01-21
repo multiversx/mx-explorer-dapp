@@ -6,7 +6,7 @@ interface MiniBlockNotFoundType {
   miniBlockHash: string | undefined;
 }
 
-export default function MiniBlockNotFound({ miniBlockHash }: MiniBlockNotFoundType) {
+export const MiniBlockNotFound = ({ miniBlockHash }: MiniBlockNotFoundType) => {
   return (
     <PageState
       icon={faCube}
@@ -20,4 +20,4 @@ export default function MiniBlockNotFound({ miniBlockHash }: MiniBlockNotFoundTy
       dataTestId="errorScreen"
     />
   );
-}
+};

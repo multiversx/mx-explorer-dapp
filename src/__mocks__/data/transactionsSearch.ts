@@ -1,4 +1,4 @@
-export default [
+export const transactionsSearch = [
   {
     txHash: '72d26fd09ed2d2bb649a401428eca1a0a7b5a11242daf5500990305f600a9a91',
     miniBlockHash: 'e9568442c52ef071dcb621372b0db41898043011bded4149a797a6b261acabc5',

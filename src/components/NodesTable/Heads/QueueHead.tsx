@@ -1,8 +1,8 @@
 import * as React from 'react';
-import StatusFilter from '../StatusFilter';
+import { StatusFilter } from '../StatusFilter';
 import { Sort } from 'components';
 
-const QueueHead = ({ hideFilters }: { hideFilters?: boolean }) => {
+export const QueueHead = ({ hideFilters }: { hideFilters?: boolean }) => {
   return (
     <tr>
       <th data-testid="position">
@@ -25,5 +25,3 @@ const QueueHead = ({ hideFilters }: { hideFilters?: boolean }) => {
     </tr>
   );
 };
-
-export default QueueHead;

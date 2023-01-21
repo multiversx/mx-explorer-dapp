@@ -4,12 +4,12 @@ import moment from 'moment';
 import { ResponsiveContainer, XAxis, YAxis, Area, AreaChart, Tooltip } from 'recharts';
 
 import { ChartProps } from './helpers/types';
-import CustomTooltip from './helpers/CustomTooltip';
-import formatYAxis from './helpers/formatYAxis';
-import getChartMergedData from './helpers/getChartMergedData';
-import StartEndTick from './helpers/StartEndTick';
+import { CustomTooltip } from './helpers/CustomTooltip';
+import { formatYAxis } from './helpers/formatYAxis';
+import { getChartMergedData } from './helpers/getChartMergedData';
+import { StartEndTick } from './helpers/StartEndTick';
 
-const ChartArea = ({
+export const ChartArea = ({
   config,
   data,
   dateFormat,
@@ -106,5 +106,3 @@ const ChartArea = ({
     </div>
   );
 };
-
-export default ChartArea;

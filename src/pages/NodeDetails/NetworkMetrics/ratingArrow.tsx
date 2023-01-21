@@ -2,7 +2,7 @@ import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { NodeType } from 'helpers/types';
 
-const RatingArrow = ({ node, showTemp = false }: { node: NodeType; showTemp?: boolean }) => {
+export const RatingArrow = ({ node, showTemp = false }: { node: NodeType; showTemp?: boolean }) => {
   const arrowsOffset = '0.56rem';
   const value = showTemp ? node.tempRating : node.rating;
 
@@ -27,5 +27,3 @@ const RatingArrow = ({ node, showTemp = false }: { node: NodeType; showTemp?: bo
     </div>
   );
 };
-
-export default RatingArrow;

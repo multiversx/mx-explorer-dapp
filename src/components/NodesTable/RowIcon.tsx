@@ -44,7 +44,7 @@ export const getIcon = (node: NodeType) => {
   return icon;
 };
 
-const RowIcon = ({ node, small }: { node: NodeType; small?: boolean }) => {
+export const RowIcon = ({ node, small }: { node: NodeType; small?: boolean }) => {
   const icon = getIcon(node);
 
   if (icon) {
@@ -119,5 +119,3 @@ const RowIcon = ({ node, small }: { node: NodeType; small?: boolean }) => {
 
   return null;
 };
-
-export default RowIcon;

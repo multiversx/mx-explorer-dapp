@@ -1,6 +1,6 @@
 import { useGlobalState } from 'context';
-import elasticAdapter from './elastic';
-import apiAdapter from './api';
+import { elasticAdapter } from './elastic';
+import { apiAdapter } from './api';
 import { metaChainShardId } from 'appConfig';
 import { ProviderPropsType } from './helpers';
 
@@ -28,7 +28,7 @@ async function wrap(asyncRequest: () => Promise<any>) {
   }
 }
 
-export default function useAdapterConfig() {
+export const useAdapterConfig = () => {
   const {
     activeNetwork: {
       elasticUrl,
@@ -93,4 +93,4 @@ export default function useAdapterConfig() {
     getProviders: (props = basicProps) => wrap(() => getProviders({ ...providerProps, ...props })),
     getProvider: (props = basicProps) => wrap(() => getProvider({ ...providerProps, ...props })),
   };
-}
+};

@@ -2,11 +2,11 @@ import * as React from 'react';
 import { NodeType } from 'helpers/types';
 import { PageState } from 'components';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import StandardRow from './Rows/StandardRow';
-import StatisticsRow from './Rows/StatisticsRow';
-import QueueRow from './Rows/QueueRow';
+import { StandardRow } from './Rows/StandardRow';
+import { StatisticsRow } from './Rows/StatisticsRow';
+import { QueueRow } from './Rows/QueueRow';
 
-const NodesTable = ({
+export const TableBody = ({
   nodes,
   statistics,
   queue,
@@ -47,5 +47,3 @@ const NodesTable = ({
     </tbody>
   );
 };
-
-export default NodesTable;

@@ -25,7 +25,7 @@ const prepareStakeDistribution = (identity: IdentityType) => {
   return distribution.sort((a, b) => b.percent - a.percent);
 };
 
-const IdentityCard = ({ identity }: { identity: IdentityType }) => {
+export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
   const distribution = prepareStakeDistribution(identity);
   const identityName = identity?.name ?? 'N/A';
 
@@ -133,5 +133,3 @@ const IdentityCard = ({ identity }: { identity: IdentityType }) => {
     </div>
   ) : null;
 };
-
-export default IdentityCard;

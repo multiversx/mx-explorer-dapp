@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NodeType } from 'helpers/types';
 import { Overlay } from 'components';
 
-const RowFullHistory = ({ node, small }: { node: NodeType; small?: boolean }) => {
+export const RowFullHistory = ({ node, small }: { node: NodeType; small?: boolean }) => {
   if (node.type === 'observer' && node.fullHistory) {
     return (
       <Overlay title="Full History">
@@ -21,5 +21,3 @@ const RowFullHistory = ({ node, small }: { node: NodeType; small?: boolean }) =>
 
   return null;
 };
-
-export default RowFullHistory;

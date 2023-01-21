@@ -2,12 +2,12 @@ import React from 'react';
 
 import { AccountStakingDetailsType } from 'context/state';
 
-import prepareChartData from './helpers/prepareChartData';
+import { prepareChartData } from './helpers/prepareChartData';
 import { ProviderType } from 'helpers/types';
 import { Denominate, UsdValue, Chart } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
 
-const DonutChart = ({
+export const DonutChart = ({
   stakingDetails,
   providers,
 }: {
@@ -40,5 +40,3 @@ const DonutChart = ({
     </>
   );
 };
-
-export default DonutChart;

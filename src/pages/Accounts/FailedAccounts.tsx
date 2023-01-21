@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import { PageState } from 'components';
 
-export default function FailedAccounts() {
+export const FailedAccounts = () => {
   return (
     <PageState
       icon={faUser}
@@ -11,4 +11,4 @@ export default function FailedAccounts() {
       dataTestId="errorScreen"
     />
   );
-}
+};

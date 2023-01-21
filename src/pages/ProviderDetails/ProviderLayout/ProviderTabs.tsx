@@ -4,7 +4,7 @@ import { NetworkLink } from 'components';
 import { urlBuilder, useActiveRoute } from 'helpers';
 import { validatorsRoutes } from 'routes';
 
-const AccountTabs = () => {
+export const ProviderTabs = () => {
   const { hash: address } = useParams() as any;
   const activeRoute = useActiveRoute();
 
@@ -28,5 +28,3 @@ const AccountTabs = () => {
     </div>
   );
 };
-
-export default AccountTabs;

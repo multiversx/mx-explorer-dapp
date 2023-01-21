@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { usdValue } from 'helpers';
 import { useGlobalState } from 'context';
 import moment from 'moment';
-import denominate from 'components/Denominate/denominate';
+import { denominate } from 'components/Denominate/denominate';
 
 const getTooltipLabel = (label: string) => {
   const capitalize = (string: string) =>
@@ -33,7 +33,7 @@ const getTooltipLabel = (label: string) => {
   }
 };
 
-const CustomTooltip = ({
+export const CustomTooltip = ({
   active,
   payload,
   label,
@@ -118,5 +118,3 @@ const CustomTooltip = ({
 
   return null;
 };
-
-export default CustomTooltip;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { faInfoCircle } from '@fortawesome/pro-regular-svg-icons/faInfoCircle';
 
-import IconState from '../IconState';
+import { IconState } from '../IconState';
 
 interface BasicPageStateType {
   title?: string;
@@ -24,7 +24,7 @@ interface PageStateWithSymbol extends BasicPageStateType {
 
 type PageStateType = PageStateWithIcon | PageStateWithSymbol;
 
-const PageState = ({
+export const PageState = ({
   title,
   description,
   icon,
@@ -50,5 +50,3 @@ const PageState = ({
     {action && <div className="d-flex align-items-center flex-column mt-spacer">{action}</div>}
   </div>
 );
-
-export default PageState;

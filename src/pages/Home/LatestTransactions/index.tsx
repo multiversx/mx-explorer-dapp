@@ -8,7 +8,7 @@ import {
   ShardSpan,
   NetworkLink,
   TimeAgo,
-  adapter,
+  useAdapter,
   Trim,
   Loader,
   LatestItem,
@@ -16,13 +16,13 @@ import {
   ScAddressIcon,
 } from 'components';
 
-import FailedTransactions from 'components/TransactionsTable/FailedTransactions';
-import NoTransactions from 'components/TransactionsTable/NoTransactions';
-import TransactionValue from 'components/TransactionsTable/TransactionValue';
+import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
+import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
+import { TransactionValue } from 'components/TransactionsTable/TransactionValue';
 
 import { UITransactionType } from 'helpers/types';
 
-const LatestTransactions = () => {
+export const LatestTransactions = () => {
   const ref = React.useRef(null);
   const {
     activeNetworkId,
@@ -30,7 +30,7 @@ const LatestTransactions = () => {
   } = useGlobalState();
   const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
-  const { getLatestTransactions } = adapter();
+  const { getLatestTransactions } = useAdapter();
   const size = 5;
 
   const fetchTransactions = () => {
@@ -214,4 +214,3 @@ const LatestTransactions = () => {
   };
   return React.useMemo(Component, [transactions, transactionsFetched]);
 };
-export default LatestTransactions;

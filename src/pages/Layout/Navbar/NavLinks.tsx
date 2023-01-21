@@ -17,7 +17,7 @@ interface NavLinksType {
   setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
+export const NavLinks = ({ setExpanded = () => null }: NavLinksType) => {
   const activeRoute = useActiveRoute();
   const { activeNetwork } = useGlobalState();
   const isMainnet = useIsMainnet();
@@ -145,4 +145,4 @@ export default function NavLinks({ setExpanded = () => null }: NavLinksType) {
       )}
     </>
   );
-}
+};

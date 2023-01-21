@@ -1,16 +1,16 @@
 import * as React from 'react';
-import ValidatorsStatus from './ValidatorsStatus';
-import NetworkHealth from './NetworkHealth';
-import LatestBlocks from './LatestBlocks';
-import LatestTransactions from './LatestTransactions';
-import PriceChart from './PriceChart';
-import StakingChart from './StakingChart';
-import TransactionsChart from './TransactionsChart';
-import AccountsChart from './AccountsChart';
+import { ValidatorsStatus } from './ValidatorsStatus';
+import { NetworkHealth } from './NetworkHealth';
+import { LatestBlocks } from './LatestBlocks';
+import { LatestTransactions } from './LatestTransactions';
+import { PriceChart } from './PriceChart';
+import { StakingChart } from './StakingChart';
+import { TransactionsChart } from './TransactionsChart';
+import { AccountsChart } from './AccountsChart';
 import { useIsMainnet } from 'helpers';
-import TestnetGlobalStatsCard from 'pages/Layout/TestnetGlobalStatsCard';
+import { TestnetGlobalStatsCard } from 'pages/Layout/TestnetGlobalStatsCard';
 
-const Home = () => {
+export const Home = () => {
   const isMainnet = useIsMainnet();
 
   return (
@@ -56,5 +56,3 @@ const Home = () => {
     </div>
   );
 };
-
-export default Home;

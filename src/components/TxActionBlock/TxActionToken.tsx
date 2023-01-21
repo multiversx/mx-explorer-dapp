@@ -4,7 +4,7 @@ import { urlBuilder, formatUSD } from 'helpers';
 import { TokenArgumentType } from 'helpers/types';
 import { denomination as configDenomination } from 'appConfig';
 
-const TxActionToken = ({
+export const TxActionToken = ({
   token,
   noValue,
   showLastNonZeroDecimal,
@@ -51,5 +51,3 @@ const TxActionToken = ({
     </div>
   );
 };
-
-export default TxActionToken;

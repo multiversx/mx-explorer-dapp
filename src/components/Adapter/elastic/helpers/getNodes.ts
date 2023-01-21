@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { getCache, putCache } from './s3Cache';
-import confirmNodeIdentity from './confirmNodeIdentity';
+import { confirmNodeIdentity } from './confirmNodeIdentity';
 
-const nodeIssues = (node: any, versionNumber: any) => {
+export const nodeIssues = (node: any, versionNumber: any) => {
   const nodeIssues = [];
 
   if (node.totalUpTimeSec === 0) {
@@ -20,7 +20,7 @@ const nodeIssues = (node: any, versionNumber: any) => {
   return nodeIssues;
 };
 
-const getNodes = async (args: any & { proxyUrl: () => string }) => {
+export const getNodes = async (args: any & { proxyUrl: () => string }) => {
   let skipCache = false;
 
   if (args && args.skipCache) {
@@ -164,5 +164,3 @@ const getNodes = async (args: any & { proxyUrl: () => string }) => {
 
   return data;
 };
-
-export default getNodes;

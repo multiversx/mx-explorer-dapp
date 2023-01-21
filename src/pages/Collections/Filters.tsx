@@ -3,9 +3,8 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {} from 'routes';
 
-const Filters = () => {
+export const Filters = () => {
   const { search: locationSearch } = useLocation();
 
   const history = useHistory();
@@ -69,5 +68,3 @@ const Filters = () => {
     </div>
   );
 };
-
-export default Filters;

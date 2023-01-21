@@ -5,7 +5,7 @@ import {
   Loader,
   NetworkLink,
   Trim,
-  adapter,
+  useAdapter,
   PageState,
   NodesTable,
   SharedIdentity,
@@ -20,13 +20,13 @@ export interface IdentityRowType {
   identity: IdentityType;
 }
 
-const IdentityRow = ({ identity }: IdentityRowType) => {
+export const IdentityRow = ({ identity }: IdentityRowType) => {
   const ref = React.useRef(null);
   const [collapsed, setCollapsed] = React.useState(true);
   const [showDetails, setShowDetails] = React.useState(false);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [identityNodes, setIdentityNodes] = React.useState<NodeType[]>([]);
-  const { getNodes, getNode } = adapter();
+  const { getNodes, getNode } = useAdapter();
 
   const expand = (identityRow: IdentityType) => () => {
     if (dataReady === undefined) {
@@ -137,5 +137,3 @@ const IdentityRow = ({ identity }: IdentityRowType) => {
     </>
   );
 };
-
-export default IdentityRow;

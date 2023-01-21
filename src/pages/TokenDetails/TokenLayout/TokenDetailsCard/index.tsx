@@ -5,7 +5,7 @@ import { urlBuilder, amountWithoutRounding } from 'helpers';
 import { Trim, NetworkLink, SocialIcons, PropertyPill, SmallDetailItem } from 'components';
 import { useGlobalState } from 'context';
 
-const TokenDetailsCard = () => {
+export const TokenDetailsCard = () => {
   const ref = React.useRef(null);
   const { tokenDetails } = useGlobalState();
 
@@ -179,4 +179,4 @@ const TokenDetailsCard = () => {
   ) : null;
 };
 
-export default TokenDetailsCard;
+

@@ -8,7 +8,7 @@ interface NftBlockType {
   value?: string;
 }
 
-const NftBlock = ({ value, operationToken }: NftBlockType) => {
+export const NftBlock = ({ value, operationToken }: NftBlockType) => {
   const ref = React.useRef(null);
 
   return (
@@ -58,5 +58,3 @@ const NftBlock = ({ value, operationToken }: NftBlockType) => {
     </div>
   );
 };
-
-export default NftBlock;

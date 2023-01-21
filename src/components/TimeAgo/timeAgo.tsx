@@ -34,10 +34,10 @@ export function dhms(ms: number) {
   return secsString + diff;
 }
 
-export default function timeAgo(timestamp: number) {
+export const timeAgo = (timestamp: number) => {
   const dateNow = moment.utc();
   const txtTime = moment.utc(timestamp);
   const diffInMs = Math.max(dateNow.diff(txtTime), 0);
 
   return dhms(diffInMs);
-}
+};

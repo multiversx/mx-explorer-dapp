@@ -6,7 +6,7 @@ import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { useGlobalState } from 'context';
 import { CardItem, MultilayerPercentageBar, PageState } from 'components';
 
-const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
+export const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
   const {
     economics,
     globalStake,
@@ -83,5 +83,3 @@ const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
     </div>
   );
 };
-
-export default GlobalStakeCard;

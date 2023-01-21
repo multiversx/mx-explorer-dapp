@@ -2,15 +2,15 @@ import React from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import BigNumber from 'bignumber.js';
 
-import { Chart, Loader, PageState, adapter } from 'components';
+import { Chart, Loader, PageState, useAdapter } from 'components';
 import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
-import formatDataCharts from 'components/Chart/helpers/formatDataCharts';
+import { formatDataCharts } from 'components/Chart/helpers/formatDataCharts';
 
 import { useGlobalState } from 'context';
 
-const TransactionsChart = () => {
+export const TransactionsChart = () => {
   const { activeNetworkId, stats } = useGlobalState();
-  const { getTransactionsHistory } = adapter();
+  const { getTransactionsHistory } = useAdapter();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
@@ -73,5 +73,3 @@ const TransactionsChart = () => {
     </section>
   );
 };
-
-export default TransactionsChart;

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { addressIsBech32 } from 'helpers';
 
-const LockedTokenAddressIcon = ({ address }: { address: string }) => {
+export const LockedTokenAddressIcon = ({ address }: { address: string }) => {
   const { tokenDetails } = useGlobalState();
   const lockedAccounts = tokenDetails.assets?.lockedAccounts;
   if (lockedAccounts) {
@@ -38,5 +38,3 @@ const LockedTokenAddressIcon = ({ address }: { address: string }) => {
 
   return null;
 };
-
-export default LockedTokenAddressIcon;

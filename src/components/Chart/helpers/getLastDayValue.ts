@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { ChartDataType } from 'components/Chart/helpers/types';
 
-const getLastDayValue = (chartData: ChartDataType[]) => {
+export const getLastDayValue = (chartData: ChartDataType[]) => {
   if (chartData.length >= 2) {
     const lastDay = chartData[chartData.length - 1].value;
     const penultimateDay = chartData[chartData.length - 2].value;
@@ -11,5 +11,3 @@ const getLastDayValue = (chartData: ChartDataType[]) => {
   }
   return '...';
 };
-
-export default getLastDayValue;

@@ -1,4 +1,4 @@
-export default [
+export const ratings = [
   { epoch: 0, shard: 4294967295, rating: 50.00001 },
   { epoch: 1, shard: 4294967295, rating: 50.87865 },
   { epoch: 2, shard: 4294967295, rating: 51.769947 },

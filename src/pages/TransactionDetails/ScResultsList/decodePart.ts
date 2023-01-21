@@ -1,6 +1,6 @@
 import { isUtf8 } from 'helpers';
 
-export default function decodePart(part: string) {
+export const decodePart = (part: string) => {
   let decodedPart = part;
 
   try {
@@ -12,4 +12,4 @@ export default function decodePart(part: string) {
   } catch (error) {}
 
   return decodedPart;
-}
+};

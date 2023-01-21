@@ -2,17 +2,17 @@ import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { useLocation, useParams } from 'react-router-dom';
 
-import { adapter, Loader, Pager, PageState, NodesTable } from 'components';
-import { useFilters } from 'helpers';
+import { useAdapter, Loader, Pager, PageState, NodesTable } from 'components';
+import { useGetFilters } from 'helpers';
 import { NodeType } from 'helpers/types';
-import ProviderTabs from 'pages/ProviderDetails/ProviderLayout/ProviderTabs';
+import { ProviderTabs } from 'pages/ProviderDetails/ProviderLayout/ProviderTabs';
 
-const Nodes = () => {
+export const ProviderDetails = () => {
   const ref = React.useRef(null);
   const { hash: address } = useParams() as any;
   const { search } = useLocation();
-  const { getNodes, getNodesCount } = adapter();
-  const { getQueryObject, size } = useFilters();
+  const { getNodes, getNodesCount } = useAdapter();
+  const { getQueryObject, size } = useGetFilters();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [nodes, setNodes] = React.useState<NodeType[]>([]);
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
@@ -76,5 +76,3 @@ const Nodes = () => {
     </div>
   );
 };
-
-export default Nodes;

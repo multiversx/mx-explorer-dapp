@@ -2,10 +2,10 @@ import * as React from 'react';
 import { urlBuilder } from 'helpers';
 import { NodeType } from 'helpers/types';
 import { NetworkLink, Trim } from 'components';
-import RowIcon from 'components/NodesTable/RowIcon';
-import RowIssueIcon from 'components/NodesTable/RowIssueIcon';
+import { RowIcon } from 'components/NodesTable/RowIcon';
+import { RowIssueIcon } from 'components/NodesTable/RowIssueIcon';
 
-const StatisticsRow = ({ nodeData }: { nodeData: NodeType }) => {
+export const StatisticsRow = ({ nodeData }: { nodeData: NodeType }) => {
   return (
     <>
       <td>
@@ -69,5 +69,3 @@ const StatisticsRow = ({ nodeData }: { nodeData: NodeType }) => {
     </>
   );
 };
-
-export default StatisticsRow;

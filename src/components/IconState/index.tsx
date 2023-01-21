@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const IconState = ({ icon, className }: { icon: any; className?: string }) => {
+export const IconState = ({ icon, className }: { icon: any; className?: string }) => {
   return (
     <span className={`icon-state mx-auto ${className ? className : ''}`}>
       <FontAwesomeIcon
@@ -12,5 +12,3 @@ const IconState = ({ icon, className }: { icon: any; className?: string }) => {
     </span>
   );
 };
-
-export default IconState;

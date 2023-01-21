@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { TxActionType, TxActionsEnum, TxActionCategoryEnum, UnwrapperType } from 'helpers/types';
 
-const mexUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
+export const mexUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
   switch (action.name) {
     // distribution
     case TxActionsEnum.claimLockedAssets:
@@ -80,7 +80,7 @@ const mexUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
   }
 };
 
-const esdtNftUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
+export const esdtNftUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
   switch (action.name) {
     case TxActionsEnum.transfer:
       return [
@@ -95,7 +95,7 @@ const esdtNftUnwrapper = (action: TxActionType): Array<string | UnwrapperType> =
   }
 };
 
-const stakeUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
+export const stakeUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
   switch (action.name) {
     case TxActionsEnum.delegate:
     case TxActionsEnum.stake:
@@ -148,7 +148,7 @@ const stakeUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => 
   }
 };
 
-const unwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
+export const unwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
   if (action.arguments) {
     switch (action.category) {
       case TxActionCategoryEnum.esdtNft:
@@ -164,5 +164,3 @@ const unwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
     return action.description ? [action.description] : [action.name];
   }
 };
-
-export default unwrapper;

@@ -3,7 +3,7 @@ import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { CardItem, Denominate, LockedAmountTooltip } from 'components';
 import { useGlobalState } from 'context';
 
-const LockedAmountCardItem = ({ cardItemClass }: { cardItemClass: string }) => {
+export const LockedAmountCardItem = ({ cardItemClass }: { cardItemClass: string }) => {
   const {
     accountStakingDetails: {
       stakingDataReady,
@@ -51,5 +51,3 @@ const LockedAmountCardItem = ({ cardItemClass }: { cardItemClass: string }) => {
     </CardItem>
   );
 };
-
-export default LockedAmountCardItem;

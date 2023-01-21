@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { useGlobalDispatch, useGlobalState } from 'context';
-import { adapter, Loader } from 'components';
+import { useAdapter, Loader } from 'components';
 import { NodesVersionsType } from 'helpers/types';
-import GlobalStakeCard from './GlobalStakeCard';
-import ShardsList from './ShardsList';
+import { GlobalStakeCard } from './GlobalStakeCard';
+import { ShardsList } from './ShardsList';
 
 const prepareNodesVersions = (data: any) => {
   const versions: NodesVersionsType[] = [];
@@ -23,8 +23,8 @@ const prepareNodesVersions = (data: any) => {
   return versions.sort((a, b) => b.percent - a.percent);
 };
 
-const NodesLayout = ({ children }: { children: React.ReactNode }) => {
-  const { getShards, getGlobalStake, getNodesVersions } = adapter();
+export const NodesLayout = ({ children }: { children: React.ReactNode }) => {
+  const { getShards, getGlobalStake, getNodesVersions } = useAdapter();
   const dispatch = useGlobalDispatch();
   const { activeNetworkId } = useGlobalState();
 
@@ -95,5 +95,3 @@ const NodesLayout = ({ children }: { children: React.ReactNode }) => {
     </>
   );
 };
-
-export default NodesLayout;

@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { NodeType } from 'helpers/types';
 
-export default function getUptimeDowntime(node: NodeType) {
+export const getUptimeDowntime = (node: NodeType) => {
   const uptimeLabel = node.uptime
     ? `${node.uptime.toFixed(2)}% (${moment.duration({ seconds: node.uptimeSec }).humanize()})`
     : '';
@@ -11,4 +11,4 @@ export default function getUptimeDowntime(node: NodeType) {
     : '';
 
   return { uptimeLabel, downtimeLabel };
-}
+};

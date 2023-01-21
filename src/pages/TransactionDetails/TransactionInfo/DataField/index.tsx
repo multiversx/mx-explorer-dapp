@@ -7,7 +7,7 @@ import { truncate, useScamFlag } from 'helpers';
 import { ScamInfoType } from 'helpers/types';
 import { displayedDataLength } from 'appConfig';
 
-const DataField = ({ data, scamInfo }: { data?: string; scamInfo?: ScamInfoType }) => {
+export const DataField = ({ data, scamInfo }: { data?: string; scamInfo?: ScamInfoType }) => {
   const { hash, pathname } = useLocation();
   const hashDecodeMethod = hash.replace('#', '');
   const initialDecodeMethod =
@@ -55,5 +55,3 @@ const DataField = ({ data, scamInfo }: { data?: string; scamInfo?: ScamInfoType 
     </DetailItem>
   );
 };
-
-export default DataField;

@@ -9,7 +9,7 @@ interface TokenBlockType {
   value?: string;
 }
 
-const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
+export const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
   const ref = React.useRef(null);
 
   const denomination =
@@ -57,5 +57,3 @@ const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
     </div>
   );
 };
-
-export default TokenBlock;

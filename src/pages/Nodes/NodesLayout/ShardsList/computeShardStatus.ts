@@ -1,6 +1,6 @@
 import { ShardType } from 'helpers/types';
 
-export default function computeShardStatus(shard: ShardType) {
+export const computeShardStatus = (shard: ShardType) => {
   const { activeValidators, validators } = shard;
   const danger = Math.ceil(validators * (2 / 3)) + 1;
   const warning = Math.ceil(validators - (validators - danger) / 2);
@@ -12,4 +12,4 @@ export default function computeShardStatus(shard: ShardType) {
     default:
       return 'danger';
   }
-}
+};

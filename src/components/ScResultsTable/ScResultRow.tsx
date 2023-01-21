@@ -8,7 +8,7 @@ export interface ScResultRowType {
   address?: string;
 }
 
-const ScAccountLink = ({ address, testId }: { address: string; testId?: string }) =>
+export const ScAccountLink = ({ address, testId }: { address: string; testId?: string }) =>
   addressIsBech32(address) ? (
     <NetworkLink
       to={urlBuilder.accountDetails(address)}
@@ -21,7 +21,7 @@ const ScAccountLink = ({ address, testId }: { address: string; testId?: string }
     <ShardSpan shard={address} />
   );
 
-const ScResultRow = ({ scResult, address }: ScResultRowType) => {
+export const ScResultRow = ({ scResult, address }: ScResultRowType) => {
   const directionOut = address === scResult.sender;
   const directionIn = address === scResult.receiver;
 
@@ -67,5 +67,3 @@ const ScResultRow = ({ scResult, address }: ScResultRowType) => {
     </tr>
   );
 };
-
-export default ScResultRow;

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { MetricType } from './helpers/types';
 
-const ChartMetrics = ({ metrics }: { metrics: MetricType[] }) => {
+export const ChartMetrics = ({ metrics }: { metrics: MetricType[] }) => {
   return (
     <div className="chart-metrics pl-3">
       {metrics.map((metric, metricIndex) => (
@@ -14,5 +14,3 @@ const ChartMetrics = ({ metrics }: { metrics: MetricType[] }) => {
     </div>
   );
 };
-
-export default ChartMetrics;

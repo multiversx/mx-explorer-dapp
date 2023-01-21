@@ -1,6 +1,6 @@
 import { UITransactionType, TxActionsEnum, TxActionCategoryEnum } from 'helpers/types';
 
-const getTransactionMethod = (transaction: UITransactionType) => {
+export const getTransactionMethod = (transaction: UITransactionType) => {
   let transactionAction = 'transaction';
   if (transaction.action && transaction.action.name && transaction.action.category) {
     if (
@@ -22,5 +22,3 @@ const getTransactionMethod = (transaction: UITransactionType) => {
 
   return transactionAction;
 };
-
-export default getTransactionMethod;

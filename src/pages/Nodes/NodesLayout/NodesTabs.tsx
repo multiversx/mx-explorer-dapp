@@ -3,7 +3,7 @@ import * as React from 'react';
 import { validatorsRoutes } from 'routes';
 import { NetworkLink } from 'components';
 
-const NodesTabs = () => {
+export const NodesTabs = () => {
   const isMainnet = useIsMainnet();
   const activeRoute = useActiveRoute();
 
@@ -56,5 +56,3 @@ const NodesTabs = () => {
     </div>
   );
 };
-
-export default NodesTabs;

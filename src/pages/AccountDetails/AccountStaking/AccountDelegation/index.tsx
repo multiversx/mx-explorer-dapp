@@ -4,10 +4,10 @@ import { Denominate } from 'components';
 import { DelegationType, ProviderType } from 'helpers/types';
 import { useGlobalState } from 'context';
 
-import ProviderDetails from './ProviderDetails';
-import DetailsBlock from 'pages/AccountDetails/AccountStaking/DetailsBlock';
+import { ProviderDetails } from './ProviderDetails';
+import { DetailsBlock } from 'pages/AccountDetails/AccountStaking/DetailsBlock';
 
-const AccountDelegation = ({
+export const AccountDelegation = ({
   delegation,
   provider,
 }: {
@@ -61,5 +61,3 @@ const AccountDelegation = ({
     </div>
   );
 };
-
-export default AccountDelegation;

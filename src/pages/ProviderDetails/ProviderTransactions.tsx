@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
-import { Loader, TransactionsTable, adapter } from 'components';
+import { Loader, TransactionsTable, useAdapter } from 'components';
 
-import txStatus from 'components/TransactionStatus/txStatus';
-import NoTransactions from 'components/TransactionsTable/NoTransactions';
-import FailedTransactions from 'components/TransactionsTable/FailedTransactions';
+import { txStatus } from 'components/TransactionStatus/txStatus';
+import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
+import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { useSize, useURLSearchParams } from 'helpers';
 import { UITransactionType } from 'helpers/types';
-import ProviderTabs from './ProviderLayout/ProviderTabs';
+import { ProviderTabs } from './ProviderLayout/ProviderTabs';
 
-const AccountDetails = () => {
+export const ProviderTransactions = () => {
   const ref = React.useRef(null);
-  const { getTransactions, getTransactionsCount } = adapter();
+  const { getTransactions, getTransactionsCount } = useAdapter();
   const { size, firstPageTicker } = useSize();
   const { activeNetworkId } = useGlobalState();
   const { hash: address } = useParams() as any;
@@ -153,5 +153,3 @@ const AccountDetails = () => {
     </div>
   );
 };
-
-export default AccountDetails;

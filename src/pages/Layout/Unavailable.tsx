@@ -4,7 +4,7 @@ import { faWifiSlash } from '@fortawesome/pro-regular-svg-icons/faWifiSlash';
 import { PageState } from 'components';
 import { useGlobalState } from 'context';
 
-const Unavailable = () => {
+export const Unavailable = () => {
   const { activeNetwork } = useGlobalState();
 
   let icon = faBan;
@@ -26,5 +26,3 @@ const Unavailable = () => {
     <PageState icon={icon} title={title} className="py-spacer m-auto" data-testid="errorScreen" />
   );
 };
-
-export default Unavailable;

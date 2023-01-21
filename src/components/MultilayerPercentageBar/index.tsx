@@ -4,7 +4,7 @@ import { NodesVersionsType } from 'helpers/types';
 
 export interface PercentageStepType extends NodesVersionsType {}
 
-const MultilayerPercentageBar = ({
+export const MultilayerPercentageBar = ({
   steps,
   trim,
 }: {
@@ -43,5 +43,3 @@ const MultilayerPercentageBar = ({
     </div>
   );
 };
-
-export default MultilayerPercentageBar;

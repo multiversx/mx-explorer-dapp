@@ -5,7 +5,7 @@ import { useGlobalState } from 'context';
 import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
 
-export default function AppSwitcher({ onToggle }: { onToggle?: () => void }) {
+export const AppSwitcher = ({ onToggle }: { onToggle?: () => void }) => {
   const {
     config: { multiversXApps },
   } = useGlobalState();
@@ -50,4 +50,4 @@ export default function AppSwitcher({ onToggle }: { onToggle?: () => void }) {
       })}
     </NavDropdown>
   );
-}
+};

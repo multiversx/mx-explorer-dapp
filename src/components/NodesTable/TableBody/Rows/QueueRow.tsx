@@ -2,10 +2,10 @@ import * as React from 'react';
 import { urlBuilder } from 'helpers';
 import { NodeType } from 'helpers/types';
 import { NetworkLink, Trim, Led } from 'components';
-import RowIcon from 'components/NodesTable/RowIcon';
-import RowIssueIcon from 'components/NodesTable/RowIssueIcon';
+import { RowIcon } from 'components/NodesTable/RowIcon';
+import { RowIssueIcon } from 'components/NodesTable/RowIssueIcon';
 
-const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
+export const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
   return (
     <>
       <td>
@@ -50,5 +50,3 @@ const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
     </>
   );
 };
-
-export default QueueRow;

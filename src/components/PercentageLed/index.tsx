@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const PercentageLed = ({ percentage }: { percentage: string }) => {
+export const PercentageLed = ({ percentage }: { percentage: string }) => {
   return (
     <div className="percentage-led mr-1" data-percentage={parseInt(percentage)}>
       <svg viewBox="0 0 32 32" width="16" height="16">
@@ -9,5 +9,3 @@ const PercentageLed = ({ percentage }: { percentage: string }) => {
     </div>
   );
 };
-
-export default PercentageLed;
