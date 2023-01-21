@@ -1,5 +1,5 @@
 import React from 'react';
-import config from 'utils/config';
+import config from '__mocks__/config';
 import Denominate from '../index';
 import { GlobalProvider } from 'context';
 import { render } from '@testing-library/react';
