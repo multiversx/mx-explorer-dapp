@@ -1,3 +1,6 @@
+@import './DetailsBlock/detailsBlock.styles.scss';
+@import './AccountDelegation/ProviderDetails/providerDetails.styles.scss';
+
 .account-staking {
   .delegation-row + .delegation-row {
     border-top: 1px solid $border-color !important;
@@ -36,6 +39,3 @@
     margin: auto;
   }
 }
-
-@import './DetailsBlock/detailsBlock.scss';
-@import './AccountDelegation/ProviderDetails/providerDetails.scss';
