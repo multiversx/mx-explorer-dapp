@@ -5,7 +5,7 @@ import { useGlobalState, useGlobalDispatch } from 'context';
 import { extrasApi } from 'appConfig';
 import { StateType } from 'context/state';
 
-const useScamDetect = () => {
+export const useScamDetect = () => {
   const { urlBlacklist } = useGlobalState();
   const dispatch = useGlobalDispatch();
   const blacklist: StateType['urlBlacklist'] = urlBlacklist ? urlBlacklist : {};
@@ -91,5 +91,3 @@ export const scamDetect = (blacklist: StateType['urlBlacklist'] = {}) => (
 
   return { output, stringWithLinks: parts.join(''), found };
 };
-
-export default useScamDetect;

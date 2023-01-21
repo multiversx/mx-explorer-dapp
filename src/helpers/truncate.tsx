@@ -1,8 +1,8 @@
-export default function truncate(
+export const truncate = (
   text: string | undefined,
   length: number,
   end: string | undefined = '...'
-) {
+) => {
   if (isNaN(length)) length = 10;
 
   if (!end) end = '...';
@@ -12,4 +12,4 @@ export default function truncate(
   } else {
     return String(text).substring(0, length - end.length) + end;
   }
-}
+};

@@ -113,7 +113,7 @@ export interface StateType {
   stats: StatsType;
 }
 
-const initialState = (optionalConfig?: ConfigType): StateType => {
+export const initialState = (optionalConfig?: ConfigType): StateType => {
   const configObject = optionalConfig !== undefined ? optionalConfig : config;
 
   return {
@@ -243,5 +243,3 @@ const getTheme = (): StateType['theme'] => {
 
   return 'dark'; // theme;
 };
-
-export default initialState;

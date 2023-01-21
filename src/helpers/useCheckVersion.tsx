@@ -4,7 +4,7 @@ import moment from 'moment';
 import { useGlobalState } from 'context';
 import { useNotifications } from 'helpers';
 
-export default function useCheckVersion() {
+export const useCheckVersion = () => {
   const {
     refresh: { timestamp },
   } = useGlobalState();
@@ -63,4 +63,4 @@ export default function useCheckVersion() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(useLoop, []);
-}
+};

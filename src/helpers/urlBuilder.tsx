@@ -1,4 +1,4 @@
-const urlBuilder = {
+export const urlBuilder = {
   shard: (shard: number | string) => `/blocks?shard=${shard}`,
   receiverShard: (shard: number | string) => `/transactions?receiverShard=${shard}`,
   senderShard: (shard: number | string) => `/transactions?senderShard=${shard}`,
@@ -26,5 +26,3 @@ const urlBuilder = {
   providerDetailsTransactions: (address: string) => `/providers/${address}/transactions`,
   miniblockDetails: (hash: string) => `/miniblocks/${hash}`,
 };
-
-export default urlBuilder;

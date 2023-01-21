@@ -6,7 +6,7 @@ interface DownloadFileType {
   fileType: 'csv' | 'json' | 'wasm';
 }
 
-const getFileMetadata = (type: DownloadFileType['fileType']) => {
+export const getFileMetadata = (type: DownloadFileType['fileType']) => {
   switch (type) {
     case 'csv':
       return 'data:text/csv;charset=utf-8';
@@ -19,7 +19,7 @@ const getFileMetadata = (type: DownloadFileType['fileType']) => {
   }
 };
 
-const downloadFile = ({ data, name, fileType }: DownloadFileType) => {
+export const downloadFile = ({ data, name, fileType }: DownloadFileType) => {
   if (data && name && process.env.NODE_ENV !== 'test') {
     const type = getFileMetadata(fileType);
     const blob = new Blob([data], { type });
@@ -43,5 +43,3 @@ const downloadFile = ({ data, name, fileType }: DownloadFileType) => {
     }
   }
 };
-
-export default downloadFile;

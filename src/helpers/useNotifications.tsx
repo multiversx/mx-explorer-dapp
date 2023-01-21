@@ -9,7 +9,7 @@ interface AddNotificationType {
   dismissable?: NotificationType['dismissable'];
 }
 
-export default function useNotifications() {
+export const useNotifications = () => {
   const dispatch = useGlobalDispatch();
   const { notifications } = useGlobalState();
 
@@ -44,4 +44,4 @@ export default function useNotifications() {
   };
 
   return { addNotification, removeNotification };
-}
+};

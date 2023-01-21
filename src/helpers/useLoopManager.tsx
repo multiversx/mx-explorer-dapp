@@ -3,7 +3,7 @@ import moment from 'moment';
 import { useGlobalState, useGlobalDispatch } from 'context';
 import { refreshRate } from 'appConfig';
 
-export default function useLoopManager() {
+export const useLoopManager = () => {
   const {
     refresh: { timestamp },
   } = useGlobalState();
@@ -26,4 +26,4 @@ export default function useLoopManager() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(setRounds, []);
-}
+};

@@ -1,6 +1,6 @@
 import { useGlobalState } from 'context';
 import { NetworkIdType } from 'helpers/types';
 
-export default function useIsTestnet() {
+export const useIsTestnet = () => {
   return useGlobalState().activeNetwork.id === NetworkIdType.testnet;
-}
+};

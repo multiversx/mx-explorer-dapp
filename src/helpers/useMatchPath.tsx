@@ -1,6 +1,6 @@
 import { matchPath, useLocation } from 'react-router-dom';
 
-const useMatchPath = () => {
+export const useMatchPath = () => {
   const { pathname } = useLocation();
 
   return (path: string) =>
@@ -10,5 +10,3 @@ const useMatchPath = () => {
       strict: false,
     });
 };
-
-export default useMatchPath;
