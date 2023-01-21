@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { ResponsiveContainer, PieChart, Pie, Sector, Cell } from 'recharts';
 
 import { ChartProps } from './helpers/types';
-import getEntryColor from './helpers/getEntryColor';
+import { getProviderColor } from './helpers/getEntryColor';
 import { useGlobalState } from 'context';
 import { usdValue } from 'helpers';
 
@@ -103,7 +103,7 @@ const RenderActiveShape = (props: any) => {
   );
 };
 
-const ChartDonut = ({ config }: ChartProps) => {
+export const ChartDonut = ({ config }: ChartProps) => {
   const chartData = config[0].data;
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
@@ -137,7 +137,7 @@ const ChartDonut = ({ config }: ChartProps) => {
               key={`cell-${index}`}
               fill={
                 entry?.identifier
-                  ? getEntryColor({
+                  ? getProviderColor({
                       name: entry.identifier,
                       currentIndex: index,
                       total: chartData.length,
@@ -151,5 +151,3 @@ const ChartDonut = ({ config }: ChartProps) => {
     </ResponsiveContainer>
   );
 };
-
-export default ChartDonut;

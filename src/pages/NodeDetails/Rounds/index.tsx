@@ -14,7 +14,7 @@ interface RoundsType {
   success: boolean | undefined;
 }
 
-const RoundsPageState = ({ message }: { message: string }) => {
+export const RoundsPageState = ({ message }: { message: string }) => {
   return (
     <PageState
       icon={faRepeat}
@@ -25,7 +25,7 @@ const RoundsPageState = ({ message }: { message: string }) => {
   );
 };
 
-const Rounds = ({ rounds, node }: { rounds: RoundsType; node: NodeType }) => {
+export const Rounds = ({ rounds, node }: { rounds: RoundsType; node: NodeType }) => {
   return (
     <div className="card" data-testid="roundsContainer">
       {rounds.success === false && <RoundsPageState message={'Unable to load rounds'} />}
@@ -68,5 +68,3 @@ const Rounds = ({ rounds, node }: { rounds: RoundsType; node: NodeType }) => {
     </div>
   );
 };
-
-export default Rounds;

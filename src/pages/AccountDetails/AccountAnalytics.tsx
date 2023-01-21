@@ -2,21 +2,21 @@ import React from 'react';
 import moment from 'moment';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import { useGlobalState } from 'context';
-import { adapter, Loader, PageState, Chart } from 'components';
+import { useAdapter, Loader, PageState, Chart } from 'components';
 import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
 import {
   getNormalizedTimeEntries,
   getFrequency,
 } from 'components/Chart/helpers/getChartBinnedData';
-import AccountTabs from './AccountLayout/AccountTabs';
+import { AccountTabs } from './AccountLayout/AccountTabs';
 
-const AccountAnalytics = () => {
+export const AccountAnalytics = () => {
   const {
     accountDetails,
     activeNetwork: { erdLabel },
   } = useGlobalState();
   const { activeNetworkId } = useGlobalState();
-  const { getAccountHistory } = adapter();
+  const { getAccountHistory } = useAdapter();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
@@ -113,5 +113,3 @@ const AccountAnalytics = () => {
     </div>
   );
 };
-
-export default AccountAnalytics;

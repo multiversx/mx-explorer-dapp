@@ -5,7 +5,7 @@ import { NetworkIdType } from 'helpers/types';
 import { ReactComponent as MultiversXLogo } from 'assets/img/logo-full.svg';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 
-const Logo = () => {
+export const Logo = () => {
   const {
     activeNetwork: { id },
   } = useGlobalState();
@@ -23,5 +23,3 @@ const Logo = () => {
     </Link>
   );
 };
-
-export default Logo;

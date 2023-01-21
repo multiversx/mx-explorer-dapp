@@ -1,6 +1,6 @@
 import * as React from 'react';
-import ScResultRow from './ScResultRow';
-import Pager from '../Pager';
+import { ScResultRow } from './ScResultRow';
+import { Pager } from '../Pager';
 import { ScResultType } from 'helpers/types';
 
 interface ScResultsTableType {
@@ -11,7 +11,7 @@ interface ScResultsTableType {
   title?: React.ReactNode;
 }
 
-const ScResultsTable = ({
+export const ScResultsTable = ({
   scResults,
   address,
   totalScResults,
@@ -76,5 +76,3 @@ const ScResultsTable = ({
     </div>
   );
 };
-
-export default ScResultsTable;

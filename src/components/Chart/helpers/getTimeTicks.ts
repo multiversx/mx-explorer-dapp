@@ -2,7 +2,7 @@ import moment from 'moment';
 import { getFrequency, getIntervalDates } from './getChartBinnedData';
 import { ChartDataType } from './types';
 
-const getTimeTicks = (data: ChartDataType[], total: number) => {
+export const getTimeTicks = (data: ChartDataType[], total: number) => {
   const frequency = getFrequency(data);
   const intervalDates = getIntervalDates(
     data[0].timestamp,
@@ -28,5 +28,3 @@ const getTimeTicks = (data: ChartDataType[], total: number) => {
 
   return ticks;
 };
-
-export default getTimeTicks;

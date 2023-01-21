@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { Loader, TransactionsTable, adapter } from 'components';
+import { Loader, TransactionsTable, useAdapter } from 'components';
 
-import NoTransactions from 'components/TransactionsTable/NoTransactions';
-import FailedTransactions from 'components/TransactionsTable/FailedTransactions';
+import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
+import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { useSize, useURLSearchParams } from 'helpers';
 import { UITransactionType } from 'helpers/types';
 import { shardSpanText } from 'components/ShardSpan';
 
-const Transactions = () => {
+export const Transactions = () => {
   const ref = React.useRef(null);
   const { activeNetworkId } = useGlobalState();
 
@@ -32,7 +32,7 @@ const Transactions = () => {
     }
   }, [receiverShard, senderShard]);
 
-  const { getTransactionsCount, getTransactions } = adapter();
+  const { getTransactionsCount, getTransactions } = useAdapter();
 
   const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -126,5 +126,3 @@ const Transactions = () => {
     </>
   );
 };
-
-export default Transactions;

@@ -2,17 +2,17 @@ import * as React from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { tokensRoutes } from 'routes';
 import { useGlobalDispatch, useGlobalState } from 'context';
-import { Loader, adapter } from 'components';
+import { Loader, useAdapter } from 'components';
 import { useSize, useNetworkRoute } from 'helpers';
-import FailedTokenDetails from './FailedTokenDetails';
-import TokenDetailsCard from './TokenDetailsCard';
+import { FailedTokenDetails } from './FailedTokenDetails';
+import { TokenDetailsCard } from './TokenDetailsCard';
 
-const TokenLayout = ({ children }: { children: React.ReactNode }) => {
+export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { firstPageTicker } = useSize();
   const { activeNetwork } = useGlobalState();
   const dispatch = useGlobalDispatch();
-  const { getToken } = adapter();
+  const { getToken } = useAdapter();
   const networkRoute = useNetworkRoute();
 
   const match: any = useRouteMatch(networkRoute(tokensRoutes.tokenDetails));
@@ -71,5 +71,3 @@ const TokenLayout = ({ children }: { children: React.ReactNode }) => {
     </>
   );
 };
-
-export default TokenLayout;

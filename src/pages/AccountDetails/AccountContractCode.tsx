@@ -1,11 +1,11 @@
 import React from 'react';
 import { useGlobalState } from 'context';
-import AccountTabs from './AccountLayout/AccountTabs';
+import { AccountTabs } from './AccountLayout/AccountTabs';
 import { Redirect } from 'react-router-dom';
 import { urlBuilder, useNetworkRoute } from 'helpers';
 import { downloadFile } from 'helpers';
 
-const DownloadContractCode = ({ code, fileName }: { code: string; fileName?: string }) => {
+export const DownloadContractCode = ({ code, fileName }: { code: string; fileName?: string }) => {
   const download = (e: React.MouseEvent) => {
     const name = fileName ?? 'contract';
 
@@ -25,7 +25,7 @@ const DownloadContractCode = ({ code, fileName }: { code: string; fileName?: str
   );
 };
 
-const AccountContractCode = () => {
+export const AccountContractCode = () => {
   const { accountDetails } = useGlobalState();
   const networkRoute = useNetworkRoute();
 
@@ -60,5 +60,3 @@ const AccountContractCode = () => {
     </div>
   );
 };
-
-export default AccountContractCode;

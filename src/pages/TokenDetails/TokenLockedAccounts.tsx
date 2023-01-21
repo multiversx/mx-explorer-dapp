@@ -4,7 +4,7 @@ import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import { useGlobalState } from 'context';
 import {
   Loader,
-  adapter,
+  useAdapter,
   NetworkLink,
   Trim,
   ScAddressIcon,
@@ -13,12 +13,12 @@ import {
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { TokenLockedAccountType } from 'helpers/types';
-import TokenTabs from './TokenLayout/TokenTabs';
+import { TokenTabs } from './TokenLayout/TokenTabs';
 
-const TokenLockedAccounts = () => {
+export const TokenDetailsLockedAccounts = () => {
   const ref = React.useRef(null);
   const { activeNetworkId, tokenDetails } = useGlobalState();
-  const { getTokenSupply } = adapter();
+  const { getTokenSupply } = useAdapter();
   const { decimals } = tokenDetails;
 
   const { hash: tokenId } = useParams() as any;
@@ -125,5 +125,3 @@ const TokenLockedAccounts = () => {
     </div>
   );
 };
-
-export default TokenLockedAccounts;

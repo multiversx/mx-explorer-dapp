@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { faCode } from '@fortawesome/pro-solid-svg-icons/faCode';
 import {
-  adapter,
+  useAdapter,
   Loader,
   Pager,
   PageState,
@@ -12,8 +12,8 @@ import {
   ShardSpan,
 } from 'components';
 import { useGlobalState } from 'context';
-import AccountTabs from './AccountLayout/AccountTabs';
-import { urlBuilder, useFilters, addressIsBech32 } from 'helpers';
+import { AccountTabs } from './AccountLayout/AccountTabs';
+import { urlBuilder, useGetFilters, addressIsBech32 } from 'helpers';
 
 export interface AccountSmartContractType {
   address: string;
@@ -21,12 +21,12 @@ export interface AccountSmartContractType {
   timestamp: number;
 }
 
-const AccountContracts = () => {
+export const AccountContracts = () => {
   const ref = React.useRef(null);
   const { activeNetwork, accountDetails } = useGlobalState();
-  const { size } = useFilters();
+  const { size } = useGetFilters();
 
-  const { getAccountContracts, getAccountContractsCount } = adapter();
+  const { getAccountContracts, getAccountContractsCount } = useAdapter();
 
   const { hash: address } = useParams() as any;
 
@@ -151,5 +151,3 @@ const AccountContracts = () => {
     </div>
   );
 };
-
-export default AccountContracts;

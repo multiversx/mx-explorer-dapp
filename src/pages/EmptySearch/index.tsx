@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { PageState } from 'components';
 
-const EmptySearch = () => {
+export const EmptySearch = () => {
   const { hash: query } = useParams() as any;
 
   return (
@@ -20,5 +20,3 @@ const EmptySearch = () => {
     />
   );
 };
-
-export default EmptySearch;

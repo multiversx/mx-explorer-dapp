@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const ChartHeading = ({
+export const ChartHeading = ({
   title,
   icon,
   svgIcon,
@@ -29,5 +29,3 @@ const ChartHeading = ({
     </div>
   </div>
 );
-
-export default ChartHeading;

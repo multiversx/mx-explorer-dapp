@@ -8,7 +8,7 @@ import {
   CopyButton,
   Denominate,
   NetworkLink,
-  adapter,
+  useAdapter,
   ShardSpan,
   ScAddressIcon,
   Trim,
@@ -21,16 +21,16 @@ import { useGlobalState } from 'context';
 import { isContract, urlBuilder, dateFormatted, formatHerotag } from 'helpers';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 
-import LockedAmountCardItem from './LockedAmountCardItem';
-import AccountUsdValueCardItem from './AccountUsdValueCardItem';
+import { LockedAmountCardItem } from './LockedAmountCardItem';
+import { AccountUsdValueCardItem } from './AccountUsdValueCardItem';
 
-const AccountDetailsCard = () => {
+export const AccountDetailsCard = () => {
   const ref = React.useRef(null);
   const {
     activeNetwork: { id, adapter: networkAdapter },
     accountDetails,
   } = useGlobalState();
-  const { getProvider, getAccountTokensCount, getAccountNftsCount } = adapter();
+  const { getProvider, getAccountTokensCount, getAccountNftsCount } = useAdapter();
   const {
     address,
     balance,
@@ -331,5 +331,3 @@ const AccountDetailsCard = () => {
     </div>
   ) : null;
 };
-
-export default AccountDetailsCard;

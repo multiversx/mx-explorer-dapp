@@ -57,7 +57,7 @@ const MarkerToolTip = ({
   </OverlayTrigger>
 );
 
-const SimpleMap = ({ markers }: SimpleMapType) => {
+export const SimpleMap = ({ markers }: SimpleMapType) => {
   const ref = React.useRef(null);
   const [localMarkers, setLocalMarkers] = React.useState<MarkerType[]>([]);
   const [pulse, setPulse] = React.useState(0);
@@ -140,5 +140,3 @@ const SimpleMap = ({ markers }: SimpleMapType) => {
     </div>
   );
 };
-
-export default SimpleMap;

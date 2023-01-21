@@ -7,7 +7,7 @@ import { GlobalStakeType } from 'context/state';
 import { ShardType } from 'helpers/types';
 import { PageState } from 'components';
 
-import ShardCard from './ShardCard';
+import { ShardCard } from './ShardCard';
 
 const StakingQueueCard = ({ globalStake }: { globalStake: GlobalStakeType | undefined }) => {
   return (
@@ -41,7 +41,7 @@ const sortShards = ({
   return sorted;
 };
 
-const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
+export const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
   const { shards, globalStake } = useGlobalState();
 
   const overallCard: ShardType = {
@@ -99,5 +99,3 @@ const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
     </>
   );
 };
-
-export default ShardsList;

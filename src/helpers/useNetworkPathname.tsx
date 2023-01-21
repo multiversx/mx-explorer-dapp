@@ -1,7 +1,7 @@
 import { useGlobalState } from 'context';
 import { useLocation } from 'react-router-dom';
 
-const useNetworkPathname = () => {
+export const useNetworkPathname = () => {
   const { pathname: originalPathname } = useLocation();
   const { activeNetworkId } = useGlobalState();
   const pathname = activeNetworkId
@@ -9,5 +9,3 @@ const useNetworkPathname = () => {
     : originalPathname;
   return pathname;
 };
-
-export default useNetworkPathname;

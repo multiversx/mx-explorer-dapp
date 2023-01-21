@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const DetailItem = ({
+export const DetailItem = ({
   children,
   title,
   className = '',
@@ -18,5 +18,3 @@ const DetailItem = ({
     <div className={`col-lg-${12 - Number(colWidth)} pr-lg-spacer`}>{children}</div>
   </div>
 );
-
-export default DetailItem;

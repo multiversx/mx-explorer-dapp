@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getStats = async ({
+export const getStats = async ({
   proxyUrl,
   elasticUrl,
   metaChainShardId,
@@ -62,5 +62,3 @@ const getStats = async ({
     throw new Error(error);
   }
 };
-
-export default getStats;

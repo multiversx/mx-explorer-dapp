@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faCoins } from '@fortawesome/pro-regular-svg-icons/faCoins';
 import { PageState } from 'components';
 
-export default function FailedTokens() {
+export const FailedTokens = () => {
   return (
     <PageState
       icon={faCoins}
@@ -11,4 +11,4 @@ export default function FailedTokens() {
       dataTestId="errorScreen"
     />
   );
-}
+};

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { ToggleType, OptionType } from './helpers/types';
 
-const ChartOptions = ({
+export const ChartOptions = ({
   options,
   toggle,
   setToggle,
@@ -42,5 +42,3 @@ const ChartOptions = ({
     </div>
   );
 };
-
-export default ChartOptions;

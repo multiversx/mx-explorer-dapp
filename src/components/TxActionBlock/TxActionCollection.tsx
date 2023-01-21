@@ -3,7 +3,7 @@ import { NetworkLink } from 'components';
 import { urlBuilder } from 'helpers';
 import { TokenArgumentType } from 'helpers/types';
 
-const TxActionCollection = ({ token }: { token: TokenArgumentType }) => {
+export const TxActionCollection = ({ token }: { token: TokenArgumentType }) => {
   const ref = React.useRef(null);
 
   return (
@@ -22,5 +22,3 @@ const TxActionCollection = ({ token }: { token: TokenArgumentType }) => {
     </div>
   );
 };
-
-export default TxActionCollection;

@@ -2,7 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Overlay, Popover } from 'react-bootstrap';
 
-const PopoverStickOnHover = ({ delay, onMouseEnter, children, component, placement }: any) => {
+export const PopoverStickOnHover = ({
+  delay,
+  onMouseEnter,
+  children,
+  component,
+  placement,
+}: any) => {
   const [showPopover, setShowPopover] = React.useState(false);
   const childNode = React.useRef(null);
   let setTimeoutConst: any = null;
@@ -71,5 +77,3 @@ PopoverStickOnHover.defaultProps = {
   delay: 0,
   onMouseEnter: () => null,
 };
-
-export default PopoverStickOnHover;

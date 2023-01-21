@@ -8,11 +8,11 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { ProviderType } from 'helpers/types';
 import { getPercentage, stringIsFloat } from 'helpers';
 import { Trim, PercentageLed } from 'components';
-import ProviderImage from './ProviderImage';
+import { ProviderImage } from './ProviderImage';
 
 const minDelegation = '1000000000000000000';
 
-const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
+export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
   return provider ? (
     <div className="provider-details">
       <div className="d-flex flex-row align-items-center">
@@ -105,5 +105,3 @@ const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
     </div>
   ) : null;
 };
-
-export default ProviderDetails;

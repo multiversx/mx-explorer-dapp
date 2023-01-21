@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { PageState } from 'components';
 
-const Loader = ({
+export const Loader = ({
   dataTestId = 'loader',
   small = false,
   noText = false,
@@ -30,4 +30,3 @@ const Loader = ({
     />
   );
 };
-export default Loader;

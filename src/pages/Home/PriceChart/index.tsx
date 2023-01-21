@@ -13,26 +13,26 @@ import {
   Tooltip,
 } from 'recharts';
 
-import { Chart, Loader, PageState, adapter } from 'components';
-import CustomTooltip from 'components/Chart/helpers/CustomTooltip';
-import formatDataCharts from 'components/Chart/helpers/formatDataCharts';
-import formatYAxis from 'components/Chart/helpers/formatYAxis';
-import StartEndTick from 'components/Chart/helpers/StartEndTick';
+import { Chart, Loader, PageState, useAdapter } from 'components';
+import { CustomTooltip } from 'components/Chart/helpers/CustomTooltip';
+import { formatDataCharts } from 'components/Chart/helpers/formatDataCharts';
+import { formatYAxis } from 'components/Chart/helpers/formatYAxis';
+import { StartEndTick } from 'components/Chart/helpers/StartEndTick';
 import { ControlType, ChartDataType } from 'components/Chart/helpers/types';
 
 import { useGlobalState } from 'context';
 
-const getCurrentValue = (chartData: ChartDataType[]) => {
+export const getCurrentValue = (chartData: ChartDataType[]) => {
   if (chartData.length >= 1) {
     return chartData[chartData.length - 1].value;
   }
   return '...';
 };
 
-const Price = () => {
+export const PriceChart = () => {
   const { activeNetworkId } = useGlobalState();
 
-  const { getEgldPriceHistory, getEgldMarketCapHistory } = adapter();
+  const { getEgldPriceHistory, getEgldMarketCapHistory } = useAdapter();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
   const [priceChartData, setPriceChartData] = React.useState<ChartDataType[]>([]);
@@ -207,5 +207,3 @@ const Price = () => {
     </section>
   );
 };
-
-export default Price;

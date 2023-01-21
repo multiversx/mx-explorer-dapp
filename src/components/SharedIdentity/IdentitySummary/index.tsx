@@ -9,7 +9,7 @@ import { Denominate, NetworkLink, PageState, SharedIdentity, Trim } from 'compon
 import { urlBuilder } from 'helpers';
 import { IdentityType } from 'helpers/types';
 
-const IdentitySummary = ({
+export const IdentitySummary = ({
   identity,
   featured,
 }: {
@@ -100,5 +100,3 @@ const IdentitySummary = ({
     </div>
   );
 };
-
-export default IdentitySummary;

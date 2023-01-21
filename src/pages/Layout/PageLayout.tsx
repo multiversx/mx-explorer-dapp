@@ -1,13 +1,13 @@
 import React from 'react';
 import { useActiveRoute } from 'helpers';
 import { validatorsRoutes, accountsRoutes, tokensRoutes, collectionRoutes } from 'routes';
-import NodesLayout from 'pages/Nodes/NodesLayout';
-import AccountLayout from 'pages/AccountDetails/AccountLayout';
-import ProviderLayout from 'pages/ProviderDetails/ProviderLayout';
-import TokenLayout from 'pages/TokenDetails/TokenLayout';
-import CollectionLayout from 'pages/CollectionDetails/CollectionLayout';
+import { NodesLayout } from 'pages/Nodes/NodesLayout';
+import { AccountLayout } from 'pages/AccountDetails/AccountLayout';
+import { ProviderLayout } from 'pages/ProviderDetails/ProviderLayout';
+import { TokenLayout } from 'pages/TokenDetails/TokenLayout';
+import { CollectionLayout } from 'pages/CollectionDetails/CollectionLayout';
 
-export default function PageLayout({ children }: { children: React.ReactNode }) {
+export const PageLayout = ({ children }: { children: React.ReactNode }) => {
   const activeRoute = useActiveRoute();
 
   switch (true) {
@@ -46,4 +46,4 @@ export default function PageLayout({ children }: { children: React.ReactNode }) 
     default:
       return <>{children}</>;
   }
-}
+};

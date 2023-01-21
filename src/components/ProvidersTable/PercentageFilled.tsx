@@ -34,9 +34,7 @@ export const hasDelegationCap = (delegationCap: string) => {
   return bnDelegationCap.isGreaterThan(0);
 };
 
-const PercentageFilled = ({ locked, delegationCap }: PercentageFilledType) => {
+export const PercentageFilled = ({ locked, delegationCap }: PercentageFilledType) => {
   const percentage = getPercentageFilled(locked, delegationCap);
   return hasDelegationCap(delegationCap) ? <>{percentage}%</> : <>Uncapped</>;
 };
-
-export default PercentageFilled;

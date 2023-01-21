@@ -2,13 +2,13 @@ import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import * as React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { isHash, useNetworkRoute } from 'helpers';
-import { Loader, adapter, PageState } from 'components';
-import BlockData, { BlockDataType } from './BlockData';
+import { Loader, useAdapter, PageState } from 'components';
+import { BlockData, BlockDataType } from './BlockData';
 
-const BlockDetails = () => {
+export const BlockDetails = () => {
   const ref = React.useRef(null);
   const networkRoute = useNetworkRoute();
-  const { getBlock } = adapter();
+  const { getBlock } = useAdapter();
   const { hash: blockId } = useParams() as any;
 
   const [state, setState] = React.useState<BlockDataType>();
@@ -64,5 +64,3 @@ const BlockDetails = () => {
     </>
   );
 };
-
-export default BlockDetails;

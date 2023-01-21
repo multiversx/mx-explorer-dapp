@@ -2,21 +2,21 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiamond } from '@fortawesome/pro-regular-svg-icons/faDiamond';
-import { Loader, adapter, NetworkLink, Trim, Pager } from 'components';
-import NoTokens from './NoTokens';
-import FailedTokens from './FailedTokens';
-import { urlBuilder, useFilters, useURLSearchParams, useActiveRoute } from 'helpers';
-import Filters from './Filters';
+import { Loader, useAdapter, NetworkLink, Trim, Pager } from 'components';
+import { NoTokens } from './NoTokens';
+import { FailedTokens } from './FailedTokens';
+import { urlBuilder, useGetFilters, useURLSearchParams, useActiveRoute } from 'helpers';
+import { Filters } from './Filters';
 import { tokensRoutes } from 'routes';
 import { CollectionType } from 'helpers/types';
 
-const TokensMeta = () => {
+export const TokensMeta = () => {
   const ref = React.useRef(null);
   const activeRoute = useActiveRoute();
   const { page } = useURLSearchParams();
   const { search } = useLocation();
-  const { getQueryObject, size } = useFilters();
-  const { getCollections, getCollectionsCount } = adapter();
+  const { getQueryObject, size } = useGetFilters();
+  const { getCollections, getCollectionsCount } = useAdapter();
 
   const [metaCollections, setMetaCollections] = React.useState<CollectionType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -210,5 +210,3 @@ const TokensMeta = () => {
     </>
   );
 };
-
-export default TokensMeta;

@@ -1,4 +1,4 @@
-export default [
+export const identities = [
   {
     locked: '10000000000000000000000',
     name:

@@ -19,7 +19,7 @@ const EventTopics = ({
   return <DataDecode value={mergedTopics} identifier={identifier} />;
 };
 
-const EventsList = ({ events, id }: { events: EventType[]; id?: string }) => {
+export const EventsList = ({ events, id }: { events: EventType[]; id?: string }) => {
   const { hash } = useLocation();
   const ref = React.useRef<HTMLDivElement>(null);
 
@@ -101,5 +101,3 @@ const EventsList = ({ events, id }: { events: EventType[]; id?: string }) => {
     </div>
   );
 };
-
-export default EventsList;

@@ -2,9 +2,9 @@ import * as React from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { useNetworkRoute, urlBuilder, isHash, isContract, addressIsBech32, bech32 } from 'helpers';
 import { Redirect, useParams } from 'react-router-dom';
-import { adapter, PageState, Loader } from 'components';
+import { useAdapter, PageState, Loader } from 'components';
 
-const HashSearch = () => {
+export const HashSearch = () => {
   const { hash: query } = useParams() as any;
   const networkRoute = useNetworkRoute();
   const {
@@ -17,7 +17,7 @@ const HashSearch = () => {
     getScResult,
     getNft,
     getCollection,
-  } = adapter();
+  } = useAdapter();
   const [route, setRoute] = React.useState('');
   const [searching, setSearching] = React.useState<boolean | undefined>();
 
@@ -157,5 +157,3 @@ const HashSearch = () => {
     </>
   );
 };
-
-export default HashSearch;

@@ -1,10 +1,10 @@
 import React from 'react';
-import denominate from 'components/Denominate/denominate';
+import { denominate } from 'components/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
 import { stringIsInteger, usdValue } from 'helpers';
 import { useGlobalState } from 'context';
 
-const UsdValue = ({
+export const UsdValue = ({
   input,
   className = '',
   dataTestId = '',
@@ -34,5 +34,3 @@ const UsdValue = ({
     </span>
   );
 };
-
-export default UsdValue;

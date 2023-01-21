@@ -1,4 +1,4 @@
-export default {
+export const epoch = {
   status: {
     erd_current_round: 21801,
     erd_epoch_number: 36,

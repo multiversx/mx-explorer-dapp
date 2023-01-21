@@ -2,11 +2,11 @@ import * as React from 'react';
 import { faClock, faTrophy } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams } from 'react-router-dom';
-import { urlBuilder, dateFormatted, useFilters, useURLSearchParams } from 'helpers';
+import { urlBuilder, dateFormatted, useGetFilters, useURLSearchParams } from 'helpers';
 import { NftType, NftEnumType } from 'helpers/types';
 import {
   Loader,
-  adapter,
+  useAdapter,
   DetailItem,
   Trim,
   NetworkLink,
@@ -18,15 +18,15 @@ import {
   Pager,
   CardItem,
 } from 'components';
-import FailedNftDetails from './FailedNftDetails';
-import NftPreview from './NftPreview';
+import { FailedNftDetails } from './FailedNftDetails';
+import { NftPreview } from './NftPreview';
 
 interface NftAccountType {
   address: string;
   balance: string;
 }
 
-const nftText = (type: NftType['type']) => {
+export const nftText = (type: NftType['type']) => {
   switch (type) {
     case NftEnumType.SemiFungibleESDT:
       return 'SFT';
@@ -39,13 +39,13 @@ const nftText = (type: NftType['type']) => {
   }
 };
 
-const NftDetails = () => {
+export const NftDetails = () => {
   const params: any = useParams();
   const { hash: identifier } = params;
   const ref = React.useRef(null);
   const { page } = useURLSearchParams();
-  const { getQueryObject, size } = useFilters();
-  const { getNft, getNftAccounts, getNftAccountsCount } = adapter();
+  const { getQueryObject, size } = useGetFilters();
+  const { getNft, getNftAccounts, getNftAccountsCount } = useAdapter();
   const [nftDetails, setNftDetails] = React.useState<NftType>();
   const [nftAccounts, setNftAccounts] = React.useState<NftAccountType[]>([]);
   const [nftAccountsCount, setNftAccountsCount] = React.useState<number | '...'>('...');
@@ -345,5 +345,3 @@ const NftDetails = () => {
     </>
   );
 };
-
-export default NftDetails;

@@ -35,7 +35,7 @@ function createHashItemIfLengthIsOdd(length: number) {
   return length > 1 && length % 2 ? <div className="hash-item">&nbsp;</div> : null;
 }
 
-const BlockData = (props: BlockDataType) => {
+export const BlockData = (props: BlockDataType) => {
   const { block, nextHash } = props;
   const isFirstBlock = block.prevHash && block.prevHash.length > 64;
   const [expanded, setExpanded] = React.useState(false);
@@ -265,5 +265,3 @@ const BlockData = (props: BlockDataType) => {
     </div>
   );
 };
-
-export default BlockData;

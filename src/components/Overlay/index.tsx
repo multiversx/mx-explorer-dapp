@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-const Overlay = ({
+export const Overlay = ({
   children,
   title,
   className,
@@ -28,4 +28,3 @@ const Overlay = ({
     <div className={className ?? 'text-truncate'}>{children}</div>
   </OverlayTrigger>
 );
-export default Overlay;

@@ -3,7 +3,7 @@ import { urlBuilder } from 'helpers';
 import { BlockType } from 'helpers/types';
 import { NetworkLink, Trim } from 'components';
 
-const IdentityBlock = ({ block }: { block: BlockType }) => {
+export const IdentityBlock = ({ block }: { block: BlockType }) => {
   if (!block.proposer) {
     return <span className="text-secondary">N/A</span>;
   }
@@ -28,5 +28,3 @@ const IdentityBlock = ({ block }: { block: BlockType }) => {
     </div>
   );
 };
-
-export default IdentityBlock;

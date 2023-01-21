@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { adapter } from 'components';
-import txStatus from 'components/TransactionStatus/txStatus';
+import { useAdapter } from 'components';
+import { txStatus } from 'components/TransactionStatus/txStatus';
 import { TransactionType } from 'helpers/types';
 
-const NonceMessage = ({ transaction }: { transaction: TransactionType }) => {
+export const NonceMessage = ({ transaction }: { transaction: TransactionType }) => {
   const ref = React.useRef(null);
-  const { getAccount } = adapter();
+  const { getAccount } = useAdapter();
   const { sender: senderAddress, nonce: transactionNonce, timestamp, status } = transaction;
   const [isDataReady, setIsDataReady] = React.useState<boolean>(false);
   const [hasUnsyncedNonce, setHasUnsyncedNonce] = React.useState<boolean>(false);
@@ -56,5 +56,3 @@ const NonceMessage = ({ transaction }: { transaction: TransactionType }) => {
     </div>
   );
 };
-
-export default NonceMessage;

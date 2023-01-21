@@ -4,7 +4,7 @@ import { AssetType } from 'helpers/types';
 import { Trim, Overlay } from 'components';
 import { ReactComponent as IdentityLogo } from 'assets/img/logos/identity.svg';
 
-const AccountName = ({
+export const AccountName = ({
   address,
   assets,
   dataTestId,
@@ -55,5 +55,3 @@ const AccountName = ({
     />
   );
 };
-
-export default AccountName;

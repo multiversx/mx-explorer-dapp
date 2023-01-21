@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/pro-solid-svg-icons/faHeart';
 
-const Footer = () => {
+export const Footer = () => {
   const explorerVersion = process.env.REACT_APP_CACHE_BUST;
 
   return (
@@ -28,5 +28,3 @@ const Footer = () => {
     </footer>
   );
 };
-
-export default Footer;

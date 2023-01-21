@@ -1,4 +1,4 @@
-export default [
+export const accounts = [
   {
     address: 'erd1sea63y47u569ns3x5mqjf4vnygn9whkk7p6ry4rfpqyd6rd5addqyd9lf2',
     balance: '9483750000000000000000000',

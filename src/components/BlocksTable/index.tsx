@@ -4,7 +4,7 @@ import { sizeFormat, urlBuilder } from 'helpers';
 import { BlockType } from 'helpers/types';
 import { ShardSpan, NetworkLink, TimeAgo, Trim, BlockGasUsed, IdentityBlock } from 'components';
 
-const BlocksTable = ({
+export const BlocksTable = ({
   blocks,
   shard,
   showProposerIdentity,
@@ -92,5 +92,3 @@ const BlocksTable = ({
     </div>
   );
 };
-
-export default BlocksTable;

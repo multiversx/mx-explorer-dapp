@@ -6,7 +6,7 @@ interface IdentityAvatarType {
   identity?: string;
 }
 
-const IdentityAvatar = ({ identity }: { identity: IdentityAvatarType }) => {
+export const IdentityAvatar = ({ identity }: { identity: IdentityAvatarType }) => {
   return (
     <>
       {identity.avatar ? (
@@ -27,5 +27,3 @@ const IdentityAvatar = ({ identity }: { identity: IdentityAvatarType }) => {
     </>
   );
 };
-
-export default IdentityAvatar;

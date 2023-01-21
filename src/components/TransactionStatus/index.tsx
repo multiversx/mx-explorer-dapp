@@ -4,7 +4,7 @@ import { faBan } from '@fortawesome/pro-solid-svg-icons/faBan';
 import { faHourglass } from '@fortawesome/pro-solid-svg-icons/faHourglass';
 import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import txStatus from './txStatus';
+import { txStatus } from './txStatus';
 
 interface TransactionStatusType {
   status: string;
@@ -64,7 +64,7 @@ const getStatusText = ({ status, pendingResults }: TransactionStatusType) => {
   }
 };
 
-const TransactionStatus = ({ status, pendingResults }: TransactionStatusType) => {
+export const TransactionStatus = ({ status, pendingResults }: TransactionStatusType) => {
   const { Icon } = getStatusIconAndColor(status, pendingResults);
 
   return (
@@ -74,5 +74,3 @@ const TransactionStatus = ({ status, pendingResults }: TransactionStatusType) =>
     </span>
   );
 };
-
-export default TransactionStatus;

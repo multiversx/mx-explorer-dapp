@@ -2,16 +2,16 @@ import React from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import BigNumber from 'bignumber.js';
 
-import { Chart, Loader, PageState, adapter } from 'components';
-import getLastDayValue from 'components/Chart/helpers/getLastDayValue';
+import { Chart, Loader, PageState, useAdapter } from 'components';
+import { getLastDayValue } from 'components/Chart/helpers/getLastDayValue';
 import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
-import formatDataCharts from 'components/Chart/helpers/formatDataCharts';
+import { formatDataCharts } from 'components/Chart/helpers/formatDataCharts';
 
 import { useGlobalState } from 'context';
 
-const AccountsChart = () => {
+export const AccountsChart = () => {
   const { activeNetworkId, stats } = useGlobalState();
-  const { getAccountsHistory } = adapter();
+  const { getAccountsHistory } = useAdapter();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
@@ -73,5 +73,3 @@ const AccountsChart = () => {
     </section>
   );
 };
-
-export default AccountsChart;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SmallDetailItem = ({
+export const SmallDetailItem = ({
   children,
   title,
 }: {
@@ -12,5 +12,3 @@ const SmallDetailItem = ({
     <div className="col-lg-9 pr-lg-spacer pl-lg-0">{children}</div>
   </div>
 );
-
-export default SmallDetailItem;

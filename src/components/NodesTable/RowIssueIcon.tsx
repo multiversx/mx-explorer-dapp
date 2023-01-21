@@ -30,7 +30,7 @@ export const getIcon = (node: NodeType) => {
   return icon;
 };
 
-const RowIssueIcon = ({ node, small }: { node: NodeType; small?: boolean }) => {
+export const RowIssueIcon = ({ node, small }: { node: NodeType; small?: boolean }) => {
   const icon = getIcon(node);
 
   if (icon) {
@@ -54,5 +54,3 @@ const RowIssueIcon = ({ node, small }: { node: NodeType; small?: boolean }) => {
 
   return null;
 };
-
-export default RowIssueIcon;

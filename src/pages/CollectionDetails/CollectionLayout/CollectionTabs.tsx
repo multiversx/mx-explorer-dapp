@@ -5,7 +5,7 @@ import { NftEnumType } from 'helpers/types';
 import { useGlobalState } from 'context';
 import { collectionRoutes } from 'routes';
 
-const CollectionTabs = () => {
+export const CollectionTabs = () => {
   const activeRoute = useActiveRoute();
   const { collectionDetails } = useGlobalState();
 
@@ -38,5 +38,3 @@ const CollectionTabs = () => {
     </div>
   );
 };
-
-export default CollectionTabs;

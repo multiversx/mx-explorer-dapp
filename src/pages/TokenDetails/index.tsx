@@ -1,22 +1,22 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
-import { Loader, TransactionsTable, adapter } from 'components';
+import { Loader, TransactionsTable, useAdapter } from 'components';
 
-import txStatus from 'components/TransactionStatus/txStatus';
-import NoTransactions from 'components/TransactionsTable/NoTransactions';
-import FailedTransactions from 'components/TransactionsTable/FailedTransactions';
+import { txStatus } from 'components/TransactionStatus/txStatus';
+import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
+import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { useSize, useURLSearchParams } from 'helpers';
 import {
   UITransactionType,
   TransactionsResponseType,
   TransactionsCountResponseType,
 } from 'helpers/types';
-import TokenTabs from './TokenLayout/TokenTabs';
+import { TokenTabs } from './TokenLayout/TokenTabs';
 
-const TokenDetails = () => {
+export const TokenDetails = () => {
   const ref = React.useRef(null);
-  const { getTokenTransfers, getTokenTransfersCount } = adapter();
+  const { getTokenTransfers, getTokenTransfersCount } = useAdapter();
   const { size, firstPageTicker } = useSize();
   const {
     senderShard,
@@ -158,5 +158,3 @@ const TokenDetails = () => {
     </div>
   );
 };
-
-export default TokenDetails;

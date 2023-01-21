@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import SimpleMap from './SimpleMap';
+import { SimpleMap } from './SimpleMap';
 import { getMarkers, MarkerType } from './helpers/asyncRequests';
-import calcContinentRank, { RankType } from './helpers/calcContinentRank';
-import { adapter } from 'components';
+import { calcContinentRank, RankType } from './helpers/calcContinentRank';
+import { useAdapter } from 'components';
 
 const placeHolderRank = [
   {
@@ -28,7 +28,7 @@ const placeHolderRank = [
   },
 ];
 
-const ValidatorsStatus = () => {
+export const ValidatorsStatus = () => {
   const [markers, setMarkers] = React.useState<MarkerType[]>([]);
   const [continentsRank, setContinentsRank] = React.useState<RankType[]>(placeHolderRank);
   const [totalNodes, setTotalNodes] = React.useState<string | number>('...');
@@ -40,7 +40,7 @@ const ValidatorsStatus = () => {
     activeNetwork: { apiUrl },
   } = useGlobalState();
 
-  const { getShards, getGlobalStake } = adapter();
+  const { getShards, getGlobalStake } = useAdapter();
 
   const fetchMarkers = () => {
     Promise.all([
@@ -110,5 +110,3 @@ const ValidatorsStatus = () => {
     </div>
   );
 };
-
-export default ValidatorsStatus;

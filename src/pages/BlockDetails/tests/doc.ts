@@ -1,4 +1,4 @@
-export default {
+export const doc = {
   _index: 'blocks',
   _type: '_doc',
   _id: '8eefc5aa60bd608bbd357400e9bb534d61bb328017a80d95a3027761db9dddc4',

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 
-const CardItem = ({
+export const CardItem = ({
   children,
   title,
   icon,
@@ -26,5 +26,3 @@ const CardItem = ({
     </div>
   </div>
 );
-
-export default CardItem;

@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { ProviderType, ProviderPropsType } from '../../helpers';
-import getNodes from './getNodes';
+import { getNodes } from './getNodes';
 import { bech32 } from 'helpers';
-import computeShard from './computeShard';
+import { getShardOfAddress } from './computeShard';
 
 const createMustQuery = (value: any, boolQuery: any) => {
   const firstKey = Object.keys(value)[0];
@@ -363,8 +363,8 @@ const wrapper = async ({
                 } = transaction;
 
                 // TODO: pending alignment
-                const receiverShard = computeShard(bech32.decode(receiver));
-                const senderShard = computeShard(bech32.decode(sender));
+                const receiverShard = getShardOfAddress(bech32.decode(receiver));
+                const senderShard = getShardOfAddress(bech32.decode(sender));
 
                 results = {
                   data: {
@@ -482,7 +482,7 @@ const wrapper = async ({
   return results;
 };
 
-const elastic: ProviderType = async ({ baseUrl, url, params, timeout, proxyUrl = '' }) => {
+export const elastic: ProviderType = async ({ baseUrl, url, params, timeout, proxyUrl = '' }) => {
   return wrapper({
     baseUrl,
     proxyUrl,
@@ -491,5 +491,3 @@ const elastic: ProviderType = async ({ baseUrl, url, params, timeout, proxyUrl =
     timeout,
   });
 };
-
-export default elastic;

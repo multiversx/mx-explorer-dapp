@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useGlobalState } from 'context';
 import {
   Loader,
-  adapter,
+  useAdapter,
   Pager,
   Denominate,
   NetworkLink,
@@ -11,15 +11,15 @@ import {
 } from 'components';
 import { urlBuilder, useSize, useURLSearchParams } from 'helpers';
 import { AccountType } from 'helpers/types';
-import NoAccounts from './NoAccounts';
-import FailedAccounts from './FailedAccounts';
+import { NoAccounts } from './NoAccounts';
+import { FailedAccounts } from './FailedAccounts';
 
-const Transactions = () => {
+export const Accounts = () => {
   const ref = React.useRef(null);
   const { activeNetworkId } = useGlobalState();
   const { page } = useURLSearchParams();
   const { size } = useSize();
-  const { getAccounts, getAccountsCount } = adapter();
+  const { getAccounts, getAccountsCount } = useAdapter();
 
   const [accounts, setAccounts] = React.useState<AccountType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -141,5 +141,3 @@ const Transactions = () => {
     </>
   );
 };
-
-export default Transactions;

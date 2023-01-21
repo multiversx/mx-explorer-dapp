@@ -1,4 +1,4 @@
-const getChartFilteredData = ({
+export const getChartFilteredData = ({
   data,
   filter,
   category,
@@ -27,5 +27,3 @@ const getChartFilteredData = ({
 
   return data ?? [];
 };
-
-export default getChartFilteredData;

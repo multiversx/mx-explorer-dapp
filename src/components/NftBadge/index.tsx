@@ -1,7 +1,7 @@
 import React from 'react';
 import { NftType, NftEnumType } from 'helpers/types';
 
-const NftBadge = ({
+export const NftBadge = ({
   type,
   className,
 }: {
@@ -43,5 +43,3 @@ const NftBadge = ({
       return null;
   }
 };
-
-export default NftBadge;

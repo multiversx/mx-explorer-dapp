@@ -3,10 +3,10 @@ import { types, urlBuilder } from 'helpers';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { Denominate, NetworkLink, PageState, Trim } from 'components';
-import IdentityAvatar from 'components/SharedIdentity/IdentityAvatar';
-import CopyButton from 'components/CopyButton';
-import DelegationCap from './DelegationCap';
-import PercentageFilled, { getPercentageFilled } from './PercentageFilled';
+import { IdentityAvatar } from 'components/SharedIdentity/IdentityAvatar';
+import { CopyButton } from 'components/CopyButton';
+import { DelegationCap } from './DelegationCap';
+import { PercentageFilled, getPercentageFilled } from './PercentageFilled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons/faBadgeCheck';
 import { faArrowDown } from '@fortawesome/pro-regular-svg-icons/faArrowDown';
@@ -31,7 +31,7 @@ const CaretIcon = ({ sortDirection }: { sortDirection?: SortDirectionType }) => 
   />
 );
 
-const ProvidersTable = ({
+export const ProvidersTable = ({
   providers,
   showIdentity = true,
 }: {
@@ -275,5 +275,3 @@ const ProvidersTable = ({
     </div>
   );
 };
-
-export default ProvidersTable;

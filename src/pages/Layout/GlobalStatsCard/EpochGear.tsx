@@ -1,11 +1,17 @@
 import * as React from 'react';
 import { ReactComponent as CenterGear } from 'assets/img/network-health/center-gear.svg';
 import { ReactComponent as EpochGearBg } from 'assets/img/epoch-gear-bg.svg';
-import ProgressRing from '../../Home/NetworkHealth/ProgressRing';
+import { ProgressRing } from '../../Home/NetworkHealth/ProgressRing';
 import { initialStats } from 'helpers/processStats';
 import moment from 'moment';
 
-const EpochGear = ({ stats, showTime }: { stats: typeof initialStats; showTime?: boolean }) => {
+export const EpochGear = ({
+  stats,
+  showTime,
+}: {
+  stats: typeof initialStats;
+  showTime?: boolean;
+}) => {
   const ref = React.useRef(null);
   const pageHidden = document.hidden;
   const play = !pageHidden;
@@ -123,5 +129,3 @@ const EpochGear = ({ stats, showTime }: { stats: typeof initialStats; showTime?:
     </div>
   );
 };
-
-export default EpochGear;

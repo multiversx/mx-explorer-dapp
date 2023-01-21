@@ -4,18 +4,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiamond } from '@fortawesome/pro-regular-svg-icons/faDiamond';
 
 import { NetworkLink, Denominate, Sort } from 'components';
-import { urlBuilder, amountWithoutRounding, useFilters } from 'helpers';
+import { urlBuilder, amountWithoutRounding, useGetFilters } from 'helpers';
 import { TokenType, TokenSortEnum, SortOrderEnum } from 'helpers/types';
-import EgldRow from './EgldRow';
+import { EgldRow } from './EgldRow';
 
-const TokensTable = ({
+export const TokensTable = ({
   tokens,
   totalTokens,
 }: {
   tokens: TokenType[];
   totalTokens: '...' | number;
 }) => {
-  const { getQueryObject } = useFilters();
+  const { getQueryObject } = useGetFilters();
   const queryObject = getQueryObject();
   const { order } = queryObject;
 
@@ -110,5 +110,3 @@ const TokensTable = ({
     </div>
   );
 };
-
-export default TokensTable;

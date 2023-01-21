@@ -1,4 +1,4 @@
-export default [
+export const miniblockTransactions = [
   {
     txHash: '40f0813407449cb1d81948df703b05edfde9dcbb18a057b5d10733e4f7991680',
     miniBlockHash: '7e0bf44ef84e8c535899298a51dfd66a0a73fd560945b6015922afcca73aa1d3',

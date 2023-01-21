@@ -3,9 +3,9 @@ import BigNumber from 'bignumber.js';
 
 import { useGlobalState } from 'context';
 import { EconomicsType, StatsType } from 'context/state';
-import pagerHelper from 'components/Pager/pagerHelper';
+import { pagerHelper } from 'components/Pager/pagerHelper';
 
-import { useFilters, useURLSearchParams, validDisplayValue } from 'helpers';
+import { useGetFilters, useURLSearchParams, validDisplayValue } from 'helpers';
 import { TokenType, SortOrderEnum, TokenSortEnum } from 'helpers/types';
 import { pageSize } from 'appConfig';
 import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
@@ -26,7 +26,7 @@ export const EgldRow = ({
   } = useGlobalState();
 
   const { page } = useURLSearchParams();
-  const { getQueryObject } = useFilters();
+  const { getQueryObject } = useGetFilters();
   const queryObject = getQueryObject();
   const description = `The MultiversX (Elrond) eGold (${erdLabel}) Token is native to the MultiversX (previously Elrond) Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
 
@@ -129,5 +129,3 @@ export const EgldRow = ({
     </tr>
   );
 };
-
-export default EgldRow;

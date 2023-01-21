@@ -11,7 +11,7 @@ interface NetworkLinkType {
   children: React.ReactNode | string;
 }
 
-const NetworkLink = ({ to, children, ...rest }: NetworkLinkType) => {
+export const NetworkLink = ({ to, children, ...rest }: NetworkLinkType) => {
   const { activeNetworkId } = useGlobalState();
 
   if (!to.startsWith('/')) {
@@ -26,5 +26,3 @@ const NetworkLink = ({ to, children, ...rest }: NetworkLinkType) => {
 
   return <Link {...props}>{children}</Link>;
 };
-
-export default NetworkLink;

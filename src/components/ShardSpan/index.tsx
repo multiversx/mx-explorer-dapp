@@ -23,8 +23,6 @@ export const shardSpanText = (shard: number | string) => {
   return `Shard ${shard}`;
 };
 
-const ShardSpan = ({ shard }: ShardSpanType) => {
+export const ShardSpan = ({ shard }: ShardSpanType) => {
   return <span>{shardSpanText(shard)}</span>;
 };
-
-export default ShardSpan;

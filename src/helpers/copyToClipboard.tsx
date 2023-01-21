@@ -18,7 +18,7 @@ function fallbackCopyTextToClipboard(text: string) {
   document.body.removeChild(textArea);
 }
 
-export default function copyTextToClipboard(text: string) {
+export const copyTextToClipboard = (text: string) => {
   if (!navigator.clipboard) {
     fallbackCopyTextToClipboard(text);
     return;
@@ -31,4 +31,4 @@ export default function copyTextToClipboard(text: string) {
       console.error('Async: Could not copy text: ', err);
     }
   );
-}
+};

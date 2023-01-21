@@ -22,11 +22,11 @@ import {
   Trim,
 } from 'components';
 import { useGlobalState } from 'context';
-import DelegationCap from 'components/ProvidersTable/DelegationCap';
-import PercentageFilled from 'components/ProvidersTable/PercentageFilled';
+import { DelegationCap } from 'components/ProvidersTable/DelegationCap';
+import { PercentageFilled } from 'components/ProvidersTable/PercentageFilled';
 import { hasDelegationCap } from 'components/ProvidersTable/PercentageFilled';
 
-const ProviderDetailsCard = ({ provider }: { provider?: ProviderType }) => {
+export const ProviderDetailsCard = ({ provider }: { provider?: ProviderType }) => {
   const {
     activeNetwork: { walletAddress },
   } = useGlobalState();
@@ -141,5 +141,3 @@ const ProviderDetailsCard = ({ provider }: { provider?: ProviderType }) => {
     </div>
   ) : null;
 };
-
-export default ProviderDetailsCard;

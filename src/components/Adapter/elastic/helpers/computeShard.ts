@@ -1,4 +1,4 @@
-const isAddressOfMetachain = (pubKey: any) => {
+export const isAddressOfMetachain = (pubKey: any) => {
   // prettier-ignore
   let metachainPrefix = Buffer.from([
       0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -18,7 +18,7 @@ const isAddressOfMetachain = (pubKey: any) => {
   return false;
 };
 
-const getShardOfAddress = (hexPubKey: any) => {
+export const getShardOfAddress = (hexPubKey: any) => {
   let numShards = 3;
   let maskHigh = parseInt('11', 2);
   let maskLow = parseInt('01', 2);
@@ -37,5 +37,3 @@ const getShardOfAddress = (hexPubKey: any) => {
 
   return shard;
 };
-
-export default getShardOfAddress;

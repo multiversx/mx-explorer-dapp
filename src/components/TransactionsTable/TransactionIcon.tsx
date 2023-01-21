@@ -1,5 +1,5 @@
 import React from 'react';
-import txStatus from '../TransactionStatus/txStatus';
+import { txStatus } from '../TransactionStatus/txStatus';
 import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { faHourglass } from '@fortawesome/pro-regular-svg-icons/faHourglass';
@@ -8,13 +8,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { capitalizeFirstLetter, getTransactionMessages } from 'helpers';
 import { UITransactionType, TransactionType } from 'helpers/types';
-import { adapter } from 'components';
+import { useAdapter } from 'components';
 interface TransactionIconType {
   transaction: UITransactionType;
 }
 
-const TransactionIcon = ({ transaction }: TransactionIconType) => {
-  const { getTransaction } = adapter();
+export const TransactionIcon = ({ transaction }: TransactionIconType) => {
+  const { getTransaction } = useAdapter();
 
   const [transactionMessages, setTransactionMessages] = React.useState<string[]>();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -96,5 +96,3 @@ const TransactionIcon = ({ transaction }: TransactionIconType) => {
     </>
   );
 };
-
-export default TransactionIcon;

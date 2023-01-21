@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { adapter } from 'components';
+import { useAdapter } from 'components';
 import { ReactComponent as Gear } from 'assets/img/network-health/gear.svg';
 import { ReactComponent as BigGear } from 'assets/img/network-health/big-gear.svg';
 import { ReactComponent as CenterGear } from 'assets/img/network-health/center-gear.svg';
 import { ReactComponent as LayoutGear } from 'assets/img/network-health/layout-gear.svg';
-import ProgressRing from './ProgressRing';
+import { ProgressRing } from './ProgressRing';
 import { refreshRate } from 'appConfig';
 import { processStats, validDisplayValue } from 'helpers';
 import { initialStats } from 'helpers/processStats';
@@ -17,12 +17,12 @@ export interface StateType {
   transactions: string;
 }
 
-const NetworkHealth = () => {
+export const NetworkHealth = () => {
   const {
     activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
-  const { getStats } = adapter();
+  const { getStats } = useAdapter();
 
   const ref = React.useRef(null);
   const pageHidden = document.hidden;
@@ -176,5 +176,3 @@ const NetworkHealth = () => {
     </div>
   );
 };
-
-export default NetworkHealth;

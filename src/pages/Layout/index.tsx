@@ -1,13 +1,13 @@
 import React from 'react';
 import { useGlobalState } from 'context';
-import Navbar from './Navbar/index';
-import Footer from './Footer/index';
+import { Navbar } from './Navbar/index';
+import { Footer } from './Footer/index';
 import { Search, NotificationsBar } from 'components';
-import Unavailable from './Unavailable';
-import PageLayout from './PageLayout';
-import GlobalStatsCard from './GlobalStatsCard';
-import TestnetGlobalStatsCard from './TestnetGlobalStatsCard';
-import Routes, { validatorsRoutes, searchRoutes } from 'routes';
+import { Unavailable } from './Unavailable';
+import { PageLayout } from './PageLayout';
+import { GlobalStatsCard } from './GlobalStatsCard';
+import { TestnetGlobalStatsCard } from './TestnetGlobalStatsCard';
+import { Routes, validatorsRoutes, searchRoutes } from 'routes';
 import {
   useFetchStats,
   useFetchEconomics,
@@ -18,7 +18,7 @@ import {
   useCheckVersion,
 } from 'helpers';
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+export const Layout = ({ children }: { children: React.ReactNode }) => {
   const {
     theme,
     config: { multiversXApps },
@@ -149,5 +149,3 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     </div>
   );
 };
-
-export default Layout;

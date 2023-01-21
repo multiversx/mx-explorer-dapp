@@ -76,7 +76,7 @@ const MultipleTokensBadge = ({ transactionTokens }: { transactionTokens: any[] }
   );
 };
 
-const TransactionValue = ({
+export const TransactionValue = ({
   transaction,
   hideMultipleBadge,
 }: {
@@ -112,5 +112,3 @@ const TransactionValue = ({
 
   return <Denominate value={transaction.value} />;
 };
-
-export default TransactionValue;

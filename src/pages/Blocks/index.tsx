@@ -3,9 +3,9 @@ import * as React from 'react';
 import { Redirect } from 'react-router-dom';
 import { useNetworkRoute, useURLSearchParams, useSize } from 'helpers';
 import { BlockType } from 'helpers/types';
-import { BlocksTable, Loader, Pager, ShardSpan, adapter } from 'components';
-import FailedBlocks from 'components/BlocksTable/FailedBlocks';
-import NoBlocks from 'components/BlocksTable/NoBlocks';
+import { BlocksTable, Loader, Pager, ShardSpan, useAdapter } from 'components';
+import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
+import { NoBlocks } from 'components/BlocksTable/NoBlocks';
 
 interface StateType {
   blocks: BlockType[];
@@ -13,7 +13,7 @@ interface StateType {
   endBlockNr: number;
 }
 
-const Blocks = () => {
+export const Blocks = () => {
   const { page, shard } = useURLSearchParams();
   const { size, firstPageTicker } = useSize();
 
@@ -32,7 +32,7 @@ const Blocks = () => {
 
   const { activeNetworkId } = useGlobalState();
 
-  const { getBlocks, getBlocksCount } = adapter();
+  const { getBlocks, getBlocksCount } = useAdapter();
 
   React.useEffect(() => {
     getBlocks({ size, shard, withProposerIdentity: true }).then(({ success, data }) => {
@@ -125,5 +125,3 @@ const Blocks = () => {
     </>
   );
 };
-
-export default Blocks;

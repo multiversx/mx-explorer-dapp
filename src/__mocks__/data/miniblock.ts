@@ -1,4 +1,4 @@
-export default {
+export const miniblock = {
   miniBlockHash: '7e0bf44ef84e8c535899298a51dfd66a0a73fd560945b6015922afcca73aa1d3',
   senderShard: 1,
   receiverShard: 1,

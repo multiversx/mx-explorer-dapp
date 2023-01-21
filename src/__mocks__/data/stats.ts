@@ -1,4 +1,4 @@
-export default {
+export const status = {
   shards: 3,
   blocks: 6379407,
   accounts: 60655,

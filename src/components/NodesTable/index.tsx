@@ -1,8 +1,8 @@
 import * as React from 'react';
-import TableBody from './TableBody';
-import StandardHead from './Heads/StandardHead';
-import StatisticsHead from './Heads/StatisticsHead';
-import QueueHead from './Heads/QueueHead';
+import { TableBody } from './TableBody';
+import { StandardHead } from './Heads/StandardHead';
+import { StatisticsHead } from './Heads/StatisticsHead';
+import { QueueHead } from './Heads/QueueHead';
 import { NodeType } from 'helpers/types';
 
 interface NodesTableType {

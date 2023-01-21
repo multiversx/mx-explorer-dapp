@@ -7,7 +7,7 @@ import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons';
 import { types, useScamFlag } from 'helpers';
 import { ModalLink } from 'components';
 
-const Thumbnail = ({
+export const Thumbnail = ({
   token,
   link,
   index,
@@ -69,7 +69,7 @@ const Thumbnail = ({
   );
 };
 
-const NftPreview = ({ token }: { token: types.NftType }) => {
+export const NftPreview = ({ token }: { token: types.NftType }) => {
   const scamFlag = useScamFlag();
 
   return token.uris ? (
@@ -124,5 +124,3 @@ const NftPreview = ({ token }: { token: types.NftType }) => {
     </div>
   ) : null;
 };
-
-export default NftPreview;

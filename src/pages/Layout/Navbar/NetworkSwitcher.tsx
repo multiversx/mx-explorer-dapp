@@ -38,7 +38,7 @@ const NetworkUrl = ({
   );
 };
 
-export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void }) {
+export const NetworkSwitcher = ({ onToggle }: { onToggle?: () => void }) => {
   const {
     config: { links, networks },
     defaultNetwork,
@@ -78,4 +78,4 @@ export default function NetworkSwitcher({ onToggle }: { onToggle?: () => void })
       </NavDropdown>
     </>
   );
-}
+};

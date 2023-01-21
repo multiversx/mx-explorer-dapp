@@ -1,21 +1,21 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { Loader, adapter, NetworkLink, Trim, Pager, NftBadge, TimeAgo } from 'components';
-import NoCollections from './NoCollections';
-import FailedCollections from './FailedCollections';
-import { urlBuilder, useFilters, useURLSearchParams, useActiveRoute } from 'helpers';
-import Filters from './Filters';
+import { Loader, useAdapter, NetworkLink, Trim, Pager, NftBadge, TimeAgo } from 'components';
+import { NoCollections } from './NoCollections';
+import { FailedCollections } from './FailedCollections';
+import { urlBuilder, useGetFilters, useURLSearchParams, useActiveRoute } from 'helpers';
+import { Filters } from './Filters';
 import { collectionRoutes } from 'routes';
 import { NftEnumType, CollectionType } from 'helpers/types';
 
-const Collections = () => {
+export const Collections = () => {
   const ref = React.useRef(null);
   const activeRoute = useActiveRoute();
   const { page } = useURLSearchParams();
   const { search } = useLocation();
-  const { getQueryObject, size } = useFilters();
-  const { getCollections, getCollectionsCount } = adapter();
+  const { getQueryObject, size } = useGetFilters();
+  const { getCollections, getCollectionsCount } = useAdapter();
 
   const [collections, setCollections] = React.useState<CollectionType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -199,5 +199,3 @@ const Collections = () => {
     </>
   );
 };
-
-export default Collections;

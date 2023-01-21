@@ -5,9 +5,9 @@ import { useRouteMatch } from 'react-router-dom';
 import { types, useIsMainnet, useNetworkRoute } from 'helpers';
 import { IdentityType } from 'helpers/types';
 import { validatorsRoutes } from 'routes';
-import { adapter, Loader, PageState, SharedIdentity } from 'components';
+import { useAdapter, Loader, PageState, SharedIdentity } from 'components';
 
-import ProviderDetailsCard from './ProviderDetailsCard';
+import { ProviderDetailsCard } from './ProviderDetailsCard';
 
 interface ProviderLayoutType<T> {
   data?: T;
@@ -18,13 +18,13 @@ const initialState = {
   success: undefined,
 };
 
-const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
+export const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const networkRoute = useNetworkRoute();
   const match: any = useRouteMatch(networkRoute(validatorsRoutes.providerDetails));
   const address = match ? match.params.hash : undefined;
 
-  const { getProvider, getIdentity } = adapter();
+  const { getProvider, getIdentity } = useAdapter();
   const isMainnet = useIsMainnet();
 
   const [provider, setProvider] = React.useState<ProviderLayoutType<types.ProviderType>>(
@@ -103,5 +103,3 @@ const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
     </>
   );
 };
-
-export default ProviderLayout;

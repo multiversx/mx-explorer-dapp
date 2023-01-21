@@ -4,7 +4,7 @@ import { Denominate, NetworkLink, NftBadge } from 'components';
 import { urlBuilder } from 'helpers';
 import { NftEnumType, TokenArgumentType } from 'helpers/types';
 
-const TxActionNft = ({
+export const TxActionNft = ({
   token,
   showBadge,
   noValue,
@@ -58,5 +58,3 @@ const TxActionNft = ({
     </div>
   );
 };
-
-export default TxActionNft;

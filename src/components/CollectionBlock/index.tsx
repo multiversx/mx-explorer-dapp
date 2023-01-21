@@ -2,7 +2,7 @@ import * as React from 'react';
 import { types, urlBuilder } from 'helpers';
 import { NetworkLink } from 'components';
 
-const CollectionBlock = ({ nft }: { nft: types.NftType }) => {
+export const CollectionBlock = ({ nft }: { nft: types.NftType }) => {
   return (
     <div className="collection-block d-flex text-truncate">
       <NetworkLink
@@ -25,5 +25,3 @@ const CollectionBlock = ({ nft }: { nft: types.NftType }) => {
     </div>
   );
 };
-
-export default CollectionBlock;

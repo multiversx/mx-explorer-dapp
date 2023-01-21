@@ -1,6 +1,6 @@
 import { NodeType } from 'helpers/types';
 
-export default function nodeIssue(node: NodeType) {
+export const nodeIssue = (node: NodeType) => {
   if (node.issues)
     switch (true) {
       case node.issues.includes('versionMismatch'):
@@ -13,4 +13,4 @@ export default function nodeIssue(node: NodeType) {
         return 'Multiple instances';
     }
   return '';
-}
+};

@@ -12,9 +12,9 @@ import {
   LockedTokenAddressIcon,
   AccountName,
 } from 'components';
-import TransactionIcon from './TransactionIcon';
-import TransactionMethod from './TransactionMethod';
-import TransactionValue from './TransactionValue';
+import { TransactionIcon } from './TransactionIcon';
+import { TransactionMethod } from './TransactionMethod';
+import { TransactionValue } from './TransactionValue';
 
 export interface TransactionRowType {
   transaction: UITransactionType;
@@ -23,7 +23,7 @@ export interface TransactionRowType {
   showLockedAccounts?: boolean;
 }
 
-const TransactionRow = ({
+export const TransactionRow = ({
   transaction,
   address,
   directionCol,
@@ -152,5 +152,3 @@ const TransactionRow = ({
     </tr>
   );
 };
-
-export default TransactionRow;

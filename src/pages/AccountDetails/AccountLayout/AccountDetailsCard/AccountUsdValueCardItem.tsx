@@ -4,7 +4,7 @@ import { CardItem, LockedAmountTooltip, UsdValue } from 'components';
 import { useGlobalState } from 'context';
 import BigNumber from 'bignumber.js';
 
-const AccountUsdValueCardItem = ({ cardItemClass }: { cardItemClass: string }) => {
+export const AccountUsdValueCardItem = ({ cardItemClass }: { cardItemClass: string }) => {
   const {
     accountDetails: { balance },
     accountStakingDetails: { stakingDataReady, bNtotalLocked },
@@ -43,5 +43,3 @@ const AccountUsdValueCardItem = ({ cardItemClass }: { cardItemClass: string }) =
     </CardItem>
   );
 };
-
-export default AccountUsdValueCardItem;

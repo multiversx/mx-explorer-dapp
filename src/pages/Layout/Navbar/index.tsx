@@ -1,18 +1,18 @@
 import React from 'react';
 import { Nav, Collapse } from 'react-bootstrap';
-import AppSwitcher from './AppSwitcher';
-import NetworkSwitcher from './NetworkSwitcher';
+import { AppSwitcher } from './AppSwitcher';
+import { NetworkSwitcher } from './NetworkSwitcher';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars';
 // import { faMoon } from '@fortawesome/pro-regular-svg-icons/faMoon';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
-import NavLinks from './NavLinks';
-import Logo from './Logo';
+import { NavLinks } from './NavLinks';
+import { Logo } from './Logo';
 // import { ReactComponent as Sun } from 'assets/img/sun.svg';
 // import { useGlobalState, useGlobalDispatch } from 'context';
 // import { NetworkIdType } from 'helpers/types';
 
-export default function Navbar() {
+export const Navbar = () => {
   // const { activeNetwork, theme } = useGlobalState();
   // const dispatch = useGlobalDispatch();
 
@@ -124,4 +124,4 @@ export default function Navbar() {
       </div>
     </>
   );
-}
+};

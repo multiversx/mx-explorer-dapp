@@ -2,7 +2,7 @@ import React from 'react';
 import { useGlobalState } from 'context';
 import { stringIsInteger } from 'helpers';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import denominate from './denominate';
+import { denominate } from './denominate';
 import { denomination as configDenomination, decimals as configDecimals } from 'appConfig';
 
 export interface DenominateType {
@@ -103,7 +103,7 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
   );
 };
 
-const Denominate = (props: DenominateType) => {
+export const Denominate = (props: DenominateType) => {
   const {
     activeNetwork: { erdLabel },
   } = useGlobalState();
@@ -111,5 +111,3 @@ const Denominate = (props: DenominateType) => {
 
   return !stringIsInteger(value) ? denominateInvalid(props) : denominateValid(props, erdLabel);
 };
-
-export default Denominate;

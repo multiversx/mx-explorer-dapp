@@ -1,5 +1,5 @@
 import { Children, isValidElement, ReactNode, ReactText } from 'react';
-import hasChildren from './hasChildren';
+import { hasChildren } from './hasChildren';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const childToString = (child?: ReactText | boolean | {} | null): string => {
@@ -14,7 +14,7 @@ export const childToString = (child?: ReactText | boolean | {} | null): string =
   return (child as string | number).toString();
 };
 
-const onlyText = (children: ReactNode): string => {
+export const onlyText = (children: ReactNode): string => {
   if (!(children instanceof Array) && !isValidElement(children)) {
     return childToString(children);
   }
@@ -38,5 +38,3 @@ const onlyText = (children: ReactNode): string => {
 
   return string.toString();
 };
-
-export default onlyText;

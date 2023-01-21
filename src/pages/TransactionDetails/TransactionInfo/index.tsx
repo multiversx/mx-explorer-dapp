@@ -37,19 +37,19 @@ import {
   AccountName,
 } from 'components';
 import { getStatusIconAndColor } from 'components/TransactionStatus';
-import txStatus from 'components/TransactionStatus/txStatus';
-import EventsList from '../EventsList';
-import OperationsList from '../OperationsList';
-import ScResultsList from '../ScResultsList';
-import denominate from 'components/Denominate/denominate';
+import { txStatus } from 'components/TransactionStatus/txStatus';
+import { EventsList } from '../EventsList';
+import { OperationsList } from '../OperationsList';
+import { ScResultsList } from '../ScResultsList';
+import { denominate } from 'components/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
 import { useGlobalState } from 'context';
 import { transactionsRoutes } from 'routes';
-import DataField from './DataField';
-import NonceMessage from './NonceMessage';
-import TransactionErrorDisplay from './TransactionErrorDisplay';
+import { DataField } from './DataField';
+import { NonceMessage } from './NonceMessage';
+import { TransactionErrorDisplay } from './TransactionErrorDisplay';
 
-const getFee = (transaction: TransactionType) => {
+export const getFee = (transaction: TransactionType) => {
   const bNgasPrice = new BigNumber(transaction.gasPrice);
   const bNgasUsed = new BigNumber(transaction.gasUsed);
   const output = bNgasPrice.times(bNgasUsed).toString();
@@ -57,7 +57,7 @@ const getFee = (transaction: TransactionType) => {
   return output;
 };
 
-const getVisibleOperations = (transaction: TransactionType) => {
+export const getVisibleOperations = (transaction: TransactionType) => {
   const operations =
     transaction?.operations?.filter((operation): operation is any =>
       Object.values<string>(VisibleTransactionOperationType).includes(operation.type)
@@ -66,7 +66,7 @@ const getVisibleOperations = (transaction: TransactionType) => {
   return operations;
 };
 
-const AddressDetailItem = ({ address }: { address: string }) => (
+export const AddressDetailItem = ({ address }: { address: string }) => (
   <DetailItem title="Address" noBorder>
     <div className="d-flex align-items-center">
       <ScAddressIcon initiator={address} />
@@ -82,7 +82,7 @@ const AddressDetailItem = ({ address }: { address: string }) => (
   </DetailItem>
 );
 
-const ScrDetailItem = ({ result }: { result: ResultType }) => (
+export const ScrDetailItem = ({ result }: { result: ResultType }) => (
   <DetailItem title="SC Result Hash" noBorder>
     <div className="d-flex align-items-center">
       <Trim text={result.hash} />
@@ -97,7 +97,7 @@ const ScrDetailItem = ({ result }: { result: ResultType }) => (
   </DetailItem>
 );
 
-const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
+export const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
   const ref = React.useRef(null);
   const {
     activeNetwork: { erdLabel },
@@ -479,5 +479,3 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
     </div>
   );
 };
-
-export default TransactionInfo;

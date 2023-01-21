@@ -91,16 +91,16 @@ interface DenominateType {
   addCommas?: boolean;
 }
 
-export default function denominate({
+export const denominate = ({
   input,
   denomination,
   decimals,
   showLastNonZeroDecimal = false,
   addCommas = true,
-}: DenominateType): string {
+}: DenominateType) => {
   if (!stringIsInteger(input, false)) {
     throw new Error('Invalid input');
   }
 
   return format(input, denomination, decimals, showLastNonZeroDecimal, addCommas);
-}
+};

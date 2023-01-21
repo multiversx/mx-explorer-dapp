@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useDebounce from './useDebounce';
+import { useDebounce } from './useDebounce';
 
 interface TrimType {
   text: string;
@@ -7,7 +7,7 @@ interface TrimType {
   dataTestId?: string;
 }
 
-const Trim = ({ text, dataTestId = '', color }: TrimType) => {
+export const Trim = ({ text, dataTestId = '', color }: TrimType) => {
   const [debounce, setDebounce] = React.useState(0);
 
   const [overflow, setOverflow] = React.useState(false);
@@ -58,5 +58,3 @@ const Trim = ({ text, dataTestId = '', color }: TrimType) => {
     </span>
   );
 };
-
-export default Trim;

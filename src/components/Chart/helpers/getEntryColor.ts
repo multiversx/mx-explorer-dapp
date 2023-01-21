@@ -20,7 +20,7 @@ const DEFAULT_PROVIDER_COLORS: {
   middlestakingfr: '#5485a9',
 };
 
-const getPastelColor = ({ currentIndex, total }: PastelColorType) => {
+export const getPastelColor = ({ currentIndex, total }: PastelColorType) => {
   const colors = (260 / total).toFixed();
 
   const pastelColor = total === 1 ? '#3d5170' : `hsl(${currentIndex * Number(colors)},50%,50%)`;
@@ -28,11 +28,9 @@ const getPastelColor = ({ currentIndex, total }: PastelColorType) => {
   return pastelColor;
 };
 
-const getProviderColor = ({ name, currentIndex, total }: ProviderColorType) => {
+export const getProviderColor = ({ name, currentIndex, total }: ProviderColorType) => {
   if (Object.keys(DEFAULT_PROVIDER_COLORS).includes(name)) {
     return DEFAULT_PROVIDER_COLORS[name];
   }
   return getPastelColor({ currentIndex, total });
 };
-
-export default getProviderColor;

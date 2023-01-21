@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 import { NetworkLink } from 'components';
 import { useNetworkPathname } from 'helpers';
 
-const StatusFilter = () => {
+export const StatusFilter = () => {
   const { search } = useLocation();
   const urlParams = new URLSearchParams(search);
   const { online, page, ...rest } = Object.fromEntries(urlParams);
@@ -72,5 +72,3 @@ const StatusFilter = () => {
     </OverlayTrigger>
   );
 };
-
-export default StatusFilter;

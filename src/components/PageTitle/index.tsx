@@ -1,6 +1,6 @@
 import React, { useEffect, memo } from 'react';
 
-const ScrollToTop = ({ children }: { children: React.ReactNode }) => {
+export const ScrollToTop = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     setTimeout(() => {
       window.scrollTo(0, 0);
@@ -10,7 +10,7 @@ const ScrollToTop = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
-const withPageTitle = (title: string, Component: React.ComponentType) => () => {
+export const withPageTitle = (title: string, Component: React.ComponentType) => () => {
   const Memoized = memo(() => (
     <ScrollToTop>
       <Component />
@@ -22,5 +22,3 @@ const withPageTitle = (title: string, Component: React.ComponentType) => () => {
   }, []);
   return <Memoized />;
 };
-
-export default withPageTitle;

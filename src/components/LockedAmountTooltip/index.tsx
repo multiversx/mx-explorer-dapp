@@ -8,7 +8,7 @@ interface LockedItemType {
   value: React.ReactNode;
 }
 
-const LockedAmountTooltip = ({
+export const LockedAmountTooltip = ({
   lockedDetails,
   small,
 }: {
@@ -34,5 +34,3 @@ const LockedAmountTooltip = ({
     </OverlayTrigger>
   );
 };
-
-export default LockedAmountTooltip;

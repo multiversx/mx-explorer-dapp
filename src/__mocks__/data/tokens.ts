@@ -1,4 +1,4 @@
-export default [
+export const tokens = [
   {
     token: 'TGN-916079',
     mname: 'txgenEsDtTkn',

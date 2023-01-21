@@ -1,7 +1,7 @@
 import * as React from 'react';
-import TxActionCollection from './TxActionCollection';
-import TxActionNft from './TxActionNft';
-import TxActionToken from './TxActionToken';
+import { TxActionCollection } from './TxActionCollection';
+import { TxActionNft } from './TxActionNft';
+import { TxActionToken } from './TxActionToken';
 
 export default class TxActionBlock extends React.Component<{
   children: React.ReactNode;

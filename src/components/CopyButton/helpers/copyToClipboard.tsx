@@ -20,7 +20,7 @@ function fallbackCopyTextToClipboard(text: string) {
   return success;
 }
 
-export default async function copyTextToClipboard(text: string) {
+export const copyTextToClipboard = async (text: string) => {
   let success = false;
 
   if (!navigator.clipboard) {
@@ -38,4 +38,4 @@ export default async function copyTextToClipboard(text: string) {
   }
 
   return success;
-}
+};

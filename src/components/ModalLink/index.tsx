@@ -4,7 +4,7 @@ import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExcl
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal } from 'react-bootstrap';
 
-const ModalLink = (props: LinkComponentProps) => {
+export const ModalLink = (props: LinkComponentProps) => {
   const [show, setShow] = React.useState(false);
 
   const onClick = (e: React.MouseEvent) => {
@@ -57,5 +57,3 @@ const ModalLink = (props: LinkComponentProps) => {
     </>
   );
 };
-
-export default ModalLink;

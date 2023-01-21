@@ -3,9 +3,9 @@ import { DetailItem, Led } from 'components';
 // import PercentegeBar from './PercentegeBar';
 // import getUptimeDowntime from './getUptimeDowntime';
 import { NodeType } from 'helpers/types';
-import RatingArrow from './ratingArrow';
+import { RatingArrow } from './ratingArrow';
 
-const NetworkMetrics = ({ node }: { node: NodeType }) => {
+export const NetworkMetrics = ({ node }: { node: NodeType }) => {
   // const { uptimeLabel, downtimeLabel } = getUptimeDowntime(node);
   const statusColor = node.online ? 'success' : 'danger';
 
@@ -50,5 +50,3 @@ const NetworkMetrics = ({ node }: { node: NodeType }) => {
     </div>
   );
 };
-
-export default NetworkMetrics;

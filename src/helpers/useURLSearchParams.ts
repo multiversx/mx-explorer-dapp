@@ -1,13 +1,13 @@
 import { useLocation } from 'react-router-dom';
 import { stringIsInteger } from 'helpers';
-import txStatus from 'components/TransactionStatus/txStatus';
+import { txStatus } from 'components/TransactionStatus/txStatus';
 
 const checkValue = (value: string) => (stringIsInteger(value) ? parseInt(value) : undefined);
 
 const checkStatus = (status: string) =>
   Object.keys(txStatus).includes(status.toLowerCase()) ? status.toLowerCase() : undefined;
 
-export default function useURLSearchParams() {
+export const useURLSearchParams = () => {
   const query = new URLSearchParams(useLocation().search);
   const page = query.get('page') ? String(query.get('page')) : '';
   const shard = query.get('shard') ? String(query.get('shard')) : '';
@@ -39,4 +39,4 @@ export default function useURLSearchParams() {
     search,
     method,
   };
-}
+};

@@ -3,9 +3,9 @@ import * as React from 'react';
 import { useGlobalState } from 'context';
 import { Loader, NetworkLink, Trim, ScAddressIcon } from 'components';
 import { urlBuilder } from 'helpers';
-import CollectionTabs from './CollectionLayout/CollectionTabs';
+import { CollectionTabs } from './CollectionLayout/CollectionTabs';
 
-const CollectionRoles = () => {
+export const CollectionDetailsRoles = () => {
   const ref = React.useRef(null);
   const {
     collectionDetails: { roles },
@@ -70,5 +70,3 @@ const CollectionRoles = () => {
     </div>
   );
 };
-
-export default CollectionRoles;

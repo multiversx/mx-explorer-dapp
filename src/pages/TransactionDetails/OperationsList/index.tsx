@@ -346,7 +346,7 @@ const DetailedItem = ({
   );
 };
 
-const OperationsList = ({
+export const OperationsList = ({
   transaction,
   operations,
 }: {
@@ -418,5 +418,3 @@ const OperationsList = ({
     </div>
   );
 };
-
-export default OperationsList;

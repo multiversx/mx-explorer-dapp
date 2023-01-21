@@ -5,9 +5,9 @@ import { Denominate } from 'components';
 import { StakeType } from 'helpers/types';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 
-import DetailsBlock from '../DetailsBlock';
+import { DetailsBlock } from '../DetailsBlock';
 
-const AccountStake = ({ stake }: { stake: StakeType }) => {
+export const AccountStake = ({ stake }: { stake: StakeType }) => {
   const { totalStaked, unstakedTokens } = stake;
 
   const bNtotalUnstaked = unstakedTokens
@@ -49,5 +49,3 @@ const AccountStake = ({ stake }: { stake: StakeType }) => {
     </div>
   );
 };
-
-export default AccountStake;

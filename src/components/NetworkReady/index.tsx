@@ -34,5 +34,3 @@ export const withNetworkReady = (Component: React.ComponentType) =>
       );
     }
   };
-
-export default NetworkReady;

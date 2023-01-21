@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dot } from 'recharts';
 
-const CustomDot = (props: any) => {
+export const CustomDot = (props: any) => {
   const { payload } = props;
 
   if (payload?.isBinnedData) {
@@ -10,5 +10,3 @@ const CustomDot = (props: any) => {
 
   return <Dot {...props} />;
 };
-
-export default CustomDot;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useReducer } from 'reinspect';
 import { ActionType, globalReducer } from './reducer';
-import initialState, { StateType, ConfigType } from './state';
+import { initialState, StateType, ConfigType } from './state';
 
 type DispatchType = (action: ActionType) => void;
 export interface GlobalContextProviderType {

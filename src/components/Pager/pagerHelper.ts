@@ -6,7 +6,7 @@ interface PagerHelperType {
   page: string;
 }
 
-export default function pagerHelper({ total, itemsPerPage, page }: PagerHelperType) {
+export const pagerHelper = ({ total, itemsPerPage, page }: PagerHelperType) => {
   const numericTotal = total === '...' ? 0 : total;
   const size = stringIsInteger(page) ? parseInt(page) : 1;
   const start = (size - 1) * itemsPerPage + (size === 1 ? 1 : 0);
@@ -24,4 +24,4 @@ export default function pagerHelper({ total, itemsPerPage, page }: PagerHelperTy
     last,
     lastPage,
   };
-}
+};

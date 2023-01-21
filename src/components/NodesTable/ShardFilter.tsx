@@ -6,14 +6,14 @@ import { useNetworkPathname } from 'helpers';
 import * as React from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
-import { ShardSpan, NetworkLink, adapter } from 'components';
+import { ShardSpan, NetworkLink, useAdapter } from 'components';
 
-const ShardFilter = () => {
+export const ShardFilter = () => {
   const { search } = useLocation();
   const dispatch = useGlobalDispatch();
   const urlParams = new URLSearchParams(search);
   const { shard, page, ...rest } = Object.fromEntries(urlParams);
-  const { getShards } = adapter();
+  const { getShards } = useAdapter();
   const { shards } = useGlobalState();
   const networkPathname = useNetworkPathname();
 
@@ -90,5 +90,3 @@ const ShardFilter = () => {
     </OverlayTrigger>
   );
 };
-
-export default ShardFilter;

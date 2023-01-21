@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { processEconomics } from 'helpers';
 import { useGlobalDispatch } from 'context';
-import { adapter } from 'components';
+import { useAdapter } from 'components';
 
-export default function useFetchEconomics() {
+export const useFetchEconomics = () => {
   const dispatch = useGlobalDispatch();
 
-  const { getEconomics } = adapter();
+  const { getEconomics } = useAdapter();
 
   const fetchEconomics = () => {
     getEconomics().then((economics) => {
@@ -26,4 +26,4 @@ export default function useFetchEconomics() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchEconomics, []);
-}
+};

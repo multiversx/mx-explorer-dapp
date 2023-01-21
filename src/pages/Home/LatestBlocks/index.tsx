@@ -2,20 +2,20 @@ import * as React from 'react';
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
-import { ShardSpan, NetworkLink, TimeAgo, adapter, Trim, Loader, LatestItem } from 'components';
-import FailedBlocks from 'components/BlocksTable/FailedBlocks';
-import NoBlocks from 'components/BlocksTable/NoBlocks';
+import { ShardSpan, NetworkLink, TimeAgo, useAdapter, Trim, Loader, LatestItem } from 'components';
+import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
+import { NoBlocks } from 'components/BlocksTable/NoBlocks';
 import { urlBuilder } from 'helpers';
 import { BlockType } from 'helpers/types';
 
-const LatestBlocks = () => {
+export const LatestBlocks = () => {
   const ref = React.useRef(null);
   const {
     activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
 
-  const { getLatestBlocks } = adapter();
+  const { getLatestBlocks } = useAdapter();
 
   const [blocks, setBlocks] = React.useState<BlockType[]>([]);
   const [blocksFetched, setBlocksFetched] = React.useState<boolean | undefined>();
@@ -124,4 +124,3 @@ const LatestBlocks = () => {
   };
   return React.useMemo(Component, [blocks, blocksFetched]);
 };
-export default LatestBlocks;

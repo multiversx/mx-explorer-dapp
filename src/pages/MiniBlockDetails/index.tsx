@@ -7,17 +7,17 @@ import {
   ShardSpan,
   NetworkLink,
   TransactionsTable,
-  adapter,
+  useAdapter,
   DetailItem,
   Trim,
   CopyButton,
 } from 'components';
 
-import NoTransactions from 'components/TransactionsTable/NoTransactions';
-import FailedTransactions from 'components/TransactionsTable/FailedTransactions';
-import NoScResults from 'components/ScResultsTable/NoScResults';
-import FailedScResults from 'components/ScResultsTable/FailedScResults';
-import MiniBlockNotFound from './MiniBlockNotFound';
+import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
+import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
+import { NoScResults } from 'components/ScResultsTable/NoScResults';
+import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
+import { MiniBlockNotFound } from './MiniBlockNotFound';
 
 import { UITransactionType, TxFiltersEnum } from 'helpers/types';
 
@@ -30,7 +30,7 @@ interface MiniBlockType {
   miniBlockHash: string;
 }
 
-const MiniBlockDetails = () => {
+export const MiniBlockDetails = () => {
   const { hash: miniBlockHash } = useParams() as any;
   const { size } = useSize();
 
@@ -49,7 +49,7 @@ const MiniBlockDetails = () => {
     search,
   } = useURLSearchParams();
 
-  const { getTransfers, getTransfersCount, getMiniBlock } = adapter();
+  const { getTransfers, getTransfersCount, getMiniBlock } = useAdapter();
 
   const { activeNetworkId } = useGlobalState();
 
@@ -238,5 +238,3 @@ const MiniBlockDetails = () => {
     </>
   );
 };
-
-export default MiniBlockDetails;

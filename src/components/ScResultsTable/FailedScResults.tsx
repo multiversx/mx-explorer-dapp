@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { PageState } from 'components';
 
-export default function FailedScResults() {
+export const FailedScResults = () => {
   return (
     <PageState
       icon={faCode}
@@ -11,4 +11,4 @@ export default function FailedScResults() {
       dataTestId="errorScreen"
     />
   );
-}
+};

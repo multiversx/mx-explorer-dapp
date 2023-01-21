@@ -1,12 +1,12 @@
 import * as React from 'react';
-import TransactionRow from './TransactionRow';
+import { TransactionRow } from './TransactionRow';
 import { MethodList } from './TransactionsFilters';
-import Pager from '../Pager';
+import { Pager } from '../Pager';
 import { TransactionsTableType } from 'helpers/types';
 
 import { Header } from './Header';
 
-const TransactionsTable = ({
+export const TransactionsTable = ({
   transactions,
   address,
   totalTransactions,
@@ -84,5 +84,3 @@ const TransactionsTable = ({
     </div>
   );
 };
-
-export default TransactionsTable;

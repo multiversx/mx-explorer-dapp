@@ -2,7 +2,7 @@ import moment from 'moment';
 
 type KeyType = 'theme' | 'accessToken';
 
-const storage = {
+export const storage = {
   saveToLocal: ({
     key,
     data,
@@ -44,5 +44,3 @@ const storage = {
     localStorage.removeItem(key);
   },
 };
-
-export default storage;

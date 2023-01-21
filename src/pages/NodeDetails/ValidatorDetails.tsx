@@ -4,7 +4,7 @@ import { faCheck, faTimes } from '@fortawesome/pro-solid-svg-icons';
 import { CardItem } from 'components';
 import { NodeType } from 'helpers/types';
 
-const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
+export const ValidatorDetails = ({ nodeData }: { nodeData: NodeType }) => {
   const {
     leaderSuccess,
     leaderFailure,
@@ -40,5 +40,3 @@ const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     </div>
   );
 };
-
-export default NodeInformation;

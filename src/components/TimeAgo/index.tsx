@@ -1,9 +1,9 @@
 import React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import timeAgo from './timeAgo';
+import { timeAgo } from './timeAgo';
 import { dateFormatted } from 'helpers';
 
-const TimeAgo = ({
+export const TimeAgo = ({
   value,
   short = false,
   tooltip = false,
@@ -38,5 +38,3 @@ const TimeAgo = ({
     <>{result}</>
   );
 };
-
-export default TimeAgo;

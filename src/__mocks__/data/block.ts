@@ -1,4 +1,4 @@
-export default {
+export const block = {
   hash: 'c51471d4b6a439af44c51bff7372c4f02a8c98ba3bf81e7e080fe461c074d1c1',
   nonce: 547,
   round: 608,

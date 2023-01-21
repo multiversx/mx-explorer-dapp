@@ -3,23 +3,23 @@ import { useLocation } from 'react-router-dom';
 
 import { pageSize } from 'appConfig';
 import { tokensRoutes } from 'routes';
-import { Loader, adapter, NetworkLink, Pager } from 'components';
+import { Loader, useAdapter, NetworkLink, Pager } from 'components';
 import { useGlobalState } from 'context';
-import { useFilters, useURLSearchParams, types, useActiveRoute } from 'helpers';
+import { useGetFilters, useURLSearchParams, types, useActiveRoute } from 'helpers';
 
-import NoTokens from './NoTokens';
-import FailedTokens from './FailedTokens';
-import Filters from './Filters';
-import TokensTable from './TokensTable';
+import { NoTokens } from './NoTokens';
+import { FailedTokens } from './FailedTokens';
+import { Filters } from './Filters';
+import { TokensTable } from './TokensTable';
 
-const Tokens = () => {
+export const Tokens = () => {
   const ref = React.useRef(null);
   const { economics } = useGlobalState();
   const activeRoute = useActiveRoute();
   const { page } = useURLSearchParams();
   const { search } = useLocation();
-  const { getQueryObject, size } = useFilters();
-  const { getTokens, getTokensCount } = adapter();
+  const { getQueryObject, size } = useGetFilters();
+  const { getTokens, getTokensCount } = useAdapter();
 
   const [tokens, setTokens] = React.useState<types.TokenType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -133,5 +133,3 @@ const Tokens = () => {
     </>
   );
 };
-
-export default Tokens;

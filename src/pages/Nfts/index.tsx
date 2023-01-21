@@ -1,17 +1,25 @@
 import * as React from 'react';
-import { Loader, adapter, NetworkLink, Trim, Pager, CollectionBlock, NftBadge } from 'components';
-import NoNfts from './NoNfts';
-import FailedNfts from './FailedNfts';
-import { urlBuilder, useFilters, useURLSearchParams, types } from 'helpers';
-import Filters from './Filters';
+import {
+  Loader,
+  useAdapter,
+  NetworkLink,
+  Trim,
+  Pager,
+  CollectionBlock,
+  NftBadge,
+} from 'components';
+import { NoNfts } from './NoNfts';
+import { FailedNfts } from './FailedNfts';
+import { urlBuilder, useGetFilters, useURLSearchParams, types } from 'helpers';
+import { Filters } from './Filters';
 import { useLocation } from 'react-router-dom';
 
-const Nfts = () => {
+export const Nfts = () => {
   const ref = React.useRef(null);
   const { page } = useURLSearchParams();
   const { search } = useLocation();
-  const { getQueryObject, size } = useFilters();
-  const { getNfts, getNftsCount } = adapter();
+  const { getQueryObject, size } = useGetFilters();
+  const { getNfts, getNftsCount } = useAdapter();
 
   const [nfts, setNfts] = React.useState<types.NftType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -148,5 +156,3 @@ const Nfts = () => {
     </>
   );
 };
-
-export default Nfts;

@@ -5,7 +5,7 @@ interface TickRangeType {
   filter?: string;
 }
 
-const formatTickRange = ({ config, filter }: TickRangeType) => {
+export const formatTickRange = ({ config, filter }: TickRangeType) => {
   const { min, max } = config.reduce(
     (total, item) => {
       if (filter && item?.data?.[filter]) {
@@ -33,5 +33,3 @@ const formatTickRange = ({ config, filter }: TickRangeType) => {
     min,
   };
 };
-
-export default formatTickRange;

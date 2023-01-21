@@ -1,4 +1,4 @@
-export default [
+export const proveiders = [
   {
     provider: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqhllllsajxzat',
     serviceFee: 0.1567,

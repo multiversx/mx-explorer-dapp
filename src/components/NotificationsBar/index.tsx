@@ -5,7 +5,7 @@ import { useNotifications } from 'helpers';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const NotificationsBar = () => {
+export const NotificationsBar = () => {
   const { notifications } = useGlobalState();
   const { removeNotification } = useNotifications();
 
@@ -46,5 +46,3 @@ const NotificationsBar = () => {
     </>
   );
 };
-
-export default NotificationsBar;

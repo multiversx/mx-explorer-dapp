@@ -175,7 +175,7 @@ const getHexValidationWarnings = (str: string) => {
   return warnings;
 };
 
-const DataDecode = ({
+export const DataDecode = ({
   value,
   className,
   initialDecodeMethod,
@@ -280,5 +280,3 @@ const DataDecode = ({
     </div>
   );
 };
-
-export default DataDecode;

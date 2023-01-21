@@ -2,17 +2,17 @@ import * as React from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { collectionRoutes } from 'routes';
 import { useGlobalDispatch, useGlobalState } from 'context';
-import { Loader, adapter } from 'components';
+import { Loader, useAdapter } from 'components';
 import { useSize, useNetworkRoute } from 'helpers';
-import FailedCollectionDetails from './FailedCollectionDetails';
-import CollectionDetailsCard from './CollectionDetailsCard';
+import { FailedCollectionDetails } from './FailedCollectionDetails';
+import { CollectionDetailsCard } from './CollectionDetailsCard';
 
-const CollectionLayout = ({ children }: { children: React.ReactNode }) => {
+export const CollectionLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { firstPageTicker } = useSize();
   const { activeNetwork } = useGlobalState();
   const dispatch = useGlobalDispatch();
-  const { getCollection } = adapter();
+  const { getCollection } = useAdapter();
   const networkRoute = useNetworkRoute();
 
   const match: any = useRouteMatch(networkRoute(collectionRoutes.collectionDetails));
@@ -71,5 +71,3 @@ const CollectionLayout = ({ children }: { children: React.ReactNode }) => {
     </>
   );
 };
-
-export default CollectionLayout;

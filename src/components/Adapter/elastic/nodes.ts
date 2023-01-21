@@ -1,7 +1,7 @@
 import { ProviderPropsType } from '../helpers';
-import getNodes from './helpers/getNodes';
+import { getNodes } from './helpers/getNodes';
 
-const nodes = async ({
+export const nodes = async ({
   nodeUrl,
   url,
   params = {},
@@ -106,5 +106,3 @@ const nodes = async ({
     throw new Error(error);
   }
 };
-
-export default nodes;

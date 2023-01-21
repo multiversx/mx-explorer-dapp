@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 
 import { AccountStakingDetailsType } from 'context/state';
 
-import denominate from 'components/Denominate/denominate';
+import { denominate } from 'components/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
 import { truncateMiddle } from 'helpers';
 import { ProviderType } from 'helpers/types';
@@ -14,7 +14,7 @@ interface DonutChartDataType {
   displayValue?: number;
 }
 
-const prepareChartData = ({
+export const prepareChartData = ({
   stakingDetails,
   providers,
 }: {
@@ -102,5 +102,3 @@ const prepareChartData = ({
 
   return defaultData;
 };
-
-export default prepareChartData;

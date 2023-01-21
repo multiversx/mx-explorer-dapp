@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/pro-regular-svg-icons/faInfoCircle';
 import { Overlay } from 'components';
 
-const AccountDetailsBlock = ({ assets }: { assets: AssetType }) => {
+export const AccountDetailsBlock = ({ assets }: { assets: AssetType }) => {
   return (
     <div className="d-flex align-items-center">
       {assets.iconSvg && (
@@ -19,5 +19,3 @@ const AccountDetailsBlock = ({ assets }: { assets: AssetType }) => {
     </div>
   );
 };
-
-export default AccountDetailsBlock;

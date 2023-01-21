@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-const PercentegeBar = ({
+export const PercentegeBar = ({
   uptimePercentege,
   downtimePercentege,
   uptimeLabel,
@@ -61,4 +61,3 @@ const PercentegeBar = ({
     </div>
   );
 };
-export default PercentegeBar;
