@@ -1,5 +1,5 @@
-import { fireEvent, wait, beforeAll } from 'utils/test-utils';
-import { miniblock, account, node } from 'utils/rawData';
+import { fireEvent, wait, beforeAll } from '__mocks__/test-utils';
+import { miniblock, account, node } from '__mocks__';
 
 describe('Search input', () => {
   test('Search finds block', async () => {
@@ -45,7 +45,9 @@ describe('Search input', () => {
     fireEvent.click(searchButton);
 
     await wait(async () => {
-      expect(document.title).toEqual('Transaction Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual(
+        'Transaction Details • MultiversX (previously Elrond) Explorer'
+      );
     });
   });
   test('Search finds miniblock', async () => {

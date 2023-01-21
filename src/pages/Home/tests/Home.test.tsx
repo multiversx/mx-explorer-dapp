@@ -1,4 +1,4 @@
-import { beforeAll } from 'utils/test-utils';
+import { beforeAll } from '__mocks__/test-utils';
 
 describe('Homepage tests', () => {
   test('Home page is displaying', async () => {

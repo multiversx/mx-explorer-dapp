@@ -1,4 +1,4 @@
-import { fireEvent, wait, beforeAll } from 'utils/test-utils';
+import { fireEvent, wait, beforeAll } from '__mocks__/test-utils';
 
 describe('Blocks Page', () => {
   test('Blocks page is displaying', async () => {

@@ -8,8 +8,8 @@ import { createMemoryHistory, History } from 'history';
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { App } from '../App';
-import defaultConfig from './config';
-import * as rawData from './rawData';
+import defaultConfig from '../utils/config';
+import * as rawData from '.';
 
 const customRender = (ui: any, options: any = {}) => render(ui, { wrapper: App, ...options });
 

@@ -1,5 +1,5 @@
-import { fireEvent, wait, beforeAll } from 'utils/test-utils';
-import { blocks } from 'utils/rawData';
+import { fireEvent, wait, beforeAll } from '__mocks__/test-utils';
+import { blocks } from '__mocks__';
 
 describe('Latest Blocks', () => {
   test('Latest Blocks component is displaying', async () => {

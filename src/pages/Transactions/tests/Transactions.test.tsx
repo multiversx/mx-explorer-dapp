@@ -1,4 +1,4 @@
-import { wait, waitForElement, fireEvent, act, beforeAll } from 'utils/test-utils';
+import { wait, waitForElement, fireEvent, act, beforeAll } from '__mocks__/test-utils';
 
 describe('Transactions Page', () => {
   test('Transactions page loading state', async () => {
@@ -47,7 +47,9 @@ describe('Transactions Page Links', () => {
     fireEvent.click(links[0]);
     await act(async () => {
       await wait(async () => {
-        expect(document.title).toEqual('Transaction Details • MultiversX (previously Elrond) Explorer');
+        expect(document.title).toEqual(
+          'Transaction Details • MultiversX (previously Elrond) Explorer'
+        );
       });
     });
   });

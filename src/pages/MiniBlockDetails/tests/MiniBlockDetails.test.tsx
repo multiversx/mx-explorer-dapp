@@ -1,6 +1,6 @@
-import { beforeAll } from 'utils/test-utils';
+import { beforeAll } from '__mocks__/test-utils';
 
-import { miniblock, miniblockTransactions } from 'utils/rawData';
+import { miniblock, miniblockTransactions } from '__mocks__';
 
 describe('MiniBlock Details Page', () => {
   test('MiniBlock Details page is displaying', async () => {

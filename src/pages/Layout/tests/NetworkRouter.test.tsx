@@ -1,4 +1,4 @@
-import { fireEvent, beforeAll, wait, act } from 'utils/test-utils';
+import { fireEvent, beforeAll, wait, act } from '__mocks__/test-utils';
 import { ConfigType } from 'context/state';
 
 const optionalConfig: ConfigType = {

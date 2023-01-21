@@ -1,4 +1,4 @@
-import { fireEvent, wait, waitForElement, beforeAll } from 'utils/test-utils';
+import { fireEvent, wait, waitForElement, beforeAll } from '__mocks__/test-utils';
 
 describe('Latest Transactions', () => {
   test('Latest Transactions component is displaying', async () => {
@@ -52,7 +52,9 @@ describe('Latest Transactions Links', () => {
 
     fireEvent.click(link);
     await wait(async () => {
-      expect(document.title).toEqual('Transaction Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual(
+        'Transaction Details • MultiversX (previously Elrond) Explorer'
+      );
     });
   });
   test('Tx To link', async () => {

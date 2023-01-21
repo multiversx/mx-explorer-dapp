@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
-import { wait, beforeAll } from 'utils/test-utils';
-import { provider } from 'utils/rawData';
+import { wait, beforeAll } from '__mocks__/test-utils';
+import { provider } from '__mocks__';
 
 describe('Provider Details Page', () => {
   test('Provider Details page is displaying', async () => {
