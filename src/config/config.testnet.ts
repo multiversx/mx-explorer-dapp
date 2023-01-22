@@ -1,87 +1,36 @@
-const CONFIG = {
-  /*
-        Possible flags:
-          links: (default) []
-        Possbile network flags:
-          validators: (default) true
-          economics: (default) false
-          data: (default) false
-    */
-  links: [
-    {
-      id: 'mainnet',
-      name: 'Mainnet',
-      url: 'https://explorer.multiversx.com/',
-    },
-    {
-      id: 'testnet',
-      name: 'Testnet',
-      url: 'https://testnet-explorer.multiversx.com/',
-    },
-    {
-      id: 'devnet',
-      name: 'Devnet',
-      url: 'https://devnet-explorer.multiversx.com/',
-    },
-  ],
-  networks: [
-    {
-      default: true,
-      id: 'testnet',
-      name: 'Testnet',
-      adapter: 'api',
-      apiUrl: 'https://testnet-api.multiversx.com',
-      validatorDetails: true,
-      erdLabel: 'XeGLD',
-      walletAddress: 'https://testnet-wallet.multiversx.com/',
-      explorerAddress: 'https://testnet-explorer.multiversx.com/',
-      delegationApi: 'https://testnet-delegation-api.multiversx.com',
-      extrasApi: 'https://testnet-extras-api.multiversx.com',
-      growthApi: 'https://tools.multiversx.com/growth-api',
-      theme: 'testnet',
-    },
-  ],
-  multiversXApps: [
-    {
-      id: 'main-site',
-      name: 'MultiversX',
-      url: 'https://multiversx.com/',
-    },
-    {
-      id: 'wallet',
-      name: 'Testnet Wallet',
-      url: 'https://testnet-wallet.multiversx.com/',
-    },
-    {
-      id: 'explorer',
-      name: 'Testnet Explorer', // navbar title
-      url: 'https://testnet-explorer.multiversx.com/',
-    },
-    {
-      id: 'xexchange',
-      name: 'xExchange',
-      url: 'https://xexchange.com/',
-    },
-    {
-      id: 'xlaunchpad',
-      name: 'xLaunchpad',
-      url: 'https://xlaunchpad.com/',
-    },
-    {
-      id: 'bridge',
-      name: 'Bridge',
-      url: 'https://ad-astra.multiversx.com/',
-    },
-    {
-      id: 'docs',
-      name: 'Docs',
-      url: 'https://docs.multiversx.com/',
-    },
-  ],
-};
+import { allApps, NetworkType, schema } from './sharedConfig';
+export * from './sharedConfig';
 
-window.CONFIG = CONFIG;
+export const networks: NetworkType[] = [
+  {
+    default: true,
+    id: 'testnet',
+    name: 'Testnet',
+    chainId: 'D',
+    adapter: 'api',
+    theme: 'testnet',
+    egldLabel: 'xEGLD',
+    walletAddress: 'https://testnet-wallet.multiversx.com',
+    explorerAddress: 'https://testnet-explorer.multiversx.com',
+    apiAddress: 'https://testnet-api.multiversx.com',
+  },
+];
 
-if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-  module.exports = CONFIG;
-}
+export const multiversxApps = allApps([
+  {
+    id: 'wallet',
+    name: 'Testnet Wallet', // navbar title
+    url: 'https://testnet-wallet.multiversx.com',
+  },
+  {
+    id: 'explorer',
+    name: 'Testnet Explorer',
+    url: 'http://testnet-explorer.multiversx.com',
+  },
+]);
+
+networks.forEach((network) => {
+  schema.validate(network, { strict: true }).catch(({ errors }) => {
+    console.error(`Config invalid format for ${network.id}`, errors);
+  });
+});
