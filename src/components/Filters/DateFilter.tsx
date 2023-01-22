@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { useNetworkPathname } from 'helpers';
 
@@ -16,8 +16,11 @@ const hidePopover = () => {
 export const getFilterText = (after: Date | null, before: Date | null) => {
   const dateFormat = 'DD MMM YYYY';
   const afterText =
-    after !== null ? `${before !== null ? '' : 'After '}${moment(after).format(dateFormat)}` : '';
-  const beforeText = before !== null ? ` - ${moment(before).format(dateFormat)}` : '';
+    after !== null
+      ? `${before !== null ? '' : 'After '}${moment(after).format(dateFormat)}`
+      : '';
+  const beforeText =
+    before !== null ? ` - ${moment(before).format(dateFormat)}` : '';
 
   return `${afterText}${beforeText}`;
 };
@@ -25,7 +28,7 @@ export const getFilterText = (after: Date | null, before: Date | null) => {
 export const DateFilter = () => {
   const ref = useRef(null);
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const { search: locationSearch } = useLocation();
   const networkPathname = useNetworkPathname();
   const urlParams = new URLSearchParams(locationSearch);
@@ -56,25 +59,32 @@ export const DateFilter = () => {
       delete paramsObject['after'];
     }
     const nextUrlParams = new URLSearchParams({
-      ...paramsObject,
+      ...paramsObject
     }).toString();
-    history.push(`${networkPathname}?${nextUrlParams}`);
+    navigate(`${networkPathname}?${nextUrlParams}`);
   };
 
   const onApply = () => {
     const paramsObject = Object.fromEntries(urlParams);
     const nextUrlParams = new URLSearchParams({
       ...paramsObject,
-      ...(startDate !== null ? { after: moment.utc(startDate).unix().toString() } : {}),
-      ...(endDate !== null ? { before: moment(endDate).endOf('day').utc().unix().toString() } : {}),
+      ...(startDate !== null
+        ? { after: moment.utc(startDate).unix().toString() }
+        : {}),
+      ...(endDate !== null
+        ? { before: moment(endDate).endOf('day').utc().unix().toString() }
+        : {})
     }).toString();
-    history.push(`${networkPathname}?${nextUrlParams}`);
+    navigate(`${networkPathname}?${nextUrlParams}`);
   };
 
   const filterText = getFilterText(afterDate, beforeDate);
 
   return (
-    <div ref={ref} className="transactions-datepicker d-flex flex-column align-items-center">
+    <div
+      ref={ref}
+      className='transactions-datepicker d-flex flex-column align-items-center'
+    >
       <DatePicker
         selected={startDate}
         startDate={startDate}
@@ -85,12 +95,17 @@ export const DateFilter = () => {
         maxDate={new Date()}
         showDisabledMonthNavigation
       />
-      {before && after && filterText && <div className="mb-3 text-body">{filterText}</div>}
-      <div className="d-flex justify-content-center mb-3">
-        <button className="btn btn-primary btn-sm" onClick={onApply}>
+      {before && after && filterText && (
+        <div className='mb-3 text-body'>{filterText}</div>
+      )}
+      <div className='d-flex justify-content-center mb-3'>
+        <button className='btn btn-primary btn-sm' onClick={onApply}>
           Apply
         </button>
-        <button className="btn btn-outline-primary btn-sm ml-2" onClick={onClear}>
+        <button
+          className='btn btn-outline-primary btn-sm ml-2'
+          onClick={onClear}
+        >
           Clear
         </button>
       </div>

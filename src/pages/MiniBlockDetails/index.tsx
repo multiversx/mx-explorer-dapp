@@ -1,7 +1,13 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { isHash, useNetworkRoute, urlBuilder, useSize, useURLSearchParams } from 'helpers';
-import { Redirect, useParams } from 'react-router-dom';
+import {
+  isHash,
+  useNetworkRoute,
+  urlBuilder,
+  useSize,
+  useURLSearchParams
+} from 'helpers';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Loader,
   ShardSpan,
@@ -10,7 +16,7 @@ import {
   useAdapter,
   DetailItem,
   Trim,
-  CopyButton,
+  CopyButton
 } from 'components';
 
 import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
@@ -35,6 +41,7 @@ export const MiniBlockDetails = () => {
   const { size } = useSize();
 
   const ref = React.useRef(null);
+  const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
 
   const {
@@ -46,7 +53,7 @@ export const MiniBlockDetails = () => {
     before,
     after,
     status,
-    search,
+    search
   } = useURLSearchParams();
 
   const { getTransfers, getTransfersCount, getMiniBlock } = useAdapter();
@@ -54,15 +61,27 @@ export const MiniBlockDetails = () => {
   const { activeNetworkId } = useGlobalState();
 
   const [miniBlock, setMiniBlock] = React.useState<MiniBlockType>();
-  const [miniBlockFetched, setMiniBlockFetched] = React.useState<boolean | undefined>();
+  const [miniBlockFetched, setMiniBlockFetched] = React.useState<
+    boolean | undefined
+  >();
 
-  const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
-  const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
-  const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
+  const [transactions, setTransactions] = React.useState<UITransactionType[]>(
+    []
+  );
+  const [transactionsFetched, setTransactionsFetched] = React.useState<
+    boolean | undefined
+  >();
+  const [totalTransactions, setTotalTransactions] = React.useState<
+    number | '...'
+  >('...');
 
   const invalid = miniBlockHash && !isHash(miniBlockHash);
-  const isScResult = miniBlockFetched && miniBlock && miniBlock.type === 'SmartContractResultBlock';
-  const showTransactions = transactionsFetched === true && transactions.length > 0;
+  const isScResult =
+    miniBlockFetched &&
+    miniBlock &&
+    miniBlock.type === 'SmartContractResultBlock';
+  const showTransactions =
+    transactionsFetched === true && transactions.length > 0;
 
   const fetchMiniBlockData = () => {
     if (!invalid) {
@@ -80,7 +99,7 @@ export const MiniBlockDetails = () => {
           after,
           status,
           search,
-          withUsername: true,
+          withUsername: true
         }),
         getTransfersCount({
           size,
@@ -93,23 +112,29 @@ export const MiniBlockDetails = () => {
           before,
           after,
           status,
-          search,
-        }),
-      ]).then(([miniBlockData, miniBlockTransactionsData, miniBlockTransactionsCount]) => {
-        if (ref.current !== null) {
-          if (miniBlockTransactionsData.success) {
-            setTransactions(miniBlockTransactionsData.data);
-          }
-          setTransactionsFetched(miniBlockTransactionsData.success);
-          if (miniBlockData.success) {
-            setMiniBlock(miniBlockData.data);
-          }
-          setMiniBlockFetched(miniBlockData.success);
-          if (miniBlockTransactionsCount.success) {
-            setTotalTransactions(miniBlockTransactionsCount.data);
+          search
+        })
+      ]).then(
+        ([
+          miniBlockData,
+          miniBlockTransactionsData,
+          miniBlockTransactionsCount
+        ]) => {
+          if (ref.current !== null) {
+            if (miniBlockTransactionsData.success) {
+              setTransactions(miniBlockTransactionsData.data);
+            }
+            setTransactionsFetched(miniBlockTransactionsData.success);
+            if (miniBlockData.success) {
+              setMiniBlock(miniBlockData.data);
+            }
+            setMiniBlockFetched(miniBlockData.success);
+            if (miniBlockTransactionsCount.success) {
+              setTotalTransactions(miniBlockTransactionsCount.data);
+            }
           }
         }
-      });
+      );
     }
   };
 
@@ -117,89 +142,95 @@ export const MiniBlockDetails = () => {
   React.useEffect(fetchMiniBlockData, [activeNetworkId, size, miniBlockHash]);
 
   return invalid ? (
-    <Redirect to={networkRoute(`/not-found`)} />
+    navigate(networkRoute(`/not-found`))
   ) : (
     <>
       {miniBlockFetched === undefined && <Loader />}
-      {miniBlockFetched === false && <MiniBlockNotFound miniBlockHash={miniBlockHash} />}
+      {miniBlockFetched === false && (
+        <MiniBlockNotFound miniBlockHash={miniBlockHash} />
+      )}
 
       <div ref={ref}>
         {miniBlockFetched && miniBlock && (
-          <div className="container page-content">
-            <div className="row">
-              <div className="col-12">
-                <div className="row">
-                  <div className="col-12">
-                    <div className="card">
-                      <div className="card-header">
-                        <div className="card-header-item">
-                          <h6 data-testid="pageTitle">Miniblock Details</h6>
+          <div className='container page-content'>
+            <div className='row'>
+              <div className='col-12'>
+                <div className='row'>
+                  <div className='col-12'>
+                    <div className='card'>
+                      <div className='card-header'>
+                        <div className='card-header-item'>
+                          <h6 data-testid='pageTitle'>Miniblock Details</h6>
                         </div>
                       </div>
 
-                      <div className="card-body p-0">
-                        <div className="container-fluid">
-                          <DetailItem title="Miniblock Hash">
-                            <div className="d-flex align-items-center text-break-all">
+                      <div className='card-body p-0'>
+                        <div className='container-fluid'>
+                          <DetailItem title='Miniblock Hash'>
+                            <div className='d-flex align-items-center text-break-all'>
                               {miniBlockHash}
                               <CopyButton text={miniBlockHash} />
                             </div>
                           </DetailItem>
-                          <DetailItem title="Sender Shard">
-                            <div className="d-flex">
-                              <NetworkLink to={urlBuilder.shard(miniBlock.senderShard)}>
+                          <DetailItem title='Sender Shard'>
+                            <div className='d-flex'>
+                              <NetworkLink
+                                to={urlBuilder.shard(miniBlock.senderShard)}
+                              >
                                 <ShardSpan shard={miniBlock.senderShard} />
                               </NetworkLink>
                             </div>
                           </DetailItem>
 
-                          <DetailItem title="Receiver Shard">
-                            <div className="d-flex">
-                              <NetworkLink to={urlBuilder.shard(miniBlock.receiverShard)}>
+                          <DetailItem title='Receiver Shard'>
+                            <div className='d-flex'>
+                              <NetworkLink
+                                to={urlBuilder.shard(miniBlock.receiverShard)}
+                              >
                                 <ShardSpan shard={miniBlock.receiverShard} />
                               </NetworkLink>
                             </div>
                           </DetailItem>
 
-                          <DetailItem title="Sender Block">
-                            <div className="d-flex align-items-center">
+                          <DetailItem title='Sender Block'>
+                            <div className='d-flex align-items-center'>
                               {miniBlock.senderBlockHash !== '' ? (
                                 <NetworkLink
-                                  className="trim-wrapper"
+                                  className='trim-wrapper'
                                   to={`/blocks/${miniBlock.senderBlockHash}`}
                                 >
                                   <Trim text={miniBlock.senderBlockHash} />
                                 </NetworkLink>
                               ) : (
-                                <span className="text-secondary">N/A</span>
+                                <span className='text-secondary'>N/A</span>
                               )}
                             </div>
                           </DetailItem>
 
-                          <DetailItem title="Receiver Block">
-                            <div className="d-flex align-items-center">
+                          <DetailItem title='Receiver Block'>
+                            <div className='d-flex align-items-center'>
                               {miniBlock.receiverBlockHash !== '' ? (
                                 <NetworkLink
-                                  className="trim-wrapper"
+                                  className='trim-wrapper'
                                   to={`/blocks/${miniBlock.receiverBlockHash}`}
                                 >
                                   <Trim text={miniBlock.receiverBlockHash} />
                                 </NetworkLink>
                               ) : (
-                                <span className="text-secondary">N/A</span>
+                                <span className='text-secondary'>N/A</span>
                               )}
                             </div>
                           </DetailItem>
 
-                          <DetailItem title="Type">{miniBlock.type}</DetailItem>
+                          <DetailItem title='Type'>{miniBlock.type}</DetailItem>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="row">
-                  <div className="col-12 mt-spacer">
+                <div className='row'>
+                  <div className='col-12 mt-spacer'>
                     {transactionsFetched === undefined ? (
                       <Loader />
                     ) : (
@@ -211,19 +242,27 @@ export const MiniBlockDetails = () => {
                             totalTransactions={totalTransactions}
                             size={size}
                             title={
-                              <h6 data-testid="title">
+                              <h6 data-testid='title'>
                                 {isScResult ? 'SC Results' : 'Transactions'}
                               </h6>
                             }
                             inactiveFilters={[TxFiltersEnum.miniBlockHash]}
                           />
                         ) : (
-                          <div className="card">
+                          <div className='card'>
                             {transactionsFetched === false &&
-                              (isScResult ? <FailedScResults /> : <FailedTransactions />)}
+                              (isScResult ? (
+                                <FailedScResults />
+                              ) : (
+                                <FailedTransactions />
+                              ))}
                             {transactionsFetched === true &&
                               transactions.length === 0 &&
-                              (isScResult ? <NoScResults /> : <NoTransactions />)}
+                              (isScResult ? (
+                                <NoScResults />
+                              ) : (
+                                <NoTransactions />
+                              ))}
                           </div>
                         )}
                       </>

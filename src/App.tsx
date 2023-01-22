@@ -1,18 +1,19 @@
-import { useIsMainnet } from 'helpers';
-import React, { useMemo } from 'react';
-import { hot } from 'react-hot-loader/root';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { AxiosInterceptor } from 'components';
-import { Layout } from './pages/Layout';
-import { PageNotFound } from './pages/PageNotFound';
-import { GlobalProvider, useGlobalState } from './context';
-import { ConfigType, NetworkType } from './context/state';
-import { Routes as WrappedRoutes, validatorsRoutes } from './routes';
+import { useIsMainnet } from "helpers";
+import React, { useMemo } from "react";
 
-export const Routes = ({
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import { AxiosInterceptor } from "components";
+import { Layout } from "./pages/Layout";
+import { PageNotFound } from "./pages/PageNotFound";
+import { GlobalProvider, useGlobalState } from "./context";
+import { ConfigType, NetworkType } from "./context/state";
+import { wrappedRoutes, validatorsRoutes } from "routes";
+
+export const FilteredRoutes = ({
   routes,
 }: {
-  routes: { path: string; component: React.ComponentClass }[];
+  routes: { path: string; Component: React.ComponentClass }[];
 }) => {
   const {
     config: { networks },
@@ -23,8 +24,12 @@ export const Routes = ({
   const restrictedRoutes = routes.filter(({ path }) => {
     if (
       (!isMainnet &&
-        [validatorsRoutes.identities, validatorsRoutes.identityDetails].includes(path)) ||
-      (activeNetwork.adapter === 'elastic' && Object.values(validatorsRoutes).includes(path))
+        [
+          validatorsRoutes.identities,
+          validatorsRoutes.identityDetails,
+        ].includes(path)) ||
+      (activeNetwork.adapter === "elastic" &&
+        Object.values(validatorsRoutes).includes(path))
     ) {
       return false;
     }
@@ -33,24 +38,22 @@ export const Routes = ({
 
   return useMemo(
     () => (
-      <Switch>
+      <Routes>
         {networks.map((network: NetworkType, i: number) => {
           return restrictedRoutes.map((route, i) => {
             return (
               <Route
                 path={`/${network.id}${route.path}`}
                 key={network.id + route.path}
-                exact={true}
-                component={route.component}
+                element={<route.Component />}
               />
             );
           });
         })}
         <Route
           path={`${activeNetwork.id}/:any`}
-          key={activeNetwork.id + '404'}
-          exact={true}
-          component={PageNotFound}
+          key={activeNetwork.id + "404"}
+          element={<PageNotFound />}
         />
         ,
         {restrictedRoutes.map((route, i) => {
@@ -58,37 +61,38 @@ export const Routes = ({
             <Route
               path={route.path}
               key={route.path + i}
-              component={route.component}
-              exact={true}
+              element={<route.Component />}
             />
           );
         })}
-        <Route component={PageNotFound} />
-      </Switch>
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [networks, activeNetwork.id]
   );
 };
 
-export const ProviderApp = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
+export const ProviderApp = ({
+  optionalConfig,
+}: {
+  optionalConfig?: ConfigType;
+}) => {
   return (
     <GlobalProvider optionalConfig={optionalConfig}>
       <AxiosInterceptor>
         <Layout>
-          <Routes routes={WrappedRoutes} />
+          <FilteredRoutes routes={wrappedRoutes} />
         </Layout>
       </AxiosInterceptor>
     </GlobalProvider>
   );
 };
 
-const RoutedApp = () => {
+export const App = () => {
   return (
-    <Router>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <ProviderApp />
-    </Router>
+    </BrowserRouter>
   );
 };
-
-export const App = hot(RoutedApp);

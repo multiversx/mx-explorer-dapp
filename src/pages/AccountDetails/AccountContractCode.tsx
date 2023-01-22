@@ -1,11 +1,17 @@
 import React from 'react';
 import { useGlobalState } from 'context';
 import { AccountTabs } from './AccountLayout/AccountTabs';
-import { Redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { urlBuilder, useNetworkRoute } from 'helpers';
 import { downloadFile } from 'helpers';
 
-export const DownloadContractCode = ({ code, fileName }: { code: string; fileName?: string }) => {
+export const DownloadContractCode = ({
+  code,
+  fileName
+}: {
+  code: string;
+  fileName?: string;
+}) => {
   const download = (e: React.MouseEvent) => {
     const name = fileName ?? 'contract';
 
@@ -17,8 +23,12 @@ export const DownloadContractCode = ({ code, fileName }: { code: string; fileNam
   };
 
   return (
-    <div className="mt-4">
-      <button type="button" onClick={download} className="btn btn-primary-light">
+    <div className='mt-4'>
+      <button
+        type='button'
+        onClick={download}
+        className='btn btn-primary-light'
+      >
         Download WASM File
       </button>
     </div>
@@ -26,6 +36,7 @@ export const DownloadContractCode = ({ code, fileName }: { code: string; fileNam
 };
 
 export const AccountContractCode = () => {
+  const navigate = useNavigate();
   const { accountDetails } = useGlobalState();
   const networkRoute = useNetworkRoute();
 
@@ -34,28 +45,31 @@ export const AccountContractCode = () => {
   const codeHashHexValue = codeHashBase64Buffer.toString('hex');
 
   return !accountDetails.code ? (
-    <Redirect to={networkRoute(urlBuilder.accountDetails(accountDetails.address))} />
+    navigate(networkRoute(urlBuilder.accountDetails(accountDetails.address)))
   ) : (
-    <div className="card">
-      <div className="card-header">
-        <div className="card-header-item d-flex justify-content-between align-items-center">
+    <div className='card'>
+      <div className='card-header'>
+        <div className='card-header-item d-flex justify-content-between align-items-center'>
           <AccountTabs />
         </div>
       </div>
       {codeHash && (
-        <div className="card-body d-flex flex-wrap border-bottom py-3 px-lg-spacer text-truncate">
-          <div className="text-secondary pr-3">Code Hash</div>
-          <div className="text-truncate">{codeHashHexValue}</div>
+        <div className='card-body d-flex flex-wrap border-bottom py-3 px-lg-spacer text-truncate'>
+          <div className='text-secondary pr-3'>Code Hash</div>
+          <div className='text-truncate'>{codeHashHexValue}</div>
         </div>
       )}
-      <div className="card-body px-lg-spacer py-lg-4">
+      <div className='card-body px-lg-spacer py-lg-4'>
         <textarea
           readOnly
-          className="form-control col cursor-text"
+          className='form-control col cursor-text'
           rows={10}
           defaultValue={accountDetails.code}
         />
-        <DownloadContractCode code={accountDetails.code} fileName={accountDetails.address} />
+        <DownloadContractCode
+          code={accountDetails.code}
+          fileName={accountDetails.address}
+        />
       </div>
     </div>
   );
