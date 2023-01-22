@@ -6,7 +6,7 @@ import { AccountTabs } from './AccountLayout/AccountTabs';
 import { NoScResults } from 'components/ScResultsTable/NoScResults';
 import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
 import { urlBuilder, useGetFilters, useNetworkRoute } from 'helpers';
-import { ScResultType } from 'helpers/types';
+import { ScResultType } from 'types';
 
 export const AccountScResults = () => {
   const ref = React.useRef(null);
@@ -21,9 +21,7 @@ export const AccountScResults = () => {
   const scResultsActive = activeNetwork.adapter === 'api';
 
   const [isDataReady, setIsDataReady] = React.useState<boolean | undefined>();
-  const [accountScResults, setAccountScResults] = React.useState<
-    ScResultType[]
-  >([]);
+  const [accountScResults, setAccountScResults] = React.useState<ScResultType[]>([]);
   const [accountScResultsCount, setAccountScResultsCount] = React.useState(0);
 
   const fetchAccountScResults = () => {
@@ -31,21 +29,16 @@ export const AccountScResults = () => {
       Promise.all([
         getAccountScResults({
           size,
-          address
+          address,
         }),
-        getAccountScResultsCount(address)
+        getAccountScResultsCount(address),
       ]).then(([accountScResultsData, accountScResultsCountData]) => {
         if (ref.current !== null) {
-          if (
-            accountScResultsData.success &&
-            accountScResultsCountData.success
-          ) {
+          if (accountScResultsData.success && accountScResultsCountData.success) {
             setAccountScResults(accountScResultsData.data);
             setAccountScResultsCount(accountScResultsCountData.data);
           }
-          setIsDataReady(
-            accountScResultsData.success && accountScResultsCountData.success
-          );
+          setIsDataReady(accountScResultsData.success && accountScResultsCountData.success);
         }
       });
     }
@@ -59,9 +52,9 @@ export const AccountScResults = () => {
   return !scResultsActive ? (
     navigate(networkRoute(urlBuilder.accountDetails(address)))
   ) : (
-    <div className='card' ref={ref}>
-      <div className='row'>
-        <div className='col-12'>
+    <div className="card" ref={ref}>
+      <div className="row">
+        <div className="col-12">
           {isDataReady === true && accountScResults.length > 0 ? (
             <ScResultsTable
               scResults={accountScResults}
@@ -71,17 +64,15 @@ export const AccountScResults = () => {
               title={<AccountTabs />}
             />
           ) : (
-            <div className='card'>
-              <div className='card-header'>
-                <div className='card-header-item d-flex align-items-center'>
+            <div className="card">
+              <div className="card-header">
+                <div className="card-header-item d-flex align-items-center">
                   <AccountTabs />
                 </div>
               </div>
               {isDataReady === undefined && <Loader />}
               {isDataReady === false && <FailedScResults />}
-              {isDataReady === true && accountScResults.length === 0 && (
-                <NoScResults />
-              )}
+              {isDataReady === true && accountScResults.length === 0 && <NoScResults />}
             </div>
           )}
         </div>

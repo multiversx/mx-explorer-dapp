@@ -20,7 +20,7 @@ import { FailedTransactions } from 'components/TransactionsTable/FailedTransacti
 import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
 import { TransactionValue } from 'components/TransactionsTable/TransactionValue';
 
-import { UITransactionType } from 'helpers/types';
+import { UITransactionType } from 'types';
 
 export const LatestTransactions = () => {
   const ref = React.useRef(null);

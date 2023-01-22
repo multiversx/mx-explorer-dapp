@@ -1,4 +1,4 @@
-import { UITransactionType, TxActionsEnum, TxActionCategoryEnum } from 'helpers/types';
+import { UITransactionType, TxActionsEnum, TxActionCategoryEnum } from 'types';
 
 export const getTransactionMethod = (transaction: UITransactionType) => {
   let transactionAction = 'transaction';

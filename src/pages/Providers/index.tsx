@@ -5,7 +5,7 @@ import { useGlobalState } from 'context';
 import { useAdapter, ProvidersTable, Loader, PageState } from 'components';
 import { NodesTabs } from 'pages/Nodes/NodesLayout/NodesTabs';
 import { types } from 'helpers';
-import { IdentityType } from 'helpers/types';
+import { IdentityType } from 'types';
 
 export const Providers = () => {
   const ref = React.useRef(null);

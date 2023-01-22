@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { ScAddressIcon, NetworkLink, AccountName, Denominate, TxActionBlock } from 'components';
 import { addressIsBech32, urlBuilder } from 'helpers';
-import { NftEnumType } from 'helpers/types';
-import { TokenArgumentType, TransactionType } from 'helpers/types';
+import { NftEnumType } from 'types';
+import { TokenArgumentType, TransactionType } from 'types';
 import { unwrapper } from './unwrapper';
 import { ReactComponent as DefaultAvatar } from 'assets/img/default-avatar.svg';
 

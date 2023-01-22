@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { useGlobalState } from 'context';
-import { NftEnumType } from 'helpers/types';
+import { NftEnumType } from 'types';
 import { Loader } from 'components';
 
 import { CollectionNfts } from './CollectionNfts';

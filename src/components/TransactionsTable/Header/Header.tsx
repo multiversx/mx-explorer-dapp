@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TransactionsTableType } from 'helpers/types';
+import { TransactionsTableType } from 'types';
 import {
   AgeColumnFilters,
   FromColumnFilters,

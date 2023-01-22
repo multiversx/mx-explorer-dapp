@@ -3,7 +3,7 @@ import React from 'react';
 import { AccountStakingDetailsType } from 'context/state';
 
 import { prepareChartData } from './helpers/prepareChartData';
-import { ProviderType } from 'helpers/types';
+import { ProviderType } from 'types';
 import { Denominate, UsdValue, Chart } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
 

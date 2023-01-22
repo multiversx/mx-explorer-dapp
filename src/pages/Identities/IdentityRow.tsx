@@ -13,7 +13,7 @@ import {
   PercentageBar,
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { IdentityType, NodeType } from 'helpers/types';
+import { IdentityType, NodeType } from 'types';
 import { ReactComponent as CarretDown } from 'assets/img/carret-down.svg';
 
 export interface IdentityRowType {

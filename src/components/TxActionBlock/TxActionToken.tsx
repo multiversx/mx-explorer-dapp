@@ -1,7 +1,7 @@
 import React from 'react';
 import { Denominate, NetworkLink } from 'components';
 import { urlBuilder, formatUSD } from 'helpers';
-import { TokenArgumentType } from 'helpers/types';
+import { TokenArgumentType } from 'types';
 import { denomination as configDenomination } from 'appConfig';
 
 export const TxActionToken = ({

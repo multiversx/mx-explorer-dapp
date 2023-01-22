@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { formatHerotag } from 'helpers';
-import { AssetType } from 'helpers/types';
+import { AssetType } from 'types';
 import { Trim, Overlay } from 'components';
 import { ReactComponent as IdentityLogo } from 'assets/img/logos/identity.svg';
 

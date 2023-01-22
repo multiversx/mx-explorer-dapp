@@ -6,7 +6,7 @@ import { faSync } from '@fortawesome/pro-regular-svg-icons/faSync';
 import { faFlagAlt } from '@fortawesome/pro-regular-svg-icons/faFlagAlt';
 import { faSnooze } from '@fortawesome/pro-regular-svg-icons/faSnooze';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NodeType } from 'helpers/types';
+import { NodeType } from 'types';
 import { Overlay } from 'components';
 
 export const getIcon = (node: NodeType) => {

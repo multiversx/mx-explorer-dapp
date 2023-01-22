@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ScResultRow } from './ScResultRow';
 import { Pager } from '../Pager';
-import { ScResultType } from 'helpers/types';
+import { ScResultType } from 'types';
 
 interface ScResultsTableType {
   scResults: ScResultType[];

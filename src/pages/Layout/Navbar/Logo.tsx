@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { useGlobalState } from 'context';
-import { NetworkIdType } from 'helpers/types';
+import { NetworkIdType } from 'types';
 import { ReactComponent as MultiversXLogo } from 'assets/img/logo-full.svg';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 

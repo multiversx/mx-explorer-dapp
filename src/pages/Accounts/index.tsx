@@ -10,7 +10,7 @@ import {
   AccountName,
 } from 'components';
 import { urlBuilder, useSize, useURLSearchParams } from 'helpers';
-import { AccountType } from 'helpers/types';
+import { AccountType } from 'types';
 import { NoAccounts } from './NoAccounts';
 import { FailedAccounts } from './FailedAccounts';
 

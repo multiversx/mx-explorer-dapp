@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 import { ShardSpan, Led } from 'components';
-import { ShardType } from 'helpers/types';
+import { ShardType } from 'types';
 import { computeShardStatus } from './computeShardStatus';
 
 interface ShardCardType {

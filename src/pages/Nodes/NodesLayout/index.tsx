@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useGlobalDispatch, useGlobalState } from 'context';
 import { useAdapter, Loader } from 'components';
-import { NodesVersionsType } from 'helpers/types';
+import { NodesVersionsType } from 'types';
 import { GlobalStakeCard } from './GlobalStakeCard';
 import { ShardsList } from './ShardsList';
 

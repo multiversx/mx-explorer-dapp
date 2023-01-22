@@ -6,7 +6,7 @@ import { EconomicsType, StatsType } from 'context/state';
 import { pagerHelper } from 'components/Pager/pagerHelper';
 
 import { useGetFilters, useURLSearchParams, validDisplayValue } from 'helpers';
-import { TokenType, SortOrderEnum, TokenSortEnum } from 'helpers/types';
+import { TokenType, SortOrderEnum, TokenSortEnum } from 'types';
 import { pageSize } from 'appConfig';
 import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
 

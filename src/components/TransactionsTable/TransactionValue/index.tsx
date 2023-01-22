@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLayerPlus } from '@fortawesome/pro-regular-svg-icons';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { UITransactionType, NftEnumType, TxActionsEnum } from 'helpers/types';
+import { UITransactionType, NftEnumType, TxActionsEnum } from 'types';
 import { Denominate, TxActionBlock } from 'components';
 
 const getTransactionTokens = (transaction: UITransactionType) => {

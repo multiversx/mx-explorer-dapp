@@ -4,7 +4,7 @@ import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalState } from 'context';
 import { NetworkLinkType } from 'context/state';
-import { NetworkIdType } from 'helpers/types';
+import { NetworkIdType } from 'types';
 
 const networksWithHttps = [...Object.values(NetworkIdType), 'testnet-azure-all-in-one-maiar'];
 

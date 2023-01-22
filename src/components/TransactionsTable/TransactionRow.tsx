@@ -2,7 +2,7 @@ import React from 'react';
 import { faArrowRight } from '@fortawesome/pro-regular-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { addressIsBech32, urlBuilder, getReceiverAssets } from 'helpers';
-import { UITransactionType, TransferTypeEnum } from 'helpers/types';
+import { UITransactionType, TransferTypeEnum } from 'types';
 import {
   ScAddressIcon,
   ShardSpan,

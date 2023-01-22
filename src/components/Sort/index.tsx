@@ -4,7 +4,7 @@ import { faSortDown } from '@fortawesome/pro-duotone-svg-icons/faSortDown';
 import { faSortUp } from '@fortawesome/pro-duotone-svg-icons/faSortUp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation, Link } from 'react-router-dom';
-import { SortOrderEnum } from 'helpers/types';
+import { SortOrderEnum } from 'types';
 
 export const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {
   const { search, pathname } = useLocation();

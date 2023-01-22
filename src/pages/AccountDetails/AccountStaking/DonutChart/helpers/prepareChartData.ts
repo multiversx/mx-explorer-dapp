@@ -5,7 +5,7 @@ import { AccountStakingDetailsType } from 'context/state';
 import { denominate } from 'components/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
 import { truncateMiddle } from 'helpers';
-import { ProviderType } from 'helpers/types';
+import { ProviderType } from 'types';
 
 interface DonutChartDataType {
   name: string;

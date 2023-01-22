@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { RowIssueIcon } from 'components/NodesTable/RowIssueIcon';
 import { nodeIssue } from 'helpers';
-import { NodeType } from 'helpers/types';
+import { NodeType } from 'types';
 
 export const Container = ({ children }: { children: React.ReactNode }) => (
   <div className="d-flex align-items-center">{children}</div>

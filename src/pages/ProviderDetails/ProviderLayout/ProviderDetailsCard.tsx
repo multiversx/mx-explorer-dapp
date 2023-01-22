@@ -12,7 +12,7 @@ import {
 } from '@fortawesome/pro-solid-svg-icons';
 
 import { urlBuilder } from 'helpers';
-import { ProviderType } from 'helpers/types';
+import { ProviderType } from 'types';
 import {
   CardItem,
   CopyButton,

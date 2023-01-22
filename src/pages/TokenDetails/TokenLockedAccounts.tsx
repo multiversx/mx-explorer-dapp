@@ -12,7 +12,7 @@ import {
   Denominate,
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { TokenLockedAccountType } from 'helpers/types';
+import { TokenLockedAccountType } from 'types';
 import { TokenTabs } from './TokenLayout/TokenTabs';
 
 export const TokenDetailsLockedAccounts = () => {

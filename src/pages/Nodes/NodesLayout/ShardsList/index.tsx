@@ -4,7 +4,7 @@ import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 import { metaChainShardId } from 'appConfig';
 import { useGlobalState } from 'context';
 import { GlobalStakeType } from 'context/state';
-import { ShardType } from 'helpers/types';
+import { ShardType } from 'types';
 import { PageState } from 'components';
 
 import { ShardCard } from './ShardCard';

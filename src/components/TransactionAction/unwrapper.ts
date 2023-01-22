@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { TxActionType, TxActionsEnum, TxActionCategoryEnum, UnwrapperType } from 'helpers/types';
+import { TxActionType, TxActionsEnum, TxActionCategoryEnum, UnwrapperType } from 'types';
 
 export const mexUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
   switch (action.name) {

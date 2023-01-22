@@ -6,7 +6,7 @@ import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { ApiTxStatusEnum, TxFiltersEnum, TransactionsTableType } from 'helpers/types';
+import { ApiTxStatusEnum, TxFiltersEnum, TransactionsTableType } from 'types';
 import { SelectFilter, SearchFilter } from 'components';
 
 export const StatusColumnFilters = ({

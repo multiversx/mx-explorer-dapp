@@ -7,7 +7,7 @@ import { txStatus } from 'components/TransactionStatus/txStatus';
 import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { useSize, useURLSearchParams } from 'helpers';
-import { UITransactionType } from 'helpers/types';
+import { UITransactionType } from 'types';
 import { ProviderTabs } from './ProviderLayout/ProviderTabs';
 
 export const ProviderTransactions = () => {

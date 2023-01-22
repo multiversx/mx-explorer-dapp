@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader, useAdapter, PageState } from 'components';
 import { TransactionInfo } from './TransactionInfo';
-import { TransactionType } from 'helpers/types';
+import { TransactionType } from 'types';
 import { txStatus } from 'components/TransactionStatus/txStatus';
 
 export const TransactionDetails = () => {
