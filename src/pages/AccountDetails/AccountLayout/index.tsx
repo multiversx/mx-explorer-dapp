@@ -1,16 +1,16 @@
-import * as React from "react";
-import BigNumber from "bignumber.js";
-import { useNavigate, useLocation } from "react-router-dom";
+import * as React from 'react';
+import BigNumber from 'bignumber.js';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-import { multiversXNodesIdentity } from "appConfig";
-import { useGlobalDispatch, useGlobalState } from "context";
+import { multiversXNodesIdentity } from 'appConfig';
+import { useGlobalDispatch, useGlobalState } from 'context';
 
-import { addressIsBech32, useNetworkRoute, useSize, useGetHash } from "helpers";
-import { IdentityType, ProviderType, DelegationType } from "helpers/types";
-import { Loader, useAdapter } from "components";
+import { addressIsBech32, useNetworkRoute, useSize, useGetHash } from 'helpers';
+import { IdentityType, ProviderType, DelegationType } from 'types';
+import { Loader, useAdapter } from 'components';
 
-import { AccountDetailsCard } from "./AccountDetailsCard";
-import { FailedAccount } from "./FailedAccount";
+import { AccountDetailsCard } from './AccountDetailsCard';
+import { FailedAccount } from './FailedAccount';
 
 export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
@@ -29,7 +29,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   } = useAdapter();
   const networkRoute = useNetworkRoute();
 
-  const isOldAddressRoute = pathname.includes("/address/");
+  const isOldAddressRoute = pathname.includes('/address/');
   const address = useGetHash();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -37,14 +37,12 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const fetchBalanceAndCount = () => {
     if (address) {
       getAccount(address).then((accountDetailsData) => {
-        const details = accountDetailsData.success
-          ? accountDetailsData.data
-          : {};
+        const details = accountDetailsData.success ? accountDetailsData.data : {};
 
         if (ref.current !== null) {
           if (accountDetailsData.success) {
             dispatch({
-              type: "setAccountDetails",
+              type: 'setAccountDetails',
               accountDetails: {
                 ...details,
               },
@@ -75,111 +73,86 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
         let bNtotalLocked = new BigNumber(0);
         let bNtotalClaimable = new BigNumber(0);
 
-        const delegationFetched = delegationData.success
-          ? delegationData.data
-          : {};
+        const delegationFetched = delegationData.success ? delegationData.data : {};
         const stakeFetched = stakeData.success ? stakeData.data : {};
         const delegationLegacyFetched = delegationLegacyData.success
           ? delegationLegacyData.data
           : {};
 
-        const delegation: DelegationType[] = delegationFetched
-          ? delegationData.data
-          : [];
+        const delegation: DelegationType[] = delegationFetched ? delegationData.data : [];
         const stake = stakeFetched ? stakeData.data : {};
-        const delegationLegacy = delegationLegacyFetched
-          ? delegationLegacyData.data
-          : {};
+        const delegationLegacy = delegationLegacyFetched ? delegationLegacyData.data : {};
 
         if (stake) {
-          bNtotalStaked = new BigNumber(
-            stake.totalStaked ? stake.totalStaked : 0
-          );
+          bNtotalStaked = new BigNumber(stake.totalStaked ? stake.totalStaked : 0);
         }
         if (delegationLegacy) {
-          const bNuserActiveStake = new BigNumber(
-            delegationLegacy.userActiveStake
-          );
-          const bNuserWaitingStake = new BigNumber(
-            delegationLegacy.userWaitingStake
-          );
-          const bNClaimableRewardsLegacy = new BigNumber(
-            delegationLegacy.claimableRewards
-          );
+          const bNuserActiveStake = new BigNumber(delegationLegacy.userActiveStake);
+          const bNuserWaitingStake = new BigNumber(delegationLegacy.userWaitingStake);
+          const bNClaimableRewardsLegacy = new BigNumber(delegationLegacy.claimableRewards);
           bNtotalClaimable = bNtotalClaimable.plus(bNClaimableRewardsLegacy);
           bNtotalLegacyDelegation = new BigNumber(
-            bNuserActiveStake
-              .plus(bNuserWaitingStake)
-              .plus(bNClaimableRewardsLegacy)
+            bNuserActiveStake.plus(bNuserWaitingStake).plus(bNClaimableRewardsLegacy)
           );
         }
 
         if (delegation && delegation.length > 0) {
           const bNtotalUserActiveStake = delegation
             .map(({ userActiveStake }) => userActiveStake)
-            .reduce((a, b) => new BigNumber(a).plus(b), new BigNumber("0"));
+            .reduce((a, b) => new BigNumber(a).plus(b), new BigNumber('0'));
           const bNtotalClaimableRewards = delegation
-            .map(({ claimableRewards }) => claimableRewards || "0")
-            .reduce((a, b) => new BigNumber(a).plus(b), new BigNumber("0"));
+            .map(({ claimableRewards }) => claimableRewards || '0')
+            .reduce((a, b) => new BigNumber(a).plus(b), new BigNumber('0'));
           const undelegatedAmounts = delegation
             .map(
-              ({ userUndelegatedList }) =>
-                userUndelegatedList?.map(({ amount }) => amount) ?? []
+              ({ userUndelegatedList }) => userUndelegatedList?.map(({ amount }) => amount) ?? []
             )
             .reduce((a, b) => a.concat(b), []);
           const bNtotalUserUnStakedValue = undelegatedAmounts.reduce(
             (a, b) => new BigNumber(a).plus(b),
-            new BigNumber("0")
+            new BigNumber('0')
           );
-          const activePlusUnStaked = bNtotalUserActiveStake.plus(
-            bNtotalUserUnStakedValue
-          );
+          const activePlusUnStaked = bNtotalUserActiveStake.plus(bNtotalUserUnStakedValue);
           bNtotalDelegation = bNtotalClaimableRewards.plus(activePlusUnStaked);
           bNtotalClaimable = bNtotalClaimable.plus(bNtotalClaimableRewards);
         }
         if (stake && delegation && delegationLegacy) {
-          bNtotalLocked = bNtotalStaked
-            .plus(bNtotalLegacyDelegation)
-            .plus(bNtotalDelegation);
+          bNtotalLocked = bNtotalStaked.plus(bNtotalLegacyDelegation).plus(bNtotalDelegation);
         }
 
         const visibleDelegation =
           delegation?.filter(
             (delegation) =>
-              delegation.userActiveStake !== "0" ||
-              delegation.claimableRewards !== "0" ||
-              (delegation.userUndelegatedList &&
-                delegation.userUndelegatedList.length > 0)
+              delegation.userActiveStake !== '0' ||
+              delegation.claimableRewards !== '0' ||
+              (delegation.userUndelegatedList && delegation.userUndelegatedList.length > 0)
           ) ?? [];
         const showDelegation = visibleDelegation.length > 0;
 
         const showDelegationLegacy =
           delegationLegacy &&
-          (delegationLegacy.claimableRewards !== "0" ||
-            delegationLegacy.userWaitingStake !== "0" ||
-            delegationLegacy.userActiveStake !== "0");
+          (delegationLegacy.claimableRewards !== '0' ||
+            delegationLegacy.userWaitingStake !== '0' ||
+            delegationLegacy.userActiveStake !== '0');
 
         const showStake =
           stake &&
-          (stake?.totalStaked !== "0" ||
+          (stake?.totalStaked !== '0' ||
             (stake?.unstakedTokens && stake.unstakedTokens.length > 0));
 
         //const updatedContracts = contracts ? contracts.join(',') : undefined;
         const fields = [
-          "identity",
-          "provider",
-          "stake",
-          "numNodes",
-          "apr",
-          "serviceFee",
-          "delegationCap",
-        ].join(",");
-        const contracts = visibleDelegation
-          .map((delegation) => delegation?.contract)
-          .join(",");
+          'identity',
+          'provider',
+          'stake',
+          'numNodes',
+          'apr',
+          'serviceFee',
+          'delegationCap',
+        ].join(',');
+        const contracts = visibleDelegation.map((delegation) => delegation?.contract).join(',');
 
-        const stakingDataReady =
-          stakeFetched && delegationFetched && delegationLegacyFetched;
+        const stakingDataReady = stakeFetched && delegationFetched && delegationLegacyFetched;
         const stakingData = {
           stakingDataReady,
           delegation,
@@ -214,7 +187,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
                 providerIdentitiesList.push(multiversXNodesIdentity);
               }
 
-              const identities = providerIdentitiesList.join(",");
+              const identities = providerIdentitiesList.join(',');
 
               if (identities) {
                 getIdentities(identities).then((identitiesData) => {
@@ -222,15 +195,12 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
                     newProvidersData.forEach((provider) => {
                       if (provider.identity) {
                         const identityDetails = identitiesData.data.find(
-                          (identity: IdentityType) =>
-                            identity.identity === provider.identity
+                          (identity: IdentityType) => identity.identity === provider.identity
                         );
 
                         const multiversXNodes = identitiesData.data.filter(
                           (identity: IdentityType) => {
-                            return (
-                              identity.identity === multiversXNodesIdentity
-                            );
+                            return identity.identity === multiversXNodesIdentity;
                           }
                         );
                         if (multiversXNodes.length > 0) {
@@ -244,7 +214,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
                     });
 
                     dispatch({
-                      type: "setAccountStakingDetails",
+                      type: 'setAccountStakingDetails',
                       accountStakingDetails: {
                         ...stakingData,
                         providerDataReady: true,
@@ -255,7 +225,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
                   }
 
                   dispatch({
-                    type: "setAccountStakingDetails",
+                    type: 'setAccountStakingDetails',
                     accountStakingDetails: {
                       ...stakingData,
                       providerDataReady: true,
@@ -266,7 +236,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
                 });
               } else {
                 dispatch({
-                  type: "setAccountStakingDetails",
+                  type: 'setAccountStakingDetails',
                   accountStakingDetails: {
                     ...stakingData,
                     providerDataReady: true,
@@ -277,7 +247,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
               }
             } else {
               dispatch({
-                type: "setAccountStakingDetails",
+                type: 'setAccountStakingDetails',
                 accountStakingDetails: {
                   ...stakingData,
                   providerDataReady: providersData.success,
@@ -289,7 +259,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
           });
         } else {
           dispatch({
-            type: "setAccountStakingDetails",
+            type: 'setAccountStakingDetails',
             accountStakingDetails: {
               ...stakingData,
               providerDataReady: true,
