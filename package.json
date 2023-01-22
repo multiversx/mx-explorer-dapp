@@ -4,6 +4,10 @@
   "private": true,
   "author": "MultiversX",
   "repository": "multiversx/mx-explorer-dapp",
+  "keywords": [
+    "multiversx",
+    "explorer"
+  ],
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "6.2.1",
     "@fortawesome/free-brands-svg-icons": "6.2.1",
@@ -12,40 +16,45 @@
     "@fortawesome/pro-regular-svg-icons": "6.2.1",
     "@fortawesome/pro-solid-svg-icons": "6.2.1",
     "@fortawesome/react-fontawesome": "0.2.0",
+    "@multiversx/sdk-dapp": "2.3.0",
+    "@reduxjs/toolkit": "1.8.2",
     "anchorme": "2.1.2",
     "axios": "0.24.0",
     "bech32": "2.0.0",
     "bignumber.js": "9.1.1",
     "bootstrap": "4.6.2",
+    "classnames": "2.3.2",
     "file-saver": "2.0.5",
     "moment": "2.29.4",
     "numeral": "2.0.6",
-    "react": "16.13.1",
+    "react": "18.2.0",
     "react-anchorme": "2.2.1",
-    "react-bootstrap": "1.6.4",
-    "react-datepicker": "3.4.1",
-    "react-dom": "16.13.1",
+    "react-bootstrap": "1.6.6",
+    "react-datepicker": "4.8.0",
+    "react-dom": "18.2.0",
     "react-helmet": "6.1.0",
-    "react-router-dom": "5.2.0",
+    "react-redux": "8.0.2",
+    "react-router-dom": "6.7.0",
     "react-scripts": "4.0.3",
     "react-select": "5.7.0",
-    "react-simple-maps": "2.3.0",
-    "recharts": "2.1.14",
+    "react-simple-maps": "3.0.0",
+    "recharts": "2.3.2",
+    "redux-persist": "6.0.0",
     "shards-ui": "3.0.0",
     "yup": "0.32.11"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "start-testnet": "npm run copy-testnet-config & REACT_APP_THEME=testnet react-app-rewired start",
-    "start-internal": "npm run copy-internal-config & REACT_APP_THEME=testnet react-app-rewired start",
-    "start-devnet": "npm run copy-devnet-config & REACT_APP_THEME=testnet react-app-rewired start",
-    "start-mainnet": "npm run copy-mainnet-config & REACT_APP_THEME=light react-app-rewired start",
+    "start": "REACT_APP_CACHE_BUST=$(git describe --always) HTTPS=true PORT=3001 react-scripts start",
+    "start-testnet": "npm run copy-testnet-config & REACT_APP_THEME=testnet npm run start",
+    "start-internal": "npm run copy-internal-config & REACT_APP_THEME=testnet npm run start",
+    "start-devnet": "npm run copy-devnet-config & REACT_APP_THEME=testnet npm run start",
+    "start-mainnet": "npm run copy-mainnet-config & REACT_APP_THEME=light npm run start",
     "build-mainnet": "npm run copy-mainnet-config & REACT_APP_SHARE_PREFIX= REACT_APP_GA_ID=***REMOVED*** REACT_APP_THEME=light npm run build",
     "build-staging": "npm run copy-staging-config & REACT_APP_SHARE_PREFIX= REACT_APP_GA_ID=***REMOVED*** REACT_APP_THEME=light REACT_APP_IS_STAGING=true npm run build",
     "build-testnet": "npm run copy-testnet-config & REACT_APP_SHARE_PREFIX=testnet- REACT_APP_GA_ID=G-EFN7QYSMQS REACT_APP_THEME=testnet npm run build",
     "build-internal": "npm run copy-internal-config & REACT_APP_SHARE_PREFIX=internal- REACT_APP_GA_ID=G-EFN7QYSMQS REACT_APP_THEME=testnet npm run build",
     "build-devnet": "npm run copy-devnet-config & REACT_APP_SHARE_PREFIX=devnet- REACT_APP_GA_ID=G-QE38EW59B8 REACT_APP_THEME=testnet npm run build",
-    "build": "REACT_APP_CACHE_BUST=$(git describe --always) react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false REACT_APP_CACHE_BUST=$(git describe --always) react-scripts build",
     "copy-mainnet-config": "cp ./config.mainnet.js ./public/config.js",
     "copy-staging-config": "cp ./config.staging.js ./public/config.js",
     "copy-testnet-config": "cp ./config.testnet.js ./public/config.js",
@@ -60,15 +69,28 @@
     "create-version-file": "git describe --always | sed 's/^/\"/;s/$/\"/' > build/version.json",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json"
+    "lint": "eslint --fix --ext js,ts"
   },
-  "husky": {
-    "hooks": {
-      "pre-push": "CI=true npm run test --runInBand"
+  "jest": {
+    "moduleNameMapper": {
+      "@multiversx/sdk-dapp/(.*)": "<rootDir>/node_modules/@multiversx/sdk-dapp/__commonjs/$1.js"
     }
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
   },
   "browserslist": [
     ">0.2%",
@@ -76,6 +98,7 @@
     "not op_mini all"
   ],
   "resolutions": {
+    "tslib": "^2.3.0",
     "react-error-overlay": "6.0.9"
   },
   "overrides": {
@@ -83,39 +106,44 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-common-types": "0.2.30",
-    "@hot-loader/react-dom": "16.13.0",
-    "@testing-library/jest-dom": "4.2.0",
-    "@testing-library/react": "9.3.0",
-    "@types/axios": "0.14.0",
-    "@types/bech32": "1.1.2",
-    "@types/file-saver": "2.0.1",
+    "@testing-library/jest-dom": "5.16.1",
+    "@testing-library/react": "12.1.2",
+    "@testing-library/user-event": "13.5.0",
+    "@types/bech32": "1.1.4",
+    "@types/file-saver": "2.0.5",
+    "@types/node": "12.0.0",
+    "@types/qrcode": "1.5.0",
+    "@types/qs": "6.9.7",
+    "@types/react": "18.0.24",
+    "@types/react-bootstrap-typeahead": "5.1.8",
+    "@types/react-datepicker": "4.4.2",
+    "@types/react-dom": "18.0.8",
+    "@types/react-router-dom": "5.1.7",
     "@types/jest": "24.0.19",
     "@types/moment": "2.13.0",
-    "@types/node": "14.0.13",
     "@types/papaparse": "5.2.5",
-    "@types/react": "16.9.36",
     "@types/react-bootstrap": "1.0.1",
-    "@types/react-datepicker": "3.1.2",
-    "@types/react-dom": "16.9.8",
     "@types/react-helmet": "6.1.5",
-    "@types/react-router-dom": "5.1.5",
     "@types/react-simple-maps": "1.0.3",
     "@types/yup": "0.29.3",
     "@types/numeral": "2.0.2",
-    "@welldone-software/why-did-you-render": "4.2.5",
-    "husky": "7.0.2",
-    "jest-canvas-mock": "2.3.0",
-    "prettier": "2.0.5",
-    "react-app-rewire-hot-loader": "2.0.1",
-    "react-app-rewired": "2.1.6",
+    "eslint-config-react": "1.1.7",
+    "eslint-config-react-app": "6.0.0",
+    "eslint-config-standard": "16.0.2",
+    "eslint-import-resolver-alias": "1.1.2",
+    "eslint-import-resolver-typescript": "2.4.0",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-react": "7.22.0",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "react": "18.2.0",
+    "react-app-rewired": "2.2.1",
+    "react-dom": "18.2.0",
     "react-error-overlay": "6.0.9",
-    "react-hot-loader": "4.12.21",
+    "sass": "1.57.1",
+    "jest-canvas-mock": "2.3.0",
     "reinspect": "1.0.2",
-    "sass": "1.55.0",
-    "tslint": "6.1.2",
-    "tslint-config-prettier": "1.18.0",
-    "tslint-plugin-prettier": "2.3.0",
-    "tslint-react": "5.0.0",
-    "typescript": "3.9.5"
+    "typescript": "4.1.2"
   }
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useIsMainnet } from 'helpers';
 import { Loader, useAdapter } from 'components';
 
@@ -16,6 +16,7 @@ export interface ChartListType {
 
 export const Analytics = () => {
   const ref = useRef(null);
+  const navigate = useNavigate();
   const isMainnet = useIsMainnet();
 
   const { activeNetworkId } = useGlobalState();
@@ -41,7 +42,7 @@ export const Analytics = () => {
   useEffect(getData, [activeNetworkId]);
 
   if (!isMainnet) {
-    return <Redirect to="/" />;
+    navigate('/');
   }
 
   return (
@@ -52,10 +53,10 @@ export const Analytics = () => {
 
       <div ref={ref}>
         {dataReady === true && (
-          <div className="analytics container page-content">
-            <div className="row">
+          <div className='analytics container page-content'>
+            <div className='row'>
               {chartList.map((chart) => (
-                <div className="col-12 col-lg-6 mt-spacer" key={chart.id}>
+                <div className='col-12 col-lg-6 mt-spacer' key={chart.id}>
                   <AnalyticsChart id={chart.id} path={chart.path} />
                 </div>
               ))}

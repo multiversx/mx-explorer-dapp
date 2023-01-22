@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { Tab, Nav } from 'react-bootstrap';
-import { useRouteMatch } from 'react-router-dom';
-import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
-import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
-import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
-import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import BigNumber from 'bignumber.js';
+import * as React from "react";
+import { Tab, Nav } from "react-bootstrap";
+import { useMatch } from "react-router-dom";
+import { faSpinner } from "@fortawesome/pro-regular-svg-icons/faSpinner";
+import { faClock } from "@fortawesome/pro-regular-svg-icons/faClock";
+import { faAngleDown } from "@fortawesome/pro-regular-svg-icons/faAngleDown";
+import { faSearch } from "@fortawesome/pro-regular-svg-icons/faSearch";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import BigNumber from "bignumber.js";
 import {
   addressIsBech32,
   dateFormatted,
@@ -15,13 +15,13 @@ import {
   isContract,
   getTransactionMethod,
   formatUSD,
-} from 'helpers';
+} from "helpers";
 import {
   TransactionType,
   TxActionCategoryEnum,
   VisibleTransactionOperationType,
   ResultType,
-} from 'helpers/types';
+} from "helpers/types";
 import {
   Denominate,
   ScAddressIcon,
@@ -35,19 +35,19 @@ import {
   TransactionAction,
   LoadingDots,
   AccountName,
-} from 'components';
-import { getStatusIconAndColor } from 'components/TransactionStatus';
-import { txStatus } from 'components/TransactionStatus/txStatus';
-import { EventsList } from '../EventsList';
-import { OperationsList } from '../OperationsList';
-import { ScResultsList } from '../ScResultsList';
-import { denominate } from 'components/Denominate/denominate';
-import { denomination, decimals } from 'appConfig';
-import { useGlobalState } from 'context';
-import { transactionsRoutes } from 'routes';
-import { DataField } from './DataField';
-import { NonceMessage } from './NonceMessage';
-import { TransactionErrorDisplay } from './TransactionErrorDisplay';
+} from "components";
+import { getStatusIconAndColor } from "components/TransactionStatus";
+import { txStatus } from "components/TransactionStatus/txStatus";
+import { EventsList } from "../EventsList";
+import { OperationsList } from "../OperationsList";
+import { ScResultsList } from "../ScResultsList";
+import { denominate } from "components/Denominate/denominate";
+import { denomination, decimals } from "appConfig";
+import { useGlobalState } from "context";
+import { transactionsRoutes } from "routes";
+import { DataField } from "./DataField";
+import { NonceMessage } from "./NonceMessage";
+import { TransactionErrorDisplay } from "./TransactionErrorDisplay";
 
 export const getFee = (transaction: TransactionType) => {
   const bNgasPrice = new BigNumber(transaction.gasPrice);
@@ -60,7 +60,9 @@ export const getFee = (transaction: TransactionType) => {
 export const getVisibleOperations = (transaction: TransactionType) => {
   const operations =
     transaction?.operations?.filter((operation): operation is any =>
-      Object.values<string>(VisibleTransactionOperationType).includes(operation.type)
+      Object.values<string>(VisibleTransactionOperationType).includes(
+        operation.type
+      )
     ) ?? [];
 
   return operations;
@@ -72,7 +74,10 @@ export const AddressDetailItem = ({ address }: { address: string }) => (
       <ScAddressIcon initiator={address} />
       {addressIsBech32(address) ? (
         <>
-          <NetworkLink to={urlBuilder.accountDetails(address)} className="trim-wrapper">
+          <NetworkLink
+            to={urlBuilder.accountDetails(address)}
+            className="trim-wrapper"
+          >
             <Trim text={address} />
           </NetworkLink>
           <CopyButton className="mr-2" text={address} />
@@ -97,15 +102,22 @@ export const ScrDetailItem = ({ result }: { result: ResultType }) => (
   </DetailItem>
 );
 
-export const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
+export const TransactionInfo = ({
+  transaction,
+}: {
+  transaction: TransactionType;
+}) => {
   const ref = React.useRef(null);
   const {
     activeNetwork: { erdLabel },
   } = useGlobalState();
 
   const networkRoute = useNetworkRoute();
-  const match: any = useRouteMatch(networkRoute(transactionsRoutes.transactionDetails));
-  const activeSection = match?.params.tab ? match.params.tab : 'details';
+  const match: any = useMatch(
+    networkRoute(transactionsRoutes.transactionDetailsLogs)
+  );
+
+  const activeSection = match ? "logs" : "details";
   const [activeKey, setActiveKey] = React.useState(activeSection);
 
   const isTxPending =
@@ -114,7 +126,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
 
   const transactionFee =
     transaction.fee === undefined && transaction.gasUsed === undefined
-      ? 'N/A'
+      ? "N/A"
       : denominate({
           input: transaction.fee ? transaction.fee : getFee(transaction),
           denomination,
@@ -138,7 +150,8 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
   });
 
   const visibleOperations = getVisibleOperations(transaction);
-  const showLogs = transaction.logs || (transaction.results && transaction.results.length > 0);
+  const showLogs =
+    transaction.logs || (transaction.results && transaction.results.length > 0);
 
   return (
     <div className="transaction-info card" ref={ref}>
@@ -146,23 +159,28 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
         id="transaction-tabs"
         defaultActiveKey={activeKey}
         onSelect={(selectedKey) => {
-          return selectedKey ? setActiveKey(selectedKey) : 'details';
+          return selectedKey ? setActiveKey(selectedKey) : "details";
         }}
       >
         <div
           className={`card-header status-${
-            getStatusIconAndColor(transaction.status, transaction.pendingResults).color
+            getStatusIconAndColor(
+              transaction.status,
+              transaction.pendingResults
+            ).color
           }`}
         >
           <div className="card-header-item d-flex align-items-center">
             <Nav.Link
               data-testid="title"
               eventKey="details"
-              className={`tab-link mr-3 ${activeKey === 'details' ? 'active' : ''}`}
+              className={`tab-link mr-3 ${
+                activeKey === "details" ? "active" : ""
+              }`}
               onClick={() => {
                 window.history.replaceState(
                   null,
-                  '',
+                  "",
                   urlBuilder.transactionDetails(transaction.txHash)
                 );
               }}
@@ -172,11 +190,13 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
             {showLogs && (
               <Nav.Link
                 eventKey="logs"
-                className={`tab-link mr-3 ${activeKey === 'logs' ? 'active' : ''}`}
+                className={`tab-link mr-3 ${
+                  activeKey === "logs" ? "active" : ""
+                }`}
                 onClick={() => {
                   window.history.replaceState(
                     null,
-                    '',
+                    "",
                     urlBuilder.transactionDetailsLogs(transaction.txHash)
                   );
                 }}
@@ -221,7 +241,10 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                           className="mr-2 text-secondary fa-spin slow-spin"
                         />
                       ) : (
-                        <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
+                        <FontAwesomeIcon
+                          icon={faClock}
+                          className="mr-2 text-secondary"
+                        />
                       )}
                       <TimeAgo value={transaction.timestamp} />
                       &nbsp;
@@ -266,7 +289,10 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                             assets={transaction.senderAssets}
                           />
                         </NetworkLink>
-                        <CopyButton className="mr-2" text={transaction.sender} />
+                        <CopyButton
+                          className="mr-2"
+                          text={transaction.sender}
+                        />
                         <NetworkLink
                           to={urlBuilder.senderShard(transaction.senderShard)}
                           className="flex-shrink-0"
@@ -286,7 +312,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                       {isContract(transaction.receiver) ? (
                         <span className="mr-2">Contract</span>
                       ) : (
-                        ''
+                        ""
                       )}
                       <NetworkLink
                         to={urlBuilder.accountDetails(transaction.receiver)}
@@ -297,10 +323,15 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                           assets={transaction.receiverAssets}
                         />
                       </NetworkLink>
-                      <CopyButton className="mr-2" text={transaction.receiver} />
+                      <CopyButton
+                        className="mr-2"
+                        text={transaction.receiver}
+                      />
                       {!isNaN(transaction.receiverShard) && (
                         <NetworkLink
-                          to={urlBuilder.receiverShard(transaction.receiverShard)}
+                          to={urlBuilder.receiverShard(
+                            transaction.receiverShard
+                          )}
                           className="flex-shrink-0"
                         >
                           (<ShardSpan shard={transaction.receiverShard} />)
@@ -313,21 +344,32 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                         <FontAwesomeIcon
                           icon={faAngleDown}
                           className="text-secondary"
-                          style={{ marginTop: '2px' }}
+                          style={{ marginTop: "2px" }}
                           transform={{ rotate: 45 }}
                         />
                         &nbsp;
-                        <small className="text-danger ml-1"> Block Reverted</small>
+                        <small className="text-danger ml-1">
+                          {" "}
+                          Block Reverted
+                        </small>
                       </div>
                     )}
                   </div>
                 </DetailItem>
 
                 <DetailItem title="Value">
-                  {formattedTxValue} {erdLabel}{' '}
+                  {formattedTxValue} {erdLabel}{" "}
                   <span className="text-secondary">
                     {transaction.price !== undefined ? (
-                      <>({formatUSD({ amount: txValue, usd: transaction.price, digits: 2 })})</>
+                      <>
+                        (
+                        {formatUSD({
+                          amount: txValue,
+                          usd: transaction.price,
+                          digits: 2,
+                        })}
+                        )
+                      </>
                     ) : (
                       <>N/A</>
                     )}
@@ -336,8 +378,11 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
 
                 {transaction.action && transaction.action.category && (
                   <>
-                    <DetailItem title="Method">{getTransactionMethod(transaction)}</DetailItem>
-                    {transaction.action.category !== TxActionCategoryEnum.scCall && (
+                    <DetailItem title="Method">
+                      {getTransactionMethod(transaction)}
+                    </DetailItem>
+                    {transaction.action.category !==
+                      TxActionCategoryEnum.scCall && (
                       <DetailItem title="Transaction Action">
                         <TransactionAction transaction={transaction} />
                       </DetailItem>
@@ -356,14 +401,17 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                       </>
                     }
                   >
-                    <OperationsList transaction={transaction} operations={visibleOperations} />
+                    <OperationsList
+                      transaction={transaction}
+                      operations={visibleOperations}
+                    />
                   </DetailItem>
                 )}
 
                 <DetailItem title="Transaction Fee">
                   {transaction.gasUsed !== undefined ? (
                     <>
-                      {transactionFee} {erdLabel}{' '}
+                      {transactionFee} {erdLabel}{" "}
                       <span className="text-secondary">
                         {transaction.price !== undefined ? (
                           <>
@@ -395,7 +443,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
 
                 <DetailItem title="Gas Limit">
                   {transaction.gasLimit !== undefined ? (
-                    <>{transaction.gasLimit.toLocaleString('en')}</>
+                    <>{transaction.gasLimit.toLocaleString("en")}</>
                   ) : (
                     <span className="text-secondary">N/A</span>
                   )}
@@ -403,7 +451,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
 
                 <DetailItem title="Gas Used">
                   {transaction.gasUsed !== undefined ? (
-                    <>{transaction.gasUsed.toLocaleString('en')}</>
+                    <>{transaction.gasUsed.toLocaleString("en")}</>
                   ) : (
                     <span className="text-secondary">N/A</span>
                   )}
@@ -411,7 +459,10 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
 
                 <DetailItem title="Gas Price">
                   {transaction.gasPrice !== undefined ? (
-                    <Denominate value={transaction.gasPrice.toString()} showLastNonZeroDecimal />
+                    <Denominate
+                      value={transaction.gasPrice.toString()}
+                      showLastNonZeroDecimal
+                    />
                   ) : (
                     <span className="text-secondary">N/A</span>
                   )}
@@ -424,7 +475,10 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                   </>
                 </DetailItem>
 
-                <DataField data={transaction.data} scamInfo={transaction.scamInfo} />
+                <DataField
+                  data={transaction.data}
+                  scamInfo={transaction.scamInfo}
+                />
 
                 {transaction.results && transaction.results?.length > 0 && (
                   <DetailItem title="Smart&nbsp;Contract Results">
@@ -437,15 +491,19 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                 <Tab.Pane eventKey="logs">
                   {transaction.logs && (
                     <>
-                      {' '}
+                      {" "}
                       {transaction.logs.address !== undefined && (
                         <AddressDetailItem address={transaction.logs.address} />
                       )}
-                      {transaction.logs.events && transaction.logs.events?.length > 0 && (
-                        <DetailItem title="Events">
-                          <EventsList events={transaction.logs.events} id={transaction.logs?.id} />
-                        </DetailItem>
-                      )}
+                      {transaction.logs.events &&
+                        transaction.logs.events?.length > 0 && (
+                          <DetailItem title="Events">
+                            <EventsList
+                              events={transaction.logs.events}
+                              id={transaction.logs?.id}
+                            />
+                          </DetailItem>
+                        )}
                     </>
                   )}
                   {transaction.results && transaction.results.length > 0 && (
@@ -458,13 +516,19 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                           >
                             <ScrDetailItem result={result} />
                             {result.logs.address !== undefined && (
-                              <AddressDetailItem address={result.logs.address} />
+                              <AddressDetailItem
+                                address={result.logs.address}
+                              />
                             )}
-                            {result.logs.events && result.logs.events?.length > 0 && (
-                              <DetailItem title="Events">
-                                <EventsList events={result.logs.events} id={result.logs?.id} />
-                              </DetailItem>
-                            )}
+                            {result.logs.events &&
+                              result.logs.events?.length > 0 && (
+                                <DetailItem title="Events">
+                                  <EventsList
+                                    events={result.logs.events}
+                                    id={result.logs?.id}
+                                  />
+                                </DetailItem>
+                              )}
                           </div>
                         ) : null
                       )}

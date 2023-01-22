@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,9 +19,9 @@ export const SearchFilter = ({
   filter,
   placeholder = 'Search',
   className = '',
-  validation,
+  validation
 }: SearchFilterType) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { search: locationSearch } = useLocation();
   const networkPathname = useNetworkPathname();
   const urlParams = new URLSearchParams(locationSearch);
@@ -42,9 +42,9 @@ export const SearchFilter = ({
 
     const nextUrlParams = new URLSearchParams({
       ...paramsObject,
-      ...(searchValue ? { [filter]: searchValue } : {}),
+      ...(searchValue ? { [filter]: searchValue } : {})
     }).toString();
-    history.push(`${networkPathname}?${nextUrlParams}`);
+    navigate(`${networkPathname}?${nextUrlParams}`);
   };
 
   const updateSearchValue = (searchValue: string) => {
@@ -67,11 +67,15 @@ export const SearchFilter = ({
   };
 
   return (
-    <div role="search" className={className}>
-      <div className={`input-group input-group-seamless ${validation ? 'has-validation' : ''}`}>
+    <div role='search' className={className}>
+      <div
+        className={`input-group input-group-seamless ${
+          validation ? 'has-validation' : ''
+        }`}
+      >
         <input
-          type="text"
-          className="form-control"
+          type='text'
+          className='form-control'
           value={inputValue || ''}
           onChange={changeInputValue}
           onKeyDown={(keyEvent: React.KeyboardEvent) => {
@@ -83,25 +87,25 @@ export const SearchFilter = ({
           name={name}
           data-testid={name}
         />
-        <div className="input-group-append">
+        <div className='input-group-append'>
           {inputValue && (
             <>
               <button
-                type="reset"
-                className="input-group-text"
+                type='reset'
+                className='input-group-text'
                 onClick={() => {
                   setInputValue('');
                 }}
-                data-testid="resetSearch"
+                data-testid='resetSearch'
               >
                 <FontAwesomeIcon icon={faTimes} />
               </button>
-              <span className="group-separator"></span>
+              <span className='group-separator'></span>
             </>
           )}
           <button
-            type="submit"
-            className="input-group-text outline-0"
+            type='submit'
+            className='input-group-text outline-0'
             onClick={() => {
               updateSearchValue(inputValue);
             }}
@@ -109,7 +113,9 @@ export const SearchFilter = ({
             <FontAwesomeIcon icon={faSearch} />
           </button>
         </div>
-        {errorText && <div className="invalid-feedback d-block">{errorText}</div>}
+        {errorText && (
+          <div className='invalid-feedback d-block'>{errorText}</div>
+        )}
       </div>
     </div>
   );

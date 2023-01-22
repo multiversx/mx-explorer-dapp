@@ -1,11 +1,9 @@
-import * as React from 'react';
-import { useRouteMatch } from 'react-router-dom';
-import { tokensRoutes } from 'routes';
-import { useGlobalDispatch, useGlobalState } from 'context';
-import { Loader, useAdapter } from 'components';
-import { useSize, useNetworkRoute } from 'helpers';
-import { FailedTokenDetails } from './FailedTokenDetails';
-import { TokenDetailsCard } from './TokenDetailsCard';
+import * as React from "react";
+import { useGlobalDispatch, useGlobalState } from "context";
+import { Loader, useAdapter } from "components";
+import { useSize, useGetHash } from "helpers";
+import { FailedTokenDetails } from "./FailedTokenDetails";
+import { TokenDetailsCard } from "./TokenDetailsCard";
 
 export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
@@ -13,33 +11,33 @@ export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
   const { activeNetwork } = useGlobalState();
   const dispatch = useGlobalDispatch();
   const { getToken } = useAdapter();
-  const networkRoute = useNetworkRoute();
 
-  const match: any = useRouteMatch(networkRoute(tokensRoutes.tokenDetails));
-  const tokenId = match ? match.params.hash : undefined;
+  const tokenId = useGetHash();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchTokenDetails = () => {
-    getToken(tokenId).then((tokenDetailsData) => {
-      const details = tokenDetailsData.success ? tokenDetailsData.data : {};
+    if (tokenId) {
+      getToken(tokenId).then((tokenDetailsData) => {
+        const details = tokenDetailsData.success ? tokenDetailsData.data : {};
 
-      if (ref.current !== null) {
-        if (tokenDetailsData.success) {
-          dispatch({
-            type: 'setTokenDetails',
-            tokenDetails: {
-              ...details,
-            },
-          });
-          setDataReady(true);
-        }
+        if (ref.current !== null) {
+          if (tokenDetailsData.success) {
+            dispatch({
+              type: "setTokenDetails",
+              tokenDetails: {
+                ...details,
+              },
+            });
+            setDataReady(true);
+          }
 
-        if (dataReady === undefined) {
-          setDataReady(tokenDetailsData.success);
+          if (dataReady === undefined) {
+            setDataReady(tokenDetailsData.success);
+          }
         }
-      }
-    });
+      });
+    }
   };
 
   React.useEffect(() => {

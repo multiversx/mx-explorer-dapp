@@ -2,8 +2,15 @@ import * as React from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { faCircleNotch } from '@fortawesome/pro-regular-svg-icons/faCircleNotch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNetworkRoute, urlBuilder, isHash, isContract, addressIsBech32, bech32 } from 'helpers';
-import { Redirect, useLocation } from 'react-router-dom';
+import {
+  useNetworkRoute,
+  urlBuilder,
+  isHash,
+  isContract,
+  addressIsBech32,
+  bech32
+} from 'helpers';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAdapter } from 'components';
 
 interface SearchType {
@@ -12,6 +19,7 @@ interface SearchType {
 
 export const Search = ({ setExpanded = () => null }: SearchType) => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
   const {
     getAccount,
@@ -23,7 +31,7 @@ export const Search = ({ setExpanded = () => null }: SearchType) => {
     getNft,
     getScResult,
     getCollection,
-    getUsername,
+    getUsername
   } = useAdapter();
   const [route, setRoute] = React.useState('');
   const [searching, setSearching] = React.useState(false);
@@ -53,7 +61,8 @@ export const Search = ({ setExpanded = () => null }: SearchType) => {
 
       let isPubKeyAccount = false;
       try {
-        isPubKeyAccount = hash.length < 65 && addressIsBech32(bech32.encode(hash));
+        isPubKeyAccount =
+          hash.length < 65 && addressIsBech32(bech32.encode(hash));
       } catch {}
 
       switch (true) {
@@ -105,7 +114,7 @@ export const Search = ({ setExpanded = () => null }: SearchType) => {
             getBlock(hash),
             getScResult(hash),
             getTransaction(hash),
-            getMiniBlock(hash),
+            getMiniBlock(hash)
           ]).then(([block, scResult, transaction, miniblock]) => {
             setExpanded(false);
             switch (true) {
@@ -113,7 +122,11 @@ export const Search = ({ setExpanded = () => null }: SearchType) => {
                 setRoute(networkRoute(`/blocks/${hash}`));
                 break;
               case scResult.success:
-                setRoute(networkRoute(`/transactions/${scResult.data.originalTxHash}#${hash}`));
+                setRoute(
+                  networkRoute(
+                    `/transactions/${scResult.data.originalTxHash}#${hash}`
+                  )
+                );
                 break;
               case transaction.success:
                 setRoute(networkRoute(`/transactions/${hash}`));
@@ -175,36 +188,40 @@ export const Search = ({ setExpanded = () => null }: SearchType) => {
   React.useEffect(reset, [route, pathname]);
 
   return route ? (
-    <Redirect to={route} />
+    navigate(route)
   ) : (
-    <form className="main-search w-100 d-flex" noValidate={true}>
-      <div className="input-group input-group-seamless">
+    <form className='main-search w-100 d-flex' noValidate={true}>
+      <div className='input-group input-group-seamless'>
         <input
-          type="text"
-          className="form-control border-0 rounded-pill py-3 pl-3 pl-lg-4 text-truncate"
-          placeholder="Search for an address, transaction/block hash, validator key or token id"
-          name="requestType"
-          data-testid="search"
+          type='text'
+          className='form-control border-0 rounded-pill py-3 pl-3 pl-lg-4 text-truncate'
+          placeholder='Search for an address, transaction/block hash, validator key or token id'
+          name='requestType'
+          data-testid='search'
           required
           value={hash}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
         />
-        <div className="input-group-append">
+        <div className='input-group-append'>
           <button
-            type="submit"
-            className="input-group-text outline-0 m-0 p-0"
+            type='submit'
+            className='input-group-text outline-0 m-0 p-0'
             onClick={(e) => {
               e.preventDefault();
               onClick();
             }}
-            data-testid="searchButton"
+            data-testid='searchButton'
           >
-            <div className="my-1 py-1 px-3 px-lg-4 border-left">
+            <div className='my-1 py-1 px-3 px-lg-4 border-left'>
               {searching ? (
-                <FontAwesomeIcon icon={faCircleNotch} spin className="mr-1 text-primary" />
+                <FontAwesomeIcon
+                  icon={faCircleNotch}
+                  spin
+                  className='mr-1 text-primary'
+                />
               ) : (
-                <FontAwesomeIcon icon={faSearch} className="mr-1 text-" />
+                <FontAwesomeIcon icon={faSearch} className='mr-1 text-' />
               )}
             </div>
           </button>

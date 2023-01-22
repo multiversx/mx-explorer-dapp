@@ -7,7 +7,7 @@ import { NavDropdown } from 'react-bootstrap';
 
 export const AppSwitcher = ({ onToggle }: { onToggle?: () => void }) => {
   const {
-    config: { multiversXApps },
+    config: { multiversXApps }
   } = useGlobalState();
 
   const hidePopover = () => {
@@ -20,18 +20,20 @@ export const AppSwitcher = ({ onToggle }: { onToggle?: () => void }) => {
   return (
     <NavDropdown
       title={
-        <div className="nav-link-icon flex-fill text-lg-center">
-          <i className="material-icons icon-sm m-0 d-none d-lg-block">
-            <span className="px-1 my-0 mx-2">
+        <div className='nav-link-icon flex-fill text-lg-center'>
+          <i className='material-icons icon-sm m-0 d-none d-lg-block'>
+            <span className='px-1 my-0 mx-2'>
               <FontAwesomeIcon icon={faTh} />
             </span>
           </i>
-          <span className="d-lg-none">Switch to</span>
-          <FontAwesomeIcon className="d-inline-block d-lg-none ml-1" icon={faAngleDown} />
+          <span className='d-lg-none'>Switch to</span>
+          <FontAwesomeIcon
+            className='d-inline-block d-lg-none ml-1'
+            icon={faAngleDown}
+          />
         </div>
       }
-      id="app-switcher-dropdown"
-      alignRight
+      id='app-switcher-dropdown'
     >
       {multiversXApps.map(({ name, url, id }) => {
         const active = id === 'explorer';
@@ -41,7 +43,7 @@ export const AppSwitcher = ({ onToggle }: { onToggle?: () => void }) => {
             onClick={hidePopover}
             href={url}
             target={`${active ? '' : '_blank'}`}
-            rel="noopener noreferrer"
+            rel='noopener noreferrer'
             className={`dropdown-item ${active ? 'text-primary' : ''}`}
           >
             {name}

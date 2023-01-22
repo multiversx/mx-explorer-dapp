@@ -1,45 +1,49 @@
-import * as React from 'react';
-import { useRouteMatch } from 'react-router-dom';
-import { collectionRoutes } from 'routes';
-import { useGlobalDispatch, useGlobalState } from 'context';
-import { Loader, useAdapter } from 'components';
-import { useSize, useNetworkRoute } from 'helpers';
-import { FailedCollectionDetails } from './FailedCollectionDetails';
-import { CollectionDetailsCard } from './CollectionDetailsCard';
+import * as React from "react";
+import { useGlobalDispatch, useGlobalState } from "context";
+import { Loader, useAdapter } from "components";
+import { useSize, useGetHash } from "helpers";
+import { FailedCollectionDetails } from "./FailedCollectionDetails";
+import { CollectionDetailsCard } from "./CollectionDetailsCard";
 
-export const CollectionLayout = ({ children }: { children: React.ReactNode }) => {
+export const CollectionLayout = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const ref = React.useRef(null);
   const { firstPageTicker } = useSize();
   const { activeNetwork } = useGlobalState();
   const dispatch = useGlobalDispatch();
   const { getCollection } = useAdapter();
-  const networkRoute = useNetworkRoute();
 
-  const match: any = useRouteMatch(networkRoute(collectionRoutes.collectionDetails));
-  const collection = match ? match.params.hash : undefined;
+  const collection = useGetHash();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchCollectionDetails = () => {
-    getCollection(collection).then((collectionDetailsData) => {
-      const details = collectionDetailsData.success ? collectionDetailsData.data : {};
+    if (collection) {
+      getCollection(collection).then((collectionDetailsData) => {
+        const details = collectionDetailsData.success
+          ? collectionDetailsData.data
+          : {};
 
-      if (ref.current !== null) {
-        if (collectionDetailsData.success) {
-          dispatch({
-            type: 'setCollectionDetails',
-            collectionDetails: {
-              ...details,
-            },
-          });
-          setDataReady(true);
-        }
+        if (ref.current !== null) {
+          if (collectionDetailsData.success) {
+            dispatch({
+              type: "setCollectionDetails",
+              collectionDetails: {
+                ...details,
+              },
+            });
+            setDataReady(true);
+          }
 
-        if (dataReady === undefined) {
-          setDataReady(collectionDetailsData.success);
+          if (dataReady === undefined) {
+            setDataReady(collectionDetailsData.success);
+          }
         }
-      }
-    });
+      });
+    }
   };
 
   React.useEffect(() => {
@@ -58,7 +62,9 @@ export const CollectionLayout = ({ children }: { children: React.ReactNode }) =>
   return (
     <>
       {loading && <Loader />}
-      {!loading && failed && <FailedCollectionDetails collection={collection} />}
+      {!loading && failed && (
+        <FailedCollectionDetails collection={collection} />
+      )}
 
       <div ref={ref}>
         {!loading && !failed && (
