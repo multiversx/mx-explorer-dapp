@@ -1,12 +1,12 @@
-import React from "react";
-import { faCode } from "@fortawesome/pro-regular-svg-icons/faCode";
+import React from 'react';
+import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 
-import { types, useIsMainnet, useGetHash } from "helpers";
-import { IdentityType } from "helpers/types";
+import { types, useIsMainnet, useGetHash } from 'helpers';
+import { IdentityType } from 'types';
 
-import { useAdapter, Loader, PageState, SharedIdentity } from "components";
+import { useAdapter, Loader, PageState, SharedIdentity } from 'components';
 
-import { ProviderDetailsCard } from "./ProviderDetailsCard";
+import { ProviderDetailsCard } from './ProviderDetailsCard';
 
 interface ProviderLayoutType<T> {
   data?: T;
@@ -24,12 +24,10 @@ export const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   const { getProvider, getIdentity } = useAdapter();
   const isMainnet = useIsMainnet();
 
-  const [provider, setProvider] = React.useState<
-    ProviderLayoutType<types.ProviderType>
-  >(initialState);
-  const [identity, setIdentity] = React.useState<
-    ProviderLayoutType<IdentityType>
-  >(initialState);
+  const [provider, setProvider] = React.useState<ProviderLayoutType<types.ProviderType>>(
+    initialState
+  );
+  const [identity, setIdentity] = React.useState<ProviderLayoutType<IdentityType>>(initialState);
 
   const fetchData = () => {
     if (address) {
@@ -62,8 +60,7 @@ export const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   React.useEffect(fetchData, []);
 
   const showIdentity =
-    identity.success === false ||
-    (identity.success && identity.data !== undefined);
+    identity.success === false || (identity.success && identity.data !== undefined);
 
   return (
     <>
