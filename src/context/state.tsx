@@ -15,103 +15,17 @@ import {
   ProviderType,
   CollectionType,
   NftEnumType,
-} from 'helpers/types';
-
-export type NetworkLinkType = InferType<typeof networkLink>;
-export type NetworkType = InferType<typeof schema>;
-export type AdapterType = InferType<typeof adapterSchema>;
-
-export interface ConfigType {
-  networks: NetworkType[];
-  links: NetworkLinkType[];
-  multiversXApps: NetworkLinkType[];
-}
-
-export interface GlobalStakeType {
-  queueSize: number;
-  waitingList?: number;
-  deliquentStake?: number;
-  nodesVerions?: NodesVersionsType[];
-}
-
-export interface EconomicsType {
-  economicsFetched?: boolean;
-  totalSupply: string;
-  circulatingSupply: string;
-  staked: string;
-  price: string;
-  marketCap: string;
-  apr: string;
-  topUpApr: string;
-  baseApr: string;
-  tokenMarketCap: string;
-  totalStakedPercent: string;
-  ecosystemMarketCap: string;
-}
-
-export interface StatsType {
-  statsFetched?: boolean;
-  shards: string;
-  blocks: string;
-  accounts: string;
-  transactions: string;
-  epoch: number;
-  epochPercentage: number;
-  epochTotalTime: string;
-  epochTimeElapsed: string;
-  epochTimeRemaining: string;
-  roundsPerEpoch: number;
-  roundsPassed: number;
-}
-
-export interface NotificationType {
-  id: string;
-  text: React.ReactNode;
-  priority: number;
-  bgClassName: string;
-  dismissable: boolean;
-}
-
-export interface AccountStakingDetailsType {
-  stakingDataReady: boolean | undefined;
-  bNtotalStaked: BigNumber;
-  bNtotalDelegation: BigNumber;
-  bNtotalLegacyDelegation: BigNumber;
-  bNtotalLocked: BigNumber;
-  bNtotalClaimable: BigNumber;
-  stake?: StakeType;
-  showStake: boolean;
-  delegationLegacy?: DelegationLegacyType;
-  showDelegationLegacy: boolean;
-  delegation?: DelegationType[];
-  showDelegation: boolean;
-  providerDataReady: undefined | boolean;
-  delegationProviders: ProviderType[];
-  delegationLegacyIdentity: IdentityType | undefined;
-}
-
-export interface StateType {
-  config: ConfigType;
-  defaultNetwork: NetworkType;
-  activeNetwork: NetworkType;
-  activeNetworkId: string;
-  timeout: number; // axios
-  refresh: {
-    timestamp: number;
-  };
-  theme: string;
-  shards: ShardType[];
-  globalStake: GlobalStakeType | undefined;
-  accountDetails: AccountType;
-  accountStakingDetails: AccountStakingDetailsType;
-  tokenDetails: TokenType;
-  collectionDetails: CollectionType;
-  usd: number | undefined;
-  urlBlacklist?: { [key: string]: string };
-  notifications: NotificationType[];
-  economics: EconomicsType;
-  stats: StatsType;
-}
+  NetworkLinkType,
+  NetworkType,
+  AdapterType,
+  ConfigType,
+  GlobalStakeType,
+  EconomicsType,
+  StatsType,
+  NotificationType,
+  AccountStakingDetailsType,
+  StateType,
+} from 'types';
 
 export const initialState = (optionalConfig?: ConfigType): StateType => {
   const configObject = optionalConfig !== undefined ? optionalConfig : config;
