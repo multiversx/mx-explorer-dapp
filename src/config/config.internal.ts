@@ -1,5 +1,8 @@
 import { allApps, NetworkType, schema } from './sharedConfig';
+import { links as sharedLinks } from './sharedConfig';
 export * from './sharedConfig';
+
+export const links: typeof sharedLinks = [];
 
 export const networks: NetworkType[] = [
   {
