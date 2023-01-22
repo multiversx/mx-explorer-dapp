@@ -63,11 +63,9 @@ export const allApps = (props: { id: string; name: string; url: string }[]) => [
 export const networkBaseSchema = object({
   default: boolean(),
   id: string().defined().required(),
-  chainId: string().defined().required(),
   egldLabel: string().defined().required(),
-  apiAddress: string().defined().required(),
   name: string().defined().required(),
-  theme: string(),
+  theme: string().oneOf(['default', 'testnet']),
   walletAddress: string(),
   explorerAddress: string(),
   accessToken: boolean(),
@@ -79,13 +77,16 @@ export const adapterSchema = object({
     then: string().required(),
   }),
   adapter: string().defined().oneOf(['api', 'elastic']),
-  apiUrl: string().when('adapter', {
+  apiAddress: string().when('adapter', {
     is: 'api',
     then: string().required(),
   }),
   growthApi: string().when('adapter', {
     is: 'api',
-    then: string().required(),
+    then: string().when('id', {
+      is: 'mainnet',
+      then: string().required(),
+    }),
   }),
   elasticUrl: string().when('adapter', {
     is: 'elastic',
