@@ -3,7 +3,7 @@ import { useGlobalState } from 'context';
 import { stringIsInteger } from 'helpers';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { denominate } from './denominate';
-import { denomination as configDenomination, decimals as configDecimals } from 'appConfig';
+import { DECIMALS, DIGITS } from 'config';
 
 export interface DenominateType {
   value: string;
@@ -46,8 +46,8 @@ const denominateInvalid = (props: DenominateType) => {
 
 const denominateValid = (props: DenominateType, erdLabel: string) => {
   const { value, showLastNonZeroDecimal = false, showLabel = true, showTooltip = true } = props;
-  const decimals = props.decimals !== undefined ? props.decimals : configDecimals;
-  const denomination = props.denomination !== undefined ? props.denomination : configDenomination;
+  const decimals = props.decimals !== undefined ? props.decimals : DIGITS;
+  const denomination = props.denomination !== undefined ? props.denomination : DECIMALS;
 
   const denominatedValue = denominate({
     input: value,

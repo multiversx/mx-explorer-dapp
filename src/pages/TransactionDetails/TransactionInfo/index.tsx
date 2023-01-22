@@ -42,7 +42,7 @@ import { EventsList } from '../EventsList';
 import { OperationsList } from '../OperationsList';
 import { ScResultsList } from '../ScResultsList';
 import { denominate } from 'components/Denominate/denominate';
-import { denomination, decimals } from 'appConfig';
+import { DECIMALS, DIGITS } from 'config';
 import { useGlobalState } from 'context';
 import { transactionsRoutes } from 'routes';
 import { DataField } from './DataField';
@@ -118,22 +118,22 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
       ? 'N/A'
       : denominate({
           input: transaction.fee ? transaction.fee : getFee(transaction),
-          denomination,
-          decimals,
+          denomination: DECIMALS,
+          decimals: DIGITS,
           showLastNonZeroDecimal: true,
         });
 
   const formattedTxValue = denominate({
     input: transaction.value,
-    denomination,
-    decimals,
+    denomination: DECIMALS,
+    decimals: DIGITS,
     showLastNonZeroDecimal: true,
   });
 
   const txValue = denominate({
     input: transaction.value,
-    denomination,
-    decimals,
+    denomination: DECIMALS,
+    decimals: DIGITS,
     addCommas: false,
     showLastNonZeroDecimal: true,
   });

@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { AccountStakingDetailsType } from 'context/state';
 
 import { denominate } from 'components/Denominate/denominate';
-import { denomination, decimals } from 'appConfig';
+import { DECIMALS, DIGITS } from 'config';
 import { truncateMiddle } from 'helpers';
 import { ProviderType } from 'types';
 
@@ -55,8 +55,8 @@ export const prepareChartData = ({
 
           const amount = denominate({
             input: bNtotalLocked.toString(10),
-            denomination,
-            decimals,
+            denomination: DECIMALS,
+            decimals: DIGITS,
             showLastNonZeroDecimal: false,
             addCommas: false,
           });
@@ -72,8 +72,8 @@ export const prepareChartData = ({
     if (showDelegationLegacy && delegationLegacy) {
       const amount = denominate({
         input: bNtotalLegacyDelegation.toString(10),
-        denomination,
-        decimals,
+        denomination: DECIMALS,
+        decimals: DIGITS,
         showLastNonZeroDecimal: false,
         addCommas: false,
       });
@@ -86,8 +86,8 @@ export const prepareChartData = ({
     if (showStake && stake) {
       const amount = denominate({
         input: bNtotalStaked.toString(10),
-        denomination,
-        decimals,
+        denomination: DECIMALS,
+        decimals: DIGITS,
         showLastNonZeroDecimal: false,
         addCommas: false,
       });

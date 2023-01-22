@@ -2,7 +2,7 @@ import * as React from 'react';
 import { urlBuilder } from 'helpers';
 import { TokenType } from 'types';
 import { NetworkLink, Denominate } from 'components';
-import { denomination as configDenomination } from 'appConfig';
+import { DECIMALS } from 'config';
 
 interface TokenBlockType {
   operationToken: TokenType;
@@ -12,8 +12,7 @@ interface TokenBlockType {
 export const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
   const ref = React.useRef(null);
 
-  const denomination =
-    operationToken.decimals !== undefined ? operationToken.decimals : configDenomination;
+  const denomination = operationToken.decimals !== undefined ? operationToken.decimals : DECIMALS;
 
   return (
     <div ref={ref} className="token-block d-flex text-truncate">

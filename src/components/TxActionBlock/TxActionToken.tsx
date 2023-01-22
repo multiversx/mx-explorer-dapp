@@ -2,7 +2,7 @@ import React from 'react';
 import { Denominate, NetworkLink } from 'components';
 import { urlBuilder, formatUSD } from 'helpers';
 import { TokenArgumentType } from 'types';
-import { denomination as configDenomination } from 'appConfig';
+import { DECIMALS } from 'config';
 
 export const TxActionToken = ({
   token,
@@ -14,7 +14,7 @@ export const TxActionToken = ({
   showLastNonZeroDecimal?: boolean;
 }) => {
   const ref = React.useRef(null);
-  const denomination = token.decimals !== undefined ? token.decimals : configDenomination;
+  const denomination = token.decimals !== undefined ? token.decimals : DECIMALS;
 
   return (
     <div ref={ref} className="token-action-block">

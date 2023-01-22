@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { TransactionType, TokenArgumentType, NftEnumType } from 'types';
 import { denominate } from 'components/Denominate/denominate';
-import { denomination, decimals } from 'appConfig';
+import { DECIMALS, DIGITS } from 'config';
 
 enum TransactionMessagesEnum {
   newNFTData = 'new nft data on sender',
@@ -41,8 +41,8 @@ const getReceiptValue = (transaction: TransactionType) => {
     if (transaction?.receipt?.data && transaction.receipt.data === 'refundedGas') {
       const denominatedGas = denominate({
         input: transaction.receipt.value,
-        denomination,
-        decimals,
+        denomination: DECIMALS,
+        decimals: DIGITS,
         showLastNonZeroDecimal: true,
       });
       const gasRefunded = new BigNumber(denominatedGas).times(transaction.gasPrice).times(100);

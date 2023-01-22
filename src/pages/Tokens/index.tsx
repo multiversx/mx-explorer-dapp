@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { pageSize } from 'appConfig';
+import { PAGE_SIZE } from 'appConstants';
 import { tokensRoutes } from 'routes';
 import { Loader, useAdapter, NetworkLink, Pager } from 'components';
 import { useGlobalState } from 'context';
@@ -98,7 +98,7 @@ export const Tokens = () => {
                             total={
                               totalTokens !== '...' ? Math.min(totalTokens, 10000) : totalTokens
                             }
-                            itemsPerPage={pageSize}
+                            itemsPerPage={PAGE_SIZE}
                             show={tokens.length > 0}
                           />
                         </div>
@@ -116,7 +116,7 @@ export const Tokens = () => {
                         <Pager
                           page={String(page)}
                           total={totalTokens !== '...' ? Math.min(totalTokens, 10000) : totalTokens}
-                          itemsPerPage={pageSize}
+                          itemsPerPage={PAGE_SIZE}
                           show={tokens.length > 0}
                         />
                       </div>

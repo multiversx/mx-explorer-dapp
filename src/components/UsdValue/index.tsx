@@ -1,6 +1,6 @@
 import React from 'react';
 import { denominate } from 'components/Denominate/denominate';
-import { denomination, decimals } from 'appConfig';
+import { DECIMALS, DIGITS } from 'config';
 import { stringIsInteger, usdValue } from 'helpers';
 import { useGlobalState } from 'context';
 
@@ -23,8 +23,8 @@ export const UsdValue = ({
         : usdValue({
             amount: denominate({
               input,
-              denomination,
-              decimals,
+              denomination: DECIMALS,
+              decimals: DIGITS,
               showLastNonZeroDecimal: true,
               addCommas: false,
             }),

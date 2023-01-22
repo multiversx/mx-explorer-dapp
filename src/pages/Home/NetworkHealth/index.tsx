@@ -6,7 +6,7 @@ import { ReactComponent as BigGear } from 'assets/img/network-health/big-gear.sv
 import { ReactComponent as CenterGear } from 'assets/img/network-health/center-gear.svg';
 import { ReactComponent as LayoutGear } from 'assets/img/network-health/layout-gear.svg';
 import { ProgressRing } from './ProgressRing';
-import { refreshRate } from 'appConfig';
+import { REFRESH_RATE } from 'appConstants';
 import { processStats, validDisplayValue } from 'helpers';
 import { initialStats } from 'helpers/processStats';
 
@@ -62,7 +62,7 @@ export const NetworkHealth = () => {
   React.useEffect(getData, [timestamp, activeNetworkId]);
 
   const [blockTimeProgress, setBlockTimeProgress] = React.useState(0);
-  const intervalInSec = refreshRate / 1000;
+  const intervalInSec = REFRESH_RATE / 1000;
 
   const blockTimeInterval = () => {
     const intervalBlockTime = setInterval(() => {
@@ -86,15 +86,8 @@ export const NetworkHealth = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(updateSate, [blockTimeProgress]);
 
-  const {
-    blocks,
-    accounts,
-    transactions,
-    epoch,
-    epochPercentage,
-    roundsPerEpoch,
-    roundsPassed,
-  } = state;
+  const { blocks, accounts, transactions, epoch, epochPercentage, roundsPerEpoch, roundsPassed } =
+    state;
 
   const play = !pageHidden;
 

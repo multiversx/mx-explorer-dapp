@@ -17,7 +17,7 @@ import {
   IdentityBlock,
   BlockGasUsed,
 } from 'components';
-import { metaChainShardId } from 'appConfig';
+import { METACHAIN_SHARD_ID } from 'appConstants';
 
 export interface BlockDataType {
   block: BlockType;
@@ -194,7 +194,7 @@ export const BlockData = (props: BlockDataType) => {
               <span className="text-secondary">N/A</span>
             )}
           </DetailItem>
-          {block.shard === metaChainShardId && (
+          {block.shard === METACHAIN_SHARD_ID && (
             <DetailItem title="Notarized Blocks" className="hash-group-row">
               {block.notarizedBlocksHashes === undefined ||
               (Array.isArray(block.notarizedBlocksHashes) &&
