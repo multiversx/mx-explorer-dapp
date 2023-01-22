@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { useGlobalState, useGlobalDispatch } from 'context';
-import { refreshRate } from 'appConfig';
+import { REFRESH_RATE } from 'appConstants';
 
 export const useLoopManager = () => {
   const {
@@ -9,7 +9,7 @@ export const useLoopManager = () => {
   } = useGlobalState();
   const dispatch = useGlobalDispatch();
 
-  const withinInterval = moment().subtract(refreshRate, 'ms').isAfter(moment(timestamp));
+  const withinInterval = moment().subtract(REFRESH_RATE, 'ms').isAfter(moment(timestamp));
 
   const setRounds = () => {
     const intervalId = setInterval(() => {
@@ -18,7 +18,7 @@ export const useLoopManager = () => {
           type: 'triggerTick',
         });
       }
-    }, refreshRate);
+    }, REFRESH_RATE);
     return () => {
       clearInterval(intervalId);
     };

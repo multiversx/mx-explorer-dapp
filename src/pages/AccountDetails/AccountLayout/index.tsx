@@ -2,7 +2,7 @@ import * as React from 'react';
 import BigNumber from 'bignumber.js';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { multiversXNodesIdentity } from 'appConfig';
+import { LEGACY_DELEGATION_NODES_IDENTITY } from 'appConstants';
 import { useGlobalDispatch, useGlobalState } from 'context';
 
 import { addressIsBech32, useNetworkRoute, useSize, useGetHash } from 'helpers';
@@ -182,9 +182,9 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
 
               if (
                 showDelegationLegacy &&
-                !providerIdentitiesList.includes(multiversXNodesIdentity)
+                !providerIdentitiesList.includes(LEGACY_DELEGATION_NODES_IDENTITY)
               ) {
-                providerIdentitiesList.push(multiversXNodesIdentity);
+                providerIdentitiesList.push(LEGACY_DELEGATION_NODES_IDENTITY);
               }
 
               const identities = providerIdentitiesList.join(',');
@@ -200,7 +200,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
 
                         const multiversXNodes = identitiesData.data.filter(
                           (identity: IdentityType) => {
-                            return identity.identity === multiversXNodesIdentity;
+                            return identity.identity === LEGACY_DELEGATION_NODES_IDENTITY;
                           }
                         );
                         if (multiversXNodes.length > 0) {

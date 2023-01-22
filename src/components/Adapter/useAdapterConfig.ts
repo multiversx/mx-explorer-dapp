@@ -1,7 +1,7 @@
 import { useGlobalState } from 'context';
 import { elasticAdapter } from './elastic';
 import { apiAdapter } from './api';
-import { metaChainShardId } from 'appConfig';
+import { METACHAIN_SHARD_ID } from 'appConstants';
 import { ProviderPropsType } from './helpers';
 
 interface PropsType {
@@ -70,7 +70,7 @@ export const useAdapterConfig = () => {
     getProvider,
   } = providers[adapter];
 
-  const providerProps = { ...providers[adapter], metaChainShardId, timeout };
+  const providerProps = { ...providers[adapter], metaChainShardId: METACHAIN_SHARD_ID, timeout };
 
   const basicProps: PropsType & { url: string } = { url: '' };
 

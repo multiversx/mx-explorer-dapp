@@ -7,7 +7,7 @@ import { pagerHelper } from 'components/Pager/pagerHelper';
 
 import { useGetFilters, useURLSearchParams, validDisplayValue } from 'helpers';
 import { TokenType, SortOrderEnum, TokenSortEnum } from 'types';
-import { pageSize } from 'appConfig';
+import { PAGE_SIZE } from 'appConstants';
 import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
 
 export const EgldRow = ({
@@ -42,7 +42,7 @@ export const EgldRow = ({
 
   const { lastPage } = pagerHelper({
     total: totalTokens,
-    itemsPerPage: pageSize,
+    itemsPerPage: PAGE_SIZE,
     page: String(page),
   });
   const isLastPage = lastPage === page;
