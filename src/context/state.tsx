@@ -1,31 +1,6 @@
 import BigNumber from 'bignumber.js';
-import { InferType } from 'yup';
-import config, { defaultNetwork, schema, adapterSchema, networkLink } from './config';
-// import { storage } from 'helpers';
-import {
-  AccountType,
-  TokenType,
-  // NetworkIdType,
-  NodesVersionsType,
-  ShardType,
-  DelegationLegacyType,
-  DelegationType,
-  StakeType,
-  IdentityType,
-  ProviderType,
-  CollectionType,
-  NftEnumType,
-  NetworkLinkType,
-  NetworkType,
-  AdapterType,
-  ConfigType,
-  GlobalStakeType,
-  EconomicsType,
-  StatsType,
-  NotificationType,
-  AccountStakingDetailsType,
-  StateType,
-} from 'types';
+import config, { defaultNetwork } from './config';
+import { NftEnumType, ConfigType, StateType } from 'types';
 
 export const initialState = (optionalConfig?: ConfigType): StateType => {
   const configObject = optionalConfig !== undefined ? optionalConfig : config;
