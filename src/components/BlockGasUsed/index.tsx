@@ -1,6 +1,6 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
-import { BlockType } from 'helpers/types';
+import { BlockType } from 'types';
 import { PercentageBar } from 'components';
 
 export const BlockGasUsed = ({ block }: { block: BlockType }) => {

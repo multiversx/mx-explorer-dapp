@@ -6,7 +6,7 @@ import { ShardSpan, NetworkLink, TimeAgo, useAdapter, Trim, Loader, LatestItem }
 import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/NoBlocks';
 import { urlBuilder } from 'helpers';
-import { BlockType } from 'helpers/types';
+import { BlockType } from 'types';
 
 export const LatestBlocks = () => {
   const ref = React.useRef(null);

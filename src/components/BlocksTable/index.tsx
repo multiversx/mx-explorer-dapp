@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { sizeFormat, urlBuilder } from 'helpers';
-import { BlockType } from 'helpers/types';
+import { BlockType } from 'types';
 import { ShardSpan, NetworkLink, TimeAgo, Trim, BlockGasUsed, IdentityBlock } from 'components';
 
 export const BlocksTable = ({

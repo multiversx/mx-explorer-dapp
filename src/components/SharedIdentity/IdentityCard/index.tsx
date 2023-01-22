@@ -3,7 +3,7 @@ import { faMapMarkerAlt } from '@fortawesome/pro-solid-svg-icons/faMapMarkerAlt'
 import { faLink } from '@fortawesome/pro-solid-svg-icons/faLink';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { IdentityType } from 'helpers/types';
+import { IdentityType } from 'types';
 import { Denominate, MultilayerPercentageBar, SharedIdentity, Trim } from 'components';
 import { PercentageStepType } from 'components/MultilayerPercentageBar';
 

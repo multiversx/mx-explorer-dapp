@@ -6,7 +6,7 @@ import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Collapse, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
-import { BlockType } from 'helpers/types';
+import { BlockType } from 'types';
 import {
   ShardSpan,
   NetworkLink,

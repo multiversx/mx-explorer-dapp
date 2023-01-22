@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useAdapter, Loader, Pager, PageState, NodesTable, NodesFilters } from 'components';
 import { validatorsRoutes } from 'routes';
 import { useGetFilters } from 'helpers';
-import { NodeType } from 'helpers/types';
+import { NodeType } from 'types';
 import { NodesTabs } from 'pages/Nodes/NodesLayout/NodesTabs';
 
 export const Nodes = () => {

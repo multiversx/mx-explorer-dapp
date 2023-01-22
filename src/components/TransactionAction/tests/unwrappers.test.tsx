@@ -1,5 +1,5 @@
 import unwrapper from '../unwrapper';
-import { TxActionsEnum } from 'helpers/types';
+import { TxActionsEnum } from 'types';
 
 // file.only
 describe('Tx Description unwrapper tests', () => {

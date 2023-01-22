@@ -1,7 +1,7 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
 import { Denominate } from 'components';
-import { DelegationType, ProviderType } from 'helpers/types';
+import { DelegationType, ProviderType } from 'types';
 import { useGlobalState } from 'context';
 
 import { ProviderDetails } from './ProviderDetails';

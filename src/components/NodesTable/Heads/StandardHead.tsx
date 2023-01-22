@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ShardFilter } from '../ShardFilter';
 import { StatusFilter } from '../StatusFilter';
 import { Sort } from 'components';
-import { NodeType } from 'helpers/types';
+import { NodeType } from 'types';
 
 export const StandardHead = ({
   hideFilters,

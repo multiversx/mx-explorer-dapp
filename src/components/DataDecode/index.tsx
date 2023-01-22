@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { Dropdown } from 'react-bootstrap';
 import { addressIsBech32, bech32, isUtf8 } from 'helpers';
-import { TransactionTokensType } from 'helpers/types';
+import { TransactionTokensType } from 'types';
 import { decodeLimit } from 'appConfig';
 
 export enum DecodeMethodType {

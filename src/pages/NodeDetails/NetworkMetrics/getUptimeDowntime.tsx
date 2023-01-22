@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { NodeType } from 'helpers/types';
+import { NodeType } from 'types';
 
 export const getUptimeDowntime = (node: NodeType) => {
   const uptimeLabel = node.uptime

@@ -1,4 +1,4 @@
-import { ShardType } from 'helpers/types';
+import { ShardType } from 'types';
 
 export const computeShardStatus = (shard: ShardType) => {
   const { activeValidators, validators } = shard;

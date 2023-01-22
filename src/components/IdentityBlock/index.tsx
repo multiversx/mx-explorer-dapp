@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { urlBuilder } from 'helpers';
-import { BlockType } from 'helpers/types';
+import { BlockType } from 'types';
 import { NetworkLink, Trim } from 'components';
 
 export const IdentityBlock = ({ block }: { block: BlockType }) => {

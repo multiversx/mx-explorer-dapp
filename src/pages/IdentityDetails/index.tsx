@@ -6,7 +6,7 @@ import { useAdapter, Loader, Pager, PageState, ProvidersTable } from 'components
 import { useParams } from 'react-router-dom';
 import { NodesTable, SharedIdentity } from 'components';
 import { useGetFilters, types } from 'helpers';
-import { IdentityType, NodeType } from 'helpers/types';
+import { IdentityType, NodeType } from 'types';
 import { useGlobalState } from 'context';
 
 export const IdentityDetails = () => {

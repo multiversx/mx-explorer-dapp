@@ -4,7 +4,7 @@ import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import { useGlobalState } from 'context';
 import { Loader, useAdapter, Pager, NetworkLink, Trim, PageState, NftBadge } from 'components';
 import { urlBuilder, useURLSearchParams, useGetFilters, nftText } from 'helpers';
-import { NftType } from 'helpers/types';
+import { NftType } from 'types';
 import { CollectionTabs } from './CollectionLayout/CollectionTabs';
 
 export const CollectionNfts = () => {

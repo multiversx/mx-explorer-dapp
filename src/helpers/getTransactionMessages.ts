@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { TransactionType, TokenArgumentType, NftEnumType } from 'helpers/types';
+import { TransactionType, TokenArgumentType, NftEnumType } from 'types';
 import { denominate } from 'components/Denominate/denominate';
 import { denomination, decimals } from 'appConfig';
 

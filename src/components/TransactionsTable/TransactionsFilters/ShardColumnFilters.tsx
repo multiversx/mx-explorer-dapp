@@ -7,7 +7,7 @@ import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFi
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGlobalDispatch, useGlobalState } from 'context';
 
-import { TxFiltersEnum, TransactionsTableType } from 'helpers/types';
+import { TxFiltersEnum, TransactionsTableType } from 'types';
 import { useAdapter, SelectFilter } from 'components';
 import { shardSpanText } from 'components/ShardSpan';
 

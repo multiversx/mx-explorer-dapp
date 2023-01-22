@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AssetType } from 'helpers/types';
+import { AssetType } from 'types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/pro-regular-svg-icons/faInfoCircle';
 import { Overlay } from 'components';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { urlBuilder } from 'helpers';
-import { TokenType } from 'helpers/types';
+import { TokenType } from 'types';
 import { NetworkLink, Denominate } from 'components';
 import { denomination as configDenomination } from 'appConfig';
 

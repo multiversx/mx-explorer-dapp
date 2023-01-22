@@ -10,7 +10,7 @@ import { NavLinks } from './NavLinks';
 import { Logo } from './Logo';
 // import { ReactComponent as Sun } from 'assets/img/sun.svg';
 // import { useGlobalState, useGlobalDispatch } from 'context';
-// import { NetworkIdType } from 'helpers/types';
+// import { NetworkIdType } from 'types';
 
 export const Navbar = () => {
   // const { activeNetwork, theme } = useGlobalState();

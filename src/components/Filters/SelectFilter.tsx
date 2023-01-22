@@ -4,7 +4,7 @@ import Select from 'react-select';
 import Creatable from 'react-select/creatable';
 
 import { useNetworkPathname, isHash, addressIsBech32 } from 'helpers';
-import { TxFiltersEnum } from 'helpers/types';
+import { TxFiltersEnum } from 'types';
 
 interface SelectOptionType {
   value: string;
@@ -36,16 +36,14 @@ export const SelectFilter = ({
   isMulti = false,
   showAllPlaceholder = 'Show All',
   validation,
-  noOptionsMessage
+  noOptionsMessage,
 }: SelectFilterType) => {
   const navigate = useNavigate();
   const { search: locationSearch } = useLocation();
   const networkPathname = useNetworkPathname();
   const urlParams = new URLSearchParams(locationSearch);
   const paramsObject = Object.fromEntries(urlParams);
-  const existingValue = paramsObject[filter]
-    ? paramsObject[filter].split(',')
-    : [];
+  const existingValue = paramsObject[filter] ? paramsObject[filter].split(',') : [];
 
   const updateSelectValue = (selectValue: string) => {
     const paramsObject = Object.fromEntries(urlParams);
@@ -53,14 +51,12 @@ export const SelectFilter = ({
 
     const nextUrlParams = new URLSearchParams({
       ...paramsObject,
-      ...(selectValue ? { [filter]: selectValue } : {})
+      ...(selectValue ? { [filter]: selectValue } : {}),
     }).toString();
     navigate(`${networkPathname}?${nextUrlParams}`);
   };
 
-  const hasExistingShowAllOption = options.find(
-    (option) => option.label === showAllPlaceholder
-  );
+  const hasExistingShowAllOption = options.find((option) => option.label === showAllPlaceholder);
 
   if (hasShowAllOption && !hasExistingShowAllOption) {
     options.push({ value: '', label: showAllPlaceholder });
@@ -72,9 +68,9 @@ export const SelectFilter = ({
       name={name}
       data-testid={name}
       className={`styled-select ${className}`}
-      classNamePrefix='styled-select'
+      classNamePrefix="styled-select"
       placeholder={placeholder}
-      createOptionPosition='first'
+      createOptionPosition="first"
       formatCreateLabel={(inputValue: string) => `Search for ${inputValue}`}
       isClearable
       onChange={(e) => {
@@ -112,7 +108,7 @@ export const SelectFilter = ({
       name={name}
       data-testid={name}
       className={`styled-select ${className}`}
-      classNamePrefix='styled-select'
+      classNamePrefix="styled-select"
       placeholder={placeholder}
       isClearable
       onChange={(e) => {

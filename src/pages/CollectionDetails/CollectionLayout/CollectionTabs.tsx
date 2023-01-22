@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NetworkLink } from 'components';
 import { urlBuilder, useActiveRoute, nftText } from 'helpers';
-import { NftEnumType } from 'helpers/types';
+import { NftEnumType } from 'types';
 import { useGlobalState } from 'context';
 import { collectionRoutes } from 'routes';
 

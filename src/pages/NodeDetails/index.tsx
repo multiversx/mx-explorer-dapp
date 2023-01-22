@@ -4,7 +4,7 @@ import { useAdapter, Loader, PageState, SharedIdentity } from 'components';
 import { useLocation, useParams } from 'react-router-dom';
 import { useGlobalState } from 'context';
 import { useIsMainnet } from 'helpers';
-import { BlockType, IdentityType, NodeType } from 'helpers/types';
+import { BlockType, IdentityType, NodeType } from 'types';
 import { NodeInformation } from './NodeInformation';
 import { NetworkMetrics } from './NetworkMetrics';
 import { Rounds, RoundType } from './Rounds';

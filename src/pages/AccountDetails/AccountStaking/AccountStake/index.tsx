@@ -2,7 +2,7 @@ import React from 'react';
 
 import BigNumber from 'bignumber.js';
 import { Denominate } from 'components';
-import { StakeType } from 'helpers/types';
+import { StakeType } from 'types';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 
 import { DetailsBlock } from '../DetailsBlock';

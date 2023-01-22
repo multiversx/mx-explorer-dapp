@@ -4,7 +4,7 @@ import { Anchorme } from 'react-anchorme';
 import { DetailItem, ModalLink, DataDecode } from 'components';
 import { DecodeMethodType } from 'components/DataDecode';
 import { truncate, useScamFlag } from 'helpers';
-import { ScamInfoType } from 'helpers/types';
+import { ScamInfoType } from 'types';
 import { displayedDataLength } from 'appConfig';
 
 export const DataField = ({ data, scamInfo }: { data?: string; scamInfo?: ScamInfoType }) => {
