@@ -1,7 +1,7 @@
 import { faFileAlt } from '@fortawesome/pro-regular-svg-icons/faFileAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { numInitCharactersForScAddress as charNum } from 'appConfig';
+import { SC_INIT_CHARACTERS_LENGTH } from 'appConstants';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 interface ScAddressIconType {
@@ -10,10 +10,12 @@ interface ScAddressIconType {
 }
 
 export const isContract = (initiator: string | undefined, charNum: number) =>
-  initiator && charNum > 0 && initiator.substr('erd1'.length).startsWith('q'.repeat(charNum));
+  initiator && charNum > 0 && initiator.substring('erd1'.length).startsWith('q'.repeat(charNum));
 
 export const ScAddressIcon = ({ initiator, secondInitiator }: ScAddressIconType) => {
-  const showIcon = isContract(initiator, charNum) || isContract(secondInitiator, charNum);
+  const showIcon =
+    isContract(initiator, SC_INIT_CHARACTERS_LENGTH) ||
+    isContract(secondInitiator, SC_INIT_CHARACTERS_LENGTH);
 
   return showIcon ? (
     <OverlayTrigger

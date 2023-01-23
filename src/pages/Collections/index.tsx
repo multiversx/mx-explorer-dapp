@@ -7,7 +7,7 @@ import { FailedCollections } from './FailedCollections';
 import { urlBuilder, useGetFilters, useURLSearchParams, useActiveRoute } from 'helpers';
 import { Filters } from './Filters';
 import { collectionRoutes } from 'routes';
-import { NftEnumType, CollectionType } from 'helpers/types';
+import { NftEnumType, CollectionType } from 'types';
 
 export const Collections = () => {
   const ref = React.useRef(null);

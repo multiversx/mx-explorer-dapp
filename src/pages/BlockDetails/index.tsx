@@ -1,12 +1,13 @@
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import * as React from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { isHash, useNetworkRoute } from 'helpers';
 import { Loader, useAdapter, PageState } from 'components';
 import { BlockData, BlockDataType } from './BlockData';
 
 export const BlockDetails = () => {
   const ref = React.useRef(null);
+  const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
   const { getBlock } = useAdapter();
   const { hash: blockId } = useParams() as any;
@@ -31,7 +32,7 @@ export const BlockDetails = () => {
   React.useEffect(fetchBlock, [blockId]); // run the operation only once since the parameter does not change
 
   return invalid ? (
-    <Redirect to={networkRoute(`/not-found`)} />
+    navigate(networkRoute('/not-found'))
   ) : (
     <>
       {dataReady === undefined && <Loader />}
@@ -39,22 +40,22 @@ export const BlockDetails = () => {
       {dataReady === false && (
         <PageState
           icon={faCube}
-          title="Unable to locate this block hash"
+          title='Unable to locate this block hash'
           description={
-            <div className="px-spacer">
-              <span className="text-break-all">{blockId}</span>
+            <div className='px-spacer'>
+              <span className='text-break-all'>{blockId}</span>
             </div>
           }
-          className="py-spacer my-auto"
-          dataTestId="errorScreen"
+          className='py-spacer my-auto'
+          dataTestId='errorScreen'
         />
       )}
 
-      <div className="block-details" ref={ref}>
+      <div className='block-details' ref={ref}>
         {dataReady === true && state && state.block.hash && (
-          <div className="container page-content">
-            <div className="row">
-              <div className="col-12">
+          <div className='container page-content'>
+            <div className='row'>
+              <div className='col-12'>
                 <BlockData {...state} />
               </div>
             </div>

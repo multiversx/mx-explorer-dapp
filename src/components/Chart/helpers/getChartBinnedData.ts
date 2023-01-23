@@ -1,7 +1,7 @@
 import moment, { Moment, unitOfTime } from 'moment';
 import { denominate } from 'components/Denominate/denominate';
 import { ChartDataType } from 'components/Chart/helpers/types';
-import { denomination, decimals } from 'appConfig';
+import { DECIMALS, DIGITS } from 'config';
 
 interface AccountBalanceHistoryType {
   address: string;
@@ -56,8 +56,8 @@ export const getIntervalDates = (
 export const formatEntry = (entry: AccountBalanceHistoryType) => {
   const value = denominate({
     input: entry.balance,
-    denomination,
-    decimals,
+    denomination: DECIMALS,
+    decimals: DIGITS,
     showLastNonZeroDecimal: false,
     addCommas: false,
   });

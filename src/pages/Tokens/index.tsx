@@ -1,27 +1,34 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
+import BigNumber from 'bignumber.js';
 
-import { pageSize } from 'appConfig';
+import { PAGE_SIZE } from 'appConstants';
 import { tokensRoutes } from 'routes';
 import { Loader, useAdapter, NetworkLink, Pager } from 'components';
-import { useGlobalState } from 'context';
-import { useGetFilters, useURLSearchParams, types, useActiveRoute } from 'helpers';
+import { useGetFilters, useURLSearchParams, useActiveRoute } from 'helpers';
+
+import { TokenType } from 'types';
 
 import { NoTokens } from './NoTokens';
 import { FailedTokens } from './FailedTokens';
 import { Filters } from './Filters';
 import { TokensTable } from './TokensTable';
 
+import { useSelector } from 'react-redux';
+import { economicsSelector } from 'redux/selectors';
+
 export const Tokens = () => {
   const ref = React.useRef(null);
-  const { economics } = useGlobalState();
+
   const activeRoute = useActiveRoute();
   const { page } = useURLSearchParams();
   const { search } = useLocation();
   const { getQueryObject, size } = useGetFilters();
   const { getTokens, getTokensCount } = useAdapter();
 
-  const [tokens, setTokens] = React.useState<types.TokenType[]>([]);
+  const { economicsFetched, ecosystemMarketCap } = useSelector(economicsSelector);
+
+  const [tokens, setTokens] = React.useState<TokenType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [totalTokens, setTotalTokens] = React.useState<number | '...'>('...');
 
@@ -63,7 +70,9 @@ export const Tokens = () => {
                           {totalTokens}{' '}
                           <span className="text-secondary pr-2 border-right mr-2">Tokens</span>{' '}
                           <span className="text-secondary">Ecosystem Market Cap:</span>{' '}
-                          {economics.ecosystemMarketCap}
+                          {economicsFetched
+                            ? `$${new BigNumber(ecosystemMarketCap).toFormat(0)}`
+                            : '...'}
                         </span>
                       </div>
                     </div>
@@ -98,7 +107,7 @@ export const Tokens = () => {
                             total={
                               totalTokens !== '...' ? Math.min(totalTokens, 10000) : totalTokens
                             }
-                            itemsPerPage={pageSize}
+                            itemsPerPage={PAGE_SIZE}
                             show={tokens.length > 0}
                           />
                         </div>
@@ -116,7 +125,7 @@ export const Tokens = () => {
                         <Pager
                           page={String(page)}
                           total={totalTokens !== '...' ? Math.min(totalTokens, 10000) : totalTokens}
-                          itemsPerPage={pageSize}
+                          itemsPerPage={PAGE_SIZE}
                           show={tokens.length > 0}
                         />
                       </div>

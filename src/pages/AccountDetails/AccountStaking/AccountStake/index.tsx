@@ -2,8 +2,8 @@ import React from 'react';
 
 import BigNumber from 'bignumber.js';
 import { Denominate } from 'components';
-import { StakeType } from 'helpers/types';
-import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
+import { StakeType } from 'types';
+import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy-delegation.svg';
 
 import { DetailsBlock } from '../DetailsBlock';
 

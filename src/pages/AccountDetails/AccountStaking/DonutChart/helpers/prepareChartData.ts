@@ -1,11 +1,11 @@
 import BigNumber from 'bignumber.js';
 
-import { AccountStakingDetailsType } from 'context/state';
+import { AccountStakingSliceType } from 'types/account.types';
 
 import { denominate } from 'components/Denominate/denominate';
-import { denomination, decimals } from 'appConfig';
+import { DECIMALS, DIGITS } from 'config';
 import { truncateMiddle } from 'helpers';
-import { ProviderType } from 'helpers/types';
+import { ProviderType } from 'types';
 
 interface DonutChartDataType {
   name: string;
@@ -18,23 +18,26 @@ export const prepareChartData = ({
   stakingDetails,
   providers,
 }: {
-  stakingDetails: AccountStakingDetailsType;
+  stakingDetails: AccountStakingSliceType;
   providers: ProviderType[];
 }): DonutChartDataType[] => {
   const {
-    stakingDataReady,
+    accountStakingFetched,
     delegation,
     stake,
     delegationLegacy,
     showStake,
     showDelegationLegacy,
-    bNtotalLegacyDelegation,
-    bNtotalStaked,
+    totalLegacyDelegation,
+    totalStaked,
   } = stakingDetails;
 
   const defaultData = [{ name: 'No Staking', value: 1, displayValue: 0 }];
 
-  if (stakingDataReady) {
+  if (accountStakingFetched) {
+    const bNtotalLegacyDelegation = new BigNumber(totalLegacyDelegation);
+    const bNtotalStaked = new BigNumber(totalStaked);
+
     const chartData: DonutChartDataType[] = [];
     const displayDelegations = delegation
       ? delegation.filter(
@@ -55,8 +58,8 @@ export const prepareChartData = ({
 
           const amount = denominate({
             input: bNtotalLocked.toString(10),
-            denomination,
-            decimals,
+            denomination: DECIMALS,
+            decimals: DIGITS,
             showLastNonZeroDecimal: false,
             addCommas: false,
           });
@@ -72,8 +75,8 @@ export const prepareChartData = ({
     if (showDelegationLegacy && delegationLegacy) {
       const amount = denominate({
         input: bNtotalLegacyDelegation.toString(10),
-        denomination,
-        decimals,
+        denomination: DECIMALS,
+        decimals: DIGITS,
         showLastNonZeroDecimal: false,
         addCommas: false,
       });
@@ -86,8 +89,8 @@ export const prepareChartData = ({
     if (showStake && stake) {
       const amount = denominate({
         input: bNtotalStaked.toString(10),
-        denomination,
-        decimals,
+        denomination: DECIMALS,
+        decimals: DIGITS,
         showLastNonZeroDecimal: false,
         addCommas: false,
       });

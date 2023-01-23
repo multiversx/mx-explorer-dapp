@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faRepeat } from '@fortawesome/pro-regular-svg-icons/faRepeat';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { PageState } from 'components';
-import { NodeType } from 'helpers/types';
+import { NodeType } from 'types';
 
 export interface RoundType {
   key: string;

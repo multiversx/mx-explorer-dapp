@@ -1,18 +1,17 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { useGlobalState } from 'context';
+
 import { Loader, TransactionsTable, useAdapter } from 'components';
 
 import { txStatus } from 'components/TransactionStatus/txStatus';
 import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { useSize, useURLSearchParams } from 'helpers';
-import {
-  UITransactionType,
-  TransactionsResponseType,
-  TransactionsCountResponseType,
-} from 'helpers/types';
+import { UITransactionType, TransactionsResponseType, TransactionsCountResponseType } from 'types';
 import { AccountTabs } from './AccountLayout/AccountTabs';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
 export const AccountDetails = () => {
   const ref = React.useRef(null);
@@ -30,7 +29,10 @@ export const AccountDetails = () => {
     miniBlockHash,
     search,
   } = useURLSearchParams();
-  const { activeNetworkId, accountDetails } = useGlobalState();
+
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { txCount, balance } = useSelector(accountSelector);
+
   const { hash: address } = useParams() as any;
 
   const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
@@ -117,7 +119,7 @@ export const AccountDetails = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, accountDetails.txCount, accountDetails.balance]);
+  }, [firstPageTicker, txCount, balance]);
 
   const loading = isDataReady === undefined;
   const showTransactions = isDataReady === true && transactions.length > 0;

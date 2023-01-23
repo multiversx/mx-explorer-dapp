@@ -1,24 +1,28 @@
 import * as React from 'react';
 import { NetworkLink } from 'components';
 import { urlBuilder, useActiveRoute } from 'helpers';
-import { useGlobalState } from 'context';
+
 import { tokensRoutes } from 'routes';
+
+import { useSelector } from 'react-redux';
+import { tokenSelector } from 'redux/selectors';
 
 export const TokenTabs = () => {
   const activeRoute = useActiveRoute();
-  const { tokenDetails } = useGlobalState();
+
+  const { identifier, assets, roles } = useSelector(tokenSelector);
 
   return (
     <div className="account-tabs d-flex flex-row">
       <NetworkLink
-        to={urlBuilder.tokenDetails(tokenDetails.identifier)}
+        to={urlBuilder.tokenDetails(identifier)}
         className={`tab-link mr-3 ${activeRoute(tokensRoutes.tokenDetails) ? 'active' : ''}`}
       >
         <h6>Transactions</h6>
       </NetworkLink>
 
       <NetworkLink
-        to={urlBuilder.tokenDetailsAccounts(tokenDetails.identifier)}
+        to={urlBuilder.tokenDetailsAccounts(identifier)}
         className={`tab-link mx-3 ${
           activeRoute(tokensRoutes.tokenDetailsAccounts) ? 'active' : ''
         }`}
@@ -26,9 +30,9 @@ export const TokenTabs = () => {
         <h6>Accounts</h6>
       </NetworkLink>
 
-      {tokenDetails.assets?.lockedAccounts && (
+      {assets?.lockedAccounts && (
         <NetworkLink
-          to={urlBuilder.tokenDetailsLockedAccounts(tokenDetails.identifier)}
+          to={urlBuilder.tokenDetailsLockedAccounts(identifier)}
           className={`tab-link mx-3 ${
             activeRoute(tokensRoutes.tokenDetailsLockedAccounts) ? 'active' : ''
           }`}
@@ -37,9 +41,9 @@ export const TokenTabs = () => {
         </NetworkLink>
       )}
 
-      {tokenDetails?.roles && (
+      {roles && (
         <NetworkLink
-          to={urlBuilder.tokenDetailsRoles(tokenDetails.identifier)}
+          to={urlBuilder.tokenDetailsRoles(identifier)}
           className={`tab-link mx-3 ${activeRoute(tokensRoutes.tokenDetailsRoles) ? 'active' : ''}`}
         >
           <h6>Roles</h6>

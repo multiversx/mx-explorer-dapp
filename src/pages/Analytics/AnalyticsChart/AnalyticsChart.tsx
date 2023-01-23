@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { PageState, Chart, Loader, useAdapter } from 'components';
-import { useGlobalState } from 'context';
 
 import { ChartListType } from '../Analytics';
 
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import { ChartConfigType } from 'components/Chart/helpers/types';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export interface AnalyticsChartDataType {
   value: string;
@@ -19,7 +21,7 @@ export interface AnalyticsChartType {
 export const AnalyticsChart = ({ id, path }: ChartListType) => {
   const ref = useRef(null);
 
-  const { activeNetworkId } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getAnalyticsChart } = useAdapter();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();

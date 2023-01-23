@@ -1,8 +1,10 @@
-import { useGlobalState } from 'context';
 import { elasticAdapter } from './elastic';
 import { apiAdapter } from './api';
-import { metaChainShardId } from 'appConfig';
+import { METACHAIN_SHARD_ID, TIMEOUT } from 'appConstants';
 import { ProviderPropsType } from './helpers';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 interface PropsType {
   baseUrl?: ProviderPropsType['baseUrl'];
@@ -30,21 +32,17 @@ async function wrap(asyncRequest: () => Promise<any>) {
 
 export const useAdapterConfig = () => {
   const {
-    activeNetwork: {
-      elasticUrl,
-      adapter: networkAdapter,
-      proxyUrl: nodeUrl,
-      apiUrl,
-      delegationApi,
-      growthApi,
-    },
-    timeout,
-  } = useGlobalState();
+    elasticUrl,
+    adapter: networkAdapter,
+    proxyUrl: nodeUrl,
+    apiAddress,
+    growthApi,
+  } = useSelector(activeNetworkSelector);
 
   const providers = {
     api: {
-      baseUrl: apiUrl || '',
-      proxyUrl: apiUrl || '',
+      baseUrl: apiAddress || '',
+      proxyUrl: apiAddress || '',
       ...apiAdapter,
     },
     elastic: {
@@ -70,12 +68,15 @@ export const useAdapterConfig = () => {
     getProvider,
   } = providers[adapter];
 
-  const providerProps = { ...providers[adapter], metaChainShardId, timeout };
+  const providerProps = {
+    ...providers[adapter],
+    metaChainShardId: METACHAIN_SHARD_ID,
+    timeout: TIMEOUT,
+  };
 
   const basicProps: PropsType & { url: string } = { url: '' };
 
   return {
-    delegationApi,
     growthApi,
     provider: (props = basicProps) => wrap(() => provider({ ...providerProps, ...props })),
     getStats: (props = basicProps) => wrap(() => getStats({ ...providerProps, ...props })),

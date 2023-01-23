@@ -1,7 +1,7 @@
 import React from 'react';
 import { NetworkLink } from 'components';
 import { urlBuilder } from 'helpers';
-import { TokenArgumentType } from 'helpers/types';
+import { TokenArgumentType } from 'types';
 
 export const TxActionCollection = ({ token }: { token: TokenArgumentType }) => {
   const ref = React.useRef(null);

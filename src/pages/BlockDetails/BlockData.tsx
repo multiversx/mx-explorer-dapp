@@ -6,7 +6,7 @@ import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Collapse, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
-import { BlockType } from 'helpers/types';
+import { BlockType } from 'types';
 import {
   ShardSpan,
   NetworkLink,
@@ -17,7 +17,7 @@ import {
   IdentityBlock,
   BlockGasUsed,
 } from 'components';
-import { metaChainShardId } from 'appConfig';
+import { METACHAIN_SHARD_ID } from 'appConstants';
 
 export interface BlockDataType {
   block: BlockType;
@@ -194,7 +194,7 @@ export const BlockData = (props: BlockDataType) => {
               <span className="text-secondary">N/A</span>
             )}
           </DetailItem>
-          {block.shard === metaChainShardId && (
+          {block.shard === METACHAIN_SHARD_ID && (
             <DetailItem title="Notarized Blocks" className="hash-group-row">
               {block.notarizedBlocksHashes === undefined ||
               (Array.isArray(block.notarizedBlocksHashes) &&

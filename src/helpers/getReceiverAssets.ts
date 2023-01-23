@@ -1,4 +1,4 @@
-import { UITransactionType } from 'helpers/types';
+import { UITransactionType } from 'types';
 
 export const getReceiverAssets = (transaction: UITransactionType) => {
   if (

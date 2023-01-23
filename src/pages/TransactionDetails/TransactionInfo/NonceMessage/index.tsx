@@ -3,7 +3,7 @@ import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAdapter } from 'components';
 import { txStatus } from 'components/TransactionStatus/txStatus';
-import { TransactionType } from 'helpers/types';
+import { TransactionType } from 'types';
 
 export const NonceMessage = ({ transaction }: { transaction: TransactionType }) => {
   const ref = React.useRef(null);

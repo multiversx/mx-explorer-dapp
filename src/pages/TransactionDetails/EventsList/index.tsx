@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import { CopyButton, Trim, DataDecode } from 'components';
 import { DecodeMethodType } from 'components/DataDecode';
-import { EventType } from 'helpers/types';
+import { EventType } from 'types';
 
 const EventTopics = ({
   topics,

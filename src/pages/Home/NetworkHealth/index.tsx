@@ -1,33 +1,33 @@
 import * as React from 'react';
-import { useGlobalState } from 'context';
+
 import { useAdapter } from 'components';
 import { ReactComponent as Gear } from 'assets/img/network-health/gear.svg';
 import { ReactComponent as BigGear } from 'assets/img/network-health/big-gear.svg';
 import { ReactComponent as CenterGear } from 'assets/img/network-health/center-gear.svg';
 import { ReactComponent as LayoutGear } from 'assets/img/network-health/layout-gear.svg';
 import { ProgressRing } from './ProgressRing';
-import { refreshRate } from 'appConfig';
+import { REFRESH_RATE } from 'appConstants';
 import { processStats, validDisplayValue } from 'helpers';
-import { initialStats } from 'helpers/processStats';
 
-export interface StateType {
-  shards: string;
-  blocks: string;
-  accounts: string;
-  transactions: string;
-}
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector, interfaceSelector } from 'redux/selectors';
+import { getInitialStatsState } from 'redux/slices/stats';
+
+import { StatsSliceType } from 'types/stats.types';
 
 export const NetworkHealth = () => {
   const {
-    activeNetworkId,
     refresh: { timestamp },
-  } = useGlobalState();
+  } = useSelector(interfaceSelector);
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+
   const { getStats } = useAdapter();
 
   const ref = React.useRef(null);
   const pageHidden = document.hidden;
+  const initialStats = getInitialStatsState();
 
-  const [stateBuffer, setStateBuffer] = React.useState<typeof initialStats | undefined>();
+  const [stateBuffer, setStateBuffer] = React.useState<StatsSliceType | undefined>();
   const [state, setState] = React.useState(initialStats);
 
   const [oldTestnetId, setOldTestnetId] = React.useState(activeNetworkId);
@@ -35,7 +35,7 @@ export const NetworkHealth = () => {
     setOldTestnetId(activeNetworkId);
   }, [activeNetworkId]);
 
-  const initStates = (stats: typeof initialStats) => {
+  const initStates = (stats: StatsSliceType) => {
     setState(stats);
     setStateBuffer(stats);
     blockTimeInterval();
@@ -43,16 +43,17 @@ export const NetworkHealth = () => {
 
   const getData = () => {
     getStats().then((statsData) => {
-      const { success } = statsData;
-      const newStats = processStats(statsData);
-      const sameTestnet = oldTestnetId === activeNetworkId;
+      if (statsData.success && statsData?.data) {
+        const newStats = processStats(statsData.data);
+        const sameTestnet = oldTestnetId === activeNetworkId;
 
-      if (ref.current !== null && success) {
-        if (stateBuffer === undefined || !sameTestnet) {
-          // fresh page load or active testnet changed
-          initStates(newStats);
-        } else if (sameTestnet) {
-          setStateBuffer(newStats);
+        if (ref.current !== null) {
+          if (stateBuffer === undefined || !sameTestnet) {
+            // fresh page load or active testnet changed
+            initStates(newStats);
+          } else if (sameTestnet) {
+            setStateBuffer(newStats);
+          }
         }
       }
     });
@@ -62,7 +63,7 @@ export const NetworkHealth = () => {
   React.useEffect(getData, [timestamp, activeNetworkId]);
 
   const [blockTimeProgress, setBlockTimeProgress] = React.useState(0);
-  const intervalInSec = refreshRate / 1000;
+  const intervalInSec = REFRESH_RATE / 1000;
 
   const blockTimeInterval = () => {
     const intervalBlockTime = setInterval(() => {
@@ -86,15 +87,8 @@ export const NetworkHealth = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(updateSate, [blockTimeProgress]);
 
-  const {
-    blocks,
-    accounts,
-    transactions,
-    epoch,
-    epochPercentage,
-    roundsPerEpoch,
-    roundsPassed,
-  } = state;
+  const { blocks, accounts, transactions, epoch, epochPercentage, roundsPerEpoch, roundsPassed } =
+    state;
 
   const play = !pageHidden;
 

@@ -1,19 +1,26 @@
 import React from 'react';
+import BigNumber from 'bignumber.js';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { CardItem, Denominate, LockedAmountTooltip } from 'components';
-import { useGlobalState } from 'context';
+
+import { useSelector } from 'react-redux';
+import { accountStakingSelector } from 'redux/selectors';
 
 export const LockedAmountCardItem = ({ cardItemClass }: { cardItemClass: string }) => {
   const {
-    accountStakingDetails: {
-      stakingDataReady,
-      bNtotalStaked,
-      bNtotalDelegation,
-      bNtotalLegacyDelegation,
-      bNtotalLocked,
-      bNtotalClaimable,
-    },
-  } = useGlobalState();
+    stakingDataReady,
+    totalStaked,
+    totalDelegation,
+    totalLegacyDelegation,
+    totalLocked,
+    totalClaimable,
+  } = useSelector(accountStakingSelector);
+
+  const bNtotalStaked = new BigNumber(totalStaked);
+  const bNtotalDelegation = new BigNumber(totalDelegation);
+  const bNtotalLegacyDelegation = new BigNumber(totalLegacyDelegation);
+  const bNtotalLocked = new BigNumber(totalLocked);
+  const bNtotalClaimable = new BigNumber(totalClaimable);
 
   return (
     <CardItem className={cardItemClass} title="Stake" icon={faLock}>

@@ -4,8 +4,8 @@ import { Anchorme } from 'react-anchorme';
 import { DetailItem, ModalLink, DataDecode } from 'components';
 import { DecodeMethodType } from 'components/DataDecode';
 import { truncate, useScamFlag } from 'helpers';
-import { ScamInfoType } from 'helpers/types';
-import { displayedDataLength } from 'appConfig';
+import { ScamInfoType } from 'types';
+import { MAX_DISPLAY_TX_DATA_LENGTH } from 'appConstants';
 
 export const DataField = ({ data, scamInfo }: { data?: string; scamInfo?: ScamInfoType }) => {
   const { hash, pathname } = useLocation();
@@ -42,7 +42,7 @@ export const DataField = ({ data, scamInfo }: { data?: string; scamInfo?: ScamIn
         </div>
       ) : (
         <DataDecode
-          value={truncate(output, displayedDataLength)}
+          value={truncate(output, MAX_DISPLAY_TX_DATA_LENGTH)}
           initialDecodeMethod={initialDecodeMethod}
           setDecodeMethod={setDecodeMethod}
         />

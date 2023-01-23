@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
 import {
   useAdapter,
@@ -12,21 +12,27 @@ import {
   NftBadge,
   NetworkLink,
 } from 'components';
-import { useGlobalState } from 'context';
+
 import { AccountTabs } from './AccountLayout/AccountTabs';
 import { urlBuilder, useGetFilters, useNetworkRoute } from 'helpers';
-import { NftType } from 'helpers/types';
+import { NftType } from 'types';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
 export const AccountNfts = () => {
   const ref = React.useRef(null);
-  const { activeNetwork, accountDetails } = useGlobalState();
+  const navigate = useNavigate();
+
   const { size } = useGetFilters();
   const networkRoute = useNetworkRoute();
+  const { adapter, id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { txCount } = useSelector(accountSelector);
 
   const { getAccountNfts, getAccountNftsCount } = useAdapter();
 
   const { hash: address } = useParams() as any;
-  const nftsActive = activeNetwork.adapter === 'api';
+  const nftsActive = adapter === 'api';
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [accountNfts, setAccountNfts] = React.useState<NftType[]>([]);
@@ -57,10 +63,10 @@ export const AccountNfts = () => {
   React.useEffect(() => {
     fetchAccountNfts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountDetails.txCount, activeNetwork.id, address, size]);
+  }, [txCount, activeNetworkId, address, size]);
 
   return !nftsActive ? (
-    <Redirect to={networkRoute(urlBuilder.accountDetails(address))} />
+    navigate(networkRoute(urlBuilder.accountDetails(address)))
   ) : (
     <div className="card" ref={ref}>
       <div className="card-header">

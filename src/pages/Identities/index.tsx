@@ -1,6 +1,6 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { IdentityType } from 'helpers/types';
+import { IdentityType } from 'types';
 import { useAdapter, Loader, PageState } from 'components';
 import { IdentityRow } from './IdentityRow';
 import { NodesTabs } from 'pages/Nodes/NodesLayout/NodesTabs';

@@ -1,10 +1,13 @@
 import React from 'react';
 
-import { useGlobalDispatch, useGlobalState } from 'context';
 import { useAdapter, Loader } from 'components';
-import { NodesVersionsType } from 'helpers/types';
+import { NodesVersionsType } from 'types';
 import { GlobalStakeCard } from './GlobalStakeCard';
 import { ShardsList } from './ShardsList';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+import { setShards, setGlobalStake } from 'redux/slices';
 
 const prepareNodesVersions = (data: any) => {
   const versions: NodesVersionsType[] = [];
@@ -25,8 +28,8 @@ const prepareNodesVersions = (data: any) => {
 
 export const NodesLayout = ({ children }: { children: React.ReactNode }) => {
   const { getShards, getGlobalStake, getNodesVersions } = useAdapter();
-  const dispatch = useGlobalDispatch();
-  const { activeNetworkId } = useGlobalState();
+  const dispatch = useDispatch();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const [dataReadyForNetwork, setDataReadyForNetwork] = React.useState<
     string | undefined | boolean
@@ -52,21 +55,12 @@ export const NodesLayout = ({ children }: { children: React.ReactNode }) => {
               : {}),
           };
 
-          dispatch({
-            type: 'setGlobalStake',
-            globalStake: globalStake.success
-              ? {
-                  ...newGlobalStake,
-                  ...newNodesVersions,
-                }
-              : undefined,
-          });
+          if (globalStake.success && globalStake?.data) {
+            dispatch(setGlobalStake({ ...newGlobalStake, ...newNodesVersions }));
+          }
 
-          if (shards.success) {
-            dispatch({
-              type: 'setShards',
-              shards: shards.data,
-            });
+          if (shards.success && shards?.data) {
+            dispatch(setShards(shards.data));
             setDataReadyForNetwork(activeNetworkId);
           } else {
             setDataReadyForNetwork(false);

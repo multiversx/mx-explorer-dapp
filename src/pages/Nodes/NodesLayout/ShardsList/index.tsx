@@ -1,13 +1,16 @@
 import * as React from 'react';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 
-import { metaChainShardId } from 'appConfig';
-import { useGlobalState } from 'context';
-import { GlobalStakeType } from 'context/state';
-import { ShardType } from 'helpers/types';
+import { METACHAIN_SHARD_ID } from 'appConstants';
+
+import { GlobalStakeType } from 'types';
+import { ShardType } from 'types';
 import { PageState } from 'components';
 
 import { ShardCard } from './ShardCard';
+
+import { useSelector } from 'react-redux';
+import { shardsSelector, globalStakeSelector } from 'redux/selectors';
 
 const StakingQueueCard = ({ globalStake }: { globalStake: GlobalStakeType | undefined }) => {
   return (
@@ -24,15 +27,15 @@ const StakingQueueCard = ({ globalStake }: { globalStake: GlobalStakeType | unde
 
 const sortShards = ({
   shards,
-  metaChainShardId,
+  METACHAIN_SHARD_ID,
 }: {
   shards: ShardType[];
-  metaChainShardId: number;
+  METACHAIN_SHARD_ID: number;
 }) => {
   const sorted = [...shards];
   sorted.sort((a, b) => (a.shard > b.shard ? 1 : -1));
 
-  const metaShard = sorted.find((shard) => shard.shard === metaChainShardId);
+  const metaShard = sorted.find((shard) => shard.shard === METACHAIN_SHARD_ID);
   if (metaShard && sorted[0].shard !== metaShard.shard) {
     sorted.splice(sorted.indexOf(metaShard));
     sorted.unshift(metaShard);
@@ -42,7 +45,8 @@ const sortShards = ({
 };
 
 export const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
-  const { shards, globalStake } = useGlobalState();
+  const shards = useSelector(shardsSelector);
+  const globalStake = useSelector(globalStakeSelector);
 
   const overallCard: ShardType = {
     shard: -1,
@@ -57,7 +61,7 @@ export const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
     ),
   };
 
-  const sortedShards = sortShards({ shards, metaChainShardId });
+  const sortedShards = sortShards({ shards, METACHAIN_SHARD_ID });
 
   const failed = shardsFetched === false || (shardsFetched === true && sortedShards.length === 0);
 

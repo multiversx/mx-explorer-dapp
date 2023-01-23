@@ -1,14 +1,23 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
 
-import { useGlobalState } from 'context';
-import { EconomicsType, StatsType } from 'context/state';
 import { pagerHelper } from 'components/Pager/pagerHelper';
 
-import { useGetFilters, useURLSearchParams, validDisplayValue } from 'helpers';
-import { TokenType, SortOrderEnum, TokenSortEnum } from 'helpers/types';
-import { pageSize } from 'appConfig';
+import { useGetFilters, useURLSearchParams } from 'helpers';
+import { TokenType, SortOrderEnum, TokenSortEnum } from 'types';
+import { PAGE_SIZE } from 'appConstants';
 import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
+
+import { useSelector } from 'react-redux';
+import { economicsSelector, statsSelector, activeNetworkSelector } from 'redux/selectors';
+
+interface DummyTokenType {
+  price: number;
+  marketCap: number;
+  circulatingSupply: number;
+  accounts: number;
+  transactions: number;
+}
 
 export const EgldRow = ({
   tokens,
@@ -19,21 +28,19 @@ export const EgldRow = ({
   index: number;
   totalTokens: number;
 }) => {
-  const {
-    economics,
-    stats,
-    activeNetwork: { erdLabel },
-  } = useGlobalState();
+  const { egldLabel } = useSelector(activeNetworkSelector);
+  const { economicsFetched, price, marketCap, circulatingSupply } = useSelector(economicsSelector);
+  const { statsFetched, accounts, transactions } = useSelector(statsSelector);
 
   const { page } = useURLSearchParams();
   const { getQueryObject } = useGetFilters();
   const queryObject = getQueryObject();
-  const description = `The MultiversX (Elrond) eGold (${erdLabel}) Token is native to the MultiversX (previously Elrond) Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
+  const description = `The MultiversX (Elrond) eGold (${egldLabel}) Token is native to the MultiversX (previously Elrond) Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
 
   const { search, sort, order } = queryObject;
 
   const showOnSearch =
-    search && ['egld', 'elrond', 'multiversx', erdLabel].includes(search.toLowerCase());
+    search && ['egld', 'elrond', 'multiversx', egldLabel].includes(search.toLowerCase());
   let showOnFilter = !page && index === 0;
 
   const previousToken = tokens[index > 0 ? index - 1 : 0];
@@ -42,7 +49,7 @@ export const EgldRow = ({
 
   const { lastPage } = pagerHelper({
     total: totalTokens,
-    itemsPerPage: pageSize,
+    itemsPerPage: PAGE_SIZE,
     page: String(page),
   });
   const isLastPage = lastPage === page;
@@ -51,17 +58,22 @@ export const EgldRow = ({
     sort &&
     order &&
     Object.keys(TokenSortEnum).includes(sort) &&
-    Object.keys(SortOrderEnum).includes(order)
+    Object.keys(SortOrderEnum).includes(order) &&
+    statsFetched &&
+    economicsFetched
   ) {
-    const statsValue = stats[sort as keyof StatsType];
-    const economicsValue = economics[sort as keyof EconomicsType];
+    const egldToken: DummyTokenType = {
+      price,
+      marketCap,
+      circulatingSupply,
+      accounts,
+      transactions,
+    };
+
     const tokenValue = currentToken[sort as keyof TokenType];
     const previousTokenValue = previousToken[sort as keyof TokenType];
     const nextTokenValue = nextToken[sort as keyof TokenType];
-    const egldValue =
-      sort === TokenSortEnum.price || sort === TokenSortEnum.marketCap
-        ? economicsValue
-        : statsValue;
+    const egldValue = egldToken[sort as keyof DummyTokenType];
 
     if (
       egldValue !== undefined &&
@@ -110,7 +122,7 @@ export const EgldRow = ({
             </span>
           </div>
           <div className="d-flex flex-column justify-content-center">
-            <span className="d-block token-ticker">{erdLabel}</span>
+            <span className="d-block token-ticker">{egldLabel}</span>
             <div
               className="token-description text-wrap text-secondary small d-none d-md-block"
               title={description}
@@ -120,12 +132,12 @@ export const EgldRow = ({
           </div>
         </div>
       </td>
-      <td>MultiversX (Elrond) {erdLabel}</td>
-      <td>${validDisplayValue(economics.price, 2)}</td>
-      <td>{economics.circulatingSupply}</td>
-      <td>${validDisplayValue(economics.marketCap, 0)}</td>
-      <td>{validDisplayValue(stats.accounts)}</td>
-      <td>{validDisplayValue(stats.transactions)}</td>
+      <td>MultiversX (Elrond) {egldLabel}</td>
+      <td>{economicsFetched ? `$${new BigNumber(price).toFormat(2)}` : '...'}</td>
+      <td>{economicsFetched ? new BigNumber(circulatingSupply).toFormat(0) : '...'}</td>
+      <td>{economicsFetched ? `$${new BigNumber(marketCap).toFormat()}` : '...'}</td>
+      <td>{statsFetched ? new BigNumber(accounts).toFormat(0) : '...'}</td>
+      <td>{statsFetched ? new BigNumber(transactions).toFormat(0) : '...'}</td>
     </tr>
   );
 };

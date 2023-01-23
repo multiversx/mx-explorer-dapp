@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useGlobalState } from 'context';
 import {
   Loader,
   useAdapter,
@@ -10,13 +9,16 @@ import {
   AccountName,
 } from 'components';
 import { urlBuilder, useSize, useURLSearchParams } from 'helpers';
-import { AccountType } from 'helpers/types';
+import { AccountType } from 'types';
 import { NoAccounts } from './NoAccounts';
 import { FailedAccounts } from './FailedAccounts';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const Accounts = () => {
   const ref = React.useRef(null);
-  const { activeNetworkId } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { page } = useURLSearchParams();
   const { size } = useSize();
   const { getAccounts, getAccountsCount } = useAdapter();

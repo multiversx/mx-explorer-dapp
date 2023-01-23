@@ -1,13 +1,13 @@
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import * as React from 'react';
-import { numInitCharactersForScAddress } from 'appConfig';
+import { SC_INIT_CHARACTERS_LENGTH } from 'appConstants';
 import { PageState } from 'components';
 
 export const FailedAccount = ({ address }: { address: string | undefined }) => {
   const showIcon =
-    numInitCharactersForScAddress > 0 &&
-    String(address).startsWith('0'.repeat(numInitCharactersForScAddress));
+    SC_INIT_CHARACTERS_LENGTH > 0 &&
+    String(address).startsWith('0'.repeat(SC_INIT_CHARACTERS_LENGTH));
 
   return (
     <PageState

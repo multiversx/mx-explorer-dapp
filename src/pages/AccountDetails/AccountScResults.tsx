@@ -1,23 +1,29 @@
 import React from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAdapter, Loader, ScResultsTable } from 'components';
-import { useGlobalState } from 'context';
+
 import { AccountTabs } from './AccountLayout/AccountTabs';
 import { NoScResults } from 'components/ScResultsTable/NoScResults';
 import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
 import { urlBuilder, useGetFilters, useNetworkRoute } from 'helpers';
-import { ScResultType } from 'helpers/types';
+import { ScResultType } from 'types';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
 export const AccountScResults = () => {
   const ref = React.useRef(null);
-  const { activeNetwork, accountDetails } = useGlobalState();
+  const navigate = useNavigate();
+
   const { size } = useGetFilters();
   const networkRoute = useNetworkRoute();
+  const { adapter, id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { txCount } = useSelector(accountSelector);
 
   const { getAccountScResults, getAccountScResultsCount } = useAdapter();
 
   const { hash: address } = useParams() as any;
-  const scResultsActive = activeNetwork.adapter === 'api';
+  const scResultsActive = adapter === 'api';
 
   const [isDataReady, setIsDataReady] = React.useState<boolean | undefined>();
   const [accountScResults, setAccountScResults] = React.useState<ScResultType[]>([]);
@@ -46,10 +52,10 @@ export const AccountScResults = () => {
   React.useEffect(() => {
     fetchAccountScResults();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountDetails.txCount, activeNetwork.id, address, size]);
+  }, [txCount, activeNetworkId, address, size]);
 
   return !scResultsActive ? (
-    <Redirect to={networkRoute(urlBuilder.accountDetails(address))} />
+    navigate(networkRoute(urlBuilder.accountDetails(address)))
   ) : (
     <div className="card" ref={ref}>
       <div className="row">

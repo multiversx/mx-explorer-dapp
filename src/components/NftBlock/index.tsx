@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { urlBuilder } from 'helpers';
-import { NftType } from 'helpers/types';
+import { NftType } from 'types';
 import { NetworkLink, Denominate } from 'components';
 
 interface NftBlockType {

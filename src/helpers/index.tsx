@@ -1,4 +1,3 @@
-export * as types from './types';
 export * as bech32 from './bech32';
 
 export * from './isHash';
@@ -45,6 +44,7 @@ export * from './getPercentage';
 export * from './formatHerotag';
 export * from './nftText';
 export * from './getReceiverAssets';
+export * from './useGetHash';
 
 export * from './truncateMiddle';
 export * from './formatUSD';

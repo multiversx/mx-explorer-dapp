@@ -4,11 +4,14 @@ import { faLeaf } from '@fortawesome/pro-regular-svg-icons';
 import BigNumber from 'bignumber.js';
 
 import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy-delegation.svg';
-import { useGlobalState } from 'context';
-import { DelegationLegacyType, IdentityType } from 'helpers/types';
+
+import { DelegationLegacyType, IdentityType } from 'types';
 import { Denominate } from 'components';
 
 import { DetailsBlock } from '../DetailsBlock';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
 
 export const AccountLegacyDelegation = ({
   delegationLegacy,
@@ -17,31 +20,19 @@ export const AccountLegacyDelegation = ({
   delegationLegacy: DelegationLegacyType;
   identity?: IdentityType;
 }) => {
-  const {
-    activeNetwork: { erdLabel },
-    economics,
-  } = useGlobalState();
+  const { economicsFetched, baseApr, topUpApr } = useSelector(economicsSelector);
+  const { egldLabel } = useSelector(activeNetworkSelector);
 
-  const {
-    userActiveStake,
-    claimableRewards,
-    userUnstakedStake,
-    userWaitingStake,
-  } = delegationLegacy;
+  const { userActiveStake, claimableRewards, userUnstakedStake, userWaitingStake } =
+    delegationLegacy;
 
   const [legacyDelegationApr, setLegacyDelegationApr] = React.useState<string>('...');
 
   const getLegacyDelegationApr = () => {
-    if (
-      economics.baseApr !== '...' &&
-      economics.topUpApr !== '...' &&
-      identity?.stake &&
-      identity?.topUp &&
-      identity?.locked
-    ) {
+    if (economicsFetched && identity?.stake && identity?.topUp && identity?.locked) {
       const legacyDelegationBN = new BigNumber(identity.stake)
-        .times(new BigNumber(economics.baseApr))
-        .plus(new BigNumber(identity.topUp).times(economics.topUpApr))
+        .times(new BigNumber(baseApr))
+        .plus(new BigNumber(identity.topUp).times(topUpApr))
         .dividedBy(new BigNumber(identity.locked))
         .times(new BigNumber(100));
 
@@ -51,7 +42,8 @@ export const AccountLegacyDelegation = ({
     }
   };
 
-  useEffect(getLegacyDelegationApr, [economics, identity]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(getLegacyDelegationApr, [economicsFetched, identity]);
 
   return (
     <div className="delegation-row d-flex flex-wrap align-items-center justify-content-between p-3 px-md-4">
@@ -108,7 +100,7 @@ export const AccountLegacyDelegation = ({
           {claimableRewards ? (
             <Denominate value={new BigNumber(claimableRewards).toString(10)} />
           ) : (
-            <>0 {erdLabel}</>
+            <>0 {egldLabel}</>
           )}
         </strong>
         <small>Rewards</small>

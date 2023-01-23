@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Denominate, NetworkLink, PageState, SharedIdentity, Trim } from 'components';
 import { urlBuilder } from 'helpers';
-import { IdentityType } from 'helpers/types';
+import { IdentityType } from 'types';
 
 export const IdentitySummary = ({
   identity,

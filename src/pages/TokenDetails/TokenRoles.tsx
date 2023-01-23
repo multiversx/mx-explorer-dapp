@@ -1,15 +1,16 @@
 import * as React from 'react';
 
-import { useGlobalState } from 'context';
 import { Loader, NetworkLink, Trim, ScAddressIcon } from 'components';
 import { urlBuilder } from 'helpers';
 import { TokenTabs } from './TokenLayout/TokenTabs';
 
+import { useSelector } from 'react-redux';
+import { tokenSelector } from 'redux/selectors';
+
 export const TokenDetailsRoles = () => {
   const ref = React.useRef(null);
-  const {
-    tokenDetails: { roles },
-  } = useGlobalState();
+
+  const { roles } = useSelector(tokenSelector);
 
   return (
     <div ref={ref}>

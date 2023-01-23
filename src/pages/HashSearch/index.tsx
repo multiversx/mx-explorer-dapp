@@ -1,12 +1,20 @@
 import * as React from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
-import { useNetworkRoute, urlBuilder, isHash, isContract, addressIsBech32, bech32 } from 'helpers';
-import { Redirect, useParams } from 'react-router-dom';
+import {
+  useNetworkRoute,
+  urlBuilder,
+  isHash,
+  isContract,
+  addressIsBech32,
+  bech32
+} from 'helpers';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAdapter, PageState, Loader } from 'components';
 
 export const HashSearch = () => {
   const { hash: query } = useParams() as any;
   const networkRoute = useNetworkRoute();
+  const navigate = useNavigate();
   const {
     getAccount,
     getBlock,
@@ -16,7 +24,7 @@ export const HashSearch = () => {
     getToken,
     getScResult,
     getNft,
-    getCollection,
+    getCollection
   } = useAdapter();
   const [route, setRoute] = React.useState('');
   const [searching, setSearching] = React.useState<boolean | undefined>();
@@ -27,7 +35,8 @@ export const HashSearch = () => {
 
       const isAccount = addressIsBech32(query);
       const isValidquery = isHash(query);
-      const isNode = validqueryChars.test(query) === true && query.length === 192;
+      const isNode =
+        validqueryChars.test(query) === true && query.length === 192;
       const isToken =
         query.includes('-') &&
         query.split('-')[1].length === 6 &&
@@ -35,13 +44,16 @@ export const HashSearch = () => {
 
       let isPubKeyAccount = false;
       try {
-        isPubKeyAccount = query.length < 65 && addressIsBech32(bech32.encode(query));
+        isPubKeyAccount =
+          query.length < 65 && addressIsBech32(bech32.encode(query));
       } catch {}
 
       switch (true) {
         case isAccount:
           getAccount(query).then((account) => {
-            const newRoute = account.success ? networkRoute(urlBuilder.accountDetails(query)) : '';
+            const newRoute = account.success
+              ? networkRoute(urlBuilder.accountDetails(query))
+              : '';
             setRoute(newRoute);
             setSearching(false);
           });
@@ -49,32 +61,36 @@ export const HashSearch = () => {
 
         case isNode:
           getNode(query).then((node) => {
-            const newRoute = node.success ? networkRoute(urlBuilder.nodeDetails(query)) : '';
+            const newRoute = node.success
+              ? networkRoute(urlBuilder.nodeDetails(query))
+              : '';
             setRoute(newRoute);
             setSearching(false);
           });
           break;
 
         case isToken:
-          Promise.all([getToken(query), getNft(query), getCollection(query)]).then(
-            ([token, nft, collection]) => {
-              switch (true) {
-                case token.success:
-                  setRoute(networkRoute(urlBuilder.tokenDetails(query)));
-                  break;
-                case nft.success:
-                  setRoute(networkRoute(urlBuilder.nftDetails(query)));
-                  break;
-                case collection.success:
-                  setRoute(networkRoute(urlBuilder.collectionDetails(query)));
-                  break;
-                default:
-                  setRoute('');
-                  break;
-              }
-              setSearching(false);
+          Promise.all([
+            getToken(query),
+            getNft(query),
+            getCollection(query)
+          ]).then(([token, nft, collection]) => {
+            switch (true) {
+              case token.success:
+                setRoute(networkRoute(urlBuilder.tokenDetails(query)));
+                break;
+              case nft.success:
+                setRoute(networkRoute(urlBuilder.nftDetails(query)));
+                break;
+              case collection.success:
+                setRoute(networkRoute(urlBuilder.collectionDetails(query)));
+                break;
+              default:
+                setRoute('');
+                break;
             }
-          );
+            setSearching(false);
+          });
           break;
 
         case isValidquery:
@@ -82,14 +98,18 @@ export const HashSearch = () => {
             getBlock(query),
             getScResult(query),
             getTransaction(query),
-            getMiniBlock(query),
+            getMiniBlock(query)
           ]).then(([block, scResult, transaction, miniblock]) => {
             switch (true) {
               case block.success:
                 setRoute(networkRoute(`/blocks/${query}`));
                 break;
               case scResult.success:
-                setRoute(networkRoute(`/transactions/${scResult.data.originalTxHash}#${query}`));
+                setRoute(
+                  networkRoute(
+                    `/transactions/${scResult.data.originalTxHash}#${query}`
+                  )
+                );
                 break;
               case transaction.success:
                 setRoute(networkRoute(`/transactions/${query}`));
@@ -138,18 +158,18 @@ export const HashSearch = () => {
       {searching === false && (
         <>
           {route ? (
-            <Redirect to={route} />
+            navigate(route)
           ) : (
             <PageState
               icon={faSearch}
               title="Your search does not match anything we've got"
               description={
-                <div className="px-spacer">
-                  <span className="text-break-all">{query}</span>
+                <div className='px-spacer'>
+                  <span className='text-break-all'>{query}</span>
                 </div>
               }
-              className="py-spacer m-auto"
-              dataTestId="errorScreen"
+              className='py-spacer m-auto'
+              dataTestId='errorScreen'
             />
           )}
         </>

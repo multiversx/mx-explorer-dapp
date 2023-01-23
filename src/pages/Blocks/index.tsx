@@ -1,12 +1,13 @@
-import { useGlobalState } from 'context';
 import * as React from 'react';
-import { Redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useNetworkRoute, useURLSearchParams, useSize } from 'helpers';
-import { BlockType } from 'helpers/types';
+import { BlockType } from 'types';
 import { BlocksTable, Loader, Pager, ShardSpan, useAdapter } from 'components';
 import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/NoBlocks';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 interface StateType {
   blocks: BlockType[];
   startBlockNr: number;
@@ -17,6 +18,7 @@ export const Blocks = () => {
   const { page, shard } = useURLSearchParams();
   const { size, firstPageTicker } = useSize();
 
+  const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
 
   React.useEffect(() => {
@@ -30,7 +32,7 @@ export const Blocks = () => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [totalBlocks, setTotalBlocks] = React.useState<number | '...'>('...');
 
-  const { activeNetworkId } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const { getBlocks, getBlocksCount } = useAdapter();
 
@@ -58,7 +60,7 @@ export const Blocks = () => {
   }, [activeNetworkId, size, shard, firstPageTicker]);
 
   return shard && shard < 0 ? (
-    <Redirect to={networkRoute(`/not-found`)} />
+    navigate(networkRoute('/not-found'))
   ) : (
     <>
       {dataReady === undefined && <Loader />}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NodeType } from 'helpers/types';
+import { NodeType } from 'types';
 import { PageState } from 'components';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { StandardRow } from './Rows/StandardRow';

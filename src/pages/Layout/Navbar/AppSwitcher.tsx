@@ -1,15 +1,13 @@
+import React from 'react';
+
 import { faTh } from '@fortawesome/pro-solid-svg-icons/faTh';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGlobalState } from 'context';
-import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
 
-export const AppSwitcher = ({ onToggle }: { onToggle?: () => void }) => {
-  const {
-    config: { multiversXApps },
-  } = useGlobalState();
+import { multiversxApps } from 'config';
 
+export const AppSwitcher = ({ onToggle }: { onToggle?: () => void }) => {
   const hidePopover = () => {
     document.body.click();
     if (onToggle) {
@@ -31,9 +29,8 @@ export const AppSwitcher = ({ onToggle }: { onToggle?: () => void }) => {
         </div>
       }
       id="app-switcher-dropdown"
-      alignRight
     >
-      {multiversXApps.map(({ name, url, id }) => {
+      {multiversxApps.map(({ name, url, id }) => {
         const active = id === 'explorer';
         return (
           <a

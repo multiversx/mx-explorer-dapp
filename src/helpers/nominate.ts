@@ -1,8 +1,8 @@
-import { denomination as configDenomination } from 'appConfig';
+import { DECIMALS } from 'config';
 
 export const nominate = (input: string, customDenomination?: number) => {
   const parts = input.toString().split('.');
-  const denomination = customDenomination !== undefined ? customDenomination : configDenomination;
+  const denomination = customDenomination !== undefined ? customDenomination : DECIMALS;
 
   if (parts[1]) {
     // remove trailing zeros

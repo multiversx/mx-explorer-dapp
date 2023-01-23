@@ -7,7 +7,9 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { NetworkLink } from 'components';
 import { pagerHelper } from './pagerHelper';
-import { useGlobalState } from 'context';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export const Pager = ({
   total,
@@ -24,7 +26,7 @@ export const Pager = ({
   className?: string;
   hasTestId?: boolean;
 }) => {
-  const { activeNetworkId } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const { pathname: originalPathname } = useLocation();
   const pathname = activeNetworkId

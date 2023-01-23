@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Select from 'react-select';
 import Creatable from 'react-select/creatable';
 
 import { useNetworkPathname, isHash, addressIsBech32 } from 'helpers';
-import { TxFiltersEnum } from 'helpers/types';
+import { TxFiltersEnum } from 'types';
 
 interface SelectOptionType {
   value: string;
@@ -38,7 +38,7 @@ export const SelectFilter = ({
   validation,
   noOptionsMessage,
 }: SelectFilterType) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { search: locationSearch } = useLocation();
   const networkPathname = useNetworkPathname();
   const urlParams = new URLSearchParams(locationSearch);
@@ -53,7 +53,7 @@ export const SelectFilter = ({
       ...paramsObject,
       ...(selectValue ? { [filter]: selectValue } : {}),
     }).toString();
-    history.push(`${networkPathname}?${nextUrlParams}`);
+    navigate(`${networkPathname}?${nextUrlParams}`);
   };
 
   const hasExistingShowAllOption = options.find((option) => option.label === showAllPlaceholder);

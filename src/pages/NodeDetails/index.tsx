@@ -2,9 +2,8 @@ import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { useAdapter, Loader, PageState, SharedIdentity } from 'components';
 import { useLocation, useParams } from 'react-router-dom';
-import { useGlobalState } from 'context';
 import { useIsMainnet } from 'helpers';
-import { BlockType, IdentityType, NodeType } from 'helpers/types';
+import { BlockType, IdentityType, NodeType } from 'types';
 import { NodeInformation } from './NodeInformation';
 import { NetworkMetrics } from './NetworkMetrics';
 import { Rounds, RoundType } from './Rounds';
@@ -12,6 +11,9 @@ import { BlocksTable } from 'components/BlocksTable';
 import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/NoBlocks';
 import { ValidatorDetails } from './ValidatorDetails';
+
+import { useSelector } from 'react-redux';
+import { statsSelector } from 'redux/selectors';
 
 interface NodeDetailType<T> {
   data?: T;
@@ -24,11 +26,15 @@ const initialState = {
 
 export const NodeDetails = () => {
   const ref = React.useRef(null);
-  const { stats } = useGlobalState();
+
   const { hash: publicKey } = useParams() as any;
   const { search } = useLocation();
   const { getNode, getIdentity, getRounds, getBlocks } = useAdapter();
   const isMainnet = useIsMainnet();
+
+  const stats = useSelector(statsSelector);
+
+  const { statsFetched, epoch } = stats;
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
   const [node, setNode] = React.useState<NodeDetailType<NodeType>>(initialState);
@@ -45,10 +51,9 @@ export const NodeDetails = () => {
           const hasExtendedInfo =
             nodeData.data.type !== 'observer' && nodeData.data.status !== 'queued';
 
-          const epoch = stats.epoch ?? undefined;
           const shard = nodeData.data.shard;
 
-          if (hasExtendedInfo && stats?.statsFetched) {
+          if (hasExtendedInfo && statsFetched) {
             const promises = [
               getRounds({ validator: publicKey, shard, epoch }),
               getBlocks({ proposer: publicKey, shard, epoch }),
@@ -105,7 +110,7 @@ export const NodeDetails = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchNodes, [search, publicKey, stats]);
+  React.useEffect(fetchNodes, [search, publicKey, statsFetched]);
 
   const showIdentity =
     identity.success === false || (identity.success && identity.data !== undefined);

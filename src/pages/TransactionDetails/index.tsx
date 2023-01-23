@@ -1,11 +1,14 @@
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
-import { useGlobalState } from 'context';
+
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader, useAdapter, PageState } from 'components';
 import { TransactionInfo } from './TransactionInfo';
-import { TransactionType } from 'helpers/types';
+import { TransactionType } from 'types';
 import { txStatus } from 'components/TransactionStatus/txStatus';
+
+import { useSelector } from 'react-redux';
+import { interfaceSelector } from 'redux/selectors';
 
 export const TransactionDetails = () => {
   const params: any = useParams();
@@ -14,7 +17,7 @@ export const TransactionDetails = () => {
 
   const {
     refresh: { timestamp },
-  } = useGlobalState();
+  } = useSelector(interfaceSelector);
 
   const { getTransaction } = useAdapter();
 

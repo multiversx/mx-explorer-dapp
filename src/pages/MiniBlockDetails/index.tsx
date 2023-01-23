@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { useGlobalState } from 'context';
 import { isHash, useNetworkRoute, urlBuilder, useSize, useURLSearchParams } from 'helpers';
-import { Redirect, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Loader,
   ShardSpan,
@@ -19,7 +18,9 @@ import { NoScResults } from 'components/ScResultsTable/NoScResults';
 import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
 import { MiniBlockNotFound } from './MiniBlockNotFound';
 
-import { UITransactionType, TxFiltersEnum } from 'helpers/types';
+import { UITransactionType, TxFiltersEnum } from 'types';
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 interface MiniBlockType {
   senderShard: number;
@@ -35,23 +36,15 @@ export const MiniBlockDetails = () => {
   const { size } = useSize();
 
   const ref = React.useRef(null);
+  const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
 
-  const {
-    senderShard,
-    receiverShard,
-    sender,
-    receiver,
-    method,
-    before,
-    after,
-    status,
-    search,
-  } = useURLSearchParams();
+  const { senderShard, receiverShard, sender, receiver, method, before, after, status, search } =
+    useURLSearchParams();
 
   const { getTransfers, getTransfersCount, getMiniBlock } = useAdapter();
 
-  const { activeNetworkId } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const [miniBlock, setMiniBlock] = React.useState<MiniBlockType>();
   const [miniBlockFetched, setMiniBlockFetched] = React.useState<boolean | undefined>();
@@ -117,7 +110,7 @@ export const MiniBlockDetails = () => {
   React.useEffect(fetchMiniBlockData, [activeNetworkId, size, miniBlockHash]);
 
   return invalid ? (
-    <Redirect to={networkRoute(`/not-found`)} />
+    navigate(networkRoute(`/not-found`))
   ) : (
     <>
       {miniBlockFetched === undefined && <Loader />}
