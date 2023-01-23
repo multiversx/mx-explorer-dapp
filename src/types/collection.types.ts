@@ -33,10 +33,6 @@ export interface CollectionType {
   canAddUri?: boolean;
 }
 
-export interface CollectionSliceType extends CollectionType {
-  collectionFetched: boolean;
-}
-
 export interface CollectionRolesType extends RolesType {
   canCreate: boolean;
   canBurn: boolean;

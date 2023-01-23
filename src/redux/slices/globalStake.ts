@@ -1,11 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GlobalStakeSliceType } from 'types/globalStake.types';
+import { GlobalStakeType } from 'types/globalStake.types';
 
-export const getInitialGlobalStakeState = (): GlobalStakeSliceType => {
+export const getInitialGlobalStakeState = (): GlobalStakeType => {
   return {
     queueSize: 0,
-
-    globalStakeFetched: false,
   };
 };
 
@@ -13,13 +11,11 @@ export const globalStakeSlice = createSlice({
   name: 'globalStakeSlice',
   initialState: getInitialGlobalStakeState(),
   reducers: {
-    setGlobalStake: (state: GlobalStakeSliceType, action: PayloadAction<GlobalStakeSliceType>) => {
+    setGlobalStake: (state: GlobalStakeType, action: PayloadAction<GlobalStakeType>) => {
       state.queueSize = action.payload.queueSize;
       state.waitingList = action.payload.waitingList;
       state.deliquentStake = action.payload.deliquentStake;
       state.nodesVerions = action.payload.nodesVerions;
-
-      state.globalStakeFetched = action.payload.globalStakeFetched;
     },
   },
 });

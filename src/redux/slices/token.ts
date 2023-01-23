@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TokenSliceType } from 'types/token.types';
+import { TokenType } from 'types/token.types';
 
-export const getInitialTokenState = (): TokenSliceType => {
+export const getInitialTokenState = (): TokenType => {
   return {
     identifier: '',
     ticker: '',
@@ -21,8 +21,6 @@ export const getInitialTokenState = (): TokenSliceType => {
     isPaused: false,
     accounts: 0,
     transactions: 0,
-
-    tokenFetched: false,
   };
 };
 
@@ -30,7 +28,7 @@ export const tokenSlice = createSlice({
   name: 'tokenSlice',
   initialState: getInitialTokenState(),
   reducers: {
-    setToken: (state: TokenSliceType, action: PayloadAction<TokenSliceType>) => {
+    setToken: (state: TokenType, action: PayloadAction<TokenType>) => {
       state.identifier = action.payload.identifier;
       state.ticker = action.payload.ticker;
       state.name = action.payload.name;
@@ -49,8 +47,6 @@ export const tokenSlice = createSlice({
       state.isPaused = action.payload.isPaused;
       state.accounts = action.payload.accounts;
       state.transactions = action.payload.transactions;
-
-      state.tokenFetched = action.payload.tokenFetched;
     },
   },
 });

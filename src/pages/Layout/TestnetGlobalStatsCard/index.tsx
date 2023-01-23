@@ -1,4 +1,5 @@
 import * as React from 'react';
+import BigNumber from 'bignumber.js';
 import { faUser } from '@fortawesome/pro-solid-svg-icons/faUser';
 import { faExchangeAlt } from '@fortawesome/pro-solid-svg-icons/faExchangeAlt';
 import { faCube } from '@fortawesome/pro-solid-svg-icons/faCube';
@@ -32,15 +33,21 @@ export const TestnetGlobalStatsCard = () => {
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Blocks" icon={faCube}>
-                  <div data-testid="blocks">{statsFetched ? blocks : '...'}</div>
+                  <div data-testid="blocks">
+                    {statsFetched ? new BigNumber(blocks).toFormat(0) : '...'}
+                  </div>
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Accounts" icon={faUser}>
-                  <div data-testid="accounts">{statsFetched ? accounts : '...'}</div>
+                  <div data-testid="accounts">
+                    {statsFetched ? new BigNumber(accounts).toFormat(0) : '...'}
+                  </div>
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Transactions" icon={faExchangeAlt}>
-                  <div data-testid="transactions">{statsFetched ? transactions : '...'}</div>
+                  <div data-testid="transactions">
+                    {statsFetched ? new BigNumber(transactions).toFormat(0) : '...'}
+                  </div>
                 </CardItem>
               </div>
             </div>

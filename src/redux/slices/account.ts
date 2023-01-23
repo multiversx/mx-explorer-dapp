@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AccountSliceType } from 'types/account.types';
+import { AccountType } from 'types/account.types';
 
-export const getInitialAccountState = (): AccountSliceType => {
+export const getInitialAccountState = (): AccountType => {
   return {
     address: '',
     balance: '',
@@ -9,8 +9,6 @@ export const getInitialAccountState = (): AccountSliceType => {
     txCount: 0,
     scrCount: 0,
     claimableRewards: '',
-
-    accountFetched: false,
   };
 };
 
@@ -18,7 +16,7 @@ export const accountSlice = createSlice({
   name: 'accountSlice',
   initialState: getInitialAccountState(),
   reducers: {
-    setAccount: (state: AccountSliceType, action: PayloadAction<AccountSliceType>) => {
+    setAccount: (state: AccountType, action: PayloadAction<AccountType>) => {
       state.address = action.payload.address;
       state.balance = action.payload.balance;
       state.nonce = action.payload.nonce;
@@ -38,8 +36,6 @@ export const accountSlice = createSlice({
       state.isPayableBySmartContract = action.payload.isPayableBySmartContract;
       state.assets = action.payload.assets;
       state.username = action.payload.username;
-
-      state.accountFetched = action.payload.accountFetched;
     },
   },
 });

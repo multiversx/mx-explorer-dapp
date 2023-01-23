@@ -40,6 +40,7 @@ export const accountStakingSlice = createSlice({
       state.delegation = action.payload.delegation;
       state.showDelegation = action.payload.showDelegation;
       state.providerDataReady = action.payload.providerDataReady;
+      state.stakingDataReady = action.payload.stakingDataReady;
       state.delegationProviders = action.payload.delegationProviders;
       state.delegationLegacyIdentity = action.payload.delegationLegacyIdentity;
 
