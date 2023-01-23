@@ -1,26 +1,25 @@
 import * as React from 'react';
 import { processEconomics } from 'helpers';
-import { useGlobalDispatch } from 'context';
 import { useAdapter } from 'components';
 
+import { useDispatch } from 'react-redux';
+import { setEconomics } from 'redux/slices/economics';
+
 export const useFetchEconomics = () => {
-  const dispatch = useGlobalDispatch();
+  const dispatch = useDispatch();
 
   const { getEconomics } = useAdapter();
 
   const fetchEconomics = () => {
     getEconomics().then((economics) => {
-      if (economics.success && economics.data.price) {
-        dispatch({
-          type: 'setUsd',
-          usd: economics.data.price,
-        });
+      if (economics?.data && economics.success) {
+        const processedEconomics = processEconomics(economics.data);
+        dispatch(
+          setEconomics({
+            ...processedEconomics,
+          })
+        );
       }
-      const newEconomics = processEconomics(economics);
-      dispatch({
-        type: 'setEconomics',
-        economics: newEconomics,
-      });
     });
   };
 
