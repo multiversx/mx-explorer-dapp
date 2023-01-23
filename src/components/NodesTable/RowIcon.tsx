@@ -54,7 +54,7 @@ export const RowIcon = ({ node, small }: { node: NodeType; small?: boolean }) =>
           <Overlay title="Observer">
             <FontAwesomeIcon
               icon={icon}
-              className="text-secondary mr-1"
+              className="text-secondary me-1"
               size={small ? 'xs' : '1x'}
             />
           </Overlay>
@@ -65,7 +65,7 @@ export const RowIcon = ({ node, small }: { node: NodeType; small?: boolean }) =>
           <Overlay title="New">
             <FontAwesomeIcon
               icon={icon}
-              className="text-secondary mr-1"
+              className="text-secondary me-1"
               size={small ? 'xs' : '1x'}
             />
           </Overlay>
@@ -76,7 +76,7 @@ export const RowIcon = ({ node, small }: { node: NodeType; small?: boolean }) =>
           <Overlay title="Inactive">
             <FontAwesomeIcon
               icon={icon}
-              className="text-secondary mr-1"
+              className="text-secondary me-1"
               size={small ? 'xs' : '1x'}
             />
           </Overlay>
@@ -87,7 +87,7 @@ export const RowIcon = ({ node, small }: { node: NodeType; small?: boolean }) =>
           <Overlay title="Changing shard">
             <FontAwesomeIcon
               icon={icon}
-              className="text-secondary mr-1"
+              className="text-secondary me-1"
               size={small ? 'xs' : '1x'}
             />
           </Overlay>
@@ -98,7 +98,7 @@ export const RowIcon = ({ node, small }: { node: NodeType; small?: boolean }) =>
           <Overlay title="Waiting">
             <FontAwesomeIcon
               icon={icon}
-              className="text-secondary mr-1"
+              className="text-secondary me-1"
               size={small ? 'xs' : '1x'}
             />
           </Overlay>
@@ -109,7 +109,7 @@ export const RowIcon = ({ node, small }: { node: NodeType; small?: boolean }) =>
           <Overlay title="Queued">
             <FontAwesomeIcon
               icon={icon}
-              className="text-secondary mr-1"
+              className="text-secondary me-1"
               size={small ? 'xs' : '1x'}
             />
           </Overlay>

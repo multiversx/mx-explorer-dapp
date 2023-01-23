@@ -85,7 +85,7 @@ export const ProviderDetailsCard = ({ provider }: { provider?: ProviderType }) =
         <CardItem title="Locked" icon={faLock}>
           {provider.locked ? (
             <div className="d-flex align-items-center">
-              <span className="mr-2">
+              <span className="me-2">
                 <Denominate value={provider.locked} />
               </span>
 

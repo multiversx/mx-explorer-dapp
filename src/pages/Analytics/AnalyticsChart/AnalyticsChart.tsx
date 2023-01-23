@@ -46,9 +46,9 @@ export const AnalyticsChart = ({ id, path }: ChartListType) => {
         return {
           currency: 'EGLD',
         };
-      case 'daily-average-apr-monthly':
-      case 'daily-base-apr-monthly':
-      case 'daily-topup-apr-monthly':
+      case 'daily-average-ape-monthly':
+      case 'daily-base-ape-monthly':
+      case 'daily-topup-ape-monthly':
         return {
           percentageMultiplier: 100,
         };

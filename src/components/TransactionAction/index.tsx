@@ -97,7 +97,7 @@ const ActionText = ({ entry, transaction }: { entry: any; transaction: Transacti
       return entry.token.map((token: TokenArgumentType, index: number) => (
         <div key={`tx-${token.identifier}-${index}`}>
           <ActionToken token={token} showLastNonZeroDecimal />
-          {index < entry.token.length - 1 && <span className="ml-n1 mr-1 d-none d-sm-flex">,</span>}
+          {index < entry.token.length - 1 && <span className="ml-n1 me-1 d-none d-sm-flex">,</span>}
         </div>
       ));
 
@@ -106,7 +106,7 @@ const ActionText = ({ entry, transaction }: { entry: any; transaction: Transacti
         <div key={`tx-${tokenNoValue.token}-${index}`}>
           <ActionToken token={tokenNoValue} noValue showLastNonZeroDecimal />
           {index < entry.tokenNoValue.length - 1 && (
-            <span className="ml-n1 mr-1 d-none d-sm-flex">,</span>
+            <span className="ml-n1 me-1 d-none d-sm-flex">,</span>
           )}
         </div>
       ));
@@ -114,9 +114,9 @@ const ActionText = ({ entry, transaction }: { entry: any; transaction: Transacti
     case Boolean(entry.tokenNoLink && entry.tokenNoLink.length > 0):
       return entry.tokenNoLink.map((tokenNoLink: TokenArgumentType, index: number) => (
         <div key={`tx-${tokenNoLink.token}-${index}`}>
-          <span className="mr-1">{tokenNoLink.ticker}</span>
+          <span className="me-1">{tokenNoLink.ticker}</span>
           {index < entry.tokenNoLink.length - 1 && (
-            <span className="ml-n1 mr-1 d-none d-sm-flex">,</span>
+            <span className="ml-n1 me-1 d-none d-sm-flex">,</span>
           )}
         </div>
       ));
@@ -145,11 +145,11 @@ const ActionText = ({ entry, transaction }: { entry: any; transaction: Transacti
             {entry.providerAvatar ? (
               <img
                 src={entry.providerAvatar}
-                className="side-icon rounded-circle ml-lg-1 mr-2"
+                className="side-icon rounded-circle ml-lg-1 me-2"
                 alt=" "
               />
             ) : (
-              <DefaultAvatar className="side-icon rounded-circle ml-lg-1 mr-2" />
+              <DefaultAvatar className="side-icon rounded-circle ml-lg-1 me-2" />
             )}
             {entry.providerName}
           </NetworkLink>

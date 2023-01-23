@@ -51,7 +51,7 @@ export const AccountStaking = () => {
           <div className="row">
             {hasStaking ? (
               <>
-                <div className="col-lg-7 pr-lg-0 border-right">
+                <div className="col-lg-7 pe-lg-0 border-right">
                   {displayDelegation.length > 0 && (
                     <div className="account-delegation">
                       <div className="px-spacer py-3 border-bottom bg-light">Staking List</div>
@@ -88,7 +88,7 @@ export const AccountStaking = () => {
                     </div>
                   )}
                 </div>
-                <div className="col-lg-5 pl-0 d-flex flex-column">
+                <div className="col-lg-5 ps-0 d-flex flex-column">
                   <div className="px-spacer py-3 border-bottom bg-light staking-chart-title">
                     Staking Chart
                   </div>

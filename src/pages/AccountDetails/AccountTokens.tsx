@@ -125,7 +125,7 @@ export const AccountTokens = () => {
                 return (
                   <DetailItem title={name} key={identifier}>
                     <div className="d-flex align-items-center">
-                      <div className="mr-1">
+                      <div className="me-1">
                         <Denominate
                           showLabel={false}
                           value={balance ? balance : '0'}
@@ -142,7 +142,7 @@ export const AccountTokens = () => {
                           {assets ? (
                             <>
                               {assets.svgUrl && (
-                                <img src={assets.svgUrl} alt={name} className="side-icon mr-1" />
+                                <img src={assets.svgUrl} alt={name} className="side-icon me-1" />
                               )}
                               <div className="text-truncate">
                                 {ticker ? ticker : name} ({identifier})
@@ -164,7 +164,7 @@ export const AccountTokens = () => {
                   return (
                     <DetailItem title={name} key={identifier}>
                       <div className="d-flex align-items-center">
-                        <div className="mr-1">
+                        <div className="me-1">
                           <Denominate
                             showLabel={false}
                             value={balance ? balance : '0'}
@@ -173,7 +173,7 @@ export const AccountTokens = () => {
                           />
                         </div>
                         {valueUsd && (
-                          <span className="text-secondary mr-1">
+                          <span className="text-secondary me-1">
                             (${amountWithoutRounding(valueUsd.toString())})
                           </span>
                         )}
@@ -186,7 +186,7 @@ export const AccountTokens = () => {
                             {assets ? (
                               <>
                                 {assets?.svgUrl && (
-                                  <img src={assets.svgUrl} alt={name} className="side-icon mr-1" />
+                                  <img src={assets.svgUrl} alt={name} className="side-icon me-1" />
                                 )}
                                 <div className="text-truncate">{ticker ? ticker : name}</div>
                               </>

@@ -8,7 +8,7 @@ export const AccountDetailsBlock = ({ assets }: { assets: AssetType }) => {
   return (
     <div className="d-flex align-items-center">
       {assets.iconSvg && (
-        <img src={assets.iconSvg} alt={assets.name} className="account-icon mr-2" />
+        <img src={assets.iconSvg} alt={assets.name} className="account-icon me-2" />
       )}
       <div>{assets.name}</div>
       <Overlay title={assets.description}>

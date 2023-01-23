@@ -77,7 +77,7 @@ export const AddressDetailItem = ({ address }: { address: string }) => (
           <NetworkLink to={urlBuilder.accountDetails(address)} className="trim-wrapper">
             <Trim text={address} />
           </NetworkLink>
-          <CopyButton className="mr-2" text={address} />
+          <CopyButton className="me-2" text={address} />
         </>
       ) : null}
     </div>
@@ -160,7 +160,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
             <Nav.Link
               data-testid="title"
               eventKey="details"
-              className={`tab-link mr-3 ${activeKey === 'details' ? 'active' : ''}`}
+              className={`tab-link me-3 ${activeKey === 'details' ? 'active' : ''}`}
               onClick={() => {
                 window.history.replaceState(
                   null,
@@ -174,7 +174,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
             {showLogs && (
               <Nav.Link
                 eventKey="logs"
-                className={`tab-link mr-3 ${activeKey === 'logs' ? 'active' : ''}`}
+                className={`tab-link me-3 ${activeKey === 'logs' ? 'active' : ''}`}
                 onClick={() => {
                   window.history.replaceState(
                     null,
@@ -220,10 +220,10 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                       {isTxPending ? (
                         <FontAwesomeIcon
                           icon={faSpinner}
-                          className="mr-2 text-secondary fa-spin slow-spin"
+                          className="me-2 text-secondary fa-spin slow-spin"
                         />
                       ) : (
-                        <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
+                        <FontAwesomeIcon icon={faClock} className="me-2 text-secondary" />
                       )}
                       <TimeAgo value={transaction.timestamp} />
                       &nbsp;
@@ -268,7 +268,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                             assets={transaction.senderAssets}
                           />
                         </NetworkLink>
-                        <CopyButton className="mr-2" text={transaction.sender} />
+                        <CopyButton className="me-2" text={transaction.sender} />
                         <NetworkLink
                           to={urlBuilder.senderShard(transaction.senderShard)}
                           className="flex-shrink-0"
@@ -286,7 +286,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                   <div className="d-flex flex-column">
                     <div className="d-flex align-items-center">
                       {isContract(transaction.receiver) ? (
-                        <span className="mr-2">Contract</span>
+                        <span className="me-2">Contract</span>
                       ) : (
                         ''
                       )}
@@ -299,7 +299,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                           assets={transaction.receiverAssets}
                         />
                       </NetworkLink>
-                      <CopyButton className="mr-2" text={transaction.receiver} />
+                      <CopyButton className="me-2" text={transaction.receiver} />
                       {!isNaN(transaction.receiverShard) && (
                         <NetworkLink
                           to={urlBuilder.receiverShard(transaction.receiverShard)}
@@ -359,7 +359,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                   <DetailItem
                     title={
                       <>
-                        <span className="mr-2">Token Operations</span>
+                        <span className="me-2">Token Operations</span>
                         <span className="badge badge-secondary badge-pill font-weight-normal">
                           {visibleOperations.length}
                         </span>

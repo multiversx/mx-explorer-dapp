@@ -16,7 +16,7 @@ export const NftBlock = ({ value, operationToken }: NftBlockType) => {
       {operationToken && (
         <>
           {value && operationToken.type !== 'NonFungibleESDT' && (
-            <div className="mr-1">
+            <div className="me-1">
               {operationToken.decimals !== undefined ? (
                 <Denominate
                   value={value}
@@ -40,7 +40,7 @@ export const NftBlock = ({ value, operationToken }: NftBlockType) => {
                     <img
                       src={operationToken.assets.svgUrl}
                       alt={operationToken.name}
-                      className="side-icon mr-1"
+                      className="side-icon me-1"
                     />
                   )}
                   <div className="text-truncate">

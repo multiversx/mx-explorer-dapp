@@ -90,7 +90,7 @@ export const LatestBlocks = () => {
                     <div className="latest-item-card">
                       <div className="d-flex align-items-center justify-content-between mb-3">
                         <div className="d-flex align-items-center">
-                          <div className="latest-item-icon mr-2">
+                          <div className="latest-item-icon me-2">
                             <FontAwesomeIcon icon={faCube} />
                           </div>
                           <NetworkLink to={`/blocks/${block.hash}`} data-testid={`blockLink${i}`}>
@@ -103,14 +103,14 @@ export const LatestBlocks = () => {
                         </span>
                       </div>
                       <div className="d-flex">
-                        <span className="text-secondary mr-2">Transactions:</span> {block.txCount}
+                        <span className="text-secondary me-2">Transactions:</span> {block.txCount}
                         <span className="text-muted mx-2">•</span>
                         <NetworkLink to={urlBuilder.shard(block.shard)} className="flex-shrink-0">
                           <ShardSpan shard={block.shard} />
                         </NetworkLink>
                       </div>
                       <div className="d-flex flex-row mt-1">
-                        <span className="mr-2 text-secondary">Hash:</span>
+                        <span className="me-2 text-secondary">Hash:</span>
                         <NetworkLink to={`/blocks/${block.hash}`} className="trim-wrapper">
                           <Trim dataTestId={`blockHashLink${i}`} text={block.hash} />
                         </NetworkLink>

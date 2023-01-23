@@ -20,7 +20,7 @@ export const AccountStake = ({ stake }: { stake: StakeType }) => {
     <div className="delegation-row d-flex flex-wrap align-items-center justify-content-between p-3 px-md-4">
       <div className="provider-details">
         <div className="d-flex flex-row align-items-center">
-          <div className="multiversx-icon provider-image has-avatar rounded-circle d-flex mr-3">
+          <div className="multiversx-icon provider-image has-avatar rounded-circle d-flex me-3">
             <MultiversXSymbol />
           </div>
           <div className="d-flex flex-column w-100">

@@ -64,12 +64,12 @@ export const IdentitySummary = ({
                 <div className="d-none d-md-flex mx-4">
                   <FontAwesomeIcon icon={faAngleRight} className="text-muted" size="2x" />
                 </div>
-                <div className="d-flex align-items-center mr-4">
-                  <span className="text-secondary text-nowrap pr-2">Stake Balance:</span>
+                <div className="d-flex align-items-center me-4">
+                  <span className="text-secondary text-nowrap pe-2">Stake Balance:</span>
                   {identity.locked ? <Denominate value={identity.locked} /> : 'N/A'}
                 </div>
-                <div className="d-flex align-items-center mr-4">
-                  <span className="text-secondary pr-2">Stake percent:</span>
+                <div className="d-flex align-items-center me-4">
+                  <span className="text-secondary pe-2">Stake percent:</span>
                   {identity.stakePercent ? (
                     <>
                       {Math.round(identity.stakePercent) > 0
@@ -82,7 +82,7 @@ export const IdentitySummary = ({
                   )}
                 </div>
                 <div className="d-flex align-items-center">
-                  <span className="text-secondary pr-2">Nodes:</span>
+                  <span className="text-secondary pe-2">Nodes:</span>
                   {identity.validators ? identity.validators : 'N/A'}
                 </div>
               </div>

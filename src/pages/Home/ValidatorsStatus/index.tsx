@@ -82,7 +82,7 @@ export const ValidatorsStatus = () => {
       <div className="card-body bg-black p-0 overflow-hidden">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-12 pl-0 pr-0">
+            <div className="col-12 ps-0 pe-0">
               {process.env.NODE_ENV !== 'test' && <SimpleMap markers={markers} />}
             </div>
           </div>
@@ -95,13 +95,13 @@ export const ValidatorsStatus = () => {
               key={i}
               className={`row py-2 ${i + 1 < continentsRank.length ? 'border-bottom' : ''}`}
             >
-              <div className="col pl-0 d-flex align-items-center continent-name">
+              <div className="col ps-0 d-flex align-items-center continent-name">
                 {i + 1}. {continent}
               </div>
               <div className="col d-flex align-items-center text-secondary justify-content-end">
                 {nodes > 0 ? `${nodes.toLocaleString('en')} node${nodes === 1 ? '' : 's'}` : '...'}
               </div>
-              <div className="col pr-0 d-flex align-items-center text-secondary justify-content-end">
+              <div className="col pe-0 d-flex align-items-center text-secondary justify-content-end">
                 {percentage > 0 ? `${percentage}%` : '...'}
               </div>
             </div>

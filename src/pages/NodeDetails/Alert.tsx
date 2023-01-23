@@ -29,7 +29,7 @@ export const Alert = ({ node }: { node: NodeType }) => {
     case node.online === false:
       return (
         <Container>
-          <FontAwesomeIcon icon={faExclamationTriangle} size="xs" className="text-warning mr-1" />
+          <FontAwesomeIcon icon={faExclamationTriangle} size="xs" className="text-warning me-1" />
           <small className={`ml-1 ${node.type === 'observer' ? 'text-muted' : ''}`}>
             &nbsp;Offline
           </small>

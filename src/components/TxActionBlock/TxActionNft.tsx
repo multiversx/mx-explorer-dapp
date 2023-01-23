@@ -22,10 +22,10 @@ export const TxActionNft = ({
       {token && token.identifier && (
         <>
           {showBadge && token.type !== NftEnumType.MetaESDT && (
-            <NftBadge type={token.type} className="mr-1 my-auto" />
+            <NftBadge type={token.type} className="me-1 my-auto" />
           )}
           {!noValue && token.value && token.type !== NftEnumType.NonFungibleESDT && (
-            <div className={`mr-1 ${token.svgUrl ? 'text-truncate' : ''}`}>
+            <div className={`me-1 ${token.svgUrl ? 'text-truncate' : ''}`}>
               {token.decimals !== undefined ? (
                 <Denominate
                   value={token.value}
@@ -46,7 +46,7 @@ export const TxActionNft = ({
           >
             <div className="d-flex align-items-center symbol text-truncate">
               {token.svgUrl && (
-                <img src={token.svgUrl} alt={token.name} className="side-icon mr-1" />
+                <img src={token.svgUrl} alt={token.name} className="side-icon me-1" />
               )}
               <span className="text-truncate">
                 {token.ticker === token.collection ? token.identifier : token.ticker}
