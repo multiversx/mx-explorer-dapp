@@ -1,47 +1,14 @@
-import moment from 'moment';
-import BigNumber from 'bignumber.js';
+import { StatsType } from 'types/stats.types';
 
-export const initialStats = {
-  statsFetched: false,
-  shards: '...',
-  blocks: '...',
-  accounts: '...',
-  transactions: '...',
-  epoch: 0,
-  epochPercentage: 0,
-  epochTotalTime: '...',
-  epochTimeElapsed: '...',
-  epochTimeRemaining: '...',
-  roundsPerEpoch: 0,
-  roundsPassed: 0,
-};
+export const processStats = (data: StatsType) => {
+  const check = data.roundsPerEpoch >= data.roundsPassed;
 
-export const processStats = (statsData: any) => {
-  const { data, success } = statsData;
-  const check = success ? data.roundsPerEpoch >= data.roundsPassed : false;
-
-  const newStats = success
-    ? {
-        statsFetched: true,
-        shards: new BigNumber(data.shards).toFormat(),
-        blocks: new BigNumber(data.blocks).toFormat(),
-        accounts: data.accounts,
-        transactions: data.transactions,
-        epoch: data.epoch,
-        epochPercentage: check ? (100 * data.roundsPassed) / data.roundsPerEpoch : 0,
-        epochTotalTime: check
-          ? moment.utc(data.refreshRate * data.roundsPerEpoch).format('HH:mm')
-          : '...',
-        epochTimeElapsed: check
-          ? moment.utc(data.refreshRate * data.roundsPassed).format('HH:mm')
-          : '...',
-        epochTimeRemaining: check
-          ? moment.utc(data.refreshRate * (data.roundsPerEpoch - data.roundsPassed)).format('HH:mm')
-          : '...',
-        roundsPerEpoch: data.roundsPerEpoch,
-        roundsPassed: data.roundsPassed,
-      }
-    : initialStats;
-
-  return newStats;
+  return {
+    ...data,
+    statsFetched: true,
+    epochPercentage: check ? (100 * data.roundsPassed) / data.roundsPerEpoch : 0,
+    epochTotalTime: check ? data.refreshRate * data.roundsPerEpoch : 0,
+    epochTimeElapsed: check ? data.refreshRate * data.roundsPassed : 0,
+    epochTimeRemaining: check ? data.refreshRate * (data.roundsPerEpoch - data.roundsPassed) : 0,
+  };
 };

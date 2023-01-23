@@ -3,15 +3,19 @@ import { faUser } from '@fortawesome/pro-solid-svg-icons/faUser';
 import { faExchangeAlt } from '@fortawesome/pro-solid-svg-icons/faExchangeAlt';
 import { faCube } from '@fortawesome/pro-solid-svg-icons/faCube';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
-import { useGlobalState } from 'context';
+
 import { EpochGear } from 'pages/Layout/GlobalStatsCard/EpochGear';
 import { CardItem } from 'components';
-import { validDisplayValue, useFetchStats } from 'helpers';
+import { useFetchStats } from 'helpers';
+
+import { useSelector } from 'react-redux';
+import { statsSelector } from 'redux/selectors';
 
 export const TestnetGlobalStatsCard = () => {
   useFetchStats();
   const ref = React.useRef(null);
-  const { stats } = useGlobalState();
+
+  const { statsFetched, shards, blocks, accounts, transactions } = useSelector(statsSelector);
 
   return (
     <div ref={ref} className="global-stats-card">
@@ -20,23 +24,23 @@ export const TestnetGlobalStatsCard = () => {
           <div className="card d-flex flex-column flex-lg-row flex-wrap py-4 px-3 px-lg-spacer">
             <div className="card-body p-0 d-flex flex-column flex-lg-row">
               <div className="d-flex align-items-center justify-content-center">
-                <EpochGear stats={stats} showTime />
+                <EpochGear showTime />
               </div>
               <div className="card-item-container w-100">
                 <CardItem className="lg title-bold" title="Shards" icon={faLayerGroup}>
-                  {stats.shards}
+                  {statsFetched ? shards : '...'}
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Blocks" icon={faCube}>
-                  <div data-testid="blocks">{stats.blocks}</div>
+                  <div data-testid="blocks">{statsFetched ? blocks : '...'}</div>
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Accounts" icon={faUser}>
-                  <div data-testid="accounts">{validDisplayValue(stats.accounts)}</div>
+                  <div data-testid="accounts">{statsFetched ? accounts : '...'}</div>
                 </CardItem>
 
                 <CardItem className="lg title-bold" title="Transactions" icon={faExchangeAlt}>
-                  <div data-testid="transactions">{validDisplayValue(stats.transactions)}</div>
+                  <div data-testid="transactions">{statsFetched ? transactions : '...'}</div>
                 </CardItem>
               </div>
             </div>

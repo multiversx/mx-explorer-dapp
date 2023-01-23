@@ -7,11 +7,14 @@ import { getLastDayValue } from 'components/Chart/helpers/getLastDayValue';
 import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
 import { formatDataCharts } from 'components/Chart/helpers/formatDataCharts';
 
-import { useGlobalState } from 'context';
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector, statsSelector } from 'redux/selectors';
 
 export const AccountsChart = () => {
-  const { activeNetworkId, stats } = useGlobalState();
   const { getAccountsHistory } = useAdapter();
+
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { statsFetched, accounts } = useSelector(statsSelector);
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
@@ -41,8 +44,7 @@ export const AccountsChart = () => {
     },
   ];
 
-  const totalAccounts =
-    stats.accounts !== '...' ? new BigNumber(stats.accounts).toFormat(0) : '...';
+  const totalAccounts = statsFetched ? new BigNumber(accounts).toFormat(0) : '...';
   const metrics = [
     { label: 'New Addresses Today', value: getLastDayValue(chartData) },
     { label: 'Total Addresses', value: totalAccounts },
