@@ -6,8 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AxiosInterceptor } from 'components';
 import { Layout } from './pages/Layout';
 import { PageNotFound } from './pages/PageNotFound';
-import { GlobalProvider } from './context';
-import { ConfigType, NetworkType } from 'types';
+import { NetworkType } from 'types';
 import { wrappedRoutes, validatorsRoutes } from 'routes';
 
 import { Provider, useSelector } from 'react-redux';
@@ -67,17 +66,15 @@ export const FilteredRoutes = ({
   );
 };
 
-export const ProviderApp = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
+export const ProviderApp = () => {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
-        <GlobalProvider optionalConfig={optionalConfig}>
-          <AxiosInterceptor>
-            <Layout>
-              <FilteredRoutes routes={wrappedRoutes} />
-            </Layout>
-          </AxiosInterceptor>
-        </GlobalProvider>
+        <AxiosInterceptor>
+          <Layout>
+            <FilteredRoutes routes={wrappedRoutes} />
+          </Layout>
+        </AxiosInterceptor>
       </PersistGate>
     </Provider>
   );

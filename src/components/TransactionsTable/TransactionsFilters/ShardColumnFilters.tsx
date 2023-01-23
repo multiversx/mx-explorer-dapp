@@ -5,32 +5,33 @@ import { useLocation } from 'react-router-dom';
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGlobalDispatch, useGlobalState } from 'context';
 
 import { TxFiltersEnum, TransactionsTableType } from 'types';
 import { useAdapter, SelectFilter } from 'components';
 import { shardSpanText } from 'components/ShardSpan';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { shardsSelector } from 'redux/selectors';
+import { setShards } from 'redux/slices/interface';
 
 export const ShardColumnFilters = ({
   inactiveFilters = [],
 }: {
   inactiveFilters?: TransactionsTableType['inactiveFilters'];
 }) => {
-  const dispatch = useGlobalDispatch();
+  const dispatch = useDispatch();
   const { search: locationSearch } = useLocation();
   const urlParams = new URLSearchParams(locationSearch);
   const { senderShard, receiverShard } = Object.fromEntries(urlParams);
   const { getShards } = useAdapter();
-  const { shards: stateShards } = useGlobalState();
+
+  const stateShards = useSelector(shardsSelector);
 
   const fetchShards = () => {
     if (stateShards.length === 0) {
       getShards().then((shards) => {
-        if (shards.success) {
-          dispatch({
-            type: 'setShards',
-            shards: shards.data,
-          });
+        if (shards.success && shards?.data) {
+          dispatch(setShards(shards.data));
         }
       });
     }

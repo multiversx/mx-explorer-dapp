@@ -8,6 +8,12 @@ import { networkReducer } from './slices/networks';
 import { economicsReducer } from './slices/economics';
 import { statsReducer } from './slices/stats';
 
+import { accountReducer } from './slices/account';
+import { accountStakingReducer } from './slices/accountStaking';
+import { collectionReducer } from './slices/collection';
+import { globalStakeReducer } from './slices/globalStake';
+import { tokenReducer } from './slices/token';
+
 const asyncIgnoredSlices = {};
 
 const networkPersisted = {
@@ -72,4 +78,9 @@ const ignoredSlices = Object.keys(asyncIgnoredSlices).reduce((acc, entry) => {
 export const rootReducer = combineReducers({
   ...ignoredSlices,
   ...customIgnoredSlices,
+  account: accountReducer,
+  accountStaking: accountStakingReducer,
+  collection: collectionReducer,
+  globalStake: globalStakeReducer,
+  token: tokenReducer,
 });

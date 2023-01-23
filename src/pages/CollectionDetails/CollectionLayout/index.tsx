@@ -1,18 +1,19 @@
 import * as React from 'react';
-import { useGlobalDispatch } from 'context';
+
 import { Loader, useAdapter } from 'components';
 import { useSize, useGetHash } from 'helpers';
 import { FailedCollectionDetails } from './FailedCollectionDetails';
 import { CollectionDetailsCard } from './CollectionDetailsCard';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { activeNetworkSelector } from 'redux/selectors';
+import { setCollection } from 'redux/slices';
 
 export const CollectionLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { firstPageTicker } = useSize();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const dispatch = useGlobalDispatch();
+  const dispatch = useDispatch();
   const { getCollection } = useAdapter();
 
   const collection = useGetHash();
@@ -22,16 +23,9 @@ export const CollectionLayout = ({ children }: { children: React.ReactNode }) =>
   const fetchCollectionDetails = () => {
     if (collection) {
       getCollection(collection).then((collectionDetailsData) => {
-        const details = collectionDetailsData.success ? collectionDetailsData.data : {};
-
         if (ref.current !== null) {
-          if (collectionDetailsData.success) {
-            dispatch({
-              type: 'setCollectionDetails',
-              collectionDetails: {
-                ...details,
-              },
-            });
+          if (collectionDetailsData.success && collectionDetailsData?.data) {
+            dispatch(setCollection(collectionDetailsData.data));
             setDataReady(true);
           }
 

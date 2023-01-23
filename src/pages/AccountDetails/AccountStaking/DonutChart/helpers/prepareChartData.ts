@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 
-import { AccountStakingDetailsType } from 'context/state';
+import { AccountStakingSliceType } from 'types/account.types';
 
 import { denominate } from 'components/Denominate/denominate';
 import { DECIMALS, DIGITS } from 'config';
@@ -18,23 +18,26 @@ export const prepareChartData = ({
   stakingDetails,
   providers,
 }: {
-  stakingDetails: AccountStakingDetailsType;
+  stakingDetails: AccountStakingSliceType;
   providers: ProviderType[];
 }): DonutChartDataType[] => {
   const {
-    stakingDataReady,
+    accountStakingFetched,
     delegation,
     stake,
     delegationLegacy,
     showStake,
     showDelegationLegacy,
-    bNtotalLegacyDelegation,
-    bNtotalStaked,
+    totalLegacyDelegation,
+    totalStaked,
   } = stakingDetails;
 
   const defaultData = [{ name: 'No Staking', value: 1, displayValue: 0 }];
 
-  if (stakingDataReady) {
+  if (accountStakingFetched) {
+    const bNtotalLegacyDelegation = new BigNumber(totalLegacyDelegation);
+    const bNtotalStaked = new BigNumber(totalStaked);
+
     const chartData: DonutChartDataType[] = [];
     const displayDelegations = delegation
       ? delegation.filter(

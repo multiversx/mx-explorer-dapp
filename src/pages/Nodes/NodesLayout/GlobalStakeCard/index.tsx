@@ -3,15 +3,15 @@ import BigNumber from 'bignumber.js';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import { faLeaf } from '@fortawesome/pro-solid-svg-icons/faLeaf';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
-import { useGlobalState } from 'context';
+
 import { CardItem, MultilayerPercentageBar, PageState } from 'components';
 
 import { useSelector } from 'react-redux';
-import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
+import { activeNetworkSelector, economicsSelector, globalStakeSelector } from 'redux/selectors';
 
 export const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
-  const { globalStake } = useGlobalState();
   const { egldLabel } = useSelector(activeNetworkSelector);
+  const { nodesVerions } = useSelector(globalStakeSelector);
   const { economicsFetched, baseApr, staked } = useSelector(economicsSelector);
 
   const displayBaseApr = economicsFetched
@@ -64,11 +64,7 @@ export const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => 
                 customIcon={<MultiversXSymbol />}
               >
                 <div className="d-flex flex-column flex-fill">
-                  {globalStake && globalStake.nodesVerions ? (
-                    <MultilayerPercentageBar steps={globalStake.nodesVerions} />
-                  ) : (
-                    'N/A'
-                  )}
+                  {nodesVerions ? <MultilayerPercentageBar steps={nodesVerions} /> : 'N/A'}
                 </div>
               </CardItem>
             </div>

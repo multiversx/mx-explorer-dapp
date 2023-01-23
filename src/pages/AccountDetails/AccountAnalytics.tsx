@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
-import { useGlobalState } from 'context';
+
 import { useAdapter, Loader, PageState, Chart } from 'components';
 import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
 import {
@@ -11,11 +11,10 @@ import {
 import { AccountTabs } from './AccountLayout/AccountTabs';
 
 import { useSelector } from 'react-redux';
-import { activeNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
 export const AccountAnalytics = () => {
-  const { accountDetails } = useGlobalState();
-
+  const { address } = useSelector(accountSelector);
   const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
   const { getAccountHistory } = useAdapter();
 
@@ -25,23 +24,21 @@ export const AccountAnalytics = () => {
   const [endDate, setEndDate] = React.useState<string>('...');
 
   const getData = () => {
-    getAccountHistory({ address: accountDetails.address, size: 100 }).then(
-      (accountsHistoryData) => {
-        if (accountsHistoryData.success && accountsHistoryData?.data?.length > 0) {
-          const reversedData = accountsHistoryData.data.reverse();
-          const startTimestamp = reversedData[0].timestamp;
-          const endTimestamp = reversedData[reversedData.length - 1].timestamp;
+    getAccountHistory({ address, size: 100 }).then((accountsHistoryData) => {
+      if (accountsHistoryData.success && accountsHistoryData?.data?.length > 0) {
+        const reversedData = accountsHistoryData.data.reverse();
+        const startTimestamp = reversedData[0].timestamp;
+        const endTimestamp = reversedData[reversedData.length - 1].timestamp;
 
-          const frequency = getFrequency(reversedData);
-          const normalizedData = getNormalizedTimeEntries(reversedData, frequency);
-          setChartData(normalizedData);
+        const frequency = getFrequency(reversedData);
+        const normalizedData = getNormalizedTimeEntries(reversedData, frequency);
+        setChartData(normalizedData);
 
-          setStartDate(moment.unix(startTimestamp).utc().format('MMM DD, YYYY'));
-          setEndDate(moment.unix(endTimestamp).utc().format('MMM DD, YYYY'));
-        }
-        setDataReady(accountsHistoryData.success);
+        setStartDate(moment.unix(startTimestamp).utc().format('MMM DD, YYYY'));
+        setEndDate(moment.unix(endTimestamp).utc().format('MMM DD, YYYY'));
       }
-    );
+      setDataReady(accountsHistoryData.success);
+    });
   };
 
   const config: ChartConfigType[] = [

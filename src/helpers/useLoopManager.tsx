@@ -1,22 +1,24 @@
 import React from 'react';
 import moment from 'moment';
-import { useGlobalState, useGlobalDispatch } from 'context';
 import { REFRESH_RATE } from 'appConstants';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { interfaceSelector } from 'redux/selectors';
+import { triggerRefresh } from 'redux/slices/interface';
 
 export const useLoopManager = () => {
   const {
     refresh: { timestamp },
-  } = useGlobalState();
-  const dispatch = useGlobalDispatch();
+  } = useSelector(interfaceSelector);
+
+  const dispatch = useDispatch();
 
   const withinInterval = moment().subtract(REFRESH_RATE, 'ms').isAfter(moment(timestamp));
 
   const setRounds = () => {
     const intervalId = setInterval(() => {
       if (!withinInterval && !document.hidden) {
-        dispatch({
-          type: 'triggerTick',
-        });
+        dispatch(triggerRefresh());
       }
     }, REFRESH_RATE);
     return () => {

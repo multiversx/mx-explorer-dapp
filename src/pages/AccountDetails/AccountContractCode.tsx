@@ -1,17 +1,14 @@
 import React from 'react';
-import { useGlobalState } from 'context';
+
 import { AccountTabs } from './AccountLayout/AccountTabs';
 import { useNavigate } from 'react-router-dom';
 import { urlBuilder, useNetworkRoute } from 'helpers';
 import { downloadFile } from 'helpers';
 
-export const DownloadContractCode = ({
-  code,
-  fileName
-}: {
-  code: string;
-  fileName?: string;
-}) => {
+import { useSelector } from 'react-redux';
+import { accountSelector } from 'redux/selectors';
+
+export const DownloadContractCode = ({ code, fileName }: { code: string; fileName?: string }) => {
   const download = (e: React.MouseEvent) => {
     const name = fileName ?? 'contract';
 
@@ -23,12 +20,8 @@ export const DownloadContractCode = ({
   };
 
   return (
-    <div className='mt-4'>
-      <button
-        type='button'
-        onClick={download}
-        className='btn btn-primary-light'
-      >
+    <div className="mt-4">
+      <button type="button" onClick={download} className="btn btn-primary-light">
         Download WASM File
       </button>
     </div>
@@ -37,39 +30,32 @@ export const DownloadContractCode = ({
 
 export const AccountContractCode = () => {
   const navigate = useNavigate();
-  const { accountDetails } = useGlobalState();
+
   const networkRoute = useNetworkRoute();
 
-  const codeHash = accountDetails?.codeHash ?? '';
-  const codeHashBase64Buffer = Buffer.from(String(codeHash), 'base64');
+  const { codeHash, code, address } = useSelector(accountSelector);
+
+  const codeHashBase64Buffer = Buffer.from(String(codeHash ?? ''), 'base64');
   const codeHashHexValue = codeHashBase64Buffer.toString('hex');
 
-  return !accountDetails.code ? (
-    navigate(networkRoute(urlBuilder.accountDetails(accountDetails.address)))
+  return !code ? (
+    navigate(networkRoute(urlBuilder.accountDetails(address)))
   ) : (
-    <div className='card'>
-      <div className='card-header'>
-        <div className='card-header-item d-flex justify-content-between align-items-center'>
+    <div className="card">
+      <div className="card-header">
+        <div className="card-header-item d-flex justify-content-between align-items-center">
           <AccountTabs />
         </div>
       </div>
       {codeHash && (
-        <div className='card-body d-flex flex-wrap border-bottom py-3 px-lg-spacer text-truncate'>
-          <div className='text-secondary pr-3'>Code Hash</div>
-          <div className='text-truncate'>{codeHashHexValue}</div>
+        <div className="card-body d-flex flex-wrap border-bottom py-3 px-lg-spacer text-truncate">
+          <div className="text-secondary pr-3">Code Hash</div>
+          <div className="text-truncate">{codeHashHexValue}</div>
         </div>
       )}
-      <div className='card-body px-lg-spacer py-lg-4'>
-        <textarea
-          readOnly
-          className='form-control col cursor-text'
-          rows={10}
-          defaultValue={accountDetails.code}
-        />
-        <DownloadContractCode
-          code={accountDetails.code}
-          fileName={accountDetails.address}
-        />
+      <div className="card-body px-lg-spacer py-lg-4">
+        <textarea readOnly className="form-control col cursor-text" rows={10} defaultValue={code} />
+        <DownloadContractCode code={code} fileName={address} />
       </div>
     </div>
   );

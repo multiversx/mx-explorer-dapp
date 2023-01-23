@@ -1,6 +1,7 @@
 import React from 'react';
+import BigNumber from 'bignumber.js';
 
-import { AccountStakingDetailsType } from 'context/state';
+import { AccountStakingSliceType } from 'types/account.types';
 
 import { prepareChartData } from './helpers/prepareChartData';
 import { ProviderType } from 'types';
@@ -11,11 +12,12 @@ export const DonutChart = ({
   stakingDetails,
   providers,
 }: {
-  stakingDetails: AccountStakingDetailsType;
+  stakingDetails: AccountStakingSliceType;
   providers?: ProviderType[];
 }) => {
   const chartData = providers ? prepareChartData({ stakingDetails, providers }) : [];
-  const { bNtotalLocked } = stakingDetails;
+  const { totalLocked } = stakingDetails;
+  const bNtotalLocked = new BigNumber(totalLocked);
 
   const config: ChartConfigType[] = [
     {

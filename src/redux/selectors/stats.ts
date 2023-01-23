@@ -7,6 +7,4 @@ const stateSelector = (state: RootState) => {
 
 export const statsSelector = createSelector(stateSelector, (state) => state);
 
-export const shardsSelector = createSelector(stateSelector, (state) => state.shards);
-
 export const refreshSelector = createSelector(stateSelector, (state) => state.refreshRate);

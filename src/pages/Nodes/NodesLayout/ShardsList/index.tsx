@@ -2,12 +2,15 @@ import * as React from 'react';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 
 import { METACHAIN_SHARD_ID } from 'appConstants';
-import { useGlobalState } from 'context';
+
 import { GlobalStakeType } from 'types';
 import { ShardType } from 'types';
 import { PageState } from 'components';
 
 import { ShardCard } from './ShardCard';
+
+import { useSelector } from 'react-redux';
+import { shardsSelector, globalStakeSelector } from 'redux/selectors';
 
 const StakingQueueCard = ({ globalStake }: { globalStake: GlobalStakeType | undefined }) => {
   return (
@@ -42,7 +45,8 @@ const sortShards = ({
 };
 
 export const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
-  const { shards, globalStake } = useGlobalState();
+  const shards = useSelector(shardsSelector);
+  const globalStake = useSelector(globalStakeSelector);
 
   const overallCard: ShardType = {
     shard: -1,

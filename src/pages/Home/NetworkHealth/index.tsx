@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useGlobalState } from 'context';
+
 import { useAdapter } from 'components';
 import { ReactComponent as Gear } from 'assets/img/network-health/gear.svg';
 import { ReactComponent as BigGear } from 'assets/img/network-health/big-gear.svg';
@@ -10,7 +10,7 @@ import { REFRESH_RATE } from 'appConstants';
 import { processStats, validDisplayValue } from 'helpers';
 
 import { useSelector } from 'react-redux';
-import { activeNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector, interfaceSelector } from 'redux/selectors';
 import { getInitialStatsState } from 'redux/slices/stats';
 
 import { StatsSliceType } from 'types/stats.types';
@@ -18,7 +18,7 @@ import { StatsSliceType } from 'types/stats.types';
 export const NetworkHealth = () => {
   const {
     refresh: { timestamp },
-  } = useGlobalState();
+  } = useSelector(interfaceSelector);
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const { getStats } = useAdapter();

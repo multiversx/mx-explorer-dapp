@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGlobalState } from 'context';
+
 import { ShardSpan, NetworkLink, TimeAgo, useAdapter, Trim, Loader, LatestItem } from 'components';
 import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/NoBlocks';
@@ -9,13 +9,13 @@ import { urlBuilder } from 'helpers';
 import { BlockType } from 'types';
 
 import { useSelector } from 'react-redux';
-import { activeNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector, interfaceSelector } from 'redux/selectors';
 
 export const LatestBlocks = () => {
   const ref = React.useRef(null);
   const {
     refresh: { timestamp },
-  } = useGlobalState();
+  } = useSelector(interfaceSelector);
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const { getLatestBlocks } = useAdapter();

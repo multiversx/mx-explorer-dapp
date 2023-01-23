@@ -1,6 +1,7 @@
 export const METACHAIN_SHARD_ID = 4294967295;
 export const ALL_SHARDS_SHARD_ID = 4294967280;
 
+export const TIMEOUT = 10000;
 export const REFRESH_RATE = 6000;
 export const PAGE_SIZE = 25;
 

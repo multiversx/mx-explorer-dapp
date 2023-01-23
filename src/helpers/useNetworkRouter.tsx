@@ -1,21 +1,24 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { useGlobalDispatch, useGlobalState } from 'context';
 
-import { useSelector } from 'react-redux';
-import { activeNetworkSelector } from 'redux/selectors';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  activeNetworkSelector,
+  defaultNetworkSelector,
+  activeThemeSelector,
+} from 'redux/selectors';
+import { setActiveTheme, changeNetwork as changeStateNetwork } from 'redux/slices';
 
+import { ThemesEnum } from 'types';
 import { networks } from 'config';
 
 export const useNetworkRouter = () => {
-  const {
-    defaultNetwork: { id: defaultNetworkId, theme: defaultNetworkTheme },
-    theme,
-  } = useGlobalState();
-
+  const theme = useSelector(activeThemeSelector);
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const defaultNetwork = useSelector(defaultNetworkSelector);
+  const { id: defaultNetworkId, theme: defaultNetworkTheme } = defaultNetwork;
 
-  const dispatch = useGlobalDispatch();
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
 
   const locationArray = pathname.substring(1).split('/');
@@ -28,27 +31,25 @@ export const useNetworkRouter = () => {
     if (allNetworkIds.includes(networkId) && activeNetworkId !== networkId) {
       // if route contains a network at the beginning replace the network
       setTimeout(() => {
-        const networkTheme = networks.find(({ id }) => id === networkId)?.theme;
-        if (networkTheme !== theme && theme !== 'dark') {
-          dispatch({
-            type: 'changeTheme',
-            theme: String(networkTheme),
-          });
+        const foundNetwork = networks.find(({ id }) => id === networkId);
+        const networkTheme = foundNetwork?.theme;
+        if (foundNetwork) {
+          if (networkTheme && networkTheme !== theme && theme !== ThemesEnum.default) {
+            dispatch(setActiveTheme(networkTheme as ThemesEnum));
+          }
+
+          dispatch(changeStateNetwork(foundNetwork));
         }
-        dispatch({ type: 'changeNetwork', networkId });
       });
     } else if (
       (allNetworkIds.includes(networkId) && defaultNetworkId === networkId) ||
       (networkId === '' && activeNetworkId !== '')
     ) {
       // if selected testnet is the same as the default, reset the default
-      if (defaultNetworkTheme !== theme && theme !== 'dark') {
-        dispatch({
-          type: 'changeTheme',
-          theme: String(defaultNetworkTheme),
-        });
+      if (defaultNetworkTheme && defaultNetworkTheme !== theme && theme !== ThemesEnum.default) {
+        dispatch(setActiveTheme(defaultNetworkTheme as ThemesEnum));
+        dispatch(changeStateNetwork(defaultNetwork));
       }
-      dispatch({ type: 'changeNetwork', networkId: '' });
     }
   }
 
