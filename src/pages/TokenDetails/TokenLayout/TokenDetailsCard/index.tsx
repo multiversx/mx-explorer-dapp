@@ -76,7 +76,7 @@ export const TokenDetailsCard = () => {
                   </h1>
                 </div>
               </div>
-              <div className="card-body p-0">
+              <div className="card-body">
                 <dl className="container-fluid">
                   <SmallDetailItem title="Token">{identifier}</SmallDetailItem>
 
@@ -127,7 +127,7 @@ export const TokenDetailsCard = () => {
                   <h6 data-testid="title">Summary</h6>
                 </div>
               </div>
-              <div className="card-body p-0">
+              <div className="card-body">
                 <dl className="container-fluid">
                   <SmallDetailItem title="Owner">
                     <div className="d-flex">

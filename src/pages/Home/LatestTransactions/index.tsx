@@ -101,7 +101,7 @@ export const LatestTransactions = () => {
                 </NetworkLink>
               </div>
             </div>
-            <div className="card-body p-0" data-testid="transactionsList">
+            <div className="card-body" data-testid="transactionsList">
               <div className="latest-items-container">
                 {transactions.map((transaction, i) => {
                   let receiver = transaction.receiver;

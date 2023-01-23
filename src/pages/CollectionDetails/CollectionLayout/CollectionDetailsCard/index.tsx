@@ -58,7 +58,7 @@ export const CollectionDetailsCard = () => {
                 <h6 data-testid="title">Collection Details</h6>
               </div>
             </div>
-            <div className="card-body p-0">
+            <div className="card-body">
               <div className="container-fluid">
                 <DetailItem title="Name">
                   <div className="d-flex align-items-center">

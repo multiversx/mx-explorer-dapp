@@ -97,7 +97,7 @@ export const NftDetails = () => {
                       <h6 data-testid="title">{nftText(nftDetails.type)} Details</h6>
                     </div>
                   </div>
-                  <div className="card-body p-0">
+                  <div className="card-body">
                     <div className="container-fluid">
                       <DetailItem title="Name">
                         {nftDetails.scamInfo

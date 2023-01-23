@@ -44,7 +44,7 @@ export const TransactionsTable = ({
           <MethodList />
         </div>
 
-        <div className="card-body p-0">
+        <div className="card-body">
           <div className="table-wrapper animated-list">
             <table className="table trim-size-sm" data-testid="transactionsTable">
               <Header

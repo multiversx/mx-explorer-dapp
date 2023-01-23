@@ -78,7 +78,7 @@ export const LatestBlocks = () => {
                 </NetworkLink>
               </div>
             </div>
-            <div className="card-body p-0" data-testid="blocksList">
+            <div className="card-body" data-testid="blocksList">
               <div className="latest-items-container">
                 {blocks.map((block, i) => (
                   <LatestItem

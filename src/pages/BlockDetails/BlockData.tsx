@@ -60,7 +60,7 @@ export const BlockData = (props: BlockDataType) => {
         </div>
       </div>
 
-      <div className="card-body p-0">
+      <div className="card-body">
         <div className="container-fluid">
           <DetailItem title="Block Height">
             <div className="d-flex justify-content-between align-items-center">

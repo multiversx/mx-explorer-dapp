@@ -46,7 +46,7 @@ export const AccountStaking = () => {
           <AccountTabs />
         </div>
       </div>
-      <div className="account-staking card-body p-0">
+      <div className="account-staking card-body">
         {isReady ? (
           <div className="row">
             {hasStaking ? (

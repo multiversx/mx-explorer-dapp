@@ -130,7 +130,7 @@ export const AccountDetailsCard = () => {
                   )}
                 </div>
               </div>
-              <div className="card-body p-0">
+              <div className="card-body">
                 <div className="container-fluid">
                   <SmallDetailItem title="Address">
                     <div className="d-flex align-items-center">
@@ -187,7 +187,7 @@ export const AccountDetailsCard = () => {
                   </span>
                 </div>
               </div>
-              <div className="card-body p-0">
+              <div className="card-body">
                 <div className="container-fluid">
                   <SmallDetailItem title="Shard">
                     {shard !== undefined ? (

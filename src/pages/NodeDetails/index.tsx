@@ -185,7 +185,7 @@ export const NodeDetails = () => {
                                   <h6 className="m-0">Latest Proposed Blocks</h6>
                                 </div>
                               </div>
-                              <div className="card-body p-0">
+                              <div className="card-body">
                                 <BlocksTable blocks={blocks.data} shard={undefined} />
                               </div>
                             </>

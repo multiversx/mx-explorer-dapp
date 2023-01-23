@@ -194,7 +194,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
           </div>
         </div>
 
-        <div className="card-body p-0">
+        <div className="card-body">
           <div className="container-fluid">
             <Tab.Content>
               <Tab.Pane eventKey="details">
