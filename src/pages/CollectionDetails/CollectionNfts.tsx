@@ -1,19 +1,20 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
-import { useGlobalState } from 'context';
+
 import { Loader, useAdapter, Pager, NetworkLink, Trim, PageState, NftBadge } from 'components';
 import { urlBuilder, useURLSearchParams, useGetFilters, nftText } from 'helpers';
 import { NftType } from 'types';
 import { CollectionTabs } from './CollectionLayout/CollectionTabs';
 
 import { useSelector } from 'react-redux';
-import { activeNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector, collectionSelector } from 'redux/selectors';
 
 export const CollectionNfts = () => {
   const ref = React.useRef(null);
-  const { collectionDetails } = useGlobalState();
+
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { type } = useSelector(collectionSelector);
   const { getNfts, getNftsCount } = useAdapter();
   const { page } = useURLSearchParams();
 
@@ -96,9 +97,7 @@ export const CollectionNfts = () => {
                                   <div>{nft.identifier}</div>
                                 </div>
                               </NetworkLink>
-                              {collectionDetails.type !== 'MetaESDT' && (
-                                <NftBadge type={nft.type} className="ml-2" />
-                              )}
+                              {type !== 'MetaESDT' && <NftBadge type={nft.type} className="ml-2" />}
                             </div>
                           </td>
                           <td>{nft.scamInfo ? `[Hidden - ${nft.scamInfo.info}]` : nft.name}</td>
@@ -137,7 +136,7 @@ export const CollectionNfts = () => {
               {dataReady === false && (
                 <PageState
                   icon={faUser}
-                  title={`Unable to load ${nftText(collectionDetails.type)}`}
+                  title={`Unable to load ${nftText(type)}`}
                   className="py-spacer my-auto"
                   dataTestId="errorScreen"
                 />
@@ -145,7 +144,7 @@ export const CollectionNfts = () => {
               {dataReady === true && collectionNfts.length === 0 && (
                 <PageState
                   icon={faUser}
-                  title={`No ${nftText(collectionDetails.type)}s`}
+                  title={`No ${nftText(type)}s`}
                   className="py-spacer my-auto"
                 />
               )}

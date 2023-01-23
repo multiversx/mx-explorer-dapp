@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { NetworkLink } from 'components';
 import { urlBuilder, useActiveRoute, isContract } from 'helpers';
-import { useGlobalState } from 'context';
 import { accountsRoutes } from 'routes';
 
 import { useSelector } from 'react-redux';
-import { activeNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
 export const AccountTabs = () => {
   const activeRoute = useActiveRoute();
-  const { accountDetails } = useGlobalState();
+
+  const { address, code } = useSelector(accountSelector);
   const { adapter } = useSelector(activeNetworkSelector);
 
   const tokensRouteActive = adapter === 'api';
@@ -17,7 +17,7 @@ export const AccountTabs = () => {
   return (
     <div className="account-tabs d-flex flex-row flex-wrap">
       <NetworkLink
-        to={urlBuilder.accountDetails(accountDetails.address)}
+        to={urlBuilder.accountDetails(address)}
         className={`tab-link mr-3 mr-lg-spacer ${
           activeRoute(accountsRoutes.accountDetails) ? 'active' : ''
         }`}
@@ -27,7 +27,7 @@ export const AccountTabs = () => {
 
       {tokensRouteActive && (
         <NetworkLink
-          to={urlBuilder.accountDetailsTokens(accountDetails.address)}
+          to={urlBuilder.accountDetailsTokens(address)}
           className={`tab-link mr-3 mr-lg-spacer ${
             activeRoute(accountsRoutes.accountTokens) ? 'active' : ''
           }`}
@@ -37,7 +37,7 @@ export const AccountTabs = () => {
       )}
 
       <NetworkLink
-        to={urlBuilder.accountDetailsNfts(accountDetails.address)}
+        to={urlBuilder.accountDetailsNfts(address)}
         className={`tab-link mr-3 mr-lg-spacer ${
           activeRoute(accountsRoutes.accountNfts) ? 'active' : ''
         }`}
@@ -45,9 +45,9 @@ export const AccountTabs = () => {
         <h6>NFTs</h6>
       </NetworkLink>
 
-      {!isContract(accountDetails.address) && (
+      {!isContract(address) && (
         <NetworkLink
-          to={urlBuilder.accountDetailsStaking(accountDetails.address)}
+          to={urlBuilder.accountDetailsStaking(address)}
           className={`tab-link mr-3 mr-lg-spacer ${
             activeRoute(accountsRoutes.accountStaking) ? 'active' : ''
           }`}
@@ -57,7 +57,7 @@ export const AccountTabs = () => {
       )}
 
       <NetworkLink
-        to={urlBuilder.accountDetailsAnalytics(accountDetails.address)}
+        to={urlBuilder.accountDetailsAnalytics(address)}
         className={`tab-link mr-3 mr-lg-spacer ${
           activeRoute(accountsRoutes.accountAnalytics) ? 'active' : ''
         }`}
@@ -65,9 +65,9 @@ export const AccountTabs = () => {
         <h6>Analytics</h6>
       </NetworkLink>
 
-      {!accountDetails.code && (
+      {!code && (
         <NetworkLink
-          to={urlBuilder.accountDetailsContracts(accountDetails.address)}
+          to={urlBuilder.accountDetailsContracts(address)}
           className={`tab-link mr-3 mr-lg-spacer ${
             activeRoute(accountsRoutes.accountContracts) ? 'active' : ''
           }`}
@@ -76,9 +76,9 @@ export const AccountTabs = () => {
         </NetworkLink>
       )}
 
-      {accountDetails.code && (
+      {code && (
         <NetworkLink
-          to={urlBuilder.accountDetailsContractCode(accountDetails.address)}
+          to={urlBuilder.accountDetailsContractCode(address)}
           className={`tab-link ${activeRoute(accountsRoutes.accountCode) ? 'active' : ''}`}
         >
           <h6>Code</h6>

@@ -1,13 +1,17 @@
 import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { useGlobalState } from 'context';
+
 import { useNotifications } from 'helpers';
+
+import { useSelector } from 'react-redux';
+import { interfaceSelector } from 'redux/selectors';
 
 export const useCheckVersion = () => {
   const {
     refresh: { timestamp },
-  } = useGlobalState();
+  } = useSelector(interfaceSelector);
+
   const refreshRate = 60 * 1000;
   const { addNotification } = useNotifications();
 

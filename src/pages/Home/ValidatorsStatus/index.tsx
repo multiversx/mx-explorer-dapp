@@ -1,9 +1,13 @@
 import * as React from 'react';
-import { useGlobalState } from 'context';
+
 import { SimpleMap } from './SimpleMap';
 import { getMarkers, MarkerType } from './helpers/asyncRequests';
 import { calcContinentRank, RankType } from './helpers/calcContinentRank';
 import { useAdapter } from 'components';
+import { TIMEOUT } from 'appConstants';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 const placeHolderRank = [
   {
@@ -35,16 +39,13 @@ export const ValidatorsStatus = () => {
   const [queuedNodes, setQueuedNodes] = React.useState<string | number>('...');
   const ref = React.useRef(null);
 
-  const {
-    timeout,
-    activeNetwork: { apiUrl },
-  } = useGlobalState();
+  const { apiAddress } = useSelector(activeNetworkSelector);
 
   const { getShards, getGlobalStake } = useAdapter();
 
   const fetchMarkers = () => {
     Promise.all([
-      getMarkers({ timeout, apiUrl: apiUrl || '' }),
+      getMarkers({ timeout: TIMEOUT, apiAddress: apiAddress || '' }),
       getShards(),
       getGlobalStake(),
     ]).then(([markersData, shardData, globalStake]) => {

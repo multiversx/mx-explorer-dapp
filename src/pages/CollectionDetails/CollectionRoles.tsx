@@ -1,15 +1,15 @@
 import * as React from 'react';
 
-import { useGlobalState } from 'context';
 import { Loader, NetworkLink, Trim, ScAddressIcon } from 'components';
 import { urlBuilder } from 'helpers';
 import { CollectionTabs } from './CollectionLayout/CollectionTabs';
 
+import { useSelector } from 'react-redux';
+import { collectionSelector } from 'redux/selectors';
+
 export const CollectionDetailsRoles = () => {
   const ref = React.useRef(null);
-  const {
-    collectionDetails: { roles },
-  } = useGlobalState();
+  const { roles } = useSelector(collectionSelector);
 
   return (
     <div ref={ref}>

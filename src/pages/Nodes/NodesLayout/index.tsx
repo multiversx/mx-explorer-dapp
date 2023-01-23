@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { useGlobalDispatch } from 'context';
 import { useAdapter, Loader } from 'components';
 import { NodesVersionsType } from 'types';
 import { GlobalStakeCard } from './GlobalStakeCard';
 import { ShardsList } from './ShardsList';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { activeNetworkSelector } from 'redux/selectors';
+import { setShards, setGlobalStake } from 'redux/slices';
 
 const prepareNodesVersions = (data: any) => {
   const versions: NodesVersionsType[] = [];
@@ -28,7 +28,7 @@ const prepareNodesVersions = (data: any) => {
 
 export const NodesLayout = ({ children }: { children: React.ReactNode }) => {
   const { getShards, getGlobalStake, getNodesVersions } = useAdapter();
-  const dispatch = useGlobalDispatch();
+  const dispatch = useDispatch();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const [dataReadyForNetwork, setDataReadyForNetwork] = React.useState<
@@ -55,21 +55,12 @@ export const NodesLayout = ({ children }: { children: React.ReactNode }) => {
               : {}),
           };
 
-          dispatch({
-            type: 'setGlobalStake',
-            globalStake: globalStake.success
-              ? {
-                  ...newGlobalStake,
-                  ...newNodesVersions,
-                }
-              : undefined,
-          });
+          if (globalStake.success && globalStake?.data) {
+            dispatch(setGlobalStake({ ...newGlobalStake, ...newNodesVersions }));
+          }
 
-          if (shards.success) {
-            dispatch({
-              type: 'setShards',
-              shards: shards.data,
-            });
+          if (shards.success && shards?.data) {
+            dispatch(setShards(shards.data));
             setDataReadyForNetwork(activeNetworkId);
           } else {
             setDataReadyForNetwork(false);

@@ -1,9 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ExplorerOriginType, ThemesEnum } from 'types';
+import { ExplorerOriginType, ThemesEnum, NotificationType, ShardType } from 'types';
+import { METACHAIN_SHARD_ID } from 'appConstants';
+import { sortShards } from 'helpers/sortShards';
 
 export type InterfaceSliceType = {
   activeTheme: ThemesEnum;
   explorerOrigin: ExplorerOriginType;
+  notifications: NotificationType[];
+  shards: ShardType[];
+  refresh: {
+    timestamp: number;
+  };
 };
 
 export function getInitialInterfaceState(): InterfaceSliceType {
@@ -20,6 +27,11 @@ export function getInitialInterfaceState(): InterfaceSliceType {
     explorerOrigin: {
       pathname: '/',
       search: '',
+    },
+    notifications: [],
+    shards: [],
+    refresh: {
+      timestamp: Date.now(),
     },
   };
 }
@@ -40,9 +52,33 @@ export const interfaceSlice = createSlice({
     ) => {
       state.explorerOrigin = action.payload;
     },
+    triggerRefresh: (state: InterfaceSliceType) => {
+      state.refresh = { timestamp: Date.now() };
+    },
+    setShards: (state: InterfaceSliceType, action: PayloadAction<InterfaceSliceType['shards']>) => {
+      state.shards = sortShards({ shards: action.payload, METACHAIN_SHARD_ID });
+    },
+    addNotification: (state: InterfaceSliceType, action: PayloadAction<NotificationType>) => {
+      const notification = action.payload;
+      const toastAlreadyExists = state.notifications.some((t) => t.id === notification.id);
+      if (!toastAlreadyExists) {
+        state.notifications.push(notification);
+      }
+    },
+    removeNotification: (state: InterfaceSliceType, action: PayloadAction<string>) => {
+      const removedNotificationId = action.payload;
+      state.notifications = state.notifications.filter((n) => n.id !== removedNotificationId);
+    },
   },
 });
 
-export const { setActiveTheme, setExplorerOrigin } = interfaceSlice.actions;
+export const {
+  setActiveTheme,
+  setExplorerOrigin,
+  triggerRefresh,
+  setShards,
+  addNotification,
+  removeNotification,
+} = interfaceSlice.actions;
 
 export const interfaceReducer = interfaceSlice.reducer;

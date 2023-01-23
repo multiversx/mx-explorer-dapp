@@ -1,5 +1,3 @@
-import BigNumber from 'bignumber.js';
-
 export enum NetworkIdType {
   mainnet = 'mainnet',
   testnet = 'testnet',
@@ -23,27 +21,6 @@ export interface AssetType {
   iconPng: string;
   iconSvg: string;
 }
-export interface AccountType {
-  address: string;
-  balance: string;
-  nonce: number;
-  txCount: number;
-  scrCount: number;
-  claimableRewards: string;
-  code?: string;
-  codeHash?: string;
-  shard?: number;
-  ownerAddress?: string;
-  developerReward?: string;
-  deployedAt?: number;
-  scamInfo?: ScamInfoType;
-  isUpgradeable?: boolean;
-  isReadable?: boolean;
-  isPayable?: boolean;
-  isPayableBySmartContract?: boolean;
-  assets?: AssetType;
-  username?: string;
-}
 
 export enum TokenSortEnum {
   price = 'price',
@@ -55,104 +32,6 @@ export enum TokenSortEnum {
 export interface RolesType {
   address: string;
   roles: string[];
-}
-
-export interface TokenRolesType extends RolesType {
-  canLocalMint: boolean;
-  canLocalBurn: boolean;
-}
-
-export interface CollectionRolesType extends RolesType {
-  canCreate: boolean;
-  canBurn: boolean;
-  canAddQuantity: boolean;
-  canUpdateAttributes: boolean;
-  canAddUri: boolean;
-  canTransfer: boolean;
-}
-
-export interface TokenLockedAccountType {
-  address: string;
-  name: string;
-  balance: string;
-}
-export interface TokenSupplyType {
-  supply: number;
-  circulatingSupply: number;
-  minted: number;
-  burnt: number;
-  initialMinted: number;
-  lockedAccounts?: TokenLockedAccountType[];
-}
-
-export interface TokenType {
-  identifier: string;
-  ticker?: string;
-  name: string;
-  balance?: string;
-  decimals?: number;
-  owner: string;
-  minted: string;
-  burnt: string;
-  supply: string | number;
-  circulatingSupply: string | number;
-  canBurn: boolean;
-  canChangeOwner: boolean;
-  canFreeze: boolean;
-  canMint: boolean;
-  canPause: boolean;
-  canUpgrade: boolean;
-  canWipe: boolean;
-  isPaused: boolean;
-  transactions: number;
-  accounts: number;
-  price?: number;
-  marketCap?: number;
-  valueUsd?: number;
-  assets?: {
-    website?: string;
-    description?: string;
-    status?: string;
-    pngUrl?: string;
-    svgUrl?: string;
-    social?: any;
-    extraTokens?: string[];
-    lockedAccounts?: { [key: string]: string };
-  };
-  roles?: TokenRolesType[];
-}
-
-export interface CollectionType {
-  collection: string;
-  type: NftEnumType;
-  name: string;
-  ticker: string;
-  timestamp: number;
-  owner: string;
-  canFreeze: boolean;
-  canWipe: boolean;
-  canPause: boolean;
-  canTransferNftCreateRole: boolean;
-  canChangeOwner: boolean;
-  canUpgrade: boolean;
-  canAddSpecialRoles: boolean;
-  decimals?: number;
-  assets?: {
-    website?: string;
-    description?: string;
-    status?: string;
-    pngUrl?: string;
-    svgUrl?: string;
-    social?: any;
-  };
-  scamInfo?: ScamInfoType;
-  roles?: CollectionRolesType[];
-  canTransfer?: boolean;
-  canCreate?: boolean;
-  canBurn?: boolean;
-  canAddQuantity?: boolean;
-  canUpdateAttributes?: boolean;
-  canAddUri?: boolean;
 }
 
 export enum NftEnumType {
@@ -529,33 +408,6 @@ export enum ExtraTxStatusEnum {
 
 export type TxStatusEnum = ApiTxStatusEnum | ExtraTxStatusEnum;
 
-export interface Undelegation {
-  amount: string;
-  seconds: number;
-}
-
-export interface DelegationType {
-  address: string;
-  contract: string;
-  userUnBondable: string;
-  userActiveStake: string;
-  claimableRewards: string;
-  userUndelegatedList?: Undelegation[];
-}
-export interface DelegationLegacyType {
-  userActiveStake?: string;
-  userDeferredPaymentStake?: string;
-  userUnstakedStake?: string;
-  userWaitingStake?: string;
-  userWithdrawOnlyStake?: string;
-  claimableRewards?: string;
-}
-
-export interface StakeType {
-  totalStaked?: string;
-  unstakedTokens?: { amount: string; expires?: number }[];
-}
-
 export interface IdentityType {
   name: string;
   score: number;
@@ -607,12 +459,6 @@ export interface ProviderType {
   totalUnBondedFromNodes?: string;
   maxDelegateAmountAllowed?: string;
   maxRedelegateAmountAllowed?: string;
-}
-
-export interface ShardType {
-  shard: number;
-  validators: number;
-  activeValidators: number;
 }
 
 export interface NodesVersionsType {
@@ -682,71 +528,4 @@ export interface BlockType {
   gasPenalized: number;
   maxGasLimit: number;
   proposerIdentity?: IdentityType;
-}
-
-// types from context/state
-export type NetworkLinkType = InferType<typeof networkLink>;
-
-export type AdapterType = InferType<typeof adapterSchema>;
-
-export interface ConfigType {
-  networks: NetworkType[];
-  links: NetworkLinkType[];
-  multiversXApps: NetworkLinkType[];
-}
-
-export interface GlobalStakeType {
-  queueSize: number;
-  waitingList?: number;
-  deliquentStake?: number;
-  nodesVerions?: NodesVersionsType[];
-}
-
-export interface NotificationType {
-  id: string;
-  text: React.ReactNode;
-  priority: number;
-  bgClassName: string;
-  dismissable: boolean;
-}
-
-export interface AccountStakingDetailsType {
-  stakingDataReady: boolean | undefined;
-  bNtotalStaked: BigNumber;
-  bNtotalDelegation: BigNumber;
-  bNtotalLegacyDelegation: BigNumber;
-  bNtotalLocked: BigNumber;
-  bNtotalClaimable: BigNumber;
-  stake?: StakeType;
-  showStake: boolean;
-  delegationLegacy?: DelegationLegacyType;
-  showDelegationLegacy: boolean;
-  delegation?: DelegationType[];
-  showDelegation: boolean;
-  providerDataReady: undefined | boolean;
-  delegationProviders: ProviderType[];
-  delegationLegacyIdentity: IdentityType | undefined;
-}
-
-export interface StateType {
-  config: ConfigType;
-  defaultNetwork: NetworkType;
-  activeNetwork: NetworkType;
-  activeNetworkId: string;
-  timeout: number; // axios
-  refresh: {
-    timestamp: number;
-  };
-  theme: string;
-  shards: ShardType[];
-  globalStake: GlobalStakeType | undefined;
-  accountDetails: AccountType;
-  accountStakingDetails: AccountStakingDetailsType;
-  tokenDetails: TokenType;
-  collectionDetails: CollectionType;
-  usd: number | undefined;
-  urlBlacklist?: { [key: string]: string };
-  notifications: NotificationType[];
-  economics: EconomicsType;
-  stats: StatsType;
 }

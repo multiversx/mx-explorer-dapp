@@ -12,21 +12,22 @@ import {
   NftBadge,
   NetworkLink,
 } from 'components';
-import { useGlobalState } from 'context';
+
 import { AccountTabs } from './AccountLayout/AccountTabs';
 import { urlBuilder, useGetFilters, useNetworkRoute } from 'helpers';
 import { NftType } from 'types';
 
 import { useSelector } from 'react-redux';
-import { activeNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
 export const AccountNfts = () => {
   const ref = React.useRef(null);
   const navigate = useNavigate();
-  const { accountDetails } = useGlobalState();
+
   const { size } = useGetFilters();
   const networkRoute = useNetworkRoute();
-  const { adapter } = useSelector(activeNetworkSelector);
+  const { adapter, id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { txCount } = useSelector(accountSelector);
 
   const { getAccountNfts, getAccountNftsCount } = useAdapter();
 
@@ -62,7 +63,7 @@ export const AccountNfts = () => {
   React.useEffect(() => {
     fetchAccountNfts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountDetails.txCount, activeNetwork.id, address, size]);
+  }, [txCount, activeNetworkId, address, size]);
 
   return !nftsActive ? (
     navigate(networkRoute(urlBuilder.accountDetails(address)))

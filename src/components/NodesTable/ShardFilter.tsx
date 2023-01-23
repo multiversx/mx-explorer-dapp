@@ -1,30 +1,31 @@
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGlobalDispatch, useGlobalState } from 'context';
+
 import { useNetworkPathname } from 'helpers';
 import * as React from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { ShardSpan, NetworkLink, useAdapter } from 'components';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { shardsSelector } from 'redux/selectors';
+import { setShards } from 'redux/slices/interface';
+
 export const ShardFilter = () => {
   const { search } = useLocation();
-  const dispatch = useGlobalDispatch();
+  const dispatch = useDispatch();
   const urlParams = new URLSearchParams(search);
   const { shard, page, ...rest } = Object.fromEntries(urlParams);
   const { getShards } = useAdapter();
-  const { shards } = useGlobalState();
+  const shards = useSelector(shardsSelector);
   const networkPathname = useNetworkPathname();
 
   const fetchShards = () => {
     if (shards.length === 0) {
       getShards().then((shards) => {
-        if (shards.success) {
-          dispatch({
-            type: 'setShards',
-            shards: shards.data,
-          });
+        if (shards.success && shards?.data) {
+          dispatch(setShards(shards.data));
         }
       });
     }

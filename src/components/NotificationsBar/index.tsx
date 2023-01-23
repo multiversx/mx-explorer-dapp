@@ -1,13 +1,16 @@
 import * as React from 'react';
-import { useGlobalState } from 'context';
+
 import { NotificationType } from 'types';
 import { useNotifications } from 'helpers';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { useSelector } from 'react-redux';
+import { interfaceSelector } from 'redux/selectors';
+
 export const NotificationsBar = () => {
-  const { notifications } = useGlobalState();
   const { removeNotification } = useNotifications();
+  const { notifications } = useSelector(interfaceSelector);
 
   const sortedByPriorityAsc = notifications
     .sort((a: any, b: any) => a.priority - b.priority)

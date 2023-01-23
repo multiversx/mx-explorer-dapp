@@ -17,7 +17,7 @@ import {
   SmallDetailItem,
   UsdValue,
 } from 'components';
-import { useGlobalState } from 'context';
+
 import { isContract, urlBuilder, dateFormatted, formatHerotag } from 'helpers';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 
@@ -25,14 +25,11 @@ import { LockedAmountCardItem } from './LockedAmountCardItem';
 import { AccountUsdValueCardItem } from './AccountUsdValueCardItem';
 
 import { useSelector } from 'react-redux';
-import { activeNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
 export const AccountDetailsCard = () => {
   const ref = React.useRef(null);
-  const { accountDetails } = useGlobalState();
 
-  const { id: activeNetworkId, adapter } = useSelector(activeNetworkSelector);
-  const { getProvider, getAccountTokensCount, getAccountNftsCount } = useAdapter();
   const {
     address,
     balance,
@@ -48,7 +45,11 @@ export const AccountDetailsCard = () => {
     isPayableBySmartContract,
     assets,
     username,
-  } = accountDetails;
+    txCount,
+  } = useSelector(accountSelector);
+  const { id: activeNetworkId, adapter } = useSelector(activeNetworkSelector);
+  const { getProvider, getAccountTokensCount, getAccountNftsCount } = useAdapter();
+
   const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
 
   const tokensActive = adapter === 'api';
@@ -94,7 +95,7 @@ export const AccountDetailsCard = () => {
   React.useEffect(() => {
     fetchAccountTokensCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountDetails.txCount, activeNetworkId, address]);
+  }, [txCount, activeNetworkId, address]);
 
   return address !== '' ? (
     <div ref={ref} className="row account-details-card mb-spacer">
@@ -121,7 +122,7 @@ export const AccountDetailsCard = () => {
                   </div>
                   {isProvider && (
                     <NetworkLink
-                      to={urlBuilder.providerDetails(accountDetails.address)}
+                      to={urlBuilder.providerDetails(address)}
                       className="btn btn-sm btn-primary-light"
                     >
                       Provider Details

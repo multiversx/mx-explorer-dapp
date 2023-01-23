@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAdapter, Loader, ScResultsTable } from 'components';
-import { useGlobalState } from 'context';
+
 import { AccountTabs } from './AccountLayout/AccountTabs';
 import { NoScResults } from 'components/ScResultsTable/NoScResults';
 import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
@@ -9,15 +9,16 @@ import { urlBuilder, useGetFilters, useNetworkRoute } from 'helpers';
 import { ScResultType } from 'types';
 
 import { useSelector } from 'react-redux';
-import { activeNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
 export const AccountScResults = () => {
   const ref = React.useRef(null);
   const navigate = useNavigate();
-  const { accountDetails } = useGlobalState();
+
   const { size } = useGetFilters();
   const networkRoute = useNetworkRoute();
-  const { adapter } = useSelector(activeNetworkSelector);
+  const { adapter, id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { txCount } = useSelector(accountSelector);
 
   const { getAccountScResults, getAccountScResultsCount } = useAdapter();
 
@@ -51,7 +52,7 @@ export const AccountScResults = () => {
   React.useEffect(() => {
     fetchAccountScResults();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountDetails.txCount, activeNetwork.id, address, size]);
+  }, [txCount, activeNetworkId, address, size]);
 
   return !scResultsActive ? (
     navigate(networkRoute(urlBuilder.accountDetails(address)))

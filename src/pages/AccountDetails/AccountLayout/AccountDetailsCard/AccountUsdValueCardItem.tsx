@@ -1,18 +1,18 @@
 import React from 'react';
 import { faDollarSign } from '@fortawesome/pro-solid-svg-icons/faDollarSign';
 import { CardItem, LockedAmountTooltip, UsdValue } from 'components';
-import { useGlobalState } from 'context';
 import BigNumber from 'bignumber.js';
 
+import { useSelector } from 'react-redux';
+import { accountSelector, accountStakingSelector } from 'redux/selectors';
+
 export const AccountUsdValueCardItem = ({ cardItemClass }: { cardItemClass: string }) => {
-  const {
-    accountDetails: { balance },
-    accountStakingDetails: { stakingDataReady, bNtotalLocked },
-  } = useGlobalState();
+  const { balance } = useSelector(accountSelector);
+  const { stakingDataReady, totalLocked } = useSelector(accountStakingSelector);
 
   let totalWorth = balance ? new BigNumber(balance) : new BigNumber(0);
   if (balance && stakingDataReady) {
-    totalWorth = totalWorth.plus(bNtotalLocked);
+    totalWorth = totalWorth.plus(new BigNumber(totalLocked));
   }
 
   return (
@@ -34,7 +34,7 @@ export const AccountUsdValueCardItem = ({ cardItemClass }: { cardItemClass: stri
               },
               {
                 label: 'Stake',
-                value: <UsdValue input={bNtotalLocked.toString(10)} />,
+                value: <UsdValue input={new BigNumber(totalLocked).toString(10)} />,
               },
             ]}
           />

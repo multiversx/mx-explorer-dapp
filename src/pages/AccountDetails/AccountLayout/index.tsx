@@ -3,7 +3,6 @@ import BigNumber from 'bignumber.js';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { LEGACY_DELEGATION_NODES_IDENTITY } from 'appConstants';
-import { useGlobalDispatch } from 'context';
 
 import { addressIsBech32, useNetworkRoute, useSize, useGetHash } from 'helpers';
 import { IdentityType, ProviderType, DelegationType } from 'types';
@@ -12,8 +11,9 @@ import { Loader, useAdapter } from 'components';
 import { AccountDetailsCard } from './AccountDetailsCard';
 import { FailedAccount } from './FailedAccount';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { activeNetworkSelector } from 'redux/selectors';
+import { setAccount } from 'redux/slices';
 
 export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
@@ -21,7 +21,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const { firstPageTicker } = useSize();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const dispatch = useGlobalDispatch();
+  const dispatch = useDispatch();
   const {
     getAccount,
     getAccountDelegationLegacy,
@@ -40,16 +40,9 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const fetchBalanceAndCount = () => {
     if (address) {
       getAccount(address).then((accountDetailsData) => {
-        const details = accountDetailsData.success ? accountDetailsData.data : {};
-
         if (ref.current !== null) {
-          if (accountDetailsData.success) {
-            dispatch({
-              type: 'setAccountDetails',
-              accountDetails: {
-                ...details,
-              },
-            });
+          if (accountDetailsData.success && accountDetailsData?.data) {
+            dispatch(setAccount(accountDetailsData.data));
             setDataReady(true);
           }
 

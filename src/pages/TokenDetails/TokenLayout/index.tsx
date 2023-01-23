@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { useGlobalDispatch } from 'context';
+
 import { Loader, useAdapter } from 'components';
 import { useSize, useGetHash } from 'helpers';
 import { FailedTokenDetails } from './FailedTokenDetails';
 import { TokenDetailsCard } from './TokenDetailsCard';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { activeNetworkSelector } from 'redux/selectors';
+import { setToken } from 'redux/slices';
 
 export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
@@ -14,7 +15,7 @@ export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const dispatch = useGlobalDispatch();
+  const dispatch = useDispatch();
   const { getToken } = useAdapter();
 
   const tokenId = useGetHash();
@@ -24,16 +25,9 @@ export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
   const fetchTokenDetails = () => {
     if (tokenId) {
       getToken(tokenId).then((tokenDetailsData) => {
-        const details = tokenDetailsData.success ? tokenDetailsData.data : {};
-
         if (ref.current !== null) {
-          if (tokenDetailsData.success) {
-            dispatch({
-              type: 'setTokenDetails',
-              tokenDetails: {
-                ...details,
-              },
-            });
+          if (tokenDetailsData.success && tokenDetailsData?.data) {
+            dispatch(setToken(tokenDetailsData.data));
             setDataReady(true);
           }
 

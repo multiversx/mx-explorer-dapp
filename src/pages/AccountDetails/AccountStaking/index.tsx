@@ -7,12 +7,13 @@ import { AccountLegacyDelegation } from './AccountLegacyDelegation';
 import { AccountStake } from './AccountStake';
 import { DonutChart } from './DonutChart';
 
-import { useGlobalState } from 'context';
 import { Loader, PageState } from 'components';
 
-export const AccountStaking = () => {
-  const { accountStakingDetails } = useGlobalState();
+import { useSelector } from 'react-redux';
+import { accountStakingSelector } from 'redux/selectors';
 
+export const AccountStaking = () => {
+  const stakingDetails = useSelector(accountStakingSelector);
   const {
     providerDataReady,
     stakingDataReady,
@@ -24,7 +25,7 @@ export const AccountStaking = () => {
     showDelegation,
     showDelegationLegacy,
     showStake,
-  } = accountStakingDetails;
+  } = stakingDetails;
 
   const displayDelegation = delegation
     ? delegation.filter(
@@ -92,10 +93,7 @@ export const AccountStaking = () => {
                     Staking Chart
                   </div>
                   <div className="staking-chart-holder">
-                    <DonutChart
-                      stakingDetails={accountStakingDetails}
-                      providers={delegationProviders}
-                    />
+                    <DonutChart stakingDetails={stakingDetails} providers={delegationProviders} />
                   </div>
                 </div>
               </>

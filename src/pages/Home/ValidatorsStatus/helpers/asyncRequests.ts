@@ -3,7 +3,7 @@ import { object, string, InferType, number } from 'yup';
 
 interface GetMarkersType {
   timeout: number;
-  apiUrl: string;
+  apiAddress: string;
 }
 
 const schema = object({
@@ -17,15 +17,12 @@ const schema = object({
 
 export type MarkerType = InferType<typeof schema>;
 
-export async function getMarkers({
-  timeout,
-  apiUrl,
-}: GetMarkersType): Promise<{
+export async function getMarkers({ timeout, apiAddress }: GetMarkersType): Promise<{
   data: MarkerType[];
   success: boolean;
 }> {
   try {
-    // const { data } = await axios.get(`${apiUrl}/markers`, { timeout });
+    // const { data } = await axios.get(`${apiAddress}/markers`, { timeout });
     const { data } = await axios.get(`***REMOVED***`, { timeout });
 
     schema.validate((data as any)[Object.keys(data)[0]], { strict: true }).catch(({ errors }) => {
