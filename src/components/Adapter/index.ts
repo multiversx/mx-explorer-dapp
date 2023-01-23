@@ -1,4 +1,4 @@
-import { pageSize } from 'appConfig';
+import { PAGE_SIZE } from 'appConstants';
 import { useAdapterConfig } from './useAdapterConfig';
 import {
   GetBlocksType,
@@ -117,8 +117,8 @@ export const useAdapter = () => {
         const { data: blocks, success } = await provider({
           url: `/blocks`,
           params: {
-            from: (size - 1) * pageSize,
-            size: pageSize,
+            from: (size - 1) * PAGE_SIZE,
+            size: PAGE_SIZE,
             ...(proposer ? { proposer } : {}),
             ...(withProposerIdentity ? { withProposerIdentity } : {}),
             ...getShardAndEpochParam(shard, epoch),
@@ -177,8 +177,8 @@ export const useAdapter = () => {
       provider({
         url: `/transactions`,
         params: {
-          from: (size - 1) * pageSize,
-          size: pageSize,
+          from: (size - 1) * PAGE_SIZE,
+          size: PAGE_SIZE,
           miniBlockHash,
           withUsername,
         },
@@ -191,8 +191,8 @@ export const useAdapter = () => {
       provider({
         url: `/sc-results`,
         params: {
-          from: (size - 1) * pageSize,
-          size: pageSize,
+          from: (size - 1) * PAGE_SIZE,
+          size: PAGE_SIZE,
           miniBlockHash,
         },
       }),
@@ -243,8 +243,8 @@ export const useAdapter = () => {
       provider({
         url: `/accounts/${address}/sc-results`,
         params: {
-          from: (size - 1) * pageSize,
-          size: pageSize,
+          from: (size - 1) * PAGE_SIZE,
+          size: PAGE_SIZE,
         },
       }),
 
@@ -255,8 +255,8 @@ export const useAdapter = () => {
       provider({
         url: `/accounts/${address}/contracts`,
         params: {
-          from: (size - 1) * pageSize,
-          size: pageSize,
+          from: (size - 1) * PAGE_SIZE,
+          size: PAGE_SIZE,
         },
       }),
 
@@ -277,8 +277,8 @@ export const useAdapter = () => {
       provider({
         url: `/sc-results`,
         params: {
-          from: (size - 1) * pageSize,
-          size: pageSize,
+          from: (size - 1) * PAGE_SIZE,
+          size: PAGE_SIZE,
         },
       }),
 
@@ -356,8 +356,8 @@ export const useAdapter = () => {
       provider({
         url: `/accounts`,
         params: {
-          from: (size - 1) * pageSize,
-          size: pageSize,
+          from: (size - 1) * PAGE_SIZE,
+          size: PAGE_SIZE,
         },
       }),
 
@@ -376,8 +376,8 @@ export const useAdapter = () => {
       provider({
         url: `/accounts/${address}/tokens`,
         params: {
-          from: (size - 1) * pageSize,
-          size: pageSize,
+          from: (size - 1) * PAGE_SIZE,
+          size: PAGE_SIZE,
         },
       }),
 

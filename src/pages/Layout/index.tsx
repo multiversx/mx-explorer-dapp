@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGlobalState } from 'context';
+
 import { Navbar } from './Navbar/index';
 import { Footer } from './Footer/index';
 import { Search, NotificationsBar } from 'components';
@@ -7,7 +7,7 @@ import { Unavailable } from './Unavailable';
 import { PageLayout } from './PageLayout';
 import { GlobalStatsCard } from './GlobalStatsCard';
 import { TestnetGlobalStatsCard } from './TestnetGlobalStatsCard';
-import { Routes, validatorsRoutes, searchRoutes } from 'routes';
+import { wrappedRoutes, validatorsRoutes, searchRoutes } from 'routes';
 import {
   useFetchStats,
   useFetchEconomics,
@@ -17,18 +17,20 @@ import {
   useIsMainnet,
   useCheckVersion,
 } from 'helpers';
+import { multiversxApps } from 'config';
+
+import { useSelector } from 'react-redux';
+import { activeThemeSelector } from 'redux/selectors';
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
-  const {
-    theme,
-    config: { multiversXApps },
-  } = useGlobalState();
+  const theme = useSelector(activeThemeSelector);
+
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
 
   const showGlobalStats = () => {
     let show = true;
-    const routeExists = Routes.some(({ path }) => activeRoute(path));
+    const routeExists = wrappedRoutes.some(({ path }) => activeRoute(path));
 
     switch (true) {
       case !routeExists:
@@ -64,40 +66,11 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
     if (process.env.NODE_ENV === 'development') {
       require('assets/sass/dark.scss');
     }
-    // temoporary always use the dark theme
-
-    // const stylesheet = document.getElementById('stylesheet');
-
-    // if (stylesheet) {
-    //   const href: string = (stylesheet as any).href;
-
-    //   if (process.env.NODE_ENV === 'development') {
-    //     (stylesheet as any).href = '';
-    //     switch (theme) {
-    //       case 'dark':
-    //         require('assets/sass/dark.scss');
-    //         break;
-    //       case 'testnet':
-    //         require('assets/sass/testnet.scss');
-    //         break;
-    //       default:
-    //         require('assets/sass/light.scss');
-    //         break;
-    //     }
-    //   } else {
-    //     const secondHrefPart = href.slice(href.lastIndexOf('/') + 1);
-    //     const currentTheme = secondHrefPart.slice(0, secondHrefPart.indexOf('.css'));
-
-    //     if (currentTheme !== theme) {
-    //       (stylesheet as any).href = href.replace(currentTheme, theme);
-    //     }
-    //   }
-    // }
   }, [theme]);
 
   const isHome = activeRoute('/');
 
-  const explorerApp = multiversXApps.find((app) => app.id === 'explorer');
+  const explorerApp = multiversxApps.find((app) => app.id === 'explorer');
   const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
 
   return (

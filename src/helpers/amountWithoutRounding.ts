@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { decimals as configDecimals } from 'appConfig';
+import { DIGITS } from 'config';
 import { stringIsFloat } from './stringIsFloat';
 
 export const amountWithoutRounding = (
@@ -15,7 +15,7 @@ export const amountWithoutRounding = (
     }
 
     let amountDecimals = amount.split('.')?.[1];
-    let displayDecimals = minNonZeroDecimals ?? configDecimals;
+    let displayDecimals = minNonZeroDecimals ?? DIGITS;
     if (amountDecimals) {
       for (let i = 0; i < amountDecimals.length; i++) {
         if (amountDecimals.charAt(i) === '0') {

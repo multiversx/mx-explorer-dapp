@@ -3,12 +3,16 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { faLock } from '@fortawesome/pro-regular-svg-icons/faLock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { useGlobalState } from 'context';
 import { addressIsBech32 } from 'helpers';
 
+import { useSelector } from 'react-redux';
+import { tokenSelector } from 'redux/selectors';
+
 export const LockedTokenAddressIcon = ({ address }: { address: string }) => {
-  const { tokenDetails } = useGlobalState();
-  const lockedAccounts = tokenDetails.assets?.lockedAccounts;
+  const { assets } = useSelector(tokenSelector);
+
+  const lockedAccounts = assets?.lockedAccounts;
+
   if (lockedAccounts) {
     const validLockedAccounts = Object.keys(lockedAccounts).filter((account, i) => {
       const validAddress = addressIsBech32(account)
@@ -19,7 +23,7 @@ export const LockedTokenAddressIcon = ({ address }: { address: string }) => {
 
       return validAddress === address;
     });
-    const lockedAccountName = tokenDetails.assets?.lockedAccounts?.[validLockedAccounts[0]];
+    const lockedAccountName = lockedAccounts?.[validLockedAccounts[0]];
 
     return lockedAccountName ? (
       <OverlayTrigger

@@ -6,7 +6,7 @@ import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { TxFiltersEnum, TransactionsTableType } from 'helpers/types';
+import { TxFiltersEnum, TransactionsTableType } from 'types';
 import { DateFilter } from 'components';
 
 export const AgeColumnFilters = ({

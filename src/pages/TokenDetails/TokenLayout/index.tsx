@@ -1,56 +1,53 @@
 import * as React from 'react';
-import { useRouteMatch } from 'react-router-dom';
-import { tokensRoutes } from 'routes';
-import { useGlobalDispatch, useGlobalState } from 'context';
+
 import { Loader, useAdapter } from 'components';
-import { useSize, useNetworkRoute } from 'helpers';
+import { useSize, useGetHash } from 'helpers';
 import { FailedTokenDetails } from './FailedTokenDetails';
 import { TokenDetailsCard } from './TokenDetailsCard';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+import { setToken } from 'redux/slices';
 
 export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { firstPageTicker } = useSize();
-  const { activeNetwork } = useGlobalState();
-  const dispatch = useGlobalDispatch();
-  const { getToken } = useAdapter();
-  const networkRoute = useNetworkRoute();
 
-  const match: any = useRouteMatch(networkRoute(tokensRoutes.tokenDetails));
-  const tokenId = match ? match.params.hash : undefined;
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+
+  const dispatch = useDispatch();
+  const { getToken } = useAdapter();
+
+  const tokenId = useGetHash();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchTokenDetails = () => {
-    getToken(tokenId).then((tokenDetailsData) => {
-      const details = tokenDetailsData.success ? tokenDetailsData.data : {};
+    if (tokenId) {
+      getToken(tokenId).then((tokenDetailsData) => {
+        if (ref.current !== null) {
+          if (tokenDetailsData.success && tokenDetailsData?.data) {
+            dispatch(setToken(tokenDetailsData.data));
+            setDataReady(true);
+          }
 
-      if (ref.current !== null) {
-        if (tokenDetailsData.success) {
-          dispatch({
-            type: 'setTokenDetails',
-            tokenDetails: {
-              ...details,
-            },
-          });
-          setDataReady(true);
+          if (dataReady === undefined) {
+            setDataReady(tokenDetailsData.success);
+          }
         }
-
-        if (dataReady === undefined) {
-          setDataReady(tokenDetailsData.success);
-        }
-      }
-    });
+      });
+    }
   };
 
   React.useEffect(() => {
     fetchTokenDetails();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetwork.id, tokenId]);
+  }, [firstPageTicker, activeNetworkId, tokenId]);
 
   React.useEffect(() => {
     setDataReady(undefined);
-  }, [tokenId, activeNetwork.id]);
+  }, [tokenId, activeNetworkId]);
 
   const loading = dataReady === undefined;
   const failed = dataReady === false;

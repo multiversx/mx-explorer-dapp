@@ -7,7 +7,7 @@ import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons/faSpinnerThir
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { capitalizeFirstLetter, getTransactionMessages } from 'helpers';
-import { UITransactionType, TransactionType } from 'helpers/types';
+import { UITransactionType, TransactionType } from 'types';
 import { useAdapter } from 'components';
 interface TransactionIconType {
   transaction: UITransactionType;

@@ -1,20 +1,24 @@
 import * as React from 'react';
 import { processStats } from 'helpers';
-import { useGlobalDispatch } from 'context';
 import { useAdapter } from 'components';
 
-export const useFetchStats = () => {
-  const dispatch = useGlobalDispatch();
+import { useDispatch } from 'react-redux';
+import { setStats } from 'redux/slices/stats';
 
+export const useFetchStats = () => {
+  const dispatch = useDispatch();
   const { getStats } = useAdapter();
 
   const fetchStats = () => {
     getStats().then((stats) => {
-      const newStats = processStats(stats);
-      dispatch({
-        type: 'setStats',
-        stats: newStats,
-      });
+      if (stats?.data && stats.success) {
+        const processedStats = processStats(stats.data);
+        dispatch(
+          setStats({
+            ...processedStats,
+          })
+        );
+      }
     });
   };
 

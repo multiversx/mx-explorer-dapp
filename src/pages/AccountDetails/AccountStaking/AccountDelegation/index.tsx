@@ -1,11 +1,13 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
 import { Denominate } from 'components';
-import { DelegationType, ProviderType } from 'helpers/types';
-import { useGlobalState } from 'context';
+import { DelegationType, ProviderType } from 'types';
 
 import { ProviderDetails } from './ProviderDetails';
 import { DetailsBlock } from 'pages/AccountDetails/AccountStaking/DetailsBlock';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export const AccountDelegation = ({
   delegation,
@@ -14,15 +16,13 @@ export const AccountDelegation = ({
   delegation: DelegationType;
   provider: ProviderType;
 }) => {
-  const {
-    activeNetwork: { erdLabel },
-  } = useGlobalState();
+  const { egldLabel } = useSelector(activeNetworkSelector);
 
   const { userActiveStake } = delegation;
   const claimableRewards = delegation.claimableRewards || '0';
 
   const undelegatedAmounts =
-    delegation?.userUndelegatedList?.length > 0
+    delegation?.userUndelegatedList && delegation.userUndelegatedList.length > 0
       ? delegation.userUndelegatedList.map(({ amount }) => amount)
       : [];
   const bNtotalUserUnStakedValue =
@@ -54,7 +54,7 @@ export const AccountDelegation = ({
 
       <DetailsBlock>
         <strong>
-          {claimableRewards ? <Denominate value={claimableRewards} /> : <>0 {erdLabel}</>}
+          {claimableRewards ? <Denominate value={claimableRewards} /> : <>0 {egldLabel}</>}
         </strong>
         <small>Rewards</small>
       </DetailsBlock>

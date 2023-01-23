@@ -12,7 +12,7 @@ import {
   ScAddressIcon,
 } from 'components';
 import { DecodeMethodType } from 'components/DataDecode';
-import { ResultType } from 'helpers/types';
+import { ResultType } from 'types';
 import { urlBuilder } from 'helpers';
 import { transactionsRoutes } from 'routes';
 import { decodePart } from './decodePart';

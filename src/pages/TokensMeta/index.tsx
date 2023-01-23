@@ -8,7 +8,7 @@ import { FailedTokens } from './FailedTokens';
 import { urlBuilder, useGetFilters, useURLSearchParams, useActiveRoute } from 'helpers';
 import { Filters } from './Filters';
 import { tokensRoutes } from 'routes';
-import { CollectionType } from 'helpers/types';
+import { CollectionType } from 'types';
 
 export const TokensMeta = () => {
   const ref = React.useRef(null);

@@ -1,10 +1,9 @@
 import React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
-import { useRouteMatch } from 'react-router-dom';
 
-import { types, useIsMainnet, useNetworkRoute } from 'helpers';
-import { IdentityType } from 'helpers/types';
-import { validatorsRoutes } from 'routes';
+import { types, useIsMainnet, useGetHash } from 'helpers';
+import { IdentityType } from 'types';
+
 import { useAdapter, Loader, PageState, SharedIdentity } from 'components';
 
 import { ProviderDetailsCard } from './ProviderDetailsCard';
@@ -20,9 +19,7 @@ const initialState = {
 
 export const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
-  const networkRoute = useNetworkRoute();
-  const match: any = useRouteMatch(networkRoute(validatorsRoutes.providerDetails));
-  const address = match ? match.params.hash : undefined;
+  const address = useGetHash();
 
   const { getProvider, getIdentity } = useAdapter();
   const isMainnet = useIsMainnet();
@@ -33,28 +30,30 @@ export const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   const [identity, setIdentity] = React.useState<ProviderLayoutType<IdentityType>>(initialState);
 
   const fetchData = () => {
-    getProvider({
-      address,
-    }).then((providerData) => {
-      if (ref.current !== null) {
-        if (providerData.success) {
-          if (providerData.data.identity) {
-            getIdentity(providerData.data.identity).then((identityData) => {
-              if (ref.current !== null) {
-                if (identityData.success) {
-                  setIdentity(identityData);
+    if (address) {
+      getProvider({
+        address,
+      }).then((providerData) => {
+        if (ref.current !== null) {
+          if (providerData.success) {
+            if (providerData.data.identity) {
+              getIdentity(providerData.data.identity).then((identityData) => {
+                if (ref.current !== null) {
+                  if (identityData.success) {
+                    setIdentity(identityData);
+                  }
+                  setProvider(providerData);
                 }
-                setProvider(providerData);
-              }
-            });
+              });
+            } else {
+              setProvider(providerData);
+            }
           } else {
             setProvider(providerData);
           }
-        } else {
-          setProvider(providerData);
         }
-      }
-    });
+      });
+    }
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

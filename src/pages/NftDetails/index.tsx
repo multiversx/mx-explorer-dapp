@@ -3,7 +3,7 @@ import { faClock, faTrophy } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams } from 'react-router-dom';
 import { urlBuilder, dateFormatted, useGetFilters, useURLSearchParams } from 'helpers';
-import { NftType, NftEnumType } from 'helpers/types';
+import { NftType, NftEnumType } from 'types';
 import {
   Loader,
   useAdapter,

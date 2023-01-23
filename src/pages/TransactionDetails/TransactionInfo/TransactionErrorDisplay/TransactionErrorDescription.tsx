@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons/faQuestionCircle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { TransactionType } from 'helpers/types';
+import { TransactionType } from 'types';
 import { Overlay } from 'components';
 
 enum ErrorDescriptionEnum {

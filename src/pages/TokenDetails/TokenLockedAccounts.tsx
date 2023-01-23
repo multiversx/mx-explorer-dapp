@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
-import { useGlobalState } from 'context';
+
 import {
   Loader,
   useAdapter,
@@ -12,14 +12,18 @@ import {
   Denominate,
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { TokenLockedAccountType } from 'helpers/types';
+import { TokenLockedAccountType } from 'types';
 import { TokenTabs } from './TokenLayout/TokenTabs';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 
 export const TokenDetailsLockedAccounts = () => {
   const ref = React.useRef(null);
-  const { activeNetworkId, tokenDetails } = useGlobalState();
+
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { decimals } = useSelector(tokenSelector);
   const { getTokenSupply } = useAdapter();
-  const { decimals } = tokenDetails;
 
   const { hash: tokenId } = useParams() as any;
 

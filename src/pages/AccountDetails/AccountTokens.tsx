@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
 import {
   useAdapter,
@@ -10,26 +10,28 @@ import {
   Denominate,
   NetworkLink,
 } from 'components';
-import { useGlobalState } from 'context';
+
 import { AccountTabs } from './AccountLayout/AccountTabs';
 import { urlBuilder, useGetFilters, useNetworkRoute, amountWithoutRounding } from 'helpers';
-import { TokenType, NftType } from 'helpers/types';
+import { TokenType, NftType } from 'types';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
 export const AccountTokens = () => {
   const ref = React.useRef(null);
-  const { activeNetwork, accountDetails } = useGlobalState();
+  const navigate = useNavigate();
+
+  const { adapter, id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { txCount } = useSelector(accountSelector);
   const { size } = useGetFilters();
   const networkRoute = useNetworkRoute();
 
-  const {
-    getAccountTokens,
-    getAccountTokensCount,
-    getAccountNfts,
-    getAccountNftsCount,
-  } = useAdapter();
+  const { getAccountTokens, getAccountTokensCount, getAccountNfts, getAccountNftsCount } =
+    useAdapter();
 
   const { hash: address } = useParams() as any;
-  const tokensActive = activeNetwork.adapter === 'api';
+  const tokensActive = adapter === 'api';
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [accountTokens, setAccountTokens] = React.useState<TokenType[]>([]);
@@ -81,10 +83,10 @@ export const AccountTokens = () => {
   React.useEffect(() => {
     fetchAccountTokens();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountDetails.txCount, activeNetwork.id, address, size]);
+  }, [txCount, activeNetworkId, address, size]);
 
   return !tokensActive ? (
-    <Redirect to={networkRoute(urlBuilder.accountDetails(address))} />
+    navigate(networkRoute(urlBuilder.accountDetails(address)))
   ) : (
     <div className="card" ref={ref}>
       <div className="card-header">

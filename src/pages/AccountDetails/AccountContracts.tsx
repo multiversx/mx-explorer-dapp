@@ -11,9 +11,12 @@ import {
   Trim,
   ShardSpan,
 } from 'components';
-import { useGlobalState } from 'context';
+
 import { AccountTabs } from './AccountLayout/AccountTabs';
 import { urlBuilder, useGetFilters, addressIsBech32 } from 'helpers';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
 export interface AccountSmartContractType {
   address: string;
@@ -23,7 +26,9 @@ export interface AccountSmartContractType {
 
 export const AccountContracts = () => {
   const ref = React.useRef(null);
-  const { activeNetwork, accountDetails } = useGlobalState();
+
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { txCount } = useSelector(accountSelector);
   const { size } = useGetFilters();
 
   const { getAccountContracts, getAccountContractsCount } = useAdapter();
@@ -55,7 +60,7 @@ export const AccountContracts = () => {
   React.useEffect(() => {
     fetchAccountContracts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountDetails.txCount, activeNetwork.id, address, size]);
+  }, [txCount, activeNetworkId, address, size]);
 
   return (
     <div className="card" ref={ref}>

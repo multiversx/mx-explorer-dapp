@@ -8,7 +8,7 @@ import { faFlagAlt } from '@fortawesome/pro-regular-svg-icons/faFlagAlt';
 import { faHistory } from '@fortawesome/pro-solid-svg-icons/faHistory';
 
 import { urlBuilder } from 'helpers';
-import { NodeType } from 'helpers/types';
+import { NodeType } from 'types';
 import {
   ShardSpan,
   NetworkLink,

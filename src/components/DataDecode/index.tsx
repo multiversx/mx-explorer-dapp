@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { Dropdown } from 'react-bootstrap';
 import { addressIsBech32, bech32, isUtf8 } from 'helpers';
-import { TransactionTokensType } from 'helpers/types';
-import { decodeLimit } from 'appConfig';
+import { TransactionTokensType } from 'types';
+import { MAX_DECODE_TX_DATA_LENGTH } from 'appConstants';
 
 export enum DecodeMethodType {
   raw = 'raw',
@@ -246,7 +246,7 @@ export const DataDecode = ({
             >
               Text
             </Dropdown.Item>
-            {value.length < decodeLimit && (
+            {value.length < MAX_DECODE_TX_DATA_LENGTH && (
               <>
                 <Dropdown.Item
                   eventKey={DecodeMethodType.decimal}

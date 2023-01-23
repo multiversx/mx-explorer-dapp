@@ -2,7 +2,7 @@ import * as React from 'react';
 import { TransactionRow } from './TransactionRow';
 import { MethodList } from './TransactionsFilters';
 import { Pager } from '../Pager';
-import { TransactionsTableType } from 'helpers/types';
+import { TransactionsTableType } from 'types';
 
 import { Header } from './Header';
 

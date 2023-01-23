@@ -4,7 +4,7 @@ import { useLocation, useParams } from 'react-router-dom';
 
 import { useAdapter, Loader, Pager, PageState, NodesTable } from 'components';
 import { useGetFilters } from 'helpers';
-import { NodeType } from 'helpers/types';
+import { NodeType } from 'types';
 import { ProviderTabs } from 'pages/ProviderDetails/ProviderLayout/ProviderTabs';
 
 export const ProviderDetails = () => {

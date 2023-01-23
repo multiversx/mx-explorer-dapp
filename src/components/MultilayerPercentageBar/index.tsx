@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Led, Trim } from 'components';
-import { NodesVersionsType } from 'helpers/types';
+import { NodesVersionsType } from 'types';
 
 export interface PercentageStepType extends NodesVersionsType {}
 

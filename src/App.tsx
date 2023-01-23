@@ -1,30 +1,34 @@
 import { useIsMainnet } from 'helpers';
 import React, { useMemo } from 'react';
-import { hot } from 'react-hot-loader/root';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 import { AxiosInterceptor } from 'components';
 import { Layout } from './pages/Layout';
 import { PageNotFound } from './pages/PageNotFound';
-import { GlobalProvider, useGlobalState } from './context';
-import { ConfigType, NetworkType } from './context/state';
-import { Routes as WrappedRoutes, validatorsRoutes } from './routes';
+import { NetworkType } from 'types';
+import { wrappedRoutes, validatorsRoutes } from 'routes';
 
-export const Routes = ({
+import { Provider, useSelector } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from 'redux/store';
+import { activeNetworkSelector } from 'redux/selectors';
+
+import { networks } from 'config';
+
+export const FilteredRoutes = ({
   routes,
 }: {
-  routes: { path: string; component: React.ComponentClass }[];
+  routes: { path: string; Component: React.ComponentClass }[];
 }) => {
-  const {
-    config: { networks },
-    activeNetwork,
-  } = useGlobalState();
+  const { id: activeNetworkId, adapter } = useSelector(activeNetworkSelector);
   const isMainnet = useIsMainnet();
 
   const restrictedRoutes = routes.filter(({ path }) => {
     if (
       (!isMainnet &&
         [validatorsRoutes.identities, validatorsRoutes.identityDetails].includes(path)) ||
-      (activeNetwork.adapter === 'elastic' && Object.values(validatorsRoutes).includes(path))
+      (adapter === 'elastic' && Object.values(validatorsRoutes).includes(path))
     ) {
       return false;
     }
@@ -33,62 +37,53 @@ export const Routes = ({
 
   return useMemo(
     () => (
-      <Switch>
+      <Routes>
         {networks.map((network: NetworkType, i: number) => {
           return restrictedRoutes.map((route, i) => {
             return (
               <Route
                 path={`/${network.id}${route.path}`}
                 key={network.id + route.path}
-                exact={true}
-                component={route.component}
+                element={<route.Component />}
               />
             );
           });
         })}
         <Route
-          path={`${activeNetwork.id}/:any`}
-          key={activeNetwork.id + '404'}
-          exact={true}
-          component={PageNotFound}
+          path={`${activeNetworkId}/:any`}
+          key={activeNetworkId + '404'}
+          element={<PageNotFound />}
         />
         ,
         {restrictedRoutes.map((route, i) => {
-          return (
-            <Route
-              path={route.path}
-              key={route.path + i}
-              component={route.component}
-              exact={true}
-            />
-          );
+          return <Route path={route.path} key={route.path + i} element={<route.Component />} />;
         })}
-        <Route component={PageNotFound} />
-      </Switch>
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [networks, activeNetwork.id]
+    [networks, activeNetworkId]
   );
 };
 
-export const ProviderApp = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
+export const ProviderApp = () => {
   return (
-    <GlobalProvider optionalConfig={optionalConfig}>
-      <AxiosInterceptor>
-        <Layout>
-          <Routes routes={WrappedRoutes} />
-        </Layout>
-      </AxiosInterceptor>
-    </GlobalProvider>
+    <Provider store={store}>
+      <PersistGate persistor={persistor} loading={null}>
+        <AxiosInterceptor>
+          <Layout>
+            <FilteredRoutes routes={wrappedRoutes} />
+          </Layout>
+        </AxiosInterceptor>
+      </PersistGate>
+    </Provider>
   );
 };
 
-const RoutedApp = () => {
+export const App = () => {
   return (
-    <Router>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <ProviderApp />
-    </Router>
+    </BrowserRouter>
   );
 };
-
-export const App = hot(RoutedApp);

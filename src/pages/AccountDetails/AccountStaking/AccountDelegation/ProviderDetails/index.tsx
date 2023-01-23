@@ -5,7 +5,7 @@ import { faExternalLink, faLeaf, faReceipt, faInfinity } from '@fortawesome/pro-
 import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { ProviderType } from 'helpers/types';
+import { ProviderType } from 'types';
 import { getPercentage, stringIsFloat } from 'helpers';
 import { Trim, PercentageLed } from 'components';
 import { ProviderImage } from './ProviderImage';

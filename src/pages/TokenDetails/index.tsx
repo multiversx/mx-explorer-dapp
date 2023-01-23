@@ -1,18 +1,17 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { useGlobalState } from 'context';
+
 import { Loader, TransactionsTable, useAdapter } from 'components';
 
 import { txStatus } from 'components/TransactionStatus/txStatus';
 import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { useSize, useURLSearchParams } from 'helpers';
-import {
-  UITransactionType,
-  TransactionsResponseType,
-  TransactionsCountResponseType,
-} from 'helpers/types';
+import { UITransactionType, TransactionsResponseType, TransactionsCountResponseType } from 'types';
 import { TokenTabs } from './TokenLayout/TokenTabs';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 
 export const TokenDetails = () => {
   const ref = React.useRef(null);
@@ -30,10 +29,11 @@ export const TokenDetails = () => {
     miniBlockHash,
     search,
   } = useURLSearchParams();
-  const { activeNetworkId, tokenDetails } = useGlobalState();
+
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { hash: tokenId } = useParams() as any;
 
-  const { transactions: transactionsCount } = tokenDetails;
+  const { transactions: transactionsCount } = useSelector(tokenSelector);
 
   const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
   const [tokenTransactionsCount, setTokenTransactionsCount] = React.useState<number | '...'>('...');

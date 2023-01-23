@@ -5,7 +5,7 @@ import { faDiamond } from '@fortawesome/pro-regular-svg-icons/faDiamond';
 
 import { NetworkLink, Denominate, Sort } from 'components';
 import { urlBuilder, amountWithoutRounding, useGetFilters } from 'helpers';
-import { TokenType, TokenSortEnum, SortOrderEnum } from 'helpers/types';
+import { TokenType, TokenSortEnum, SortOrderEnum } from 'types';
 import { EgldRow } from './EgldRow';
 
 export const TokensTable = ({

@@ -1,4 +1,4 @@
-import { NftType, NftEnumType } from 'helpers/types';
+import { NftType, NftEnumType } from 'types';
 
 export const nftText = (type: NftType['type']) => {
   switch (type) {

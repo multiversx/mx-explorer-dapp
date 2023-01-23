@@ -4,7 +4,7 @@ import { faSync } from '@fortawesome/pro-regular-svg-icons/faSync';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { nodeIssue } from 'helpers';
-import { NodeType } from 'helpers/types';
+import { NodeType } from 'types';
 import { Overlay } from 'components';
 
 export const getIcon = (node: NodeType) => {

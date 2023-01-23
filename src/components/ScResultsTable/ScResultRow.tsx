@@ -1,6 +1,6 @@
 import React from 'react';
 import { addressIsBech32, urlBuilder } from 'helpers';
-import { ScResultType } from 'helpers/types';
+import { ScResultType } from 'types';
 import { ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim, Denominate } from 'components';
 
 export interface ScResultRowType {

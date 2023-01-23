@@ -1,21 +1,21 @@
 import React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 
-import { useGlobalState } from 'context';
 import { useAdapter, ProvidersTable, Loader, PageState } from 'components';
 import { NodesTabs } from 'pages/Nodes/NodesLayout/NodesTabs';
-import { types } from 'helpers';
-import { IdentityType } from 'helpers/types';
+
+import { IdentityType, ProviderType } from 'types';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export const Providers = () => {
   const ref = React.useRef(null);
   const { getProviders, getIdentities } = useAdapter();
-  const {
-    activeNetwork: { id },
-  } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [providers, setProviders] = React.useState<types.ProviderType[]>([]);
+  const [providers, setProviders] = React.useState<ProviderType[]>([]);
 
   const fetchProviders = () => {
     setDataReady(undefined);
@@ -73,7 +73,7 @@ export const Providers = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchProviders, [id]);
+  React.useEffect(fetchProviders, [activeNetworkId]);
 
   return (
     <div className="card" ref={ref}>

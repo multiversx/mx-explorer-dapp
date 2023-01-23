@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faCheck, faTimes } from '@fortawesome/pro-solid-svg-icons';
 
 import { CardItem } from 'components';
-import { NodeType } from 'helpers/types';
+import { NodeType } from 'types';
 
 export const ValidatorDetails = ({ nodeData }: { nodeData: NodeType }) => {
   const {

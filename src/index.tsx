@@ -1,18 +1,20 @@
-import React from 'react';
-import { StateInspector } from 'reinspect';
-import ReactDOM from 'react-dom';
-import { App } from './App';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { App } from "./App";
 
-let MountedApp = <App />;
+import "./index.css";
 
-if (process.env.NODE_ENV === 'development') {
-  const whyDidYouRender = require('@welldone-software/why-did-you-render/dist/no-classes-transpile/umd/whyDidYouRender.min.js');
-  whyDidYouRender(React);
-  MountedApp = (
-    <StateInspector name="App">
-      <App />
-    </StateInspector>
-  );
+if (
+  process.env.NODE_ENV === "development" &&
+  process.env.REACT_APP_MSW === "true"
+) {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // const { worker } = require('./__mocks__/server');
+  // worker.start({
+  //   onUnhandledRequest: 'bypass'
+  // });
 }
 
-ReactDOM.render(MountedApp, document.getElementById('root'));
+const container: any = document.getElementById("root");
+const root = createRoot(container);
+root.render(<App />);

@@ -1,56 +1,51 @@
 import * as React from 'react';
-import { useRouteMatch } from 'react-router-dom';
-import { collectionRoutes } from 'routes';
-import { useGlobalDispatch, useGlobalState } from 'context';
+
 import { Loader, useAdapter } from 'components';
-import { useSize, useNetworkRoute } from 'helpers';
+import { useSize, useGetHash } from 'helpers';
 import { FailedCollectionDetails } from './FailedCollectionDetails';
 import { CollectionDetailsCard } from './CollectionDetailsCard';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+import { setCollection } from 'redux/slices';
 
 export const CollectionLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { firstPageTicker } = useSize();
-  const { activeNetwork } = useGlobalState();
-  const dispatch = useGlobalDispatch();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const dispatch = useDispatch();
   const { getCollection } = useAdapter();
-  const networkRoute = useNetworkRoute();
 
-  const match: any = useRouteMatch(networkRoute(collectionRoutes.collectionDetails));
-  const collection = match ? match.params.hash : undefined;
+  const collection = useGetHash();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchCollectionDetails = () => {
-    getCollection(collection).then((collectionDetailsData) => {
-      const details = collectionDetailsData.success ? collectionDetailsData.data : {};
+    if (collection) {
+      getCollection(collection).then((collectionDetailsData) => {
+        if (ref.current !== null) {
+          if (collectionDetailsData.success && collectionDetailsData?.data) {
+            dispatch(setCollection(collectionDetailsData.data));
+            setDataReady(true);
+          }
 
-      if (ref.current !== null) {
-        if (collectionDetailsData.success) {
-          dispatch({
-            type: 'setCollectionDetails',
-            collectionDetails: {
-              ...details,
-            },
-          });
-          setDataReady(true);
+          if (dataReady === undefined) {
+            setDataReady(collectionDetailsData.success);
+          }
         }
-
-        if (dataReady === undefined) {
-          setDataReady(collectionDetailsData.success);
-        }
-      }
-    });
+      });
+    }
   };
 
   React.useEffect(() => {
     fetchCollectionDetails();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetwork.id, collection]);
+  }, [firstPageTicker, activeNetworkId, collection]);
 
   React.useEffect(() => {
     setDataReady(undefined);
-  }, [collection, activeNetwork.id]);
+  }, [collection, activeNetworkId]);
 
   const loading = dataReady === undefined;
   const failed = dataReady === false;

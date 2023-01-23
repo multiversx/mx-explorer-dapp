@@ -1,9 +1,12 @@
 import React from 'react';
-import { useGlobalState } from 'context';
+
 import { AccountTabs } from './AccountLayout/AccountTabs';
-import { Redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { urlBuilder, useNetworkRoute } from 'helpers';
 import { downloadFile } from 'helpers';
+
+import { useSelector } from 'react-redux';
+import { accountSelector } from 'redux/selectors';
 
 export const DownloadContractCode = ({ code, fileName }: { code: string; fileName?: string }) => {
   const download = (e: React.MouseEvent) => {
@@ -26,15 +29,17 @@ export const DownloadContractCode = ({ code, fileName }: { code: string; fileNam
 };
 
 export const AccountContractCode = () => {
-  const { accountDetails } = useGlobalState();
+  const navigate = useNavigate();
+
   const networkRoute = useNetworkRoute();
 
-  const codeHash = accountDetails?.codeHash ?? '';
-  const codeHashBase64Buffer = Buffer.from(String(codeHash), 'base64');
+  const { codeHash, code, address } = useSelector(accountSelector);
+
+  const codeHashBase64Buffer = Buffer.from(String(codeHash ?? ''), 'base64');
   const codeHashHexValue = codeHashBase64Buffer.toString('hex');
 
-  return !accountDetails.code ? (
-    <Redirect to={networkRoute(urlBuilder.accountDetails(accountDetails.address))} />
+  return !code ? (
+    navigate(networkRoute(urlBuilder.accountDetails(address)))
   ) : (
     <div className="card">
       <div className="card-header">
@@ -49,13 +54,8 @@ export const AccountContractCode = () => {
         </div>
       )}
       <div className="card-body px-lg-spacer py-lg-4">
-        <textarea
-          readOnly
-          className="form-control col cursor-text"
-          rows={10}
-          defaultValue={accountDetails.code}
-        />
-        <DownloadContractCode code={accountDetails.code} fileName={accountDetails.address} />
+        <textarea readOnly className="form-control col cursor-text" rows={10} defaultValue={code} />
+        <DownloadContractCode code={code} fileName={address} />
       </div>
     </div>
   );

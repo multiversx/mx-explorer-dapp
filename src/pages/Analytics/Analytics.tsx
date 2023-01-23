@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useIsMainnet } from 'helpers';
 import { Loader, useAdapter } from 'components';
 
@@ -7,7 +7,8 @@ import { FailedAnalytics } from './FailedAnalytics';
 import { NoAnalytics } from './NoAnalytics';
 import { AnalyticsChart } from './AnalyticsChart';
 
-import { useGlobalState } from 'context';
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export interface ChartListType {
   id: string;
@@ -16,9 +17,10 @@ export interface ChartListType {
 
 export const Analytics = () => {
   const ref = useRef(null);
+  const navigate = useNavigate();
   const isMainnet = useIsMainnet();
 
-  const { activeNetworkId } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getAnalyticsChartList } = useAdapter();
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -41,7 +43,7 @@ export const Analytics = () => {
   useEffect(getData, [activeNetworkId]);
 
   if (!isMainnet) {
-    return <Redirect to="/" />;
+    navigate('/');
   }
 
   return (

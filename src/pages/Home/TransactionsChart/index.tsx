@@ -6,11 +6,14 @@ import { Chart, Loader, PageState, useAdapter } from 'components';
 import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
 import { formatDataCharts } from 'components/Chart/helpers/formatDataCharts';
 
-import { useGlobalState } from 'context';
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector, statsSelector } from 'redux/selectors';
 
 export const TransactionsChart = () => {
-  const { activeNetworkId, stats } = useGlobalState();
   const { getTransactionsHistory } = useAdapter();
+
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { statsFetched, transactions } = useSelector(statsSelector);
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
@@ -39,8 +42,7 @@ export const TransactionsChart = () => {
     },
   ];
 
-  const totalTransactions =
-    stats.transactions !== '...' ? new BigNumber(stats.transactions).toFormat(0) : '...';
+  const totalTransactions = statsFetched ? new BigNumber(transactions).toFormat(0) : '...';
   const transactionsToday =
     chartData.length > 0 ? new BigNumber(chartData[chartData.length - 1].value).toFormat(0) : '...';
   const metrics = [

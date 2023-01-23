@@ -2,10 +2,12 @@ import React from 'react';
 import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
 import { faWifiSlash } from '@fortawesome/pro-regular-svg-icons/faWifiSlash';
 import { PageState } from 'components';
-import { useGlobalState } from 'context';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export const Unavailable = () => {
-  const { activeNetwork } = useGlobalState();
+  const { name, default: defaultNetwork } = useSelector(activeNetworkSelector);
 
   let icon = faBan;
   let title;
@@ -15,9 +17,9 @@ export const Unavailable = () => {
       icon = faWifiSlash;
       break;
     default:
-      title = activeNetwork.default
+      title = defaultNetwork
         ? 'There was an internal website error. Please try again later.'
-        : `${activeNetwork.name} network unavialable.`;
+        : `${name} network unavialable.`;
 
       break;
   }

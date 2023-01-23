@@ -1,5 +1,11 @@
-import { useGlobalState, useGlobalDispatch } from 'context';
-import { NotificationType } from 'context/state';
+import { NotificationType } from 'types/interface.types';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { interfaceSelector } from 'redux/selectors';
+import {
+  addNotification as addStateNotification,
+  removeNotification as removeStateNotification,
+} from 'redux/slices/interface';
 
 interface AddNotificationType {
   id: NotificationType['id'];
@@ -10,8 +16,8 @@ interface AddNotificationType {
 }
 
 export const useNotifications = () => {
-  const dispatch = useGlobalDispatch();
-  const { notifications } = useGlobalState();
+  const dispatch = useDispatch();
+  const { notifications } = useSelector(interfaceSelector);
 
   const addNotification = ({
     id,
@@ -23,24 +29,20 @@ export const useNotifications = () => {
     const exists = notifications.find((item) => item.id === id);
 
     if (!exists) {
-      dispatch({
-        type: 'addNotification',
-        notification: {
+      dispatch(
+        addStateNotification({
           id,
           text,
           bgClassName,
           priority,
           dismissable,
-        },
-      });
+        })
+      );
     }
   };
 
   const removeNotification = (id: string) => {
-    dispatch({
-      type: 'removeNotification',
-      id,
-    });
+    dispatch(removeStateNotification(id));
   };
 
   return { addNotification, removeNotification };

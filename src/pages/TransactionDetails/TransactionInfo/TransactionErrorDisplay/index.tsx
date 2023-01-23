@@ -3,7 +3,7 @@ import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { faInfoCircle } from '@fortawesome/pro-regular-svg-icons/faInfoCircle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getTransactionMessages, capitalizeFirstLetter } from 'helpers';
-import { TransactionType } from 'helpers/types';
+import { TransactionType } from 'types';
 import { NetworkLink, Overlay } from 'components';
 import { decodeForDisplay, DecodeMethodType } from 'components/DataDecode';
 import { transactionsRoutes } from 'routes';

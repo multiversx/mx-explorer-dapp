@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { urlBuilder } from 'helpers';
-import { NodeType } from 'helpers/types';
+import { NodeType } from 'types';
 import { ShardSpan, NetworkLink, Trim, Led, Overlay, Denominate } from 'components';
 import { RowIcon } from 'components/NodesTable/RowIcon';
 import { RowIssueIcon } from 'components/NodesTable/RowIssueIcon';

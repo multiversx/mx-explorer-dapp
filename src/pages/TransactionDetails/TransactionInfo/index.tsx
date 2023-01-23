@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Tab, Nav } from 'react-bootstrap';
-import { useRouteMatch } from 'react-router-dom';
+import { useMatch } from 'react-router-dom';
 import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
@@ -21,7 +21,7 @@ import {
   TxActionCategoryEnum,
   VisibleTransactionOperationType,
   ResultType,
-} from 'helpers/types';
+} from 'types';
 import {
   Denominate,
   ScAddressIcon,
@@ -42,12 +42,14 @@ import { EventsList } from '../EventsList';
 import { OperationsList } from '../OperationsList';
 import { ScResultsList } from '../ScResultsList';
 import { denominate } from 'components/Denominate/denominate';
-import { denomination, decimals } from 'appConfig';
-import { useGlobalState } from 'context';
+import { DECIMALS, DIGITS } from 'config';
 import { transactionsRoutes } from 'routes';
 import { DataField } from './DataField';
 import { NonceMessage } from './NonceMessage';
 import { TransactionErrorDisplay } from './TransactionErrorDisplay';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export const getFee = (transaction: TransactionType) => {
   const bNgasPrice = new BigNumber(transaction.gasPrice);
@@ -99,13 +101,13 @@ export const ScrDetailItem = ({ result }: { result: ResultType }) => (
 
 export const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
   const ref = React.useRef(null);
-  const {
-    activeNetwork: { erdLabel },
-  } = useGlobalState();
+
+  const { egldLabel } = useSelector(activeNetworkSelector);
 
   const networkRoute = useNetworkRoute();
-  const match: any = useRouteMatch(networkRoute(transactionsRoutes.transactionDetails));
-  const activeSection = match?.params.tab ? match.params.tab : 'details';
+  const match: any = useMatch(networkRoute(transactionsRoutes.transactionDetailsLogs));
+
+  const activeSection = match ? 'logs' : 'details';
   const [activeKey, setActiveKey] = React.useState(activeSection);
 
   const isTxPending =
@@ -117,22 +119,22 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
       ? 'N/A'
       : denominate({
           input: transaction.fee ? transaction.fee : getFee(transaction),
-          denomination,
-          decimals,
+          denomination: DECIMALS,
+          decimals: DIGITS,
           showLastNonZeroDecimal: true,
         });
 
   const formattedTxValue = denominate({
     input: transaction.value,
-    denomination,
-    decimals,
+    denomination: DECIMALS,
+    decimals: DIGITS,
     showLastNonZeroDecimal: true,
   });
 
   const txValue = denominate({
     input: transaction.value,
-    denomination,
-    decimals,
+    denomination: DECIMALS,
+    decimals: DIGITS,
     addCommas: false,
     showLastNonZeroDecimal: true,
   });
@@ -324,10 +326,18 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                 </DetailItem>
 
                 <DetailItem title="Value">
-                  {formattedTxValue} {erdLabel}{' '}
+                  {formattedTxValue} {egldLabel}{' '}
                   <span className="text-secondary">
                     {transaction.price !== undefined ? (
-                      <>({formatUSD({ amount: txValue, usd: transaction.price, digits: 2 })})</>
+                      <>
+                        (
+                        {formatUSD({
+                          amount: txValue,
+                          usd: transaction.price,
+                          digits: 2,
+                        })}
+                        )
+                      </>
                     ) : (
                       <>N/A</>
                     )}
@@ -363,7 +373,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                 <DetailItem title="Transaction Fee">
                   {transaction.gasUsed !== undefined ? (
                     <>
-                      {transactionFee} {erdLabel}{' '}
+                      {transactionFee} {egldLabel}{' '}
                       <span className="text-secondary">
                         {transaction.price !== undefined ? (
                           <>
@@ -385,7 +395,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                   )}
                 </DetailItem>
 
-                <DetailItem title={`${erdLabel} Price`}>
+                <DetailItem title={`${egldLabel} Price`}>
                   {transaction.price !== undefined ? (
                     <>{`$${new BigNumber(transaction.price).toFormat(2)}`}</>
                   ) : (

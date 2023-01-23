@@ -2,7 +2,7 @@ import React from 'react';
 import BigNumber from 'bignumber.js';
 import { Denominate, NetworkLink, NftBadge } from 'components';
 import { urlBuilder } from 'helpers';
-import { NftEnumType, TokenArgumentType } from 'helpers/types';
+import { NftEnumType, TokenArgumentType } from 'types';
 
 export const TxActionNft = ({
   token,

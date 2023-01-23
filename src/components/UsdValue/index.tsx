@@ -1,8 +1,10 @@
 import React from 'react';
 import { denominate } from 'components/Denominate/denominate';
-import { denomination, decimals } from 'appConfig';
+import { DECIMALS, DIGITS } from 'config';
 import { stringIsInteger, usdValue } from 'helpers';
-import { useGlobalState } from 'context';
+
+import { useSelector } from 'react-redux';
+import { economicsSelector } from 'redux/selectors';
 
 export const UsdValue = ({
   input,
@@ -15,20 +17,20 @@ export const UsdValue = ({
   dataTestId?: string;
   showPrefix?: boolean;
 }) => {
-  const { usd } = useGlobalState();
+  const { economicsFetched, price } = useSelector(economicsSelector);
   return (
     <span className={className} data-testid={dataTestId}>
-      {!stringIsInteger(input) || !usd
+      {!stringIsInteger(input) || !economicsFetched
         ? '...'
         : usdValue({
             amount: denominate({
               input,
-              denomination,
-              decimals,
+              denomination: DECIMALS,
+              decimals: DIGITS,
               showLastNonZeroDecimal: true,
               addCommas: false,
             }),
-            usd,
+            usd: price,
             showPrefix,
           })}
     </span>

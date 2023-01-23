@@ -6,11 +6,14 @@ import { Chart, Loader, PageState, useAdapter } from 'components';
 import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
 import { formatDataCharts } from 'components/Chart/helpers/formatDataCharts';
 
-import { useGlobalState } from 'context';
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
 
 export const StakingChart = () => {
-  const { activeNetworkId, economics } = useGlobalState();
   const { getTotalStakedHistory } = useAdapter();
+
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { economicsFetched, totalStakedPercent, staked } = useSelector(economicsSelector);
 
   const [usersStaking, setUsersStaking] = React.useState('...');
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -37,8 +40,8 @@ export const StakingChart = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(getData, [activeNetworkId]);
 
-  const percentage = economics.totalStakedPercent;
-  const total = economics.staked;
+  const percentage = economicsFetched ? `${new BigNumber(totalStakedPercent).toFormat(2)}%` : '...';
+  const total = economicsFetched ? new BigNumber(staked).toFormat() : '...';
   const users = usersStaking !== '...' ? new BigNumber(usersStaking).toFormat(0) : '...';
 
   const config: ChartConfigType[] = [

@@ -1,6 +1,5 @@
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGlobalState } from 'context';
 import { addressIsBech32, urlBuilder, getReceiverAssets } from 'helpers';
 import { getStatusIconAndColor } from 'components/TransactionStatus';
 import * as React from 'react';
@@ -20,14 +19,18 @@ import { FailedTransactions } from 'components/TransactionsTable/FailedTransacti
 import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
 import { TransactionValue } from 'components/TransactionsTable/TransactionValue';
 
-import { UITransactionType } from 'helpers/types';
+import { UITransactionType } from 'types';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector, interfaceSelector } from 'redux/selectors';
 
 export const LatestTransactions = () => {
   const ref = React.useRef(null);
   const {
-    activeNetworkId,
     refresh: { timestamp },
-  } = useGlobalState();
+  } = useSelector(interfaceSelector);
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+
   const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const { getLatestTransactions } = useAdapter();
