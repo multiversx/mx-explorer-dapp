@@ -102,7 +102,7 @@ export const IdentityDetails = () => {
                           </div>
                         </div>
 
-                        <div className="card-body p-0">
+                        <div className="card-body">
                           {providers && (
                             <ProvidersTable providers={providers} showIdentity={false} />
                           )}
@@ -128,7 +128,7 @@ export const IdentityDetails = () => {
                     </div>
                   </div>
 
-                  <div className="card-body p-0">
+                  <div className="card-body">
                     <NodesTable>
                       <NodesTable.Body nodes={nodes} />
                     </NodesTable>

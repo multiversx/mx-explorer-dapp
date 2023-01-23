@@ -66,7 +66,7 @@ export const NodesStatistics = () => {
 
       {dataReady === true && (
         <>
-          <div className="card-body p-0">
+          <div className="card-body">
             <NodesTable statistics>
               <NodesTable.Body nodes={nodes} statistics />
             </NodesTable>

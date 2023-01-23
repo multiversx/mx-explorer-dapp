@@ -51,7 +51,7 @@ export const Identities = () => {
         />
       )}
       {dataReady === true && (
-        <div className="card-body p-0">
+        <div className="card-body">
           <div className="table-wrapper">
             <table className="table">
               <thead>

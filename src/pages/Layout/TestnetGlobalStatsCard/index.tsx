@@ -23,7 +23,7 @@ export const TestnetGlobalStatsCard = () => {
       <div className="row">
         <div className="col">
           <div className="card d-flex flex-column flex-lg-row flex-wrap py-4 px-3 px-lg-spacer">
-            <div className="card-body p-0 d-flex flex-column flex-lg-row">
+            <div className="card-body d-flex flex-column flex-lg-row">
               <div className="d-flex align-items-center justify-content-center">
                 <EpochGear showTime />
               </div>

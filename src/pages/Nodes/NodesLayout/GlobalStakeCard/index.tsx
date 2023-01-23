@@ -36,7 +36,7 @@ export const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => 
     <div className="row global-stake-card">
       <div className="col mb-spacer">
         <div className="card d-flex flex-column flex-lg-row flex-wrap py-3 px-2 px-lg-4">
-          <div className="card-body p-0 d-flex flex-column flex-lg-row">
+          <div className="card-body d-flex flex-column flex-lg-row">
             <div className="card-item-container w-100">
               <CardItem className="n3 lg" title="Active Stake" icon={faLock}>
                 <div className="d-flex flex-column w-100">
