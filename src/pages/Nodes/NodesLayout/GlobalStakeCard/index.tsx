@@ -7,14 +7,15 @@ import { useGlobalState } from 'context';
 import { CardItem, MultilayerPercentageBar, PageState } from 'components';
 
 import { useSelector } from 'react-redux';
-import { activeNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
 
 export const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
-  const { economics, globalStake } = useGlobalState();
+  const { globalStake } = useGlobalState();
   const { egldLabel } = useSelector(activeNetworkSelector);
+  const { economicsFetched, baseApr, staked } = useSelector(economicsSelector);
 
-  const baseApr = economics.baseApr
-    ? `Up to ${new BigNumber(economics.baseApr).times(100).toFormat(2)}%`
+  const displayBaseApr = economicsFetched
+    ? `Up to ${new BigNumber(baseApr).times(100).toFormat(2)}%`
     : 'N/A';
 
   return stakeFetched === false ? (
@@ -40,12 +41,12 @@ export const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => 
               <CardItem className="n3 lg" title="Active Stake" icon={faLock}>
                 <div className="d-flex flex-column w-100">
                   <h5 className="m-0 pb-1">
-                    {economics.staked ? (
+                    {economicsFetched ? (
                       <>
-                        {economics.staked} {egldLabel}
+                        {new BigNumber(staked).toFormat(0)} {egldLabel}
                       </>
                     ) : (
-                      'N/A'
+                      '...'
                     )}
                   </h5>
                 </div>
@@ -53,13 +54,7 @@ export const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => 
 
               <CardItem className="n3 lg" title="Staking APR" icon={faLeaf}>
                 <div className="d-flex flex-column w-100">
-                  <h5 className="m-0 pb-1">
-                    {economics.baseApr !== '...' ? baseApr : economics.baseApr}
-                  </h5>
-                  {/* <small>
-                    {globalStake && globalStake.waitingList ? `${globalStake.waitingList}% ` : 'N/A '}
-                    <span className="text-secondary">for waiting list</span>
-                  </small> */}
+                  <h5 className="m-0 pb-1">{economicsFetched ? displayBaseApr : '...'}</h5>
                 </div>
               </CardItem>
 

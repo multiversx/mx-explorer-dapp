@@ -1,14 +1,18 @@
-import { useIsMainnet } from "helpers";
-import React, { useMemo } from "react";
+import { useIsMainnet } from 'helpers';
+import React, { useMemo } from 'react';
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { AxiosInterceptor } from "components";
-import { Layout } from "./pages/Layout";
-import { PageNotFound } from "./pages/PageNotFound";
-import { GlobalProvider, useGlobalState } from "./context";
-import { ConfigType, NetworkType } from "./context/state";
-import { wrappedRoutes, validatorsRoutes } from "routes";
+import { AxiosInterceptor } from 'components';
+import { Layout } from './pages/Layout';
+import { PageNotFound } from './pages/PageNotFound';
+import { GlobalProvider, useGlobalState } from './context';
+import { ConfigType, NetworkType } from 'types';
+import { wrappedRoutes, validatorsRoutes } from 'routes';
+
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from 'redux/store';
 
 export const FilteredRoutes = ({
   routes,
@@ -24,12 +28,8 @@ export const FilteredRoutes = ({
   const restrictedRoutes = routes.filter(({ path }) => {
     if (
       (!isMainnet &&
-        [
-          validatorsRoutes.identities,
-          validatorsRoutes.identityDetails,
-        ].includes(path)) ||
-      (activeNetwork.adapter === "elastic" &&
-        Object.values(validatorsRoutes).includes(path))
+        [validatorsRoutes.identities, validatorsRoutes.identityDetails].includes(path)) ||
+      (activeNetwork.adapter === 'elastic' && Object.values(validatorsRoutes).includes(path))
     ) {
       return false;
     }
@@ -52,18 +52,12 @@ export const FilteredRoutes = ({
         })}
         <Route
           path={`${activeNetwork.id}/:any`}
-          key={activeNetwork.id + "404"}
+          key={activeNetwork.id + '404'}
           element={<PageNotFound />}
         />
         ,
         {restrictedRoutes.map((route, i) => {
-          return (
-            <Route
-              path={route.path}
-              key={route.path + i}
-              element={<route.Component />}
-            />
-          );
+          return <Route path={route.path} key={route.path + i} element={<route.Component />} />;
         })}
         <Route path="*" element={<PageNotFound />} />
       </Routes>
@@ -73,19 +67,19 @@ export const FilteredRoutes = ({
   );
 };
 
-export const ProviderApp = ({
-  optionalConfig,
-}: {
-  optionalConfig?: ConfigType;
-}) => {
+export const ProviderApp = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
   return (
-    <GlobalProvider optionalConfig={optionalConfig}>
-      <AxiosInterceptor>
-        <Layout>
-          <FilteredRoutes routes={wrappedRoutes} />
-        </Layout>
-      </AxiosInterceptor>
-    </GlobalProvider>
+    <Provider store={store}>
+      <PersistGate persistor={persistor} loading={null}>
+        <GlobalProvider optionalConfig={optionalConfig}>
+          <AxiosInterceptor>
+            <Layout>
+              <FilteredRoutes routes={wrappedRoutes} />
+            </Layout>
+          </AxiosInterceptor>
+        </GlobalProvider>
+      </PersistGate>
+    </Provider>
   );
 };
 

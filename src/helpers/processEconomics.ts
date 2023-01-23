@@ -1,46 +1,19 @@
 import BigNumber from 'bignumber.js';
+import { EconomicsType } from 'types/economics.types';
 
-export const initialEconomics = {
-  economicsFetched: false,
-  totalSupply: '...',
-  circulatingSupply: '...',
-  staked: '...',
-  price: '...',
-  marketCap: '...',
-  apr: '...',
-  topUpApr: '...',
-  baseApr: '...',
-  tokenMarketCap: '...',
-  totalStakedPercent: '...',
-  ecosystemMarketCap: '...',
-};
-
-export const processEconomics = (statsData: any) => {
-  const { data, success } = statsData;
+export const processEconomics = (data: EconomicsType) => {
   const totalStakedPercent = new BigNumber(data.staked)
     .dividedBy(new BigNumber(data.circulatingSupply))
     .times(100)
-    .toFixed(0);
+    .toNumber();
   const ecosystemMarketCap = new BigNumber(data.marketCap)
     .plus(new BigNumber(data.tokenMarketCap ? data.tokenMarketCap : 0))
-    .toFormat(0);
+    .toNumber();
 
-  const newEconomics = success
-    ? {
-        economicsFetched: true,
-        totalSupply: new BigNumber(data.totalSupply).toFormat(),
-        circulatingSupply: new BigNumber(data.circulatingSupply).toFormat(),
-        staked: new BigNumber(data.staked).toFormat(),
-        price: data.price,
-        marketCap: data.marketCap,
-        apr: data.apr,
-        topUpApr: data.topUpApr,
-        baseApr: data.baseApr,
-        tokenMarketCap: `$${new BigNumber(data.tokenMarketCap).toFormat(0)}`,
-        totalStakedPercent: `${totalStakedPercent}%`,
-        ecosystemMarketCap: `$${ecosystemMarketCap}`,
-      }
-    : initialEconomics;
-
-  return newEconomics;
+  return {
+    ...data,
+    economicsFetched: true,
+    totalStakedPercent,
+    ecosystemMarketCap,
+  };
 };
