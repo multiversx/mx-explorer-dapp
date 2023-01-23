@@ -1,4 +1,5 @@
-import { allApps, NetworkType, schema } from './sharedConfig';
+import { NetworkType } from 'types/network.types';
+import { allApps, schema } from './sharedConfig';
 import { links as sharedLinks } from './sharedConfig';
 export * from './sharedConfig';
 
