@@ -28,23 +28,9 @@ const interfacePersisted = {
   blacklist: [],
 };
 
-const economicsPersisted = {
-  key: 'economics',
-  storage,
-  blacklist: [],
-};
-
-const statsPersisted = {
-  key: 'stats',
-  storage,
-  blacklist: [],
-};
-
 export const customIgnoredSlices = {
   networks: persistReducer(networkPersisted, networkReducer),
   interface: persistReducer(interfacePersisted, interfaceReducer),
-  economics: persistReducer(economicsPersisted, economicsReducer),
-  stats: persistReducer(statsPersisted, statsReducer),
 };
 
 export const ignoredSliceNames: string[] = [
@@ -78,6 +64,8 @@ const ignoredSlices = Object.keys(asyncIgnoredSlices).reduce((acc, entry) => {
 export const rootReducer = combineReducers({
   ...ignoredSlices,
   ...customIgnoredSlices,
+  economics: economicsReducer,
+  stats: statsReducer,
   account: accountReducer,
   accountStaking: accountStakingReducer,
   collection: collectionReducer,
