@@ -8,26 +8,26 @@ import { ReactComponent as LayoutGear } from 'assets/img/network-health/layout-g
 import { ProgressRing } from './ProgressRing';
 import { REFRESH_RATE } from 'appConstants';
 import { processStats, validDisplayValue } from 'helpers';
-import { initialStats } from 'helpers/processStats';
 
-export interface StateType {
-  shards: string;
-  blocks: string;
-  accounts: string;
-  transactions: string;
-}
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+import { getInitialStatsState } from 'redux/slices/stats';
+
+import { StatsSliceType } from 'types/stats.types';
 
 export const NetworkHealth = () => {
   const {
-    activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+
   const { getStats } = useAdapter();
 
   const ref = React.useRef(null);
   const pageHidden = document.hidden;
+  const initialStats = getInitialStatsState();
 
-  const [stateBuffer, setStateBuffer] = React.useState<typeof initialStats | undefined>();
+  const [stateBuffer, setStateBuffer] = React.useState<StatsSliceType | undefined>();
   const [state, setState] = React.useState(initialStats);
 
   const [oldTestnetId, setOldTestnetId] = React.useState(activeNetworkId);
@@ -35,7 +35,7 @@ export const NetworkHealth = () => {
     setOldTestnetId(activeNetworkId);
   }, [activeNetworkId]);
 
-  const initStates = (stats: typeof initialStats) => {
+  const initStates = (stats: StatsSliceType) => {
     setState(stats);
     setStateBuffer(stats);
     blockTimeInterval();
@@ -43,16 +43,17 @@ export const NetworkHealth = () => {
 
   const getData = () => {
     getStats().then((statsData) => {
-      const { success } = statsData;
-      const newStats = processStats(statsData);
-      const sameTestnet = oldTestnetId === activeNetworkId;
+      if (statsData.success && statsData?.data) {
+        const newStats = processStats(statsData.data);
+        const sameTestnet = oldTestnetId === activeNetworkId;
 
-      if (ref.current !== null && success) {
-        if (stateBuffer === undefined || !sameTestnet) {
-          // fresh page load or active testnet changed
-          initStates(newStats);
-        } else if (sameTestnet) {
-          setStateBuffer(newStats);
+        if (ref.current !== null) {
+          if (stateBuffer === undefined || !sameTestnet) {
+            // fresh page load or active testnet changed
+            initStates(newStats);
+          } else if (sameTestnet) {
+            setStateBuffer(newStats);
+          }
         }
       }
     });

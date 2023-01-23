@@ -2,20 +2,18 @@ import * as React from 'react';
 import { ReactComponent as CenterGear } from 'assets/img/network-health/center-gear.svg';
 import { ReactComponent as EpochGearBg } from 'assets/img/epoch-gear-bg.svg';
 import { ProgressRing } from '../../Home/NetworkHealth/ProgressRing';
-import { initialStats } from 'helpers/processStats';
 import moment from 'moment';
 
-export const EpochGear = ({
-  stats,
-  showTime,
-}: {
-  stats: typeof initialStats;
-  showTime?: boolean;
-}) => {
+import { useSelector } from 'react-redux';
+import { statsSelector } from 'redux/selectors';
+
+export const EpochGear = ({ showTime }: { showTime?: boolean }) => {
   const ref = React.useRef(null);
   const pageHidden = document.hidden;
   const play = !pageHidden;
   const refreshIntervalSec = 6;
+
+  const { epoch, statsFetched, roundsPerEpoch, roundsPassed } = useSelector(statsSelector);
 
   const [nextEpoch, setNextEpoch] = React.useState<any>();
   const [epochDurationSec, setEpochDurationSec] = React.useState(0);
@@ -29,15 +27,14 @@ export const EpochGear = ({
   const [resetCount, setResetCount] = React.useState(0);
 
   const init = () => {
-    if (stats.epoch) {
-      const secondsUntilNextEpoch =
-        refreshIntervalSec * (stats.roundsPerEpoch - stats.roundsPassed);
+    if (statsFetched) {
+      const secondsUntilNextEpoch = refreshIntervalSec * (roundsPerEpoch - roundsPassed);
       const nextEpochDate: any = moment().utc().add(secondsUntilNextEpoch, 'seconds');
 
       if (ref.current !== null) {
         setNextEpoch(nextEpochDate);
-        setEpochDurationSec(refreshIntervalSec * stats.roundsPerEpoch);
-        setRoundsLeft(stats.roundsPerEpoch - stats.roundsPassed);
+        setEpochDurationSec(refreshIntervalSec * roundsPerEpoch);
+        setRoundsLeft(roundsPerEpoch - roundsPassed);
       }
     }
   };
@@ -52,7 +49,7 @@ export const EpochGear = ({
     }
   };
 
-  React.useEffect(init, [stats]);
+  React.useEffect(init, [statsFetched, roundsPerEpoch, roundsPassed]);
 
   const calculate = () => {
     const now: any = moment();
@@ -65,7 +62,7 @@ export const EpochGear = ({
 
     if (ref.current !== null) {
       if (percentRemaining <= 0) {
-        hardReset(stats.roundsPerEpoch);
+        hardReset(roundsPerEpoch);
       } else {
         setHours(hours);
         setMinutes(minutes);
@@ -90,7 +87,7 @@ export const EpochGear = ({
   React.useEffect(mount, [nextEpoch]);
 
   const timeLabel = nextEpoch ? `${hours}h ${minutes}m ${seconds}s` : '...';
-  const epochLabel = nextEpoch ? `Epoch ${(stats.epoch + resetCount).toLocaleString('en')}` : '...';
+  const epochLabel = nextEpoch ? `Epoch ${(epoch + resetCount).toLocaleString('en')}` : '...';
 
   return (
     <div className="ml-lg-2 mr-lg-4 pr-lg-3 mb-4 mb-lg-0" ref={ref}>

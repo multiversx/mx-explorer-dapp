@@ -6,12 +6,12 @@ import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { useGlobalState } from 'context';
 import { CardItem, MultilayerPercentageBar, PageState } from 'components';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => {
-  const {
-    economics,
-    globalStake,
-    activeNetwork: { erdLabel },
-  } = useGlobalState();
+  const { economics, globalStake } = useGlobalState();
+  const { egldLabel } = useSelector(activeNetworkSelector);
 
   const baseApr = economics.baseApr
     ? `Up to ${new BigNumber(economics.baseApr).times(100).toFormat(2)}%`
@@ -42,7 +42,7 @@ export const GlobalStakeCard = ({ stakeFetched }: { stakeFetched: boolean }) => 
                   <h5 className="m-0 pb-1">
                     {economics.staked ? (
                       <>
-                        {economics.staked} {erdLabel}
+                        {economics.staked} {egldLabel}
                       </>
                     ) : (
                       'N/A'
