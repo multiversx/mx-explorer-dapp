@@ -1,15 +1,18 @@
-import { useGlobalState } from 'context';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { networks } from 'config';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 const NetworkReady: React.FC = ({ children }) => {
-  const globalState = useGlobalState();
-  const { activeNetworkId } = useGlobalState();
   const { pathname } = useLocation();
 
-  const locationArray = pathname.substr(1).split('/');
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+
+  const locationArray = pathname.substring(1).split('/');
   const networkId = locationArray[0];
-  const allNetworkIds = globalState.config.networks.map((testnet) => testnet.id);
+  const allNetworkIds = networks.map((testnet) => testnet.id);
 
   const [networkReady, setNetworkReady] = React.useState(false);
 

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useGlobalState } from 'context';
 import { Loader, TransactionsTable, useAdapter } from 'components';
 
 import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
@@ -8,9 +7,12 @@ import { useSize, useURLSearchParams } from 'helpers';
 import { UITransactionType } from 'types';
 import { shardSpanText } from 'components/ShardSpan';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const Transactions = () => {
   const ref = React.useRef(null);
-  const { activeNetworkId } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const {
     senderShard,

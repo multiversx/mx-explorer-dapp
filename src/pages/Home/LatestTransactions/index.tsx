@@ -22,12 +22,15 @@ import { TransactionValue } from 'components/TransactionsTable/TransactionValue'
 
 import { UITransactionType } from 'types';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const LatestTransactions = () => {
   const ref = React.useRef(null);
   const {
-    activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
   const [transactionsFetched, setTransactionsFetched] = React.useState<boolean | undefined>();
   const { getLatestTransactions } = useAdapter();

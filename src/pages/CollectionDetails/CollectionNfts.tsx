@@ -7,9 +7,13 @@ import { urlBuilder, useURLSearchParams, useGetFilters, nftText } from 'helpers'
 import { NftType } from 'types';
 import { CollectionTabs } from './CollectionLayout/CollectionTabs';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const CollectionNfts = () => {
   const ref = React.useRef(null);
-  const { activeNetworkId, collectionDetails } = useGlobalState();
+  const { collectionDetails } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getNfts, getNftsCount } = useAdapter();
   const { page } = useURLSearchParams();
 

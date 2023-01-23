@@ -5,22 +5,22 @@ import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { useAdapter, Loader, Pager, PageState, ProvidersTable } from 'components';
 import { useParams } from 'react-router-dom';
 import { NodesTable, SharedIdentity } from 'components';
-import { useGetFilters, types } from 'helpers';
-import { IdentityType, NodeType } from 'types';
-import { useGlobalState } from 'context';
+import { useGetFilters } from 'helpers';
+import { IdentityType, NodeType, ProviderType } from 'types';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export const IdentityDetails = () => {
   const ref = React.useRef(null);
   const { hash: id } = useParams() as any;
   const { getIdentity, getNodes, getNodesCount, getProviders } = useAdapter();
   const { getQueryObject, size } = useGetFilters();
-  const {
-    activeNetwork: { walletAddress },
-  } = useGlobalState();
+  const { walletAddress } = useSelector(activeNetworkSelector);
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
   const [identity, setIdentity] = React.useState<IdentityType>();
-  const [providers, setProviders] = React.useState<types.ProviderType[]>();
+  const [providers, setProviders] = React.useState<ProviderType[]>();
   const [providersFetched, setProvidersFetched] = React.useState<boolean | undefined>(undefined);
   const [nodes, setNodes] = React.useState<NodeType[]>([]);
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');

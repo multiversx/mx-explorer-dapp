@@ -17,17 +17,21 @@ import { AccountTabs } from './AccountLayout/AccountTabs';
 import { urlBuilder, useGetFilters, useNetworkRoute } from 'helpers';
 import { NftType } from 'types';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const AccountNfts = () => {
   const ref = React.useRef(null);
   const navigate = useNavigate();
-  const { activeNetwork, accountDetails } = useGlobalState();
+  const { accountDetails } = useGlobalState();
   const { size } = useGetFilters();
   const networkRoute = useNetworkRoute();
+  const { adapter } = useSelector(activeNetworkSelector);
 
   const { getAccountNfts, getAccountNftsCount } = useAdapter();
 
   const { hash: address } = useParams() as any;
-  const nftsActive = activeNetwork.adapter === 'api';
+  const nftsActive = adapter === 'api';
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [accountNfts, setAccountNfts] = React.useState<NftType[]>([]);

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { useGlobalState } from 'context';
+
 import { Loader, TransactionsTable, useAdapter } from 'components';
 
 import { txStatus } from 'components/TransactionStatus/txStatus';
@@ -10,11 +10,14 @@ import { useSize, useURLSearchParams } from 'helpers';
 import { UITransactionType } from 'types';
 import { ProviderTabs } from './ProviderLayout/ProviderTabs';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const ProviderTransactions = () => {
   const ref = React.useRef(null);
   const { getTransactions, getTransactionsCount } = useAdapter();
   const { size, firstPageTicker } = useSize();
-  const { activeNetworkId } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { hash: address } = useParams() as any;
   const {
     senderShard,

@@ -15,22 +15,22 @@ import { AccountTabs } from './AccountLayout/AccountTabs';
 import { urlBuilder, useGetFilters, useNetworkRoute, amountWithoutRounding } from 'helpers';
 import { TokenType, NftType } from 'types';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const AccountTokens = () => {
   const ref = React.useRef(null);
   const navigate = useNavigate();
-  const { activeNetwork, accountDetails } = useGlobalState();
+  const { accountDetails } = useGlobalState();
+  const { adapter } = useSelector(activeNetworkSelector);
   const { size } = useGetFilters();
   const networkRoute = useNetworkRoute();
 
-  const {
-    getAccountTokens,
-    getAccountTokensCount,
-    getAccountNfts,
-    getAccountNftsCount,
-  } = useAdapter();
+  const { getAccountTokens, getAccountTokensCount, getAccountNfts, getAccountNftsCount } =
+    useAdapter();
 
   const { hash: address } = useParams() as any;
-  const tokensActive = activeNetwork.adapter === 'api';
+  const tokensActive = adapter === 'api';
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [accountTokens, setAccountTokens] = React.useState<TokenType[]>([]);

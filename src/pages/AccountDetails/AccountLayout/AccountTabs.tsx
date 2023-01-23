@@ -4,10 +4,15 @@ import { urlBuilder, useActiveRoute, isContract } from 'helpers';
 import { useGlobalState } from 'context';
 import { accountsRoutes } from 'routes';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const AccountTabs = () => {
   const activeRoute = useActiveRoute();
-  const { accountDetails, activeNetwork } = useGlobalState();
-  const tokensRouteActive = activeNetwork.adapter === 'api';
+  const { accountDetails } = useGlobalState();
+  const { adapter } = useSelector(activeNetworkSelector);
+
+  const tokensRouteActive = adapter === 'api';
 
   return (
     <div className="account-tabs d-flex flex-row flex-wrap">

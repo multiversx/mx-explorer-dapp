@@ -4,18 +4,11 @@ import { AppSwitcher } from './AppSwitcher';
 import { NetworkSwitcher } from './NetworkSwitcher';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars';
-// import { faMoon } from '@fortawesome/pro-regular-svg-icons/faMoon';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import { NavLinks } from './NavLinks';
 import { Logo } from './Logo';
-// import { ReactComponent as Sun } from 'assets/img/sun.svg';
-// import { useGlobalState, useGlobalDispatch } from 'context';
-// import { NetworkIdType } from 'types';
 
 export const Navbar = () => {
-  // const { activeNetwork, theme } = useGlobalState();
-  // const dispatch = useGlobalDispatch();
-
   const toggleState = () => {
     const collapsed = !headerNavCollapsed;
 
@@ -36,14 +29,6 @@ export const Navbar = () => {
     toggleState();
   };
 
-  // const handleThemeToggleChange = (e: React.MouseEvent) => {
-  //   e.preventDefault();
-  //   dispatch({
-  //     type: 'changeTheme',
-  //     theme: theme === 'dark' ? String(activeNetwork.theme) : 'dark',
-  //   });
-  // };
-
   return (
     <>
       <div className="main-navbar sticky-top">
@@ -57,23 +42,6 @@ export const Navbar = () => {
             </div>
             <div>
               <ul className="flex-row navbar-nav">
-                {/* {activeNetwork.id === NetworkIdType.mainnet && (
-                  <li className="nav-item d-flex align-items-center">
-                    <a
-                      href="/#"
-                      onClick={handleThemeToggleChange}
-                      className="nav-link nav-link-icon text-center"
-                    >
-                      <i className="material-icons icon-sm px-1 my-0 mx-2">
-                        {theme === 'dark' ? (
-                          <Sun className="sun" />
-                        ) : (
-                          <FontAwesomeIcon icon={faMoon} />
-                        )}
-                      </i>
-                    </a>
-                  </li>
-                )} */}
                 <li className="nav-item d-none d-lg-flex">
                   <AppSwitcher />
                 </li>

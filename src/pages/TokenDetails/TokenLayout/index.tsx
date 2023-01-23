@@ -1,14 +1,19 @@
-import * as React from "react";
-import { useGlobalDispatch, useGlobalState } from "context";
-import { Loader, useAdapter } from "components";
-import { useSize, useGetHash } from "helpers";
-import { FailedTokenDetails } from "./FailedTokenDetails";
-import { TokenDetailsCard } from "./TokenDetailsCard";
+import * as React from 'react';
+import { useGlobalDispatch } from 'context';
+import { Loader, useAdapter } from 'components';
+import { useSize, useGetHash } from 'helpers';
+import { FailedTokenDetails } from './FailedTokenDetails';
+import { TokenDetailsCard } from './TokenDetailsCard';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { firstPageTicker } = useSize();
-  const { activeNetwork } = useGlobalState();
+
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+
   const dispatch = useGlobalDispatch();
   const { getToken } = useAdapter();
 
@@ -24,7 +29,7 @@ export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
         if (ref.current !== null) {
           if (tokenDetailsData.success) {
             dispatch({
-              type: "setTokenDetails",
+              type: 'setTokenDetails',
               tokenDetails: {
                 ...details,
               },
@@ -44,11 +49,11 @@ export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
     fetchTokenDetails();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetwork.id, tokenId]);
+  }, [firstPageTicker, activeNetworkId, tokenId]);
 
   React.useEffect(() => {
     setDataReady(undefined);
-  }, [tokenId, activeNetwork.id]);
+  }, [tokenId, activeNetworkId]);
 
   const loading = dataReady === undefined;
   const failed = dataReady === false;

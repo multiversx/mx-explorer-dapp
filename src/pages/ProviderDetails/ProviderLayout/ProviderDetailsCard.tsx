@@ -21,15 +21,15 @@ import {
   NetworkLink,
   Trim,
 } from 'components';
-import { useGlobalState } from 'context';
 import { DelegationCap } from 'components/ProvidersTable/DelegationCap';
 import { PercentageFilled } from 'components/ProvidersTable/PercentageFilled';
 import { hasDelegationCap } from 'components/ProvidersTable/PercentageFilled';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const ProviderDetailsCard = ({ provider }: { provider?: ProviderType }) => {
-  const {
-    activeNetwork: { walletAddress },
-  } = useGlobalState();
+  const { walletAddress } = useSelector(activeNetworkSelector);
 
   return provider !== undefined ? (
     <div className="provider-details-card card">

@@ -24,12 +24,14 @@ import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { LockedAmountCardItem } from './LockedAmountCardItem';
 import { AccountUsdValueCardItem } from './AccountUsdValueCardItem';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const AccountDetailsCard = () => {
   const ref = React.useRef(null);
-  const {
-    activeNetwork: { id, adapter: networkAdapter },
-    accountDetails,
-  } = useGlobalState();
+  const { accountDetails } = useGlobalState();
+
+  const { id: activeNetworkId, adapter } = useSelector(activeNetworkSelector);
   const { getProvider, getAccountTokensCount, getAccountNftsCount } = useAdapter();
   const {
     address,
@@ -49,7 +51,7 @@ export const AccountDetailsCard = () => {
   } = accountDetails;
   const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
 
-  const tokensActive = networkAdapter === 'api';
+  const tokensActive = adapter === 'api';
   const cardItemClass = tokensActive ? 'n4' : '';
 
   const [isProvider, setIsProvider] = React.useState(false);
@@ -68,7 +70,7 @@ export const AccountDetailsCard = () => {
   React.useEffect(() => {
     fetchProviderDetails();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, address]);
+  }, [activeNetworkId, address]);
 
   const fetchAccountTokensCount = () => {
     if (tokensActive) {
@@ -92,7 +94,7 @@ export const AccountDetailsCard = () => {
   React.useEffect(() => {
     fetchAccountTokensCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountDetails.txCount, id, address]);
+  }, [accountDetails.txCount, activeNetworkId, address]);
 
   return address !== '' ? (
     <div ref={ref} className="row account-details-card mb-spacer">

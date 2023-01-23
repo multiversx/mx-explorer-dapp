@@ -1,6 +1,9 @@
-import { useGlobalState } from 'context';
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 import { NetworkIdType } from 'types';
 
 export const useIsMainnet = () => {
-  return useGlobalState().activeNetwork.id === NetworkIdType.mainnet;
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+
+  return activeNetworkId === NetworkIdType.mainnet;
 };

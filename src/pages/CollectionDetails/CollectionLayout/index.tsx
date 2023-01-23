@@ -1,18 +1,17 @@
-import * as React from "react";
-import { useGlobalDispatch, useGlobalState } from "context";
-import { Loader, useAdapter } from "components";
-import { useSize, useGetHash } from "helpers";
-import { FailedCollectionDetails } from "./FailedCollectionDetails";
-import { CollectionDetailsCard } from "./CollectionDetailsCard";
+import * as React from 'react';
+import { useGlobalDispatch } from 'context';
+import { Loader, useAdapter } from 'components';
+import { useSize, useGetHash } from 'helpers';
+import { FailedCollectionDetails } from './FailedCollectionDetails';
+import { CollectionDetailsCard } from './CollectionDetailsCard';
 
-export const CollectionLayout = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
+export const CollectionLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { firstPageTicker } = useSize();
-  const { activeNetwork } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const dispatch = useGlobalDispatch();
   const { getCollection } = useAdapter();
 
@@ -23,14 +22,12 @@ export const CollectionLayout = ({
   const fetchCollectionDetails = () => {
     if (collection) {
       getCollection(collection).then((collectionDetailsData) => {
-        const details = collectionDetailsData.success
-          ? collectionDetailsData.data
-          : {};
+        const details = collectionDetailsData.success ? collectionDetailsData.data : {};
 
         if (ref.current !== null) {
           if (collectionDetailsData.success) {
             dispatch({
-              type: "setCollectionDetails",
+              type: 'setCollectionDetails',
               collectionDetails: {
                 ...details,
               },
@@ -50,11 +47,11 @@ export const CollectionLayout = ({
     fetchCollectionDetails();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetwork.id, collection]);
+  }, [firstPageTicker, activeNetworkId, collection]);
 
   React.useEffect(() => {
     setDataReady(undefined);
-  }, [collection, activeNetwork.id]);
+  }, [collection, activeNetworkId]);
 
   const loading = dataReady === undefined;
   const failed = dataReady === false;
@@ -62,9 +59,7 @@ export const CollectionLayout = ({
   return (
     <>
       {loading && <Loader />}
-      {!loading && failed && (
-        <FailedCollectionDetails collection={collection} />
-      )}
+      {!loading && failed && <FailedCollectionDetails collection={collection} />}
 
       <div ref={ref}>
         {!loading && !failed && (

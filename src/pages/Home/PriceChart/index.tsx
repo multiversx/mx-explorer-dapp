@@ -20,7 +20,8 @@ import { formatYAxis } from 'components/Chart/helpers/formatYAxis';
 import { StartEndTick } from 'components/Chart/helpers/StartEndTick';
 import { ControlType, ChartDataType } from 'components/Chart/helpers/types';
 
-import { useGlobalState } from 'context';
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export const getCurrentValue = (chartData: ChartDataType[]) => {
   if (chartData.length >= 1) {
@@ -30,7 +31,7 @@ export const getCurrentValue = (chartData: ChartDataType[]) => {
 };
 
 export const PriceChart = () => {
-  const { activeNetworkId } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const { getEgldPriceHistory, getEgldMarketCapHistory } = useAdapter();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();

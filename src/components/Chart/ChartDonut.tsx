@@ -4,14 +4,14 @@ import { ResponsiveContainer, PieChart, Pie, Sector, Cell } from 'recharts';
 
 import { ChartProps } from './helpers/types';
 import { getProviderColor } from './helpers/getEntryColor';
-import { useGlobalState } from 'context';
 import { usdValue } from 'helpers';
 
+import { useSelector } from 'react-redux';
+import { economicsSelector, activeNetworkSelector } from 'redux/selectors';
+
 const RenderActiveShape = (props: any) => {
-  const {
-    activeNetwork: { erdLabel },
-    usd,
-  } = useGlobalState();
+  const { egldLabel } = useSelector(activeNetworkSelector);
+  const { economicsFetched, price } = useSelector(economicsSelector);
 
   const RADIAN = Math.PI / 180;
 
@@ -85,9 +85,9 @@ const RenderActiveShape = (props: any) => {
         fill={bodyColor}
         fontSize={12}
       >
-        {payload.displayValue ?? new BigNumber(value).toFormat()} {erdLabel}
+        {payload.displayValue ?? new BigNumber(value).toFormat()} {egldLabel}
       </text>
-      {usd && (
+      {economicsFetched && (
         <text
           x={ex + (cos >= 0 ? 1 : -1) * 12}
           y={ey}
@@ -96,7 +96,7 @@ const RenderActiveShape = (props: any) => {
           fill={secondaryColor}
           fontSize={10}
         >
-          {usdValue({ amount: payload.displayValue ?? value, usd, showPrefix: true })}
+          {usdValue({ amount: payload.displayValue ?? value, usd: price, showPrefix: true })}
         </text>
       )}
     </g>

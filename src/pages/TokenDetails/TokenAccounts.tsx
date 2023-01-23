@@ -13,12 +13,17 @@ import {
   PageState,
   LockedTokenAddressIcon,
 } from 'components';
-import { types, urlBuilder, useSize, useURLSearchParams } from 'helpers';
+import { urlBuilder, useSize, useURLSearchParams } from 'helpers';
 import { TokenTabs } from './TokenLayout/TokenTabs';
+import { AccountType } from 'types';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export const TokenDetailsAccounts = () => {
   const ref = React.useRef(null);
-  const { activeNetworkId, tokenDetails } = useGlobalState();
+  const { tokenDetails } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { page } = useURLSearchParams();
   const { size } = useSize();
   const { getTokenAccounts, getTokenAccountsCount } = useAdapter();
@@ -26,7 +31,7 @@ export const TokenDetailsAccounts = () => {
   const { hash: tokenId } = useParams() as any;
   const { decimals, accounts: totalAccounts } = tokenDetails;
 
-  const [accounts, setAccounts] = React.useState<types.AccountType[]>([]);
+  const [accounts, setAccounts] = React.useState<AccountType[]>([]);
   const [accountsCount, setAccountsCount] = React.useState(0);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 

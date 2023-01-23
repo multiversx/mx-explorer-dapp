@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { LEGACY_DELEGATION_NODES_IDENTITY } from 'appConstants';
-import { useGlobalDispatch, useGlobalState } from 'context';
+import { useGlobalDispatch } from 'context';
 
 import { addressIsBech32, useNetworkRoute, useSize, useGetHash } from 'helpers';
 import { IdentityType, ProviderType, DelegationType } from 'types';
@@ -12,12 +12,15 @@ import { Loader, useAdapter } from 'components';
 import { AccountDetailsCard } from './AccountDetailsCard';
 import { FailedAccount } from './FailedAccount';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { firstPageTicker } = useSize();
-  const { activeNetwork } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const dispatch = useGlobalDispatch();
   const {
     getAccount,
@@ -278,7 +281,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address, activeNetwork.id]);
+  }, [address, activeNetworkId]);
 
   React.useEffect(() => {
     if (!isOldAddressRoute && address) {
@@ -286,11 +289,11 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetwork.id, address]);
+  }, [firstPageTicker, activeNetworkId, address]);
 
   React.useEffect(() => {
     setDataReady(undefined);
-  }, [address, activeNetwork.id]);
+  }, [address, activeNetworkId]);
 
   const loading = dataReady === undefined;
   const failed = dataReady === false || !addressIsBech32(address);

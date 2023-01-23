@@ -10,12 +10,13 @@ import {
 } from 'components/Chart/helpers/getChartBinnedData';
 import { AccountTabs } from './AccountLayout/AccountTabs';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const AccountAnalytics = () => {
-  const {
-    accountDetails,
-    activeNetwork: { erdLabel },
-  } = useGlobalState();
-  const { activeNetworkId } = useGlobalState();
+  const { accountDetails } = useGlobalState();
+
+  const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
   const { getAccountHistory } = useAdapter();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -63,7 +64,7 @@ export const AccountAnalytics = () => {
           <AccountTabs />
         </div>
         <div className="card-header-item d-flex align-items-center bg-light">
-          Account {erdLabel} Balance{' '}
+          Account {egldLabel} Balance{' '}
           {chartData.length > 1 && (
             <span className="text-secondary ml-1">
               ( from {startDate} to {endDate} )
@@ -89,7 +90,7 @@ export const AccountAnalytics = () => {
                 <div className="mx-n4">
                   <Chart.Area
                     config={config}
-                    currency={erdLabel}
+                    currency={egldLabel}
                     tooltip={{ showUsdValue: true, dateFormat: 'MMM DD, YYYY HH:mm:ss UTC' }}
                   ></Chart.Area>
                 </div>

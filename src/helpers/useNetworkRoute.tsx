@@ -1,7 +1,8 @@
-import { useGlobalState } from "context";
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export const useNetworkRoute = () => {
-  const { activeNetworkId } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   return (to: string) => (activeNetworkId ? `/${activeNetworkId}${to}` : to);
 };
