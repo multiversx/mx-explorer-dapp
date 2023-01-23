@@ -2,27 +2,33 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useGlobalDispatch, useGlobalState } from 'context';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
+import { networks } from 'config';
+
 export const useNetworkRouter = () => {
   const {
-    config,
-    activeNetworkId,
     defaultNetwork: { id: defaultNetworkId, theme: defaultNetworkTheme },
     theme,
   } = useGlobalState();
+
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+
   const dispatch = useGlobalDispatch();
   const { pathname } = useLocation();
 
-  const locationArray = pathname.substr(1).split('/');
+  const locationArray = pathname.substring(1).split('/');
 
   const networkId = locationArray[0];
 
-  const allNetworkIds = config.networks.map((network) => network.id);
+  const allNetworkIds = networks.map((network) => network.id);
 
   function changeNetwork() {
     if (allNetworkIds.includes(networkId) && activeNetworkId !== networkId) {
       // if route contains a network at the beginning replace the network
       setTimeout(() => {
-        const networkTheme = config.networks.find(({ id }) => id === networkId)?.theme;
+        const networkTheme = networks.find(({ id }) => id === networkId)?.theme;
         if (networkTheme !== theme && theme !== 'dark') {
           dispatch({
             type: 'changeTheme',

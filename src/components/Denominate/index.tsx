@@ -1,9 +1,11 @@
 import React from 'react';
-import { useGlobalState } from 'context';
 import { stringIsInteger } from 'helpers';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { denominate } from './denominate';
 import { DECIMALS, DIGITS } from 'config';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export interface DenominateType {
   value: string;
@@ -44,7 +46,7 @@ const denominateInvalid = (props: DenominateType) => {
   );
 };
 
-const denominateValid = (props: DenominateType, erdLabel: string) => {
+const denominateValid = (props: DenominateType, egldLabel?: string) => {
   const { value, showLastNonZeroDecimal = false, showLabel = true, showTooltip = true } = props;
   const decimals = props.decimals !== undefined ? props.decimals : DIGITS;
   const denomination = props.denomination !== undefined ? props.denomination : DECIMALS;
@@ -96,7 +98,7 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
 
       {showLabel && (
         <span className={`symbol ${props.token ? 'text-muted' : ''}`}>
-          &nbsp;{props.token ? props.token : erdLabel}
+          &nbsp;{props.token ? props.token : egldLabel}
         </span>
       )}
     </span>
@@ -104,10 +106,8 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
 };
 
 export const Denominate = (props: DenominateType) => {
-  const {
-    activeNetwork: { erdLabel },
-  } = useGlobalState();
+  const { egldLabel } = useSelector(activeNetworkSelector);
   const { value } = props;
 
-  return !stringIsInteger(value) ? denominateInvalid(props) : denominateValid(props, erdLabel);
+  return !stringIsInteger(value) ? denominateInvalid(props) : denominateValid(props, egldLabel);
 };

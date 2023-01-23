@@ -11,7 +11,9 @@ import {
   analyticsRoutes,
 } from 'routes';
 import { useIsMainnet, useActiveRoute } from 'helpers';
-import { useGlobalState } from 'context';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 interface NavLinksType {
   setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,7 +21,9 @@ interface NavLinksType {
 
 export const NavLinks = ({ setExpanded = () => null }: NavLinksType) => {
   const activeRoute = useActiveRoute();
-  const { activeNetwork } = useGlobalState();
+
+  const { adapter } = useSelector(activeNetworkSelector);
+
   const isMainnet = useIsMainnet();
 
   const onToggle = (isExpanded: boolean) => {
@@ -80,7 +84,7 @@ export const NavLinks = ({ setExpanded = () => null }: NavLinksType) => {
         Accounts
       </NetworkLink>
 
-      {activeNetwork.adapter === 'api' && (
+      {adapter === 'api' && (
         <>
           <NetworkLink
             className={`nav-link ${

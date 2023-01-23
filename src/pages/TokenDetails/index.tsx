@@ -10,6 +10,9 @@ import { useSize, useURLSearchParams } from 'helpers';
 import { UITransactionType, TransactionsResponseType, TransactionsCountResponseType } from 'types';
 import { TokenTabs } from './TokenLayout/TokenTabs';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const TokenDetails = () => {
   const ref = React.useRef(null);
   const { getTokenTransfers, getTokenTransfersCount } = useAdapter();
@@ -26,7 +29,8 @@ export const TokenDetails = () => {
     miniBlockHash,
     search,
   } = useURLSearchParams();
-  const { activeNetworkId, tokenDetails } = useGlobalState();
+  const { tokenDetails } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { hash: tokenId } = useParams() as any;
 
   const { transactions: transactionsCount } = tokenDetails;

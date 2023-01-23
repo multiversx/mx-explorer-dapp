@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useGlobalState } from 'context';
 import { isHash, useNetworkRoute, urlBuilder, useSize, useURLSearchParams } from 'helpers';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -20,6 +19,8 @@ import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
 import { MiniBlockNotFound } from './MiniBlockNotFound';
 
 import { UITransactionType, TxFiltersEnum } from 'types';
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 interface MiniBlockType {
   senderShard: number;
@@ -38,21 +39,12 @@ export const MiniBlockDetails = () => {
   const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
 
-  const {
-    senderShard,
-    receiverShard,
-    sender,
-    receiver,
-    method,
-    before,
-    after,
-    status,
-    search,
-  } = useURLSearchParams();
+  const { senderShard, receiverShard, sender, receiver, method, before, after, status, search } =
+    useURLSearchParams();
 
   const { getTransfers, getTransfersCount, getMiniBlock } = useAdapter();
 
-  const { activeNetworkId } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const [miniBlock, setMiniBlock] = React.useState<MiniBlockType>();
   const [miniBlockFetched, setMiniBlockFetched] = React.useState<boolean | undefined>();

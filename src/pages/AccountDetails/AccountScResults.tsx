@@ -8,17 +8,21 @@ import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
 import { urlBuilder, useGetFilters, useNetworkRoute } from 'helpers';
 import { ScResultType } from 'types';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const AccountScResults = () => {
   const ref = React.useRef(null);
   const navigate = useNavigate();
-  const { activeNetwork, accountDetails } = useGlobalState();
+  const { accountDetails } = useGlobalState();
   const { size } = useGetFilters();
   const networkRoute = useNetworkRoute();
+  const { adapter } = useSelector(activeNetworkSelector);
 
   const { getAccountScResults, getAccountScResultsCount } = useAdapter();
 
   const { hash: address } = useParams() as any;
-  const scResultsActive = activeNetwork.adapter === 'api';
+  const scResultsActive = adapter === 'api';
 
   const [isDataReady, setIsDataReady] = React.useState<boolean | undefined>();
   const [accountScResults, setAccountScResults] = React.useState<ScResultType[]>([]);

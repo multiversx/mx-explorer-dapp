@@ -8,12 +8,15 @@ import { NoBlocks } from 'components/BlocksTable/NoBlocks';
 import { urlBuilder } from 'helpers';
 import { BlockType } from 'types';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const LatestBlocks = () => {
   const ref = React.useRef(null);
   const {
-    activeNetworkId,
     refresh: { timestamp },
   } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const { getLatestBlocks } = useAdapter();
 

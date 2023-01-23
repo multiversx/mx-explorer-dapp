@@ -43,11 +43,13 @@ import { OperationsList } from '../OperationsList';
 import { ScResultsList } from '../ScResultsList';
 import { denominate } from 'components/Denominate/denominate';
 import { DECIMALS, DIGITS } from 'config';
-import { useGlobalState } from 'context';
 import { transactionsRoutes } from 'routes';
 import { DataField } from './DataField';
 import { NonceMessage } from './NonceMessage';
 import { TransactionErrorDisplay } from './TransactionErrorDisplay';
+
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export const getFee = (transaction: TransactionType) => {
   const bNgasPrice = new BigNumber(transaction.gasPrice);
@@ -99,9 +101,8 @@ export const ScrDetailItem = ({ result }: { result: ResultType }) => (
 
 export const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
   const ref = React.useRef(null);
-  const {
-    activeNetwork: { erdLabel },
-  } = useGlobalState();
+
+  const { egldLabel } = useSelector(activeNetworkSelector);
 
   const networkRoute = useNetworkRoute();
   const match: any = useMatch(networkRoute(transactionsRoutes.transactionDetailsLogs));
@@ -325,7 +326,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                 </DetailItem>
 
                 <DetailItem title="Value">
-                  {formattedTxValue} {erdLabel}{' '}
+                  {formattedTxValue} {egldLabel}{' '}
                   <span className="text-secondary">
                     {transaction.price !== undefined ? (
                       <>
@@ -372,7 +373,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                 <DetailItem title="Transaction Fee">
                   {transaction.gasUsed !== undefined ? (
                     <>
-                      {transactionFee} {erdLabel}{' '}
+                      {transactionFee} {egldLabel}{' '}
                       <span className="text-secondary">
                         {transaction.price !== undefined ? (
                           <>
@@ -394,7 +395,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                   )}
                 </DetailItem>
 
-                <DetailItem title={`${erdLabel} Price`}>
+                <DetailItem title={`${egldLabel} Price`}>
                   {transaction.price !== undefined ? (
                     <>{`$${new BigNumber(transaction.price).toFormat(2)}`}</>
                   ) : (

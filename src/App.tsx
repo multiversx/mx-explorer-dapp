@@ -6,30 +6,30 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AxiosInterceptor } from 'components';
 import { Layout } from './pages/Layout';
 import { PageNotFound } from './pages/PageNotFound';
-import { GlobalProvider, useGlobalState } from './context';
+import { GlobalProvider } from './context';
 import { ConfigType, NetworkType } from 'types';
 import { wrappedRoutes, validatorsRoutes } from 'routes';
 
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from 'redux/store';
+import { activeNetworkSelector } from 'redux/selectors';
+
+import { networks } from 'config';
 
 export const FilteredRoutes = ({
   routes,
 }: {
   routes: { path: string; Component: React.ComponentClass }[];
 }) => {
-  const {
-    config: { networks },
-    activeNetwork,
-  } = useGlobalState();
+  const { id: activeNetworkId, adapter } = useSelector(activeNetworkSelector);
   const isMainnet = useIsMainnet();
 
   const restrictedRoutes = routes.filter(({ path }) => {
     if (
       (!isMainnet &&
         [validatorsRoutes.identities, validatorsRoutes.identityDetails].includes(path)) ||
-      (activeNetwork.adapter === 'elastic' && Object.values(validatorsRoutes).includes(path))
+      (adapter === 'elastic' && Object.values(validatorsRoutes).includes(path))
     ) {
       return false;
     }
@@ -51,8 +51,8 @@ export const FilteredRoutes = ({
           });
         })}
         <Route
-          path={`${activeNetwork.id}/:any`}
-          key={activeNetwork.id + '404'}
+          path={`${activeNetworkId}/:any`}
+          key={activeNetworkId + '404'}
           element={<PageNotFound />}
         />
         ,
@@ -63,7 +63,7 @@ export const FilteredRoutes = ({
       </Routes>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [networks, activeNetwork.id]
+    [networks, activeNetworkId]
   );
 };
 

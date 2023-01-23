@@ -3,7 +3,7 @@ import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 
 import { METACHAIN_SHARD_ID } from 'appConstants';
 import { useGlobalState } from 'context';
-import { GlobalStakeType } from 'context/state';
+import { GlobalStakeType } from 'types';
 import { ShardType } from 'types';
 import { PageState } from 'components';
 

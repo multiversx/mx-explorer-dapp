@@ -1,9 +1,11 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
 import { usdValue } from 'helpers';
-import { useGlobalState } from 'context';
 import moment from 'moment';
 import { denominate } from 'components/Denominate/denominate';
+
+import { useSelector } from 'react-redux';
+import { economicsSelector } from 'redux/selectors';
 
 const getTooltipLabel = (label: string) => {
   const capitalize = (string: string) =>
@@ -54,9 +56,9 @@ export const CustomTooltip = ({
   showUsdValue?: boolean;
   dateFormat?: string;
 }) => {
-  const { usd } = useGlobalState();
+  const { economicsFetched, price } = useSelector(economicsSelector);
 
-  if (active && payload && payload.length) {
+  if (active && payload && payload.length && economicsFetched) {
     return (
       <div className="custom-tooltip">
         <ul className="recharts-tooltip-item-list list-unstyled">
@@ -97,7 +99,7 @@ export const CustomTooltip = ({
                 </span>
                 {showUsdValue && (
                   <p className="text-secondary small mb-0">
-                    {usdValue({ amount: displayValue, usd, showPrefix: true })}
+                    {usdValue({ amount: displayValue, usd: price, showPrefix: true })}
                   </p>
                 )}
               </li>

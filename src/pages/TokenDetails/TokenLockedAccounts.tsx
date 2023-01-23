@@ -15,9 +15,13 @@ import { urlBuilder } from 'helpers';
 import { TokenLockedAccountType } from 'types';
 import { TokenTabs } from './TokenLayout/TokenTabs';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const TokenDetailsLockedAccounts = () => {
   const ref = React.useRef(null);
-  const { activeNetworkId, tokenDetails } = useGlobalState();
+  const { tokenDetails } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getTokenSupply } = useAdapter();
   const { decimals } = tokenDetails;
 

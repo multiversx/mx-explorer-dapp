@@ -7,7 +7,8 @@ import { FailedAnalytics } from './FailedAnalytics';
 import { NoAnalytics } from './NoAnalytics';
 import { AnalyticsChart } from './AnalyticsChart';
 
-import { useGlobalState } from 'context';
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export interface ChartListType {
   id: string;
@@ -19,7 +20,7 @@ export const Analytics = () => {
   const navigate = useNavigate();
   const isMainnet = useIsMainnet();
 
-  const { activeNetworkId } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getAnalyticsChartList } = useAdapter();
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -53,10 +54,10 @@ export const Analytics = () => {
 
       <div ref={ref}>
         {dataReady === true && (
-          <div className='analytics container page-content'>
-            <div className='row'>
+          <div className="analytics container page-content">
+            <div className="row">
               {chartList.map((chart) => (
-                <div className='col-12 col-lg-6 mt-spacer' key={chart.id}>
+                <div className="col-12 col-lg-6 mt-spacer" key={chart.id}>
                   <AnalyticsChart id={chart.id} path={chart.path} />
                 </div>
               ))}

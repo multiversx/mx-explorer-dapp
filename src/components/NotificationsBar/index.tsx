@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useGlobalState } from 'context';
-import { NotificationType } from 'context/state';
+import { NotificationType } from 'types';
 import { useNotifications } from 'helpers';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

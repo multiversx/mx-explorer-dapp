@@ -10,6 +10,9 @@ import { useSize, useURLSearchParams } from 'helpers';
 import { UITransactionType, TransactionsResponseType, TransactionsCountResponseType } from 'types';
 import { AccountTabs } from './AccountLayout/AccountTabs';
 
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
+
 export const AccountDetails = () => {
   const ref = React.useRef(null);
   const { getAccountTransfers, getAccountTransfersCount } = useAdapter();
@@ -26,7 +29,9 @@ export const AccountDetails = () => {
     miniBlockHash,
     search,
   } = useURLSearchParams();
-  const { activeNetworkId, accountDetails } = useGlobalState();
+  const { accountDetails } = useGlobalState();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+
   const { hash: address } = useParams() as any;
 
   const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
