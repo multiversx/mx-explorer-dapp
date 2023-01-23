@@ -686,7 +686,7 @@ export interface BlockType {
 
 // types from context/state
 export type NetworkLinkType = InferType<typeof networkLink>;
-export type NetworkType = InferType<typeof schema>;
+
 export type AdapterType = InferType<typeof adapterSchema>;
 
 export interface ConfigType {
@@ -700,36 +700,6 @@ export interface GlobalStakeType {
   waitingList?: number;
   deliquentStake?: number;
   nodesVerions?: NodesVersionsType[];
-}
-
-export interface EconomicsType {
-  economicsFetched?: boolean;
-  totalSupply: string;
-  circulatingSupply: string;
-  staked: string;
-  price: string;
-  marketCap: string;
-  apr: string;
-  topUpApr: string;
-  baseApr: string;
-  tokenMarketCap: string;
-  totalStakedPercent: string;
-  ecosystemMarketCap: string;
-}
-
-export interface StatsType {
-  statsFetched?: boolean;
-  shards: string;
-  blocks: string;
-  accounts: string;
-  transactions: string;
-  epoch: number;
-  epochPercentage: number;
-  epochTotalTime: string;
-  epochTimeElapsed: string;
-  epochTimeRemaining: string;
-  roundsPerEpoch: number;
-  roundsPassed: number;
 }
 
 export interface NotificationType {

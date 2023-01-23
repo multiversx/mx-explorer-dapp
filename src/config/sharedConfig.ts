@@ -6,7 +6,7 @@ import {
   GAS_PRICE_MODIFIER,
   GAS_PRICE as DEFAULT_GAS_PRICE,
 } from '@multiversx/sdk-dapp/constants/index';
-import { NetworkType as NetworkConfigType } from '@multiversx/sdk-dapp/types/network.types';
+import { NetworkUrlType } from 'types/network.types';
 import { object, string, boolean } from 'yup';
 
 const GAS_PRICE = String(DEFAULT_GAS_PRICE);
@@ -99,20 +99,3 @@ export const adapterSchema = object({
 }).required();
 
 export const schema = networkBaseSchema.concat(adapterSchema);
-
-export interface NetworkType extends Partial<NetworkConfigType> {
-  adapter: 'api' | 'elastic';
-  theme?: string;
-  default?: boolean;
-  accessToken?: boolean;
-  extrasApi?: string;
-  growthApi?: string;
-  elasticUrl?: string;
-  proxyUrl?: string;
-}
-
-export interface NetworkUrlType {
-  id: string;
-  name: string;
-  url: string;
-}
