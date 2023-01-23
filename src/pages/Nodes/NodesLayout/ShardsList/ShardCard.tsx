@@ -17,14 +17,14 @@ export const ShardCard = ({ shard, isOverall }: ShardCardType) => {
     <div className="shard-card py-3">
       <div className="mb-2">
         {!isOverall && (
-          <FontAwesomeIcon icon={faLayerGroup} className="shard-icon text-primary mr-2" />
+          <FontAwesomeIcon icon={faLayerGroup} className="shard-icon text-primary me-2" />
         )}
         <span className="text-secondary">
           {isOverall ? 'Active Validators' : <ShardSpan shard={shard.shard} />}
         </span>
       </div>
       <div className="d-flex align-items-center">
-        {!isOverall && <Led color={`led ml-1 mr-2 bg-${status}`} />}
+        {!isOverall && <Led color={`led ml-1 me-2 bg-${status}`} />}
         <h5 className="m-0">
           {shard.activeValidators}/{shard.validators}
         </h5>

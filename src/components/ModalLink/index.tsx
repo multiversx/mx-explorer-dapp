@@ -32,7 +32,7 @@ export const ModalLink = (props: LinkComponentProps) => {
         <div className="card card-small">
           <div className="card-body text-center p-spacer">
             <p className="h3 pt-1">
-              <FontAwesomeIcon icon={faExclamationTriangle} className="mr-2 text-warning" />
+              <FontAwesomeIcon icon={faExclamationTriangle} className="me-2 text-warning" />
               Caution!
             </p>
             <p className="lead">You are about to navigate to an external website.</p>

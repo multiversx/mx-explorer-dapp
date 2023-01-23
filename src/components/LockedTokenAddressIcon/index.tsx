@@ -35,7 +35,7 @@ export const LockedTokenAddressIcon = ({ address }: { address: string }) => {
           </Tooltip>
         )}
       >
-        <FontAwesomeIcon icon={faLock} size="xs" className="mr-1 text-secondary" />
+        <FontAwesomeIcon icon={faLock} size="xs" className="me-1 text-secondary" />
       </OverlayTrigger>
     ) : null;
   }

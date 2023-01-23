@@ -4,7 +4,7 @@ import { ReactComponent as DefaultAvatar } from 'assets/img/default-avatar.svg';
 
 export const ProviderImage = ({ provider }: { provider: ProviderType }) => (
   <div
-    className={`provider-image rounded-circle d-flex mr-3 ${
+    className={`provider-image rounded-circle d-flex me-3 ${
       provider?.identityDetails?.avatar ? 'has-avatar' : ''
     }`}
   >

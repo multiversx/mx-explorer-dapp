@@ -62,11 +62,11 @@ export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
 
           <div className="d-flex flex-wrap provider-metrics">
             <div>
-              <FontAwesomeIcon size="xs" icon={faLeaf} className="mr-1" />
+              <FontAwesomeIcon size="xs" icon={faLeaf} className="me-1" />
               {provider.apr}%<span className="text-secondary ml-1">APR</span>
             </div>
             <div>
-              <FontAwesomeIcon size="xs" icon={faReceipt} className="mr-1" />
+              <FontAwesomeIcon size="xs" icon={faReceipt} className="me-1" />
               {new BigNumber(provider.serviceFee).times(100).toFormat()}%
               <span className="text-secondary ml-1">Fee</span>
             </div>
@@ -94,7 +94,7 @@ export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
                 </>
               ) : (
                 <span>
-                  <FontAwesomeIcon size="xs" icon={faInfinity} className="mr-1" />
+                  <FontAwesomeIcon size="xs" icon={faInfinity} className="me-1" />
                   Uncapped
                 </span>
               )}

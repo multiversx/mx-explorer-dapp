@@ -14,7 +14,7 @@ export const DetailItem = ({
   noBorder?: boolean;
 }) => (
   <div className={`row detail-item ${className} ${noBorder ? 'pt-3 pb-1' : 'border-bottom py-3'}`}>
-    <div className={`col-lg-${colWidth} text-secondary text-lg-right pl-lg-spacer`}>{title}</div>
-    <div className={`col-lg-${12 - Number(colWidth)} pr-lg-spacer`}>{children}</div>
+    <div className={`col-lg-${colWidth} text-secondary text-lg-right ps-lg-spacer`}>{title}</div>
+    <div className={`col-lg-${12 - Number(colWidth)} pe-lg-spacer`}>{children}</div>
   </div>
 );

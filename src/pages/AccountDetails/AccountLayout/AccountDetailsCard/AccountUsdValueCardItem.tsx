@@ -19,7 +19,7 @@ export const AccountUsdValueCardItem = ({ cardItemClass }: { cardItemClass: stri
     <CardItem className={cardItemClass} title="Value" icon={faDollarSign}>
       <div className="d-flex align-items-center">
         {balance ? (
-          <span className="mr-2">
+          <span className="me-2">
             <UsdValue input={totalWorth.toString(10)} />
           </span>
         ) : (

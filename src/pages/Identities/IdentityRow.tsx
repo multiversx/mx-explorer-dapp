@@ -71,7 +71,7 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
         <td>{identity.rank}</td>
         <td>
           <div className="d-flex align-items-center">
-            <div className="mr-3">
+            <div className="me-3">
               <NetworkLink to={link}>
                 <SharedIdentity.Avatar identity={identity} />
               </NetworkLink>

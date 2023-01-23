@@ -64,7 +64,7 @@ export const TokensMeta = () => {
                           <li className="list-inline-item my-1 my-md-0">
                             <NetworkLink
                               to={tokensRoutes.tokens}
-                              className={`btn btn-sm btn-outline-light btn-pill mr-2 ${
+                              className={`btn btn-sm btn-outline-light btn-pill me-2 ${
                                 activeRoute(tokensRoutes.tokens) ? 'active' : ''
                               }`}
                             >
@@ -72,7 +72,7 @@ export const TokensMeta = () => {
                             </NetworkLink>
                             <NetworkLink
                               to={tokensRoutes.tokensMeta}
-                              className={`btn btn-sm btn-outline-light btn-pill mr-2 ${
+                              className={`btn btn-sm btn-outline-light btn-pill me-2 ${
                                 activeRoute(tokensRoutes.tokensMeta) ? 'active' : ''
                               }`}
                             >
@@ -116,7 +116,7 @@ export const TokensMeta = () => {
                                 <tr key={`${metaCollection.name}-${metaCollection.collection}`}>
                                   <td>
                                     <div className="token-identity d-flex flex-row">
-                                      <div className="d-flex align-items-center mr-3">
+                                      <div className="d-flex align-items-center me-3">
                                         <NetworkLink
                                           to={urlBuilder.collectionDetails(
                                             metaCollection.collection

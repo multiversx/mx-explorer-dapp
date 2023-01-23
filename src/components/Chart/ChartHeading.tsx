@@ -20,7 +20,7 @@ export const ChartHeading = ({
   <div className={`chart-heading card-header ${className ?? ''}`}>
     <div className="card-header-item d-flex align-items-center">
       {icon && (
-        <FontAwesomeIcon icon={icon} className={`chart-icon mr-3 ${iconClass ? iconClass : ''}`} />
+        <FontAwesomeIcon icon={icon} className={`chart-icon me-3 ${iconClass ? iconClass : ''}`} />
       )}
       {svgIcon && svgIcon}
       {title && <h6 className="title mb-0">{title}</h6>}

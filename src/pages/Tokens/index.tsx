@@ -68,7 +68,7 @@ export const Tokens = () => {
                         <h6 data-testid="title">Tokens</h6>
                         <span>
                           {totalTokens}{' '}
-                          <span className="text-secondary pr-2 border-right mr-2">Tokens</span>{' '}
+                          <span className="text-secondary pe-2 border-right me-2">Tokens</span>{' '}
                           <span className="text-secondary">Ecosystem Market Cap:</span>{' '}
                           {economicsFetched
                             ? `$${new BigNumber(ecosystemMarketCap).toFormat(0)}`
@@ -82,7 +82,7 @@ export const Tokens = () => {
                           <li className="list-inline-item my-1 my-md-0">
                             <NetworkLink
                               to={tokensRoutes.tokens}
-                              className={`btn btn-sm btn-outline-light btn-pill mr-2 ${
+                              className={`btn btn-sm btn-outline-light btn-pill me-2 ${
                                 activeRoute(tokensRoutes.tokens) ? 'active' : ''
                               }`}
                             >
@@ -90,7 +90,7 @@ export const Tokens = () => {
                             </NetworkLink>
                             <NetworkLink
                               to={tokensRoutes.tokensMeta}
-                              className={`btn btn-sm btn-outline-light btn-pill mr-2 ${
+                              className={`btn btn-sm btn-outline-light btn-pill me-2 ${
                                 activeRoute(tokensRoutes.tokensMeta) ? 'active' : ''
                               }`}
                             >

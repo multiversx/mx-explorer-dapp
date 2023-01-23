@@ -271,7 +271,7 @@ export const DataDecode = ({
               <FontAwesomeIcon
                 icon={faExclamationTriangle}
                 size="xs"
-                className="text-warning mr-1"
+                className="text-warning me-1"
               />
               <small className="text-warning"> {warning}</small>
             </div>

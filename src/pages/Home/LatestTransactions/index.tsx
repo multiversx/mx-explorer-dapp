@@ -126,8 +126,8 @@ export const LatestTransactions = () => {
                       >
                         <div className="d-flex flex-column overflow-hidden min-w-0">
                           <div className="d-flex flex-row mb-1 align-items-center justify-content-between">
-                            <div className="d-flex align-items-center mr-2">
-                              <div className="latest-item-icon mr-2">
+                            <div className="d-flex align-items-center me-2">
+                              <div className="latest-item-icon me-2">
                                 <FontAwesomeIcon icon={faExchangeAlt} />
                               </div>
                               <div className="transaction-value">
@@ -142,7 +142,7 @@ export const LatestTransactions = () => {
 
                           <div className="mb-1">
                             <div className="d-flex flex-row align-items-center text-secondary">
-                              <span className="mr-2">To:</span>
+                              <span className="me-2">To:</span>
                               <ScAddressIcon initiator={receiver} />
                               <NetworkLink
                                 to={urlBuilder.accountDetails(transaction.receiver)}
@@ -163,7 +163,7 @@ export const LatestTransactions = () => {
 
                           <div className="mb-1">
                             <div className="d-flex flex-row align-items-center text-secondary">
-                              <span className="mr-2">From:</span>
+                              <span className="me-2">From:</span>
                               {addressIsBech32(transaction.sender) ? (
                                 <>
                                   <ScAddressIcon initiator={transaction.sender} />
@@ -192,7 +192,7 @@ export const LatestTransactions = () => {
 
                           <div>
                             <div className="d-flex align-items-center">
-                              <span className="text-secondary mr-2">Hash:</span>
+                              <span className="text-secondary me-2">Hash:</span>
 
                               <NetworkLink
                                 to={`/transactions/${transaction.txHash}`}

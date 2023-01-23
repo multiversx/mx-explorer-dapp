@@ -15,7 +15,7 @@ export const CardItem = ({
   className?: string;
 }) => (
   <div className={`card-item px-2 py-3 d-flex align-items-center ${className}`}>
-    <div className="card-item-icon flex-shrink-0 mr-3">
+    <div className="card-item-icon flex-shrink-0 me-3">
       {icon && <FontAwesomeIcon icon={icon} />}
       {customIcon && <>{customIcon}</>}
     </div>
