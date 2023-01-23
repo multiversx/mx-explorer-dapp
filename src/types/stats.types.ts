@@ -8,3 +8,11 @@ export interface StatsType {
   roundsPassed: number;
   roundsPerEpoch: number;
 }
+
+export interface StatsSliceType extends StatsType {
+  statsFetched: boolean;
+  epochPercentage: number;
+  epochTotalTime: number;
+  epochTimeElapsed: number;
+  epochTimeRemaining: number;
+}
