@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NftEnumType } from 'types';
-import { CollectionSliceType } from 'types/collection.types';
+import { CollectionType } from 'types/collection.types';
 
-export const getInitialCollectionState = (): CollectionSliceType => {
+export const getInitialCollectionState = (): CollectionType => {
   return {
     collection: '',
     type: NftEnumType.NonFungibleESDT,
@@ -18,8 +18,6 @@ export const getInitialCollectionState = (): CollectionSliceType => {
     canAddSpecialRoles: false,
     canTransfer: false,
     owner: '',
-
-    collectionFetched: false,
   };
 };
 
@@ -27,7 +25,7 @@ export const collectionSlice = createSlice({
   name: 'collectionSlice',
   initialState: getInitialCollectionState(),
   reducers: {
-    setCollection: (state: CollectionSliceType, action: PayloadAction<CollectionSliceType>) => {
+    setCollection: (state: CollectionType, action: PayloadAction<CollectionType>) => {
       state.collection = action.payload.collection;
       state.type = action.payload.type;
       state.name = action.payload.name;
@@ -42,8 +40,6 @@ export const collectionSlice = createSlice({
       state.canAddSpecialRoles = action.payload.canAddSpecialRoles;
       state.canTransfer = action.payload.canTransfer;
       state.owner = action.payload.owner;
-
-      state.collectionFetched = action.payload.collectionFetched;
     },
   },
 });

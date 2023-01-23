@@ -10,11 +10,11 @@ import { useSelector } from 'react-redux';
 import { collectionSelector } from 'redux/selectors';
 
 export const CollectionDetails = () => {
-  const { collectionFetched, type } = useSelector(collectionSelector);
+  const { collection, type } = useSelector(collectionSelector);
 
   return (
     <>
-      {collectionFetched ? (
+      {collection ? (
         <>{type === NftEnumType.MetaESDT ? <CollectionDetailsRoles /> : <CollectionNfts />}</>
       ) : (
         <Loader />

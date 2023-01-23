@@ -13,7 +13,7 @@ import { FailedAccount } from './FailedAccount';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { activeNetworkSelector } from 'redux/selectors';
-import { setAccount } from 'redux/slices';
+import { setAccount, setAccountStaking } from 'redux/slices';
 
 export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
@@ -131,10 +131,11 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
             delegationLegacy.userWaitingStake !== '0' ||
             delegationLegacy.userActiveStake !== '0');
 
-        const showStake =
+        const showStake = Boolean(
           stake &&
-          (stake?.totalStaked !== '0' ||
-            (stake?.unstakedTokens && stake.unstakedTokens.length > 0));
+            (stake?.totalStaked !== '0' ||
+              (stake?.unstakedTokens && stake.unstakedTokens.length > 0))
+        );
 
         //const updatedContracts = contracts ? contracts.join(',') : undefined;
         const fields = [
@@ -148,7 +149,9 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
         ].join(',');
         const contracts = visibleDelegation.map((delegation) => delegation?.contract).join(',');
 
-        const stakingDataReady = stakeFetched && delegationFetched && delegationLegacyFetched;
+        const stakingDataReady = Boolean(
+          stakeFetched && delegationFetched && delegationLegacyFetched
+        );
         const stakingData = {
           stakingDataReady,
           delegation,
@@ -157,11 +160,11 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
           showStake,
           delegationLegacy,
           showDelegationLegacy,
-          bNtotalStaked,
-          bNtotalDelegation,
-          bNtotalLegacyDelegation,
-          bNtotalLocked,
-          bNtotalClaimable,
+          totalStaked: bNtotalStaked.toString(),
+          totalDelegation: bNtotalDelegation.toString(),
+          totalLegacyDelegation: bNtotalLegacyDelegation.toString(),
+          totalLocked: bNtotalLocked.toString(),
+          totalClaimable: bNtotalClaimable.toString(),
         };
 
         if (showDelegation || showDelegationLegacy) {
@@ -209,60 +212,60 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
                       }
                     });
 
-                    dispatch({
-                      type: 'setAccountStakingDetails',
-                      accountStakingDetails: {
+                    dispatch(
+                      setAccountStaking({
                         ...stakingData,
+                        accountStakingFetched: stakingDataReady,
                         providerDataReady: true,
                         delegationProviders: newProvidersData,
                         delegationLegacyIdentity,
-                      },
-                    });
+                      })
+                    );
                   }
 
-                  dispatch({
-                    type: 'setAccountStakingDetails',
-                    accountStakingDetails: {
+                  dispatch(
+                    setAccountStaking({
                       ...stakingData,
+                      accountStakingFetched: stakingDataReady,
                       providerDataReady: true,
                       delegationProviders: newProvidersData,
                       delegationLegacyIdentity,
-                    },
-                  });
+                    })
+                  );
                 });
               } else {
-                dispatch({
-                  type: 'setAccountStakingDetails',
-                  accountStakingDetails: {
+                dispatch(
+                  setAccountStaking({
                     ...stakingData,
+                    accountStakingFetched: stakingDataReady,
                     providerDataReady: true,
                     delegationProviders: providersData.data,
                     delegationLegacyIdentity,
-                  },
-                });
+                  })
+                );
               }
             } else {
-              dispatch({
-                type: 'setAccountStakingDetails',
-                accountStakingDetails: {
+              dispatch(
+                setAccountStaking({
                   ...stakingData,
+                  accountStakingFetched: stakingDataReady,
                   providerDataReady: providersData.success,
                   delegationProviders,
                   delegationLegacyIdentity,
-                },
-              });
+                })
+              );
             }
           });
         } else {
-          dispatch({
-            type: 'setAccountStakingDetails',
-            accountStakingDetails: {
+          dispatch(
+            setAccountStaking({
               ...stakingData,
+              accountStakingFetched: stakingDataReady,
               providerDataReady: true,
               delegationProviders,
               delegationLegacyIdentity,
-            },
-          });
+            })
+          );
         }
       });
     }

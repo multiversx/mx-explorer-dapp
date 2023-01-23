@@ -30,10 +30,6 @@ export interface AccountType {
   username?: string;
 }
 
-export interface AccountSliceType extends AccountType {
-  accountFetched: boolean;
-}
-
 export interface AccountStakingSliceType {
   accountStakingFetched: boolean;
 

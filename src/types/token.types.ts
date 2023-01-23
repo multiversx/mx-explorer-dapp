@@ -37,10 +37,6 @@ export interface TokenType {
   roles?: TokenRolesType[];
 }
 
-export interface TokenSliceType extends TokenType {
-  tokenFetched: boolean;
-}
-
 export interface TokenRolesType extends RolesType {
   canLocalMint: boolean;
   canLocalBurn: boolean;
