@@ -213,7 +213,6 @@ const wrapper = async ({
       const params = { query };
 
       const {
-        // @ts-ignore
         data: { count }
       } = await axios.post(url, params, { timeout });
 
@@ -232,7 +231,6 @@ const wrapper = async ({
 
       const {
         data: {
-          // @ts-ignore
           hits: { hits }
         }
       } = await axios.post(url, params, { timeout });
@@ -253,7 +251,6 @@ const wrapper = async ({
           try {
             const [
               {
-                // @ts-ignore
                 data: { count: txCount }
               },
               {
@@ -299,7 +296,6 @@ const wrapper = async ({
 
             results = { data };
           } catch (error) {
-            // @ts-ignore
             throw new Error(error);
           }
         } else {
@@ -329,16 +325,14 @@ const wrapper = async ({
                 elasticUrl
               });
 
-              // @ts-ignore
               _source.proposer = publicKeys[_source.proposer];
-              // @ts-ignore
+
               _source.validators = _source.validators.map(
                 (index: any) => publicKeys[index]
               );
             }
 
             if (collection === 'rounds') {
-              // @ts-ignore
               delete _source.signersIndexes;
             }
 
@@ -350,21 +344,16 @@ const wrapper = async ({
               });
             }
 
-            // @ts-ignore
             if (_source.shardId !== undefined) {
-              // @ts-ignore
               _source.shard = _source.shardId;
-              // @ts-ignore
+
               delete _source.shardId;
             }
 
-            // @ts-ignore
             if (_source.searchOrder !== undefined) {
-              // @ts-ignore
               delete _source.searchOrder;
             }
 
-            // @ts-ignore
             _source = Object.keys(_source)
               .sort()
               .reduce((result: any, key) => {
@@ -372,11 +361,10 @@ const wrapper = async ({
                 return result;
               }, {});
 
-            // @ts-ignore
             results = { data: { ...hash, ..._source } };
           } catch (error) {
             // if transaction not found in elastic
-            // @ts-ignore
+
             if (collection === 'transactions' && error.response) {
               try {
                 const {
@@ -424,11 +412,9 @@ const wrapper = async ({
                   }
                 };
               } catch (error) {
-                // @ts-ignore
                 throw new Error(error);
               }
             } else {
-              // @ts-ignore
               throw new Error(error);
             }
           }
