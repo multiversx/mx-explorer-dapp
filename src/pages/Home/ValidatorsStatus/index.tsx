@@ -108,14 +108,14 @@ export const ValidatorsStatus = () => {
               <div className='col ps-0 d-flex align-items-center continent-name'>
                 {i + 1}. {continent}
               </div>
-              <div className='col d-flex align-items-center text-secondary justify-content-end'>
+              <div className='col d-flex align-items-center text-neutral-300 justify-content-end'>
                 {nodes > 0
                   ? `${nodes.toLocaleString('en')} node${
                       nodes === 1 ? '' : 's'
                     }`
                   : '...'}
               </div>
-              <div className='col pe-0 d-flex align-items-center text-secondary justify-content-end'>
+              <div className='col pe-0 d-flex align-items-center text-neutral-300 justify-content-end'>
                 {percentage > 0 ? `${percentage}%` : '...'}
               </div>
             </div>

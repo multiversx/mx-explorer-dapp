@@ -14,7 +14,7 @@ export const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
             {nodeData.position.toLocaleString('en')}
           </div>
         ) : (
-          <span className='text-secondary'>N/A</span>
+          <span className='text-neutral-300'>N/A</span>
         )}
       </td>
       <td>
@@ -33,21 +33,21 @@ export const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
         {nodeData.name ? (
           <div className='truncate-item-lg'>{nodeData.name}</div>
         ) : (
-          <span className='text-secondary'>N/A</span>
+          <span className='text-neutral-300'>N/A</span>
         )}
       </td>
       <td>
         {nodeData.version ? (
           nodeData.version
         ) : (
-          <span className='text-secondary'>N/A</span>
+          <span className='text-neutral-300'>N/A</span>
         )}
       </td>
       {/* <td className="text-right">
         {nodeData.uptimeSec !== undefined && nodeData.uptimeSec !== 0 ? (
           <span>{nodeData.uptime}%</span>
         ) : (
-          <span className="text-secondary">N/A</span>
+          <span className="text-neutral-300">N/A</span>
         )}
       </td> */}
       <td>

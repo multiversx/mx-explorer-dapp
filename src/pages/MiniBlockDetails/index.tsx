@@ -202,7 +202,7 @@ export const MiniBlockDetails = () => {
                                   <Trim text={miniBlock.senderBlockHash} />
                                 </NetworkLink>
                               ) : (
-                                <span className='text-secondary'>N/A</span>
+                                <span className='text-neutral-300'>N/A</span>
                               )}
                             </div>
                           </DetailItem>
@@ -217,7 +217,7 @@ export const MiniBlockDetails = () => {
                                   <Trim text={miniBlock.receiverBlockHash} />
                                 </NetworkLink>
                               ) : (
-                                <span className='text-secondary'>N/A</span>
+                                <span className='text-neutral-300'>N/A</span>
                               )}
                             </div>
                           </DetailItem>

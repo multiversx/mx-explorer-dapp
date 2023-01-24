@@ -60,7 +60,7 @@ export const RowIcon = ({
           <Overlay title='Observer'>
             <FontAwesomeIcon
               icon={icon}
-              className='text-secondary me-1'
+              className='text-neutral-300 me-1'
               size={small ? 'xs' : '1x'}
             />
           </Overlay>
@@ -71,7 +71,7 @@ export const RowIcon = ({
           <Overlay title='New'>
             <FontAwesomeIcon
               icon={icon}
-              className='text-secondary me-1'
+              className='text-neutral-300 me-1'
               size={small ? 'xs' : '1x'}
             />
           </Overlay>
@@ -82,7 +82,7 @@ export const RowIcon = ({
           <Overlay title='Inactive'>
             <FontAwesomeIcon
               icon={icon}
-              className='text-secondary me-1'
+              className='text-neutral-300 me-1'
               size={small ? 'xs' : '1x'}
             />
           </Overlay>
@@ -93,7 +93,7 @@ export const RowIcon = ({
           <Overlay title='Changing shard'>
             <FontAwesomeIcon
               icon={icon}
-              className='text-secondary me-1'
+              className='text-neutral-300 me-1'
               size={small ? 'xs' : '1x'}
             />
           </Overlay>
@@ -104,7 +104,7 @@ export const RowIcon = ({
           <Overlay title='Waiting'>
             <FontAwesomeIcon
               icon={icon}
-              className='text-secondary me-1'
+              className='text-neutral-300 me-1'
               size={small ? 'xs' : '1x'}
             />
           </Overlay>
@@ -115,7 +115,7 @@ export const RowIcon = ({
           <Overlay title='Queued'>
             <FontAwesomeIcon
               icon={icon}
-              className='text-secondary me-1'
+              className='text-neutral-300 me-1'
               size={small ? 'xs' : '1x'}
             />
           </Overlay>

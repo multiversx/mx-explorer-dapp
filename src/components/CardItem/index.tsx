@@ -21,7 +21,7 @@ export const CardItem = ({
     </div>
 
     <div className='min-w-0 w-100'>
-      <div className='card-item-title text-secondary'>{title}</div>
+      <div className='card-item-title text-neutral-300'>{title}</div>
       <div className='card-item-value d-flex flex-row flex-nowrap'>
         {children}
       </div>

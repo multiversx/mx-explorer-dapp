@@ -7,7 +7,7 @@ export const ChartMetrics = ({ metrics }: { metrics: MetricType[] }) => {
     <div className='chart-metrics ps-3'>
       {metrics.map((metric, metricIndex) => (
         <div key={`${metric.label}-${metric.value}`} className='metric'>
-          <span className='text-secondary small me-3'>{metric.label}:</span>
+          <span className='text-neutral-300 small me-3'>{metric.label}:</span>
           <span>{metric.value}</span>
         </div>
       ))}

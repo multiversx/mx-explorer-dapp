@@ -61,7 +61,11 @@
 }
 
 @mixin radial-bg() {
-  background: radial-gradient(circle, rgba(var(--primary-light), 0.25) 60%, rgba(0, 0, 0, 0) 40%)
+  background: radial-gradient(
+      circle,
+      rgba(var(--primary-light), 0.25) 60%,
+      rgba(0, 0, 0, 0) 40%
+    )
     no-repeat;
 }
 
@@ -216,7 +220,7 @@
         }
 
         small {
-          @extend .text-secondary;
+          @extend .text-neutral-300;
           font-size: 85%;
         }
       }

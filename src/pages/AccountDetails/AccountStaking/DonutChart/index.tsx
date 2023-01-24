@@ -38,7 +38,7 @@ export const DonutChart = ({
         <h6 className='mb-1 h5'>
           <Denominate value={bNtotalLocked.toString(10)} decimals={2} />
         </h6>
-        <p className='text-secondary small mb-0'>
+        <p className='text-neutral-300 small mb-0'>
           <UsdValue input={bNtotalLocked.toString(10)} showPrefix />
         </p>
       </div>

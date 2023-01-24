@@ -67,7 +67,7 @@ export const StandardRow = ({
         {nodeData.name ? (
           <div className='truncate-item-lg'>{nodeData.name}</div>
         ) : (
-          <span className='text-secondary'>N/A</span>
+          <span className='text-neutral-300'>N/A</span>
         )}
       </td>
       <td>
@@ -80,7 +80,7 @@ export const StandardRow = ({
               <ShardSpan shard={nodeData.shard} />
             </NetworkLink>
           ) : (
-            <span className='text-secondary'>N/A</span>
+            <span className='text-neutral-300'>N/A</span>
           )}
         </div>
       </td>
@@ -88,14 +88,14 @@ export const StandardRow = ({
         {nodeData.version ? (
           nodeData.version
         ) : (
-          <span className='text-secondary'>N/A</span>
+          <span className='text-neutral-300'>N/A</span>
         )}
       </td>
       <td className='text-right' style={{ maxWidth: '8rem' }}>
         {nodeData.validatorIgnoredSignatures ? (
           nodeData.validatorIgnoredSignatures.toLocaleString('en')
         ) : (
-          <span className='text-secondary'>N/A</span>
+          <span className='text-neutral-300'>N/A</span>
         )}
       </td>
       <td>
@@ -114,14 +114,14 @@ export const StandardRow = ({
         {!isNaN(nodeData.tempRating) ? (
           Math.floor(nodeData.tempRating)
         ) : (
-          <span className='text-secondary'>N/A</span>
+          <span className='text-neutral-300'>N/A</span>
         )}
       </td>
       <td className='text-right'>
         {nodeData.nonce ? (
           nodeData.nonce
         ) : (
-          <span className='text-secondary'>N/A</span>
+          <span className='text-neutral-300'>N/A</span>
         )}
       </td>
 
@@ -130,7 +130,7 @@ export const StandardRow = ({
           {nodeData.position ? (
             <div className='truncate-item-lg'>{nodeData.position}</div>
           ) : (
-            <span className='text-secondary'>N/A</span>
+            <span className='text-neutral-300'>N/A</span>
           )}
         </td>
       )}
