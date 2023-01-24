@@ -2,8 +2,8 @@ import React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 
 import { useAdapter, Loader, PageState, SharedIdentity } from 'components';
-import { types, useIsMainnet, useGetHash } from 'helpers';
-import { IdentityType } from 'types';
+import { useIsMainnet, useGetHash } from 'helpers';
+import { IdentityType, ProviderType } from 'types';
 
 import { ProviderDetailsCard } from './ProviderDetailsCard';
 
@@ -24,7 +24,7 @@ export const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   const isMainnet = useIsMainnet();
 
   const [provider, setProvider] =
-    React.useState<ProviderLayoutType<types.ProviderType>>(initialState);
+    React.useState<ProviderLayoutType<ProviderType>>(initialState);
   const [identity, setIdentity] =
     React.useState<ProviderLayoutType<IdentityType>>(initialState);
 

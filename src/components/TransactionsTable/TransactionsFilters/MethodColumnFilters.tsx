@@ -45,7 +45,7 @@ export const MethodColumnFilters = ({
           id='popover-positioned-bottom'
           className='border popover-xs bg-light'
         >
-          <Popover.Content>
+          <Popover.Body>
             <div className='p-3 text-dark'>
               {searchMethods.length > 0 && (
                 <div className='filter-block'>
@@ -60,7 +60,7 @@ export const MethodColumnFilters = ({
                 </div>
               )}
             </div>
-          </Popover.Content>
+          </Popover.Body>
         </Popover>
       }
     >

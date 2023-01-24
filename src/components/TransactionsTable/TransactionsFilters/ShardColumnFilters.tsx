@@ -67,7 +67,7 @@ export const ShardColumnFilters = ({
           className='border popover-xs bg-light'
         >
           {stateShards.length > 0 && (
-            <Popover.Content>
+            <Popover.Body>
               <div className='p-3 text-dark'>
                 {!inactiveFilters.includes(TxFiltersEnum.senderShard) && (
                   <div className='filter-block'>
@@ -91,7 +91,7 @@ export const ShardColumnFilters = ({
                   </div>
                 )}
               </div>
-            </Popover.Content>
+            </Popover.Body>
           )}
         </Popover>
       }

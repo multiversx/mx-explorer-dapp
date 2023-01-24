@@ -14,7 +14,7 @@ export const ChartOptions = ({
   className?: string;
 }) => {
   const onToggle = React.useCallback(
-    (needle) => {
+    (needle: string) => {
       setToggle((currentToggle) => ({
         ...currentToggle,
         [needle]: !currentToggle[needle]
@@ -31,7 +31,7 @@ export const ChartOptions = ({
           style={{
             textDecoration: toggle[option.key] ? 'none' : 'line-through'
           }}
-          onClick={() => onToggle(option.key)}
+          onClick={() => onToggle(String(option.key))}
           className='option'
         >
           <span style={{ backgroundColor: option.color }} className='dot' />

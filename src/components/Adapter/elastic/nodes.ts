@@ -116,6 +116,6 @@ export const nodes = async ({
     return results;
   } catch (error) {
     console.error('nodes error', error);
-    throw new Error(error);
+    throw new Error(error as any);
   }
 };

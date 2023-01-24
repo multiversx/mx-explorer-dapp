@@ -11,12 +11,12 @@ import {
   SharedIdentity,
   Trim
 } from 'components';
-import { PercentageStepType } from 'components/MultilayerPercentageBar';
+import { NodesVersionsType } from 'types';
 
 import { IdentityType } from 'types';
 
 const prepareStakeDistribution = (identity: IdentityType) => {
-  const distribution: PercentageStepType[] = [];
+  const distribution: NodesVersionsType[] = [];
 
   if (identity.distribution) {
     Object.keys(identity.distribution).forEach((key) => {

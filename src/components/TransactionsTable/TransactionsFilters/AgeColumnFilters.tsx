@@ -35,9 +35,9 @@ export const AgeColumnFilters = ({
       rootClose
       overlay={
         <Popover id='popover-positioned-bottom' className='border bg-light'>
-          <Popover.Content className='p-0'>
+          <Popover.Body className='p-0'>
             <DateFilter />
-          </Popover.Content>
+          </Popover.Body>
         </Popover>
       }
     >

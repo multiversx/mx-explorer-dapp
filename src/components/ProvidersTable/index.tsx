@@ -8,7 +8,8 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Denominate, NetworkLink, PageState, Trim } from 'components';
 import { CopyButton } from 'components/CopyButton';
 import { IdentityAvatar } from 'components/SharedIdentity/IdentityAvatar';
-import { types, urlBuilder } from 'helpers';
+import { urlBuilder } from 'helpers';
+import { ProviderType } from 'types';
 import { DelegationCap } from './DelegationCap';
 import { PercentageFilled, getPercentageFilled } from './PercentageFilled';
 
@@ -39,13 +40,13 @@ export const ProvidersTable = ({
   providers,
   showIdentity = true
 }: {
-  providers: types.ProviderType[];
+  providers: ProviderType[];
   showIdentity?: boolean;
 }) => {
   const [originalProviders /*setOriginalProviders*/] =
-    React.useState<types.ProviderType[]>(providers);
+    React.useState<ProviderType[]>(providers);
   const [displayProviders, setDisplayProviders] =
-    React.useState<types.ProviderType[]>(providers);
+    React.useState<ProviderType[]>(providers);
   const [sort, setSort] = React.useState<SortType>([undefined, undefined]);
   const [sortField, sortDirection] = sort;
 
@@ -68,7 +69,7 @@ export const ProvidersTable = ({
     });
   };
 
-  const sortProviders = (displayProviders: types.ProviderType[]) => {
+  const sortProviders = (displayProviders: ProviderType[]) => {
     if (sortField) {
       const sortParams = sortDirection === 'asc' ? [1, -1] : [-1, 1];
 

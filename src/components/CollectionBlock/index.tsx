@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { NetworkLink } from 'components';
-import { types, urlBuilder } from 'helpers';
+import { urlBuilder } from 'helpers';
+import { NftType } from 'types';
 
-export const CollectionBlock = ({ nft }: { nft: types.NftType }) => {
+export const CollectionBlock = ({ nft }: { nft: NftType }) => {
   return (
     <div className='collection-block d-flex text-truncate'>
       <NetworkLink

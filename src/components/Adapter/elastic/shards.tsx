@@ -31,6 +31,6 @@ export const shards = async ({ proxyUrl: nodeUrl }: { proxyUrl: string }) => {
     return { data: shards };
   } catch (error) {
     console.error('shards error', error);
-    throw new Error(error);
+    throw new Error(error as any);
   }
 };
