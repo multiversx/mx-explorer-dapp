@@ -5,28 +5,28 @@
   }
 
   .step-1 {
-    background-color: $primary;
+    background-color: var(--primary);
   }
 
   .step-2 {
-    background-color: darken($primary, 20%);
+    background-color: var(--primary);
   }
 
   &.two-items {
     .step-2 {
-      background-color: darken($primary, 30%);
+      background-color: var(--primary);
     }
   }
 
   .step-3 {
-    background-color: darken($primary, 30%);
+    background-color: var(--primary);
   }
 
   .step-4 {
-    background-color: darken($primary, 40%);
+    background-color: var(--primary);
   }
 
   .step-5 {
-    background-color: darken($primary, 50%);
+    background-color: var(--primary);
   }
 }

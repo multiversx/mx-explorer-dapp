@@ -16,9 +16,9 @@
     }
     font-size: 0.425rem;
     text-align: center;
-    border: 1px solid $muted;
+    border: 1px solid var(--muted);
     .default-image {
-      fill: $muted;
+      fill: var(--muted);
     }
   }
   .provider-title {
@@ -41,7 +41,7 @@
       align-items: center;
       padding: 0.1875rem 0.5rem 0 0;
       svg {
-        color: $muted;
+        color: var(--muted);
       }
       .percentage-led svg {
         width: 0.75rem !important;
@@ -54,7 +54,7 @@
   }
   .provider-image svg,
   .provider-title svg {
-    color: $muted;
+    color: var(--muted);
   }
   .trim .left span,
   .trim .right span,

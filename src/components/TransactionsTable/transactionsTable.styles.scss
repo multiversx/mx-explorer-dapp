@@ -49,9 +49,9 @@
 .filter-block {
   margin-bottom: 1rem;
   .form-control {
-    background-color: $body-bg;
+    background-color: var(--body-background);
     &:hover {
-      border-color: $primary;
+      border-color: var(--primary);
     }
   }
   .input-group-seamless.input-group.has-validation > .form-control {
@@ -72,10 +72,10 @@
   .input-group.input-group-seamless > .input-group-append .input-group-text,
   .input-group.input-group-seamless > .input-group-prepend .input-group-text {
     padding: 10px 8px;
-    color: $muted;
+    color: var(--muted);
     font-size: 0.75rem;
     &:hover {
-      color: $primary;
+      color: var(--primary);
     }
   }
 
@@ -85,7 +85,7 @@
     margin-bottom: 8px;
     margin-top: 8px;
     box-sizing: border-box;
-    background-color: $muted;
+    background-color: var(--muted);
   }
 }
 .filter-block:last-of-type {

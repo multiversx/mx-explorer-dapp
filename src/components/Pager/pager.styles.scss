@@ -12,7 +12,7 @@
   .btns-contrainer {
     display: flex;
     overflow: hidden;
-    border-color: $primary-light !important;
+    border-color: var(--primary-light) !important;
 
     &.left {
       border-top-left-radius: 0.25rem;
@@ -27,15 +27,15 @@
     }
 
     &.inactive {
-      border-color: $light !important;
+      border-color: var(--light) !important;
 
       .btn {
-        color: $muted !important;
-        background-color: $light;
+        color: var(--muted) !important;
+        background-color: var(--light);
 
         &:hover {
-          color: $muted !important;
-          background-color: $light;
+          color: var(--muted) !important;
+          background-color: var(--light);
         }
       }
     }
@@ -46,7 +46,7 @@
   }
 
   .current-page {
-    border-color: $primary-light !important;
+    border-color: var(--primary-light) !important;
     // font-size: 0.8rem;
   }
 

@@ -5,7 +5,7 @@
   .main-symbol,
   .main-logo,
   .main-logo-short {
-    fill: $body;
+    fill: var(--body);
   }
 
   .dropdown-toggle {
@@ -20,7 +20,7 @@
   }
 
   .dropdown-menu {
-    border: 1px solid $border-color !important;
+    border: 1px solid var(--border-color) !important;
     border-radius: 0.25rem !important;
     top: -0.5rem !important;
     width: auto !important;
@@ -34,12 +34,12 @@
     vertical-align: -0.16rem;
 
     path {
-      fill: $muted;
+      fill: var(--muted);
     }
 
     &:hover {
       path {
-        fill: $primary;
+        fill: var(--primary);
       }
     }
   }
@@ -51,11 +51,11 @@
       display: flex;
       border-top: 0.25rem solid transparent;
       border-bottom: 0.25rem solid transparent;
-      color: $secondary;
+      color: var(--secondary);
 
       &.active {
-        color: $primary;
-        border-bottom-color: $primary;
+        color: var(--primary);
+        border-bottom-color: var(--primary);
       }
     }
   }
@@ -63,7 +63,7 @@
 
 .main-navbar,
 .header-navbar {
-  background: $card-bg;
+  background: var(--card-bg);
 
   .nav-link,
   .nav-link-icon {
@@ -72,7 +72,7 @@
 
     .material-icons {
       transition: color 200ms ease;
-      color: $muted;
+      color: var(--muted);
       top: 0;
 
       &.icon-sm {
@@ -81,20 +81,20 @@
     }
 
     &:hover {
-      color: $primary;
+      color: var(--primary);
 
       .material-icons {
-        color: $primary;
+        color: var(--primary);
       }
     }
   }
 
   .nav-link:hover {
     .nav-link-icon {
-      color: $primary;
+      color: var(--primary);
 
       .material-icons {
-        color: $primary;
+        color: var(--primary);
       }
     }
   }
@@ -103,7 +103,7 @@
     .dropdown-item {
       &.active {
         background-color: transparent;
-        color: $primary;
+        color: var(--primary);
       }
     }
   }
@@ -116,13 +116,13 @@
 
     &:hover {
       .nav-link-icon {
-        color: $primary;
+        color: var(--primary);
       }
     }
   }
 
   .nav-link-icon {
-    color: $secondary;
+    color: var(--secondary);
   }
 
   .dropdown-toggle {

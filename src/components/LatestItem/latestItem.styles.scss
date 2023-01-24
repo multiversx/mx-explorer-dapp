@@ -7,7 +7,7 @@
 
   @extend .m-3;
   @extend .my-lg-4;
-  @extend .mx-lg-spacer;
+  @extend .mx-lg-spacer !optional;
 
   display: flex;
   position: relative;
@@ -21,7 +21,11 @@
     height: 100%;
     width: 1rem;
     z-index: 999;
-    background: linear-gradient(90deg, rgba($card-bg, 0.3) 30%, rgba($card-bg, 0.7) 50%);
+    background: linear-gradient(
+      90deg,
+      rgba(var(--card-bg), 0.3) 30%,
+      rgba(var(--card-bg), 0.7) 50%
+    );
   }
 
   .latest-item {
@@ -43,25 +47,24 @@
 
     .latest-item-card {
       @extend .p-3;
-      @include left-bar($primary);
+      @include left-bar(var(--primary));
 
       max-width: $itemMaxWidth;
       display: flex;
       flex-direction: column;
       border-radius: 0.3rem;
-      border: 1px solid $border-color;
-      box-shadow: 0 2px 4px 0 rgba($standard-box-shadow, 0.2);
+      border: 1px solid var(--border-color);
 
       &.status-text-success {
-        @include left-bar($success);
+        @include left-bar(var(--success));
       }
 
       &.status-text-warning {
-        @include left-bar($warning);
+        @include left-bar(var(--watning));
       }
 
       &.status-text-danger {
-        @include left-bar($danger);
+        @include left-bar(var(--danger));
       }
 
       .latest-item-icon {
@@ -72,12 +75,12 @@
         border-radius: 50%;
         font-size: 0.9375rem;
         text-align: center;
-        color: $secondary;
+        color: var(--secondary);
         width: 2.1875rem;
         height: 2.1875rem;
         line-height: 2.1875rem;
-        background: $light;
-        box-shadow: inset 0 0 3px rgba($secondary, 0.2);
+        background: var(--light);
+        box-shadow: inset 0 0 3px rgba(var(--secondary), 0.2);
         flex-shrink: 0;
       }
 

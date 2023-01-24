@@ -13,7 +13,7 @@
   }
 
   .react-datepicker {
-    background-color: $light;
+    background-color: var(--light);
 
     .react-datepicker__navigation {
       outline: none;
@@ -21,16 +21,16 @@
 
     .react-datepicker__day--outside-month {
       &:not(.react-datepicker__day--in-range) {
-        color: $muted;
+        color: var(--muted);
       }
     }
 
     .react-datepicker__day--keyboard-selected {
-      background-color: $primary;
+      background-color: var(--primary);
 
       &:not(.react-datepicker__day--in-range) {
-        background-color: $light;
-        color: $body;
+        background-color: var(--light);
+        color: var(--body);
       }
     }
   }

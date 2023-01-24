@@ -4,8 +4,8 @@
   }
 
   .rsm-svg {
-    fill: $map-bg; // background color
-    stroke: $secondary; // border color
+    fill: var(--map-bg); // background color
+    stroke: var(--secondary); // border color
     stroke-width: 0.015rem;
 
     .rsm-geography {
@@ -15,16 +15,16 @@
     }
 
     .simple-map-marker {
-      fill: $primary;
+      fill: var(--primary);
 
       &.pulse-marker {
-        fill: lighten($primary, 15%);
+        fill: var(--primary);
       }
     }
 
     .pulse {
       fill: none;
-      stroke: $primary;
+      stroke: var(--primary);
       animation-duration: 0.9s;
       animation-name: pulse;
       animation-iteration-count: 1;
