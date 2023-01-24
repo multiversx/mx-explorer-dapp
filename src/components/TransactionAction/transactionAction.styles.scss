@@ -15,6 +15,9 @@
     margin-right: 0.25rem;
     margin-left: 0;
   }
+  span:not([class]):not([data-testid]) {
+    color: var(--neutral-400);
+  }
   @include media-breakpoint-up(sm) {
     .action-step {
       display: flex;

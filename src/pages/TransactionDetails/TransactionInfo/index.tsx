@@ -232,28 +232,25 @@ export const TransactionInfo = ({
                   </div>
                 </DetailItem>
 
-                <DetailItem title='Age'>
+                <DetailItem title='Age' className='text-neutral-400'>
                   {transaction.timestamp !== undefined ? (
                     <div className='d-flex flex-wrap align-items-center'>
                       {isTxPending ? (
                         <FontAwesomeIcon
                           icon={faSpinner}
-                          className='me-2 text-neutral-300 fa-spin slow-spin'
+                          className='me-2  fa-spin slow-spin'
                         />
                       ) : (
-                        <FontAwesomeIcon
-                          icon={faClock}
-                          className='me-2 text-neutral-300'
-                        />
+                        <FontAwesomeIcon icon={faClock} className='me-2 ' />
                       )}
                       <TimeAgo value={transaction.timestamp} />
                       &nbsp;
-                      <span className='text-neutral-300'>
+                      <span>
                         ({dateFormatted(transaction.timestamp, false, true)})
                       </span>
                     </div>
                   ) : (
-                    <span className='text-neutral-300'>N/A</span>
+                    <span>N/A</span>
                   )}
                 </DetailItem>
 
@@ -270,7 +267,7 @@ export const TransactionInfo = ({
                         <CopyButton text={transaction.miniBlockHash} />
                       </>
                     ) : (
-                      <span className='text-neutral-300'>N/A</span>
+                      <span>N/A</span>
                     )}
                   </div>
                 </DetailItem>
@@ -310,7 +307,7 @@ export const TransactionInfo = ({
                   <div className='d-flex flex-column'>
                     <div className='d-flex align-items-center'>
                       {isContract(transaction.receiver) ? (
-                        <span className='me-2'>Contract</span>
+                        <span className='me-2 text-neutral-400'>Contract</span>
                       ) : (
                         ''
                       )}
@@ -343,7 +340,6 @@ export const TransactionInfo = ({
                       <div className='d-flex ms-1 text-break-all'>
                         <FontAwesomeIcon
                           icon={faAngleDown}
-                          className='text-neutral-300'
                           style={{ marginTop: '2px' }}
                           transform={{ rotate: 45 }}
                         />
@@ -359,7 +355,7 @@ export const TransactionInfo = ({
 
                 <DetailItem title='Value'>
                   {formattedTxValue} {egldLabel}{' '}
-                  <span className='text-neutral-300'>
+                  <span className='text-neutral-400'>
                     {transaction.price !== undefined ? (
                       <>
                         (
@@ -379,7 +375,9 @@ export const TransactionInfo = ({
                 {transaction.action && transaction.action.category && (
                   <>
                     <DetailItem title='Method'>
-                      {getTransactionMethod(transaction)}
+                      <div className='badge badge-outline badge-outline-green-alt'>
+                        {getTransactionMethod(transaction)}
+                      </div>
                     </DetailItem>
                     {transaction.action.category !==
                       TxActionCategoryEnum.scCall && (
@@ -395,7 +393,7 @@ export const TransactionInfo = ({
                     title={
                       <>
                         <span className='me-2'>Token Operations</span>
-                        <span className='badge badge-secondary badge-pill font-weight-normal'>
+                        <span className='badge badge-outline badge-outline-grey'>
                           {visibleOperations.length}
                         </span>
                       </>
@@ -412,7 +410,7 @@ export const TransactionInfo = ({
                   {transaction.gasUsed !== undefined ? (
                     <>
                       {transactionFee} {egldLabel}{' '}
-                      <span className='text-neutral-300'>
+                      <span className='text-neutral-400'>
                         {transaction.price !== undefined ? (
                           <>
                             (
@@ -429,7 +427,7 @@ export const TransactionInfo = ({
                       </span>
                     </>
                   ) : (
-                    <span className='text-neutral-300'>N/A</span>
+                    <span>N/A</span>
                   )}
                 </DetailItem>
 
@@ -437,7 +435,7 @@ export const TransactionInfo = ({
                   {transaction.price !== undefined ? (
                     <>{`$${new BigNumber(transaction.price).toFormat(2)}`}</>
                   ) : (
-                    <span className='text-neutral-300'>N/A</span>
+                    <span>N/A</span>
                   )}
                 </DetailItem>
 
@@ -445,7 +443,7 @@ export const TransactionInfo = ({
                   {transaction.gasLimit !== undefined ? (
                     <>{transaction.gasLimit.toLocaleString('en')}</>
                   ) : (
-                    <span className='text-neutral-300'>N/A</span>
+                    <span>N/A</span>
                   )}
                 </DetailItem>
 
@@ -453,7 +451,7 @@ export const TransactionInfo = ({
                   {transaction.gasUsed !== undefined ? (
                     <>{transaction.gasUsed.toLocaleString('en')}</>
                   ) : (
-                    <span className='text-neutral-300'>N/A</span>
+                    <span>N/A</span>
                   )}
                 </DetailItem>
 
@@ -464,7 +462,7 @@ export const TransactionInfo = ({
                       showLastNonZeroDecimal
                     />
                   ) : (
-                    <span className='text-neutral-300'>N/A</span>
+                    <span>N/A</span>
                   )}
                 </DetailItem>
 

@@ -145,7 +145,7 @@ const OperationBlock = ({
         isFullSize
           ? 'col-12'
           : ` pe-xl-0 ${
-              operationAssets ? 'mw-lg-6 mw-xl-4' : 'col-lg-6 col-xl-4'
+              operationAssets ? 'w-auto mw-lg-6 mw-xl-4' : 'col-lg-6 col-xl-4'
             }`
       }`}
     >

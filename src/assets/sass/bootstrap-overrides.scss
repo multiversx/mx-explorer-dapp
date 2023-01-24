@@ -14,7 +14,7 @@
   th {
     font-weight: 400;
     background-color: rgba(38, 38, 38, 0.6);
-    padding: 0.825rem;
+    padding: 1rem;
     border-bottom-width: 0;
     &:first-of-type {
       border-top-left-radius: 0.5rem;
@@ -26,8 +26,11 @@
     }
   }
   td {
-    padding-top: 0.825rem;
-    padding-bottom: 0.825rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    &:first-of-type {
+      padding-left: 1rem;
+    }
   }
 }
 
