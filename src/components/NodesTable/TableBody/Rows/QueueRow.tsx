@@ -43,7 +43,7 @@ export const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
           <span className='text-neutral-300'>N/A</span>
         )}
       </td>
-      {/* <td className="text-right">
+      {/* <td className="text-end">
         {nodeData.uptimeSec !== undefined && nodeData.uptimeSec !== 0 ? (
           <span>{nodeData.uptime}%</span>
         ) : (

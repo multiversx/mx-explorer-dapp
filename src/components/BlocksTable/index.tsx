@@ -29,9 +29,9 @@ export const BlocksTable = ({
             <th>Age</th>
             <th>Txns</th>
             <th>Shard</th>
-            <th className='text-right'>Size</th>
-            <th className='text-right'>Gas Used</th>
-            <th className={showProposerIdentity ? '' : 'text-right'}>
+            <th className='text-end'>Size</th>
+            <th className='text-end'>Gas Used</th>
+            <th className={showProposerIdentity ? '' : 'text-end'}>
               Block Hash
             </th>
             {showProposerIdentity && <th>Leader</th>}
@@ -71,7 +71,7 @@ export const BlocksTable = ({
                   )}
                 </div>
               </td>
-              <td className='text-right'>
+              <td className='text-end'>
                 {block.sizeTxs !== undefined
                   ? sizeFormat(block.size + block.sizeTxs)
                   : sizeFormat(block.size)}

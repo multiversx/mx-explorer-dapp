@@ -104,11 +104,9 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
             <div className='ms-3'>{stakePercentLabel}</div>
           </div>
         </td>
-        <td className='text-right'>
-          {identity.validators.toLocaleString('en')}
-        </td>
-        {/* <td className="text-right">{Math.round(identity.score).toLocaleString('en')}</td> */}
-        <td className='text-right'>
+        <td className='text-end'>{identity.validators.toLocaleString('en')}</td>
+        {/* <td className="text-end">{Math.round(identity.score).toLocaleString('en')}</td> */}
+        <td className='text-end'>
           <CarretDown className='details-arrow' height='8' />
         </td>
       </tr>

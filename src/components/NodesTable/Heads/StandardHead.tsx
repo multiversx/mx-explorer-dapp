@@ -25,29 +25,29 @@ export const StandardHead = ({
       <Sort id='version' field='Version' />
     </th>
     <th
-      className='text-right'
+      className='text-end'
       data-testid='validatorIgnoredSignatures'
       style={{ maxWidth: '8rem' }}
     >
       <Sort id='validatorIgnoredSignatures' field='Ignored Signatures' />
     </th>
-    <th className='text-right' data-testid='status'>
+    <th className='text-end' data-testid='status'>
       Status
       {hideFilters === true ? '' : <StatusFilter />}
     </th>
-    <th className='text-right' data-testid='tempRating'>
+    <th className='text-end' data-testid='tempRating'>
       <Sort id='tempRating' field='Rating' />
     </th>
-    <th className='text-right' data-testid='nonce'>
+    <th className='text-end' data-testid='nonce'>
       Nonce
     </th>
     {status === 'queued' && (
-      <th className='text-right' data-testid='position'>
+      <th className='text-end' data-testid='position'>
         <Sort id='position' field='Position' />
       </th>
     )}
     {type === 'validator' && (
-      <th className='text-right' data-testid='lockedStake'>
+      <th className='text-end' data-testid='lockedStake'>
         <Sort id='locked' field='Locked Stake' />
       </th>
     )}
