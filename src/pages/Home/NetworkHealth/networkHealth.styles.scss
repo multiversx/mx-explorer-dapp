@@ -220,7 +220,7 @@
         }
 
         small {
-          @extend .text-neutral-300;
+          @extend .text-neutral-400;
           font-size: 85%;
         }
       }
@@ -230,7 +230,7 @@
 
 .gear-teeth {
   fill: var(--card-bg);
-  stroke: var(--secondary);
+  stroke: var(--neutral-400);
 }
 
 .gear-circle {
@@ -238,7 +238,7 @@
 }
 
 .gear-circle-border {
-  stroke: var(--secondary);
+  stroke: var(--neutral-400);
 
   &.light {
     stroke: var(--muted);

@@ -30,7 +30,7 @@ export const LockedAmountTooltip = ({
               key={i}
               className={`locked-item ${small ? 'small-labels' : ''}`}
             >
-              <span className='locked-item-label text-neutral-300'>
+              <span className='locked-item-label text-neutral-400'>
                 {label}
               </span>
               <span>{value}</span>

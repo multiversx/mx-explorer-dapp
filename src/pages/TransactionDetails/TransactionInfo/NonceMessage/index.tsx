@@ -56,7 +56,7 @@ export const NonceMessage = ({
         <div className='d-flex ms-1 text-break-all'>
           <FontAwesomeIcon
             icon={faAngleDown}
-            className='text-neutral-300'
+            className='text-neutral-400'
             style={{ marginTop: '2px' }}
             transform={{ rotate: 45 }}
           />

@@ -15,7 +15,7 @@ export const Footer = () => {
         <a
           rel='noopener noreferrer nofollow'
           target='_blank'
-          className='d-flex align-items-center text-neutral-300'
+          className='d-flex align-items-center text-neutral-400'
           href='https://multiversx.com/'
         >
           Made with{' '}

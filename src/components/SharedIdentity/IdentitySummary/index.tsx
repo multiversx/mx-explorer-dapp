@@ -79,7 +79,7 @@ export const IdentitySummary = ({
                   />
                 </div>
                 <div className='d-flex align-items-center me-4'>
-                  <span className='text-neutral-300 text-nowrap pe-2'>
+                  <span className='text-neutral-400 text-nowrap pe-2'>
                     Stake Balance:
                   </span>
                   {identity.locked ? (
@@ -89,7 +89,7 @@ export const IdentitySummary = ({
                   )}
                 </div>
                 <div className='d-flex align-items-center me-4'>
-                  <span className='text-neutral-300 pe-2'>Stake percent:</span>
+                  <span className='text-neutral-400 pe-2'>Stake percent:</span>
                   {identity.stakePercent ? (
                     <>
                       {Math.round(identity.stakePercent) > 0
@@ -102,7 +102,7 @@ export const IdentitySummary = ({
                   )}
                 </div>
                 <div className='d-flex align-items-center'>
-                  <span className='text-neutral-300 pe-2'>Nodes:</span>
+                  <span className='text-neutral-400 pe-2'>Nodes:</span>
                   {identity.validators ? identity.validators : 'N/A'}
                 </div>
               </div>

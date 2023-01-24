@@ -110,7 +110,7 @@ export const EpochGear = ({ showTime }: { showTime?: boolean }) => {
           {showTime ? (
             <>
               <span className='mt-2 pt-2'>{timeLabel}</span>
-              <small className='text-neutral-300' data-testid='currentEpoch'>
+              <small className='text-neutral-400' data-testid='currentEpoch'>
                 {epochLabel}
               </small>
             </>
@@ -119,7 +119,7 @@ export const EpochGear = ({ showTime }: { showTime?: boolean }) => {
               <span className='mt-2 pt-2' data-testid='currentEpoch'>
                 {epochLabel}
               </span>
-              <small className='text-neutral-300'>
+              <small className='text-neutral-400'>
                 {roundsLeft ? (
                   <>
                     {roundsLeft.toLocaleString('en')} Rounds <br /> Left

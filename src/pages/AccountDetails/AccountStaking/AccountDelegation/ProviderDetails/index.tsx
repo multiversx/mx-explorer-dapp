@@ -59,7 +59,7 @@ export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
               )}
               rel='noopener noreferrer nofollow'
               target='_blank'
-              className='provider-website text-neutral-300 d-inline-flex align-items-center'
+              className='provider-website text-neutral-400 d-inline-flex align-items-center'
               onClick={(e) => {
                 e.stopPropagation();
               }}
@@ -77,12 +77,12 @@ export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
           <div className='d-flex flex-wrap provider-metrics'>
             <div>
               <FontAwesomeIcon size='xs' icon={faLeaf} className='me-1' />
-              {provider.apr}%<span className='text-neutral-300 ms-1'>APR</span>
+              {provider.apr}%<span className='text-neutral-400 ms-1'>APR</span>
             </div>
             <div>
               <FontAwesomeIcon size='xs' icon={faReceipt} className='me-1' />
               {new BigNumber(provider.serviceFee).times(100).toFormat()}%
-              <span className='text-neutral-300 ms-1'>Fee</span>
+              <span className='text-neutral-400 ms-1'>Fee</span>
             </div>
             <div>
               {stringIsFloat(provider.locked) &&
@@ -103,7 +103,7 @@ export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
                       total: provider.delegationCap,
                       minDelegation
                     })}
-                    %<span className='text-neutral-300 ms-1'>Filled</span>
+                    %<span className='text-neutral-400 ms-1'>Filled</span>
                   </span>
                 </>
               ) : (

@@ -167,7 +167,7 @@ export const TokensMeta = () => {
                                         {metaCollection.assets &&
                                           metaCollection.assets.description && (
                                             <div
-                                              className='token-description text-wrap text-neutral-300 small d-none d-md-block'
+                                              className='token-description text-wrap text-neutral-400 small d-none d-md-block'
                                               title={
                                                 metaCollection.assets
                                                   .description

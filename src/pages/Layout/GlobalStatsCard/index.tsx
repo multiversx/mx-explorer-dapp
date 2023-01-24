@@ -40,13 +40,13 @@ export const GlobalStatsCard = () => {
                 >
                   <div className='d-flex flex-column w-100'>
                     <div className='d-flex justify-content-between mb-1'>
-                      <span className='text-neutral-300 me-3'>EGLD Price:</span>
+                      <span className='text-neutral-400 me-3'>EGLD Price:</span>
                       {economicsFetched
                         ? `$${new BigNumber(price).toFormat(2)}`
                         : '...'}
                     </div>
                     <div className='d-flex justify-content-between'>
-                      <span className='text-neutral-300 me-3'>Market Cap:</span>
+                      <span className='text-neutral-400 me-3'>Market Cap:</span>
                       {economicsFetched
                         ? `$${new BigNumber(marketCap).toFormat(0)}`
                         : '...'}
@@ -61,7 +61,7 @@ export const GlobalStatsCard = () => {
                 >
                   <div className='d-flex flex-column w-100'>
                     <div className='d-flex justify-content-between mb-1'>
-                      <span className='text-neutral-300 me-1'>
+                      <span className='text-neutral-400 me-1'>
                         Circulating Supply:
                       </span>
 
@@ -70,7 +70,7 @@ export const GlobalStatsCard = () => {
                         : '...'}
                     </div>
                     <div className='d-flex justify-content-between'>
-                      <span className='text-neutral-300 me-1'>
+                      <span className='text-neutral-400 me-1'>
                         Total Staked:
                       </span>
                       {economicsFetched
@@ -92,13 +92,13 @@ export const GlobalStatsCard = () => {
                 >
                   <div className='d-flex flex-column w-100'>
                     <div className='d-flex justify-content-between mb-1'>
-                      <span className='text-neutral-300 me-3'>Addresses:</span>
+                      <span className='text-neutral-400 me-3'>Addresses:</span>
                       {statsFetched
                         ? new BigNumber(accounts).toFormat(0)
                         : '...'}
                     </div>
                     <div className='d-flex justify-content-between'>
-                      <span className='text-neutral-300 me-3'>
+                      <span className='text-neutral-400 me-3'>
                         Transactions:
                       </span>
                       {statsFetched

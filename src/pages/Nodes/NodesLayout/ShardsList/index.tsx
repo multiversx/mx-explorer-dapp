@@ -19,7 +19,7 @@ const StakingQueueCard = ({
   return (
     <div className='shard-card py-3'>
       <div className='mb-2'>
-        <span className='text-neutral-300'>Queue</span>
+        <span className='text-neutral-400'>Queue</span>
       </div>
       <div className='d-flex align-items-center'>
         <h5>{globalStake !== undefined ? globalStake.queueSize : 'N/A'}</h5>

@@ -144,7 +144,7 @@ export const EgldRow = ({
           <div className='d-flex flex-column justify-content-center'>
             <span className='d-block token-ticker'>{egldLabel}</span>
             <div
-              className='token-description text-wrap text-neutral-300 small d-none d-md-block'
+              className='token-description text-wrap text-neutral-400 small d-none d-md-block'
               title={description}
             >
               {description}

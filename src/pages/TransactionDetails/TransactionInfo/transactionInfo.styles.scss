@@ -43,7 +43,7 @@
       }
 
       .col-left {
-        color: var(--secondary);
+        color: var(--neutral-400);
 
         @include media-breakpoint-up(sm) {
           text-align: right;
@@ -63,13 +63,13 @@
         border-radius: 50%;
         font-size: 0.9375rem;
         text-align: center;
-        color: var(--secondary);
+        color: var(--neutral-400);
         width: 2.1875rem;
         height: 2.1875rem;
         min-width: 2.1875rem;
         line-height: 2.1875rem;
-        background: var(--light);
-        box-shadow: inset 0 0 3px rgba(var(--secondary), 0.2);
+        background: var(--neutral-800);
+        box-shadow: inset 0 0 3px rgba(var(--neutral-400), 0.2);
       }
 
       @keyframes target-fade {

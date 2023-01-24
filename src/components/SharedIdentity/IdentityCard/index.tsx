@@ -58,7 +58,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
               </div>
 
               {identity.description && (
-                <div className='idenity-description text-neutral-300 mt-3'>
+                <div className='idenity-description text-neutral-400 mt-3'>
                   {identity.description}
                 </div>
               )}
@@ -69,9 +69,9 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                     <div className='d-flex align-items-center me-3'>
                       <FontAwesomeIcon
                         icon={faMapMarkerAlt}
-                        className='text-neutral-300 me-1'
+                        className='text-neutral-400 me-1'
                       />
-                      <span className='text-neutral-300'>
+                      <span className='text-neutral-400'>
                         {identity.location}
                       </span>
                     </div>
@@ -94,7 +94,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                     <div className='d-flex align-items-center me-1'>
                       <FontAwesomeIcon
                         icon={faLink}
-                        className='text-neutral-300 me-1'
+                        className='text-neutral-400 me-1'
                       />
                       <a
                         target={'_blank'}
@@ -119,7 +119,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
               <h6 className='mb-3 font-weight-600'>Validator Details</h6>
 
               <div className='d-flex'>
-                <span className='text-neutral-300 text-nowrap pe-2'>
+                <span className='text-neutral-400 text-nowrap pe-2'>
                   Stake Balance:
                 </span>
                 {identity.locked ? (
@@ -129,7 +129,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                 )}
               </div>
               <div className='d-flex mt-2'>
-                <span className='text-neutral-300 pe-2'>Stake percent:</span>
+                <span className='text-neutral-400 pe-2'>Stake percent:</span>
                 {identity.stakePercent ? (
                   <>
                     {Math.round(identity.stakePercent) > 0
@@ -142,11 +142,11 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                 )}
               </div>
               <div className='d-flex mt-2'>
-                <span className='text-neutral-300 pe-2'>Nodes:</span>
+                <span className='text-neutral-400 pe-2'>Nodes:</span>
                 {identity.validators ? identity.validators : 'N/A'}
               </div>
               <div className='d-flex mt-2'>
-                <span className='text-neutral-300 pe-2'>Computed APR:</span>
+                <span className='text-neutral-400 pe-2'>Computed APR:</span>
                 {identity.apr ? `${identity.apr}%` : 'N/A'}
               </div>
             </div>
@@ -155,7 +155,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
               {distribution && distribution.length > 0 ? (
                 <MultilayerPercentageBar steps={distribution} trim />
               ) : (
-                <span className='text-neutral-300'>N/A</span>
+                <span className='text-neutral-400'>N/A</span>
               )}
             </div>
           </div>

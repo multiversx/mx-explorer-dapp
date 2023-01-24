@@ -92,11 +92,11 @@ export const CollectionDetailsCard = () => {
                   <DetailItem title='Created'>
                     <FontAwesomeIcon
                       icon={faClock}
-                      className='me-2 text-neutral-300'
+                      className='me-2 text-neutral-400'
                     />
                     <TimeAgo value={timestamp} />
                     &nbsp;
-                    <span className='text-neutral-300'>
+                    <span className='text-neutral-400'>
                       ({dateFormatted(timestamp, false, true)})
                     </span>
                   </DetailItem>
@@ -134,7 +134,7 @@ export const CollectionDetailsCard = () => {
                       <SocialIcons assets={mergedAssets} />
                     </div>
                   ) : (
-                    <span className='text-neutral-300'>N/A</span>
+                    <span className='text-neutral-400'>N/A</span>
                   )}
                 </DetailItem>
                 <DetailItem title='Description'>
@@ -146,7 +146,7 @@ export const CollectionDetailsCard = () => {
                       {assets.description}
                     </h2>
                   ) : (
-                    <span className='text-neutral-300'>N/A</span>
+                    <span className='text-neutral-400'>N/A</span>
                   )}
                 </DetailItem>
               </div>
