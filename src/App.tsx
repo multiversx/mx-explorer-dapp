@@ -6,6 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { networks } from 'config';
 import { useIsMainnet } from 'helpers';
 
+// eslint-disable-next-line import/order
 import { AxiosInterceptor } from 'components';
 import { activeNetworkSelector } from 'redux/selectors';
 import { store, persistor } from 'redux/store';

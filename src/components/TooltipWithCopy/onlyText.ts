@@ -3,7 +3,7 @@ import { hasChildren } from './hasChildren';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const childToString = (
-  child?: ReactText | boolean | {} | null
+  child?: ReactText | boolean | any | null
 ): string => {
   if (
     typeof child === 'undefined' ||

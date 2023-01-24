@@ -341,7 +341,7 @@ export const routes = () =>
       Component: withPageTitle(
         title,
         withNetworkReady(route.component)
-      ) as any as React.ComponentClass<{}, any>
+      ) as any as React.ComponentClass<any, any>
     };
   });
 
