@@ -56,7 +56,7 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
           <div className="d-flex flex-column min-w-0">
             <div className="d-flex align-items-center">
               <Trim text={bls} />
-              <CopyButton text={bls} className="ml-2" />
+              <CopyButton text={bls} className="ms-2" />
             </div>
             <Alert node={nodeData} />
           </div>
@@ -86,7 +86,7 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             {type === 'observer' && <>Observer</>}
             {type !== 'observer' && (
               <>
-                Validator <span className="text-secondary ml-1">({status})</span>
+                Validator <span className="text-secondary ms-1">({status})</span>
               </>
             )}
           </>

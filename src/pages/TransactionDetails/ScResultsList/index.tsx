@@ -64,7 +64,7 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
           <div
             key={i}
             id={result.hash}
-            className={`detailed-item d-flex border-left border-bottom ml-3 py-3 ${
+            className={`detailed-item d-flex border-left border-bottom ms-3 py-3 ${
               highlightTx ? 'highlighted' : ''
             }`}
             {...(highlightTx ? { ref: ref } : {})}
@@ -79,10 +79,10 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
                   <div className="col-sm-2 col-left">Hash</div>
                   <div className="col-sm-10 d-flex align-items-center">
                     <Trim text={result.hash} />
-                    <CopyButton text={result.hash} className="side-action ml-2" />
+                    <CopyButton text={result.hash} className="side-action ms-2" />
                     <NetworkLink
                       to={`${transactionsRoutes.transactions}/${result.originalTxHash}#${result.hash}/${decodeMethod}`}
-                      className="side-action ml-2"
+                      className="side-action ms-2"
                     >
                       <FontAwesomeIcon icon={faSearch} />
                     </NetworkLink>
@@ -95,10 +95,10 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
                   <div className="col-sm-2 col-left">Miniblock Hash</div>
                   <div className="col-sm-10 d-flex align-items-center">
                     <Trim text={result.miniBlockHash} />
-                    <CopyButton text={result.miniBlockHash} className="side-action ml-2" />
+                    <CopyButton text={result.miniBlockHash} className="side-action ms-2" />
                     <NetworkLink
                       to={urlBuilder.miniblockDetails(result.miniBlockHash)}
-                      className="side-action ml-2"
+                      className="side-action ms-2"
                     >
                       <FontAwesomeIcon icon={faSearch} />
                     </NetworkLink>
@@ -112,7 +112,7 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
                   <div className="col-sm-10 d-flex align-items-center">
                     <ScAddressIcon initiator={result.sender} />
                     <AccountName address={result.sender} assets={result.senderAssets} />
-                    <CopyButton text={result.sender} className="side-action ml-2" />
+                    <CopyButton text={result.sender} className="side-action ms-2" />
                   </div>
                 </div>
               )}
@@ -123,7 +123,7 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
                   <div className="col-sm-10 d-flex align-items-center">
                     <ScAddressIcon initiator={result.receiver} />
                     <AccountName address={result.receiver} assets={result.receiverAssets} />
-                    <CopyButton text={result.receiver} className="side-action ml-2" />
+                    <CopyButton text={result.receiver} className="side-action ms-2" />
                   </div>
                 </div>
               )}

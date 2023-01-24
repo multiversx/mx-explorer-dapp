@@ -47,7 +47,7 @@ export const ProviderDetailsCard = ({ provider }: { provider?: ProviderType }) =
         </div>
         <div className="card-header-item compact d-flex">
           <span className="text-secondary flex-shrink-0">Address:</span>
-          <div className="d-flex align-items-center text-break-all ml-2">
+          <div className="d-flex align-items-center text-break-all ms-2">
             <NetworkLink to={urlBuilder.accountDetails(provider.provider)} data-testid="address">
               {provider.provider}
             </NetworkLink>

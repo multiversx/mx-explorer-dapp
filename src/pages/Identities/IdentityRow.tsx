@@ -97,7 +97,7 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
               fillPercentLabel={stakePercentLabel}
             />
 
-            <div className="ml-3">{stakePercentLabel}</div>
+            <div className="ms-3">{stakePercentLabel}</div>
           </div>
         </td>
         <td className="text-right">{identity.validators.toLocaleString('en')}</td>

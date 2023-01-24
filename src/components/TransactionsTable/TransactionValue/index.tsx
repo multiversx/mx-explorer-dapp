@@ -71,7 +71,7 @@ const MultipleTokensBadge = ({ transactionTokens }: { transactionTokens: any[] }
 
   return (
     <OverlayTooltip tooltip={Tooltip}>
-      <FontAwesomeIcon icon={faLayerPlus} className="ml-2 text-secondary" />
+      <FontAwesomeIcon icon={faLayerPlus} className="ms-2 text-secondary" />
     </OverlayTooltip>
   );
 };

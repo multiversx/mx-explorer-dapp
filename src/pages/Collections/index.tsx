@@ -147,7 +147,7 @@ export const Collections = () => {
                                           <div>{collection.collection}</div>
                                         </div>
                                       </NetworkLink>
-                                      <NftBadge type={collection.type} className="ml-2" />
+                                      <NftBadge type={collection.type} className="ms-2" />
                                     </div>
                                   </td>
                                   <td>{collection.name}</td>

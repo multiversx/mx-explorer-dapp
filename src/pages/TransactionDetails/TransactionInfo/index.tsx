@@ -88,10 +88,10 @@ export const ScrDetailItem = ({ result }: { result: ResultType }) => (
   <DetailItem title="SC Result Hash" noBorder>
     <div className="d-flex align-items-center">
       <Trim text={result.hash} />
-      <CopyButton className="ml-2" text={result.hash} />
+      <CopyButton className="ms-2" text={result.hash} />
       <NetworkLink
         to={`${transactionsRoutes.transactions}/${result.originalTxHash}#${result.hash}`}
-        className="side-action ml-2"
+        className="side-action ms-2"
       >
         <FontAwesomeIcon icon={faSearch} />
       </NetworkLink>
@@ -187,7 +187,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
               </Nav.Link>
             )}
             {isTxPending && (
-              <div className="d-flex align-items-center ml-auto">
+              <div className="d-flex align-items-center ms-auto">
                 <LoadingDots />
               </div>
             )}
@@ -311,7 +311,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                     </div>
                     <TransactionErrorDisplay transaction={transaction} />
                     {transaction.status === txStatus.rewardReverted && (
-                      <div className="d-flex ml-1 text-break-all">
+                      <div className="d-flex ms-1 text-break-all">
                         <FontAwesomeIcon
                           icon={faAngleDown}
                           className="text-secondary"
@@ -319,7 +319,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                           transform={{ rotate: 45 }}
                         />
                         &nbsp;
-                        <small className="text-danger ml-1"> Block Reverted</small>
+                        <small className="text-danger ms-1"> Block Reverted</small>
                       </div>
                     )}
                   </div>

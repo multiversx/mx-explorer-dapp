@@ -24,7 +24,7 @@ export const ShardCard = ({ shard, isOverall }: ShardCardType) => {
         </span>
       </div>
       <div className="d-flex align-items-center">
-        {!isOverall && <Led color={`led ml-1 me-2 bg-${status}`} />}
+        {!isOverall && <Led color={`led ms-1 me-2 bg-${status}`} />}
         <h5 className="m-0">
           {shard.activeValidators}/{shard.validators}
         </h5>

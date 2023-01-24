@@ -63,7 +63,7 @@ const Icon = ({ icon }: { icon: string }) => {
 
 export const SocialIcons = ({ assets }: { assets: any }) => {
   return (
-    <div className="social-icons d-flex align-items-center ml-n2 mt-2 mt-lg-0">
+    <div className="social-icons d-flex align-items-center ms-n2 mt-2 mt-lg-0">
       {Object.keys(assets).map((social, i) => (
         <OverlayTrigger
           placement="top"

@@ -61,7 +61,7 @@ export const AccountLegacyDelegation = ({
               <div>
                 <FontAwesomeIcon size="xs" icon={faLeaf} className="me-1" />
                 Up to {legacyDelegationApr}
-                <span className="text-secondary ml-1">APY</span>
+                <span className="text-secondary ms-1">APY</span>
               </div>
             </div>
           </div>
