@@ -90,7 +90,7 @@ export const EpochGear = ({ showTime }: { showTime?: boolean }) => {
   const epochLabel = nextEpoch ? `Epoch ${(epoch + resetCount).toLocaleString('en')}` : '...';
 
   return (
-    <div className="ml-lg-2 me-lg-4 pe-lg-3 mb-4 mb-lg-0" ref={ref}>
+    <div className="ms-lg-2 me-lg-4 pe-lg-3 mb-4 mb-lg-0" ref={ref}>
       <div className="epoch-gear-container">
         <EpochGearBg className="epoch-gear-bg" />
         <div className={`animate ${play ? '' : 'paused'}`}>

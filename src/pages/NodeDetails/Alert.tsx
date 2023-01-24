@@ -16,21 +16,21 @@ export const Alert = ({ node }: { node: NodeType }) => {
       return (
         <Container>
           <RowIssueIcon node={node} small={true} />
-          <small className="text-danger ml-1">Jailed</small>
+          <small className="text-danger ms-1">Jailed</small>
         </Container>
       );
     case node.issues && node.issues.length > 0:
       return (
         <Container>
           <RowIssueIcon node={node} small={true} />
-          <small className="text-warning ml-1">{nodeIssue(node)}</small>
+          <small className="text-warning ms-1">{nodeIssue(node)}</small>
         </Container>
       );
     case node.online === false:
       return (
         <Container>
           <FontAwesomeIcon icon={faExclamationTriangle} size="xs" className="text-warning me-1" />
-          <small className={`ml-1 ${node.type === 'observer' ? 'text-muted' : ''}`}>
+          <small className={`ms-1 ${node.type === 'observer' ? 'text-muted' : ''}`}>
             &nbsp;Offline
           </small>
         </Container>

@@ -110,7 +110,7 @@ export const AccountDetailsCard = () => {
                       Contract Details
                     </span>
                     {scamInfo && (
-                      <span className="text-warning d-flex align-items-center ml-2">
+                      <span className="text-warning d-flex align-items-center ms-2">
                         <FontAwesomeIcon
                           icon={faExclamationTriangle}
                           size="sm"
@@ -273,7 +273,7 @@ export const AccountDetailsCard = () => {
                       </div>
                     </span>
                     {scamInfo && (
-                      <span className="text-warning d-flex align-items-center ml-2">
+                      <span className="text-warning d-flex align-items-center ms-2">
                         <FontAwesomeIcon
                           icon={faExclamationTriangle}
                           size="sm"
@@ -287,7 +287,7 @@ export const AccountDetailsCard = () => {
               </div>
               <div className="card-header-item compact d-flex">
                 <span className="text-secondary">Address:</span>
-                <div className="d-flex align-items-center text-break-all ml-2">
+                <div className="d-flex align-items-center text-break-all ms-2">
                   <span data-testid="address">{address}</span>
                   <CopyButton text={address} />
                 </div>
@@ -295,7 +295,7 @@ export const AccountDetailsCard = () => {
               {username && (
                 <div className="card-header-item compact d-flex">
                   <span className="text-secondary">Herotag:</span>
-                  <div className="d-flex align-items-center text-break-all ml-2">
+                  <div className="d-flex align-items-center text-break-all ms-2">
                     <span data-testid="address">{formatHerotag(username)}</span>
                     <CopyButton text={formatHerotag(username)} />
                   </div>

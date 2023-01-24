@@ -42,7 +42,7 @@ export const TxActionToken = ({
             </div>
           </NetworkLink>
           {token?.valueUSD && (
-            <div className="me-1 text-truncate text-secondary ml-1">
+            <div className="me-1 text-truncate text-secondary ms-1">
               ({formatUSD({ amount: token.valueUSD, digits: 2 })})
             </div>
           )}

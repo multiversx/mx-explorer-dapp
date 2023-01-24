@@ -148,7 +148,7 @@ const OperationBlock = ({
           <NetworkLink to={urlBuilder.accountDetails(address)} className="trim-wrapper">
             <AccountName address={address} assets={operationAssets} />
           </NetworkLink>
-          <CopyButton text={address} className="side-action ml-2" />
+          <CopyButton text={address} className="side-action ms-2" />
         </>
       ) : (
         ''

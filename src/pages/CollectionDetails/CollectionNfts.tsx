@@ -97,7 +97,7 @@ export const CollectionNfts = () => {
                                   <div>{nft.identifier}</div>
                                 </div>
                               </NetworkLink>
-                              {type !== 'MetaESDT' && <NftBadge type={nft.type} className="ml-2" />}
+                              {type !== 'MetaESDT' && <NftBadge type={nft.type} className="ms-2" />}
                             </div>
                           </td>
                           <td>{nft.scamInfo ? `[Hidden - ${nft.scamInfo.info}]` : nft.name}</td>

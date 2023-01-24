@@ -26,7 +26,7 @@ export const IdentitySummary = ({
                 <div className="d-flex align-items-center min-w-0 mb-3 mb-md-0">
                   <SharedIdentity.Avatar identity={identity} />
 
-                  <h5 className="mb-0 ml-2">
+                  <h5 className="mb-0 ms-2">
                     {identity.identity ? (
                       <>
                         <NetworkLink to={urlBuilder.identityDetails(identity.identity)}>
@@ -47,7 +47,7 @@ export const IdentitySummary = ({
                             <FontAwesomeIcon
                               icon={faBadgeCheck}
                               size="lg"
-                              className="ml-2 text-primary"
+                              className="ms-2 text-primary"
                             />
                           </OverlayTrigger>
                         )}
@@ -57,7 +57,7 @@ export const IdentitySummary = ({
                     )}
                   </h5>
 
-                  <div className="flex-shrink-0 bg-success text-white btn-sm rounded-pill ml-2">
+                  <div className="flex-shrink-0 bg-success text-white btn-sm rounded-pill ms-2">
                     Rank {identity.rank ? identity.rank : 'N/A'}
                   </div>
                 </div>

@@ -151,7 +151,7 @@ export const LatestTransactions = () => {
                               >
                                 <AccountName address={receiver} assets={receiverAssets} />
                               </NetworkLink>
-                              <span className="px-2 text-muted ml-auto">•</span>
+                              <span className="px-2 text-muted ms-auto">•</span>
                               <NetworkLink
                                 to={urlBuilder.receiverShard(transaction.receiverShard)}
                                 className="flex-shrink-0"
@@ -176,7 +176,7 @@ export const LatestTransactions = () => {
                                       assets={transaction.senderAssets}
                                     />
                                   </NetworkLink>
-                                  <span className="px-2 text-muted ml-auto">•</span>
+                                  <span className="px-2 text-muted ms-auto">•</span>
                                   <NetworkLink
                                     to={urlBuilder.senderShard(transaction.senderShard)}
                                     className="flex-shrink-0"

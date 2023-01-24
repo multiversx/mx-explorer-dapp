@@ -78,7 +78,7 @@ export const TransactionIcon = ({ transaction }: TransactionIconType) => {
                     <FontAwesomeIcon
                       icon={faSpinnerThird}
                       size={'sm'}
-                      className="ml-2 fa-spin fast-spin"
+                      className="ms-2 fa-spin fast-spin"
                     />
                   </>
                 )}

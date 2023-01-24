@@ -66,14 +66,14 @@ export const BlockData = (props: BlockDataType) => {
             <div className="d-flex justify-content-between align-items-center">
               <div>{block.nonce}</div>
               <ul className="list-inline mb-0">
-                <li className="list-inline-item ml-2 me-2">
+                <li className="list-inline-item ms-2 me-2">
                   <div className="pager pager-inline">
                     <NetworkLink to={`/blocks/${block.prevHash}`} data-testid="previousPageButton">
                       <FontAwesomeIcon icon={faChevronLeft} /> Prev
                     </NetworkLink>
                   </div>
                 </li>
-                <li className="ml-2 list-inline-item">
+                <li className="ms-2 list-inline-item">
                   <div className="pager pager-inline">
                     {nextHash !== '' ? (
                       <NetworkLink data-testid="nextPageButton" to={`/blocks/${nextHash}`}>

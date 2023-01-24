@@ -29,7 +29,7 @@ export const MethodList = () => {
   return (
     <div className="card-header-item d-flex justify-content-between align-items-center">
       Method:
-      <div className="filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row ml-3 me-auto">
+      <div className="filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row ms-3 me-auto">
         <ul className="list-inline m-0">
           {method && (
             <li className="list-inline-item my-1 my-md-0">

@@ -38,14 +38,14 @@ export const RowIssueIcon = ({ node, small }: { node: NodeType; small?: boolean 
       case node.status === 'jailed':
         return (
           <Overlay title="Jailed">
-            <FontAwesomeIcon icon={icon} className="text-danger ml-1" size={small ? 'xs' : '1x'} />
+            <FontAwesomeIcon icon={icon} className="text-danger ms-1" size={small ? 'xs' : '1x'} />
           </Overlay>
         );
 
       case node.issues && node.issues.length > 0: {
         return (
           <Overlay title={nodeIssue(node)}>
-            <FontAwesomeIcon icon={icon} className="ml-1 text-warning" size={small ? 'xs' : '1x'} />
+            <FontAwesomeIcon icon={icon} className="ms-1 text-warning" size={small ? 'xs' : '1x'} />
           </Overlay>
         );
       }

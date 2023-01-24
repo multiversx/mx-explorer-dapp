@@ -48,7 +48,7 @@ export const NodesTabs = () => {
 
         <NetworkLink
           to={validatorsRoutes.queue}
-          className={`tab-link ml-0 ml-sm-3 ${activeRoute(validatorsRoutes.queue) ? 'active' : ''}`}
+          className={`tab-link ms-0 ms-sm-3 ${activeRoute(validatorsRoutes.queue) ? 'active' : ''}`}
         >
           <h6>Queue</h6>
         </NetworkLink>

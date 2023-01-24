@@ -13,7 +13,7 @@ export const AccountDetailsBlock = ({ assets }: { assets: AssetType }) => {
       <div>{assets.name}</div>
       <Overlay title={assets.description}>
         <div className="d-flex align-items-center justify-content-center">
-          <FontAwesomeIcon icon={faInfoCircle} size="1x" className="text-secondary ml-1" />
+          <FontAwesomeIcon icon={faInfoCircle} size="1x" className="text-secondary ms-1" />
         </div>
       </Overlay>
     </div>

@@ -110,7 +110,7 @@ export const NftPreview = ({ token }: { token: types.NftType }) => {
         })}
       </ul>
       {/* {token.isWhitelistedStorage === false && (
-        <div className="d-flex ml-2 text-break-all ps-1">
+        <div className="d-flex ms-2 text-break-all ps-1">
           <FontAwesomeIcon
             icon={faAngleDown}
             className="text-secondary"
@@ -118,7 +118,7 @@ export const NftPreview = ({ token }: { token: types.NftType }) => {
             transform={{ rotate: 45 }}
           />
           &nbsp;
-          <small className="text-danger ml-1">storage not whitelisted</small>
+          <small className="text-danger ms-1">storage not whitelisted</small>
         </div>
       )} */}
     </div>

@@ -43,7 +43,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                 <h5 className="mb-0 identity-name">
                   {identityName.length > 70 ? <Trim text={identityName} /> : identityName}
                 </h5>
-                <div className="d-flex flex-shrink-0 bg-success text-white btn-sm rounded-pill ml-2">
+                <div className="d-flex flex-shrink-0 bg-success text-white btn-sm rounded-pill ms-2">
                   Rank {identity.rank ? identity.rank : 'N/A'}
                 </div>
               </div>
@@ -119,7 +119,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                 {identity.apr ? `${identity.apr}%` : 'N/A'}
               </div>
             </div>
-            <div className="d-flex flex-column flex-fill mt-4 mt-lg-0 ml-sm-spacer min-w-0">
+            <div className="d-flex flex-column flex-fill mt-4 mt-lg-0 ms-sm-spacer min-w-0">
               <h6 className="mb-3 font-weight-600">Stake Distribution</h6>
               {distribution && distribution.length > 0 ? (
                 <MultilayerPercentageBar steps={distribution} trim />

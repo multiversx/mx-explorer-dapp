@@ -47,7 +47,7 @@ export const EventsList = ({ events, id }: { events: EventType[]; id?: string })
         return (
           <div
             key={i}
-            className={`detailed-item d-flex border-left border-bottom ml-3 py-3 ${
+            className={`detailed-item d-flex border-left border-bottom ms-3 py-3 ${
               highlightTx ? 'highlighted' : ''
             }`}
             {...(highlightTx ? { ref: ref } : {})}
@@ -62,7 +62,7 @@ export const EventsList = ({ events, id }: { events: EventType[]; id?: string })
                   <div className="col-sm-2 col-left">Address</div>
                   <div className="col-sm-10 d-flex align-items-center">
                     <Trim text={event.address} />
-                    <CopyButton text={event.address} className="side-action ml-2" />
+                    <CopyButton text={event.address} className="side-action ms-2" />
                   </div>
                 </div>
               )}

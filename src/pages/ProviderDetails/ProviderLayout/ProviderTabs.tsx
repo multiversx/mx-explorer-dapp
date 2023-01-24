@@ -19,7 +19,7 @@ export const ProviderTabs = () => {
 
       <NetworkLink
         to={urlBuilder.providerDetailsTransactions(address)}
-        className={`tab-link ml-3 ${
+        className={`tab-link ms-3 ${
           activeRoute(validatorsRoutes.providerTransactions) ? 'active' : ''
         }`}
       >
