@@ -75,7 +75,7 @@ export const TransactionRow = ({
           </NetworkLink>
         </div>
       </td>
-      <td className='text-neutral-400'>
+      <td className='text-neutral-400 text-center'>
         <TimeAgo value={transaction.timestamp} short tooltip />
       </td>
       <td>

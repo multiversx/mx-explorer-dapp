@@ -5,7 +5,8 @@ import {
   NetworkLink,
   AccountName,
   Denominate,
-  TxActionBlock
+  TxActionBlock,
+  NftBadge
 } from 'components';
 import { addressIsBech32, urlBuilder } from 'helpers';
 import { NftEnumType } from 'types';
@@ -29,7 +30,7 @@ export const ActionToken = ({
       case NftEnumType.SemiFungibleESDT:
         return (
           <div>
-            <span>SFT quantity</span>
+            <NftBadge type={token.type} className='me-1' />
             <TxActionBlock.Nft
               token={token}
               noValue={noValue}
@@ -42,7 +43,7 @@ export const ActionToken = ({
       case NftEnumType.NonFungibleESDT:
         return (
           <div>
-            <span>NFT</span>
+            <NftBadge type={token.type} className='me-1' />
             <TxActionBlock.Nft
               token={token}
               noValue={noValue}

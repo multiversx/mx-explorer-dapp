@@ -19,7 +19,7 @@ export const DetailItem = ({
     }`}
   >
     <div
-      className={`col-lg-${colWidth} text-neutral-400 text-lg-end ps-lg-spacer`}
+      className={`col-lg-${colWidth} d-flex align-items-center text-lg-end justify-content-lg-end text-neutral-400`}
     >
       {title}
     </div>

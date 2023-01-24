@@ -27,11 +27,7 @@ export const TxActionNft = ({
           {!noValue &&
             token.value &&
             token.type !== NftEnumType.NonFungibleESDT && (
-              <div
-                className={`me-1 badge badge-orange ${
-                  token.svgUrl ? 'text-truncate' : ''
-                }`}
-              >
+              <div className={`me-1  ${token.svgUrl ? 'text-truncate' : ''}`}>
                 {token.decimals !== undefined ? (
                   <Denominate
                     value={token.value}
@@ -40,7 +36,9 @@ export const TxActionNft = ({
                     showLastNonZeroDecimal={showLastNonZeroDecimal}
                   />
                 ) : Number(token.value).toLocaleString('en') !== '∞' ? (
-                  new BigNumber(token.value).toFormat()
+                  <span className='badge badge-orange'>
+                    {new BigNumber(token.value).toFormat()}
+                  </span>
                 ) : (
                   ''
                 )}
