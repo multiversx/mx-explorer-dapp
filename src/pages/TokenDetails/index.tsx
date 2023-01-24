@@ -1,17 +1,20 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { Loader, TransactionsTable, useAdapter } from 'components';
 
-import { txStatus } from 'components/TransactionStatus/txStatus';
-import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
+import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
+import { txStatus } from 'components/TransactionStatus/txStatus';
 import { useSize, useURLSearchParams } from 'helpers';
-import { UITransactionType, TransactionsResponseType, TransactionsCountResponseType } from 'types';
-import { TokenTabs } from './TokenLayout/TokenTabs';
-
-import { useSelector } from 'react-redux';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
+import {
+  UITransactionType,
+  TransactionsResponseType,
+  TransactionsCountResponseType
+} from 'types';
+import { TokenTabs } from './TokenLayout/TokenTabs';
 
 export const TokenDetails = () => {
   const ref = React.useRef(null);
@@ -27,7 +30,7 @@ export const TokenDetails = () => {
     after,
     status,
     miniBlockHash,
-    search,
+    search
   } = useURLSearchParams();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -35,10 +38,15 @@ export const TokenDetails = () => {
 
   const { transactions: transactionsCount } = useSelector(tokenSelector);
 
-  const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
-  const [tokenTransactionsCount, setTokenTransactionsCount] = React.useState<number | '...'>('...');
+  const [transactions, setTransactions] = React.useState<UITransactionType[]>(
+    []
+  );
+  const [tokenTransactionsCount, setTokenTransactionsCount] = React.useState<
+    number | '...'
+  >('...');
   const [isDataReady, setIsDataReady] = React.useState<boolean | undefined>();
-  const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
+  const [hasPendingTransaction, setHasPendingTransaction] =
+    React.useState(false);
 
   const handleTransactions = (
     transactionsData: TransactionsResponseType,
@@ -50,14 +58,15 @@ export const TokenDetails = () => {
         const existingHashes = transactions.map((b) => b.txHash);
         const newTransactions = data.map((transaction: UITransactionType) => ({
           ...transaction,
-          isNew: !existingHashes.includes(transaction.txHash),
+          isNew: !existingHashes.includes(transaction.txHash)
         }));
 
         setTransactions(newTransactions);
         setTokenTransactionsCount(countData?.data ?? '...');
         const pending = data.some(
           (tx: UITransactionType) =>
-            tx.status.toLowerCase() === txStatus.pending.toLowerCase() || tx.pendingResults
+            tx.status.toLowerCase() === txStatus.pending.toLowerCase() ||
+            tx.pendingResults
         );
         setHasPendingTransaction(pending);
         setIsDataReady(true);
@@ -83,7 +92,7 @@ export const TokenDetails = () => {
         status,
         miniBlockHash,
         search,
-        withUsername: true,
+        withUsername: true
       }),
       getTokenTransfersCount({
         size,
@@ -98,8 +107,8 @@ export const TokenDetails = () => {
         after,
         status,
         miniBlockHash,
-        search,
-      }),
+        search
+      })
     ]).then(([tokenTransfersData, tokenTransfersCountData]) => {
       handleTransactions(tokenTransfersData, tokenTransfersCountData);
     });
@@ -131,8 +140,8 @@ export const TokenDetails = () => {
 
   return (
     <div ref={ref}>
-      <div className="row">
-        <div className="col-12">
+      <div className='row'>
+        <div className='col-12'>
           {showTransactions ? (
             <TransactionsTable
               transactions={transactions}
@@ -142,15 +151,17 @@ export const TokenDetails = () => {
               title={<TokenTabs />}
             />
           ) : (
-            <div className="card">
-              <div className="card-header">
-                <div className="card-header-item d-flex align-items-center">
+            <div className='card'>
+              <div className='card-header'>
+                <div className='card-header-item d-flex align-items-center'>
                   <TokenTabs />
                 </div>
               </div>
               {isDataReady === undefined && <Loader />}
               {isDataReady === false && <FailedTransactions />}
-              {isDataReady === true && transactions.length === 0 && <NoTransactions />}
+              {isDataReady === true && transactions.length === 0 && (
+                <NoTransactions />
+              )}
             </div>
           )}
         </div>

@@ -2,7 +2,7 @@ export const analytics = {
   sendEvent: ({
     action,
     label,
-    explorerVersion,
+    explorerVersion
   }: {
     action: string;
     label: string;
@@ -16,10 +16,16 @@ export const analytics = {
       cleanLabel = cleanLabel.replace(hashRegex, 'hash...');
 
       if ((window as any).ga) {
-        (window as any).ga('send', 'event', action, cleanLabel, explorerVersion);
+        (window as any).ga(
+          'send',
+          'event',
+          action,
+          cleanLabel,
+          explorerVersion
+        );
       }
     } catch (err) {
       console.error(err);
     }
-  },
+  }
 };

@@ -1,16 +1,19 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { networks } from 'config';
 import {
   activeNetworkSelector,
   defaultNetworkSelector,
-  activeThemeSelector,
+  activeThemeSelector
 } from 'redux/selectors';
-import { setActiveTheme, changeNetwork as changeStateNetwork } from 'redux/slices';
+import {
+  setActiveTheme,
+  changeNetwork as changeStateNetwork
+} from 'redux/slices';
 
 import { ThemesEnum } from 'types';
-import { networks } from 'config';
 
 export const useNetworkRouter = () => {
   const theme = useSelector(activeThemeSelector);
@@ -34,7 +37,11 @@ export const useNetworkRouter = () => {
         const foundNetwork = networks.find(({ id }) => id === networkId);
         const networkTheme = foundNetwork?.theme;
         if (foundNetwork) {
-          if (networkTheme && networkTheme !== theme && theme !== ThemesEnum.default) {
+          if (
+            networkTheme &&
+            networkTheme !== theme &&
+            theme !== ThemesEnum.default
+          ) {
             dispatch(setActiveTheme(networkTheme as ThemesEnum));
           }
 
@@ -46,7 +53,11 @@ export const useNetworkRouter = () => {
       (networkId === '' && activeNetworkId !== '')
     ) {
       // if selected testnet is the same as the default, reset the default
-      if (defaultNetworkTheme && defaultNetworkTheme !== theme && theme !== ThemesEnum.default) {
+      if (
+        defaultNetworkTheme &&
+        defaultNetworkTheme !== theme &&
+        theme !== ThemesEnum.default
+      ) {
         dispatch(setActiveTheme(defaultNetworkTheme as ThemesEnum));
         dispatch(changeStateNetwork(defaultNetwork));
       }

@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { NetworkLink, Denominate } from 'components';
 import { urlBuilder } from 'helpers';
 import { NftType } from 'types';
-import { NetworkLink, Denominate } from 'components';
 
 interface NftBlockType {
   operationToken?: NftType;
@@ -12,11 +12,11 @@ export const NftBlock = ({ value, operationToken }: NftBlockType) => {
   const ref = React.useRef(null);
 
   return (
-    <div ref={ref} className="nft-block d-flex text-truncate">
+    <div ref={ref} className='nft-block d-flex text-truncate'>
       {operationToken && (
         <>
           {value && operationToken.type !== 'NonFungibleESDT' && (
-            <div className="me-1">
+            <div className='me-1'>
               {operationToken.decimals !== undefined ? (
                 <Denominate
                   value={value}
@@ -31,25 +31,31 @@ export const NftBlock = ({ value, operationToken }: NftBlockType) => {
           )}
           <NetworkLink
             to={urlBuilder.nftDetails(operationToken.identifier)}
-            className={`d-flex text-truncate ${operationToken?.assets?.svgUrl ? 'side-link' : ''}`}
+            className={`d-flex text-truncate ${
+              operationToken?.assets?.svgUrl ? 'side-link' : ''
+            }`}
           >
-            <div className="d-flex align-items-center symbol text-truncate">
+            <div className='d-flex align-items-center symbol text-truncate'>
               {operationToken.assets ? (
                 <>
                   {operationToken.assets.svgUrl && (
                     <img
                       src={operationToken.assets.svgUrl}
                       alt={operationToken.name}
-                      className="side-icon me-1"
+                      className='side-icon me-1'
                     />
                   )}
-                  <div className="text-truncate">
-                    {operationToken.ticker ? operationToken.ticker : operationToken.name} (
-                    {operationToken.identifier})
+                  <div className='text-truncate'>
+                    {operationToken.ticker
+                      ? operationToken.ticker
+                      : operationToken.name}{' '}
+                    ({operationToken.identifier})
                   </div>
                 </>
               ) : (
-                <span className="text-truncate">{operationToken.identifier}</span>
+                <span className='text-truncate'>
+                  {operationToken.identifier}
+                </span>
               )}
             </div>
           </NetworkLink>

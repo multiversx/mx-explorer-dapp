@@ -8,7 +8,9 @@ function format(
   addCommas: boolean
 ) {
   showLastNonZeroDecimal =
-    typeof showLastNonZeroDecimal !== 'undefined' ? showLastNonZeroDecimal : false;
+    typeof showLastNonZeroDecimal !== 'undefined'
+      ? showLastNonZeroDecimal
+      : false;
 
   let array = big.toString().split('');
 
@@ -52,7 +54,9 @@ function format(
   if (addCommas) {
     // add comas every 3 characters
     array = array.reverse();
-    const reference = denomination ? array.length - array.indexOf('.') - 1 : array.length;
+    const reference = denomination
+      ? array.length - array.indexOf('.') - 1
+      : array.length;
     const count = Math.floor(reference / 3);
     for (let i = 1; i <= count; i++) {
       const position = array.indexOf('.') + 3 * i + i;
@@ -73,7 +77,10 @@ function format(
   if (allDecimalsZero) {
     output = string.split('.')[0];
   } else {
-    output = decimals === 0 && !showLastNonZeroDecimal ? string.split('.').join('') : string;
+    output =
+      decimals === 0 && !showLastNonZeroDecimal
+        ? string.split('.').join('')
+        : string;
   }
 
   if (negative) {
@@ -96,11 +103,17 @@ export const denominate = ({
   denomination,
   decimals,
   showLastNonZeroDecimal = false,
-  addCommas = true,
+  addCommas = true
 }: DenominateType) => {
   if (!stringIsInteger(input, false)) {
     throw new Error('Invalid input');
   }
 
-  return format(input, denomination, decimals, showLastNonZeroDecimal, addCommas);
+  return format(
+    input,
+    denomination,
+    decimals,
+    showLastNonZeroDecimal,
+    addCommas
+  );
 };

@@ -15,7 +15,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 export const NetworkUrl = ({ internal = false, link }: NetworkUrlPropsType) => {
   const {
     activeNetwork,
-    defaultNetwork: { id: defaultNetworkId },
+    defaultNetwork: { id: defaultNetworkId }
   } = useSelector(networksSelector);
 
   const dispatch = useDispatch();
@@ -52,13 +52,17 @@ export const NetworkUrl = ({ internal = false, link }: NetworkUrlPropsType) => {
 
   return (
     <a
-      className={`dropdown-item ${activeNetwork.id === link.id ? 'active' : ''}`}
+      className={`dropdown-item ${
+        activeNetwork.id === link.id ? 'active' : ''
+      }`}
       key={link.id}
-      href={internal ? `/${link.id !== defaultNetworkId ? link.id : ''}` : link.url}
+      href={
+        internal ? `/${link.id !== defaultNetworkId ? link.id : ''}` : link.url
+      }
       data-testid={link.id}
       onClick={handleClick}
       {...{
-        ...(internal ? { target: '_blank' } : {}),
+        ...(internal ? { target: '_blank' } : {})
       }}
     >
       {link.name}

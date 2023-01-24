@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchange, faSearch } from '@fortawesome/pro-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useLocation } from 'react-router-dom';
 import {
   Denominate,
   CopyButton,
@@ -9,12 +9,12 @@ import {
   NetworkLink,
   DataDecode,
   AccountName,
-  ScAddressIcon,
+  ScAddressIcon
 } from 'components';
 import { DecodeMethodType } from 'components/DataDecode';
-import { ResultType } from 'types';
 import { urlBuilder } from 'helpers';
 import { transactionsRoutes } from 'routes';
+import { ResultType } from 'types';
 import { decodePart } from './decodePart';
 
 export const ScResultsList = ({ results }: { results: ResultType[] }) => {
@@ -25,10 +25,13 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
     .replace('#', '');
 
   const initialDecodeMethod =
-    hash.indexOf('/') > 0 ? hash.substring(hash.indexOf('/') + 1) : DecodeMethodType.raw;
+    hash.indexOf('/') > 0
+      ? hash.substring(hash.indexOf('/') + 1)
+      : DecodeMethodType.raw;
 
   const [decodeMethod, setDecodeMethod] = React.useState<string>(
-    initialDecodeMethod && Object.values<string>(DecodeMethodType).includes(initialDecodeMethod)
+    initialDecodeMethod &&
+      Object.values<string>(DecodeMethodType).includes(initialDecodeMethod)
       ? initialDecodeMethod
       : DecodeMethodType.raw
   );
@@ -51,13 +54,13 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
     if (ref.current && ref.current !== null) {
       window.scrollTo({
         top: ref.current.getBoundingClientRect().top - 70,
-        behavior: 'smooth',
+        behavior: 'smooth'
       });
     }
   }, []);
 
   return (
-    <div className="sc-results-list detailed-list d-flex flex-column mt-1">
+    <div className='sc-results-list detailed-list d-flex flex-column mt-1'>
       {results.map((result: ResultType, i) => {
         const highlightTx = formattedHash === result.hash;
         return (
@@ -69,20 +72,23 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
             }`}
             {...(highlightTx ? { ref: ref } : {})}
           >
-            <div className="transaction-icon">
+            <div className='transaction-icon'>
               <FontAwesomeIcon icon={faExchange} />
             </div>
 
-            <div className="detailed-item-content">
+            <div className='detailed-item-content'>
               {result.hash && (
-                <div className="row mb-3 d-flex flex-column flex-sm-row">
-                  <div className="col-sm-2 col-left">Hash</div>
-                  <div className="col-sm-10 d-flex align-items-center">
+                <div className='row mb-3 d-flex flex-column flex-sm-row'>
+                  <div className='col-sm-2 col-left'>Hash</div>
+                  <div className='col-sm-10 d-flex align-items-center'>
                     <Trim text={result.hash} />
-                    <CopyButton text={result.hash} className="side-action ms-2" />
+                    <CopyButton
+                      text={result.hash}
+                      className='side-action ms-2'
+                    />
                     <NetworkLink
                       to={`${transactionsRoutes.transactions}/${result.originalTxHash}#${result.hash}/${decodeMethod}`}
-                      className="side-action ms-2"
+                      className='side-action ms-2'
                     >
                       <FontAwesomeIcon icon={faSearch} />
                     </NetworkLink>
@@ -91,14 +97,17 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
               )}
 
               {result?.miniBlockHash && (
-                <div className="row mb-3 d-flex flex-column flex-sm-row">
-                  <div className="col-sm-2 col-left">Miniblock Hash</div>
-                  <div className="col-sm-10 d-flex align-items-center">
+                <div className='row mb-3 d-flex flex-column flex-sm-row'>
+                  <div className='col-sm-2 col-left'>Miniblock Hash</div>
+                  <div className='col-sm-10 d-flex align-items-center'>
                     <Trim text={result.miniBlockHash} />
-                    <CopyButton text={result.miniBlockHash} className="side-action ms-2" />
+                    <CopyButton
+                      text={result.miniBlockHash}
+                      className='side-action ms-2'
+                    />
                     <NetworkLink
                       to={urlBuilder.miniblockDetails(result.miniBlockHash)}
-                      className="side-action ms-2"
+                      className='side-action ms-2'
                     >
                       <FontAwesomeIcon icon={faSearch} />
                     </NetworkLink>
@@ -107,52 +116,68 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
               )}
 
               {result.sender && (
-                <div className="row mb-3 d-flex flex-column flex-sm-row">
-                  <div className="col-sm-2 col-left">From</div>
-                  <div className="col-sm-10 d-flex align-items-center">
+                <div className='row mb-3 d-flex flex-column flex-sm-row'>
+                  <div className='col-sm-2 col-left'>From</div>
+                  <div className='col-sm-10 d-flex align-items-center'>
                     <ScAddressIcon initiator={result.sender} />
-                    <AccountName address={result.sender} assets={result.senderAssets} />
-                    <CopyButton text={result.sender} className="side-action ms-2" />
+                    <AccountName
+                      address={result.sender}
+                      assets={result.senderAssets}
+                    />
+                    <CopyButton
+                      text={result.sender}
+                      className='side-action ms-2'
+                    />
                   </div>
                 </div>
               )}
 
               {result.receiver && (
-                <div className="row mb-3 d-flex flex-column flex-sm-row">
-                  <div className="col-sm-2 col-left">To</div>
-                  <div className="col-sm-10 d-flex align-items-center">
+                <div className='row mb-3 d-flex flex-column flex-sm-row'>
+                  <div className='col-sm-2 col-left'>To</div>
+                  <div className='col-sm-10 d-flex align-items-center'>
                     <ScAddressIcon initiator={result.receiver} />
-                    <AccountName address={result.receiver} assets={result.receiverAssets} />
-                    <CopyButton text={result.receiver} className="side-action ms-2" />
+                    <AccountName
+                      address={result.receiver}
+                      assets={result.receiverAssets}
+                    />
+                    <CopyButton
+                      text={result.receiver}
+                      className='side-action ms-2'
+                    />
                   </div>
                 </div>
               )}
 
               {result.value !== undefined && (
-                <div className="row mb-3 d-flex flex-column flex-sm-row">
-                  <div className="col-sm-2 col-left">Value</div>
-                  <div className="col-sm-10 text-wrap">
+                <div className='row mb-3 d-flex flex-column flex-sm-row'>
+                  <div className='col-sm-2 col-left'>Value</div>
+                  <div className='col-sm-10 text-wrap'>
                     <Denominate value={result.value} showLastNonZeroDecimal />
                   </div>
                 </div>
               )}
 
               {result.data && (
-                <div className="row d-flex flex-column flex-sm-row">
-                  <div className="col-sm-2 col-left">Data</div>
-                  <div className="col-sm-10">
+                <div className='row d-flex flex-column flex-sm-row'>
+                  <div className='col-sm-2 col-left'>Data</div>
+                  <div className='col-sm-10'>
                     <DataDecode
                       value={result.data ? decodeData(result.data) : 'N/A'}
-                      {...(highlightTx ? { initialDecodeMethod, setDecodeMethod } : {})}
+                      {...(highlightTx
+                        ? { initialDecodeMethod, setDecodeMethod }
+                        : {})}
                     />
                   </div>
                 </div>
               )}
 
               {result.returnMessage && (
-                <div className="row mt-3 d-flex flex-column flex-sm-row">
-                  <div className="col-sm-2 col-left">Response</div>
-                  <div className="col-sm-10 text-break-all">{result.returnMessage}</div>
+                <div className='row mt-3 d-flex flex-column flex-sm-row'>
+                  <div className='col-sm-2 col-left'>Response</div>
+                  <div className='col-sm-10 text-break-all'>
+                    {result.returnMessage}
+                  </div>
                 </div>
               )}
             </div>

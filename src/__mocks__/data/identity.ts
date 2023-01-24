@@ -6,5 +6,5 @@ export const identity = {
   validators: 1454,
   score: 174480,
   stake: 3635000,
-  stakePercent: 67.04,
+  stakePercent: 67.04
 };

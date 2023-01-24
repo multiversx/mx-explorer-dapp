@@ -4,6 +4,10 @@ import { PageState } from 'components';
 
 export const NoScResults = () => {
   return (
-    <PageState icon={faCode} title="No Smart Contract Results" className="py-spacer my-auto" />
+    <PageState
+      icon={faCode}
+      title='No Smart Contract Results'
+      className='py-spacer my-auto'
+    />
   );
 };

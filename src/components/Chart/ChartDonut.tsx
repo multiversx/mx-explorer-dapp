@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import BigNumber from 'bignumber.js';
+import { useSelector } from 'react-redux';
 import { ResponsiveContainer, PieChart, Pie, Sector, Cell } from 'recharts';
 
-import { ChartProps } from './helpers/types';
-import { getProviderColor } from './helpers/getEntryColor';
 import { usdValue } from 'helpers';
 
-import { useSelector } from 'react-redux';
 import { economicsSelector, activeNetworkSelector } from 'redux/selectors';
+import { getProviderColor } from './helpers/getEntryColor';
+import { ChartProps } from './helpers/types';
 
 const RenderActiveShape = (props: any) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
@@ -31,7 +31,7 @@ const RenderActiveShape = (props: any) => {
     fill,
     payload,
     percent,
-    value,
+    value
   } = props;
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
@@ -66,8 +66,12 @@ const RenderActiveShape = (props: any) => {
         fill={fill}
         stroke={fill}
       />
-      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+      <path
+        d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
+        stroke={fill}
+        fill='none'
+      />
+      <circle cx={ex} cy={ey} r={2} fill={fill} stroke='none' />
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -96,7 +100,11 @@ const RenderActiveShape = (props: any) => {
           fill={secondaryColor}
           fontSize={10}
         >
-          {usdValue({ amount: payload.displayValue ?? value, usd: price, showPrefix: true })}
+          {usdValue({
+            amount: payload.displayValue ?? value,
+            usd: price,
+            showPrefix: true
+          })}
         </text>
       )}
     </g>
@@ -116,17 +124,17 @@ export const ChartDonut = ({ config }: ChartProps) => {
   const mutedColor = docStyle.getPropertyValue('--muted');
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width='100%' height='100%'>
       <PieChart>
         <Pie
           activeIndex={activeIndex}
           activeShape={<RenderActiveShape />}
           data={chartData}
-          cx="50%"
-          cy="50%"
+          cx='50%'
+          cy='50%'
           innerRadius={75}
           outerRadius={100}
-          dataKey="value"
+          dataKey='value'
           onMouseEnter={onPieEnter}
           onClick={onPieEnter}
           strokeWidth={chartData.length > 1 ? 3 : 0}
@@ -140,7 +148,7 @@ export const ChartDonut = ({ config }: ChartProps) => {
                   ? getProviderColor({
                       name: entry.identifier,
                       currentIndex: index,
-                      total: chartData.length,
+                      total: chartData.length
                     })
                   : mutedColor
               }

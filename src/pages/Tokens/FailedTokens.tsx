@@ -6,9 +6,9 @@ export const FailedTokens = () => {
   return (
     <PageState
       icon={faCoins}
-      title="Unable to load Tokens"
-      className="py-spacer my-auto"
-      dataTestId="errorScreen"
+      title='Unable to load Tokens'
+      className='py-spacer my-auto'
+      dataTestId='errorScreen'
     />
   );
 };

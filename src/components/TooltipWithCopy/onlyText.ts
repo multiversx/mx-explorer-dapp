@@ -2,8 +2,14 @@ import { Children, isValidElement, ReactNode, ReactText } from 'react';
 import { hasChildren } from './hasChildren';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const childToString = (child?: ReactText | boolean | {} | null): string => {
-  if (typeof child === 'undefined' || child === null || typeof child === 'boolean') {
+export const childToString = (
+  child?: ReactText | boolean | any | null
+): string => {
+  if (
+    typeof child === 'undefined' ||
+    child === null ||
+    typeof child === 'boolean'
+  ) {
     return '';
   }
 

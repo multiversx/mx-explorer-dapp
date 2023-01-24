@@ -16,7 +16,7 @@ export const getInitialAccountStakingState = (): AccountStakingSliceType => {
     delegationProviders: [],
     delegationLegacyIdentity: undefined,
 
-    accountStakingFetched: false,
+    accountStakingFetched: false
   };
 };
 
@@ -45,8 +45,8 @@ export const accountStakingSlice = createSlice({
       state.delegationLegacyIdentity = action.payload.delegationLegacyIdentity;
 
       state.accountStakingFetched = action.payload.accountStakingFetched;
-    },
-  },
+    }
+  }
 });
 
 export const { setAccountStaking } = accountStakingSlice.actions;

@@ -3,15 +3,15 @@ import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExcl
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { Dropdown } from 'react-bootstrap';
+import { MAX_DECODE_TX_DATA_LENGTH } from 'appConstants';
 import { addressIsBech32, bech32, isUtf8 } from 'helpers';
 import { TransactionTokensType } from 'types';
-import { MAX_DECODE_TX_DATA_LENGTH } from 'appConstants';
 
 export enum DecodeMethodType {
   raw = 'raw',
   text = 'text',
   decimal = 'decimal',
-  smart = 'smart',
+  smart = 'smart'
 }
 
 export const decode = (
@@ -39,7 +39,10 @@ export const decode = (
         const decoded = Buffer.from(String(part), 'hex').toString('utf8');
         if (!isUtf8(decoded)) {
           if (transactionTokens) {
-            const tokens = [...transactionTokens.esdts, ...transactionTokens.nfts];
+            const tokens = [
+              ...transactionTokens.esdts,
+              ...transactionTokens.nfts
+            ];
             if (tokens.some((token) => decoded.includes(token))) {
               return decoded;
             }
@@ -60,7 +63,7 @@ export const decode = (
 const treatSmartDecodingCases = ({
   parts,
   decodedParts,
-  identifier,
+  identifier
 }: {
   parts: string[];
   decodedParts: string[];
@@ -82,7 +85,7 @@ const treatSmartDecodingCases = ({
 export const decodeForDisplay = ({
   input,
   decodeMethod,
-  identifier,
+  identifier
 }: {
   input: string;
   decodeMethod: DecodeMethodType;
@@ -93,12 +96,15 @@ export const decodeForDisplay = ({
     validationWarnings: string[];
   } = {
     displayValue: '',
-    validationWarnings: [],
+    validationWarnings: []
   };
 
   const getDecodedParts = (parts: string[]) => {
     const initialDecodedParts = parts.map((part, index) => {
-      if (parts.length >= 2 && ((index === 0 && part.length < 64) || (index === 1 && !parts[0]))) {
+      if (
+        parts.length >= 2 &&
+        ((index === 0 && part.length < 64) || (index === 1 && !parts[0]))
+      ) {
         const encodedDisplayValue = /[^a-z0-9]/gi.test(part);
         if (encodedDisplayValue) {
           return decode(part, decodeMethod);
@@ -119,7 +125,11 @@ export const decodeForDisplay = ({
 
     const decodedParts =
       decodeMethod === 'smart'
-        ? treatSmartDecodingCases({ parts, decodedParts: initialDecodedParts, identifier })
+        ? treatSmartDecodingCases({
+            parts,
+            decodedParts: initialDecodedParts,
+            identifier
+          })
         : initialDecodedParts;
 
     return decodedParts;
@@ -144,7 +154,11 @@ export const decodeForDisplay = ({
 
       const decodedParts =
         decodeMethod === 'smart'
-          ? treatSmartDecodingCases({ parts, decodedParts: initialDecodedParts, identifier })
+          ? treatSmartDecodingCases({
+              parts,
+              decodedParts: initialDecodedParts,
+              identifier
+            })
           : initialDecodedParts;
 
       display.displayValue = decodedParts.join('\n');
@@ -180,7 +194,7 @@ export const DataDecode = ({
   className,
   initialDecodeMethod,
   setDecodeMethod,
-  identifier,
+  identifier
 }: {
   value: string;
   className?: string;
@@ -189,7 +203,8 @@ export const DataDecode = ({
   identifier?: string;
 }) => {
   const [activeKey, setActiveKey] = React.useState(
-    initialDecodeMethod && Object.values<string>(DecodeMethodType).includes(initialDecodeMethod)
+    initialDecodeMethod &&
+      Object.values<string>(DecodeMethodType).includes(initialDecodeMethod)
       ? initialDecodeMethod
       : DecodeMethodType.raw
   );
@@ -200,7 +215,7 @@ export const DataDecode = ({
     const { displayValue, validationWarnings } = decodeForDisplay({
       input: value,
       decodeMethod: activeKey as DecodeMethodType,
-      identifier,
+      identifier
     });
     setDisplayValue(displayValue);
     setValidationWarnings(validationWarnings);
@@ -216,33 +231,41 @@ export const DataDecode = ({
   }, [activeKey]);
 
   return (
-    <div className="position-relative data-decode mt-1">
-      <div className={`form-control textarea ${className ? className : ''}`}>{displayValue}</div>
+    <div className='position-relative data-decode mt-1'>
+      <div className={`form-control textarea ${className ? className : ''}`}>
+        {displayValue}
+      </div>
       {value && value !== 'N/A' && (
         <Dropdown
-          className="position-absolute dropdown"
+          className='position-absolute dropdown'
           onSelect={(eventKey: any) => {
             return eventKey ? setActiveKey(eventKey) : DecodeMethodType.raw;
           }}
         >
           <Dropdown.Toggle
-            variant="light"
-            size="sm"
-            className={`border text-capitalize py-1`}
-            id="decode"
+            variant='light'
+            size='sm'
+            className={'border text-capitalize py-1'}
+            id='decode'
           >
             {activeKey.replace('/', '')}
           </Dropdown.Toggle>
-          <Dropdown.Menu style={{ marginTop: '0.35rem', marginBottom: '0.35rem' }}>
+          <Dropdown.Menu
+            style={{ marginTop: '0.35rem', marginBottom: '0.35rem' }}
+          >
             <Dropdown.Item
               eventKey={DecodeMethodType.raw}
-              className={`${activeKey === DecodeMethodType.raw ? 'active' : ''}`}
+              className={`${
+                activeKey === DecodeMethodType.raw ? 'active' : ''
+              }`}
             >
               Raw
             </Dropdown.Item>
             <Dropdown.Item
               eventKey={DecodeMethodType.text}
-              className={`${activeKey === DecodeMethodType.text ? 'active' : ''}`}
+              className={`${
+                activeKey === DecodeMethodType.text ? 'active' : ''
+              }`}
             >
               Text
             </Dropdown.Item>
@@ -250,13 +273,17 @@ export const DataDecode = ({
               <>
                 <Dropdown.Item
                   eventKey={DecodeMethodType.decimal}
-                  className={`${activeKey === DecodeMethodType.decimal ? 'active' : ''}`}
+                  className={`${
+                    activeKey === DecodeMethodType.decimal ? 'active' : ''
+                  }`}
                 >
                   Decimal
                 </Dropdown.Item>
                 <Dropdown.Item
                   eventKey={DecodeMethodType.smart}
-                  className={`${activeKey === DecodeMethodType.smart ? 'active' : ''}`}
+                  className={`${
+                    activeKey === DecodeMethodType.smart ? 'active' : ''
+                  }`}
                 >
                   Smart
                 </Dropdown.Item>
@@ -267,13 +294,16 @@ export const DataDecode = ({
       )}
       {validationWarnings.length
         ? validationWarnings.map((warning: string, i: number) => (
-            <div key={i} className="d-flex align-items-center mt-1 text-break-all">
+            <div
+              key={i}
+              className='d-flex align-items-center mt-1 text-break-all'
+            >
               <FontAwesomeIcon
                 icon={faExclamationTriangle}
-                size="xs"
-                className="text-warning me-1"
+                size='xs'
+                className='text-warning me-1'
               />
-              <small className="text-warning"> {warning}</small>
+              <small className='text-warning'> {warning}</small>
             </div>
           ))
         : null}

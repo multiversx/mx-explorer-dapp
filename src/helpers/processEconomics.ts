@@ -14,6 +14,6 @@ export const processEconomics = (data: EconomicsType) => {
     ...data,
     economicsFetched: true,
     totalStakedPercent,
-    ecosystemMarketCap,
+    ecosystemMarketCap
   };
 };

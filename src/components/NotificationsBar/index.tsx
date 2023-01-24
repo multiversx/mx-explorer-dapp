@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import { NotificationType } from 'types';
-import { useNotifications } from 'helpers';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useSelector } from 'react-redux';
+import { useNotifications } from 'helpers';
 import { interfaceSelector } from 'redux/selectors';
+import { NotificationType } from 'types';
 
 export const NotificationsBar = () => {
   const { removeNotification } = useNotifications();
@@ -24,23 +24,25 @@ export const NotificationsBar = () => {
       {notification !== undefined ? (
         <div
           className={`${
-            notification.bgClassName !== '' ? notification.bgClassName : 'bg-warning'
+            notification.bgClassName !== ''
+              ? notification.bgClassName
+              : 'bg-warning'
           } notification-bar d-flex flex-row align-items-center justify-content-center alert fade show m-0`}
-          role="alert"
-          data-testid="notificationBar"
+          role='alert'
+          data-testid='notificationBar'
         >
-          <div className="container d-flex flex-row align-items-center justify-content-between">
-            <div className="w-100">{notification.text}</div>
+          <div className='container d-flex flex-row align-items-center justify-content-between'>
+            <div className='w-100'>{notification.text}</div>
             {notification.dismissable && (
               <a
-                href="/#"
+                href='/#'
                 onClick={(event) => {
                   event.preventDefault();
                   removeNotification(notification.id);
                 }}
-                className="d-flex"
+                className='d-flex'
               >
-                <FontAwesomeIcon icon={faTimes} className="close-icon" />
+                <FontAwesomeIcon icon={faTimes} className='close-icon' />
               </a>
             )}
           </div>

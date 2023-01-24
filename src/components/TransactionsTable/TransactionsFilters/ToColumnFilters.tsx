@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
 
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
-import { TxFiltersEnum, TransactionsTableType } from 'types';
 import { SelectFilter, SelectFilterType } from 'components';
 import { truncateMiddle } from 'helpers';
+import { TxFiltersEnum, TransactionsTableType } from 'types';
 
 export const ToColumnFilters = ({
-  inactiveFilters = [],
+  inactiveFilters = []
 }: {
   inactiveFilters?: TransactionsTableType['inactiveFilters'];
 }) => {
@@ -31,23 +31,26 @@ export const ToColumnFilters = ({
 
   return (
     <OverlayTrigger
-      trigger="click"
-      key="popover"
-      placement="bottom"
+      trigger='click'
+      key='popover'
+      placement='bottom'
       rootClose
       overlay={
-        <Popover id="popover-positioned-bottom" className="border popover-xs bg-light">
+        <Popover
+          id='popover-positioned-bottom'
+          className='border popover-xs bg-light'
+        >
           <Popover.Content>
-            <div className="p-3 text-dark">
-              <div className="filter-block">
-                <div className="mb-1">To</div>
+            <div className='p-3 text-dark'>
+              <div className='filter-block'>
+                <div className='mb-1'>To</div>
                 <SelectFilter
-                  name="receiver-filter"
+                  name='receiver-filter'
                   options={existingValues}
                   filter={TxFiltersEnum.receiver}
-                  placeholder="Search for multiple addresses"
-                  validation="address"
-                  noOptionsMessage="Invalid Address"
+                  placeholder='Search for multiple addresses'
+                  validation='address'
+                  noOptionsMessage='Invalid Address'
                   hasCustomSearch
                   isMulti
                 />
@@ -57,7 +60,10 @@ export const ToColumnFilters = ({
         </Popover>
       }
     >
-      <div className="d-inline-block side-action cursor-pointer" data-testid="StatusFilterButton">
+      <div
+        className='d-inline-block side-action cursor-pointer'
+        data-testid='StatusFilterButton'
+      >
         <FontAwesomeIcon
           icon={receiver !== undefined ? faFilterSolid : faFilter}
           className={receiver !== undefined ? 'text-primary' : ''}

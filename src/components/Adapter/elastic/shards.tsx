@@ -8,7 +8,9 @@ export const shards = async ({ proxyUrl: nodeUrl }: { proxyUrl: string }) => {
 
     data.forEach((node: any) => {
       if (node.nodeType === 'validator') {
-        const existing = shards.find((shard: any) => shard.shard === node.shard);
+        const existing = shards.find(
+          (shard: any) => shard.shard === node.shard
+        );
 
         if (existing) {
           existing.validators = existing.validators + 1;
@@ -20,7 +22,7 @@ export const shards = async ({ proxyUrl: nodeUrl }: { proxyUrl: string }) => {
           shards.push({
             shard: node.shard,
             validators: 1,
-            activeValidators: node.status === 'online' ? 1 : 0,
+            activeValidators: node.status === 'online' ? 1 : 0
           });
         }
       }

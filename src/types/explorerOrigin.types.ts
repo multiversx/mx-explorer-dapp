@@ -3,7 +3,7 @@ export enum QueryParamNamesEnum {
   after = 'after',
   before = 'before',
   search = 'search',
-  type = 'type',
+  type = 'type'
 }
 
 export interface ExplorerOriginType {

@@ -1,20 +1,26 @@
 import * as React from 'react';
 import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  NetworkLink,
+  AccountName,
+  CopyButton,
+  TxActionBlock,
+  Denominate
+} from 'components';
 import { addressIsBech32, urlBuilder } from 'helpers';
 import {
   OperationType,
   TransactionOperationActionType,
-  VisibleTransactionOperationType,
+  VisibleTransactionOperationType
 } from 'types';
-import { NetworkLink, AccountName, CopyButton, TxActionBlock, Denominate } from 'components';
 import { UITransactionType } from 'types';
 
 export enum OperationDirectionEnum {
   out = 'out',
   in = 'in',
   self = 'self',
-  internal = 'int',
+  internal = 'int'
 }
 
 const internalTransactionActions = [
@@ -27,7 +33,7 @@ const internalTransactionActions = [
   TransactionOperationActionType.ESDTLocalBurn,
   TransactionOperationActionType.wipe,
   TransactionOperationActionType.writeLog,
-  TransactionOperationActionType.signalError,
+  TransactionOperationActionType.signalError
 ];
 
 const getTicker = (identifier: string) => {
@@ -43,7 +49,7 @@ const getTicker = (identifier: string) => {
 
 export const getOperationDirection = ({
   operation,
-  address,
+  address
 }: {
   operation: OperationType;
   address: string;
@@ -70,7 +76,7 @@ export const getOperationDirection = ({
   }
 
   return {
-    direction,
+    direction
   };
 };
 
@@ -78,14 +84,16 @@ const OperationToken = ({ operation }: { operation: OperationType }) => {
   const token = {
     type: operation.esdtType,
     name: operation.name,
-    ticker: operation.svgUrl ? getTicker(operation.identifier) : operation.identifier,
+    ticker: operation.svgUrl
+      ? getTicker(operation.identifier)
+      : operation.identifier,
     collection: operation.collection,
     identifier: operation.identifier,
     token: operation.identifier,
     decimals: operation.decimals,
     value: operation.value,
     svgUrl: operation.svgUrl,
-    valueUSD: operation.valueUSD,
+    valueUSD: operation.valueUSD
   };
   switch (operation.type) {
     case 'nft':
@@ -103,7 +111,7 @@ const OperationBlock = ({
   operation,
   action,
   isFullSize,
-  direction,
+  direction
 }: {
   address: string;
   transaction: UITransactionType;
@@ -133,7 +141,9 @@ const OperationBlock = ({
       className={`d-flex align-items-center ${
         isFullSize
           ? 'col-12'
-          : ` pe-xl-0 ${operationAssets ? 'ps-3 mw-lg-6 mw-xl-4' : 'col-lg-6 col-xl-4'}`
+          : ` pe-xl-0 ${
+              operationAssets ? 'ps-3 mw-lg-6 mw-xl-4' : 'col-lg-6 col-xl-4'
+            }`
       }`}
     >
       {direction && (
@@ -141,14 +151,23 @@ const OperationBlock = ({
           {direction.toUpperCase()}
         </div>
       )}
-      {action && <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary me-2" />}
-      <div className="me-2 text-nowrap">{action ? action : ''}</div>
+      {action && (
+        <FontAwesomeIcon
+          icon={faCaretRight}
+          size='xs'
+          className='text-secondary me-2'
+        />
+      )}
+      <div className='me-2 text-nowrap'>{action ? action : ''}</div>
       {addressIsBech32(address) ? (
         <>
-          <NetworkLink to={urlBuilder.accountDetails(address)} className="trim-wrapper">
+          <NetworkLink
+            to={urlBuilder.accountDetails(address)}
+            className='trim-wrapper'
+          >
             <AccountName address={address} assets={operationAssets} />
           </NetworkLink>
-          <CopyButton text={address} className="side-action ms-2" />
+          <CopyButton text={address} className='side-action ms-2' />
         </>
       ) : (
         ''
@@ -159,12 +178,15 @@ const OperationBlock = ({
 
 const OperationText = ({
   operation,
-  transaction,
+  transaction
 }: {
   operation: OperationType;
   transaction: UITransactionType;
 }) => {
-  const { direction } = getOperationDirection({ operation, address: transaction.sender });
+  const { direction } = getOperationDirection({
+    operation,
+    address: transaction.sender
+  });
 
   switch (operation.action) {
     case TransactionOperationActionType.create:
@@ -175,7 +197,7 @@ const OperationText = ({
           transaction={transaction}
           operation={operation}
           address={operation.sender}
-          action="Mint by"
+          action='Mint by'
           direction={OperationDirectionEnum.internal}
         />
       );
@@ -185,7 +207,7 @@ const OperationText = ({
           transaction={transaction}
           operation={operation}
           address={operation.sender}
-          action="Add quantity by"
+          action='Add quantity by'
           direction={OperationDirectionEnum.internal}
         />
       );
@@ -197,7 +219,7 @@ const OperationText = ({
           transaction={transaction}
           operation={operation}
           address={operation.sender}
-          action="Burn by"
+          action='Burn by'
           direction={OperationDirectionEnum.internal}
         />
       );
@@ -207,7 +229,7 @@ const OperationText = ({
           transaction={transaction}
           operation={operation}
           address={operation.receiver}
-          action="Wipe from"
+          action='Wipe from'
           direction={OperationDirectionEnum.internal}
         />
       );
@@ -218,14 +240,14 @@ const OperationText = ({
             transaction={transaction}
             operation={operation}
             address={operation.sender}
-            action="Multi transfer from"
+            action='Multi transfer from'
             direction={direction}
           />{' '}
           <OperationBlock
             transaction={transaction}
             operation={operation}
             address={operation.receiver}
-            action="To"
+            action='To'
           />
         </>
       );
@@ -236,14 +258,14 @@ const OperationText = ({
             transaction={transaction}
             operation={operation}
             address={operation.sender}
-            action="Transfer from"
+            action='Transfer from'
             direction={direction}
           />{' '}
           <OperationBlock
             transaction={transaction}
             operation={operation}
             address={operation.receiver}
-            action="To"
+            action='To'
           />
         </>
       );
@@ -253,7 +275,7 @@ const OperationText = ({
           transaction={transaction}
           operation={operation}
           address={operation.sender}
-          action="Write log by"
+          action='Write log by'
           direction={OperationDirectionEnum.internal}
           isFullSize
         />
@@ -264,7 +286,7 @@ const OperationText = ({
           transaction={transaction}
           operation={operation}
           address={operation.sender}
-          action="Signal error by"
+          action='Signal error by'
           direction={OperationDirectionEnum.internal}
           isFullSize
         />
@@ -276,14 +298,14 @@ const OperationText = ({
             transaction={transaction}
             operation={operation}
             address={operation.sender}
-            action="From"
+            action='From'
             direction={direction}
           />{' '}
           <OperationBlock
             transaction={transaction}
             operation={operation}
             address={operation.receiver}
-            action="To"
+            action='To'
           />
         </>
       );
@@ -292,7 +314,7 @@ const OperationText = ({
 
 const OperationRow = ({
   operation,
-  transaction,
+  transaction
 }: {
   operation: OperationType;
   transaction: UITransactionType;
@@ -303,8 +325,12 @@ const OperationRow = ({
       return (
         <DetailedItem operation={operation} transaction={transaction}>
           <>
-            {operation.esdtType === 'NonFungibleESDT' && <div className="me-1">NFT</div>}
-            {operation.esdtType === 'SemiFungibleESDT' && <div className="me-1">SFT quantity</div>}
+            {operation.esdtType === 'NonFungibleESDT' && (
+              <div className='me-1'>NFT</div>
+            )}
+            {operation.esdtType === 'SemiFungibleESDT' && (
+              <div className='me-1'>SFT quantity</div>
+            )}
             <OperationToken operation={operation} />
           </>
         </DetailedItem>
@@ -314,7 +340,7 @@ const OperationRow = ({
       return (
         <DetailedItem operation={operation} transaction={transaction}>
           <>
-            <div className="me-2">Value</div>
+            <div className='me-2'>Value</div>
             <Denominate value={operation.value} showLastNonZeroDecimal={true} />
           </>
         </DetailedItem>
@@ -328,18 +354,18 @@ const OperationRow = ({
 const DetailedItem = ({
   children,
   operation,
-  transaction,
+  transaction
 }: {
   children?: React.ReactNode;
   operation: OperationType;
   transaction: UITransactionType;
 }) => {
   return (
-    <div className="detailed-item d-flex row mb-3 mb-xl-2">
+    <div className='detailed-item d-flex row mb-3 mb-xl-2'>
       <OperationText operation={operation} transaction={transaction} />
       {children && (
-        <div className="col d-flex align-items-center">
-          <div className="d-flex text-truncate">{children}</div>
+        <div className='col d-flex align-items-center'>
+          <div className='d-flex text-truncate'>{children}</div>
         </div>
       )}
     </div>
@@ -348,7 +374,7 @@ const DetailedItem = ({
 
 export const OperationsList = ({
   transaction,
-  operations,
+  operations
 }: {
   transaction: UITransactionType;
   operations: OperationType[];
@@ -363,9 +389,11 @@ export const OperationsList = ({
   const filteredOperations = operations.filter(
     (operation) =>
       !internalTransactionActions.includes(operation.action) &&
-      (operation.sender === transaction.sender || operation.receiver === transaction.sender)
+      (operation.sender === transaction.sender ||
+        operation.receiver === transaction.sender)
   );
-  const importantOperations = filteredOperations.length > 0 ? filteredOperations : operations;
+  const importantOperations =
+    filteredOperations.length > 0 ? filteredOperations : operations;
 
   const displayOperations =
     importantOperations.length > initialDisplay
@@ -384,8 +412,8 @@ export const OperationsList = ({
     : 'Show all operations';
 
   return (
-    <div className="mb-n2">
-      <div className="operations-list d-flex flex-column">
+    <div className='mb-n2'>
+      <div className='operations-list d-flex flex-column'>
         {expanded ? (
           <>
             {operations.map((operation: OperationType, index) => (
@@ -404,12 +432,13 @@ export const OperationsList = ({
           </>
         )}
       </div>
-      {(displayOperations.length !== operations.length || collapsedOperations.length > 0) && (
+      {(displayOperations.length !== operations.length ||
+        collapsedOperations.length > 0) && (
         <button
-          className="btn btn-link btn-link-base"
-          type="button"
+          className='btn btn-link btn-link-base'
+          type='button'
           onClick={toggleCollapseClick}
-          aria-controls="operations-list"
+          aria-controls='operations-list'
           aria-expanded={expanded}
         >
           {buttonText}

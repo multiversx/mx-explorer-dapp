@@ -3,11 +3,13 @@ import { fireEvent, wait, beforeAll } from '__mocks__/test-utils';
 describe('Providers Page', () => {
   test('Providers page is displaying', async () => {
     const render = beforeAll({
-      route: '/providers',
+      route: '/providers'
     });
 
     await wait(async () => {
-      expect(document.title).toEqual('Providers • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual(
+        'Providers • MultiversX (previously Elrond) Explorer'
+      );
       const table = await render.findByTestId('providersTable');
       expect(table.childElementCount).toBe(8);
     });
@@ -15,7 +17,7 @@ describe('Providers Page', () => {
 
   test('Providers page loading state', async () => {
     const render = beforeAll({
-      route: '/providers',
+      route: '/providers'
     });
 
     const loader = await render.findByTestId('loader');
@@ -26,8 +28,8 @@ describe('Providers Page', () => {
     const render = beforeAll({
       route: '/providers',
       networkRequests: {
-        providers: () => Promise.resolve(new Error('error')),
-      },
+        providers: () => Promise.resolve(new Error('error'))
+      }
     });
 
     const failedState = await render.findByTestId('errorScreenProviders');
@@ -38,7 +40,7 @@ describe('Providers Page', () => {
 describe('Providers Page Links', () => {
   test('Provider page link', async () => {
     const render = beforeAll({
-      route: '/providers',
+      route: '/providers'
     });
 
     const link = await render.findByTestId('providerLink0');
@@ -46,7 +48,9 @@ describe('Providers Page Links', () => {
 
     fireEvent.click(link);
     await wait(async () => {
-      expect(document.title).toEqual('Provider Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual(
+        'Provider Details • MultiversX (previously Elrond) Explorer'
+      );
     });
   });
 });

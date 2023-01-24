@@ -8,47 +8,54 @@ import {
   faReceipt,
   faLeaf,
   faUserFriends,
-  faUser,
+  faUser
 } from '@fortawesome/pro-solid-svg-icons';
 
-import { urlBuilder } from 'helpers';
-import { ProviderType } from 'types';
+import { useSelector } from 'react-redux';
 import {
   CardItem,
   CopyButton,
   Denominate,
   LockedAmountTooltip,
   NetworkLink,
-  Trim,
+  Trim
 } from 'components';
 import { DelegationCap } from 'components/ProvidersTable/DelegationCap';
 import { PercentageFilled } from 'components/ProvidersTable/PercentageFilled';
 import { hasDelegationCap } from 'components/ProvidersTable/PercentageFilled';
+import { urlBuilder } from 'helpers';
 
-import { useSelector } from 'react-redux';
 import { activeNetworkSelector } from 'redux/selectors';
+import { ProviderType } from 'types';
 
-export const ProviderDetailsCard = ({ provider }: { provider?: ProviderType }) => {
+export const ProviderDetailsCard = ({
+  provider
+}: {
+  provider?: ProviderType;
+}) => {
   const { walletAddress } = useSelector(activeNetworkSelector);
 
   return provider !== undefined ? (
-    <div className="provider-details-card card">
-      <div className="card-header">
-        <div className="card-header-item d-flex justify-content-between align-items-center">
-          <h6 data-testid="title">Contract Details</h6>
+    <div className='provider-details-card card'>
+      <div className='card-header'>
+        <div className='card-header-item d-flex justify-content-between align-items-center'>
+          <h6 data-testid='title'>Contract Details</h6>
           <a
-            className="btn btn-sm btn-primary-light"
-            target={`_blank`}
-            rel={`noreferrer nofollow`}
+            className='btn btn-sm btn-primary-light'
+            target={'_blank'}
+            rel={'noreferrer nofollow'}
             href={walletAddress}
           >
             Stake now
           </a>
         </div>
-        <div className="card-header-item compact d-flex">
-          <span className="text-secondary flex-shrink-0">Address:</span>
-          <div className="d-flex align-items-center text-break-all ms-2">
-            <NetworkLink to={urlBuilder.accountDetails(provider.provider)} data-testid="address">
+        <div className='card-header-item compact d-flex'>
+          <span className='text-secondary flex-shrink-0'>Address:</span>
+          <div className='d-flex align-items-center text-break-all ms-2'>
+            <NetworkLink
+              to={urlBuilder.accountDetails(provider.provider)}
+              data-testid='address'
+            >
               {provider.provider}
             </NetworkLink>
             <CopyButton text={provider.provider} />
@@ -56,8 +63,8 @@ export const ProviderDetailsCard = ({ provider }: { provider?: ProviderType }) =
         </div>
       </div>
 
-      <div className="card-body card-item-container mx-spacing">
-        <CardItem title="Number of nodes" icon={faServer}>
+      <div className='card-body card-item-container mx-spacing'>
+        <CardItem title='Number of nodes' icon={faServer}>
           {provider.numNodes !== undefined ? (
             <>
               {provider.numNodes} node{provider.numNodes !== 1 ? 's' : ''}
@@ -67,7 +74,7 @@ export const ProviderDetailsCard = ({ provider }: { provider?: ProviderType }) =
           )}
         </CardItem>
 
-        <CardItem title="Computed APR" icon={faLeaf}>
+        <CardItem title='Computed APR' icon={faLeaf}>
           {provider.apr ? (
             <>
               {provider.apr}
@@ -78,25 +85,32 @@ export const ProviderDetailsCard = ({ provider }: { provider?: ProviderType }) =
           )}
         </CardItem>
 
-        <CardItem title="Service fee" icon={faReceipt}>
-          {provider.serviceFee ? <>{(provider.serviceFee * 100).toFixed(2)}%</> : <>N/A</>}
+        <CardItem title='Service fee' icon={faReceipt}>
+          {provider.serviceFee ? (
+            <>{(provider.serviceFee * 100).toFixed(2)}%</>
+          ) : (
+            <>N/A</>
+          )}
         </CardItem>
 
-        <CardItem title="Locked" icon={faLock}>
+        <CardItem title='Locked' icon={faLock}>
           {provider.locked ? (
-            <div className="d-flex align-items-center">
-              <span className="me-2">
+            <div className='d-flex align-items-center'>
+              <span className='me-2'>
                 <Denominate value={provider.locked} />
               </span>
 
               <LockedAmountTooltip
                 small
                 lockedDetails={[
-                  { label: 'Stake', value: <Denominate value={provider.stake} /> },
+                  {
+                    label: 'Stake',
+                    value: <Denominate value={provider.stake} />
+                  },
                   {
                     label: 'Topup',
-                    value: <Denominate value={provider.topUp} />,
-                  },
+                    value: <Denominate value={provider.topUp} />
+                  }
                 ]}
               />
             </div>
@@ -105,15 +119,19 @@ export const ProviderDetailsCard = ({ provider }: { provider?: ProviderType }) =
           )}
         </CardItem>
 
-        <CardItem title="Delegators" icon={faUserFriends}>
+        <CardItem title='Delegators' icon={faUserFriends}>
           {provider.numUsers ? <>{provider.numUsers}</> : <>N/A</>}
         </CardItem>
 
-        <CardItem title="Cumulated Rewards" icon={faCoins}>
-          {provider.cumulatedRewards ? <Denominate value={provider.cumulatedRewards} /> : <>0</>}
+        <CardItem title='Cumulated Rewards' icon={faCoins}>
+          {provider.cumulatedRewards ? (
+            <Denominate value={provider.cumulatedRewards} />
+          ) : (
+            <>0</>
+          )}
         </CardItem>
 
-        <CardItem title="Delegation Cap" icon={faArrowToTop}>
+        <CardItem title='Delegation Cap' icon={faArrowToTop}>
           {provider.delegationCap ? (
             <DelegationCap delegationCap={provider.delegationCap} />
           ) : (
@@ -122,15 +140,21 @@ export const ProviderDetailsCard = ({ provider }: { provider?: ProviderType }) =
         </CardItem>
 
         {hasDelegationCap(provider.delegationCap) && (
-          <CardItem title="Filled" icon={faChartPieAlt}>
-            <PercentageFilled locked={provider.locked} delegationCap={provider.delegationCap} />
+          <CardItem title='Filled' icon={faChartPieAlt}>
+            <PercentageFilled
+              locked={provider.locked}
+              delegationCap={provider.delegationCap}
+            />
           </CardItem>
         )}
 
         {provider?.owner && (
-          <CardItem title="Owner" icon={faUser}>
-            <div className="d-flex align-items-center min-w-0">
-              <NetworkLink to={urlBuilder.accountDetails(provider.owner)} className="trim-wrapper">
+          <CardItem title='Owner' icon={faUser}>
+            <div className='d-flex align-items-center min-w-0'>
+              <NetworkLink
+                to={urlBuilder.accountDetails(provider.owner)}
+                className='trim-wrapper'
+              >
                 <Trim text={provider.owner} />
               </NetworkLink>
               <CopyButton text={provider.owner} />

@@ -1,6 +1,7 @@
 export const transactions = {
   txHash: '41fa1461ac134ee095dbee60c3cc2848255181aaa2bdd6f5aae386d58e0d4a80',
-  miniBlockHash: '93762910edf44a1297e28bb3a7ba101b9398e1145bc5055d8aadc7a342ea4e0f',
+  miniBlockHash:
+    '93762910edf44a1297e28bb3a7ba101b9398e1145bc5055d8aadc7a342ea4e0f',
   blockHash: 'd9afb04206194cea67632fbee776585529704cb36c456d14116880a92d99907a',
   nonce: 0,
   round: 10721,
@@ -15,5 +16,5 @@ export const transactions = {
   data: '',
   signature: '',
   timestamp: 1579096326,
-  status: 'Success',
+  status: 'Success'
 };

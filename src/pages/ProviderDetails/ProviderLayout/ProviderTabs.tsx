@@ -9,10 +9,12 @@ export const ProviderTabs = () => {
   const activeRoute = useActiveRoute();
 
   return (
-    <div className="provider-tabs d-flex flex-row">
+    <div className='provider-tabs d-flex flex-row'>
       <NetworkLink
         to={urlBuilder.providerDetails(address)}
-        className={`tab-link me-3 ${activeRoute(validatorsRoutes.providerDetails) ? 'active' : ''}`}
+        className={`tab-link me-3 ${
+          activeRoute(validatorsRoutes.providerDetails) ? 'active' : ''
+        }`}
       >
         <h6>Nodes</h6>
       </NetworkLink>

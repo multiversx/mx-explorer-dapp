@@ -1,23 +1,22 @@
 import * as React from 'react';
 
-import { useAdapter } from 'components';
-import { ReactComponent as Gear } from 'assets/img/network-health/gear.svg';
+import { useSelector } from 'react-redux';
+import { REFRESH_RATE } from 'appConstants';
 import { ReactComponent as BigGear } from 'assets/img/network-health/big-gear.svg';
 import { ReactComponent as CenterGear } from 'assets/img/network-health/center-gear.svg';
+import { ReactComponent as Gear } from 'assets/img/network-health/gear.svg';
 import { ReactComponent as LayoutGear } from 'assets/img/network-health/layout-gear.svg';
-import { ProgressRing } from './ProgressRing';
-import { REFRESH_RATE } from 'appConstants';
+import { useAdapter } from 'components';
 import { processStats, validDisplayValue } from 'helpers';
-
-import { useSelector } from 'react-redux';
 import { activeNetworkSelector, interfaceSelector } from 'redux/selectors';
 import { getInitialStatsState } from 'redux/slices/stats';
 
 import { StatsSliceType } from 'types/stats.types';
+import { ProgressRing } from './ProgressRing';
 
 export const NetworkHealth = () => {
   const {
-    refresh: { timestamp },
+    refresh: { timestamp }
   } = useSelector(interfaceSelector);
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
@@ -27,7 +26,9 @@ export const NetworkHealth = () => {
   const pageHidden = document.hidden;
   const initialStats = getInitialStatsState();
 
-  const [stateBuffer, setStateBuffer] = React.useState<StatsSliceType | undefined>();
+  const [stateBuffer, setStateBuffer] = React.useState<
+    StatsSliceType | undefined
+  >();
   const [state, setState] = React.useState(initialStats);
 
   const [oldTestnetId, setOldTestnetId] = React.useState(activeNetworkId);
@@ -87,80 +88,96 @@ export const NetworkHealth = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(updateSate, [blockTimeProgress]);
 
-  const { blocks, accounts, transactions, epoch, epochPercentage, roundsPerEpoch, roundsPassed } =
-    state;
+  const {
+    blocks,
+    accounts,
+    transactions,
+    epoch,
+    epochPercentage,
+    roundsPerEpoch,
+    roundsPassed
+  } = state;
 
   const play = !pageHidden;
 
   return (
-    <div ref={ref} className="card network-health">
-      <div className="card-header">
-        <div className="card-header-item d-flex justify-content-between align-items-center">
-          <h6 className="m-0">Network Health</h6>
+    <div ref={ref} className='card network-health'>
+      <div className='card-header'>
+        <div className='card-header-item d-flex justify-content-between align-items-center'>
+          <h6 className='m-0'>Network Health</h6>
         </div>
       </div>
-      <div className="card-body d-flex justify-content-center align-items-center">
-        <div className="gears-layout-container position-relative flex-fill">
-          <LayoutGear className={`layout-gear blink-${play ? blockTimeProgress : 0}`} />
+      <div className='card-body d-flex justify-content-center align-items-center'>
+        <div className='gears-layout-container position-relative flex-fill'>
+          <LayoutGear
+            className={`layout-gear blink-${play ? blockTimeProgress : 0}`}
+          />
 
-          <div className="big-gear-container">
+          <div className='big-gear-container'>
             <div className={`animate ${play ? '' : 'paused'}`}>
-              <BigGear className="w-100 h-100" />
+              <BigGear className='w-100 h-100' />
             </div>
           </div>
 
-          <div className="gear-container top-left">
+          <div className='gear-container top-left'>
             <div className={`animate ${play ? '' : 'paused'}`}>
-              <Gear className="w-100 h-100" />
+              <Gear className='w-100 h-100' />
             </div>
-            <div className="gear-content">
-              <span data-testid="accounts">{validDisplayValue(accounts)}</span>
+            <div className='gear-content'>
+              <span data-testid='accounts'>{validDisplayValue(accounts)}</span>
               <small>Accounts</small>
             </div>
           </div>
 
-          <div className="gear-container top-right">
+          <div className='gear-container top-right'>
             <div className={`animate ${play ? '' : 'paused'}`}>
-              <Gear className="w-100 h-100" />
+              <Gear className='w-100 h-100' />
             </div>
-            <div className="gear-content">
-              <span data-testid="transactions">{validDisplayValue(transactions)}</span>
+            <div className='gear-content'>
+              <span data-testid='transactions'>
+                {validDisplayValue(transactions)}
+              </span>
               <small>Transactions</small>
             </div>
           </div>
 
-          <div className="gear-container center">
+          <div className='gear-container center'>
             <div className={`animate ${play ? '' : 'paused'}`}>
-              <CenterGear className="w-100 h-100" />
+              <CenterGear className='w-100 h-100' />
             </div>
-            <div className="gear-content">
+            <div className='gear-content'>
               <ProgressRing progress={epochPercentage} />
-              <span className="mt-1">Epoch {epoch}</span>
+              <span className='mt-1'>Epoch {epoch}</span>
               {epoch && (
                 <small>
-                  {(roundsPerEpoch - roundsPassed).toLocaleString('en')} Rounds <br />
+                  {(roundsPerEpoch - roundsPassed).toLocaleString('en')} Rounds{' '}
+                  <br />
                   Left
                 </small>
               )}
             </div>
           </div>
 
-          <div className="gear-container bottom-left">
+          <div className='gear-container bottom-left'>
             <div className={`animate ${play ? '' : 'paused'}`}>
-              <Gear className="w-100 h-100" />
+              <Gear className='w-100 h-100' />
             </div>
-            <div className="gear-content">
-              <span data-testid="blocks">{blocks}</span>
+            <div className='gear-content'>
+              <span data-testid='blocks'>{blocks}</span>
               <small>Block Height</small>
             </div>
           </div>
 
-          <div className="gear-container bottom-right">
+          <div className='gear-container bottom-right'>
             <div className={`animate ${play ? '' : 'paused'}`}>
-              <Gear className="w-100 h-100" />
+              <Gear className='w-100 h-100' />
             </div>
-            <div className={`gear-content current-block-time-${blockTimeProgress}`}>
-              <ProgressRing progress={(blockTimeProgress * 100) / intervalInSec} />
+            <div
+              className={`gear-content current-block-time-${blockTimeProgress}`}
+            >
+              <ProgressRing
+                progress={(blockTimeProgress * 100) / intervalInSec}
+              />
               {stateBuffer !== undefined ? blockTimeProgress : '...'}
               <small>Block Time</small>
             </div>

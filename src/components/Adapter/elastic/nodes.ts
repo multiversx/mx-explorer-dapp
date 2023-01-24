@@ -1,10 +1,10 @@
-import { ProviderPropsType } from '../helpers';
 import { getNodes } from './helpers/getNodes';
+import { ProviderPropsType } from '../helpers';
 
 export const nodes = async ({
   nodeUrl,
   url,
-  params = {},
+  params = {}
 }: {
   url: string;
   nodeUrl: string;
@@ -27,7 +27,7 @@ export const nodes = async ({
       fullHistory,
       identity,
       sort,
-      order = 'asc',
+      order = 'asc'
     } = queryStringParameters;
 
     let results;
@@ -40,10 +40,15 @@ export const nodes = async ({
     } else {
       const data = nodes.filter((node: any) => {
         if (search) {
-          const pubKeyMatches = node.publicKey.toLowerCase().includes(search.toLowerCase());
+          const pubKeyMatches = node.publicKey
+            .toLowerCase()
+            .includes(search.toLowerCase());
           const nameMatches =
-            node.nodeName && node.nodeName.toLowerCase().includes(search.toLowerCase());
-          const versionMatches = node.versionNumber.toLowerCase().includes(search.toLowerCase());
+            node.nodeName &&
+            node.nodeName.toLowerCase().includes(search.toLowerCase());
+          const versionMatches = node.versionNumber
+            .toLowerCase()
+            .includes(search.toLowerCase());
 
           if (!pubKeyMatches && !nameMatches && !versionMatches) {
             return false;
@@ -64,7 +69,8 @@ export const nodes = async ({
 
         if (
           shard !== undefined &&
-          (typeof node.shard === 'undefined' || node.shard.toString() !== shard.toString())
+          (typeof node.shard === 'undefined' ||
+            node.shard.toString() !== shard.toString())
         ) {
           return false;
         }
@@ -84,8 +90,15 @@ export const nodes = async ({
         return true;
       });
 
-      if (sort && ['nodeName', 'versionNumber', 'totalUpTime', 'tempRating'].includes(sort)) {
-        data.sort((a: any, b: any) => (a[sort] > b[sort] ? 1 : b[sort] > a[sort] ? -1 : 0));
+      if (
+        sort &&
+        ['nodeName', 'versionNumber', 'totalUpTime', 'tempRating'].includes(
+          sort
+        )
+      ) {
+        data.sort((a: any, b: any) =>
+          a[sort] > b[sort] ? 1 : b[sort] > a[sort] ? -1 : 0
+        );
 
         if (order === 'desc') {
           data.reverse();

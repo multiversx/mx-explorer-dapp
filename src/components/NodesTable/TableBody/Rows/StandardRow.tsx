@@ -1,16 +1,23 @@
 import * as React from 'react';
-import { urlBuilder } from 'helpers';
-import { NodeType } from 'types';
-import { ShardSpan, NetworkLink, Trim, Led, Overlay, Denominate } from 'components';
+import {
+  ShardSpan,
+  NetworkLink,
+  Trim,
+  Led,
+  Overlay,
+  Denominate
+} from 'components';
+import { RowFullHistory } from 'components/NodesTable/RowFullHistory';
 import { RowIcon } from 'components/NodesTable/RowIcon';
 import { RowIssueIcon } from 'components/NodesTable/RowIssueIcon';
-import { RowFullHistory } from 'components/NodesTable/RowFullHistory';
+import { urlBuilder } from 'helpers';
+import { NodeType } from 'types';
 
 export const StandardRow = ({
   nodeData,
   index,
   type,
-  status,
+  status
 }: {
   nodeData: NodeType;
   index: number;
@@ -18,7 +25,10 @@ export const StandardRow = ({
   status?: NodeType['status'];
 }) => {
   const ValidatorLockedStakeTooltip = () => {
-    if ((type === 'validator' && nodeData.locked && nodeData.stake) || nodeData.topUp) {
+    if (
+      (type === 'validator' && nodeData.locked && nodeData.stake) ||
+      nodeData.topUp
+    ) {
       return (
         <>
           {nodeData.stake && (
@@ -41,10 +51,13 @@ export const StandardRow = ({
   return (
     <>
       <td>
-        <div className="d-flex align-items-center">
+        <div className='d-flex align-items-center'>
           <RowIcon node={nodeData} />
           <RowFullHistory node={nodeData} small={true} />
-          <NetworkLink to={urlBuilder.nodeDetails(nodeData.bls)} className="trim-wrapper">
+          <NetworkLink
+            to={urlBuilder.nodeDetails(nodeData.bls)}
+            className='trim-wrapper'
+          >
             <Trim text={nodeData.bls} />
           </NetworkLink>
           <RowIssueIcon node={nodeData} />
@@ -52,61 +65,78 @@ export const StandardRow = ({
       </td>
       <td>
         {nodeData.name ? (
-          <div className="truncate-item-lg">{nodeData.name}</div>
+          <div className='truncate-item-lg'>{nodeData.name}</div>
         ) : (
-          <span className="text-secondary">N/A</span>
+          <span className='text-secondary'>N/A</span>
         )}
       </td>
       <td>
-        <div className="d-flex">
+        <div className='d-flex'>
           {nodeData.shard !== undefined ? (
-            <NetworkLink to={urlBuilder.shard(nodeData.shard)} data-testid={`shardLink${index}`}>
+            <NetworkLink
+              to={urlBuilder.shard(nodeData.shard)}
+              data-testid={`shardLink${index}`}
+            >
               <ShardSpan shard={nodeData.shard} />
             </NetworkLink>
           ) : (
-            <span className="text-secondary">N/A</span>
+            <span className='text-secondary'>N/A</span>
           )}
         </div>
       </td>
-      <td>{nodeData.version ? nodeData.version : <span className="text-secondary">N/A</span>}</td>
-      <td className="text-right" style={{ maxWidth: '8rem' }}>
+      <td>
+        {nodeData.version ? (
+          nodeData.version
+        ) : (
+          <span className='text-secondary'>N/A</span>
+        )}
+      </td>
+      <td className='text-right' style={{ maxWidth: '8rem' }}>
         {nodeData.validatorIgnoredSignatures ? (
           nodeData.validatorIgnoredSignatures.toLocaleString('en')
         ) : (
-          <span className="text-secondary">N/A</span>
+          <span className='text-secondary'>N/A</span>
         )}
       </td>
       <td>
-        <div className="d-flex align-items-center justify-content-end">
+        <div className='d-flex align-items-center justify-content-end'>
           <Led color={nodeData.online ? 'bg-success' : 'bg-danger'} />
-          <span className={`ms-2 ${nodeData.online ? 'text-success' : 'text-danger'}`}>
+          <span
+            className={`ms-2 ${
+              nodeData.online ? 'text-success' : 'text-danger'
+            }`}
+          >
             {nodeData.online ? 'online' : 'offline'}
           </span>
         </div>
       </td>
-      <td className="text-right">
+      <td className='text-right'>
         {!isNaN(nodeData.tempRating) ? (
           Math.floor(nodeData.tempRating)
         ) : (
-          <span className="text-secondary">N/A</span>
+          <span className='text-secondary'>N/A</span>
         )}
       </td>
-      <td className="text-right">
-        {nodeData.nonce ? nodeData.nonce : <span className="text-secondary">N/A</span>}
+      <td className='text-right'>
+        {nodeData.nonce ? (
+          nodeData.nonce
+        ) : (
+          <span className='text-secondary'>N/A</span>
+        )}
       </td>
 
       {status === 'queued' && (
-        <td className="text-right">
+        <td className='text-right'>
           {nodeData.position ? (
-            <div className="truncate-item-lg">{nodeData.position}</div>
+            <div className='truncate-item-lg'>{nodeData.position}</div>
           ) : (
-            <span className="text-secondary">N/A</span>
+            <span className='text-secondary'>N/A</span>
           )}
         </td>
       )}
 
       {type === 'validator' && nodeData.locked && (
-        <td className="text-right">
+        <td className='text-right'>
           <Overlay title={<ValidatorLockedStakeTooltip />}>
             <Denominate value={nodeData.locked} showTooltip={false} />
           </Overlay>

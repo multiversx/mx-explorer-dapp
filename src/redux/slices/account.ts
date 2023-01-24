@@ -8,7 +8,7 @@ export const getInitialAccountState = (): AccountType => {
     nonce: 0,
     txCount: 0,
     scrCount: 0,
-    claimableRewards: '',
+    claimableRewards: ''
   };
 };
 
@@ -36,8 +36,8 @@ export const accountSlice = createSlice({
       state.isPayableBySmartContract = action.payload.isPayableBySmartContract;
       state.assets = action.payload.assets;
       state.username = action.payload.username;
-    },
-  },
+    }
+  }
 });
 
 export const { setAccount } = accountSlice.actions;

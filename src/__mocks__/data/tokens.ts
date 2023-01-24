@@ -12,7 +12,7 @@ export const tokens = [
     canChangeOwner: false,
     canPause: true,
     canFreeze: true,
-    canWipe: true,
+    canWipe: true
   },
   {
     token: 'TTE-ae246a',
@@ -27,6 +27,6 @@ export const tokens = [
     canChangeOwner: false,
     canPause: false,
     canFreeze: false,
-    canWipe: false,
-  },
+    canWipe: false
+  }
 ];

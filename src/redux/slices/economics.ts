@@ -15,7 +15,7 @@ export const getInitialEconomicsState = (): EconomicsSliceType => {
 
     economicsFetched: false,
     totalStakedPercent: 0,
-    ecosystemMarketCap: 0,
+    ecosystemMarketCap: 0
   };
 };
 
@@ -23,7 +23,10 @@ export const economicsSlice = createSlice({
   name: 'economicsSlice',
   initialState: getInitialEconomicsState(),
   reducers: {
-    setEconomics: (state: EconomicsSliceType, action: PayloadAction<EconomicsSliceType>) => {
+    setEconomics: (
+      state: EconomicsSliceType,
+      action: PayloadAction<EconomicsSliceType>
+    ) => {
       state.totalSupply = action.payload.totalSupply;
       state.circulatingSupply = action.payload.circulatingSupply;
       state.staked = action.payload.staked;
@@ -37,8 +40,8 @@ export const economicsSlice = createSlice({
       state.economicsFetched = action.payload.economicsFetched;
       state.totalStakedPercent = action.payload.totalStakedPercent;
       state.ecosystemMarketCap = action.payload.ecosystemMarketCap;
-    },
-  },
+    }
+  }
 });
 
 export const { setEconomics } = economicsSlice.actions;

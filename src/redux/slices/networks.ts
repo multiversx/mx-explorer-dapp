@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NetworkType } from 'types/network.types';
 import { networks } from 'config';
+import { NetworkType } from 'types/network.types';
 
 export const emptyNetwork: NetworkType = {
   default: false,
@@ -12,7 +12,7 @@ export const emptyNetwork: NetworkType = {
   walletAddress: '',
   explorerAddress: '',
   apiAddress: '',
-  accessToken: false,
+  accessToken: false
 };
 
 type CurrentNetworkSliceType = {
@@ -21,11 +21,12 @@ type CurrentNetworkSliceType = {
 };
 
 export const getInitialState = (): CurrentNetworkSliceType => {
-  const defaultNetwork = networks.find(({ default: active }) => Boolean(active)) ?? emptyNetwork;
+  const defaultNetwork =
+    networks.find(({ default: active }) => Boolean(active)) ?? emptyNetwork;
 
   return {
     defaultNetwork,
-    activeNetwork: defaultNetwork,
+    activeNetwork: defaultNetwork
   };
 };
 
@@ -33,12 +34,15 @@ export const networksSlice = createSlice({
   name: 'networksSlice',
   initialState: getInitialState(),
   reducers: {
-    changeNetwork: (state: CurrentNetworkSliceType, action: PayloadAction<NetworkType>) => {
+    changeNetwork: (
+      state: CurrentNetworkSliceType,
+      action: PayloadAction<NetworkType>
+    ) => {
       state.activeNetwork = {
-        ...action.payload,
+        ...action.payload
       };
-    },
-  },
+    }
+  }
 });
 
 export const { changeNetwork } = networksSlice.actions;

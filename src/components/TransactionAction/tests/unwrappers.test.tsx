@@ -1,5 +1,5 @@
-import unwrapper from '../unwrapper';
 import { TxActionsEnum } from 'types';
+import unwrapper from '../unwrapper';
 
 // file.only
 describe('Tx Description unwrapper tests', () => {
@@ -17,18 +17,19 @@ describe('Tx Description unwrapper tests', () => {
               identifier: 'USDC-c76f1f',
               ticker: 'USDC',
               name: 'WrappedUSDC',
-              value: '2950000000',
-            },
+              value: '2950000000'
+            }
           ],
-          receiver: 'erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex',
-        },
-      },
+          receiver:
+            'erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex'
+        }
+      }
     };
     expect(unwrapper(action)).toEqual([
       'Transfer',
       { token: action.arguments.transfers },
       'to',
-      { address: action.arguments.receiver },
+      { address: action.arguments.receiver }
     ]);
   });
   test('NFT Transfer', () => {
@@ -46,18 +47,19 @@ describe('Tx Description unwrapper tests', () => {
               identifier: 'ARTCRAFT-322c6e-11',
               ticker: 'ARTCRAFT-322c6e',
               name: 'Hope',
-              value: '1',
-            },
+              value: '1'
+            }
           ],
-          receiver: 'erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex',
-        },
-      },
+          receiver:
+            'erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex'
+        }
+      }
     };
     expect(unwrapper(action)).toEqual([
       'Transfer',
       { token: action.arguments.transfers },
       'to',
-      { address: action.arguments.receiver },
+      { address: action.arguments.receiver }
     ]);
   });
   test('MetaESDT Transfer', () => {
@@ -76,18 +78,19 @@ describe('Tx Description unwrapper tests', () => {
               ticker: 'LKFARM',
               name: 'LockedLPStaked',
               value: '1537276176898979513',
-              decimals: 18,
-            },
+              decimals: 18
+            }
           ],
-          receiver: 'erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex',
-        },
-      },
+          receiver:
+            'erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex'
+        }
+      }
     };
     expect(unwrapper(action)).toEqual([
       'Transfer',
       { token: action.arguments.transfers },
       'to',
-      { address: action.arguments.receiver },
+      { address: action.arguments.receiver }
     ]);
   });
 
@@ -96,15 +99,16 @@ describe('Tx Description unwrapper tests', () => {
       action: {
         category: 'stake',
         name: 'delegate',
-        description: 'Delegate 14.167802221131358682 EGLD to staking provider ARC Stake',
-        arguments: { value: '14167802221131358682', providerName: 'ARC Stake' },
-      },
+        description:
+          'Delegate 14.167802221131358682 EGLD to staking provider ARC Stake',
+        arguments: { value: '14167802221131358682', providerName: 'ARC Stake' }
+      }
     };
     expect(unwrapper(action)).toEqual([
       'Delegate',
       { value: action.arguments?.value },
       'to staking provider',
-      { providerName: action.arguments?.providerName },
+      { providerName: action.arguments?.providerName }
     ]);
   });
 
@@ -114,14 +118,14 @@ describe('Tx Description unwrapper tests', () => {
         category: 'stake',
         name: 'unDelegate',
         description: 'Undelegate 5 eGLD from staking provider ARC Stake',
-        arguments: { value: '5000000000000000000', providerName: 'ARC Stake' },
-      },
+        arguments: { value: '5000000000000000000', providerName: 'ARC Stake' }
+      }
     };
     expect(unwrapper(action)).toEqual([
       'Undelegate',
       { value: action.arguments?.value },
       'from staking provider',
-      { providerName: action.arguments?.providerName },
+      { providerName: action.arguments?.providerName }
     ]);
   });
 
@@ -131,12 +135,12 @@ describe('Tx Description unwrapper tests', () => {
         category: 'stake',
         name: 'claimRewards',
         description: 'Claim rewards from staking provider ARC Stake',
-        arguments: { providerName: 'ARC Stake' },
-      },
+        arguments: { providerName: 'ARC Stake' }
+      }
     };
     expect(unwrapper(action)).toEqual([
       'Claim rewards from staking provider',
-      { providerName: action.arguments?.providerName },
+      { providerName: action.arguments?.providerName }
     ]);
   });
 
@@ -146,12 +150,12 @@ describe('Tx Description unwrapper tests', () => {
         category: 'stake',
         name: 'reDelegateRewards',
         description: 'Redelegate rewards from staking provider ARC Stake',
-        arguments: { providerName: 'ARC Stake' },
-      },
+        arguments: { providerName: 'ARC Stake' }
+      }
     };
     expect(unwrapper(action)).toEqual([
       'Redelegate rewards from staking provider',
-      { providerName: action.arguments?.providerName },
+      { providerName: action.arguments?.providerName }
     ]);
   });
 
@@ -161,12 +165,12 @@ describe('Tx Description unwrapper tests', () => {
         category: 'stake',
         name: 'withdraw',
         description: 'Withdraw from staking provider ARC Stake',
-        arguments: { providerName: 'ARC Stake' },
-      },
+        arguments: { providerName: 'ARC Stake' }
+      }
     };
     expect(unwrapper(action)).toEqual([
       'Withdraw from staking provider',
-      { providerName: action.arguments?.providerName },
+      { providerName: action.arguments?.providerName }
     ]);
   });
 
@@ -185,33 +189,37 @@ describe('Tx Description unwrapper tests', () => {
             identifier: 'LKMEX-aab910-04',
             ticker: 'LKMEX',
             decimals: 18,
-            value: '20000000000000000000',
-          },
-        },
-      },
+            value: '20000000000000000000'
+          }
+        }
+      }
     };
-    expect(unwrapper(action)).toEqual(['Enter farm with', { token: [action.arguments.token] }]);
+    expect(unwrapper(action)).toEqual([
+      'Enter farm with',
+      { token: [action.arguments.token] }
+    ]);
   });
   test('Enter farm and lock rewards', () => {
     const { action } = {
       action: {
         category: 'mex',
         name: TxActionsEnum.enterFarmAndLockRewards,
-        description: 'Enter farm and lock rewards with 61.229451140721546841 EGLDMEX',
+        description:
+          'Enter farm and lock rewards with 61.229451140721546841 EGLDMEX',
         arguments: {
           token: {
             name: 'EGLDMEXLP',
             collection: 'EGLDMEX-0be9e5',
             identifier: 'EGLDMEX-0be9e5',
             ticker: 'EGLDMEX',
-            value: '61229451140721546841',
-          },
-        },
-      },
+            value: '61229451140721546841'
+          }
+        }
+      }
     };
     expect(unwrapper(action)).toEqual([
       'Enter farm and lock rewards with',
-      { token: [action.arguments.token] },
+      { token: [action.arguments.token] }
     ]);
   });
   test('Exit farm', () => {
@@ -228,12 +236,15 @@ describe('Tx Description unwrapper tests', () => {
             identifier: 'LKFARM-9d1ea8-7ff1',
             ticker: 'LKFARM',
             decimals: 18,
-            value: '1358392837361997848576000',
-          },
-        },
-      },
+            value: '1358392837361997848576000'
+          }
+        }
+      }
     };
-    expect(unwrapper(action)).toEqual(['Exit farm with', { token: [action.arguments.token] }]);
+    expect(unwrapper(action)).toEqual([
+      'Exit farm with',
+      { token: [action.arguments.token] }
+    ]);
   });
   test('Claim rewards', () => {
     const { action } = {
@@ -249,12 +260,15 @@ describe('Tx Description unwrapper tests', () => {
             identifier: 'LKFARM-9d1ea8-016711',
             ticker: 'LKFARM',
             decimals: 18,
-            value: '8113902227485916134',
-          },
-        },
-      },
+            value: '8113902227485916134'
+          }
+        }
+      }
     };
-    expect(unwrapper(action)).toEqual(['Claim rewards', { token: [action.arguments.token] }]);
+    expect(unwrapper(action)).toEqual([
+      'Claim rewards',
+      { token: [action.arguments.token] }
+    ]);
   });
   test('Compound rewards', () => {
     const { action } = {
@@ -270,42 +284,46 @@ describe('Tx Description unwrapper tests', () => {
             identifier: 'LKFARM-9d1ea8-01ee91',
             ticker: 'LKFARM',
             decimals: 18,
-            value: '20000000000000000000',
-          },
-        },
-      },
+            value: '20000000000000000000'
+          }
+        }
+      }
     };
-    expect(unwrapper(action)).toEqual(['Reinvest rewards', { token: [action.arguments.token] }]);
+    expect(unwrapper(action)).toEqual([
+      'Reinvest rewards',
+      { token: [action.arguments.token] }
+    ]);
   });
   test('Swap tokens', () => {
     const { action } = {
       action: {
         category: 'mex',
         name: TxActionsEnum.swap,
-        description: 'Swap 1 WEGLD for a minimum of 281066.754391919467235791 MEX',
+        description:
+          'Swap 1 WEGLD for a minimum of 281066.754391919467235791 MEX',
         arguments: {
           token1: {
             name: 'WrappedEGLD',
             collection: 'WEGLD-bd4d79',
             identifier: 'WEGLD-bd4d79',
             ticker: 'WEGLD',
-            value: '1000000000000000000',
+            value: '1000000000000000000'
           },
           token2: {
             name: 'MEX',
             collection: 'MEX-455c57',
             identifier: 'MEX-455c57',
             ticker: 'MEX',
-            value: '281066754391919467235791',
-          },
-        },
-      },
+            value: '281066754391919467235791'
+          }
+        }
+      }
     };
     expect(unwrapper(action)).toEqual([
       'Swap',
       { token: [action.arguments.token1] },
       'for a minimum of',
-      { token: [action.arguments.token2] },
+      { token: [action.arguments.token2] }
     ]);
   });
   test('Add liquidity', () => {
@@ -321,23 +339,23 @@ describe('Tx Description unwrapper tests', () => {
             collection: 'WEGLD-bd4d79',
             identifier: 'WEGLD-bd4d79',
             ticker: 'WEGLD',
-            value: '309893556225986569',
+            value: '309893556225986569'
           },
           token2: {
             name: 'MEX',
             collection: 'MEX-455c57',
             identifier: 'MEX-455c57',
             ticker: 'MEX',
-            value: '88246977342390371665220',
-          },
-        },
-      },
+            value: '88246977342390371665220'
+          }
+        }
+      }
     };
     expect(unwrapper(action)).toEqual([
       'Added liquidity for',
       { token: [action.arguments.token1] },
       'and',
-      { token: [action.arguments.token2] },
+      { token: [action.arguments.token2] }
     ]);
   });
   test('Remove liquidity', () => {
@@ -352,11 +370,14 @@ describe('Tx Description unwrapper tests', () => {
             collection: 'EGLDMEX-0be9e5',
             identifier: 'EGLDMEX-0be9e5',
             ticker: 'EGLDMEX',
-            value: '297000000000000000',
-          },
-        },
-      },
+            value: '297000000000000000'
+          }
+        }
+      }
     };
-    expect(unwrapper(action)).toEqual(['Removed liquidity', { token: [action.arguments.token] }]);
+    expect(unwrapper(action)).toEqual([
+      'Removed liquidity',
+      { token: [action.arguments.token] }
+    ]);
   });
 });

@@ -15,7 +15,7 @@ export const useGetFilters = () => {
     identity,
     page,
     order,
-    sort,
+    sort
   } = Object.fromEntries(urlParams);
 
   const size = page && stringIsInteger(page) ? parseInt(page) : 1;
@@ -30,11 +30,11 @@ export const useGetFilters = () => {
     ...(order ? { order } : {}),
     ...(issues ? { issues: 'true' } : {}),
     ...(fullHistory ? { fullHistory: 'true' } : {}),
-    ...(shard && stringIsInteger(shard) ? { shard } : {}),
+    ...(shard && stringIsInteger(shard) ? { shard } : {})
   });
 
   return {
     getQueryObject,
-    size,
+    size
   };
 };

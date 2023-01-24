@@ -1,11 +1,10 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { NetworkLink } from 'components';
 import { urlBuilder, useActiveRoute } from 'helpers';
 
-import { tokensRoutes } from 'routes';
-
-import { useSelector } from 'react-redux';
 import { tokenSelector } from 'redux/selectors';
+import { tokensRoutes } from 'routes';
 
 export const TokenTabs = () => {
   const activeRoute = useActiveRoute();
@@ -13,10 +12,12 @@ export const TokenTabs = () => {
   const { identifier, assets, roles } = useSelector(tokenSelector);
 
   return (
-    <div className="account-tabs d-flex flex-row">
+    <div className='account-tabs d-flex flex-row'>
       <NetworkLink
         to={urlBuilder.tokenDetails(identifier)}
-        className={`tab-link me-3 ${activeRoute(tokensRoutes.tokenDetails) ? 'active' : ''}`}
+        className={`tab-link me-3 ${
+          activeRoute(tokensRoutes.tokenDetails) ? 'active' : ''
+        }`}
       >
         <h6>Transactions</h6>
       </NetworkLink>
@@ -44,7 +45,9 @@ export const TokenTabs = () => {
       {roles && (
         <NetworkLink
           to={urlBuilder.tokenDetailsRoles(identifier)}
-          className={`tab-link mx-3 ${activeRoute(tokensRoutes.tokenDetailsRoles) ? 'active' : ''}`}
+          className={`tab-link mx-3 ${
+            activeRoute(tokensRoutes.tokenDetailsRoles) ? 'active' : ''
+          }`}
         >
           <h6>Roles</h6>
         </NetworkLink>

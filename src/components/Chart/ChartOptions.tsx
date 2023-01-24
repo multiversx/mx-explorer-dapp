@@ -6,7 +6,7 @@ export const ChartOptions = ({
   options,
   toggle,
   setToggle,
-  className,
+  className
 }: {
   options: OptionType[];
   toggle: ToggleType;
@@ -17,7 +17,7 @@ export const ChartOptions = ({
     (needle) => {
       setToggle((currentToggle) => ({
         ...currentToggle,
-        [needle]: !currentToggle[needle],
+        [needle]: !currentToggle[needle]
       }));
     },
     [setToggle]
@@ -29,12 +29,12 @@ export const ChartOptions = ({
         <span
           key={option.key}
           style={{
-            textDecoration: toggle[option.key] ? 'none' : 'line-through',
+            textDecoration: toggle[option.key] ? 'none' : 'line-through'
           }}
           onClick={() => onToggle(option.key)}
-          className="option"
+          className='option'
         >
-          <span style={{ backgroundColor: option.color }} className="dot" />
+          <span style={{ backgroundColor: option.color }} className='dot' />
 
           {option.label}
         </span>

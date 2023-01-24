@@ -20,7 +20,7 @@ export const getInitialTokenState = (): TokenType => {
     canWipe: false,
     isPaused: false,
     accounts: 0,
-    transactions: 0,
+    transactions: 0
   };
 };
 
@@ -47,8 +47,8 @@ export const tokenSlice = createSlice({
       state.isPaused = action.payload.isPaused;
       state.accounts = action.payload.accounts;
       state.transactions = action.payload.transactions;
-    },
-  },
+    }
+  }
 });
 
 export const { setToken } = tokenSlice.actions;

@@ -1,10 +1,9 @@
 import React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 
+import { useAdapter, Loader, PageState, SharedIdentity } from 'components';
 import { types, useIsMainnet, useGetHash } from 'helpers';
 import { IdentityType } from 'types';
-
-import { useAdapter, Loader, PageState, SharedIdentity } from 'components';
 
 import { ProviderDetailsCard } from './ProviderDetailsCard';
 
@@ -14,7 +13,7 @@ interface ProviderLayoutType<T> {
 }
 
 const initialState = {
-  success: undefined,
+  success: undefined
 };
 
 export const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
@@ -24,15 +23,15 @@ export const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   const { getProvider, getIdentity } = useAdapter();
   const isMainnet = useIsMainnet();
 
-  const [provider, setProvider] = React.useState<ProviderLayoutType<types.ProviderType>>(
-    initialState
-  );
-  const [identity, setIdentity] = React.useState<ProviderLayoutType<IdentityType>>(initialState);
+  const [provider, setProvider] =
+    React.useState<ProviderLayoutType<types.ProviderType>>(initialState);
+  const [identity, setIdentity] =
+    React.useState<ProviderLayoutType<IdentityType>>(initialState);
 
   const fetchData = () => {
     if (address) {
       getProvider({
-        address,
+        address
       }).then((providerData) => {
         if (ref.current !== null) {
           if (providerData.success) {
@@ -60,7 +59,8 @@ export const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   React.useEffect(fetchData, []);
 
   const showIdentity =
-    identity.success === false || (identity.success && identity.data !== undefined);
+    identity.success === false ||
+    (identity.success && identity.data !== undefined);
 
   return (
     <>
@@ -68,17 +68,17 @@ export const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
       {provider.success === false && (
         <PageState
           icon={faCode}
-          title="Unable to load provider details"
-          className="py-spacer my-auto"
-          dataTestId="errorScreen"
+          title='Unable to load provider details'
+          className='py-spacer my-auto'
+          dataTestId='errorScreen'
         />
       )}
       <div ref={ref}>
         {provider.success === true && (
-          <div className="container page-content">
+          <div className='container page-content'>
             {isMainnet && showIdentity && (
-              <div className="row">
-                <div className="col-12 mb-spacer">
+              <div className='row'>
+                <div className='col-12 mb-spacer'>
                   <SharedIdentity.Summary
                     identity={identity.data}
                     featured={provider.data?.featured}
@@ -87,14 +87,14 @@ export const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
               </div>
             )}
 
-            <div className="row">
-              <div className="col-12 mb-spacer">
+            <div className='row'>
+              <div className='col-12 mb-spacer'>
                 <ProviderDetailsCard provider={provider.data} />
               </div>
             </div>
 
-            <div className="row">
-              <div className="col-12">{children}</div>
+            <div className='row'>
+              <div className='col-12'>{children}</div>
             </div>
           </div>
         )}

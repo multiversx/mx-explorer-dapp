@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { faEye } from '@fortawesome/pro-regular-svg-icons/faEye';
-import { faLeaf } from '@fortawesome/pro-regular-svg-icons/faLeaf';
-import { faSync } from '@fortawesome/pro-regular-svg-icons/faSync';
 import { faFlagAlt } from '@fortawesome/pro-regular-svg-icons/faFlagAlt';
+import { faLeaf } from '@fortawesome/pro-regular-svg-icons/faLeaf';
 import { faSnooze } from '@fortawesome/pro-regular-svg-icons/faSnooze';
+import { faSync } from '@fortawesome/pro-regular-svg-icons/faSync';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NodeType } from 'types';
 import { Overlay } from 'components';
+import { NodeType } from 'types';
 
 export const getIcon = (node: NodeType) => {
   let icon;
@@ -44,17 +44,23 @@ export const getIcon = (node: NodeType) => {
   return icon;
 };
 
-export const RowIcon = ({ node, small }: { node: NodeType; small?: boolean }) => {
+export const RowIcon = ({
+  node,
+  small
+}: {
+  node: NodeType;
+  small?: boolean;
+}) => {
   const icon = getIcon(node);
 
   if (icon) {
     switch (true) {
       case node.type === 'observer':
         return (
-          <Overlay title="Observer">
+          <Overlay title='Observer'>
             <FontAwesomeIcon
               icon={icon}
-              className="text-secondary me-1"
+              className='text-secondary me-1'
               size={small ? 'xs' : '1x'}
             />
           </Overlay>
@@ -62,10 +68,10 @@ export const RowIcon = ({ node, small }: { node: NodeType; small?: boolean }) =>
 
       case node.status === 'new':
         return (
-          <Overlay title="New">
+          <Overlay title='New'>
             <FontAwesomeIcon
               icon={icon}
-              className="text-secondary me-1"
+              className='text-secondary me-1'
               size={small ? 'xs' : '1x'}
             />
           </Overlay>
@@ -73,10 +79,10 @@ export const RowIcon = ({ node, small }: { node: NodeType; small?: boolean }) =>
 
       case node.status === 'inactive':
         return (
-          <Overlay title="Inactive">
+          <Overlay title='Inactive'>
             <FontAwesomeIcon
               icon={icon}
-              className="text-secondary me-1"
+              className='text-secondary me-1'
               size={small ? 'xs' : '1x'}
             />
           </Overlay>
@@ -84,10 +90,10 @@ export const RowIcon = ({ node, small }: { node: NodeType; small?: boolean }) =>
 
       case node.receivedShardID !== node.computedShardID:
         return (
-          <Overlay title="Changing shard">
+          <Overlay title='Changing shard'>
             <FontAwesomeIcon
               icon={icon}
-              className="text-secondary me-1"
+              className='text-secondary me-1'
               size={small ? 'xs' : '1x'}
             />
           </Overlay>
@@ -95,10 +101,10 @@ export const RowIcon = ({ node, small }: { node: NodeType; small?: boolean }) =>
 
       case node.status === 'waiting':
         return (
-          <Overlay title="Waiting">
+          <Overlay title='Waiting'>
             <FontAwesomeIcon
               icon={icon}
-              className="text-secondary me-1"
+              className='text-secondary me-1'
               size={small ? 'xs' : '1x'}
             />
           </Overlay>
@@ -106,10 +112,10 @@ export const RowIcon = ({ node, small }: { node: NodeType; small?: boolean }) =>
 
       case node.status === 'queued':
         return (
-          <Overlay title="Queued">
+          <Overlay title='Queued'>
             <FontAwesomeIcon
               icon={icon}
-              className="text-secondary me-1"
+              className='text-secondary me-1'
               size={small ? 'xs' : '1x'}
             />
           </Overlay>

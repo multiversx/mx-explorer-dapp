@@ -3,5 +3,5 @@ export const account = {
   nonce: 15,
   balance: '62803693501081701872',
   txCount: 1933,
-  scrCount: 0,
+  scrCount: 0
 };

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { urlBuilder } from 'helpers';
-import { TokenType } from 'types';
 import { NetworkLink, Denominate } from 'components';
 import { DECIMALS } from 'config';
+import { urlBuilder } from 'helpers';
+import { TokenType } from 'types';
 
 interface TokenBlockType {
   operationToken: TokenType;
@@ -12,12 +12,13 @@ interface TokenBlockType {
 export const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
   const ref = React.useRef(null);
 
-  const denomination = operationToken.decimals !== undefined ? operationToken.decimals : DECIMALS;
+  const denomination =
+    operationToken.decimals !== undefined ? operationToken.decimals : DECIMALS;
 
   return (
-    <div ref={ref} className="token-block d-flex text-truncate">
+    <div ref={ref} className='token-block d-flex text-truncate'>
       {value && (
-        <div className="me-1">
+        <div className='me-1'>
           <Denominate
             value={value}
             denomination={denomination}
@@ -28,9 +29,11 @@ export const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
       )}
       <NetworkLink
         to={urlBuilder.tokenDetails(operationToken.identifier)}
-        className={`d-flex text-truncate ${operationToken?.assets?.svgUrl ? 'side-link' : ''}`}
+        className={`d-flex text-truncate ${
+          operationToken?.assets?.svgUrl ? 'side-link' : ''
+        }`}
       >
-        <div className="d-flex align-items-center symbol text-truncate">
+        <div className='d-flex align-items-center symbol text-truncate'>
           {operationToken && (
             <>
               {operationToken.assets ? (
@@ -39,15 +42,19 @@ export const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
                     <img
                       src={operationToken.assets.svgUrl}
                       alt={operationToken.name}
-                      className="side-icon me-1"
+                      className='side-icon me-1'
                     />
                   )}
-                  <div className="text-truncate">
-                    {operationToken.ticker ? operationToken.ticker : operationToken.name}
+                  <div className='text-truncate'>
+                    {operationToken.ticker
+                      ? operationToken.ticker
+                      : operationToken.name}
                   </div>
                 </>
               ) : (
-                <span className="text-truncate">{operationToken.identifier}</span>
+                <span className='text-truncate'>
+                  {operationToken.identifier}
+                </span>
               )}
             </>
           )}

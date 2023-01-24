@@ -5,11 +5,13 @@ import { account } from '__mocks__';
 describe('Account Details Page', () => {
   test('Account Details page is displaying', async () => {
     const render = beforeAll({
-      route: `/accounts/${account.address}`,
+      route: `/accounts/${account.address}`
     });
 
     await wait(async () => {
-      expect(document.title).toEqual('Account Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual(
+        'Account Details • MultiversX (previously Elrond) Explorer'
+      );
 
       const pageInterval = render.getByTestId('pageInterval');
       expect(pageInterval!.innerHTML).toBe('1');
@@ -23,7 +25,7 @@ describe('Account Details Page', () => {
   });
   test('Account Details page loading state', async () => {
     const render = beforeAll({
-      route: `/accounts/${account.address}`,
+      route: `/accounts/${account.address}`
     });
     const loader = await render.findByTestId('loader');
     expect(loader).toBeDefined();
@@ -33,8 +35,8 @@ describe('Account Details Page', () => {
     const render = beforeAll({
       route: `/accounts/${account.address}`,
       networkRequests: {
-        account: () => Promise.resolve(new Error('error')),
-      },
+        account: () => Promise.resolve(new Error('error'))
+      }
     });
 
     const errorScreen = await render.findByTestId('errorScreen');

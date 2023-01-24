@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { PageState, Chart, Loader, useAdapter } from 'components';
-
-import { ChartListType } from '../Analytics';
 
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
-import { ChartConfigType } from 'components/Chart/helpers/types';
 
 import { useSelector } from 'react-redux';
+import { PageState, Chart, Loader, useAdapter } from 'components';
+import { ChartConfigType } from 'components/Chart/helpers/types';
 import { activeNetworkSelector } from 'redux/selectors';
+import { ChartListType } from '../Analytics';
 
 export interface AnalyticsChartDataType {
   value: string;
@@ -34,7 +33,10 @@ export const AnalyticsChart = ({ id, path }: ChartListType) => {
     return normalizedName;
   };
   const formatChartLabelFomId = (id: string) => {
-    const normalizedName = id.replace('-monthly', '').replace('daily-', '').replaceAll('-', ' ');
+    const normalizedName = id
+      .replace('-monthly', '')
+      .replace('daily-', '')
+      .replaceAll('-', ' ');
 
     return normalizedName;
   };
@@ -44,19 +46,19 @@ export const AnalyticsChart = ({ id, path }: ChartListType) => {
       case 'total-value-locked-plus-staking-monthly':
       case 'daily-fees-captured-monthly':
         return {
-          currency: 'EGLD',
+          currency: 'EGLD'
         };
       case 'daily-average-ape-monthly':
       case 'daily-base-ape-monthly':
       case 'daily-topup-ape-monthly':
         return {
-          percentageMultiplier: 100,
+          percentageMultiplier: 100
         };
       case 'daily-developer-rewards-monthly':
       case 'daily-inflation-monthly':
         return {
           denomination: 18,
-          currency: 'EGLD',
+          currency: 'EGLD'
         };
       case 'daily-new-smart-contracts-monthly':
       case 'daily-new-fungible-esdts-monthly':
@@ -81,8 +83,8 @@ export const AnalyticsChart = ({ id, path }: ChartListType) => {
       id: formatChartLabelFomId(id),
       label: formatChartLabelFomId(id),
       gradient: 'defaultGradient',
-      data: chart,
-    },
+      data: chart
+    }
   ];
 
   const getData = () => {
@@ -103,31 +105,38 @@ export const AnalyticsChart = ({ id, path }: ChartListType) => {
 
   return (
     <>
-      <section id={id} ref={ref} className="card">
-        <Chart.Heading title={formatChartNameFomId(id)} className="text-capitalize"></Chart.Heading>
+      <section id={id} ref={ref} className='card'>
+        <Chart.Heading
+          title={formatChartNameFomId(id)}
+          className='text-capitalize'
+        ></Chart.Heading>
         <Chart.Body>
           {dataReady === undefined && <Loader />}
           {dataReady === false && (
             <PageState
               icon={faChartBar}
-              title="Unable to load Chart"
-              className="py-spacer my-auto"
-              titleClassName="mt-0"
-              dataTestId="accountsChartError"
+              title='Unable to load Chart'
+              className='py-spacer my-auto'
+              titleClassName='mt-0'
+              dataTestId='accountsChartError'
             />
           )}
           {dataReady === true && chart.length === 0 && (
             <PageState
               icon={faChartBar}
-              title="Missing Chart data"
-              className="py-spacer my-auto"
-              titleClassName="mt-0"
-              dataTestId="accountsChartError"
+              title='Missing Chart data'
+              className='py-spacer my-auto'
+              titleClassName='mt-0'
+              dataTestId='accountsChartError'
             />
           )}
 
           {dataReady === true && chart.length > 0 && (
-            <Chart.Bar {...{ config }} hasOnlyStartEndTick {...getChartPropsFromId(id)}></Chart.Bar>
+            <Chart.Bar
+              {...{ config }}
+              hasOnlyStartEndTick
+              {...getChartPropsFromId(id)}
+            ></Chart.Bar>
           )}
         </Chart.Body>
       </section>

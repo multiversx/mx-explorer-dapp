@@ -1,5 +1,9 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { NetworkLink } from 'components';
+import { useIsMainnet, useActiveRoute } from 'helpers';
+
+import { activeNetworkSelector } from 'redux/selectors';
 import {
   blocksRoutes,
   transactionsRoutes,
@@ -8,12 +12,8 @@ import {
   tokensRoutes,
   nftRoutes,
   collectionRoutes,
-  analyticsRoutes,
+  analyticsRoutes
 } from 'routes';
-import { useIsMainnet, useActiveRoute } from 'helpers';
-
-import { useSelector } from 'react-redux';
-import { activeNetworkSelector } from 'redux/selectors';
 
 interface NavLinksType {
   setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,7 +34,7 @@ export const NavLinks = ({ setExpanded = () => null }: NavLinksType) => {
     <>
       <NetworkLink
         className={`nav-link ${activeRoute('/') ? 'active' : ''}`}
-        to="/"
+        to='/'
         onClick={() => onToggle(false)}
       >
         Dashboard
@@ -130,7 +130,9 @@ export const NavLinks = ({ setExpanded = () => null }: NavLinksType) => {
                 ? 'active'
                 : ''
             }`}
-            to={isMainnet ? validatorsRoutes.identities : validatorsRoutes.nodes}
+            to={
+              isMainnet ? validatorsRoutes.identities : validatorsRoutes.nodes
+            }
             onClick={() => onToggle(false)}
           >
             Validators
@@ -138,7 +140,9 @@ export const NavLinks = ({ setExpanded = () => null }: NavLinksType) => {
 
           {isMainnet && (
             <NetworkLink
-              className={`nav-link ${activeRoute(analyticsRoutes.analytics) ? 'active' : ''}`}
+              className={`nav-link ${
+                activeRoute(analyticsRoutes.analytics) ? 'active' : ''
+              }`}
               to={analyticsRoutes.analytics}
               onClick={() => onToggle(false)}
             >

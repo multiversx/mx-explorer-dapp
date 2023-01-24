@@ -5,11 +5,13 @@ import { provider } from '__mocks__';
 describe('Provider Details Page', () => {
   test('Provider Details page is displaying', async () => {
     const render = beforeAll({
-      route: `/providers/${provider.provider}`,
+      route: `/providers/${provider.provider}`
     });
 
     await wait(async () => {
-      expect(document.title).toEqual('Provider Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual(
+        'Provider Details • MultiversX (previously Elrond) Explorer'
+      );
 
       const address = await render.findByTestId('address');
       expect(address.textContent).toBe(provider.provider);
@@ -17,7 +19,7 @@ describe('Provider Details Page', () => {
   });
   test('Provider Details page loading state', async () => {
     const render = beforeAll({
-      route: `/providers/${provider.provider}`,
+      route: `/providers/${provider.provider}`
     });
     const loader = await render.findByTestId('loader');
     expect(loader).toBeDefined();
@@ -27,8 +29,8 @@ describe('Provider Details Page', () => {
     const render = beforeAll({
       route: `/providers/${provider.provider}`,
       networkRequests: {
-        provider: () => Promise.resolve(new Error('error')),
-      },
+        provider: () => Promise.resolve(new Error('error'))
+      }
     });
 
     const errorScreen = await render.findByTestId('errorScreen');

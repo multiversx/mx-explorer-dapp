@@ -1,17 +1,17 @@
 import * as React from 'react';
+import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons';
+import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Anchorme } from 'react-anchorme';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
-import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons';
-import { types, useScamFlag } from 'helpers';
 import { ModalLink } from 'components';
+import { types, useScamFlag } from 'helpers';
 
 export const Thumbnail = ({
   token,
   link,
   index,
-  children,
+  children
 }: {
   token: types.NftType;
   link: string;
@@ -21,7 +21,9 @@ export const Thumbnail = ({
   let thumbnail = '';
   const [loaded, setLoaded] = React.useState(false);
   if (token.media && token.media.length && link) {
-    const found = token.media.find((mediaEntry) => mediaEntry.originalUrl === link);
+    const found = token.media.find(
+      (mediaEntry) => mediaEntry.originalUrl === link
+    );
 
     if (found) {
       thumbnail = found.thumbnailUrl;
@@ -35,24 +37,24 @@ export const Thumbnail = ({
 
   return thumbnail ? (
     <OverlayTrigger
-      placement="top"
+      placement='top'
       delay={{ show: 250, hide: 400 }}
       onExited={() => {
         setLoaded(false);
       }}
       overlay={(props) => (
-        <Tooltip id="nft-tooltip" {...props}>
+        <Tooltip id='nft-tooltip' {...props}>
           <div style={{ width: '90px' }}>
             {!loaded && (
               <FontAwesomeIcon
                 icon={faSpinnerThird}
-                size="2x"
-                className="text-white fa-spin fast-spin"
+                size='2x'
+                className='text-white fa-spin fast-spin'
               />
             )}
             <img
               src={thumbnail}
-              alt=" "
+              alt=' '
               height={90}
               onLoad={() => {
                 setLoaded(true);
@@ -73,8 +75,8 @@ export const NftPreview = ({ token }: { token: types.NftType }) => {
   const scamFlag = useScamFlag();
 
   return token.uris ? (
-    <div className="nft-details d-flex flex-column text-left">
-      <ul className="list-unstyled mb-0">
+    <div className='nft-details d-flex flex-column text-left'>
+      <ul className='list-unstyled mb-0'>
         {token.uris.map((uri, i) => {
           if (uri !== null && uri !== undefined) {
             const link = Buffer.from(String(uri), 'base64').toString();
@@ -82,19 +84,31 @@ export const NftPreview = ({ token }: { token: types.NftType }) => {
 
             return (
               <li key={i}>
-                <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary me-2" />
+                <FontAwesomeIcon
+                  icon={faCaretRight}
+                  size='xs'
+                  className='text-secondary me-2'
+                />
                 {link.startsWith(
                   'https://ipfs.io/ipfs/'
                 ) /* && token.isWhitelistedStorage === true */ ? (
                   <Thumbnail link={found ? '' : link} token={token} index={i}>
-                    <Anchorme linkComponent={ModalLink} target="_blank" rel="noreferrer noopener">
+                    <Anchorme
+                      linkComponent={ModalLink}
+                      target='_blank'
+                      rel='noreferrer noopener'
+                    >
                       {found ? stringWithLinks : link}
                     </Anchorme>
                   </Thumbnail>
                 ) : (
-                  <span className="text-break">
+                  <span className='text-break'>
                     {found ? (
-                      <Anchorme linkComponent={ModalLink} target="_blank" rel="noreferrer noopener">
+                      <Anchorme
+                        linkComponent={ModalLink}
+                        target='_blank'
+                        rel='noreferrer noopener'
+                      >
                         {stringWithLinks}
                       </Anchorme>
                     ) : (
