@@ -1,13 +1,12 @@
 import React from 'react';
 
+import { useSelector, useDispatch } from 'react-redux';
 import { useAdapter, Loader } from 'components';
+import { activeNetworkSelector } from 'redux/selectors';
+import { setShards, setGlobalStake } from 'redux/slices';
 import { NodesVersionsType } from 'types';
 import { GlobalStakeCard } from './GlobalStakeCard';
 import { ShardsList } from './ShardsList';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { activeNetworkSelector } from 'redux/selectors';
-import { setShards, setGlobalStake } from 'redux/slices';
 
 const prepareNodesVersions = (data: any) => {
   const versions: NodesVersionsType[] = [];
@@ -18,7 +17,7 @@ const prepareNodesVersions = (data: any) => {
     if (percent > 0) {
       versions.push({
         name: version,
-        percent: Math.floor(percent * 100),
+        percent: Math.floor(percent * 100)
       });
     }
   });
@@ -42,21 +41,23 @@ export const NodesLayout = ({ children }: { children: React.ReactNode }) => {
           const newGlobalStake = {
             ...(globalStake.success
               ? {
-                  ...globalStake.data,
+                  ...globalStake.data
                 }
-              : {}),
+              : {})
           };
 
           const newNodesVersions = {
             ...(nodesVersions.success
               ? {
-                  nodesVerions: prepareNodesVersions(nodesVersions.data),
+                  nodesVerions: prepareNodesVersions(nodesVersions.data)
                 }
-              : {}),
+              : {})
           };
 
           if (globalStake.success && globalStake?.data) {
-            dispatch(setGlobalStake({ ...newGlobalStake, ...newNodesVersions }));
+            dispatch(
+              setGlobalStake({ ...newGlobalStake, ...newNodesVersions })
+            );
           }
 
           if (shards.success && shards?.data) {
@@ -77,12 +78,14 @@ export const NodesLayout = ({ children }: { children: React.ReactNode }) => {
     <>
       {dataReadyForNetwork === undefined && <Loader />}
       {dataReadyForNetwork !== undefined && (
-        <div className="container page-content">
-          <GlobalStakeCard stakeFetched={dataReadyForNetwork === activeNetworkId} />
+        <div className='container page-content'>
+          <GlobalStakeCard
+            stakeFetched={dataReadyForNetwork === activeNetworkId}
+          />
           <ShardsList shardsFetched={dataReadyForNetwork === activeNetworkId} />
 
-          <div className="row">
-            <div className="col-12">{children}</div>
+          <div className='row'>
+            <div className='col-12'>{children}</div>
           </div>
         </div>
       )}

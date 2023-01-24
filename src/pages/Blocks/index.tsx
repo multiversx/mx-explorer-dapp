@@ -1,13 +1,13 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useNetworkRoute, useURLSearchParams, useSize } from 'helpers';
-import { BlockType } from 'types';
 import { BlocksTable, Loader, Pager, ShardSpan, useAdapter } from 'components';
 import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/NoBlocks';
+import { useNetworkRoute, useURLSearchParams, useSize } from 'helpers';
 
-import { useSelector } from 'react-redux';
 import { activeNetworkSelector } from 'redux/selectors';
+import { BlockType } from 'types';
 interface StateType {
   blocks: BlockType[];
   startBlockNr: number;
@@ -37,20 +37,24 @@ export const Blocks = () => {
   const { getBlocks, getBlocksCount } = useAdapter();
 
   React.useEffect(() => {
-    getBlocks({ size, shard, withProposerIdentity: true }).then(({ success, data }) => {
-      if (ref.current !== null) {
-        if (success && data) {
-          const { blocks, endBlockNr, startBlockNr } = data;
-          const existingHashes = state ? state.blocks.map((block: BlockType) => block.hash) : [];
-          const newBlocks = blocks.map((block: BlockType) => ({
-            ...block,
-            isNew: !existingHashes.includes(block.hash),
-          }));
-          setState({ blocks: newBlocks, endBlockNr, startBlockNr });
+    getBlocks({ size, shard, withProposerIdentity: true }).then(
+      ({ success, data }) => {
+        if (ref.current !== null) {
+          if (success && data) {
+            const { blocks, endBlockNr, startBlockNr } = data;
+            const existingHashes = state
+              ? state.blocks.map((block: BlockType) => block.hash)
+              : [];
+            const newBlocks = blocks.map((block: BlockType) => ({
+              ...block,
+              isNew: !existingHashes.includes(block.hash)
+            }));
+            setState({ blocks: newBlocks, endBlockNr, startBlockNr });
+          }
+          setDataReady(success);
         }
-        setDataReady(success);
       }
-    });
+    );
     getBlocksCount({ size, shard }).then(({ data: count, success }) => {
       if (ref.current !== null && success) {
         setTotalBlocks(count);
@@ -68,15 +72,15 @@ export const Blocks = () => {
 
       <div ref={ref}>
         {dataReady === true && (
-          <div className="container page-content">
-            <div className="row">
-              <div className="col-12">
-                <div className="card">
+          <div className='container page-content'>
+            <div className='row'>
+              <div className='col-12'>
+                <div className='card'>
                   {state && state.blocks.length > 0 ? (
                     <>
-                      <div className="card-header">
-                        <div className="card-header-item d-flex justify-content-between align-items-center">
-                          <h6 className="m-0" data-testid="title">
+                      <div className='card-header'>
+                        <div className='card-header-item d-flex justify-content-between align-items-center'>
+                          <h6 className='m-0' data-testid='title'>
                             Blocks
                             {shard !== undefined && shard >= 0 && (
                               <>
@@ -85,11 +89,13 @@ export const Blocks = () => {
                               </>
                             )}
                           </h6>
-                          <div className="d-none d-sm-flex">
+                          <div className='d-none d-sm-flex'>
                             <Pager
                               page={String(page)}
                               total={
-                                totalBlocks !== '...' ? Math.min(totalBlocks, 10000) : totalBlocks
+                                totalBlocks !== '...'
+                                  ? Math.min(totalBlocks, 10000)
+                                  : totalBlocks
                               }
                               itemsPerPage={25}
                               show={state.blocks.length > 0}
@@ -98,7 +104,7 @@ export const Blocks = () => {
                         </div>
                       </div>
 
-                      <div className="card-body border-0 p-0">
+                      <div className='card-body border-0 p-0'>
                         <BlocksTable
                           blocks={state.blocks}
                           shard={shard}
@@ -106,10 +112,14 @@ export const Blocks = () => {
                         />
                       </div>
 
-                      <div className="card-footer d-flex justify-content-end">
+                      <div className='card-footer d-flex justify-content-end'>
                         <Pager
                           page={String(page)}
-                          total={totalBlocks !== '...' ? Math.min(totalBlocks, 10000) : totalBlocks}
+                          total={
+                            totalBlocks !== '...'
+                              ? Math.min(totalBlocks, 10000)
+                              : totalBlocks
+                          }
                           itemsPerPage={25}
                           show={state.blocks.length > 0}
                         />

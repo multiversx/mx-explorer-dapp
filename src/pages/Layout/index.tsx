@@ -1,13 +1,7 @@
 import React from 'react';
 
-import { Navbar } from './Navbar/index';
-import { Footer } from './Footer/index';
 import { Search, NotificationsBar } from 'components';
-import { Unavailable } from './Unavailable';
-import { PageLayout } from './PageLayout';
-import { GlobalStatsCard } from './GlobalStatsCard';
-import { TestnetGlobalStatsCard } from './TestnetGlobalStatsCard';
-import { wrappedRoutes, validatorsRoutes, searchRoutes } from 'routes';
+import { multiversxApps } from 'config';
 import {
   useFetchStats,
   useFetchEconomics,
@@ -15,9 +9,15 @@ import {
   useLoopManager,
   useActiveRoute,
   useIsMainnet,
-  useCheckVersion,
+  useCheckVersion
 } from 'helpers';
-import { multiversxApps } from 'config';
+import { wrappedRoutes, validatorsRoutes, searchRoutes } from 'routes';
+import { Footer } from './Footer/index';
+import { GlobalStatsCard } from './GlobalStatsCard';
+import { Navbar } from './Navbar/index';
+import { PageLayout } from './PageLayout';
+import { TestnetGlobalStatsCard } from './TestnetGlobalStatsCard';
+import { Unavailable } from './Unavailable';
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   const activeRoute = useActiveRoute();
@@ -62,30 +62,30 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
 
   return (
-    <div className="d-flex">
-      <div className="flex-fill vh-100">
-        <main className="main-content d-flex flex-column flex-grow-1">
+    <div className='d-flex'>
+      <div className='flex-fill vh-100'>
+        <main className='main-content d-flex flex-column flex-grow-1'>
           <Navbar />
           <NotificationsBar />
-          <div className="main-content-container container-fluid p-0 d-flex flex-column">
+          <div className='main-content-container container-fluid p-0 d-flex flex-column'>
             {offline ? (
               <Unavailable />
             ) : (
               <>
-                <div className="main-search-container py-spacer">
+                <div className='main-search-container py-spacer'>
                   <div className={`container ${isHome ? 'py-3' : ''}`}>
                     {isHome && (
-                      <div className="row">
-                        <div className="col-12 text-center">
-                          <h1 className="mb-4">
+                      <div className='row'>
+                        <div className='col-12 text-center'>
+                          <h1 className='mb-4'>
                             The MultiversX (Elrond) Blockchain {explorerTitle}
                           </h1>
                         </div>
                       </div>
                     )}
 
-                    <div className="row">
-                      <div className="col-12 col-lg-9 mx-auto">
+                    <div className='row'>
+                      <div className='col-12 col-lg-9 mx-auto'>
                         <Search />
                       </div>
                     </div>
@@ -93,12 +93,18 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                 </div>
 
                 {showGlobalStats() && (
-                  <div className="container mb-spacer">
-                    <>{isMainnet ? <GlobalStatsCard /> : <TestnetGlobalStatsCard />}</>
+                  <div className='container mb-spacer'>
+                    <>
+                      {isMainnet ? (
+                        <GlobalStatsCard />
+                      ) : (
+                        <TestnetGlobalStatsCard />
+                      )}
+                    </>
                   </div>
                 )}
 
-                <div className="page-container" data-testid="mainPageContent">
+                <div className='page-container' data-testid='mainPageContent'>
                   <PageLayout>{children}</PageLayout>
                 </div>
               </>

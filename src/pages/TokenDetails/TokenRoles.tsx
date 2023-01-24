@@ -1,11 +1,10 @@
 import * as React from 'react';
 
+import { useSelector } from 'react-redux';
 import { Loader, NetworkLink, Trim, ScAddressIcon } from 'components';
 import { urlBuilder } from 'helpers';
-import { TokenTabs } from './TokenLayout/TokenTabs';
-
-import { useSelector } from 'react-redux';
 import { tokenSelector } from 'redux/selectors';
+import { TokenTabs } from './TokenLayout/TokenTabs';
 
 export const TokenDetailsRoles = () => {
   const ref = React.useRef(null);
@@ -14,40 +13,45 @@ export const TokenDetailsRoles = () => {
 
   return (
     <div ref={ref}>
-      <div className="card">
-        <div className="card-header">
-          <div className="card-header-item d-flex justify-content-between align-items-center">
+      <div className='card'>
+        <div className='card-header'>
+          <div className='card-header-item d-flex justify-content-between align-items-center'>
             <TokenTabs />
           </div>
           {roles ? (
             <>
-              <div className="card-body border-0 p-0">
-                <div className="table-wrapper">
-                  <table className="table">
+              <div className='card-body border-0 p-0'>
+                <div className='table-wrapper'>
+                  <table className='table'>
                     <thead>
                       <tr>
                         <th>Address</th>
                         <th>Roles</th>
                       </tr>
                     </thead>
-                    <tbody data-testid="tokenRolesTable">
+                    <tbody data-testid='tokenRolesTable'>
                       {roles.map((tokenRole, i) => (
                         <tr key={tokenRole.address}>
                           <td>
-                            <div className="d-flex align-items-center">
+                            <div className='d-flex align-items-center'>
                               <ScAddressIcon initiator={tokenRole.address} />
                               <NetworkLink
-                                to={urlBuilder.accountDetails(tokenRole.address)}
-                                className="trim-only-sm"
+                                to={urlBuilder.accountDetails(
+                                  tokenRole.address
+                                )}
+                                className='trim-only-sm'
                               >
-                                <Trim text={tokenRole.address} dataTestId={`roleLink${i}`} />
+                                <Trim
+                                  text={tokenRole.address}
+                                  dataTestId={`roleLink${i}`}
+                                />
                               </NetworkLink>
                             </div>
                           </td>
                           <td>
                             {tokenRole.roles.map((role, index) => (
                               <div
-                                className="badge badge-secondary badge-pill font-weight-normal me-2"
+                                className='badge badge-secondary badge-pill font-weight-normal me-2'
                                 key={`${tokenRole.address}-${index}`}
                               >
                                 {role}
@@ -61,10 +65,12 @@ export const TokenDetailsRoles = () => {
                 </div>
               </div>
 
-              <div className="card-footer d-flex justify-content-end"></div>
+              <div className='card-footer d-flex justify-content-end'></div>
             </>
           ) : (
-            <>{roles === undefined && <Loader dataTestId="tokenRolesLoader" />}</>
+            <>
+              {roles === undefined && <Loader dataTestId='tokenRolesLoader' />}
+            </>
           )}
         </div>
       </div>

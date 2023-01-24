@@ -33,20 +33,27 @@ export const PageState = ({
   className = '',
   iconClassName,
   dataTestId,
-  titleClassName,
+  titleClassName
 }: PageStateType) => (
   <div className={`text-center ${className}`} data-testid={dataTestId}>
-    <div className="my-spacer">
+    <div className='my-spacer'>
       {symbol ? (
         <>{symbol}</>
       ) : (
-        <IconState className={iconClassName} icon={icon ? icon : faInfoCircle} />
+        <IconState
+          className={iconClassName}
+          icon={icon ? icon : faInfoCircle}
+        />
       )}
       <div className={titleClassName ? titleClassName : 'mt-spacer'}>
-        {title && <p className="h4">{title}</p>}
+        {title && <p className='h4'>{title}</p>}
         {description && <>{description}</>}
       </div>
     </div>
-    {action && <div className="d-flex align-items-center flex-column mt-spacer">{action}</div>}
+    {action && (
+      <div className='d-flex align-items-center flex-column mt-spacer'>
+        {action}
+      </div>
+    )}
   </div>
 );

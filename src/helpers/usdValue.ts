@@ -4,7 +4,7 @@ export const usdValue = ({
   amount,
   usd,
   showPrefix,
-  decimals,
+  decimals
 }: {
   amount: string;
   usd?: number;
@@ -16,5 +16,7 @@ export const usdValue = ({
   }
 
   const value = new BigNumber(amount).times(usd);
-  return `${showPrefix ? (value.isEqualTo(0) ? '= ' : '≈ ') : ''}$${value.toFormat(decimals ?? 2)}`;
+  return `${
+    showPrefix ? (value.isEqualTo(0) ? '= ' : '≈ ') : ''
+  }$${value.toFormat(decimals ?? 2)}`;
 };

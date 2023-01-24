@@ -1,14 +1,13 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { Loader, TransactionsTable, useAdapter } from 'components';
 
-import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
-import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
-import { useSize, useURLSearchParams } from 'helpers';
-import { UITransactionType } from 'types';
 import { shardSpanText } from 'components/ShardSpan';
-
-import { useSelector } from 'react-redux';
+import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
+import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
+import { useSize, useURLSearchParams } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
+import { UITransactionType } from 'types';
 
 export const Transactions = () => {
   const ref = React.useRef(null);
@@ -24,7 +23,7 @@ export const Transactions = () => {
     after,
     status,
     miniBlockHash,
-    search,
+    search
   } = useURLSearchParams();
   const { size, firstPageTicker } = useSize();
 
@@ -36,9 +35,13 @@ export const Transactions = () => {
 
   const { getTransactionsCount, getTransactions } = useAdapter();
 
-  const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
+  const [transactions, setTransactions] = React.useState<UITransactionType[]>(
+    []
+  );
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [totalTransactions, setTotalTransactions] = React.useState<number | '...'>('...');
+  const [totalTransactions, setTotalTransactions] = React.useState<
+    number | '...'
+  >('...');
 
   React.useEffect(() => {
     getTransactions({
@@ -53,15 +56,17 @@ export const Transactions = () => {
       status,
       miniBlockHash,
       search,
-      withUsername: true,
+      withUsername: true
     }).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
           const existingHashes = transactions.map((b) => b.txHash);
-          const newTransactions = data.map((transaction: UITransactionType) => ({
-            ...transaction,
-            isNew: !existingHashes.includes(transaction.txHash),
-          }));
+          const newTransactions = data.map(
+            (transaction: UITransactionType) => ({
+              ...transaction,
+              isNew: !existingHashes.includes(transaction.txHash)
+            })
+          );
           setTransactions(newTransactions);
         }
         setDataReady(success);
@@ -73,7 +78,7 @@ export const Transactions = () => {
       method,
       before,
       after,
-      status,
+      status
     }).then(({ data: count, success }) => {
       if (ref.current !== null && success) {
         setTotalTransactions(Math.min(count, 10000));
@@ -89,16 +94,16 @@ export const Transactions = () => {
 
       <div ref={ref}>
         {dataReady === true && (
-          <div className="container page-content">
-            <div className="row">
-              <div className="col-12">
+          <div className='container page-content'>
+            <div className='row'>
+              <div className='col-12'>
                 {transactions.length > 0 ? (
                   <TransactionsTable
                     transactions={transactions}
                     totalTransactions={totalTransactions}
                     size={size}
                     title={
-                      <h6 data-testid="title">
+                      <h6 data-testid='title'>
                         Transactions
                         {senderShard !== undefined && (
                           <>
@@ -116,7 +121,7 @@ export const Transactions = () => {
                     }
                   />
                 ) : (
-                  <div className="card">
+                  <div className='card'>
                     <NoTransactions />
                   </div>
                 )}

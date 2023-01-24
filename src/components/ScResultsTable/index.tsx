@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { ScResultType } from 'types';
 import { ScResultRow } from './ScResultRow';
 import { Pager } from '../Pager';
-import { ScResultType } from 'types';
 
 interface ScResultsTableType {
   scResults: ScResultType[];
@@ -18,20 +18,20 @@ export const ScResultsTable = ({
   size,
   title = (
     <>
-      <h6 data-testid="title">SC Results</h6>
+      <h6 data-testid='title'>SC Results</h6>
     </>
-  ),
+  )
 }: ScResultsTableType) => {
   const paginationTotalResults =
     totalScResults !== '...' ? Math.min(totalScResults, 10000) : totalScResults;
 
   return (
-    <div className="transactions-table">
-      <div className="card">
-        <div className="card-header">
-          <div className="card-header-item d-flex justify-content-between align-items-center">
+    <div className='transactions-table'>
+      <div className='card'>
+        <div className='card-header'>
+          <div className='card-header-item d-flex justify-content-between align-items-center'>
             <div>{title}</div>
-            <div className="d-none d-sm-flex">
+            <div className='d-none d-sm-flex'>
               <Pager
                 itemsPerPage={25}
                 page={String(size)}
@@ -43,28 +43,32 @@ export const ScResultsTable = ({
           </div>
         </div>
 
-        <div className="card-body">
-          <div className="table-wrapper animated-list">
-            <table className="table trim-size-sm" data-testid="scResultsTable">
+        <div className='card-body'>
+          <div className='table-wrapper animated-list'>
+            <table className='table trim-size-sm' data-testid='scResultsTable'>
               <thead>
                 <tr>
-                  <th scope="col">Hash</th>
-                  <th scope="col">Age</th>
-                  <th scope="col">From</th>
-                  <th scope="col">To</th>
-                  <th scope="col">Value</th>
+                  <th scope='col'>Hash</th>
+                  <th scope='col'>Age</th>
+                  <th scope='col'>From</th>
+                  <th scope='col'>To</th>
+                  <th scope='col'>Value</th>
                 </tr>
               </thead>
               <tbody>
                 {scResults.map((scResult) => (
-                  <ScResultRow scResult={scResult} key={scResult.hash} address={address} />
+                  <ScResultRow
+                    scResult={scResult}
+                    key={scResult.hash}
+                    address={address}
+                  />
                 ))}
               </tbody>
             </table>
           </div>
         </div>
 
-        <div className="card-footer d-flex justify-content-end">
+        <div className='card-footer d-flex justify-content-end'>
           <Pager
             itemsPerPage={25}
             page={String(size)}

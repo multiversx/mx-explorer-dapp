@@ -1,9 +1,9 @@
 import React from 'react';
 import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
 import { faWifiSlash } from '@fortawesome/pro-regular-svg-icons/faWifiSlash';
+import { useSelector } from 'react-redux';
 import { PageState } from 'components';
 
-import { useSelector } from 'react-redux';
 import { activeNetworkSelector } from 'redux/selectors';
 
 export const Unavailable = () => {
@@ -25,6 +25,11 @@ export const Unavailable = () => {
   }
 
   return (
-    <PageState icon={icon} title={title} className="py-spacer m-auto" data-testid="errorScreen" />
+    <PageState
+      icon={icon}
+      title={title}
+      className='py-spacer m-auto'
+      data-testid='errorScreen'
+    />
   );
 };

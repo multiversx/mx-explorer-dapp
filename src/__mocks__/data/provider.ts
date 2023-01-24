@@ -9,5 +9,5 @@ export const provider = {
   provider: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqhllllsajxzat',
   serviceFee: 0.1567,
   stake: '2500000000000000000000',
-  topUp: '455693890552223336694',
+  topUp: '455693890552223336694'
 };

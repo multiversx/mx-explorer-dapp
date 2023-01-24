@@ -1,9 +1,9 @@
 import React from 'react';
 
 import BigNumber from 'bignumber.js';
+import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy-delegation.svg';
 import { Denominate } from 'components';
 import { StakeType } from 'types';
-import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy-delegation.svg';
 
 import { DetailsBlock } from '../DetailsBlock';
 
@@ -17,14 +17,16 @@ export const AccountStake = ({ stake }: { stake: StakeType }) => {
     : null;
 
   return (
-    <div className="delegation-row d-flex flex-wrap align-items-center justify-content-between p-3 px-md-4">
-      <div className="provider-details">
-        <div className="d-flex flex-row align-items-center">
-          <div className="multiversx-icon provider-image has-avatar rounded-circle d-flex me-3">
+    <div className='delegation-row d-flex flex-wrap align-items-center justify-content-between p-3 px-md-4'>
+      <div className='provider-details'>
+        <div className='d-flex flex-row align-items-center'>
+          <div className='multiversx-icon provider-image has-avatar rounded-circle d-flex me-3'>
             <MultiversXSymbol />
           </div>
-          <div className="d-flex flex-column w-100">
-            <div className="provider-title d-flex align-items-center">Staked Validator Nodes</div>
+          <div className='d-flex flex-column w-100'>
+            <div className='provider-title d-flex align-items-center'>
+              Staked Validator Nodes
+            </div>
           </div>
         </div>
       </div>

@@ -1,11 +1,11 @@
+import { useSelector } from 'react-redux';
 import { useURLSearchParams } from 'helpers';
 
-import { useSelector } from 'react-redux';
 import { interfaceSelector } from 'redux/selectors';
 
 export const useSize = () => {
   const {
-    refresh: { timestamp },
+    refresh: { timestamp }
   } = useSelector(interfaceSelector);
 
   const { page } = useURLSearchParams();
@@ -14,6 +14,6 @@ export const useSize = () => {
 
   return {
     size,
-    firstPageTicker,
+    firstPageTicker
   };
 };

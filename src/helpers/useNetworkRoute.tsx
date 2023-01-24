@@ -6,7 +6,9 @@ export const useNetworkRoute = () => {
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
 
   return (to: string) =>
-    activeNetworkId && activeNetworkId !== defaultNetworkId && !to.includes(activeNetworkId)
+    activeNetworkId &&
+    activeNetworkId !== defaultNetworkId &&
+    !to.includes(activeNetworkId)
       ? `/${activeNetworkId}${to}`
       : to;
 };

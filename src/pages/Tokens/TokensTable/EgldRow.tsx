@@ -1,15 +1,18 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
 
+import { useSelector } from 'react-redux';
+import { PAGE_SIZE } from 'appConstants';
+import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
 import { pagerHelper } from 'components/Pager/pagerHelper';
 
 import { useGetFilters, useURLSearchParams } from 'helpers';
+import {
+  economicsSelector,
+  statsSelector,
+  activeNetworkSelector
+} from 'redux/selectors';
 import { TokenType, SortOrderEnum, TokenSortEnum } from 'types';
-import { PAGE_SIZE } from 'appConstants';
-import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
-
-import { useSelector } from 'react-redux';
-import { economicsSelector, statsSelector, activeNetworkSelector } from 'redux/selectors';
 
 interface DummyTokenType {
   price: number;
@@ -22,14 +25,15 @@ interface DummyTokenType {
 export const EgldRow = ({
   tokens,
   index,
-  totalTokens,
+  totalTokens
 }: {
   tokens: TokenType[];
   index: number;
   totalTokens: number;
 }) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
-  const { economicsFetched, price, marketCap, circulatingSupply } = useSelector(economicsSelector);
+  const { economicsFetched, price, marketCap, circulatingSupply } =
+    useSelector(economicsSelector);
   const { statsFetched, accounts, transactions } = useSelector(statsSelector);
 
   const { page } = useURLSearchParams();
@@ -40,7 +44,8 @@ export const EgldRow = ({
   const { search, sort, order } = queryObject;
 
   const showOnSearch =
-    search && ['egld', 'elrond', 'multiversx', egldLabel].includes(search.toLowerCase());
+    search &&
+    ['egld', 'elrond', 'multiversx', egldLabel].includes(search.toLowerCase());
   let showOnFilter = !page && index === 0;
 
   const previousToken = tokens[index > 0 ? index - 1 : 0];
@@ -50,7 +55,7 @@ export const EgldRow = ({
   const { lastPage } = pagerHelper({
     total: totalTokens,
     itemsPerPage: PAGE_SIZE,
-    page: String(page),
+    page: String(page)
   });
   const isLastPage = lastPage === page;
 
@@ -67,7 +72,7 @@ export const EgldRow = ({
       marketCap,
       circulatingSupply,
       accounts,
-      transactions,
+      transactions
     };
 
     const tokenValue = currentToken[sort as keyof TokenType];
@@ -83,23 +88,38 @@ export const EgldRow = ({
       showOnFilter = false;
       if (order === SortOrderEnum.desc) {
         const egldIsGreaterThanNext =
-          new BigNumber(egldValue).isGreaterThanOrEqualTo(tokenValue as string | number) &&
-          new BigNumber(egldValue).isGreaterThanOrEqualTo(nextTokenValue as string | number);
+          new BigNumber(egldValue).isGreaterThanOrEqualTo(
+            tokenValue as string | number
+          ) &&
+          new BigNumber(egldValue).isGreaterThanOrEqualTo(
+            nextTokenValue as string | number
+          );
         const egldIsGreater =
           egldIsGreaterThanNext &&
-          new BigNumber(egldValue).isLessThanOrEqualTo(previousTokenValue as string | number);
+          new BigNumber(egldValue).isLessThanOrEqualTo(
+            previousTokenValue as string | number
+          );
         showOnFilter =
-          previousToken === currentToken && !page ? egldIsGreaterThanNext : egldIsGreater;
+          previousToken === currentToken && !page
+            ? egldIsGreaterThanNext
+            : egldIsGreater;
       }
       if (order === SortOrderEnum.asc) {
         const egldIsGreaterThanPrevious =
-          new BigNumber(egldValue).isGreaterThanOrEqualTo(previousTokenValue as string | number) &&
-          new BigNumber(egldValue).isGreaterThanOrEqualTo(tokenValue as string | number);
+          new BigNumber(egldValue).isGreaterThanOrEqualTo(
+            previousTokenValue as string | number
+          ) &&
+          new BigNumber(egldValue).isGreaterThanOrEqualTo(
+            tokenValue as string | number
+          );
         const egldIsLess =
-          new BigNumber(egldValue).isLessThanOrEqualTo(nextTokenValue as string | number) &&
-          egldIsGreaterThanPrevious;
+          new BigNumber(egldValue).isLessThanOrEqualTo(
+            nextTokenValue as string | number
+          ) && egldIsGreaterThanPrevious;
         showOnFilter =
-          nextToken === currentToken && isLastPage ? egldIsGreaterThanPrevious : egldIsLess;
+          nextToken === currentToken && isLastPage
+            ? egldIsGreaterThanPrevious
+            : egldIsLess;
       }
     }
   }
@@ -111,20 +131,20 @@ export const EgldRow = ({
   }
 
   return (
-    <tr className="egld-row">
+    <tr className='egld-row'>
       <td>
-        <div className="token-identity d-flex flex-row">
-          <div className="d-flex align-items-center me-3">
-            <span className="side-link">
-              <div className="side-icon d-flex align-items-center justify-content-center">
+        <div className='token-identity d-flex flex-row'>
+          <div className='d-flex align-items-center me-3'>
+            <span className='side-link'>
+              <div className='side-icon d-flex align-items-center justify-content-center'>
                 <EgldSymbol />
               </div>
             </span>
           </div>
-          <div className="d-flex flex-column justify-content-center">
-            <span className="d-block token-ticker">{egldLabel}</span>
+          <div className='d-flex flex-column justify-content-center'>
+            <span className='d-block token-ticker'>{egldLabel}</span>
             <div
-              className="token-description text-wrap text-secondary small d-none d-md-block"
+              className='token-description text-wrap text-secondary small d-none d-md-block'
               title={description}
             >
               {description}
@@ -133,9 +153,17 @@ export const EgldRow = ({
         </div>
       </td>
       <td>MultiversX (Elrond) {egldLabel}</td>
-      <td>{economicsFetched ? `$${new BigNumber(price).toFormat(2)}` : '...'}</td>
-      <td>{economicsFetched ? new BigNumber(circulatingSupply).toFormat(0) : '...'}</td>
-      <td>{economicsFetched ? `$${new BigNumber(marketCap).toFormat()}` : '...'}</td>
+      <td>
+        {economicsFetched ? `$${new BigNumber(price).toFormat(2)}` : '...'}
+      </td>
+      <td>
+        {economicsFetched
+          ? new BigNumber(circulatingSupply).toFormat(0)
+          : '...'}
+      </td>
+      <td>
+        {economicsFetched ? `$${new BigNumber(marketCap).toFormat()}` : '...'}
+      </td>
       <td>{statsFetched ? new BigNumber(accounts).toFormat(0) : '...'}</td>
       <td>{statsFetched ? new BigNumber(transactions).toFormat(0) : '...'}</td>
     </tr>

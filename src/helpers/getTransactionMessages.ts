@@ -1,18 +1,18 @@
 import BigNumber from 'bignumber.js';
-import { TransactionType, TokenArgumentType, NftEnumType } from 'types';
 import { denominate } from 'components/Denominate/denominate';
 import { DECIMALS, DIGITS } from 'config';
+import { TransactionType, TokenArgumentType, NftEnumType } from 'types';
 
 enum TransactionMessagesEnum {
   newNFTData = 'new nft data on sender',
   invalidLiquidity = 'invalid liquidity for esdt',
-  nilUserAccount = 'nil user account',
+  nilUserAccount = 'nil user account'
 }
 
 // Temporarily show more meaningful error messages
 const getDisplayMessages = ({
   message,
-  transaction,
+  transaction
 }: {
   message?: string;
   transaction: TransactionType;
@@ -20,11 +20,12 @@ const getDisplayMessages = ({
   const compareMessage = message?.toLowerCase();
   switch (true) {
     case compareMessage?.includes(TransactionMessagesEnum.newNFTData):
-      const transactionActionTransfers = transaction?.action?.arguments?.transfers ?? [];
+      const transactionActionTransfers =
+        transaction?.action?.arguments?.transfers ?? [];
       if (transactionActionTransfers.length === 1) {
-        return `Not enough balance of ${getTokenDisplayType(transactionActionTransfers[0].type)} ${
-          transactionActionTransfers[0].identifier
-        }`;
+        return `Not enough balance of ${getTokenDisplayType(
+          transactionActionTransfers[0].type
+        )} ${transactionActionTransfers[0].identifier}`;
       }
       return 'Not enough balance of transferred token';
     case compareMessage?.includes(TransactionMessagesEnum.invalidLiquidity):
@@ -38,14 +39,19 @@ const getDisplayMessages = ({
 
 const getReceiptValue = (transaction: TransactionType) => {
   if (transaction?.receipt?.value) {
-    if (transaction?.receipt?.data && transaction.receipt.data === 'refundedGas') {
+    if (
+      transaction?.receipt?.data &&
+      transaction.receipt.data === 'refundedGas'
+    ) {
       const denominatedGas = denominate({
         input: transaction.receipt.value,
         denomination: DECIMALS,
         decimals: DIGITS,
-        showLastNonZeroDecimal: true,
+        showLastNonZeroDecimal: true
       });
-      const gasRefunded = new BigNumber(denominatedGas).times(transaction.gasPrice).times(100);
+      const gasRefunded = new BigNumber(denominatedGas)
+        .times(transaction.gasPrice)
+        .times(100);
 
       return gasRefunded.toFixed();
     }
@@ -82,7 +88,9 @@ export const getReceiptMessages = (transaction: TransactionType) => {
 export const getOperationsMessages = (transaction: TransactionType) => {
   const messages =
     transaction?.operations
-      ?.map((operation) => getDisplayMessages({ message: operation.message, transaction }))
+      ?.map((operation) =>
+        getDisplayMessages({ message: operation.message, transaction })
+      )
       .filter((messages): messages is string => Boolean(messages)) ?? [];
 
   return messages;
@@ -91,7 +99,9 @@ export const getOperationsMessages = (transaction: TransactionType) => {
 export const getScResultsMessages = (transaction: TransactionType) => {
   const messages =
     transaction?.results
-      ?.map((result) => getDisplayMessages({ message: result.returnMessage, transaction }))
+      ?.map((result) =>
+        getDisplayMessages({ message: result.returnMessage, transaction })
+      )
       .filter((messages): messages is string => Boolean(messages)) ?? [];
 
   return messages;
@@ -102,7 +112,7 @@ export const getTransactionMessages = (transaction: TransactionType) => {
     new Set([
       ...getScResultsMessages(transaction),
       ...getOperationsMessages(transaction),
-      ...getReceiptMessages(transaction),
+      ...getReceiptMessages(transaction)
     ])
   );
 

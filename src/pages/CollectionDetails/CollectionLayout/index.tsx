@@ -1,15 +1,19 @@
 import * as React from 'react';
 
+import { useSelector, useDispatch } from 'react-redux';
 import { Loader, useAdapter } from 'components';
 import { useSize, useGetHash } from 'helpers';
-import { FailedCollectionDetails } from './FailedCollectionDetails';
-import { CollectionDetailsCard } from './CollectionDetailsCard';
 
-import { useSelector, useDispatch } from 'react-redux';
 import { activeNetworkSelector } from 'redux/selectors';
 import { setCollection } from 'redux/slices';
+import { CollectionDetailsCard } from './CollectionDetailsCard';
+import { FailedCollectionDetails } from './FailedCollectionDetails';
 
-export const CollectionLayout = ({ children }: { children: React.ReactNode }) => {
+export const CollectionLayout = ({
+  children
+}: {
+  children: React.ReactNode;
+}) => {
   const ref = React.useRef(null);
   const { firstPageTicker } = useSize();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -53,11 +57,13 @@ export const CollectionLayout = ({ children }: { children: React.ReactNode }) =>
   return (
     <>
       {loading && <Loader />}
-      {!loading && failed && <FailedCollectionDetails collection={collection} />}
+      {!loading && failed && (
+        <FailedCollectionDetails collection={collection} />
+      )}
 
       <div ref={ref}>
         {!loading && !failed && (
-          <div className="container page-content">
+          <div className='container page-content'>
             <CollectionDetailsCard />
             {children}
           </div>

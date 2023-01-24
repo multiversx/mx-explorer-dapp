@@ -2,49 +2,57 @@ import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
 
+import { useSelector } from 'react-redux';
 import { useNotifications } from 'helpers';
 
-import { useSelector } from 'react-redux';
 import { interfaceSelector } from 'redux/selectors';
 
 export const useCheckVersion = () => {
   const {
-    refresh: { timestamp },
+    refresh: { timestamp }
   } = useSelector(interfaceSelector);
 
   const refreshRate = 60 * 1000;
   const { addNotification } = useNotifications();
 
-  const isMainnetExplorer = window.location.origin === 'https://explorer.multiversx.com';
+  const isMainnetExplorer =
+    window.location.origin === 'https://explorer.multiversx.com';
   const explorerVersion = process.env.REACT_APP_CACHE_BUST;
 
-  const withinInterval = moment().subtract(refreshRate, 'ms').isAfter(moment(timestamp));
+  const withinInterval = moment()
+    .subtract(refreshRate, 'ms')
+    .isAfter(moment(timestamp));
 
   const checkVersion = () => {
     axios
-      .get(`https:***REMOVED***?${Date.now()}`)
+      .get(
+        `https:***REMOVED***?${Date.now()}`
+      )
       .then(({ data: latestExplorerVersion }) => {
-        if (explorerVersion !== undefined && latestExplorerVersion !== undefined) {
+        if (
+          explorerVersion !== undefined &&
+          latestExplorerVersion !== undefined
+        ) {
           if (explorerVersion !== latestExplorerVersion) {
             addNotification({
               id: 'newExplorerVersion',
               text: (
-                <div className="d-flex justify-content-between align-items-center">
+                <div className='d-flex justify-content-between align-items-center'>
                   A new version of the Explorer is available.
                   <a
-                    href="/#"
+                    href='/#'
                     onClick={(e: React.MouseEvent) => {
                       e.preventDefault();
                       window.location.reload();
                     }}
-                    className="ms-1 text-black"
+                    className='ms-1 text-black'
                   >
                     <u>Reload</u>
                   </a>
                 </div>
               ),
               dismissable: false,
-              priority: 1,
+              priority: 1
             });
           }
         }

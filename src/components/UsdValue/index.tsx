@@ -1,16 +1,16 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { denominate } from 'components/Denominate/denominate';
 import { DECIMALS, DIGITS } from 'config';
 import { stringIsInteger, usdValue } from 'helpers';
 
-import { useSelector } from 'react-redux';
 import { economicsSelector } from 'redux/selectors';
 
 export const UsdValue = ({
   input,
   className = '',
   dataTestId = '',
-  showPrefix = false,
+  showPrefix = false
 }: {
   input: string;
   className?: string;
@@ -28,10 +28,10 @@ export const UsdValue = ({
               denomination: DECIMALS,
               decimals: DIGITS,
               showLastNonZeroDecimal: true,
-              addCommas: false,
+              addCommas: false
             }),
             usd: price,
-            showPrefix,
+            showPrefix
           })}
     </span>
   );

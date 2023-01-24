@@ -3,10 +3,12 @@ import { fireEvent, wait, beforeAll } from '__mocks__/test-utils';
 describe('Accounts Page', () => {
   test('Accounts page is displaying', async () => {
     const render = beforeAll({
-      route: '/accounts',
+      route: '/accounts'
     });
 
-    expect(document.title).toEqual('Accounts • MultiversX (previously Elrond) Explorer');
+    expect(document.title).toEqual(
+      'Accounts • MultiversX (previously Elrond) Explorer'
+    );
 
     await wait(async () => {
       expect(render.queryByTestId('title')!.innerHTML).toBe('Accounts');
@@ -17,7 +19,7 @@ describe('Accounts Page', () => {
 
   test('Accounts page loading state', async () => {
     const render = beforeAll({
-      route: '/accounts',
+      route: '/accounts'
     });
 
     const loader = await render.findByTestId('loader');
@@ -28,8 +30,8 @@ describe('Accounts Page', () => {
     const render = beforeAll({
       route: '/accounts',
       networkRequests: {
-        accounts: () => Promise.resolve(new Error('error')),
-      },
+        accounts: () => Promise.resolve(new Error('error'))
+      }
     });
 
     const failedState = await render.findByTestId('errorScreen');
@@ -40,15 +42,19 @@ describe('Accounts Page', () => {
 describe('Accounts Page Links', () => {
   test('Account page link', async () => {
     const render = beforeAll({
-      route: '/accounts',
+      route: '/accounts'
     });
 
     const link = await render.findByTestId('accountLink0');
-    expect(link.textContent).toBe('erd1sea63y47u569ns3x5mqjf4vnygn9whkk7p6ry4rfpqyd6rd5addqyd9lf2');
+    expect(link.textContent).toBe(
+      'erd1sea63y47u569ns3x5mqjf4vnygn9whkk7p6ry4rfpqyd6rd5addqyd9lf2'
+    );
 
     fireEvent.click(link);
     await wait(async () => {
-      expect(document.title).toEqual('Account Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual(
+        'Account Details • MultiversX (previously Elrond) Explorer'
+      );
     });
   });
 });

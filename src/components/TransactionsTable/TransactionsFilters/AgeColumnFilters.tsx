@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
 
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
-import { TxFiltersEnum, TransactionsTableType } from 'types';
 import { DateFilter } from 'components';
+import { TxFiltersEnum, TransactionsTableType } from 'types';
 
 export const AgeColumnFilters = ({
-  inactiveFilters = [],
+  inactiveFilters = []
 }: {
   inactiveFilters?: TransactionsTableType['inactiveFilters'];
 }) => {
@@ -29,22 +29,31 @@ export const AgeColumnFilters = ({
 
   return (
     <OverlayTrigger
-      trigger="click"
-      key="popover"
-      placement="bottom"
+      trigger='click'
+      key='popover'
+      placement='bottom'
       rootClose
       overlay={
-        <Popover id="popover-positioned-bottom" className="border bg-light">
-          <Popover.Content className="p-0">
+        <Popover id='popover-positioned-bottom' className='border bg-light'>
+          <Popover.Content className='p-0'>
             <DateFilter />
           </Popover.Content>
         </Popover>
       }
     >
-      <div className="d-inline-block side-action cursor-pointer" data-testid="StatusFilterButton">
+      <div
+        className='d-inline-block side-action cursor-pointer'
+        data-testid='StatusFilterButton'
+      >
         <FontAwesomeIcon
-          icon={before !== undefined || after !== undefined ? faFilterSolid : faFilter}
-          className={before !== undefined || after !== undefined ? 'text-primary' : ''}
+          icon={
+            before !== undefined || after !== undefined
+              ? faFilterSolid
+              : faFilter
+          }
+          className={
+            before !== undefined || after !== undefined ? 'text-primary' : ''
+          }
         />
       </div>
     </OverlayTrigger>

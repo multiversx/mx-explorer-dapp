@@ -1,8 +1,13 @@
 import * as React from 'react';
-import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { MarkerType } from '../helpers/asyncRequests';
+import {
+  ComposableMap,
+  Geographies,
+  Geography,
+  Marker
+} from 'react-simple-maps';
 import countries from './countries100m.json';
+import { MarkerType } from '../helpers/asyncRequests';
 
 interface SimpleMapType {
   markers: MarkerType[];
@@ -38,18 +43,19 @@ const getRandomInt = (min: number, max: number) => {
 const MarkerToolTip = ({
   children,
   city,
-  validators,
+  validators
 }: {
   children: React.ReactNode;
   city: string;
   validators: number;
 }) => (
   <OverlayTrigger
-    placement="top"
+    placement='top'
     delay={{ show: 0, hide: 400 }}
     overlay={(props) => (
-      <Tooltip id="marker-tooltip" {...props}>
-        {city ? `${city}:` : ''} {`${validators} node${validators === 1 ? '' : 's'}`}
+      <Tooltip id='marker-tooltip' {...props}>
+        {city ? `${city}:` : ''}{' '}
+        {`${validators} node${validators === 1 ? '' : 's'}`}
       </Tooltip>
     )}
   >
@@ -61,7 +67,9 @@ export const SimpleMap = ({ markers }: SimpleMapType) => {
   const ref = React.useRef(null);
   const [localMarkers, setLocalMarkers] = React.useState<MarkerType[]>([]);
   const [pulse, setPulse] = React.useState(0);
-  const [pulseMarker, setPulseMarker] = React.useState<MarkerType | undefined>();
+  const [pulseMarker, setPulseMarker] = React.useState<
+    MarkerType | undefined
+  >();
 
   React.useEffect(() => {
     setLocalMarkers(markers);
@@ -72,7 +80,8 @@ export const SimpleMap = ({ markers }: SimpleMapType) => {
       let newPulseMarker;
 
       while (newPulseMarker === undefined) {
-        const candidate = localMarkers[getRandomInt(1, localMarkers.length) - 1];
+        const candidate =
+          localMarkers[getRandomInt(1, localMarkers.length) - 1];
         if (candidate && candidate.city) {
           newPulseMarker = candidate;
         }
@@ -101,16 +110,18 @@ export const SimpleMap = ({ markers }: SimpleMapType) => {
   React.useEffect(pulseInterval, []);
 
   return (
-    <div className="simple-map" ref={ref}>
+    <div className='simple-map' ref={ref}>
       <ComposableMap
         projectionConfig={{
           scale: 200,
-          center: [15, 0],
+          center: [15, 0]
         }}
       >
         <Geographies geography={countries}>
           {({ geographies }: any) =>
-            geographies.map((geo: any) => <Geography key={geo.rsmKey} geography={geo} />)
+            geographies.map((geo: any) => (
+              <Geography key={geo.rsmKey} geography={geo} />
+            ))
           }
         </Geographies>
         {localMarkers
@@ -126,11 +137,13 @@ export const SimpleMap = ({ markers }: SimpleMapType) => {
                   <circle
                     r={calcRadius(validators)}
                     className={`simple-map-marker ${
-                      pulseMarker && pulseMarker.city === city ? 'pulse-marker' : ''
+                      pulseMarker && pulseMarker.city === city
+                        ? 'pulse-marker'
+                        : ''
                     }`}
                   />
                   {pulseMarker && pulseMarker.city === city && (
-                    <circle className="pulse" r={calcRadius(validators)} />
+                    <circle className='pulse' r={calcRadius(validators)} />
                   )}
                 </g>
               </MarkerToolTip>

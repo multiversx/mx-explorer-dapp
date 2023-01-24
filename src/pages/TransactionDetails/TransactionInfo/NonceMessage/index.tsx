@@ -5,15 +5,26 @@ import { useAdapter } from 'components';
 import { txStatus } from 'components/TransactionStatus/txStatus';
 import { TransactionType } from 'types';
 
-export const NonceMessage = ({ transaction }: { transaction: TransactionType }) => {
+export const NonceMessage = ({
+  transaction
+}: {
+  transaction: TransactionType;
+}) => {
   const ref = React.useRef(null);
   const { getAccount } = useAdapter();
-  const { sender: senderAddress, nonce: transactionNonce, timestamp, status } = transaction;
+  const {
+    sender: senderAddress,
+    nonce: transactionNonce,
+    timestamp,
+    status
+  } = transaction;
   const [isDataReady, setIsDataReady] = React.useState<boolean>(false);
-  const [hasUnsyncedNonce, setHasUnsyncedNonce] = React.useState<boolean>(false);
+  const [hasUnsyncedNonce, setHasUnsyncedNonce] =
+    React.useState<boolean>(false);
 
   const isTxPending =
-    status.toLowerCase() === txStatus.pending.toLowerCase() || transaction.pendingResults;
+    status.toLowerCase() === txStatus.pending.toLowerCase() ||
+    transaction.pendingResults;
 
   const getSenderNonce = () => {
     getAccount(senderAddress).then((accountDetailsData) => {
@@ -42,15 +53,18 @@ export const NonceMessage = ({ transaction }: { transaction: TransactionType }) 
   return (
     <div ref={ref}>
       {isDataReady && hasUnsyncedNonce && (
-        <div className="d-flex ms-1 text-break-all">
+        <div className='d-flex ms-1 text-break-all'>
           <FontAwesomeIcon
             icon={faAngleDown}
-            className="text-secondary"
+            className='text-secondary'
             style={{ marginTop: '2px' }}
             transform={{ rotate: 45 }}
           />
           &nbsp;
-          <small className="text-warning ms-1"> Probable higher nonce in transaction</small>
+          <small className='text-warning ms-1'>
+            {' '}
+            Probable higher nonce in transaction
+          </small>
         </div>
       )}
     </div>

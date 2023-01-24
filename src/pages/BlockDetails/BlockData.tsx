@@ -1,12 +1,11 @@
 import * as React from 'react';
-import BigNumber from 'bignumber.js';
 import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons/faChevronLeft';
 import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BigNumber from 'bignumber.js';
 import { Collapse, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
-import { BlockType } from 'types';
+import { METACHAIN_SHARD_ID } from 'appConstants';
 import {
   ShardSpan,
   NetworkLink,
@@ -17,7 +16,8 @@ import {
   IdentityBlock,
   BlockGasUsed
 } from 'components';
-import { METACHAIN_SHARD_ID } from 'appConstants';
+import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
+import { BlockType } from 'types';
 
 export interface BlockDataType {
   block: BlockType;

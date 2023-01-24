@@ -10,30 +10,30 @@ export const ValidatorDetails = ({ nodeData }: { nodeData: NodeType }) => {
     leaderFailure,
     validatorSuccess,
     validatorFailure,
-    validatorIgnoredSignatures,
+    validatorIgnoredSignatures
   } = nodeData;
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <div className="card-header-item">
-          <h6 data-testid="title">Validator Statistics</h6>
+    <div className='card'>
+      <div className='card-header'>
+        <div className='card-header-item'>
+          <h6 data-testid='title'>Validator Statistics</h6>
         </div>
       </div>
-      <div className="card-body card-item-container mx-spacing">
-        <CardItem title="Ignored Signature" icon={faTimes}>
+      <div className='card-body card-item-container mx-spacing'>
+        <CardItem title='Ignored Signature' icon={faTimes}>
           {validatorIgnoredSignatures ? validatorIgnoredSignatures : <>N/A</>}
         </CardItem>
-        <CardItem title="Leader Success" icon={faCheck}>
+        <CardItem title='Leader Success' icon={faCheck}>
           {leaderSuccess ? leaderSuccess : <>N/A</>}
         </CardItem>
-        <CardItem title="Leader Failure" icon={faTimes}>
+        <CardItem title='Leader Failure' icon={faTimes}>
           {leaderFailure ? leaderFailure : <>N/A</>}
         </CardItem>
-        <CardItem title="Validator Success" icon={faCheck}>
+        <CardItem title='Validator Success' icon={faCheck}>
           {validatorSuccess ? validatorSuccess : <>N/A</>}
         </CardItem>
-        <CardItem title="Validator Failure" icon={faTimes}>
+        <CardItem title='Validator Failure' icon={faTimes}>
           {validatorFailure ? validatorFailure : <>N/A</>}
         </CardItem>
       </div>

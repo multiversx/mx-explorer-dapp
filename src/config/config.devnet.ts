@@ -13,21 +13,21 @@ export const networks: NetworkType[] = [
     egldLabel: 'xEGLD',
     walletAddress: 'https://devnet-wallet.multiversx.com',
     explorerAddress: 'https://devnet-explorer.multiversx.com',
-    apiAddress: 'https://devnet-api.multiversx.com',
-  },
+    apiAddress: 'https://devnet-api.multiversx.com'
+  }
 ];
 
 export const multiversxApps = allApps([
   {
     id: 'wallet',
     name: 'Devnet Wallet', // navbar title
-    url: 'https://devnet-wallet.multiversx.com',
+    url: 'https://devnet-wallet.multiversx.com'
   },
   {
     id: 'explorer',
     name: 'Devnet Explorer',
-    url: 'http://devnet-explorer.multiversx.com',
-  },
+    url: 'http://devnet-explorer.multiversx.com'
+  }
 ]);
 
 networks.forEach((network) => {

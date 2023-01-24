@@ -10,15 +10,16 @@ export const ScrollToTop = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
-export const withPageTitle = (title: string, Component: React.ComponentType) => () => {
-  const Memoized = memo(() => (
-    <ScrollToTop>
-      <Component />
-    </ScrollToTop>
-  ));
+export const withPageTitle =
+  (title: string, Component: React.ComponentType) => () => {
+    const Memoized = memo(() => (
+      <ScrollToTop>
+        <Component />
+      </ScrollToTop>
+    ));
 
-  useEffect(() => {
-    document.title = title;
-  }, []);
-  return <Memoized />;
-};
+    useEffect(() => {
+      document.title = title;
+    }, []);
+    return <Memoized />;
+  };

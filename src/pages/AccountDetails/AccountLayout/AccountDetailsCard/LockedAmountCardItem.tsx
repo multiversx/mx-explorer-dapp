@@ -1,19 +1,23 @@
 import React from 'react';
-import BigNumber from 'bignumber.js';
 import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
+import BigNumber from 'bignumber.js';
+import { useSelector } from 'react-redux';
 import { CardItem, Denominate, LockedAmountTooltip } from 'components';
 
-import { useSelector } from 'react-redux';
 import { accountStakingSelector } from 'redux/selectors';
 
-export const LockedAmountCardItem = ({ cardItemClass }: { cardItemClass: string }) => {
+export const LockedAmountCardItem = ({
+  cardItemClass
+}: {
+  cardItemClass: string;
+}) => {
   const {
     stakingDataReady,
     totalStaked,
     totalDelegation,
     totalLegacyDelegation,
     totalLocked,
-    totalClaimable,
+    totalClaimable
   } = useSelector(accountStakingSelector);
 
   const bNtotalStaked = new BigNumber(totalStaked);
@@ -23,10 +27,10 @@ export const LockedAmountCardItem = ({ cardItemClass }: { cardItemClass: string 
   const bNtotalClaimable = new BigNumber(totalClaimable);
 
   return (
-    <CardItem className={cardItemClass} title="Stake" icon={faLock}>
-      <div className="d-flex align-items-center">
+    <CardItem className={cardItemClass} title='Stake' icon={faLock}>
+      <div className='d-flex align-items-center'>
         {stakingDataReady ? (
-          <span className="me-2">
+          <span className='me-2'>
             <Denominate value={bNtotalLocked.toString(10)} />
           </span>
         ) : (
@@ -37,20 +41,22 @@ export const LockedAmountCardItem = ({ cardItemClass }: { cardItemClass: string 
             lockedDetails={[
               {
                 label: 'Stake',
-                value: <Denominate value={bNtotalStaked.toString(10)} />,
+                value: <Denominate value={bNtotalStaked.toString(10)} />
               },
               {
                 label: 'Delegation',
-                value: <Denominate value={bNtotalDelegation.toString(10)} />,
+                value: <Denominate value={bNtotalDelegation.toString(10)} />
               },
               {
                 label: 'Legacy Delegation',
-                value: <Denominate value={bNtotalLegacyDelegation.toString(10)} />,
+                value: (
+                  <Denominate value={bNtotalLegacyDelegation.toString(10)} />
+                )
               },
               {
                 label: 'Claimable Rewards',
-                value: <Denominate value={bNtotalClaimable.toString(10)} />,
-              },
+                value: <Denominate value={bNtotalClaimable.toString(10)} />
+              }
             ]}
           />
         )}

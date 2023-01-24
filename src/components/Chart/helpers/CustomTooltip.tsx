@@ -1,10 +1,10 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
-import { usdValue } from 'helpers';
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 import { denominate } from 'components/Denominate/denominate';
 
-import { useSelector } from 'react-redux';
+import { usdValue } from 'helpers';
 import { economicsSelector } from 'redux/selectors';
 
 const getTooltipLabel = (label: string) => {
@@ -44,7 +44,7 @@ export const CustomTooltip = ({
   denomination,
   customLabel,
   showUsdValue,
-  dateFormat,
+  dateFormat
 }: {
   active?: boolean;
   payload?: any;
@@ -60,8 +60,8 @@ export const CustomTooltip = ({
 
   if (active && payload && payload.length && economicsFetched) {
     return (
-      <div className="custom-tooltip">
-        <ul className="recharts-tooltip-item-list list-unstyled">
+      <div className='custom-tooltip'>
+        <ul className='recharts-tooltip-item-list list-unstyled'>
           {payload.map((entry: any) => {
             let displayValue = entry.value;
             if (denomination) {
@@ -70,7 +70,7 @@ export const CustomTooltip = ({
                 denomination,
                 decimals: 2,
                 showLastNonZeroDecimal: false,
-                addCommas: false,
+                addCommas: false
               });
 
               displayValue = denominatedValue;
@@ -88,7 +88,7 @@ export const CustomTooltip = ({
                   : ''}
                 <span
                   style={{ color: payload.length > 1 ? entry.color : '' }}
-                  className="item-value"
+                  className='item-value'
                 >
                   {currency === '$' ? '$' : ''}
                   {currency === '$'
@@ -98,15 +98,19 @@ export const CustomTooltip = ({
                   {percentageMultiplier ? '%' : ''}
                 </span>
                 {showUsdValue && (
-                  <p className="text-secondary small mb-0">
-                    {usdValue({ amount: displayValue, usd: price, showPrefix: true })}
+                  <p className='text-secondary small mb-0'>
+                    {usdValue({
+                      amount: displayValue,
+                      usd: price,
+                      showPrefix: true
+                    })}
                   </p>
                 )}
               </li>
             );
           })}
         </ul>
-        <div className="recharts-tooltip-label">
+        <div className='recharts-tooltip-label'>
           {payload[0]?.payload?.timestamp
             ? moment
                 .unix(payload[0].payload.timestamp)

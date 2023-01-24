@@ -7,7 +7,7 @@ export const PopoverStickOnHover = ({
   onMouseEnter,
   children,
   component,
-  placement,
+  placement
 }: any) => {
   const [showPopover, setShowPopover] = React.useState(false);
   const childNode = React.useRef(null);
@@ -43,7 +43,7 @@ export const PopoverStickOnHover = ({
         if (typeof ref === 'function') {
           ref(node);
         }
-      },
+      }
     })
   )[0];
 
@@ -56,7 +56,7 @@ export const PopoverStickOnHover = ({
             setShowPopover(true);
           }}
           onMouseLeave={handleMouseLeave}
-          id="popover"
+          id='popover'
         >
           {component}
         </Popover>
@@ -70,10 +70,10 @@ PopoverStickOnHover.propTypes = {
   delay: PropTypes.number,
   onMouseEnter: PropTypes.func,
   component: PropTypes.node.isRequired,
-  placement: PropTypes.string.isRequired,
+  placement: PropTypes.string.isRequired
 };
 
 PopoverStickOnHover.defaultProps = {
   delay: 0,
-  onMouseEnter: () => null,
+  onMouseEnter: () => null
 };

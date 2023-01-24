@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 export const formatUSD = ({
   amount,
   usd,
-  digits,
+  digits
 }: {
   amount: string | number;
   usd?: string | number;

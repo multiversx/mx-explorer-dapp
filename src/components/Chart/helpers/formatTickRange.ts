@@ -15,7 +15,7 @@ export const formatTickRange = ({ config, filter }: TickRangeType) => {
 
         return {
           min: min > total.min && total.min !== 0 ? total.min : min,
-          max: total.max < max ? max : total.max,
+          max: total.max < max ? max : total.max
         };
       } else {
         return total;
@@ -30,6 +30,6 @@ export const formatTickRange = ({ config, filter }: TickRangeType) => {
 
   return {
     ticks: [min, ...inbetweens, max],
-    min,
+    min
   };
 };

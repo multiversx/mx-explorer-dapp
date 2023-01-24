@@ -1,8 +1,17 @@
 import React from 'react';
 
+import {
+  faClock,
+  faExclamationTriangle
+} from '@fortawesome/pro-regular-svg-icons';
+import {
+  faUser,
+  faCoins,
+  faLayerGroup
+} from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons';
-import { faUser, faCoins, faLayerGroup } from '@fortawesome/pro-solid-svg-icons';
+import { useSelector } from 'react-redux';
+import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import {
   CardItem,
   CopyButton,
@@ -15,17 +24,14 @@ import {
   TimeAgo,
   PropertyPill,
   SmallDetailItem,
-  UsdValue,
+  UsdValue
 } from 'components';
 
 import { isContract, urlBuilder, dateFormatted, formatHerotag } from 'helpers';
-import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 
-import { LockedAmountCardItem } from './LockedAmountCardItem';
-import { AccountUsdValueCardItem } from './AccountUsdValueCardItem';
-
-import { useSelector } from 'react-redux';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
+import { AccountUsdValueCardItem } from './AccountUsdValueCardItem';
+import { LockedAmountCardItem } from './LockedAmountCardItem';
 
 export const AccountDetailsCard = () => {
   const ref = React.useRef(null);
@@ -45,10 +51,11 @@ export const AccountDetailsCard = () => {
     isPayableBySmartContract,
     assets,
     username,
-    txCount,
+    txCount
   } = useSelector(accountSelector);
   const { id: activeNetworkId, adapter } = useSelector(activeNetworkSelector);
-  const { getProvider, getAccountTokensCount, getAccountNftsCount } = useAdapter();
+  const { getProvider, getAccountTokensCount, getAccountNftsCount } =
+    useAdapter();
 
   const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
 
@@ -76,20 +83,25 @@ export const AccountDetailsCard = () => {
   const fetchAccountTokensCount = () => {
     if (tokensActive) {
       const type = 'MetaESDT';
-      Promise.all([getAccountTokensCount(address), getAccountNftsCount({ address, type })]).then(
-        ([accountTokensCountData, accountNftsCountData]) => {
-          if (ref.current !== null) {
-            if (accountTokensCountData.success && accountNftsCountData.success) {
-              const accountTokens =
-                typeof accountTokensCountData.data === 'number' ? accountTokensCountData.data : 0;
-              const accountMetaTokens =
-                typeof accountNftsCountData.data === 'number' ? accountNftsCountData.data : 0;
+      Promise.all([
+        getAccountTokensCount(address),
+        getAccountNftsCount({ address, type })
+      ]).then(([accountTokensCountData, accountNftsCountData]) => {
+        if (ref.current !== null) {
+          if (accountTokensCountData.success && accountNftsCountData.success) {
+            const accountTokens =
+              typeof accountTokensCountData.data === 'number'
+                ? accountTokensCountData.data
+                : 0;
+            const accountMetaTokens =
+              typeof accountNftsCountData.data === 'number'
+                ? accountNftsCountData.data
+                : 0;
 
-              setAccountTokensCount(accountTokens + accountMetaTokens);
-            }
+            setAccountTokensCount(accountTokens + accountMetaTokens);
           }
         }
-      );
+      });
     }
   };
   React.useEffect(() => {
@@ -98,23 +110,27 @@ export const AccountDetailsCard = () => {
   }, [txCount, activeNetworkId, address]);
 
   return address !== '' ? (
-    <div ref={ref} className="row account-details-card mb-spacer">
+    <div ref={ref} className='row account-details-card mb-spacer'>
       {isContract(address) ? (
         <>
-          <div className="col-12 col-lg-6 mb-spacer mb-lg-0">
-            <div className="card">
-              <div className={`card-header ${scamInfo ? 'status-text-warning' : ''}`}>
-                <div className="card-header-item d-flex align-items-center justify-content-between">
-                  <div className="d-flex align-items-center w-100">
-                    <span className="me-2 h6 mb-0" data-testid="title">
+          <div className='col-12 col-lg-6 mb-spacer mb-lg-0'>
+            <div className='card'>
+              <div
+                className={`card-header ${
+                  scamInfo ? 'status-text-warning' : ''
+                }`}
+              >
+                <div className='card-header-item d-flex align-items-center justify-content-between'>
+                  <div className='d-flex align-items-center w-100'>
+                    <span className='me-2 h6 mb-0' data-testid='title'>
                       Contract Details
                     </span>
                     {scamInfo && (
-                      <span className="text-warning d-flex align-items-center ms-2">
+                      <span className='text-warning d-flex align-items-center ms-2'>
                         <FontAwesomeIcon
                           icon={faExclamationTriangle}
-                          size="sm"
-                          className="text-warning me-2"
+                          size='sm'
+                          className='text-warning me-2'
                         />
                         {scamInfo.info}
                       </span>
@@ -123,17 +139,17 @@ export const AccountDetailsCard = () => {
                   {isProvider && (
                     <NetworkLink
                       to={urlBuilder.providerDetails(address)}
-                      className="btn btn-sm btn-primary-light"
+                      className='btn btn-sm btn-primary-light'
                     >
                       Provider Details
                     </NetworkLink>
                   )}
                 </div>
               </div>
-              <div className="card-body">
-                <div className="container-fluid">
-                  <SmallDetailItem title="Address">
-                    <div className="d-flex align-items-center">
+              <div className='card-body'>
+                <div className='container-fluid'>
+                  <SmallDetailItem title='Address'>
+                    <div className='d-flex align-items-center'>
                       <ScAddressIcon initiator={address} />
                       <Trim text={address} />
                       <CopyButton text={address} />
@@ -141,11 +157,11 @@ export const AccountDetailsCard = () => {
                   </SmallDetailItem>
 
                   {assets?.name && (
-                    <SmallDetailItem title="Name">
-                      <div className="d-flex align-items-center">
+                    <SmallDetailItem title='Name'>
+                      <div className='d-flex align-items-center'>
                         {assets?.iconSvg && (
-                          <div className="side-icon me-1">
-                            <img src={assets?.iconSvg} alt=" " />
+                          <div className='side-icon me-1'>
+                            <img src={assets?.iconSvg} alt=' ' />
                           </div>
                         )}
                         <div>{assets.name}</div>
@@ -153,21 +169,34 @@ export const AccountDetailsCard = () => {
                     </SmallDetailItem>
                   )}
 
-                  <SmallDetailItem title="Balance">
-                    <div className="d-flex align-items-center">
-                      {balance !== '...' ? <Denominate value={balance} decimals={4} /> : balance}
+                  <SmallDetailItem title='Balance'>
+                    <div className='d-flex align-items-center'>
+                      {balance !== '...' ? (
+                        <Denominate value={balance} decimals={4} />
+                      ) : (
+                        balance
+                      )}
                     </div>
                   </SmallDetailItem>
 
-                  <SmallDetailItem title="Value">
+                  <SmallDetailItem title='Value'>
                     <UsdValue input={balance} />
                   </SmallDetailItem>
 
-                  <SmallDetailItem title="Properties">
-                    <div className="d-flex alig-items-center flex-wrap">
-                      <PropertyPill name={'Upgradeable'} active={Boolean(isUpgradeable)} />
-                      <PropertyPill name={'Readable'} active={Boolean(isReadable)} />
-                      <PropertyPill name={'Payable'} active={Boolean(isPayable)} />
+                  <SmallDetailItem title='Properties'>
+                    <div className='d-flex alig-items-center flex-wrap'>
+                      <PropertyPill
+                        name={'Upgradeable'}
+                        active={Boolean(isUpgradeable)}
+                      />
+                      <PropertyPill
+                        name={'Readable'}
+                        active={Boolean(isReadable)}
+                      />
+                      <PropertyPill
+                        name={'Payable'}
+                        active={Boolean(isPayable)}
+                      />
                       <PropertyPill
                         name={'Payable by Smart Contract'}
                         active={Boolean(isPayableBySmartContract)}
@@ -178,44 +207,47 @@ export const AccountDetailsCard = () => {
               </div>
             </div>
           </div>
-          <div className="col-12 col-lg-6">
-            <div className="card">
-              <div className="card-header">
-                <div className="card-header-item d-flex align-items-center">
-                  <span className="h6 mb-0" data-testid="overview">
+          <div className='col-12 col-lg-6'>
+            <div className='card'>
+              <div className='card-header'>
+                <div className='card-header-item d-flex align-items-center'>
+                  <span className='h6 mb-0' data-testid='overview'>
                     Overview
                   </span>
                 </div>
               </div>
-              <div className="card-body">
-                <div className="container-fluid">
-                  <SmallDetailItem title="Shard">
+              <div className='card-body'>
+                <div className='container-fluid'>
+                  <SmallDetailItem title='Shard'>
                     {shard !== undefined ? (
-                      <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
+                      <NetworkLink
+                        to={urlBuilder.shard(shard)}
+                        data-testid='shardLink'
+                      >
                         <ShardSpan shard={shard} />
                       </NetworkLink>
                     ) : (
-                      <span className="text-secondary">N/A</span>
+                      <span className='text-secondary'>N/A</span>
                     )}
                   </SmallDetailItem>
 
-                  <SmallDetailItem title="Rewards">
+                  <SmallDetailItem title='Rewards'>
                     {developerReward !== undefined ? (
                       <Denominate value={developerReward} decimals={4} />
                     ) : (
-                      <span className="text-secondary">N/A</span>
+                      <span className='text-secondary'>N/A</span>
                     )}
                   </SmallDetailItem>
 
-                  <SmallDetailItem title="Owner">
+                  <SmallDetailItem title='Owner'>
                     {ownerAddress !== undefined ? (
-                      <div className="d-flex align-items-center">
+                      <div className='d-flex align-items-center'>
                         <ScAddressIcon initiator={ownerAddress} />
                         {ownerAddress !== address ? (
                           <NetworkLink
                             to={urlBuilder.accountDetails(ownerAddress)}
-                            data-testid="ownerLink"
-                            className="trim-wrapper"
+                            data-testid='ownerLink'
+                            className='trim-wrapper'
                           >
                             <Trim text={ownerAddress} />
                           </NetworkLink>
@@ -225,27 +257,33 @@ export const AccountDetailsCard = () => {
                         <CopyButton text={ownerAddress} />
                       </div>
                     ) : (
-                      <span className="text-secondary">N/A</span>
+                      <span className='text-secondary'>N/A</span>
                     )}
                   </SmallDetailItem>
 
-                  <SmallDetailItem title="Deployed">
+                  <SmallDetailItem title='Deployed'>
                     {deployedAt !== undefined ? (
-                      <div className="d-flex align-items-center">
-                        <FontAwesomeIcon icon={faClock} className="me-2 text-secondary" />
+                      <div className='d-flex align-items-center'>
+                        <FontAwesomeIcon
+                          icon={faClock}
+                          className='me-2 text-secondary'
+                        />
                         <TimeAgo value={deployedAt} /> ago &nbsp;
-                        <span className="text-secondary">
+                        <span className='text-secondary'>
                           ({dateFormatted(deployedAt, false, true)})
                         </span>
                       </div>
                     ) : (
-                      <span className="text-secondary">N/A</span>
+                      <span className='text-secondary'>N/A</span>
                     )}
                   </SmallDetailItem>
 
                   {assets?.description && (
-                    <SmallDetailItem title="Description">
-                      <span className="account-description" title={assets.description}>
+                    <SmallDetailItem title='Description'>
+                      <span
+                        className='account-description'
+                        title={assets.description}
+                      >
                         {assets.description}
                       </span>
                     </SmallDetailItem>
@@ -256,28 +294,30 @@ export const AccountDetailsCard = () => {
           </div>
         </>
       ) : (
-        <div className="col mb-spacer">
-          <div className="card">
-            <div className={`card-header ${scamInfo ? 'status-text-warning' : ''}`}>
-              <div className="card-header-item">
-                <div className="d-flex align-items-center justify-content-between">
-                  <div className="d-flex align-items-center w-100">
-                    <span className="me-2 h6 mb-0" data-testid="title">
-                      <div className="d-flex align-items-center">
+        <div className='col mb-spacer'>
+          <div className='card'>
+            <div
+              className={`card-header ${scamInfo ? 'status-text-warning' : ''}`}
+            >
+              <div className='card-header-item'>
+                <div className='d-flex align-items-center justify-content-between'>
+                  <div className='d-flex align-items-center w-100'>
+                    <span className='me-2 h6 mb-0' data-testid='title'>
+                      <div className='d-flex align-items-center'>
                         {assets?.iconSvg && (
-                          <div className="side-icon me-1">
-                            <img src={assets?.iconSvg} alt=" " />
+                          <div className='side-icon me-1'>
+                            <img src={assets?.iconSvg} alt=' ' />
                           </div>
                         )}
                         <div>{assets?.name ?? 'Address Details'}</div>
                       </div>
                     </span>
                     {scamInfo && (
-                      <span className="text-warning d-flex align-items-center ms-2">
+                      <span className='text-warning d-flex align-items-center ms-2'>
                         <FontAwesomeIcon
                           icon={faExclamationTriangle}
-                          size="sm"
-                          className="text-warning me-2"
+                          size='sm'
+                          className='text-warning me-2'
                         />
                         {scamInfo.info}
                       </span>
@@ -285,42 +325,63 @@ export const AccountDetailsCard = () => {
                   </div>
                 </div>
               </div>
-              <div className="card-header-item compact d-flex">
-                <span className="text-secondary">Address:</span>
-                <div className="d-flex align-items-center text-break-all ms-2">
-                  <span data-testid="address">{address}</span>
+              <div className='card-header-item compact d-flex'>
+                <span className='text-secondary'>Address:</span>
+                <div className='d-flex align-items-center text-break-all ms-2'>
+                  <span data-testid='address'>{address}</span>
                   <CopyButton text={address} />
                 </div>
               </div>
               {username && (
-                <div className="card-header-item compact d-flex">
-                  <span className="text-secondary">Herotag:</span>
-                  <div className="d-flex align-items-center text-break-all ms-2">
-                    <span data-testid="address">{formatHerotag(username)}</span>
+                <div className='card-header-item compact d-flex'>
+                  <span className='text-secondary'>Herotag:</span>
+                  <div className='d-flex align-items-center text-break-all ms-2'>
+                    <span data-testid='address'>{formatHerotag(username)}</span>
                     <CopyButton text={formatHerotag(username)} />
                   </div>
                 </div>
               )}
             </div>
-            <div className="card-body card-item-container mx-spacing">
-              <CardItem className={cardItemClass} title="Balance" customIcon={<MultiversXSymbol />}>
-                <div className="d-flex align-items-center">
-                  {balance !== '...' ? <Denominate value={balance} decimals={4} /> : balance}
+            <div className='card-body card-item-container mx-spacing'>
+              <CardItem
+                className={cardItemClass}
+                title='Balance'
+                customIcon={<MultiversXSymbol />}
+              >
+                <div className='d-flex align-items-center'>
+                  {balance !== '...' ? (
+                    <Denominate value={balance} decimals={4} />
+                  ) : (
+                    balance
+                  )}
                 </div>
               </CardItem>
               <LockedAmountCardItem cardItemClass={cardItemClass} />
               <AccountUsdValueCardItem cardItemClass={cardItemClass} />
-              <CardItem className={cardItemClass} title="Nonce" icon={faUser}>
+              <CardItem className={cardItemClass} title='Nonce' icon={faUser}>
                 {nonce !== undefined ? nonce.toLocaleString('en') : '...'}
               </CardItem>
               {tokensActive && (
-                <CardItem className={cardItemClass} title="Tokens" icon={faCoins}>
-                  {accountTokensCount !== undefined ? accountTokensCount : '...'}
+                <CardItem
+                  className={cardItemClass}
+                  title='Tokens'
+                  icon={faCoins}
+                >
+                  {accountTokensCount !== undefined
+                    ? accountTokensCount
+                    : '...'}
                 </CardItem>
               )}
-              <CardItem className={cardItemClass} title="Shard" icon={faLayerGroup}>
+              <CardItem
+                className={cardItemClass}
+                title='Shard'
+                icon={faLayerGroup}
+              >
                 {shard !== undefined ? (
-                  <NetworkLink to={urlBuilder.shard(shard)} data-testid="shardLink">
+                  <NetworkLink
+                    to={urlBuilder.shard(shard)}
+                    data-testid='shardLink'
+                  >
                     <ShardSpan shard={shard} />
                   </NetworkLink>
                 ) : (

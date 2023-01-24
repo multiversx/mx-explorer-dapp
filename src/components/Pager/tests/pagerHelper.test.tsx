@@ -5,7 +5,7 @@ describe('Pager helper tests', () => {
     const { size, start, last, lastPage } = pagerHelper({
       page: '2',
       total: 10000,
-      itemsPerPage: 25,
+      itemsPerPage: 25
     });
     expect(size).toBe(2);
     expect(start).toBe(25);
@@ -16,7 +16,7 @@ describe('Pager helper tests', () => {
     const { size, start, last, lastPage } = pagerHelper({
       page: '1',
       total: 10000,
-      itemsPerPage: 25,
+      itemsPerPage: 25
     });
     expect(size).toBe(1);
     expect(start).toBe(1);
@@ -27,7 +27,7 @@ describe('Pager helper tests', () => {
     const { size, start, last, lastPage } = pagerHelper({
       page: 'asd',
       total: 10000,
-      itemsPerPage: 25,
+      itemsPerPage: 25
     });
     expect(size).toBe(1);
     expect(start).toBe(1);
@@ -38,7 +38,7 @@ describe('Pager helper tests', () => {
     const { size, start, last, lastPage } = pagerHelper({
       page: '-2',
       total: 10000,
-      itemsPerPage: 25,
+      itemsPerPage: 25
     });
     expect(size).toBe(1);
     expect(start).toBe(1);

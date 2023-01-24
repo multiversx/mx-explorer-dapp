@@ -6,9 +6,9 @@ export const FailedAnalytics = () => {
   return (
     <PageState
       icon={faChartBar}
-      title="Unable to load Analytics Details"
-      className="py-spacer my-auto"
-      dataTestId="errorScreen"
+      title='Unable to load Analytics Details'
+      className='py-spacer my-auto'
+      dataTestId='errorScreen'
     />
   );
 };

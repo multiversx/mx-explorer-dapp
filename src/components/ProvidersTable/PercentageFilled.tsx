@@ -19,8 +19,13 @@ export const getPercentageFilled = (locked: string, delegationCap: string) => {
         .minus(bnLocked)
         .isGreaterThanOrEqualTo(nominate(String(minDelegation)));
 
-      const filled = bnLocked.multipliedBy(100).dividedBy(bnDelegationCap).toFixed(4).slice(0, -3);
-      const filledPercent = filled === '100.0' ? '100' : filled === '0.0' ? '0' : filled;
+      const filled = bnLocked
+        .multipliedBy(100)
+        .dividedBy(bnDelegationCap)
+        .toFixed(4)
+        .slice(0, -3);
+      const filledPercent =
+        filled === '100.0' ? '100' : filled === '0.0' ? '0' : filled;
 
       return isOverMinimum ? filledPercent : '100';
 
@@ -34,7 +39,10 @@ export const hasDelegationCap = (delegationCap: string) => {
   return bnDelegationCap.isGreaterThan(0);
 };
 
-export const PercentageFilled = ({ locked, delegationCap }: PercentageFilledType) => {
+export const PercentageFilled = ({
+  locked,
+  delegationCap
+}: PercentageFilledType) => {
   const percentage = getPercentageFilled(locked, delegationCap);
   return hasDelegationCap(delegationCap) ? <>{percentage}%</> : <>Uncapped</>;
 };

@@ -1,7 +1,7 @@
-import { getStats as stats } from './stats';
+import { elastic } from './helpers';
 import { nodes } from './nodes';
 import { shards } from './shards';
-import { elastic } from './helpers';
+import { getStats as stats } from './stats';
 import { ProviderPropsType } from '../helpers';
 
 export const elasticAdapter = {
@@ -11,7 +11,7 @@ export const elasticAdapter = {
     return stats({
       proxyUrl,
       elasticUrl,
-      metaChainShardId,
+      metaChainShardId
     });
   },
   getNodes: (props: ProviderPropsType & { proxyUrl: string }) => {
@@ -19,7 +19,7 @@ export const elasticAdapter = {
     return nodes({
       nodeUrl,
       url,
-      params,
+      params
     });
   },
   getShards: (props: ProviderPropsType & { proxyUrl: string }) => {
@@ -70,5 +70,5 @@ export const elasticAdapter = {
   },
   getAnalyticsChart: () => {
     throw new Error('not defined');
-  },
+  }
 };

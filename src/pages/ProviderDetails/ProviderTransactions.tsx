@@ -1,17 +1,16 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { Loader, TransactionsTable, useAdapter } from 'components';
 
-import { txStatus } from 'components/TransactionStatus/txStatus';
-import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
+import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
+import { txStatus } from 'components/TransactionStatus/txStatus';
 import { useSize, useURLSearchParams } from 'helpers';
+import { activeNetworkSelector } from 'redux/selectors';
 import { UITransactionType } from 'types';
 import { ProviderTabs } from './ProviderLayout/ProviderTabs';
-
-import { useSelector } from 'react-redux';
-import { activeNetworkSelector } from 'redux/selectors';
 
 export const ProviderTransactions = () => {
   const ref = React.useRef(null);
@@ -29,13 +28,16 @@ export const ProviderTransactions = () => {
     after,
     status,
     miniBlockHash,
-    search,
+    search
   } = useURLSearchParams();
 
-  const [transactions, setTransactions] = React.useState<UITransactionType[]>([]);
+  const [transactions, setTransactions] = React.useState<UITransactionType[]>(
+    []
+  );
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [transactionsCount, setTransactionsCount] = React.useState(0);
-  const [hasPendingTransaction, setHasPendingTransaction] = React.useState(false);
+  const [hasPendingTransaction, setHasPendingTransaction] =
+    React.useState(false);
 
   const fetchTransactions = () => {
     getTransactions({
@@ -52,20 +54,21 @@ export const ProviderTransactions = () => {
       status,
       miniBlockHash,
       search,
-      withUsername: true,
+      withUsername: true
     }).then((transactionsData) => {
       const { data, success } = transactionsData;
       if (success) {
         const existingHashes = transactions.map((b) => b.txHash);
         const newTransactions = data.map((transaction: UITransactionType) => ({
           ...transaction,
-          isNew: !existingHashes.includes(transaction.txHash),
+          isNew: !existingHashes.includes(transaction.txHash)
         }));
         if (ref.current !== null) {
           setTransactions(newTransactions);
           const pending = data.some(
             (tx: UITransactionType) =>
-              tx.status.toLowerCase() === txStatus.pending.toLowerCase() || tx.pendingResults
+              tx.status.toLowerCase() === txStatus.pending.toLowerCase() ||
+              tx.pendingResults
           );
           setHasPendingTransaction(pending);
           setDataReady(true);
@@ -92,7 +95,7 @@ export const ProviderTransactions = () => {
       after,
       status,
       miniBlockHash,
-      search,
+      search
     }).then(({ data: count, success }) => {
       if (ref.current !== null && success) {
         setTransactionsCount(count);
@@ -128,8 +131,8 @@ export const ProviderTransactions = () => {
 
   return (
     <div ref={ref}>
-      <div className="row">
-        <div className="col-12">
+      <div className='row'>
+        <div className='col-12'>
           {showTransactions ? (
             <TransactionsTable
               transactions={transactions}
@@ -140,15 +143,17 @@ export const ProviderTransactions = () => {
               title={<ProviderTabs />}
             />
           ) : (
-            <div className="card">
-              <div className="card-header">
-                <div className="card-header-item d-flex align-items-center">
+            <div className='card'>
+              <div className='card-header'>
+                <div className='card-header-item d-flex align-items-center'>
                   <ProviderTabs />
                 </div>
               </div>
               {dataReady === undefined && <Loader />}
               {dataReady === false && <FailedTransactions />}
-              {dataReady === true && transactions.length === 0 && <NoTransactions />}
+              {dataReady === true && transactions.length === 0 && (
+                <NoTransactions />
+              )}
             </div>
           )}
         </div>

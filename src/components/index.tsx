@@ -1,7 +1,7 @@
 import Chart from './Chart';
 import NodesTable from './NodesTable';
-import TxActionBlock from './TxActionBlock';
 import SharedIdentity from './SharedIdentity';
+import TxActionBlock from './TxActionBlock';
 
 export * from './BlocksTable';
 export * from './Denominate';

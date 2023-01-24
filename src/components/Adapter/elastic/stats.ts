@@ -3,7 +3,7 @@ import axios from 'axios';
 export const getStats = async ({
   proxyUrl,
   elasticUrl,
-  metaChainShardId,
+  metaChainShardId
 }: {
   proxyUrl: string;
   elasticUrl: string;
@@ -14,9 +14,12 @@ export const getStats = async ({
       {
         data: {
           data: {
-            config: { erd_num_shards_without_meta: shards, erd_round_duration: refreshRate },
-          },
-        },
+            config: {
+              erd_num_shards_without_meta: shards,
+              erd_round_duration: refreshRate
+            }
+          }
+        }
       },
       {
         data: {
@@ -24,26 +27,26 @@ export const getStats = async ({
             status: {
               erd_epoch_number: epoch,
               erd_rounds_passed_in_current_epoch: roundsPassed,
-              erd_rounds_per_epoch: roundsPerEpoch,
-            },
-          },
-        },
+              erd_rounds_per_epoch: roundsPerEpoch
+            }
+          }
+        }
       },
       {
-        data: { count: blocks },
+        data: { count: blocks }
       },
       {
-        data: { count: accounts },
+        data: { count: accounts }
       },
       {
-        data: { count: transactions },
-      },
+        data: { count: transactions }
+      }
     ] = await Promise.all([
       axios.get(`${proxyUrl}/network/config`),
       axios.get(`${proxyUrl}/network/status/${metaChainShardId}`),
       axios.get(`${elasticUrl}/blocks/_count`),
       axios.get(`${elasticUrl}/accounts/_count`),
-      axios.get(`${elasticUrl}/transactions/_count`),
+      axios.get(`${elasticUrl}/transactions/_count`)
     ]);
     return {
       data: {
@@ -54,8 +57,8 @@ export const getStats = async ({
         refreshRate,
         epoch,
         roundsPassed,
-        roundsPerEpoch,
-      },
+        roundsPerEpoch
+      }
     };
   } catch (error) {
     console.error('stats error', error);

@@ -3,10 +3,12 @@ import { fireEvent, wait, beforeAll } from '__mocks__/test-utils';
 describe('Blocks Page', () => {
   test('Blocks page is displaying', async () => {
     const render = beforeAll({
-      route: '/blocks',
+      route: '/blocks'
     });
 
-    expect(document.title).toEqual('Blocks • MultiversX (previously Elrond) Explorer');
+    expect(document.title).toEqual(
+      'Blocks • MultiversX (previously Elrond) Explorer'
+    );
 
     await wait(async () => {
       expect(render.queryByTestId('title')!.innerHTML).toBe('Blocks');
@@ -17,7 +19,7 @@ describe('Blocks Page', () => {
 
   test('Blocks page loading state', async () => {
     const render = beforeAll({
-      route: '/blocks',
+      route: '/blocks'
     });
 
     const loader = await render.findByTestId('loader');
@@ -28,8 +30,8 @@ describe('Blocks Page', () => {
     const render = beforeAll({
       route: '/blocks',
       networkRequests: {
-        blocks: () => Promise.resolve(new Error('error')),
-      },
+        blocks: () => Promise.resolve(new Error('error'))
+      }
     });
 
     const failedState = await render.findByTestId('errorScreen');
@@ -40,7 +42,7 @@ describe('Blocks Page', () => {
 describe('Blocks Page Links', () => {
   test('Block page link', async () => {
     const render = beforeAll({
-      route: '/blocks',
+      route: '/blocks'
     });
 
     const link = await render.findByTestId('blockLink0');
@@ -48,13 +50,15 @@ describe('Blocks Page Links', () => {
 
     fireEvent.click(link);
     await wait(async () => {
-      expect(document.title).toEqual('Block Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual(
+        'Block Details • MultiversX (previously Elrond) Explorer'
+      );
     });
   });
 
   test('Block shard link', async () => {
     const render = beforeAll({
-      route: '/blocks',
+      route: '/blocks'
     });
 
     const link = await render.findByTestId('blockShardLink0');
@@ -62,13 +66,15 @@ describe('Blocks Page Links', () => {
 
     fireEvent.click(link);
     await wait(async () => {
-      expect(document.title).toEqual('Shard Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual(
+        'Shard Details • MultiversX (previously Elrond) Explorer'
+      );
     });
   });
 
   test('Block Hash link', async () => {
     const render = beforeAll({
-      route: '/blocks',
+      route: '/blocks'
     });
 
     const link = await render.findByTestId('blockHashLink0');
@@ -78,7 +84,9 @@ describe('Blocks Page Links', () => {
 
     fireEvent.click(link);
     await wait(async () => {
-      expect(document.title).toEqual('Block Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual(
+        'Block Details • MultiversX (previously Elrond) Explorer'
+      );
     });
   });
 });

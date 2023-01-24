@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Loader,
   useAdapter,
@@ -6,13 +7,12 @@ import {
   Trim,
   Pager,
   CollectionBlock,
-  NftBadge,
+  NftBadge
 } from 'components';
-import { NoNfts } from './NoNfts';
-import { FailedNfts } from './FailedNfts';
 import { urlBuilder, useGetFilters, useURLSearchParams, types } from 'helpers';
+import { FailedNfts } from './FailedNfts';
 import { Filters } from './Filters';
-import { useLocation } from 'react-router-dom';
+import { NoNfts } from './NoNfts';
 
 export const Nfts = () => {
   const ref = React.useRef(null);
@@ -31,7 +31,7 @@ export const Nfts = () => {
 
     Promise.all([
       getNfts({ ...queryObject, size, type }),
-      getNftsCount({ ...queryObject, type }),
+      getNftsCount({ ...queryObject, type })
     ]).then(([nftsData, count]) => {
       if (ref.current !== null) {
         if (nftsData.success) {
@@ -53,18 +53,22 @@ export const Nfts = () => {
 
       <div ref={ref}>
         {dataReady === true && (
-          <div className="container page-content">
-            <div className="row">
-              <div className="col-12">
-                <div className="card">
-                  <div className="card-header">
-                    <div className="card-header-item d-flex justify-content-between align-items-center">
+          <div className='container page-content'>
+            <div className='row'>
+              <div className='col-12'>
+                <div className='card'>
+                  <div className='card-header'>
+                    <div className='card-header-item d-flex justify-content-between align-items-center'>
                       <Filters />
                       {nfts && nfts.length > 0 && (
-                        <div className="d-none d-sm-flex">
+                        <div className='d-none d-sm-flex'>
                           <Pager
                             page={String(page)}
-                            total={totalNfts !== '...' ? Math.min(totalNfts, 10000) : totalNfts}
+                            total={
+                              totalNfts !== '...'
+                                ? Math.min(totalNfts, 10000)
+                                : totalNfts
+                            }
                             itemsPerPage={25}
                             show={nfts.length > 0}
                           />
@@ -75,9 +79,9 @@ export const Nfts = () => {
 
                   {nfts && nfts.length > 0 ? (
                     <>
-                      <div className="card-body border-0 p-0">
-                        <div className="table-wrapper">
-                          <table className="table">
+                      <div className='card-body border-0 p-0'>
+                        <div className='table-wrapper'>
+                          <table className='table'>
                             <thead>
                               <tr>
                                 <th>Identifier</th>
@@ -86,45 +90,57 @@ export const Nfts = () => {
                                 <th>Creator Account</th>
                               </tr>
                             </thead>
-                            <tbody data-testid="nftsTable">
+                            <tbody data-testid='nftsTable'>
                               {nfts.map((nft, i) => (
                                 <tr key={`${nft.name}-${nft.identifier}`}>
                                   <td>
-                                    <div className="d-flex align-items-center">
+                                    <div className='d-flex align-items-center'>
                                       <NetworkLink
-                                        to={urlBuilder.nftDetails(nft.identifier)}
+                                        to={urlBuilder.nftDetails(
+                                          nft.identifier
+                                        )}
                                         data-testid={`nftsLink${i}`}
                                         className={`d-flex ${
                                           nft.assets?.svgUrl ? 'side-link' : ''
                                         }`}
                                       >
-                                        <div className="d-flex align-items-center">
+                                        <div className='d-flex align-items-center'>
                                           {nft.assets && nft.assets.svgUrl && (
                                             <img
                                               src={nft.assets.svgUrl}
                                               alt={nft.identifier}
-                                              className="side-icon me-1"
+                                              className='side-icon me-1'
                                             />
                                           )}
                                           <div>{nft.identifier}</div>
                                         </div>
                                       </NetworkLink>
-                                      <NftBadge type={nft.type} className="ms-2" />
+                                      <NftBadge
+                                        type={nft.type}
+                                        className='ms-2'
+                                      />
                                     </div>
                                   </td>
                                   <td>
-                                    {nft.scamInfo ? `[Hidden - ${nft.scamInfo.info}]` : nft.name}
+                                    {nft.scamInfo
+                                      ? `[Hidden - ${nft.scamInfo.info}]`
+                                      : nft.name}
                                   </td>
                                   <td>
                                     <CollectionBlock nft={nft} />
                                   </td>
                                   <td>
-                                    <div className="d-flex trim-size-xl">
+                                    <div className='d-flex trim-size-xl'>
                                       <NetworkLink
-                                        to={urlBuilder.accountDetails(nft.creator)}
-                                        className="trim-wrapper"
+                                        to={urlBuilder.accountDetails(
+                                          nft.creator
+                                        )}
+                                        className='trim-wrapper'
                                       >
-                                        <Trim text={nft.creator} dataTestId={`accountLink${i}`} />
+                                        <Trim
+                                          text={nft.creator}
+                                          dataTestId={`accountLink${i}`}
+                                        />
                                       </NetworkLink>
                                     </div>
                                   </td>
@@ -135,10 +151,14 @@ export const Nfts = () => {
                         </div>
                       </div>
 
-                      <div className="card-footer d-flex justify-content-end">
+                      <div className='card-footer d-flex justify-content-end'>
                         <Pager
                           page={String(page)}
-                          total={totalNfts !== '...' ? Math.min(totalNfts, 10000) : totalNfts}
+                          total={
+                            totalNfts !== '...'
+                              ? Math.min(totalNfts, 10000)
+                              : totalNfts
+                          }
                           itemsPerPage={25}
                           show={nfts.length > 0}
                         />

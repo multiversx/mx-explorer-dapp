@@ -10,23 +10,23 @@ export const apiAdapter = {
   getStats: ({ baseUrl, timeout }: ProviderPropsType) => {
     return api({
       baseUrl,
-      url: `/stats`,
-      timeout,
+      url: '/stats',
+      timeout
     });
   },
   getNodes: api,
   getNodesVersions: ({ baseUrl, timeout }: ProviderPropsType) => {
     return api({
       baseUrl,
-      url: `/nodes/versions`,
-      timeout,
+      url: '/nodes/versions',
+      timeout
     });
   },
   getShards: ({ baseUrl, timeout }: ProviderPropsType) => {
     return api({
       baseUrl,
-      url: `/shards`,
-      timeout,
+      url: '/shards',
+      timeout
     });
   },
   getAccountDelegation: api,
@@ -42,5 +42,5 @@ export const apiAdapter = {
   getTransactionsHistory: api,
   getAccountsHistory: api,
   getAnalyticsChartList: api,
-  getAnalyticsChart: api,
+  getAnalyticsChart: api
 };

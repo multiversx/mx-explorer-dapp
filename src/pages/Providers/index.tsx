@@ -1,13 +1,12 @@
 import React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 
+import { useSelector } from 'react-redux';
 import { useAdapter, ProvidersTable, Loader, PageState } from 'components';
 import { NodesTabs } from 'pages/Nodes/NodesLayout/NodesTabs';
 
-import { IdentityType, ProviderType } from 'types';
-
-import { useSelector } from 'react-redux';
 import { activeNetworkSelector } from 'redux/selectors';
+import { IdentityType, ProviderType } from 'types';
 
 export const Providers = () => {
   const ref = React.useRef(null);
@@ -28,12 +27,12 @@ export const Providers = () => {
         'numNodes',
         'apr',
         'serviceFee',
-        'delegationCap',
-      ].join(','),
+        'delegationCap'
+      ].join(',')
     }).then((providersData) => {
       if (ref.current !== null) {
         if (providersData.success) {
-          let newProvidersData: types.ProviderType[] = providersData.data;
+          const newProvidersData: types.ProviderType[] = providersData.data;
 
           const identities = newProvidersData
             .filter((item) => item.identity)
@@ -47,7 +46,8 @@ export const Providers = () => {
                   newProvidersData.forEach((provider) => {
                     if (provider.identity) {
                       const identityDetails = identitiesData.data.find(
-                        (identity: IdentityType) => identity.identity === provider.identity
+                        (identity: IdentityType) =>
+                          identity.identity === provider.identity
                       );
 
                       if (identityDetails) {
@@ -76,8 +76,8 @@ export const Providers = () => {
   React.useEffect(fetchProviders, [activeNetworkId]);
 
   return (
-    <div className="card" ref={ref}>
-      <div className="card-header">
+    <div className='card' ref={ref}>
+      <div className='card-header'>
         <NodesTabs />
       </div>
 
@@ -85,14 +85,14 @@ export const Providers = () => {
       {dataReady === false && (
         <PageState
           icon={faCode}
-          title="Unable to load providers"
-          className="py-spacer my-auto"
-          dataTestId="errorScreenProviders"
+          title='Unable to load providers'
+          className='py-spacer my-auto'
+          dataTestId='errorScreenProviders'
         />
       )}
 
       {dataReady === true && (
-        <div className="card-body">
+        <div className='card-body'>
           <ProvidersTable providers={providers} />
         </div>
       )}

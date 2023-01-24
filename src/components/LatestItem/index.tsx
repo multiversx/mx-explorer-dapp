@@ -4,7 +4,7 @@ export const LatestItem = ({
   children,
   isNew,
   index,
-  totalItems,
+  totalItems
 }: {
   children: React.ReactNode;
   isNew: boolean | undefined;
@@ -12,7 +12,9 @@ export const LatestItem = ({
   totalItems: number;
 }) => {
   const ref = React.useRef(null);
-  const [internalIsNew, setInternalIsNew] = React.useState<boolean | undefined>();
+  const [internalIsNew, setInternalIsNew] = React.useState<
+    boolean | undefined
+  >();
   const expandDuration = 600;
   const totalAnimationTime = totalItems * expandDuration;
   const itemAnimationDelay = totalAnimationTime - expandDuration * index;

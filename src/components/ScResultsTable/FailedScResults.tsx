@@ -6,9 +6,9 @@ export const FailedScResults = () => {
   return (
     <PageState
       icon={faCode}
-      title="Unable to load Smart Contract Results"
-      className="py-spacer my-auto"
-      dataTestId="errorScreen"
+      title='Unable to load Smart Contract Results'
+      className='py-spacer my-auto'
+      dataTestId='errorScreen'
     />
   );
 };

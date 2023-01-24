@@ -1,21 +1,21 @@
 import * as React from 'react';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
 
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
 
-import { TxFiltersEnum, TransactionsTableType } from 'types';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { useAdapter, SelectFilter } from 'components';
 import { shardSpanText } from 'components/ShardSpan';
 
-import { useSelector, useDispatch } from 'react-redux';
 import { shardsSelector } from 'redux/selectors';
 import { setShards } from 'redux/slices/interface';
+import { TxFiltersEnum, TransactionsTableType } from 'types';
 
 export const ShardColumnFilters = ({
-  inactiveFilters = [],
+  inactiveFilters = []
 }: {
   inactiveFilters?: TransactionsTableType['inactiveFilters'];
 }) => {
@@ -41,7 +41,10 @@ export const ShardColumnFilters = ({
   React.useEffect(fetchShards, []);
 
   const searchShards = stateShards.map((shard) => {
-    return { value: shard.shard.toString(), label: shardSpanText(shard.shard.toString()) };
+    return {
+      value: shard.shard.toString(),
+      label: shardSpanText(shard.shard.toString())
+    };
   });
 
   if (
@@ -54,20 +57,23 @@ export const ShardColumnFilters = ({
 
   return (
     <OverlayTrigger
-      trigger="click"
-      key="popover"
-      placement="bottom"
+      trigger='click'
+      key='popover'
+      placement='bottom'
       rootClose
       overlay={
-        <Popover id="popover-positioned-bottom" className="border popover-xs bg-light">
+        <Popover
+          id='popover-positioned-bottom'
+          className='border popover-xs bg-light'
+        >
           {stateShards.length > 0 && (
             <Popover.Content>
-              <div className="p-3 text-dark">
+              <div className='p-3 text-dark'>
                 {!inactiveFilters.includes(TxFiltersEnum.senderShard) && (
-                  <div className="filter-block">
-                    <div className="mb-1">Sender Shard</div>
+                  <div className='filter-block'>
+                    <div className='mb-1'>Sender Shard</div>
                     <SelectFilter
-                      name="senderShard-filter"
+                      name='senderShard-filter'
                       options={searchShards}
                       filter={TxFiltersEnum.senderShard}
                     />
@@ -75,10 +81,10 @@ export const ShardColumnFilters = ({
                 )}
 
                 {!inactiveFilters.includes(TxFiltersEnum.receiverShard) && (
-                  <div className="filter-block">
-                    <div className="mb-1">Receiver Shard</div>
+                  <div className='filter-block'>
+                    <div className='mb-1'>Receiver Shard</div>
                     <SelectFilter
-                      name="receiverShard-filter"
+                      name='receiverShard-filter'
                       options={searchShards}
                       filter={TxFiltersEnum.receiverShard}
                     />
@@ -90,10 +96,21 @@ export const ShardColumnFilters = ({
         </Popover>
       }
     >
-      <div className="d-inline-block side-action cursor-pointer" data-testid="shardFilterButton">
+      <div
+        className='d-inline-block side-action cursor-pointer'
+        data-testid='shardFilterButton'
+      >
         <FontAwesomeIcon
-          icon={senderShard !== undefined || receiverShard !== undefined ? faFilterSolid : faFilter}
-          className={senderShard !== undefined || receiverShard !== undefined ? 'text-primary' : ''}
+          icon={
+            senderShard !== undefined || receiverShard !== undefined
+              ? faFilterSolid
+              : faFilter
+          }
+          className={
+            senderShard !== undefined || receiverShard !== undefined
+              ? 'text-primary'
+              : ''
+          }
         />
       </div>
     </OverlayTrigger>

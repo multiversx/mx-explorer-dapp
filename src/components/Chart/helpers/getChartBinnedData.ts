@@ -1,6 +1,6 @@
 import moment, { Moment, unitOfTime } from 'moment';
-import { denominate } from 'components/Denominate/denominate';
 import { ChartDataType } from 'components/Chart/helpers/types';
+import { denominate } from 'components/Denominate/denominate';
 import { DECIMALS, DIGITS } from 'config';
 
 interface AccountBalanceHistoryType {
@@ -11,7 +11,9 @@ interface AccountBalanceHistoryType {
 }
 
 const getMoment = (timestamp: string | number): Moment => {
-  return typeof timestamp === 'number' ? moment.unix(timestamp) : moment(timestamp);
+  return typeof timestamp === 'number'
+    ? moment.unix(timestamp)
+    : moment(timestamp);
 };
 
 export const getFrequency = (
@@ -59,11 +61,11 @@ export const formatEntry = (entry: AccountBalanceHistoryType) => {
     denomination: DECIMALS,
     decimals: DIGITS,
     showLastNonZeroDecimal: false,
-    addCommas: false,
+    addCommas: false
   });
   return {
     timestamp: entry.timestamp,
-    value,
+    value
   };
 };
 
@@ -73,7 +75,9 @@ export const getNormalizedTimeEntries = (
 ): any[] => {
   const normalizedEntries: { [key: string]: any } = {};
   for (const entry of [...data]) {
-    const identifier = getMoment(entry.timestamp).startOf(frequency).format('X');
+    const identifier = getMoment(entry.timestamp)
+      .startOf(frequency)
+      .format('X');
     normalizedEntries[identifier] = formatEntry(entry);
   }
   return Object.values(normalizedEntries);
@@ -96,7 +100,7 @@ export const getChartBinnedData = (data: AccountBalanceHistoryType[]) => {
   for (const date of intervalDates) {
     binnedData[date] = {
       timestamp: Number(moment.unix(date).format('X')),
-      value: '',
+      value: ''
     };
   }
 
@@ -114,7 +118,7 @@ export const getChartBinnedData = (data: AccountBalanceHistoryType[]) => {
       chartBinnedData.push({
         ...normalizedEntry,
         value: previousEntry.value,
-        isBinnedData: true,
+        isBinnedData: true
       });
     }
   }

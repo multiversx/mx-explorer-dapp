@@ -6,9 +6,9 @@ export const FailedCollections = () => {
   return (
     <PageState
       icon={faCoins}
-      title="Unable to load Collections"
-      className="py-spacer my-auto"
-      dataTestId="errorScreen"
+      title='Unable to load Collections'
+      className='py-spacer my-auto'
+      dataTestId='errorScreen'
     />
   );
 };

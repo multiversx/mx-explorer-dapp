@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { LinkComponentProps } from 'react-anchorme';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { LinkComponentProps } from 'react-anchorme';
 import { Modal } from 'react-bootstrap';
 
 export const ModalLink = (props: LinkComponentProps) => {
@@ -57,7 +57,7 @@ export const ModalLink = (props: LinkComponentProps) => {
               </button>
               <a
                 href={props.href}
-                target={`_blank`}
+                target={'_blank'}
                 className='mt-3'
                 rel='noreferrer noopener'
               >
