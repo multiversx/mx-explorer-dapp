@@ -30,7 +30,7 @@ export const StatusFilter = () => {
       rootClose
       overlay={
         <Popover id='popover-positioned-bottom' className='border'>
-          <Popover.Content>
+          <Popover.Body>
             <NetworkLink
               className={`dropdown-item ${online === 'true' ? 'active' : ''}`}
               to={onlineLink('true')}
@@ -52,7 +52,7 @@ export const StatusFilter = () => {
             >
               Show all
             </NetworkLink>
-          </Popover.Content>
+          </Popover.Body>
         </Popover>
       }
     >

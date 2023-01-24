@@ -32,7 +32,7 @@ export const Providers = () => {
     }).then((providersData) => {
       if (ref.current !== null) {
         if (providersData.success) {
-          const newProvidersData: types.ProviderType[] = providersData.data;
+          const newProvidersData: ProviderType[] = providersData.data;
 
           const identities = newProvidersData
             .filter((item) => item.identity)

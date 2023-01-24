@@ -296,7 +296,7 @@ const wrapper = async ({
 
             results = { data };
           } catch (error) {
-            throw new Error(error);
+            throw new Error(error as any);
           }
         } else {
           const url = `${elasticUrl()}/${collection}/_doc/${hash}`;
@@ -365,7 +365,7 @@ const wrapper = async ({
           } catch (error) {
             // if transaction not found in elastic
 
-            if (collection === 'transactions' && error.response) {
+            if (collection === 'transactions' && (error as any).response) {
               try {
                 const {
                   data: {
@@ -412,10 +412,10 @@ const wrapper = async ({
                   }
                 };
               } catch (error) {
-                throw new Error(error);
+                throw new Error(error as any);
               }
             } else {
-              throw new Error(error);
+              throw new Error(error as any);
             }
           }
         }

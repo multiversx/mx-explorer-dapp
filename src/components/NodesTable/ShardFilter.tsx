@@ -51,7 +51,7 @@ export const ShardFilter = () => {
       overlay={
         <Popover id='popover-positioned-bottom' className='border'>
           {shards.length > 0 && (
-            <Popover.Content>
+            <Popover.Body>
               {shards.map((entry, i) => {
                 return (
                   <NetworkLink
@@ -74,7 +74,7 @@ export const ShardFilter = () => {
               >
                 Show all
               </NetworkLink>
-            </Popover.Content>
+            </Popover.Body>
           )}
         </Popover>
       }

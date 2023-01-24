@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Anchorme } from 'react-anchorme';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { ModalLink } from 'components';
-import { types, useScamFlag } from 'helpers';
+import { useScamFlag } from 'helpers';
+import { NftType } from 'types';
 
 export const Thumbnail = ({
   token,
@@ -13,7 +14,7 @@ export const Thumbnail = ({
   index,
   children
 }: {
-  token: types.NftType;
+  token: NftType;
   link: string;
   index: number;
   children: any;
@@ -71,7 +72,7 @@ export const Thumbnail = ({
   );
 };
 
-export const NftPreview = ({ token }: { token: types.NftType }) => {
+export const NftPreview = ({ token }: { token: NftType }) => {
   const scamFlag = useScamFlag();
 
   return token.uris ? (

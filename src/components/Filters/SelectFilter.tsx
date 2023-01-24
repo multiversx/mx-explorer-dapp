@@ -82,8 +82,8 @@ export const SelectFilter = ({
           const values = e.map((value) => value.value).join(',');
           updateSelectValue(values);
         } else {
-          if (e?.value !== undefined) {
-            updateSelectValue(e.value.toString());
+          if ((e as any)?.value !== undefined) {
+            updateSelectValue((e as any).value.toString());
           }
         }
       }}
@@ -103,7 +103,7 @@ export const SelectFilter = ({
       }}
       {...(isMulti ? { isMulti: true } : {})}
       noOptionsMessage={(message) => {
-        return noOptionsMessage ? noOptionsMessage : message;
+        return noOptionsMessage ? <>{noOptionsMessage}</> : <>{message}</>;
       }}
     />
   ) : (
@@ -120,8 +120,8 @@ export const SelectFilter = ({
           const values = e.map((value) => value.value).join(',');
           updateSelectValue(values);
         } else {
-          if (e?.value !== undefined) {
-            updateSelectValue(e.value.toString());
+          if ((e as any)?.value !== undefined) {
+            updateSelectValue((e as any).value.toString());
           }
         }
       }}

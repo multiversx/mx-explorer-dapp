@@ -40,7 +40,7 @@ export const ToColumnFilters = ({
           id='popover-positioned-bottom'
           className='border popover-xs bg-light'
         >
-          <Popover.Content>
+          <Popover.Body>
             <div className='p-3 text-dark'>
               <div className='filter-block'>
                 <div className='mb-1'>To</div>
@@ -56,7 +56,7 @@ export const ToColumnFilters = ({
                 />
               </div>
             </div>
-          </Popover.Content>
+          </Popover.Body>
         </Popover>
       }
     >

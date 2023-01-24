@@ -9,7 +9,8 @@ import {
   CollectionBlock,
   NftBadge
 } from 'components';
-import { urlBuilder, useGetFilters, useURLSearchParams, types } from 'helpers';
+import { urlBuilder, useGetFilters, useURLSearchParams } from 'helpers';
+import { NftType } from 'types';
 import { FailedNfts } from './FailedNfts';
 import { Filters } from './Filters';
 import { NoNfts } from './NoNfts';
@@ -21,7 +22,7 @@ export const Nfts = () => {
   const { getQueryObject, size } = useGetFilters();
   const { getNfts, getNftsCount } = useAdapter();
 
-  const [nfts, setNfts] = React.useState<types.NftType[]>([]);
+  const [nfts, setNfts] = React.useState<NftType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [totalNfts, setTotalNfts] = React.useState<number | '...'>('...');
 

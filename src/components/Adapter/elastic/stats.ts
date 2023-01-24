@@ -62,6 +62,6 @@ export const getStats = async ({
     };
   } catch (error) {
     console.error('stats error', error);
-    throw new Error(error);
+    throw new Error(error as any);
   }
 };

@@ -47,7 +47,7 @@ export const StatusColumnFilters = ({
           id='popover-positioned-bottom'
           className='border popover-xs bg-light'
         >
-          <Popover.Content>
+          <Popover.Body>
             <div className='p-3 text-dark'>
               {!inactiveFilters.includes(TxFiltersEnum.status) && (
                 <>
@@ -76,7 +76,7 @@ export const StatusColumnFilters = ({
                 </div>
               )}
             </div>
-          </Popover.Content>
+          </Popover.Body>
         </Popover>
       }
     >

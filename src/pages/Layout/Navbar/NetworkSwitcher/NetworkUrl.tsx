@@ -1,9 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { networks, NetworkUrlType } from 'config';
+import { networks } from 'config';
 import { networksSelector } from 'redux/selectors';
 import { changeNetwork } from 'redux/slices';
+import { NetworkUrlType } from 'types';
 
 export interface NetworkUrlPropsType extends React.PropsWithChildren {
   link: NetworkUrlType;
