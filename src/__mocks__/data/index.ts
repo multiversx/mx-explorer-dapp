@@ -1,25 +1,25 @@
+import account from './account';
+import accounts from './accounts';
+import accountTokens from './accountTokens';
+import block from './block';
+import blocks from './blocks';
+import blockValidators from './blockValidators';
+import delegation from './delegation';
+import epoch from './epoch';
+import identity from './identity';
+import miniblock from './miniblock';
 import transactions from './transactions';
 import transactionsSearch from './transactionsSearch';
 import validators from './validators'; // TODO: check
 import validatorsdoc from './validatorsdoc';
-import blockValidators from './blockValidators';
-import epoch from './epoch';
-import miniblock from './miniblock';
 import miniblockTransactions from './miniblockTransactions';
-import blocks from './blocks';
-import block from './block';
 import stats from './stats';
-import delegation from './delegation';
-import account from './account';
-import accounts from './accounts';
 import node from './node';
-import identity from './identity';
 import identities from './identities';
 import tokens from './tokens';
 import tokenDetails from './tokenDetails';
 import providers from './providers';
 import provider from './provider';
-import accountTokens from './accountTokens';
 
 export {
   transactions,
@@ -43,5 +43,5 @@ export {
   tokenDetails,
   providers,
   provider,
-  identities,
+  identities
 };

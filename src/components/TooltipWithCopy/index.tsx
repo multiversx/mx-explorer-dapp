@@ -1,11 +1,11 @@
 import React from 'react';
+import { CopyButton } from 'components';
 import { onlyText } from './onlyText';
 import { PopoverStickOnHover } from './PopoverStickOnHover';
-import { CopyButton } from 'components';
 
 export const TooltipWithCopy = ({
   children,
-  textToCopy,
+  textToCopy
 }: {
   textToCopy?: string;
   children: React.ReactNode;
@@ -16,12 +16,12 @@ export const TooltipWithCopy = ({
   return (
     <PopoverStickOnHover
       component={
-        <div className="d-flex tooltip-inner mw-100">
+        <div className='d-flex tooltip-inner mw-100'>
           {childAsText}
           <CopyButton text={copy} />
         </div>
       }
-      placement="top"
+      placement='top'
       delay={200}
     >
       <span>{children}</span>

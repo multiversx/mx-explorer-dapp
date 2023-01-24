@@ -1,7 +1,14 @@
 import BigNumber from 'bignumber.js';
-import { TxActionType, TxActionsEnum, TxActionCategoryEnum, UnwrapperType } from 'types';
+import {
+  TxActionType,
+  TxActionsEnum,
+  TxActionCategoryEnum,
+  UnwrapperType
+} from 'types';
 
-export const mexUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
+export const mexUnwrapper = (
+  action: TxActionType
+): Array<string | UnwrapperType> => {
   switch (action.name) {
     // distribution
     case TxActionsEnum.claimLockedAssets:
@@ -13,7 +20,10 @@ export const mexUnwrapper = (action: TxActionType): Array<string | UnwrapperType
     }
     case TxActionsEnum.enterFarmAndLockRewards:
     case TxActionsEnum.enterFarmAndLockRewardsProxy:
-      return ['Enter farm and lock rewards with', { token: action.arguments?.transfers }];
+      return [
+        'Enter farm and lock rewards with',
+        { token: action.arguments?.transfers }
+      ];
     case TxActionsEnum.exitFarm:
     case TxActionsEnum.exitFarmProxy:
       return ['Exit farm with', { token: action.arguments?.transfers }];
@@ -47,11 +57,14 @@ export const mexUnwrapper = (action: TxActionType): Array<string | UnwrapperType
         'Added liquidity for',
         { token: [action.arguments?.transfers[0]] },
         'and',
-        { token: [action.arguments?.transfers[1]] },
+        { token: [action.arguments?.transfers[1]] }
       ];
     case TxActionsEnum.removeLiquidity:
     case TxActionsEnum.removeLiquidityProxy:
-      return ['Removed liquidity with ', { token: action.arguments?.transfers }];
+      return [
+        'Removed liquidity with ',
+        { token: action.arguments?.transfers }
+      ];
     // wrap - commented for now until we have the proper tokens from the Api
     // case TxActionsEnum.wrapEgld:
     //   return ['Wrap' /* EGLD value */];
@@ -62,7 +75,9 @@ export const mexUnwrapper = (action: TxActionType): Array<string | UnwrapperType
     case TxActionsEnum.mergeLockedAssetTokens:
       let value = '0';
       if (action.arguments?.transfers) {
-        const values = action.arguments.transfers.map(({ value }: { value: string }) => value);
+        const values = action.arguments.transfers.map(
+          ({ value }: { value: string }) => value
+        );
         value = BigNumber.sum.apply(null, values).toString(10);
       }
       return [
@@ -71,7 +86,7 @@ export const mexUnwrapper = (action: TxActionType): Array<string | UnwrapperType
         'positions into a single',
         { tokenNoLink: [action.arguments?.transfers[0]] },
         'position of value',
-        { value },
+        { value }
       ];
     case TxActionsEnum.wrapEgld:
     case TxActionsEnum.unwrapEgld:
@@ -80,14 +95,16 @@ export const mexUnwrapper = (action: TxActionType): Array<string | UnwrapperType
   }
 };
 
-export const esdtNftUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
+export const esdtNftUnwrapper = (
+  action: TxActionType
+): Array<string | UnwrapperType> => {
   switch (action.name) {
     case TxActionsEnum.transfer:
       return [
         'Transfer',
         { token: action.arguments?.transfers },
         'to',
-        { address: action.arguments?.receiver },
+        { address: action.arguments?.receiver }
       ];
 
     default:
@@ -95,7 +112,9 @@ export const esdtNftUnwrapper = (action: TxActionType): Array<string | Unwrapper
   }
 };
 
-export const stakeUnwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
+export const stakeUnwrapper = (
+  action: TxActionType
+): Array<string | UnwrapperType> => {
   switch (action.name) {
     case TxActionsEnum.delegate:
     case TxActionsEnum.stake:
@@ -105,8 +124,8 @@ export const stakeUnwrapper = (action: TxActionType): Array<string | UnwrapperTy
         'to staking provider',
         {
           providerName: action.arguments?.providerName,
-          providerAvatar: action.arguments?.providerAvatar,
-        },
+          providerAvatar: action.arguments?.providerAvatar
+        }
       ];
     case TxActionsEnum.unDelegate:
       return [
@@ -115,32 +134,32 @@ export const stakeUnwrapper = (action: TxActionType): Array<string | UnwrapperTy
         'from staking provider',
         {
           providerName: action.arguments?.providerName,
-          providerAvatar: action.arguments?.providerAvatar,
-        },
+          providerAvatar: action.arguments?.providerAvatar
+        }
       ];
     case TxActionsEnum.stakeClaimRewards:
       return [
         'Claim rewards from staking provider',
         {
           providerName: action.arguments?.providerName,
-          providerAvatar: action.arguments?.providerAvatar,
-        },
+          providerAvatar: action.arguments?.providerAvatar
+        }
       ];
     case TxActionsEnum.reDelegateRewards:
       return [
         'Redelegate rewards from staking provider',
         {
           providerName: action.arguments?.providerName,
-          providerAvatar: action.arguments?.providerAvatar,
-        },
+          providerAvatar: action.arguments?.providerAvatar
+        }
       ];
     case TxActionsEnum.withdraw:
       return [
         'Withdraw from staking provider',
         {
           providerName: action.arguments?.providerName,
-          providerAvatar: action.arguments?.providerAvatar,
-        },
+          providerAvatar: action.arguments?.providerAvatar
+        }
       ];
 
     default:
@@ -148,7 +167,9 @@ export const stakeUnwrapper = (action: TxActionType): Array<string | UnwrapperTy
   }
 };
 
-export const unwrapper = (action: TxActionType): Array<string | UnwrapperType> => {
+export const unwrapper = (
+  action: TxActionType
+): Array<string | UnwrapperType> => {
   if (action.arguments) {
     switch (action.category) {
       case TxActionCategoryEnum.esdtNft:

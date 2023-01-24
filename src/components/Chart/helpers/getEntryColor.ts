@@ -17,18 +17,23 @@ const DEFAULT_PROVIDER_COLORS: {
   moonlorianstake: '#6c4c59',
   sikka_tech: '#ffbe00',
   rosettastake: '#1aaefb',
-  middlestakingfr: '#5485a9',
+  middlestakingfr: '#5485a9'
 };
 
 export const getPastelColor = ({ currentIndex, total }: PastelColorType) => {
   const colors = (260 / total).toFixed();
 
-  const pastelColor = total === 1 ? '#3d5170' : `hsl(${currentIndex * Number(colors)},50%,50%)`;
+  const pastelColor =
+    total === 1 ? '#3d5170' : `hsl(${currentIndex * Number(colors)},50%,50%)`;
 
   return pastelColor;
 };
 
-export const getProviderColor = ({ name, currentIndex, total }: ProviderColorType) => {
+export const getProviderColor = ({
+  name,
+  currentIndex,
+  total
+}: ProviderColorType) => {
   if (Object.keys(DEFAULT_PROVIDER_COLORS).includes(name)) {
     return DEFAULT_PROVIDER_COLORS[name];
   }

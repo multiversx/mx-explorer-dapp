@@ -3,7 +3,7 @@ import { NftType, NftEnumType } from 'types';
 
 export const NftBadge = ({
   type,
-  className,
+  className
 }: {
   type: NftType['type'] | 'FungibleESDT';
   className?: string;

@@ -6,9 +6,9 @@ export const FailedBlocks = () => {
   return (
     <PageState
       icon={faCube}
-      title="Unable to load blocks"
-      className="py-spacer my-auto"
-      dataTestId="errorScreen"
+      title='Unable to load blocks'
+      className='py-spacer my-auto'
+      dataTestId='errorScreen'
     />
   );
 };

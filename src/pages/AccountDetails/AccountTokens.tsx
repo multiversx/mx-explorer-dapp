@@ -1,6 +1,7 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
+import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   useAdapter,
   DetailItem,
@@ -8,15 +9,18 @@ import {
   Pager,
   PageState,
   Denominate,
-  NetworkLink,
+  NetworkLink
 } from 'components';
 
-import { AccountTabs } from './AccountLayout/AccountTabs';
-import { urlBuilder, useGetFilters, useNetworkRoute, amountWithoutRounding } from 'helpers';
-import { TokenType, NftType } from 'types';
-
-import { useSelector } from 'react-redux';
+import {
+  urlBuilder,
+  useGetFilters,
+  useNetworkRoute,
+  amountWithoutRounding
+} from 'helpers';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
+import { TokenType, NftType } from 'types';
+import { AccountTabs } from './AccountLayout/AccountTabs';
 
 export const AccountTokens = () => {
   const ref = React.useRef(null);
@@ -27,8 +31,12 @@ export const AccountTokens = () => {
   const { size } = useGetFilters();
   const networkRoute = useNetworkRoute();
 
-  const { getAccountTokens, getAccountTokensCount, getAccountNfts, getAccountNftsCount } =
-    useAdapter();
+  const {
+    getAccountTokens,
+    getAccountTokensCount,
+    getAccountNfts,
+    getAccountNftsCount
+  } = useAdapter();
 
   const { hash: address } = useParams() as any;
   const tokensActive = adapter === 'api';
@@ -45,17 +53,22 @@ export const AccountTokens = () => {
       Promise.all([
         getAccountTokens({
           size,
-          address,
+          address
         }),
         getAccountTokensCount(address),
         getAccountNfts({
           size,
           address,
-          type,
+          type
         }),
-        getAccountNftsCount({ address, type }),
+        getAccountNftsCount({ address, type })
       ]).then(
-        ([accountTokensData, accountTokensCountData, accountNftsData, accountNftsCountData]) => {
+        ([
+          accountTokensData,
+          accountTokensCountData,
+          accountNftsData,
+          accountNftsCountData
+        ]) => {
           if (ref.current !== null) {
             if (
               accountTokensData.success &&
@@ -88,133 +101,168 @@ export const AccountTokens = () => {
   return !tokensActive ? (
     navigate(networkRoute(urlBuilder.accountDetails(address)))
   ) : (
-    <div className="card" ref={ref}>
-      <div className="card-header">
-        <div className="card-header-item d-flex justify-content-between align-items-center">
+    <div className='card' ref={ref}>
+      <div className='card-header'>
+        <div className='card-header-item d-flex justify-content-between align-items-center'>
           <AccountTabs />
-          {dataReady === true && (accountTokens.length > 0 || accountNfts.length > 0) && (
-            <div className="d-none d-md-flex">
-              <Pager
-                itemsPerPage={25}
-                page={String(size)}
-                total={Math.max(accountTokensCount, accountNftsCount)}
-                show={accountTokens.length > 0 || accountNfts.length > 0}
-              />
-            </div>
-          )}
+          {dataReady === true &&
+            (accountTokens.length > 0 || accountNfts.length > 0) && (
+              <div className='d-none d-md-flex'>
+                <Pager
+                  itemsPerPage={25}
+                  page={String(size)}
+                  total={Math.max(accountTokensCount, accountNftsCount)}
+                  show={accountTokens.length > 0 || accountNfts.length > 0}
+                />
+              </div>
+            )}
         </div>
       </div>
-      <div className="card-body pt-0 px-lg-spacer py-lg-4">
-        <div className="container-fluid">
-          {dataReady === undefined && <Loader dataTestId="tokensLoader" />}
+      <div className='card-body pt-0 px-lg-spacer py-lg-4'>
+        <div className='container-fluid'>
+          {dataReady === undefined && <Loader dataTestId='tokensLoader' />}
           {dataReady === false && (
             <PageState
               icon={faCoins}
-              title="Unable to load tokens"
-              className="py-spacer my-auto"
-              dataTestId="errorScreen"
+              title='Unable to load tokens'
+              className='py-spacer my-auto'
+              dataTestId='errorScreen'
             />
           )}
-          {dataReady === true && accountTokens.length === 0 && accountNfts.length === 0 && (
-            <PageState icon={faCoins} title="No tokens" className="py-spacer my-auto" />
-          )}
+          {dataReady === true &&
+            accountTokens.length === 0 &&
+            accountNfts.length === 0 && (
+              <PageState
+                icon={faCoins}
+                title='No tokens'
+                className='py-spacer my-auto'
+              />
+            )}
 
-          {dataReady === true && (accountTokens.length > 0 || accountNfts.length > 0) && (
-            <>
-              {accountNfts.map(({ name, identifier, decimals, balance, assets, ticker }) => {
-                return (
-                  <DetailItem title={name} key={identifier}>
-                    <div className="d-flex align-items-center">
-                      <div className="me-1">
-                        <Denominate
-                          showLabel={false}
-                          value={balance ? balance : '0'}
-                          denomination={decimals}
-                          showLastNonZeroDecimal
-                        />
-                      </div>
-
-                      <NetworkLink
-                        to={urlBuilder.nftDetails(identifier)}
-                        className={`d-flex text-truncate ${assets?.svgUrl ? 'side-link' : ''}`}
-                      >
-                        <div className="d-flex align-items-center symbol text-truncate">
-                          {assets ? (
-                            <>
-                              {assets.svgUrl && (
-                                <img src={assets.svgUrl} alt={name} className="side-icon me-1" />
-                              )}
-                              <div className="text-truncate">
-                                {ticker ? ticker : name} ({identifier})
-                              </div>
-                            </>
-                          ) : (
-                            <div className="text-truncate">
-                              {name} ({identifier})
-                            </div>
-                          )}
-                        </div>
-                      </NetworkLink>
-                    </div>
-                  </DetailItem>
-                );
-              })}
-              {accountTokens.map(
-                ({ identifier, name, balance, decimals, assets, ticker, valueUsd }) => {
-                  return (
-                    <DetailItem title={name} key={identifier}>
-                      <div className="d-flex align-items-center">
-                        <div className="me-1">
-                          <Denominate
-                            showLabel={false}
-                            value={balance ? balance : '0'}
-                            denomination={decimals}
-                            showLastNonZeroDecimal
-                          />
-                        </div>
-                        {valueUsd && (
-                          <span className="text-secondary me-1">
-                            (${amountWithoutRounding(valueUsd.toString())})
-                          </span>
-                        )}
-
-                        <NetworkLink
-                          to={urlBuilder.tokenDetails(identifier)}
-                          className={`d-flex text-truncate ${assets?.svgUrl ? 'side-link' : ''}`}
-                        >
-                          <div className="d-flex align-items-center symbol text-truncate">
-                            {assets ? (
-                              <>
-                                {assets?.svgUrl && (
-                                  <img src={assets.svgUrl} alt={name} className="side-icon me-1" />
-                                )}
-                                <div className="text-truncate">{ticker ? ticker : name}</div>
-                              </>
-                            ) : (
-                              <div className="text-truncate">{identifier}</div>
-                            )}
+          {dataReady === true &&
+            (accountTokens.length > 0 || accountNfts.length > 0) && (
+              <>
+                {accountNfts.map(
+                  ({ name, identifier, decimals, balance, assets, ticker }) => {
+                    return (
+                      <DetailItem title={name} key={identifier}>
+                        <div className='d-flex align-items-center'>
+                          <div className='me-1'>
+                            <Denominate
+                              showLabel={false}
+                              value={balance ? balance : '0'}
+                              denomination={decimals}
+                              showLastNonZeroDecimal
+                            />
                           </div>
-                        </NetworkLink>
-                      </div>
-                    </DetailItem>
-                  );
-                }
-              )}
-            </>
-          )}
+
+                          <NetworkLink
+                            to={urlBuilder.nftDetails(identifier)}
+                            className={`d-flex text-truncate ${
+                              assets?.svgUrl ? 'side-link' : ''
+                            }`}
+                          >
+                            <div className='d-flex align-items-center symbol text-truncate'>
+                              {assets ? (
+                                <>
+                                  {assets.svgUrl && (
+                                    <img
+                                      src={assets.svgUrl}
+                                      alt={name}
+                                      className='side-icon me-1'
+                                    />
+                                  )}
+                                  <div className='text-truncate'>
+                                    {ticker ? ticker : name} ({identifier})
+                                  </div>
+                                </>
+                              ) : (
+                                <div className='text-truncate'>
+                                  {name} ({identifier})
+                                </div>
+                              )}
+                            </div>
+                          </NetworkLink>
+                        </div>
+                      </DetailItem>
+                    );
+                  }
+                )}
+                {accountTokens.map(
+                  ({
+                    identifier,
+                    name,
+                    balance,
+                    decimals,
+                    assets,
+                    ticker,
+                    valueUsd
+                  }) => {
+                    return (
+                      <DetailItem title={name} key={identifier}>
+                        <div className='d-flex align-items-center'>
+                          <div className='me-1'>
+                            <Denominate
+                              showLabel={false}
+                              value={balance ? balance : '0'}
+                              denomination={decimals}
+                              showLastNonZeroDecimal
+                            />
+                          </div>
+                          {valueUsd && (
+                            <span className='text-secondary me-1'>
+                              (${amountWithoutRounding(valueUsd.toString())})
+                            </span>
+                          )}
+
+                          <NetworkLink
+                            to={urlBuilder.tokenDetails(identifier)}
+                            className={`d-flex text-truncate ${
+                              assets?.svgUrl ? 'side-link' : ''
+                            }`}
+                          >
+                            <div className='d-flex align-items-center symbol text-truncate'>
+                              {assets ? (
+                                <>
+                                  {assets?.svgUrl && (
+                                    <img
+                                      src={assets.svgUrl}
+                                      alt={name}
+                                      className='side-icon me-1'
+                                    />
+                                  )}
+                                  <div className='text-truncate'>
+                                    {ticker ? ticker : name}
+                                  </div>
+                                </>
+                              ) : (
+                                <div className='text-truncate'>
+                                  {identifier}
+                                </div>
+                              )}
+                            </div>
+                          </NetworkLink>
+                        </div>
+                      </DetailItem>
+                    );
+                  }
+                )}
+              </>
+            )}
         </div>
       </div>
 
-      {dataReady === true && (accountTokens.length > 0 || accountNfts.length > 0) && (
-        <div className="card-footer d-flex justify-content-end border-0 pt-0">
-          <Pager
-            itemsPerPage={25}
-            page={String(size)}
-            total={Math.max(accountTokensCount, accountNftsCount)}
-            show={accountTokens.length > 0 || accountNfts.length > 0}
-          />
-        </div>
-      )}
+      {dataReady === true &&
+        (accountTokens.length > 0 || accountNfts.length > 0) && (
+          <div className='card-footer d-flex justify-content-end border-0 pt-0'>
+            <Pager
+              itemsPerPage={25}
+              page={String(size)}
+              total={Math.max(accountTokensCount, accountNftsCount)}
+              show={accountTokens.length > 0 || accountNfts.length > 0}
+            />
+          </div>
+        )}
     </div>
   );
 };

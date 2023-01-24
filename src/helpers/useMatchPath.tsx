@@ -1,5 +1,5 @@
-import { matchPath, useLocation } from "react-router-dom";
-import { useNetworkRoute } from "helpers";
+import { matchPath, useLocation } from 'react-router-dom';
+import { useNetworkRoute } from 'helpers';
 
 export const useMatchPath = () => {
   const networkRoute = useNetworkRoute();

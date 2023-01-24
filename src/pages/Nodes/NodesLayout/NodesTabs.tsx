@@ -1,19 +1,21 @@
-import { useIsMainnet, useActiveRoute } from 'helpers';
 import * as React from 'react';
-import { validatorsRoutes } from 'routes';
 import { NetworkLink } from 'components';
+import { useIsMainnet, useActiveRoute } from 'helpers';
+import { validatorsRoutes } from 'routes';
 
 export const NodesTabs = () => {
   const isMainnet = useIsMainnet();
   const activeRoute = useActiveRoute();
 
   return (
-    <div className="nodes-tabs card-header-item">
-      <div className="d-flex flex-wrap">
+    <div className='nodes-tabs card-header-item'>
+      <div className='d-flex flex-wrap'>
         {isMainnet && (
           <NetworkLink
             to={validatorsRoutes.identities}
-            className={`tab-link me-3 ${activeRoute(validatorsRoutes.identities) ? 'active' : ''}`}
+            className={`tab-link me-3 ${
+              activeRoute(validatorsRoutes.identities) ? 'active' : ''
+            }`}
           >
             <h6>Validators</h6>
           </NetworkLink>
@@ -48,7 +50,9 @@ export const NodesTabs = () => {
 
         <NetworkLink
           to={validatorsRoutes.queue}
-          className={`tab-link ms-0 ms-sm-3 ${activeRoute(validatorsRoutes.queue) ? 'active' : ''}`}
+          className={`tab-link ms-0 ms-sm-3 ${
+            activeRoute(validatorsRoutes.queue) ? 'active' : ''
+          }`}
         >
           <h6>Queue</h6>
         </NetworkLink>

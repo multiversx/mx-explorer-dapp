@@ -6,5 +6,5 @@ export const status = {
   refreshRate: 6000,
   epoch: 110,
   roundsPassed: 11896,
-  roundsPerEpoch: 14400,
+  roundsPerEpoch: 14400
 };

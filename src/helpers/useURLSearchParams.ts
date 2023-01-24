@@ -1,11 +1,14 @@
 import { useLocation } from 'react-router-dom';
-import { stringIsInteger } from 'helpers';
 import { txStatus } from 'components/TransactionStatus/txStatus';
+import { stringIsInteger } from 'helpers';
 
-const checkValue = (value: string) => (stringIsInteger(value) ? parseInt(value) : undefined);
+const checkValue = (value: string) =>
+  stringIsInteger(value) ? parseInt(value) : undefined;
 
 const checkStatus = (status: string) =>
-  Object.keys(txStatus).includes(status.toLowerCase()) ? status.toLowerCase() : undefined;
+  Object.keys(txStatus).includes(status.toLowerCase())
+    ? status.toLowerCase()
+    : undefined;
 
 export const useURLSearchParams = () => {
   const query = new URLSearchParams(useLocation().search);
@@ -15,15 +18,25 @@ export const useURLSearchParams = () => {
   const before = query.get('before') ? String(query.get('before')) : '';
   const after = query.get('after') ? String(query.get('after')) : '';
   const status = query.get('status') ? String(query.get('status')) : '';
-  const miniBlockHash = query.get('miniBlockHash') ? String(query.get('miniBlockHash')) : '';
+  const miniBlockHash = query.get('miniBlockHash')
+    ? String(query.get('miniBlockHash'))
+    : '';
   const search = query.get('search') ? String(query.get('search')) : '';
   const sender = query.get('sender') ? String(query.get('sender')) : '';
   const receiver = query.get('receiver') ? String(query.get('receiver')) : '';
 
-  let senderShard = query.get('senderShard') ? String(query.get('senderShard')) : '';
-  senderShard = query.get('sendershard') ? String(query.get('sendershard')) : senderShard;
-  let receiverShard = query.get('receiverShard') ? String(query.get('receiverShard')) : '';
-  receiverShard = query.get('receivershard') ? String(query.get('receivershard')) : receiverShard;
+  let senderShard = query.get('senderShard')
+    ? String(query.get('senderShard'))
+    : '';
+  senderShard = query.get('sendershard')
+    ? String(query.get('sendershard'))
+    : senderShard;
+  let receiverShard = query.get('receiverShard')
+    ? String(query.get('receiverShard'))
+    : '';
+  receiverShard = query.get('receivershard')
+    ? String(query.get('receivershard'))
+    : receiverShard;
 
   return {
     page: checkValue(page),
@@ -37,6 +50,6 @@ export const useURLSearchParams = () => {
     status: checkStatus(status),
     miniBlockHash,
     search,
-    method,
+    method
   };
 };

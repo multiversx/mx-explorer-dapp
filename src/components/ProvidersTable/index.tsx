@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { types, urlBuilder } from 'helpers';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
-import { Denominate, NetworkLink, PageState, Trim } from 'components';
-import { IdentityAvatar } from 'components/SharedIdentity/IdentityAvatar';
-import { CopyButton } from 'components/CopyButton';
-import { DelegationCap } from './DelegationCap';
-import { PercentageFilled, getPercentageFilled } from './PercentageFilled';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons/faBadgeCheck';
 import { faArrowDown } from '@fortawesome/pro-regular-svg-icons/faArrowDown';
 import { faArrowUp } from '@fortawesome/pro-regular-svg-icons/faArrowUp';
+import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
+import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons/faBadgeCheck';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Denominate, NetworkLink, PageState, Trim } from 'components';
+import { CopyButton } from 'components/CopyButton';
+import { IdentityAvatar } from 'components/SharedIdentity/IdentityAvatar';
+import { types, urlBuilder } from 'helpers';
+import { DelegationCap } from './DelegationCap';
+import { PercentageFilled, getPercentageFilled } from './PercentageFilled';
 
 type SortFieldType =
   | 'filled'
@@ -24,23 +24,28 @@ type SortFieldType =
 type SortDirectionType = 'asc' | 'desc' | undefined;
 type SortType = [SortFieldType, SortDirectionType];
 
-const CaretIcon = ({ sortDirection }: { sortDirection?: SortDirectionType }) => (
+const CaretIcon = ({
+  sortDirection
+}: {
+  sortDirection?: SortDirectionType;
+}) => (
   <FontAwesomeIcon
     icon={sortDirection === 'asc' ? faArrowUp : faArrowDown}
-    className="sort-icon ms-1"
+    className='sort-icon ms-1'
   />
 );
 
 export const ProvidersTable = ({
   providers,
-  showIdentity = true,
+  showIdentity = true
 }: {
   providers: types.ProviderType[];
   showIdentity?: boolean;
 }) => {
   const [originalProviders /*setOriginalProviders*/] =
     React.useState<types.ProviderType[]>(providers);
-  const [displayProviders, setDisplayProviders] = React.useState<types.ProviderType[]>(providers);
+  const [displayProviders, setDisplayProviders] =
+    React.useState<types.ProviderType[]>(providers);
   const [sort, setSort] = React.useState<SortType>([undefined, undefined]);
   const [sortField, sortDirection] = sort;
 
@@ -70,39 +75,55 @@ export const ProvidersTable = ({
       switch (true) {
         case sortField === 'name':
           const sortedNames = displayProviders.filter(
-            (provider) => provider.identityDetails && provider.identityDetails.name
+            (provider) =>
+              provider.identityDetails && provider.identityDetails.name
           );
           const sortedContracts = displayProviders.filter(
-            (provider) => !(provider.identityDetails && provider.identityDetails.name)
+            (provider) =>
+              !(provider.identityDetails && provider.identityDetails.name)
           );
           sortedNames.sort((a, b) => {
-            const aName = a.identityDetails && a.identityDetails.name ? a.identityDetails.name : '';
-            const bName = b.identityDetails && b.identityDetails.name ? b.identityDetails.name : '';
-            return aName.toLowerCase() > bName.toLowerCase() ? sortParams[0] : sortParams[1];
+            const aName =
+              a.identityDetails && a.identityDetails.name
+                ? a.identityDetails.name
+                : '';
+            const bName =
+              b.identityDetails && b.identityDetails.name
+                ? b.identityDetails.name
+                : '';
+            return aName.toLowerCase() > bName.toLowerCase()
+              ? sortParams[0]
+              : sortParams[1];
           });
-          sortedContracts.sort((a, b) => (a.provider > b.provider ? sortParams[0] : sortParams[1]));
+          sortedContracts.sort((a, b) =>
+            a.provider > b.provider ? sortParams[0] : sortParams[1]
+          );
           displayProviders = [...sortedNames, ...sortedContracts];
           break;
 
         case sortField === 'filled':
           displayProviders.sort((a, b) => {
-            let aFilled = getPercentageFilled(a.locked, a.delegationCap);
-            let bFilled = getPercentageFilled(b.locked, b.delegationCap);
-            return parseFloat(aFilled) > parseFloat(bFilled) ? sortParams[0] : sortParams[1];
+            const aFilled = getPercentageFilled(a.locked, a.delegationCap);
+            const bFilled = getPercentageFilled(b.locked, b.delegationCap);
+            return parseFloat(aFilled) > parseFloat(bFilled)
+              ? sortParams[0]
+              : sortParams[1];
           });
           break;
 
         case sortField === 'serviceFee':
           displayProviders.sort((a, b) => {
-            let aFee = a.serviceFee ? a.serviceFee : -1;
-            let bFee = b.serviceFee ? b.serviceFee : -1;
+            const aFee = a.serviceFee ? a.serviceFee : -1;
+            const bFee = b.serviceFee ? b.serviceFee : -1;
             return aFee > bFee ? sortParams[0] : sortParams[1];
           });
           break;
 
         default:
           displayProviders.sort((a: any, b: any) =>
-            parseFloat(a[sortField]) > parseFloat(b[sortField]) ? sortParams[0] : sortParams[1]
+            parseFloat(a[sortField]) > parseFloat(b[sortField])
+              ? sortParams[0]
+              : sortParams[1]
           );
           break;
       }
@@ -121,66 +142,72 @@ export const ProvidersTable = ({
   }, [sort]);
 
   const SortTh = ({ field, name }: { field: SortFieldType; name: string }) => (
-    <span className={`sort-col ${sortField === field ? 'active' : ''}`} onClick={onSort(field)}>
+    <span
+      className={`sort-col ${sortField === field ? 'active' : ''}`}
+      onClick={onSort(field)}
+    >
       {name}
       {sortField === field && <CaretIcon sortDirection={sortDirection} />}
     </span>
   );
 
   return (
-    <div className="providers-table table-wrapper">
-      <table className="table">
+    <div className='providers-table table-wrapper'>
+      <table className='table'>
         <thead>
           <tr>
             {showIdentity ? (
               <th>
-                <SortTh name="Name" field="name" />
+                <SortTh name='Name' field='name' />
               </th>
             ) : (
               <th>Address</th>
             )}
             <th>
-              <SortTh name="Stake" field="locked" />
+              <SortTh name='Stake' field='locked' />
             </th>
             <th>
-              <SortTh name="Nodes" field="numNodes" />
+              <SortTh name='Nodes' field='numNodes' />
             </th>
             <th>
-              <SortTh name="Computed APR" field="apr" />
+              <SortTh name='Computed APR' field='apr' />
             </th>
             <th>
-              <SortTh name="Service fee" field="serviceFee" />
+              <SortTh name='Service fee' field='serviceFee' />
             </th>
             <th>
-              <SortTh name="Delegation cap" field="delegationCap" />
+              <SortTh name='Delegation cap' field='delegationCap' />
             </th>
             <th>
-              <SortTh name="Filled" field="filled" />
+              <SortTh name='Filled' field='filled' />
             </th>
           </tr>
         </thead>
-        <tbody data-testid="providersTable">
+        <tbody data-testid='providersTable'>
           {displayProviders.map((provider, i) => (
             <tr key={provider.provider}>
               {showIdentity ? (
                 <td>
-                  <div className="d-flex align-items-center">
+                  <div className='d-flex align-items-center'>
                     <IdentityAvatar identity={provider.identityDetails || {}} />
 
                     <NetworkLink
                       to={urlBuilder.providerDetails(provider.provider)}
-                      className="trim-wrapper"
+                      className='trim-wrapper'
                       data-testid={`providerLink${i}`}
                     >
-                      {provider.identityDetails && provider.identityDetails.name ? (
-                        <span className="text-truncate">{provider.identityDetails.name}</span>
+                      {provider.identityDetails &&
+                      provider.identityDetails.name ? (
+                        <span className='text-truncate'>
+                          {provider.identityDetails.name}
+                        </span>
                       ) : (
                         <Trim text={provider.provider} />
                       )}
                     </NetworkLink>
                     {provider.featured && (
                       <OverlayTrigger
-                        placement="top"
+                        placement='top'
                         delay={{ show: 0, hide: 400 }}
                         overlay={(props: any) => (
                           <Tooltip {...props} show={props.show.toString()}>
@@ -190,8 +217,8 @@ export const ProvidersTable = ({
                       >
                         <FontAwesomeIcon
                           icon={faBadgeCheck}
-                          size="sm"
-                          className="ms-2 text-primary"
+                          size='sm'
+                          className='ms-2 text-primary'
                         />
                       </OverlayTrigger>
                     )}
@@ -199,10 +226,10 @@ export const ProvidersTable = ({
                 </td>
               ) : (
                 <td>
-                  <div className="d-flex align-items-center">
+                  <div className='d-flex align-items-center'>
                     <NetworkLink
                       to={urlBuilder.providerDetails(provider.provider)}
-                      className="trim-wrapper"
+                      className='trim-wrapper'
                       data-testid={`providerLink${i}`}
                     >
                       <Trim text={provider.provider} />
@@ -211,7 +238,13 @@ export const ProvidersTable = ({
                   </div>
                 </td>
               )}
-              <td>{provider.locked ? <Denominate value={provider.locked} /> : <>N/A</>}</td>
+              <td>
+                {provider.locked ? (
+                  <Denominate value={provider.locked} />
+                ) : (
+                  <>N/A</>
+                )}
+              </td>
               <td>
                 {provider.numNodes !== undefined ? (
                   <>
@@ -233,7 +266,9 @@ export const ProvidersTable = ({
               </td>
               <td>
                 {provider.serviceFee ? (
-                  <>{(provider.serviceFee * 100).toFixed(2).replace('.00', '')}%</>
+                  <>
+                    {(provider.serviceFee * 100).toFixed(2).replace('.00', '')}%
+                  </>
                 ) : (
                   <>N/A</>
                 )}
@@ -262,9 +297,9 @@ export const ProvidersTable = ({
               <td colSpan={7}>
                 <PageState
                   icon={faCode}
-                  title="No Providers"
-                  className="py-spacer my-auto"
-                  dataTestId="errorScreen"
+                  title='No Providers'
+                  className='py-spacer my-auto'
+                  dataTestId='errorScreen'
                 />
               </td>
             </tr>

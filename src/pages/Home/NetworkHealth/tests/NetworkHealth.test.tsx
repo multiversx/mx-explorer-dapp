@@ -3,7 +3,7 @@ import { beforeAll } from '__mocks__/test-utils';
 describe('NetworkHealth tests', () => {
   test('NetworkHealth data is displaying', async () => {
     const render = beforeAll({
-      route: `/`,
+      route: '/'
     });
     const blocks = await render.findByTestId('blocks');
     expect(blocks.innerHTML).toBe('6,379,407');

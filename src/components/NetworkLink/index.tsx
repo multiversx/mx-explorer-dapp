@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 
 interface NetworkLinkType {
@@ -17,7 +17,9 @@ export const NetworkLink = ({ to, children, ...rest }: NetworkLinkType) => {
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
 
   const prependLink =
-    activeNetworkId && activeNetworkId !== defaultNetworkId && !to.includes(activeNetworkId);
+    activeNetworkId &&
+    activeNetworkId !== defaultNetworkId &&
+    !to.includes(activeNetworkId);
 
   if (!to.startsWith('/')) {
     console.error('Link not prepeded by / : ', to);
@@ -26,7 +28,7 @@ export const NetworkLink = ({ to, children, ...rest }: NetworkLinkType) => {
 
   const props = {
     to: prependLink ? `/${activeNetworkId}${to}` : to,
-    ...rest,
+    ...rest
   };
 
   return <Link {...props}>{children}</Link>;

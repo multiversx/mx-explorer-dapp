@@ -1,17 +1,16 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
+import { useSelector } from 'react-redux';
 import { Denominate } from 'components';
+import { DetailsBlock } from 'pages/AccountDetails/AccountStaking/DetailsBlock';
+import { activeNetworkSelector } from 'redux/selectors';
 import { DelegationType, ProviderType } from 'types';
 
 import { ProviderDetails } from './ProviderDetails';
-import { DetailsBlock } from 'pages/AccountDetails/AccountStaking/DetailsBlock';
-
-import { useSelector } from 'react-redux';
-import { activeNetworkSelector } from 'redux/selectors';
 
 export const AccountDelegation = ({
   delegation,
-  provider,
+  provider
 }: {
   delegation: DelegationType;
   provider: ProviderType;
@@ -27,11 +26,14 @@ export const AccountDelegation = ({
       : [];
   const bNtotalUserUnStakedValue =
     undelegatedAmounts.length > 0
-      ? undelegatedAmounts.reduce((a, b) => new BigNumber(a).plus(b), new BigNumber('0'))
+      ? undelegatedAmounts.reduce(
+          (a, b) => new BigNumber(a).plus(b),
+          new BigNumber('0')
+        )
       : null;
 
   return (
-    <div className="delegation-row d-flex flex-wrap align-items-center justify-content-between p-3 px-md-4">
+    <div className='delegation-row d-flex flex-wrap align-items-center justify-content-between p-3 px-md-4'>
       <ProviderDetails provider={provider} />
 
       {userActiveStake !== '0' && (
@@ -54,7 +56,11 @@ export const AccountDelegation = ({
 
       <DetailsBlock>
         <strong>
-          {claimableRewards ? <Denominate value={claimableRewards} /> : <>0 {egldLabel}</>}
+          {claimableRewards ? (
+            <Denominate value={claimableRewards} />
+          ) : (
+            <>0 {egldLabel}</>
+          )}
         </strong>
         <small>Rewards</small>
       </DetailsBlock>

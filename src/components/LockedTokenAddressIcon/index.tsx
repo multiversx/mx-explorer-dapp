@@ -1,11 +1,10 @@
 import React from 'react';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { faLock } from '@fortawesome/pro-regular-svg-icons/faLock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { addressIsBech32 } from 'helpers';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { useSelector } from 'react-redux';
+import { addressIsBech32 } from 'helpers';
 import { tokenSelector } from 'redux/selectors';
 
 export const LockedTokenAddressIcon = ({ address }: { address: string }) => {
@@ -14,20 +13,22 @@ export const LockedTokenAddressIcon = ({ address }: { address: string }) => {
   const lockedAccounts = assets?.lockedAccounts;
 
   if (lockedAccounts) {
-    const validLockedAccounts = Object.keys(lockedAccounts).filter((account, i) => {
-      const validAddress = addressIsBech32(account)
-        ? account
-        : addressIsBech32(lockedAccounts[account])
-        ? lockedAccounts[account]
-        : '';
+    const validLockedAccounts = Object.keys(lockedAccounts).filter(
+      (account, i) => {
+        const validAddress = addressIsBech32(account)
+          ? account
+          : addressIsBech32(lockedAccounts[account])
+          ? lockedAccounts[account]
+          : '';
 
-      return validAddress === address;
-    });
+        return validAddress === address;
+      }
+    );
     const lockedAccountName = lockedAccounts?.[validLockedAccounts[0]];
 
     return lockedAccountName ? (
       <OverlayTrigger
-        placement="top"
+        placement='top'
         delay={{ show: 0, hide: 400 }}
         overlay={(props: any) => (
           <Tooltip {...props} show={props.show.toString()}>
@@ -35,7 +36,11 @@ export const LockedTokenAddressIcon = ({ address }: { address: string }) => {
           </Tooltip>
         )}
       >
-        <FontAwesomeIcon icon={faLock} size="xs" className="me-1 text-secondary" />
+        <FontAwesomeIcon
+          icon={faLock}
+          size='xs'
+          className='me-1 text-secondary'
+        />
       </OverlayTrigger>
     ) : null;
   }

@@ -1,14 +1,13 @@
+import * as React from 'react';
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
 
-import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Loader, useAdapter, PageState } from 'components';
-import { TransactionInfo } from './TransactionInfo';
-import { TransactionType } from 'types';
 import { txStatus } from 'components/TransactionStatus/txStatus';
-
-import { useSelector } from 'react-redux';
 import { interfaceSelector } from 'redux/selectors';
+import { TransactionType } from 'types';
+import { TransactionInfo } from './TransactionInfo';
 
 export const TransactionDetails = () => {
   const params: any = useParams();
@@ -16,12 +15,14 @@ export const TransactionDetails = () => {
   const ref = React.useRef(null);
 
   const {
-    refresh: { timestamp },
+    refresh: { timestamp }
   } = useSelector(interfaceSelector);
 
   const { getTransaction } = useAdapter();
 
-  const [transaction, setTransaction] = React.useState<TransactionType | undefined>();
+  const [transaction, setTransaction] = React.useState<
+    TransactionType | undefined
+  >();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchTransaction = () => {
@@ -58,21 +59,21 @@ export const TransactionDetails = () => {
       {dataReady === false && (
         <PageState
           icon={faExchangeAlt}
-          title="Unable to locate this transaction hash"
+          title='Unable to locate this transaction hash'
           description={
-            <div className="px-spacer">
-              <span className="text-break-all">{transactionId}</span>
+            <div className='px-spacer'>
+              <span className='text-break-all'>{transactionId}</span>
             </div>
           }
-          className="py-spacer my-auto"
-          data-testid="errorScreen"
+          className='py-spacer my-auto'
+          data-testid='errorScreen'
         />
       )}
       <div ref={ref}>
         {dataReady === true && transaction && (
-          <div className="container page-content">
-            <div className="row">
-              <div className="col-12">
+          <div className='container page-content'>
+            <div className='row'>
+              <div className='col-12'>
                 <TransactionInfo transaction={transaction} />
               </div>
             </div>

@@ -1,13 +1,13 @@
-import numeral from 'numeral';
 import BigNumber from 'bignumber.js';
-import { ChartAxisType } from './types';
+import numeral from 'numeral';
 import { denominate } from 'components/Denominate/denominate';
+import { ChartAxisType } from './types';
 
 export const formatYAxis = ({
   tick,
   currency,
   percentageMultiplier,
-  denomination,
+  denomination
 }: ChartAxisType) => {
   if (percentageMultiplier) {
     return `${numeral(Number(tick) * 100).format('0.0')}%`;
@@ -17,10 +17,12 @@ export const formatYAxis = ({
       denomination,
       decimals: 2,
       showLastNonZeroDecimal: false,
-      addCommas: false,
+      addCommas: false
     });
 
-    return `${numeral(denominatedValue).format('0a')}${currency ? ` ${currency}` : ''}`;
+    return `${numeral(denominatedValue).format('0a')}${
+      currency ? ` ${currency}` : ''
+    }`;
   } else if (currency) {
     if (currency === '$') {
       return numeral(tick).format('$0a');

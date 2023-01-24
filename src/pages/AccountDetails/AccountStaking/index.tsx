@@ -1,16 +1,15 @@
 import React from 'react';
 import { faChartPie } from '@fortawesome/pro-solid-svg-icons/faChartPie';
 
-import { AccountTabs } from '../AccountLayout/AccountTabs';
+import { useSelector } from 'react-redux';
+import { Loader, PageState } from 'components';
+import { accountStakingSelector } from 'redux/selectors';
 import { AccountDelegation } from './AccountDelegation';
 import { AccountLegacyDelegation } from './AccountLegacyDelegation';
 import { AccountStake } from './AccountStake';
 import { DonutChart } from './DonutChart';
 
-import { Loader, PageState } from 'components';
-
-import { useSelector } from 'react-redux';
-import { accountStakingSelector } from 'redux/selectors';
+import { AccountTabs } from '../AccountLayout/AccountTabs';
 
 export const AccountStaking = () => {
   const stakingDetails = useSelector(accountStakingSelector);
@@ -24,7 +23,7 @@ export const AccountStaking = () => {
     delegationLegacyIdentity,
     showDelegation,
     showDelegationLegacy,
-    showStake,
+    showStake
   } = stakingDetails;
 
   const displayDelegation = delegation
@@ -32,7 +31,8 @@ export const AccountStaking = () => {
         (delegation) =>
           delegation.userActiveStake !== '0' ||
           delegation.claimableRewards !== '0' ||
-          (delegation.userUndelegatedList && delegation.userUndelegatedList?.length > 0)
+          (delegation.userUndelegatedList &&
+            delegation.userUndelegatedList?.length > 0)
       )
     : [];
 
@@ -40,27 +40,33 @@ export const AccountStaking = () => {
   const isReady = providerDataReady && stakingDataReady;
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <div className="card-header-item d-flex justify-content-between align-items-center">
+    <div className='card'>
+      <div className='card-header'>
+        <div className='card-header-item d-flex justify-content-between align-items-center'>
           <AccountTabs />
         </div>
       </div>
-      <div className="account-staking card-body">
+      <div className='account-staking card-body'>
         {isReady ? (
-          <div className="row">
+          <div className='row'>
             {hasStaking ? (
               <>
-                <div className="col-lg-7 pe-lg-0 border-right">
+                <div className='col-lg-7 pe-lg-0 border-right'>
                   {displayDelegation.length > 0 && (
-                    <div className="account-delegation">
-                      <div className="px-spacer py-3 border-bottom bg-light">Staking List</div>
+                    <div className='account-delegation'>
+                      <div className='px-spacer py-3 border-bottom bg-light'>
+                        Staking List
+                      </div>
                       {displayDelegation.map((delegation, i) => {
                         const provider = delegationProviders?.find(
                           ({ provider }) => delegation.contract === provider
                         );
                         return provider ? (
-                          <AccountDelegation delegation={delegation} provider={provider} key={i} />
+                          <AccountDelegation
+                            delegation={delegation}
+                            provider={provider}
+                            key={i}
+                          />
                         ) : null;
                       })}
                     </div>
@@ -71,7 +77,9 @@ export const AccountStaking = () => {
                         displayDelegation.length > 0 ? 'border-top' : ''
                       }`}
                     >
-                      <div className="px-spacer py-3 border-bottom bg-light">Legacy Delegation</div>
+                      <div className='px-spacer py-3 border-bottom bg-light'>
+                        Legacy Delegation
+                      </div>
 
                       <AccountLegacyDelegation
                         delegationLegacy={delegationLegacy}
@@ -80,36 +88,40 @@ export const AccountStaking = () => {
                     </div>
                   )}
                   {stake && showStake && (
-                    <div className="account-legacy-delegation">
-                      <div className="px-spacer py-3 border-bottom bg-light">
-                        Stake <span className="text-secondary">(Validation)</span>
+                    <div className='account-legacy-delegation'>
+                      <div className='px-spacer py-3 border-bottom bg-light'>
+                        Stake{' '}
+                        <span className='text-secondary'>(Validation)</span>
                       </div>
                       <AccountStake stake={stake} />
                     </div>
                   )}
                 </div>
-                <div className="col-lg-5 ps-0 d-flex flex-column">
-                  <div className="px-spacer py-3 border-bottom bg-light staking-chart-title">
+                <div className='col-lg-5 ps-0 d-flex flex-column'>
+                  <div className='px-spacer py-3 border-bottom bg-light staking-chart-title'>
                     Staking Chart
                   </div>
-                  <div className="staking-chart-holder">
-                    <DonutChart stakingDetails={stakingDetails} providers={delegationProviders} />
+                  <div className='staking-chart-holder'>
+                    <DonutChart
+                      stakingDetails={stakingDetails}
+                      providers={delegationProviders}
+                    />
                   </div>
                 </div>
               </>
             ) : (
-              <div className="col-12">
+              <div className='col-12'>
                 <PageState
                   icon={faChartPie}
-                  title="No Staking"
-                  className="py-spacer my-auto"
-                  dataTestId="errorScreen"
+                  title='No Staking'
+                  className='py-spacer my-auto'
+                  dataTestId='errorScreen'
                 />
               </div>
             )}
           </div>
         ) : (
-          <Loader dataTestId="stakingLoader" />
+          <Loader dataTestId='stakingLoader' />
         )}
       </div>
     </div>

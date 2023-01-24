@@ -3,5 +3,7 @@ export const formatHerotag = (address?: string) => {
     return '';
   }
 
-  return address.endsWith('.elrond') ? `${address.replaceAll('.elrond', '')}` : address;
+  return address.endsWith('.elrond')
+    ? `${address.replaceAll('.elrond', '')}`
+    : address;
 };

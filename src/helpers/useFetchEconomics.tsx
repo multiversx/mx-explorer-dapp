@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { processEconomics } from 'helpers';
-import { useAdapter } from 'components';
-
 import { useDispatch } from 'react-redux';
+import { useAdapter } from 'components';
+import { processEconomics } from 'helpers';
+
 import { setEconomics } from 'redux/slices/economics';
 
 export const useFetchEconomics = () => {
@@ -16,7 +16,7 @@ export const useFetchEconomics = () => {
         const processedEconomics = processEconomics(economics.data);
         dispatch(
           setEconomics({
-            ...processedEconomics,
+            ...processedEconomics
           })
         );
       }

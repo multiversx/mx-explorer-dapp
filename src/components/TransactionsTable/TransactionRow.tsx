@@ -1,8 +1,6 @@
 import React from 'react';
 import { faArrowRight } from '@fortawesome/pro-regular-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { addressIsBech32, urlBuilder, getReceiverAssets } from 'helpers';
-import { UITransactionType, TransferTypeEnum } from 'types';
 import {
   ScAddressIcon,
   ShardSpan,
@@ -10,8 +8,10 @@ import {
   TimeAgo,
   Trim,
   LockedTokenAddressIcon,
-  AccountName,
+  AccountName
 } from 'components';
+import { addressIsBech32, urlBuilder, getReceiverAssets } from 'helpers';
+import { UITransactionType, TransferTypeEnum } from 'types';
 import { TransactionIcon } from './TransactionIcon';
 import { TransactionMethod } from './TransactionMethod';
 import { TransactionValue } from './TransactionValue';
@@ -27,7 +27,7 @@ export const TransactionRow = ({
   transaction,
   address,
   directionCol,
-  showLockedAccounts,
+  showLockedAccounts
 }: TransactionRowType) => {
   let receiver = transaction.receiver;
   if (transaction?.action?.arguments?.receiver) {
@@ -56,9 +56,11 @@ export const TransactionRow = ({
   }
 
   return (
-    <tr className={`animated-row trim-size-sm ${transaction.isNew ? 'new' : ''}`}>
+    <tr
+      className={`animated-row trim-size-sm ${transaction.isNew ? 'new' : ''}`}
+    >
       <td>
-        <div className="d-flex align-items-center">
+        <div className='d-flex align-items-center'>
           <TransactionIcon transaction={transaction} />
           <NetworkLink
             to={urlBuilder.transactionDetails(
@@ -66,8 +68,8 @@ export const TransactionRow = ({
                 ? `${transaction.originalTxHash}#${transaction.txHash}`
                 : transaction.txHash
             )}
-            data-testid="transactionLink"
-            className="trim-wrapper"
+            data-testid='transactionLink'
+            className='trim-wrapper'
           >
             <Trim text={transaction.txHash} />
           </NetworkLink>
@@ -77,37 +79,48 @@ export const TransactionRow = ({
         <TimeAgo value={transaction.timestamp} short tooltip />
       </td>
       <td>
-        <div className="d-flex align-items-center">
+        <div className='d-flex align-items-center'>
           <NetworkLink
             to={urlBuilder.senderShard(transaction.senderShard)}
-            data-testid="shardFromLink"
+            data-testid='shardFromLink'
           >
             <ShardSpan shard={transaction.senderShard} />
           </NetworkLink>
-          <FontAwesomeIcon icon={faArrowRight} className="text-secondary mx-2" />
+          <FontAwesomeIcon
+            icon={faArrowRight}
+            className='text-secondary mx-2'
+          />
           <NetworkLink
             to={urlBuilder.receiverShard(transaction.receiverShard)}
-            data-testid="shardToLink"
+            data-testid='shardToLink'
           >
             <ShardSpan shard={transaction.receiverShard} />
           </NetworkLink>
         </div>
       </td>
       <td>
-        <div className="d-flex align-items-center sender">
-          {showLockedAccounts && <LockedTokenAddressIcon address={transaction.sender} />}
+        <div className='d-flex align-items-center sender'>
+          {showLockedAccounts && (
+            <LockedTokenAddressIcon address={transaction.sender} />
+          )}
           <ScAddressIcon initiator={transaction.sender} />
           {directionOut ? (
-            <AccountName address={transaction.sender} assets={transaction.senderAssets} />
+            <AccountName
+              address={transaction.sender}
+              assets={transaction.senderAssets}
+            />
           ) : (
             <>
               {addressIsBech32(transaction.sender) ? (
                 <NetworkLink
                   to={urlBuilder.accountDetails(transaction.sender)}
-                  data-testid="senderLink"
-                  className="trim-wrapper"
+                  data-testid='senderLink'
+                  className='trim-wrapper'
                 >
-                  <AccountName address={transaction.sender} assets={transaction.senderAssets} />
+                  <AccountName
+                    address={transaction.sender}
+                    assets={transaction.senderAssets}
+                  />
                 </NetworkLink>
               ) : (
                 <ShardSpan shard={transaction.sender} />
@@ -118,7 +131,7 @@ export const TransactionRow = ({
       </td>
       {directionCol === true && (
         <td>
-          <div className="d-flex">
+          <div className='d-flex'>
             <span className={`direction-badge ${direction.toLowerCase()}`}>
               {direction.toUpperCase()}
             </span>
@@ -127,7 +140,7 @@ export const TransactionRow = ({
       )}
 
       <td>
-        <div className="d-flex align-items-center receiver">
+        <div className='d-flex align-items-center receiver'>
           {showLockedAccounts && <LockedTokenAddressIcon address={receiver} />}
           <ScAddressIcon initiator={receiver} />
           {directionIn ? (
@@ -135,18 +148,18 @@ export const TransactionRow = ({
           ) : (
             <NetworkLink
               to={urlBuilder.accountDetails(receiver)}
-              data-testid="receiverLink"
-              className="trim-wrapper"
+              data-testid='receiverLink'
+              className='trim-wrapper'
             >
               <AccountName address={receiver} assets={receiverAssets} />
             </NetworkLink>
           )}
         </div>
       </td>
-      <td className="transaction-function">
+      <td className='transaction-function'>
         <TransactionMethod transaction={transaction} />
       </td>
-      <td className="transaction-value">
+      <td className='transaction-value'>
         <TransactionValue transaction={transaction} />
       </td>
     </tr>

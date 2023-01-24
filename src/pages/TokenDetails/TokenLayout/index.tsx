@@ -1,13 +1,12 @@
 import * as React from 'react';
 
+import { useSelector, useDispatch } from 'react-redux';
 import { Loader, useAdapter } from 'components';
 import { useSize, useGetHash } from 'helpers';
-import { FailedTokenDetails } from './FailedTokenDetails';
-import { TokenDetailsCard } from './TokenDetailsCard';
-
-import { useSelector, useDispatch } from 'react-redux';
 import { activeNetworkSelector } from 'redux/selectors';
 import { setToken } from 'redux/slices';
+import { FailedTokenDetails } from './FailedTokenDetails';
+import { TokenDetailsCard } from './TokenDetailsCard';
 
 export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
@@ -59,7 +58,7 @@ export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
 
       <div ref={ref}>
         {!loading && !failed && (
-          <div className="container page-content">
+          <div className='container page-content'>
             <TokenDetailsCard />
             {children}
           </div>

@@ -5,7 +5,7 @@ import {
   DelegationType,
   DelegationLegacyType,
   ProviderType,
-  IdentityType,
+  IdentityType
 } from 'types';
 
 export interface AccountType {

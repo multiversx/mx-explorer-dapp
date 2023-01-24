@@ -5,7 +5,7 @@ export const PercentageBar = ({
   overallPercent,
   fillPercent,
   fillPercentLabel,
-  type,
+  type
 }: {
   overallPercent: number;
   fillPercent: number;
@@ -13,37 +13,43 @@ export const PercentageBar = ({
   type?: string;
 }) => (
   <div
-    className={`d-flex h-100 align-items-center percentage-bar ${type === 'small' ? 'small' : ''}`}
+    className={`d-flex h-100 align-items-center percentage-bar ${
+      type === 'small' ? 'small' : ''
+    }`}
   >
     {overallPercent + fillPercent > 0 ? (
-      <div className="progress progress-sm w-100 my-2">
+      <div className='progress progress-sm w-100 my-2'>
         <div
-          className="progress-bar bg-success"
-          data-testid="progresUpTimeBar"
+          className='progress-bar bg-success'
+          data-testid='progresUpTimeBar'
           id={overallPercent.toString()}
           style={{ width: overallPercent + '%' }}
         />
 
         <OverlayTrigger
-          placement="top"
+          placement='top'
           delay={{ show: 0, hide: 400 }}
           overlay={(props: any) => (
-            <Tooltip id={fillPercentLabel} {...props} show={props.show.toString()}>
+            <Tooltip
+              id={fillPercentLabel}
+              {...props}
+              show={props.show.toString()}
+            >
               {fillPercentLabel}
             </Tooltip>
           )}
         >
           <div
-            className="progress-bar bg-danger"
-            data-testid="progresDownTimeBar"
+            className='progress-bar bg-danger'
+            data-testid='progresDownTimeBar'
             id={fillPercentLabel + fillPercent.toString()}
             style={{ width: fillPercent + '%' }}
           />
         </OverlayTrigger>
       </div>
     ) : (
-      <div className="progress progress-sm w-100 my-2">
-        <div className="progress-bar bg-success" />
+      <div className='progress progress-sm w-100 my-2'>
+        <div className='progress-bar bg-success' />
       </div>
     )}
   </div>

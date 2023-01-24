@@ -62,13 +62,13 @@ export enum DateFilterEnum {
   // day = "day",
   week = 'week',
   month = 'month',
-  all = 'all',
+  all = 'all'
 }
 
 export enum ChartSizeEnum {
   sm = 'sm',
   md = 'md',
-  lg = 'lg',
+  lg = 'lg'
 }
 
 export interface ChartProps {

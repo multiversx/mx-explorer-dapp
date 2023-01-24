@@ -9,7 +9,7 @@ export const proveiders = [
     numNodes: 1,
     stake: '2500000000000000000000',
     topUp: '455693890552223336694',
-    locked: '2955693890552223336694',
+    locked: '2955693890552223336694'
   },
   {
     provider: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqlllllskf06ky',
@@ -22,7 +22,7 @@ export const proveiders = [
     numNodes: 2,
     stake: '5000000000000000000000',
     topUp: '70099818995199604556',
-    locked: '5070099818995199604556',
+    locked: '5070099818995199604556'
   },
   {
     provider: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp8lllls9jsunl',
@@ -33,7 +33,7 @@ export const proveiders = [
     numNodes: 1,
     stake: '2500000000000000000000',
     topUp: '2249000000000000000000',
-    locked: '4749000000000000000000',
+    locked: '4749000000000000000000'
   },
   {
     provider: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp0llllswfeycs',
@@ -46,7 +46,7 @@ export const proveiders = [
     numNodes: 1,
     stake: '2500000000000000000000',
     topUp: '1468132495350786868678',
-    locked: '3968132495350786868678',
+    locked: '3968132495350786868678'
   },
   {
     provider: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqphllllsndz99p',
@@ -57,7 +57,7 @@ export const proveiders = [
     numNodes: 0,
     stake: '0',
     topUp: '0',
-    locked: '0',
+    locked: '0'
   },
   {
     provider: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllllscktaww',
@@ -69,7 +69,7 @@ export const proveiders = [
     numNodes: 4,
     stake: '10000000000000000000000',
     topUp: '1499109525952243902148',
-    locked: '11499109525952243902148',
+    locked: '11499109525952243902148'
   },
   {
     provider: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqz8llllsh6u4jp',
@@ -80,7 +80,7 @@ export const proveiders = [
     numNodes: 0,
     stake: '0',
     topUp: '0',
-    locked: '0',
+    locked: '0'
   },
   {
     provider: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqz0llllsup4dew',
@@ -92,6 +92,6 @@ export const proveiders = [
     numNodes: 0,
     stake: '0',
     topUp: '0',
-    locked: '0',
-  },
+    locked: '0'
+  }
 ];

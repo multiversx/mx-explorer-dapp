@@ -2,7 +2,11 @@ import { UITransactionType, TxActionsEnum, TxActionCategoryEnum } from 'types';
 
 export const getTransactionMethod = (transaction: UITransactionType) => {
   let transactionAction = 'transaction';
-  if (transaction.action && transaction.action.name && transaction.action.category) {
+  if (
+    transaction.action &&
+    transaction.action.name &&
+    transaction.action.category
+  ) {
     if (
       transaction.action.category === TxActionCategoryEnum.esdtNft &&
       transaction.action.name === TxActionsEnum.transfer

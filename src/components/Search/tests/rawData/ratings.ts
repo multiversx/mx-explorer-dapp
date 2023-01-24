@@ -16,5 +16,5 @@ export const ratings = [
   { epoch: 14, shard: 0, rating: 60.657703 },
   { epoch: 15, shard: 0, rating: 61.667717 },
   { epoch: 16, shard: 0, rating: 62.26252 },
-  { epoch: 17, shard: 0, rating: 62.26252 },
+  { epoch: 17, shard: 0, rating: 62.26252 }
 ];

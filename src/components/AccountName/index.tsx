@@ -1,14 +1,14 @@
 import * as React from 'react';
+import { ReactComponent as IdentityLogo } from 'assets/img/logos/identity.svg';
+import { Trim, Overlay } from 'components';
 import { formatHerotag } from 'helpers';
 import { AssetType } from 'types';
-import { Trim, Overlay } from 'components';
-import { ReactComponent as IdentityLogo } from 'assets/img/logos/identity.svg';
 
 export const AccountName = ({
   address,
   assets,
   dataTestId,
-  color,
+  color
 }: {
   address: string;
   assets?: AssetType;
@@ -23,16 +23,20 @@ export const AccountName = ({
     return (
       <>
         {cleanName.endsWith('.elrond') && (
-          <Overlay title="Herotag" className="herotag" tooltipClassName="account-name">
-            <IdentityLogo className="herotag-logo" />
+          <Overlay
+            title='Herotag'
+            className='herotag'
+            tooltipClassName='account-name'
+          >
+            <IdentityLogo className='herotag-logo' />
           </Overlay>
         )}
-        <Overlay title={description} tooltipClassName="account-name">
+        <Overlay title={description} tooltipClassName='account-name'>
           <div
             className={`text-truncate ${color ? `text-${color}` : ''}`}
             {...(dataTestId
               ? {
-                  datatestid: dataTestId,
+                  datatestid: dataTestId
                 }
               : {})}
           >
@@ -49,7 +53,7 @@ export const AccountName = ({
       color={color}
       {...(dataTestId
         ? {
-            dataTestId,
+            dataTestId
           }
         : {})}
     />

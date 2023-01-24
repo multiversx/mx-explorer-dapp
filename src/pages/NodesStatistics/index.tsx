@@ -1,11 +1,18 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { useLocation } from 'react-router-dom';
-import { useAdapter, Loader, Pager, PageState, NodesTable, NodesFilters } from 'components';
+import {
+  useAdapter,
+  Loader,
+  Pager,
+  PageState,
+  NodesTable,
+  NodesFilters
+} from 'components';
 import { useGetFilters } from 'helpers';
-import { NodeType } from 'types';
-import { validatorsRoutes } from 'routes';
 import { NodesTabs } from 'pages/Nodes/NodesLayout/NodesTabs';
+import { validatorsRoutes } from 'routes';
+import { NodeType } from 'types';
 
 export const NodesStatistics = () => {
   const ref = React.useRef(null);
@@ -20,35 +27,41 @@ export const NodesStatistics = () => {
     const queryObject = {
       ...getQueryObject(),
       type: 'validator',
-      status: 'eligible',
+      status: 'eligible'
     };
     setDataReady(undefined);
 
-    Promise.all([getNodes({ ...queryObject, size }), getNodesCount(queryObject)]).then(
-      ([nodesData, count]) => {
-        setNodes(nodesData.data);
-        setTotalNodes(count.data);
+    Promise.all([
+      getNodes({ ...queryObject, size }),
+      getNodesCount(queryObject)
+    ]).then(([nodesData, count]) => {
+      setNodes(nodesData.data);
+      setTotalNodes(count.data);
 
-        if (ref.current !== null) {
-          setDataReady(nodesData.success && count.success);
-        }
+      if (ref.current !== null) {
+        setDataReady(nodesData.success && count.success);
       }
-    );
+    });
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchNodes, [search]);
 
   return (
-    <div className="card position-unset" ref={ref}>
-      <div className="card-header position-unset">
+    <div className='card position-unset' ref={ref}>
+      <div className='card-header position-unset'>
         <NodesTabs />
 
-        <div className="card-header-item d-flex justify-content-between align-items-center">
+        <div className='card-header-item d-flex justify-content-between align-items-center'>
           <NodesFilters baseRoute={validatorsRoutes.statistics} onlySearch />
           {dataReady === true && (
-            <div className="d-none d-sm-flex">
-              <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+            <div className='d-none d-sm-flex'>
+              <Pager
+                itemsPerPage={25}
+                page={String(size)}
+                total={totalNodes}
+                show
+              />
             </div>
           )}
         </div>
@@ -58,21 +71,26 @@ export const NodesStatistics = () => {
       {dataReady === false && (
         <PageState
           icon={faCogs}
-          title="Unable to load nodes"
-          className="py-spacer my-auto"
-          dataTestId="errorScreen"
+          title='Unable to load nodes'
+          className='py-spacer my-auto'
+          dataTestId='errorScreen'
         />
       )}
 
       {dataReady === true && (
         <>
-          <div className="card-body">
+          <div className='card-body'>
             <NodesTable statistics>
               <NodesTable.Body nodes={nodes} statistics />
             </NodesTable>
           </div>
-          <div className="card-footer d-flex justify-content-end">
-            <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+          <div className='card-footer d-flex justify-content-end'>
+            <Pager
+              itemsPerPage={25}
+              page={String(size)}
+              total={totalNodes}
+              show
+            />
           </div>
         </>
       )}

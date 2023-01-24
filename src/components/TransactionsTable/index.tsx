@@ -1,10 +1,9 @@
 import * as React from 'react';
+import { TransactionsTableType } from 'types';
+import { Header } from './Header';
 import { TransactionRow } from './TransactionRow';
 import { MethodList } from './TransactionsFilters';
 import { Pager } from '../Pager';
-import { TransactionsTableType } from 'types';
-
-import { Header } from './Header';
 
 export const TransactionsTable = ({
   transactions,
@@ -13,21 +12,23 @@ export const TransactionsTable = ({
   size,
   title = (
     <>
-      <h6 data-testid="title">Transactions</h6>
+      <h6 data-testid='title'>Transactions</h6>
     </>
   ),
   directionCol = false,
   showLockedAccounts = false,
-  inactiveFilters,
+  inactiveFilters
 }: TransactionsTableType) => {
   return (
-    <div className={`transactions-table ${directionCol ? 'has-direction' : ''}`}>
-      <div className="card">
-        <div className="card-header">
-          <div className="card-header-item d-flex justify-content-between align-items-center">
+    <div
+      className={`transactions-table ${directionCol ? 'has-direction' : ''}`}
+    >
+      <div className='card'>
+        <div className='card-header'>
+          <div className='card-header-item d-flex justify-content-between align-items-center'>
             <div>{title}</div>
 
-            <div className="d-none d-sm-flex">
+            <div className='d-none d-sm-flex'>
               <Pager
                 itemsPerPage={25}
                 page={String(size)}
@@ -44,9 +45,12 @@ export const TransactionsTable = ({
           <MethodList />
         </div>
 
-        <div className="card-body">
-          <div className="table-wrapper animated-list">
-            <table className="table trim-size-sm" data-testid="transactionsTable">
+        <div className='card-body'>
+          <div className='table-wrapper animated-list'>
+            <table
+              className='table trim-size-sm'
+              data-testid='transactionsTable'
+            >
               <Header
                 transactions={transactions}
                 totalTransactions={totalTransactions}
@@ -70,12 +74,14 @@ export const TransactionsTable = ({
           </div>
         </div>
 
-        <div className="card-footer d-flex justify-content-end">
+        <div className='card-footer d-flex justify-content-end'>
           <Pager
             itemsPerPage={25}
             page={String(size)}
             total={
-              totalTransactions !== '...' ? Math.min(totalTransactions, 10000) : totalTransactions
+              totalTransactions !== '...'
+                ? Math.min(totalTransactions, 10000)
+                : totalTransactions
             }
             show={transactions.length > 0}
           />

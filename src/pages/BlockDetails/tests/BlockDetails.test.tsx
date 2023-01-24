@@ -7,10 +7,12 @@ describe('Block Details Page', () => {
     const render = beforeAll({
       route: `/blocks/${doc.hash}`,
       networkRequests: {
-        validators: () => Promise.resolve({ data: validatorsdoc }),
-      },
+        validators: () => Promise.resolve({ data: validatorsdoc })
+      }
     });
-    expect(document.title).toEqual('Block Details • MultiversX (previously Elrond) Explorer');
+    expect(document.title).toEqual(
+      'Block Details • MultiversX (previously Elrond) Explorer'
+    );
     await wait(async () => {
       expect(render.queryByTestId('title')!.innerHTML).toBe('Block Details');
     });
@@ -18,7 +20,7 @@ describe('Block Details Page', () => {
   });
   test('Block Details page loading state', async () => {
     const render = beforeAll({
-      route: `/blocks/${doc.hash}`,
+      route: `/blocks/${doc.hash}`
     });
 
     const loader = await render.findByTestId('loader');
@@ -28,11 +30,13 @@ describe('Block Details Page', () => {
     const render = beforeAll({
       route: `/blocks/${doc.hash}`,
       networkRequests: {
-        block: () => Promise.resolve(new Error('error')),
-      },
+        block: () => Promise.resolve(new Error('error'))
+      }
     });
 
-    const failedState = await render.findByText('Unable to locate this block hash');
+    const failedState = await render.findByText(
+      'Unable to locate this block hash'
+    );
     expect(failedState.innerHTML).toBeDefined();
   });
 });

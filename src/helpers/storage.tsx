@@ -6,7 +6,7 @@ export const storage = {
   saveToLocal: ({
     key,
     data,
-    expirationDate,
+    expirationDate
   }: {
     key: KeyType;
     data: string;
@@ -16,7 +16,7 @@ export const storage = {
       key,
       JSON.stringify({
         expirationDate,
-        data,
+        data
       })
     );
   },
@@ -28,7 +28,10 @@ export const storage = {
     }
 
     const item = JSON.parse(lsEntry);
-    if (!item.hasOwnProperty('expirationDate') || !item.hasOwnProperty('data')) {
+    if (
+      !item.hasOwnProperty('expirationDate') ||
+      !item.hasOwnProperty('data')
+    ) {
       localStorage.removeItem(key);
       return null;
     }
@@ -42,5 +45,5 @@ export const storage = {
   },
   removeFromLocal: (key: string) => {
     localStorage.removeItem(key);
-  },
+  }
 };

@@ -1,13 +1,26 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { Loader, useAdapter, NetworkLink, Trim, Pager, NftBadge, TimeAgo } from 'components';
-import { NoCollections } from './NoCollections';
-import { FailedCollections } from './FailedCollections';
-import { urlBuilder, useGetFilters, useURLSearchParams, useActiveRoute } from 'helpers';
-import { Filters } from './Filters';
+import {
+  Loader,
+  useAdapter,
+  NetworkLink,
+  Trim,
+  Pager,
+  NftBadge,
+  TimeAgo
+} from 'components';
+import {
+  urlBuilder,
+  useGetFilters,
+  useURLSearchParams,
+  useActiveRoute
+} from 'helpers';
 import { collectionRoutes } from 'routes';
 import { NftEnumType, CollectionType } from 'types';
+import { FailedCollections } from './FailedCollections';
+import { Filters } from './Filters';
+import { NoCollections } from './NoCollections';
 
 export const Collections = () => {
   const ref = React.useRef(null);
@@ -19,7 +32,9 @@ export const Collections = () => {
 
   const [collections, setCollections] = React.useState<CollectionType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [totalCollections, setTotalCollections] = React.useState<number | '...'>('...');
+  const [totalCollections, setTotalCollections] = React.useState<
+    number | '...'
+  >('...');
 
   const getCollectionType = () => {
     if (activeRoute(collectionRoutes.collectionsNft)) {
@@ -38,7 +53,7 @@ export const Collections = () => {
 
     Promise.all([
       getCollections({ ...queryObject, size, type }),
-      getCollectionsCount({ ...queryObject, type }),
+      getCollectionsCount({ ...queryObject, type })
     ]).then(([collectionsData, count]) => {
       if (ref.current !== null) {
         if (collectionsData.success) {
@@ -60,19 +75,21 @@ export const Collections = () => {
 
       <div ref={ref}>
         {dataReady === true && (
-          <div className="container page-content">
-            <div className="row">
-              <div className="col-12">
-                <div className="card">
-                  <div className="card-header">
-                    <div className="card-header-item d-flex justify-content-between align-items-center">
-                      <div className="filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row">
-                        <ul className="list-inline m-0">
-                          <li className="list-inline-item my-1 my-md-0">
+          <div className='container page-content'>
+            <div className='row'>
+              <div className='col-12'>
+                <div className='card'>
+                  <div className='card-header'>
+                    <div className='card-header-item d-flex justify-content-between align-items-center'>
+                      <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row'>
+                        <ul className='list-inline m-0'>
+                          <li className='list-inline-item my-1 my-md-0'>
                             <NetworkLink
                               to={collectionRoutes.collections}
                               className={`btn btn-sm btn-outline-light btn-pill me-2 ${
-                                activeRoute(collectionRoutes.collections) ? 'active' : ''
+                                activeRoute(collectionRoutes.collections)
+                                  ? 'active'
+                                  : ''
                               }`}
                             >
                               All
@@ -80,7 +97,9 @@ export const Collections = () => {
                             <NetworkLink
                               to={collectionRoutes.collectionsNft}
                               className={`btn btn-sm btn-outline-light btn-pill me-2 ${
-                                activeRoute(collectionRoutes.collectionsNft) ? 'active' : ''
+                                activeRoute(collectionRoutes.collectionsNft)
+                                  ? 'active'
+                                  : ''
                               }`}
                             >
                               NFT
@@ -88,7 +107,9 @@ export const Collections = () => {
                             <NetworkLink
                               to={collectionRoutes.collectionsSft}
                               className={`btn btn-sm btn-outline-light btn-pill me-2 ${
-                                activeRoute(collectionRoutes.collectionsSft) ? 'active' : ''
+                                activeRoute(collectionRoutes.collectionsSft)
+                                  ? 'active'
+                                  : ''
                               }`}
                             >
                               SFT
@@ -97,7 +118,7 @@ export const Collections = () => {
                         </ul>
                         <Filters />
                       </div>
-                      <div className="d-none d-sm-flex">
+                      <div className='d-none d-sm-flex'>
                         {collections && collections.length > 0 && (
                           <Pager
                             page={String(page)}
@@ -116,9 +137,9 @@ export const Collections = () => {
 
                   {collections && collections.length > 0 ? (
                     <>
-                      <div className="card-body border-0 p-0">
-                        <div className="table-wrapper">
-                          <table className="table">
+                      <div className='card-body border-0 p-0'>
+                        <div className='table-wrapper'>
+                          <table className='table'>
                             <thead>
                               <tr>
                                 <th>Collection</th>
@@ -127,38 +148,51 @@ export const Collections = () => {
                                 <th>Owner</th>
                               </tr>
                             </thead>
-                            <tbody data-testid="collectionsTable">
+                            <tbody data-testid='collectionsTable'>
                               {collections.map((collection, i) => (
-                                <tr key={`${collection.name}-${collection.collection}`}>
+                                <tr
+                                  key={`${collection.name}-${collection.collection}`}
+                                >
                                   <td>
-                                    <div className="d-flex align-items-center">
+                                    <div className='d-flex align-items-center'>
                                       <NetworkLink
-                                        to={urlBuilder.collectionDetails(collection.collection)}
+                                        to={urlBuilder.collectionDetails(
+                                          collection.collection
+                                        )}
                                         data-testid={`collectionsLink${i}`}
                                       >
-                                        <div className="d-flex align-items-center">
-                                          {collection.assets && collection.assets.svgUrl && (
-                                            <img
-                                              src={collection.assets.svgUrl}
-                                              alt={collection.name}
-                                              className="side-icon me-1"
-                                            />
-                                          )}
+                                        <div className='d-flex align-items-center'>
+                                          {collection.assets &&
+                                            collection.assets.svgUrl && (
+                                              <img
+                                                src={collection.assets.svgUrl}
+                                                alt={collection.name}
+                                                className='side-icon me-1'
+                                              />
+                                            )}
                                           <div>{collection.collection}</div>
                                         </div>
                                       </NetworkLink>
-                                      <NftBadge type={collection.type} className="ms-2" />
+                                      <NftBadge
+                                        type={collection.type}
+                                        className='ms-2'
+                                      />
                                     </div>
                                   </td>
                                   <td>{collection.name}</td>
                                   <td>
-                                    <TimeAgo value={collection.timestamp} tooltip />
+                                    <TimeAgo
+                                      value={collection.timestamp}
+                                      tooltip
+                                    />
                                   </td>
                                   <td>
-                                    <div className="d-flex trim-size-xl">
+                                    <div className='d-flex trim-size-xl'>
                                       <NetworkLink
-                                        to={urlBuilder.accountDetails(collection.owner)}
-                                        className="trim-wrapper"
+                                        to={urlBuilder.accountDetails(
+                                          collection.owner
+                                        )}
+                                        className='trim-wrapper'
                                       >
                                         <Trim
                                           text={collection.owner}
@@ -174,7 +208,7 @@ export const Collections = () => {
                         </div>
                       </div>
 
-                      <div className="card-footer d-flex justify-content-end">
+                      <div className='card-footer d-flex justify-content-end'>
                         <Pager
                           page={String(page)}
                           total={

@@ -6,7 +6,11 @@ interface IdentityAvatarType {
   identity?: string;
 }
 
-export const IdentityAvatar = ({ identity }: { identity: IdentityAvatarType }) => {
+export const IdentityAvatar = ({
+  identity
+}: {
+  identity: IdentityAvatarType;
+}) => {
   return (
     <>
       {identity.avatar ? (
@@ -15,12 +19,12 @@ export const IdentityAvatar = ({ identity }: { identity: IdentityAvatarType }) =
             !identity.avatar ? 'border-0' : ''
           }`}
           src={identity.avatar}
-          alt="img"
-          height="42"
+          alt='img'
+          height='42'
         />
       ) : (
         <DefaultAvatar
-          className="identity-avatar border-0 flex-shrink-0 me-2"
+          className='identity-avatar border-0 flex-shrink-0 me-2'
           style={{ width: '42px', height: '42px' }}
         />
       )}

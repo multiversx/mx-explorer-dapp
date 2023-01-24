@@ -17,38 +17,38 @@ export const StatusFilter = () => {
   const onlineLink = (onlineValue: string) => {
     const nextUrlParams = new URLSearchParams({
       ...rest,
-      ...(onlineValue ? { online: onlineValue } : {}),
+      ...(onlineValue ? { online: onlineValue } : {})
     }).toString();
     return `${networkPathname}?${nextUrlParams}`;
   };
 
   return (
     <OverlayTrigger
-      trigger="click"
-      key="popover"
-      placement="bottom"
+      trigger='click'
+      key='popover'
+      placement='bottom'
       rootClose
       overlay={
-        <Popover id="popover-positioned-bottom" className="border">
+        <Popover id='popover-positioned-bottom' className='border'>
           <Popover.Content>
             <NetworkLink
               className={`dropdown-item ${online === 'true' ? 'active' : ''}`}
               to={onlineLink('true')}
-              data-testid="filterByStatusOnline"
+              data-testid='filterByStatusOnline'
             >
               Online
             </NetworkLink>
             <NetworkLink
               className={`dropdown-item ${online === 'false' ? 'active' : ''}`}
               to={onlineLink('false')}
-              data-testid="filterByStatusOffline"
+              data-testid='filterByStatusOffline'
             >
               Offline
             </NetworkLink>
             <NetworkLink
               className={`dropdown-item ${online === undefined ? '' : ''}`}
               to={onlineLink('')}
-              data-testid="filterByStatusAll"
+              data-testid='filterByStatusAll'
             >
               Show all
             </NetworkLink>
@@ -57,8 +57,8 @@ export const StatusFilter = () => {
       }
     >
       <a
-        className="d-inline-block side-action"
-        data-testid="shardFilterButton"
+        className='d-inline-block side-action'
+        data-testid='shardFilterButton'
         href={`${networkPathname}/${search}`}
         onClick={(e) => {
           e.preventDefault();

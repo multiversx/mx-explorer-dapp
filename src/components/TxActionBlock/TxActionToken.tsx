@@ -1,13 +1,13 @@
 import React from 'react';
 import { Denominate, NetworkLink } from 'components';
+import { DECIMALS } from 'config';
 import { urlBuilder, formatUSD } from 'helpers';
 import { TokenArgumentType } from 'types';
-import { DECIMALS } from 'config';
 
 export const TxActionToken = ({
   token,
   noValue,
-  showLastNonZeroDecimal,
+  showLastNonZeroDecimal
 }: {
   token: TokenArgumentType;
   noValue?: boolean;
@@ -17,11 +17,11 @@ export const TxActionToken = ({
   const denomination = token.decimals !== undefined ? token.decimals : DECIMALS;
 
   return (
-    <div ref={ref} className="token-action-block">
+    <div ref={ref} className='token-action-block'>
       {token && token.token && (
         <>
           {!noValue && token.value && (
-            <div className="me-1 text-truncate">
+            <div className='me-1 text-truncate'>
               <Denominate
                 value={token.value}
                 showLabel={false}
@@ -34,15 +34,19 @@ export const TxActionToken = ({
             to={urlBuilder.tokenDetails(token.token)}
             className={`d-flex ${token.svgUrl ? 'side-link' : 'text-truncate'}`}
           >
-            <div className="d-flex align-items-center symbol text-truncate">
+            <div className='d-flex align-items-center symbol text-truncate'>
               {token.svgUrl && (
-                <img src={token.svgUrl} alt={token.name} className="side-icon me-1" />
+                <img
+                  src={token.svgUrl}
+                  alt={token.name}
+                  className='side-icon me-1'
+                />
               )}
-              <span className="text-truncate">{token.ticker}</span>
+              <span className='text-truncate'>{token.ticker}</span>
             </div>
           </NetworkLink>
           {token?.valueUSD && (
-            <div className="me-1 text-truncate text-secondary ms-1">
+            <div className='me-1 text-truncate text-secondary ms-1'>
               ({formatUSD({ amount: token.valueUSD, digits: 2 })})
             </div>
           )}

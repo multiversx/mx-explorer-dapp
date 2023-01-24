@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { getCache, putCache } from './s3Cache';
 import { confirmNodeIdentity } from './confirmNodeIdentity';
+import { getCache, putCache } from './s3Cache';
 
 export const nodeIssues = (node: any, versionNumber: any) => {
   const nodeIssues = [];
@@ -13,7 +13,10 @@ export const nodeIssues = (node: any, versionNumber: any) => {
     nodeIssues.push('outdatedVersion'); // Outdated client version
   }
 
-  if (node.receivedShardID !== node.computedShardID && node.peerType === 'eligible') {
+  if (
+    node.receivedShardID !== node.computedShardID &&
+    node.peerType === 'eligible'
+  ) {
     nodeIssues.push('shuffledOut'); // Shuffled out restart failed
   }
 
@@ -39,23 +42,23 @@ export const getNodes = async (args: any & { proxyUrl: () => string }) => {
   const [
     {
       data: {
-        data: { heartbeats },
-      },
+        data: { heartbeats }
+      }
     },
     {
       data: {
-        data: { statistics },
-      },
+        data: { statistics }
+      }
     },
     {
       data: {
-        data: { config },
-      },
-    },
+        data: { config }
+      }
+    }
   ] = await Promise.all([
     axios.get(`${args.proxyUrl()}/node/heartbeatstatus`), // TODO: check
     axios.get(`${args.proxyUrl()}/validator/statistics`),
-    axios.get(`${args.proxyUrl()}/network/config`),
+    axios.get(`${args.proxyUrl()}/network/config`)
   ]);
 
   const publicKeys = Object.keys(statistics);
@@ -67,12 +70,14 @@ export const getNodes = async (args: any & { proxyUrl: () => string }) => {
   });
 
   // tslint:disable-next-line
-  for (let i in publicKeys) {
+  for (const i in publicKeys) {
     // eslint-disable-line
-    let publicKey = publicKeys[i];
+    const publicKey = publicKeys[i];
 
     let node: any = {};
-    const found = (heartbeats as any).find((element: any) => element.publicKey === publicKey);
+    const found = (heartbeats as any).find(
+      (element: any) => element.publicKey === publicKey
+    );
 
     if (statistics[publicKey]) {
       node = statistics[publicKey];
@@ -97,7 +102,7 @@ export const getNodes = async (args: any & { proxyUrl: () => string }) => {
       peerType,
       isActive,
       validatorStatus,
-      fullHistory,
+      fullHistory
     } = node;
 
     if (shard === undefined) {
@@ -133,7 +138,7 @@ export const getNodes = async (args: any & { proxyUrl: () => string }) => {
       nodeType,
       peerType,
       status: isActive ? 'online' : 'offline',
-      fullHistory,
+      fullHistory
     };
 
     if (resultNode.totalUpTimeSec === 0 && node.totalDownTimeSec === 0) {
@@ -148,14 +153,20 @@ export const getNodes = async (args: any & { proxyUrl: () => string }) => {
     }
 
     if (resultNode.identity) {
-      const confirmed = await confirmNodeIdentity(resultNode.identity, publicKey);
+      const confirmed = await confirmNodeIdentity(
+        resultNode.identity,
+        publicKey
+      );
 
       if (!confirmed) {
         resultNode.identity = undefined;
       }
     }
 
-    resultNode.issues = nodeIssues(resultNode, (config as any).erd_latest_tag_software_version);
+    resultNode.issues = nodeIssues(
+      resultNode,
+      (config as any).erd_latest_tag_software_version
+    );
 
     data.push(resultNode);
   }

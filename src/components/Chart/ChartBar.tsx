@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer } from 'recharts';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Cell,
+  ResponsiveContainer
+} from 'recharts';
 
-import { ChartProps } from './helpers/types';
 import { CustomTooltip } from './helpers/CustomTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { getChartMergedData } from './helpers/getChartMergedData';
 import { StartEndTick } from './helpers/StartEndTick';
+import { ChartProps } from './helpers/types';
 
 export const ChartBar = ({
   config,
@@ -19,7 +27,7 @@ export const ChartBar = ({
   denomination,
   size,
   tooltip,
-  hasOnlyStartEndTick,
+  hasOnlyStartEndTick
 }: ChartProps) => {
   const [focusBar, setFocusBar] = useState<any>(null);
 
@@ -34,7 +42,7 @@ export const ChartBar = ({
         hasOnlyStartEndTick ? 'has-only-start-end-tick' : ''
       }`}
     >
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width='100%' height='100%'>
         <BarChart
           data={chartData}
           onMouseMove={(state) => {
@@ -46,13 +54,13 @@ export const ChartBar = ({
           }}
         >
           <defs>
-            <linearGradient id="transparent" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="100%" stopColor="transparent" stopOpacity={0} />
+            <linearGradient id='transparent' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='100%' stopColor='transparent' stopOpacity={0} />
             </linearGradient>
-            <linearGradient id="defaultGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={primaryColor} stopOpacity={0.25} />
-              <stop offset="35%" stopColor={primaryColor} stopOpacity={0.4} />
-              <stop offset="95%" stopColor={primaryColor} stopOpacity={0} />
+            <linearGradient id='defaultGradient' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='5%' stopColor={primaryColor} stopOpacity={0.25} />
+              <stop offset='35%' stopColor={primaryColor} stopOpacity={0.4} />
+              <stop offset='95%' stopColor={primaryColor} stopOpacity={0} />
             </linearGradient>
             {config.map((chartConfig) => {
               if (chartConfig.gradient) {
@@ -60,13 +68,21 @@ export const ChartBar = ({
                   <linearGradient
                     key={chartConfig.gradient}
                     id={chartConfig.gradient}
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
+                    x1='0'
+                    y1='0'
+                    x2='0'
+                    y2='1'
                   >
-                    <stop offset="5%" stopColor={`#${chartConfig.gradient}`} stopOpacity={0.25} />
-                    <stop offset="95%" stopColor={`#${chartConfig.gradient}`} stopOpacity={0} />
+                    <stop
+                      offset='5%'
+                      stopColor={`#${chartConfig.gradient}`}
+                      stopOpacity={0.25}
+                    />
+                    <stop
+                      offset='95%'
+                      stopColor={`#${chartConfig.gradient}`}
+                      stopOpacity={0}
+                    />
                   </linearGradient>
                 );
               }
@@ -77,7 +93,7 @@ export const ChartBar = ({
           <XAxis
             minTickGap={40}
             tickCount={10}
-            dataKey="timestamp"
+            dataKey='timestamp'
             tickLine={false}
             tickFormatter={(tick) =>
               moment
@@ -86,15 +102,22 @@ export const ChartBar = ({
                 .format(dateFormat ?? 'D MMM YYYY')
             }
             strokeWidth={0.3}
-            {...(hasOnlyStartEndTick ? { tick: <StartEndTick dateformat={dateFormat} /> } : {})}
+            {...(hasOnlyStartEndTick
+              ? { tick: <StartEndTick dateformat={dateFormat} /> }
+              : {})}
             {...(hasOnlyStartEndTick ? { interval: 0 } : {})}
             {...(chartData.length > 3 ? { scale: 'time' } : {})}
           />
 
           <YAxis
-            orientation="right"
+            orientation='right'
             tickFormatter={(tick) =>
-              formatYAxis({ tick, currency, percentageMultiplier, denomination })
+              formatYAxis({
+                tick,
+                currency,
+                percentageMultiplier,
+                denomination
+              })
             }
             axisLine={false}
             tickLine={false}

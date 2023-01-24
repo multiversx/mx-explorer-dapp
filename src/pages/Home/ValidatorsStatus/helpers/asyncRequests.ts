@@ -12,31 +12,39 @@ const schema = object({
   country: string().defined(),
   latitude: number().defined(),
   longitude: number().defined(),
-  validators: number().defined(),
+  validators: number().defined()
 }).defined();
 
 export type MarkerType = InferType<typeof schema>;
 
-export async function getMarkers({ timeout, apiAddress }: GetMarkersType): Promise<{
+export async function getMarkers({
+  timeout,
+  apiAddress
+}: GetMarkersType): Promise<{
   data: MarkerType[];
   success: boolean;
 }> {
   try {
     // const { data } = await axios.get(`${apiAddress}/markers`, { timeout });
-    const { data } = await axios.get(`***REMOVED***`, { timeout });
+    const { data } = await axios.get(
+      '***REMOVED***',
+      { timeout }
+    );
 
-    schema.validate((data as any)[Object.keys(data)[0]], { strict: true }).catch(({ errors }) => {
-      console.error('Markers format errors: ', errors);
-    });
+    schema
+      .validate((data as any)[Object.keys(data)[0]], { strict: true })
+      .catch(({ errors }) => {
+        console.error('Markers format errors: ', errors);
+      });
 
     return {
       data,
-      success: true,
+      success: true
     };
   } catch {
     return {
       data: [],
-      success: false,
+      success: false
     };
   }
 }

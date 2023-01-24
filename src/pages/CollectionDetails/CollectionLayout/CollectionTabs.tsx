@@ -1,19 +1,17 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { NetworkLink } from 'components';
 import { urlBuilder, useActiveRoute, nftText } from 'helpers';
-import { NftEnumType } from 'types';
-
-import { collectionRoutes } from 'routes';
-
-import { useSelector } from 'react-redux';
 import { collectionSelector } from 'redux/selectors';
+import { collectionRoutes } from 'routes';
+import { NftEnumType } from 'types';
 
 export const CollectionTabs = () => {
   const activeRoute = useActiveRoute();
   const { collection, roles, type } = useSelector(collectionSelector);
 
   return (
-    <div className="account-tabs d-flex flex-row">
+    <div className='account-tabs d-flex flex-row'>
       {type && type !== NftEnumType.MetaESDT && (
         <NetworkLink
           to={urlBuilder.collectionDetails(collection)}
@@ -29,7 +27,8 @@ export const CollectionTabs = () => {
         <NetworkLink
           to={urlBuilder.collectionDetailsRoles(collection)}
           className={`tab-link me-spacer ${
-            activeRoute(collectionRoutes.collectionDetailsRoles) || type === NftEnumType.MetaESDT
+            activeRoute(collectionRoutes.collectionDetailsRoles) ||
+            type === NftEnumType.MetaESDT
               ? 'active'
               : ''
           }`}

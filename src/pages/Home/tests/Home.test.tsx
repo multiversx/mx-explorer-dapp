@@ -3,7 +3,7 @@ import { beforeAll } from '__mocks__/test-utils';
 describe('Homepage tests', () => {
   test('Home page is displaying', async () => {
     const render = beforeAll({
-      route: '/',
+      route: '/'
     });
     const mainPageContent = await render.findByTestId('mainPageContent');
     expect(mainPageContent).toBeDefined();
@@ -12,7 +12,7 @@ describe('Homepage tests', () => {
     const onLine = jest.spyOn(window.navigator, 'onLine', 'get');
     onLine.mockReturnValue(false);
     const render = beforeAll({
-      route: '/',
+      route: '/'
     });
     const offline = await render.findByText('No internet connection');
     expect(offline).toBeDefined();

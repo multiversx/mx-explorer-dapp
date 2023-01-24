@@ -2,9 +2,9 @@ import React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 
-import { UITransactionType } from 'types';
-import { getTransactionMethod, useNetworkPathname } from 'helpers';
 import { NetworkLink } from 'components';
+import { getTransactionMethod, useNetworkPathname } from 'helpers';
+import { UITransactionType } from 'types';
 
 export interface TransactionMethodType {
   transaction: UITransactionType;
@@ -22,7 +22,7 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
     }
     const nextUrlParams = new URLSearchParams({
       ...rest,
-      ...(method ? { function: method } : {}),
+      ...(method ? { function: method } : {})
     }).toString();
     return `${networkPathname}?${nextUrlParams}`;
   };
@@ -35,8 +35,8 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
         {networkPathname && method !== 'transaction' ? (
           <NetworkLink
             to={methodLink(getTransactionMethod(transaction))}
-            data-testid="filterByTransactionMethod"
-            className="text-decoration-none"
+            data-testid='filterByTransactionMethod'
+            className='text-decoration-none'
           >
             {children}
           </NetworkLink>
@@ -48,10 +48,10 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
   };
 
   const TxMethodBadge = (
-    <div className="d-inline-block">
+    <div className='d-inline-block'>
       <TxMethodText>
-        <span className="badge badge-secondary badge-pill font-weight-normal">
-          <div className="transaction-function-badge text-truncate text-capitalize">
+        <span className='badge badge-secondary badge-pill font-weight-normal'>
+          <div className='transaction-function-badge text-truncate text-capitalize'>
             {getTransactionMethod(transaction)}
           </div>
         </span>
@@ -61,7 +61,7 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
 
   return transaction.action?.description ? (
     <OverlayTrigger
-      placement="top"
+      placement='top'
       delay={{ show: 0, hide: 400 }}
       overlay={(props: any) => (
         <Tooltip {...props} show={props.show.toString()}>

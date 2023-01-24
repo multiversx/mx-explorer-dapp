@@ -1,6 +1,6 @@
-import { wrappedRoutes } from "routes";
-import { useLocation, useMatch, matchPath } from "react-router-dom";
-import { useNetworkRoute } from "helpers";
+import { useLocation, useMatch, matchPath } from 'react-router-dom';
+import { useNetworkRoute } from 'helpers';
+import { wrappedRoutes } from 'routes';
 
 export const useGetHash = () => {
   const networkRoute = useNetworkRoute();
@@ -11,7 +11,7 @@ export const useGetHash = () => {
       const match = matchPath(networkRoute(path), pathname);
 
       return match?.params?.hash;
-    }) ?? "";
+    }) ?? '';
 
   const match = useMatch(currentRoute);
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 
+import { ReactComponent as CarretDown } from 'assets/img/carret-down.svg';
 import {
   Loader,
   NetworkLink,
@@ -10,11 +11,10 @@ import {
   NodesTable,
   SharedIdentity,
   Denominate,
-  PercentageBar,
+  PercentageBar
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { IdentityType, NodeType } from 'types';
-import { ReactComponent as CarretDown } from 'assets/img/carret-down.svg';
 
 export interface IdentityRowType {
   identity: IdentityType;
@@ -34,7 +34,7 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
         getNodes({
           identity: identityRow.identity,
           size: 1500,
-          pagination: false,
+          pagination: false
         }).then((nodes) => {
           if (ref.current !== null) {
             setDataReady(nodes.success);
@@ -59,7 +59,9 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
     : urlBuilder.nodeDetails(identity.name);
 
   const stakePercentLabel =
-    Math.round(identity.stakePercent) > 0 ? `${Math.round(identity.stakePercent)}%` : '< 1 %';
+    Math.round(identity.stakePercent) > 0
+      ? `${Math.round(identity.stakePercent)}%`
+      : '< 1 %';
 
   return (
     <>
@@ -70,18 +72,20 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
       >
         <td>{identity.rank}</td>
         <td>
-          <div className="d-flex align-items-center">
-            <div className="me-3">
+          <div className='d-flex align-items-center'>
+            <div className='me-3'>
               <NetworkLink to={link}>
                 <SharedIdentity.Avatar identity={identity} />
               </NetworkLink>
             </div>
             {identity.name && identity.name.length > 70 ? (
-              <NetworkLink to={link} className="trim-wrapper">
+              <NetworkLink to={link} className='trim-wrapper'>
                 <Trim text={identity.name} />
               </NetworkLink>
             ) : (
-              <NetworkLink to={link}>{identity.name ? identity.name : 'N/A'}</NetworkLink>
+              <NetworkLink to={link}>
+                {identity.name ? identity.name : 'N/A'}
+              </NetworkLink>
             )}
           </div>
         </td>
@@ -90,41 +94,43 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
           <Denominate value={identity.locked} />
         </td>
         <td>
-          <div className="d-flex align-items-center">
+          <div className='d-flex align-items-center'>
             <PercentageBar
               overallPercent={identity.overallStakePercent || 0}
               fillPercent={identity.stakePercent}
               fillPercentLabel={stakePercentLabel}
             />
 
-            <div className="ms-3">{stakePercentLabel}</div>
+            <div className='ms-3'>{stakePercentLabel}</div>
           </div>
         </td>
-        <td className="text-right">{identity.validators.toLocaleString('en')}</td>
+        <td className='text-right'>
+          {identity.validators.toLocaleString('en')}
+        </td>
         {/* <td className="text-right">{Math.round(identity.score).toLocaleString('en')}</td> */}
-        <td className="text-right">
-          <CarretDown className="details-arrow" height="8" />
+        <td className='text-right'>
+          <CarretDown className='details-arrow' height='8' />
         </td>
       </tr>
       {showDetails && (
         <tr className={`identity-details-row ${collapsed ? 'collapsed' : ''}`}>
-          <td colSpan={6} className="p-0">
-            <div className="content">
+          <td colSpan={6} className='p-0'>
+            <div className='content'>
               {dataReady === undefined && (
-                <div className="py-4">
+                <div className='py-4'>
                   <Loader small={true} noText={true} />
                 </div>
               )}
               {dataReady === false && (
                 <PageState
                   icon={faCogs}
-                  title="Unable to load validators"
-                  className="py-spacer my-auto"
-                  dataTestId="errorScreen"
+                  title='Unable to load validators'
+                  className='py-spacer my-auto'
+                  dataTestId='errorScreen'
                 />
               )}
               {dataReady === true && (
-                <div className="nodes-table-wrapper py-2 px-4">
+                <div className='nodes-table-wrapper py-2 px-4'>
                   <NodesTable hideFilters={true}>
                     <NodesTable.Body nodes={identityNodes} />
                   </NodesTable>

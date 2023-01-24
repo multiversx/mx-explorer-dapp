@@ -1,11 +1,10 @@
 import BigNumber from 'bignumber.js';
 
-import { AccountStakingSliceType } from 'types/account.types';
-
 import { denominate } from 'components/Denominate/denominate';
 import { DECIMALS, DIGITS } from 'config';
 import { truncateMiddle } from 'helpers';
 import { ProviderType } from 'types';
+import { AccountStakingSliceType } from 'types/account.types';
 
 interface DonutChartDataType {
   name: string;
@@ -16,7 +15,7 @@ interface DonutChartDataType {
 
 export const prepareChartData = ({
   stakingDetails,
-  providers,
+  providers
 }: {
   stakingDetails: AccountStakingSliceType;
   providers: ProviderType[];
@@ -29,7 +28,7 @@ export const prepareChartData = ({
     showStake,
     showDelegationLegacy,
     totalLegacyDelegation,
-    totalStaked,
+    totalStaked
   } = stakingDetails;
 
   const defaultData = [{ name: 'No Staking', value: 1, displayValue: 0 }];
@@ -44,14 +43,18 @@ export const prepareChartData = ({
           (delegation) =>
             delegation.userActiveStake !== '0' ||
             delegation.claimableRewards !== '0' ||
-            (delegation.userUndelegatedList && delegation.userUndelegatedList.length > 0)
+            (delegation.userUndelegatedList &&
+              delegation.userUndelegatedList.length > 0)
         )
       : [];
     if (displayDelegations.length > 0) {
       displayDelegations.forEach((delegation) => {
-        const provider = providers.find(({ provider }) => delegation.contract === provider);
+        const provider = providers.find(
+          ({ provider }) => delegation.contract === provider
+        );
         if (provider) {
-          const { userActiveStake, claimableRewards, userUnBondable } = delegation;
+          const { userActiveStake, claimableRewards, userUnBondable } =
+            delegation;
           const bNtotalLocked = new BigNumber(userActiveStake)
             .plus(claimableRewards)
             .plus(userUnBondable);
@@ -61,13 +64,15 @@ export const prepareChartData = ({
             denomination: DECIMALS,
             decimals: DIGITS,
             showLastNonZeroDecimal: false,
-            addCommas: false,
+            addCommas: false
           });
 
           chartData.push({
-            name: provider?.identityDetails?.name ?? truncateMiddle(provider.provider, 20),
+            name:
+              provider?.identityDetails?.name ??
+              truncateMiddle(provider.provider, 20),
             identifier: provider?.identity ?? provider.provider,
-            value: Number(amount),
+            value: Number(amount)
           });
         }
       });
@@ -78,12 +83,12 @@ export const prepareChartData = ({
         denomination: DECIMALS,
         decimals: DIGITS,
         showLastNonZeroDecimal: false,
-        addCommas: false,
+        addCommas: false
       });
       chartData.push({
         name: 'MultiversX Legacy Delegation',
         identifier: 'multiversx',
-        value: Number(amount),
+        value: Number(amount)
       });
     }
     if (showStake && stake) {
@@ -92,12 +97,12 @@ export const prepareChartData = ({
         denomination: DECIMALS,
         decimals: DIGITS,
         showLastNonZeroDecimal: false,
-        addCommas: false,
+        addCommas: false
       });
       chartData.push({
         name: 'Staked Validator Nodes',
         identifier: 'defaultstaked',
-        value: Number(amount),
+        value: Number(amount)
       });
     }
     return chartData.length > 0 ? chartData : defaultData;

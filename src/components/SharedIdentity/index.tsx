@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { IdentityCard } from './IdentityCard';
 import { IdentityAvatar } from './IdentityAvatar';
+import { IdentityCard } from './IdentityCard';
 import { IdentitySummary } from './IdentitySummary';
 
 export default class SharedIdentity extends React.Component<{

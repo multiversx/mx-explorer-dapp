@@ -2,7 +2,7 @@ export const getChartFilteredData = ({
   data,
   filter,
   category,
-  id,
+  id
 }: {
   data: any;
   filter?: string;

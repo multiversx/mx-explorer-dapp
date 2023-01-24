@@ -16,7 +16,7 @@ export const ChartControls = ({ controls }: { controls: ControlType[] }) => (
             key={dataKey}
             onClick={() => control.callback(dataKey)}
             className={classNames(control.singular, {
-              active: dataKey === control.comparison,
+              active: dataKey === control.comparison
             })}
           >
             {control.data[dataKey]}

@@ -10,18 +10,18 @@ export const NetworkMetrics = ({ node }: { node: NodeType }) => {
   const statusColor = node.online ? 'success' : 'danger';
 
   return (
-    <div className="card network-metrics">
-      <div className="card-header">
-        <div className="card-header-item">
-          <h6 className="m-0">Network Metrics</h6>
+    <div className='card network-metrics'>
+      <div className='card-header'>
+        <div className='card-header-item'>
+          <h6 className='m-0'>Network Metrics</h6>
         </div>
       </div>
 
-      <div className="card-body">
-        <div className="container-fluid">
-          <DetailItem title="Rating" colWidth="3">
-            <div className="d-flex align-items-center h-100">
-              <div className="gradient-bar progress progress-sm w-100 my-2">
+      <div className='card-body'>
+        <div className='container-fluid'>
+          <DetailItem title='Rating' colWidth='3'>
+            <div className='d-flex align-items-center h-100'>
+              <div className='gradient-bar progress progress-sm w-100 my-2'>
                 <RatingArrow node={node} showTemp={true} />
                 <RatingArrow node={node} />
               </div>
@@ -37,8 +37,8 @@ export const NetworkMetrics = ({ node }: { node: NodeType }) => {
             />
           </DetailItem> */}
 
-          <DetailItem title="Status" colWidth="3">
-            <div className="d-flex align-items-center">
+          <DetailItem title='Status' colWidth='3'>
+            <div className='d-flex align-items-center'>
               <Led color={`bg-${statusColor}`} />
               <span className={`ms-2 text-${statusColor}`}>
                 {node.online ? 'online' : 'offline'}

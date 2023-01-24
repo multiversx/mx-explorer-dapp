@@ -28,18 +28,20 @@ export const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {
   const nextUrlParams = new URLSearchParams({
     ...rest,
     ...(newOrder ? { sort: id } : {}),
-    ...(newOrder ? { order: newOrder } : {}),
+    ...(newOrder ? { order: newOrder } : {})
   }).toString();
 
   return (
-    <Link to={`${pathname}?${nextUrlParams}`} className="text-body me-n1">
+    <Link to={`${pathname}?${nextUrlParams}`} className='text-body me-n1'>
       {field}
-      {sort !== id && <FontAwesomeIcon icon={faSort} className="side-action text-secondary" />}
+      {sort !== id && (
+        <FontAwesomeIcon icon={faSort} className='side-action text-secondary' />
+      )}
       {order === SortOrderEnum.asc && sort === id && (
-        <FontAwesomeIcon icon={faSortUp} className="side-action text-body" />
+        <FontAwesomeIcon icon={faSortUp} className='side-action text-body' />
       )}
       {order === SortOrderEnum.desc && sort === id && (
-        <FontAwesomeIcon icon={faSortDown} className="side-action text-body" />
+        <FontAwesomeIcon icon={faSortDown} className='side-action text-body' />
       )}
     </Link>
   );

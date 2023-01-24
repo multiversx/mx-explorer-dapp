@@ -15,21 +15,21 @@ export const networks: NetworkType[] = [
     apiAddress: '***REMOVED***',
     extrasApi: '***REMOVED***',
     growthApi: 'https://tools.multiversx.com/growth-api',
-    accessToken: true,
-  },
+    accessToken: true
+  }
 ];
 
 export const multiversxApps = allApps([
   {
     id: 'wallet',
     name: 'Wallet', // navbar title
-    url: 'https://wallet.multiversx.com',
+    url: 'https://wallet.multiversx.com'
   },
   {
     id: 'explorer',
     name: 'Explorer',
-    url: 'http://explorer.multiversx.com',
-  },
+    url: 'http://explorer.multiversx.com'
+  }
 ]);
 
 networks.forEach((network) => {

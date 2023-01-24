@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import BigNumber from 'bignumber.js';
+import { useSelector } from 'react-redux';
 import {
   ResponsiveContainer,
   XAxis,
@@ -10,7 +11,7 @@ import {
   Bar,
   Cell,
   BarChart,
-  Tooltip,
+  Tooltip
 } from 'recharts';
 
 import { Chart, Loader, PageState, useAdapter } from 'components';
@@ -20,7 +21,6 @@ import { formatYAxis } from 'components/Chart/helpers/formatYAxis';
 import { StartEndTick } from 'components/Chart/helpers/StartEndTick';
 import { ControlType, ChartDataType } from 'components/Chart/helpers/types';
 
-import { useSelector } from 'react-redux';
 import { activeNetworkSelector } from 'redux/selectors';
 
 export const getCurrentValue = (chartData: ChartDataType[]) => {
@@ -36,9 +36,15 @@ export const PriceChart = () => {
   const { getEgldPriceHistory, getEgldMarketCapHistory } = useAdapter();
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
-  const [priceChartData, setPriceChartData] = React.useState<ChartDataType[]>([]);
-  const [marketCapChartData, setMarketCapChartData] = React.useState<ChartDataType[]>([]);
-  const [volumeChartData, setVolumeChartData] = React.useState<ChartDataType[]>([]);
+  const [priceChartData, setPriceChartData] = React.useState<ChartDataType[]>(
+    []
+  );
+  const [marketCapChartData, setMarketCapChartData] = React.useState<
+    ChartDataType[]
+  >([]);
+  const [volumeChartData, setVolumeChartData] = React.useState<ChartDataType[]>(
+    []
+  );
 
   const [focusBar, setFocusBar] = useState<any>(null);
   const [category, setCategory] = useState<string>('price');
@@ -91,9 +97,9 @@ export const PriceChart = () => {
       plural: 'categories',
       data: {
         price: 'Price',
-        marketCap: 'Market Cap',
-      },
-    },
+        marketCap: 'Market Cap'
+      }
+    }
   ];
 
   const value = getCurrentValue(priceChartData);
@@ -101,11 +107,11 @@ export const PriceChart = () => {
 
   const metrics = [
     { label: 'Current Price', value: `$${new BigNumber(value).toFormat(2)}` },
-    { label: 'Volume 24h', value: `$${new BigNumber(volume).toFormat(0)}` },
+    { label: 'Volume 24h', value: `$${new BigNumber(volume).toFormat(0)}` }
   ];
 
   return (
-    <section id="price" className="price card">
+    <section id='price' className='price card'>
       <Chart.Heading>
         <Chart.Controls controls={controls} />
       </Chart.Heading>
@@ -114,57 +120,79 @@ export const PriceChart = () => {
         {dataReady === false && (
           <PageState
             icon={faChartBar}
-            title="Unable to load chart"
-            className="py-spacer my-auto"
-            titleClassName="mt-0"
-            dataTestId="priceChartError"
+            title='Unable to load chart'
+            className='py-spacer my-auto'
+            titleClassName='mt-0'
+            dataTestId='priceChartError'
           />
         )}
         {dataReady === true && chartData.length > 0 && (
           <>
             <Chart.Metrics metrics={metrics} />
-            <div className="stacked-chart">
-              <ResponsiveContainer width="100%" height="70%" className="mb-n3">
-                <AreaChart data={chartData} syncId="priceChart">
+            <div className='stacked-chart'>
+              <ResponsiveContainer width='100%' height='70%' className='mb-n3'>
+                <AreaChart data={chartData} syncId='priceChart'>
                   <defs>
-                    <linearGradient id="defaultGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={primaryColor} stopOpacity={0.25} />
-                      <stop offset="35%" stopColor={primaryColor} stopOpacity={0.4} />
-                      <stop offset="95%" stopColor={primaryColor} stopOpacity={0} />
+                    <linearGradient
+                      id='defaultGradient'
+                      x1='0'
+                      y1='0'
+                      x2='0'
+                      y2='1'
+                    >
+                      <stop
+                        offset='5%'
+                        stopColor={primaryColor}
+                        stopOpacity={0.25}
+                      />
+                      <stop
+                        offset='35%'
+                        stopColor={primaryColor}
+                        stopOpacity={0.4}
+                      />
+                      <stop
+                        offset='95%'
+                        stopColor={primaryColor}
+                        stopOpacity={0}
+                      />
                     </linearGradient>
                   </defs>
 
                   <XAxis
-                    dataKey="timestamp"
+                    dataKey='timestamp'
                     tickLine={false}
                     tick={StartEndTick as any}
                     interval={0}
                     strokeWidth={0.3}
                   />
                   <YAxis
-                    orientation="right"
-                    tickFormatter={(tick) => formatYAxis({ tick, currency: '$' })}
+                    orientation='right'
+                    tickFormatter={(tick) =>
+                      formatYAxis({ tick, currency: '$' })
+                    }
                     axisLine={false}
                     tickLine={false}
-                    type="number"
+                    type='number'
                   />
                   <Area
-                    type="monotone"
-                    dataKey="value"
-                    fill="url(#defaultGradient)"
+                    type='monotone'
+                    dataKey='value'
+                    fill='url(#defaultGradient)'
                     stroke={primaryColor}
                     strokeWidth={1.5}
                   />
                   <Tooltip
-                    content={(props) => <CustomTooltip {...props} currency="$" />}
+                    content={(props) => (
+                      <CustomTooltip {...props} currency='$' />
+                    )}
                     cursor={{
                       strokeDasharray: '3 5',
-                      stroke: mutedColor,
+                      stroke: mutedColor
                     }}
                   />
                 </AreaChart>
               </ResponsiveContainer>
-              <ResponsiveContainer width="100%" height={100}>
+              <ResponsiveContainer width='100%' height={100}>
                 <BarChart
                   data={volumeChartData}
                   onMouseMove={(state) => {
@@ -174,28 +202,41 @@ export const PriceChart = () => {
                       setFocusBar(null);
                     }
                   }}
-                  syncId="priceChart"
+                  syncId='priceChart'
                 >
-                  <XAxis dataKey="timestamp" tickLine={false} tick={false} strokeWidth={0.3} />
+                  <XAxis
+                    dataKey='timestamp'
+                    tickLine={false}
+                    tick={false}
+                    strokeWidth={0.3}
+                  />
                   <YAxis
-                    orientation="right"
-                    tickFormatter={(tick) => formatYAxis({ tick, currency: '$' })}
+                    orientation='right'
+                    tickFormatter={(tick) =>
+                      formatYAxis({ tick, currency: '$' })
+                    }
                     axisLine={false}
                     tickLine={false}
                     tick={false}
                   />
 
-                  <Bar dataKey="value">
+                  <Bar dataKey='value'>
                     {volumeChartData.map((entry: any, index: number) => (
                       <Cell
-                        fill={focusBar === index ? primaryColor : fadedBackground}
+                        fill={
+                          focusBar === index ? primaryColor : fadedBackground
+                        }
                         key={index}
                       />
                     ))}
                   </Bar>
                   <Tooltip
                     content={(props) => (
-                      <CustomTooltip {...props} currency="$" customLabel="volume" />
+                      <CustomTooltip
+                        {...props}
+                        currency='$'
+                        customLabel='volume'
+                      />
                     )}
                     cursor={false}
                   />

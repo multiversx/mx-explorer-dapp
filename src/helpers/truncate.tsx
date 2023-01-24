@@ -7,7 +7,10 @@ export const truncate = (
 
   if (!end) end = '...';
 
-  if (text !== undefined && (text.length <= length || text.length - end.length <= length)) {
+  if (
+    text !== undefined &&
+    (text.length <= length || text.length - end.length <= length)
+  ) {
     return text;
   } else {
     return String(text).substring(0, length - end.length) + end;

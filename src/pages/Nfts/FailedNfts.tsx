@@ -6,9 +6,9 @@ export const FailedNfts = () => {
   return (
     <PageState
       icon={faPalette}
-      title="Unable to load NFTs"
-      className="py-spacer my-auto"
-      dataTestId="errorScreen"
+      title='Unable to load NFTs'
+      className='py-spacer my-auto'
+      dataTestId='errorScreen'
     />
   );
 };

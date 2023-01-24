@@ -1,17 +1,25 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLayerPlus } from '@fortawesome/pro-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { UITransactionType, NftEnumType, TxActionsEnum } from 'types';
 import { Denominate, TxActionBlock } from 'components';
+import { UITransactionType, NftEnumType, TxActionsEnum } from 'types';
 
 const getTransactionTokens = (transaction: UITransactionType) => {
   if (transaction.action) {
     return [
-      ...(transaction.action.arguments?.token ? [transaction.action.arguments?.token] : []),
-      ...(transaction.action.arguments?.token1 ? [transaction.action.arguments?.token1] : []),
-      ...(transaction.action.arguments?.token2 ? [transaction.action.arguments?.token2] : []),
-      ...(transaction.action.arguments?.transfers ? transaction.action.arguments?.transfers : []),
+      ...(transaction.action.arguments?.token
+        ? [transaction.action.arguments?.token]
+        : []),
+      ...(transaction.action.arguments?.token1
+        ? [transaction.action.arguments?.token1]
+        : []),
+      ...(transaction.action.arguments?.token2
+        ? [transaction.action.arguments?.token2]
+        : []),
+      ...(transaction.action.arguments?.transfers
+        ? transaction.action.arguments?.transfers
+        : [])
     ];
   }
 
@@ -23,8 +31,8 @@ const OverlayTooltip = ({ tooltip, children }: any) => {
 
   const renderTooltip = (props: any) => (
     <Tooltip
-      className="extra-tokens-tooltip"
-      id="extra-tokens-tooltip"
+      className='extra-tokens-tooltip'
+      id='extra-tokens-tooltip'
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
       {...props}
@@ -44,16 +52,23 @@ const OverlayTooltip = ({ tooltip, children }: any) => {
       delay={{ show: 250, hide: 300 }}
       overlay={renderTooltip}
     >
-      <span onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)}>
+      <span
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
+      >
         {child}
       </span>
     </OverlayTrigger>
   );
 };
 
-const MultipleTokensBadge = ({ transactionTokens }: { transactionTokens: any[] }) => {
+const MultipleTokensBadge = ({
+  transactionTokens
+}: {
+  transactionTokens: any[];
+}) => {
   const Tooltip = (
-    <div className="py-2 px-1">
+    <div className='py-2 px-1'>
       {transactionTokens.map((transactionToken, index) => (
         <div
           key={`tx-token-tooltip-${index}`}
@@ -71,14 +86,14 @@ const MultipleTokensBadge = ({ transactionTokens }: { transactionTokens: any[] }
 
   return (
     <OverlayTooltip tooltip={Tooltip}>
-      <FontAwesomeIcon icon={faLayerPlus} className="ms-2 text-secondary" />
+      <FontAwesomeIcon icon={faLayerPlus} className='ms-2 text-secondary' />
     </OverlayTooltip>
   );
 };
 
 export const TransactionValue = ({
   transaction,
-  hideMultipleBadge,
+  hideMultipleBadge
 }: {
   transaction: UITransactionType;
   hideMultipleBadge?: boolean;
@@ -96,7 +111,7 @@ export const TransactionValue = ({
     if (transactionTokens.length) {
       const txToken = transactionTokens[0];
       return (
-        <div className="d-flex align-items-center">
+        <div className='d-flex align-items-center'>
           {Object.values(NftEnumType).includes(txToken.type) ? (
             <TxActionBlock.Nft token={txToken} showBadge />
           ) : (

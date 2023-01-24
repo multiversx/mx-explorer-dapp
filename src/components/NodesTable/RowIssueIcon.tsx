@@ -1,11 +1,11 @@
 import * as React from 'react';
+import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { faLock } from '@fortawesome/pro-regular-svg-icons/faLock';
 import { faSync } from '@fortawesome/pro-regular-svg-icons/faSync';
-import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Overlay } from 'components';
 import { nodeIssue } from 'helpers';
 import { NodeType } from 'types';
-import { Overlay } from 'components';
 
 export const getIcon = (node: NodeType) => {
   let icon;
@@ -30,22 +30,36 @@ export const getIcon = (node: NodeType) => {
   return icon;
 };
 
-export const RowIssueIcon = ({ node, small }: { node: NodeType; small?: boolean }) => {
+export const RowIssueIcon = ({
+  node,
+  small
+}: {
+  node: NodeType;
+  small?: boolean;
+}) => {
   const icon = getIcon(node);
 
   if (icon) {
     switch (true) {
       case node.status === 'jailed':
         return (
-          <Overlay title="Jailed">
-            <FontAwesomeIcon icon={icon} className="text-danger ms-1" size={small ? 'xs' : '1x'} />
+          <Overlay title='Jailed'>
+            <FontAwesomeIcon
+              icon={icon}
+              className='text-danger ms-1'
+              size={small ? 'xs' : '1x'}
+            />
           </Overlay>
         );
 
       case node.issues && node.issues.length > 0: {
         return (
           <Overlay title={nodeIssue(node)}>
-            <FontAwesomeIcon icon={icon} className="ms-1 text-warning" size={small ? 'xs' : '1x'} />
+            <FontAwesomeIcon
+              icon={icon}
+              className='ms-1 text-warning'
+              size={small ? 'xs' : '1x'}
+            />
           </Overlay>
         );
       }
