@@ -18,7 +18,7 @@ export const InternalErrorDisplay = ({ data }: { data: string }) => {
       decodeMethod: DecodeMethodType.smart
     });
     if (decodedDisplay.displayValue) {
-      return <p className='text-left'>{decodedDisplay.displayValue}</p>;
+      return <p className='text-start'>{decodedDisplay.displayValue}</p>;
     }
   }
 

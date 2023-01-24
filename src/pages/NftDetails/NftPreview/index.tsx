@@ -76,7 +76,7 @@ export const NftPreview = ({ token }: { token: NftType }) => {
   const scamFlag = useScamFlag();
 
   return token.uris ? (
-    <div className='nft-details d-flex flex-column text-left'>
+    <div className='nft-details d-flex flex-column text-start'>
       <ul className='list-unstyled mb-0'>
         {token.uris.map((uri, i) => {
           if (uri !== null && uri !== undefined) {

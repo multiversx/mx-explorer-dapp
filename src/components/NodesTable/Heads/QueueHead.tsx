@@ -15,10 +15,10 @@ export const QueueHead = ({ hideFilters }: { hideFilters?: boolean }) => {
       <th data-testid='version'>
         <Sort id='version' field='Version' />
       </th>
-      {/* <th className="text-right" data-testid="uptime">
+      {/* <th className="text-end" data-testid="uptime">
         <Sort id="uptime" field="Uptime" />
       </th> */}
-      <th className='text-right' data-testid='status'>
+      <th className='text-end' data-testid='status'>
         Status
         {hideFilters === true ? '' : <StatusFilter />}
       </th>

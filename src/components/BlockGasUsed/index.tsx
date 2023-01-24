@@ -13,7 +13,7 @@ export const BlockGasUsed = ({ block }: { block: BlockType }) => {
       {gasUsedBn.isGreaterThan(0) &&
       new BigNumber(block.maxGasLimit).isGreaterThan(0) ? (
         <>
-          <div className='text-right mb-1'>
+          <div className='text-end mb-1'>
             {gasUsedBn.toFormat()}{' '}
             <span className='text-neutral-300'>
               ({gasUsedBn.dividedBy(block.maxGasLimit).times(100).toFormat(2)}%)
@@ -34,7 +34,7 @@ export const BlockGasUsed = ({ block }: { block: BlockType }) => {
         </>
       ) : (
         <>
-          <div className='text-right mb-1'>
+          <div className='text-end mb-1'>
             <span className='text-neutral-300'>0%</span>
           </div>
           <PercentageBar

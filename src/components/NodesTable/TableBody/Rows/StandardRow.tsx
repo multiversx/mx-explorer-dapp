@@ -91,7 +91,7 @@ export const StandardRow = ({
           <span className='text-neutral-300'>N/A</span>
         )}
       </td>
-      <td className='text-right' style={{ maxWidth: '8rem' }}>
+      <td className='text-end' style={{ maxWidth: '8rem' }}>
         {nodeData.validatorIgnoredSignatures ? (
           nodeData.validatorIgnoredSignatures.toLocaleString('en')
         ) : (
@@ -110,14 +110,14 @@ export const StandardRow = ({
           </span>
         </div>
       </td>
-      <td className='text-right'>
+      <td className='text-end'>
         {!isNaN(nodeData.tempRating) ? (
           Math.floor(nodeData.tempRating)
         ) : (
           <span className='text-neutral-300'>N/A</span>
         )}
       </td>
-      <td className='text-right'>
+      <td className='text-end'>
         {nodeData.nonce ? (
           nodeData.nonce
         ) : (
@@ -126,7 +126,7 @@ export const StandardRow = ({
       </td>
 
       {status === 'queued' && (
-        <td className='text-right'>
+        <td className='text-end'>
           {nodeData.position ? (
             <div className='truncate-item-lg'>{nodeData.position}</div>
           ) : (
@@ -136,7 +136,7 @@ export const StandardRow = ({
       )}
 
       {type === 'validator' && nodeData.locked && (
-        <td className='text-right'>
+        <td className='text-end'>
           <Overlay title={<ValidatorLockedStakeTooltip />}>
             <Denominate value={nodeData.locked} showTooltip={false} />
           </Overlay>
