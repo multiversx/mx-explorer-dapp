@@ -2,13 +2,11 @@ import * as React from 'react';
 import { Led, Trim } from 'components';
 import { NodesVersionsType } from 'types';
 
-export interface PercentageStepType extends NodesVersionsType {}
-
 export const MultilayerPercentageBar = ({
   steps,
-  trim,
+  trim
 }: {
-  steps: PercentageStepType[];
+  steps: NodesVersionsType[];
   trim?: boolean;
 }) => {
   return (
@@ -17,7 +15,7 @@ export const MultilayerPercentageBar = ({
         steps.length === 2 ? 'two-items' : ''
       }`}
     >
-      <div className="progress w-100 my-0">
+      <div className='progress w-100 my-0'>
         {steps.map((step, i) => (
           <div
             key={`progress-bar-${i}`}
@@ -26,16 +24,22 @@ export const MultilayerPercentageBar = ({
           />
         ))}
       </div>
-      <div className={`d-flex legend-dot-container mt-2 ${trim ? '' : 'flex-wrap'}`}>
+      <div
+        className={`d-flex legend-dot-container mt-2 ${
+          trim ? '' : 'flex-wrap'
+        }`}
+      >
         {steps.map((step, i) => (
           <div
             key={`legend-${i}`}
-            className={`legend-dot d-flex align-items-center ${trim ? '' : 'me-1 me-lg-3'}`}
+            className={`legend-dot d-flex align-items-center ${
+              trim ? '' : 'me-1 me-lg-3'
+            }`}
           >
             <Led color={`flex-shrink-0 me-1 step-${i + 1}`} />
-            <small className="d-flex align-items-center overflow-hidden min-w-0">
+            <small className='d-flex align-items-center overflow-hidden min-w-0'>
               {trim ? <Trim text={step.name} /> : <>{step.name}</>}
-              <span className="text-secondary ms-1">({step.percent}%)</span>
+              <span className='text-secondary ms-1'>({step.percent}%)</span>
             </small>
           </div>
         ))}
