@@ -1,47 +1,22 @@
-import account from './account';
-import accounts from './accounts';
-import accountTokens from './accountTokens';
-import block from './block';
-import blocks from './blocks';
-import blockValidators from './blockValidators';
-import delegation from './delegation';
-import epoch from './epoch';
-import identity from './identity';
-import miniblock from './miniblock';
-import transactions from './transactions';
-import transactionsSearch from './transactionsSearch';
-import validators from './validators'; // TODO: check
-import validatorsdoc from './validatorsdoc';
-import miniblockTransactions from './miniblockTransactions';
-import stats from './stats';
-import node from './node';
-import identities from './identities';
-import tokens from './tokens';
-import tokenDetails from './tokenDetails';
-import providers from './providers';
-import provider from './provider';
-
-export {
-  transactions,
-  transactionsSearch,
-  validators,
-  validatorsdoc,
-  epoch,
-  blocks,
-  block,
-  miniblock,
-  miniblockTransactions,
-  blockValidators,
-  stats,
-  account,
-  accountTokens,
-  delegation,
-  node,
-  identity,
-  accounts,
-  tokens,
-  tokenDetails,
-  providers,
-  provider,
-  identities
-};
+export * from './account';
+export * from './accounts';
+export * from './accountTokens';
+export * from './block';
+export * from './blocks';
+export * from './blockValidators';
+export * from './delegation';
+export * from './epoch';
+export * from './identities';
+export * from './identity';
+export * from './miniblock';
+export * from './miniblockTransactions';
+export * from './node';
+export * from './provider';
+export * from './providers';
+export * from './stats';
+export * from './tokenDetails';
+export * from './tokens';
+export * from './transactions';
+export * from './transactionsSearch';
+export * from './validators'; // TODO: check
+export * from './validatorsdoc';

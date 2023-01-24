@@ -1,25 +1,24 @@
-import { useIsMainnet } from 'helpers';
 import React, { useMemo } from 'react';
-
+import { Provider, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import { PersistGate } from 'redux-persist/integration/react';
+import { networks } from 'config';
+import { useIsMainnet } from 'helpers';
+
 import { AxiosInterceptor } from 'components';
+import { activeNetworkSelector } from 'redux/selectors';
+import { store, persistor } from 'redux/store';
+import { wrappedRoutes, validatorsRoutes } from 'routes';
+import { NetworkType } from 'types';
+
 import { Layout } from './pages/Layout';
 import { PageNotFound } from './pages/PageNotFound';
-import { NetworkType } from 'types';
-import { wrappedRoutes, validatorsRoutes } from 'routes';
-
-import { Provider, useSelector } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { store, persistor } from 'redux/store';
-import { activeNetworkSelector } from 'redux/selectors';
-
-import { networks } from 'config';
 
 import './assets/sass/theme.scss';
 
 export const FilteredRoutes = ({
-  routes,
+  routes
 }: {
   routes: { path: string; Component: React.ComponentClass }[];
 }) => {
@@ -29,7 +28,10 @@ export const FilteredRoutes = ({
   const restrictedRoutes = routes.filter(({ path }) => {
     if (
       (!isMainnet &&
-        [validatorsRoutes.identities, validatorsRoutes.identityDetails].includes(path)) ||
+        [
+          validatorsRoutes.identities,
+          validatorsRoutes.identityDetails
+        ].includes(path)) ||
       (adapter === 'elastic' && Object.values(validatorsRoutes).includes(path))
     ) {
       return false;
@@ -58,9 +60,15 @@ export const FilteredRoutes = ({
         />
         ,
         {restrictedRoutes.map((route, i) => {
-          return <Route path={route.path} key={route.path + i} element={<route.Component />} />;
+          return (
+            <Route
+              path={route.path}
+              key={route.path + i}
+              element={<route.Component />}
+            />
+          );
         })}
-        <Route path="*" element={<PageNotFound />} />
+        <Route path='*' element={<PageNotFound />} />
       </Routes>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
