@@ -37,7 +37,7 @@ export const useCheckVersion = () => {
                       e.preventDefault();
                       window.location.reload();
                     }}
-                    className="ml-1 text-black"
+                    className="ms-1 text-black"
                   >
                     <u>Reload</u>
                   </a>

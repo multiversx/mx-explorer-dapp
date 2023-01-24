@@ -21,7 +21,7 @@ export const TxActionToken = ({
       {token && token.token && (
         <>
           {!noValue && token.value && (
-            <div className="mr-1 text-truncate">
+            <div className="me-1 text-truncate">
               <Denominate
                 value={token.value}
                 showLabel={false}
@@ -36,13 +36,13 @@ export const TxActionToken = ({
           >
             <div className="d-flex align-items-center symbol text-truncate">
               {token.svgUrl && (
-                <img src={token.svgUrl} alt={token.name} className="side-icon mr-1" />
+                <img src={token.svgUrl} alt={token.name} className="side-icon me-1" />
               )}
               <span className="text-truncate">{token.ticker}</span>
             </div>
           </NetworkLink>
           {token?.valueUSD && (
-            <div className="mr-1 text-truncate text-secondary ml-1">
+            <div className="me-1 text-truncate text-secondary ms-1">
               ({formatUSD({ amount: token.valueUSD, digits: 2 })})
             </div>
           )}

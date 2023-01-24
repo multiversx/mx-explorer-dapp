@@ -40,28 +40,28 @@
   .tl-#{$index - 1},
   .bl-#{$index - 1},
   .tr-#{$index - 1} {
-    fill: lighten($primary, 25%);
+    fill: var(--primary);
   }
 
   .tl-#{$index},
   .bl-#{$index},
   .tr-#{$index} {
-    fill: lighten($primary, 15%);
+    fill: var(--primary);
   }
 }
 
 @mixin blink-reverse($index) {
   .br-#{$index + 1} {
-    fill: lighten($primary, 25%);
+    fill: var(--primary);
   }
 
   .br-#{$index} {
-    fill: lighten($primary, 15%);
+    fill: var(--primary);
   }
 }
 
 @mixin radial-bg() {
-  background: radial-gradient(circle, rgba($primary-light, 0.25) 60%, rgba(0, 0, 0, 0) 40%)
+  background: radial-gradient(circle, rgba(var(--primary-light), 0.25) 60%, rgba(0, 0, 0, 0) 40%)
     no-repeat;
 }
 
@@ -75,7 +75,7 @@
 
       .blinking-dot {
         transition: fill 0.35s;
-        fill: $muted;
+        fill: var(--muted);
       }
 
       &.blink-1 {
@@ -83,7 +83,7 @@
         .tl-1,
         .tr-1,
         .br-6 {
-          fill: lighten($primary, 15%);
+          fill: var(--primary);
         }
       }
 
@@ -112,7 +112,7 @@
         .tl-6,
         .tr-6,
         .br-1 {
-          fill: lighten($primary, 25%);
+          fill: var(--primary);
         }
       }
     }
@@ -225,18 +225,18 @@
 }
 
 .gear-teeth {
-  fill: $card-bg;
-  stroke: $secondary;
+  fill: var(--card-bg);
+  stroke: var(--secondary);
 }
 
 .gear-circle {
-  fill: $card-bg;
+  fill: var(--card-bg);
 }
 
 .gear-circle-border {
-  stroke: $secondary;
+  stroke: var(--secondary);
 
   &.light {
-    stroke: $muted;
+    stroke: var(--muted);
   }
 }

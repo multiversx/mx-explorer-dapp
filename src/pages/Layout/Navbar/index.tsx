@@ -53,7 +53,7 @@ export const Navbar = () => {
 
               <div className="nav d-lg-none">
                 <a
-                  className="nav-link nav-link-icon text-center d-flex align-items-center justify-content-center pr-0"
+                  className="nav-link nav-link-icon text-center d-flex align-items-center justify-content-center pe-0"
                   href="/"
                   onClick={toggleHeaderNav}
                 >

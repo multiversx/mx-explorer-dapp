@@ -11,7 +11,7 @@ export const RowFullHistory = ({ node, small }: { node: NodeType; small?: boolea
         <div className="d-flex align-items-center justify-content-center">
           <FontAwesomeIcon
             icon={faHistory}
-            className="text-secondary ml-1 mr-2"
+            className="text-secondary ms-1 me-2"
             size={small ? 'xs' : '1x'}
           />
         </div>

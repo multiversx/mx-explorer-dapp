@@ -70,11 +70,11 @@ export const BlocksTable = ({
                 </div>
               </td>
               <td>
-                <div className={showProposerIdentity ? '' : 'd-flex justify-content-end mr-spacer'}>
+                <div className={showProposerIdentity ? '' : 'd-flex justify-content-end me-spacer'}>
                   <NetworkLink
                     to={`/blocks/${block.hash}`}
                     data-testid={`blockHashLink${i}`}
-                    className="trim-wrapper trim-size-xl mr-xl-n5"
+                    className="trim-wrapper trim-size-xl me-xl-n5"
                   >
                     <Trim text={block.hash} />
                   </NetworkLink>

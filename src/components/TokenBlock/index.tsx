@@ -17,7 +17,7 @@ export const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
   return (
     <div ref={ref} className="token-block d-flex text-truncate">
       {value && (
-        <div className="mr-1">
+        <div className="me-1">
           <Denominate
             value={value}
             denomination={denomination}
@@ -39,7 +39,7 @@ export const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
                     <img
                       src={operationToken.assets.svgUrl}
                       alt={operationToken.name}
-                      className="side-icon mr-1"
+                      className="side-icon me-1"
                     />
                   )}
                   <div className="text-truncate">

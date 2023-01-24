@@ -19,7 +19,7 @@
       justify-content: center;
 
       background-color: transparent;
-      box-shadow: 0 0 0.25rem 0 rgba($item-box-shadow, 0.3);
+      box-shadow: 0 0 0.25rem 0 rgba(var(--box-shadow), 0.3);
 
       border-radius: 0.5rem;
       min-width: 3.2rem;
@@ -28,12 +28,12 @@
       svg {
         width: 1.15rem !important;
         height: 1.15rem !important;
-        fill: $primary;
-        color: $primary;
+        fill: var(--primary);
+        color: var(--primary);
         #multiversx-symbol,
         #elrond-symbol,
         #egld-symbol {
-          fill: $primary;
+          fill: var(--primary);
         }
       }
     }
@@ -45,7 +45,7 @@
 
     &.lg {
       .card-item-icon {
-        @extend .mr-4;
+        @extend .me-4 !optional;
         padding: 1.35rem;
 
         svg {
@@ -65,7 +65,7 @@
 
     &.title-bold {
       .card-item-title {
-        color: $body !important;
+        color: var(--body) !important;
         font-weight: 600;
       }
     }

@@ -35,7 +35,7 @@
 
   .left span,
   .right span {
-    color: $body;
+    color: var(--#{$prefix}body);
     font-size: 1rem;
     pointer-events: none;
     user-select: none;
@@ -51,14 +51,14 @@
   &.secondary {
     .left span,
     .right span {
-      color: $secondary;
+      color: var(--#{$prefix}secondary);
     }
   }
 
   &.muted {
     .left span,
     .right span {
-      color: $muted;
+      color: var(--#{$prefix}muted);
     }
   }
 
@@ -94,14 +94,14 @@
 }
 
 a:hover > .trim span {
-  color: $link-hover-color !important;
+  color: var(--#{$prefix}link-color) !important;
   &.hidden-text-ref {
     color: transparent !important;
   }
 }
 
 a > .trim span {
-  color: $primary !important;
+  color: var(--#{$prefix}link-color) !important;
   &.hidden-text-ref {
     color: transparent !important;
   }

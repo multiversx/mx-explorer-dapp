@@ -50,7 +50,7 @@ export const TokensTable = ({
               <tr>
                 <td>
                   <div className="token-identity d-flex flex-row">
-                    <div className="d-flex align-items-center mr-3">
+                    <div className="d-flex align-items-center me-3">
                       <NetworkLink
                         to={urlBuilder.tokenDetails(token.identifier)}
                         data-testid={`tokensLink${i}`}

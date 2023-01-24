@@ -16,7 +16,7 @@ export const TokenTabs = () => {
     <div className="account-tabs d-flex flex-row">
       <NetworkLink
         to={urlBuilder.tokenDetails(identifier)}
-        className={`tab-link mr-3 ${activeRoute(tokensRoutes.tokenDetails) ? 'active' : ''}`}
+        className={`tab-link me-3 ${activeRoute(tokensRoutes.tokenDetails) ? 'active' : ''}`}
       >
         <h6>Transactions</h6>
       </NetworkLink>

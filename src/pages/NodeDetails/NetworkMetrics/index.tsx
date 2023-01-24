@@ -17,7 +17,7 @@ export const NetworkMetrics = ({ node }: { node: NodeType }) => {
         </div>
       </div>
 
-      <div className="card-body p-0">
+      <div className="card-body">
         <div className="container-fluid">
           <DetailItem title="Rating" colWidth="3">
             <div className="d-flex align-items-center h-100">
@@ -40,7 +40,7 @@ export const NetworkMetrics = ({ node }: { node: NodeType }) => {
           <DetailItem title="Status" colWidth="3">
             <div className="d-flex align-items-center">
               <Led color={`bg-${statusColor}`} />
-              <span className={`ml-2 text-${statusColor}`}>
+              <span className={`ms-2 text-${statusColor}`}>
                 {node.online ? 'online' : 'offline'}
               </span>
             </div>

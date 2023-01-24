@@ -9,7 +9,7 @@
 
     &.active {
       .sort-icon {
-        color: $primary;
+        color: var(--primary);
       }
     }
   }

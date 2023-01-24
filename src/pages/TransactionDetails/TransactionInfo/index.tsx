@@ -77,7 +77,7 @@ export const AddressDetailItem = ({ address }: { address: string }) => (
           <NetworkLink to={urlBuilder.accountDetails(address)} className="trim-wrapper">
             <Trim text={address} />
           </NetworkLink>
-          <CopyButton className="mr-2" text={address} />
+          <CopyButton className="me-2" text={address} />
         </>
       ) : null}
     </div>
@@ -88,10 +88,10 @@ export const ScrDetailItem = ({ result }: { result: ResultType }) => (
   <DetailItem title="SC Result Hash" noBorder>
     <div className="d-flex align-items-center">
       <Trim text={result.hash} />
-      <CopyButton className="ml-2" text={result.hash} />
+      <CopyButton className="ms-2" text={result.hash} />
       <NetworkLink
         to={`${transactionsRoutes.transactions}/${result.originalTxHash}#${result.hash}`}
-        className="side-action ml-2"
+        className="side-action ms-2"
       >
         <FontAwesomeIcon icon={faSearch} />
       </NetworkLink>
@@ -160,7 +160,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
             <Nav.Link
               data-testid="title"
               eventKey="details"
-              className={`tab-link mr-3 ${activeKey === 'details' ? 'active' : ''}`}
+              className={`tab-link me-3 ${activeKey === 'details' ? 'active' : ''}`}
               onClick={() => {
                 window.history.replaceState(
                   null,
@@ -174,7 +174,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
             {showLogs && (
               <Nav.Link
                 eventKey="logs"
-                className={`tab-link mr-3 ${activeKey === 'logs' ? 'active' : ''}`}
+                className={`tab-link me-3 ${activeKey === 'logs' ? 'active' : ''}`}
                 onClick={() => {
                   window.history.replaceState(
                     null,
@@ -187,14 +187,14 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
               </Nav.Link>
             )}
             {isTxPending && (
-              <div className="d-flex align-items-center ml-auto">
+              <div className="d-flex align-items-center ms-auto">
                 <LoadingDots />
               </div>
             )}
           </div>
         </div>
 
-        <div className="card-body p-0">
+        <div className="card-body">
           <div className="container-fluid">
             <Tab.Content>
               <Tab.Pane eventKey="details">
@@ -220,10 +220,10 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                       {isTxPending ? (
                         <FontAwesomeIcon
                           icon={faSpinner}
-                          className="mr-2 text-secondary fa-spin slow-spin"
+                          className="me-2 text-secondary fa-spin slow-spin"
                         />
                       ) : (
-                        <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
+                        <FontAwesomeIcon icon={faClock} className="me-2 text-secondary" />
                       )}
                       <TimeAgo value={transaction.timestamp} />
                       &nbsp;
@@ -268,7 +268,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                             assets={transaction.senderAssets}
                           />
                         </NetworkLink>
-                        <CopyButton className="mr-2" text={transaction.sender} />
+                        <CopyButton className="me-2" text={transaction.sender} />
                         <NetworkLink
                           to={urlBuilder.senderShard(transaction.senderShard)}
                           className="flex-shrink-0"
@@ -286,7 +286,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                   <div className="d-flex flex-column">
                     <div className="d-flex align-items-center">
                       {isContract(transaction.receiver) ? (
-                        <span className="mr-2">Contract</span>
+                        <span className="me-2">Contract</span>
                       ) : (
                         ''
                       )}
@@ -299,7 +299,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                           assets={transaction.receiverAssets}
                         />
                       </NetworkLink>
-                      <CopyButton className="mr-2" text={transaction.receiver} />
+                      <CopyButton className="me-2" text={transaction.receiver} />
                       {!isNaN(transaction.receiverShard) && (
                         <NetworkLink
                           to={urlBuilder.receiverShard(transaction.receiverShard)}
@@ -311,7 +311,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                     </div>
                     <TransactionErrorDisplay transaction={transaction} />
                     {transaction.status === txStatus.rewardReverted && (
-                      <div className="d-flex ml-1 text-break-all">
+                      <div className="d-flex ms-1 text-break-all">
                         <FontAwesomeIcon
                           icon={faAngleDown}
                           className="text-secondary"
@@ -319,7 +319,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                           transform={{ rotate: 45 }}
                         />
                         &nbsp;
-                        <small className="text-danger ml-1"> Block Reverted</small>
+                        <small className="text-danger ms-1"> Block Reverted</small>
                       </div>
                     )}
                   </div>
@@ -359,7 +359,7 @@ export const TransactionInfo = ({ transaction }: { transaction: TransactionType 
                   <DetailItem
                     title={
                       <>
-                        <span className="mr-2">Token Operations</span>
+                        <span className="me-2">Token Operations</span>
                         <span className="badge badge-secondary badge-pill font-weight-normal">
                           {visibleOperations.length}
                         </span>

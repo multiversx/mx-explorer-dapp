@@ -37,7 +37,7 @@ export const TransactionErrorDisplay = ({ transaction }: { transaction: Transact
   return (
     <>
       {transactionMessages.map((transactionMessage, messageIndex) => (
-        <div key={`tx-message-${messageIndex}`} className="d-flex ml-1 align-items-center">
+        <div key={`tx-message-${messageIndex}`} className="d-flex ms-1 align-items-center">
           <FontAwesomeIcon
             icon={faAngleDown}
             className="text-secondary"
@@ -46,7 +46,7 @@ export const TransactionErrorDisplay = ({ transaction }: { transaction: Transact
           />
           &nbsp;
           <div className="d-flex flex-wrap">
-            <small className="text-danger ml-1">
+            <small className="text-danger ms-1">
               {' '}
               {capitalizeFirstLetter(transactionMessage.toString().trim())}
             </small>
@@ -54,11 +54,11 @@ export const TransactionErrorDisplay = ({ transaction }: { transaction: Transact
               {/* VM ERRORS */}
               {logsLink && messageIndex === transactionMessages.length - 1 && (
                 <>
-                  <NetworkLink to={logsLink} className="small ml-1">
+                  <NetworkLink to={logsLink} className="small ms-1">
                     See logs
                   </NetworkLink>
                   {internalVMErrorEvent?.data && (
-                    <div className="ml-1">
+                    <div className="ms-1">
                       <Overlay
                         title={<InternalErrorDisplay data={internalVMErrorEvent.data} />}
                         className="d-flex"
@@ -66,7 +66,7 @@ export const TransactionErrorDisplay = ({ transaction }: { transaction: Transact
                       >
                         <FontAwesomeIcon
                           icon={faInfoCircle}
-                          className="small text-secondary ml-1"
+                          className="small text-secondary ms-1"
                         />
                       </Overlay>
                     </div>

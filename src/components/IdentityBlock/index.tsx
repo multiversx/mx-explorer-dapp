@@ -17,7 +17,7 @@ export const IdentityBlock = ({ block }: { block: BlockType }) => {
         {block.proposerIdentity ? (
           <div className="d-flex align-items-center symbol text-truncate">
             {block?.proposerIdentity?.avatar && (
-              <img src={block?.proposerIdentity?.avatar} className="side-icon mr-1" alt=" " />
+              <img src={block?.proposerIdentity?.avatar} className="side-icon me-1" alt=" " />
             )}
             <div className="text-truncate">{block?.proposerIdentity?.name}</div>
           </div>

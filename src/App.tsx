@@ -16,6 +16,8 @@ import { activeNetworkSelector } from 'redux/selectors';
 
 import { networks } from 'config';
 
+import './assets/sass/theme.scss';
+
 export const FilteredRoutes = ({
   routes,
 }: {

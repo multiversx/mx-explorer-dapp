@@ -65,7 +65,7 @@ export const Nodes = () => {
 
       {dataReady === true && (
         <>
-          <div className="card-body p-0">
+          <div className="card-body">
             <NodesTable type={type as NodeType['type']} status={status as NodeType['status']}>
               <NodesTable.Body
                 nodes={nodes}

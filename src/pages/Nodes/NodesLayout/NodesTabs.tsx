@@ -13,7 +13,7 @@ export const NodesTabs = () => {
         {isMainnet && (
           <NetworkLink
             to={validatorsRoutes.identities}
-            className={`tab-link mr-3 ${activeRoute(validatorsRoutes.identities) ? 'active' : ''}`}
+            className={`tab-link me-3 ${activeRoute(validatorsRoutes.identities) ? 'active' : ''}`}
           >
             <h6>Validators</h6>
           </NetworkLink>
@@ -21,7 +21,7 @@ export const NodesTabs = () => {
 
         <NetworkLink
           to={validatorsRoutes.providers}
-          className={`tab-link ${isMainnet ? 'mx-3' : 'mr-3'} ${
+          className={`tab-link ${isMainnet ? 'mx-3' : 'me-3'} ${
             activeRoute(validatorsRoutes.providers) ? 'active' : ''
           }`}
         >
@@ -30,7 +30,7 @@ export const NodesTabs = () => {
 
         <NetworkLink
           to={validatorsRoutes.nodes}
-          className={`tab-link mx-3 pr-3 pr-sm-0 ${
+          className={`tab-link mx-3 pe-3 pe-sm-0 ${
             activeRoute(validatorsRoutes.nodes) ? 'active' : ''
           }`}
         >
@@ -39,7 +39,7 @@ export const NodesTabs = () => {
 
         <NetworkLink
           to={validatorsRoutes.statistics}
-          className={`tab-link mx-3 pr-3 pr-sm-0 ${
+          className={`tab-link mx-3 pe-3 pe-sm-0 ${
             activeRoute(validatorsRoutes.statistics) ? 'active' : ''
           }`}
         >
@@ -48,7 +48,7 @@ export const NodesTabs = () => {
 
         <NetworkLink
           to={validatorsRoutes.queue}
-          className={`tab-link ml-0 ml-sm-3 ${activeRoute(validatorsRoutes.queue) ? 'active' : ''}`}
+          className={`tab-link ms-0 ms-sm-3 ${activeRoute(validatorsRoutes.queue) ? 'active' : ''}`}
         >
           <h6>Queue</h6>
         </NetworkLink>

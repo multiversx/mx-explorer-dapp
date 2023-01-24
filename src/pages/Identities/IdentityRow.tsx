@@ -71,7 +71,7 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
         <td>{identity.rank}</td>
         <td>
           <div className="d-flex align-items-center">
-            <div className="mr-3">
+            <div className="me-3">
               <NetworkLink to={link}>
                 <SharedIdentity.Avatar identity={identity} />
               </NetworkLink>
@@ -97,7 +97,7 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
               fillPercentLabel={stakePercentLabel}
             />
 
-            <div className="ml-3">{stakePercentLabel}</div>
+            <div className="ms-3">{stakePercentLabel}</div>
           </div>
         </td>
         <td className="text-right">{identity.validators.toLocaleString('en')}</td>

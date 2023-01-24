@@ -25,7 +25,7 @@ export const AppSwitcher = ({ onToggle }: { onToggle?: () => void }) => {
             </span>
           </i>
           <span className="d-lg-none">Switch to</span>
-          <FontAwesomeIcon className="d-inline-block d-lg-none ml-1" icon={faAngleDown} />
+          <FontAwesomeIcon className="d-inline-block d-lg-none ms-1" icon={faAngleDown} />
         </div>
       }
       id="app-switcher-dropdown"

@@ -1,0 +1,44 @@
+// TEMPORARY - css overrides - TODO - move to bootstrap
+
+$base-font-size: 16px;
+
+html {
+  font-size: $base-font-size;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+
+  // Adjust font sizes for 144dpi+ (including retina).
+  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+    font-size: $base-font-size;
+    font-weight: 400;
+  }
+}
+
+body {
+  font-size: $base-font-size;
+  font-weight: 500;
+}
+
+dt {
+  font-weight: 400;
+}
+dd {
+  margin-bottom: 0;
+}
+
+.main-content {
+  > .main-content-container {
+    &.container-fluid {
+      min-height: calc(
+        100vh - 9rem
+      ); // fixes content min height taking into account navbar and footer heights
+    }
+  }
+}
+
+a {
+  text-decoration: none;
+  &:hover {
+    color: var(--#{$prefix}primary);
+  }
+}

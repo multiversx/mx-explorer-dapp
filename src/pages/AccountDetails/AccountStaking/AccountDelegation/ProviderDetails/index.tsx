@@ -35,7 +35,7 @@ export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
                   </Tooltip>
                 )}
               >
-                <FontAwesomeIcon icon={faBadgeCheck} size="lg" className="ml-2 text-primary" />
+                <FontAwesomeIcon icon={faBadgeCheck} size="lg" className="ms-2 text-primary" />
               </OverlayTrigger>
             )}
           </div>
@@ -55,20 +55,20 @@ export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
                 size="xs"
                 icon={faExternalLink}
                 style={{ pointerEvents: 'none' }}
-                className="ml-1 text-muted"
+                className="ms-1 text-muted"
               />
             </a>
           )}
 
           <div className="d-flex flex-wrap provider-metrics">
             <div>
-              <FontAwesomeIcon size="xs" icon={faLeaf} className="mr-1" />
-              {provider.apr}%<span className="text-secondary ml-1">APR</span>
+              <FontAwesomeIcon size="xs" icon={faLeaf} className="me-1" />
+              {provider.apr}%<span className="text-secondary ms-1">APR</span>
             </div>
             <div>
-              <FontAwesomeIcon size="xs" icon={faReceipt} className="mr-1" />
+              <FontAwesomeIcon size="xs" icon={faReceipt} className="me-1" />
               {new BigNumber(provider.serviceFee).times(100).toFormat()}%
-              <span className="text-secondary ml-1">Fee</span>
+              <span className="text-secondary ms-1">Fee</span>
             </div>
             <div>
               {stringIsFloat(provider.locked) &&
@@ -89,12 +89,12 @@ export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
                       total: provider.delegationCap,
                       minDelegation,
                     })}
-                    %<span className="text-secondary ml-1">Filled</span>
+                    %<span className="text-secondary ms-1">Filled</span>
                   </span>
                 </>
               ) : (
                 <span>
-                  <FontAwesomeIcon size="xs" icon={faInfinity} className="mr-1" />
+                  <FontAwesomeIcon size="xs" icon={faInfinity} className="me-1" />
                   Uncapped
                 </span>
               )}

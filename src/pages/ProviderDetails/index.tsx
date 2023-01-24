@@ -63,7 +63,7 @@ export const ProviderDetails = () => {
 
       {dataReady === true && (
         <>
-          <div className="card-body p-0">
+          <div className="card-body">
             <NodesTable>
               <NodesTable.Body nodes={nodes} />
             </NodesTable>

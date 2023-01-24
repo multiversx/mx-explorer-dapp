@@ -106,15 +106,15 @@ export const AccountDetailsCard = () => {
               <div className={`card-header ${scamInfo ? 'status-text-warning' : ''}`}>
                 <div className="card-header-item d-flex align-items-center justify-content-between">
                   <div className="d-flex align-items-center w-100">
-                    <span className="mr-2 h6 mb-0" data-testid="title">
+                    <span className="me-2 h6 mb-0" data-testid="title">
                       Contract Details
                     </span>
                     {scamInfo && (
-                      <span className="text-warning d-flex align-items-center ml-2">
+                      <span className="text-warning d-flex align-items-center ms-2">
                         <FontAwesomeIcon
                           icon={faExclamationTriangle}
                           size="sm"
-                          className="text-warning mr-2"
+                          className="text-warning me-2"
                         />
                         {scamInfo.info}
                       </span>
@@ -130,7 +130,7 @@ export const AccountDetailsCard = () => {
                   )}
                 </div>
               </div>
-              <div className="card-body p-0">
+              <div className="card-body">
                 <div className="container-fluid">
                   <SmallDetailItem title="Address">
                     <div className="d-flex align-items-center">
@@ -144,7 +144,7 @@ export const AccountDetailsCard = () => {
                     <SmallDetailItem title="Name">
                       <div className="d-flex align-items-center">
                         {assets?.iconSvg && (
-                          <div className="side-icon mr-1">
+                          <div className="side-icon me-1">
                             <img src={assets?.iconSvg} alt=" " />
                           </div>
                         )}
@@ -187,7 +187,7 @@ export const AccountDetailsCard = () => {
                   </span>
                 </div>
               </div>
-              <div className="card-body p-0">
+              <div className="card-body">
                 <div className="container-fluid">
                   <SmallDetailItem title="Shard">
                     {shard !== undefined ? (
@@ -232,7 +232,7 @@ export const AccountDetailsCard = () => {
                   <SmallDetailItem title="Deployed">
                     {deployedAt !== undefined ? (
                       <div className="d-flex align-items-center">
-                        <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
+                        <FontAwesomeIcon icon={faClock} className="me-2 text-secondary" />
                         <TimeAgo value={deployedAt} /> ago &nbsp;
                         <span className="text-secondary">
                           ({dateFormatted(deployedAt, false, true)})
@@ -262,10 +262,10 @@ export const AccountDetailsCard = () => {
               <div className="card-header-item">
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="d-flex align-items-center w-100">
-                    <span className="mr-2 h6 mb-0" data-testid="title">
+                    <span className="me-2 h6 mb-0" data-testid="title">
                       <div className="d-flex align-items-center">
                         {assets?.iconSvg && (
-                          <div className="side-icon mr-1">
+                          <div className="side-icon me-1">
                             <img src={assets?.iconSvg} alt=" " />
                           </div>
                         )}
@@ -273,11 +273,11 @@ export const AccountDetailsCard = () => {
                       </div>
                     </span>
                     {scamInfo && (
-                      <span className="text-warning d-flex align-items-center ml-2">
+                      <span className="text-warning d-flex align-items-center ms-2">
                         <FontAwesomeIcon
                           icon={faExclamationTriangle}
                           size="sm"
-                          className="text-warning mr-2"
+                          className="text-warning me-2"
                         />
                         {scamInfo.info}
                       </span>
@@ -287,7 +287,7 @@ export const AccountDetailsCard = () => {
               </div>
               <div className="card-header-item compact d-flex">
                 <span className="text-secondary">Address:</span>
-                <div className="d-flex align-items-center text-break-all ml-2">
+                <div className="d-flex align-items-center text-break-all ms-2">
                   <span data-testid="address">{address}</span>
                   <CopyButton text={address} />
                 </div>
@@ -295,7 +295,7 @@ export const AccountDetailsCard = () => {
               {username && (
                 <div className="card-header-item compact d-flex">
                   <span className="text-secondary">Herotag:</span>
-                  <div className="d-flex align-items-center text-break-all ml-2">
+                  <div className="d-flex align-items-center text-break-all ms-2">
                     <span data-testid="address">{formatHerotag(username)}</span>
                     <CopyButton text={formatHerotag(username)} />
                   </div>

@@ -49,7 +49,7 @@ export const AccountContractCode = () => {
       </div>
       {codeHash && (
         <div className="card-body d-flex flex-wrap border-bottom py-3 px-lg-spacer text-truncate">
-          <div className="text-secondary pr-3">Code Hash</div>
+          <div className="text-secondary pe-3">Code Hash</div>
           <div className="text-truncate">{codeHashHexValue}</div>
         </div>
       )}

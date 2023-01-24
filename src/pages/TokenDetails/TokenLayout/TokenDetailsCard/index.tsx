@@ -70,13 +70,13 @@ export const TokenDetailsCard = () => {
                 <div className="card-header-item d-flex align-items-center">
                   <h1 className="h6 d-flex align-items-center" data-testid="title">
                     {assets && assets.svgUrl && (
-                      <img src={assets.svgUrl} alt={ticker} className="side-icon mr-1" />
+                      <img src={assets.svgUrl} alt={ticker} className="side-icon me-1" />
                     )}
                     <span>{title}</span>
                   </h1>
                 </div>
               </div>
-              <div className="card-body p-0">
+              <div className="card-body">
                 <dl className="container-fluid">
                   <SmallDetailItem title="Token">{identifier}</SmallDetailItem>
 
@@ -127,7 +127,7 @@ export const TokenDetailsCard = () => {
                   <h6 data-testid="title">Summary</h6>
                 </div>
               </div>
-              <div className="card-body p-0">
+              <div className="card-body">
                 <dl className="container-fluid">
                   <SmallDetailItem title="Owner">
                     <div className="d-flex">

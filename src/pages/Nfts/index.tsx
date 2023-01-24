@@ -103,13 +103,13 @@ export const Nfts = () => {
                                             <img
                                               src={nft.assets.svgUrl}
                                               alt={nft.identifier}
-                                              className="side-icon mr-1"
+                                              className="side-icon me-1"
                                             />
                                           )}
                                           <div>{nft.identifier}</div>
                                         </div>
                                       </NetworkLink>
-                                      <NftBadge type={nft.type} className="ml-2" />
+                                      <NftBadge type={nft.type} className="ms-2" />
                                     </div>
                                   </td>
                                   <td>

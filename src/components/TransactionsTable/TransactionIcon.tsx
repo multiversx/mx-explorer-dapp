@@ -78,7 +78,7 @@ export const TransactionIcon = ({ transaction }: TransactionIconType) => {
                     <FontAwesomeIcon
                       icon={faSpinnerThird}
                       size={'sm'}
-                      className="ml-2 fa-spin fast-spin"
+                      className="ms-2 fa-spin fast-spin"
                     />
                   </>
                 )}
@@ -90,7 +90,7 @@ export const TransactionIcon = ({ transaction }: TransactionIconType) => {
         <FontAwesomeIcon
           icon={icon}
           size={icon === faTimes ? '1x' : 'sm'}
-          className="mr-1 text-secondary"
+          className="me-1 text-secondary"
         />
       </OverlayTrigger>
     </>

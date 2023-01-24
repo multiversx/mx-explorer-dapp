@@ -130,7 +130,7 @@ export const MiniBlockDetails = () => {
                         </div>
                       </div>
 
-                      <div className="card-body p-0">
+                      <div className="card-body">
                         <div className="container-fluid">
                           <DetailItem title="Miniblock Hash">
                             <div className="d-flex align-items-center text-break-all">

@@ -30,12 +30,12 @@ export const MultilayerPercentageBar = ({
         {steps.map((step, i) => (
           <div
             key={`legend-${i}`}
-            className={`legend-dot d-flex align-items-center ${trim ? '' : 'mr-1 mr-lg-3'}`}
+            className={`legend-dot d-flex align-items-center ${trim ? '' : 'me-1 me-lg-3'}`}
           >
-            <Led color={`flex-shrink-0 mr-1 step-${i + 1}`} />
+            <Led color={`flex-shrink-0 me-1 step-${i + 1}`} />
             <small className="d-flex align-items-center overflow-hidden min-w-0">
               {trim ? <Trim text={step.name} /> : <>{step.name}</>}
-              <span className="text-secondary ml-1">({step.percent}%)</span>
+              <span className="text-secondary ms-1">({step.percent}%)</span>
             </small>
           </div>
         ))}

@@ -22,29 +22,29 @@ export const getStatusIconAndColor = (
   switch (true) {
     case pendingResults:
       color = 'text-warning';
-      Icon = () => <FontAwesomeIcon icon={faHourglass} className={`mr-2 ${color}`} />;
+      Icon = () => <FontAwesomeIcon icon={faHourglass} className={`me-2 ${color}`} />;
       break;
     case statusIs(txStatus.notExecuted):
       color = 'text-danger';
-      Icon = () => <FontAwesomeIcon icon={faBan} className={`mr-2 ${color}`} />;
+      Icon = () => <FontAwesomeIcon icon={faBan} className={`me-2 ${color}`} />;
       break;
     case statusIs(txStatus.fail):
     case statusIs(txStatus.failed):
     case statusIs(txStatus.rewardReverted):
       color = 'text-danger';
-      Icon = () => <FontAwesomeIcon icon={faTimes} className={`mr-2 ${color}`} />;
+      Icon = () => <FontAwesomeIcon icon={faTimes} className={`me-2 ${color}`} />;
       break;
     case statusIs(txStatus.success):
       color = 'text-success';
-      Icon = () => <FontAwesomeIcon icon={faCheckCircle} className={`mr-2 ${color}`} />;
+      Icon = () => <FontAwesomeIcon icon={faCheckCircle} className={`me-2 ${color}`} />;
       break;
     case statusIs(txStatus.invalid):
       color = 'text-danger';
-      Icon = () => <FontAwesomeIcon icon={faBan} className={`mr-2 ${color}`} />;
+      Icon = () => <FontAwesomeIcon icon={faBan} className={`me-2 ${color}`} />;
       break;
     default:
       color = 'text-warning';
-      Icon = () => <FontAwesomeIcon icon={faHourglass} className={`mr-2 ${color}`} />;
+      Icon = () => <FontAwesomeIcon icon={faHourglass} className={`me-2 ${color}`} />;
   }
 
   return {
@@ -68,7 +68,7 @@ export const TransactionStatus = ({ status, pendingResults }: TransactionStatusT
   const { Icon } = getStatusIconAndColor(status, pendingResults);
 
   return (
-    <span className="d-flex align-items-center text-capitalize mr-2">
+    <span className="d-flex align-items-center text-capitalize me-2">
       <Icon />
       {getStatusText({ status, pendingResults })}
     </span>
