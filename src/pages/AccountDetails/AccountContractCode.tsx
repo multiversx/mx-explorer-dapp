@@ -27,11 +27,7 @@ export const DownloadContractCode = ({
 
   return (
     <div className='mt-4'>
-      <button
-        type='button'
-        onClick={download}
-        className='btn btn-primary-light'
-      >
+      <button type='button' onClick={download} className='btn btn-primary'>
         Download WASM File
       </button>
     </div>

@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
+import { faChevronRight } from '@fortawesome/pro-solid-svg-icons/faChevronRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
 import {
   NetworkLink,
   AccountName,
@@ -10,11 +11,11 @@ import {
 } from 'components';
 import { addressIsBech32, urlBuilder } from 'helpers';
 import {
+  UITransactionType,
   OperationType,
   TransactionOperationActionType,
   VisibleTransactionOperationType
 } from 'types';
-import { UITransactionType } from 'types';
 
 export enum OperationDirectionEnum {
   out = 'out',
@@ -111,7 +112,8 @@ const OperationBlock = ({
   operation,
   action,
   isFullSize,
-  direction
+  direction,
+  isFirst
 }: {
   address: string;
   transaction: UITransactionType;
@@ -119,6 +121,7 @@ const OperationBlock = ({
   action?: string;
   isFullSize?: boolean;
   direction?: string;
+  isFirst?: boolean;
 }) => {
   let operationAssets;
   if (address === transaction.sender) {
@@ -142,23 +145,27 @@ const OperationBlock = ({
         isFullSize
           ? 'col-12'
           : ` pe-xl-0 ${
-              operationAssets ? 'ps-3 mw-lg-6 mw-xl-4' : 'col-lg-6 col-xl-4'
+              operationAssets ? 'mw-lg-6 mw-xl-4' : 'col-lg-6 col-xl-4'
             }`
       }`}
     >
       {direction && (
-        <div className={`direction-badge me-2 ${direction.toLowerCase()}`}>
+        <div
+          className={`me-2 badge badge-outline badge-rounded badge-direction ${direction.toLowerCase()}`}
+        >
           {direction.toUpperCase()}
         </div>
       )}
-      {action && (
+      {!isFirst && action && (
         <FontAwesomeIcon
-          icon={faCaretRight}
-          size='xs'
-          className='text-secondary me-2'
+          icon={faChevronRight}
+          size='sm'
+          className='text-primary-200 me-2'
         />
       )}
-      <div className='me-2 text-nowrap'>{action ? action : ''}</div>
+      {action && (
+        <div className='me-2 text-nowrap text-neutral-400'>{action}</div>
+      )}
       {addressIsBech32(address) ? (
         <>
           <NetworkLink
@@ -199,6 +206,7 @@ const OperationText = ({
           address={operation.sender}
           action='Mint by'
           direction={OperationDirectionEnum.internal}
+          isFirst
         />
       );
     case TransactionOperationActionType.addQuantity:
@@ -209,6 +217,7 @@ const OperationText = ({
           address={operation.sender}
           action='Add quantity by'
           direction={OperationDirectionEnum.internal}
+          isFirst
         />
       );
     case TransactionOperationActionType.burn:
@@ -221,6 +230,7 @@ const OperationText = ({
           address={operation.sender}
           action='Burn by'
           direction={OperationDirectionEnum.internal}
+          isFirst
         />
       );
     case TransactionOperationActionType.wipe:
@@ -231,6 +241,7 @@ const OperationText = ({
           address={operation.receiver}
           action='Wipe from'
           direction={OperationDirectionEnum.internal}
+          isFirst
         />
       );
     case TransactionOperationActionType.multiTransfer:
@@ -242,6 +253,7 @@ const OperationText = ({
             address={operation.sender}
             action='Multi transfer from'
             direction={direction}
+            isFirst
           />{' '}
           <OperationBlock
             transaction={transaction}
@@ -260,6 +272,7 @@ const OperationText = ({
             address={operation.sender}
             action='Transfer from'
             direction={direction}
+            isFirst
           />{' '}
           <OperationBlock
             transaction={transaction}
@@ -277,6 +290,7 @@ const OperationText = ({
           address={operation.sender}
           action='Write log by'
           direction={OperationDirectionEnum.internal}
+          isFirst
           isFullSize
         />
       );
@@ -288,6 +302,7 @@ const OperationText = ({
           address={operation.sender}
           action='Signal error by'
           direction={OperationDirectionEnum.internal}
+          isFirst
           isFullSize
         />
       );
@@ -300,6 +315,7 @@ const OperationText = ({
             address={operation.sender}
             action='From'
             direction={direction}
+            isFirst
           />{' '}
           <OperationBlock
             transaction={transaction}
@@ -326,10 +342,14 @@ const OperationRow = ({
         <DetailedItem operation={operation} transaction={transaction}>
           <>
             {operation.esdtType === 'NonFungibleESDT' && (
-              <div className='me-1'>NFT</div>
+              <div className='me-1 badge badge-outline badge-outline-yellow'>
+                NFT
+              </div>
             )}
             {operation.esdtType === 'SemiFungibleESDT' && (
-              <div className='me-1'>SFT quantity</div>
+              <div className='me-1 badge badge-outline badge-outline-orange'>
+                SFT
+              </div>
             )}
             <OperationToken operation={operation} />
           </>
@@ -339,10 +359,15 @@ const OperationRow = ({
     case VisibleTransactionOperationType.egld:
       return (
         <DetailedItem operation={operation} transaction={transaction}>
-          <>
-            <div className='me-2'>Value</div>
-            <Denominate value={operation.value} showLastNonZeroDecimal={true} />
-          </>
+          <div className='d-flex align-items-center symbol text-truncate'>
+            <EgldSymbol className='side-icon me-1' />
+            <span className='text-truncate'>
+              <Denominate
+                value={operation.value}
+                showLastNonZeroDecimal={true}
+              />
+            </span>
+          </div>
         </DetailedItem>
       );
 
@@ -435,7 +460,7 @@ export const OperationsList = ({
       {(displayOperations.length !== operations.length ||
         collapsedOperations.length > 0) && (
         <button
-          className='btn btn-link btn-link-base'
+          className='btn btn-link btn-link-base text-primary-200'
           type='button'
           onClick={toggleCollapseClick}
           aria-controls='operations-list'

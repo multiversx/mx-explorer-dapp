@@ -45,9 +45,16 @@ export const TransactionIcon = ({ transaction }: TransactionIconType) => {
   };
 
   let icon;
-  if (failed) icon = faTimes;
-  if (invalid) icon = faBan;
-  if (pending) icon = faHourglass;
+
+  if (failed) {
+    icon = faTimes;
+  }
+  if (invalid) {
+    icon = faBan;
+  }
+  if (pending) {
+    icon = faHourglass;
+  }
 
   return icon === undefined ? null : (
     <>
@@ -93,7 +100,7 @@ export const TransactionIcon = ({ transaction }: TransactionIconType) => {
         <FontAwesomeIcon
           icon={icon}
           size={icon === faTimes ? '1x' : 'sm'}
-          className='me-1 text-secondary'
+          className={`me-1 tx-status ${transaction.status.toLowerCase()} `}
         />
       </OverlayTrigger>
     </>

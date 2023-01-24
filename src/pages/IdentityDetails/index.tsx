@@ -100,7 +100,7 @@ export const IdentityDetails = () => {
 
                             <div className='ms-auto'>
                               <a
-                                className='btn btn-sm btn-primary-light'
+                                className='btn btn-sm btn-primary'
                                 target={'_blank'}
                                 rel={'noreferrer nofollow'}
                                 href={walletAddress}

@@ -1,0 +1,253 @@
+// Neutrals
+
+.text-neutral-100 {
+  color: var(--neutral-100);
+}
+.text-neutral-200 {
+  color: var(--neutral-200);
+}
+.text-neutral-300 {
+  color: var(--neutral-300);
+}
+.text-neutral-400 {
+  color: var(--neutral-400);
+}
+.text-neutral-500 {
+  color: var(--neutral-500);
+}
+.text-neutral-600 {
+  color: var(--neutral-600);
+}
+.text-neutral-700 {
+  color: var(--neutral-700);
+}
+.text-neutral-800 {
+  color: var(--neutral-800);
+}
+.text-neutral-900 {
+  color: var(--neutral-900);
+}
+
+.bg-neutral-100 {
+  background-color: var(--neutral-100);
+}
+.bg-neutral-200 {
+  background-color: var(--neutral-200);
+}
+.bg-neutral-300 {
+  background-color: var(--neutral-300);
+}
+.bg-neutral-400 {
+  background-color: var(--neutral-400);
+}
+.bg-neutral-500 {
+  background-color: var(--neutral-500);
+}
+.bg-neutral-600 {
+  background-color: var(--neutral-600);
+}
+.bg-neutral-700 {
+  background-color: var(--neutral-700);
+}
+.bg-neutral-800 {
+  background-color: var(--neutral-800);
+}
+.bg-neutral-900 {
+  background-color: var(--neutral-900);
+}
+
+// Colors
+
+.text-green {
+  color: var(--green);
+}
+.bg-green {
+  background-color: var(--green);
+}
+.text-yellow {
+  color: var(--yellow);
+}
+.bg-yellow {
+  background-color: var(--yellow);
+}
+.text-orange {
+  color: var(--orange);
+}
+.bg-orange {
+  background-color: var(--orange);
+}
+.text-red {
+  color: var(--red);
+}
+.bg-red {
+  background-color: var(--red);
+}
+
+.text-primary-200 {
+  color: var(--primary-200);
+}
+.bg-primary-200 {
+  background-color: var(--primary-200);
+}
+
+// BADGES
+
+.badge-green-alt,
+.badge-yellow,
+.badge-orange {
+  line-height: 1rem;
+  color: #fafafa; // TODO theme-color neutral/50
+  min-width: 1.5rem;
+}
+
+.badge-green-alt {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 245, 160, 0.3),
+    rgba(0, 217, 245, 0.3)
+  );
+}
+.badge-yellow {
+  background: linear-gradient(
+    90deg,
+    rgba(240, 152, 25, 0.4),
+    rgba(237, 222, 93, 0.4)
+  );
+}
+.badge-orange {
+  background: linear-gradient(
+    90deg,
+    rgba(240, 77, 25, 0.2) 0%,
+    rgba(237, 136, 93, 0.2) 100%
+  );
+}
+
+.badge-outline {
+  position: relative;
+  line-height: 1rem;
+  &:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: $badge-border-radius;
+    padding: 1px;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+  &-green {
+    color: #22c55e; // TODO theme-color green/500
+    background: linear-gradient(
+      90deg,
+      rgba(74, 222, 128, 0.06) 0%,
+      rgba(134, 239, 172, 0.06) 36.32%,
+      rgba(22, 163, 74, 0.06) 100%
+    );
+    &:before {
+      background: linear-gradient(
+        90deg,
+        rgba(134, 239, 172, 0.5),
+        rgba(74, 222, 128, 0.5),
+        rgba(22, 163, 74, 0.5)
+      );
+    }
+  }
+  &-green-alt {
+    color: #ccfbf1; // TODO theme-color teal/100 rgba(204, 251, 241)
+    background: linear-gradient(
+      90deg,
+      rgba(0, 245, 160, 0.06) 0%,
+      rgba(0, 217, 245, 0.06) 100%
+    );
+    &:before {
+      background: linear-gradient(
+        90deg,
+        rgba(0, 245, 160, 0.3),
+        rgba(0, 217, 245, 0.3)
+      );
+    }
+  }
+  &-yellow {
+    color: #fef08a; // TODO theme-color yellow/100
+    background: #171717;
+    &:before {
+      background: linear-gradient(
+        90deg,
+        rgba(240, 152, 25, 0.4),
+        rgba(237, 222, 93, 0.4)
+      );
+    }
+  }
+  &-orange {
+    color: #fed7aa; // TODO theme-color orange/200 rgba(254, 215, 170)
+    background: #171717;
+    &:before {
+      background: linear-gradient(
+        90deg,
+        rgba(240, 77, 25, 0.4),
+        rgba(237, 136, 93, 0.4)
+      );
+    }
+  }
+  &-grey {
+    color: var(--neutral-500);
+    background: linear-gradient(
+      90deg,
+      rgba(117, 127, 154, 0.06) 0%,
+      rgba(215, 221, 232, 0.06) 100%
+    );
+    &:before {
+      background: linear-gradient(
+        90deg,
+        rgba(117, 127, 154, 0.3),
+        rgba(215, 221, 232, 0.3)
+      );
+    }
+  }
+
+  &.badge-rounded {
+    line-height: 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    &:before {
+      border-radius: 6px;
+    }
+  }
+}
+
+.badge-direction {
+  min-width: 40px;
+  &.out {
+    @extend .badge-outline-yellow;
+  }
+  &.in {
+    @extend .badge-outline-green;
+  }
+  &.self {
+    @extend .badge-outline-grey;
+  }
+  &.internal,
+  &.int {
+    @extend .badge-outline-grey;
+  }
+}
+
+.tx-status {
+  &.pending {
+    color: var(--yellow);
+  }
+  &.invalid {
+    color: var(--orange);
+  }
+  &.success {
+    color: var(--green);
+  }
+  &.failed,
+  &.fail {
+    color: var(--red);
+  }
+  color: var(--neutral-400);
+}

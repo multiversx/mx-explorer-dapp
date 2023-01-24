@@ -11,7 +11,7 @@ export const TxActionCollection = ({ token }: { token: TokenArgumentType }) => {
       {token && token.collection && (
         <NetworkLink
           to={urlBuilder.collectionDetails(token.collection)}
-          className={`d-flex ${token.svgUrl ? 'side-link' : 'text-truncate'}`}
+          className={`d-flex text-truncate ${token.svgUrl ? 'side-link' : ''}`}
         >
           <div className='d-flex align-items-center symbol text-truncate'>
             {token.svgUrl && (

@@ -75,7 +75,7 @@ export const TransactionRow = ({
           </NetworkLink>
         </div>
       </td>
-      <td>
+      <td className='text-neutral-400'>
         <TimeAgo value={transaction.timestamp} short tooltip />
       </td>
       <td>
@@ -88,7 +88,7 @@ export const TransactionRow = ({
           </NetworkLink>
           <FontAwesomeIcon
             icon={faArrowRight}
-            className='text-secondary mx-2'
+            className='text-neutral-500 mx-2'
           />
           <NetworkLink
             to={urlBuilder.receiverShard(transaction.receiverShard)}
@@ -132,7 +132,9 @@ export const TransactionRow = ({
       {directionCol === true && (
         <td>
           <div className='d-flex'>
-            <span className={`direction-badge ${direction.toLowerCase()}`}>
+            <span
+              className={`badge badge-outline badge-rounded badge-direction ${direction.toLowerCase()}`}
+            >
               {direction.toUpperCase()}
             </span>
           </div>

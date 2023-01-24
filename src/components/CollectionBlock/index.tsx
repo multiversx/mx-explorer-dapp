@@ -8,7 +8,9 @@ export const CollectionBlock = ({ nft }: { nft: NftType }) => {
     <div className='collection-block d-flex text-truncate'>
       <NetworkLink
         to={urlBuilder.collectionDetails(nft.collection)}
-        className={`d-flex ${nft?.assets?.svgUrl ? 'side-link' : ''}`}
+        className={`d-flex text-truncate ${
+          nft?.assets?.svgUrl ? 'side-link' : ''
+        }`}
       >
         <div className='d-flex align-items-center symbol text-truncate'>
           {nft.assets ? (

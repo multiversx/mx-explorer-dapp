@@ -10,7 +10,11 @@ export const PropertyPill = ({
   active: boolean;
 }) => {
   return (
-    <span className={`direction-badge my-1 me-1 ${active ? 'in' : 'out'}`}>
+    <span
+      className={`me-1 badge badge-outline badge-rounded badge-direction ${
+        active ? 'in' : 'out'
+      }`}
+    >
       <FontAwesomeIcon className='me-1' icon={active ? faCheck : faTimes} />{' '}
       {name}
     </span>

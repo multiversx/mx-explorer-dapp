@@ -99,7 +99,7 @@ export const CollectionNfts = () => {
                               <NetworkLink
                                 to={urlBuilder.nftDetails(nft.identifier)}
                                 data-testid={`nftsLink${i}`}
-                                className={`d-flex ${
+                                className={`d-flex text-truncate ${
                                   nft.assets?.svgUrl ? 'side-link' : ''
                                 }`}
                               >

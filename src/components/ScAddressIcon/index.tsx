@@ -32,7 +32,7 @@ export const ScAddressIcon = ({
         </Tooltip>
       )}
     >
-      <FontAwesomeIcon icon={faFileAlt} className='me-1 text-secondary' />
+      <FontAwesomeIcon icon={faFileAlt} className='me-1 text-primary' />
     </OverlayTrigger>
   ) : null;
 };

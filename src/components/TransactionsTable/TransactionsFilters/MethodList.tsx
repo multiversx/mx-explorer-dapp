@@ -19,6 +19,7 @@ export const MethodList = () => {
       ...rest,
       ...(method ? { function: method } : {})
     }).toString();
+
     return `${networkPathname}?${nextUrlParams}`;
   };
 
@@ -33,11 +34,11 @@ export const MethodList = () => {
         <ul className='list-inline m-0'>
           {method && (
             <li className='list-inline-item my-1 my-md-0'>
-              <div className='btn btn-sm btn-light border btn-pill text-capitalize pe-0'>
+              <div className='badge badge-outline badge-outline-green text-capitalize d-flex align-items-center justify-content-center pe-0'>
                 {method}
                 <NetworkLink
                   to={methodLink('')}
-                  className='text-body py-2 ps-2 pe-3'
+                  className='text-green px-2 cursor-pointer'
                 >
                   ×
                 </NetworkLink>

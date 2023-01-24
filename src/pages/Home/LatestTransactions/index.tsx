@@ -112,7 +112,7 @@ export const LatestTransactions = () => {
                 <h6 className='m-0'>Transactions</h6>
                 <NetworkLink
                   to='/transactions'
-                  className='btn btn-sm btn-primary-light'
+                  className='btn btn-sm btn-primary'
                 >
                   View All Transactions
                 </NetworkLink>

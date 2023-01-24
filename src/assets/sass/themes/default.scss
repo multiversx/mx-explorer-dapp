@@ -21,16 +21,18 @@
   --neutral-800: #262626;
   --neutral-900: #171717;
   --dark-gray: #193b37;
+
   --red: #ff0000;
   --green: #4ade80;
   --orange: #f2542d;
-  --yellow: #fbca1c;
+  --yellow: #fbbf24;
   --blue: #1e65e7;
   --teal: #23f7dd;
 
+  --teal-200: #99f6e4;
+
   // Overrides
   // Only these variables must be changed across themes
-  --gray: #6c757d;
   --gray-dark: var(--dark-gray);
   --gray-100: var(--neutral-100);
   --gray-200: var(--neutral-200);
@@ -43,13 +45,18 @@
   --gray-900: var(--neutral-900);
 
   --primary: var(--teal);
+  --primary-200: var(--teal-200);
   --secondary: var(--neutral-800);
   --accent: var(--teal);
   --danger: var(--red);
   --info: var(--yellow);
   --success: var(--green);
   --warning: var(--orange);
-  --muted: var(--neutral-500);
+  --muted: var(--neutral-400);
+
+  --primary-rgb: 35, 247, 322;
+  --secondary-rgb: 38, 38, 38;
+  --muted-rgb: 163, 163, 163;
 
   --text-color: var(--neutral-100);
   --link-color: var(--neutral-100);

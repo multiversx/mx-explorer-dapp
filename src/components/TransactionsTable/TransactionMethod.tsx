@@ -50,7 +50,7 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
   const TxMethodBadge = (
     <div className='d-inline-block'>
       <TxMethodText>
-        <span className='badge badge-secondary badge-pill font-weight-normal'>
+        <span className='badge badge-outline badge-outline-green'>
           <div className='transaction-function-badge text-truncate text-capitalize'>
             {getTransactionMethod(transaction)}
           </div>

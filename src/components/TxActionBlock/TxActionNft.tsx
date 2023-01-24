@@ -27,7 +27,11 @@ export const TxActionNft = ({
           {!noValue &&
             token.value &&
             token.type !== NftEnumType.NonFungibleESDT && (
-              <div className={`me-1 ${token.svgUrl ? 'text-truncate' : ''}`}>
+              <div
+                className={`me-1 badge badge-orange ${
+                  token.svgUrl ? 'text-truncate' : ''
+                }`}
+              >
                 {token.decimals !== undefined ? (
                   <Denominate
                     value={token.value}
@@ -44,7 +48,9 @@ export const TxActionNft = ({
             )}
           <NetworkLink
             to={urlBuilder.nftDetails(token.identifier)}
-            className={`d-flex ${token.svgUrl ? 'side-link' : 'text-truncate'}`}
+            className={`d-flex text-truncate ${
+              token.svgUrl ? 'side-link' : ''
+            }`}
           >
             <div className='d-flex align-items-center symbol text-truncate'>
               {token.svgUrl && (
