@@ -139,7 +139,7 @@ export const AccountDetailsCard = () => {
                   {isProvider && (
                     <NetworkLink
                       to={urlBuilder.providerDetails(address)}
-                      className='btn btn-sm btn-primary-light'
+                      className='btn btn-sm btn-primary'
                     >
                       Provider Details
                     </NetworkLink>

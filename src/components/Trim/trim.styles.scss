@@ -1,3 +1,5 @@
+// Base Logic
+
 .trim {
   display: flex;
   max-width: 100%;
@@ -36,7 +38,7 @@
   .left span,
   .right span {
     color: var(--#{$prefix}body);
-    font-size: 1rem;
+    font-size: $font-size-base;
     pointer-events: none;
     user-select: none;
   }
@@ -93,12 +95,7 @@
   overflow: hidden;
 }
 
-a:hover > .trim span {
-  color: var(--#{$prefix}link-color) !important;
-  &.hidden-text-ref {
-    color: transparent !important;
-  }
-}
+// Link Extra Logic
 
 a > .trim span {
   color: var(--#{$prefix}link-color) !important;
@@ -106,6 +103,14 @@ a > .trim span {
     color: transparent !important;
   }
 }
+a:hover > .trim span {
+  color: var(--#{$prefix}primary) !important;
+  &.hidden-text-ref {
+    color: transparent !important;
+  }
+}
+
+// Table Extra Logic
 
 .table .trim {
   max-width: 10rem;

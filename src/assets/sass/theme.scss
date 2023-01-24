@@ -14,6 +14,7 @@ Override Bootstrap variables only above.
 @import './themes/default.scss';
 @import './main.scss';
 @import './bootstrap-overrides.scss';
+@import './theme-helpers.scss';
 
 /* Base
 -------------------------------------------------- */
@@ -191,55 +192,6 @@ Override Bootstrap variables only above.
   flex-basis: 0;
 }
 
-.direction-badge {
-  @extend .badge;
-  @extend .badge-pill !optional;
-  @extend .text-uppercase;
-
-  font-weight: normal;
-  font-size: 63%;
-  position: relative;
-  background-color: var(--light);
-  min-width: 2.5rem;
-
-  &.out {
-    color: darken($warning, 10%);
-    border: 1px solid rgba(darken($warning, 10%), 0.2);
-  }
-
-  &.in {
-    color: var(--success);
-    border: 1px solid rgba(var(--success), 0.2);
-  }
-
-  &.self {
-    color: var(--secondary);
-    border: 1px solid rgba(var(--secondary), 0.2);
-  }
-
-  &.internal,
-  &.int {
-    color: var(--muted);
-    border: 1px solid rgba(var(--muted), 0.2);
-  }
-}
-
-.me-lg-n1rem {
-  @include media-breakpoint-up(lg) {
-    margin-right: -1rem;
-  }
-}
-
-.btn-primary-light {
-  color: var(--primary) !important;
-  background-color: var(--primary)-light;
-
-  &:hover {
-    color: var(--primary) !important;
-    background-color: var(--primary)-light-hover;
-  }
-}
-
 .animated-list {
   .animated-row {
     padding-top: 0.93rem;
@@ -253,7 +205,7 @@ Override Bootstrap variables only above.
   .new {
     @keyframes highlight {
       from {
-        background-color: var(--light);
+        background-color: var(--neutral-900);
       }
     }
     animation: highlight 1000ms ease-in-out;
@@ -314,7 +266,7 @@ Override Bootstrap variables only above.
   color: transparent;
   border-radius: 50%;
   overflow: hidden;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   svg,
   img {
     max-width: 1.5rem;
@@ -341,11 +293,13 @@ div.side-icon {
   outline: 0;
   border: 0;
   box-shadow: none;
+  text-decoration: none;
   &:focus,
   &:hover,
   &.focus {
     box-shadow: none;
     text-decoration: none;
+    color: var(--primary-200);
   }
 }
 

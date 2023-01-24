@@ -86,7 +86,7 @@ const MultipleTokensBadge = ({
 
   return (
     <OverlayTooltip tooltip={Tooltip}>
-      <FontAwesomeIcon icon={faLayerPlus} className='ms-2 text-secondary' />
+      <FontAwesomeIcon icon={faLayerPlus} className='ms-2 text-neutral-400' />
     </OverlayTooltip>
   );
 };

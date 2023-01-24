@@ -12,7 +12,7 @@ export const NftBadge = ({
     case NftEnumType.SemiFungibleESDT:
       return (
         <div
-          className={`badge badge-secondary badge-pill font-weight-normal ${
+          className={`badge badge-outline badge-outline-orange ${
             className ? className : ''
           }`}
         >
@@ -22,7 +22,7 @@ export const NftBadge = ({
     case NftEnumType.NonFungibleESDT:
       return (
         <div
-          className={`badge badge-secondary badge-pill font-weight-normal ${
+          className={`badge badge-outline badge-outline-yellow ${
             className ? className : ''
           }`}
         >
@@ -32,7 +32,7 @@ export const NftBadge = ({
     case NftEnumType.MetaESDT:
       return (
         <div
-          className={`badge badge-secondary badge-pill font-weight-normal ${
+          className={`badge badge-outline badge-outline-green ${
             className ? className : ''
           }`}
         >

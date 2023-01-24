@@ -11,6 +11,9 @@ $enable-rounded: true;
 $enable-shadows: false;
 
 // FONTS
+$font-family-sans-serif: 'Inter', sans-serif;
+
+$font-size-root: 16px;
 $font-size-base: 14px;
 
 $spacer-val: $spacer * 2;
@@ -20,8 +23,8 @@ $spacers: map-merge(
   $spacers,
   (
     spacer: (
-      $spacer-val,
-    ),
+      $spacer-val
+    )
   )
 );
 
@@ -32,7 +35,7 @@ $grid-breakpoints: (
   md: 768px,
   lg: 992px,
   xl: 1200px,
-  xxl: 1400px,
+  xxl: 1400px
 );
 
 // CONTAINER
@@ -41,7 +44,7 @@ $container-max-widths: (
   md: 720px,
   lg: 960px,
   xl: 1140px,
-  xxl: 1248px,
+  xxl: 1248px
 );
 
 // GRID
@@ -56,3 +59,11 @@ $card-border-radius: 1.5rem;
 $card-inner-border-radius: 1.5rem;
 $card-cap-padding-y: 2rem;
 $card-cap-padding-x: 2rem;
+
+// BADGES
+$badge-font-size: 12px;
+$badge-font-weight: $font-weight-normal;
+$badge-color: $white;
+$badge-padding-y: 0.25rem;
+$badge-padding-x: 0.5rem;
+$badge-border-radius: 0.25rem;

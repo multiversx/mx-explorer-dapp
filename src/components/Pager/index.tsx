@@ -80,12 +80,12 @@ export const Pager = ({
           }`}
         >
           {size === 1 ? (
-            <div className='btn btn-primary-light'>
+            <div className='btn btn-primary'>
               <FontAwesomeIcon icon={faBackward} />
             </div>
           ) : (
             <NetworkLink
-              className='btn btn-primary-light'
+              className='btn btn-primary'
               {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
               to={`${pathname}?${firstUrlParams}`}
             >
@@ -95,7 +95,7 @@ export const Pager = ({
 
           {size === 1 ? (
             <div
-              className='btn btn-primary-light'
+              className='btn btn-primary'
               {...(hasTestId
                 ? { 'data-testid': 'disabledPreviousPageButton' }
                 : {})}
@@ -104,7 +104,7 @@ export const Pager = ({
             </div>
           ) : (
             <NetworkLink
-              className='btn btn-primary-light'
+              className='btn btn-primary'
               to={prevPageUrl}
               {...(hasTestId ? { 'data-testid': 'previousPageButton' } : {})}
             >
@@ -132,7 +132,7 @@ export const Pager = ({
         >
           {total === '...' || end < total ? (
             <NetworkLink
-              className='btn btn-primary-light'
+              className='btn btn-primary'
               {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
               to={`${pathname}?${nextUrlParams}`}
             >
@@ -140,7 +140,7 @@ export const Pager = ({
             </NetworkLink>
           ) : (
             <div
-              className='btn btn-primary-light'
+              className='btn btn-primary'
               {...(hasTestId
                 ? { 'data-testid': 'disabledNextPageButton' }
                 : {})}
@@ -151,14 +151,14 @@ export const Pager = ({
 
           {!isNaN(lastPage) && end < total ? (
             <NetworkLink
-              className='btn btn-primary-light'
+              className='btn btn-primary'
               {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
               to={`${pathname}?${lastUrlParams}`}
             >
               <FontAwesomeIcon icon={faForward} />
             </NetworkLink>
           ) : (
-            <span className='btn btn-primary-light'>
+            <span className='btn btn-primary'>
               <FontAwesomeIcon icon={faForward} />
             </span>
           )}

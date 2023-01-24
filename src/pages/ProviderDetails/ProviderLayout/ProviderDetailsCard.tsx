@@ -41,7 +41,7 @@ export const ProviderDetailsCard = ({
         <div className='card-header-item d-flex justify-content-between align-items-center'>
           <h6 data-testid='title'>Contract Details</h6>
           <a
-            className='btn btn-sm btn-primary-light'
+            className='btn btn-sm btn-primary'
             target={'_blank'}
             rel={'noreferrer nofollow'}
             href={walletAddress}

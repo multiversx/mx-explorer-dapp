@@ -11,7 +11,6 @@
 
 // STYLING OVERRIDES
 .table {
-  font-size: 14px;
   th {
     font-weight: 400;
     background-color: rgba(38, 38, 38, 0.6);
@@ -29,10 +28,6 @@
   td {
     padding-top: 0.825rem;
     padding-bottom: 0.825rem;
-  }
-  .trim .left span,
-  .trim .right span {
-    font-size: 14px;
   }
 }
 
