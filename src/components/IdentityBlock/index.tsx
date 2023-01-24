@@ -5,7 +5,7 @@ import { BlockType } from 'types';
 
 export const IdentityBlock = ({ block }: { block: BlockType }) => {
   if (!block.proposer) {
-    return <span className='text-neutral-300'>N/A</span>;
+    return <span className='text-neutral-400'>N/A</span>;
   }
 
   return (

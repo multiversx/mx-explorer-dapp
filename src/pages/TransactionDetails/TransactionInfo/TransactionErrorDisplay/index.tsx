@@ -49,7 +49,7 @@ export const TransactionErrorDisplay = ({
         >
           <FontAwesomeIcon
             icon={faAngleDown}
-            className='text-neutral-300'
+            className='text-neutral-400'
             style={{ marginTop: '2px' }}
             transform={{ rotate: 45 }}
           />
@@ -79,7 +79,7 @@ export const TransactionErrorDisplay = ({
                       >
                         <FontAwesomeIcon
                           icon={faInfoCircle}
-                          className='small text-neutral-300 ms-1'
+                          className='small text-neutral-400 ms-1'
                         />
                       </Overlay>
                     </div>

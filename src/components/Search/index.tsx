@@ -215,7 +215,7 @@ export const Search = ({ setExpanded = () => null }: SearchType) => {
             }}
             data-testid='searchButton'
           >
-            <div className='my-1 py-1 px-3 px-lg-4 border-left'>
+            <div className='my-1 py-1 px-3 px-lg-4 border-start'>
               {searching ? (
                 <FontAwesomeIcon
                   icon={faCircleNotch}

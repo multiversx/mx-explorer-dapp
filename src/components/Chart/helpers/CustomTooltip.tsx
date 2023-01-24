@@ -98,7 +98,7 @@ export const CustomTooltip = ({
                   {percentageMultiplier ? '%' : ''}
                 </span>
                 {showUsdValue && (
-                  <p className='text-neutral-300 small mb-0'>
+                  <p className='text-neutral-400 small mb-0'>
                     {usdValue({
                       amount: displayValue,
                       usd: price,

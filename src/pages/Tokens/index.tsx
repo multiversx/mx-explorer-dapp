@@ -69,10 +69,10 @@ export const Tokens = () => {
                         <h6 data-testid='title'>Tokens</h6>
                         <span>
                           {totalTokens}{' '}
-                          <span className='text-neutral-300 pe-2 border-right me-2'>
+                          <span className='text-neutral-400 pe-2 border-end me-2'>
                             Tokens
                           </span>{' '}
-                          <span className='text-neutral-300'>
+                          <span className='text-neutral-400'>
                             Ecosystem Market Cap:
                           </span>{' '}
                           {economicsFetched

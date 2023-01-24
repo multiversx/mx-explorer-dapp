@@ -190,7 +190,7 @@ export const TokenDetailsCard = () => {
                         <SocialIcons assets={mergedAssets} />
                       </div>
                     ) : (
-                      <span className='text-neutral-300'>N/A</span>
+                      <span className='text-neutral-400'>N/A</span>
                     )}
                   </SmallDetailItem>
 
@@ -203,7 +203,7 @@ export const TokenDetailsCard = () => {
                         {assets.description}
                       </h2>
                     ) : (
-                      <span className='text-neutral-300'>N/A</span>
+                      <span className='text-neutral-400'>N/A</span>
                     )}
                   </SmallDetailItem>
                 </dl>

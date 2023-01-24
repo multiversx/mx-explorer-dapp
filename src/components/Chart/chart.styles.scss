@@ -47,7 +47,7 @@
 
     .category {
       @extend .h6;
-      color: var(--secondary);
+      color: var(--neutral-400);
       cursor: pointer;
       &.active {
         color: var(--body);
@@ -102,7 +102,7 @@
     tspan {
       font-size: 0.75rem;
       font-weight: 300;
-      fill: var(--secondary);
+      fill: var(--neutral-400);
     }
   }
 }
@@ -120,7 +120,7 @@
 
 .recharts-tooltip-wrapper {
   outline: none !important;
-  color: var(--secondary);
+  color: var(--neutral-400);
   background-color: var(--card-bg);
   font-size: 12px;
   font-weight: 400;
@@ -193,5 +193,5 @@
 }
 
 .recharts-cartesian-axis-line {
-  stroke: var(--secondary);
+  stroke: var(--neutral-400);
 }

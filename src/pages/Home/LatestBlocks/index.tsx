@@ -112,12 +112,12 @@ export const LatestBlocks = () => {
                           </NetworkLink>
                         </div>
 
-                        <span className='text-neutral-300'>
+                        <span className='text-neutral-400'>
                           <TimeAgo value={block.timestamp} /> ago
                         </span>
                       </div>
                       <div className='d-flex'>
-                        <span className='text-neutral-300 me-2'>
+                        <span className='text-neutral-400 me-2'>
                           Transactions:
                         </span>{' '}
                         {block.txCount}
@@ -130,7 +130,7 @@ export const LatestBlocks = () => {
                         </NetworkLink>
                       </div>
                       <div className='d-flex flex-row mt-1'>
-                        <span className='me-2 text-neutral-300'>Hash:</span>
+                        <span className='me-2 text-neutral-400'>Hash:</span>
                         <NetworkLink
                           to={`/blocks/${block.hash}`}
                           className='trim-wrapper'

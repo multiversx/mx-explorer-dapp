@@ -162,11 +162,11 @@ export const NftDetails = () => {
                         <DetailItem title='Minted'>
                           <FontAwesomeIcon
                             icon={faClock}
-                            className='me-2 text-neutral-300'
+                            className='me-2 text-neutral-400'
                           />
                           <TimeAgo value={nftDetails.timestamp} />
                           &nbsp;
-                          <span className='text-neutral-300'>
+                          <span className='text-neutral-400'>
                             ({dateFormatted(nftDetails.timestamp, false, true)})
                           </span>
                         </DetailItem>
@@ -227,7 +227,7 @@ export const NftDetails = () => {
                           <a
                             href='/#'
                             onClick={show}
-                            className='small-font text-neutral-300'
+                            className='small-font text-neutral-400'
                           >
                             {!showData ? 'Show' : 'Hide'} original content
                           </a>

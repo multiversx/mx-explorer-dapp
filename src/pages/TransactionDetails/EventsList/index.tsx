@@ -54,7 +54,7 @@ export const EventsList = ({
         return (
           <div
             key={i}
-            className={`detailed-item d-flex border-left border-bottom ms-3 py-3 ${
+            className={`detailed-item d-flex border-start border-bottom ms-3 py-3 ${
               highlightTx ? 'highlighted' : ''
             }`}
             {...(highlightTx ? { ref: ref } : {})}

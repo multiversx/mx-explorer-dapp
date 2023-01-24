@@ -5,13 +5,15 @@ export const DetailItem = ({
   title,
   className = '',
   colWidth = '2',
-  noBorder = false
+  noBorder = false,
+  verticalCenter = false
 }: {
   children: React.ReactNode;
   title: string | React.ReactNode;
   className?: string;
   colWidth?: string;
   noBorder?: boolean;
+  verticalCenter?: boolean;
 }) => (
   <div
     className={`row detail-item ${className} ${
@@ -19,7 +21,9 @@ export const DetailItem = ({
     }`}
   >
     <div
-      className={`col-lg-${colWidth} d-flex align-items-center text-lg-end justify-content-lg-end text-neutral-400`}
+      className={`col-lg-${colWidth} ${
+        verticalCenter ? 'd-flex align-items-center justify-content-lg-end' : ''
+      } text-lg-end  text-neutral-400`}
     >
       {title}
     </div>

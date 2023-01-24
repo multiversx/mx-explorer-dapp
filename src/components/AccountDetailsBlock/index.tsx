@@ -20,7 +20,7 @@ export const AccountDetailsBlock = ({ assets }: { assets: AssetType }) => {
           <FontAwesomeIcon
             icon={faInfoCircle}
             size='1x'
-            className='text-neutral-300 ms-1'
+            className='text-neutral-400 ms-1'
           />
         </div>
       </Overlay>

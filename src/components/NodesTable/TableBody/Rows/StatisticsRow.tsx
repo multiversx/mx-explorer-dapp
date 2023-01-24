@@ -24,49 +24,49 @@ export const StatisticsRow = ({ nodeData }: { nodeData: NodeType }) => {
         {nodeData.name ? (
           <div className='truncate-item-md'>{nodeData.name}</div>
         ) : (
-          <span className='text-neutral-300'>N/A</span>
+          <span className='text-neutral-400'>N/A</span>
         )}
       </td>
       <td className='text-end'>
         {nodeData.leaderSuccess ? (
           nodeData.leaderSuccess.toLocaleString('en')
         ) : (
-          <span className='text-neutral-300'>N/A</span>
+          <span className='text-neutral-400'>N/A</span>
         )}
       </td>
       <td className='text-end'>
         {nodeData.leaderFailure ? (
           nodeData.leaderFailure.toLocaleString('en')
         ) : (
-          <span className='text-neutral-300'>N/A</span>
+          <span className='text-neutral-400'>N/A</span>
         )}
       </td>
       <td className='text-end'>
         {nodeData.validatorSuccess ? (
           nodeData.validatorSuccess.toLocaleString('en')
         ) : (
-          <span className='text-neutral-300'>N/A</span>
+          <span className='text-neutral-400'>N/A</span>
         )}
       </td>
       <td className='text-end'>
         {nodeData.validatorFailure ? (
           nodeData.validatorFailure.toLocaleString('en')
         ) : (
-          <span className='text-neutral-300'>N/A</span>
+          <span className='text-neutral-400'>N/A</span>
         )}
       </td>
       <td className='text-end'>
         {nodeData.validatorIgnoredSignatures ? (
           nodeData.validatorIgnoredSignatures.toLocaleString('en')
         ) : (
-          <span className='text-neutral-300'>N/A</span>
+          <span className='text-neutral-400'>N/A</span>
         )}
       </td>
       <td className='text-end'>
         {nodeData.tempRating ? (
           nodeData.tempRating.toLocaleString('en')
         ) : (
-          <span className='text-neutral-300'>N/A</span>
+          <span className='text-neutral-400'>N/A</span>
         )}
       </td>
     </>

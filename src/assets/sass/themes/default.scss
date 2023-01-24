@@ -46,7 +46,7 @@
 
   --primary: var(--teal);
   --primary-200: var(--teal-200);
-  --secondary: var(--neutral-800);
+  --secondary: var(--neutral-400);
   --accent: var(--teal);
   --danger: var(--red);
   --info: var(--yellow);
@@ -55,12 +55,15 @@
   --muted: var(--neutral-400);
 
   --primary-rgb: 35, 247, 322;
-  --secondary-rgb: 38, 38, 38;
-  --muted-rgb: 163, 163, 163;
+  --secondary-rgb: 163, 163, 163;
+  --muted-rgb: 212, 212, 212;
 
   --border-color: rgba(38, 38, 38, 0.8);
 
   --text-color: var(--neutral-100);
   --link-color: var(--neutral-100);
   --body-bg: var(--neutral-900);
+
+  --data-decode-border-radius: 8px;
+  --data-decode-font-size: 1rem;
 }

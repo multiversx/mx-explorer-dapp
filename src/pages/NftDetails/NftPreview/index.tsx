@@ -88,7 +88,7 @@ export const NftPreview = ({ token }: { token: NftType }) => {
                 <FontAwesomeIcon
                   icon={faCaretRight}
                   size='xs'
-                  className='text-neutral-300 me-2'
+                  className='text-neutral-400 me-2'
                 />
                 {link.startsWith(
                   'https://ipfs.io/ipfs/'
@@ -128,7 +128,7 @@ export const NftPreview = ({ token }: { token: NftType }) => {
         <div className="d-flex ms-2 text-break-all ps-1">
           <FontAwesomeIcon
             icon={faAngleDown}
-            className="text-neutral-300"
+            className="text-neutral-400"
             style={{ marginTop: '2px' }}
             transform={{ rotate: 45 }}
           />

@@ -51,7 +51,7 @@ export const AccountStaking = () => {
           <div className='row'>
             {hasStaking ? (
               <>
-                <div className='col-lg-7 pe-lg-0 border-right'>
+                <div className='col-lg-7 pe-lg-0 border-end'>
                   {displayDelegation.length > 0 && (
                     <div className='account-delegation'>
                       <div className='px-spacer py-3 border-bottom bg-light'>
@@ -91,7 +91,7 @@ export const AccountStaking = () => {
                     <div className='account-legacy-delegation'>
                       <div className='px-spacer py-3 border-bottom bg-light'>
                         Stake{' '}
-                        <span className='text-neutral-300'>(Validation)</span>
+                        <span className='text-neutral-400'>(Validation)</span>
                       </div>
                       <AccountStake stake={stake} />
                     </div>

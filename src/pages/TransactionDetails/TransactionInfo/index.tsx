@@ -398,6 +398,7 @@ export const TransactionInfo = ({
                         </span>
                       </>
                     }
+                    verticalCenter
                   >
                     <OperationsList
                       transaction={transaction}

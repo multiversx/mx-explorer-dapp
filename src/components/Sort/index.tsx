@@ -37,7 +37,7 @@ export const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {
       {sort !== id && (
         <FontAwesomeIcon
           icon={faSort}
-          className='side-action text-neutral-300'
+          className='side-action text-neutral-400'
         />
       )}
       {order === SortOrderEnum.asc && sort === id && (
