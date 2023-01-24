@@ -51,12 +51,12 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
           <h6 data-testid="title">Node Details</h6>
         </div>
         <div className="card-header-item compact d-flex">
-          <span className="flex-shrink-0 text-secondary mr-2">Public key:</span>
+          <span className="flex-shrink-0 text-secondary me-2">Public key:</span>
 
           <div className="d-flex flex-column min-w-0">
             <div className="d-flex align-items-center">
               <Trim text={bls} />
-              <CopyButton text={bls} className="ml-2" />
+              <CopyButton text={bls} className="ms-2" />
             </div>
             <Alert node={nodeData} />
           </div>
@@ -86,7 +86,7 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             {type === 'observer' && <>Observer</>}
             {type !== 'observer' && (
               <>
-                Validator <span className="text-secondary ml-1">({status})</span>
+                Validator <span className="text-secondary ms-1">({status})</span>
               </>
             )}
           </>
@@ -97,7 +97,7 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
         {type !== 'observer' && locked !== undefined && (
           <CardItem title="Locked" icon={faLock}>
             <div className="d-flex align-items-center">
-              <span className="mr-2">
+              <span className="me-2">
                 <Denominate value={locked} />
               </span>
 

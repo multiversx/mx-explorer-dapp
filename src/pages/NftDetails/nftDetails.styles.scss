@@ -15,7 +15,7 @@
       &.trait {
         font-size: 90%;
         margin-bottom: 0.25rem;
-        color: $secondary;
+        color: var(--secondary);
       }
     }
     display: flex;
@@ -25,9 +25,9 @@
     overflow: hidden;
     flex-grow: 0;
     flex-shrink: 0;
-    border: 1px solid $border-color;
+    border: 1px solid var(--border-color);
     border-radius: $border-radius;
-    background-color: $light;
+    background-color: var(--light);
     padding: 1rem;
   }
 }

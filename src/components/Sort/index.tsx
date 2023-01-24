@@ -32,7 +32,7 @@ export const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {
   }).toString();
 
   return (
-    <Link to={`${pathname}?${nextUrlParams}`} className="text-body mr-n1">
+    <Link to={`${pathname}?${nextUrlParams}`} className="text-body me-n1">
       {field}
       {sort !== id && <FontAwesomeIcon icon={faSort} className="side-action text-secondary" />}
       {order === SortOrderEnum.asc && sort === id && (

@@ -40,9 +40,9 @@ export const TransactionErrorDescription = ({
   }
 
   return (
-    <div className="ml-1">
+    <div className="ms-1">
       <Overlay title={description} className="d-flex" tooltipClassName="vm-error-display">
-        <FontAwesomeIcon icon={faQuestionCircle} className="small text-secondary ml-1" />
+        <FontAwesomeIcon icon={faQuestionCircle} className="small text-secondary ms-1" />
       </Overlay>
     </div>
   );

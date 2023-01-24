@@ -79,7 +79,7 @@ export const StandardRow = ({
       <td>
         <div className="d-flex align-items-center justify-content-end">
           <Led color={nodeData.online ? 'bg-success' : 'bg-danger'} />
-          <span className={`ml-2 ${nodeData.online ? 'text-success' : 'text-danger'}`}>
+          <span className={`ms-2 ${nodeData.online ? 'text-success' : 'text-danger'}`}>
             {nodeData.online ? 'online' : 'offline'}
           </span>
         </div>

@@ -19,12 +19,7 @@ import {
 } from 'helpers';
 import { multiversxApps } from 'config';
 
-import { useSelector } from 'react-redux';
-import { activeThemeSelector } from 'redux/selectors';
-
 export const Layout = ({ children }: { children: React.ReactNode }) => {
-  const theme = useSelector(activeThemeSelector);
-
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
 
@@ -60,13 +55,6 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   useCheckVersion();
 
   const offline = !window.navigator.onLine;
-
-  React.useEffect(() => {
-    // temoporary always use the dark theme
-    if (process.env.NODE_ENV === 'development') {
-      require('assets/sass/dark.scss');
-    }
-  }, [theme]);
 
   const isHome = activeRoute('/');
 

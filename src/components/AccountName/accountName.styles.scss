@@ -13,7 +13,7 @@
   width: 0.825rem;
   height: 0.825rem;
   opacity: 1;
-  fill: $secondary; // #23F7DD
+  fill: var(--#{$prefix}primary);
   margin-bottom: 1px;
   margin-right: 0.25rem;
 }

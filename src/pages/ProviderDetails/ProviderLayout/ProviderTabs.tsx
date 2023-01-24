@@ -12,14 +12,14 @@ export const ProviderTabs = () => {
     <div className="provider-tabs d-flex flex-row">
       <NetworkLink
         to={urlBuilder.providerDetails(address)}
-        className={`tab-link mr-3 ${activeRoute(validatorsRoutes.providerDetails) ? 'active' : ''}`}
+        className={`tab-link me-3 ${activeRoute(validatorsRoutes.providerDetails) ? 'active' : ''}`}
       >
         <h6>Nodes</h6>
       </NetworkLink>
 
       <NetworkLink
         to={urlBuilder.providerDetailsTransactions(address)}
-        className={`tab-link ml-3 ${
+        className={`tab-link ms-3 ${
           activeRoute(validatorsRoutes.providerTransactions) ? 'active' : ''
         }`}
       >

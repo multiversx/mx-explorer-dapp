@@ -5,7 +5,7 @@
   left: 50%;
 
   circle {
-    stroke: $primary;
+    stroke: var(--primary);
     transform: rotate(-90deg);
     transform-origin: 50% 50%;
     transition: stroke-dashoffset 0.35s;

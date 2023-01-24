@@ -42,7 +42,7 @@ export const NonceMessage = ({ transaction }: { transaction: TransactionType }) 
   return (
     <div ref={ref}>
       {isDataReady && hasUnsyncedNonce && (
-        <div className="d-flex ml-1 text-break-all">
+        <div className="d-flex ms-1 text-break-all">
           <FontAwesomeIcon
             icon={faAngleDown}
             className="text-secondary"
@@ -50,7 +50,7 @@ export const NonceMessage = ({ transaction }: { transaction: TransactionType }) 
             transform={{ rotate: 45 }}
           />
           &nbsp;
-          <small className="text-warning ml-1"> Probable higher nonce in transaction</small>
+          <small className="text-warning ms-1"> Probable higher nonce in transaction</small>
         </div>
       )}
     </div>

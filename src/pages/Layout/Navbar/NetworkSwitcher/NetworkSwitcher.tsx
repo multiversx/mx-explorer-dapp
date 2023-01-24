@@ -42,9 +42,9 @@ export const NetworkSwitcher = ({ onToggle }: { onToggle?: () => void }) => {
   return (
     <NavDropdown
       title={
-        <div className="nav-link-icon flex-fill pr-0 pl-lg-1 ml-lg-2" data-testid="networkSwitch">
+        <div className="nav-link-icon flex-fill pe-0 ps-lg-1 ms-lg-2" data-testid="networkSwitch">
           {activeNetwork.name}
-          <FontAwesomeIcon className="d-inline-block ml-1" icon={faAngleDown} />
+          <FontAwesomeIcon className="d-inline-block ms-1" icon={faAngleDown} />
         </div>
       }
       id="network-switcher-dropdown"

@@ -79,7 +79,7 @@ export const AccountContracts = () => {
           </div>
         </div>
       </div>
-      <div className="card-body p-0">
+      <div className="card-body">
         {dataReady === undefined && <Loader dataTestId="contractsLoader" />}
         {dataReady === false && (
           <PageState

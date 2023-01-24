@@ -11,7 +11,7 @@ export const IdentityAvatar = ({ identity }: { identity: IdentityAvatarType }) =
     <>
       {identity.avatar ? (
         <img
-          className={`identity-avatar rounded-circle flex-shrink-0 mr-2 ${
+          className={`identity-avatar rounded-circle flex-shrink-0 me-2 ${
             !identity.avatar ? 'border-0' : ''
           }`}
           src={identity.avatar}
@@ -20,7 +20,7 @@ export const IdentityAvatar = ({ identity }: { identity: IdentityAvatarType }) =
         />
       ) : (
         <DefaultAvatar
-          className="identity-avatar border-0 flex-shrink-0 mr-2"
+          className="identity-avatar border-0 flex-shrink-0 me-2"
           style={{ width: '42px', height: '42px' }}
         />
       )}

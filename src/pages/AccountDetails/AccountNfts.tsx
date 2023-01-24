@@ -106,7 +106,7 @@ export const AccountNfts = () => {
                   <DetailItem title={<CollectionBlock nft={nft} />} key={nft.identifier}>
                     <div className="d-flex align-items-center">
                       {nft.balance !== undefined && (
-                        <div className="mr-1">
+                        <div className="me-1">
                           {nft.decimals ? (
                             <Denominate
                               showLabel={false}
@@ -130,14 +130,14 @@ export const AccountNfts = () => {
                               <img
                                 src={nft.assets.svgUrl}
                                 alt={nft.identifier}
-                                className="side-icon mr-1"
+                                className="side-icon me-1"
                               />
                             )}
                             <div className="text-truncate">{nft.identifier}</div>
                           </div>
                         </NetworkLink>
                       </div>
-                      <NftBadge type={nft.type} className="ml-2" />
+                      <NftBadge type={nft.type} className="ms-2" />
                     </div>
                   </DetailItem>
                 );

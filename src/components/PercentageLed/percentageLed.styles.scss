@@ -2,7 +2,7 @@
   display: inline;
   svg {
     background: transparent;
-    border: 1px solid $border-color;
+    border: 1px solid var(--border-color);
     border-radius: 50%;
     margin-top: -0.2rem;
     width: 1rem;
@@ -11,7 +11,7 @@
   }
   circle {
     fill: transparent;
-    stroke: $primary;
+    stroke: var(--primary);
     stroke-width: 32;
   }
   @for $i from 0 through 100 {

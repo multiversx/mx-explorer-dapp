@@ -1,0 +1,58 @@
+@import './../../../node_modules/bootstrap/scss/functions';
+@import './../../../node_modules/bootstrap/scss/variables';
+@import './../../../node_modules/bootstrap/scss/mixins';
+
+// CONFIG
+$prefix: '';
+
+// TOGGLE
+$enable-negative-margins: true;
+$enable-rounded: true;
+$enable-shadows: false;
+
+// FONTS
+$font-size-base: 14px;
+
+$spacer-val: $spacer * 2;
+
+// SPACING
+$spacers: map-merge(
+  $spacers,
+  (
+    spacer: (
+      $spacer-val,
+    ),
+  )
+);
+
+// BREAKPOINTS
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+);
+
+// CONTAINER
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1248px,
+);
+
+// GRID
+$grid-gutter-width: 1rem;
+
+// CARD
+$card-spacer-y: 1.5rem;
+$card-spacer-x: 1.5rem;
+$card-title-spacer-y: 2rem;
+$card-border-width: 0;
+$card-border-radius: 1.5rem;
+$card-inner-border-radius: 1.5rem;
+$card-cap-padding-y: 2rem;
+$card-cap-padding-x: 2rem;

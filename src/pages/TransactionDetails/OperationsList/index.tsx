@@ -133,22 +133,22 @@ const OperationBlock = ({
       className={`d-flex align-items-center ${
         isFullSize
           ? 'col-12'
-          : ` pr-xl-0 ${operationAssets ? 'pl-3 mw-lg-6 mw-xl-4' : 'col-lg-6 col-xl-4'}`
+          : ` pe-xl-0 ${operationAssets ? 'ps-3 mw-lg-6 mw-xl-4' : 'col-lg-6 col-xl-4'}`
       }`}
     >
       {direction && (
-        <div className={`direction-badge mr-2 ${direction.toLowerCase()}`}>
+        <div className={`direction-badge me-2 ${direction.toLowerCase()}`}>
           {direction.toUpperCase()}
         </div>
       )}
-      {action && <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary mr-2" />}
-      <div className="mr-2 text-nowrap">{action ? action : ''}</div>
+      {action && <FontAwesomeIcon icon={faCaretRight} size="xs" className="text-secondary me-2" />}
+      <div className="me-2 text-nowrap">{action ? action : ''}</div>
       {addressIsBech32(address) ? (
         <>
           <NetworkLink to={urlBuilder.accountDetails(address)} className="trim-wrapper">
             <AccountName address={address} assets={operationAssets} />
           </NetworkLink>
-          <CopyButton text={address} className="side-action ml-2" />
+          <CopyButton text={address} className="side-action ms-2" />
         </>
       ) : (
         ''
@@ -303,8 +303,8 @@ const OperationRow = ({
       return (
         <DetailedItem operation={operation} transaction={transaction}>
           <>
-            {operation.esdtType === 'NonFungibleESDT' && <div className="mr-1">NFT</div>}
-            {operation.esdtType === 'SemiFungibleESDT' && <div className="mr-1">SFT quantity</div>}
+            {operation.esdtType === 'NonFungibleESDT' && <div className="me-1">NFT</div>}
+            {operation.esdtType === 'SemiFungibleESDT' && <div className="me-1">SFT quantity</div>}
             <OperationToken operation={operation} />
           </>
         </DetailedItem>
@@ -314,7 +314,7 @@ const OperationRow = ({
       return (
         <DetailedItem operation={operation} transaction={transaction}>
           <>
-            <div className="mr-2">Value</div>
+            <div className="me-2">Value</div>
             <Denominate value={operation.value} showLastNonZeroDecimal={true} />
           </>
         </DetailedItem>

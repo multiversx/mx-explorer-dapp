@@ -4,7 +4,7 @@
 
 .transaction-info {
   .status-text-success {
-    @include top-bar($success);
+    @include top-bar(var(--success));
   }
 
   .status-text-warning {
@@ -20,7 +20,7 @@
     line-height: 1.95rem;
     padding: 0;
     &.active {
-      color: $body;
+      color: var(--body);
     }
   }
 
@@ -43,7 +43,7 @@
       }
 
       .col-left {
-        color: $secondary;
+        color: var(--secondary);
 
         @include media-breakpoint-up(sm) {
           text-align: right;
@@ -63,13 +63,13 @@
         border-radius: 50%;
         font-size: 0.9375rem;
         text-align: center;
-        color: $secondary;
+        color: var(--secondary);
         width: 2.1875rem;
         height: 2.1875rem;
         min-width: 2.1875rem;
         line-height: 2.1875rem;
-        background: $light;
-        box-shadow: inset 0 0 3px rgba($secondary, 0.2);
+        background: var(--light);
+        box-shadow: inset 0 0 3px rgba(var(--secondary), 0.2);
       }
 
       @keyframes target-fade {

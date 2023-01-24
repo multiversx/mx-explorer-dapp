@@ -97,7 +97,7 @@ export const NftDetails = () => {
                       <h6 data-testid="title">{nftText(nftDetails.type)} Details</h6>
                     </div>
                   </div>
-                  <div className="card-body p-0">
+                  <div className="card-body">
                     <div className="container-fluid">
                       <DetailItem title="Name">
                         {nftDetails.scamInfo
@@ -145,7 +145,7 @@ export const NftDetails = () => {
                       </DetailItem>
                       {nftDetails.timestamp !== undefined && (
                         <DetailItem title="Minted">
-                          <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
+                          <FontAwesomeIcon icon={faClock} className="me-2 text-secondary" />
                           <TimeAgo value={nftDetails.timestamp} />
                           &nbsp;
                           <span className="text-secondary">
@@ -190,7 +190,7 @@ export const NftDetails = () => {
                           {nftDetails.tags.map((tag) => (
                             <div
                               key={tag}
-                              className="badge badge-light p-2 mr-2 font-weight-normal"
+                              className="badge badge-light p-2 me-2 font-weight-normal"
                             >
                               #{tag}
                             </div>

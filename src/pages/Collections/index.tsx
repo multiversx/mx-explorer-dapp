@@ -71,7 +71,7 @@ export const Collections = () => {
                           <li className="list-inline-item my-1 my-md-0">
                             <NetworkLink
                               to={collectionRoutes.collections}
-                              className={`btn btn-sm btn-outline-light btn-pill mr-2 ${
+                              className={`btn btn-sm btn-outline-light btn-pill me-2 ${
                                 activeRoute(collectionRoutes.collections) ? 'active' : ''
                               }`}
                             >
@@ -79,7 +79,7 @@ export const Collections = () => {
                             </NetworkLink>
                             <NetworkLink
                               to={collectionRoutes.collectionsNft}
-                              className={`btn btn-sm btn-outline-light btn-pill mr-2 ${
+                              className={`btn btn-sm btn-outline-light btn-pill me-2 ${
                                 activeRoute(collectionRoutes.collectionsNft) ? 'active' : ''
                               }`}
                             >
@@ -87,7 +87,7 @@ export const Collections = () => {
                             </NetworkLink>
                             <NetworkLink
                               to={collectionRoutes.collectionsSft}
-                              className={`btn btn-sm btn-outline-light btn-pill mr-2 ${
+                              className={`btn btn-sm btn-outline-light btn-pill me-2 ${
                                 activeRoute(collectionRoutes.collectionsSft) ? 'active' : ''
                               }`}
                             >
@@ -141,13 +141,13 @@ export const Collections = () => {
                                             <img
                                               src={collection.assets.svgUrl}
                                               alt={collection.name}
-                                              className="side-icon mr-1"
+                                              className="side-icon me-1"
                                             />
                                           )}
                                           <div>{collection.collection}</div>
                                         </div>
                                       </NetworkLink>
-                                      <NftBadge type={collection.type} className="ml-2" />
+                                      <NftBadge type={collection.type} className="ms-2" />
                                     </div>
                                   </td>
                                   <td>{collection.name}</td>

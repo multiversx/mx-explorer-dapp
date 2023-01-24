@@ -58,12 +58,12 @@ export const CollectionDetailsCard = () => {
                 <h6 data-testid="title">Collection Details</h6>
               </div>
             </div>
-            <div className="card-body p-0">
+            <div className="card-body">
               <div className="container-fluid">
                 <DetailItem title="Name">
                   <div className="d-flex align-items-center">
                     {assets?.svgUrl && (
-                      <img src={assets.svgUrl} alt={name} className="side-icon mr-1" />
+                      <img src={assets.svgUrl} alt={name} className="side-icon me-1" />
                     )}
                     <div>{name}</div>
                   </div>
@@ -84,7 +84,7 @@ export const CollectionDetailsCard = () => {
                 </DetailItem>
                 {timestamp !== undefined && (
                   <DetailItem title="Created">
-                    <FontAwesomeIcon icon={faClock} className="mr-2 text-secondary" />
+                    <FontAwesomeIcon icon={faClock} className="me-2 text-secondary" />
                     <TimeAgo value={timestamp} />
                     &nbsp;
                     <span className="text-secondary">

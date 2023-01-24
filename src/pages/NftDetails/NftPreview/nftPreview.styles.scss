@@ -2,12 +2,12 @@
   opacity: 1;
   .tooltip-inner {
     max-width: unset;
-    background-color: $body-bg;
+    background-color: var(--body-background-color);
   }
   .arrow {
     &::before {
       border-width: 0.4rem 0.4rem 0;
-      border-top-color: $body-bg;
+      border-top-color: var(--body-background-color);
     }
   }
 }

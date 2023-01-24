@@ -89,7 +89,7 @@ export const IdentityDetails = () => {
                           <div className="card-header-item d-flex align-items-center">
                             <h6 className="m-0">Delegation Contracts</h6>
 
-                            <div className="ml-auto">
+                            <div className="ms-auto">
                               <a
                                 className="btn btn-sm btn-primary-light"
                                 target={`_blank`}
@@ -102,7 +102,7 @@ export const IdentityDetails = () => {
                           </div>
                         </div>
 
-                        <div className="card-body p-0">
+                        <div className="card-body">
                           {providers && (
                             <ProvidersTable providers={providers} showIdentity={false} />
                           )}
@@ -128,7 +128,7 @@ export const IdentityDetails = () => {
                     </div>
                   </div>
 
-                  <div className="card-body p-0">
+                  <div className="card-body">
                     <NodesTable>
                       <NodesTable.Body nodes={nodes} />
                     </NodesTable>

@@ -8,10 +8,10 @@
   .tooltip-inner {
     @extend .p-3;
 
-    background-color: $card-bg;
-    border: 1px solid $border-color;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
     box-shadow: none;
-    color: $body;
+    color: var(--body);
 
     max-width: none !important;
     // white-space: nowrap;

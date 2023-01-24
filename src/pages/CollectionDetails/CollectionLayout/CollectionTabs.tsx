@@ -17,7 +17,7 @@ export const CollectionTabs = () => {
       {type && type !== NftEnumType.MetaESDT && (
         <NetworkLink
           to={urlBuilder.collectionDetails(collection)}
-          className={`tab-link mr-spacer ${
+          className={`tab-link me-spacer ${
             activeRoute(collectionRoutes.collectionDetails) ? 'active' : ''
           }`}
         >
@@ -28,7 +28,7 @@ export const CollectionTabs = () => {
       {roles && (
         <NetworkLink
           to={urlBuilder.collectionDetailsRoles(collection)}
-          className={`tab-link mr-spacer ${
+          className={`tab-link me-spacer ${
             activeRoute(collectionRoutes.collectionDetailsRoles) || type === NftEnumType.MetaESDT
               ? 'active'
               : ''

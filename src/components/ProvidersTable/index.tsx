@@ -27,7 +27,7 @@ type SortType = [SortFieldType, SortDirectionType];
 const CaretIcon = ({ sortDirection }: { sortDirection?: SortDirectionType }) => (
   <FontAwesomeIcon
     icon={sortDirection === 'asc' ? faArrowUp : faArrowDown}
-    className="sort-icon ml-1"
+    className="sort-icon ms-1"
   />
 );
 
@@ -38,9 +38,8 @@ export const ProvidersTable = ({
   providers: types.ProviderType[];
   showIdentity?: boolean;
 }) => {
-  const [originalProviders /*setOriginalProviders*/] = React.useState<types.ProviderType[]>(
-    providers
-  );
+  const [originalProviders /*setOriginalProviders*/] =
+    React.useState<types.ProviderType[]>(providers);
   const [displayProviders, setDisplayProviders] = React.useState<types.ProviderType[]>(providers);
   const [sort, setSort] = React.useState<SortType>([undefined, undefined]);
   const [sortField, sortDirection] = sort;
@@ -192,7 +191,7 @@ export const ProvidersTable = ({
                         <FontAwesomeIcon
                           icon={faBadgeCheck}
                           size="sm"
-                          className="ml-2 text-primary"
+                          className="ms-2 text-primary"
                         />
                       </OverlayTrigger>
                     )}

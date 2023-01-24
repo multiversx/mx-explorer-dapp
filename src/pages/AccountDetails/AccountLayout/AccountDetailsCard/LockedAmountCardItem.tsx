@@ -26,7 +26,7 @@ export const LockedAmountCardItem = ({ cardItemClass }: { cardItemClass: string 
     <CardItem className={cardItemClass} title="Stake" icon={faLock}>
       <div className="d-flex align-items-center">
         {stakingDataReady ? (
-          <span className="mr-2">
+          <span className="me-2">
             <Denominate value={bNtotalLocked.toString(10)} />
           </span>
         ) : (

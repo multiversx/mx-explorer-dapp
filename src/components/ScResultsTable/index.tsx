@@ -43,7 +43,7 @@ export const ScResultsTable = ({
           </div>
         </div>
 
-        <div className="card-body p-0">
+        <div className="card-body">
           <div className="table-wrapper animated-list">
             <table className="table trim-size-sm" data-testid="scResultsTable">
               <thead>
