@@ -15,7 +15,7 @@ import {
   DetailItem,
   CopyButton,
   IdentityBlock,
-  BlockGasUsed,
+  BlockGasUsed
 } from 'components';
 import { METACHAIN_SHARD_ID } from 'appConstants';
 
@@ -32,7 +32,9 @@ function decodeHex(hex: string) {
 }
 
 function createHashItemIfLengthIsOdd(length: number) {
-  return length > 1 && length % 2 ? <div className="hash-item">&nbsp;</div> : null;
+  return length > 1 && length % 2 ? (
+    <div className='hash-item'>&nbsp;</div>
+  ) : null;
 }
 
 export const BlockData = (props: BlockDataType) => {
@@ -53,34 +55,40 @@ export const BlockData = (props: BlockDataType) => {
   }, [expanded]);
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <div className="card-header-item d-flex align-items-center">
-          <h6 data-testid="title">Block Details</h6>
+    <div className='card'>
+      <div className='card-header'>
+        <div className='card-header-item d-flex align-items-center'>
+          <h6 data-testid='title'>Block Details</h6>
         </div>
       </div>
 
-      <div className="card-body">
-        <div className="container-fluid">
-          <DetailItem title="Block Height">
-            <div className="d-flex justify-content-between align-items-center">
+      <div className='card-body'>
+        <div className='container-fluid'>
+          <DetailItem title='Block Height'>
+            <div className='d-flex justify-content-between align-items-center'>
               <div>{block.nonce}</div>
-              <ul className="list-inline mb-0">
-                <li className="list-inline-item ms-2 me-2">
-                  <div className="pager pager-inline">
-                    <NetworkLink to={`/blocks/${block.prevHash}`} data-testid="previousPageButton">
+              <ul className='list-inline mb-0'>
+                <li className='list-inline-item ms-2 me-2'>
+                  <div className='pager pager-inline'>
+                    <NetworkLink
+                      to={`/blocks/${block.prevHash}`}
+                      data-testid='previousPageButton'
+                    >
                       <FontAwesomeIcon icon={faChevronLeft} /> Prev
                     </NetworkLink>
                   </div>
                 </li>
-                <li className="ms-2 list-inline-item">
-                  <div className="pager pager-inline">
+                <li className='ms-2 list-inline-item'>
+                  <div className='pager pager-inline'>
                     {nextHash !== '' ? (
-                      <NetworkLink data-testid="nextPageButton" to={`/blocks/${nextHash}`}>
+                      <NetworkLink
+                        data-testid='nextPageButton'
+                        to={`/blocks/${nextHash}`}
+                      >
                         Next <FontAwesomeIcon icon={faChevronRight} />
                       </NetworkLink>
                     ) : (
-                      <span className="text-secondary">
+                      <span className='text-secondary'>
                         Next <FontAwesomeIcon icon={faChevronRight} />
                       </span>
                     )}
@@ -89,40 +97,44 @@ export const BlockData = (props: BlockDataType) => {
               </ul>
             </div>
           </DetailItem>
-          <DetailItem title="Block Hash">
-            <div className="d-flex align-items-center text-break-all">
+          <DetailItem title='Block Hash'>
+            <div className='d-flex align-items-center text-break-all'>
               {block.hash}
               <CopyButton text={block.hash} />
             </div>
           </DetailItem>
 
-          <DetailItem title="Round">{block.round}</DetailItem>
-          <DetailItem title="Epoch">{block.epoch}</DetailItem>
+          <DetailItem title='Round'>{block.round}</DetailItem>
+          <DetailItem title='Epoch'>{block.epoch}</DetailItem>
 
-          <DetailItem title="Age">
-            <FontAwesomeIcon icon={faClock} className="me-2 text-secondary" />
+          <DetailItem title='Age'>
+            <FontAwesomeIcon icon={faClock} className='me-2 text-secondary' />
             <TimeAgo value={block.timestamp} />
             &nbsp;
-            <span className="text-secondary">({dateFormatted(block.timestamp, false, true)})</span>
+            <span className='text-secondary'>
+              ({dateFormatted(block.timestamp, false, true)})
+            </span>
           </DetailItem>
-          <DetailItem title="Transactions">
+          <DetailItem title='Transactions'>
             {block.txCount + ' transactions in this block'}
           </DetailItem>
-          <DetailItem title="Shard">
-            <div className="d-flex">
+          <DetailItem title='Shard'>
+            <div className='d-flex'>
               <NetworkLink to={urlBuilder.shard(block.shard)}>
                 <ShardSpan shard={block.shard} />
               </NetworkLink>
             </div>
           </DetailItem>
-          <DetailItem title="Size">
+          <DetailItem title='Size'>
             <OverlayTrigger
-              placement="top"
+              placement='top'
               delay={{ show: 0, hide: 400 }}
               overlay={(props: any) => (
-                <Tooltip id="size" {...props} show={props.show.toString()}>
+                <Tooltip id='size' {...props} show={props.show.toString()}>
                   {sizeFormat(block.size)} (size)
-                  {block.sizeTxs !== undefined && <> + {sizeFormat(block.sizeTxs)} (sizetxs)</>}
+                  {block.sizeTxs !== undefined && (
+                    <> + {sizeFormat(block.sizeTxs)} (sizetxs)</>
+                  )}
                 </Tooltip>
               )}
             >
@@ -133,47 +145,50 @@ export const BlockData = (props: BlockDataType) => {
               </span>
             </OverlayTrigger>
           </DetailItem>
-          <DetailItem title="Gas Used">
-            <div className="d-flex flex-column align-items-start">
+          <DetailItem title='Gas Used'>
+            <div className='d-flex flex-column align-items-start'>
               <BlockGasUsed block={block} />
             </div>
           </DetailItem>
-          <DetailItem title="Gas Provided">
+          <DetailItem title='Gas Provided'>
             {new BigNumber(block.gasConsumed).toFormat()}{' '}
           </DetailItem>
-          <DetailItem title="Gas Refunded">
+          <DetailItem title='Gas Refunded'>
             {new BigNumber(block.gasRefunded).toFormat()}
           </DetailItem>
-          <DetailItem title="Gas Penalized">
+          <DetailItem title='Gas Penalized'>
             {new BigNumber(block.gasPenalized).toFormat()}
           </DetailItem>
-          <DetailItem title="Max Gas Limit">
+          <DetailItem title='Max Gas Limit'>
             {new BigNumber(block.maxGasLimit).toFormat()}
           </DetailItem>
-          <DetailItem title="Proposer">
+          <DetailItem title='Proposer'>
             {block.proposer ? (
               <IdentityBlock block={block} />
             ) : (
-              <span className="text-secondary">N/A</span>
+              <span className='text-secondary'>N/A</span>
             )}
           </DetailItem>
 
-          <DetailItem title="Consensus Group" className="hash-group-row">
+          <DetailItem title='Consensus Group' className='hash-group-row'>
             {block.validators ? (
               <>
                 {expanded === false && (
-                  <div className="d-flex text-break-all">
-                    <a href="/#" onClick={toggleCollapseClick}>
+                  <div className='d-flex text-break-all'>
+                    <a href='/#' onClick={toggleCollapseClick}>
                       {block.validators.length} validators (See all)
                     </a>
                   </div>
                 )}
                 <Collapse in={expanded}>
                   <div>
-                    <div className="hash-group">
+                    <div className='hash-group'>
                       {block.validators.map((item, i) => (
-                        <div className="hash-item mb-1" key={`${item}/${i}`}>
-                          <NetworkLink className="trim-wrapper" to={urlBuilder.nodeDetails(item)}>
+                        <div className='hash-item mb-1' key={`${item}/${i}`}>
+                          <NetworkLink
+                            className='trim-wrapper'
+                            to={urlBuilder.nodeDetails(item)}
+                          >
                             <Trim text={item} />
                           </NetworkLink>
                         </div>
@@ -184,45 +199,54 @@ export const BlockData = (props: BlockDataType) => {
                 </Collapse>
               </>
             ) : (
-              <span className="text-secondary">N/A</span>
+              <span className='text-secondary'>N/A</span>
             )}
           </DetailItem>
-          <DetailItem title="State Root Hash">
+          <DetailItem title='State Root Hash'>
             {block.stateRootHash ? (
               <Trim text={block.stateRootHash} />
             ) : (
-              <span className="text-secondary">N/A</span>
+              <span className='text-secondary'>N/A</span>
             )}
           </DetailItem>
           {block.shard === METACHAIN_SHARD_ID && (
-            <DetailItem title="Notarized Blocks" className="hash-group-row">
+            <DetailItem title='Notarized Blocks' className='hash-group-row'>
               {block.notarizedBlocksHashes === undefined ||
               (Array.isArray(block.notarizedBlocksHashes) &&
                 block.notarizedBlocksHashes.length === 0) ? (
-                <span className="text-secondary na-item">N/A</span>
+                <span className='text-secondary na-item'>N/A</span>
               ) : (
-                <div className="hash-group">
+                <div className='hash-group'>
                   {block.notarizedBlocksHashes.map((item, i) => (
-                    <div className="hash-item">
-                      <NetworkLink className="trim-wrapper" key={item + i} to={`/blocks/${item}`}>
+                    <div className='hash-item' key={item + i}>
+                      <NetworkLink
+                        className='trim-wrapper'
+                        to={`/blocks/${item}`}
+                      >
                         <Trim text={item} />
                       </NetworkLink>
                     </div>
                   ))}
-                  {createHashItemIfLengthIsOdd(block.notarizedBlocksHashes.length)}
+                  {createHashItemIfLengthIsOdd(
+                    block.notarizedBlocksHashes.length
+                  )}
                 </div>
               )}
             </DetailItem>
           )}
-          <DetailItem title="Miniblocks" className="hash-group-row">
+          <DetailItem title='Miniblocks' className='hash-group-row'>
             {block.miniBlocksHashes === undefined ||
-            (Array.isArray(block.miniBlocksHashes) && block.miniBlocksHashes.length === 0) ? (
-              <span className="text-secondary na-item">N/A</span>
+            (Array.isArray(block.miniBlocksHashes) &&
+              block.miniBlocksHashes.length === 0) ? (
+              <span className='text-secondary na-item'>N/A</span>
             ) : (
-              <div className="hash-group">
+              <div className='hash-group'>
                 {block.miniBlocksHashes.map((item) => (
-                  <div className="hash-item" key={item}>
-                    <NetworkLink className="trim-wrapper" to={`/miniblocks/${item}`}>
+                  <div className='hash-item' key={item}>
+                    <NetworkLink
+                      className='trim-wrapper'
+                      to={`/miniblocks/${item}`}
+                    >
                       <Trim text={item} />
                     </NetworkLink>
                   </div>
@@ -231,30 +255,33 @@ export const BlockData = (props: BlockDataType) => {
               </div>
             )}
           </DetailItem>
-          <DetailItem title="Previous Hash">
-            <div className="d-flex align-items-center">
+          <DetailItem title='Previous Hash'>
+            <div className='d-flex align-items-center'>
               {isFirstBlock ? (
-                <span className="text-secondary">N/A</span>
+                <span className='text-secondary'>N/A</span>
               ) : block.prevHash ? (
-                <NetworkLink className="trim-wrapper" to={`/blocks/${block.prevHash}`}>
+                <NetworkLink
+                  className='trim-wrapper'
+                  to={`/blocks/${block.prevHash}`}
+                >
                   <Trim text={block.prevHash} />
                 </NetworkLink>
               ) : (
-                <span className="text-secondary">N/A</span>
+                <span className='text-secondary'>N/A</span>
               )}
             </div>
           </DetailItem>
-          <DetailItem title="Public Keys Bitmap">
+          <DetailItem title='Public Keys Bitmap'>
             {block.pubKeyBitmap ? (
               <Trim text={block.pubKeyBitmap} />
             ) : (
-              <span className="text-secondary">N/A</span>
+              <span className='text-secondary'>N/A</span>
             )}
           </DetailItem>
           {isFirstBlock && block.prevHash && (
             <>
-              <DetailItem title="">
-                <pre className="genesis px-3 pt-2 pb-4 m-0 rounded border">
+              <DetailItem title=''>
+                <pre className='genesis px-3 pt-2 pb-4 m-0 rounded border'>
                   {decodeHex(block.prevHash)}
                 </pre>
               </DetailItem>
