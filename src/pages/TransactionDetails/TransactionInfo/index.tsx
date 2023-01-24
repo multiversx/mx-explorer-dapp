@@ -238,22 +238,22 @@ export const TransactionInfo = ({
                       {isTxPending ? (
                         <FontAwesomeIcon
                           icon={faSpinner}
-                          className='me-2 text-secondary fa-spin slow-spin'
+                          className='me-2 text-neutral-300 fa-spin slow-spin'
                         />
                       ) : (
                         <FontAwesomeIcon
                           icon={faClock}
-                          className='me-2 text-secondary'
+                          className='me-2 text-neutral-300'
                         />
                       )}
                       <TimeAgo value={transaction.timestamp} />
                       &nbsp;
-                      <span className='text-secondary'>
+                      <span className='text-neutral-300'>
                         ({dateFormatted(transaction.timestamp, false, true)})
                       </span>
                     </div>
                   ) : (
-                    <span className='text-secondary'>N/A</span>
+                    <span className='text-neutral-300'>N/A</span>
                   )}
                 </DetailItem>
 
@@ -270,7 +270,7 @@ export const TransactionInfo = ({
                         <CopyButton text={transaction.miniBlockHash} />
                       </>
                     ) : (
-                      <span className='text-secondary'>N/A</span>
+                      <span className='text-neutral-300'>N/A</span>
                     )}
                   </div>
                 </DetailItem>
@@ -343,7 +343,7 @@ export const TransactionInfo = ({
                       <div className='d-flex ms-1 text-break-all'>
                         <FontAwesomeIcon
                           icon={faAngleDown}
-                          className='text-secondary'
+                          className='text-neutral-300'
                           style={{ marginTop: '2px' }}
                           transform={{ rotate: 45 }}
                         />
@@ -359,7 +359,7 @@ export const TransactionInfo = ({
 
                 <DetailItem title='Value'>
                   {formattedTxValue} {egldLabel}{' '}
-                  <span className='text-secondary'>
+                  <span className='text-neutral-300'>
                     {transaction.price !== undefined ? (
                       <>
                         (
@@ -412,7 +412,7 @@ export const TransactionInfo = ({
                   {transaction.gasUsed !== undefined ? (
                     <>
                       {transactionFee} {egldLabel}{' '}
-                      <span className='text-secondary'>
+                      <span className='text-neutral-300'>
                         {transaction.price !== undefined ? (
                           <>
                             (
@@ -429,7 +429,7 @@ export const TransactionInfo = ({
                       </span>
                     </>
                   ) : (
-                    <span className='text-secondary'>N/A</span>
+                    <span className='text-neutral-300'>N/A</span>
                   )}
                 </DetailItem>
 
@@ -437,7 +437,7 @@ export const TransactionInfo = ({
                   {transaction.price !== undefined ? (
                     <>{`$${new BigNumber(transaction.price).toFormat(2)}`}</>
                   ) : (
-                    <span className='text-secondary'>N/A</span>
+                    <span className='text-neutral-300'>N/A</span>
                   )}
                 </DetailItem>
 
@@ -445,7 +445,7 @@ export const TransactionInfo = ({
                   {transaction.gasLimit !== undefined ? (
                     <>{transaction.gasLimit.toLocaleString('en')}</>
                   ) : (
-                    <span className='text-secondary'>N/A</span>
+                    <span className='text-neutral-300'>N/A</span>
                   )}
                 </DetailItem>
 
@@ -453,7 +453,7 @@ export const TransactionInfo = ({
                   {transaction.gasUsed !== undefined ? (
                     <>{transaction.gasUsed.toLocaleString('en')}</>
                   ) : (
-                    <span className='text-secondary'>N/A</span>
+                    <span className='text-neutral-300'>N/A</span>
                   )}
                 </DetailItem>
 
@@ -464,7 +464,7 @@ export const TransactionInfo = ({
                       showLastNonZeroDecimal
                     />
                   ) : (
-                    <span className='text-secondary'>N/A</span>
+                    <span className='text-neutral-300'>N/A</span>
                   )}
                 </DetailItem>
 

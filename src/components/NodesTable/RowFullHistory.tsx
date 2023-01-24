@@ -17,7 +17,7 @@ export const RowFullHistory = ({
         <div className='d-flex align-items-center justify-content-center'>
           <FontAwesomeIcon
             icon={faHistory}
-            className='text-secondary ms-1 me-2'
+            className='text-neutral-300 ms-1 me-2'
             size={small ? 'xs' : '1x'}
           />
         </div>

@@ -88,7 +88,7 @@ export const BlockData = (props: BlockDataType) => {
                         Next <FontAwesomeIcon icon={faChevronRight} />
                       </NetworkLink>
                     ) : (
-                      <span className='text-secondary'>
+                      <span className='text-neutral-300'>
                         Next <FontAwesomeIcon icon={faChevronRight} />
                       </span>
                     )}
@@ -108,10 +108,10 @@ export const BlockData = (props: BlockDataType) => {
           <DetailItem title='Epoch'>{block.epoch}</DetailItem>
 
           <DetailItem title='Age'>
-            <FontAwesomeIcon icon={faClock} className='me-2 text-secondary' />
+            <FontAwesomeIcon icon={faClock} className='me-2 text-neutral-300' />
             <TimeAgo value={block.timestamp} />
             &nbsp;
-            <span className='text-secondary'>
+            <span className='text-neutral-300'>
               ({dateFormatted(block.timestamp, false, true)})
             </span>
           </DetailItem>
@@ -166,7 +166,7 @@ export const BlockData = (props: BlockDataType) => {
             {block.proposer ? (
               <IdentityBlock block={block} />
             ) : (
-              <span className='text-secondary'>N/A</span>
+              <span className='text-neutral-300'>N/A</span>
             )}
           </DetailItem>
 
@@ -199,14 +199,14 @@ export const BlockData = (props: BlockDataType) => {
                 </Collapse>
               </>
             ) : (
-              <span className='text-secondary'>N/A</span>
+              <span className='text-neutral-300'>N/A</span>
             )}
           </DetailItem>
           <DetailItem title='State Root Hash'>
             {block.stateRootHash ? (
               <Trim text={block.stateRootHash} />
             ) : (
-              <span className='text-secondary'>N/A</span>
+              <span className='text-neutral-300'>N/A</span>
             )}
           </DetailItem>
           {block.shard === METACHAIN_SHARD_ID && (
@@ -214,7 +214,7 @@ export const BlockData = (props: BlockDataType) => {
               {block.notarizedBlocksHashes === undefined ||
               (Array.isArray(block.notarizedBlocksHashes) &&
                 block.notarizedBlocksHashes.length === 0) ? (
-                <span className='text-secondary na-item'>N/A</span>
+                <span className='text-neutral-300 na-item'>N/A</span>
               ) : (
                 <div className='hash-group'>
                   {block.notarizedBlocksHashes.map((item, i) => (
@@ -238,7 +238,7 @@ export const BlockData = (props: BlockDataType) => {
             {block.miniBlocksHashes === undefined ||
             (Array.isArray(block.miniBlocksHashes) &&
               block.miniBlocksHashes.length === 0) ? (
-              <span className='text-secondary na-item'>N/A</span>
+              <span className='text-neutral-300 na-item'>N/A</span>
             ) : (
               <div className='hash-group'>
                 {block.miniBlocksHashes.map((item) => (
@@ -258,7 +258,7 @@ export const BlockData = (props: BlockDataType) => {
           <DetailItem title='Previous Hash'>
             <div className='d-flex align-items-center'>
               {isFirstBlock ? (
-                <span className='text-secondary'>N/A</span>
+                <span className='text-neutral-300'>N/A</span>
               ) : block.prevHash ? (
                 <NetworkLink
                   className='trim-wrapper'
@@ -267,7 +267,7 @@ export const BlockData = (props: BlockDataType) => {
                   <Trim text={block.prevHash} />
                 </NetworkLink>
               ) : (
-                <span className='text-secondary'>N/A</span>
+                <span className='text-neutral-300'>N/A</span>
               )}
             </div>
           </DetailItem>
@@ -275,7 +275,7 @@ export const BlockData = (props: BlockDataType) => {
             {block.pubKeyBitmap ? (
               <Trim text={block.pubKeyBitmap} />
             ) : (
-              <span className='text-secondary'>N/A</span>
+              <span className='text-neutral-300'>N/A</span>
             )}
           </DetailItem>
           {isFirstBlock && block.prevHash && (

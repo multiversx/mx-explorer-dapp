@@ -91,7 +91,7 @@ export const AccountStaking = () => {
                     <div className='account-legacy-delegation'>
                       <div className='px-spacer py-3 border-bottom bg-light'>
                         Stake{' '}
-                        <span className='text-secondary'>(Validation)</span>
+                        <span className='text-neutral-300'>(Validation)</span>
                       </div>
                       <AccountStake stake={stake} />
                     </div>

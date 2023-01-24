@@ -50,7 +50,7 @@ export const ProviderDetailsCard = ({
           </a>
         </div>
         <div className='card-header-item compact d-flex'>
-          <span className='text-secondary flex-shrink-0'>Address:</span>
+          <span className='text-neutral-300 flex-shrink-0'>Address:</span>
           <div className='d-flex align-items-center text-break-all ms-2'>
             <NetworkLink
               to={urlBuilder.accountDetails(provider.provider)}

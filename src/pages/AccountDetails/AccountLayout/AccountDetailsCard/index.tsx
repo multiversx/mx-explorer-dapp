@@ -227,7 +227,7 @@ export const AccountDetailsCard = () => {
                         <ShardSpan shard={shard} />
                       </NetworkLink>
                     ) : (
-                      <span className='text-secondary'>N/A</span>
+                      <span className='text-neutral-300'>N/A</span>
                     )}
                   </SmallDetailItem>
 
@@ -235,7 +235,7 @@ export const AccountDetailsCard = () => {
                     {developerReward !== undefined ? (
                       <Denominate value={developerReward} decimals={4} />
                     ) : (
-                      <span className='text-secondary'>N/A</span>
+                      <span className='text-neutral-300'>N/A</span>
                     )}
                   </SmallDetailItem>
 
@@ -257,7 +257,7 @@ export const AccountDetailsCard = () => {
                         <CopyButton text={ownerAddress} />
                       </div>
                     ) : (
-                      <span className='text-secondary'>N/A</span>
+                      <span className='text-neutral-300'>N/A</span>
                     )}
                   </SmallDetailItem>
 
@@ -266,15 +266,15 @@ export const AccountDetailsCard = () => {
                       <div className='d-flex align-items-center'>
                         <FontAwesomeIcon
                           icon={faClock}
-                          className='me-2 text-secondary'
+                          className='me-2 text-neutral-300'
                         />
                         <TimeAgo value={deployedAt} /> ago &nbsp;
-                        <span className='text-secondary'>
+                        <span className='text-neutral-300'>
                           ({dateFormatted(deployedAt, false, true)})
                         </span>
                       </div>
                     ) : (
-                      <span className='text-secondary'>N/A</span>
+                      <span className='text-neutral-300'>N/A</span>
                     )}
                   </SmallDetailItem>
 
@@ -326,7 +326,7 @@ export const AccountDetailsCard = () => {
                 </div>
               </div>
               <div className='card-header-item compact d-flex'>
-                <span className='text-secondary'>Address:</span>
+                <span className='text-neutral-300'>Address:</span>
                 <div className='d-flex align-items-center text-break-all ms-2'>
                   <span data-testid='address'>{address}</span>
                   <CopyButton text={address} />
@@ -334,7 +334,7 @@ export const AccountDetailsCard = () => {
               </div>
               {username && (
                 <div className='card-header-item compact d-flex'>
-                  <span className='text-secondary'>Herotag:</span>
+                  <span className='text-neutral-300'>Herotag:</span>
                   <div className='d-flex align-items-center text-break-all ms-2'>
                     <span data-testid='address'>{formatHerotag(username)}</span>
                     <CopyButton text={formatHerotag(username)} />

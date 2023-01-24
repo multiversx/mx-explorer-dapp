@@ -68,7 +68,7 @@ export const AccountAnalytics = () => {
         <div className='card-header-item d-flex align-items-center bg-light'>
           Account {egldLabel} Balance{' '}
           {chartData.length > 1 && (
-            <span className='text-secondary ms-1'>
+            <span className='text-neutral-300 ms-1'>
               ( from {startDate} to {endDate} )
             </span>
           )}

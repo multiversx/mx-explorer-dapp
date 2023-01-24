@@ -35,7 +35,10 @@ export const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {
     <Link to={`${pathname}?${nextUrlParams}`} className='text-body me-n1'>
       {field}
       {sort !== id && (
-        <FontAwesomeIcon icon={faSort} className='side-action text-secondary' />
+        <FontAwesomeIcon
+          icon={faSort}
+          className='side-action text-neutral-300'
+        />
       )}
       {order === SortOrderEnum.asc && sort === id && (
         <FontAwesomeIcon icon={faSortUp} className='side-action text-body' />

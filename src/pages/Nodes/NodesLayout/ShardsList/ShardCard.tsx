@@ -22,7 +22,7 @@ export const ShardCard = ({ shard, isOverall }: ShardCardType) => {
             className='shard-icon text-primary me-2'
           />
         )}
-        <span className='text-secondary'>
+        <span className='text-neutral-300'>
           {isOverall ? 'Active Validators' : <ShardSpan shard={shard.shard} />}
         </span>
       </div>

@@ -48,7 +48,7 @@ export const TransactionErrorDescription = ({
       >
         <FontAwesomeIcon
           icon={faQuestionCircle}
-          className='small text-secondary ms-1'
+          className='small text-neutral-300 ms-1'
         />
       </Overlay>
     </div>

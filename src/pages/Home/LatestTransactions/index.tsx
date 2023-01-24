@@ -157,14 +157,14 @@ export const LatestTransactions = () => {
                               </div>
                             </div>
 
-                            <div className='text-secondary flex-shrink-0'>
+                            <div className='text-neutral-300 flex-shrink-0'>
                               <TimeAgo value={transaction.timestamp} short />{' '}
                               ago
                             </div>
                           </div>
 
                           <div className='mb-1'>
-                            <div className='d-flex flex-row align-items-center text-secondary'>
+                            <div className='d-flex flex-row align-items-center text-neutral-300'>
                               <span className='me-2'>To:</span>
                               <ScAddressIcon initiator={receiver} />
                               <NetworkLink
@@ -192,7 +192,7 @@ export const LatestTransactions = () => {
                           </div>
 
                           <div className='mb-1'>
-                            <div className='d-flex flex-row align-items-center text-secondary'>
+                            <div className='d-flex flex-row align-items-center text-neutral-300'>
                               <span className='me-2'>From:</span>
                               {addressIsBech32(transaction.sender) ? (
                                 <>
@@ -232,7 +232,9 @@ export const LatestTransactions = () => {
 
                           <div>
                             <div className='d-flex align-items-center'>
-                              <span className='text-secondary me-2'>Hash:</span>
+                              <span className='text-neutral-300 me-2'>
+                                Hash:
+                              </span>
 
                               <NetworkLink
                                 to={`/transactions/${transaction.txHash}`}

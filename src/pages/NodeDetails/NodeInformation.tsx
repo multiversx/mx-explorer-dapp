@@ -58,7 +58,9 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
           <h6 data-testid='title'>Node Details</h6>
         </div>
         <div className='card-header-item compact d-flex'>
-          <span className='flex-shrink-0 text-secondary me-2'>Public key:</span>
+          <span className='flex-shrink-0 text-neutral-300 me-2'>
+            Public key:
+          </span>
 
           <div className='d-flex flex-column min-w-0'>
             <div className='d-flex align-items-center'>
@@ -100,7 +102,7 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             {type !== 'observer' && (
               <>
                 Validator{' '}
-                <span className='text-secondary ms-1'>({status})</span>
+                <span className='text-neutral-300 ms-1'>({status})</span>
               </>
             )}
           </>
