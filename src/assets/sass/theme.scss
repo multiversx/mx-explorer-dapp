@@ -1,3 +1,23 @@
+/* Bootstrap overrides
+-------------------------------------------------- */
+
+@import './bootstrap-variables';
+
+/* Do not move the imports from here.
+Override Bootstrap variables only above.
+-------------------------------------------------- */
+
+/* Variables
+-------------------------------------------------- */
+// Bootstrap
+@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+@import './themes/default.scss';
+@import './main.scss';
+@import './bootstrap-overrides.scss';
+
+/* Base
+-------------------------------------------------- */
+
 .form-control {
   &:focus-visible {
     text-shadow: none;
@@ -10,24 +30,24 @@
 
 .btn {
   &.btn-white {
-    border: 1px solid $border-color;
-    color: $secondary;
-    background-color: $card-bg;
+    border: 1px solid var(--border-color);
+    color: var(--secondary);
+    background-color: var(--card-bg);
 
     &:hover {
       box-shadow: none;
-      border-color: $input-hover-border-color;
+      // border-color: $input-hover-border-color;
     }
   }
 }
 
 .side-action {
-  color: $muted;
+  color: var(--muted);
   margin-left: 0.5rem;
   transition: color 200ms ease;
 
   &:hover {
-    color: $primary !important;
+    color: var(--primary) !important;
   }
 }
 
@@ -70,19 +90,19 @@
   overflow-x: auto;
 
   .table {
-    @extend .m-0;
+    // @extend .m-0;
     white-space: nowrap;
 
-    th {
-      border: 0;
-      color: $body;
+    //th {
+    // border: 0;
+    //color: var(--white);
 
-      @extend .border-bottom;
-      @extend .bg-light;
-    }
+    // @extend .border-bottom;
+    // @extend .bg-light;
+    //}
 
     td {
-      color: $body;
+      //   color: var(--white);
       vertical-align: middle;
     }
   }
@@ -100,11 +120,11 @@
   }
 
   span {
-    color: $white;
+    color: var(--white);
     font-size: 1.2rem;
     font-weight: 300;
-    border-left: 1px solid $white;
-    border-left-color: $white;
+    border-left: 1px solid var(--white);
+    border-left-color: var(--white);
     padding-left: 0.7rem;
   }
 }
@@ -114,10 +134,10 @@
 }
 
 .bg-body {
-  background-color: $body-bg;
+  background-color: var(--body-background-color);
 }
 .bg-card {
-  background-color: $card-bg;
+  background-color: var(--card-bg);
 }
 
 .page-state-sm {
@@ -164,7 +184,7 @@
 }
 
 .text-body {
-  color: $body;
+  color: var(--white);
 }
 
 .flex-basis-0 {
@@ -173,13 +193,13 @@
 
 .direction-badge {
   @extend .badge;
-  @extend .badge-pill;
+  @extend .badge-pill !optional;
   @extend .text-uppercase;
 
   font-weight: normal;
   font-size: 63%;
   position: relative;
-  background-color: $light;
+  background-color: var(--light);
   min-width: 2.5rem;
 
   &.out {
@@ -188,35 +208,35 @@
   }
 
   &.in {
-    color: $success;
-    border: 1px solid rgba($success, 0.2);
+    color: var(--success);
+    border: 1px solid rgba(var(--success), 0.2);
   }
 
   &.self {
-    color: $secondary;
-    border: 1px solid rgba($secondary, 0.2);
+    color: var(--secondary);
+    border: 1px solid rgba(var(--secondary), 0.2);
   }
 
   &.internal,
   &.int {
-    color: $muted;
-    border: 1px solid rgba($muted, 0.2);
+    color: var(--muted);
+    border: 1px solid rgba(var(--muted), 0.2);
   }
 }
 
-.mr-lg-n1rem {
+.me-lg-n1rem {
   @include media-breakpoint-up(lg) {
     margin-right: -1rem;
   }
 }
 
 .btn-primary-light {
-  color: $primary !important;
-  background-color: $primary-light;
+  color: var(--primary) !important;
+  background-color: var(--primary)-light;
 
   &:hover {
-    color: $primary !important;
-    background-color: $primary-light-hover;
+    color: var(--primary) !important;
+    background-color: var(--primary)-light-hover;
   }
 }
 
@@ -233,7 +253,7 @@
   .new {
     @keyframes highlight {
       from {
-        background-color: $light;
+        background-color: var(--light);
       }
     }
     animation: highlight 1000ms ease-in-out;
@@ -243,12 +263,12 @@
     border-radius: 50%;
     font-size: 0.9375rem;
     text-align: center;
-    color: $secondary;
+    color: var(--secondary);
     width: 2.1875rem;
     height: 2.1875rem;
     line-height: 2.1875rem;
-    background: $light;
-    box-shadow: inset 0 0 3px rgba($secondary, 0.2);
+    background: var(--light);
+    box-shadow: inset 0 0 3px rgba(var(--secondary), 0.2);
     flex-shrink: 0;
   }
 }
@@ -257,16 +277,16 @@
   display: flex;
 
   h6 {
-    color: $primary;
+    color: var(--primary);
 
     &:hover {
-      color: $link-hover-color;
+      color: var(--link-hover-color);
     }
   }
 
   &.active {
     h6 {
-      color: $body;
+      color: var(--white);
     }
   }
 }
@@ -294,23 +314,19 @@
   color: transparent;
   border-radius: 50%;
   overflow: hidden;
-  border: 1px solid $border-color-alt;
+  border: 1px solid var(--border-color);
   svg,
   img {
     max-width: 1.5rem;
   }
   svg {
-    color: $muted;
+    color: var(--muted);
   }
 }
 div.side-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.icon-egld {
-  filter: $image-filter;
 }
 
 .account-icon {
@@ -359,11 +375,11 @@ div.side-icon {
 
 .bg-light.bs-popover-bottom .arrow::after,
 .bg-light.bs-popover-auto[x-placement^='bottom'] .arrow::after {
-  border-bottom-color: $light;
+  border-bottom-color: var(--light);
 }
 .bg-light.bs-popover-top .arrow::after,
 .bg-light.bs-popover-auto[x-placement^='top'] .arrow::after {
-  border-top-color: $light;
+  border-top-color: var(--light);
 }
 
 @include media-breakpoint-up(lg) {

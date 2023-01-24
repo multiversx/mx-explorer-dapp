@@ -4,8 +4,8 @@
   width: 0.825rem;
   height: 0.825rem;
   border-radius: 50%;
-  background-color: $muted;
-  color: $muted;
+  background-color: var(--muted);
+  color: var(--muted);
   animation: dotFlashing 1s infinite linear alternate;
   animation-delay: 0.5s;
   left: 0.825rem;
@@ -24,8 +24,8 @@
     width: 0.825rem;
     height: 0.825rem;
     border-radius: 50%;
-    background-color: $muted;
-    color: $muted;
+    background-color: var(--muted);
+    color: var(--muted);
     animation: dotFlashing 1s infinite alternate;
     animation-delay: 0s;
   }
@@ -35,8 +35,8 @@
     width: 0.825rem;
     height: 0.825rem;
     border-radius: 50%;
-    background-color: $muted;
-    color: $muted;
+    background-color: var(--muted);
+    color: var(--muted);
     animation: dotFlashing 1s infinite alternate;
     animation-delay: 1s;
   }
@@ -47,7 +47,7 @@
     }
     50%,
     100% {
-      background-color: $muted;
+      background-color: var(--muted);
     }
   }
 }

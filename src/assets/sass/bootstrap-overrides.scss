@@ -1,0 +1,44 @@
+// THEME COLOR OVERRIDES
+.table {
+  --table-border-color: var(--neutral-800);
+}
+.card {
+  --card-cap-bg: transparent;
+  --card-cap-color: var(--neutral-100);
+  --card-color: var(--neutral-100);
+  --card-bg: rgba(0, 0, 0, 0.2);
+}
+
+// STYLING OVERRIDES
+.table {
+  font-size: 14px;
+  th {
+    font-weight: 400;
+    background-color: rgba(38, 38, 38, 0.6);
+    padding: 0.825rem;
+    border-bottom-width: 0;
+    &:first-of-type {
+      border-top-left-radius: 0.5rem;
+      border-bottom-left-radius: 0.5rem;
+    }
+    &:last-of-type {
+      border-top-right-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+    }
+  }
+  td {
+    padding-top: 0.825rem;
+    padding-bottom: 0.825rem;
+  }
+  .trim .left span,
+  .trim .right span {
+    font-size: 14px;
+  }
+}
+
+.card {
+  .card-header + .card-body {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}

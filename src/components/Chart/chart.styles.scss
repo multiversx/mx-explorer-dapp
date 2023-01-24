@@ -47,10 +47,10 @@
 
     .category {
       @extend .h6;
-      color: $secondary;
+      color: var(--secondary);
       cursor: pointer;
       &.active {
-        color: $body;
+        color: var(--body);
       }
       &:not(:first-child) {
         padding-left: 1rem;
@@ -63,17 +63,17 @@
     align-items: center;
 
     .filter {
-      background-color: rgba($primary, 0.1);
+      background-color: rgba(var(--primary), 0.1);
       border-radius: 4px;
-      color: $primary;
+      color: var(--primary);
       font-size: 12px;
       padding: 10px 15px;
       cursor: pointer;
       text-transform: capitalize;
 
       &.active {
-        background-color: $primary;
-        color: $white;
+        background-color: var(--primary);
+        color: var(--white);
       }
 
       &:not(:last-child) {
@@ -102,13 +102,13 @@
     tspan {
       font-size: 0.75rem;
       font-weight: 300;
-      fill: $secondary;
+      fill: var(--secondary);
     }
   }
 }
 
 .chart-metrics {
-  background-color: rgba($card-bg, 0.9);
+  background-color: rgba(var(--card-bg), 0.9);
   border-radius: $border-radius;
   pointer-events: none;
 }
@@ -120,8 +120,8 @@
 
 .recharts-tooltip-wrapper {
   outline: none !important;
-  color: $secondary;
-  background-color: $card-bg;
+  color: var(--secondary);
+  background-color: var(--card-bg);
   font-size: 12px;
   font-weight: 400;
   text-align: center;
@@ -129,8 +129,8 @@
   .recharts-default-tooltip {
     outline: none !important;
     padding: 1rem;
-    border: 1px solid $border-color !important;
-    background-color: $card-bg !important;
+    border: 1px solid var(--border-color) !important;
+    background-color: var(--card-bg) !important;
     border-radius: $border-radius;
     overflow: hidden;
   }
@@ -167,13 +167,13 @@
       left: -15.5px;
       bottom: calc(50% - 8px);
       border-width: 8px;
-      border-color: transparent $border-color transparent transparent;
+      border-color: transparent var(--border-color) transparent transparent;
     }
     &:after {
       left: -13px;
       bottom: calc(50% - 7px);
       border-width: 7px;
-      border-color: transparent $card-bg transparent transparent;
+      border-color: transparent var(--card-bg) transparent transparent;
     }
   }
   &-left {
@@ -181,17 +181,17 @@
       right: -15.5px;
       bottom: calc(50% - 8px);
       border-width: 8px;
-      border-color: transparent transparent transparent $border-color;
+      border-color: transparent transparent transparent var(--border-color);
     }
     &:after {
       right: -13px;
       bottom: calc(50% - 7px);
       border-width: 7px;
-      border-color: transparent transparent transparent $card-bg;
+      border-color: transparent transparent transparent var(--card-bg);
     }
   }
 }
 
 .recharts-cartesian-axis-line {
-  stroke: $secondary;
+  stroke: var(--secondary);
 }

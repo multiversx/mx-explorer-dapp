@@ -1,27 +1,27 @@
 .main-search {
   .form-control {
-    box-shadow: $card-small-box-shadow;
+    box-shadow: var(--box-shadow);
     padding-right: 3.5rem !important;
 
     @include media-breakpoint-up(lg) {
       padding-right: 4rem !important;
     }
     &::placeholder {
-      color: $muted;
+      color: var(--muted);
     }
     &:focus-visible {
       text-shadow: none;
       &::placeholder {
-        color: darken($muted, 8%);
+        color: var(--muted);
       }
     }
   }
 
   .input-group-text {
-    color: $secondary;
+    color: var(--secondary);
 
     &:hover {
-      color: $primary;
+      color: var(--primary);
     }
   }
 }

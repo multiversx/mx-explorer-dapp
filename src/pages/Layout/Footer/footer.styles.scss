@@ -8,10 +8,10 @@
     padding: 0 0.155rem;
 
     a {
-      color: $body;
+      color: var(--body);
 
       &:hover {
-        color: $body;
+        color: var(--body);
       }
 
       #heart {
