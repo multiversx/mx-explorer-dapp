@@ -1,19 +1,18 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { useAdapter, Loader, PageState, SharedIdentity } from 'components';
+import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
-import { useIsMainnet } from 'helpers';
-import { BlockType, IdentityType, NodeType } from 'types';
-import { NodeInformation } from './NodeInformation';
-import { NetworkMetrics } from './NetworkMetrics';
-import { Rounds, RoundType } from './Rounds';
+import { useAdapter, Loader, PageState, SharedIdentity } from 'components';
 import { BlocksTable } from 'components/BlocksTable';
 import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/NoBlocks';
-import { ValidatorDetails } from './ValidatorDetails';
-
-import { useSelector } from 'react-redux';
+import { useIsMainnet } from 'helpers';
 import { statsSelector } from 'redux/selectors';
+import { BlockType, IdentityType, NodeType } from 'types';
+import { NetworkMetrics } from './NetworkMetrics';
+import { NodeInformation } from './NodeInformation';
+import { Rounds, RoundType } from './Rounds';
+import { ValidatorDetails } from './ValidatorDetails';
 
 interface NodeDetailType<T> {
   data?: T;
@@ -21,7 +20,7 @@ interface NodeDetailType<T> {
 }
 
 const initialState = {
-  success: undefined,
+  success: undefined
 };
 
 export const NodeDetails = () => {
@@ -37,19 +36,25 @@ export const NodeDetails = () => {
   const { statsFetched, epoch } = stats;
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
-  const [node, setNode] = React.useState<NodeDetailType<NodeType>>(initialState);
-  const [identity, setIdentity] = React.useState<NodeDetailType<IdentityType>>(initialState);
-  const [rounds, setRounds] = React.useState<NodeDetailType<RoundType[]>>(initialState);
-  const [blocks, setBlocks] = React.useState<NodeDetailType<BlockType[]>>(initialState);
+  const [node, setNode] =
+    React.useState<NodeDetailType<NodeType>>(initialState);
+  const [identity, setIdentity] =
+    React.useState<NodeDetailType<IdentityType>>(initialState);
+  const [rounds, setRounds] =
+    React.useState<NodeDetailType<RoundType[]>>(initialState);
+  const [blocks, setBlocks] =
+    React.useState<NodeDetailType<BlockType[]>>(initialState);
 
   const fetchNodes = () => {
     setDataReady(undefined);
     getNode(publicKey).then((nodeData) => {
       if (ref.current !== null) {
         if (nodeData.success) {
-          const fetchIdentity = isMainnet && nodeData.data.identity !== undefined;
+          const fetchIdentity =
+            isMainnet && nodeData.data.identity !== undefined;
           const hasExtendedInfo =
-            nodeData.data.type !== 'observer' && nodeData.data.status !== 'queued';
+            nodeData.data.type !== 'observer' &&
+            nodeData.data.status !== 'queued';
 
           const shard = nodeData.data.shard;
 
@@ -57,7 +62,7 @@ export const NodeDetails = () => {
             const promises = [
               getRounds({ validator: publicKey, shard, epoch }),
               getBlocks({ proposer: publicKey, shard, epoch }),
-              ...(fetchIdentity ? [getIdentity(nodeData.data.identity)] : []),
+              ...(fetchIdentity ? [getIdentity(nodeData.data.identity)] : [])
             ];
             Promise.all(promises).then((response) => {
               const [roundsData, blocksData, identityData] = response;
@@ -66,17 +71,17 @@ export const NodeDetails = () => {
 
                 setBlocks({
                   data: blocksData.success ? blocksData.data.blocks : [],
-                  success: blocksData.success,
+                  success: blocksData.success
                 });
 
                 setRounds({
                   data: roundsData.success
                     ? (roundsData as any).data.map((round: any) => ({
                         key: round.round,
-                        value: round.blockWasProposed,
+                        value: round.blockWasProposed
                       }))
                     : [],
-                  success: roundsData.success,
+                  success: roundsData.success
                 });
 
                 if (isMainnet && identityData) {
@@ -113,10 +118,13 @@ export const NodeDetails = () => {
   React.useEffect(fetchNodes, [search, publicKey, statsFetched]);
 
   const showIdentity =
-    identity.success === false || (identity.success && identity.data !== undefined);
+    identity.success === false ||
+    (identity.success && identity.data !== undefined);
 
   const showExtendedInfo =
-    node.data !== undefined && node.data.type !== 'observer' && node.data.status !== 'queued';
+    node.data !== undefined &&
+    node.data.type !== 'observer' &&
+    node.data.status !== 'queued';
 
   return (
     <>
@@ -124,48 +132,48 @@ export const NodeDetails = () => {
       {dataReady === false && (
         <PageState
           icon={faCogs}
-          title="Unable to locate this node"
-          className="py-spacer my-auto"
-          dataTestId="errorScreen"
+          title='Unable to locate this node'
+          className='py-spacer my-auto'
+          dataTestId='errorScreen'
         />
       )}
       <div ref={ref}>
         {dataReady === true && node.data !== undefined && (
-          <div className="container page-content">
+          <div className='container page-content'>
             {showIdentity && (
-              <div className="row">
-                <div className="col mb-spacer">
+              <div className='row'>
+                <div className='col mb-spacer'>
                   <SharedIdentity.Summary identity={identity.data} />
                 </div>
               </div>
             )}
 
-            <div className="row">
-              <div className="mb-spacer col">
+            <div className='row'>
+              <div className='mb-spacer col'>
                 <NodeInformation nodeData={node.data} />
               </div>
             </div>
 
             {showExtendedInfo && (
               <>
-                <div className="row">
-                  <div className="mb-spacer col">
+                <div className='row'>
+                  <div className='mb-spacer col'>
                     <ValidatorDetails nodeData={node.data} />
                   </div>
                 </div>
 
-                <div className="row">
-                  <div className="mb-spacer col-md-6">
+                <div className='row'>
+                  <div className='mb-spacer col-md-6'>
                     <NetworkMetrics node={node.data} />
                   </div>
-                  <div className="col-md-6 mb-spacer">
+                  <div className='col-md-6 mb-spacer'>
                     <Rounds rounds={rounds} node={node.data} />
                   </div>
                 </div>
 
-                <div className="row">
-                  <div className="col-12">
-                    <div className="card">
+                <div className='row'>
+                  <div className='col-12'>
+                    <div className='card'>
                       {blocks.success === false && <FailedBlocks />}
                       {blocks.success && blocks.data && (
                         <>
@@ -180,13 +188,18 @@ export const NodeDetails = () => {
                           )}
                           {blocks.data.length > 0 && (
                             <>
-                              <div className="card-header">
-                                <div className="card-header-item">
-                                  <h6 className="m-0">Latest Proposed Blocks</h6>
+                              <div className='card-header'>
+                                <div className='card-header-item'>
+                                  <h6 className='m-0'>
+                                    Latest Proposed Blocks
+                                  </h6>
                                 </div>
                               </div>
-                              <div className="card-body">
-                                <BlocksTable blocks={blocks.data} shard={undefined} />
+                              <div className='card-body'>
+                                <BlocksTable
+                                  blocks={blocks.data}
+                                  shard={undefined}
+                                />
                               </div>
                             </>
                           )}

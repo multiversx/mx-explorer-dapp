@@ -4,7 +4,7 @@ import { blocks } from '__mocks__';
 describe('Latest Blocks', () => {
   test('Latest Blocks component is displaying', async () => {
     const render = beforeAll({
-      route: '/',
+      route: '/'
     });
     await wait(async () => {
       expect(render.queryByTestId('blocksList')!.childElementCount).toBe(1); // 1 because of the css animation
@@ -13,7 +13,7 @@ describe('Latest Blocks', () => {
 
   test('Latest Blocks component loading state', async () => {
     const render = beforeAll({
-      route: '/',
+      route: '/'
     });
     // correct way to get rid of not wrapped in act
     // https://stackoverflow.com/a/60164821/4264699
@@ -27,8 +27,8 @@ describe('Latest Blocks', () => {
     const render = beforeAll({
       route: '/',
       networkRequests: {
-        blocks: () => Promise.resolve(new Error('error')),
-      },
+        blocks: () => Promise.resolve(new Error('error'))
+      }
     });
 
     await wait(async () => {
@@ -40,7 +40,7 @@ describe('Latest Blocks', () => {
 describe('Latest Blocks Links', () => {
   test('View All Blocks', async () => {
     const render = beforeAll({
-      route: '/',
+      route: '/'
     });
 
     const allBlocksLink = await render.findByText('View All Blocks');
@@ -48,12 +48,14 @@ describe('Latest Blocks Links', () => {
 
     fireEvent.click(allBlocksLink);
     await wait(async () => {
-      expect(document.title).toEqual('Blocks • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual(
+        'Blocks • MultiversX (previously Elrond) Explorer'
+      );
     });
   });
   test('Block Link', async () => {
     const render = beforeAll({
-      route: '/',
+      route: '/'
     });
 
     const blockLink = await render.findByTestId('blockLink0');
@@ -62,12 +64,14 @@ describe('Latest Blocks Links', () => {
     expect(blockLink.innerHTML).toBe(blocks[0].nonce.toString());
     fireEvent.click(blockLink);
     await wait(async () => {
-      expect(document.title).toEqual('Block Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual(
+        'Block Details • MultiversX (previously Elrond) Explorer'
+      );
     });
   });
   test('Latest Blocks Hash Link', async () => {
     const render = beforeAll({
-      route: '/',
+      route: '/'
     });
 
     const blockHashLink = await render.findByTestId('blockHashLink0');
@@ -78,7 +82,9 @@ describe('Latest Blocks Links', () => {
     );
     fireEvent.click(blockHashLink);
     await wait(async () => {
-      expect(document.title).toEqual('Block Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual(
+        'Block Details • MultiversX (previously Elrond) Explorer'
+      );
     });
   });
 });

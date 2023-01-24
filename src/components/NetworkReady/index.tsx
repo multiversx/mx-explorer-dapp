@@ -1,8 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { networks } from 'config';
 
-import { useSelector } from 'react-redux';
 import { activeNetworkSelector } from 'redux/selectors';
 
 const NetworkReady: React.FC = ({ children }) => {

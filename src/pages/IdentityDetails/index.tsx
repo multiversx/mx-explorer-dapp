@@ -2,14 +2,19 @@ import React from 'react';
 import { faCity } from '@fortawesome/pro-regular-svg-icons/faCity';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 
-import { useAdapter, Loader, Pager, PageState, ProvidersTable } from 'components';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import {
+  useAdapter,
+  Loader,
+  Pager,
+  PageState,
+  ProvidersTable
+} from 'components';
 import { NodesTable, SharedIdentity } from 'components';
 import { useGetFilters } from 'helpers';
-import { IdentityType, NodeType, ProviderType } from 'types';
-
-import { useSelector } from 'react-redux';
 import { activeNetworkSelector } from 'redux/selectors';
+import { IdentityType, NodeType, ProviderType } from 'types';
 
 export const IdentityDetails = () => {
   const ref = React.useRef(null);
@@ -18,10 +23,14 @@ export const IdentityDetails = () => {
   const { getQueryObject, size } = useGetFilters();
   const { walletAddress } = useSelector(activeNetworkSelector);
 
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>(
+    undefined
+  );
   const [identity, setIdentity] = React.useState<IdentityType>();
   const [providers, setProviders] = React.useState<ProviderType[]>();
-  const [providersFetched, setProvidersFetched] = React.useState<boolean | undefined>(undefined);
+  const [providersFetched, setProvidersFetched] = React.useState<
+    boolean | undefined
+  >(undefined);
   const [nodes, setNodes] = React.useState<NodeType[]>([]);
   const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
 
@@ -32,7 +41,7 @@ export const IdentityDetails = () => {
       getIdentity(id),
       getProviders({ identity: id }),
       getNodes({ ...queryObject, identity: id, size }),
-      getNodesCount({ ...queryObject, identity: id }),
+      getNodesCount({ ...queryObject, identity: id })
     ]).then(([identityData, providersData, nodesData, nodesCount]) => {
       if (ref.current !== null) {
         setIdentity(identityData.data);
@@ -58,42 +67,42 @@ export const IdentityDetails = () => {
       {dataReady === false && (
         <PageState
           icon={faCity}
-          title="Unable to load identity details"
-          className="py-spacer my-auto"
-          dataTestId="errorScreen"
+          title='Unable to load identity details'
+          className='py-spacer my-auto'
+          dataTestId='errorScreen'
         />
       )}
       <div ref={ref}>
         {dataReady === true && identity && (
-          <div className="container page-content">
-            <div className="row" data-testid="identityDetailsContainer">
-              <div className="col-12 mb-spacer">
+          <div className='container page-content'>
+            <div className='row' data-testid='identityDetailsContainer'>
+              <div className='col-12 mb-spacer'>
                 <SharedIdentity.Card identity={identity} />
               </div>
             </div>
 
             {showProviders && (
-              <div className="row">
-                <div className="col-12 mb-spacer">
-                  <div className="card">
+              <div className='row'>
+                <div className='col-12 mb-spacer'>
+                  <div className='card'>
                     {providersFetched === false ? (
                       <PageState
                         icon={faCode}
-                        title="Unable to load providers"
-                        className="py-spacer my-auto"
-                        dataTestId="errorScreen"
+                        title='Unable to load providers'
+                        className='py-spacer my-auto'
+                        dataTestId='errorScreen'
                       />
                     ) : (
                       <>
-                        <div className="card-header">
-                          <div className="card-header-item d-flex align-items-center">
-                            <h6 className="m-0">Delegation Contracts</h6>
+                        <div className='card-header'>
+                          <div className='card-header-item d-flex align-items-center'>
+                            <h6 className='m-0'>Delegation Contracts</h6>
 
-                            <div className="ms-auto">
+                            <div className='ms-auto'>
                               <a
-                                className="btn btn-sm btn-primary-light"
-                                target={`_blank`}
-                                rel={`noreferrer nofollow`}
+                                className='btn btn-sm btn-primary-light'
+                                target={'_blank'}
+                                rel={'noreferrer nofollow'}
                                 href={walletAddress}
                               >
                                 Stake now
@@ -102,9 +111,12 @@ export const IdentityDetails = () => {
                           </div>
                         </div>
 
-                        <div className="card-body">
+                        <div className='card-body'>
                           {providers && (
-                            <ProvidersTable providers={providers} showIdentity={false} />
+                            <ProvidersTable
+                              providers={providers}
+                              showIdentity={false}
+                            />
                           )}
                         </div>
                       </>
@@ -114,27 +126,37 @@ export const IdentityDetails = () => {
               </div>
             )}
 
-            <div className="row">
-              <div className="col-12">
-                <div className="card">
-                  <div className="card-header">
-                    <div className="card-header-item d-flex justify-content-between align-items-center">
-                      <h6 className="m-0" data-testid="title">
+            <div className='row'>
+              <div className='col-12'>
+                <div className='card'>
+                  <div className='card-header'>
+                    <div className='card-header-item d-flex justify-content-between align-items-center'>
+                      <h6 className='m-0' data-testid='title'>
                         Nodes
                       </h6>
-                      <div className="d-none d-md-flex">
-                        <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+                      <div className='d-none d-md-flex'>
+                        <Pager
+                          itemsPerPage={25}
+                          page={String(size)}
+                          total={totalNodes}
+                          show
+                        />
                       </div>
                     </div>
                   </div>
 
-                  <div className="card-body">
+                  <div className='card-body'>
                     <NodesTable>
                       <NodesTable.Body nodes={nodes} />
                     </NodesTable>
                   </div>
-                  <div className="card-footer d-flex justify-content-end">
-                    <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+                  <div className='card-footer d-flex justify-content-end'>
+                    <Pager
+                      itemsPerPage={25}
+                      page={String(size)}
+                      total={totalNodes}
+                      show
+                    />
                   </div>
                 </div>
               </div>

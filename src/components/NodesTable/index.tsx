@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { TableBody } from './TableBody';
+import { NodeType } from 'types';
+import { QueueHead } from './Heads/QueueHead';
 import { StandardHead } from './Heads/StandardHead';
 import { StatisticsHead } from './Heads/StatisticsHead';
-import { QueueHead } from './Heads/QueueHead';
-import { NodeType } from 'types';
+import { TableBody } from './TableBody';
 
 interface NodesTableType {
   children: React.ReactNode;
@@ -18,14 +18,19 @@ export default class NodesTable extends React.Component<NodesTableType> {
   static Body = TableBody;
 
   render() {
-    const { statistics, queue, children, hideFilters, type, status } = this.props;
+    const { statistics, queue, children, hideFilters, type, status } =
+      this.props;
 
     return (
-      <div className="nodes-table table-wrapper">
-        <table className="table">
+      <div className='nodes-table table-wrapper'>
+        <table className='table'>
           <thead>
             {!statistics && !queue && (
-              <StandardHead hideFilters={hideFilters} type={type} status={status} />
+              <StandardHead
+                hideFilters={hideFilters}
+                type={type}
+                status={status}
+              />
             )}
             {statistics && <StatisticsHead />}
             {queue && <QueueHead hideFilters={hideFilters} />}

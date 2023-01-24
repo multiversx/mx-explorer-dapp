@@ -11,5 +11,5 @@ export const tokenDetails = {
   canChangeOwner: false,
   canPause: true,
   canFreeze: true,
-  canWipe: true,
+  canWipe: true
 };

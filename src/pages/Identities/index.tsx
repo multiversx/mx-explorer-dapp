@@ -1,16 +1,18 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { IdentityType } from 'types';
 import { useAdapter, Loader, PageState } from 'components';
-import { IdentityRow } from './IdentityRow';
 import { NodesTabs } from 'pages/Nodes/NodesLayout/NodesTabs';
+import { IdentityType } from 'types';
+import { IdentityRow } from './IdentityRow';
 
 export const Identities = () => {
   const ref = React.useRef(null);
   const { getIdentities } = useAdapter();
 
   const [identities, setIdentities] = React.useState<IdentityType[]>([]);
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>(undefined);
+  const [dataReady, setDataReady] = React.useState<boolean | undefined>(
+    undefined
+  );
 
   const fetchIdentities = () => {
     getIdentities().then(({ data, success }) => {
@@ -36,8 +38,8 @@ export const Identities = () => {
   React.useEffect(fetchIdentities, []);
 
   return (
-    <div className="card identities" ref={ref}>
-      <div className="card-header">
+    <div className='card identities' ref={ref}>
+      <div className='card-header'>
         <NodesTabs />
       </div>
 
@@ -45,24 +47,24 @@ export const Identities = () => {
       {dataReady === false && (
         <PageState
           icon={faCogs}
-          title="Unable to load validators"
-          className="py-spacer my-auto"
-          dataTestId="errorScreen"
+          title='Unable to load validators'
+          className='py-spacer my-auto'
+          dataTestId='errorScreen'
         />
       )}
       {dataReady === true && (
-        <div className="card-body">
-          <div className="table-wrapper">
-            <table className="table">
+        <div className='card-body'>
+          <div className='table-wrapper'>
+            <table className='table'>
               <thead>
                 <tr>
-                  <th className="th-rank">#</th>
-                  <th className="th-name">Name</th>
+                  <th className='th-rank'>#</th>
+                  <th className='th-name'>Name</th>
                   <th>Stake</th>
-                  <th className="th-stake-percent">Cumulative stake</th>
-                  <th className="w-10 text-right">Nodes</th>
+                  <th className='th-stake-percent'>Cumulative stake</th>
+                  <th className='w-10 text-right'>Nodes</th>
                   {/* <th className="w-10 text-right">Score</th> */}
-                  <th className="th-details">&nbsp;</th>
+                  <th className='th-details'>&nbsp;</th>
                 </tr>
               </thead>
               <tbody>

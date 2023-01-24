@@ -1,15 +1,15 @@
 export const isAddressOfMetachain = (pubKey: any) => {
   // prettier-ignore
-  let metachainPrefix = Buffer.from([
+  const metachainPrefix = Buffer.from([
       0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     ]);
-  let pubKeyPrefix = pubKey.slice(0, metachainPrefix.length);
+  const pubKeyPrefix = pubKey.slice(0, metachainPrefix.length);
 
   if (pubKeyPrefix.equals(metachainPrefix)) {
     return true;
   }
 
-  let zeroAddress = Buffer.alloc(32).fill(0);
+  const zeroAddress = Buffer.alloc(32).fill(0);
 
   if (pubKey.equals(zeroAddress)) {
     return true;
@@ -19,11 +19,11 @@ export const isAddressOfMetachain = (pubKey: any) => {
 };
 
 export const getShardOfAddress = (hexPubKey: any) => {
-  let numShards = 3;
-  let maskHigh = parseInt('11', 2);
-  let maskLow = parseInt('01', 2);
-  let pubKey = Buffer.from(hexPubKey, 'hex');
-  let lastByteOfPubKey = pubKey[31];
+  const numShards = 3;
+  const maskHigh = parseInt('11', 2);
+  const maskLow = parseInt('01', 2);
+  const pubKey = Buffer.from(hexPubKey, 'hex');
+  const lastByteOfPubKey = pubKey[31];
 
   if (isAddressOfMetachain(pubKey)) {
     return 4294967295;

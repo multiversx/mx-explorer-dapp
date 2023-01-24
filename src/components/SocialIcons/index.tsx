@@ -9,13 +9,18 @@ import {
   faTelegramPlane,
   faMediumM,
   faMedium,
-  faDiscord,
+  faDiscord
 } from '@fortawesome/free-brands-svg-icons';
-import { faGlobe, faEnvelope, faPencil, faFileAlt } from '@fortawesome/pro-regular-svg-icons';
+import {
+  faGlobe,
+  faEnvelope,
+  faPencil,
+  faFileAlt
+} from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { ReactComponent as CoinMarketCap } from 'assets/img/logos/coinmarketcap.svg';
 import { ReactComponent as CoinGecko } from 'assets/img/logos/coingecko.svg';
+import { ReactComponent as CoinMarketCap } from 'assets/img/logos/coinmarketcap.svg';
 
 const getFaIcon = (icon: string) => {
   switch (icon) {
@@ -53,24 +58,24 @@ const getFaIcon = (icon: string) => {
 const Icon = ({ icon }: { icon: string }) => {
   switch (icon) {
     case 'coinmarketcap':
-      return <CoinMarketCap className="social-icon" />;
+      return <CoinMarketCap className='social-icon' />;
     case 'coingecko':
-      return <CoinGecko className="social-icon" />;
+      return <CoinGecko className='social-icon' />;
     default:
-      return <FontAwesomeIcon icon={getFaIcon(icon)} className="social-icon" />;
+      return <FontAwesomeIcon icon={getFaIcon(icon)} className='social-icon' />;
   }
 };
 
 export const SocialIcons = ({ assets }: { assets: any }) => {
   return (
-    <div className="social-icons d-flex align-items-center ms-n2 mt-2 mt-lg-0">
+    <div className='social-icons d-flex align-items-center ms-n2 mt-2 mt-lg-0'>
       {Object.keys(assets).map((social, i) => (
         <OverlayTrigger
-          placement="top"
+          placement='top'
           delay={{ show: 250, hide: 400 }}
           overlay={(props) => (
-            <Tooltip id="social-tooltip" {...props}>
-              <span className="text-capitalize">{social}: </span>
+            <Tooltip id='social-tooltip' {...props}>
+              <span className='text-capitalize'>{social}: </span>
               {assets[social]}
             </Tooltip>
           )}
@@ -78,18 +83,18 @@ export const SocialIcons = ({ assets }: { assets: any }) => {
         >
           {social === 'email' ? (
             <a
-              className="icon d-flex align-items-center justify-content-center mx-2"
+              className='icon d-flex align-items-center justify-content-center mx-2'
               href={`mailto:${assets[social]}`}
             >
               <Icon icon={social} />
             </a>
           ) : (
             <a
-              target="_blank"
-              className="icon d-flex align-items-center justify-content-center mx-2"
+              target='_blank'
+              className='icon d-flex align-items-center justify-content-center mx-2'
               href={assets[social]}
               aria-label={social}
-              rel="noreferrer nofollow"
+              rel='noreferrer nofollow'
             >
               <Icon icon={social} />
             </a>

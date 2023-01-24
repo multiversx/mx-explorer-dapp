@@ -17,7 +17,7 @@ export const getInitialCollectionState = (): CollectionType => {
     canUpgrade: false,
     canAddSpecialRoles: false,
     canTransfer: false,
-    owner: '',
+    owner: ''
   };
 };
 
@@ -25,7 +25,10 @@ export const collectionSlice = createSlice({
   name: 'collectionSlice',
   initialState: getInitialCollectionState(),
   reducers: {
-    setCollection: (state: CollectionType, action: PayloadAction<CollectionType>) => {
+    setCollection: (
+      state: CollectionType,
+      action: PayloadAction<CollectionType>
+    ) => {
       state.collection = action.payload.collection;
       state.type = action.payload.type;
       state.name = action.payload.name;
@@ -40,8 +43,8 @@ export const collectionSlice = createSlice({
       state.canAddSpecialRoles = action.payload.canAddSpecialRoles;
       state.canTransfer = action.payload.canTransfer;
       state.owner = action.payload.owner;
-    },
-  },
+    }
+  }
 });
 
 export const { setCollection } = collectionSlice.actions;

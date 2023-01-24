@@ -15,7 +15,7 @@ export const networks: NetworkType[] = [
     egldLabel: 'xEGLD',
     walletAddress: 'https://testnet-wallet.multiversx.com/',
     explorerAddress: 'https://testnet-explorer.multiversx.com/',
-    apiAddress: 'https://testnet-api.multiversx.com',
+    apiAddress: 'https://testnet-api.multiversx.com'
   },
   // Testnets
   {
@@ -24,70 +24,70 @@ export const networks: NetworkType[] = [
     adapter: 'elastic',
     egldLabel: 'xEGLD',
     proxyUrl: 'https://proxy-maiar.multiversx.com',
-    elasticUrl: 'https://elastic-maiar.multiversx.com',
+    elasticUrl: 'https://elastic-maiar.multiversx.com'
   },
   {
     id: 'testnet-cp-test01',
     name: 'ClusterPower Testnet 01',
     adapter: 'api',
     egldLabel: 'xEGLD',
-    apiAddress: '***REMOVED***',
+    apiAddress: '***REMOVED***'
   },
   {
     id: 'testnet-do-ams',
     name: 'DigitalOcean Amsterdam Testnet',
     adapter: 'api',
     egldLabel: 'xEGLD',
-    apiAddress: '***REMOVED***',
+    apiAddress: '***REMOVED***'
   },
   {
     id: 'testnet-upcloud-fra',
     name: 'Upcloud Frankfurt Testnet',
     adapter: 'api',
     egldLabel: 'xEGLD',
-    apiAddress: '***REMOVED***',
+    apiAddress: '***REMOVED***'
   },
   {
     id: 'testnet-do-lon',
     name: 'DigitalOcean London Testnet',
     adapter: 'api',
     egldLabel: 'xEGLD',
-    apiAddress: '***REMOVED***',
+    apiAddress: '***REMOVED***'
   },
   {
     id: 'testnet-upcloud-mad',
     name: 'Upcloud Madrid Testnet',
     adapter: 'api',
     egldLabel: 'xEGLD',
-    apiAddress: '***REMOVED***',
+    apiAddress: '***REMOVED***'
   },
   {
     id: 'testnet-do-multi',
     name: 'DigitalOcean MULTI Testnet',
     adapter: 'api',
     egldLabel: 'xEGLD',
-    apiAddress: '***REMOVED***',
+    apiAddress: '***REMOVED***'
   },
   {
     id: 'testnet-do-shadowfork-four',
     name: 'SHADOWFORK 4 Testnet',
     adapter: 'api',
     egldLabel: 'xEGLD',
-    apiAddress: '***REMOVED***',
-  },
+    apiAddress: '***REMOVED***'
+  }
 ];
 
 export const multiversxApps = allApps([
   {
     id: 'wallet',
     name: 'Internal Wallet', // navbar title
-    url: '***REMOVED***',
+    url: '***REMOVED***'
   },
   {
     id: 'explorer',
     name: 'Internal Explorer',
-    url: '***REMOVED***',
-  },
+    url: '***REMOVED***'
+  }
 ]);
 
 networks.forEach((network) => {

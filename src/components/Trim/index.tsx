@@ -31,24 +31,34 @@ export const Trim = ({ text, dataTestId = '', color }: TrimType) => {
 
   React.useEffect(() => {
     if (trimRef.current && hiddenTextRef.current) {
-      const diff = hiddenTextRef.current.offsetWidth - trimRef.current.offsetWidth;
+      const diff =
+        hiddenTextRef.current.offsetWidth - trimRef.current.offsetWidth;
       setOverflow(diff > 1);
     }
   }, [debounceTracker]);
 
   return (
-    <span ref={trimRef} className={`trim ${color ? color : ''} ${overflow ? 'overflow' : ''}`}>
-      <span ref={hiddenTextRef} className="hidden-text-ref" data-testid={dataTestId}>
+    <span
+      ref={trimRef}
+      className={`trim ${color ? color : ''} ${overflow ? 'overflow' : ''}`}
+    >
+      <span
+        ref={hiddenTextRef}
+        className='hidden-text-ref'
+        data-testid={dataTestId}
+      >
         {text}
       </span>
 
       {overflow ? (
         <>
-          <span className="left">
-            <span>{String(text).substring(0, Math.floor(text.length / 2))}</span>
+          <span className='left'>
+            <span>
+              {String(text).substring(0, Math.floor(text.length / 2))}
+            </span>
           </span>
-          <span className="ellipsis">...</span>
-          <span className="right">
+          <span className='ellipsis'>...</span>
+          <span className='right'>
             <span>{String(text).substring(Math.ceil(text.length / 2))}</span>
           </span>
         </>

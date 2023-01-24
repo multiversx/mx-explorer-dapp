@@ -12,5 +12,5 @@ export const node = {
   shard: 4294967295,
   nodeType: 'validator',
   peerType: 'eligible',
-  status: 'online',
+  status: 'online'
 };

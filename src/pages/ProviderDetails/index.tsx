@@ -4,8 +4,8 @@ import { useLocation, useParams } from 'react-router-dom';
 
 import { useAdapter, Loader, Pager, PageState, NodesTable } from 'components';
 import { useGetFilters } from 'helpers';
-import { NodeType } from 'types';
 import { ProviderTabs } from 'pages/ProviderDetails/ProviderLayout/ProviderTabs';
+import { NodeType } from 'types';
 
 export const ProviderDetails = () => {
   const ref = React.useRef(null);
@@ -24,7 +24,7 @@ export const ProviderDetails = () => {
 
     Promise.all([
       getNodes({ ...queryObject, provider: address, size }),
-      getNodesCount({ ...queryObject, provider: address }),
+      getNodesCount({ ...queryObject, provider: address })
     ]).then(([nodesData, count]) => {
       setNodes(nodesData.data);
       setTotalNodes(count.data);
@@ -39,13 +39,18 @@ export const ProviderDetails = () => {
   React.useEffect(fetchNodes, [search]);
 
   return (
-    <div className="card" ref={ref}>
-      <div className="card-header">
-        <div className="card-header-item d-flex justify-content-between align-items-center">
+    <div className='card' ref={ref}>
+      <div className='card-header'>
+        <div className='card-header-item d-flex justify-content-between align-items-center'>
           <ProviderTabs />
-          <div className="d-none d-sm-flex">
+          <div className='d-none d-sm-flex'>
             {dataReady === true && (
-              <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+              <Pager
+                itemsPerPage={25}
+                page={String(size)}
+                total={totalNodes}
+                show
+              />
             )}
           </div>
         </div>
@@ -55,21 +60,26 @@ export const ProviderDetails = () => {
       {dataReady === false && (
         <PageState
           icon={faCogs}
-          title="Unable to load nodes"
-          className="py-spacer my-auto"
-          dataTestId="errorScreen"
+          title='Unable to load nodes'
+          className='py-spacer my-auto'
+          dataTestId='errorScreen'
         />
       )}
 
       {dataReady === true && (
         <>
-          <div className="card-body">
+          <div className='card-body'>
             <NodesTable>
               <NodesTable.Body nodes={nodes} />
             </NodesTable>
           </div>
-          <div className="card-footer d-flex justify-content-end">
-            <Pager itemsPerPage={25} page={String(size)} total={totalNodes} show />
+          <div className='card-footer d-flex justify-content-end'>
+            <Pager
+              itemsPerPage={25}
+              page={String(size)}
+              total={totalNodes}
+              show
+            />
           </div>
         </>
       )}

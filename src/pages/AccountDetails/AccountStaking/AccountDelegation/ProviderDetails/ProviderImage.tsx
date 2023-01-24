@@ -1,6 +1,6 @@
 import React from 'react';
-import { ProviderType } from 'types';
 import { ReactComponent as DefaultAvatar } from 'assets/img/default-avatar.svg';
+import { ProviderType } from 'types';
 
 export const ProviderImage = ({ provider }: { provider: ProviderType }) => (
   <div
@@ -10,13 +10,13 @@ export const ProviderImage = ({ provider }: { provider: ProviderType }) => (
   >
     {provider?.identityDetails?.avatar ? (
       <img
-        className="rounded-circle"
+        className='rounded-circle'
         src={provider.identityDetails.avatar}
         alt={provider?.identityDetails?.name ?? provider.provider}
-        height="42"
+        height='42'
       />
     ) : (
-      <DefaultAvatar className="default-image p-1" />
+      <DefaultAvatar className='default-image p-1' />
     )}
   </div>
 );

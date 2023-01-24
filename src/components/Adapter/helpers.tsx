@@ -70,7 +70,7 @@ export const getAccountParams = (address?: string) =>
     ? {
         sender: address,
         receiver: address,
-        condition: 'should',
+        condition: 'should'
       }
     : {};
 
@@ -103,7 +103,7 @@ export function getTransactionsParams({
   status,
   miniBlockHash,
   search,
-  withUsername,
+  withUsername
 }: TransactionsParamsType) {
   const params: ProviderPropsType['params'] = {
     from: (size - 1) * PAGE_SIZE,
@@ -119,7 +119,7 @@ export function getTransactionsParams({
     ...(status ? { status } : {}),
     ...(miniBlockHash ? { miniBlockHash } : {}),
     ...(search ? { search } : {}),
-    ...(withUsername !== undefined ? { withUsername } : {}),
+    ...(withUsername !== undefined ? { withUsername } : {})
   };
 
   return params;
@@ -138,7 +138,7 @@ export function getNodeParams({
   sort,
   order,
   provider,
-  fullHistory,
+  fullHistory
 }: GetNodesType) {
   const params: ProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
@@ -156,7 +156,7 @@ export function getNodeParams({
       ? pagination
         ? { from: (size - 1) * PAGE_SIZE, size: PAGE_SIZE }
         : { size }
-      : {}),
+      : {})
   };
 
   return params;
@@ -165,7 +165,7 @@ export function getNodeParams({
 export function getProviderParams({ identity, providers }: GetProvidersType) {
   const params: ProviderPropsType['params'] = {
     ...(identity !== undefined ? { identity } : {}),
-    ...(providers !== undefined ? { providers } : {}),
+    ...(providers !== undefined ? { providers } : {})
   };
   return params;
 }
@@ -177,7 +177,7 @@ export function getTokensParam({
   identifiers,
   sort,
   order,
-  withUsername,
+  withUsername
 }: GetTokensType) {
   const params: ProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
@@ -186,7 +186,9 @@ export function getTokensParam({
     ...(sort !== undefined ? { sort } : {}),
     ...(order !== undefined ? { order } : {}),
     ...(withUsername !== undefined ? { withUsername } : {}),
-    ...(size !== undefined ? { from: (size - 1) * PAGE_SIZE, size: PAGE_SIZE } : {}),
+    ...(size !== undefined
+      ? { from: (size - 1) * PAGE_SIZE, size: PAGE_SIZE }
+      : {})
   };
 
   return params;
@@ -199,7 +201,7 @@ export function getNftsParam({
   collection,
   identifiers,
   collections,
-  includeFlagged,
+  includeFlagged
 }: GetNftsType) {
   const params: ProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
@@ -207,14 +209,19 @@ export function getNftsParam({
     ...(type !== undefined ? { type } : {}),
     ...(identifiers !== undefined ? { identifiers } : {}),
     ...(collections !== undefined ? { collections } : {}),
-    ...(size !== undefined ? { from: (size - 1) * PAGE_SIZE, size: PAGE_SIZE } : {}),
-    ...(includeFlagged !== undefined ? { includeFlagged } : {}),
+    ...(size !== undefined
+      ? { from: (size - 1) * PAGE_SIZE, size: PAGE_SIZE }
+      : {}),
+    ...(includeFlagged !== undefined ? { includeFlagged } : {})
   };
 
   return params;
 }
 
-export const getShardAndEpochParam = (shard: number | undefined, epoch: number | undefined) => {
+export const getShardAndEpochParam = (
+  shard: number | undefined,
+  epoch: number | undefined
+) => {
   let result = {};
 
   if (shard !== undefined) {
@@ -256,11 +263,13 @@ export function processBlocks(blocks: any[]) {
   return {
     blocks,
     startBlockNr,
-    endBlockNr,
+    endBlockNr
   };
 }
 
-export type ProviderType = (props: ProviderPropsType & { url: string }) => Promise<any>;
+export type ProviderType = (
+  props: ProviderPropsType & { url: string }
+) => Promise<any>;
 
 export interface GetTokensType {
   search?: string;

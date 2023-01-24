@@ -1,12 +1,12 @@
 export enum NetworkIdType {
   mainnet = 'mainnet',
   testnet = 'testnet',
-  devnet = 'devnet',
+  devnet = 'devnet'
 }
 
 export enum SortOrderEnum {
   asc = 'asc',
-  desc = 'desc',
+  desc = 'desc'
 }
 
 export interface ScamInfoType {
@@ -26,7 +26,7 @@ export enum TokenSortEnum {
   price = 'price',
   marketCap = 'marketCap',
   accounts = 'accounts',
-  transactions = 'transactions',
+  transactions = 'transactions'
 }
 
 export interface RolesType {
@@ -37,7 +37,7 @@ export interface RolesType {
 export enum NftEnumType {
   NonFungibleESDT = 'NonFungibleESDT',
   SemiFungibleESDT = 'SemiFungibleESDT',
-  MetaESDT = 'MetaESDT',
+  MetaESDT = 'MetaESDT'
 }
 export interface NftType {
   identifier: string;
@@ -135,7 +135,7 @@ export enum TxFiltersEnum {
   before = 'before',
   after = 'after',
   status = 'status',
-  search = 'search',
+  search = 'search'
 }
 
 export interface TransactionTokensType {
@@ -175,14 +175,14 @@ export enum TxActionsEnum {
   wrapEgld = 'wrapEgld',
   unwrapEgld = 'unwrapEgld',
   unlockAssets = 'unlockAssets',
-  mergeLockedAssetTokens = 'mergeLockedAssetTokens',
+  mergeLockedAssetTokens = 'mergeLockedAssetTokens'
 }
 
 export enum TxActionCategoryEnum {
   esdtNft = 'esdtNft',
   mex = 'mex',
   stake = 'stake',
-  scCall = 'scCall',
+  scCall = 'scCall'
 }
 
 export interface TokenArgumentType {
@@ -234,18 +234,18 @@ export enum TransactionOperationActionType {
 
   // to be deprecated ?
   ESDTLocalMint = 'ESDTLocalMint',
-  ESDTLocalBurn = 'ESDTLocalBurn',
+  ESDTLocalBurn = 'ESDTLocalBurn'
 }
 
 export enum VisibleTransactionOperationType {
   nft = 'nft',
   esdt = 'esdt',
-  egld = 'egld',
+  egld = 'egld'
 }
 export enum HiddenTransactionOperationType {
   none = 'none',
   error = 'error',
-  log = 'log',
+  log = 'log'
 }
 export interface OperationType {
   action: TransactionOperationActionType;
@@ -359,7 +359,7 @@ export interface TransactionType {
 
 export enum TransferTypeEnum {
   Transaction = 'Transaction',
-  SmartContractResult = 'SmartContractResult',
+  SmartContractResult = 'SmartContractResult'
 }
 
 export interface TransactionsResponseType {
@@ -397,13 +397,13 @@ export enum ApiTxStatusEnum {
   success = 'Success',
   pending = 'Pending',
   invalid = 'Invalid',
-  fail = 'Fail',
+  fail = 'Fail'
 }
 
 export enum ExtraTxStatusEnum {
   notExecuted = 'Not Executed',
   failed = 'Failed', // TODO: remove when ready
-  rewardReverted = 'reward-reverted',
+  rewardReverted = 'reward-reverted'
 }
 
 export type TxStatusEnum = ApiTxStatusEnum | ExtraTxStatusEnum;
@@ -470,7 +470,14 @@ export interface NodeType {
   bls: string;
   name: string;
   type: 'observer' | 'validator';
-  status?: 'waiting' | 'eligible' | 'new' | 'jailed' | 'leaving' | 'inactive' | 'queued';
+  status?:
+    | 'waiting'
+    | 'eligible'
+    | 'new'
+    | 'jailed'
+    | 'leaving'
+    | 'inactive'
+    | 'queued';
   online: false;
   rating: number;
   tempRating: number;

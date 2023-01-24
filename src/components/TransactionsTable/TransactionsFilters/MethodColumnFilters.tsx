@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
 
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
-import { TxActionsEnum, TxFiltersEnum, TransactionsTableType } from 'types';
 import { SelectFilter } from 'components';
+import { TxActionsEnum, TxFiltersEnum, TransactionsTableType } from 'types';
 
 export const MethodColumnFilters = ({
-  inactiveFilters = [],
+  inactiveFilters = []
 }: {
   inactiveFilters?: TransactionsTableType['inactiveFilters'];
 }) => {
@@ -21,14 +21,14 @@ export const MethodColumnFilters = ({
   const capitalize = (string: string) =>
     (string && string[0].toUpperCase() + string.slice(1)) || '';
 
-  const searchMethods = (Object.keys(TxActionsEnum) as (keyof typeof TxActionsEnum)[]).map(
-    (key) => {
-      return {
-        value: key,
-        label: capitalize(TxActionsEnum[key]),
-      };
-    }
-  );
+  const searchMethods = (
+    Object.keys(TxActionsEnum) as (keyof typeof TxActionsEnum)[]
+  ).map((key) => {
+    return {
+      value: key,
+      label: capitalize(TxActionsEnum[key])
+    };
+  });
 
   if (inactiveFilters && inactiveFilters.includes(TxFiltersEnum.method)) {
     return null;
@@ -36,22 +36,25 @@ export const MethodColumnFilters = ({
 
   return (
     <OverlayTrigger
-      trigger="click"
-      key="popover"
-      placement="bottom"
+      trigger='click'
+      key='popover'
+      placement='bottom'
       rootClose
       overlay={
-        <Popover id="popover-positioned-bottom" className="border popover-xs bg-light">
+        <Popover
+          id='popover-positioned-bottom'
+          className='border popover-xs bg-light'
+        >
           <Popover.Content>
-            <div className="p-3 text-dark">
+            <div className='p-3 text-dark'>
               {searchMethods.length > 0 && (
-                <div className="filter-block">
-                  <div className="mb-1">Method</div>
+                <div className='filter-block'>
+                  <div className='mb-1'>Method</div>
                   <SelectFilter
-                    name="function-filter"
+                    name='function-filter'
                     options={searchMethods}
                     filter={TxFiltersEnum.method}
-                    placeholder="Search"
+                    placeholder='Search'
                     hasCustomSearch
                   />
                 </div>
@@ -61,7 +64,10 @@ export const MethodColumnFilters = ({
         </Popover>
       }
     >
-      <div className="d-inline-block side-action cursor-pointer" data-testid="StatusFilterButton">
+      <div
+        className='d-inline-block side-action cursor-pointer'
+        data-testid='StatusFilterButton'
+      >
         <FontAwesomeIcon
           icon={method !== undefined ? faFilterSolid : faFilter}
           className={method !== undefined ? 'text-primary' : ''}

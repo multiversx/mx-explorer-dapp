@@ -1,7 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ExplorerOriginType, ThemesEnum, NotificationType, ShardType } from 'types';
 import { METACHAIN_SHARD_ID } from 'appConstants';
 import { sortShards } from 'helpers/sortShards';
+import {
+  ExplorerOriginType,
+  ThemesEnum,
+  NotificationType,
+  ShardType
+} from 'types';
 
 export type InterfaceSliceType = {
   activeTheme: ThemesEnum;
@@ -26,13 +31,13 @@ export function getInitialInterfaceState(): InterfaceSliceType {
     activeTheme: ThemesEnum.default,
     explorerOrigin: {
       pathname: '/',
-      search: '',
+      search: ''
     },
     notifications: [],
     shards: [],
     refresh: {
-      timestamp: Date.now(),
-    },
+      timestamp: Date.now()
+    }
   };
 }
 
@@ -55,21 +60,34 @@ export const interfaceSlice = createSlice({
     triggerRefresh: (state: InterfaceSliceType) => {
       state.refresh = { timestamp: Date.now() };
     },
-    setShards: (state: InterfaceSliceType, action: PayloadAction<InterfaceSliceType['shards']>) => {
+    setShards: (
+      state: InterfaceSliceType,
+      action: PayloadAction<InterfaceSliceType['shards']>
+    ) => {
       state.shards = sortShards({ shards: action.payload, METACHAIN_SHARD_ID });
     },
-    addNotification: (state: InterfaceSliceType, action: PayloadAction<NotificationType>) => {
+    addNotification: (
+      state: InterfaceSliceType,
+      action: PayloadAction<NotificationType>
+    ) => {
       const notification = action.payload;
-      const toastAlreadyExists = state.notifications.some((t) => t.id === notification.id);
+      const toastAlreadyExists = state.notifications.some(
+        (t) => t.id === notification.id
+      );
       if (!toastAlreadyExists) {
         state.notifications.push(notification);
       }
     },
-    removeNotification: (state: InterfaceSliceType, action: PayloadAction<string>) => {
+    removeNotification: (
+      state: InterfaceSliceType,
+      action: PayloadAction<string>
+    ) => {
       const removedNotificationId = action.payload;
-      state.notifications = state.notifications.filter((n) => n.id !== removedNotificationId);
-    },
-  },
+      state.notifications = state.notifications.filter(
+        (n) => n.id !== removedNotificationId
+      );
+    }
+  }
 });
 
 export const {
@@ -78,7 +96,7 @@ export const {
   triggerRefresh,
   setShards,
   addNotification,
-  removeNotification,
+  removeNotification
 } = interfaceSlice.actions;
 
 export const interfaceReducer = interfaceSlice.reducer;

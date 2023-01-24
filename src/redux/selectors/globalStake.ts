@@ -5,4 +5,7 @@ const stateSelector = (state: RootState) => {
   return state.globalStake;
 };
 
-export const globalStakeSelector = createSelector(stateSelector, (state) => state);
+export const globalStakeSelector = createSelector(
+  stateSelector,
+  (state) => state
+);

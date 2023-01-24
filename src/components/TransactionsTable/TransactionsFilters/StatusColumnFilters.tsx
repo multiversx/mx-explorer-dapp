@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
 
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
-import { ApiTxStatusEnum, TxFiltersEnum, TransactionsTableType } from 'types';
 import { SelectFilter, SearchFilter } from 'components';
+import { ApiTxStatusEnum, TxFiltersEnum, TransactionsTableType } from 'types';
 
 export const StatusColumnFilters = ({
-  inactiveFilters = [],
+  inactiveFilters = []
 }: {
   inactiveFilters?: TransactionsTableType['inactiveFilters'];
 }) => {
@@ -19,14 +19,14 @@ export const StatusColumnFilters = ({
 
   const { status, miniBlockHash } = Object.fromEntries(urlParams);
 
-  const searchStatuses = (Object.keys(ApiTxStatusEnum) as (keyof typeof ApiTxStatusEnum)[]).map(
-    (key) => {
-      return {
-        value: key,
-        label: ApiTxStatusEnum[key],
-      };
-    }
-  );
+  const searchStatuses = (
+    Object.keys(ApiTxStatusEnum) as (keyof typeof ApiTxStatusEnum)[]
+  ).map((key) => {
+    return {
+      value: key,
+      label: ApiTxStatusEnum[key]
+    };
+  });
 
   if (
     inactiveFilters &&
@@ -38,21 +38,24 @@ export const StatusColumnFilters = ({
 
   return (
     <OverlayTrigger
-      trigger="click"
-      key="popover"
-      placement="bottom"
+      trigger='click'
+      key='popover'
+      placement='bottom'
       rootClose
       overlay={
-        <Popover id="popover-positioned-bottom" className="border popover-xs bg-light">
+        <Popover
+          id='popover-positioned-bottom'
+          className='border popover-xs bg-light'
+        >
           <Popover.Content>
-            <div className="p-3 text-dark">
+            <div className='p-3 text-dark'>
               {!inactiveFilters.includes(TxFiltersEnum.status) && (
                 <>
                   {searchStatuses.length > 0 && (
-                    <div className="filter-block">
-                      <div className="mb-1">Status</div>
+                    <div className='filter-block'>
+                      <div className='mb-1'>Status</div>
                       <SelectFilter
-                        name="status-filter"
+                        name='status-filter'
                         options={searchStatuses}
                         filter={TxFiltersEnum.status}
                       />
@@ -62,13 +65,13 @@ export const StatusColumnFilters = ({
               )}
 
               {!inactiveFilters.includes(TxFiltersEnum.miniBlockHash) && (
-                <div className="filter-block">
-                  <div className="mb-1">Miniblock Hash</div>
+                <div className='filter-block'>
+                  <div className='mb-1'>Miniblock Hash</div>
                   <SearchFilter
-                    name="miniBlockHash-filter"
+                    name='miniBlockHash-filter'
                     filter={TxFiltersEnum.miniBlockHash}
-                    placeholder="Hash"
-                    validation="hash"
+                    placeholder='Hash'
+                    validation='hash'
                   />
                 </div>
               )}
@@ -77,10 +80,21 @@ export const StatusColumnFilters = ({
         </Popover>
       }
     >
-      <div className="d-inline-block side-action cursor-pointer" data-testid="StatusFilterButton">
+      <div
+        className='d-inline-block side-action cursor-pointer'
+        data-testid='StatusFilterButton'
+      >
         <FontAwesomeIcon
-          icon={status !== undefined || miniBlockHash !== undefined ? faFilterSolid : faFilter}
-          className={status !== undefined || miniBlockHash !== undefined ? 'text-primary' : ''}
+          icon={
+            status !== undefined || miniBlockHash !== undefined
+              ? faFilterSolid
+              : faFilter
+          }
+          className={
+            status !== undefined || miniBlockHash !== undefined
+              ? 'text-primary'
+              : ''
+          }
         />
       </div>
     </OverlayTrigger>

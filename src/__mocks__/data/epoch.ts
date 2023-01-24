@@ -9,6 +9,6 @@ export const epoch = {
     // not used
     erd_nonce: 0,
     erd_nonce_at_epoch_start: 0,
-    erd_nonces_passed_in_current_epoch: 0,
-  },
+    erd_nonces_passed_in_current_epoch: 0
+  }
 };

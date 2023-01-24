@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { ProviderType, ProviderPropsType } from '../../helpers';
-import { getNodes } from './getNodes';
 import { bech32 } from 'helpers';
 import { getShardOfAddress } from './computeShard';
+import { getNodes } from './getNodes';
+import { ProviderType, ProviderPropsType } from '../../helpers';
 
 const createMustQuery = (value: any, boolQuery: any) => {
   const firstKey = Object.keys(value)[0];
@@ -36,7 +36,7 @@ const publicKeysCache: any = {};
 const getPublicKeys = async ({
   shard,
   epoch,
-  elasticUrl,
+  elasticUrl
 }: {
   shard: any;
   epoch: any;
@@ -50,8 +50,8 @@ const getPublicKeys = async ({
 
   const {
     data: {
-      _source: { publicKeys },
-    },
+      _source: { publicKeys }
+    }
   } = await axios.get(url);
 
   publicKeysCache[`${shard}_${epoch}`] = publicKeys;
@@ -62,7 +62,7 @@ const getPublicKeys = async ({
 const getValidatorIndex = async ({
   validator,
   proxyUrl = () => '',
-  elasticUrl,
+  elasticUrl
 }: {
   validator: any;
   proxyUrl: () => string;
@@ -75,14 +75,17 @@ const getValidatorIndex = async ({
   const {
     data: {
       data: {
-        status: { erd_epoch_number: epoch },
-      },
-    },
+        status: { erd_epoch_number: epoch }
+      }
+    }
   } = await axios.get(`${proxyUrl()}/network/status/${shard}`);
 
   const publicKeys = await getPublicKeys({ shard, epoch, elasticUrl });
 
-  return [publicKeys.findIndex((publicKey: any) => publicKey === validator), shard];
+  return [
+    publicKeys.findIndex((publicKey: any) => publicKey === validator),
+    shard
+  ];
 };
 
 const wrapper = async ({
@@ -90,7 +93,7 @@ const wrapper = async ({
   proxyUrl: nodeUrl = '',
   url,
   params = {},
-  timeout,
+  timeout
 }: ProviderPropsType & { url: string }) => {
   const elasticUrl = () => baseUrl;
   const proxyUrl = () => nodeUrl;
@@ -112,7 +115,7 @@ const wrapper = async ({
     receiverShard,
     round,
     condition,
-    validator,
+    validator
   } = queryStringParameters;
 
   let { shard, fields, proposer, signersIndexes } = queryStringParameters;
@@ -127,11 +130,19 @@ const wrapper = async ({
   }
 
   if (proposer && collection === 'blocks') {
-    [proposer, shard] = await getValidatorIndex({ validator: proposer, proxyUrl, elasticUrl });
+    [proposer, shard] = await getValidatorIndex({
+      validator: proposer,
+      proxyUrl,
+      elasticUrl
+    });
   }
 
   if (validator && collection === 'rounds') {
-    [signersIndexes, shard] = await getValidatorIndex({ validator, proxyUrl, elasticUrl });
+    [signersIndexes, shard] = await getValidatorIndex({
+      validator,
+      proxyUrl,
+      elasticUrl
+    });
   }
 
   boolQuery = createMustQuery({ nonce }, boolQuery);
@@ -163,8 +174,8 @@ const wrapper = async ({
     }
     boolQuery.must.push({
       range: {
-        round: { gte: round },
-      },
+        round: { gte: round }
+      }
     });
   }
   //#endregion
@@ -202,8 +213,7 @@ const wrapper = async ({
       const params = { query };
 
       const {
-        // @ts-ignore
-        data: { count },
+        data: { count }
       } = await axios.post(url, params, { timeout });
 
       results = { data: count };
@@ -216,14 +226,13 @@ const wrapper = async ({
       const params = {
         sort: { timestamp: { order: 'asc' } },
         query,
-        size: 25,
+        size: 25
       };
 
       const {
         data: {
-          // @ts-ignore
-          hits: { hits },
-        },
+          hits: { hits }
+        }
       } = await axios.post(url, params, { timeout });
 
       const data: any = [];
@@ -242,33 +251,51 @@ const wrapper = async ({
           try {
             const [
               {
-                // @ts-ignore
-                data: { count: txCount },
+                data: { count: txCount }
               },
               {
                 data: {
                   data: {
-                    account: { address, nonce, balance, code, codeHash, rootHash },
-                  },
-                },
-              },
+                    account: {
+                      address,
+                      nonce,
+                      balance,
+                      code,
+                      codeHash,
+                      rootHash
+                    }
+                  }
+                }
+              }
             ] = await Promise.all([
               axios.post(`${elasticUrl()}/transactions/_count`, {
                 query: {
-                  bool: { should: [{ match: { sender: hash } }, { match: { receiver: hash } }] },
-                },
+                  bool: {
+                    should: [
+                      { match: { sender: hash } },
+                      { match: { receiver: hash } }
+                    ]
+                  }
+                }
               }),
               axios({
                 method: 'get',
-                url: `${proxyUrl()}/address/${hash}`,
-              }),
+                url: `${proxyUrl()}/address/${hash}`
+              })
             ]);
 
-            const data = { address, nonce, balance, code, codeHash, rootHash, txCount };
+            const data = {
+              address,
+              nonce,
+              balance,
+              code,
+              codeHash,
+              rootHash,
+              txCount
+            };
 
             results = { data };
           } catch (error) {
-            // @ts-ignore
             throw new Error(error);
           }
         } else {
@@ -276,7 +303,7 @@ const wrapper = async ({
 
           try {
             let {
-              data: { _id, _source },
+              data: { _id, _source }
             } = await axios.get(url, { timeout });
 
             const hash: any = {};
@@ -286,20 +313,26 @@ const wrapper = async ({
 
             if (
               collection === 'blocks' &&
-              (!fields || fields.includes('proposer') || fields.includes('validators'))
+              (!fields ||
+                fields.includes('proposer') ||
+                fields.includes('validators'))
             ) {
               const { shardId: shard, epoch } = _source;
 
-              const publicKeys = await getPublicKeys({ shard, epoch, elasticUrl });
+              const publicKeys = await getPublicKeys({
+                shard,
+                epoch,
+                elasticUrl
+              });
 
-              // @ts-ignore
               _source.proposer = publicKeys[_source.proposer];
-              // @ts-ignore
-              _source.validators = _source.validators.map((index: any) => publicKeys[index]);
+
+              _source.validators = _source.validators.map(
+                (index: any) => publicKeys[index]
+              );
             }
 
             if (collection === 'rounds') {
-              // @ts-ignore
               delete _source.signersIndexes;
             }
 
@@ -311,21 +344,16 @@ const wrapper = async ({
               });
             }
 
-            // @ts-ignore
             if (_source.shardId !== undefined) {
-              // @ts-ignore
               _source.shard = _source.shardId;
-              // @ts-ignore
+
               delete _source.shardId;
             }
 
-            // @ts-ignore
             if (_source.searchOrder !== undefined) {
-              // @ts-ignore
               delete _source.searchOrder;
             }
 
-            // @ts-ignore
             _source = Object.keys(_source)
               .sort()
               .reduce((result: any, key) => {
@@ -333,21 +361,20 @@ const wrapper = async ({
                 return result;
               }, {});
 
-            // @ts-ignore
             results = { data: { ...hash, ..._source } };
           } catch (error) {
             // if transaction not found in elastic
-            // @ts-ignore
+
             if (collection === 'transactions' && error.response) {
               try {
                 const {
                   data: {
-                    data: { transaction },
-                  },
+                    data: { transaction }
+                  }
                 } = await axios({
                   method: 'get',
                   url: `${proxyUrl()}/transaction/${hash}`,
-                  timeout,
+                  timeout
                 });
 
                 const {
@@ -359,11 +386,13 @@ const wrapper = async ({
                   sender,
                   signature,
                   status,
-                  value,
+                  value
                 } = transaction;
 
                 // TODO: pending alignment
-                const receiverShard = getShardOfAddress(bech32.decode(receiver));
+                const receiverShard = getShardOfAddress(
+                  bech32.decode(receiver)
+                );
                 const senderShard = getShardOfAddress(bech32.decode(sender));
 
                 results = {
@@ -379,15 +408,13 @@ const wrapper = async ({
                     senderShard,
                     signature,
                     status,
-                    value,
-                  },
+                    value
+                  }
                 };
               } catch (error) {
-                // @ts-ignore
                 throw new Error(error);
               }
             } else {
-              // @ts-ignore
               throw new Error(error);
             }
           }
@@ -400,11 +427,14 @@ const wrapper = async ({
           sort: { timestamp: { order: 'desc' } },
           query,
           from,
-          size,
+          size
         };
 
         if (collection === 'transactions') {
-          params.sort = [{ timestamp: { order: 'desc' } }, { nonce: { order: 'desc' } }];
+          params.sort = [
+            { timestamp: { order: 'desc' } },
+            { nonce: { order: 'desc' } }
+          ];
         }
 
         if (collection === 'accounts') {
@@ -413,8 +443,8 @@ const wrapper = async ({
 
         const {
           data: {
-            hits: { hits },
-          },
+            hits: { hits }
+          }
         } = await axios.post(url, params);
 
         const data = [];
@@ -429,14 +459,22 @@ const wrapper = async ({
 
           if (
             collection === 'blocks' &&
-            (!fields || fields.includes('proposer') || fields.includes('validators'))
+            (!fields ||
+              fields.includes('proposer') ||
+              fields.includes('validators'))
           ) {
             const { shardId: shard, epoch } = _source;
 
-            const publicKeys = await getPublicKeys({ shard, epoch, elasticUrl });
+            const publicKeys = await getPublicKeys({
+              shard,
+              epoch,
+              elasticUrl
+            });
 
             _source.proposer = publicKeys[_source.proposer];
-            _source.validators = _source.validators.map((index: any) => publicKeys[index]);
+            _source.validators = _source.validators.map(
+              (index: any) => publicKeys[index]
+            );
           }
 
           if (collection === 'rounds') {
@@ -482,12 +520,18 @@ const wrapper = async ({
   return results;
 };
 
-export const elastic: ProviderType = async ({ baseUrl, url, params, timeout, proxyUrl = '' }) => {
+export const elastic: ProviderType = async ({
+  baseUrl,
+  url,
+  params,
+  timeout,
+  proxyUrl = ''
+}) => {
   return wrapper({
     baseUrl,
     proxyUrl,
     url,
     params,
-    timeout,
+    timeout
   });
 };

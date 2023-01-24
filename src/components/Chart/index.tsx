@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import { ChartArea } from './ChartArea';
 import { ChartBar } from './ChartBar';
-import { ChartDonut } from './ChartDonut';
 import { ChartBody } from './ChartBody';
 import { ChartControls } from './ChartControls';
+import { ChartDonut } from './ChartDonut';
 import { ChartHeading } from './ChartHeading';
 import { ChartMetrics } from './ChartMetrics';
 import { ChartOptions } from './ChartOptions';

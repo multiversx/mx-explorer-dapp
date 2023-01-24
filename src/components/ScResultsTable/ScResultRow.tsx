@@ -1,19 +1,32 @@
 import React from 'react';
+import {
+  ScAddressIcon,
+  ShardSpan,
+  NetworkLink,
+  TimeAgo,
+  Trim,
+  Denominate
+} from 'components';
 import { addressIsBech32, urlBuilder } from 'helpers';
 import { ScResultType } from 'types';
-import { ScAddressIcon, ShardSpan, NetworkLink, TimeAgo, Trim, Denominate } from 'components';
 
 export interface ScResultRowType {
   scResult: ScResultType;
   address?: string;
 }
 
-export const ScAccountLink = ({ address, testId }: { address: string; testId?: string }) =>
+export const ScAccountLink = ({
+  address,
+  testId
+}: {
+  address: string;
+  testId?: string;
+}) =>
   addressIsBech32(address) ? (
     <NetworkLink
       to={urlBuilder.accountDetails(address)}
       data-testid={testId ? testId : 'addressLink'}
-      className="trim-wrapper"
+      className='trim-wrapper'
     >
       <Trim text={address} />
     </NetworkLink>
@@ -26,14 +39,20 @@ export const ScResultRow = ({ scResult, address }: ScResultRowType) => {
   const directionIn = address === scResult.receiver;
 
   const transactionLink = `/transactions/${
-    scResult.originalTxHash ? `${scResult.originalTxHash}#${scResult.hash}` : scResult.hash
+    scResult.originalTxHash
+      ? `${scResult.originalTxHash}#${scResult.hash}`
+      : scResult.hash
   }`;
 
   return (
-    <tr className="animated-row trim-size-sm">
+    <tr className='animated-row trim-size-sm'>
       <td>
-        <div className="d-flex align-items-center trim-size-xl">
-          <NetworkLink to={transactionLink} data-testid="transactionLink" className="trim-wrapper">
+        <div className='d-flex align-items-center trim-size-xl'>
+          <NetworkLink
+            to={transactionLink}
+            data-testid='transactionLink'
+            className='trim-wrapper'
+          >
             <Trim text={scResult.hash} />
           </NetworkLink>
         </div>
@@ -42,22 +61,22 @@ export const ScResultRow = ({ scResult, address }: ScResultRowType) => {
         <TimeAgo value={scResult.timestamp} tooltip /> ago &nbsp;
       </td>
       <td>
-        <div className="d-flex align-items-center">
+        <div className='d-flex align-items-center'>
           <ScAddressIcon initiator={scResult.sender} />
           {directionOut ? (
             <Trim text={scResult.sender} />
           ) : (
-            <ScAccountLink address={scResult.sender} testId="senderLink" />
+            <ScAccountLink address={scResult.sender} testId='senderLink' />
           )}
         </div>
       </td>
       <td>
-        <div className="d-flex align-items-center">
+        <div className='d-flex align-items-center'>
           <ScAddressIcon initiator={scResult.receiver} />
           {directionIn ? (
             <Trim text={scResult.receiver} />
           ) : (
-            <ScAccountLink address={scResult.receiver} testId="receiverLink" />
+            <ScAccountLink address={scResult.receiver} testId='receiverLink' />
           )}
         </div>
       </td>

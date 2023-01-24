@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import {
   Loader,
@@ -11,14 +12,12 @@ import {
   Trim,
   ScAddressIcon,
   PageState,
-  LockedTokenAddressIcon,
+  LockedTokenAddressIcon
 } from 'components';
 import { urlBuilder, useSize, useURLSearchParams } from 'helpers';
-import { TokenTabs } from './TokenLayout/TokenTabs';
-import { AccountType } from 'types';
-
-import { useSelector } from 'react-redux';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
+import { AccountType } from 'types';
+import { TokenTabs } from './TokenLayout/TokenTabs';
 
 export const TokenDetailsAccounts = () => {
   const ref = React.useRef(null);
@@ -45,17 +44,18 @@ export const TokenDetailsAccounts = () => {
       }
     });
 
-    Promise.all([getTokenAccounts({ tokenId, size }), getTokenAccountsCount({ tokenId })]).then(
-      ([tokenAccountsData, tokenAccountsCountData]) => {
-        if (ref.current !== null) {
-          if (tokenAccountsData.success && tokenAccountsCountData.success) {
-            setAccounts(tokenAccountsData.data);
-            setAccountsCount(tokenAccountsCountData.data);
-            setDataReady(true);
-          }
+    Promise.all([
+      getTokenAccounts({ tokenId, size }),
+      getTokenAccountsCount({ tokenId })
+    ]).then(([tokenAccountsData, tokenAccountsCountData]) => {
+      if (ref.current !== null) {
+        if (tokenAccountsData.success && tokenAccountsCountData.success) {
+          setAccounts(tokenAccountsData.data);
+          setAccountsCount(tokenAccountsCountData.data);
+          setDataReady(true);
         }
       }
-    );
+    });
   };
 
   React.useEffect(() => {
@@ -67,11 +67,11 @@ export const TokenDetailsAccounts = () => {
 
   return (
     <div ref={ref}>
-      <div className="card">
-        <div className="card-header">
-          <div className="card-header-item d-flex justify-content-between align-items-center">
+      <div className='card'>
+        <div className='card-header'>
+          <div className='card-header-item d-flex justify-content-between align-items-center'>
             <TokenTabs />
-            <div className="d-none d-sm-flex">
+            <div className='d-none d-sm-flex'>
               <Pager
                 page={String(page)}
                 total={accountsCount ? Math.min(accountsCount, 10000) : 0}
@@ -82,27 +82,32 @@ export const TokenDetailsAccounts = () => {
           </div>
           {showAccounts ? (
             <>
-              <div className="card-body border-0 p-0">
-                <div className="table-wrapper">
-                  <table className="table">
+              <div className='card-body border-0 p-0'>
+                <div className='table-wrapper'>
+                  <table className='table'>
                     <thead>
                       <tr>
                         <th>Address</th>
                         <th>Balance</th>
                       </tr>
                     </thead>
-                    <tbody data-testid="accountsTable">
+                    <tbody data-testid='accountsTable'>
                       {accounts.map((account, i) => (
                         <tr key={account.address}>
                           <td>
-                            <div className="d-flex align-items-center">
-                              <LockedTokenAddressIcon address={account.address} />
+                            <div className='d-flex align-items-center'>
+                              <LockedTokenAddressIcon
+                                address={account.address}
+                              />
                               <ScAddressIcon initiator={account.address} />
                               <NetworkLink
                                 to={urlBuilder.accountDetails(account.address)}
-                                className="trim-only-sm"
+                                className='trim-only-sm'
                               >
-                                <Trim text={account.address} dataTestId={`accountLink${i}`} />
+                                <Trim
+                                  text={account.address}
+                                  dataTestId={`accountLink${i}`}
+                                />
                               </NetworkLink>
                             </div>
                           </td>
@@ -121,7 +126,7 @@ export const TokenDetailsAccounts = () => {
                 </div>
               </div>
 
-              <div className="card-footer d-flex justify-content-end">
+              <div className='card-footer d-flex justify-content-end'>
                 <Pager
                   page={String(page)}
                   total={accountsCount ? Math.min(accountsCount, 10000) : 0}
@@ -132,17 +137,23 @@ export const TokenDetailsAccounts = () => {
             </>
           ) : (
             <>
-              {dataReady === undefined && <Loader dataTestId="tokenAccountsLoader" />}
+              {dataReady === undefined && (
+                <Loader dataTestId='tokenAccountsLoader' />
+              )}
               {dataReady === false && (
                 <PageState
                   icon={faUser}
-                  title="Unable to load Accounts"
-                  className="py-spacer my-auto"
-                  dataTestId="errorScreen"
+                  title='Unable to load Accounts'
+                  className='py-spacer my-auto'
+                  dataTestId='errorScreen'
                 />
               )}
               {dataReady === true && accounts.length === 0 && (
-                <PageState icon={faUser} title="No Accounts" className="py-spacer my-auto" />
+                <PageState
+                  icon={faUser}
+                  title='No Accounts'
+                  className='py-spacer my-auto'
+                />
               )}
             </>
           )}

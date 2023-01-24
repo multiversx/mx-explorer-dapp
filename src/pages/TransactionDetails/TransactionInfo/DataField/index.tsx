@@ -1,20 +1,28 @@
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
 import { Anchorme } from 'react-anchorme';
+import { useLocation } from 'react-router-dom';
+import { MAX_DISPLAY_TX_DATA_LENGTH } from 'appConstants';
 import { DetailItem, ModalLink, DataDecode } from 'components';
 import { DecodeMethodType } from 'components/DataDecode';
 import { truncate, useScamFlag } from 'helpers';
 import { ScamInfoType } from 'types';
-import { MAX_DISPLAY_TX_DATA_LENGTH } from 'appConstants';
 
-export const DataField = ({ data, scamInfo }: { data?: string; scamInfo?: ScamInfoType }) => {
+export const DataField = ({
+  data,
+  scamInfo
+}: {
+  data?: string;
+  scamInfo?: ScamInfoType;
+}) => {
   const { hash, pathname } = useLocation();
   const hashDecodeMethod = hash.replace('#', '');
   const initialDecodeMethod =
-    hashDecodeMethod && Object.values<string>(DecodeMethodType).includes(hashDecodeMethod)
+    hashDecodeMethod &&
+    Object.values<string>(DecodeMethodType).includes(hashDecodeMethod)
       ? hashDecodeMethod
       : DecodeMethodType.raw;
-  const [decodeMethod, setDecodeMethod] = React.useState<string>(hashDecodeMethod);
+  const [decodeMethod, setDecodeMethod] =
+    React.useState<string>(hashDecodeMethod);
   const scamFlag = useScamFlag();
   const [showData, setShowData] = React.useState(false);
 
@@ -33,10 +41,14 @@ export const DataField = ({ data, scamInfo }: { data?: string; scamInfo?: ScamIn
   }, [decodeMethod, pathname]);
 
   return (
-    <DetailItem title="Input Data" className="data-field">
+    <DetailItem title='Input Data' className='data-field'>
       {showData ? (
-        <div className="textarea form-control col cursor-text mt-1">
-          <Anchorme linkComponent={ModalLink} target="_blank" rel="noreferrer noopener">
+        <div className='textarea form-control col cursor-text mt-1'>
+          <Anchorme
+            linkComponent={ModalLink}
+            target='_blank'
+            rel='noreferrer noopener'
+          >
             {stringWithLinks}
           </Anchorme>
         </div>
@@ -48,7 +60,7 @@ export const DataField = ({ data, scamInfo }: { data?: string; scamInfo?: ScamIn
         />
       )}
       {found && (
-        <a href="/#" onClick={show} className="small-font text-muted">
+        <a href='/#' onClick={show} className='small-font text-muted'>
           {!showData ? 'Show' : 'Hide'} original message
         </a>
       )}

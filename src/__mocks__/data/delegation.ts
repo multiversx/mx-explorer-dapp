@@ -4,5 +4,5 @@ export const delegation = {
   userActiveStake: '21085487050359112064540',
   userUnstakedStake: '0',
   userDeferredPaymentStake: '0',
-  claimableRewards: '15880203211810136619',
+  claimableRewards: '15880203211810136619'
 };

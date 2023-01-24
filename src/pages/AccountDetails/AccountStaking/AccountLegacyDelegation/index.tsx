@@ -1,35 +1,45 @@
 import React, { useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLeaf } from '@fortawesome/pro-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 
+import { useSelector } from 'react-redux';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy-delegation.svg';
 
-import { DelegationLegacyType, IdentityType } from 'types';
 import { Denominate } from 'components';
+import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
+import { DelegationLegacyType, IdentityType } from 'types';
 
 import { DetailsBlock } from '../DetailsBlock';
 
-import { useSelector } from 'react-redux';
-import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
-
 export const AccountLegacyDelegation = ({
   delegationLegacy,
-  identity,
+  identity
 }: {
   delegationLegacy: DelegationLegacyType;
   identity?: IdentityType;
 }) => {
-  const { economicsFetched, baseApr, topUpApr } = useSelector(economicsSelector);
+  const { economicsFetched, baseApr, topUpApr } =
+    useSelector(economicsSelector);
   const { egldLabel } = useSelector(activeNetworkSelector);
 
-  const { userActiveStake, claimableRewards, userUnstakedStake, userWaitingStake } =
-    delegationLegacy;
+  const {
+    userActiveStake,
+    claimableRewards,
+    userUnstakedStake,
+    userWaitingStake
+  } = delegationLegacy;
 
-  const [legacyDelegationApr, setLegacyDelegationApr] = React.useState<string>('...');
+  const [legacyDelegationApr, setLegacyDelegationApr] =
+    React.useState<string>('...');
 
   const getLegacyDelegationApr = () => {
-    if (economicsFetched && identity?.stake && identity?.topUp && identity?.locked) {
+    if (
+      economicsFetched &&
+      identity?.stake &&
+      identity?.topUp &&
+      identity?.locked
+    ) {
       const legacyDelegationBN = new BigNumber(identity.stake)
         .times(new BigNumber(baseApr))
         .plus(new BigNumber(identity.topUp).times(topUpApr))
@@ -46,22 +56,22 @@ export const AccountLegacyDelegation = ({
   useEffect(getLegacyDelegationApr, [economicsFetched, identity]);
 
   return (
-    <div className="delegation-row d-flex flex-wrap align-items-center justify-content-between p-3 px-md-4">
-      <div className="provider-details">
-        <div className="d-flex flex-row align-items-center">
-          <div className="multiversx-icon provider-image has-avatar rounded-circle d-flex me-3">
+    <div className='delegation-row d-flex flex-wrap align-items-center justify-content-between p-3 px-md-4'>
+      <div className='provider-details'>
+        <div className='d-flex flex-row align-items-center'>
+          <div className='multiversx-icon provider-image has-avatar rounded-circle d-flex me-3'>
             <MultiversXSymbol />
           </div>
-          <div className="d-flex flex-column w-100">
-            <div className="provider-title d-flex align-items-center">
+          <div className='d-flex flex-column w-100'>
+            <div className='provider-title d-flex align-items-center'>
               MultiversX Legacy Delegation
             </div>
 
-            <div className="d-flex flex-wrap provider-metrics">
+            <div className='d-flex flex-wrap provider-metrics'>
               <div>
-                <FontAwesomeIcon size="xs" icon={faLeaf} className="me-1" />
+                <FontAwesomeIcon size='xs' icon={faLeaf} className='me-1' />
                 Up to {legacyDelegationApr}
-                <span className="text-secondary ms-1">APY</span>
+                <span className='text-secondary ms-1'>APY</span>
               </div>
             </div>
           </div>

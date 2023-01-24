@@ -1,14 +1,26 @@
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
-import { Loader, useAdapter, Pager, NetworkLink, Trim, PageState, NftBadge } from 'components';
-import { urlBuilder, useURLSearchParams, useGetFilters, nftText } from 'helpers';
+import {
+  Loader,
+  useAdapter,
+  Pager,
+  NetworkLink,
+  Trim,
+  PageState,
+  NftBadge
+} from 'components';
+import {
+  urlBuilder,
+  useURLSearchParams,
+  useGetFilters,
+  nftText
+} from 'helpers';
+import { activeNetworkSelector, collectionSelector } from 'redux/selectors';
 import { NftType } from 'types';
 import { CollectionTabs } from './CollectionLayout/CollectionTabs';
-
-import { useSelector } from 'react-redux';
-import { activeNetworkSelector, collectionSelector } from 'redux/selectors';
 
 export const CollectionNfts = () => {
   const ref = React.useRef(null);
@@ -23,7 +35,8 @@ export const CollectionNfts = () => {
   const { hash: collection } = useParams() as any;
 
   const [collectionNfts, setCollectionNfts] = React.useState<NftType[]>([]);
-  const [totalCollectionNfts, setTotalCollectionNfts] = React.useState<number>(0);
+  const [totalCollectionNfts, setTotalCollectionNfts] =
+    React.useState<number>(0);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchCollectionNfts = () => {
@@ -31,7 +44,7 @@ export const CollectionNfts = () => {
       const queryObject = getQueryObject();
       Promise.all([
         getNfts({ ...queryObject, size, collection }),
-        getNftsCount({ ...queryObject, collection }),
+        getNftsCount({ ...queryObject, collection })
       ]).then(([nftsData, count]) => {
         if (nftsData.success && count.success) {
           setCollectionNfts(nftsData.data);
@@ -51,14 +64,16 @@ export const CollectionNfts = () => {
 
   return (
     <div ref={ref}>
-      <div className="card">
-        <div className="card-header">
-          <div className="card-header-item d-flex justify-content-between align-items-center">
+      <div className='card'>
+        <div className='card-header'>
+          <div className='card-header-item d-flex justify-content-between align-items-center'>
             <CollectionTabs />
-            <div className="d-none d-sm-flex">
+            <div className='d-none d-sm-flex'>
               <Pager
                 page={String(page)}
-                total={totalCollectionNfts ? Math.min(totalCollectionNfts, 10000) : 0}
+                total={
+                  totalCollectionNfts ? Math.min(totalCollectionNfts, 10000) : 0
+                }
                 itemsPerPage={25}
                 show={collectionNfts.length > 0}
               />
@@ -66,9 +81,9 @@ export const CollectionNfts = () => {
           </div>
           {showCollectionNfts ? (
             <>
-              <div className="card-body border-0 p-0">
-                <div className="table-wrapper">
-                  <table className="table">
+              <div className='card-body border-0 p-0'>
+                <div className='table-wrapper'>
+                  <table className='table'>
                     <thead>
                       <tr>
                         <th>Identifier</th>
@@ -76,36 +91,46 @@ export const CollectionNfts = () => {
                         <th>Creator</th>
                       </tr>
                     </thead>
-                    <tbody data-testid="nftsTable">
+                    <tbody data-testid='nftsTable'>
                       {collectionNfts.map((nft, i) => (
                         <tr key={`${nft.name}-${nft.identifier}`}>
                           <td>
-                            <div className="d-flex align-items-center">
+                            <div className='d-flex align-items-center'>
                               <NetworkLink
                                 to={urlBuilder.nftDetails(nft.identifier)}
                                 data-testid={`nftsLink${i}`}
-                                className={`d-flex ${nft.assets?.svgUrl ? 'side-link' : ''}`}
+                                className={`d-flex ${
+                                  nft.assets?.svgUrl ? 'side-link' : ''
+                                }`}
                               >
-                                <div className="d-flex align-items-center">
+                                <div className='d-flex align-items-center'>
                                   {nft.assets && nft.assets.svgUrl && (
                                     <img
                                       src={nft.assets.svgUrl}
                                       alt={nft.name}
-                                      className="side-icon me-1"
+                                      className='side-icon me-1'
                                     />
                                   )}
                                   <div>{nft.identifier}</div>
                                 </div>
                               </NetworkLink>
-                              {type !== 'MetaESDT' && <NftBadge type={nft.type} className="ms-2" />}
+                              {type !== 'MetaESDT' && (
+                                <NftBadge type={nft.type} className='ms-2' />
+                              )}
                             </div>
                           </td>
-                          <td>{nft.scamInfo ? `[Hidden - ${nft.scamInfo.info}]` : nft.name}</td>
                           <td>
-                            <div className="d-flex trim-size-xl">
+                            {nft.scamInfo
+                              ? `[Hidden - ${nft.scamInfo.info}]`
+                              : nft.name}
+                          </td>
+                          <td>
+                            <div className='d-flex trim-size-xl'>
                               <NetworkLink
-                                to={urlBuilder.accountDetails(nft.owner ? nft.owner : nft.creator)}
-                                className="trim-wrapper"
+                                to={urlBuilder.accountDetails(
+                                  nft.owner ? nft.owner : nft.creator
+                                )}
+                                className='trim-wrapper'
                               >
                                 <Trim
                                   text={nft.owner ? nft.owner : nft.creator}
@@ -121,10 +146,14 @@ export const CollectionNfts = () => {
                 </div>
               </div>
 
-              <div className="card-footer d-flex justify-content-end">
+              <div className='card-footer d-flex justify-content-end'>
                 <Pager
                   page={String(page)}
-                  total={totalCollectionNfts ? Math.min(totalCollectionNfts, 10000) : 0}
+                  total={
+                    totalCollectionNfts
+                      ? Math.min(totalCollectionNfts, 10000)
+                      : 0
+                  }
                   itemsPerPage={25}
                   show={collectionNfts.length > 0}
                 />
@@ -132,20 +161,22 @@ export const CollectionNfts = () => {
             </>
           ) : (
             <>
-              {dataReady === undefined && <Loader dataTestId="collectionCollectionNftsLoader" />}
+              {dataReady === undefined && (
+                <Loader dataTestId='collectionCollectionNftsLoader' />
+              )}
               {dataReady === false && (
                 <PageState
                   icon={faUser}
                   title={`Unable to load ${nftText(type)}`}
-                  className="py-spacer my-auto"
-                  dataTestId="errorScreen"
+                  className='py-spacer my-auto'
+                  dataTestId='errorScreen'
                 />
               )}
               {dataReady === true && collectionNfts.length === 0 && (
                 <PageState
                   icon={faUser}
                   title={`No ${nftText(type)}s`}
-                  className="py-spacer my-auto"
+                  className='py-spacer my-auto'
                 />
               )}
             </>

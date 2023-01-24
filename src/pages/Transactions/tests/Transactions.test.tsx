@@ -1,34 +1,48 @@
-import { wait, waitForElement, fireEvent, act, beforeAll } from '__mocks__/test-utils';
+import {
+  wait,
+  waitForElement,
+  fireEvent,
+  act,
+  beforeAll
+} from '__mocks__/test-utils';
 
 describe('Transactions Page', () => {
   test('Transactions page loading state', async () => {
     const render = beforeAll({
-      route: '/transactions',
+      route: '/transactions'
     });
     const loader = await render.findByTestId('loader');
     expect(loader.innerHTML).toBeDefined();
-    const title = await waitForElement(() => render.queryByTestId('title')!.innerHTML);
+    const title = await waitForElement(
+      () => render.queryByTestId('title')!.innerHTML
+    );
     expect(title).toBe('Transactions');
   });
 
   test('Transactions data is displayed correctly', async () => {
     const render = beforeAll({
-      route: '/transactions',
+      route: '/transactions'
     });
-    const pageInterval = await waitForElement(() => render.queryByTestId('pageInterval'));
+    const pageInterval = await waitForElement(() =>
+      render.queryByTestId('pageInterval')
+    );
     expect(pageInterval!.innerHTML).toBe('1');
 
     const table = render.queryByTestId('transactionsTable');
-    const numberOfRows = table!.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+    const numberOfRows = table!
+      .getElementsByTagName('tbody')[0]
+      .getElementsByTagName('tr');
     expect(numberOfRows).toHaveLength(50);
   });
 
   test('Transactions pager working', async () => {
     const render = beforeAll({
-      route: '/transactions?page=1',
+      route: '/transactions?page=1'
     });
 
-    const pageInterval = await waitForElement(() => render.queryByTestId('pageInterval'));
+    const pageInterval = await waitForElement(() =>
+      render.queryByTestId('pageInterval')
+    );
     expect(pageInterval!.innerHTML).toBe('1');
   });
 });
@@ -36,7 +50,7 @@ describe('Transactions Page', () => {
 describe('Transactions Page Links', () => {
   test('Transaction link', async () => {
     const render = beforeAll({
-      route: '/transactions',
+      route: '/transactions'
     });
 
     const links = await render.findAllByTestId('transactionLink');
@@ -55,7 +69,7 @@ describe('Transactions Page Links', () => {
   });
   test('Shard from link', async () => {
     const render = beforeAll({
-      route: '/transactions',
+      route: '/transactions'
     });
 
     const links = await render.findAllByTestId('shardFromLink');
@@ -63,12 +77,14 @@ describe('Transactions Page Links', () => {
 
     fireEvent.click(links[0]);
     await wait(async () => {
-      expect(document.title).toEqual('Shard Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual(
+        'Shard Details • MultiversX (previously Elrond) Explorer'
+      );
     });
   });
   test('Shard to link', async () => {
     const render = beforeAll({
-      route: '/transactions',
+      route: '/transactions'
     });
 
     const links = await render.findAllByTestId('shardToLink');
@@ -76,12 +92,14 @@ describe('Transactions Page Links', () => {
 
     fireEvent.click(links[0]);
     await wait(async () => {
-      expect(document.title).toEqual('Shard Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual(
+        'Shard Details • MultiversX (previously Elrond) Explorer'
+      );
     });
   });
   test('Receiver link', async () => {
     const render = beforeAll({
-      route: '/transactions',
+      route: '/transactions'
     });
 
     const links = await render.findAllByTestId('receiverLink');
@@ -91,7 +109,9 @@ describe('Transactions Page Links', () => {
 
     fireEvent.click(links[0]);
     await wait(async () => {
-      expect(document.title).toEqual('Account Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual(
+        'Account Details • MultiversX (previously Elrond) Explorer'
+      );
     });
   });
 });

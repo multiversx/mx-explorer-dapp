@@ -2,11 +2,15 @@ import { DECIMALS } from 'config';
 
 export const nominate = (input: string, customDenomination?: number) => {
   const parts = input.toString().split('.');
-  const denomination = customDenomination !== undefined ? customDenomination : DECIMALS;
+  const denomination =
+    customDenomination !== undefined ? customDenomination : DECIMALS;
 
   if (parts[1]) {
     // remove trailing zeros
-    while (parts[1].substring(parts[1].length - 1) === '0' && parts[1].length > 1) {
+    while (
+      parts[1].substring(parts[1].length - 1) === '0' &&
+      parts[1].length > 1
+    ) {
       parts[1] = parts[1].substring(0, parts[1].length - 1);
     }
   }

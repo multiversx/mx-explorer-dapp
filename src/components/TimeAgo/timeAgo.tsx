@@ -1,16 +1,16 @@
 import moment from 'moment';
 
 export function dhms(ms: number) {
-  let days = Math.floor(ms / (24 * 60 * 60 * 1000));
-  let daysms = ms % (24 * 60 * 60 * 1000);
-  let hrs = Math.floor(daysms / (60 * 60 * 1000));
-  let hrsms = daysms % (60 * 60 * 1000);
-  let mins = Math.floor(hrsms / (60 * 1000));
-  let minsms = hrsms % (60 * 1000);
-  let secs = Math.floor(minsms / 1000);
+  const days = Math.floor(ms / (24 * 60 * 60 * 1000));
+  const daysms = ms % (24 * 60 * 60 * 1000);
+  const hrs = Math.floor(daysms / (60 * 60 * 1000));
+  const hrsms = daysms % (60 * 60 * 1000);
+  const mins = Math.floor(hrsms / (60 * 1000));
+  const minsms = hrsms % (60 * 1000);
+  const secs = Math.floor(minsms / 1000);
 
   // let diff = ' ago';
-  let diff = '';
+  const diff = '';
   let secsString = secs + ' sec';
   let minsString = mins + ' min';
   let hrsString = hrs + ' hr';

@@ -5,7 +5,7 @@ export const Overlay = ({
   children,
   title,
   className,
-  tooltipClassName,
+  tooltipClassName
 }: {
   children: React.ReactNode;
   title: React.ReactNode | string;
@@ -13,7 +13,7 @@ export const Overlay = ({
   tooltipClassName?: string;
 }) => (
   <OverlayTrigger
-    placement="top"
+    placement='top'
     delay={{ show: 0, hide: 400 }}
     overlay={(props: any) => (
       <Tooltip

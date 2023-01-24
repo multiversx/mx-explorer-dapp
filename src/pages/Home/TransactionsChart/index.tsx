@@ -2,11 +2,11 @@ import React from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import BigNumber from 'bignumber.js';
 
-import { Chart, Loader, PageState, useAdapter } from 'components';
-import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
-import { formatDataCharts } from 'components/Chart/helpers/formatDataCharts';
-
 import { useSelector } from 'react-redux';
+import { Chart, Loader, PageState, useAdapter } from 'components';
+import { formatDataCharts } from 'components/Chart/helpers/formatDataCharts';
+import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
+
 import { activeNetworkSelector, statsSelector } from 'redux/selectors';
 
 export const TransactionsChart = () => {
@@ -21,10 +21,13 @@ export const TransactionsChart = () => {
   const getData = () => {
     getTransactionsHistory().then((transactionsHistoryData) => {
       if (transactionsHistoryData.success) {
-        const transactionsChart = transactionsHistoryData.data?.[0]?.data?.[0]?.all;
+        const transactionsChart =
+          transactionsHistoryData.data?.[0]?.data?.[0]?.all;
 
         if (transactionsChart) {
-          setChartData(formatDataCharts(transactionsHistoryData.data?.[0]?.data?.[0]?.all));
+          setChartData(
+            formatDataCharts(transactionsHistoryData.data?.[0]?.data?.[0]?.all)
+          );
         }
       }
       setDataReady(transactionsHistoryData.success);
@@ -38,31 +41,35 @@ export const TransactionsChart = () => {
     {
       id: 'transactions',
       gradient: 'defaultGradient',
-      data: chartData,
-    },
+      data: chartData
+    }
   ];
 
-  const totalTransactions = statsFetched ? new BigNumber(transactions).toFormat(0) : '...';
+  const totalTransactions = statsFetched
+    ? new BigNumber(transactions).toFormat(0)
+    : '...';
   const transactionsToday =
-    chartData.length > 0 ? new BigNumber(chartData[chartData.length - 1].value).toFormat(0) : '...';
+    chartData.length > 0
+      ? new BigNumber(chartData[chartData.length - 1].value).toFormat(0)
+      : '...';
   const metrics = [
     { label: 'Transactions Today', value: transactionsToday },
-    { label: 'Total Transactions', value: totalTransactions },
+    { label: 'Total Transactions', value: totalTransactions }
   ];
 
   return (
-    <section id="transactions" className="transactions card">
-      <Chart.Heading title="Daily Transactions"></Chart.Heading>
+    <section id='transactions' className='transactions card'>
+      <Chart.Heading title='Daily Transactions'></Chart.Heading>
 
       <Chart.Body>
         {dataReady === undefined && <Loader />}
         {dataReady === false && (
           <PageState
             icon={faChartBar}
-            title="Unable to load chart"
-            className="py-spacer my-auto"
-            titleClassName="mt-0"
-            dataTestId="TransactionsChartError"
+            title='Unable to load chart'
+            className='py-spacer my-auto'
+            titleClassName='mt-0'
+            dataTestId='TransactionsChartError'
           />
         )}
         {dataReady === true && chartData.length > 0 && (

@@ -1,11 +1,10 @@
-import { NotificationType } from 'types/interface.types';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { interfaceSelector } from 'redux/selectors';
 import {
   addNotification as addStateNotification,
-  removeNotification as removeStateNotification,
+  removeNotification as removeStateNotification
 } from 'redux/slices/interface';
+import { NotificationType } from 'types/interface.types';
 
 interface AddNotificationType {
   id: NotificationType['id'];
@@ -24,7 +23,7 @@ export const useNotifications = () => {
     text,
     priority,
     bgClassName = '',
-    dismissable = true,
+    dismissable = true
   }: AddNotificationType) => {
     const exists = notifications.find((item) => item.id === id);
 
@@ -35,7 +34,7 @@ export const useNotifications = () => {
           text,
           bgClassName,
           priority,
-          dismissable,
+          dismissable
         })
       );
     }

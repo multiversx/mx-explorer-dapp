@@ -1,24 +1,27 @@
 import * as React from 'react';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 
+import { useSelector } from 'react-redux';
 import { METACHAIN_SHARD_ID } from 'appConstants';
 
+import { PageState } from 'components';
+import { shardsSelector, globalStakeSelector } from 'redux/selectors';
 import { GlobalStakeType } from 'types';
 import { ShardType } from 'types';
-import { PageState } from 'components';
 
 import { ShardCard } from './ShardCard';
 
-import { useSelector } from 'react-redux';
-import { shardsSelector, globalStakeSelector } from 'redux/selectors';
-
-const StakingQueueCard = ({ globalStake }: { globalStake: GlobalStakeType | undefined }) => {
+const StakingQueueCard = ({
+  globalStake
+}: {
+  globalStake: GlobalStakeType | undefined;
+}) => {
   return (
-    <div className="shard-card py-3">
-      <div className="mb-2">
-        <span className="text-secondary">Queue</span>
+    <div className='shard-card py-3'>
+      <div className='mb-2'>
+        <span className='text-secondary'>Queue</span>
       </div>
-      <div className="d-flex align-items-center">
+      <div className='d-flex align-items-center'>
         <h5>{globalStake !== undefined ? globalStake.queueSize : 'N/A'}</h5>
       </div>
     </div>
@@ -27,7 +30,7 @@ const StakingQueueCard = ({ globalStake }: { globalStake: GlobalStakeType | unde
 
 const sortShards = ({
   shards,
-  METACHAIN_SHARD_ID,
+  METACHAIN_SHARD_ID
 }: {
   shards: ShardType[];
   METACHAIN_SHARD_ID: number;
@@ -58,35 +61,37 @@ export const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
       (totalAllActiveValidators, shardEntry) =>
         totalAllActiveValidators + shardEntry.activeValidators,
       0
-    ),
+    )
   };
 
   const sortedShards = sortShards({ shards, METACHAIN_SHARD_ID });
 
-  const failed = shardsFetched === false || (shardsFetched === true && sortedShards.length === 0);
+  const failed =
+    shardsFetched === false ||
+    (shardsFetched === true && sortedShards.length === 0);
 
   return (
     <>
       {failed ? (
-        <div className="row">
-          <div className="col mb-spacer">
-            <div className="card py-4">
+        <div className='row'>
+          <div className='col mb-spacer'>
+            <div className='card py-4'>
               <PageState
                 icon={faLayerGroup}
-                title="Unable to load shards"
-                titleClassName="mt-0"
-                className="page-state-sm"
-                dataTestId="errorScreen"
+                title='Unable to load shards'
+                titleClassName='mt-0'
+                className='page-state-sm'
+                dataTestId='errorScreen'
               />
             </div>
           </div>
         </div>
       ) : (
-        <div className="row shards-list">
-          <div className="col mb-spacer">
-            <div className="card">
-              <div className="card-body px-lg-spacer py-lg-4">
-                <div className="shards-container">
+        <div className='row shards-list'>
+          <div className='col mb-spacer'>
+            <div className='card'>
+              <div className='card-body px-lg-spacer py-lg-4'>
+                <div className='shards-container'>
                   <ShardCard shard={overallCard} isOverall />
                   {sortedShards.map((shard, i) => (
                     <React.Fragment key={shard.shard + i}>

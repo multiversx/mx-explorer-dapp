@@ -1,19 +1,21 @@
 import React from 'react';
 import moment from 'moment';
+import { useSelector, useDispatch } from 'react-redux';
 import { REFRESH_RATE } from 'appConstants';
 
-import { useSelector, useDispatch } from 'react-redux';
 import { interfaceSelector } from 'redux/selectors';
 import { triggerRefresh } from 'redux/slices/interface';
 
 export const useLoopManager = () => {
   const {
-    refresh: { timestamp },
+    refresh: { timestamp }
   } = useSelector(interfaceSelector);
 
   const dispatch = useDispatch();
 
-  const withinInterval = moment().subtract(REFRESH_RATE, 'ms').isAfter(moment(timestamp));
+  const withinInterval = moment()
+    .subtract(REFRESH_RATE, 'ms')
+    .isAfter(moment(timestamp));
 
   const setRounds = () => {
     const intervalId = setInterval(() => {

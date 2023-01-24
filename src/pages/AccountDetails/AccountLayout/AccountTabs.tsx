@@ -1,10 +1,9 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { NetworkLink } from 'components';
 import { urlBuilder, useActiveRoute, isContract } from 'helpers';
-import { accountsRoutes } from 'routes';
-
-import { useSelector } from 'react-redux';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
+import { accountsRoutes } from 'routes';
 
 export const AccountTabs = () => {
   const activeRoute = useActiveRoute();
@@ -15,7 +14,7 @@ export const AccountTabs = () => {
   const tokensRouteActive = adapter === 'api';
 
   return (
-    <div className="account-tabs d-flex flex-row flex-wrap">
+    <div className='account-tabs d-flex flex-row flex-wrap'>
       <NetworkLink
         to={urlBuilder.accountDetails(address)}
         className={`tab-link me-3 me-lg-spacer ${
@@ -79,7 +78,9 @@ export const AccountTabs = () => {
       {code && (
         <NetworkLink
           to={urlBuilder.accountDetailsContractCode(address)}
-          className={`tab-link ${activeRoute(accountsRoutes.accountCode) ? 'active' : ''}`}
+          className={`tab-link ${
+            activeRoute(accountsRoutes.accountCode) ? 'active' : ''
+          }`}
         >
           <h6>Code</h6>
         </NetworkLink>

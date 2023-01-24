@@ -7,16 +7,18 @@ describe('MiniBlock Details Page', () => {
     const render = beforeAll({
       route: `/miniblocks/${miniblock.miniBlockHash}`,
       networkRequests: {
-        transactions: () => Promise.resolve({ data: miniblockTransactions }),
-      },
+        transactions: () => Promise.resolve({ data: miniblockTransactions })
+      }
     });
-    expect(document.title).toEqual('Miniblock Details • MultiversX (previously Elrond) Explorer');
+    expect(document.title).toEqual(
+      'Miniblock Details • MultiversX (previously Elrond) Explorer'
+    );
     const pageTitle = await render.findByTestId('pageTitle');
     expect(pageTitle.textContent).toBe('Miniblock Details');
   });
   test('MiniBlock Details page loading state', async () => {
     const render = beforeAll({
-      route: `/miniblocks/${miniblock.miniBlockHash}`,
+      route: `/miniblocks/${miniblock.miniBlockHash}`
     });
 
     const loader = await render.findByTestId('loader');
@@ -26,11 +28,13 @@ describe('MiniBlock Details Page', () => {
     const render = beforeAll({
       route: `/miniblocks/${miniblock.miniBlockHash}`,
       networkRequests: {
-        miniblock: () => Promise.resolve(new Error('error')),
-      },
+        miniblock: () => Promise.resolve(new Error('error'))
+      }
     });
 
-    const failedState = await render.findByText('Unable to locate this miniblock hash');
+    const failedState = await render.findByText(
+      'Unable to locate this miniblock hash'
+    );
     expect(failedState.innerHTML).toBeDefined();
   });
 });

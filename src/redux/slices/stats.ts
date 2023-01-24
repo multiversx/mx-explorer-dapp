@@ -16,7 +16,7 @@ export const getInitialStatsState = (): StatsSliceType => {
     epochPercentage: 0,
     epochTotalTime: 0,
     epochTimeElapsed: 0,
-    epochTimeRemaining: 0,
+    epochTimeRemaining: 0
   };
 };
 
@@ -24,7 +24,10 @@ export const statsSlice = createSlice({
   name: 'statsSlice',
   initialState: getInitialStatsState(),
   reducers: {
-    setStats: (state: StatsSliceType, action: PayloadAction<StatsSliceType>) => {
+    setStats: (
+      state: StatsSliceType,
+      action: PayloadAction<StatsSliceType>
+    ) => {
       state.shards = action.payload.shards;
       state.blocks = action.payload.blocks;
       state.accounts = action.payload.accounts;
@@ -38,8 +41,8 @@ export const statsSlice = createSlice({
       state.epochTotalTime = action.payload.epochTotalTime;
       state.epochTimeElapsed = action.payload.epochTimeElapsed;
       state.epochTimeRemaining = action.payload.epochTimeRemaining;
-    },
-  },
+    }
+  }
 });
 
 export const { setStats } = statsSlice.actions;

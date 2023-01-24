@@ -6,9 +6,14 @@ export interface RankType {
   percentage: number;
 }
 
-export const calcContinentRank = (markers: MarkerType[], totalNodes: number) => {
+export const calcContinentRank = (
+  markers: MarkerType[],
+  totalNodes: number
+) => {
   const rank: RankType[] = [];
-  const uniqueContinents = Array.from(new Set(markers.map((marker) => marker.continent)));
+  const uniqueContinents = Array.from(
+    new Set(markers.map((marker) => marker.continent))
+  );
 
   let markersTotalNodes = 0;
   markers.forEach((marker) => (markersTotalNodes += marker.validators));
@@ -27,7 +32,7 @@ export const calcContinentRank = (markers: MarkerType[], totalNodes: number) => 
     rank.push({
       continent,
       nodes: alteredNodesCount,
-      percentage: Math.floor(percentage),
+      percentage: Math.floor(percentage)
     });
   });
   rank.sort((a, b) => b.percentage - a.percentage);
@@ -51,7 +56,7 @@ export const calcContinentRank = (markers: MarkerType[], totalNodes: number) => 
     {
       continent: 'Others',
       nodes: alteredOtherNodesCount + diff,
-      percentage: otherPercent < 1 ? 1 : Math.floor(otherPercent),
-    },
+      percentage: otherPercent < 1 ? 1 : Math.floor(otherPercent)
+    }
   ];
 };

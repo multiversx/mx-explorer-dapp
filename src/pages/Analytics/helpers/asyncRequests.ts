@@ -12,14 +12,14 @@ const schema = object({
   country: string().defined(),
   latitude: number().defined(),
   longitude: number().defined(),
-  validators: number().defined(),
+  validators: number().defined()
 }).defined();
 
 export type MarkerType = InferType<typeof schema>;
 
 export async function GetCharts({
   timeout = 10 * 1000,
-  apiUrl,
+  apiUrl
 }: GetChartsType): Promise<{
   data: MarkerType[];
   success: boolean;
@@ -27,18 +27,20 @@ export async function GetCharts({
   try {
     const { data } = await axios.get(apiUrl, { timeout });
 
-    schema.validate((data as any)[Object.keys(data)[0]], { strict: true }).catch(({ errors }) => {
-      console.error('Markers format errors: ', errors);
-    });
+    schema
+      .validate((data as any)[Object.keys(data)[0]], { strict: true })
+      .catch(({ errors }) => {
+        console.error('Markers format errors: ', errors);
+      });
 
     return {
       data,
-      success: true,
+      success: true
     };
   } catch {
     return {
       data: [],
-      success: false,
+      success: false
     };
   }
 }

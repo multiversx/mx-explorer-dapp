@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { processStats } from 'helpers';
-import { useAdapter } from 'components';
-
 import { useDispatch } from 'react-redux';
+import { useAdapter } from 'components';
+import { processStats } from 'helpers';
+
 import { setStats } from 'redux/slices/stats';
 
 export const useFetchStats = () => {
@@ -15,7 +15,7 @@ export const useFetchStats = () => {
         const processedStats = processStats(stats.data);
         dispatch(
           setStats({
-            ...processedStats,
+            ...processedStats
           })
         );
       }

@@ -1,6 +1,6 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/pro-solid-svg-icons/faHeart';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Footer = () => {
   const explorerVersion = process.env.REACT_APP_CACHE_BUST;
@@ -11,19 +11,22 @@ export const Footer = () => {
         explorerVersion ? 'pt-2' : ''
       }`}
     >
-      <div className="footer-inner">
+      <div className='footer-inner'>
         <a
-          rel="noopener noreferrer nofollow"
-          target="_blank"
-          className="d-flex align-items-center text-secondary"
-          href="https://multiversx.com/"
+          rel='noopener noreferrer nofollow'
+          target='_blank'
+          className='d-flex align-items-center text-secondary'
+          href='https://multiversx.com/'
         >
-          Made with <FontAwesomeIcon icon={faHeart} className="text-danger mx-1" />
+          Made with{' '}
+          <FontAwesomeIcon icon={faHeart} className='text-danger mx-1' />
           by the MultiversX team
         </a>
       </div>
       {explorerVersion && (
-        <small className="text-muted version mt-1">Build {explorerVersion}</small>
+        <small className='text-muted version mt-1'>
+          Build {explorerVersion}
+        </small>
       )}
     </footer>
   );

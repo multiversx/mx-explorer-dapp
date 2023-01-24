@@ -13,21 +13,21 @@ export const networks: NetworkType[] = [
     walletAddress: '***REMOVED***',
     explorerAddress: '***REMOVED***',
     apiAddress: '***REMOVED***',
-    growthApi: 'https://tools.multiversx.com/growth-api',
-  },
+    growthApi: 'https://tools.multiversx.com/growth-api'
+  }
 ];
 
 export const multiversxApps = allApps([
   {
     id: 'wallet',
     name: 'Wallet', // navbar title
-    url: '***REMOVED***',
+    url: '***REMOVED***'
   },
   {
     id: 'explorer',
     name: 'Explorer',
-    url: 'http://***REMOVED***',
-  },
+    url: 'http://***REMOVED***'
+  }
 ]);
 
 networks.forEach((network) => {

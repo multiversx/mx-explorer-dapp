@@ -11,7 +11,7 @@ export const getTimeTicks = (data: ChartDataType[], total: number) => {
   );
 
   let current = data[0].timestamp;
-  let velocity = Math.round((intervalDates.length - 1) / (total - 1));
+  const velocity = Math.round((intervalDates.length - 1) / (total - 1));
   const ticks = [data[0].timestamp];
 
   for (let i = 1; i < total - 1; i++) {

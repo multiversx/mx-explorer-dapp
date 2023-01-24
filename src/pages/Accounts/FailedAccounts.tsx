@@ -6,9 +6,9 @@ export const FailedAccounts = () => {
   return (
     <PageState
       icon={faUser}
-      title="Unable to load accounts"
-      className="py-spacer my-auto"
-      dataTestId="errorScreen"
+      title='Unable to load accounts'
+      className='py-spacer my-auto'
+      dataTestId='errorScreen'
     />
   );
 };

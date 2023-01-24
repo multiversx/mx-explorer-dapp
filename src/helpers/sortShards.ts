@@ -2,7 +2,7 @@ import { ShardType } from 'types';
 
 export const sortShards = ({
   shards,
-  METACHAIN_SHARD_ID,
+  METACHAIN_SHARD_ID
 }: {
   shards: ShardType[];
   METACHAIN_SHARD_ID: number;

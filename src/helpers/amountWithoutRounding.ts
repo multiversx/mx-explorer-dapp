@@ -14,7 +14,7 @@ export const amountWithoutRounding = (
       return '0';
     }
 
-    let amountDecimals = amount.split('.')?.[1];
+    const amountDecimals = amount.split('.')?.[1];
     let displayDecimals = minNonZeroDecimals ?? DIGITS;
     if (amountDecimals) {
       for (let i = 0; i < amountDecimals.length; i++) {

@@ -22,7 +22,7 @@ export const stringIsFloat = (amount: string) => {
   const bNparsed = new BigNumber(number);
 
   return (
-    bNparsed.toFormat({ groupSeparator: '', decimalSeparator: '.' }) === number &&
-    bNparsed.comparedTo(0) >= 0
+    bNparsed.toFormat({ groupSeparator: '', decimalSeparator: '.' }) ===
+      number && bNparsed.comparedTo(0) >= 0
   );
 };

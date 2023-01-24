@@ -7,4 +7,7 @@ const stateSelector = (state: RootState) => {
 
 export const statsSelector = createSelector(stateSelector, (state) => state);
 
-export const refreshSelector = createSelector(stateSelector, (state) => state.refreshRate);
+export const refreshSelector = createSelector(
+  stateSelector,
+  (state) => state.refreshRate
+);
