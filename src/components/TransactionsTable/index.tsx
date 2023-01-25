@@ -12,7 +12,9 @@ export const TransactionsTable = ({
   size,
   title = (
     <>
-      <h6 data-testid='title'>Transactions</h6>
+      <h5 data-testid='title' className='mb-0'>
+        Live Transactions
+      </h5>
     </>
   ),
   directionCol = false,

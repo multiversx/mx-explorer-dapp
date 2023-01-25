@@ -39,7 +39,9 @@ export const ProviderDetailsCard = ({
     <div className='provider-details-card card'>
       <div className='card-header'>
         <div className='card-header-item d-flex justify-content-between align-items-center'>
-          <h6 data-testid='title'>Contract Details</h6>
+          <h5 data-testid='title' className='mb-0'>
+            Contract Details
+          </h5>
           <a
             className='btn btn-sm btn-primary'
             target={'_blank'}

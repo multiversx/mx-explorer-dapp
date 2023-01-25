@@ -242,9 +242,9 @@ export const MiniBlockDetails = () => {
                             totalTransactions={totalTransactions}
                             size={size}
                             title={
-                              <h6 data-testid='title'>
+                              <h5 data-testid='title' className='mb-0'>
                                 {isScResult ? 'SC Results' : 'Transactions'}
-                              </h6>
+                              </h5>
                             }
                             inactiveFilters={[TxFiltersEnum.miniBlockHash]}
                           />

@@ -18,7 +18,9 @@ export const ScResultsTable = ({
   size,
   title = (
     <>
-      <h6 data-testid='title'>SC Results</h6>
+      <h5 data-testid='title' className='mb-0'>
+        SC Results
+      </h5>
     </>
   )
 }: ScResultsTableType) => {

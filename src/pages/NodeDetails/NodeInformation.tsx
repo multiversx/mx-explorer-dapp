@@ -55,7 +55,9 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     <div className='card'>
       <div className='card-header'>
         <div className='card-header-item'>
-          <h6 data-testid='title'>Node Details</h6>
+          <h5 data-testid='title' className='mb-0'>
+            Node Details
+          </h5>
         </div>
         <div className='card-header-item compact d-flex'>
           <span className='flex-shrink-0 text-neutral-400 me-2'>
