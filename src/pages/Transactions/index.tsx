@@ -111,7 +111,7 @@ export const Transactions = () => {
                       <h5 data-testid='title' className='mb-0'>
                         <div className='d-flex align-items-center'>
                           Live Transactions
-                          <PulsatingLed className='ms-2' />
+                          <PulsatingLed className='ms-2 mt-1' />
                         </div>
 
                         {senderShard !== undefined && (

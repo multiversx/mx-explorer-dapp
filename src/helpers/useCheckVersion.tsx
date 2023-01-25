@@ -5,12 +5,10 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useNotifications } from 'helpers';
 
-import { interfaceSelector } from 'redux/selectors';
+import { refreshSelector } from 'redux/selectors/refresh';
 
 export const useCheckVersion = () => {
-  const {
-    refresh: { timestamp }
-  } = useSelector(interfaceSelector);
+  const { timestamp } = useSelector(refreshSelector);
 
   const refreshRate = 60 * 1000;
   const { addNotification } = useNotifications();

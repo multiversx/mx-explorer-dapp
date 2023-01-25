@@ -15,14 +15,12 @@ import {
 import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/NoBlocks';
 import { urlBuilder } from 'helpers';
-import { activeNetworkSelector, interfaceSelector } from 'redux/selectors';
+import { activeNetworkSelector, refreshSelector } from 'redux/selectors';
 import { BlockType } from 'types';
 
 export const LatestBlocks = () => {
   const ref = React.useRef(null);
-  const {
-    refresh: { timestamp }
-  } = useSelector(interfaceSelector);
+  const { timestamp } = useSelector(refreshSelector);
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const { getLatestBlocks } = useAdapter();

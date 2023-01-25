@@ -10,6 +10,7 @@ import { economicsReducer } from './slices/economics';
 import { globalStakeReducer } from './slices/globalStake';
 import { interfaceReducer } from './slices/interface';
 import { networkReducer } from './slices/networks';
+import { refreshReducer } from './slices/refresh';
 import { statsReducer } from './slices/stats';
 import { tokenReducer } from './slices/token';
 
@@ -66,11 +67,12 @@ const ignoredSlices = Object.keys(asyncIgnoredSlices).reduce((acc, entry) => {
 export const rootReducer = combineReducers({
   ...ignoredSlices,
   ...customIgnoredSlices,
-  economics: economicsReducer,
-  stats: statsReducer,
   account: accountReducer,
   accountStaking: accountStakingReducer,
   collection: collectionReducer,
+  economics: economicsReducer,
   globalStake: globalStakeReducer,
+  refresh: refreshReducer,
+  stats: statsReducer,
   token: tokenReducer
 });

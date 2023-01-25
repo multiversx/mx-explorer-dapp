@@ -29,8 +29,3 @@ export const shardsSelector = createSelector(
   stateSelector,
   (state) => state.shards
 );
-
-export const refreshSelector = createSelector(
-  stateSelector,
-  (state) => state.refresh
-);
