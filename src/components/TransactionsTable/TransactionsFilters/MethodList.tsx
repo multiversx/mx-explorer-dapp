@@ -28,7 +28,7 @@ export const MethodList = () => {
   }
 
   return (
-    <div className='card-header-item d-flex justify-content-between align-items-center'>
+    <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
       Method:
       <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row ms-3 me-auto'>
         <ul className='list-inline m-0'>

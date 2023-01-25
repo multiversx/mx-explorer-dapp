@@ -51,7 +51,7 @@ export const Rounds = ({
         <>
           <div className='card-header'>
             <div className='card-header-item'>
-              <h6 className='m-0'>Latest Consensus Rounds</h6>
+              <h5 className='mb-0'>Latest Consensus Rounds</h5>
             </div>
           </div>
           <div className='card-body px-lg-spacer'>

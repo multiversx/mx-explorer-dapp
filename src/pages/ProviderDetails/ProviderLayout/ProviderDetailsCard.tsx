@@ -38,8 +38,8 @@ export const ProviderDetailsCard = ({
   return provider !== undefined ? (
     <div className='provider-details-card card'>
       <div className='card-header'>
-        <div className='card-header-item d-flex justify-content-between align-items-center'>
-          <h5 data-testid='title' className='mb-0'>
+        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+          <h5 data-testid='title' className='mb-0 d-flex align-items-center'>
             Contract Details
           </h5>
           <a

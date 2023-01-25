@@ -13,7 +13,7 @@ export const NetworkMetrics = ({ node }: { node: NodeType }) => {
     <div className='card network-metrics'>
       <div className='card-header'>
         <div className='card-header-item'>
-          <h6 className='m-0'>Network Metrics</h6>
+          <h5 className='m-0'>Network Metrics</h5>
         </div>
       </div>
 

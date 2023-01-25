@@ -101,8 +101,8 @@ export const NetworkHealth = () => {
   return (
     <div ref={ref} className='card network-health'>
       <div className='card-header'>
-        <div className='card-header-item d-flex justify-content-between align-items-center'>
-          <h6 className='m-0'>Network Health</h6>
+        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+          <h5 className='m-0'>Network Health</h5>
         </div>
       </div>
       <div className='card-body d-flex justify-content-center align-items-center'>

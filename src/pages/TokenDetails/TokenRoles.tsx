@@ -15,7 +15,7 @@ export const TokenDetailsRoles = () => {
     <div ref={ref}>
       <div className='card'>
         <div className='card-header'>
-          <div className='card-header-item d-flex justify-content-between align-items-center'>
+          <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
             <TokenTabs />
           </div>
           {roles ? (
@@ -65,7 +65,7 @@ export const TokenDetailsRoles = () => {
                 </div>
               </div>
 
-              <div className='card-footer d-flex justify-content-end'></div>
+              <div className='card-footer'></div>
             </>
           ) : (
             <>

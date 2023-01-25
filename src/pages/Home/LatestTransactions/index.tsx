@@ -106,8 +106,8 @@ export const LatestTransactions = () => {
         {transactionsFetched === true && transactions.length > 0 && (
           <>
             <div className='card-header'>
-              <div className='card-header-item d-flex justify-content-between align-items-center'>
-                <h6 className='m-0'>Transactions</h6>
+              <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+                <h5 className='mb-0 d-flex align-items-center'>Transactions</h5>
                 <NetworkLink
                   to='/transactions'
                   className='btn btn-sm btn-primary'

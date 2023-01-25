@@ -85,11 +85,11 @@ export const TokenDetailsCard = () => {
       <div ref={ref}>
         <div className='token-details-card row mb-spacer'>
           <div className='col-12 col-lg-6 mb-spacer mb-lg-0'>
-            <div className='card'>
+            <div className='card h-100'>
               <div className='card-header'>
                 <div className='card-header-item d-flex align-items-center'>
                   <h1
-                    className='h6 d-flex align-items-center'
+                    className='h5 mb-0 d-flex align-items-center'
                     data-testid='title'
                   >
                     {assets && assets.svgUrl && (
@@ -132,7 +132,7 @@ export const TokenDetailsCard = () => {
                   </SmallDetailItem>
 
                   <SmallDetailItem title='Properties'>
-                    <div className='d-flex alig-items-center flex-wrap'>
+                    <div className='d-flex alig-items-center flex-wrap gap-2'>
                       <PropertyPill name={'Can Upgrade'} active={canUpgrade} />
                       <PropertyPill name={'Can Mint'} active={canMint} />
                       <PropertyPill name={'Can Burn'} active={canBurn} />
@@ -151,10 +151,13 @@ export const TokenDetailsCard = () => {
             </div>
           </div>
           <div className='col-12 col-lg-6'>
-            <div className='card'>
+            <div className='card h-100'>
               <div className='card-header'>
                 <div className='card-header-item d-flex align-items-center'>
-                  <h5 data-testid='title' className='mb-0'>
+                  <h5
+                    data-testid='title'
+                    className='table-title d-flex align-items-center'
+                  >
                     Summary
                   </h5>
                 </div>

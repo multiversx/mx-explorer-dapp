@@ -103,18 +103,17 @@ export const AccountTokens = () => {
   ) : (
     <div className='card' ref={ref}>
       <div className='card-header'>
-        <div className='card-header-item d-flex justify-content-between align-items-center'>
+        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
           <AccountTabs />
           {dataReady === true &&
             (accountTokens.length > 0 || accountNfts.length > 0) && (
-              <div className='d-none d-md-flex'>
-                <Pager
-                  itemsPerPage={25}
-                  page={String(size)}
-                  total={Math.max(accountTokensCount, accountNftsCount)}
-                  show={accountTokens.length > 0 || accountNfts.length > 0}
-                />
-              </div>
+              <Pager
+                itemsPerPage={25}
+                page={String(size)}
+                total={Math.max(accountTokensCount, accountNftsCount)}
+                show={accountTokens.length > 0 || accountNfts.length > 0}
+                className='d-none d-sm-flex ms-auto'
+              />
             )}
         </div>
       </div>
@@ -254,7 +253,7 @@ export const AccountTokens = () => {
 
       {dataReady === true &&
         (accountTokens.length > 0 || accountNfts.length > 0) && (
-          <div className='card-footer d-flex justify-content-end border-0 pt-0'>
+          <div className='card-footer px-1 px-sm-spacer d-flex justify-content-center justify-content-sm-end'>
             <Pager
               itemsPerPage={25}
               page={String(size)}

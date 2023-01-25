@@ -54,7 +54,10 @@ export const CollectionDetailsCard = () => {
           <div className='card'>
             <div className='card-header'>
               <div className='card-header-item d-flex align-items-center'>
-                <h5 data-testid='title' className='mb-0'>
+                <h5
+                  data-testid='title'
+                  className='mb-0 d-flex align-items-center'
+                >
                   Collection Details
                 </h5>
               </div>
@@ -107,7 +110,7 @@ export const CollectionDetailsCard = () => {
                   <DetailItem title='Decimals'>{decimals}</DetailItem>
                 )}
                 <DetailItem title='Properties'>
-                  <div className='d-flex alig-items-center flex-wrap'>
+                  <div className='d-flex alig-items-center flex-wrap gap-2'>
                     <PropertyPill name={'Can Pause'} active={canPause} />
                     <PropertyPill name={'Can Freeze'} active={canFreeze} />
                     <PropertyPill name={'Can Wipe'} active={canWipe} />

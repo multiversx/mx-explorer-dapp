@@ -18,7 +18,7 @@ export const ScResultsTable = ({
   size,
   title = (
     <>
-      <h5 data-testid='title' className='mb-0'>
+      <h5 data-testid='title' className='table-title d-flex align-items-center'>
         SC Results
       </h5>
     </>
@@ -31,17 +31,16 @@ export const ScResultsTable = ({
     <div className='transactions-table'>
       <div className='card'>
         <div className='card-header'>
-          <div className='card-header-item d-flex justify-content-between align-items-center'>
+          <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
             <div>{title}</div>
-            <div className='d-none d-sm-flex'>
-              <Pager
-                itemsPerPage={25}
-                page={String(size)}
-                total={paginationTotalResults}
-                show={scResults.length > 0}
-                hasTestId={false}
-              />
-            </div>
+            <Pager
+              itemsPerPage={25}
+              page={String(size)}
+              total={paginationTotalResults}
+              show={scResults.length > 0}
+              hasTestId={false}
+              className='d-none d-sm-flex ms-auto'
+            />
           </div>
         </div>
 
@@ -70,7 +69,7 @@ export const ScResultsTable = ({
           </div>
         </div>
 
-        <div className='card-footer d-flex justify-content-end'>
+        <div className='card-footer px-1 px-sm-spacer d-flex justify-content-center justify-content-sm-end'>
           <Pager
             itemsPerPage={25}
             page={String(size)}

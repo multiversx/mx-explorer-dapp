@@ -67,22 +67,24 @@ export const Accounts = () => {
                   {accounts && accounts.length > 0 ? (
                     <>
                       <div className='card-header'>
-                        <div className='card-header-item d-flex justify-content-between align-items-center'>
-                          <h5 data-testid='title' className='mb-0'>
+                        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+                          <h5
+                            data-testid='title'
+                            className='table-title d-flex align-items-center'
+                          >
                             Accounts
                           </h5>
-                          <div className='d-none d-sm-flex'>
-                            <Pager
-                              page={String(page)}
-                              total={
-                                totalAccounts !== '...'
-                                  ? Math.min(totalAccounts, 10000)
-                                  : totalAccounts
-                              }
-                              itemsPerPage={25}
-                              show={accounts.length > 0}
-                            />
-                          </div>
+                          <Pager
+                            page={String(page)}
+                            total={
+                              totalAccounts !== '...'
+                                ? Math.min(totalAccounts, 10000)
+                                : totalAccounts
+                            }
+                            itemsPerPage={25}
+                            show={accounts.length > 0}
+                            className='d-none d-sm-flex ms-auto'
+                          />
                         </div>
                       </div>
 
@@ -127,7 +129,7 @@ export const Accounts = () => {
                         </div>
                       </div>
 
-                      <div className='card-footer d-flex justify-content-end'>
+                      <div className='card-footer px-1 px-sm-spacer d-flex justify-content-center justify-content-sm-end'>
                         <Pager
                           page={String(page)}
                           total={

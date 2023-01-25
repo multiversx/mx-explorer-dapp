@@ -12,7 +12,7 @@ export const TransactionsTable = ({
   size,
   title = (
     <>
-      <h5 data-testid='title' className='mb-0'>
+      <h5 data-testid='title' className='table-title d-flex align-items-center'>
         Live Transactions
       </h5>
     </>
@@ -27,27 +27,24 @@ export const TransactionsTable = ({
     >
       <div className='card'>
         <div className='card-header'>
-          <div className='card-header-item d-flex justify-content-between align-items-center'>
-            <div>{title}</div>
-
-            <div className='d-none d-sm-flex'>
-              <Pager
-                itemsPerPage={25}
-                page={String(size)}
-                total={
-                  totalTransactions !== '...'
-                    ? Math.min(totalTransactions, 10000)
-                    : totalTransactions
-                }
-                show={transactions.length > 0}
-                hasTestId={false}
-              />
-            </div>
+          <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+            {title}
+            <Pager
+              itemsPerPage={25}
+              page={String(size)}
+              total={
+                totalTransactions !== '...'
+                  ? Math.min(totalTransactions, 10000)
+                  : totalTransactions
+              }
+              show={transactions.length > 0}
+              className='d-none d-sm-flex ms-auto'
+            />
           </div>
           <MethodList />
         </div>
 
-        <div className='card-body'>
+        <div className='card-body px-1 px-sm-spacer'>
           <div className='table-wrapper animated-list'>
             <table
               className='table trim-size-sm mb-0'
@@ -76,7 +73,7 @@ export const TransactionsTable = ({
           </div>
         </div>
 
-        <div className='card-footer d-flex justify-content-end'>
+        <div className='card-footer px-1 px-sm-spacer d-flex justify-content-center justify-content-sm-end'>
           <Pager
             itemsPerPage={25}
             page={String(size)}

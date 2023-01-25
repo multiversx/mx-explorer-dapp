@@ -225,22 +225,37 @@ Override Bootstrap variables only above.
   }
 }
 
-.tab-link {
-  display: flex;
-
-  h6 {
-    color: var(--primary);
-
+.tab-links {
+  .tab-link {
+    display: flex;
+    color: var(--primary-200);
     &:hover {
-      color: var(--link-hover-color);
+      color: var(--primary);
+    }
+    &.active {
+      color: var(--text-color);
+    }
+    h5 {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.table-card-header {
+  .table-title {
+    margin-bottom: 2rem;
+  }
+  .tab-links {
+    margin-bottom: 1rem;
+    .tab-link {
+      margin-bottom: 1rem;
     }
   }
 
-  &.active {
-    h6 {
-      color: var(--white);
-    }
+  .pager {
+    margin-bottom: 2rem;
   }
+  margin-bottom: -2rem;
 }
 
 .position-absolute-center {

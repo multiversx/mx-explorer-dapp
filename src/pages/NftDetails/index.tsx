@@ -101,7 +101,10 @@ export const NftDetails = () => {
                 <div className='card'>
                   <div className='card-header'>
                     <div className='card-header-item d-flex align-items-center'>
-                      <h5 data-testid='title' className='mb-0'>
+                      <h5
+                        data-testid='title'
+                        className='mb-0 d-flex align-items-center'
+                      >
                         {nftText(nftDetails.type)} Details
                       </h5>
                     </div>
@@ -309,16 +312,15 @@ export const NftDetails = () => {
                   <div className='col-12'>
                     <div className='card'>
                       <div className='card-header'>
-                        <div className='card-header-item d-flex justify-content-between align-items-center'>
-                          <h6>Owners</h6>
-                          <div className='d-none d-sm-flex'>
-                            <Pager
-                              page={String(page)}
-                              total={nftAccountsCount}
-                              itemsPerPage={25}
-                              show={nftAccounts.length > 0}
-                            />
-                          </div>
+                        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+                          <h5>Owners</h5>
+                          <Pager
+                            page={String(page)}
+                            total={nftAccountsCount}
+                            itemsPerPage={25}
+                            show={nftAccounts.length > 0}
+                            className='d-none d-sm-flex ms-auto'
+                          />
                         </div>
                         <div className='card-body'>
                           <div className='table-wrapper animated-list'>
@@ -369,7 +371,7 @@ export const NftDetails = () => {
                             </table>
                           </div>
                         </div>
-                        <div className='card-footer d-flex justify-content-end'>
+                        <div className='card-footer px-1 px-sm-spacer d-flex justify-content-center justify-content-sm-end'>
                           <Pager
                             page={String(page)}
                             total={nftAccountsCount}

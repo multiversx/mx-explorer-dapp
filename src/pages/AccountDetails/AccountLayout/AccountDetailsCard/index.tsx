@@ -114,7 +114,7 @@ export const AccountDetailsCard = () => {
       {isContract(address) ? (
         <>
           <div className='col-12 col-lg-6 mb-spacer mb-lg-0'>
-            <div className='card'>
+            <div className='card h-100'>
               <div
                 className={`card-header ${
                   scamInfo ? 'status-text-warning' : ''
@@ -122,19 +122,22 @@ export const AccountDetailsCard = () => {
               >
                 <div className='card-header-item d-flex align-items-center justify-content-between'>
                   <div className='d-flex align-items-center w-100'>
-                    <span className='me-2 h6 mb-0' data-testid='title'>
+                    <h5
+                      className='mb-0 d-flex align-items-center'
+                      data-testid='title'
+                    >
                       Contract Details
-                    </span>
-                    {scamInfo && (
-                      <span className='text-warning d-flex align-items-center ms-2'>
-                        <FontAwesomeIcon
-                          icon={faExclamationTriangle}
-                          size='sm'
-                          className='text-warning me-2'
-                        />
-                        {scamInfo.info}
-                      </span>
-                    )}
+                      {scamInfo && (
+                        <span className='text-warning d-flex align-items-center ms-2'>
+                          <FontAwesomeIcon
+                            icon={faExclamationTriangle}
+                            size='sm'
+                            className='text-warning me-2'
+                          />
+                          {scamInfo.info}
+                        </span>
+                      )}
+                    </h5>
                   </div>
                   {isProvider && (
                     <NetworkLink
@@ -184,7 +187,7 @@ export const AccountDetailsCard = () => {
                   </SmallDetailItem>
 
                   <SmallDetailItem title='Properties'>
-                    <div className='d-flex alig-items-center flex-wrap'>
+                    <div className='d-flex alig-items-center flex-wrap gap-2'>
                       <PropertyPill
                         name={'Upgradeable'}
                         active={Boolean(isUpgradeable)}
@@ -208,12 +211,12 @@ export const AccountDetailsCard = () => {
             </div>
           </div>
           <div className='col-12 col-lg-6'>
-            <div className='card'>
+            <div className='card h-100'>
               <div className='card-header'>
                 <div className='card-header-item d-flex align-items-center'>
-                  <span className='h6 mb-0' data-testid='overview'>
+                  <h5 className='mb-0' data-testid='overview'>
                     Overview
-                  </span>
+                  </h5>
                 </div>
               </div>
               <div className='card-body'>
@@ -302,7 +305,7 @@ export const AccountDetailsCard = () => {
               <div className='card-header-item'>
                 <div className='d-flex align-items-center justify-content-between'>
                   <div className='d-flex align-items-center w-100'>
-                    <span className='me-2 h6 mb-0' data-testid='title'>
+                    <h5 className='me-2 mb-0' data-testid='title'>
                       <div className='d-flex align-items-center'>
                         {assets?.iconSvg && (
                           <div className='side-icon me-1'>
@@ -311,7 +314,7 @@ export const AccountDetailsCard = () => {
                         )}
                         <div>{assets?.name ?? 'Address Details'}</div>
                       </div>
-                    </span>
+                    </h5>
                     {scamInfo && (
                       <span className='text-warning d-flex align-items-center ms-2'>
                         <FontAwesomeIcon
