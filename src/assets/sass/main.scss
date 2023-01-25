@@ -1,3 +1,16 @@
+/* Plugins
+-------------------------------------------------- */
+
+@import './plugins/react-datepicker';
+@import './plugins/react-select';
+
+/* Elements
+-------------------------------------------------- */
+@import './elements/scrollbar';
+
+/* Plugins
+-------------------------------------------------- */
+
 @import './overrides.scss';
 @import './components.scss';
 @import './pages.scss';

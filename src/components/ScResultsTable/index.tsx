@@ -39,7 +39,7 @@ export const ScResultsTable = ({
               total={paginationTotalResults}
               show={scResults.length > 0}
               hasTestId={false}
-              className='d-none d-sm-flex ms-auto'
+              className='d-flex ms-auto me-auto me-sm-0'
             />
           </div>
         </div>

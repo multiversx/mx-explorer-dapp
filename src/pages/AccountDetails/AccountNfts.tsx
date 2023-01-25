@@ -78,7 +78,7 @@ export const AccountNfts = () => {
               page={String(size)}
               total={accountNftsCount}
               show={accountNfts.length > 0}
-              className='d-none d-sm-flex ms-auto'
+              className='d-flex ms-auto me-auto me-sm-0'
             />
           )}
         </div>

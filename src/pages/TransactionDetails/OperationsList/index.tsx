@@ -438,7 +438,7 @@ export const OperationsList = ({
 
   return (
     <div className='mb-n2'>
-      <div className='operations-list d-flex flex-column lh-24'>
+      <div className='operations-list d-flex flex-column text-lh-24'>
         {expanded ? (
           <>
             {operations.map((operation: OperationType, index) => (

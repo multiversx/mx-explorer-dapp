@@ -37,7 +37,7 @@
 
   .left span,
   .right span {
-    color: var(--#{$prefix}text-color);
+    color: var(--#{$prefix}body-color);
     font-size: $font-size-base;
     pointer-events: none;
     user-select: none;
