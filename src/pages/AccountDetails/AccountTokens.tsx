@@ -112,7 +112,7 @@ export const AccountTokens = () => {
                 page={String(size)}
                 total={Math.max(accountTokensCount, accountNftsCount)}
                 show={accountTokens.length > 0 || accountNfts.length > 0}
-                className='d-none d-sm-flex ms-auto'
+                className='d-flex ms-auto me-auto me-sm-0'
               />
             )}
         </div>

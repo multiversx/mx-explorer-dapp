@@ -204,7 +204,7 @@ export const TransactionAction = ({
   }, [transaction.action]);
 
   return (
-    <div className='transaction-action d-flex flex-column flex-lg-row flex-lg-wrap'>
+    <div className='transaction-action d-flex flex-column flex-lg-row flex-lg-wrap text-lh-24'>
       {unwrappedResult.map((entry, i) => (
         <div key={JSON.stringify(unwrappedResult) + i} className='action-step'>
           <ActionText entry={entry} transaction={transaction} />

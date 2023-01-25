@@ -49,7 +49,7 @@ export const NodesStatistics = () => {
 
   return (
     <div className='card position-unset' ref={ref}>
-      <div className='card-header position-unset'>
+      <div className='card-header position-unset p-3 p-sm-spacer'>
         <NodesTabs />
 
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
@@ -59,7 +59,7 @@ export const NodesStatistics = () => {
               itemsPerPage={25}
               page={String(size)}
               total={totalNodes}
-              className='d-none d-sm-flex ms-auto'
+              className='d-flex ms-auto me-auto me-sm-0'
               show
             />
           )}

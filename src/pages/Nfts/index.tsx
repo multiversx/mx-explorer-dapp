@@ -71,7 +71,7 @@ export const Nfts = () => {
                           }
                           itemsPerPage={25}
                           show={nfts.length > 0}
-                          className='d-none d-sm-flex ms-auto'
+                          className='d-flex ms-auto me-auto me-sm-0'
                         />
                       )}
                     </div>

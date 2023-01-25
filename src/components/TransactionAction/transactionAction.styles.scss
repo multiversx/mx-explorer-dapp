@@ -1,5 +1,4 @@
 .transaction-action {
-  line-height: 24px; // must be same as icon height to avoid issues between browsers
   div:not([class]):not([data-testid]) {
     display: flex;
     flex-direction: row;

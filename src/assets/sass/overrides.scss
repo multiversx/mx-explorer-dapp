@@ -37,3 +37,22 @@ a {
     color: var(--#{$prefix}primary);
   }
 }
+
+.text-lh-24 {
+  line-height: 24px; // must be same as icon height to avoid issues between browsers
+  .trim {
+    .left,
+    .right,
+    .elipsis {
+      height: 24px;
+    }
+  }
+}
+
+// webkit being webkit
+input {
+  color-scheme: dark;
+}
+input:is(:-webkit-autofill, :-webkit-autofill:focus) {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}

@@ -1,4 +1,7 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { UAParser } from 'ua-parser-js';
 
 import { Search, NotificationsBar } from 'components';
 import { multiversxApps } from 'config';
@@ -11,6 +14,7 @@ import {
   useIsMainnet,
   useCheckVersion
 } from 'helpers';
+import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 import { wrappedRoutes, validatorsRoutes, searchRoutes } from 'routes';
 import { Footer } from './Footer/index';
 import { GlobalStatsCard } from './GlobalStatsCard';
@@ -22,6 +26,11 @@ import { Unavailable } from './Unavailable';
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
+  const browser = UAParser();
+  const { pathname } = useLocation();
+
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
 
   const showGlobalStats = () => {
     let show = true;
@@ -61,8 +70,25 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   const explorerApp = multiversxApps.find((app) => app.id === 'explorer');
   const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
 
+  const userAgentInfo = [
+    browser?.browser?.name ?? '',
+    browser?.engine?.name ?? '',
+    browser?.os?.name ?? ''
+  ];
+  const userAgentClasses = userAgentInfo
+    .map((info) => info.replaceAll(' ', '-').toLowerCase())
+    .join(' ');
+
+  const pathArray = pathname.split('/');
+  const pageClass =
+    activeNetworkId === defaultNetworkId ? pathArray?.[1] : pathArray?.[2];
+
   return (
-    <div className='d-flex'>
+    <div
+      className={`d-flex scrollbar-thin ${
+        pageClass ? pageClass : 'home'
+      } ${userAgentClasses}`}
+    >
       <div className='flex-fill vh-100'>
         <main className='main-content d-flex flex-column flex-grow-1'>
           <Navbar />
