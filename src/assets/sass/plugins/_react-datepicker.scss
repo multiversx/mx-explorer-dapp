@@ -30,7 +30,7 @@
 
       &:not(.react-datepicker__day--in-range) {
         background-color: var(--light);
-        color: var(--body);
+        color: var(--text-color);
       }
     }
   }

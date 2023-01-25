@@ -50,7 +50,7 @@
       color: var(--neutral-400);
       cursor: pointer;
       &.active {
-        color: var(--body);
+        color: var(--text-color);
       }
       &:not(:first-child) {
         padding-left: 1rem;
