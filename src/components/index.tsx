@@ -55,5 +55,6 @@ export * from './PercentageLed';
 export * from './UsdValue';
 export * from './Filters';
 export * from './Adapter';
+export * from './PulsatingLed';
 
 export { Chart, NodesTable, TxActionBlock, SharedIdentity };
