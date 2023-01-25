@@ -22,7 +22,7 @@ export const BlocksTable = ({
 }) => {
   return (
     <div className='blocks-table table-wrapper animated-list'>
-      <table className='table'>
+      <table className='table mb-0'>
         <thead>
           <tr>
             <th>Block</th>

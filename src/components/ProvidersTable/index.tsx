@@ -154,7 +154,7 @@ export const ProvidersTable = ({
 
   return (
     <div className='providers-table table-wrapper'>
-      <table className='table'>
+      <table className='table mb-0'>
         <thead>
           <tr>
             {showIdentity ? (

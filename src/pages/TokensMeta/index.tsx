@@ -114,8 +114,8 @@ export const TokensMeta = () => {
 
                   {metaCollections && metaCollections.length > 0 ? (
                     <>
-                      <div className='card-body border-0 p-0'>
-                        <div className='table-wrapper'>
+                      <div className='card-body'>
+                        <div className='table-wrapper animated-list'>
                           <table className='table tokens-table'>
                             <thead>
                               <tr>

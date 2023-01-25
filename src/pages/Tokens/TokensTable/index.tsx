@@ -21,7 +21,7 @@ export const TokensTable = ({
 
   return (
     <div className='table-wrapper tokens-table'>
-      <table className='table'>
+      <table className='table mb-0'>
         <thead>
           <tr>
             <th>Token</th>

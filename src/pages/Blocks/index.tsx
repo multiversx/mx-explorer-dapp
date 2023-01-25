@@ -104,7 +104,7 @@ export const Blocks = () => {
                         </div>
                       </div>
 
-                      <div className='card-body border-0 p-0'>
+                      <div className='card-body'>
                         <BlocksTable
                           blocks={state.blocks}
                           shard={shard}
