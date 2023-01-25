@@ -7,24 +7,45 @@
   $border-width: var(--#{$prefix}#{$name}-border-width, 0);
   $border-radius: var(--#{$prefix}#{$name}-border-radius, var(--border-radius));
   $font-size: var(--#{$prefix}#{$name}-font-size, $font-size-base);
-  $padding: var(--#{$prefix}#{$name}-padding, 0.375rem 6rem 0.375rem 0.75rem);
+  $padding: var(--#{$prefix}#{$name}-padding, 0.375rem 9rem 0.375rem 0.75rem);
 
-  .dropdown {
-    right: 0.313rem;
-    top: 0.313rem;
-    pointer-events: none;
-    .btn-pill {
-      background-color: var(--card-bg);
+  border-radius: $border-radius;
+
+  .button-holder {
+    .dropdown {
+      right: 0.313rem;
+      top: 0.313rem;
+      pointer-events: none;
+      * {
+        pointer-events: initial;
+      }
+      .dropdown-item::after {
+        display: none;
+      }
+      .dropdown-toggle {
+        width: 6.125rem;
+      }
     }
-    * {
-      pointer-events: initial;
-    }
-    .dropdown-item::after {
-      display: none;
+    .copy-button {
+      position: absolute;
+      top: 0.313rem;
+      right: 6.75rem;
+      width: 1.813rem;
+      height: 1.813rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--neutral-900);
+      &:hover {
+        background-color: var(--black);
+      }
+      svg {
+        height: 0.75rem;
+      }
     }
   }
 
-  border-radius: $border-radius;
   .textarea {
     -moz-appearance: textfield-multiline;
     -webkit-appearance: textarea;
@@ -33,8 +54,8 @@
     color: $color;
     border-radius: $border-radius;
     font-size: $font-size;
-    min-height: 3.125rem;
-    height: 4.5rem;
+    min-height: 4rem;
+    height: 5.5rem;
     overflow: auto;
     padding: $padding;
     word-wrap: break-word;

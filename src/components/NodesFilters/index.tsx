@@ -85,7 +85,7 @@ export const NodesFilters = ({
           <li className='list-inline-item my-1 my-md-0'>
             <NetworkLink
               to={baseRoute}
-              className={`btn btn-sm btn-outline-light btn-pill ${
+              className={`btn btn-sm btn-outline-primary btn-pill ${
                 [search, status, issues, type].every((el) => el === undefined)
                   ? 'active'
                   : ''
@@ -97,7 +97,7 @@ export const NodesFilters = ({
           <li className='list-inline-item my-1 my-md-0'>
             <NetworkLink
               to={nodeTypeLink('validator')}
-              className={`btn btn-sm btn-outline-light btn-pill ${
+              className={`btn btn-sm btn-outline-primary btn-pill ${
                 type === 'validator' && issues !== 'true' ? 'active' : ''
               }`}
             >
@@ -108,7 +108,7 @@ export const NodesFilters = ({
             <NetworkLink
               to={nodeTypeLink('observer')}
               data-testid='filterByObservers'
-              className={`btn btn-sm btn-outline-light btn-pill ${
+              className={`btn btn-sm btn-outline-primary btn-pill ${
                 type === 'observer' ? 'active' : ''
               }`}
             >
@@ -119,7 +119,7 @@ export const NodesFilters = ({
             <NetworkLink
               to={fullHistoryLink('true')}
               data-testid='filterByFullHistory'
-              className={`btn btn-sm btn-outline-light btn-pill ${
+              className={`btn btn-sm btn-outline-primary btn-pill ${
                 fullHistory ? 'active' : ''
               }`}
             >
@@ -129,7 +129,7 @@ export const NodesFilters = ({
           <li className='list-inline-item my-1 my-md-0'>
             <NetworkLink
               to={issuesLink('true')}
-              className={`btn btn-sm btn-outline-light btn-pill ${
+              className={`btn btn-sm btn-outline-primary btn-pill ${
                 issues === 'true' ? 'active' : ''
               }`}
             >
@@ -139,7 +139,7 @@ export const NodesFilters = ({
           <li className='list-inline-item my-1 my-md-0'>
             <Dropdown className='position-unset'>
               <Dropdown.Toggle
-                variant='outline-light'
+                variant='outline-primary'
                 size='sm'
                 className={`btn-pill me-2 ${
                   [

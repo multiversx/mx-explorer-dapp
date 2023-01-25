@@ -2,6 +2,7 @@
 .table {
   --table-border-color: var(--neutral-800);
 }
+
 .card {
   --card-cap-bg: transparent;
   --card-cap-color: var(--neutral-100);
@@ -9,44 +10,86 @@
   --card-bg: rgba(0, 0, 0, 0.2);
 }
 
-// STYLING OVERRIDES
-.table {
-  th {
-    font-weight: 400;
-    background-color: rgba(38, 38, 38, 0.6);
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    border-bottom-width: 0;
-    &:first-of-type {
-      padding-left: 1rem;
-      border-top-left-radius: 0.5rem;
-      border-bottom-left-radius: 0.5rem;
-    }
-    &:last-of-type {
-      border-top-right-radius: 0.5rem;
-      border-bottom-right-radius: 0.5rem;
-    }
+.btn-primary {
+  --#{$prefix}btn-color: var(--neutral-900);
+  --#{$prefix}btn-bg: var(--primary);
+  --#{$prefix}btn-border-color: transparent;
+  --#{$prefix}btn-hover-border-color: transparent;
+  --#{$prefix}btn-focus-box-shadow: 0 0 0 #{$btn-focus-width} rgba(var(--#{$prefix}btn-focus-shadow-rgb), 0.5);
+
+  --#{$prefix}btn-hover-color: var(--neutral-900);
+  --#{$prefix}btn-hover-bg: var(--primary-200);
+}
+
+.btn-dark {
+  --#{$prefix}btn-color: var(--body-color);
+  --#{$prefix}btn-bg: var(--neutral-900);
+  --#{$prefix}btn-border-color: transparent;
+  --#{$prefix}btn-hover-border-color: transparent;
+  --#{$prefix}btn-focus-box-shadow: none;
+
+  --#{$prefix}btn-hover-color: var(--body-color);
+  --#{$prefix}btn-hover-bg: var(--black);
+
+  --#{$prefix}btn-active-color: var(--body-color);
+  --#{$prefix}btn-active-bg: var(--black);
+  --#{$prefix}btn-active-border-color: var(--primary);
+}
+
+.form-control {
+  background-color: var(--neutral-800);
+  color: var(--neutral-500);
+  &::placeholder {
+    color: var(--neutral-500);
   }
-  td {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    &:first-of-type {
-      padding-left: 1rem;
-    }
+  &:focus {
+    color: var(--neutral-400);
+    background-color: var(--neutral-800);
+    box-shadow: 0 0 0 1px rgba(var(--#{$prefix}primary-rgb), 0.5);
   }
-  tr:first-of-type {
-    td:first-of-type {
-      border-top-left-radius: 0.5rem;
-    }
-    td:last-of-type {
-      border-top-right-radius: 0.5rem;
-    }
+  &:focus-visible {
+    border: 0;
+    outline: 0;
+  }
+  &.form-control-dark {
+    background-color: var(--black);
   }
 }
 
-.card {
-  .card-header + .card-body {
-    padding-top: 0;
-    padding-bottom: 0;
+.input-group-text {
+  background-color: var(--neutral-800);
+  color: var(--neutral-500);
+  &:hover {
+    color: var(--primary);
+  }
+}
+
+.input-group-black {
+  .form-control {
+    background-color: var(--black);
+    &:focus {
+      background-color: var(--black);
+    }
+  }
+  .input-group-text {
+    background-color: var(--black);
+  }
+}
+
+// DROPDOWN
+.dropdown-menu {
+  --#{$prefix}dropdown-color: var(--body-color);
+  --#{$prefix}dropdown-bg: var(--black);
+  --#{$prefix}dropdown-border-color: transparent;
+  --#{$prefix}dropdown-divider-bg: var(--border-color);
+  --#{$prefix}dropdown-link-color: var(--body-color);
+  --#{$prefix}dropdown-link-hover-color: var(--body-color);
+  --#{$prefix}dropdown-link-hover-bg: var(--neutral-800);
+  --#{$prefix}dropdown-link-active-color: var(--black);
+  --#{$prefix}dropdown-link-active-bg: var(--primary);
+  --#{$prefix}dropdown-link-disabled-color: var(--neutral-700);
+  --#{$prefix}dropdown-header-color: var(--neutral-700);
+  &.show {
+    margin: 0 !important;
   }
 }

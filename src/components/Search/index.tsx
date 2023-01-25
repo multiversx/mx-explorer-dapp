@@ -193,10 +193,10 @@ export const Search = ({ setExpanded = () => null }: SearchType) => {
 
   return (
     <form className='main-search w-100 d-flex' noValidate={true}>
-      <div className='input-group input-group-seamless'>
+      <div className='input-group input-group-black input-group-seamless mb-3'>
         <input
           type='text'
-          className='form-control border-0 rounded-pill py-3 ps-3 ps-lg-4 text-truncate'
+          className='form-control text-truncate'
           placeholder='Search for an address, transaction/block hash, validator key or token id'
           name='requestType'
           data-testid='search'
@@ -204,7 +204,32 @@ export const Search = ({ setExpanded = () => null }: SearchType) => {
           value={hash}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+          aria-label='Search for an address, transaction/block hash, validator key or token id'
+          aria-describedby='search-addon'
         />
+        <button
+          type='submit'
+          className='input-group-text'
+          onClick={(e) => {
+            e.preventDefault();
+            onClick();
+          }}
+          data-testid='searchButton'
+        >
+          {searching ? (
+            <FontAwesomeIcon
+              icon={faCircleNotch}
+              spin
+              className='me-1 text-primary'
+            />
+          ) : (
+            <FontAwesomeIcon icon={faSearch} className='me-1' />
+          )}
+        </button>
+      </div>
+      {/* 
+      <div className='input-group input-group-seamless'>
+
         <div className='input-group-append'>
           <button
             type='submit'
@@ -228,7 +253,7 @@ export const Search = ({ setExpanded = () => null }: SearchType) => {
             </div>
           </button>
         </div>
-      </div>
+      </div> */}
     </form>
   );
 };
