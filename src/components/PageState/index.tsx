@@ -46,7 +46,7 @@ export const PageState = ({
         />
       )}
       <div className={titleClassName ? titleClassName : 'mt-spacer'}>
-        {title && <p className='h4'>{title}</p>}
+        {title && <h5>{title}</h5>}
         {description && <>{description}</>}
       </div>
     </div>
