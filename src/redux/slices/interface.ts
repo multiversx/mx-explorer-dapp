@@ -13,9 +13,6 @@ export type InterfaceSliceType = {
   explorerOrigin: ExplorerOriginType;
   notifications: NotificationType[];
   shards: ShardType[];
-  refresh: {
-    timestamp: number;
-  };
 };
 
 export function getInitialInterfaceState(): InterfaceSliceType {
@@ -34,10 +31,7 @@ export function getInitialInterfaceState(): InterfaceSliceType {
       search: ''
     },
     notifications: [],
-    shards: [],
-    refresh: {
-      timestamp: Date.now()
-    }
+    shards: []
   };
 }
 
@@ -56,9 +50,6 @@ export const interfaceSlice = createSlice({
       action: PayloadAction<InterfaceSliceType['explorerOrigin']>
     ) => {
       state.explorerOrigin = action.payload;
-    },
-    triggerRefresh: (state: InterfaceSliceType) => {
-      state.refresh = { timestamp: Date.now() };
     },
     setShards: (
       state: InterfaceSliceType,
@@ -93,7 +84,6 @@ export const interfaceSlice = createSlice({
 export const {
   setActiveTheme,
   setExplorerOrigin,
-  triggerRefresh,
   setShards,
   addNotification,
   removeNotification

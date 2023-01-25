@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Loader, useAdapter, PageState } from 'components';
 import { txStatus } from 'components/TransactionStatus/txStatus';
-import { interfaceSelector } from 'redux/selectors';
+import { refreshSelector } from 'redux/selectors/refresh';
 import { TransactionType } from 'types';
 import { TransactionInfo } from './TransactionInfo';
 
@@ -14,9 +14,7 @@ export const TransactionDetails = () => {
   const { hash: transactionId } = params;
   const ref = React.useRef(null);
 
-  const {
-    refresh: { timestamp }
-  } = useSelector(interfaceSelector);
+  const { timestamp } = useSelector(refreshSelector);
 
   const { getTransaction } = useAdapter();
 

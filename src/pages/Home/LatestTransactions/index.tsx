@@ -20,14 +20,12 @@ import { TransactionValue } from 'components/TransactionsTable/TransactionValue'
 import { getStatusIconAndColor } from 'components/TransactionStatus';
 import { addressIsBech32, urlBuilder, getReceiverAssets } from 'helpers';
 
-import { activeNetworkSelector, interfaceSelector } from 'redux/selectors';
+import { activeNetworkSelector, refreshSelector } from 'redux/selectors';
 import { UITransactionType } from 'types';
 
 export const LatestTransactions = () => {
   const ref = React.useRef(null);
-  const {
-    refresh: { timestamp }
-  } = useSelector(interfaceSelector);
+  const { timestamp } = useSelector(refreshSelector);
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const [transactions, setTransactions] = React.useState<UITransactionType[]>(

@@ -1,12 +1,10 @@
 import { useSelector } from 'react-redux';
 import { useURLSearchParams } from 'helpers';
 
-import { interfaceSelector } from 'redux/selectors';
+import { refreshSelector } from 'redux/selectors/refresh';
 
 export const useSize = () => {
-  const {
-    refresh: { timestamp }
-  } = useSelector(interfaceSelector);
+  const { timestamp } = useSelector(refreshSelector);
 
   const { page } = useURLSearchParams();
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

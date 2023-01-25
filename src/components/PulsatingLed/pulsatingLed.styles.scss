@@ -7,7 +7,7 @@
     background-color: var(--primary);
     border-radius: 50%;
   }
-  .ringring {
+  .pulse {
     border: 4px solid var(--primary);
     border-radius: 50%;
     height: 14px;
@@ -15,9 +15,11 @@
     position: absolute;
     left: -3px;
     top: -3px;
-    animation: pulsate 1s ease-out;
-    animation-iteration-count: infinite;
     opacity: 0;
+    &.animation {
+      animation: pulsate 1s ease-out;
+      animation-iteration-count: 1;
+    }
   }
 }
 

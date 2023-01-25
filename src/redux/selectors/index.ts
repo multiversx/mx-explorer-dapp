@@ -5,5 +5,6 @@ export * from './economics';
 export * from './globalStake';
 export * from './interface';
 export * from './networks';
+export * from './refresh';
 export * from './stats';
 export * from './token';

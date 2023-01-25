@@ -8,16 +8,14 @@ import { ReactComponent as Gear } from 'assets/img/network-health/gear.svg';
 import { ReactComponent as LayoutGear } from 'assets/img/network-health/layout-gear.svg';
 import { useAdapter } from 'components';
 import { processStats, validDisplayValue } from 'helpers';
-import { activeNetworkSelector, interfaceSelector } from 'redux/selectors';
+import { activeNetworkSelector, refreshSelector } from 'redux/selectors';
 import { getInitialStatsState } from 'redux/slices/stats';
 
 import { StatsSliceType } from 'types/stats.types';
 import { ProgressRing } from './ProgressRing';
 
 export const NetworkHealth = () => {
-  const {
-    refresh: { timestamp }
-  } = useSelector(interfaceSelector);
+  const { timestamp } = useSelector(refreshSelector);
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const { getStats } = useAdapter();

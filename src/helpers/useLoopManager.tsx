@@ -1,33 +1,33 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { REFRESH_RATE } from 'appConstants';
 
-import { interfaceSelector } from 'redux/selectors';
-import { triggerRefresh } from 'redux/slices/interface';
+import { refreshSelector } from 'redux/selectors';
+import { triggerRefresh } from 'redux/slices/refresh';
 
 export const useLoopManager = () => {
-  const {
-    refresh: { timestamp }
-  } = useSelector(interfaceSelector);
+  const intervalRef = useRef<any>(null);
+  const { timestamp } = useSelector(refreshSelector);
 
   const dispatch = useDispatch();
 
-  const withinInterval = moment()
-    .subtract(REFRESH_RATE, 'ms')
-    .isAfter(moment(timestamp));
+  const setLoopInterval = () => {
+    intervalRef.current = setInterval(() => {
+      const withinInterval = moment()
+        .subtract(REFRESH_RATE, 'ms')
+        .isBefore(timestamp);
 
-  const setRounds = () => {
-    const intervalId = setInterval(() => {
-      if (!withinInterval && !document.hidden) {
+      if (!document.hidden && !withinInterval) {
         dispatch(triggerRefresh());
       }
     }, REFRESH_RATE);
     return () => {
-      clearInterval(intervalId);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(setRounds, []);
+  React.useEffect(setLoopInterval, []);
 };
