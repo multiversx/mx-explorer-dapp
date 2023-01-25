@@ -15,20 +15,22 @@
     td {
       .sender,
       .receiver {
-        max-width: 10.5rem;
+        min-width: 10rem;
+        max-width: 10rem;
       }
       &:last-child {
         padding-right: 1rem !important;
       }
     }
     .transaction-value {
-      max-width: 11.5rem;
-      min-width: 11.5rem;
+      max-width: 13.5rem;
+      min-width: 13.5rem;
     }
     .transaction-function {
-      width: 10.5rem;
+      max-width: 9.5rem;
+      min-width: 9.5rem;
       .transaction-function-badge {
-        max-width: 9.5rem;
+        max-width: 8rem;
       }
     }
   }
@@ -38,7 +40,8 @@
       td {
         .sender,
         .receiver {
-          max-width: 10rem;
+          min-width: 9.5rem;
+          max-width: 9.5rem;
         }
       }
     }
