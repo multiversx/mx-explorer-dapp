@@ -54,8 +54,8 @@ export const Identities = () => {
       )}
       {dataReady === true && (
         <div className='card-body'>
-          <div className='table-wrapper'>
-            <table className='table'>
+          <div className='table-wrapper animated-list'>
+            <table className='table mb-0'>
               <thead>
                 <tr>
                   <th className='th-rank'>#</th>

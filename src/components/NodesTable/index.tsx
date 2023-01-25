@@ -23,7 +23,7 @@ export default class NodesTable extends React.Component<NodesTableType> {
 
     return (
       <div className='nodes-table table-wrapper'>
-        <table className='table'>
+        <table className='table mb-0'>
           <thead>
             {!statistics && !queue && (
               <StandardHead

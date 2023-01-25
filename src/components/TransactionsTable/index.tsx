@@ -50,7 +50,7 @@ export const TransactionsTable = ({
         <div className='card-body'>
           <div className='table-wrapper animated-list'>
             <table
-              className='table trim-size-sm'
+              className='table trim-size-sm mb-0'
               data-testid='transactionsTable'
             >
               <Header

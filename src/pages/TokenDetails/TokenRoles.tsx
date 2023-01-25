@@ -20,9 +20,9 @@ export const TokenDetailsRoles = () => {
           </div>
           {roles ? (
             <>
-              <div className='card-body border-0 p-0'>
-                <div className='table-wrapper'>
-                  <table className='table'>
+              <div className='card-body'>
+                <div className='table-wrapper animated-list'>
+                  <table className='table mb-0'>
                     <thead>
                       <tr>
                         <th>Address</th>

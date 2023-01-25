@@ -130,7 +130,7 @@ export const Tokens = () => {
 
                   {tokens && tokens.length > 0 ? (
                     <>
-                      <div className='card-body border-0 p-0'>
+                      <div className='card-body'>
                         <TokensTable
                           tokens={tokens}
                           totalTokens={totalTokens}
