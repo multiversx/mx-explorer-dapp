@@ -1,7 +1,7 @@
 .styled-select .styled-select {
   &__control {
-    background-color: var(--body-background);
-    color: $input-color;
+    background-color: var(--body-bg);
+    color: var(--body-color);
     border-color: var(--border-color);
     border-radius: $border-radius;
     font-size: 0.8125rem;
@@ -18,18 +18,18 @@
   }
 
   &__menu {
-    background-color: var(--body-background);
+    background-color: var(--body-bg);
     z-index: 5;
     max-height: 200px;
   }
   &__option {
     &--is-focused {
-      background-color: var(--card-bg);
+      background-color: var(--neutral-800);
       color: var(--primary);
     }
     &--is-selected {
       background-color: var(--primary);
-      color: var(--card-bg);
+      color: var(--neutral-800);
     }
   }
 
@@ -47,7 +47,7 @@
   }
 
   &__multi-value {
-    background-color: var(--card-bg);
+    background-color: var(--neutral-800);
     border: 1px solid var(--border-color);
   }
   &__multi-value__label {
@@ -63,6 +63,6 @@
   &__single-value,
   &__input-container,
   &__input {
-    color: $input-color;
+    color: var(--body-color);
   }
 }
