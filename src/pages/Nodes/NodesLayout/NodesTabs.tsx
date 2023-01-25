@@ -9,7 +9,7 @@ export const NodesTabs = () => {
 
   return (
     <div className='nodes-tabs card-header-item'>
-      <div className='d-flex flex-wrap'>
+      <div className='tab-links d-flex flex-wrap'>
         {isMainnet && (
           <NetworkLink
             to={validatorsRoutes.identities}
@@ -17,7 +17,7 @@ export const NodesTabs = () => {
               activeRoute(validatorsRoutes.identities) ? 'active' : ''
             }`}
           >
-            <h6>Validators</h6>
+            <h5>Validators</h5>
           </NetworkLink>
         )}
 
@@ -27,7 +27,7 @@ export const NodesTabs = () => {
             activeRoute(validatorsRoutes.providers) ? 'active' : ''
           }`}
         >
-          <h6>Staking Providers</h6>
+          <h5>Staking Providers</h5>
         </NetworkLink>
 
         <NetworkLink
@@ -36,7 +36,7 @@ export const NodesTabs = () => {
             activeRoute(validatorsRoutes.nodes) ? 'active' : ''
           }`}
         >
-          <h6>Nodes</h6>
+          <h5>Nodes</h5>
         </NetworkLink>
 
         <NetworkLink
@@ -45,7 +45,7 @@ export const NodesTabs = () => {
             activeRoute(validatorsRoutes.statistics) ? 'active' : ''
           }`}
         >
-          <h6>Statistics</h6>
+          <h5>Statistics</h5>
         </NetworkLink>
 
         <NetworkLink
@@ -54,7 +54,7 @@ export const NodesTabs = () => {
             activeRoute(validatorsRoutes.queue) ? 'active' : ''
           }`}
         >
-          <h6>Queue</h6>
+          <h5>Queue</h5>
         </NetworkLink>
       </div>
     </div>

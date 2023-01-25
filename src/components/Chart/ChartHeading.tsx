@@ -26,7 +26,7 @@ export const ChartHeading = ({
         />
       )}
       {svgIcon && svgIcon}
-      {title && <h6 className='title mb-0'>{title}</h6>}
+      {title && <h5 className='title mb-0'>{title}</h5>}
 
       {children}
     </div>

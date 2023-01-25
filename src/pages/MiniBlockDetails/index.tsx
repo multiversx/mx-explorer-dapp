@@ -160,7 +160,12 @@ export const MiniBlockDetails = () => {
                     <div className='card'>
                       <div className='card-header'>
                         <div className='card-header-item'>
-                          <h6 data-testid='pageTitle'>Miniblock Details</h6>
+                          <h5
+                            data-testid='pageTitle'
+                            className='mb-0 d-flex align-items-center'
+                          >
+                            Miniblock Details
+                          </h5>
                         </div>
                       </div>
 
@@ -242,7 +247,10 @@ export const MiniBlockDetails = () => {
                             totalTransactions={totalTransactions}
                             size={size}
                             title={
-                              <h5 data-testid='title' className='mb-0'>
+                              <h5
+                                data-testid='title'
+                                className='mb-0 d-flex align-items-center'
+                              >
                                 {isScResult ? 'SC Results' : 'Transactions'}
                               </h5>
                             }

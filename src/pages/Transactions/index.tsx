@@ -108,12 +108,11 @@ export const Transactions = () => {
                     totalTransactions={totalTransactions}
                     size={size}
                     title={
-                      <h5 data-testid='title' className='mb-0'>
-                        <div className='d-flex align-items-center'>
-                          Live Transactions
-                          <PulsatingLed className='ms-2 mt-1' />
-                        </div>
-
+                      <h5
+                        data-testid='title'
+                        className='table-title d-flex align-items-center'
+                      >
+                        Live Transactions
                         {senderShard !== undefined && (
                           <>
                             <span>&nbsp;from&nbsp;</span>
@@ -126,6 +125,7 @@ export const Transactions = () => {
                             {shardSpanText(receiverShard)}
                           </>
                         )}
+                        <PulsatingLed className='ms-2 mt-1' />
                       </h5>
                     }
                   />

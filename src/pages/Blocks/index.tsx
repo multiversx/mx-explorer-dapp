@@ -79,8 +79,11 @@ export const Blocks = () => {
                   {state && state.blocks.length > 0 ? (
                     <>
                       <div className='card-header'>
-                        <div className='card-header-item d-flex justify-content-between align-items-center'>
-                          <h6 className='m-0' data-testid='title'>
+                        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+                          <h5
+                            className='table-title d-flex align-items-center'
+                            data-testid='title'
+                          >
                             Blocks
                             {shard !== undefined && shard >= 0 && (
                               <>
@@ -88,19 +91,18 @@ export const Blocks = () => {
                                 <ShardSpan shard={shard} />
                               </>
                             )}
-                          </h6>
-                          <div className='d-none d-sm-flex'>
-                            <Pager
-                              page={String(page)}
-                              total={
-                                totalBlocks !== '...'
-                                  ? Math.min(totalBlocks, 10000)
-                                  : totalBlocks
-                              }
-                              itemsPerPage={25}
-                              show={state.blocks.length > 0}
-                            />
-                          </div>
+                          </h5>
+                          <Pager
+                            page={String(page)}
+                            total={
+                              totalBlocks !== '...'
+                                ? Math.min(totalBlocks, 10000)
+                                : totalBlocks
+                            }
+                            itemsPerPage={25}
+                            show={state.blocks.length > 0}
+                            className='d-none d-sm-flex ms-auto'
+                          />
                         </div>
                       </div>
 
@@ -112,7 +114,7 @@ export const Blocks = () => {
                         />
                       </div>
 
-                      <div className='card-footer d-flex justify-content-end'>
+                      <div className='card-footer px-1 px-sm-spacer d-flex justify-content-center justify-content-sm-end'>
                         <Pager
                           page={String(page)}
                           total={

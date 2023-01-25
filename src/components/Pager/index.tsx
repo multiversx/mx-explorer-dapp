@@ -98,8 +98,8 @@ export const Pager = ({
                 ? { 'data-testid': 'disabledPreviousPageButton' }
                 : {})}
             >
-              <FontAwesomeIcon icon={faAngleLeft} size='lg' className='pe-2' />
-              Prev
+              <FontAwesomeIcon icon={faAngleLeft} size='lg' />
+              <span className='d-none d-sm-flex ps-2'>Prev</span>
             </div>
           ) : (
             <NetworkLink
@@ -107,13 +107,13 @@ export const Pager = ({
               to={prevPageUrl}
               {...(hasTestId ? { 'data-testid': 'previousPageButton' } : {})}
             >
-              <FontAwesomeIcon icon={faAngleLeft} size='lg' className='pe-2' />
-              Prev
+              <FontAwesomeIcon icon={faAngleLeft} size='lg' />
+              <span className='d-none d-sm-flex ps-2'>Prev</span>
             </NetworkLink>
           )}
         </div>
 
-        <div className='d-flex align-items-center page-holder px-2'>
+        <div className='d-flex align-items-center page-holder'>
           {paginationArray.map((page, index) => {
             const currentUrlParams = new URLSearchParams({
               ...params,
@@ -148,8 +148,8 @@ export const Pager = ({
               {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
               to={`${pathname}?${nextUrlParams}`}
             >
-              Next
-              <FontAwesomeIcon icon={faAngleRight} size='lg' className='ps-2' />
+              <span className='d-none d-sm-flex pe-2'>Next</span>
+              <FontAwesomeIcon icon={faAngleRight} size='lg' />
             </NetworkLink>
           ) : (
             <div
@@ -158,8 +158,8 @@ export const Pager = ({
                 ? { 'data-testid': 'disabledNextPageButton' }
                 : {})}
             >
-              Next
-              <FontAwesomeIcon icon={faAngleRight} size='lg' className='ps-2' />
+              <span className='d-none d-sm-flex pe-2'>Next</span>
+              <FontAwesomeIcon icon={faAngleRight} size='lg' />
             </div>
           )}
 

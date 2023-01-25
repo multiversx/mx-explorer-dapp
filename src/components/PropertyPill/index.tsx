@@ -11,7 +11,7 @@ export const PropertyPill = ({
 }) => {
   return (
     <span
-      className={`me-1 badge badge-outline badge-rounded badge-direction ${
+      className={`badge badge-outline badge-rounded badge-direction ${
         active ? 'in' : 'out'
       }`}
     >

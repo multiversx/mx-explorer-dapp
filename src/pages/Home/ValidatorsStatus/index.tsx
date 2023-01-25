@@ -77,8 +77,8 @@ export const ValidatorsStatus = () => {
   return (
     <div className='card' ref={ref}>
       <div className='card-header'>
-        <div className='card-header-item d-flex justify-content-between align-items-center'>
-          <h6 className='m-0'>Validators Status</h6>
+        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+          <h5 className='mb-0 d-flex align-items-center'>Validators Status</h5>
           <div>
             {totalNodes.toLocaleString('en')} Active /{' '}
             {queuedNodes.toLocaleString('en')} Queue

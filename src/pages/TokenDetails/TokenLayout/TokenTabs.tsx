@@ -12,44 +12,44 @@ export const TokenTabs = () => {
   const { identifier, assets, roles } = useSelector(tokenSelector);
 
   return (
-    <div className='account-tabs d-flex flex-row'>
+    <div className='tab-links d-flex flex-row flex-wrap'>
       <NetworkLink
         to={urlBuilder.tokenDetails(identifier)}
-        className={`tab-link me-3 ${
+        className={`tab-link me-3 me-lg-4 ${
           activeRoute(tokensRoutes.tokenDetails) ? 'active' : ''
         }`}
       >
-        <h6>Transactions</h6>
+        <h5>Transactions</h5>
       </NetworkLink>
 
       <NetworkLink
         to={urlBuilder.tokenDetailsAccounts(identifier)}
-        className={`tab-link mx-3 ${
+        className={`tab-link me-3 me-lg-4 ${
           activeRoute(tokensRoutes.tokenDetailsAccounts) ? 'active' : ''
         }`}
       >
-        <h6>Accounts</h6>
+        <h5>Accounts</h5>
       </NetworkLink>
 
       {assets?.lockedAccounts && (
         <NetworkLink
           to={urlBuilder.tokenDetailsLockedAccounts(identifier)}
-          className={`tab-link mx-3 ${
+          className={`tab-link me-3 me-lg-4 ${
             activeRoute(tokensRoutes.tokenDetailsLockedAccounts) ? 'active' : ''
           }`}
         >
-          <h6>Locked Accounts</h6>
+          <h5>Locked Accounts</h5>
         </NetworkLink>
       )}
 
       {roles && (
         <NetworkLink
           to={urlBuilder.tokenDetailsRoles(identifier)}
-          className={`tab-link mx-3 ${
+          className={`tab-link me-3 me-lg-4 ${
             activeRoute(tokensRoutes.tokenDetailsRoles) ? 'active' : ''
           }`}
         >
-          <h6>Roles</h6>
+          <h5>Roles</h5>
         </NetworkLink>
       )}
     </div>

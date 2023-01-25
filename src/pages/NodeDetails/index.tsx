@@ -190,9 +190,9 @@ export const NodeDetails = () => {
                             <>
                               <div className='card-header'>
                                 <div className='card-header-item'>
-                                  <h6 className='m-0'>
+                                  <h5 className='mb-0 d-flex align-items-center'>
                                     Latest Proposed Blocks
-                                  </h6>
+                                  </h5>
                                 </div>
                               </div>
                               <div className='card-body'>

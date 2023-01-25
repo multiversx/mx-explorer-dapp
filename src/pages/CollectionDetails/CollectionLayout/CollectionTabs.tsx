@@ -11,29 +11,29 @@ export const CollectionTabs = () => {
   const { collection, roles, type } = useSelector(collectionSelector);
 
   return (
-    <div className='account-tabs d-flex flex-row'>
+    <div className='tab-links d-flex flex-row flex-wrap'>
       {type && type !== NftEnumType.MetaESDT && (
         <NetworkLink
           to={urlBuilder.collectionDetails(collection)}
-          className={`tab-link me-spacer ${
+          className={`tab-link me-3 me-lg-4 ${
             activeRoute(collectionRoutes.collectionDetails) ? 'active' : ''
           }`}
         >
-          <h6>{nftText(type)}s</h6>
+          <h5>{nftText(type)}s</h5>
         </NetworkLink>
       )}
 
       {roles && (
         <NetworkLink
           to={urlBuilder.collectionDetailsRoles(collection)}
-          className={`tab-link me-spacer ${
+          className={`tab-link me-3 me-lg-4 ${
             activeRoute(collectionRoutes.collectionDetailsRoles) ||
             type === NftEnumType.MetaESDT
               ? 'active'
               : ''
           }`}
         >
-          <h6>Roles</h6>
+          <h5>Roles</h5>
         </NetworkLink>
       )}
     </div>

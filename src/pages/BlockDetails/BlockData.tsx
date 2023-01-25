@@ -58,7 +58,7 @@ export const BlockData = (props: BlockDataType) => {
     <div className='card'>
       <div className='card-header'>
         <div className='card-header-item d-flex align-items-center'>
-          <h5 data-testid='title' className='mb-0'>
+          <h5 data-testid='title' className='mb-0 d-flex align-items-center'>
             Block Details
           </h5>
         </div>

@@ -69,16 +69,16 @@ export const TokenDetailsAccounts = () => {
     <div ref={ref}>
       <div className='card'>
         <div className='card-header'>
-          <div className='card-header-item d-flex justify-content-between align-items-center'>
+          <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
             <TokenTabs />
-            <div className='d-none d-sm-flex'>
-              <Pager
-                page={String(page)}
-                total={accountsCount ? Math.min(accountsCount, 10000) : 0}
-                itemsPerPage={25}
-                show={accounts.length > 0}
-              />
-            </div>
+
+            <Pager
+              page={String(page)}
+              total={accountsCount ? Math.min(accountsCount, 10000) : 0}
+              itemsPerPage={25}
+              show={accounts.length > 0}
+              className='d-none d-sm-flex ms-auto'
+            />
           </div>
           {showAccounts ? (
             <>
@@ -126,7 +126,7 @@ export const TokenDetailsAccounts = () => {
                 </div>
               </div>
 
-              <div className='card-footer d-flex justify-content-end'>
+              <div className='card-footer px-1 px-sm-spacer d-flex justify-content-center justify-content-sm-end'>
                 <Pager
                   page={String(page)}
                   total={accountsCount ? Math.min(accountsCount, 10000) : 0}

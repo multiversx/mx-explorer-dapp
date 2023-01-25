@@ -9,23 +9,23 @@ export const ProviderTabs = () => {
   const activeRoute = useActiveRoute();
 
   return (
-    <div className='provider-tabs d-flex flex-row'>
+    <div className='provider-tabs tab-links d-flex flex-row flex-wrap'>
       <NetworkLink
         to={urlBuilder.providerDetails(address)}
-        className={`tab-link me-3 ${
+        className={`tab-link me-3 me-lg-4 ${
           activeRoute(validatorsRoutes.providerDetails) ? 'active' : ''
         }`}
       >
-        <h6>Nodes</h6>
+        <h5>Nodes</h5>
       </NetworkLink>
 
       <NetworkLink
         to={urlBuilder.providerDetailsTransactions(address)}
-        className={`tab-link ms-3 ${
+        className={`tab-link me-3 me-lg-4 ${
           activeRoute(validatorsRoutes.providerTransactions) ? 'active' : ''
         }`}
       >
-        <h6>Transactions</h6>
+        <h5>Transactions</h5>
       </NetworkLink>
     </div>
   );

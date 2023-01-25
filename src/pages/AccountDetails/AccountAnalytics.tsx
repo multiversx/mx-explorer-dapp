@@ -62,7 +62,7 @@ export const AccountAnalytics = () => {
   return (
     <div className='card'>
       <div className='card-header'>
-        <div className='card-header-item d-flex justify-content-between align-items-center'>
+        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
           <AccountTabs />
         </div>
         <div className='card-header-item d-flex align-items-center bg-light'>

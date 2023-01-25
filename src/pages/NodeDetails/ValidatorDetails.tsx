@@ -17,7 +17,7 @@ export const ValidatorDetails = ({ nodeData }: { nodeData: NodeType }) => {
     <div className='card'>
       <div className='card-header'>
         <div className='card-header-item'>
-          <h5 data-testid='title' className='mb-0'>
+          <h5 data-testid='title' className='mb-0 d-flex align-items-center'>
             Validator Statistics
           </h5>
         </div>

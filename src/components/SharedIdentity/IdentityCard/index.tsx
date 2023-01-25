@@ -116,7 +116,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
 
           <div className='col-12 col-lg-5 d-flex flex-column flex-sm-row ps-lg-0'>
             <div className='d-flex flex-column flex-fill mt-4 mt-lg-0'>
-              <h6 className='mb-3 font-weight-600'>Validator Details</h6>
+              <h5 className='mb-3 font-weight-600'>Validator Details</h5>
 
               <div className='d-flex'>
                 <span className='text-neutral-400 text-nowrap pe-2'>
@@ -151,7 +151,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
               </div>
             </div>
             <div className='d-flex flex-column flex-fill mt-4 mt-lg-0 ms-sm-spacer min-w-0'>
-              <h6 className='mb-3 font-weight-600'>Stake Distribution</h6>
+              <h5 className='mb-3 font-weight-600'>Stake Distribution</h5>
               {distribution && distribution.length > 0 ? (
                 <MultilayerPercentageBar steps={distribution} trim />
               ) : (

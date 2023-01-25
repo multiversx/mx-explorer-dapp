@@ -52,17 +52,16 @@ export const NodesStatistics = () => {
       <div className='card-header position-unset'>
         <NodesTabs />
 
-        <div className='card-header-item d-flex justify-content-between align-items-center'>
+        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
           <NodesFilters baseRoute={validatorsRoutes.statistics} onlySearch />
           {dataReady === true && (
-            <div className='d-none d-sm-flex'>
-              <Pager
-                itemsPerPage={25}
-                page={String(size)}
-                total={totalNodes}
-                show
-              />
-            </div>
+            <Pager
+              itemsPerPage={25}
+              page={String(size)}
+              total={totalNodes}
+              className='d-none d-sm-flex ms-auto'
+              show
+            />
           )}
         </div>
       </div>
@@ -84,7 +83,7 @@ export const NodesStatistics = () => {
               <NodesTable.Body nodes={nodes} statistics />
             </NodesTable>
           </div>
-          <div className='card-footer d-flex justify-content-end'>
+          <div className='card-footer px-1 px-sm-spacer d-flex justify-content-center justify-content-sm-end'>
             <Pager
               itemsPerPage={25}
               page={String(size)}

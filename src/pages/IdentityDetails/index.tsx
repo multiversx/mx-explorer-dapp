@@ -96,7 +96,9 @@ export const IdentityDetails = () => {
                       <>
                         <div className='card-header'>
                           <div className='card-header-item d-flex align-items-center'>
-                            <h6 className='m-0'>Delegation Contracts</h6>
+                            <h5 className='mb-0 d-flex align-items-center'>
+                              Delegation Contracts
+                            </h5>
 
                             <div className='ms-auto'>
                               <a
@@ -130,18 +132,20 @@ export const IdentityDetails = () => {
               <div className='col-12'>
                 <div className='card'>
                   <div className='card-header'>
-                    <div className='card-header-item d-flex justify-content-between align-items-center'>
-                      <h6 className='m-0' data-testid='title'>
+                    <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+                      <h5
+                        className='table-title d-flex align-items-center'
+                        data-testid='title'
+                      >
                         Nodes
-                      </h6>
-                      <div className='d-none d-md-flex'>
-                        <Pager
-                          itemsPerPage={25}
-                          page={String(size)}
-                          total={totalNodes}
-                          show
-                        />
-                      </div>
+                      </h5>
+                      <Pager
+                        itemsPerPage={25}
+                        page={String(size)}
+                        total={totalNodes}
+                        className='d-none d-sm-flex ms-auto'
+                        show
+                      />
                     </div>
                   </div>
 
@@ -150,7 +154,7 @@ export const IdentityDetails = () => {
                       <NodesTable.Body nodes={nodes} />
                     </NodesTable>
                   </div>
-                  <div className='card-footer d-flex justify-content-end'>
+                  <div className='card-footer px-1 px-sm-spacer d-flex justify-content-center justify-content-sm-end'>
                     <Pager
                       itemsPerPage={25}
                       page={String(size)}

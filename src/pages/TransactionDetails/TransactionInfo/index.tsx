@@ -171,39 +171,42 @@ export const TransactionInfo = ({
           }`}
         >
           <div className='card-header-item d-flex align-items-center'>
-            <Nav.Link
-              data-testid='title'
-              eventKey='details'
-              className={`tab-link me-3 ${
-                activeKey === 'details' ? 'active' : ''
-              }`}
-              onClick={() => {
-                window.history.replaceState(
-                  null,
-                  '',
-                  urlBuilder.transactionDetails(transaction.txHash)
-                );
-              }}
-            >
-              Transaction Details
-            </Nav.Link>
-            {showLogs && (
+            <div className='tab-links d-flex flex-row flex-wrap'>
               <Nav.Link
-                eventKey='logs'
-                className={`tab-link me-3 ${
-                  activeKey === 'logs' ? 'active' : ''
+                data-testid='title'
+                eventKey='details'
+                className={`tab-link me-3 me-lg-4 ${
+                  activeKey === 'details' ? 'active' : ''
                 }`}
                 onClick={() => {
                   window.history.replaceState(
                     null,
                     '',
-                    urlBuilder.transactionDetailsLogs(transaction.txHash)
+                    urlBuilder.transactionDetails(transaction.txHash)
                   );
                 }}
               >
-                Logs
+                <h5>Transaction Details</h5>
               </Nav.Link>
-            )}
+              {showLogs && (
+                <Nav.Link
+                  eventKey='logs'
+                  className={`tab-link me-3 me-lg-4 ${
+                    activeKey === 'logs' ? 'active' : ''
+                  }`}
+                  onClick={() => {
+                    window.history.replaceState(
+                      null,
+                      '',
+                      urlBuilder.transactionDetailsLogs(transaction.txHash)
+                    );
+                  }}
+                >
+                  <h5>Logs</h5>
+                </Nav.Link>
+              )}
+            </div>
+
             {isTxPending && (
               <div className='d-flex align-items-center ms-auto'>
                 <LoadingDots />

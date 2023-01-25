@@ -68,18 +68,17 @@ export const AccountContracts = () => {
   return (
     <div className='card' ref={ref}>
       <div className='card-header'>
-        <div className='card-header-item d-flex justify-content-between align-items-center'>
+        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
           <AccountTabs />
-          <div className='d-none d-md-flex'>
-            {dataReady === true && accountContracts.length > 0 && (
-              <Pager
-                itemsPerPage={25}
-                page={String(size)}
-                total={Math.min(accountContractsCount, 10000)}
-                show={accountContracts.length > 0}
-              />
-            )}
-          </div>
+          {dataReady === true && accountContracts.length > 0 && (
+            <Pager
+              itemsPerPage={25}
+              page={String(size)}
+              total={Math.min(accountContractsCount, 10000)}
+              show={accountContracts.length > 0}
+              className='d-none d-sm-flex ms-auto'
+            />
+          )}
         </div>
       </div>
       <div className='card-body'>
@@ -152,7 +151,7 @@ export const AccountContracts = () => {
         )}
       </div>
       {dataReady === true && accountContracts.length > 0 && (
-        <div className='card-footer d-flex justify-content-end'>
+        <div className='card-footer px-1 px-sm-spacer d-flex justify-content-center justify-content-sm-end'>
           <Pager
             itemsPerPage={25}
             page={String(size)}

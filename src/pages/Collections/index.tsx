@@ -80,7 +80,7 @@ export const Collections = () => {
               <div className='col-12'>
                 <div className='card'>
                   <div className='card-header'>
-                    <div className='card-header-item d-flex justify-content-between align-items-center'>
+                    <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
                       <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row'>
                         <ul className='list-inline m-0'>
                           <li className='list-inline-item my-1 my-md-0'>
@@ -208,7 +208,7 @@ export const Collections = () => {
                         </div>
                       </div>
 
-                      <div className='card-footer d-flex justify-content-end'>
+                      <div className='card-footer px-1 px-sm-spacer d-flex justify-content-center justify-content-sm-end'>
                         <Pager
                           page={String(page)}
                           total={
