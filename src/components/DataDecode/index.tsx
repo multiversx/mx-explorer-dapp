@@ -210,6 +210,7 @@ export const DataDecode = ({
   );
   const [displayValue, setDisplayValue] = React.useState('');
   const [validationWarnings, setValidationWarnings] = React.useState<any>([]);
+  const [hasOverflow, setHasOverflow] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     const { displayValue, validationWarnings } = decodeForDisplay({
@@ -231,7 +232,11 @@ export const DataDecode = ({
   }, [activeKey]);
 
   return (
-    <div className='position-relative data-decode mt-1'>
+    <div
+      className={`position-relative data-decode mt-1 ${
+        hasOverflow ? '' : 'overflow-hidden'
+      }`}
+    >
       <div className={`form-control textarea ${className ? className : ''}`}>
         {displayValue}
       </div>
@@ -240,6 +245,9 @@ export const DataDecode = ({
           className='position-absolute dropdown'
           onSelect={(eventKey: any) => {
             return eventKey ? setActiveKey(eventKey) : DecodeMethodType.raw;
+          }}
+          onToggle={(e) => {
+            setHasOverflow(e);
           }}
         >
           <Dropdown.Toggle

@@ -1,41 +1,43 @@
 .pager {
-  line-height: 2.37rem;
-  .btn {
+  .btn.btn-pager {
+    background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 0;
+    font-size: $font-size-base;
+    font-weight: 600;
     border: 0;
-    width: 2.81rem;
+    border-radius: 2rem;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 2rem;
+    color: var(--neutral-100);
+    &.square {
+      min-width: 2rem;
+      width: 2rem;
+    }
+    &.active {
+      background-color: var(--neutral-800);
+    }
+    &:hover {
+      background-color: var(--neutral-900);
+    }
+  }
+
+  .page-holder {
+    gap: 0.25rem;
   }
 
   .btns-contrainer {
     display: flex;
     overflow: hidden;
-    border-color: var(--primary-light) !important;
-
-    &.left {
-      border-top-left-radius: 0.25rem;
-      border-bottom-left-radius: 0.25rem;
-      border-right: 0 !important;
-    }
-
-    &.right {
-      border-top-right-radius: 0.25rem;
-      border-bottom-right-radius: 0.25rem;
-      border-left: 0 !important;
-    }
+    gap: 0.5rem;
 
     &.inactive {
-      border-color: var(--light) !important;
-
       .btn {
-        color: var(--muted) !important;
-        background-color: var(--light);
-
+        color: var(--neutral-600) !important;
         &:hover {
-          color: var(--muted) !important;
-          background-color: var(--light);
+          background-color: transparent;
         }
       }
     }
@@ -43,11 +45,6 @@
     .btn:first-child {
       margin-right: 1px;
     }
-  }
-
-  .current-page {
-    border-color: var(--primary-light) !important;
-    // font-size: 0.8rem;
   }
 
   &.pager-inline {

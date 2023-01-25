@@ -1,8 +1,8 @@
 import React from 'react';
-import { faBackward } from '@fortawesome/pro-solid-svg-icons/faBackward';
-import { faCaretLeft } from '@fortawesome/pro-solid-svg-icons/faCaretLeft';
-import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
-import { faForward } from '@fortawesome/pro-solid-svg-icons/faForward';
+import { faAngleLeft } from '@fortawesome/pro-solid-svg-icons/faAngleLeft';
+import { faAngleRight } from '@fortawesome/pro-solid-svg-icons/faAngleRight';
+import { faAnglesLeft } from '@fortawesome/pro-solid-svg-icons/faAnglesLeft';
+import { faAnglesRight } from '@fortawesome/pro-solid-svg-icons/faAnglesRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -35,7 +35,7 @@ export const Pager = ({
   const urlParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlParams);
 
-  const { size, lastPage, end } = pagerHelper({
+  const { size, lastPage, end, paginationArray } = pagerHelper({
     total,
     itemsPerPage,
     page
@@ -71,95 +71,113 @@ export const Pager = ({
   const leftBtnActive = size !== 1;
   const rightBtnsActive = end < total;
 
+  console.log('----lastPage', lastPage);
+  console.log('----startEnd', startEnd);
+
   return show ? (
     <div className={`pager ${className}`}>
       <div className='m-0 d-flex align-items-strech'>
         <div
-          className={`btns-contrainer left border ${
-            leftBtnActive ? '' : 'inactive'
-          }`}
+          className={`btns-contrainer left ${leftBtnActive ? '' : 'inactive'}`}
         >
           {size === 1 ? (
-            <div className='btn btn-primary'>
-              <FontAwesomeIcon icon={faBackward} />
+            <div className='btn btn-pager square'>
+              <FontAwesomeIcon icon={faAnglesLeft} size='lg' />
             </div>
           ) : (
             <NetworkLink
-              className='btn btn-primary'
+              className='btn btn-pager square'
               {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
               to={`${pathname}?${firstUrlParams}`}
             >
-              <FontAwesomeIcon icon={faBackward} />
+              <FontAwesomeIcon icon={faAnglesLeft} size='lg' />
             </NetworkLink>
           )}
 
           {size === 1 ? (
             <div
-              className='btn btn-primary'
+              className='btn btn-pager'
               {...(hasTestId
                 ? { 'data-testid': 'disabledPreviousPageButton' }
                 : {})}
             >
-              <FontAwesomeIcon icon={faCaretLeft} size='lg' />
+              <FontAwesomeIcon icon={faAngleLeft} size='lg' className='pe-2' />
+              Prev
             </div>
           ) : (
             <NetworkLink
-              className='btn btn-primary'
+              className='btn btn-pager'
               to={prevPageUrl}
               {...(hasTestId ? { 'data-testid': 'previousPageButton' } : {})}
             >
-              <FontAwesomeIcon icon={faCaretLeft} size='lg' />
+              <FontAwesomeIcon icon={faAngleLeft} size='lg' className='pe-2' />
+              Prev
             </NetworkLink>
           )}
         </div>
 
-        <div className='d-flex align-items-center current-page border px-2'>
-          <span>
-            <span {...(hasTestId ? { 'data-testid': 'pageInterval' } : {})}>
-              {startEnd}
-            </span>
-            &nbsp;/&nbsp;
-            <span {...(hasTestId ? { 'data-testid': 'totalPages' } : {})}>
-              {!isNaN(lastPage) ? lastPage.toLocaleString('en') : 1}
-            </span>
-          </span>
+        <div className='d-flex align-items-center page-holder px-2'>
+          {paginationArray.map((page, index) => {
+            const currentUrlParams = new URLSearchParams({
+              ...params,
+              page: String(page)
+            }).toString();
+
+            return (
+              <>
+                {page !== '...' ? (
+                  <NetworkLink
+                    className={`btn btn-pager ${page === size ? 'active' : ''}`}
+                    to={`${pathname}?${currentUrlParams}`}
+                    key={`${page}-${index}`}
+                  >
+                    {page}
+                  </NetworkLink>
+                ) : (
+                  <span key={`${page}-${index}`}>...</span>
+                )}
+              </>
+            );
+          })}
         </div>
 
         <div
-          className={`btns-contrainer right border ${
+          className={`btns-contrainer right ${
             rightBtnsActive ? '' : 'inactive'
           }`}
         >
           {total === '...' || end < total ? (
             <NetworkLink
-              className='btn btn-primary'
+              className='btn btn-pager'
               {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
               to={`${pathname}?${nextUrlParams}`}
             >
-              <FontAwesomeIcon icon={faCaretRight} size='lg' />
+              Next
+              <FontAwesomeIcon icon={faAngleRight} size='lg' className='ps-2' />
             </NetworkLink>
           ) : (
             <div
-              className='btn btn-primary'
+              className='btn btn-pager'
               {...(hasTestId
                 ? { 'data-testid': 'disabledNextPageButton' }
                 : {})}
             >
-              <FontAwesomeIcon icon={faCaretRight} size='lg' />
+              Next
+              <FontAwesomeIcon icon={faAngleRight} size='lg' className='ps-2' />
             </div>
           )}
 
           {!isNaN(lastPage) && end < total ? (
             <NetworkLink
-              className='btn btn-primary'
+              className='btn btn-pager square'
               {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
               to={`${pathname}?${lastUrlParams}`}
             >
-              <FontAwesomeIcon icon={faForward} />
+              <FontAwesomeIcon icon={faAnglesRight} size='lg' />
             </NetworkLink>
           ) : (
-            <span className='btn btn-primary'>
-              <FontAwesomeIcon icon={faForward} />
+            <span className='btn btn-pager square'>
+              <FontAwesomeIcon icon={faAnglesRight} size='lg' />
             </span>
           )}
         </div>
