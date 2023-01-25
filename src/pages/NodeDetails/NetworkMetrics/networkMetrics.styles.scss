@@ -17,14 +17,14 @@
       height: 0;
       border-left: 0.5rem solid transparent;
       border-right: 0.5rem solid transparent;
-      border-top: 0.5rem solid var(--body);
+      border-top: 0.5rem solid var(--text-color);
     }
     .arrow-down {
       width: 0;
       height: 0;
       border-left: 0.5rem solid transparent;
       border-right: 0.5rem solid transparent;
-      border-bottom: 0.5rem solid var(--body);
+      border-bottom: 0.5rem solid var(--text-color);
     }
 
     .rating {
