@@ -273,6 +273,9 @@ Override Bootstrap variables only above.
   position: unset;
 }
 
+.symbol {
+  max-width: 7rem;
+}
 .side-icon {
   width: 1.5rem;
   height: 1.5rem;
