@@ -71,9 +71,6 @@ export const Pager = ({
   const leftBtnActive = size !== 1;
   const rightBtnsActive = end < total;
 
-  console.log('----lastPage', lastPage);
-  console.log('----startEnd', startEnd);
-
   return show ? (
     <div className={`pager ${className}`}>
       <div className='m-0 d-flex align-items-strech'>
