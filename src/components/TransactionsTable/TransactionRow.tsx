@@ -135,7 +135,7 @@ export const TransactionRow = ({
             <span
               className={`badge badge-outline badge-rounded badge-direction ${direction.toLowerCase()}`}
             >
-              {direction.toUpperCase()}
+              {direction.toLowerCase().replace('internal', 'int').toUpperCase()}
             </span>
           </div>
         </td>

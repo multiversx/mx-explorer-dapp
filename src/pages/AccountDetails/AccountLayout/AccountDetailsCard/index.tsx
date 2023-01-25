@@ -339,7 +339,9 @@ export const AccountDetailsCard = () => {
                 <div className='card-header-item compact d-flex'>
                   <span className='text-neutral-400'>Herotag:</span>
                   <div className='d-flex align-items-center text-break-all ms-2'>
-                    <span data-testid='address'>{formatHerotag(username)}</span>
+                    <span data-testid='address' title={username}>
+                      {formatHerotag(username)}
+                    </span>
                     <CopyButton text={formatHerotag(username)} />
                   </div>
                 </div>

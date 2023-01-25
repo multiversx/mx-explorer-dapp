@@ -18,6 +18,7 @@
         display: none;
       }
     }
+
     @include media-breakpoint-up(md) {
       .side-icon {
         width: 3rem;

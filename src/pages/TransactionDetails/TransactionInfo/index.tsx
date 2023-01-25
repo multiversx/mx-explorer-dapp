@@ -384,7 +384,7 @@ export const TransactionInfo = ({
                     </DetailItem>
                     {transaction.action.category !==
                       TxActionCategoryEnum.scCall && (
-                      <DetailItem title='Transaction Action'>
+                      <DetailItem title='Transaction Action' className='lh-24'>
                         <TransactionAction transaction={transaction} />
                       </DetailItem>
                     )}
@@ -395,7 +395,7 @@ export const TransactionInfo = ({
                   <DetailItem
                     title={
                       <>
-                        <span className='me-2'>Token Operations</span>
+                        <span className='me-2 lh-24'>Token Operations</span>
                         <span className='badge badge-outline badge-outline-grey'>
                           {visibleOperations.length}
                         </span>

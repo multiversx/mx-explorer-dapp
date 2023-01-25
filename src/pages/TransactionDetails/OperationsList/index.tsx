@@ -386,7 +386,7 @@ const DetailedItem = ({
   transaction: UITransactionType;
 }) => {
   return (
-    <div className='detailed-item d-flex row mb-3 mb-xl-2'>
+    <div className='detailed-item d-flex row mb-2 mb-xl-1'>
       <OperationText operation={operation} transaction={transaction} />
       {children && (
         <div className='col d-flex align-items-center'>
@@ -438,7 +438,7 @@ export const OperationsList = ({
 
   return (
     <div className='mb-n2'>
-      <div className='operations-list d-flex flex-column'>
+      <div className='operations-list d-flex flex-column lh-24'>
         {expanded ? (
           <>
             {operations.map((operation: OperationType, index) => (
