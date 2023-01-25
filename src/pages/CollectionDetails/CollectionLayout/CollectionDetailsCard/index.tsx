@@ -54,7 +54,9 @@ export const CollectionDetailsCard = () => {
           <div className='card'>
             <div className='card-header'>
               <div className='card-header-item d-flex align-items-center'>
-                <h6 data-testid='title'>Collection Details</h6>
+                <h5 data-testid='title' className='mb-0'>
+                  Collection Details
+                </h5>
               </div>
             </div>
             <div className='card-body'>

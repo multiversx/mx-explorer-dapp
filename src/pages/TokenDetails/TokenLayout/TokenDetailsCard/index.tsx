@@ -154,7 +154,9 @@ export const TokenDetailsCard = () => {
             <div className='card'>
               <div className='card-header'>
                 <div className='card-header-item d-flex align-items-center'>
-                  <h6 data-testid='title'>Summary</h6>
+                  <h5 data-testid='title' className='mb-0'>
+                    Summary
+                  </h5>
                 </div>
               </div>
               <div className='card-body'>

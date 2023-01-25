@@ -68,7 +68,9 @@ export const Accounts = () => {
                     <>
                       <div className='card-header'>
                         <div className='card-header-item d-flex justify-content-between align-items-center'>
-                          <h6 data-testid='title'>Accounts</h6>
+                          <h5 data-testid='title' className='mb-0'>
+                            Accounts
+                          </h5>
                           <div className='d-none d-sm-flex'>
                             <Pager
                               page={String(page)}

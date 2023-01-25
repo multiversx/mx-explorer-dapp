@@ -103,8 +103,8 @@ export const Transactions = () => {
                     totalTransactions={totalTransactions}
                     size={size}
                     title={
-                      <h6 data-testid='title'>
-                        Transactions
+                      <h5 data-testid='title' className='mb-0'>
+                        Live Transactions
                         {senderShard !== undefined && (
                           <>
                             <span>&nbsp;from&nbsp;</span>
@@ -117,7 +117,7 @@ export const Transactions = () => {
                             {shardSpanText(receiverShard)}
                           </>
                         )}
-                      </h6>
+                      </h5>
                     }
                   />
                 ) : (

@@ -66,7 +66,9 @@ export const Tokens = () => {
                   <div className='card-header'>
                     <div className='card-header-item d-flex align-items-center justify-content-between'>
                       <div className='d-flex flex-wrap w-100 align-items-center justify-content-between'>
-                        <h6 data-testid='title'>Tokens</h6>
+                        <h5 data-testid='title' className='mb-0'>
+                          Tokens
+                        </h5>
                         <span>
                           {totalTokens}{' '}
                           <span className='text-neutral-400 pe-2 border-end me-2'>

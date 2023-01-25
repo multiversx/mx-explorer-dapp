@@ -101,9 +101,9 @@ export const NftDetails = () => {
                 <div className='card'>
                   <div className='card-header'>
                     <div className='card-header-item d-flex align-items-center'>
-                      <h6 data-testid='title'>
+                      <h5 data-testid='title' className='mb-0'>
                         {nftText(nftDetails.type)} Details
-                      </h6>
+                      </h5>
                     </div>
                   </div>
                   <div className='card-body'>

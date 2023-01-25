@@ -65,7 +65,9 @@ export const TokensMeta = () => {
                 <div className='card'>
                   <div className='card-header'>
                     <div className='card-header-item d-flex align-items-center justify-content-between'>
-                      <h6 data-testid='title'>Meta-ESDT</h6>
+                      <h5 data-testid='title' className='mb-0'>
+                        Meta-ESDT
+                      </h5>
                     </div>
                     <div className='card-header-item d-flex justify-content-between align-items-center'>
                       <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row'>
