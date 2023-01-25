@@ -121,19 +121,18 @@ export const Pager = ({
             }).toString();
 
             return (
-              <>
+              <React.Fragment key={`${page}-${index}`}>
                 {page !== '...' ? (
                   <NetworkLink
                     className={`btn btn-pager ${page === size ? 'active' : ''}`}
                     to={`${pathname}?${currentUrlParams}`}
-                    key={`${page}-${index}`}
                   >
                     {page}
                   </NetworkLink>
                 ) : (
-                  <span key={`${page}-${index}`}>...</span>
+                  <span>...</span>
                 )}
-              </>
+              </React.Fragment>
             );
           })}
         </div>

@@ -1,6 +1,11 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { Loader, TransactionsTable, useAdapter } from 'components';
+import {
+  Loader,
+  TransactionsTable,
+  useAdapter,
+  PulsatingLed
+} from 'components';
 
 import { shardSpanText } from 'components/ShardSpan';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
@@ -104,7 +109,11 @@ export const Transactions = () => {
                     size={size}
                     title={
                       <h5 data-testid='title' className='mb-0'>
-                        Live Transactions
+                        <div className='d-flex align-items-center'>
+                          Live Transactions
+                          <PulsatingLed className='ms-2' />
+                        </div>
+
                         {senderShard !== undefined && (
                           <>
                             <span>&nbsp;from&nbsp;</span>
