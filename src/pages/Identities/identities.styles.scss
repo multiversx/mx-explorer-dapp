@@ -16,7 +16,7 @@
     position: relative;
 
     &:hover {
-      background-color: var(--light);
+      background-color: var(--neutral-700);
       cursor: pointer;
     }
 
@@ -27,7 +27,7 @@
     }
   }
 
-  $detailsTableBgColor: var(--light);
+  $detailsTableBgColor: var(--neutral-700);
 
   .identity-details-row {
     background-color: $detailsTableBgColor;
