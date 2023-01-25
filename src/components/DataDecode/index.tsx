@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { Dropdown } from 'react-bootstrap';
 import { MAX_DECODE_TX_DATA_LENGTH } from 'appConstants';
+import { CopyButton } from 'components';
 import { addressIsBech32, bech32, isUtf8 } from 'helpers';
 import { TransactionTokensType } from 'types';
 
@@ -241,64 +242,69 @@ export const DataDecode = ({
         {displayValue}
       </div>
       {value && value !== 'N/A' && (
-        <Dropdown
-          className='position-absolute dropdown'
-          onSelect={(eventKey: any) => {
-            return eventKey ? setActiveKey(eventKey) : DecodeMethodType.raw;
-          }}
-          onToggle={(e) => {
-            setHasOverflow(e);
-          }}
-        >
-          <Dropdown.Toggle
-            variant='light'
-            size='sm'
-            className={'border text-capitalize py-1'}
-            id='decode'
+        <div className='d-flex button-holder'>
+          <CopyButton text={displayValue} className='copy-button' />
+          <Dropdown
+            className='position-absolute'
+            onSelect={(eventKey: any) => {
+              return eventKey ? setActiveKey(eventKey) : DecodeMethodType.raw;
+            }}
+            onToggle={(e) => {
+              setHasOverflow(e);
+            }}
           >
-            {activeKey.replace('/', '')}
-          </Dropdown.Toggle>
-          <Dropdown.Menu
-            style={{ marginTop: '0.35rem', marginBottom: '0.35rem' }}
-          >
-            <Dropdown.Item
-              eventKey={DecodeMethodType.raw}
-              className={`${
-                activeKey === DecodeMethodType.raw ? 'active' : ''
-              }`}
+            <Dropdown.Toggle
+              variant='dark'
+              size='sm'
+              className={
+                'text-capitalize py-1 d-flex align-items-center justify-content-between'
+              }
+              id='decode'
             >
-              Raw
-            </Dropdown.Item>
-            <Dropdown.Item
-              eventKey={DecodeMethodType.text}
-              className={`${
-                activeKey === DecodeMethodType.text ? 'active' : ''
-              }`}
+              <span className='me-2'>{activeKey.replace('/', '')}</span>
+            </Dropdown.Toggle>
+            <Dropdown.Menu
+              style={{ marginTop: '0.35rem', marginBottom: '0.35rem' }}
             >
-              Text
-            </Dropdown.Item>
-            {value.length < MAX_DECODE_TX_DATA_LENGTH && (
-              <>
-                <Dropdown.Item
-                  eventKey={DecodeMethodType.decimal}
-                  className={`${
-                    activeKey === DecodeMethodType.decimal ? 'active' : ''
-                  }`}
-                >
-                  Decimal
-                </Dropdown.Item>
-                <Dropdown.Item
-                  eventKey={DecodeMethodType.smart}
-                  className={`${
-                    activeKey === DecodeMethodType.smart ? 'active' : ''
-                  }`}
-                >
-                  Smart
-                </Dropdown.Item>
-              </>
-            )}
-          </Dropdown.Menu>
-        </Dropdown>
+              <Dropdown.Item
+                eventKey={DecodeMethodType.raw}
+                className={`${
+                  activeKey === DecodeMethodType.raw ? 'active' : ''
+                }`}
+              >
+                Raw
+              </Dropdown.Item>
+              <Dropdown.Item
+                eventKey={DecodeMethodType.text}
+                className={`${
+                  activeKey === DecodeMethodType.text ? 'active' : ''
+                }`}
+              >
+                Text
+              </Dropdown.Item>
+              {value.length < MAX_DECODE_TX_DATA_LENGTH && (
+                <>
+                  <Dropdown.Item
+                    eventKey={DecodeMethodType.decimal}
+                    className={`${
+                      activeKey === DecodeMethodType.decimal ? 'active' : ''
+                    }`}
+                  >
+                    Decimal
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    eventKey={DecodeMethodType.smart}
+                    className={`${
+                      activeKey === DecodeMethodType.smart ? 'active' : ''
+                    }`}
+                  >
+                    Smart
+                  </Dropdown.Item>
+                </>
+              )}
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
       )}
       {validationWarnings.length
         ? validationWarnings.map((warning: string, i: number) => (
