@@ -89,6 +89,7 @@
     "prefer-const": "off", // TODO - Enable once theme ready
     "@typescript-eslint/no-shadow": "off", // TODO - Enable once theme ready
     "@typescript-eslint/no-unused-vars": "off", // TODO - Enable once theme ready
+    "@typescript-eslint/ban-ts-comment": "off", // TODO - Enable once theme ready
     "react/no-array-index-key": "off"
   }
 }
