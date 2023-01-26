@@ -58,5 +58,7 @@ export * from './Adapter';
 export * from './PulsatingLed';
 export * from './MostUsed';
 export * from './TransactionIcon';
+export * from './Particles';
+export * from './ValidatorsStatus';
 
 export { Chart, NodesTable, TxActionBlock, SharedIdentity };

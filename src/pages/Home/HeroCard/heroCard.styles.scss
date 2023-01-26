@@ -1,0 +1,42 @@
+.hero-card {
+  position: relative;
+  @include media-breakpoint-up(md) {
+    min-height: 600px;
+  }
+  .particles {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  .main-search {
+    .form-control,
+    .input-group-text {
+      background-color: var(--neutral-900);
+    }
+  }
+  .card {
+    background-color: var(--neutral-900);
+    display: flex;
+    flex-basis: 20%;
+    .card-value {
+      color: var(--primary-200);
+      margin-bottom: 0.5rem;
+    }
+    &.validator-status {
+      flex-basis: 25%;
+    }
+  }
+
+  .simple-map {
+    text-align: right;
+    padding-right: 0.5rem;
+    max-height: 136px;
+    .rsm-svg {
+      width: 80%;
+      height: auto;
+    }
+  }
+}

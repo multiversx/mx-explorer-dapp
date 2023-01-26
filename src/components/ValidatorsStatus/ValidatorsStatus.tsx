@@ -32,7 +32,11 @@ const placeHolderRank = [
   }
 ];
 
-export const ValidatorsStatus = () => {
+export const ValidatorsStatus = ({
+  isSmall = false
+}: {
+  isSmall?: boolean;
+}) => {
   const [markers, setMarkers] = React.useState<MarkerType[]>([]);
   const [continentsRank, setContinentsRank] =
     React.useState<RankType[]>(placeHolderRank);
@@ -75,17 +79,8 @@ export const ValidatorsStatus = () => {
   React.useEffect(fetchMarkers, []);
 
   return (
-    <div className='card' ref={ref}>
-      <div className='card-header'>
-        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
-          <h5 className='mb-0 d-flex align-items-center'>Validators Status</h5>
-          <div>
-            {totalNodes.toLocaleString('en')} Active /{' '}
-            {queuedNodes.toLocaleString('en')} Queue
-          </div>
-        </div>
-      </div>
-      <div className='card-body bg-black p-0 overflow-hidden'>
+    <div className='card validator-status' ref={ref}>
+      <div className='card-body p-0 overflow-hidden'>
         <div className='container-fluid'>
           <div className='row'>
             <div className='col-12 ps-0 pe-0'>
@@ -96,32 +91,34 @@ export const ValidatorsStatus = () => {
           </div>
         </div>
       </div>
-      <div className='card-footer py-0'>
-        <div className='container'>
-          {continentsRank.map(({ continent, nodes, percentage }, i) => (
-            <div
-              key={i}
-              className={`row py-2 ${
-                i + 1 < continentsRank.length ? 'border-bottom' : ''
-              }`}
-            >
-              <div className='col ps-0 d-flex align-items-center continent-name'>
-                {i + 1}. {continent}
+      {!isSmall && (
+        <div className='card-footer py-0'>
+          <div className='container'>
+            {continentsRank.map(({ continent, nodes, percentage }, i) => (
+              <div
+                key={i}
+                className={`row py-2 ${
+                  i + 1 < continentsRank.length ? 'border-bottom' : ''
+                }`}
+              >
+                <div className='col ps-0 d-flex align-items-center continent-name'>
+                  {i + 1}. {continent}
+                </div>
+                <div className='col d-flex align-items-center text-neutral-400 justify-content-end'>
+                  {nodes > 0
+                    ? `${nodes.toLocaleString('en')} node${
+                        nodes === 1 ? '' : 's'
+                      }`
+                    : '...'}
+                </div>
+                <div className='col pe-0 d-flex align-items-center text-neutral-400 justify-content-end'>
+                  {percentage > 0 ? `${percentage}%` : '...'}
+                </div>
               </div>
-              <div className='col d-flex align-items-center text-neutral-400 justify-content-end'>
-                {nodes > 0
-                  ? `${nodes.toLocaleString('en')} node${
-                      nodes === 1 ? '' : 's'
-                    }`
-                  : '...'}
-              </div>
-              <div className='col pe-0 d-flex align-items-center text-neutral-400 justify-content-end'>
-                {percentage > 0 ? `${percentage}%` : '...'}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
