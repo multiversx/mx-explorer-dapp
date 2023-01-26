@@ -328,6 +328,11 @@
       border-top-right-radius: 0.5rem;
     }
   }
+  tr:last-of-type {
+    td {
+      border-bottom: 0;
+    }
+  }
 }
 
 .card {

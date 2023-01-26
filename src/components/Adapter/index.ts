@@ -611,6 +611,9 @@ export const useAdapter = () => {
     getAnalyticsChartList: () =>
       provider({ baseUrl: growthApi, url: '/explorer/analytics' }),
 
-    getAnalyticsChart: (url: string) => provider({ baseUrl: growthApi, url })
+    getAnalyticsChart: (url: string) => provider({ baseUrl: growthApi, url }),
+
+    getGrowthWidget: (url: string) =>
+      provider({ baseUrl: `${growthApi}/explorer/widgets`, url })
   };
 };

@@ -70,5 +70,8 @@ export const elasticAdapter = {
   },
   getAnalyticsChart: () => {
     throw new Error('not defined');
+  },
+  getGrowthWidget: () => {
+    throw new Error('not defined');
   }
 };

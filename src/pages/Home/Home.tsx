@@ -10,14 +10,17 @@ import { StakingChart } from './StakingChart';
 import { TransactionsChart } from './TransactionsChart';
 import { ValidatorsStatus } from './ValidatorsStatus';
 
+import { MostUsed } from './components/MostUsed';
+
 export const Home = () => {
   const isMainnet = useIsMainnet();
 
   return (
     <div className='home page-content container'>
-      {/* {isMainnet ? (
+      {isMainnet ? (
         <>
-          <div className='row'>
+          <MostUsed />
+          {/* <div className='row'>
             <div className='col-12 mx-auto col-lg-6'>
               <NetworkHealth />
             </div>
@@ -39,11 +42,12 @@ export const Home = () => {
             <div className='col-12 col-lg-6 mt-spacer'>
               <AccountsChart />
             </div>
-          </div>
+          </div> */}
         </>
       ) : (
-        <TestnetGlobalStatsCard />
-      )} */}
+        // <TestnetGlobalStatsCard />
+        <></>
+      )}
 
       <div className='row'>
         <div className='col-12 mt-spacer'>
