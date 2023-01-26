@@ -56,5 +56,6 @@ export * from './UsdValue';
 export * from './Filters';
 export * from './Adapter';
 export * from './PulsatingLed';
+export * from './MostUsed';
 
 export { Chart, NodesTable, TxActionBlock, SharedIdentity };
