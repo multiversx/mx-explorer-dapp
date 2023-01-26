@@ -89,7 +89,7 @@ export const Nodes = () => {
               />
             </NodesTable>
           </div>
-          <div className='card-footer px-1 px-sm-spacer d-flex justify-content-center justify-content-sm-end'>
+          <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
             <Pager
               itemsPerPage={25}
               page={String(size)}

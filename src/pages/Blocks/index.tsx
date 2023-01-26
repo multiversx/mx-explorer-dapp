@@ -114,7 +114,7 @@ export const Blocks = () => {
                         />
                       </div>
 
-                      <div className='card-footer px-1 px-sm-spacer d-flex justify-content-center justify-content-sm-end'>
+                      <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
                         <Pager
                           page={String(page)}
                           total={
