@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavDropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { Led } from 'components';
 import { links, networks } from 'config';
 import { networksSelector } from 'redux/selectors';
 import { changeNetwork } from 'redux/slices';
@@ -43,13 +44,15 @@ export const NetworkSwitcher = ({ onToggle }: { onToggle?: () => void }) => {
     <NavDropdown
       title={
         <div
-          className='nav-link-icon flex-fill pe-0 ps-lg-1 ms-lg-2'
+          className='nav-link-icon d-flex flex-fill align-items-center px-lg-2'
           data-testid='networkSwitch'
         >
-          {activeNetwork.name}
+          <Led color='bg-primary d-flex' />
+          <span className='ps-lg-2 pe-2'>{activeNetwork.name}</span>
           <FontAwesomeIcon className='d-inline-block ms-1' icon={faAngleDown} />
         </div>
       }
+      className='nav-dropdown'
       id='network-switcher-dropdown'
     >
       {links.length > 0
