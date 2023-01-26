@@ -338,7 +338,9 @@
 .card {
   .card-header + .card-body {
     padding-top: 0 !important;
-    padding-bottom: 0 !important;
+  }
+  .card-body + .card-footer {
+    padding-top: 0 !important;
   }
   @include media-breakpoint-down(md) {
     .card-header,
