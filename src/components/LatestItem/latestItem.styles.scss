@@ -1,13 +1,5 @@
-@mixin left-bar($color) {
-  border-left: 0.5rem solid rgba($color, 0.3) !important;
-}
-
 .latest-items-container {
   $itemMaxWidth: 20.5rem;
-
-  @extend .m-3;
-  @extend .my-lg-4;
-  @extend .mx-lg-spacer !optional;
 
   display: flex;
   position: relative;
@@ -23,8 +15,8 @@
     z-index: 999;
     background: linear-gradient(
       90deg,
-      rgba(var(--card-bg), 0.3) 30%,
-      rgba(var(--card-bg), 0.7) 50%
+      rgba(var(--black-rgb), 0.3) 30%,
+      rgba(var(--black-rgb), 0.7) 50%
     );
   }
 
@@ -46,32 +38,62 @@
     }
 
     .latest-item-card {
-      @extend .p-3;
-      @include left-bar(var(--primary));
-
+      position: relative;
       max-width: $itemMaxWidth;
       display: flex;
       flex-direction: column;
-      border-radius: 0.3rem;
-      border: 1px solid var(--border-color);
+      background-color: var(--neutral-900);
+      border-radius: 1rem;
 
+      &:before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 1rem;
+        padding: 1px;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+        background: linear-gradient(
+          90deg,
+          rgba(35, 247, 221, 1) 0%,
+          transparent 75%
+        );
+      }
       &.status-text-success {
-        @include left-bar(var(--success));
+        &:before {
+          background: linear-gradient(
+            90deg,
+            rgba(74, 222, 128, 1) 0%,
+            transparent 75%
+          );
+        }
       }
-
       &.status-text-warning {
-        @include left-bar(var(--watning));
+        &:before {
+          background: linear-gradient(
+            90deg,
+            rgba(251, 191, 36, 1) 0%,
+            transparent 75%
+          );
+        }
       }
-
       &.status-text-danger {
-        @include left-bar(var(--danger));
+        &:before {
+          background: linear-gradient(
+            90deg,
+            rgba(248, 113, 113, 1) 0%,
+            transparent 75%
+          );
+        }
       }
 
       .latest-item-icon {
         display: flex;
         align-items: center;
         justify-content: center;
-
         border-radius: 50%;
         font-size: 0.9375rem;
         text-align: center;
@@ -83,9 +105,8 @@
         box-shadow: inset 0 0 3px rgba(var(--neutral-400), 0.2);
         flex-shrink: 0;
       }
-
       .transaction-value {
-        width: 8.5rem;
+        width: 10.5rem;
       }
     }
   }
