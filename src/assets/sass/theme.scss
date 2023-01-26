@@ -242,6 +242,9 @@ Override Bootstrap variables only above.
 }
 
 .table-card-header {
+  .filters {
+    margin-bottom: 2rem;
+  }
   .table-title {
     margin-bottom: 2rem;
   }

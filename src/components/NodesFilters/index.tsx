@@ -85,10 +85,10 @@ export const NodesFilters = ({
           <li className='list-inline-item my-1 my-md-0'>
             <NetworkLink
               to={baseRoute}
-              className={`btn btn-sm btn-outline-primary btn-pill ${
+              className={`badge py-2 px-3 br-lg ${
                 [search, status, issues, type].every((el) => el === undefined)
-                  ? 'active'
-                  : ''
+                  ? 'badge-grey'
+                  : 'badge-outline badge-outline-grey'
               }`}
             >
               All
@@ -97,8 +97,10 @@ export const NodesFilters = ({
           <li className='list-inline-item my-1 my-md-0'>
             <NetworkLink
               to={nodeTypeLink('validator')}
-              className={`btn btn-sm btn-outline-primary btn-pill ${
-                type === 'validator' && issues !== 'true' ? 'active' : ''
+              className={`badge py-2 px-3 br-lg ${
+                type === 'validator' && issues !== 'true'
+                  ? 'badge-grey'
+                  : 'badge-outline badge-outline-grey'
               }`}
             >
               Validators
@@ -108,8 +110,10 @@ export const NodesFilters = ({
             <NetworkLink
               to={nodeTypeLink('observer')}
               data-testid='filterByObservers'
-              className={`btn btn-sm btn-outline-primary btn-pill ${
-                type === 'observer' ? 'active' : ''
+              className={`badge py-2 px-3 br-lg ${
+                type === 'observer'
+                  ? 'badge-grey'
+                  : 'badge-outline badge-outline-grey'
               }`}
             >
               Observers
@@ -119,8 +123,8 @@ export const NodesFilters = ({
             <NetworkLink
               to={fullHistoryLink('true')}
               data-testid='filterByFullHistory'
-              className={`btn btn-sm btn-outline-primary btn-pill ${
-                fullHistory ? 'active' : ''
+              className={`badge py-2 px-3 br-lg ${
+                fullHistory ? 'badge-grey' : 'badge-outline badge-outline-grey'
               }`}
             >
               Full History
@@ -129,8 +133,10 @@ export const NodesFilters = ({
           <li className='list-inline-item my-1 my-md-0'>
             <NetworkLink
               to={issuesLink('true')}
-              className={`btn btn-sm btn-outline-primary btn-pill ${
-                issues === 'true' ? 'active' : ''
+              className={`badge py-2 px-3 br-lg ${
+                issues === 'true'
+                  ? 'badge-grey'
+                  : 'badge-outline badge-outline-grey'
               }`}
             >
               Issues
@@ -139,9 +145,9 @@ export const NodesFilters = ({
           <li className='list-inline-item my-1 my-md-0'>
             <Dropdown className='position-unset'>
               <Dropdown.Toggle
-                variant='outline-primary'
+                variant='outline-dark'
                 size='sm'
-                className={`btn-pill me-2 ${
+                className={`badge-outline badge-outline-grey py-2 px-3 br-lg me-2 ${
                   [
                     'eligible',
                     'waiting',
@@ -233,10 +239,10 @@ export const NodesFilters = ({
 
       <div className='my-1 my-md-0'>
         <div role='search'>
-          <div className='input-group input-group-seamless'>
+          <div className='input-group input-group-sm input-group-seamless'>
             <input
               type='text'
-              className='form-control rounded-pill'
+              className='form-control'
               value={inputValue || ''}
               onChange={changeValidatorValue}
               onKeyDown={(keyEvent: React.KeyboardEvent) => {
@@ -248,27 +254,23 @@ export const NodesFilters = ({
               name='validatorSearch'
               data-testid='validatorSearch'
             />
-            <div className='input-group-append'>
-              {inputValue ? (
-                <button
-                  type='reset'
-                  className='input-group-text side-action'
-                  onClick={() => {
-                    updateSearchValue('');
-                  }}
-                  data-testid='resetSearch'
-                >
-                  <FontAwesomeIcon icon={faTimes} />
-                </button>
-              ) : (
-                <button
-                  type='submit'
-                  className='input-group-text side-action outline-0'
-                >
-                  <FontAwesomeIcon icon={faSearch} />
-                </button>
-              )}
-            </div>
+
+            {inputValue ? (
+              <button
+                type='reset'
+                className='input-group-text'
+                onClick={() => {
+                  updateSearchValue('');
+                }}
+                data-testid='resetSearch'
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
+            ) : (
+              <button type='submit' className='input-group-text'>
+                <FontAwesomeIcon icon={faSearch} />
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -50,6 +50,8 @@ $container-max-widths: (
   xxl: 1272px
 );
 
+$border-radius: 8px;
+
 // GRID
 $grid-gutter-width: 1rem;
 
@@ -149,9 +151,9 @@ $input-border-color: $gray-400;
 $input-border-width: $input-btn-border-width;
 $input-box-shadow: $box-shadow-inset;
 
-$input-border-radius: 1rem;
-$input-border-radius-sm: $border-radius-sm;
-$input-border-radius-lg: $border-radius-lg;
+$input-border-radius: $btn-border-radius;
+$input-border-radius-sm: $btn-border-radius-sm;
+$input-border-radius-lg: $btn-border-radius-lg;
 
 $input-placeholder-color: $gray-600;
 $input-plaintext-color: $body-color;

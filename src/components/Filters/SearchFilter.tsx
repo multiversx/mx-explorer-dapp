@@ -69,7 +69,7 @@ export const SearchFilter = ({
   return (
     <div role='search' className={className}>
       <div
-        className={`input-group input-group-seamless ${
+        className={`input-group input-group-sm input-group-seamless ${
           validation ? 'has-validation' : ''
         }`}
       >
@@ -87,7 +87,7 @@ export const SearchFilter = ({
           name={name}
           data-testid={name}
         />
-        <div className='input-group-append'>
+        <>
           {inputValue && (
             <>
               <button
@@ -105,14 +105,14 @@ export const SearchFilter = ({
           )}
           <button
             type='submit'
-            className='input-group-text outline-0'
+            className='input-group-text'
             onClick={() => {
               updateSearchValue(inputValue);
             }}
           >
             <FontAwesomeIcon icon={faSearch} />
           </button>
-        </div>
+        </>
         {errorText && (
           <div className='invalid-feedback d-block'>{errorText}</div>
         )}

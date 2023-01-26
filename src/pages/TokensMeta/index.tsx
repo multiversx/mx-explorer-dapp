@@ -64,7 +64,7 @@ export const TokensMeta = () => {
               <div className='col-12'>
                 <div className='card'>
                   <div className='card-header'>
-                    <div className='card-header-item d-flex align-items-center justify-content-between'>
+                    <div className='card-header-item d-flex align-items-center justify-content-between mb-spacer'>
                       <h5
                         data-testid='title'
                         className='table-title d-flex align-items-center'
@@ -78,18 +78,20 @@ export const TokensMeta = () => {
                           <li className='list-inline-item my-1 my-md-0'>
                             <NetworkLink
                               to={tokensRoutes.tokens}
-                              className={`btn btn-sm btn-outline-light btn-pill me-2 ${
-                                activeRoute(tokensRoutes.tokens) ? 'active' : ''
+                              className={`badge py-2 px-3 me-2 br-lg ${
+                                activeRoute(tokensRoutes.tokens)
+                                  ? 'badge-grey'
+                                  : 'badge-outline badge-outline-grey'
                               }`}
                             >
                               Tokens
                             </NetworkLink>
                             <NetworkLink
                               to={tokensRoutes.tokensMeta}
-                              className={`btn btn-sm btn-outline-light btn-pill me-2 ${
+                              className={`badge py-2 px-3 me-2 br-lg ${
                                 activeRoute(tokensRoutes.tokensMeta)
-                                  ? 'active'
-                                  : ''
+                                  ? 'badge-grey'
+                                  : 'badge-outline badge-outline-grey'
                               }`}
                             >
                               Meta-ESDT
