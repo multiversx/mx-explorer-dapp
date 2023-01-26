@@ -2,15 +2,17 @@ import * as React from 'react';
 import { MostUsed } from 'components';
 import { useIsMainnet } from 'helpers';
 
-import { TestnetGlobalStatsCard } from 'pages/Layout/TestnetGlobalStatsCard';
-import { AccountsChart } from './AccountsChart';
+import { HeroCard } from './HeroCard';
 import { LatestBlocks } from './LatestBlocks';
 import { LatestTransactions } from './LatestTransactions';
-import { NetworkHealth } from './NetworkHealth';
-import { PriceChart } from './PriceChart';
-import { StakingChart } from './StakingChart';
-import { TransactionsChart } from './TransactionsChart';
-import { ValidatorsStatus } from './ValidatorsStatus';
+
+// import { TestnetGlobalStatsCard } from 'pages/Layout/TestnetGlobalStatsCard';
+// import { AccountsChart } from './AccountsChart';
+// import { NetworkHealth } from './NetworkHealth';
+// import { PriceChart } from './PriceChart';
+// import { StakingChart } from './StakingChart';
+// import { TransactionsChart } from './TransactionsChart';
+// import { ValidatorsStatus } from './ValidatorsStatus';
 
 export const Home = () => {
   const isMainnet = useIsMainnet();
@@ -19,6 +21,7 @@ export const Home = () => {
     <div className='home page-content container'>
       {isMainnet ? (
         <>
+          <HeroCard />
           <MostUsed />
           {/* <div className='row'>
             <div className='col-12 mx-auto col-lg-6'>

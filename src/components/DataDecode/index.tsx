@@ -2,7 +2,7 @@ import * as React from 'react';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
-import { Dropdown } from 'react-bootstrap';
+import { Anchor, Dropdown } from 'react-bootstrap';
 import { MAX_DECODE_TX_DATA_LENGTH } from 'appConstants';
 import { CopyButton } from 'components';
 import { addressIsBech32, bech32, isUtf8 } from 'helpers';
@@ -267,6 +267,7 @@ export const DataDecode = ({
               style={{ marginTop: '0.35rem', marginBottom: '0.35rem' }}
             >
               <Dropdown.Item
+                as={Anchor} // This is needed due to issues between threejs, react-bootstrap and typescript, what a time to be alive: https://github.com/react-bootstrap/react-bootstrap/issues/6283
                 eventKey={DecodeMethodType.raw}
                 className={`${
                   activeKey === DecodeMethodType.raw ? 'active' : ''
@@ -275,6 +276,7 @@ export const DataDecode = ({
                 Raw
               </Dropdown.Item>
               <Dropdown.Item
+                as={Anchor}
                 eventKey={DecodeMethodType.text}
                 className={`${
                   activeKey === DecodeMethodType.text ? 'active' : ''
@@ -285,6 +287,7 @@ export const DataDecode = ({
               {value.length < MAX_DECODE_TX_DATA_LENGTH && (
                 <>
                   <Dropdown.Item
+                    as={Anchor}
                     eventKey={DecodeMethodType.decimal}
                     className={`${
                       activeKey === DecodeMethodType.decimal ? 'active' : ''
@@ -293,6 +296,7 @@ export const DataDecode = ({
                     Decimal
                   </Dropdown.Item>
                   <Dropdown.Item
+                    as={Anchor}
                     eventKey={DecodeMethodType.smart}
                     className={`${
                       activeKey === DecodeMethodType.smart ? 'active' : ''
