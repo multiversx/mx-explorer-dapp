@@ -31,22 +31,21 @@ export const Navbar = () => {
 
   return (
     <>
-      <div className='main-navbar sticky-top'>
-        <div className='container'>
-          <Nav className='align-items-stretch flex-nowrap p-0 navbar'>
-            <div className='d-flex align-items-center'>
-              <Logo />
-            </div>
-            <div className='nav-links d-none d-lg-flex flex-fill justify-content-around'>
+      <div className='sticky-top container h-10'>
+        <Nav className='main-navbar navbar align-items-stretch flex-nowrap p-0 w-100'>
+          <div className='d-flex align-items-center'>
+            <Logo />
+          </div>
+          <div className='d-flex align-items-center'>
+            <div className='nav-links d-none d-lg-flex justify-content-end'>
               <NavLinks />
             </div>
             <div>
-              <ul className='flex-row navbar-nav'>
-                <li className='nav-item d-none d-lg-flex'>
+              <ul className='flex-row navbar-nav ms-3'>
+                <li className='d-none d-lg-flex'>
                   <AppSwitcher />
                 </li>
-
-                <li className='nav-item d-none d-lg-flex align-items-strech'>
+                <li className='d-none d-lg-flex align-items-strech'>
                   <NetworkSwitcher />
                 </li>
               </ul>
@@ -67,8 +66,8 @@ export const Navbar = () => {
                 </a>
               </div>
             </div>
-          </Nav>
-        </div>
+          </div>
+        </Nav>
       </div>
 
       <div className='header-navbar d-lg-none p-0'>
