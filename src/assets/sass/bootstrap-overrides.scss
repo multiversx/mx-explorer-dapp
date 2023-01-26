@@ -6,9 +6,12 @@
 
 .card {
   --card-cap-bg: transparent;
-  --card-cap-color: var(--neutral-100);
-  --card-color: var(--neutral-100);
+  --card-cap-color: var(--body-color);
+  --card-color: var(--body-color);
   --card-bg: rgba(0, 0, 0, 0.2);
+  &.card-black {
+    --card-bg: var(--black);
+  }
 }
 
 .btn-primary {

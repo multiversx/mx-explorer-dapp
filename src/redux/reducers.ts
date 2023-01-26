@@ -8,6 +8,7 @@ import { accountStakingReducer } from './slices/accountStaking';
 import { collectionReducer } from './slices/collection';
 import { economicsReducer } from './slices/economics';
 import { globalStakeReducer } from './slices/globalStake';
+import { growthMostUsedReducer } from './slices/growthMostUsed';
 import { interfaceReducer } from './slices/interface';
 import { networkReducer } from './slices/networks';
 import { refreshReducer } from './slices/refresh';
@@ -72,6 +73,7 @@ export const rootReducer = combineReducers({
   collection: collectionReducer,
   economics: economicsReducer,
   globalStake: globalStakeReducer,
+  growthMostUsed: growthMostUsedReducer,
   refresh: refreshReducer,
   stats: statsReducer,
   token: tokenReducer

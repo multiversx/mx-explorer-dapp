@@ -16,10 +16,10 @@ export interface ScamInfoType {
 
 export interface AssetType {
   name: string;
-  description: string;
-  tags: string[];
-  iconPng: string;
-  iconSvg: string;
+  description?: string;
+  tags?: string[];
+  iconPng?: string;
+  iconSvg?: string;
 }
 
 export enum TokenSortEnum {
