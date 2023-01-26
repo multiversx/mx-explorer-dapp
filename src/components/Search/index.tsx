@@ -227,33 +227,6 @@ export const Search = ({ setExpanded = () => null }: SearchType) => {
           )}
         </button>
       </div>
-      {/* 
-      <div className='input-group input-group-seamless'>
-
-        <div className='input-group-append'>
-          <button
-            type='submit'
-            className='input-group-text outline-0 m-0 p-0'
-            onClick={(e) => {
-              e.preventDefault();
-              onClick();
-            }}
-            data-testid='searchButton'
-          >
-            <div className='my-1 py-1 px-3 px-lg-4 border-start'>
-              {searching ? (
-                <FontAwesomeIcon
-                  icon={faCircleNotch}
-                  spin
-                  className='me-1 text-primary'
-                />
-              ) : (
-                <FontAwesomeIcon icon={faSearch} className='me-1 text-' />
-              )}
-            </div>
-          </button>
-        </div>
-      </div> */}
     </form>
   );
 };

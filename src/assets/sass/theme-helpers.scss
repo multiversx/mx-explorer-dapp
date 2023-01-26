@@ -92,9 +92,16 @@
 
 // BADGES
 
+.badge {
+  &:hover {
+    color: inherit;
+  }
+}
+
 .badge-green-alt,
 .badge-yellow,
-.badge-orange {
+.badge-orange,
+.badge-grey {
   line-height: 1rem;
   color: #fafafa; // TODO theme-color neutral/50
   min-width: 1.5rem;
@@ -119,6 +126,14 @@
     90deg,
     rgba(240, 77, 25, 0.2) 0%,
     rgba(237, 136, 93, 0.2) 100%
+  );
+}
+.badge-grey {
+  color: var(--neutral-400);
+  background: linear-gradient(
+    90deg,
+    rgba(117, 127, 154, 0.3),
+    rgba(215, 221, 232, 0.3)
   );
 }
 
@@ -326,5 +341,36 @@
     .card-footer {
       padding: 1.5rem 1rem;
     }
+  }
+}
+
+.br-sm {
+  border-radius: 0.25rem;
+  &.badge-outline:before {
+    border-radius: 0.25rem;
+  }
+}
+.br-md {
+  border-radius: 0.375rem;
+  &.badge-outline:before {
+    border-radius: 0.375rem;
+  }
+}
+.br-lg {
+  border-radius: 0.5rem;
+  &.badge-outline:before {
+    border-radius: 0.5rem;
+  }
+}
+.br-xl {
+  border-radius: $font-size-base;
+  &.badge-outline:before {
+    border-radius: $font-size-base;
+  }
+}
+.br-xxl {
+  border-radius: $font-size-root;
+  &.badge-outline:before {
+    border-radius: $font-size-root;
   }
 }

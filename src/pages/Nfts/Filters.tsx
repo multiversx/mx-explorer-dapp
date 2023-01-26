@@ -31,10 +31,10 @@ export const Filters = () => {
     <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row'>
       <div className='my-1 my-md-0'>
         <div role='search'>
-          <div className='input-group input-group-seamless'>
+          <div className='input-group input-group-sm input-group-seamless'>
             <input
               type='text'
-              className='form-control rounded-pill'
+              className='form-control'
               value={inputValue || ''}
               onChange={changeValidatorValue}
               onKeyDown={(keyEvent: React.KeyboardEvent) => {
@@ -46,27 +46,23 @@ export const Filters = () => {
               name='nftsSearch'
               data-testid='nftsSearch'
             />
-            <div className='input-group-append'>
-              {inputValue ? (
-                <button
-                  type='reset'
-                  className='input-group-text side-action'
-                  onClick={() => {
-                    updateSearchValue('');
-                  }}
-                  data-testid='resetSearch'
-                >
-                  <FontAwesomeIcon icon={faTimes} />
-                </button>
-              ) : (
-                <button
-                  type='submit'
-                  className='input-group-text side-action outline-0'
-                >
-                  <FontAwesomeIcon icon={faSearch} />
-                </button>
-              )}
-            </div>
+
+            {inputValue ? (
+              <button
+                type='reset'
+                className='input-group-text '
+                onClick={() => {
+                  updateSearchValue('');
+                }}
+                data-testid='resetSearch'
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
+            ) : (
+              <button type='submit' className='input-group-text'>
+                <FontAwesomeIcon icon={faSearch} />
+              </button>
+            )}
           </div>
         </div>
       </div>

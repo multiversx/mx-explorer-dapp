@@ -8,7 +8,7 @@ export const NodesTabs = () => {
   const activeRoute = useActiveRoute();
 
   return (
-    <div className='nodes-tabs card-header-item'>
+    <div className='card-header-item nodes-tabs mb-spacer'>
       <div className='tab-links d-flex flex-wrap'>
         {isMainnet && (
           <NetworkLink

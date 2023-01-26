@@ -86,30 +86,30 @@ export const Collections = () => {
                           <li className='list-inline-item my-1 my-md-0'>
                             <NetworkLink
                               to={collectionRoutes.collections}
-                              className={`btn btn-sm btn-outline-light btn-pill me-2 ${
+                              className={`badge py-2 px-3 me-2 br-lg ${
                                 activeRoute(collectionRoutes.collections)
-                                  ? 'active'
-                                  : ''
+                                  ? 'badge-grey'
+                                  : 'badge-outline badge-outline-grey'
                               }`}
                             >
                               All
                             </NetworkLink>
                             <NetworkLink
                               to={collectionRoutes.collectionsNft}
-                              className={`btn btn-sm btn-outline-light btn-pill me-2 ${
+                              className={`badge py-2 px-3 me-2 br-lg ${
                                 activeRoute(collectionRoutes.collectionsNft)
-                                  ? 'active'
-                                  : ''
+                                  ? 'badge-yellow'
+                                  : 'badge-outline badge-outline-yellow'
                               }`}
                             >
                               NFT
                             </NetworkLink>
                             <NetworkLink
                               to={collectionRoutes.collectionsSft}
-                              className={`btn btn-sm btn-outline-light btn-pill me-2 ${
+                              className={`badge py-2 px-3 me-2 br-lg ${
                                 activeRoute(collectionRoutes.collectionsSft)
-                                  ? 'active'
-                                  : ''
+                                  ? 'badge-orange'
+                                  : 'badge-outline badge-outline-orange'
                               }`}
                             >
                               SFT

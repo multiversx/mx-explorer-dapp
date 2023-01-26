@@ -1,17 +1,7 @@
 // TEMPORARY - css overrides - TODO - move to bootstrap
 
 html {
-  font-weight: 500;
   font-variant-numeric: tabular-nums;
-
-  // Adjust font sizes for 144dpi+ (including retina).
-  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
-    font-weight: 400;
-  }
-}
-
-body {
-  font-weight: 500;
 }
 
 dt {
