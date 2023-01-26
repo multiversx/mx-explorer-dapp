@@ -69,14 +69,6 @@ export const TransactionIcon = ({
     icon = faCheck;
   }
 
-  const TxIcon = () => (
-    <FontAwesomeIcon
-      icon={icon as IconProp}
-      size={(icon as IconProp) === faTimes ? '1x' : 'sm'}
-      className={`me-1 tx-status ${transaction.status.toLowerCase()}`}
-    />
-  );
-
   return icon === undefined ? null : (
     <>
       <OverlayTrigger
@@ -120,12 +112,18 @@ export const TransactionIcon = ({
       >
         {withBadge ? (
           <div className={`tx-badge ${transaction.status.toLowerCase()}`}>
-            <TxIcon />
+            <FontAwesomeIcon
+              icon={icon as IconProp}
+              size={(icon as IconProp) === faTimes ? '1x' : 'sm'}
+              className={`me-1 tx-status ${transaction.status.toLowerCase()}`}
+            />
           </div>
         ) : (
-          <>
-            <TxIcon />
-          </>
+          <FontAwesomeIcon
+            icon={icon as IconProp}
+            size={(icon as IconProp) === faTimes ? '1x' : 'sm'}
+            className={`me-1 tx-status ${transaction.status.toLowerCase()}`}
+          />
         )}
       </OverlayTrigger>
     </>
