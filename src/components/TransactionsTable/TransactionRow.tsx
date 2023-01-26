@@ -8,11 +8,12 @@ import {
   TimeAgo,
   Trim,
   LockedTokenAddressIcon,
-  AccountName
+  AccountName,
+  TransactionIcon
 } from 'components';
 import { addressIsBech32, urlBuilder, getReceiverAssets } from 'helpers';
 import { UITransactionType, TransferTypeEnum } from 'types';
-import { TransactionIcon } from './TransactionIcon';
+
 import { TransactionMethod } from './TransactionMethod';
 import { TransactionValue } from './TransactionValue';
 

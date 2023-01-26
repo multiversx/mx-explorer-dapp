@@ -57,5 +57,6 @@ export * from './Filters';
 export * from './Adapter';
 export * from './PulsatingLed';
 export * from './MostUsed';
+export * from './TransactionIcon';
 
 export { Chart, NodesTable, TxActionBlock, SharedIdentity };
