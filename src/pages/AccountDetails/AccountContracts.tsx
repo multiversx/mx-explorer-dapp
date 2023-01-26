@@ -151,7 +151,7 @@ export const AccountContracts = () => {
         )}
       </div>
       {dataReady === true && accountContracts.length > 0 && (
-        <div className='card-footer px-1 px-sm-spacer d-flex justify-content-center justify-content-sm-end'>
+        <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
           <Pager
             itemsPerPage={25}
             page={String(size)}

@@ -332,14 +332,35 @@
 
 .card {
   .card-header + .card-body {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
   }
   @include media-breakpoint-down(md) {
     .card-header,
     .card-body,
     .card-footer {
       padding: 1.5rem 1rem;
+    }
+  }
+  &.card-sm {
+    .card-header,
+    .card-body,
+    .card-footer {
+      padding: 1rem;
+    }
+  }
+  &.card-lg {
+    .card-header,
+    .card-body,
+    .card-footer {
+      padding: 2rem;
+      @include media-breakpoint-down(md) {
+        .card-header,
+        .card-body,
+        .card-footer {
+          padding: 1.5rem 1rem;
+        }
+      }
     }
   }
 }
