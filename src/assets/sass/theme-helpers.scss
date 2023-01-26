@@ -281,6 +281,7 @@
 }
 .tx-badge,
 .tx-status {
+  cursor: context-menu;
   &.pending {
     color: var(--yellow);
   }
