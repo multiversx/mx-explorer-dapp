@@ -1,5 +1,7 @@
 import React from 'react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
+import { faCheck } from '@fortawesome/pro-regular-svg-icons/faCheck';
 import { faHourglass } from '@fortawesome/pro-regular-svg-icons/faHourglass';
 import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons/faSpinnerThird';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
@@ -9,11 +11,18 @@ import { useAdapter } from 'components';
 import { capitalizeFirstLetter, getTransactionMessages } from 'helpers';
 import { UITransactionType, TransactionType } from 'types';
 import { txStatus } from '../TransactionStatus/txStatus';
+
 interface TransactionIconType {
   transaction: UITransactionType;
+  showSuccess?: boolean;
+  withBadge?: boolean;
 }
 
-export const TransactionIcon = ({ transaction }: TransactionIconType) => {
+export const TransactionIcon = ({
+  transaction,
+  showSuccess = false,
+  withBadge = false
+}: TransactionIconType) => {
   const { getTransaction } = useAdapter();
 
   const [transactionMessages, setTransactionMessages] =
@@ -26,6 +35,7 @@ export const TransactionIcon = ({ transaction }: TransactionIconType) => {
   const statusIs = (compareTo: string) =>
     transaction.status.toLowerCase() === compareTo.toLowerCase();
 
+  const success = statusIs(txStatus.success);
   const failed = statusIs(txStatus.failed) || statusIs(txStatus.fail);
   const invalid = statusIs(txStatus.notExecuted) || statusIs(txStatus.invalid);
   const pending = statusIs(txStatus.pending);
@@ -44,7 +54,7 @@ export const TransactionIcon = ({ transaction }: TransactionIconType) => {
     }
   };
 
-  let icon;
+  let icon: any;
 
   if (failed) {
     icon = faTimes;
@@ -55,6 +65,17 @@ export const TransactionIcon = ({ transaction }: TransactionIconType) => {
   if (pending) {
     icon = faHourglass;
   }
+  if (showSuccess && success) {
+    icon = faCheck;
+  }
+
+  const TxIcon = () => (
+    <FontAwesomeIcon
+      icon={icon as IconProp}
+      size={(icon as IconProp) === faTimes ? '1x' : 'sm'}
+      className={`me-1 tx-status ${transaction.status.toLowerCase()}`}
+    />
+  );
 
   return icon === undefined ? null : (
     <>
@@ -97,11 +118,15 @@ export const TransactionIcon = ({ transaction }: TransactionIconType) => {
           </Tooltip>
         )}
       >
-        <FontAwesomeIcon
-          icon={icon}
-          size={icon === faTimes ? '1x' : 'sm'}
-          className={`me-1 tx-status ${transaction.status.toLowerCase()} `}
-        />
+        {withBadge ? (
+          <div className={`tx-badge ${transaction.status.toLowerCase()}`}>
+            <TxIcon />
+          </div>
+        ) : (
+          <>
+            <TxIcon />
+          </>
+        )}
       </OverlayTrigger>
     </>
   );

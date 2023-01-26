@@ -250,6 +250,36 @@
   }
 }
 
+.tx-badge {
+  width: 1.5rem;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border-width: 1px;
+  border-style: solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--neutral-900);
+  svg {
+    margin-right: 0 !important;
+  }
+  &.pending {
+    border-color: var(--yellow);
+  }
+  &.invalid {
+    border-color: var(--orange);
+  }
+  &.success {
+    border-color: var(--green);
+  }
+  &.failed,
+  &.fail {
+    border-color: var(--red);
+  }
+  border-color: var(--neutral-400);
+}
+.tx-badge,
 .tx-status {
   &.pending {
     color: var(--yellow);

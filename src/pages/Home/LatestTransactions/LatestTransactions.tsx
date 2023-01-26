@@ -10,7 +10,8 @@ import {
   LatestItem,
   AccountName,
   ScAddressIcon,
-  PulsatingLed
+  PulsatingLed,
+  TransactionIcon
 } from 'components';
 
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
@@ -89,7 +90,7 @@ export const LatestTransactions = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchTransactions, [timestamp]);
+  React.useEffect(fetchTransactions, []);
 
   const Component = () => {
     return (
@@ -142,6 +143,12 @@ export const LatestTransactions = () => {
                           ).color
                         }`}
                       >
+                        <TransactionIcon
+                          transaction={transaction}
+                          showSuccess
+                          withBadge
+                        />
+
                         <div className='d-flex flex-column overflow-hidden min-w-0'>
                           <div className='d-flex flex-row mb-2 align-items-center justify-content-between'>
                             <div className='d-flex align-items-center me-2'>
