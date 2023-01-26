@@ -90,7 +90,7 @@ export const LatestTransactions = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchTransactions, []);
+  React.useEffect(fetchTransactions, [timestamp]);
 
   const Component = () => {
     return (
