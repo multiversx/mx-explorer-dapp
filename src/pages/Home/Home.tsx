@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { MostUsed } from 'components';
 import { useIsMainnet } from 'helpers';
+
 import { TestnetGlobalStatsCard } from 'pages/Layout/TestnetGlobalStatsCard';
 import { AccountsChart } from './AccountsChart';
 import { LatestBlocks } from './LatestBlocks';
@@ -9,8 +11,6 @@ import { PriceChart } from './PriceChart';
 import { StakingChart } from './StakingChart';
 import { TransactionsChart } from './TransactionsChart';
 import { ValidatorsStatus } from './ValidatorsStatus';
-
-import { MostUsed } from './components/MostUsed';
 
 export const Home = () => {
   const isMainnet = useIsMainnet();
