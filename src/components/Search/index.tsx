@@ -12,12 +12,13 @@ import {
   addressIsBech32,
   bech32
 } from 'helpers';
+import { WithClassnameType } from 'types';
 
-interface SearchType {
+interface SearchType extends WithClassnameType {
   setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const Search = ({ setExpanded = () => null }: SearchType) => {
+export const Search = ({ setExpanded = () => null, className }: SearchType) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
@@ -192,8 +193,11 @@ export const Search = ({ setExpanded = () => null }: SearchType) => {
   }
 
   return (
-    <form className='main-search w-100 d-flex' noValidate={true}>
-      <div className='input-group input-group-black input-group-seamless mb-3'>
+    <form
+      className={`main-search w-100 d-flex ${className ?? ''}`}
+      noValidate={true}
+    >
+      <div className='input-group input-group-seamless mb-3'>
         <input
           type='text'
           className='form-control text-truncate'

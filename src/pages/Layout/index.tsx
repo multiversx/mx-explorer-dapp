@@ -98,25 +98,17 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
               <Unavailable />
             ) : (
               <>
-                <div className='main-search-container py-spacer'>
-                  <div className={`container ${isHome ? 'py-3' : ''}`}>
-                    {isHome && (
+                {!isHome && (
+                  <div className='main-search-container py-spacer'>
+                    <div className='container'>
                       <div className='row'>
-                        <div className='col-12 text-center'>
-                          <h1 className='mb-4'>
-                            The MultiversX (Elrond) Blockchain {explorerTitle}
-                          </h1>
+                        <div className='col-12 col-lg-9 mx-auto'>
+                          <Search className='input-group-black' />
                         </div>
-                      </div>
-                    )}
-
-                    <div className='row'>
-                      <div className='col-12 col-lg-9 mx-auto'>
-                        <Search />
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
 
                 {showGlobalStats() && (
                   <div className='container mb-spacer'>
