@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ELLIPSIS } from 'appConstants';
 import { StatsSliceType } from 'types/stats.types';
 
 export const getInitialStatsState = (): StatsSliceType => {
@@ -20,19 +21,19 @@ export const getInitialStatsState = (): StatsSliceType => {
       epochTimeRemaining: 0
     },
 
-    shards: '...',
-    blocks: '...',
-    accounts: '...',
-    transactions: '...',
+    shards: ELLIPSIS,
+    blocks: ELLIPSIS,
+    accounts: ELLIPSIS,
+    transactions: ELLIPSIS,
     refreshRate: 0,
-    epoch: '...',
-    roundsPassed: '...',
-    roundsPerEpoch: '...',
+    epoch: ELLIPSIS,
+    roundsPassed: ELLIPSIS,
+    roundsPerEpoch: ELLIPSIS,
 
-    epochPercentage: '...',
-    epochTotalTime: '...',
-    epochTimeElapsed: '...',
-    epochTimeRemaining: '...'
+    epochPercentage: ELLIPSIS,
+    epochTotalTime: ELLIPSIS,
+    epochTimeElapsed: ELLIPSIS,
+    epochTimeRemaining: ELLIPSIS
   };
 };
 

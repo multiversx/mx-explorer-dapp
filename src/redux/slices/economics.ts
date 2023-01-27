@@ -1,9 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ELLIPSIS } from 'appConstants';
 import { EconomicsSliceType } from 'types/economics.types';
 
 export const getInitialEconomicsState = (): EconomicsSliceType => {
   return {
-    isFetched: false,
+    totalSupply: ELLIPSIS,
+    circulatingSupply: ELLIPSIS,
+    staked: ELLIPSIS,
+    price: ELLIPSIS,
+    marketCap: ELLIPSIS,
+    apr: ELLIPSIS,
+    topUpApr: ELLIPSIS,
+    baseApr: ELLIPSIS,
+    tokenMarketCap: ELLIPSIS,
+
+    totalStakedPercent: ELLIPSIS,
+    ecosystemMarketCap: ELLIPSIS,
+
     unprocessed: {
       totalSupply: 0,
       circulatingSupply: 0,
@@ -15,19 +28,7 @@ export const getInitialEconomicsState = (): EconomicsSliceType => {
       baseApr: 0,
       tokenMarketCap: 0
     },
-
-    totalSupply: '...',
-    circulatingSupply: '...',
-    staked: '...',
-    price: '...',
-    marketCap: '...',
-    apr: '...',
-    topUpApr: '...',
-    baseApr: '...',
-    tokenMarketCap: '...',
-
-    totalStakedPercent: '...',
-    ecosystemMarketCap: '...'
+    isFetched: false
   };
 };
 
@@ -39,9 +40,6 @@ export const economicsSlice = createSlice({
       state: EconomicsSliceType,
       action: PayloadAction<EconomicsSliceType>
     ) => {
-      state.isFetched = action.payload.isFetched;
-      state.unprocessed = action.payload.unprocessed;
-
       state.totalSupply = action.payload.totalSupply;
       state.circulatingSupply = action.payload.circulatingSupply;
       state.staked = action.payload.staked;
@@ -54,6 +52,9 @@ export const economicsSlice = createSlice({
 
       state.totalStakedPercent = action.payload.totalStakedPercent;
       state.ecosystemMarketCap = action.payload.ecosystemMarketCap;
+
+      state.unprocessed = action.payload.unprocessed;
+      state.isFetched = action.payload.isFetched;
     }
   }
 });
