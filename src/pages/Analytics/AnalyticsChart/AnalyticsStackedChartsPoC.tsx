@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 
@@ -98,7 +104,7 @@ export const AnalyticsStackedChartPoC = ({
     gradient: 'defaultGradient',
     data: secondSeries
   };
-  const getData = async () => {
+  const getData = useCallback(async () => {
     const [firstSeriesData, secondSeriesData] = await Promise.allSettled([
       getAnalyticsChart(firstSeriesPath),
       getAnalyticsChart(secondSeriesPath)
@@ -122,12 +128,12 @@ export const AnalyticsStackedChartPoC = ({
         firstSeriesData.value.success &&
         secondSeriesData.value.success
     );
-  };
+  }, [firstSeriesPath, secondSeriesPath]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     getData();
-  }, [activeNetworkId]);
+  }, [activeNetworkId, firstSeriesPath, secondSeriesPath]);
 
   return (
     <>

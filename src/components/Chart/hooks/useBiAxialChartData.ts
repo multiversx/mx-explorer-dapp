@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { getChartMergedData } from '../helpers/getChartMergedData';
 import { BiAxialChartConfigType, MergedChartDataType } from '../helpers/types';
 
@@ -28,6 +28,7 @@ export const useBiAxialChartData = ({
 
   const getChartData = useCallback(() => {
     const data: MergedChartDataType[] = [];
+
     for (let i = 0; i < firstSeriesData.length; i++) {
       data.push({
         timestamp: firstSeriesData[i].timestamp,
@@ -39,26 +40,11 @@ export const useBiAxialChartData = ({
     }
 
     return data;
-  }, []);
-
-  const domain = useMemo(() => {
-    const startTimestamp =
-      firstSeriesData[0].timestamp ?? secondSeriesData[0].timestamp;
-
-    const endTimestamp =
-      firstSeriesData.length > 0
-        ? firstSeriesData[firstSeriesData.length - 1].timestamp
-        : secondSeriesData.length > 0
-        ? secondSeriesData[secondSeriesData.length - 1].timestamp
-        : '0';
-
-    return [startTimestamp, endTimestamp];
   }, [firstSeriesData, secondSeriesData]);
 
   return {
     firstSeriesData,
     secondSeriesData,
-    domain,
     getChartData
   };
 };
