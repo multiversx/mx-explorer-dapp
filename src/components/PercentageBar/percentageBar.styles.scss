@@ -7,7 +7,7 @@
   }
   .progress {
     margin: 0 !important;
-    background-color: var(--muted);
+    background-color: var(--neutral-600);
     height: 1rem;
     border-radius: 0.2rem;
 
@@ -16,11 +16,11 @@
     }
   }
 
-  .bg-success {
-    background-color: var(--primary-light) !important;
+  .existing {
+    background-color: var(--primary-700) !important;
   }
 
-  .bg-danger {
+  .new {
     background-color: var(--primary) !important;
     min-width: 2px;
   }

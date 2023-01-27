@@ -33,7 +33,7 @@ export const Rounds = ({
   node: NodeType;
 }) => {
   return (
-    <div className='card' data-testid='roundsContainer'>
+    <div className='card h-100' data-testid='roundsContainer'>
       {rounds.success === false && (
         <RoundsPageState message={'Unable to load rounds'} />
       )}
