@@ -36,7 +36,21 @@ const interfacePersisted = {
 
 export const customIgnoredSlices = {
   networks: persistReducer(networkPersisted, networkReducer),
-  interface: persistReducer(interfacePersisted, interfaceReducer)
+  interface: persistReducer(interfacePersisted, interfaceReducer),
+  account: accountReducer,
+  accountStaking: accountStakingReducer,
+  collection: collectionReducer,
+  economics: economicsReducer,
+  globalStake: globalStakeReducer,
+  growthHero: growthHeroReducer,
+  growthMostUsed: growthMostUsedReducer,
+  growthPrice: growthPriceReducer,
+  growthSearch: growthSearchReducer,
+  growthStaking: growthStakingReducer,
+  growthTransactions: growthTransactionsReducer,
+  refresh: refreshReducer,
+  stats: statsReducer,
+  token: tokenReducer
 };
 
 export const ignoredSliceNames: string[] = [
@@ -72,19 +86,5 @@ const ignoredSlices = Object.keys(asyncIgnoredSlices).reduce((acc, entry) => {
 
 export const rootReducer = combineReducers({
   ...ignoredSlices,
-  ...customIgnoredSlices,
-  account: accountReducer,
-  accountStaking: accountStakingReducer,
-  collection: collectionReducer,
-  economics: economicsReducer,
-  globalStake: globalStakeReducer,
-  growthHero: growthHeroReducer,
-  growthMostUsed: growthMostUsedReducer,
-  growthPrice: growthPriceReducer,
-  growthSearch: growthSearchReducer,
-  growthStaking: growthStakingReducer,
-  growthTransactions: growthTransactionsReducer,
-  refresh: refreshReducer,
-  stats: statsReducer,
-  token: tokenReducer
+  ...customIgnoredSlices
 });
