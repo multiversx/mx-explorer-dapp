@@ -13,7 +13,7 @@ export const useFetchGrowthTransactions = () => {
 
   const fetchTransactions = () => {
     if (!isFetched) {
-      getGrowthWidget('/staking').then(({ data, success }) => {
+      getGrowthWidget('/transactions').then(({ data, success }) => {
         if (data && success) {
           const processedGrowthTransactions = processGrowthTransactions(data);
           dispatch(
