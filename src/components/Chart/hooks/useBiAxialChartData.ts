@@ -38,7 +38,6 @@ export const useBiAxialChartData = ({
       });
     }
 
-    console.log('data = ', data);
     return data;
   }, []);
 
