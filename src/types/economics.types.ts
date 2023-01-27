@@ -10,8 +10,20 @@ export interface EconomicsType {
   tokenMarketCap: number;
 }
 
-export interface EconomicsSliceType extends EconomicsType {
-  economicsFetched: boolean;
-  totalStakedPercent: number;
-  ecosystemMarketCap: number;
+export interface EconomicsSliceType {
+  isFetched: boolean;
+  unprocessed: EconomicsType;
+
+  totalSupply: string;
+  circulatingSupply: string;
+  staked: string;
+  price: string;
+  marketCap: string;
+  apr: string;
+  topUpApr: string;
+  baseApr: string;
+  tokenMarketCap: string;
+
+  totalStakedPercent: string;
+  ecosystemMarketCap: string;
 }

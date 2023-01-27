@@ -17,10 +17,10 @@ export const UsdValue = ({
   dataTestId?: string;
   showPrefix?: boolean;
 }) => {
-  const { economicsFetched, price } = useSelector(economicsSelector);
+  const { isFetched, unprocessed } = useSelector(economicsSelector);
   return (
     <span className={className} data-testid={dataTestId}>
-      {!stringIsInteger(input) || !economicsFetched
+      {!stringIsInteger(input) || !isFetched
         ? '...'
         : usdValue({
             amount: denominate({
@@ -30,7 +30,7 @@ export const UsdValue = ({
               showLastNonZeroDecimal: true,
               addCommas: false
             }),
-            usd: price,
+            usd: unprocessed.price,
             showPrefix
           })}
     </span>
