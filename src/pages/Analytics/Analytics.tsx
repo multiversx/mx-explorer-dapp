@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Loader, useAdapter } from 'components';
-import { useIsMainnet } from 'helpers';
+import { useIsMainnet } from 'hooks';
 
 import { activeNetworkSelector } from 'redux/selectors';
 import { AnalyticsChart } from './AnalyticsChart';

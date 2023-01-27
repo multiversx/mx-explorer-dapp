@@ -13,7 +13,8 @@ import {
   ShardSpan
 } from 'components';
 
-import { urlBuilder, useGetFilters, addressIsBech32 } from 'helpers';
+import { urlBuilder, addressIsBech32 } from 'helpers';
+import { useGetFilters } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { AccountTabs } from './AccountLayout/AccountTabs';
 

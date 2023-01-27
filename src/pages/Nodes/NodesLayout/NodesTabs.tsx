@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NetworkLink } from 'components';
-import { useIsMainnet, useActiveRoute } from 'helpers';
+import { useIsMainnet, useActiveRoute } from 'hooks';
 import { validatorsRoutes } from 'routes';
 
 export const NodesTabs = () => {

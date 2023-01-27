@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { NetworkLink } from 'components';
-import { useIsMainnet, useActiveRoute } from 'helpers';
+import { useIsMainnet, useActiveRoute } from 'hooks';
 
 import { activeNetworkSelector } from 'redux/selectors';
 import {

@@ -12,12 +12,8 @@ import {
   PageState,
   NftBadge
 } from 'components';
-import {
-  urlBuilder,
-  useURLSearchParams,
-  useGetFilters,
-  nftText
-} from 'helpers';
+import { urlBuilder, nftText } from 'helpers';
+import { useURLSearchParams, useGetFilters } from 'hooks';
 import { activeNetworkSelector, collectionSelector } from 'redux/selectors';
 import { NftType } from 'types';
 import { CollectionTabs } from './CollectionLayout/CollectionTabs';

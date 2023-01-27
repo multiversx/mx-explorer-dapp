@@ -12,7 +12,7 @@ import {
   ProvidersTable
 } from 'components';
 import { NodesTable, SharedIdentity } from 'components';
-import { useGetFilters } from 'helpers';
+import { useGetFilters } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { IdentityType, NodeType, ProviderType } from 'types';
 

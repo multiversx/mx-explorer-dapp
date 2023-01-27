@@ -30,11 +30,11 @@ import {
   addressIsBech32,
   dateFormatted,
   urlBuilder,
-  useNetworkRoute,
   isContract,
   getTransactionMethod,
   formatUSD
 } from 'helpers';
+import { useNetworkRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { transactionsRoutes } from 'routes';
 import {

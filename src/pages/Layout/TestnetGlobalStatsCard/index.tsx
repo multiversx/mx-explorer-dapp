@@ -7,7 +7,7 @@ import BigNumber from 'bignumber.js';
 
 import { useSelector } from 'react-redux';
 import { CardItem } from 'components';
-import { useFetchStats } from 'helpers';
+import { useFetchStats } from 'hooks';
 
 import { EpochGear } from 'pages/Layout/GlobalStatsCard/EpochGear';
 import { statsSelector } from 'redux/selectors';

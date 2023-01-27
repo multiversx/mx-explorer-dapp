@@ -1,5 +1,5 @@
 import { useLocation, useMatch, matchPath } from 'react-router-dom';
-import { useNetworkRoute } from 'helpers';
+import { useNetworkRoute } from 'hooks';
 import { wrappedRoutes } from 'routes';
 
 export const useGetHash = () => {

@@ -3,7 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Select from 'react-select';
 import Creatable from 'react-select/creatable';
 
-import { useNetworkPathname, isHash, addressIsBech32 } from 'helpers';
+import { isHash, addressIsBech32 } from 'helpers';
+import { useNetworkPathname } from 'hooks';
 import { TxFiltersEnum } from 'types';
 
 interface SelectOptionType {

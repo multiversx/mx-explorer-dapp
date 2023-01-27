@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
-import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useNetworkPathname, isHash, addressIsBech32 } from 'helpers';
+import { isHash, addressIsBech32 } from 'helpers';
+import { useNetworkPathname } from 'hooks';
 import { TxFiltersEnum } from 'types';
 
 export interface SearchFilterType {

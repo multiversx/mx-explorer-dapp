@@ -6,7 +6,7 @@ import { useAdapter, Loader, PageState, SharedIdentity } from 'components';
 import { BlocksTable } from 'components/BlocksTable';
 import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/NoBlocks';
-import { useIsMainnet } from 'helpers';
+import { useIsMainnet } from 'hooks';
 import { statsSelector } from 'redux/selectors';
 import { BlockType, IdentityType, NodeType } from 'types';
 import { NetworkMetrics } from './NetworkMetrics';

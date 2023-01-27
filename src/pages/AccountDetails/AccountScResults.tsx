@@ -5,7 +5,8 @@ import { useAdapter, Loader, ScResultsTable } from 'components';
 
 import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
 import { NoScResults } from 'components/ScResultsTable/NoScResults';
-import { urlBuilder, useGetFilters, useNetworkRoute } from 'helpers';
+import { urlBuilder } from 'helpers';
+import { useGetFilters, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { ScResultType } from 'types';
 

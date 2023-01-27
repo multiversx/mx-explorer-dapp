@@ -12,12 +12,8 @@ import {
   NetworkLink
 } from 'components';
 
-import {
-  urlBuilder,
-  useGetFilters,
-  useNetworkRoute,
-  amountWithoutRounding
-} from 'helpers';
+import { urlBuilder, amountWithoutRounding } from 'helpers';
+import { useGetFilters, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { TokenType, NftType } from 'types';
 import { AccountTabs } from './AccountLayout/AccountTabs';
