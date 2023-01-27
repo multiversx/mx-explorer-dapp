@@ -58,6 +58,11 @@ export interface ChartConfigType {
   showUsdValue?: boolean;
 }
 
+export interface BiAxialChartConfigType {
+  firstSeriesConfig: ChartConfigType;
+  secondSeriesConfig: ChartConfigType;
+}
+
 export enum DateFilterEnum {
   // day = "day",
   week = 'week',
@@ -73,6 +78,23 @@ export enum ChartSizeEnum {
 
 export interface ChartProps {
   config: ChartConfigType[];
+  data?: any;
+  dateFormat?: string;
+  filter?: string;
+  category?: string;
+  currency?: string;
+  percentageMultiplier?: number;
+  denomination?: number;
+  size?: ChartSizeEnum;
+  hasOnlyStartEndTick?: boolean;
+  tooltip?: {
+    showUsdValue?: boolean;
+    dateFormat?: string;
+  };
+}
+
+export interface BiAxialChartProps {
+  config: BiAxialChartConfigType;
   data?: any;
   dateFormat?: string;
   filter?: string;

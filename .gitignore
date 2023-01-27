@@ -25,3 +25,5 @@ yarn-error.log*
 
 /sam/build.yaml
 /src/config/index.ts
+
+.idea
