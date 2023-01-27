@@ -1,6 +1,5 @@
 import {
   DECIMALS,
-  DIGITS,
   GAS_LIMIT,
   GAS_PER_DATA_BYTE,
   GAS_PRICE_MODIFIER,
@@ -10,6 +9,7 @@ import { object, string, boolean } from 'yup';
 import { NetworkUrlType } from 'types/network.types';
 
 const GAS_PRICE = String(DEFAULT_GAS_PRICE);
+const DIGITS = 2;
 
 export {
   DECIMALS,

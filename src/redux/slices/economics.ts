@@ -3,19 +3,31 @@ import { EconomicsSliceType } from 'types/economics.types';
 
 export const getInitialEconomicsState = (): EconomicsSliceType => {
   return {
-    totalSupply: 0,
-    circulatingSupply: 0,
-    staked: 0,
-    price: 0,
-    marketCap: 0,
-    apr: 0,
-    topUpApr: 0,
-    baseApr: 0,
-    tokenMarketCap: 0,
+    isFetched: false,
+    unprocessed: {
+      totalSupply: 0,
+      circulatingSupply: 0,
+      staked: 0,
+      price: 0,
+      marketCap: 0,
+      apr: 0,
+      topUpApr: 0,
+      baseApr: 0,
+      tokenMarketCap: 0
+    },
 
-    economicsFetched: false,
-    totalStakedPercent: 0,
-    ecosystemMarketCap: 0
+    totalSupply: '...',
+    circulatingSupply: '...',
+    staked: '...',
+    price: '...',
+    marketCap: '...',
+    apr: '...',
+    topUpApr: '...',
+    baseApr: '...',
+    tokenMarketCap: '...',
+
+    totalStakedPercent: '...',
+    ecosystemMarketCap: '...'
   };
 };
 
@@ -27,6 +39,9 @@ export const economicsSlice = createSlice({
       state: EconomicsSliceType,
       action: PayloadAction<EconomicsSliceType>
     ) => {
+      state.isFetched = action.payload.isFetched;
+      state.unprocessed = action.payload.unprocessed;
+
       state.totalSupply = action.payload.totalSupply;
       state.circulatingSupply = action.payload.circulatingSupply;
       state.staked = action.payload.staked;
@@ -37,7 +52,6 @@ export const economicsSlice = createSlice({
       state.baseApr = action.payload.baseApr;
       state.tokenMarketCap = action.payload.tokenMarketCap;
 
-      state.economicsFetched = action.payload.economicsFetched;
       state.totalStakedPercent = action.payload.totalStakedPercent;
       state.ecosystemMarketCap = action.payload.ecosystemMarketCap;
     }

@@ -7,7 +7,7 @@ import { ReactComponent as CenterGear } from 'assets/img/network-health/center-g
 import { ReactComponent as Gear } from 'assets/img/network-health/gear.svg';
 import { ReactComponent as LayoutGear } from 'assets/img/network-health/layout-gear.svg';
 import { useAdapter } from 'components';
-import { processStats, validDisplayValue } from 'helpers';
+import { processStats, validDisplayValue, getExtraStats } from 'helpers';
 import { activeNetworkSelector, refreshSelector } from 'redux/selectors';
 import { getInitialStatsState } from 'redux/slices/stats';
 
@@ -41,17 +41,46 @@ export const NetworkHealth = () => {
   };
 
   const getData = () => {
-    getStats().then((statsData) => {
-      if (statsData.success && statsData?.data) {
-        const newStats = processStats(statsData.data);
+    getStats().then(({ success, data }) => {
+      if (success && data) {
+        const {
+          epochPercentage,
+          epochTotalTime,
+          epochTimeElapsed,
+          epochTimeRemaining
+        } = getExtraStats(data);
+        const processedStats = processStats(data);
+
         const sameTestnet = oldTestnetId === activeNetworkId;
 
         if (ref.current !== null) {
           if (stateBuffer === undefined || !sameTestnet) {
             // fresh page load or active testnet changed
-            initStates(newStats);
+            initStates({
+              ...processedStats,
+
+              unprocessed: {
+                ...data,
+                epochPercentage,
+                epochTotalTime,
+                epochTimeElapsed,
+                epochTimeRemaining
+              },
+              isFetched: true
+            });
           } else if (sameTestnet) {
-            setStateBuffer(newStats);
+            setStateBuffer({
+              ...processedStats,
+
+              unprocessed: {
+                ...data,
+                epochPercentage,
+                epochTotalTime,
+                epochTimeElapsed,
+                epochTimeRemaining
+              },
+              isFetched: true
+            });
           }
         }
       }
@@ -90,10 +119,7 @@ export const NetworkHealth = () => {
     blocks,
     accounts,
     transactions,
-    epoch,
-    epochPercentage,
-    roundsPerEpoch,
-    roundsPassed
+    unprocessed: { roundsPerEpoch, roundsPassed, epoch, epochPercentage }
   } = state;
 
   const play = !pageHidden;
@@ -122,7 +148,7 @@ export const NetworkHealth = () => {
               <Gear className='w-100 h-100' />
             </div>
             <div className='gear-content'>
-              <span data-testid='accounts'>{validDisplayValue(accounts)}</span>
+              <span data-testid='accounts'>{accounts}</span>
               <small>Accounts</small>
             </div>
           </div>
@@ -132,9 +158,7 @@ export const NetworkHealth = () => {
               <Gear className='w-100 h-100' />
             </div>
             <div className='gear-content'>
-              <span data-testid='transactions'>
-                {validDisplayValue(transactions)}
-              </span>
+              <span data-testid='transactions'>{transactions}</span>
               <small>Transactions</small>
             </div>
           </div>

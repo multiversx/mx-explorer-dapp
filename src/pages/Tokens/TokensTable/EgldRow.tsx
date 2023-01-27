@@ -32,9 +32,19 @@ export const EgldRow = ({
   totalTokens: number;
 }) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
-  const { economicsFetched, price, marketCap, circulatingSupply } =
-    useSelector(economicsSelector);
-  const { statsFetched, accounts, transactions } = useSelector(statsSelector);
+  const {
+    isFetched: isEconomicsFetched,
+    price,
+    marketCap,
+    circulatingSupply,
+    unprocessed: unProcessedEconomics
+  } = useSelector(economicsSelector);
+  const {
+    isFetched: isStatsFetched,
+    accounts,
+    transactions,
+    unprocessed: unProcessedStats
+  } = useSelector(statsSelector);
 
   const { page } = useURLSearchParams();
   const { getQueryObject } = useGetFilters();
@@ -64,15 +74,15 @@ export const EgldRow = ({
     order &&
     Object.keys(TokenSortEnum).includes(sort) &&
     Object.keys(SortOrderEnum).includes(order) &&
-    statsFetched &&
-    economicsFetched
+    isEconomicsFetched &&
+    isStatsFetched
   ) {
     const egldToken: DummyTokenType = {
-      price,
-      marketCap,
-      circulatingSupply,
-      accounts,
-      transactions
+      price: unProcessedEconomics.price,
+      marketCap: unProcessedEconomics.marketCap,
+      circulatingSupply: unProcessedEconomics.circulatingSupply,
+      accounts: unProcessedStats.accounts,
+      transactions: unProcessedStats.transactions
     };
 
     const tokenValue = currentToken[sort as keyof TokenType];
@@ -153,19 +163,11 @@ export const EgldRow = ({
         </div>
       </td>
       <td>MultiversX (Elrond) {egldLabel}</td>
-      <td>
-        {economicsFetched ? `$${new BigNumber(price).toFormat(2)}` : '...'}
-      </td>
-      <td>
-        {economicsFetched
-          ? new BigNumber(circulatingSupply).toFormat(0)
-          : '...'}
-      </td>
-      <td>
-        {economicsFetched ? `$${new BigNumber(marketCap).toFormat()}` : '...'}
-      </td>
-      <td>{statsFetched ? new BigNumber(accounts).toFormat(0) : '...'}</td>
-      <td>{statsFetched ? new BigNumber(transactions).toFormat(0) : '...'}</td>
+      <td>{price}</td>
+      <td>{circulatingSupply}</td>
+      <td>{marketCap}</td>
+      <td>{accounts}</td>
+      <td>{transactions}</td>
     </tr>
   );
 };
