@@ -14,7 +14,7 @@ export const MostUsed = () => {
   const isMainnet = useIsMainnet();
 
   const {
-    growthMostUsedFetched,
+    isFetched,
     dailyMostUsedApplications,
     dailyMostTransactedNFTs,
     dailyMostTransactedTokens
@@ -26,7 +26,7 @@ export const MostUsed = () => {
     <>
       {isMainnet ? (
         <>
-          {growthMostUsedFetched ? (
+          {isFetched ? (
             <div className='row'>
               <div className='col-12 col-lg-4 mt-spacer'>
                 <MostUsedContracts data={dailyMostUsedApplications} />

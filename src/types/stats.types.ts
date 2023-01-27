@@ -1,3 +1,5 @@
+import { SliceType } from 'types/general.types';
+
 export interface StatsType {
   shards: number;
   blocks: number;
@@ -16,8 +18,7 @@ export interface ExtendedStatsType extends StatsType {
   epochTimeRemaining: number;
 }
 
-export interface StatsSliceType {
-  isFetched: boolean;
+export interface StatsSliceType extends SliceType {
   unprocessed: ExtendedStatsType;
 
   shards: string;

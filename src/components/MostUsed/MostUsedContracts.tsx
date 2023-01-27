@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 import { NetworkLink, ScAddressIcon, AccountName } from 'components';
 import { urlBuilder } from 'helpers';
 import { AssetType } from 'types';
-import { MostUsedApplicationsType } from 'types/growth.types';
+import { MostUsedApplicationsType } from 'types/growthWidgets';
 
 export const MostUsedContracts = ({
   data

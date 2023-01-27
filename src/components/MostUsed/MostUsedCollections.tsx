@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 
 import { NetworkLink } from 'components';
 import { urlBuilder } from 'helpers';
-import { MostUsedCollectionsType } from 'types/growth.types';
+import { MostUsedCollectionsType } from 'types/growthWidgets';
 
 export const MostUsedCollections = ({
   data
