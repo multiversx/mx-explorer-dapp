@@ -90,6 +90,12 @@ export const ComposedChartPoC = ({
 
           <YAxis
             yAxisId='left-axis'
+            label={{
+              value: config.firstSeriesConfig.label,
+              angle: -90,
+              position: 'outsideLeft',
+              dx: -15
+            }}
             orientation='left'
             tickFormatter={(tick) =>
               formatYAxis({
@@ -105,6 +111,12 @@ export const ComposedChartPoC = ({
           />
           <YAxis
             yAxisId='right-axis'
+            label={{
+              value: config.secondSeriesConfig.label,
+              angle: -270,
+              position: 'outsideRight',
+              dx: 15
+            }}
             orientation='right'
             tickFormatter={(tick) =>
               formatYAxis({

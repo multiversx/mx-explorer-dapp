@@ -20,12 +20,14 @@ export interface AnalyticsStackedChartDataPoCType {
 
 export const AnalyticsStackedChartPoC = ({
   ids,
-  firstSeriesPath,
-  secondSeriesPath
+  firstSeriesLabel,
+  secondSeriesLabel,
+  title
 }: {
   ids: string[];
-  firstSeriesPath: string;
-  secondSeriesPath: string;
+  firstSeriesLabel: string;
+  secondSeriesLabel: string;
+  title?: string;
 }) => {
   const ref = useRef(null);
 
@@ -40,20 +42,9 @@ export const AnalyticsStackedChartPoC = ({
     AnalyticsStackedChartDataPoCType[]
   >([]);
 
-  // Temporary ?
-  const formatChartNameFomId = (id: string) => {
-    const normalizedName = id.replace('-monthly', '').replaceAll('-', ' ');
+  const firstSeriesPath = ids[0];
+  const secondSeriesPath = ids[1];
 
-    return normalizedName;
-  };
-  const formatChartLabelFomId = (id: string) => {
-    const normalizedName = id
-      .replace('-monthly', '')
-      .replace('daily-', '')
-      .replaceAll('-', ' ');
-
-    return normalizedName;
-  };
   const getChartPropsFromId = (id: string) => {
     switch (id) {
       case 'daily-total-staked-egld-monthly':
@@ -93,14 +84,14 @@ export const AnalyticsStackedChartPoC = ({
   };
 
   const firstSeriesConfig: ChartConfigType = {
-    id: ids[0],
-    label: formatChartLabelFomId(ids[0]),
+    id: firstSeriesLabel,
+    label: firstSeriesLabel,
     gradient: 'defaultGradient',
     data: firstSeries
   };
   const secondSeriesConfig: ChartConfigType = {
-    id: ids[1],
-    label: formatChartLabelFomId(ids[1]),
+    id: secondSeriesLabel,
+    label: secondSeriesLabel,
     gradient: 'defaultGradient',
     data: secondSeries
   };
@@ -138,12 +129,7 @@ export const AnalyticsStackedChartPoC = ({
   return (
     <>
       <section id={ids.join('/')} ref={ref} className='card'>
-        <Chart.Heading
-          title={`${formatChartNameFomId(ids[0])} - ${formatChartNameFomId(
-            ids[1]
-          )}`}
-          className='text-capitalize'
-        ></Chart.Heading>
+        <Chart.Heading title={title} className=''></Chart.Heading>
         <Chart.Body>
           {dataReady === undefined && <Loader />}
           {dataReady === false && (
