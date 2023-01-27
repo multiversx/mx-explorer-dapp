@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Loader, useAdapter } from 'components';
 import { useIsMainnet } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -15,10 +15,20 @@ export interface ChartListType {
   longPath: string;
 }
 
+const FIRST_SERIES_ID = 'firstSeriesId';
+const SECOND_SERIES_ID = 'secondSeriesId';
+
 export const Analytics = () => {
   const ref = useRef(null);
   const navigate = useNavigate();
   const isMainnet = useIsMainnet();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // @ts-ignore
+  console.log(Object.fromEntries([...searchParams]));
+  const firstSeriesId = searchParams.get(FIRST_SERIES_ID);
+  const secondSeriesId = searchParams.get(SECOND_SERIES_ID);
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getAnalyticsChartList } = useAdapter();
@@ -34,7 +44,6 @@ export const Analytics = () => {
 
         if (chartData) {
           setChartList(chartData);
-          setSelectedPills(chartData.slice(0, 2));
         }
       }
       setDataReady(chartList.success);
@@ -42,25 +51,53 @@ export const Analytics = () => {
   };
 
   const onSelectPill = (series: ChartListType) => () => {
-    setSelectedPills((pills) => [pills[1], series]);
+    setSelectedPills((pills) => {
+      const newQueryParameters: URLSearchParams = new URLSearchParams();
+      const newSelectedPills = [pills[1], series];
+
+      newQueryParameters.set(FIRST_SERIES_ID, pills[1].id);
+      newQueryParameters.set(SECOND_SERIES_ID, series.id);
+
+      setSearchParams(newQueryParameters);
+
+      return newSelectedPills;
+    });
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(getData, [activeNetworkId]);
 
+  useEffect(() => {
+    const firstSeries = chartList.find((x) => x.id === firstSeriesId);
+    const secondSeries = chartList.find((x) => x.id === secondSeriesId);
+
+    console.log(chartList);
+    console.log(firstSeries);
+    console.log(secondSeries);
+
+    if (!firstSeries || !secondSeries) {
+      setSelectedPills(chartList.slice(0, 2));
+      return;
+    }
+
+    setSelectedPills([firstSeries, secondSeries]);
+  }, [firstSeriesId, secondSeriesId, chartList]);
+
   if (!isMainnet) {
     navigate('/');
   }
+
+  console.log('selectedPills = ', selectedPills);
 
   return (
     <>
       {dataReady === undefined && <Loader />}
       {dataReady === false && <FailedAnalytics />}
       {dataReady === true && chartList.length === 0 && <NoAnalytics />}
-      {dataReady === true && selectedPills.length < 2 && <NoAnalytics />}
+      {selectedPills.length < 2 && <NoAnalytics />}
 
       <div ref={ref}>
-        {dataReady === true && (
+        {dataReady === true && selectedPills.length === 2 && (
           <div className='analytics container page-content'>
             <div className='row mb-3'>
               {chartList.map((series) => (
