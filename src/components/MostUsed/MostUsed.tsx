@@ -2,10 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { Loader } from 'components';
-import { useIsMainnet } from 'hooks';
+import { useIsMainnet, useFetchGrowthMostUsed } from 'hooks';
 import { growthMostUsedSelector } from 'redux/selectors';
 
-import { useFetchMostUsed } from './helpers/useFetchMostUsed';
 import { MostUsedCollections } from './MostUsedCollections';
 import { MostUsedContracts } from './MostUsedContracts';
 import { MostUsedTokens } from './MostUsedTokens';
@@ -20,7 +19,7 @@ export const MostUsed = () => {
     dailyMostTransactedTokens
   } = useSelector(growthMostUsedSelector);
 
-  useFetchMostUsed();
+  useFetchGrowthMostUsed();
 
   return (
     <>

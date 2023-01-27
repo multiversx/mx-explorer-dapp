@@ -15,3 +15,5 @@ export * from './useScamFlag';
 export * from './useNotifications';
 export * from './useCheckVersion';
 export * from './useGetHash';
+
+export * from './growth';
