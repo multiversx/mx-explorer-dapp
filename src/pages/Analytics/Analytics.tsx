@@ -7,6 +7,7 @@ import { activeNetworkSelector } from 'redux/selectors';
 import { AnalyticsStackedChartPoC } from './AnalyticsChart/AnalyticsStackedChartsPoC';
 import { FailedAnalytics } from './FailedAnalytics';
 import { NoAnalytics } from './NoAnalytics';
+import { capitalize } from '../../helpers';
 
 export interface ChartListType {
   id: string;
@@ -113,8 +114,11 @@ export const Analytics = () => {
             <div className='row'>
               <AnalyticsStackedChartPoC
                 ids={selectedPills.map((pill) => pill.path)}
-                firstSeriesPath={selectedPills[0].path}
-                secondSeriesPath={selectedPills[1].path}
+                firstSeriesLabel={selectedPills[0].label}
+                secondSeriesLabel={selectedPills[1].label}
+                title={`${capitalize(selectedPills[0].label)} vs. ${capitalize(
+                  selectedPills[1].label
+                )} in the past 30 days`}
               />
 
               {/*{chartList.map((chart) => (*/}
