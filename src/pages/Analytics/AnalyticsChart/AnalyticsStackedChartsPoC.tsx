@@ -104,9 +104,6 @@ export const AnalyticsStackedChartPoC = ({
       getAnalyticsChart(secondSeriesPath)
     ]);
 
-    console.log(firstSeriesData);
-    console.log(secondSeriesData);
-
     if (firstSeriesData.status === 'fulfilled') {
       setFirstSeries(firstSeriesData.value.data?.data ?? []);
     }
