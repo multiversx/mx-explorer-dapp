@@ -53,7 +53,7 @@ export const pagerHelper = ({ total, itemsPerPage, page }: PagerHelperType) => {
 
   const paginationArray = generatePaginationArray({
     currentPage: size,
-    totalPages: lastPage
+    totalPages: !isNaN(lastPage) ? lastPage : size
   });
 
   return {

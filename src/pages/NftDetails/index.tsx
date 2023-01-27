@@ -309,7 +309,12 @@ export const NftDetails = () => {
                     <div className='card'>
                       <div className='card-header'>
                         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
-                          <h5>Owners</h5>
+                          <h5
+                            data-testid='title'
+                            className='table-title d-flex align-items-center'
+                          >
+                            Owners
+                          </h5>
                           <Pager
                             page={String(page)}
                             total={nftAccountsCount}
@@ -318,63 +323,63 @@ export const NftDetails = () => {
                             className='d-flex ms-auto me-auto me-sm-0'
                           />
                         </div>
-                        <div className='card-body'>
-                          <div className='table-wrapper animated-list'>
-                            <table className='table mb-0'>
-                              <thead>
-                                <tr>
-                                  <th>Address</th>
-                                  <th>Balance</th>
+                      </div>
+                      <div className='card-body'>
+                        <div className='table-wrapper animated-list'>
+                          <table className='table mb-0'>
+                            <thead>
+                              <tr>
+                                <th>Address</th>
+                                <th>Balance</th>
+                              </tr>
+                            </thead>
+                            <tbody data-testid='accountsTable'>
+                              {nftAccounts.map((account, i) => (
+                                <tr key={account.address}>
+                                  <td>
+                                    <div className='d-flex align-items-center'>
+                                      <ScAddressIcon
+                                        initiator={account.address}
+                                      />
+                                      <NetworkLink
+                                        to={urlBuilder.accountDetails(
+                                          account.address
+                                        )}
+                                        className='trim-only-sm'
+                                      >
+                                        <Trim
+                                          text={account.address}
+                                          dataTestId={`accountLink${i}`}
+                                        />
+                                      </NetworkLink>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    {nftDetails.decimals ? (
+                                      <Denominate
+                                        value={account.balance}
+                                        showLabel={false}
+                                        denomination={nftDetails.decimals}
+                                      />
+                                    ) : (
+                                      Number(account.balance).toLocaleString(
+                                        'en'
+                                      )
+                                    )}
+                                  </td>
                                 </tr>
-                              </thead>
-                              <tbody data-testid='accountsTable'>
-                                {nftAccounts.map((account, i) => (
-                                  <tr key={account.address}>
-                                    <td>
-                                      <div className='d-flex align-items-center'>
-                                        <ScAddressIcon
-                                          initiator={account.address}
-                                        />
-                                        <NetworkLink
-                                          to={urlBuilder.accountDetails(
-                                            account.address
-                                          )}
-                                          className='trim-only-sm'
-                                        >
-                                          <Trim
-                                            text={account.address}
-                                            dataTestId={`accountLink${i}`}
-                                          />
-                                        </NetworkLink>
-                                      </div>
-                                    </td>
-                                    <td>
-                                      {nftDetails.decimals ? (
-                                        <Denominate
-                                          value={account.balance}
-                                          showLabel={false}
-                                          denomination={nftDetails.decimals}
-                                        />
-                                      ) : (
-                                        Number(account.balance).toLocaleString(
-                                          'en'
-                                        )
-                                      )}
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
+                              ))}
+                            </tbody>
+                          </table>
                         </div>
-                        <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-                          <Pager
-                            page={String(page)}
-                            total={nftAccountsCount}
-                            itemsPerPage={25}
-                            show={nftAccounts.length > 0}
-                          />
-                        </div>
+                      </div>
+                      <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+                        <Pager
+                          page={String(page)}
+                          total={nftAccountsCount}
+                          itemsPerPage={25}
+                          show={nftAccounts.length > 0}
+                        />
                       </div>
                     </div>
                   </div>
