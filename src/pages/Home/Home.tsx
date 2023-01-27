@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { MostUsed } from 'components';
-import { useIsMainnet } from 'helpers';
+import { useIsMainnet } from 'hooks';
 
 import { HeroCard } from './HeroCard';
 import { LatestBlocks } from './LatestBlocks';
 import { LatestTransactions } from './LatestTransactions';
+import { PriceChart } from './PriceChart';
+import { LongChart } from './LongChart';
+import { DelegationChart } from './DelegationChart';
+import { StatisticsCard } from './StatisticsCard';
 
 // import { TestnetGlobalStatsCard } from 'pages/Layout/TestnetGlobalStatsCard';
 // import { AccountsChart } from './AccountsChart';
@@ -54,6 +58,13 @@ export const Home = () => {
 
       <div className='row'>
         <div className='col-12 mt-spacer'>
+          <div className='d-xl-flex'>
+            <PriceChart />
+            <DelegationChart />
+            <StatisticsCard />
+          </div>
+
+          <LongChart />
           <LatestBlocks />
         </div>
         <div className='col-12 mt-spacer'>

@@ -8,7 +8,12 @@ import { accountStakingReducer } from './slices/accountStaking';
 import { collectionReducer } from './slices/collection';
 import { economicsReducer } from './slices/economics';
 import { globalStakeReducer } from './slices/globalStake';
+import { growthHeroReducer } from './slices/growthHero';
 import { growthMostUsedReducer } from './slices/growthMostUsed';
+import { growthPriceReducer } from './slices/growthPrice';
+import { growthSearchReducer } from './slices/growthSearch';
+import { growthStakingReducer } from './slices/growthStaking';
+import { growthTransactionsReducer } from './slices/growthTransactions';
 import { interfaceReducer } from './slices/interface';
 import { networkReducer } from './slices/networks';
 import { refreshReducer } from './slices/refresh';
@@ -31,7 +36,21 @@ const interfacePersisted = {
 
 export const customIgnoredSlices = {
   networks: persistReducer(networkPersisted, networkReducer),
-  interface: persistReducer(interfacePersisted, interfaceReducer)
+  interface: persistReducer(interfacePersisted, interfaceReducer),
+  account: accountReducer,
+  accountStaking: accountStakingReducer,
+  collection: collectionReducer,
+  economics: economicsReducer,
+  globalStake: globalStakeReducer,
+  growthHero: growthHeroReducer,
+  growthMostUsed: growthMostUsedReducer,
+  growthPrice: growthPriceReducer,
+  growthSearch: growthSearchReducer,
+  growthStaking: growthStakingReducer,
+  growthTransactions: growthTransactionsReducer,
+  refresh: refreshReducer,
+  stats: statsReducer,
+  token: tokenReducer
 };
 
 export const ignoredSliceNames: string[] = [
@@ -67,14 +86,5 @@ const ignoredSlices = Object.keys(asyncIgnoredSlices).reduce((acc, entry) => {
 
 export const rootReducer = combineReducers({
   ...ignoredSlices,
-  ...customIgnoredSlices,
-  account: accountReducer,
-  accountStaking: accountStakingReducer,
-  collection: collectionReducer,
-  economics: economicsReducer,
-  globalStake: globalStakeReducer,
-  growthMostUsed: growthMostUsedReducer,
-  refresh: refreshReducer,
-  stats: statsReducer,
-  token: tokenReducer
+  ...customIgnoredSlices
 });

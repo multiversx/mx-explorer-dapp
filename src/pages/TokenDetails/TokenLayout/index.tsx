@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { Loader, useAdapter } from 'components';
-import { useSize, useGetHash } from 'helpers';
+import { useSize, useGetHash } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { setToken } from 'redux/slices';
 import { FailedTokenDetails } from './FailedTokenDetails';

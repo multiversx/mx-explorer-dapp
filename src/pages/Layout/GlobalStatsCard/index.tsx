@@ -13,15 +13,9 @@ import { economicsSelector, statsSelector } from 'redux/selectors';
 export const GlobalStatsCard = () => {
   const ref = React.useRef(null);
 
-  const {
-    economicsFetched,
-    circulatingSupply,
-    staked,
-    totalStakedPercent,
-    marketCap,
-    price
-  } = useSelector(economicsSelector);
-  const { statsFetched, accounts, transactions } = useSelector(statsSelector);
+  const { circulatingSupply, staked, totalStakedPercent, marketCap, price } =
+    useSelector(economicsSelector);
+  const { accounts, transactions } = useSelector(statsSelector);
 
   return (
     <div ref={ref} className='global-stats-card'>
@@ -41,15 +35,11 @@ export const GlobalStatsCard = () => {
                   <div className='d-flex flex-column w-100'>
                     <div className='d-flex justify-content-between mb-1'>
                       <span className='text-neutral-400 me-3'>EGLD Price:</span>
-                      {economicsFetched
-                        ? `$${new BigNumber(price).toFormat(2)}`
-                        : '...'}
+                      {price}
                     </div>
                     <div className='d-flex justify-content-between'>
                       <span className='text-neutral-400 me-3'>Market Cap:</span>
-                      {economicsFetched
-                        ? `$${new BigNumber(marketCap).toFormat(0)}`
-                        : '...'}
+                      {marketCap}
                     </div>
                   </div>
                 </CardItem>
@@ -65,22 +55,13 @@ export const GlobalStatsCard = () => {
                         Circulating Supply:
                       </span>
 
-                      {economicsFetched
-                        ? new BigNumber(circulatingSupply).toFormat(0)
-                        : '...'}
+                      {circulatingSupply}
                     </div>
                     <div className='d-flex justify-content-between'>
                       <span className='text-neutral-400 me-1'>
                         Total Staked:
                       </span>
-                      {economicsFetched
-                        ? new BigNumber(staked).toFormat(0)
-                        : '...'}{' '}
-                      (
-                      {economicsFetched
-                        ? `${new BigNumber(totalStakedPercent).toFormat(0)}%`
-                        : '...'}
-                      )
+                      {staked} ({totalStakedPercent})
                     </div>
                   </div>
                 </CardItem>
@@ -93,17 +74,13 @@ export const GlobalStatsCard = () => {
                   <div className='d-flex flex-column w-100'>
                     <div className='d-flex justify-content-between mb-1'>
                       <span className='text-neutral-400 me-3'>Addresses:</span>
-                      {statsFetched
-                        ? new BigNumber(accounts).toFormat(0)
-                        : '...'}
+                      {accounts}
                     </div>
                     <div className='d-flex justify-content-between'>
                       <span className='text-neutral-400 me-3'>
                         Transactions:
                       </span>
-                      {statsFetched
-                        ? new BigNumber(transactions).toFormat(0)
-                        : '...'}
+                      {transactions}
                     </div>
                   </div>
                 </CardItem>

@@ -1,10 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import { SearchFilter } from 'components';
 import { TxFiltersEnum, TransactionsTableType } from 'types';
@@ -14,10 +14,8 @@ export const FromColumnFilters = ({
 }: {
   inactiveFilters?: TransactionsTableType['inactiveFilters'];
 }) => {
-  const { search: locationSearch } = useLocation();
-  const urlParams = new URLSearchParams(locationSearch);
-
-  const { sender } = Object.fromEntries(urlParams);
+  const [searchParams] = useSearchParams();
+  const { sender } = Object.fromEntries(searchParams);
 
   if (inactiveFilters && inactiveFilters.includes(TxFiltersEnum.sender)) {
     return null;

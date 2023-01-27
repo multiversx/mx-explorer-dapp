@@ -13,7 +13,7 @@ import {
   useActiveRoute,
   useIsMainnet,
   useCheckVersion
-} from 'helpers';
+} from 'hooks';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 import { wrappedRoutes, validatorsRoutes, searchRoutes } from 'routes';
 import { Footer } from './Footer/index';

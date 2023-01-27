@@ -7,7 +7,7 @@ import { Loader, TransactionsTable, useAdapter } from 'components';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
 import { txStatus } from 'components/TransactionStatus/txStatus';
-import { useSize, useURLSearchParams } from 'helpers';
+import { useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 import {
   UITransactionType,

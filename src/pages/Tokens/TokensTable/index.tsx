@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 
 import { NetworkLink, Denominate, Sort } from 'components';
-import { urlBuilder, amountWithoutRounding, useGetFilters } from 'helpers';
+import { urlBuilder, amountWithoutRounding } from 'helpers';
+import { useGetFilters } from 'hooks';
 import { TokenType, TokenSortEnum, SortOrderEnum } from 'types';
 import { EgldRow } from './EgldRow';
 

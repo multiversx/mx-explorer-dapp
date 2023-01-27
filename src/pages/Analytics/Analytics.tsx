@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Loader, useAdapter } from 'components';
-import { useIsMainnet } from 'helpers';
+import { useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { AnalyticsStackedChartPoC } from './AnalyticsChart/AnalyticsStackedChartsPoC';
 import { FailedAnalytics } from './FailedAnalytics';
@@ -80,8 +80,6 @@ export const Analytics = () => {
   if (!isMainnet) {
     navigate('/');
   }
-
-  console.log('selectedPills = ', selectedPills);
 
   return (
     <>

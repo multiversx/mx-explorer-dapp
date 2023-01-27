@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Select from 'react-select';
 import Creatable from 'react-select/creatable';
 
-import { useNetworkPathname, isHash, addressIsBech32 } from 'helpers';
+import { isHash, addressIsBech32 } from 'helpers';
 import { TxFiltersEnum } from 'types';
 
 interface SelectOptionType {
@@ -38,24 +38,22 @@ export const SelectFilter = ({
   validation,
   noOptionsMessage
 }: SelectFilterType) => {
-  const navigate = useNavigate();
-  const { search: locationSearch } = useLocation();
-  const networkPathname = useNetworkPathname();
-  const urlParams = new URLSearchParams(locationSearch);
-  const paramsObject = Object.fromEntries(urlParams);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const paramsObject = Object.fromEntries(searchParams);
   const existingValue = paramsObject[filter]
     ? paramsObject[filter].split(',')
     : [];
 
   const updateSelectValue = (selectValue: string) => {
-    const paramsObject = Object.fromEntries(urlParams);
+    const paramsObject = Object.fromEntries(searchParams);
     delete paramsObject[filter];
 
-    const nextUrlParams = new URLSearchParams({
+    const nextUrlParams = {
       ...paramsObject,
       ...(selectValue ? { [filter]: selectValue } : {})
-    }).toString();
-    navigate(`${networkPathname}?${nextUrlParams}`);
+    };
+
+    setSearchParams(nextUrlParams);
   };
 
   const hasExistingShowAllOption = options.find(
@@ -84,6 +82,8 @@ export const SelectFilter = ({
         } else {
           if ((e as any)?.value !== undefined) {
             updateSelectValue((e as any).value.toString());
+          } else {
+            updateSelectValue('');
           }
         }
       }}
@@ -122,6 +122,8 @@ export const SelectFilter = ({
         } else {
           if ((e as any)?.value !== undefined) {
             updateSelectValue((e as any).value.toString());
+          } else {
+            updateSelectValue('');
           }
         }
       }}

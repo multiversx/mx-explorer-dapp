@@ -56,9 +56,9 @@ export const CustomTooltip = ({
   showUsdValue?: boolean;
   dateFormat?: string;
 }) => {
-  const { economicsFetched, price } = useSelector(economicsSelector);
+  const { isFetched, unprocessed } = useSelector(economicsSelector);
 
-  if (active && payload && payload.length && economicsFetched) {
+  if (active && payload && payload.length && isFetched) {
     return (
       <div className='custom-tooltip'>
         <ul className='recharts-tooltip-item-list list-unstyled'>
@@ -101,7 +101,7 @@ export const CustomTooltip = ({
                   <p className='text-neutral-400 small mb-0'>
                     {usdValue({
                       amount: displayValue,
-                      usd: price,
+                      usd: unprocessed.price,
                       showPrefix: true
                     })}
                   </p>

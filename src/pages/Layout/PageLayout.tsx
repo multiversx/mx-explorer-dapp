@@ -1,5 +1,5 @@
 import React from 'react';
-import { useActiveRoute } from 'helpers';
+import { useActiveRoute } from 'hooks';
 import { AccountLayout } from 'pages/AccountDetails/AccountLayout';
 import { CollectionLayout } from 'pages/CollectionDetails/CollectionLayout';
 import { NodesLayout } from 'pages/Nodes/NodesLayout';

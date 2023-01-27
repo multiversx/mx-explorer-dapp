@@ -4,7 +4,8 @@ import { useLocation } from 'react-router-dom';
 import { MAX_DISPLAY_TX_DATA_LENGTH } from 'appConstants';
 import { DetailItem, ModalLink, DataDecode } from 'components';
 import { DecodeMethodType } from 'components/DataDecode';
-import { truncate, useScamFlag } from 'helpers';
+import { truncate } from 'helpers';
+import { useScamFlag } from 'hooks';
 import { ScamInfoType } from 'types';
 
 export const DataField = ({
