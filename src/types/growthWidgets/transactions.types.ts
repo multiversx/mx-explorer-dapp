@@ -10,9 +10,9 @@ export interface GrowthTransactionsType {
 export interface GrowthTransactionsSliceType extends SliceType {
   unprocessed: GrowthTransactionsType;
 
-  totalTransactions: number;
-  scResults: number;
-  transactions: number;
+  totalTransactions: string;
+  scResults: string;
+  transactions: string;
 
   scResults30d: GrowthChartDataType[];
   scResultsAll: GrowthChartDataType[];
