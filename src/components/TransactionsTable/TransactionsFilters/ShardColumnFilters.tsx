@@ -62,13 +62,10 @@ export const ShardColumnFilters = ({
       placement='bottom'
       rootClose
       overlay={
-        <Popover
-          id='popover-positioned-bottom'
-          className='border popover-xs bg-light'
-        >
+        <Popover id='popover-positioned-bottom' className='border popover-xs '>
           {stateShards.length > 0 && (
             <Popover.Body>
-              <div className='p-3 text-dark'>
+              <div className='p-3 '>
                 {!inactiveFilters.includes(TxFiltersEnum.senderShard) && (
                   <div className='filter-block'>
                     <div className='mb-1'>Sender Shard</div>

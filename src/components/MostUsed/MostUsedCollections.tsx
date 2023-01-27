@@ -36,7 +36,7 @@ export const MostUsedCollections = ({
                   <td>{collection.rank}</td>
                   <td>
                     <NetworkLink
-                      to={urlBuilder.tokenDetails(collection.key)}
+                      to={urlBuilder.collectionDetails(collection.key)}
                       className={`d-flex text-truncate text-primary-200 ${
                         collection?.extraInfo?.assets?.svgUrl ? 'side-link' : ''
                       }`}

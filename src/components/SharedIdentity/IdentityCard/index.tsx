@@ -81,8 +81,8 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                     <div className='d-flex align-items-center me-3'>
                       <TwitterLogo className='identity-social-logo me-1' />
                       <a
-                        target={'_blank'}
-                        rel={'noreferrer nofollow'}
+                        target='_blank'
+                        rel='noreferrer nofollow'
                         href={identity.twitter}
                       >
                         {identity.twitter.split('/').pop()}
@@ -97,8 +97,8 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                         className='text-neutral-400 me-1'
                       />
                       <a
-                        target={'_blank'}
-                        rel={'noreferrer nofollow'}
+                        target='_blank'
+                        rel='noreferrer nofollow'
                         href={identity.website}
                       >
                         {identity.website.split('//').pop()}

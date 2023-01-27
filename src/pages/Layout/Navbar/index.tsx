@@ -31,43 +31,46 @@ export const Navbar = () => {
 
   return (
     <>
-      <div className='sticky-top container h-10'>
-        <Nav className='main-navbar navbar align-items-stretch flex-nowrap p-0 w-100'>
-          <div className='d-flex align-items-center'>
-            <Logo />
-          </div>
-          <div className='d-flex align-items-center'>
-            <div className='nav-links d-none d-lg-flex justify-content-end'>
-              <NavLinks />
+      <div className='main-navbar sticky-top'>
+        <div className='container h-100'>
+          <Nav className='navbar align-items-stretch flex-nowrap p-0 w-100 h-100'>
+            <div className='d-flex align-items-center'>
+              <Logo />
             </div>
-            <div>
-              <ul className='flex-row navbar-nav ms-3'>
-                <li className='d-none d-lg-flex'>
-                  <AppSwitcher />
-                </li>
-                <li className='d-none d-lg-flex align-items-strech'>
-                  <NetworkSwitcher />
-                </li>
-              </ul>
+            <div className='d-flex align-items-center'>
+              <div className='nav-links d-none d-lg-flex justify-content-end'>
+                <NavLinks />
+              </div>
+              <div>
+                <ul className='flex-row navbar-nav ms-3'>
+                  <li className='d-none d-lg-flex align-items-strech'>
+                    <NetworkSwitcher />
+                  </li>
 
-              <div className='nav d-lg-none'>
-                <a
-                  className='nav-link nav-link-icon text-center d-flex align-items-center justify-content-center pe-0'
-                  href='/'
-                  onClick={toggleHeaderNav}
-                >
-                  <i className='material-icons' style={{ width: '1.375rem' }}>
-                    {headerNavCollapsed ? (
-                      <FontAwesomeIcon icon={faTimes} />
-                    ) : (
-                      <FontAwesomeIcon icon={faBars} />
-                    )}
-                  </i>
-                </a>
+                  <li className='d-none d-lg-flex'>
+                    <AppSwitcher />
+                  </li>
+                </ul>
+
+                <div className='nav d-lg-none'>
+                  <a
+                    className='nav-link nav-link-icon text-center d-flex align-items-center justify-content-center pe-0'
+                    href='/'
+                    onClick={toggleHeaderNav}
+                  >
+                    <i className='material-icons' style={{ width: '1.375rem' }}>
+                      {headerNavCollapsed ? (
+                        <FontAwesomeIcon icon={faTimes} />
+                      ) : (
+                        <FontAwesomeIcon icon={faBars} />
+                      )}
+                    </i>
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-        </Nav>
+          </Nav>
+        </div>
       </div>
 
       <div className='header-navbar d-lg-none p-0'>
@@ -78,11 +81,11 @@ export const Navbar = () => {
                 <NavLinks setExpanded={setHeaderNavCollapsed} />
 
                 <div className='d-lg-none'>
-                  <AppSwitcher onToggle={toggleState} />
+                  <NetworkSwitcher onToggle={toggleState} />
                 </div>
 
                 <div className='d-lg-none'>
-                  <NetworkSwitcher onToggle={toggleState} />
+                  <AppSwitcher onToggle={toggleState} />
                 </div>
               </div>
             </div>

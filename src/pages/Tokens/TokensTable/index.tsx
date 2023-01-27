@@ -68,7 +68,7 @@ export const TokensTable = ({
                             className='side-icon'
                           />
                         ) : (
-                          <div className='bg-light side-icon d-flex align-items-center justify-content-center'>
+                          <div className=' side-icon d-flex align-items-center justify-content-center'>
                             <FontAwesomeIcon icon={faDiamond} />
                           </div>
                         )}

@@ -77,6 +77,21 @@ $badge-padding-y: 0.25rem;
 $badge-padding-x: 0.5rem;
 $badge-border-radius: 0.25rem;
 
+// TOOLTIP
+
+$tooltip-font-size: 12px;
+$tooltip-padding-y: 0.5rem;
+$tooltip-padding-x: 0.5rem;
+
+// POPOVER
+$popover-body-padding-y: 0.6rem;
+$popover-body-padding-x: 0;
+
+$popover-font-size: $font-size-base;
+$popover-max-width: 276px !default;
+
+$zindex-sticky: 1100;
+
 // INPUT + FORM
 //
 // Shared variables that are reassigned to `$input-` and `$btn-` specific variables.

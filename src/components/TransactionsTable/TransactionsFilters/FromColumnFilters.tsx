@@ -30,12 +30,9 @@ export const FromColumnFilters = ({
       placement='bottom'
       rootClose
       overlay={
-        <Popover
-          id='popover-positioned-bottom'
-          className='border popover-xs bg-light'
-        >
+        <Popover id='popover-positioned-bottom' className='border popover-xs '>
           <Popover.Body>
-            <div className='p-3 text-dark'>
+            <div className='p-3 '>
               <div className='filter-block'>
                 <div className='mb-1'>From</div>
                 <SearchFilter

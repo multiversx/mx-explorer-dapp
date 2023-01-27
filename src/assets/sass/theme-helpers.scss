@@ -302,7 +302,7 @@
   position: relative;
   .form-control {
     width: 100%;
-    padding-right: 4rem;
+    padding-right: 4.5rem;
     border-top-right-radius: $input-border-radius !important;
     border-bottom-right-radius: $input-border-radius !important;
   }
@@ -312,6 +312,12 @@
     top: 0;
     bottom: 0;
     z-index: 5;
+  }
+  .input-group-text:first-of-type:not(:last-of-type) {
+    right: 40px;
+    &::before {
+      display: none;
+    }
   }
   &.input-group-lg {
     .form-control {
@@ -323,6 +329,12 @@
     .form-control {
       border-top-right-radius: $input-border-radius-sm !important;
       border-bottom-right-radius: $input-border-radius-sm !important;
+    }
+  }
+  &.has-validation {
+    .input-group-text {
+      top: 10%;
+      bottom: unset;
     }
   }
 }
