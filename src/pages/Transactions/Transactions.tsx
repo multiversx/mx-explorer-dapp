@@ -104,7 +104,7 @@ export const Transactions = () => {
 
   return (
     <>
-      {dataReady === undefined && !searchParams.toString() && <Loader />}
+      {dataReady === undefined && <Loader />}
       {dataReady === false && <FailedTransactions />}
 
       <div ref={ref}>
