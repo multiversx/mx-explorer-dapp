@@ -1,10 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import { SelectFilter } from 'components';
 import { TxActionsEnum, TxFiltersEnum, TransactionsTableType } from 'types';
@@ -14,9 +14,8 @@ export const MethodColumnFilters = ({
 }: {
   inactiveFilters?: TransactionsTableType['inactiveFilters'];
 }) => {
-  const { search: locationSearch } = useLocation();
-  const urlParams = new URLSearchParams(locationSearch);
-  const { function: method } = Object.fromEntries(urlParams);
+  const [searchParams] = useSearchParams();
+  const { function: method } = Object.fromEntries(searchParams);
 
   const capitalize = (string: string) =>
     (string && string[0].toUpperCase() + string.slice(1)) || '';

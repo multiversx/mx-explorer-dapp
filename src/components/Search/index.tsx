@@ -5,13 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAdapter } from 'components';
 import {
-  useNetworkRoute,
   urlBuilder,
   isHash,
   isContract,
   addressIsBech32,
   bech32
 } from 'helpers';
+import { useNetworkRoute } from 'hooks';
 import { WithClassnameType } from 'types';
 
 interface SearchType extends WithClassnameType {

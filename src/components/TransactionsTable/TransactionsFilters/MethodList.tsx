@@ -1,26 +1,22 @@
-import * as React from 'react';
-import { useLocation } from 'react-router-dom';
-import { NetworkLink } from 'components';
-import { useNetworkPathname } from 'helpers';
+import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 export const MethodList = () => {
-  const { search: locationSearch } = useLocation();
-  const urlParams = new URLSearchParams(locationSearch);
-  const { function: method } = Object.fromEntries(urlParams);
-  const networkPathname = useNetworkPathname();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { function: method } = Object.fromEntries(searchParams);
 
-  const methodLink = (method: string) => {
-    const { ...rest } = Object.fromEntries(urlParams);
+  const setMethod = (method: string) => {
+    const { ...rest } = Object.fromEntries(searchParams);
 
     if (method === '' && rest?.function) {
       delete rest.function;
     }
-    const nextUrlParams = new URLSearchParams({
+    const nextUrlParams = {
       ...rest,
       ...(method ? { function: method } : {})
-    }).toString();
+    };
 
-    return `${networkPathname}?${nextUrlParams}`;
+    setSearchParams(nextUrlParams);
   };
 
   if (!method) {
@@ -36,12 +32,14 @@ export const MethodList = () => {
             <li className='list-inline-item my-1 my-md-0'>
               <div className='badge badge-outline badge-outline-green text-capitalize d-flex align-items-center justify-content-center pe-0'>
                 {method}
-                <NetworkLink
-                  to={methodLink('')}
+                <div
+                  onClick={() => {
+                    setMethod(method);
+                  }}
                   className='text-green px-2 cursor-pointer'
                 >
                   ×
-                </NetworkLink>
+                </div>
               </div>
             </li>
           )}

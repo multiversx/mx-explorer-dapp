@@ -4,10 +4,7 @@ import { faAngleRight } from '@fortawesome/pro-solid-svg-icons/faAngleRight';
 import { faAnglesLeft } from '@fortawesome/pro-solid-svg-icons/faAnglesLeft';
 import { faAnglesRight } from '@fortawesome/pro-solid-svg-icons/faAnglesRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { NetworkLink } from 'components';
-import { activeNetworkSelector } from 'redux/selectors';
+import { useSearchParams } from 'react-router-dom';
 import { pagerHelper } from './pagerHelper';
 
 export const Pager = ({
@@ -25,15 +22,8 @@ export const Pager = ({
   className?: string;
   hasTestId?: boolean;
 }) => {
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-
-  const { pathname: originalPathname } = useLocation();
-  const pathname = activeNetworkId
-    ? originalPathname.replace(`/${activeNetworkId}`, '')
-    : originalPathname;
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const params = Object.fromEntries(urlParams);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const params = Object.fromEntries(searchParams);
 
   const { size, lastPage, end, paginationArray } = pagerHelper({
     total,
@@ -41,32 +31,29 @@ export const Pager = ({
     page
   });
 
-  const nextUrlParams = new URLSearchParams({
+  const nextUrlParams = {
     ...params,
     page: `${size + 1}`
-  }).toString();
+  };
 
   const { page: urlPage, ...rest } = params;
 
-  const firstUrlParams = new URLSearchParams({
+  const firstUrlParams = {
     ...rest
-  }).toString();
-  const prevUrlParams = new URLSearchParams({
+  };
+  const prevUrlParams = {
     ...params,
     page: `${size - 1}`
-  }).toString();
+  };
 
-  const prevPageUrl =
-    size === 2
-      ? `${pathname}?${firstUrlParams}`
-      : `${pathname}?${prevUrlParams}`;
-
-  const startEnd = size;
-
-  const lastUrlParams = new URLSearchParams({
+  const lastUrlParams = {
     ...params,
     page: `${lastPage}`
-  }).toString();
+  };
+
+  const updatePage = (nextUrlParams: any) => {
+    setSearchParams(nextUrlParams);
+  };
 
   const leftBtnActive = size !== 1;
   const rightBtnsActive = end < total;
@@ -82,13 +69,13 @@ export const Pager = ({
               <FontAwesomeIcon icon={faAnglesLeft} size='lg' />
             </div>
           ) : (
-            <NetworkLink
+            <span
               className='btn btn-pager square'
+              onClick={() => updatePage(firstUrlParams)}
               {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
-              to={`${pathname}?${firstUrlParams}`}
             >
               <FontAwesomeIcon icon={faAnglesLeft} size='lg' />
-            </NetworkLink>
+            </span>
           )}
 
           {size === 1 ? (
@@ -102,33 +89,35 @@ export const Pager = ({
               <span className='d-none d-sm-flex ps-2'>Prev</span>
             </div>
           ) : (
-            <NetworkLink
+            <span
               className='btn btn-pager'
-              to={prevPageUrl}
+              onClick={() =>
+                updatePage(size === 2 ? firstUrlParams : prevUrlParams)
+              }
               {...(hasTestId ? { 'data-testid': 'previousPageButton' } : {})}
             >
               <FontAwesomeIcon icon={faAngleLeft} size='lg' />
               <span className='d-none d-sm-flex ps-2'>Prev</span>
-            </NetworkLink>
+            </span>
           )}
         </div>
 
         <div className='d-flex align-items-center page-holder'>
           {paginationArray.map((page, index) => {
-            const currentUrlParams = new URLSearchParams({
+            const currentUrlParams = {
               ...params,
               page: String(page)
-            }).toString();
+            };
 
             return (
               <React.Fragment key={`${page}-${index}`}>
                 {page !== '...' ? (
-                  <NetworkLink
+                  <span
                     className={`btn btn-pager ${page === size ? 'active' : ''}`}
-                    to={`${pathname}?${currentUrlParams}`}
+                    onClick={() => updatePage(currentUrlParams)}
                   >
                     {page}
-                  </NetworkLink>
+                  </span>
                 ) : (
                   <span>...</span>
                 )}
@@ -143,14 +132,15 @@ export const Pager = ({
           }`}
         >
           {total === '...' || end < total ? (
-            <NetworkLink
+            <button
+              type='button'
               className='btn btn-pager'
+              onClick={() => updatePage(nextUrlParams)}
               {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
-              to={`${pathname}?${nextUrlParams}`}
             >
               <span className='d-none d-sm-flex pe-2'>Next</span>
               <FontAwesomeIcon icon={faAngleRight} size='lg' />
-            </NetworkLink>
+            </button>
           ) : (
             <div
               className='btn btn-pager'
@@ -164,13 +154,13 @@ export const Pager = ({
           )}
 
           {!isNaN(lastPage) && end < total ? (
-            <NetworkLink
+            <span
               className='btn btn-pager square'
+              onClick={() => updatePage(lastUrlParams)}
               {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
-              to={`${pathname}?${lastUrlParams}`}
             >
               <FontAwesomeIcon icon={faAnglesRight} size='lg' />
-            </NetworkLink>
+            </span>
           ) : (
             <span className='btn btn-pager square'>
               <FontAwesomeIcon icon={faAnglesRight} size='lg' />

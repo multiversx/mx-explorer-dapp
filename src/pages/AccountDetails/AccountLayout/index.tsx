@@ -6,7 +6,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { LEGACY_DELEGATION_NODES_IDENTITY } from 'appConstants';
 
 import { Loader, useAdapter } from 'components';
-import { addressIsBech32, useNetworkRoute, useSize, useGetHash } from 'helpers';
+import { addressIsBech32 } from 'helpers';
+import { useNetworkRoute, useSize, useGetHash } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { setAccount, setAccountStaking } from 'redux/slices';
 import { IdentityType, ProviderType, DelegationType } from 'types';

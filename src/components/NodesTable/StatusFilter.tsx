@@ -1,25 +1,21 @@
-import * as React from 'react';
+import React from 'react';
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
-import { NetworkLink } from 'components';
-import { useNetworkPathname } from 'helpers';
+import { useSearchParams } from 'react-router-dom';
 
 export const StatusFilter = () => {
-  const { search } = useLocation();
-  const urlParams = new URLSearchParams(search);
-  const { online, page, ...rest } = Object.fromEntries(urlParams);
-
-  const networkPathname = useNetworkPathname();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { online, page, ...rest } = Object.fromEntries(searchParams);
 
   const onlineLink = (onlineValue: string) => {
-    const nextUrlParams = new URLSearchParams({
+    const nextUrlParams = {
       ...rest,
       ...(onlineValue ? { online: onlineValue } : {})
-    }).toString();
-    return `${networkPathname}?${nextUrlParams}`;
+    };
+
+    setSearchParams(nextUrlParams);
   };
 
   return (
@@ -31,44 +27,46 @@ export const StatusFilter = () => {
       overlay={
         <Popover id='popover-positioned-bottom' className='border'>
           <Popover.Body>
-            <NetworkLink
+            <div
               className={`dropdown-item ${online === 'true' ? 'active' : ''}`}
-              to={onlineLink('true')}
+              onClick={() => {
+                onlineLink('true');
+              }}
               data-testid='filterByStatusOnline'
             >
               Online
-            </NetworkLink>
-            <NetworkLink
+            </div>
+            <div
               className={`dropdown-item ${online === 'false' ? 'active' : ''}`}
-              to={onlineLink('false')}
+              onClick={() => {
+                onlineLink('false');
+              }}
               data-testid='filterByStatusOffline'
             >
               Offline
-            </NetworkLink>
-            <NetworkLink
+            </div>
+            <div
               className={`dropdown-item ${online === undefined ? '' : ''}`}
-              to={onlineLink('')}
+              onClick={() => {
+                onlineLink('');
+              }}
               data-testid='filterByStatusAll'
             >
               Show all
-            </NetworkLink>
+            </div>
           </Popover.Body>
         </Popover>
       }
     >
-      <a
-        className='d-inline-block side-action'
+      <div
+        className='d-inline-block side-action cursor-pointer'
         data-testid='shardFilterButton'
-        href={`${networkPathname}/${search}`}
-        onClick={(e) => {
-          e.preventDefault();
-        }}
       >
         <FontAwesomeIcon
           icon={online !== undefined ? faFilterSolid : faFilter}
           className={online !== undefined ? 'text-primary' : ''}
         />
-      </a>
+      </div>
     </OverlayTrigger>
   );
 };

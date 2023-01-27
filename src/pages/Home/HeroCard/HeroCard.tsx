@@ -1,13 +1,29 @@
-import * as React from 'react';
+import React from 'react';
+
 import { faCircleBolt } from '@fortawesome/pro-solid-svg-icons/faCircleBolt';
 import { faCirclePlus } from '@fortawesome/pro-solid-svg-icons/faCirclePlus';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSelector } from 'react-redux';
+
 import { Search, Particles, ValidatorsStatus } from 'components';
 import { multiversxApps } from 'config';
+
+import { useFetchGrowthHero } from 'hooks';
+import { growthHeroSelector, statsSelector } from 'redux/selectors';
 
 export const HeroCard = () => {
   const explorerApp = multiversxApps.find((app) => app.id === 'explorer');
   const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
+
+  const {
+    totalTransactions,
+    totalTransactionsToday,
+    totalAccounts,
+    activeAccountsToday
+  } = useSelector(growthHeroSelector);
+  const { blocks } = useSelector(statsSelector);
+
+  useFetchGrowthHero();
 
   return (
     <div className='hero-card card card-lg card-black'>
@@ -25,7 +41,7 @@ export const HeroCard = () => {
             <div className='card card-black'>
               <div className='card-body'>
                 <p className='text-neutral-400 mb-0'>Block Height</p>
-                <h3 className='mb-0'>51,232,323</h3>
+                <h3 className='mb-0'>{blocks}</h3>
               </div>
             </div>
           </div>
@@ -33,20 +49,20 @@ export const HeroCard = () => {
             <div className='card card-black'>
               <div className='card-body'>
                 <p className='text-neutral-400 mb-0'>Total Transactions</p>
-                <h3 className='card-value'>51,232,323</h3>
+                <h3 className='card-value'>{totalTransactions}</h3>
                 <p className='mb-0 text-primary-200'>
                   <FontAwesomeIcon icon={faCirclePlus} className='me-2' />
-                  108,075 active today
+                  {totalTransactionsToday} today
                 </p>
               </div>
             </div>
             <div className='card card-black'>
               <div className='card-body'>
                 <p className='text-neutral-400 mb-0'>Total Accounts</p>
-                <h3 className='card-value'>51,232,323</h3>
+                <h3 className='card-value'>{totalAccounts}</h3>
                 <p className='mb-0 text-primary-200'>
                   <FontAwesomeIcon icon={faCircleBolt} className='me-2' />
-                  108,075 active today
+                  {activeAccountsToday} active today
                 </p>
               </div>
             </div>

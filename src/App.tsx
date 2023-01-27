@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { PersistGate } from 'redux-persist/integration/react';
 import { networks } from 'config';
-import { useIsMainnet } from 'helpers';
+import { useIsMainnet } from 'hooks';
 
 // eslint-disable-next-line import/order
 import { AxiosInterceptor } from 'components';

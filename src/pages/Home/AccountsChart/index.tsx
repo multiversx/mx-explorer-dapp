@@ -14,7 +14,7 @@ export const AccountsChart = () => {
   const { getAccountsHistory } = useAdapter();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { statsFetched, accounts } = useSelector(statsSelector);
+  const { isFetched, accounts } = useSelector(statsSelector);
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
@@ -44,9 +44,7 @@ export const AccountsChart = () => {
     }
   ];
 
-  const totalAccounts = statsFetched
-    ? new BigNumber(accounts).toFormat(0)
-    : '...';
+  const totalAccounts = isFetched ? new BigNumber(accounts).toFormat(0) : '...';
   const metrics = [
     { label: 'New Addresses Today', value: getLastDayValue(chartData) },
     { label: 'Total Addresses', value: totalAccounts }

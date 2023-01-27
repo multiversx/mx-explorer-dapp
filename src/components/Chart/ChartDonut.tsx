@@ -11,7 +11,7 @@ import { ChartProps } from './helpers/types';
 
 const RenderActiveShape = (props: any) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
-  const { economicsFetched, price } = useSelector(economicsSelector);
+  const { isFetched, unprocessed } = useSelector(economicsSelector);
 
   const RADIAN = Math.PI / 180;
 
@@ -91,7 +91,7 @@ const RenderActiveShape = (props: any) => {
       >
         {payload.displayValue ?? new BigNumber(value).toFormat()} {egldLabel}
       </text>
-      {economicsFetched && (
+      {isFetched && (
         <text
           x={ex + (cos >= 0 ? 1 : -1) * 12}
           y={ey}
@@ -102,7 +102,7 @@ const RenderActiveShape = (props: any) => {
         >
           {usdValue({
             amount: payload.displayValue ?? value,
-            usd: price,
+            usd: unprocessed.price,
             showPrefix: true
           })}
         </text>

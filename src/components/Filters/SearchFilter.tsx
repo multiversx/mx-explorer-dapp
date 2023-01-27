@@ -1,9 +1,8 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
-import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useNetworkPathname, isHash, addressIsBech32 } from 'helpers';
+import { useSearchParams } from 'react-router-dom';
+import { isHash, addressIsBech32 } from 'helpers';
 import { TxFiltersEnum } from 'types';
 
 export interface SearchFilterType {
@@ -21,15 +20,12 @@ export const SearchFilter = ({
   className = '',
   validation
 }: SearchFilterType) => {
-  const navigate = useNavigate();
-  const { search: locationSearch } = useLocation();
-  const networkPathname = useNetworkPathname();
-  const urlParams = new URLSearchParams(locationSearch);
-  const paramsObject = Object.fromEntries(urlParams);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const paramsObject = Object.fromEntries(searchParams);
   const existingValue = paramsObject[filter] ?? '';
 
-  const [inputValue, setInputValue] = React.useState<string>(existingValue);
-  const [errorText, setErrorText] = React.useState<string>('');
+  const [inputValue, setInputValue] = useState<string>(existingValue);
+  const [errorText, setErrorText] = useState<string>('');
 
   const changeInputValue: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setInputValue(e.target.value);
@@ -37,14 +33,15 @@ export const SearchFilter = ({
   };
 
   const updateUrl = (searchValue: string) => {
-    const paramsObject = Object.fromEntries(urlParams);
+    const paramsObject = Object.fromEntries(searchParams);
     delete paramsObject[filter];
 
-    const nextUrlParams = new URLSearchParams({
+    const nextUrlParams = {
       ...paramsObject,
       ...(searchValue ? { [filter]: searchValue } : {})
-    }).toString();
-    navigate(`${networkPathname}?${nextUrlParams}`);
+    };
+
+    setSearchParams(nextUrlParams);
   };
 
   const updateSearchValue = (searchValue: string) => {
