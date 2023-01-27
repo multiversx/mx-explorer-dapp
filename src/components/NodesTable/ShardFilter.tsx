@@ -1,25 +1,23 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { ShardSpan, NetworkLink, useAdapter } from 'components';
+import { useSearchParams } from 'react-router-dom';
+import { ShardSpan, useAdapter } from 'components';
 
-import { useNetworkPathname } from 'hooks';
 import { shardsSelector } from 'redux/selectors';
 import { setShards } from 'redux/slices/interface';
 
 export const ShardFilter = () => {
-  const { search } = useLocation();
-  const dispatch = useDispatch();
-  const urlParams = new URLSearchParams(search);
-  const { shard, page, ...rest } = Object.fromEntries(urlParams);
   const { getShards } = useAdapter();
+  const dispatch = useDispatch();
   const shards = useSelector(shardsSelector);
-  const networkPathname = useNetworkPathname();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { shard, page, ...rest } = Object.fromEntries(searchParams);
 
   const fetchShards = () => {
     if (shards.length === 0) {
@@ -32,14 +30,15 @@ export const ShardFilter = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchShards, []);
+  useEffect(fetchShards, []);
 
-  const shardLink = (shard: string) => {
-    const nextUrlParams = new URLSearchParams({
+  const setShardfilter = (shard: string) => {
+    const nextUrlParams = {
       ...rest,
       ...(shard ? { shard } : {})
-    }).toString();
-    return `${networkPathname}?${nextUrlParams}`;
+    };
+
+    setSearchParams(nextUrlParams);
   };
 
   return (
@@ -54,44 +53,44 @@ export const ShardFilter = () => {
             <Popover.Body>
               {shards.map((entry, i) => {
                 return (
-                  <NetworkLink
-                    to={shardLink(entry.shard.toString())}
-                    className={`dropdown-item ${
+                  <div
+                    className={`dropdown-item cursor-pointer ${
                       shard === entry.shard.toString() ? 'active' : ''
                     }`}
                     key={entry.shard + i}
+                    onClick={() => {
+                      setShardfilter(entry.shard.toString());
+                    }}
                   >
                     <ShardSpan shard={entry.shard} />
-                  </NetworkLink>
+                  </div>
                 );
               })}
-              <NetworkLink
-                className={`dropdown-item ${
+              <div
+                className={`dropdown-item cursor-pointer ${
                   shard === undefined ? 'active' : ''
                 }`}
                 key={-1}
-                to={shardLink('')}
+                onClick={() => {
+                  setShardfilter('');
+                }}
               >
                 Show all
-              </NetworkLink>
+              </div>
             </Popover.Body>
           )}
         </Popover>
       }
     >
-      <a
-        className='d-inline-block side-action'
+      <div
+        className='d-inline-block side-action cursor-pointer'
         data-testid='shardFilterButton'
-        href={`${networkPathname}/${search}`}
-        onClick={(e) => {
-          e.preventDefault();
-        }}
       >
         <FontAwesomeIcon
           icon={shard !== undefined ? faFilterSolid : faFilter}
           className={shard !== undefined ? 'text-primary' : ''}
         />
-      </a>
+      </div>
     </OverlayTrigger>
   );
 };

@@ -23,6 +23,10 @@
   --#{$prefix}popover-arrow-border: var(--gray-dark);
 }
 
+.badge {
+  --#{$prefix}badge-color: var(--body-color);
+}
+
 .btn-primary {
   --#{$prefix}btn-color: var(--neutral-900);
   --#{$prefix}btn-bg: var(--primary);
@@ -104,5 +108,8 @@
   --#{$prefix}dropdown-header-color: var(--neutral-700);
   &.show {
     margin: 0 !important;
+  }
+  .dropdown-item {
+    cursor: pointer;
   }
 }

@@ -1,15 +1,14 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
-
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+
 import { useAdapter, SelectFilter } from 'components';
 import { shardSpanText } from 'components/ShardSpan';
-
 import { shardsSelector } from 'redux/selectors';
 import { setShards } from 'redux/slices/interface';
 import { TxFiltersEnum, TransactionsTableType } from 'types';
@@ -20,9 +19,8 @@ export const ShardColumnFilters = ({
   inactiveFilters?: TransactionsTableType['inactiveFilters'];
 }) => {
   const dispatch = useDispatch();
-  const { search: locationSearch } = useLocation();
-  const urlParams = new URLSearchParams(locationSearch);
-  const { senderShard, receiverShard } = Object.fromEntries(urlParams);
+  const [searchParams] = useSearchParams();
+  const { senderShard, receiverShard } = Object.fromEntries(searchParams);
   const { getShards } = useAdapter();
 
   const stateShards = useSelector(shardsSelector);
@@ -38,7 +36,7 @@ export const ShardColumnFilters = ({
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchShards, []);
+  useEffect(fetchShards, []);
 
   const searchShards = stateShards.map((shard) => {
     return {

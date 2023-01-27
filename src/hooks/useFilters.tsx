@@ -1,9 +1,8 @@
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { stringIsInteger } from 'helpers';
 
 export const useGetFilters = () => {
-  const { search: urlSearch } = useLocation();
-  const urlParams = new URLSearchParams(urlSearch);
+  const [searchParams] = useSearchParams();
   const {
     online,
     search,
@@ -16,7 +15,7 @@ export const useGetFilters = () => {
     page,
     order,
     sort
-  } = Object.fromEntries(urlParams);
+  } = Object.fromEntries(searchParams);
 
   const size = page && stringIsInteger(page) ? parseInt(page) : 1;
 

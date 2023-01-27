@@ -1,11 +1,9 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown } from 'react-bootstrap';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { NetworkLink } from 'components';
-import { useNetworkRoute } from 'hooks';
+import { useSearchParams } from 'react-router-dom';
 
 export const NodesFilters = ({
   baseRoute,
@@ -14,13 +12,11 @@ export const NodesFilters = ({
   baseRoute: string;
   onlySearch?: boolean;
 }) => {
-  const { search: locationSearch } = useLocation();
-  const networkRoute = useNetworkRoute();
-  const navigate = useNavigate();
-  const urlParams = new URLSearchParams(locationSearch);
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const { search, status, issues, type, fullHistory } =
-    Object.fromEntries(urlParams);
-  const [inputValue, setInputValue] = React.useState<string>(search);
+    Object.fromEntries(searchParams);
+  const [inputValue, setInputValue] = useState<string>(search);
 
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = (
     e
@@ -29,53 +25,59 @@ export const NodesFilters = ({
   };
 
   const updateSearchValue = (searchValue: string) => {
-    const { search, page, ...rest } = Object.fromEntries(urlParams);
-    const nextUrlParams = new URLSearchParams({
+    const { search, page, ...rest } = Object.fromEntries(searchParams);
+    const nextUrlParams = {
       ...rest,
       ...(searchValue ? { search: searchValue } : {})
-    }).toString();
-    navigate(networkRoute(`${baseRoute}?${nextUrlParams}`));
+    };
+
+    setSearchParams(nextUrlParams);
   };
 
   const nodeStatusLink = (statusValue: string) => {
     const { status, type, issues, fullHistory, page, ...rest } =
-      Object.fromEntries(urlParams);
-    const nextUrlParams = new URLSearchParams({
+      Object.fromEntries(searchParams);
+
+    const nextUrlParams = {
       ...rest,
       ...(statusValue ? { status: statusValue } : {}),
       ...(statusValue && statusValue === 'queued' ? { sort: 'position' } : {})
-    }).toString();
-    return `${baseRoute}?${nextUrlParams}`;
+    };
+
+    setSearchParams(nextUrlParams);
   };
 
   const nodeTypeLink = (typeValue: string) => {
     const { type, status, issues, fullHistory, page, ...rest } =
-      Object.fromEntries(urlParams);
-    const nextUrlParams = new URLSearchParams({
+      Object.fromEntries(searchParams);
+    const nextUrlParams = {
       ...rest,
       ...(typeValue ? { type: typeValue } : {})
-    }).toString();
-    return `${baseRoute}?${nextUrlParams}`;
+    };
+
+    setSearchParams(nextUrlParams);
   };
 
   const issuesLink = (issuesValue: string) => {
     const { type, status, issues, fullHistory, page, ...rest } =
-      Object.fromEntries(urlParams);
-    const nextUrlParams = new URLSearchParams({
+      Object.fromEntries(searchParams);
+    const nextUrlParams = {
       ...rest,
       ...(issuesValue ? { issues: issuesValue, type: 'validator' } : {})
-    }).toString();
-    return `${baseRoute}?${nextUrlParams}`;
+    };
+
+    setSearchParams(nextUrlParams);
   };
 
   const fullHistoryLink = (fullHistoryValue: string) => {
     const { type, status, issues, fullHistory, page, ...rest } =
-      Object.fromEntries(urlParams);
-    const nextUrlParams = new URLSearchParams({
+      Object.fromEntries(searchParams);
+    const nextUrlParams = {
       ...rest,
       ...(fullHistoryValue ? { fullHistory: fullHistoryValue } : {})
-    }).toString();
-    return `${baseRoute}?${nextUrlParams}`;
+    };
+
+    setSearchParams(nextUrlParams);
   };
 
   return (
@@ -83,20 +85,28 @@ export const NodesFilters = ({
       {!onlySearch && (
         <ul className='list-inline m-0'>
           <li className='list-inline-item my-1 my-md-0'>
-            <NetworkLink
-              to={baseRoute}
+            <button
+              type='button'
+              onClick={() => {
+                nodeTypeLink('');
+              }}
               className={`badge py-2 px-3 br-lg ${
-                [search, status, issues, type].every((el) => el === undefined)
+                [search, status, issues, type, fullHistory].every(
+                  (el) => el === undefined
+                )
                   ? 'badge-grey'
                   : 'badge-outline badge-outline-grey'
               }`}
             >
               All
-            </NetworkLink>
+            </button>
           </li>
           <li className='list-inline-item my-1 my-md-0'>
-            <NetworkLink
-              to={nodeTypeLink('validator')}
+            <button
+              type='button'
+              onClick={() => {
+                nodeTypeLink('validator');
+              }}
               className={`badge py-2 px-3 br-lg ${
                 type === 'validator' && issues !== 'true'
                   ? 'badge-grey'
@@ -104,11 +114,14 @@ export const NodesFilters = ({
               }`}
             >
               Validators
-            </NetworkLink>
+            </button>
           </li>
           <li className='list-inline-item my-1 my-md-0'>
-            <NetworkLink
-              to={nodeTypeLink('observer')}
+            <button
+              type='button'
+              onClick={() => {
+                nodeTypeLink('observer');
+              }}
               data-testid='filterByObservers'
               className={`badge py-2 px-3 br-lg ${
                 type === 'observer'
@@ -117,22 +130,28 @@ export const NodesFilters = ({
               }`}
             >
               Observers
-            </NetworkLink>
+            </button>
           </li>
           <li className='list-inline-item my-1 my-md-0'>
-            <NetworkLink
-              to={fullHistoryLink('true')}
+            <button
+              type='button'
+              onClick={() => {
+                fullHistoryLink('true');
+              }}
               data-testid='filterByFullHistory'
               className={`badge py-2 px-3 br-lg ${
                 fullHistory ? 'badge-grey' : 'badge-outline badge-outline-grey'
               }`}
             >
               Full History
-            </NetworkLink>
+            </button>
           </li>
           <li className='list-inline-item my-1 my-md-0'>
-            <NetworkLink
-              to={issuesLink('true')}
+            <button
+              type='button'
+              onClick={() => {
+                issuesLink('true');
+              }}
               className={`badge py-2 px-3 br-lg ${
                 issues === 'true'
                   ? 'badge-grey'
@@ -140,14 +159,14 @@ export const NodesFilters = ({
               }`}
             >
               Issues
-            </NetworkLink>
+            </button>
           </li>
           <li className='list-inline-item my-1 my-md-0'>
             <Dropdown className='position-unset'>
               <Dropdown.Toggle
                 variant='outline-dark'
                 size='sm'
-                className={`badge-outline badge-outline-grey py-2 px-3 br-lg me-2 ${
+                className={`badge  py-2 px-3 br-lg me-2 ${
                   [
                     'eligible',
                     'waiting',
@@ -157,8 +176,8 @@ export const NodesFilters = ({
                     'queued',
                     'inactive'
                   ].includes(status)
-                    ? 'active'
-                    : ''
+                    ? 'badge-grey'
+                    : 'badge-outline badge-outline-grey'
                 }`}
                 id='more'
               >
@@ -168,69 +187,83 @@ export const NodesFilters = ({
               <Dropdown.Menu
                 style={{ marginTop: '0.35rem', marginBottom: '0.35rem' }}
               >
-                <NetworkLink
+                <div
                   className={`dropdown-item ${
                     status === 'eligible' ? 'active' : ''
                   }`}
                   data-testid='filterByValidators'
-                  to={nodeStatusLink('eligible')}
+                  onClick={() => {
+                    nodeStatusLink('eligible');
+                  }}
                 >
                   Eligible
-                </NetworkLink>
-                <NetworkLink
+                </div>
+                <div
                   className={`dropdown-item ${
                     status === 'waiting' ? 'active' : ''
                   }`}
                   data-testid='filterByValidators'
-                  to={nodeStatusLink('waiting')}
+                  onClick={() => {
+                    nodeStatusLink('waiting');
+                  }}
                 >
                   Waiting
-                </NetworkLink>
-                <NetworkLink
+                </div>
+                <div
                   className={`dropdown-item ${
                     status === 'new' ? 'active' : ''
                   }`}
                   data-testid='filterByValidators'
-                  to={nodeStatusLink('new')}
+                  onClick={() => {
+                    nodeStatusLink('new');
+                  }}
                 >
                   New
-                </NetworkLink>
-                <NetworkLink
+                </div>
+                <div
                   className={`dropdown-item ${
                     status === 'jailed' ? 'active' : ''
                   }`}
                   data-testid='filterByValidators'
-                  to={nodeStatusLink('jailed')}
+                  onClick={() => {
+                    nodeStatusLink('jailed');
+                  }}
                 >
                   Jailed
-                </NetworkLink>
-                <NetworkLink
+                </div>
+                <div
                   className={`dropdown-item ${
                     status === 'leaving' ? 'active' : ''
                   }`}
                   data-testid='filterByValidators'
-                  to={nodeStatusLink('leaving')}
+                  onClick={() => {
+                    nodeStatusLink('leaving');
+                  }}
                 >
                   Leaving
-                </NetworkLink>
-                <NetworkLink
+                </div>
+                <div
                   className={`dropdown-item ${
                     status === 'queued' ? 'active' : ''
                   }`}
                   data-testid='filterByValidators'
-                  to={nodeStatusLink('queued')}
+                  onClick={() => {
+                    nodeStatusLink('queued');
+                  }}
                 >
                   Queued
-                </NetworkLink>
-                <NetworkLink
+                </div>
+                <div
                   className={`dropdown-item ${
                     status === 'inactive' ? 'active' : ''
                   }`}
                   data-testid='filterByValidators'
-                  to={nodeStatusLink('inactive')}
+                  onClick={() => {
+                    nodeStatusLink('inactive');
+                  }}
                 >
                   Inactive
-                </NetworkLink>
+                </div>
               </Dropdown.Menu>
             </Dropdown>
           </li>

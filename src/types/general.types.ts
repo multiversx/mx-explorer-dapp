@@ -131,7 +131,7 @@ export enum TxFiltersEnum {
   receiverShard = 'receiverShard',
   sender = 'sender',
   receiver = 'receiver',
-  method = 'filter',
+  method = 'function',
   before = 'before',
   after = 'after',
   status = 'status',

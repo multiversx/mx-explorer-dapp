@@ -1,16 +1,14 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 export const Filters = () => {
-  const { search: locationSearch } = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const navigate = useNavigate();
-  const urlParams = new URLSearchParams(locationSearch);
-  const { search } = Object.fromEntries(urlParams);
-  const [inputValue, setInputValue] = React.useState<string>(search);
+  const { search } = Object.fromEntries(searchParams);
+  const [inputValue, setInputValue] = useState<string>(search);
 
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = (
     e
@@ -19,12 +17,13 @@ export const Filters = () => {
   };
 
   const updateSearchValue = (searchValue: string) => {
-    const { search, page, ...rest } = Object.fromEntries(urlParams);
-    const nextUrlParams = new URLSearchParams({
+    const { search, page, ...rest } = Object.fromEntries(searchParams);
+    const nextUrlParams = {
       ...rest,
       ...(searchValue ? { search: searchValue } : {})
-    }).toString();
-    navigate(`/nfts?${nextUrlParams}`);
+    };
+
+    setSearchParams(nextUrlParams);
   };
 
   return (
