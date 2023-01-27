@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { NetworkLink } from 'components';
-import { useNetworkPathname } from 'helpers';
+import { useNetworkPathname } from 'hooks';
 
 export const StatusFilter = () => {
   const { search } = useLocation();

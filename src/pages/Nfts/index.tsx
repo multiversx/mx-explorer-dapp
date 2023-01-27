@@ -9,7 +9,8 @@ import {
   CollectionBlock,
   NftBadge
 } from 'components';
-import { urlBuilder, useGetFilters, useURLSearchParams } from 'helpers';
+import { urlBuilder } from 'helpers';
+import { useGetFilters, useURLSearchParams } from 'hooks';
 import { NftType } from 'types';
 import { FailedNfts } from './FailedNfts';
 import { Filters } from './Filters';

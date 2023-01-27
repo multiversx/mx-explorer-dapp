@@ -5,7 +5,7 @@ export interface GrowthMostUsedType {
 }
 
 export interface GrowthMostUsedSliceType extends GrowthMostUsedType {
-  growthMostUsedFetched: boolean;
+  isFetched: boolean;
 }
 
 export interface MostUsedBaseType {

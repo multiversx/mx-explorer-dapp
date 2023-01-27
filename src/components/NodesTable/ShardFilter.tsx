@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { ShardSpan, NetworkLink, useAdapter } from 'components';
 
-import { useNetworkPathname } from 'helpers';
+import { useNetworkPathname } from 'hooks';
 import { shardsSelector } from 'redux/selectors';
 import { setShards } from 'redux/slices/interface';
 

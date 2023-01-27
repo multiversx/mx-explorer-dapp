@@ -13,7 +13,7 @@ export const TransactionsChart = () => {
   const { getTransactionsHistory } = useAdapter();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { statsFetched, transactions } = useSelector(statsSelector);
+  const { isFetched, transactions } = useSelector(statsSelector);
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
@@ -45,7 +45,7 @@ export const TransactionsChart = () => {
     }
   ];
 
-  const totalTransactions = statsFetched
+  const totalTransactions = isFetched
     ? new BigNumber(transactions).toFormat(0)
     : '...';
   const transactionsToday =

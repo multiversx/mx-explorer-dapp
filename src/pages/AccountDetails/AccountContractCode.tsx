@@ -2,8 +2,8 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { urlBuilder, useNetworkRoute } from 'helpers';
-import { downloadFile } from 'helpers';
+import { downloadFile, urlBuilder } from 'helpers';
+import { useNetworkRoute } from 'hooks';
 
 import { accountSelector } from 'redux/selectors';
 import { AccountTabs } from './AccountLayout/AccountTabs';

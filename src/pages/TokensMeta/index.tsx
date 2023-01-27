@@ -3,12 +3,8 @@ import { faDiamond } from '@fortawesome/pro-regular-svg-icons/faDiamond';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom';
 import { Loader, useAdapter, NetworkLink, Trim, Pager } from 'components';
-import {
-  urlBuilder,
-  useGetFilters,
-  useURLSearchParams,
-  useActiveRoute
-} from 'helpers';
+import { urlBuilder } from 'helpers';
+import { useGetFilters, useURLSearchParams, useActiveRoute } from 'hooks';
 import { tokensRoutes } from 'routes';
 import { CollectionType } from 'types';
 import { FailedTokens } from './FailedTokens';

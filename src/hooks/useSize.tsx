@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useURLSearchParams } from 'helpers';
+import { useURLSearchParams } from 'hooks';
 
 import { refreshSelector } from 'redux/selectors/refresh';
 

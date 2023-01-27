@@ -15,13 +15,8 @@ import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
 import { NoScResults } from 'components/ScResultsTable/NoScResults';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
-import {
-  isHash,
-  useNetworkRoute,
-  urlBuilder,
-  useSize,
-  useURLSearchParams
-} from 'helpers';
+import { isHash, urlBuilder } from 'helpers';
+import { useNetworkRoute, useSize, useURLSearchParams } from 'hooks';
 
 import { activeNetworkSelector } from 'redux/selectors';
 import { UITransactionType, TxFiltersEnum } from 'types';

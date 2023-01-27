@@ -10,12 +10,8 @@ import {
   NftBadge,
   TimeAgo
 } from 'components';
-import {
-  urlBuilder,
-  useGetFilters,
-  useURLSearchParams,
-  useActiveRoute
-} from 'helpers';
+import { urlBuilder } from 'helpers';
+import { useGetFilters, useURLSearchParams, useActiveRoute } from 'hooks';
 import { collectionRoutes } from 'routes';
 import { NftEnumType, CollectionType } from 'types';
 import { FailedCollections } from './FailedCollections';

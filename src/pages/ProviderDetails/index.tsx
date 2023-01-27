@@ -3,7 +3,7 @@ import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { useLocation, useParams } from 'react-router-dom';
 
 import { useAdapter, Loader, Pager, PageState, NodesTable } from 'components';
-import { useGetFilters } from 'helpers';
+import { useGetFilters } from 'hooks';
 import { ProviderTabs } from 'pages/ProviderDetails/ProviderLayout/ProviderTabs';
 import { NodeType } from 'types';
 

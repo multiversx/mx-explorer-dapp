@@ -536,3 +536,15 @@ export interface BlockType {
   maxGasLimit: number;
   proposerIdentity?: IdentityType;
 }
+
+//----------
+
+export interface SliceType {
+  isFetched: boolean;
+}
+
+export enum TrendEnum {
+  up = 'up',
+  down = 'down',
+  neutral = 'neutral'
+}

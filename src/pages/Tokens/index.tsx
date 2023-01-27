@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import { PAGE_SIZE } from 'appConstants';
 import { Loader, useAdapter, NetworkLink, Pager } from 'components';
-import { useGetFilters, useURLSearchParams, useActiveRoute } from 'helpers';
+import { useGetFilters, useURLSearchParams, useActiveRoute } from 'hooks';
 import { economicsSelector } from 'redux/selectors';
 import { tokensRoutes } from 'routes';
 
@@ -25,8 +25,7 @@ export const Tokens = () => {
   const { getQueryObject, size } = useGetFilters();
   const { getTokens, getTokensCount } = useAdapter();
 
-  const { economicsFetched, ecosystemMarketCap } =
-    useSelector(economicsSelector);
+  const { isFetched, ecosystemMarketCap } = useSelector(economicsSelector);
 
   const [tokens, setTokens] = React.useState<TokenType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -80,7 +79,7 @@ export const Tokens = () => {
                           <span className='text-neutral-400'>
                             Ecosystem Market Cap:
                           </span>{' '}
-                          {economicsFetched
+                          {isFetched
                             ? `$${new BigNumber(ecosystemMarketCap).toFormat(
                                 0
                               )}`

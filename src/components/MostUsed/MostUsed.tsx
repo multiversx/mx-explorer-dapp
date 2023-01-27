@@ -2,10 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { Loader } from 'components';
-import { useIsMainnet } from 'helpers';
+import { useIsMainnet, useFetchGrowthMostUsed } from 'hooks';
 import { growthMostUsedSelector } from 'redux/selectors';
 
-import { useFetchMostUsed } from './helpers/useFetchMostUsed';
 import { MostUsedCollections } from './MostUsedCollections';
 import { MostUsedContracts } from './MostUsedContracts';
 import { MostUsedTokens } from './MostUsedTokens';
@@ -14,19 +13,19 @@ export const MostUsed = () => {
   const isMainnet = useIsMainnet();
 
   const {
-    growthMostUsedFetched,
+    isFetched,
     dailyMostUsedApplications,
     dailyMostTransactedNFTs,
     dailyMostTransactedTokens
   } = useSelector(growthMostUsedSelector);
 
-  useFetchMostUsed();
+  useFetchGrowthMostUsed();
 
   return (
     <>
       {isMainnet ? (
         <>
-          {growthMostUsedFetched ? (
+          {isFetched ? (
             <div className='row'>
               <div className='col-12 col-lg-4 mt-spacer'>
                 <MostUsedContracts data={dailyMostUsedApplications} />

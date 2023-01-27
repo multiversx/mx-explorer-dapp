@@ -5,19 +5,20 @@ import { useAdapter } from 'components';
 import { growthMostUsedSelector } from 'redux/selectors';
 import { setGrowthMostUsed } from 'redux/slices/growthMostUsed';
 
-export const useFetchMostUsed = () => {
+export const useFetchGrowthMostUsed = () => {
   const dispatch = useDispatch();
-  const { growthMostUsedFetched } = useSelector(growthMostUsedSelector);
+  const { isFetched } = useSelector(growthMostUsedSelector);
   const { getGrowthWidget } = useAdapter();
 
-  const fetchGrowthMostUsed = () => {
-    if (!growthMostUsedFetched) {
+  const fetchMostUsed = () => {
+    if (!isFetched) {
       getGrowthWidget('/most-used').then((growthMostUsed) => {
         if (growthMostUsed?.data && growthMostUsed.success) {
           dispatch(
             setGrowthMostUsed({
               ...growthMostUsed.data,
-              growthMostUsedFetched: growthMostUsed.success
+
+              isFetched: growthMostUsed.success
             })
           );
         }
@@ -25,5 +26,5 @@ export const useFetchMostUsed = () => {
     }
   };
 
-  React.useEffect(fetchGrowthMostUsed, []);
+  React.useEffect(fetchMostUsed, []);
 };

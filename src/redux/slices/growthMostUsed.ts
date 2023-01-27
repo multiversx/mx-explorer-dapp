@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GrowthMostUsedSliceType } from 'types/growth.types';
+import { GrowthMostUsedSliceType } from 'types/growthWidgets';
 
 export const getInitialGrowthMostUsedState = (): GrowthMostUsedSliceType => {
   return {
@@ -7,7 +7,7 @@ export const getInitialGrowthMostUsedState = (): GrowthMostUsedSliceType => {
     dailyMostTransactedNFTs: [],
     dailyMostTransactedTokens: [],
 
-    growthMostUsedFetched: false
+    isFetched: false
   };
 };
 
@@ -25,7 +25,7 @@ export const growthMostUsedSlice = createSlice({
       state.dailyMostTransactedTokens =
         action.payload.dailyMostTransactedTokens;
 
-      state.growthMostUsedFetched = action.payload.growthMostUsedFetched;
+      state.isFetched = action.payload.isFetched;
     }
   }
 });

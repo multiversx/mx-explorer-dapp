@@ -3,7 +3,7 @@ import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { useNetworkPathname } from 'helpers';
+import { useNetworkPathname } from 'hooks';
 
 export const timestampToDate = (timestamp: number | undefined) => {
   return timestamp ? moment.unix(timestamp).toDate() : null;

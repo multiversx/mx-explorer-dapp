@@ -13,8 +13,10 @@ export const EpochGear = ({ showTime }: { showTime?: boolean }) => {
   const play = !pageHidden;
   const refreshIntervalSec = 6;
 
-  const { epoch, statsFetched, roundsPerEpoch, roundsPassed } =
-    useSelector(statsSelector);
+  const {
+    isFetched,
+    unprocessed: { roundsPerEpoch, roundsPassed, epoch }
+  } = useSelector(statsSelector);
 
   const [nextEpoch, setNextEpoch] = React.useState<any>();
   const [epochDurationSec, setEpochDurationSec] = React.useState(0);
@@ -28,7 +30,7 @@ export const EpochGear = ({ showTime }: { showTime?: boolean }) => {
   const [resetCount, setResetCount] = React.useState(0);
 
   const init = () => {
-    if (statsFetched) {
+    if (isFetched) {
       const secondsUntilNextEpoch =
         refreshIntervalSec * (roundsPerEpoch - roundsPassed);
       const nextEpochDate: any = moment()
@@ -53,7 +55,7 @@ export const EpochGear = ({ showTime }: { showTime?: boolean }) => {
     }
   };
 
-  React.useEffect(init, [statsFetched, roundsPerEpoch, roundsPassed]);
+  React.useEffect(init, [isFetched, roundsPerEpoch, roundsPassed]);
 
   const calculate = () => {
     const now: any = moment();
