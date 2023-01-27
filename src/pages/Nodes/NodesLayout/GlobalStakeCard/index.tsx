@@ -22,9 +22,7 @@ export const GlobalStakeCard = ({
   const { nodesVerions } = useSelector(globalStakeSelector);
   const { isFetched, baseApr, staked } = useSelector(economicsSelector);
 
-  const displayBaseApr = isFetched
-    ? `Up to ${new BigNumber(baseApr).times(100).toFormat(2)}%`
-    : 'N/A';
+  const displayBaseApr = isFetched ? `Up to ${baseApr}` : 'N/A';
 
   return stakeFetched === false ? (
     <div className='row'>
@@ -51,7 +49,7 @@ export const GlobalStakeCard = ({
                   <h5 className='m-0 pb-1'>
                     {isFetched ? (
                       <>
-                        {new BigNumber(staked).toFormat(0)} {egldLabel}
+                        {staked} {egldLabel}
                       </>
                     ) : (
                       '...'

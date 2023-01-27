@@ -90,15 +90,13 @@ export const BlocksTable = ({
               <td>
                 <div
                   className={
-                    showProposerIdentity
-                      ? ''
-                      : 'd-flex justify-content-end me-spacer'
+                    showProposerIdentity ? '' : 'd-flex justify-content-end'
                   }
                 >
                   <NetworkLink
                     to={`/blocks/${block.hash}`}
                     data-testid={`blockHashLink${i}`}
-                    className='trim-wrapper trim-size-xl me-xl-n5'
+                    className='trim-wrapper trim-size-xl'
                   >
                     <Trim text={block.hash} />
                   </NetworkLink>
