@@ -1,15 +1,15 @@
-import * as React from 'react';
+import React from 'react';
 import { faSort } from '@fortawesome/pro-duotone-svg-icons/faSort';
 import { faSortDown } from '@fortawesome/pro-duotone-svg-icons/faSortDown';
 import { faSortUp } from '@fortawesome/pro-duotone-svg-icons/faSortUp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useLocation, Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+
 import { SortOrderEnum } from 'types';
 
 export const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {
-  const { search, pathname } = useLocation();
-  const urlParams = new URLSearchParams(search);
-  const { order, sort, ...rest } = Object.fromEntries(urlParams);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { order, sort, ...rest } = Object.fromEntries(searchParams);
 
   const nextOrder = () => {
     if (sort === id) {
@@ -25,14 +25,23 @@ export const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {
 
   const newOrder = nextOrder();
 
-  const nextUrlParams = new URLSearchParams({
-    ...rest,
-    ...(newOrder ? { sort: id } : {}),
-    ...(newOrder ? { order: newOrder } : {})
-  }).toString();
+  const updateSortValue = () => {
+    const nextUrlParams = {
+      ...rest,
+      ...(newOrder ? { sort: id } : {}),
+      ...(newOrder ? { order: newOrder } : {})
+    };
+
+    setSearchParams(nextUrlParams);
+  };
 
   return (
-    <Link to={`${pathname}?${nextUrlParams}`} className='me-n1'>
+    <div
+      className='me-n1 cursor-pointer'
+      onClick={() => {
+        updateSortValue();
+      }}
+    >
       {field}
       {sort !== id && (
         <FontAwesomeIcon
@@ -41,11 +50,14 @@ export const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {
         />
       )}
       {order === SortOrderEnum.asc && sort === id && (
-        <FontAwesomeIcon icon={faSortUp} className='side-action' />
+        <FontAwesomeIcon icon={faSortUp} className='side-action text-primary' />
       )}
       {order === SortOrderEnum.desc && sort === id && (
-        <FontAwesomeIcon icon={faSortDown} className='side-action' />
+        <FontAwesomeIcon
+          icon={faSortDown}
+          className='side-action text-primary'
+        />
       )}
-    </Link>
+    </div>
   );
 };

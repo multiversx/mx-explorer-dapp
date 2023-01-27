@@ -1,10 +1,8 @@
 import React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
-import { NetworkLink } from 'components';
 import { getTransactionMethod } from 'helpers';
-import { useNetworkPathname } from 'hooks';
 import { UITransactionType } from 'types';
 
 export interface TransactionMethodType {
@@ -12,20 +10,20 @@ export interface TransactionMethodType {
 }
 
 export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
-  const { search: locationSearch } = useLocation();
-  const urlParams = new URLSearchParams(locationSearch);
-  const networkPathname = useNetworkPathname();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { function: filteredFunction } = Object.fromEntries(searchParams);
 
-  const methodLink = (method: string) => {
-    const { ...rest } = Object.fromEntries(urlParams);
+  const updateMethod = (method: string) => {
+    const { ...rest } = Object.fromEntries(searchParams);
     if (method) {
       delete rest.page;
     }
-    const nextUrlParams = new URLSearchParams({
+    const nextUrlParams = {
       ...rest,
       ...(method ? { function: method } : {})
-    }).toString();
-    return `${networkPathname}?${nextUrlParams}`;
+    };
+
+    setSearchParams(nextUrlParams);
   };
 
   const TxMethodText = ({ children }: { children: React.ReactNode }) => {
@@ -33,14 +31,16 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
 
     return (
       <span>
-        {networkPathname && method !== 'transaction' ? (
-          <NetworkLink
-            to={methodLink(getTransactionMethod(transaction))}
+        {method !== 'transaction' && method !== filteredFunction ? (
+          <div
+            onClick={() => {
+              updateMethod(getTransactionMethod(transaction));
+            }}
             data-testid='filterByTransactionMethod'
-            className='text-decoration-none'
+            className='text-decoration-none cursor-pointer'
           >
             {children}
-          </NetworkLink>
+          </div>
         ) : (
           <span>{children}</span>
         )}

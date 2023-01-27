@@ -102,6 +102,7 @@
 .badge-yellow,
 .badge-orange,
 .badge-grey {
+  border: 0;
   line-height: 1rem;
   color: #fafafa; // TODO theme-color neutral/50
   min-width: 1.5rem;
@@ -138,6 +139,7 @@
 }
 
 .badge-outline {
+  border: 0;
   position: relative;
   line-height: 1rem;
   &:before {

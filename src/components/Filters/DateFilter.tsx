@@ -1,9 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
-import { useNavigate, useLocation } from 'react-router-dom';
-
-import { useNetworkPathname } from 'hooks';
+import { useSearchParams } from 'react-router-dom';
 
 export const timestampToDate = (timestamp: number | undefined) => {
   return timestamp ? moment.unix(timestamp).toDate() : null;
@@ -27,18 +25,14 @@ export const getFilterText = (after: Date | null, before: Date | null) => {
 
 export const DateFilter = () => {
   const ref = useRef(null);
-
-  const navigate = useNavigate();
-  const { search: locationSearch } = useLocation();
-  const networkPathname = useNetworkPathname();
-  const urlParams = new URLSearchParams(locationSearch);
-  const { before, after } = Object.fromEntries(urlParams);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { before, after } = Object.fromEntries(searchParams);
 
   const afterDate = timestampToDate(Number(after));
   const beforeDate = timestampToDate(Number(before));
 
-  const [startDate, setStartDate] = React.useState<Date | null>(afterDate);
-  const [endDate, setEndDate] = React.useState<Date | null>(beforeDate);
+  const [startDate, setStartDate] = useState<Date | null>(afterDate);
+  const [endDate, setEndDate] = useState<Date | null>(beforeDate);
 
   const onChange = (dates: [Date, Date]) => {
     const [start, end] = dates;
@@ -51,22 +45,23 @@ export const DateFilter = () => {
     setEndDate(null);
     hidePopover();
 
-    const paramsObject = Object.fromEntries(urlParams);
+    const paramsObject = Object.fromEntries(searchParams);
     if (paramsObject['before']) {
       delete paramsObject['before'];
     }
     if (paramsObject['after']) {
       delete paramsObject['after'];
     }
-    const nextUrlParams = new URLSearchParams({
+    const nextUrlParams = {
       ...paramsObject
-    }).toString();
-    navigate(`${networkPathname}?${nextUrlParams}`);
+    };
+
+    setSearchParams(nextUrlParams);
   };
 
   const onApply = () => {
-    const paramsObject = Object.fromEntries(urlParams);
-    const nextUrlParams = new URLSearchParams({
+    const paramsObject = Object.fromEntries(searchParams);
+    const nextUrlParams = {
       ...paramsObject,
       ...(startDate !== null
         ? { after: moment.utc(startDate).unix().toString() }
@@ -74,8 +69,9 @@ export const DateFilter = () => {
       ...(endDate !== null
         ? { before: moment(endDate).endOf('day').utc().unix().toString() }
         : {})
-    }).toString();
-    navigate(`${networkPathname}?${nextUrlParams}`);
+    };
+
+    setSearchParams(nextUrlParams);
   };
 
   const filterText = getFilterText(afterDate, beforeDate);

@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { txStatus } from 'components/TransactionStatus/txStatus';
 import { stringIsInteger } from 'helpers';
 
@@ -11,31 +11,48 @@ const checkStatus = (status: string) =>
     : undefined;
 
 export const useURLSearchParams = () => {
-  const query = new URLSearchParams(useLocation().search);
-  const page = query.get('page') ? String(query.get('page')) : '';
-  const shard = query.get('shard') ? String(query.get('shard')) : '';
-  const method = query.get('function') ? String(query.get('function')) : '';
-  const before = query.get('before') ? String(query.get('before')) : '';
-  const after = query.get('after') ? String(query.get('after')) : '';
-  const status = query.get('status') ? String(query.get('status')) : '';
-  const miniBlockHash = query.get('miniBlockHash')
-    ? String(query.get('miniBlockHash'))
-    : '';
-  const search = query.get('search') ? String(query.get('search')) : '';
-  const sender = query.get('sender') ? String(query.get('sender')) : '';
-  const receiver = query.get('receiver') ? String(query.get('receiver')) : '';
+  const [searchParams] = useSearchParams();
 
-  let senderShard = query.get('senderShard')
-    ? String(query.get('senderShard'))
+  const page = searchParams.get('page') ? String(searchParams.get('page')) : '';
+  const shard = searchParams.get('shard')
+    ? String(searchParams.get('shard'))
     : '';
-  senderShard = query.get('sendershard')
-    ? String(query.get('sendershard'))
+  const method = searchParams.get('function')
+    ? String(searchParams.get('function'))
+    : '';
+  const before = searchParams.get('before')
+    ? String(searchParams.get('before'))
+    : '';
+  const after = searchParams.get('after')
+    ? String(searchParams.get('after'))
+    : '';
+  const status = searchParams.get('status')
+    ? String(searchParams.get('status'))
+    : '';
+  const miniBlockHash = searchParams.get('miniBlockHash')
+    ? String(searchParams.get('miniBlockHash'))
+    : '';
+  const search = searchParams.get('search')
+    ? String(searchParams.get('search'))
+    : '';
+  const sender = searchParams.get('sender')
+    ? String(searchParams.get('sender'))
+    : '';
+  const receiver = searchParams.get('receiver')
+    ? String(searchParams.get('receiver'))
+    : '';
+
+  let senderShard = searchParams.get('senderShard')
+    ? String(searchParams.get('senderShard'))
+    : '';
+  senderShard = searchParams.get('sendershard')
+    ? String(searchParams.get('sendershard'))
     : senderShard;
-  let receiverShard = query.get('receiverShard')
-    ? String(query.get('receiverShard'))
+  let receiverShard = searchParams.get('receiverShard')
+    ? String(searchParams.get('receiverShard'))
     : '';
-  receiverShard = query.get('receivershard')
-    ? String(query.get('receivershard'))
+  receiverShard = searchParams.get('receivershard')
+    ? String(searchParams.get('receivershard'))
     : receiverShard;
 
   return {

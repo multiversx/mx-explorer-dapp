@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import {
   useAdapter,
   Loader,
@@ -15,16 +15,15 @@ import { validatorsRoutes } from 'routes';
 import { NodeType } from 'types';
 
 export const Nodes = () => {
-  const ref = React.useRef(null);
-  const { search } = useLocation();
+  const ref = useRef(null);
+  const [searchParams] = useSearchParams();
   const { getNodes, getNodesCount } = useAdapter();
   const { getQueryObject, size } = useGetFilters();
-  const [nodes, setNodes] = React.useState<NodeType[]>([]);
-  const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [nodes, setNodes] = useState<NodeType[]>([]);
+  const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
 
-  const urlParams = new URLSearchParams(search);
-  const { type, status } = Object.fromEntries(urlParams);
+  const { type, status } = Object.fromEntries(searchParams);
 
   const fetchNodes = () => {
     const queryObject = getQueryObject();
@@ -44,7 +43,7 @@ export const Nodes = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchNodes, [search]);
+  useEffect(fetchNodes, [searchParams]);
 
   return (
     <div className='card position-unset' ref={ref}>
