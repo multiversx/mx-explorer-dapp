@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useAdapter, Loader, ScResultsTable } from 'components';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
+import { useAdapter, Loader, ScResultsTable } from 'components';
 import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
 import { NoScResults } from 'components/ScResultsTable/NoScResults';
 import { urlBuilder } from 'helpers';
@@ -19,6 +19,7 @@ export const AccountScResults = () => {
   const { size } = useGetFilters();
   const networkRoute = useNetworkRoute();
   const { adapter, id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const [searchParams] = useSearchParams();
   const { txCount } = useSelector(accountSelector);
 
   const { getAccountScResults, getAccountScResultsCount } = useAdapter();
@@ -60,7 +61,7 @@ export const AccountScResults = () => {
   React.useEffect(() => {
     fetchAccountScResults();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txCount, activeNetworkId, address, size]);
+  }, [txCount, activeNetworkId, address, size, searchParams]);
 
   return !scResultsActive ? (
     navigate(networkRoute(urlBuilder.accountDetails(address)))

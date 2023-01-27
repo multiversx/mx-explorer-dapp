@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import {
   Loader,
@@ -22,7 +22,7 @@ import { TokenTabs } from './TokenLayout/TokenTabs';
 
 export const TokenDetailsAccounts = () => {
   const ref = React.useRef(null);
-
+  const [searchParams] = useSearchParams();
   const { decimals, accounts: totalAccounts } = useSelector(tokenSelector);
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { page } = useURLSearchParams();
@@ -62,7 +62,7 @@ export const TokenDetailsAccounts = () => {
   React.useEffect(() => {
     fetchAccounts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, size, totalAccounts]);
+  }, [activeNetworkId, size, totalAccounts, searchParams]);
 
   const showAccounts = dataReady === true && accounts.length > 0;
 

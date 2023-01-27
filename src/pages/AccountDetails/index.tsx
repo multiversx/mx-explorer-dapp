@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Loader, TransactionsTable, useAdapter } from 'components';
-
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
 import { txStatus } from 'components/TransactionStatus/txStatus';
@@ -14,6 +13,7 @@ import {
   TransactionsResponseType,
   TransactionsCountResponseType
 } from 'types';
+
 import { AccountTabs } from './AccountLayout/AccountTabs';
 
 export const AccountDetails = () => {
@@ -33,6 +33,7 @@ export const AccountDetails = () => {
     search
   } = useURLSearchParams();
 
+  const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { txCount, balance } = useSelector(accountSelector);
 
@@ -125,7 +126,7 @@ export const AccountDetails = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, txCount, balance]);
+  }, [firstPageTicker, txCount, balance, searchParams]);
 
   const loading = isDataReady === undefined;
   const showTransactions = isDataReady === true && transactions.length > 0;

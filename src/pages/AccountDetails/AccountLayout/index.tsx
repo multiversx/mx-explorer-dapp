@@ -1,7 +1,7 @@
 import * as React from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 
 import { LEGACY_DELEGATION_NODES_IDENTITY } from 'appConstants';
 
@@ -21,6 +21,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const { firstPageTicker } = useSize();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
   const {
     getAccount,
@@ -315,11 +316,11 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetworkId, address]);
+  }, [firstPageTicker, activeNetworkId, address, searchParams]);
 
   React.useEffect(() => {
     setDataReady(undefined);
-  }, [address, activeNetworkId]);
+  }, [address, activeNetworkId, searchParams]);
 
   const loading = dataReady === undefined;
   const failed = dataReady === false || !addressIsBech32(address);

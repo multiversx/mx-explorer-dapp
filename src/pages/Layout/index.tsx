@@ -68,7 +68,6 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   const isHome = activeRoute('/');
 
   const explorerApp = multiversxApps.find((app) => app.id === 'explorer');
-  const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
 
   const userAgentInfo = [
     browser?.browser?.name ?? '',

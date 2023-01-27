@@ -1,7 +1,7 @@
 import React from 'react';
 import { faCode } from '@fortawesome/pro-solid-svg-icons/faCode';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import {
   useAdapter,
   Loader,
@@ -16,6 +16,7 @@ import {
 import { urlBuilder, addressIsBech32 } from 'helpers';
 import { useGetFilters } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
+
 import { AccountTabs } from './AccountLayout/AccountTabs';
 
 export interface AccountSmartContractType {
@@ -27,6 +28,7 @@ export interface AccountSmartContractType {
 export const AccountContracts = () => {
   const ref = React.useRef(null);
 
+  const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { txCount } = useSelector(accountSelector);
   const { size } = useGetFilters();
@@ -64,7 +66,7 @@ export const AccountContracts = () => {
   React.useEffect(() => {
     fetchAccountContracts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txCount, activeNetworkId, address, size]);
+  }, [txCount, activeNetworkId, address, size, searchParams]);
 
   return (
     <div className='card' ref={ref}>

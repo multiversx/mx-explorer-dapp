@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+
 import {
   Loader,
   TransactionsTable,
   useAdapter,
   PulsatingLed
 } from 'components';
-
 import { shardSpanText } from 'components/ShardSpan';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
@@ -16,6 +17,7 @@ import { UITransactionType } from 'types';
 
 export const Transactions = () => {
   const ref = React.useRef(null);
+  const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const {
@@ -90,7 +92,7 @@ export const Transactions = () => {
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, size, firstPageTicker]);
+  }, [activeNetworkId, size, firstPageTicker, searchParams]);
 
   return (
     <>

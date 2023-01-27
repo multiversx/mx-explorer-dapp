@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import {
   Loader,
   ShardSpan,
@@ -52,7 +52,7 @@ export const MiniBlockDetails = () => {
   } = useURLSearchParams();
 
   const { getTransfers, getTransfersCount, getMiniBlock } = useAdapter();
-
+  const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const [miniBlock, setMiniBlock] = React.useState<MiniBlockType>();
@@ -134,7 +134,12 @@ export const MiniBlockDetails = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchMiniBlockData, [activeNetworkId, size, miniBlockHash]);
+  React.useEffect(fetchMiniBlockData, [
+    activeNetworkId,
+    size,
+    miniBlockHash,
+    searchParams
+  ]);
 
   return invalid ? (
     navigate(networkRoute('/not-found'))

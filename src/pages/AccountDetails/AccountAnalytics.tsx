@@ -1,8 +1,9 @@
 import React from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import moment from 'moment';
-
 import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+
 import { useAdapter, Loader, PageState, Chart } from 'components';
 import {
   getNormalizedTimeEntries,
@@ -10,10 +11,12 @@ import {
 } from 'components/Chart/helpers/getChartBinnedData';
 import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
+
 import { AccountTabs } from './AccountLayout/AccountTabs';
 
 export const AccountAnalytics = () => {
   const { address } = useSelector(accountSelector);
+  const [searchParams] = useSearchParams();
   const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
   const { getAccountHistory } = useAdapter();
 
@@ -57,7 +60,7 @@ export const AccountAnalytics = () => {
   ];
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(getData, [activeNetworkId]);
+  React.useEffect(getData, [activeNetworkId, searchParams]);
 
   return (
     <div className='card'>
