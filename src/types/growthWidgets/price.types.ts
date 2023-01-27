@@ -19,5 +19,5 @@ export interface GrowthPriceSliceType extends SliceType {
 
   price7d: GrowthChartDataType[];
   price30d: GrowthChartDataType[];
-  all: GrowthChartDataType[];
+  priceAll: GrowthChartDataType[];
 }

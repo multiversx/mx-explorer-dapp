@@ -12,7 +12,7 @@ export const getInitialGrowthPriceState = (): GrowthPriceSliceType => {
 
     price7d: [],
     price30d: [],
-    all: [],
+    priceAll: [],
 
     unprocessed: {
       currentPrice: 0,
@@ -40,7 +40,7 @@ export const growthPriceSlice = createSlice({
 
       state.price7d = action.payload.price7d;
       state.price30d = action.payload.price30d;
-      state.all = action.payload.all;
+      state.priceAll = action.payload.priceAll;
 
       state.unprocessed = action.payload.unprocessed;
       state.isFetched = action.payload.isFetched;

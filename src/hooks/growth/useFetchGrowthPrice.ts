@@ -22,7 +22,7 @@ export const useFetchGrowthPrice = () => {
 
               price7d: data.price7d,
               price30d: data.price30d,
-              all: data.all,
+              priceAll: data.priceAll,
 
               unprocessed: data,
               isFetched: success
