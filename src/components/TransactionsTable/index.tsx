@@ -1,5 +1,8 @@
 import * as React from 'react';
+
+import { Loader } from 'components';
 import { TransactionsTableType } from 'types';
+
 import { Header } from './Header';
 import { TransactionRow } from './TransactionRow';
 import { MethodList } from './TransactionsFilters';
@@ -19,6 +22,7 @@ export const TransactionsTable = ({
   ),
   directionCol = false,
   showLockedAccounts = false,
+  dataChanged = false,
   inactiveFilters
 }: TransactionsTableType) => {
   return (
@@ -46,6 +50,10 @@ export const TransactionsTable = ({
 
         <div className='card-body'>
           <div className='table-wrapper animated-list'>
+            <div className={`overlay ${dataChanged ? '' : 'transparent'}`}>
+              <Loader />
+            </div>
+
             <table
               className='table trim-size-sm mb-0'
               data-testid='transactionsTable'

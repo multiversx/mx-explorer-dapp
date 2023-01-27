@@ -389,6 +389,7 @@ export interface TransactionsTableType {
   size: number;
   title?: React.ReactNode;
   directionCol?: boolean;
+  dataChanged?: boolean;
   showLockedAccounts?: boolean;
   inactiveFilters?: TxFiltersEnum[];
 }

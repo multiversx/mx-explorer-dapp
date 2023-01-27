@@ -24,7 +24,7 @@ export const Loader = ({
       }
       dataTestId={dataTestId}
       titleClassName={noText ? 'mt-0' : ''}
-      className={`d-flex h-100 align-items-center justify-content-center ${
+      className={`loader d-flex h-100 align-items-center justify-content-center ${
         small ? 'page-state-sm' : 'py-spacer my-auto'
       }`}
     />

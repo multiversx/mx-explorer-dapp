@@ -46,6 +46,7 @@ export const Transactions = () => {
     []
   );
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [dataChanged, setDataChanged] = React.useState<boolean>(false);
   const [totalTransactions, setTotalTransactions] = React.useState<
     number | '...'
   >('...');
@@ -75,6 +76,7 @@ export const Transactions = () => {
             })
           );
           setTransactions(newTransactions);
+          setDataChanged(false);
         }
         setDataReady(success);
       }
@@ -94,9 +96,15 @@ export const Transactions = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, size, firstPageTicker, searchParams]);
 
+  React.useEffect(() => {
+    if (searchParams.toString()) {
+      setDataChanged(true);
+    }
+  }, [searchParams]);
+
   return (
     <>
-      {dataReady === undefined && <Loader />}
+      {dataReady === undefined && !searchParams.toString() && <Loader />}
       {dataReady === false && <FailedTransactions />}
 
       <div ref={ref}>
@@ -109,6 +117,7 @@ export const Transactions = () => {
                     transactions={transactions}
                     totalTransactions={totalTransactions}
                     size={size}
+                    dataChanged={dataChanged}
                     title={
                       <h5
                         data-testid='title'
