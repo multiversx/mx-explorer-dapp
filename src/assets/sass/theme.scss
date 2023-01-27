@@ -91,19 +91,9 @@ Override Bootstrap variables only above.
   overflow-x: auto;
 
   .table {
-    // @extend .m-0;
     white-space: nowrap;
 
-    //th {
-    // border: 0;
-    //color: var(--white);
-
-    // @extend .border-bottom;
-    // @extend .bg-light;
-    //}
-
     td {
-      //   color: var(--white);
       vertical-align: middle;
     }
   }
@@ -343,15 +333,6 @@ div.side-icon {
   .popover-md {
     width: 480px;
   }
-}
-
-.bg-light.bs-popover-bottom .arrow::after,
-.bg-light.bs-popover-auto[x-placement^='bottom'] .arrow::after {
-  border-bottom-color: var(--neutral-700);
-}
-.bg-light.bs-popover-top .arrow::after,
-.bg-light.bs-popover-auto[x-placement^='top'] .arrow::after {
-  border-top-color: var(--neutral-700);
 }
 
 @include media-breakpoint-up(lg) {

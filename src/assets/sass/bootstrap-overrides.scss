@@ -8,10 +8,19 @@
   --card-cap-bg: transparent;
   --card-cap-color: var(--body-color);
   --card-color: var(--body-color);
-  --card-bg: rgba(0, 0, 0, 0.2);
+  --card-bg: var(--gray-dark);
   &.card-black {
     --card-bg: var(--black);
   }
+}
+
+.popover {
+  --#{$prefix}popover-bg: var(--gray-dark);
+  --#{$prefix}popover-border-color: var(--gray-dark);
+  --#{$prefix}popover-header-color: var(--body-color);
+  --#{$prefix}popover-header-bg: var(--gray-dark);
+  --#{$prefix}popover-body-color: var(--body-color);
+  --#{$prefix}popover-arrow-border: var(--gray-dark);
 }
 
 .btn-primary {
@@ -83,7 +92,7 @@
 // DROPDOWN
 .dropdown-menu {
   --#{$prefix}dropdown-color: var(--body-color);
-  --#{$prefix}dropdown-bg: var(--black);
+  --#{$prefix}dropdown-bg: var(--card-bg);
   --#{$prefix}dropdown-border-color: transparent;
   --#{$prefix}dropdown-divider-bg: var(--border-color);
   --#{$prefix}dropdown-link-color: var(--body-color);

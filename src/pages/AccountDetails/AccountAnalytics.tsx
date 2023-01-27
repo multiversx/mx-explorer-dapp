@@ -65,7 +65,7 @@ export const AccountAnalytics = () => {
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
           <AccountTabs />
         </div>
-        <div className='card-header-item d-flex align-items-center bg-light'>
+        <div className='card-header-item d-flex align-items-center '>
           Account {egldLabel} Balance{' '}
           {chartData.length > 1 && (
             <span className='text-neutral-400 ms-1'>

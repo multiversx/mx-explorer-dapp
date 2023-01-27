@@ -1,7 +1,4 @@
 .main-navbar {
-  &.sticky-top {
-    z-index: 2000;
-  }
   .main-symbol,
   .main-logo,
   .main-logo-short {
@@ -20,16 +17,14 @@
   }
 
   .dropdown-menu {
-    border: 1px solid var(--border-color) !important;
-    border-radius: 0.25rem !important;
-    top: -0.5rem !important;
+    border-radius: 0.5rem !important;
     width: auto !important;
     right: auto !important;
-    left: 0 !important;
+    left: -1.5rem !important;
   }
 
   .nav-links {
-    gap: 4px;
+    gap: 0.25rem;
     .nav-link {
       align-items: center;
       justify-content: center;
@@ -51,7 +46,7 @@
 }
 
 .navbar-nav {
-  gap: 4px;
+  gap: 0.5rem;
   .dropdown-toggle {
     cursor: pointer;
     align-items: center;
@@ -81,17 +76,23 @@
 }
 
 .main-navbar {
-  background: linear-gradient(
-      0deg,
-      rgba(23, 23, 23, 0.4),
-      rgba(23, 23, 23, 0.4)
-    ),
-    linear-gradient(
-      180deg,
-      #171717 0%,
-      rgba(23, 23, 23, 0.6) 47.25%,
-      rgba(23, 23, 23, 0.5) 100%
-    );
-  backdrop-filter: blur(6px);
+  background-color: rgba(23, 23, 23, 0.9);
   height: 76px;
+}
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+  .main-navbar {
+    background: linear-gradient(
+        0deg,
+        rgba(23, 23, 23, 0.4),
+        rgba(23, 23, 23, 0.4)
+      ),
+      linear-gradient(
+        180deg,
+        #171717 0%,
+        rgba(23, 23, 23, 0.6) 47.25%,
+        rgba(23, 23, 23, 0.5) 100%
+      );
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
 }

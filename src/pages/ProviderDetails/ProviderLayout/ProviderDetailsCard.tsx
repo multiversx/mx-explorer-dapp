@@ -44,8 +44,8 @@ export const ProviderDetailsCard = ({
           </h5>
           <a
             className='btn btn-sm btn-primary'
-            target={'_blank'}
-            rel={'noreferrer nofollow'}
+            target='_blank'
+            rel='noreferrer nofollow'
             href={walletAddress}
           >
             Stake now

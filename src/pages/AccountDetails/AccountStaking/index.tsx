@@ -54,7 +54,7 @@ export const AccountStaking = () => {
                 <div className='col-lg-7 pe-lg-0 border-end'>
                   {displayDelegation.length > 0 && (
                     <div className='account-delegation'>
-                      <div className='px-spacer py-3 border-bottom bg-light'>
+                      <div className='px-spacer py-3 border-bottom '>
                         Staking List
                       </div>
                       {displayDelegation.map((delegation, i) => {
@@ -77,7 +77,7 @@ export const AccountStaking = () => {
                         displayDelegation.length > 0 ? 'border-top' : ''
                       }`}
                     >
-                      <div className='px-spacer py-3 border-bottom bg-light'>
+                      <div className='px-spacer py-3 border-bottom '>
                         Legacy Delegation
                       </div>
 
@@ -89,7 +89,7 @@ export const AccountStaking = () => {
                   )}
                   {stake && showStake && (
                     <div className='account-legacy-delegation'>
-                      <div className='px-spacer py-3 border-bottom bg-light'>
+                      <div className='px-spacer py-3 border-bottom '>
                         Stake{' '}
                         <span className='text-neutral-400'>(Validation)</span>
                       </div>
@@ -98,7 +98,7 @@ export const AccountStaking = () => {
                   )}
                 </div>
                 <div className='col-lg-5 ps-0 d-flex flex-column'>
-                  <div className='px-spacer py-3 border-bottom bg-light staking-chart-title'>
+                  <div className='px-spacer py-3 border-bottom  staking-chart-title'>
                     Staking Chart
                   </div>
                   <div className='staking-chart-holder'>

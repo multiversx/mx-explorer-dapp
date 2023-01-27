@@ -62,9 +62,8 @@ export const NetworkUrl = ({ internal = false, link }: NetworkUrlPropsType) => {
       }
       data-testid={link.id}
       onClick={handleClick}
-      {...{
-        ...(internal ? { target: '_blank' } : {})
-      }}
+      {...(internal ? {} : { target: '_blank' })}
+      {...(internal ? {} : { rel: 'noreferrer nofollow' })}
     >
       {link.name}
     </a>
