@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { MostUsed } from 'components';
-import { useIsMainnet } from 'helpers';
+import { useIsMainnet } from 'hooks';
 
 import { HeroCard } from './HeroCard';
 import { LatestBlocks } from './LatestBlocks';

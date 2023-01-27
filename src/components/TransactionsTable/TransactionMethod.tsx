@@ -3,7 +3,8 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 
 import { NetworkLink } from 'components';
-import { getTransactionMethod, useNetworkPathname } from 'helpers';
+import { getTransactionMethod } from 'helpers';
+import { useNetworkPathname } from 'hooks';
 import { UITransactionType } from 'types';
 
 export interface TransactionMethodType {

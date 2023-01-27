@@ -6,7 +6,7 @@ import { PAGE_SIZE } from 'appConstants';
 import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
 import { pagerHelper } from 'components/Pager/pagerHelper';
 
-import { useGetFilters, useURLSearchParams } from 'helpers';
+import { useGetFilters, useURLSearchParams } from 'hooks';
 import {
   economicsSelector,
   statsSelector,

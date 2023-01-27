@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import { PAGE_SIZE } from 'appConstants';
 import { Loader, useAdapter, NetworkLink, Pager } from 'components';
-import { useGetFilters, useURLSearchParams, useActiveRoute } from 'helpers';
+import { useGetFilters, useURLSearchParams, useActiveRoute } from 'hooks';
 import { economicsSelector } from 'redux/selectors';
 import { tokensRoutes } from 'routes';
 

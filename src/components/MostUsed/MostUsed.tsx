@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { Loader } from 'components';
-import { useIsMainnet } from 'helpers';
+import { useIsMainnet } from 'hooks';
 import { growthMostUsedSelector } from 'redux/selectors';
 
 import { useFetchMostUsed } from './helpers/useFetchMostUsed';

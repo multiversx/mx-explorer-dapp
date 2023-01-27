@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { NetworkLink } from 'components';
-import { urlBuilder, useActiveRoute } from 'helpers';
+import { urlBuilder } from 'helpers';
+import { useActiveRoute } from 'hooks';
 
 import { tokenSelector } from 'redux/selectors';
 import { tokensRoutes } from 'routes';

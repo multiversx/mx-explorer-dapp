@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Anchorme } from 'react-anchorme';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { ModalLink } from 'components';
-import { useScamFlag } from 'helpers';
+import { useScamFlag } from 'hooks';
 import { NftType } from 'types';
 
 export const Thumbnail = ({

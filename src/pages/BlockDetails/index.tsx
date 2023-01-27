@@ -2,7 +2,8 @@ import * as React from 'react';
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Loader, useAdapter, PageState } from 'components';
-import { isHash, useNetworkRoute } from 'helpers';
+import { isHash } from 'helpers';
+import { useNetworkRoute } from 'hooks';
 import { BlockData, BlockDataType } from './BlockData';
 
 export const BlockDetails = () => {

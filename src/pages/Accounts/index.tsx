@@ -9,7 +9,8 @@ import {
   ScAddressIcon,
   AccountName
 } from 'components';
-import { urlBuilder, useSize, useURLSearchParams } from 'helpers';
+import { urlBuilder } from 'helpers';
+import { useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { AccountType } from 'types';
 import { FailedAccounts } from './FailedAccounts';
