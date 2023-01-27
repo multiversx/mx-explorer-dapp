@@ -46,3 +46,12 @@ input {
 input:is(:-webkit-autofill, :-webkit-autofill:focus) {
   transition: background-color 600000s 0s, color 600000s 0s;
 }
+
+.recharts-tooltip-wrapper {
+  background-color: transparent !important;
+
+  &:before,
+  &:after {
+    content: none !important;
+  }
+}
