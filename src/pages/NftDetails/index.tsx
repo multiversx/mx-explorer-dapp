@@ -16,12 +16,8 @@ import {
   Pager,
   CardItem
 } from 'components';
-import {
-  urlBuilder,
-  dateFormatted,
-  useGetFilters,
-  useURLSearchParams
-} from 'helpers';
+import { urlBuilder, dateFormatted } from 'helpers';
+import { useGetFilters, useURLSearchParams } from 'hooks';
 import { NftType, NftEnumType } from 'types';
 import { FailedNftDetails } from './FailedNftDetails';
 import { NftPreview } from './NftPreview';

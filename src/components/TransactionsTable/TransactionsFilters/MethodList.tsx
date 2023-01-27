@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { NetworkLink } from 'components';
-import { useNetworkPathname } from 'helpers';
+import { useNetworkPathname } from 'hooks';
 
 export const MethodList = () => {
   const { search: locationSearch } = useLocation();

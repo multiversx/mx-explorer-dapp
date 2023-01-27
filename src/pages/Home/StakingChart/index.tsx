@@ -13,7 +13,7 @@ export const StakingChart = () => {
   const { getTotalStakedHistory } = useAdapter();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { economicsFetched, totalStakedPercent, staked } =
+  const { isFetched, totalStakedPercent, staked } =
     useSelector(economicsSelector);
 
   const [usersStaking, setUsersStaking] = React.useState('...');
@@ -42,10 +42,10 @@ export const StakingChart = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(getData, [activeNetworkId]);
 
-  const percentage = economicsFetched
+  const percentage = isFetched
     ? `${new BigNumber(totalStakedPercent).toFormat(2)}%`
     : '...';
-  const total = economicsFetched ? new BigNumber(staked).toFormat() : '...';
+  const total = isFetched ? new BigNumber(staked).toFormat() : '...';
   const users =
     usersStaking !== '...' ? new BigNumber(usersStaking).toFormat(0) : '...';
 

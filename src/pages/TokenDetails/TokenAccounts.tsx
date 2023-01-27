@@ -14,7 +14,8 @@ import {
   PageState,
   LockedTokenAddressIcon
 } from 'components';
-import { urlBuilder, useSize, useURLSearchParams } from 'helpers';
+import { urlBuilder } from 'helpers';
+import { useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 import { AccountType } from 'types';
 import { TokenTabs } from './TokenLayout/TokenTabs';

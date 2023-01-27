@@ -7,7 +7,7 @@ import BigNumber from 'bignumber.js';
 
 import { useSelector } from 'react-redux';
 import { CardItem } from 'components';
-import { useFetchStats } from 'helpers';
+import { useFetchStats } from 'hooks';
 
 import { EpochGear } from 'pages/Layout/GlobalStatsCard/EpochGear';
 import { statsSelector } from 'redux/selectors';
@@ -16,7 +16,7 @@ export const TestnetGlobalStatsCard = () => {
   useFetchStats();
   const ref = React.useRef(null);
 
-  const { statsFetched, shards, blocks, accounts, transactions } =
+  const { isFetched, shards, blocks, accounts, transactions } =
     useSelector(statsSelector);
 
   return (
@@ -34,7 +34,7 @@ export const TestnetGlobalStatsCard = () => {
                   title='Shards'
                   icon={faLayerGroup}
                 >
-                  {statsFetched ? shards : '...'}
+                  {isFetched ? shards : '...'}
                 </CardItem>
 
                 <CardItem
@@ -43,7 +43,7 @@ export const TestnetGlobalStatsCard = () => {
                   icon={faCube}
                 >
                   <div data-testid='blocks'>
-                    {statsFetched ? new BigNumber(blocks).toFormat(0) : '...'}
+                    {isFetched ? new BigNumber(blocks).toFormat(0) : '...'}
                   </div>
                 </CardItem>
 
@@ -53,7 +53,7 @@ export const TestnetGlobalStatsCard = () => {
                   icon={faUser}
                 >
                   <div data-testid='accounts'>
-                    {statsFetched ? new BigNumber(accounts).toFormat(0) : '...'}
+                    {isFetched ? new BigNumber(accounts).toFormat(0) : '...'}
                   </div>
                 </CardItem>
 
@@ -63,7 +63,7 @@ export const TestnetGlobalStatsCard = () => {
                   icon={faExchangeAlt}
                 >
                   <div data-testid='transactions'>
-                    {statsFetched
+                    {isFetched
                       ? new BigNumber(transactions).toFormat(0)
                       : '...'}
                   </div>

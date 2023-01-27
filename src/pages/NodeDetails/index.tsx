@@ -6,7 +6,7 @@ import { useAdapter, Loader, PageState, SharedIdentity } from 'components';
 import { BlocksTable } from 'components/BlocksTable';
 import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/NoBlocks';
-import { useIsMainnet } from 'helpers';
+import { useIsMainnet } from 'hooks';
 import { statsSelector } from 'redux/selectors';
 import { BlockType, IdentityType, NodeType } from 'types';
 import { NetworkMetrics } from './NetworkMetrics';
@@ -33,7 +33,10 @@ export const NodeDetails = () => {
 
   const stats = useSelector(statsSelector);
 
-  const { statsFetched, epoch } = stats;
+  const {
+    isFetched,
+    unprocessed: { epoch }
+  } = stats;
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
   const [node, setNode] =
@@ -58,7 +61,7 @@ export const NodeDetails = () => {
 
           const shard = nodeData.data.shard;
 
-          if (hasExtendedInfo && statsFetched) {
+          if (hasExtendedInfo && isFetched) {
             const promises = [
               getRounds({ validator: publicKey, shard, epoch }),
               getBlocks({ proposer: publicKey, shard, epoch }),
@@ -115,7 +118,7 @@ export const NodeDetails = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchNodes, [search, publicKey, statsFetched]);
+  React.useEffect(fetchNodes, [search, publicKey, isFetched]);
 
   const showIdentity =
     identity.success === false ||

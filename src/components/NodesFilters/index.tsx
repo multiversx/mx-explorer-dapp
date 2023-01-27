@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { NetworkLink } from 'components';
-import { useNetworkRoute } from 'helpers';
+import { useNetworkRoute } from 'hooks';
 
 export const NodesFilters = ({
   baseRoute,

@@ -11,12 +11,15 @@ export const useFetchEconomics = () => {
   const { getEconomics } = useAdapter();
 
   const fetchEconomics = () => {
-    getEconomics().then((economics) => {
-      if (economics?.data && economics.success) {
-        const processedEconomics = processEconomics(economics.data);
+    getEconomics().then(({ data, success }) => {
+      if (data && success) {
+        const processedEconomics = processEconomics(data);
         dispatch(
           setEconomics({
-            ...processedEconomics
+            ...processedEconomics,
+
+            unprocessed: data,
+            isFetched: true
           })
         );
       }

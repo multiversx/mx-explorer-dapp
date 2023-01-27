@@ -20,9 +20,9 @@ export const GlobalStakeCard = ({
 }) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
   const { nodesVerions } = useSelector(globalStakeSelector);
-  const { economicsFetched, baseApr, staked } = useSelector(economicsSelector);
+  const { isFetched, baseApr, staked } = useSelector(economicsSelector);
 
-  const displayBaseApr = economicsFetched
+  const displayBaseApr = isFetched
     ? `Up to ${new BigNumber(baseApr).times(100).toFormat(2)}%`
     : 'N/A';
 
@@ -49,7 +49,7 @@ export const GlobalStakeCard = ({
               <CardItem className='n3 lg' title='Active Stake' icon={faLock}>
                 <div className='d-flex flex-column w-100'>
                   <h5 className='m-0 pb-1'>
-                    {economicsFetched ? (
+                    {isFetched ? (
                       <>
                         {new BigNumber(staked).toFormat(0)} {egldLabel}
                       </>
@@ -63,7 +63,7 @@ export const GlobalStakeCard = ({
               <CardItem className='n3 lg' title='Staking APR' icon={faLeaf}>
                 <div className='d-flex flex-column w-100'>
                   <h5 className='m-0 pb-1'>
-                    {economicsFetched ? displayBaseApr : '...'}
+                    {isFetched ? displayBaseApr : '...'}
                   </h5>
                 </div>
               </CardItem>

@@ -9,7 +9,7 @@ import {
   NodesTable,
   NodesFilters
 } from 'components';
-import { useGetFilters } from 'helpers';
+import { useGetFilters } from 'hooks';
 import { NodesTabs } from 'pages/Nodes/NodesLayout/NodesTabs';
 import { validatorsRoutes } from 'routes';
 import { NodeType } from 'types';

@@ -3,7 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 import { useSelector } from 'react-redux';
-import { useNotifications } from 'helpers';
+import { useNotifications } from 'hooks';
 
 import { refreshSelector } from 'redux/selectors/refresh';
 

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { BlocksTable, Loader, Pager, ShardSpan, useAdapter } from 'components';
 import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/NoBlocks';
-import { useNetworkRoute, useURLSearchParams, useSize } from 'helpers';
+import { useNetworkRoute, useURLSearchParams, useSize } from 'hooks';
 
 import { activeNetworkSelector } from 'redux/selectors';
 import { BlockType } from 'types';

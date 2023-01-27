@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { NetworkLink } from 'components';
-import { urlBuilder, useActiveRoute, nftText } from 'helpers';
+import { urlBuilder, nftText } from 'helpers';
+import { useActiveRoute } from 'hooks';
 import { collectionSelector } from 'redux/selectors';
 import { collectionRoutes } from 'routes';
 import { NftEnumType } from 'types';

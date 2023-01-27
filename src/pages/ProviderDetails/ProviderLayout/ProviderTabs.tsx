@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { NetworkLink } from 'components';
-import { urlBuilder, useActiveRoute } from 'helpers';
+import { urlBuilder } from 'helpers';
+import { useActiveRoute } from 'hooks';
 import { validatorsRoutes } from 'routes';
 
 export const ProviderTabs = () => {

@@ -10,7 +10,7 @@ import {
 import { shardSpanText } from 'components/ShardSpan';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
-import { useSize, useURLSearchParams } from 'helpers';
+import { useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { UITransactionType } from 'types';
 

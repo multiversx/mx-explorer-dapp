@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 
 import { NetworkLink } from 'components';
 import { urlBuilder } from 'helpers';
-import { MostUsedTokensType } from 'types/growth.types';
+import { MostUsedTokensType } from 'types/growthWidgets';
 
 export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
   return (

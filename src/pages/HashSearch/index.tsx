@@ -3,13 +3,13 @@ import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAdapter, PageState, Loader } from 'components';
 import {
-  useNetworkRoute,
   urlBuilder,
   isHash,
   isContract,
   addressIsBech32,
   bech32
 } from 'helpers';
+import { useNetworkRoute } from 'hooks';
 
 export const HashSearch = () => {
   const { hash: query } = useParams() as any;
