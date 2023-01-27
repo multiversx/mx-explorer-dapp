@@ -37,9 +37,7 @@ export const ComposedChartPoC = ({
   tooltip,
   hasOnlyStartEndTick
 }: BiAxialChartProps) => {
-  const [focusBar, setFocusBar] = useState<any>(null);
-
-  const { secondSeriesData, domain, getChartData } = useBiAxialChartData({
+  const { getChartData } = useBiAxialChartData({
     config,
     data,
     filter,
@@ -59,16 +57,7 @@ export const ComposedChartPoC = ({
       }`}
     >
       <ResponsiveContainer width='100%' height='100%'>
-        <ComposedChart
-          data={chartData}
-          onMouseMove={(state) => {
-            if (state.isTooltipActive) {
-              setFocusBar(state.activeTooltipIndex);
-            } else {
-              setFocusBar(null);
-            }
-          }}
-        >
+        <ComposedChart data={chartData}>
           <defs>
             <linearGradient id='transparent' x1='0' y1='0' x2='0' y2='1'>
               <stop offset='100%' stopColor='transparent' stopOpacity={0} />
@@ -78,33 +67,6 @@ export const ComposedChartPoC = ({
               <stop offset='35%' stopColor={primaryColor} stopOpacity={0.4} />
               <stop offset='95%' stopColor={primaryColor} stopOpacity={0} />
             </linearGradient>
-            {secondSeriesData.map((chartConfig) => {
-              if (chartConfig.gradient) {
-                return (
-                  <linearGradient
-                    key={chartConfig.gradient}
-                    id={chartConfig.gradient}
-                    x1='0'
-                    y1='0'
-                    x2='0'
-                    y2='1'
-                  >
-                    <stop
-                      offset='5%'
-                      stopColor={`#${chartConfig.gradient}`}
-                      stopOpacity={0.25}
-                    />
-                    <stop
-                      offset='95%'
-                      stopColor={`#${chartConfig.gradient}`}
-                      stopOpacity={0}
-                    />
-                  </linearGradient>
-                );
-              }
-
-              return null;
-            })}
           </defs>
           <XAxis
             minTickGap={40}
@@ -184,36 +146,6 @@ export const ComposedChartPoC = ({
             key={config.secondSeriesConfig.id}
             strokeWidth={1.5}
           />
-          {/*<Bar*/}
-          {/*  yAxisId='right-axis'*/}
-          {/*  dataKey={config.secondSeriesConfig.id}*/}
-          {/*  key={config.secondSeriesConfig.id}*/}
-          {/*  {...(config.secondSeriesConfig.gradient*/}
-          {/*    ? { fill: `url(#${config.secondSeriesConfig.gradient})` }*/}
-          {/*    : { fill: 'url(#transparent)' })}*/}
-          {/*  {...(config.secondSeriesConfig.stroke*/}
-          {/*    ? { stroke: config.secondSeriesConfig.stroke }*/}
-          {/*    : {})}*/}
-          {/*  {...(config.secondSeriesConfig.fill*/}
-          {/*    ? { fill: config.secondSeriesConfig.fill }*/}
-          {/*    : {})}*/}
-          {/*  {...(config.secondSeriesConfig.strokeDasharray*/}
-          {/*    ? { strokeDasharray: config.secondSeriesConfig.strokeDasharray }*/}
-          {/*    : {})}*/}
-          {/*>*/}
-          {/*  {chartData.map((entry: any, index: number) => (*/}
-          {/*    <Cell*/}
-          {/*      fill={*/}
-          {/*        focusBar === index*/}
-          {/*          ? primaryColor*/}
-          {/*          : config.secondSeriesConfig.fill*/}
-          {/*          ? config.secondSeriesConfig.fill*/}
-          {/*          : primaryColor*/}
-          {/*      }*/}
-          {/*      key={index}*/}
-          {/*    />*/}
-          {/*  ))}*/}
-          {/*</Bar>*/}
           <Tooltip
             content={(props) => (
               <CustomTooltip

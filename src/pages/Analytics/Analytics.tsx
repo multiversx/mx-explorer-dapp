@@ -25,8 +25,6 @@ export const Analytics = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // @ts-ignore
-  console.log(Object.fromEntries([...searchParams]));
   const firstSeriesId = searchParams.get(FIRST_SERIES_ID);
   const secondSeriesId = searchParams.get(SECOND_SERIES_ID);
 
@@ -70,10 +68,6 @@ export const Analytics = () => {
   useEffect(() => {
     const firstSeries = chartList.find((x) => x.id === firstSeriesId);
     const secondSeries = chartList.find((x) => x.id === secondSeriesId);
-
-    console.log(chartList);
-    console.log(firstSeries);
-    console.log(secondSeries);
 
     if (!firstSeries || !secondSeries) {
       setSelectedPills(chartList.slice(0, 2));
