@@ -1,10 +1,12 @@
 import React from 'react';
-
 import { useSelector, useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+
 import { useAdapter, Loader } from 'components';
 import { activeNetworkSelector } from 'redux/selectors';
 import { setShards, setGlobalStake } from 'redux/slices';
 import { NodesVersionsType } from 'types';
+
 import { GlobalStakeCard } from './GlobalStakeCard';
 import { ShardsList } from './ShardsList';
 
@@ -28,6 +30,7 @@ const prepareNodesVersions = (data: any) => {
 export const NodesLayout = ({ children }: { children: React.ReactNode }) => {
   const { getShards, getGlobalStake, getNodesVersions } = useAdapter();
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const [dataReadyForNetwork, setDataReadyForNetwork] = React.useState<
@@ -72,7 +75,7 @@ export const NodesLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchShardsAndGlobalStaking, [activeNetworkId]);
+  React.useEffect(fetchShardsAndGlobalStaking, [activeNetworkId, searchParams]);
 
   return (
     <>

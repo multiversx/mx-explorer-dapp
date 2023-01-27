@@ -1,11 +1,12 @@
 import * as React from 'react';
-
 import { useSelector, useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+
 import { Loader, useAdapter } from 'components';
 import { useSize, useGetHash } from 'hooks';
-
 import { activeNetworkSelector } from 'redux/selectors';
 import { setCollection } from 'redux/slices';
+
 import { CollectionDetailsCard } from './CollectionDetailsCard';
 import { FailedCollectionDetails } from './FailedCollectionDetails';
 
@@ -16,6 +17,7 @@ export const CollectionLayout = ({
 }) => {
   const ref = React.useRef(null);
   const { firstPageTicker } = useSize();
+  const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const dispatch = useDispatch();
   const { getCollection } = useAdapter();
@@ -45,11 +47,11 @@ export const CollectionLayout = ({
     fetchCollectionDetails();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetworkId, collection]);
+  }, [firstPageTicker, activeNetworkId, collection, searchParams]);
 
   React.useEffect(() => {
     setDataReady(undefined);
-  }, [collection, activeNetworkId]);
+  }, [collection, activeNetworkId, searchParams]);
 
   const loading = dataReady === undefined;
   const failed = dataReady === false;

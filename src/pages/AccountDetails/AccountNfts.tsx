@@ -1,7 +1,8 @@
 import React from 'react';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+
 import {
   useAdapter,
   DetailItem,
@@ -13,11 +14,11 @@ import {
   NftBadge,
   NetworkLink
 } from 'components';
-
 import { urlBuilder } from 'helpers';
 import { useGetFilters, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { NftType } from 'types';
+
 import { AccountTabs } from './AccountLayout/AccountTabs';
 
 export const AccountNfts = () => {
@@ -27,6 +28,7 @@ export const AccountNfts = () => {
   const { size } = useGetFilters();
   const networkRoute = useNetworkRoute();
   const { adapter, id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const [searchParams] = useSearchParams();
   const { txCount } = useSelector(accountSelector);
 
   const { getAccountNfts, getAccountNftsCount } = useAdapter();
@@ -63,7 +65,7 @@ export const AccountNfts = () => {
   React.useEffect(() => {
     fetchAccountNfts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txCount, activeNetworkId, address, size]);
+  }, [txCount, activeNetworkId, address, size, searchParams]);
 
   return !nftsActive ? (
     navigate(networkRoute(urlBuilder.accountDetails(address)))

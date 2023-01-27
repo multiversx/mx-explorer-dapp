@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
 import { BlocksTable, Loader, Pager, ShardSpan, useAdapter } from 'components';
 import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/NoBlocks';
 import { useNetworkRoute, useURLSearchParams, useSize } from 'hooks';
-
 import { activeNetworkSelector } from 'redux/selectors';
 import { BlockType } from 'types';
 interface StateType {
@@ -15,6 +15,7 @@ interface StateType {
 }
 
 export const Blocks = () => {
+  const [searchParams] = useSearchParams();
   const { page, shard } = useURLSearchParams();
   const { size, firstPageTicker } = useSize();
 
@@ -61,7 +62,7 @@ export const Blocks = () => {
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, size, shard, firstPageTicker]);
+  }, [activeNetworkId, size, shard, firstPageTicker, searchParams]);
 
   return shard && shard < 0 ? (
     navigate(networkRoute('/not-found'))

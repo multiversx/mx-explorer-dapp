@@ -1,7 +1,8 @@
 import React from 'react';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+
 import {
   useAdapter,
   DetailItem,
@@ -11,11 +12,11 @@ import {
   Denominate,
   NetworkLink
 } from 'components';
-
 import { urlBuilder, amountWithoutRounding } from 'helpers';
 import { useGetFilters, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { TokenType, NftType } from 'types';
+
 import { AccountTabs } from './AccountLayout/AccountTabs';
 
 export const AccountTokens = () => {
@@ -23,6 +24,7 @@ export const AccountTokens = () => {
   const navigate = useNavigate();
 
   const { adapter, id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const [searchParams] = useSearchParams();
   const { txCount } = useSelector(accountSelector);
   const { size } = useGetFilters();
   const networkRoute = useNetworkRoute();
@@ -92,7 +94,7 @@ export const AccountTokens = () => {
   React.useEffect(() => {
     fetchAccountTokens();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txCount, activeNetworkId, address, size]);
+  }, [txCount, activeNetworkId, address, size, searchParams]);
 
   return !tokensActive ? (
     navigate(networkRoute(urlBuilder.accountDetails(address)))

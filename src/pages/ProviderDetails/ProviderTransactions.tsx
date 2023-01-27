@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Loader, TransactionsTable, useAdapter } from 'components';
 
@@ -30,6 +30,7 @@ export const ProviderTransactions = () => {
     miniBlockHash,
     search
   } = useURLSearchParams();
+  const [searchParams] = useSearchParams();
 
   const [transactions, setTransactions] = React.useState<UITransactionType[]>(
     []
@@ -107,7 +108,7 @@ export const ProviderTransactions = () => {
     fetchTransactions();
     fetchTransactionsCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, size, address]);
+  }, [activeNetworkId, size, address, searchParams]);
 
   React.useEffect(() => {
     if (!loading) {

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+
 import {
   Loader,
   useAdapter,
@@ -13,11 +15,13 @@ import { urlBuilder } from 'helpers';
 import { useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { AccountType } from 'types';
+
 import { FailedAccounts } from './FailedAccounts';
 import { NoAccounts } from './NoAccounts';
 
 export const Accounts = () => {
   const ref = React.useRef(null);
+  const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { page } = useURLSearchParams();
   const { size } = useSize();
@@ -52,7 +56,7 @@ export const Accounts = () => {
     fetchAccounts();
     fetchAccountsCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, size]);
+  }, [activeNetworkId, size, searchParams]);
 
   return (
     <>

@@ -1,17 +1,19 @@
 import * as React from 'react';
-
 import { useSelector, useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+
 import { Loader, useAdapter } from 'components';
 import { useSize, useGetHash } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { setToken } from 'redux/slices';
+
 import { FailedTokenDetails } from './FailedTokenDetails';
 import { TokenDetailsCard } from './TokenDetailsCard';
 
 export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { firstPageTicker } = useSize();
-
+  const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const dispatch = useDispatch();
@@ -42,11 +44,11 @@ export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
     fetchTokenDetails();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetworkId, tokenId]);
+  }, [firstPageTicker, activeNetworkId, tokenId, searchParams]);
 
   React.useEffect(() => {
     setDataReady(undefined);
-  }, [tokenId, activeNetworkId]);
+  }, [tokenId, activeNetworkId, searchParams]);
 
   const loading = dataReady === undefined;
   const failed = dataReady === false;

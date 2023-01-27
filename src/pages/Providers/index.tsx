@@ -1,7 +1,8 @@
 import React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
-
 import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+
 import { useAdapter, ProvidersTable, Loader, PageState } from 'components';
 import { NodesTabs } from 'pages/Nodes/NodesLayout/NodesTabs';
 
@@ -11,6 +12,7 @@ import { IdentityType, ProviderType } from 'types';
 export const Providers = () => {
   const ref = React.useRef(null);
   const { getProviders, getIdentities } = useAdapter();
+  const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -73,7 +75,7 @@ export const Providers = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchProviders, [activeNetworkId]);
+  React.useEffect(fetchProviders, [activeNetworkId, searchParams]);
 
   return (
     <div className='card' ref={ref}>

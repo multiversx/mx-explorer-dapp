@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import {
   Loader,
@@ -16,11 +16,12 @@ import { urlBuilder, nftText } from 'helpers';
 import { useURLSearchParams, useGetFilters } from 'hooks';
 import { activeNetworkSelector, collectionSelector } from 'redux/selectors';
 import { NftType } from 'types';
+
 import { CollectionTabs } from './CollectionLayout/CollectionTabs';
 
 export const CollectionNfts = () => {
   const ref = React.useRef(null);
-
+  const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { type } = useSelector(collectionSelector);
   const { getNfts, getNftsCount } = useAdapter();
@@ -54,7 +55,7 @@ export const CollectionNfts = () => {
   React.useEffect(() => {
     fetchCollectionNfts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, size]);
+  }, [activeNetworkId, size, searchParams]);
 
   const showCollectionNfts = dataReady === true && collectionNfts.length > 0;
 
