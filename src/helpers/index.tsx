@@ -23,8 +23,6 @@ export * from './analytics';
 export * from './isContract';
 export * from './usdValue';
 export * from './nominate';
-export * from './processStats';
-export * from './processEconomics';
 export * from './useFetchEconomics';
 export * from './useFetchStats';
 export * from './useNetworkRouter';
@@ -48,3 +46,6 @@ export * from './useGetHash';
 
 export * from './truncateMiddle';
 export * from './formatUSD';
+
+export * from './processData';
+export * from './getValue';

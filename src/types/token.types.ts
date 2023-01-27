@@ -1,4 +1,4 @@
-import { RolesType } from './legacyTypes.types';
+import { RolesType } from './general.types';
 
 export interface TokenType {
   identifier: string;

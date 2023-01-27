@@ -1,4 +1,4 @@
-import { RolesType, NftEnumType, ScamInfoType } from './legacyTypes.types';
+import { RolesType, NftEnumType, ScamInfoType } from './general.types';
 
 export interface CollectionType {
   collection: string;
