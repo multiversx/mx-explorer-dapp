@@ -16,6 +16,8 @@ export const useFetchGrowthStaking = () => {
       getGrowthWidget('/staking').then(({ data, success }) => {
         if (data && success) {
           const processedGrowthStaking = processGrowthStaking(data);
+          const { totalStaked30d, totalStakedAll, ...rest } = data;
+
           dispatch(
             setGrowthStaking({
               ...processedGrowthStaking,
@@ -23,7 +25,7 @@ export const useFetchGrowthStaking = () => {
               totalStaked30d: data.totalStaked30d,
               totalStakedAll: data.totalStakedAll,
 
-              unprocessed: data,
+              unprocessed: rest,
               isFetched: success
             })
           );

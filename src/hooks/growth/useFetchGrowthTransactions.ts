@@ -16,6 +16,14 @@ export const useFetchGrowthTransactions = () => {
       getGrowthWidget('/transactions').then(({ data, success }) => {
         if (data && success) {
           const processedGrowthTransactions = processGrowthTransactions(data);
+          const {
+            scResults30d,
+            scResultsAll,
+            transactions30d,
+            transactionsAll,
+            ...rest
+          } = data;
+
           dispatch(
             setGrowthTransactions({
               ...processedGrowthTransactions,
@@ -25,7 +33,7 @@ export const useFetchGrowthTransactions = () => {
               transactions30d: data.transactions30d,
               transactionsAll: data.transactionsAll,
 
-              unprocessed: data,
+              unprocessed: rest,
               isFetched: success
             })
           );
