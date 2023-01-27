@@ -16,6 +16,7 @@ export const useFetchGrowthPrice = () => {
       getGrowthWidget('/price').then(({ data, success }) => {
         if (data && success) {
           const processedGrowthPrice = processGrowthPrice(data);
+          const { price7d, price30d, priceAll, ...rest } = data;
           dispatch(
             setGrowthPrice({
               ...processedGrowthPrice,
@@ -24,7 +25,7 @@ export const useFetchGrowthPrice = () => {
               price30d: data.price30d,
               priceAll: data.priceAll,
 
-              unprocessed: data,
+              unprocessed: rest,
               isFetched: success
             })
           );
