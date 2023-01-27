@@ -10,7 +10,7 @@ export const NetworkMetrics = ({ node }: { node: NodeType }) => {
   const statusColor = node.online ? 'success' : 'danger';
 
   return (
-    <div className='card network-metrics'>
+    <div className='card network-metrics h-100'>
       <div className='card-header'>
         <div className='card-header-item'>
           <h5 className='m-0'>Network Metrics</h5>
@@ -21,7 +21,7 @@ export const NetworkMetrics = ({ node }: { node: NodeType }) => {
         <div className='container-fluid'>
           <DetailItem title='Rating' colWidth='3'>
             <div className='d-flex align-items-center h-100'>
-              <div className='gradient-bar progress progress-sm w-100 my-2'>
+              <div className='gradient-bar progress progress-sm w-100'>
                 <RatingArrow node={node} showTemp={true} />
                 <RatingArrow node={node} />
               </div>

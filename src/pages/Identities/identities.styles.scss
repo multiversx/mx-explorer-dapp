@@ -14,30 +14,30 @@
 
   .identity-row {
     position: relative;
-
+    background-color: var(--neutral-900);
     &:hover {
-      background-color: var(--neutral-700);
+      background-color: var(--neutral-900);
       cursor: pointer;
     }
 
     &.collapsed {
+      background-color: transparent;
       .details-arrow {
         transform: rotateZ(-90deg);
       }
     }
   }
 
-  $detailsTableBgColor: var(--neutral-700);
-
   .identity-details-row {
-    background-color: $detailsTableBgColor;
+    background-color: var(--neutral-900);
 
     &:hover {
-      background-color: $detailsTableBgColor;
+      background-color: var(--neutral-900);
     }
 
     .table-wrapper {
       th {
+        color: var(--body-color);
         background: none;
         text-transform: uppercase;
         font-size: 0.785rem;
@@ -45,8 +45,8 @@
       }
 
       tr {
-        background-color: $detailsTableBgColor;
-        color: #5a6169;
+        background-color: var(--neutral-900);
+        color: var(--neutral-400);
       }
     }
 

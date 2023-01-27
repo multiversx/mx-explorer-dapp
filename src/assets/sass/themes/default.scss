@@ -30,6 +30,7 @@
   --teal: #23f7dd;
 
   --teal-200: #99f6e4;
+  --teal-700: #0d786c;
 
   // Overrides
   // Only these variables must be changed across themes
@@ -46,6 +47,7 @@
 
   --primary: var(--teal);
   --primary-200: var(--teal-200);
+  --primary-700: var(--teal-700);
   --secondary: var(--neutral-400);
   --accent: var(--teal);
   --danger: var(--red);

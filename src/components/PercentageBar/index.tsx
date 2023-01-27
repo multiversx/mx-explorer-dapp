@@ -20,7 +20,7 @@ export const PercentageBar = ({
     {overallPercent + fillPercent > 0 ? (
       <div className='progress progress-sm w-100 my-2'>
         <div
-          className='progress-bar bg-success'
+          className='progress-bar existing'
           data-testid='progresUpTimeBar'
           id={overallPercent.toString()}
           style={{ width: overallPercent + '%' }}
@@ -40,7 +40,7 @@ export const PercentageBar = ({
           )}
         >
           <div
-            className='progress-bar bg-danger'
+            className='progress-bar new'
             data-testid='progresDownTimeBar'
             id={fillPercentLabel + fillPercent.toString()}
             style={{ width: fillPercent + '%' }}
@@ -49,7 +49,7 @@ export const PercentageBar = ({
       </div>
     ) : (
       <div className='progress progress-sm w-100 my-2'>
-        <div className='progress-bar bg-success' />
+        <div className='progress-bar existing' />
       </div>
     )}
   </div>

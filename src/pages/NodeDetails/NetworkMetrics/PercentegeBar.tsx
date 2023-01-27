@@ -35,7 +35,7 @@ export const PercentegeBar = ({
               )}
             >
               <div
-                className='progress-bar bg-success'
+                className='progress-bar existing'
                 data-testid='progresUpTimeBar'
                 id={uptimeLabel + uptimePercentege.toString()}
                 style={{ width: uptimePercentege + '%' }}
@@ -55,7 +55,7 @@ export const PercentegeBar = ({
               )}
             >
               <div
-                className='progress-bar bg-danger'
+                className='progress-bar new'
                 data-testid='progresDownTimeBar'
                 id={downtimeLabel + downtimePercentege.toString()}
                 style={{ width: downtimePercentege + '%' }}
@@ -63,7 +63,7 @@ export const PercentegeBar = ({
             </OverlayTrigger>
           </>
         ) : (
-          <div className='progress-bar bg-success' />
+          <div className='progress-bar existing' />
         )}
       </div>
     </div>
