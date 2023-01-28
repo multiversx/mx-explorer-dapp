@@ -4,9 +4,22 @@ import { TableWrapper } from 'components';
 import { TransactionsTableType } from 'types';
 
 import { Header } from './Header';
+import { NoTransactions } from './NoTransactions';
 import { TransactionRow } from './TransactionRow';
 import { MethodList } from './TransactionsFilters';
 import { Pager } from '../Pager';
+
+const ColSpanWrapper = ({
+  children,
+  directionCol
+}: {
+  children: React.ReactNode;
+  directionCol: boolean;
+}) => (
+  <tr>
+    <td colSpan={directionCol ? 8 : 7}>{children}</td>
+  </tr>
+);
 
 export const TransactionsTable = ({
   transactions,
@@ -63,15 +76,26 @@ export const TransactionsTable = ({
                 inactiveFilters={inactiveFilters}
               />
               <tbody>
-                {transactions.map((transaction) => (
-                  <TransactionRow
-                    transaction={transaction}
-                    key={transaction.txHash}
-                    address={address}
-                    directionCol={directionCol}
-                    showLockedAccounts={showLockedAccounts}
-                  />
-                ))}
+                {transactions.length > 0 ? (
+                  <>
+                    {' '}
+                    {transactions.map((transaction) => (
+                      <TransactionRow
+                        transaction={transaction}
+                        key={transaction.txHash}
+                        address={address}
+                        directionCol={directionCol}
+                        showLockedAccounts={showLockedAccounts}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <ColSpanWrapper directionCol={directionCol}>
+                      <NoTransactions />
+                    </ColSpanWrapper>
+                  </>
+                )}
               </tbody>
             </table>
           </TableWrapper>
