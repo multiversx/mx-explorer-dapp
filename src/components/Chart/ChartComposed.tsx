@@ -43,7 +43,7 @@ export const ChartComposed = ({
     'violet-400',
     'muted',
     'primary',
-    '--secondary'
+    'secondary'
   ].map((color) =>
     getComputedStyle(document.documentElement)
       .getPropertyValue(`--${color}`)
@@ -100,7 +100,7 @@ export const ChartComposed = ({
           const active = Boolean(hiddenSeries && hiddenSeries[dataKey]);
           const style = {
             marginRight: 10,
-            color: `${active ? '#AAA' : color}`
+            color: `${active ? secondary : color}`
           };
           const badgeOutlineColor =
             dataKey === firstSeriesConfig.id
