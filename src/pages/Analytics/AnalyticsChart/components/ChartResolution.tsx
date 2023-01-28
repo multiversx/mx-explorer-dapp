@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { SingleValue } from 'react-select';
-import { DropdownChart } from '../../../Home/DropdownChart';
-import { DropdownChartOptionType } from '../../../Home/DropdownChart/types';
+import { ChartSelect } from '../../../Home/ChartSelect';
+import { ChartSelectOptionType } from '../../../Home/ChartSelect/types';
 
 export type ChartResolutionRangeType = 'year' | 'month' | 'week';
 
@@ -41,7 +41,7 @@ export const ChartResolutionSelector = ({
   value,
   onChange
 }: ChartResolutionSelectorProps) => {
-  const options: DropdownChartOptionType[] = [
+  const options: ChartSelectOptionType[] = [
     {
       label: '365 days',
       value: ChartResolution['year'].range
@@ -57,13 +57,20 @@ export const ChartResolutionSelector = ({
   ];
 
   const dropdownValue = useMemo(() => {
+    if (!value) {
+      return {
+        label: ChartResolution['month'].label,
+        value: ChartResolution['month'].range
+      };
+    }
+
     return {
       label: ChartResolution[value].label,
       value: ChartResolution[value].range
     };
   }, [value]);
 
-  const onChangeHandler = (option: SingleValue<DropdownChartOptionType>) => {
+  const onChangeHandler = (option: SingleValue<ChartSelectOptionType>) => {
     const value: ChartResolutionRangeType =
       (option?.value as ChartResolutionRangeType) ??
       ChartResolution['month'].range;
@@ -74,7 +81,7 @@ export const ChartResolutionSelector = ({
   };
 
   return (
-    <DropdownChart
+    <ChartSelect
       options={options}
       value={dropdownValue}
       onChange={onChangeHandler}
