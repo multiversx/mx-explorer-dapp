@@ -1,29 +1,40 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Loader, useAdapter } from 'components';
 import { useIsMainnet } from 'hooks';
-
 import { activeNetworkSelector } from 'redux/selectors';
-import { AnalyticsChart } from './AnalyticsChart';
+import { AnalyticsStackedChartPoC } from './AnalyticsChart/AnalyticsStackedChartsPoC';
 import { FailedAnalytics } from './FailedAnalytics';
 import { NoAnalytics } from './NoAnalytics';
+import { capitalize } from '../../helpers';
 
 export interface ChartListType {
   id: string;
+  label: string;
   path: string;
+  longPath: string;
 }
+
+const FIRST_SERIES_ID = 'firstSeriesId';
+const SECOND_SERIES_ID = 'secondSeriesId';
 
 export const Analytics = () => {
   const ref = useRef(null);
   const navigate = useNavigate();
   const isMainnet = useIsMainnet();
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const firstSeriesId = searchParams.get(FIRST_SERIES_ID);
+  const secondSeriesId = searchParams.get(SECOND_SERIES_ID);
+
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getAnalyticsChartList } = useAdapter();
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();
   const [chartList, setChartList] = useState<ChartListType[]>([]);
+  const [selectedPills, setSelectedPills] = useState<ChartListType[]>([]);
 
   const getData = () => {
     getAnalyticsChartList().then((chartList) => {
@@ -38,8 +49,34 @@ export const Analytics = () => {
     });
   };
 
+  const onSelectPill = (series: ChartListType) => () => {
+    setSelectedPills((pills) => {
+      const newQueryParameters: URLSearchParams = new URLSearchParams();
+      const newSelectedPills = [pills[1], series];
+
+      newQueryParameters.set(FIRST_SERIES_ID, pills[1].id);
+      newQueryParameters.set(SECOND_SERIES_ID, series.id);
+
+      setSearchParams(newQueryParameters);
+
+      return newSelectedPills;
+    });
+  };
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(getData, [activeNetworkId]);
+
+  useEffect(() => {
+    const firstSeries = chartList.find((x) => x.id === firstSeriesId);
+    const secondSeries = chartList.find((x) => x.id === secondSeriesId);
+
+    if (!firstSeries || !secondSeries) {
+      setSelectedPills(chartList.slice(0, 2));
+      return;
+    }
+
+    setSelectedPills([firstSeries, secondSeries]);
+  }, [firstSeriesId, secondSeriesId, chartList]);
 
   if (!isMainnet) {
     navigate('/');
@@ -50,16 +87,39 @@ export const Analytics = () => {
       {dataReady === undefined && <Loader />}
       {dataReady === false && <FailedAnalytics />}
       {dataReady === true && chartList.length === 0 && <NoAnalytics />}
+      {selectedPills.length < 2 && <NoAnalytics />}
 
       <div ref={ref}>
-        {dataReady === true && (
+        {dataReady === true && selectedPills.length === 2 && (
           <div className='analytics container page-content'>
-            <div className='row'>
-              {chartList.map((chart) => (
-                <div className='col-12 col-lg-6 mt-spacer' key={chart.id}>
-                  <AnalyticsChart id={chart.id} path={chart.path} />
+            <div className='row mb-3'>
+              {chartList.map((series) => (
+                <div
+                  key={series.id}
+                  className='col'
+                  onClick={onSelectPill(series)}
+                >
+                  <span
+                    className={`badge rounded-pill cursor-pointer ${
+                      selectedPills.find((x) => x.id === series.id)
+                        ? 'bg-light text-dark'
+                        : 'bg-dark'
+                    }`}
+                  >
+                    {series.label}
+                  </span>
                 </div>
               ))}
+            </div>
+            <div className='row'>
+              <AnalyticsStackedChartPoC
+                ids={selectedPills.map((pill) => pill.path)}
+                firstSeriesLabel={selectedPills[0].label}
+                secondSeriesLabel={selectedPills[1].label}
+                title={`${capitalize(selectedPills[0].label)} vs. ${capitalize(
+                  selectedPills[1].label
+                )} in the past 30 days`}
+              />
             </div>
           </div>
         )}
