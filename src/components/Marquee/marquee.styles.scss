@@ -1,6 +1,15 @@
 .marquee-wrapper {
   max-width: 100%;
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
+.marquee-wrapper::-webkit-scrollbar {
+  display: none;
+}
+.marquee-wrapper {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .marquee {
