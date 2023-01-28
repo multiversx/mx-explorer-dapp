@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 
-import { Loader } from 'components';
+import { TableWrapper } from 'components';
 import { TransactionsTableType } from 'types';
 
 import { Header } from './Header';
@@ -49,11 +49,7 @@ export const TransactionsTable = ({
         </div>
 
         <div className='card-body'>
-          <div className='table-wrapper animated-list'>
-            <div className={`overlay ${dataChanged ? '' : 'transparent'}`}>
-              <Loader />
-            </div>
-
+          <TableWrapper dataChanged={dataChanged}>
             <table
               className='table trim-size-sm mb-0'
               data-testid='transactionsTable'
@@ -78,7 +74,7 @@ export const TransactionsTable = ({
                 ))}
               </tbody>
             </table>
-          </div>
+          </TableWrapper>
         </div>
 
         <div className='card-footer d-flex justify-content-center justify-content-sm-end'>

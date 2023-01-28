@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ import { activeNetworkSelector } from 'redux/selectors';
 import { UITransactionType } from 'types';
 
 export const Transactions = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
@@ -34,73 +34,76 @@ export const Transactions = () => {
   } = useURLSearchParams();
   const { size, firstPageTicker } = useSize();
 
-  React.useEffect(() => {
+  const { getTransactionsCount, getTransactions } = useAdapter();
+
+  const [transactions, setTransactions] = useState<UITransactionType[]>([]);
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [dataChanged, setDataChanged] = useState<boolean>(false);
+  const [totalTransactions, setTotalTransactions] = useState<number | '...'>(
+    '...'
+  );
+
+  useEffect(() => {
+    if (searchParams.toString()) {
+      setDataChanged(true);
+    }
+
+    Promise.all([
+      getTransactions({
+        size,
+        senderShard,
+        receiverShard,
+        sender,
+        receiver,
+        method,
+        before,
+        after,
+        status,
+        miniBlockHash,
+        search,
+        withUsername: true
+      }),
+      getTransactionsCount({
+        senderShard,
+        receiverShard,
+        sender,
+        receiver,
+        method,
+        before,
+        after,
+        status,
+        miniBlockHash,
+        search
+      })
+    ])
+      .then(([transctionsData, transctionsCountData]) => {
+        if (ref.current !== null) {
+          if (transctionsData.success && transctionsCountData.success) {
+            const existingHashes = transactions.map((b) => b.txHash);
+            const newTransactions = transctionsData.data.map(
+              (transaction: UITransactionType) => ({
+                ...transaction,
+                isNew: !existingHashes.includes(transaction.txHash)
+              })
+            );
+            setTransactions(newTransactions);
+            setTotalTransactions(Math.min(transctionsCountData.data, 10000));
+          }
+          setDataReady(transctionsData.success && transctionsCountData.success);
+        }
+      })
+      .finally(() => {
+        setDataChanged(false);
+      });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeNetworkId, size, firstPageTicker, searchParams]);
+
+  useEffect(() => {
     if (senderShard !== undefined || receiverShard !== undefined) {
       document.title = document.title.replace('Transactions', 'Shard Details');
     }
   }, [receiverShard, senderShard]);
-
-  const { getTransactionsCount, getTransactions } = useAdapter();
-
-  const [transactions, setTransactions] = React.useState<UITransactionType[]>(
-    []
-  );
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [dataChanged, setDataChanged] = React.useState<boolean>(false);
-  const [totalTransactions, setTotalTransactions] = React.useState<
-    number | '...'
-  >('...');
-
-  React.useEffect(() => {
-    getTransactions({
-      size,
-      senderShard,
-      receiverShard,
-      sender,
-      receiver,
-      method,
-      before,
-      after,
-      status,
-      miniBlockHash,
-      search,
-      withUsername: true
-    }).then(({ data, success }) => {
-      if (ref.current !== null) {
-        if (success) {
-          const existingHashes = transactions.map((b) => b.txHash);
-          const newTransactions = data.map(
-            (transaction: UITransactionType) => ({
-              ...transaction,
-              isNew: !existingHashes.includes(transaction.txHash)
-            })
-          );
-          setTransactions(newTransactions);
-          setDataChanged(false);
-        }
-        setDataReady(success);
-      }
-    });
-    getTransactionsCount({
-      senderShard,
-      receiverShard,
-      method,
-      before,
-      after,
-      status
-    }).then(({ data: count, success }) => {
-      if (ref.current !== null && success) {
-        setTotalTransactions(Math.min(count, 10000));
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, size, firstPageTicker, searchParams]);
-
-  React.useEffect(() => {
-    if (searchParams.toString()) {
-      setDataChanged(true);
-    }
-  }, [searchParams]);
 
   return (
     <>
