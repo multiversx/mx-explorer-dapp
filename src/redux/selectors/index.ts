@@ -14,6 +14,7 @@ export * from './interface';
 export * from './markers';
 export * from './miniBlock';
 export * from './networks';
+export * from './nodesVersions';
 export * from './refresh';
 export * from './stats';
 export * from './token';

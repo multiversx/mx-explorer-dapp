@@ -32,10 +32,6 @@ export const globalStakeSlice = createSlice({
       state.queueSize = action.payload.queueSize;
       state.totalStaked = action.payload.totalStaked;
 
-      state.waitingList = action.payload.waitingList;
-      state.deliquentStake = action.payload.deliquentStake;
-      state.nodesVerions = action.payload.nodesVerions;
-
       state.unprocessed = action.payload.unprocessed;
       state.isFetched = action.payload.isFetched;
     }

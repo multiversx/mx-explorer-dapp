@@ -19,6 +19,7 @@ import { interfaceReducer } from './slices/interface';
 import { markersReducer } from './slices/markers';
 import { miniBlockReducer } from './slices/miniBlock';
 import { networkReducer } from './slices/networks';
+import { nodesVersionsReducer } from './slices/nodesVersions';
 import { refreshReducer } from './slices/refresh';
 import { statsReducer } from './slices/stats';
 import { tokenReducer } from './slices/token';
@@ -56,7 +57,8 @@ export const customIgnoredSlices = {
   stats: statsReducer,
   token: tokenReducer,
   markers: markersReducer,
-  miniBlock: miniBlockReducer
+  miniBlock: miniBlockReducer,
+  nodesVersions: nodesVersionsReducer
 };
 
 export const ignoredSliceNames: string[] = [

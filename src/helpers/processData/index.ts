@@ -8,4 +8,5 @@ export * from './processGrowthStaking';
 export * from './processGrowthTransactions';
 export * from './processGrowthEconomics';
 
+export * from './processNodesVersions';
 export * from './processStats';

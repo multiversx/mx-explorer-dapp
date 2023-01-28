@@ -463,11 +463,6 @@ export interface ProviderType {
   maxRedelegateAmountAllowed?: string;
 }
 
-export interface NodesVersionsType {
-  name: string;
-  percent: number;
-}
-
 export interface NodeType {
   bls: string;
   name: string;
