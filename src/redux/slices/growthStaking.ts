@@ -10,6 +10,7 @@ export const getInitialGrowthStakingState = (): GrowthStakingSliceType => {
     usersStaking: ELLIPSIS,
     averageAPR: ELLIPSIS,
 
+    totalStaked7d: [],
     totalStaked30d: [],
     totalStakedAll: [],
 
@@ -37,6 +38,7 @@ export const growthStakingSlice = createSlice({
       state.circulatingSupply = action.payload.circulatingSupply;
       state.usersStaking = action.payload.usersStaking;
       state.averageAPR = action.payload.averageAPR;
+      state.totalStaked7d = action.payload.totalStaked7d;
       state.totalStaked30d = action.payload.totalStaked30d;
       state.totalStakedAll = action.payload.totalStakedAll;
 

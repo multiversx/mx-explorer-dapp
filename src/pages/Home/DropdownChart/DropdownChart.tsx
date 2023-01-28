@@ -55,6 +55,7 @@ export const DropdownChart = (props: DropdownChartPropsType) => (
     className={styles.dropdown}
     isMulti={false}
     isSearchable={false}
+    defaultValue={props.options.find(() => true)}
     components={{
       Menu,
       MenuList,

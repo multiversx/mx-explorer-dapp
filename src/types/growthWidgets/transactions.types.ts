@@ -14,8 +14,10 @@ export interface GrowthTransactionsSliceType extends SliceType {
   scResults: string;
   transactions: string;
 
+  scResults7d: GrowthChartDataType[];
   scResults30d: GrowthChartDataType[];
   scResultsAll: GrowthChartDataType[];
+  transactions7d: GrowthChartDataType[];
   transactions30d: GrowthChartDataType[];
   transactionsAll: GrowthChartDataType[];
 }

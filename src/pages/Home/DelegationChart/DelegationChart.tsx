@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Area, Tooltip, ResponsiveContainer, AreaChart } from 'recharts';
+import {
+  Area,
+  Tooltip,
+  ResponsiveContainer,
+  AreaChart,
+  TooltipProps
+} from 'recharts';
 import { SingleValue } from 'react-select';
 
 import { useFetchGrowthStaking } from 'hooks';
@@ -15,7 +21,7 @@ import type { StatisticType } from './types';
 
 import styles from './styles.module.scss';
 
-const CustomTooltip = (props: any) => {
+const CustomTooltip = (props: TooltipProps<number, string>) => {
   const { payload, active } = props;
 
   if (!payload || !active) {
@@ -44,17 +50,18 @@ export const DelegationChart = () => {
     totalStaked,
     averageAPR,
     circulatingSupply,
-    // totalStaked7d,
     usersStaking,
+    totalStaked7d,
     totalStaked30d,
-    totalStakedAll
+    totalStakedAll,
+    isFetched
   } = useSelector(growthStakingSelector);
 
   const filters: DropdownChartOptionType[] = [
-    // {
-    //   label: StakingSelectLabelEnum.Days7,
-    //   value: StakingSelectValueEnum.totalStaked7d
-    // },x
+    {
+      label: '7d',
+      value: 'totalStaked7d'
+    },
     {
       label: '30d',
       value: 'totalStaked30d'
@@ -81,23 +88,35 @@ export const DelegationChart = () => {
   ];
 
   const dataMap = new Map([
-    // [StakingSelectValueEnum.totalStaked7d, totalStaked7d],
+    ['totalStaked7d', totalStaked7d],
     ['totalStaked30d', totalStaked30d],
     ['totalStakedAll', totalStakedAll]
   ]);
 
-  const [data, setData] = useState(dataMap.get('totalStaked30d'));
+  const initialFilter = 'totalStaked7d';
   const teal = getComputedStyle(document.documentElement)
     .getPropertyValue('--teal')
     .trim();
 
-  const onChange = (option: SingleValue<DropdownChartOptionType>) => {
-    if (option && option.value) {
-      setData(dataMap.get(option.value));
+  const [data, setData] = useState(dataMap.get(initialFilter));
+
+  const onChange = useCallback(
+    (option: SingleValue<DropdownChartOptionType>) => {
+      if (option && option.value && isFetched) {
+        setData(dataMap.get(option.value));
+      }
+    },
+    [isFetched]
+  );
+
+  const onInitialLoad = useCallback(() => {
+    if (isFetched) {
+      setData(dataMap.get(initialFilter));
     }
-  };
+  }, [isFetched]);
 
   useFetchGrowthStaking();
+  useEffect(onInitialLoad, [onInitialLoad]);
 
   return (
     <div className={styles.chart}>
@@ -110,11 +129,7 @@ export const DelegationChart = () => {
         </div>
 
         <div className={styles.right}>
-          <DropdownChart
-            options={filters}
-            defaultValue={filters[0]}
-            onChange={onChange}
-          />
+          <DropdownChart options={filters} onChange={onChange} />
         </div>
       </div>
 
@@ -136,6 +151,7 @@ export const DelegationChart = () => {
             dataKey='value'
             stroke={teal}
             fill='url(#delegationGradient)'
+            activeDot={{ stroke: teal }}
           />
 
           <Tooltip content={CustomTooltip} />
