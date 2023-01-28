@@ -16,6 +16,7 @@ import { growthSearchReducer } from './slices/growthSearch';
 import { growthStakingReducer } from './slices/growthStaking';
 import { growthTransactionsReducer } from './slices/growthTransactions';
 import { interfaceReducer } from './slices/interface';
+import { markersReducer } from './slices/markers';
 import { miniBlockReducer } from './slices/miniBlock';
 import { networkReducer } from './slices/networks';
 import { refreshReducer } from './slices/refresh';
@@ -54,6 +55,7 @@ export const customIgnoredSlices = {
   refresh: refreshReducer,
   stats: statsReducer,
   token: tokenReducer,
+  markers: markersReducer,
   miniBlock: miniBlockReducer
 };
 

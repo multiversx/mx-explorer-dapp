@@ -11,6 +11,7 @@ export * from './growthStaking';
 export * from './growthTransactions';
 export * from './growthEconomics';
 export * from './interface';
+export * from './markers';
 export * from './miniBlock';
 export * from './networks';
 export * from './refresh';

@@ -7,6 +7,8 @@ export * from './useIsMainnet';
 export * from './useIsTestnet';
 export * from './useNetworkPathname';
 export * from './useFetchEconomics';
+export * from './useFetchGlobalStake';
+export * from './useFetchMarkers';
 export * from './useFetchStats';
 export * from './useNetworkRouter';
 export * from './useLoopManager';

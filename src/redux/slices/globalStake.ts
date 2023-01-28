@@ -1,9 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GlobalStakeType } from 'types/globalStake.types';
+import { ELLIPSIS } from 'appConstants';
+import { GlobalStakeSliceType } from 'types/globalStake.types';
 
-export const getInitialGlobalStakeState = (): GlobalStakeType => {
+export const getInitialGlobalStakeState = (): GlobalStakeSliceType => {
   return {
-    queueSize: 0
+    totalValidators: ELLIPSIS,
+    activeValidators: ELLIPSIS,
+    queueSize: ELLIPSIS,
+    totalStaked: ELLIPSIS,
+
+    unprocessed: {
+      totalValidators: 0,
+      activeValidators: 0,
+      queueSize: 0,
+      totalStaked: ELLIPSIS
+    },
+    isFetched: false
   };
 };
 
@@ -12,13 +24,20 @@ export const globalStakeSlice = createSlice({
   initialState: getInitialGlobalStakeState(),
   reducers: {
     setGlobalStake: (
-      state: GlobalStakeType,
-      action: PayloadAction<GlobalStakeType>
+      state: GlobalStakeSliceType,
+      action: PayloadAction<GlobalStakeSliceType>
     ) => {
+      state.totalValidators = action.payload.totalValidators;
+      state.activeValidators = action.payload.activeValidators;
       state.queueSize = action.payload.queueSize;
+      state.totalStaked = action.payload.totalStaked;
+
       state.waitingList = action.payload.waitingList;
       state.deliquentStake = action.payload.deliquentStake;
       state.nodesVerions = action.payload.nodesVerions;
+
+      state.unprocessed = action.payload.unprocessed;
+      state.isFetched = action.payload.isFetched;
     }
   }
 });

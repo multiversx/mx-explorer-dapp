@@ -6,10 +6,10 @@ import {
   Geography,
   Marker
 } from 'react-simple-maps';
+import { MarkerType } from 'components/ValidatorsStatus/helpers/asyncRequests';
 import countries from './countries100m.json';
-import { MarkerType } from '../helpers/asyncRequests';
 
-interface SimpleMapType {
+interface ValidatorMapType {
   markers: MarkerType[];
 }
 
@@ -63,7 +63,7 @@ const MarkerToolTip = ({
   </OverlayTrigger>
 );
 
-export const SimpleMap = ({ markers }: SimpleMapType) => {
+export const ValidatorMap = ({ markers }: ValidatorMapType) => {
   const ref = React.useRef(null);
   const [localMarkers, setLocalMarkers] = React.useState<MarkerType[]>([]);
   const [pulse, setPulse] = React.useState(0);
@@ -110,7 +110,7 @@ export const SimpleMap = ({ markers }: SimpleMapType) => {
   React.useEffect(pulseInterval, []);
 
   return (
-    <div className='simple-map' ref={ref}>
+    <div className='validator-map' ref={ref}>
       <ComposableMap
         projectionConfig={{
           scale: 200,
@@ -124,31 +124,25 @@ export const SimpleMap = ({ markers }: SimpleMapType) => {
             ))
           }
         </Geographies>
-        {localMarkers
-          .sort((a, b) => {
-            const aCity = a.city === pulseMarker?.city ? -1 : 1;
-            const bCity = b.city === pulseMarker?.city ? -1 : 1;
-            return bCity - aCity;
-          })
-          .map(({ city, longitude, latitude, validators }) => (
-            <Marker key={longitude} coordinates={[longitude, latitude]}>
-              <MarkerToolTip city={city} validators={validators}>
-                <g>
-                  <circle
-                    r={calcRadius(validators)}
-                    className={`simple-map-marker ${
-                      pulseMarker && pulseMarker.city === city
-                        ? 'pulse-marker'
-                        : ''
-                    }`}
-                  />
-                  {pulseMarker && pulseMarker.city === city && (
-                    <circle className='pulse' r={calcRadius(validators)} />
-                  )}
-                </g>
-              </MarkerToolTip>
-            </Marker>
-          ))}
+        {localMarkers.map(({ city, longitude, latitude, validators }) => (
+          <Marker key={longitude} coordinates={[longitude, latitude]}>
+            <MarkerToolTip city={city} validators={validators}>
+              <g>
+                <circle
+                  r={calcRadius(validators)}
+                  className={`validator-map-marker ${
+                    pulseMarker && pulseMarker.city === city
+                      ? 'pulse-marker'
+                      : ''
+                  }`}
+                />
+                {pulseMarker && pulseMarker.city === city && (
+                  <circle className='pulse' r={calcRadius(validators)} />
+                )}
+              </g>
+            </MarkerToolTip>
+          </Marker>
+        ))}
       </ComposableMap>
     </div>
   );
