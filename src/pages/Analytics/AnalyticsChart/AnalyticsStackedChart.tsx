@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { PageState, Chart, Loader, useAdapter } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
 import { activeNetworkSelector } from 'redux/selectors';
+import { capitalize } from '../../../helpers';
+import { ChartListType } from '../Analytics';
 
 export interface AnalyticsStackedChartDataPoCType {
   value: string;
@@ -11,26 +13,29 @@ export interface AnalyticsStackedChartDataPoCType {
 }
 
 export const AnalyticsStackedChart = ({
-  ids,
-  firstSeriesLabel,
-  secondSeriesLabel,
-  title
+  firstSeries,
+  secondSeries
 }: {
-  ids: string[];
-  firstSeriesLabel: string;
-  secondSeriesLabel: string;
-  title?: string;
+  firstSeries: ChartListType;
+  secondSeries: ChartListType;
 }) => {
   const ref = useRef(null);
+
+  const ids = [firstSeries.path, secondSeries.path];
+  const firstSeriesLabel = firstSeries.label;
+  const secondSeriesLabel = secondSeries.label;
+  const title = `${capitalize(firstSeriesLabel)} vs. ${capitalize(
+    secondSeriesLabel
+  )} in the past 30 days`;
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getAnalyticsChart } = useAdapter();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [firstSeries, setFirstSeries] = useState<
+  const [firstSeriesData, setFirstSeriesData] = useState<
     AnalyticsStackedChartDataPoCType[]
   >([]);
-  const [secondSeries, setSecondSeries] = useState<
+  const [secondSeriesData, setSecondSeriesData] = useState<
     AnalyticsStackedChartDataPoCType[]
   >([]);
 
@@ -79,13 +84,13 @@ export const AnalyticsStackedChart = ({
     id: firstSeriesLabel,
     label: firstSeriesLabel,
     gradient: 'defaultGradient',
-    data: firstSeries
+    data: firstSeriesData
   };
   const secondSeriesConfig: ChartConfigType = {
     id: secondSeriesLabel,
     label: secondSeriesLabel,
     gradient: 'defaultGradient',
-    data: secondSeries
+    data: secondSeriesData
   };
   const getData = useCallback(async () => {
     const [firstSeriesData, secondSeriesData] = await Promise.allSettled([
@@ -94,11 +99,11 @@ export const AnalyticsStackedChart = ({
     ]);
 
     if (firstSeriesData.status === 'fulfilled') {
-      setFirstSeries(firstSeriesData.value.data?.data ?? []);
+      setFirstSeriesData(firstSeriesData.value.data?.data ?? []);
     }
 
     if (secondSeriesData.status === 'fulfilled') {
-      setSecondSeries(
+      setSecondSeriesData(
         secondSeriesData.status === 'fulfilled'
           ? secondSeriesData?.value.data?.data
           : []
@@ -134,7 +139,8 @@ export const AnalyticsStackedChart = ({
             />
           )}
           {dataReady === true &&
-            (firstSeries?.length === 0 || secondSeries?.length === 0) && (
+            (firstSeriesData?.length === 0 ||
+              secondSeriesData?.length === 0) && (
               <PageState
                 icon={faChartBar}
                 title='Missing Chart data'
@@ -145,8 +151,8 @@ export const AnalyticsStackedChart = ({
             )}
 
           {dataReady === true &&
-            firstSeries.length > 0 &&
-            secondSeries.length > 0 && (
+            firstSeriesData.length > 0 &&
+            secondSeriesData.length > 0 && (
               <Chart.Composed
                 config={{
                   firstSeriesConfig,

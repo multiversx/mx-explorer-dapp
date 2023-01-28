@@ -87,7 +87,7 @@ export const Analytics = () => {
       {dataReady === undefined && <Loader />}
       {dataReady === false && <FailedAnalytics />}
       {dataReady === true && chartList.length === 0 && <NoAnalytics />}
-      {selectedPills.length < 2 && <NoAnalytics />}
+      {selectedPills.length < 2 && <FailedAnalytics />}
 
       <div ref={ref}>
         {dataReady === true && selectedPills.length === 2 && (
@@ -113,12 +113,8 @@ export const Analytics = () => {
             </div>
             <div className='row'>
               <AnalyticsStackedChart
-                ids={selectedPills.map((pill) => pill.path)}
-                firstSeriesLabel={selectedPills[0].label}
-                secondSeriesLabel={selectedPills[1].label}
-                title={`${capitalize(selectedPills[0].label)} vs. ${capitalize(
-                  selectedPills[1].label
-                )} in the past 30 days`}
+                firstSeries={selectedPills[0]}
+                secondSeries={selectedPills[1]}
               />
             </div>
           </div>
