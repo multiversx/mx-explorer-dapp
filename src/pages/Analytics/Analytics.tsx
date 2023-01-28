@@ -5,9 +5,10 @@ import { Loader, useAdapter } from 'components';
 import { useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { AnalyticsStackedChart } from './AnalyticsChart/AnalyticsStackedChart';
+import { ChartResolution } from './AnalyticsChart/components/ChartResolution';
+import { FIRST_SERIES_ID, RANGE, SECOND_SERIES_ID } from './constants';
 import { FailedAnalytics } from './FailedAnalytics';
 import { NoAnalytics } from './NoAnalytics';
-import { capitalize } from '../../helpers';
 
 export interface ChartListType {
   id: string;
@@ -15,9 +16,6 @@ export interface ChartListType {
   path: string;
   longPath: string;
 }
-
-const FIRST_SERIES_ID = 'firstSeriesId';
-const SECOND_SERIES_ID = 'secondSeriesId';
 
 export const Analytics = () => {
   const ref = useRef(null);
@@ -49,18 +47,18 @@ export const Analytics = () => {
     });
   };
 
-  const onSelectPill = (series: ChartListType) => () => {
-    setSelectedPills((pills) => {
-      const newQueryParameters: URLSearchParams = new URLSearchParams();
-      const newSelectedPills = [pills[1], series];
+  const setNewQueryParameters = (params: Record<string, string>) => {
+    const newQueryParameters: URLSearchParams = new URLSearchParams();
 
-      newQueryParameters.set(FIRST_SERIES_ID, pills[1].id);
-      newQueryParameters.set(SECOND_SERIES_ID, series.id);
-
-      setSearchParams(newQueryParameters);
-
-      return newSelectedPills;
+    Object.entries(params).forEach((entry) => {
+      newQueryParameters.set(entry[0], entry[1]);
     });
+
+    setSearchParams(newQueryParameters);
+  };
+
+  const onSelectPill = (series: ChartListType) => () => {
+    setSelectedPills((pills) => [pills[1], series]);
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,6 +75,18 @@ export const Analytics = () => {
 
     setSelectedPills([firstSeries, secondSeries]);
   }, [firstSeriesId, secondSeriesId, chartList]);
+
+  useEffect(() => {
+    if (selectedPills.length < 2) {
+      return;
+    }
+
+    setNewQueryParameters({
+      [FIRST_SERIES_ID]: selectedPills[0].id,
+      [SECOND_SERIES_ID]: selectedPills[1].id,
+      [RANGE]: searchParams.get(RANGE) ?? ChartResolution['month'].range
+    });
+  }, [selectedPills]);
 
   if (!isMainnet) {
     navigate('/');

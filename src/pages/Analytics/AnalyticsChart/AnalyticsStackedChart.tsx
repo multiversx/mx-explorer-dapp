@@ -1,39 +1,22 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
-import { Anchor, Dropdown } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { PageState, Chart, Loader, useAdapter } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
 import { activeNetworkSelector } from 'redux/selectors';
+import {
+  ChartResolutionRangeType,
+  ChartResolutionSelector
+} from './components/ChartResolution';
 import { capitalize } from '../../../helpers';
 import { ChartListType } from '../Analytics';
+import { RANGE } from '../constants';
 
 export interface AnalyticsStackedChartDataPoCType {
   value: string;
   timestamp: number;
 }
-
-type ChartResolutionRangeType = 'year' | 'month' | 'week';
-
-const ChartResolution: {
-  [key in ChartResolutionRangeType]: {
-    label: string;
-    range: ChartResolutionRangeType;
-  };
-} = {
-  year: {
-    label: '365 days',
-    range: 'year'
-  },
-  month: {
-    label: '30 days',
-    range: 'month'
-  },
-  week: {
-    label: '7 days',
-    range: 'week'
-  }
-};
 
 export const AnalyticsStackedChart = ({
   firstSeries,
@@ -44,9 +27,12 @@ export const AnalyticsStackedChart = ({
 }) => {
   const ref = useRef(null);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const ids = [firstSeries.path, secondSeries.path];
   const firstSeriesPath = ids[0];
   const secondSeriesPath = ids[1];
+  const range = searchParams.get(RANGE) as ChartResolutionRangeType;
   const firstSeriesLabel = firstSeries.label;
   const secondSeriesLabel = secondSeries.label;
   const title = `${capitalize(firstSeriesLabel)} vs. ${capitalize(
@@ -63,9 +49,6 @@ export const AnalyticsStackedChart = ({
   const [secondSeriesData, setSecondSeriesData] = useState<
     AnalyticsStackedChartDataPoCType[]
   >([]);
-  const [activeResolution, setActiveResolution] = React.useState(
-    ChartResolution['month']
-  );
 
   const getChartPropsFromId = (id: string) => {
     switch (id) {
@@ -119,8 +102,8 @@ export const AnalyticsStackedChart = ({
   };
   const getData = useCallback(async () => {
     const [firstSeriesData, secondSeriesData] = await Promise.allSettled([
-      getAnalyticsChart(`${firstSeriesPath}?range=${activeResolution.range}`),
-      getAnalyticsChart(`${secondSeriesPath}?range=${activeResolution.range}`)
+      getAnalyticsChart(`${firstSeriesPath}?range=${range}`),
+      getAnalyticsChart(`${secondSeriesPath}?range=${range}`)
     ]);
 
     if (firstSeriesData.status === 'fulfilled') {
@@ -141,81 +124,25 @@ export const AnalyticsStackedChart = ({
         firstSeriesData.value.success &&
         secondSeriesData.value.success
     );
-  }, [firstSeriesPath, secondSeriesPath, activeResolution.range]);
+  }, [firstSeriesPath, secondSeriesPath, range]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     getData();
-  }, [
-    activeNetworkId,
-    firstSeriesPath,
-    secondSeriesPath,
-    activeResolution.range
-  ]);
+  }, [activeNetworkId, firstSeriesPath, secondSeriesPath, range]);
 
   return (
     <>
       <section id={ids.join('/')} ref={ref} className='card'>
-        <div className='d-flex flex-row flex-nowrap align-items-center'>
+        <div className='d-flex align-items-center'>
           <Chart.Heading title={title} className=''></Chart.Heading>
-          <Dropdown
-            className=''
-            onSelect={(eventKey: ChartResolutionRangeType | string | null) => {
-              return eventKey
-                ? setActiveResolution(
-                    ChartResolution[eventKey as ChartResolutionRangeType]
-                  )
-                : ChartResolution['month'];
+          <ChartResolutionSelector
+            value={range}
+            onChange={(resolution) => {
+              searchParams.set('range', resolution.range);
+              setSearchParams(searchParams);
             }}
-          >
-            <Dropdown.Toggle
-              variant='dark'
-              size='sm'
-              className={
-                'py-1 d-flex align-items-center justify-content-between'
-              }
-              id='chart-resolution'
-            >
-              <span className='me-2'>{activeResolution.label}</span>
-            </Dropdown.Toggle>
-            <Dropdown.Menu
-              style={{ marginTop: '0.35rem', marginBottom: '0.35rem' }}
-            >
-              <Dropdown.Item
-                as={Anchor} // This is needed due to issues between threejs, react-bootstrap and typescript, what a time to be alive: https://github.com/react-bootstrap/react-bootstrap/issues/6283
-                eventKey={ChartResolution['year'].range}
-                className={`${
-                  activeResolution.range === ChartResolution['year'].range
-                    ? 'active'
-                    : ''
-                }`}
-              >
-                {ChartResolution['year'].label}
-              </Dropdown.Item>
-              <Dropdown.Item
-                as={Anchor}
-                eventKey={ChartResolution['month'].range}
-                className={`${
-                  activeResolution.range === ChartResolution['month'].range
-                    ? 'active'
-                    : ''
-                }`}
-              >
-                {ChartResolution['month'].label}
-              </Dropdown.Item>
-              <Dropdown.Item
-                as={Anchor}
-                eventKey={ChartResolution['week'].range}
-                className={`${
-                  activeResolution.range === ChartResolution['week'].range
-                    ? 'active'
-                    : ''
-                }`}
-              >
-                {ChartResolution['week'].label}
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          />
         </div>
 
         <Chart.Body>
