@@ -1,6 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Area, Tooltip, ResponsiveContainer, AreaChart } from 'recharts';
+import {
+  Area,
+  Tooltip,
+  ResponsiveContainer,
+  AreaChart,
+  TooltipProps
+} from 'recharts';
 import { SingleValue } from 'react-select';
 
 import { growthTransactionsSelector } from 'redux/selectors';
@@ -15,7 +21,7 @@ import type { ChartType, StatisticType } from './types';
 
 import styles from './styles.module.scss';
 
-const CustomTooltip = (props: any) => {
+const CustomTooltip = (props: TooltipProps<number, string>) => {
   const { payload, active } = props;
 
   if (!payload || !active) {
@@ -36,10 +42,13 @@ export const LongChart = () => {
     scResults,
     transactions,
     totalTransactions,
+    transactions7d,
     transactions30d,
     transactionsAll,
+    scResults7d,
     scResults30d,
-    scResultsAll
+    scResultsAll,
+    isFetched
   } = useSelector(growthTransactionsSelector);
 
   const [white, teal, purple] = ['white', 'teal', 'purple'].map((color) =>
@@ -49,6 +58,10 @@ export const LongChart = () => {
   );
 
   const filters: DropdownChartOptionType[] = [
+    {
+      label: '7d',
+      value: 'transactions7d'
+    },
     {
       label: '30d',
       value: 'transactions30d'
@@ -80,45 +93,52 @@ export const LongChart = () => {
   const dataTransactions = useMemo(
     () =>
       new Map([
+        ['transactions7d', transactions7d],
         ['transactions30d', transactions30d],
         ['transactionsAll', transactionsAll]
       ]),
-    [transactions30d, transactionsAll]
+    [transactions7d, transactions30d, transactionsAll]
   );
 
   const dataContracts = useMemo(
     () =>
       new Map([
+        ['scResults7d', scResults7d],
         ['scResults30d', scResults30d],
         ['scResultsAll', scResultsAll]
       ]),
-    [scResults30d, scResultsAll]
+    [scResults7d, scResults30d, scResultsAll]
   );
 
   const [transactionsPayload, setTransactionsPayload] = useState(
-    dataTransactions.get('transactions30d')
+    dataTransactions.get('transactions7d')
   );
 
   const [contractsPayload, setContractsPayload] = useState(
-    dataContracts.get('scResults30d')
+    dataContracts.get('scResults7d')
   );
 
-  const onChange = (option: SingleValue<DropdownChartOptionType>) => {
-    if (option && option.value) {
-      const value = option.value.replace('transactions', '');
-      const [transactionsKey, contractsKey] = [
-        `transactions${value}`,
-        `scResults${value}`
-      ];
+  const onChange = useCallback(
+    (option: SingleValue<DropdownChartOptionType>) => {
+      if (option && option.value && isFetched) {
+        const value = option.value.replace('transactions', '');
+        const [transactionsKey, contractsKey] = [
+          `transactions${value}`,
+          `scResults${value}`
+        ];
 
-      setTransactionsPayload(dataTransactions.get(transactionsKey));
-      setContractsPayload(dataContracts.get(contractsKey));
-    }
-  };
+        setTransactionsPayload(dataTransactions.get(transactionsKey));
+        setContractsPayload(dataContracts.get(contractsKey));
+      }
+    },
+    [isFetched]
+  );
 
   const onInitialLoad = useCallback(() => {
-    setTransactionsPayload(dataTransactions.get('transactions30d'));
-    setContractsPayload(dataContracts.get('scResults30d'));
+    if (isFetched) {
+      setTransactionsPayload(dataTransactions.get('transactions7d'));
+      setContractsPayload(dataContracts.get('scResults7d'));
+    }
   }, [dataTransactions, dataContracts]);
 
   useFetchGrowthTransactions();
@@ -152,11 +172,7 @@ export const LongChart = () => {
 
       <div className={styles.charts}>
         <div className={styles.filters}>
-          <DropdownChart
-            options={filters}
-            defaultValue={filters[0]}
-            onChange={onChange}
-          />
+          <DropdownChart options={filters} onChange={onChange} />
         </div>
 
         {charts.map((chart) => (
@@ -180,6 +196,7 @@ export const LongChart = () => {
                       stopColor={chart.color}
                       stopOpacity={0.15}
                     />
+
                     <stop
                       offset='95%'
                       stopColor={chart.color}
@@ -193,6 +210,7 @@ export const LongChart = () => {
                   dataKey='value'
                   stroke={chart.color}
                   fill={`url(#${chart.identifier})`}
+                  activeDot={{ stroke: chart.color, fill: chart.color }}
                 />
 
                 <Tooltip content={CustomTooltip} cursor={false} />

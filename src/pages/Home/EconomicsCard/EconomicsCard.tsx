@@ -18,11 +18,11 @@ export const EconomicsCard = () => {
   const economics: EconomicsType[] = [
     {
       label: EconomicsLabelsEnum.DeveloperRewards,
-      value: developerRewards
+      value: `${developerRewards} EGLD`
     },
     {
       label: EconomicsLabelsEnum.FeesCaptured,
-      value: feesCaptured
+      value: `${feesCaptured} EGLD`
     },
     {
       label: EconomicsLabelsEnum.ApplicationsDeployed,

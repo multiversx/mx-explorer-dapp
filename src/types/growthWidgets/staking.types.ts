@@ -18,6 +18,7 @@ export interface GrowthStakingSliceType extends SliceType {
   usersStaking: string;
   averageAPR: string;
 
+  totalStaked7d: GrowthChartDataType[];
   totalStaked30d: GrowthChartDataType[];
   totalStakedAll: GrowthChartDataType[];
 }
