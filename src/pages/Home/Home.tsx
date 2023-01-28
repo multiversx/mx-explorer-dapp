@@ -8,7 +8,7 @@ import { LatestTransactions } from './LatestTransactions';
 import { PriceChart } from './PriceChart';
 import { LongChart } from './LongChart';
 import { DelegationChart } from './DelegationChart';
-import { StatisticsCard } from './StatisticsCard';
+import { EconomicsCard } from './EconomicsCard';
 
 // import { TestnetGlobalStatsCard } from 'pages/Layout/TestnetGlobalStatsCard';
 // import { AccountsChart } from './AccountsChart';
@@ -61,7 +61,7 @@ export const Home = () => {
           <div className='d-xl-flex'>
             <PriceChart />
             <DelegationChart />
-            <StatisticsCard />
+            <EconomicsCard />
           </div>
 
           <LongChart />

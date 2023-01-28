@@ -9,6 +9,7 @@ export * from './growthPrice';
 export * from './growthSearch';
 export * from './growthStaking';
 export * from './growthTransactions';
+export * from './growthEconomics';
 export * from './interface';
 export * from './networks';
 export * from './refresh';

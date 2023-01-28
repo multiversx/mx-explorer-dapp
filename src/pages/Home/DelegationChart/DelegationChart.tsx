@@ -1,7 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Area, Tooltip, ResponsiveContainer, AreaChart } from 'recharts';
-import Select from 'react-select';
-import axios from 'axios';
+import { SingleValue } from 'react-select';
+
+import { useFetchGrowthStaking } from 'hooks';
+import { growthStakingSelector } from 'redux/selectors';
+
+import { DropdownChart } from '../DropdownChart';
+
+import { StakingStatisticsLabelEnum } from './enum';
+
+import type { DropdownChartOptionType } from '../DropdownChart/types';
+import type { StatisticType } from './types';
 
 import styles from './styles.module.scss';
 
@@ -29,31 +39,65 @@ const CustomTooltip = (props: any) => {
 };
 
 export const DelegationChart = () => {
-  const [temp, setTemp] = useState<any>();
-  const [data, setData] = useState<any>();
+  const {
+    stakingPercentage,
+    totalStaked,
+    averageAPR,
+    circulatingSupply,
+    // totalStaked7d,
+    usersStaking,
+    totalStaked30d,
+    totalStakedAll
+  } = useSelector(growthStakingSelector);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await axios.get(
-        'https://tools.multiversx.com/growth-api/explorer/widgets/staking'
-      );
-
-      setTemp(data);
-      setData(data['totalStakedAll']);
-    };
-
-    fetchData();
-  }, []);
-
-  const filters = [
-    { label: '7d', key: 'totalStaked7d' },
-    { label: '30d', key: 'totalStaked30d' },
-    { label: 'All', key: 'totalStakedAll' }
+  const filters: DropdownChartOptionType[] = [
+    // {
+    //   label: StakingSelectLabelEnum.Days7,
+    //   value: StakingSelectValueEnum.totalStaked7d
+    // },x
+    {
+      label: '30d',
+      value: 'totalStaked30d'
+    },
+    {
+      label: 'All',
+      value: 'totalStakedAll'
+    }
   ];
 
-  if (!temp) {
-    return null;
-  }
+  const statistics: StatisticType[] = [
+    {
+      label: StakingStatisticsLabelEnum.CirculatingSupply,
+      value: circulatingSupply
+    },
+    {
+      label: StakingStatisticsLabelEnum.UsersStaking,
+      value: usersStaking
+    },
+    {
+      label: StakingStatisticsLabelEnum.AverageAPR,
+      value: averageAPR
+    }
+  ];
+
+  const dataMap = new Map([
+    // [StakingSelectValueEnum.totalStaked7d, totalStaked7d],
+    ['totalStaked30d', totalStaked30d],
+    ['totalStakedAll', totalStakedAll]
+  ]);
+
+  const [data, setData] = useState(dataMap.get('totalStaked30d'));
+  const teal = getComputedStyle(document.documentElement)
+    .getPropertyValue('--teal')
+    .trim();
+
+  const onChange = (option: SingleValue<DropdownChartOptionType>) => {
+    if (option && option.value) {
+      setData(dataMap.get(option.value));
+    }
+  };
+
+  useFetchGrowthStaking();
 
   return (
     <div className={styles.chart}>
@@ -61,17 +105,15 @@ export const DelegationChart = () => {
         <div className={styles.left}>
           <div className={styles.label}>Total Staked</div>
           <div className={styles.price}>
-            15,286,612 EGLD <span>(63%)</span>
+            {totalStaked} EGLD <span>({stakingPercentage})</span>
           </div>
         </div>
 
         <div className={styles.right}>
-          <Select
+          <DropdownChart
             options={filters}
-            isSearchable={false}
             defaultValue={filters[0]}
-            className='styled-select'
-            classNamePrefix='styled-select'
+            onChange={onChange}
           />
         </div>
       </div>
@@ -83,39 +125,30 @@ export const DelegationChart = () => {
       >
         <AreaChart data={data} margin={{ left: 0, right: 0 }}>
           <defs>
-            <linearGradient id='colorPv' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset='5%' stopColor='#23f7dd' stopOpacity={0.15} />
-              <stop offset='95%' stopColor='#23f7dd' stopOpacity={0} />
+            <linearGradient id='delegationGradient' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='5%' stopColor={teal} stopOpacity={0.15} />
+              <stop offset='95%' stopColor={teal} stopOpacity={0} />
             </linearGradient>
           </defs>
 
           <Area
             type='monotone'
             dataKey='value'
-            stroke='#23f7dd'
-            fillOpacity={1}
-            fill='url(#colorPv)'
+            stroke={teal}
+            fill='url(#delegationGradient)'
           />
 
-          <Tooltip content={CustomTooltip} cursor={false} />
+          <Tooltip content={CustomTooltip} />
         </AreaChart>
       </ResponsiveContainer>
 
       <div className={styles.statistics}>
-        <div className={styles.statistic}>
-          <div className={styles.label}>Circulating Supply</div>
-          <div className={styles.value}>24,323,731 EGLD</div>
-        </div>
-
-        <div className={styles.statistic}>
-          <div className={styles.label}>Users Staking</div>
-          <div className={styles.value}>135,795</div>
-        </div>
-
-        <div className={styles.statistic}>
-          <div className={styles.label}>Average APR</div>
-          <div className={styles.value}>8.84%</div>
-        </div>
+        {statistics.map((statistic) => (
+          <div className={styles.statistic} key={statistic.label}>
+            <div className={styles.label}>{statistic.label}</div>
+            <div className={styles.value}>{statistic.value}</div>
+          </div>
+        ))}
       </div>
     </div>
   );
