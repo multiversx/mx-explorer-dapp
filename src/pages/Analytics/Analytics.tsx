@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Loader, useAdapter } from 'components';
 import { useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
-import { AnalyticsStackedChartPoC } from './AnalyticsChart/AnalyticsStackedChartsPoC';
+import { AnalyticsStackedChart } from './AnalyticsChart/AnalyticsStackedChart';
 import { FailedAnalytics } from './FailedAnalytics';
 import { NoAnalytics } from './NoAnalytics';
 import { capitalize } from '../../helpers';
@@ -112,7 +112,7 @@ export const Analytics = () => {
               ))}
             </div>
             <div className='row'>
-              <AnalyticsStackedChartPoC
+              <AnalyticsStackedChart
                 ids={selectedPills.map((pill) => pill.path)}
                 firstSeriesLabel={selectedPills[0].label}
                 secondSeriesLabel={selectedPills[1].label}

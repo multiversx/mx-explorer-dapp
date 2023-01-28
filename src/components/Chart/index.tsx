@@ -3,12 +3,12 @@ import * as React from 'react';
 import { ChartArea } from './ChartArea';
 import { ChartBar } from './ChartBar';
 import { ChartBody } from './ChartBody';
+import { ChartComposed } from './ChartComposed';
 import { ChartControls } from './ChartControls';
 import { ChartDonut } from './ChartDonut';
 import { ChartHeading } from './ChartHeading';
 import { ChartMetrics } from './ChartMetrics';
 import { ChartOptions } from './ChartOptions';
-import { ComposedChartPoC } from './ComposedChartPoC';
 
 export default class Chart extends React.Component<{
   children: React.ReactNode;
@@ -21,7 +21,7 @@ export default class Chart extends React.Component<{
   static Controls = ChartControls;
   static Metrics = ChartMetrics;
   static Body = ChartBody;
-  static ComposedChartPoC = ComposedChartPoC;
+  static Composed = ChartComposed;
 
   render() {
     return null;

@@ -1,13 +1,5 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
-
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
-
 import { useSelector } from 'react-redux';
 import { PageState, Chart, Loader, useAdapter } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
@@ -18,7 +10,7 @@ export interface AnalyticsStackedChartDataPoCType {
   timestamp: number;
 }
 
-export const AnalyticsStackedChartPoC = ({
+export const AnalyticsStackedChart = ({
   ids,
   firstSeriesLabel,
   secondSeriesLabel,
@@ -155,14 +147,14 @@ export const AnalyticsStackedChartPoC = ({
           {dataReady === true &&
             firstSeries.length > 0 &&
             secondSeries.length > 0 && (
-              <Chart.ComposedChartPoC
+              <Chart.Composed
                 config={{
                   firstSeriesConfig,
                   secondSeriesConfig
                 }}
                 hasOnlyStartEndTick
                 {...getChartPropsFromId(ids[1])}
-              ></Chart.ComposedChartPoC>
+              ></Chart.Composed>
             )}
         </Chart.Body>
       </section>

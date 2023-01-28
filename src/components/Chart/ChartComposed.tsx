@@ -1,30 +1,20 @@
-import React, { useMemo, useState } from 'react';
+import React from 'react';
 import moment from 'moment';
-
 import {
   ResponsiveContainer,
   XAxis,
   YAxis,
   Area,
-  AreaChart,
   Tooltip,
-  ComposedChart,
-  Bar,
-  Cell
+  ComposedChart
 } from 'recharts';
-
 import { CustomTooltip } from './helpers/CustomTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
-import { getChartMergedData } from './helpers/getChartMergedData';
 import { StartEndTick } from './helpers/StartEndTick';
-import {
-  BiAxialChartProps,
-  ChartProps,
-  MergedChartDataType
-} from './helpers/types';
+import { BiAxialChartProps } from './helpers/types';
 import { useBiAxialChartData } from './hooks/useBiAxialChartData';
 
-export const ComposedChartPoC = ({
+export const ChartComposed = ({
   config,
   data,
   dateFormat,
