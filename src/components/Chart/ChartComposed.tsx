@@ -6,7 +6,8 @@ import {
   YAxis,
   Area,
   Tooltip,
-  ComposedChart
+  ComposedChart,
+  CartesianGrid
 } from 'recharts';
 import { CustomTooltip } from './helpers/CustomTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
@@ -36,28 +37,58 @@ export const ChartComposed = ({
 
   const chartData = getChartData();
 
-  const docStyle = window.getComputedStyle(document.documentElement);
-  const mutedColor = docStyle.getPropertyValue('--muted');
-  const primaryColor = docStyle.getPropertyValue('--primary');
+  const [neutral800, teal, violet400, muted, primary] = [
+    'neutral-800',
+    'teal',
+    'violet-400',
+    'muted',
+    'primary'
+  ].map((color) =>
+    getComputedStyle(document.documentElement)
+      .getPropertyValue(`--${color}`)
+      .trim()
+  );
 
   return (
     <div
-      className={`chart-area mb-n3 ${size ? `chart-area-${size}` : ''} ${
+      className={`${size ? `chart-area-${size}` : ''} ${
         hasOnlyStartEndTick ? 'has-only-start-end-tick' : ''
       }`}
     >
-      <ResponsiveContainer width='100%' height='100%'>
+      <ResponsiveContainer width='100%' height={448}>
         <ComposedChart data={chartData}>
           <defs>
             <linearGradient id='transparent' x1='0' y1='0' x2='0' y2='1'>
               <stop offset='100%' stopColor='transparent' stopOpacity={0} />
             </linearGradient>
-            <linearGradient id='defaultGradient' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset='5%' stopColor={primaryColor} stopOpacity={0.25} />
-              <stop offset='35%' stopColor={primaryColor} stopOpacity={0.4} />
-              <stop offset='95%' stopColor={primaryColor} stopOpacity={0} />
+          </defs>
+          <defs>
+            <linearGradient
+              id='firstSeriesGradientId'
+              x1='0'
+              y1='0'
+              x2='0'
+              y2='1'
+            >
+              <stop offset='5%' stopColor={violet400} stopOpacity={0.15} />
+              <stop offset='95%' stopColor={violet400} stopOpacity={0} />
             </linearGradient>
           </defs>
+          <defs>
+            <linearGradient
+              id='secondSeriesGradientId'
+              x1='0'
+              y1='0'
+              x2='0'
+              y2='1'
+            >
+              <stop offset='5%' stopColor={teal} stopOpacity={0.15} />
+              <stop offset='95%' stopColor={teal} stopOpacity={0} />
+            </linearGradient>
+          </defs>
+
+          <CartesianGrid vertical={false} stroke={neutral800} opacity={0.8} />
+
           <XAxis
             minTickGap={40}
             tickCount={10}
@@ -75,6 +106,7 @@ export const ChartComposed = ({
               ? { tick: <StartEndTick dateformat={dateFormat} /> }
               : {})}
             {...(hasOnlyStartEndTick ? { interval: 0 } : {})}
+            tickMargin={15}
           />
 
           <YAxis
@@ -90,7 +122,9 @@ export const ChartComposed = ({
             }
             axisLine={false}
             tickLine={false}
-            tickCount={5}
+            tickCount={10}
+            stroke={config.firstSeriesConfig.stroke}
+            dx={-20}
           />
           <YAxis
             yAxisId='right-axis'
@@ -105,13 +139,15 @@ export const ChartComposed = ({
             }
             axisLine={false}
             tickLine={false}
-            tickCount={5}
+            tickCount={10}
+            stroke={config.secondSeriesConfig.stroke}
+            dx={20}
           />
           <Area
             type='monotone'
             yAxisId='left-axis'
             dataKey={config.firstSeriesConfig.id}
-            stroke={config.firstSeriesConfig.stroke ?? primaryColor}
+            stroke={config.firstSeriesConfig.stroke ?? primary}
             {...(config.firstSeriesConfig.gradient
               ? { fill: `url(#${config.firstSeriesConfig.gradient})` }
               : { fill: 'url(#transparent)' })}
@@ -120,12 +156,16 @@ export const ChartComposed = ({
               : {})}
             key={config.firstSeriesConfig.id}
             strokeWidth={1.5}
+            activeDot={{
+              stroke: violet400,
+              fill: violet400
+            }}
           />
           <Area
             type='monotone'
             yAxisId='right-axis'
             dataKey={config.secondSeriesConfig.id}
-            stroke={config.secondSeriesConfig.stroke ?? primaryColor}
+            stroke={config.secondSeriesConfig.stroke ?? primary}
             {...(config.secondSeriesConfig.gradient
               ? { fill: `url(#${config.secondSeriesConfig.gradient})` }
               : { fill: 'url(#transparent)' })}
@@ -134,6 +174,10 @@ export const ChartComposed = ({
               : {})}
             key={config.secondSeriesConfig.id}
             strokeWidth={1.5}
+            activeDot={{
+              stroke: teal,
+              fill: teal
+            }}
           />
           <Tooltip
             content={(props) => (
@@ -147,7 +191,7 @@ export const ChartComposed = ({
             )}
             cursor={{
               strokeDasharray: '3 5',
-              stroke: mutedColor
+              stroke: muted
             }}
           />
         </ComposedChart>

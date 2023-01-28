@@ -88,17 +88,25 @@ export const AnalyticsStackedChart = ({
     }
   };
 
+  const [teal, violet400] = ['teal', 'violet-400'].map((color) =>
+    getComputedStyle(document.documentElement)
+      .getPropertyValue(`--${color}`)
+      .trim()
+  );
+
   const firstSeriesConfig: ChartConfigType = {
     id: firstSeriesLabel,
     label: firstSeriesLabel,
-    gradient: 'defaultGradient',
-    data: firstSeriesData
+    gradient: 'firstSeriesGradientId',
+    data: firstSeriesData,
+    stroke: violet400
   };
   const secondSeriesConfig: ChartConfigType = {
     id: secondSeriesLabel,
     label: secondSeriesLabel,
-    gradient: 'defaultGradient',
-    data: secondSeriesData
+    gradient: 'secondSeriesGradientId',
+    data: secondSeriesData,
+    stroke: teal
   };
   const getData = useCallback(async () => {
     const [firstSeriesData, secondSeriesData] = await Promise.allSettled([
