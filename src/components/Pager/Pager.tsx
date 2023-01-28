@@ -117,7 +117,11 @@ export const Pager = ({
                   <button
                     type='button'
                     className={`btn btn-pager ${page === size ? 'active' : ''}`}
-                    onClick={() => updatePage(currentUrlParams)}
+                    onClick={() => {
+                      if (page !== size) {
+                        updatePage(currentUrlParams);
+                      }
+                    }}
                   >
                     {page}
                   </button>

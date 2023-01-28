@@ -49,11 +49,15 @@
   &__multi-value {
     background-color: var(--neutral-800);
     border: 1px solid var(--neutral-500);
-  }
-  &__multi-value__label {
-    max-width: 44px;
-    color: var(--body-color);
-    text-overflow: clip;
+    border-radius: $border-radius;
+    &__label {
+      max-width: 44px;
+      color: var(--body-color);
+      text-overflow: clip;
+    }
+    &__remove {
+      background-color: transparent !important;
+    }
   }
 
   &__indicator-separator {
@@ -64,5 +68,14 @@
   &__input-container,
   &__input {
     color: var(--body-color);
+  }
+}
+
+.multiple-select {
+  .styled-select__placeholder {
+    font-size: 0.75rem;
+  }
+  .styled-select__multi-value__label {
+    font-size: 0.563rem !important;
   }
 }
