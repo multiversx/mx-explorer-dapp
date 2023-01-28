@@ -9,8 +9,10 @@ export const getInitialGrowthTransactionsState =
       scResults: ELLIPSIS,
       transactions: ELLIPSIS,
 
+      scResults7d: [],
       scResults30d: [],
       scResultsAll: [],
+      transactions7d: [],
       transactions30d: [],
       transactionsAll: [],
 
@@ -35,8 +37,10 @@ export const growthTransactionsSlice = createSlice({
       state.scResults = action.payload.scResults;
       state.transactions = action.payload.transactions;
 
+      state.scResults7d = action.payload.scResults7d;
       state.scResults30d = action.payload.scResults30d;
       state.scResultsAll = action.payload.scResultsAll;
+      state.transactions7d = action.payload.transactions7d;
       state.transactions30d = action.payload.transactions30d;
       state.transactionsAll = action.payload.transactionsAll;
 

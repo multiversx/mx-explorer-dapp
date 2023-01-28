@@ -1,29 +1,35 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { SingleValue } from 'react-select';
-import { Area, Tooltip, ResponsiveContainer, AreaChart } from 'recharts';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   faCircleUp,
   faCircleDown,
   faCircleMinus
 } from '@fortawesome/pro-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSelector } from 'react-redux';
+import { SingleValue } from 'react-select';
+import {
+  Area,
+  Tooltip,
+  ResponsiveContainer,
+  AreaChart,
+  TooltipProps
+} from 'recharts';
 import classNames from 'classnames';
 
-import { growthPriceSelector } from 'redux/selectors';
 import { useFetchGrowthPrice } from 'hooks';
+import { growthPriceSelector } from 'redux/selectors';
+
+import { TrendEnum } from 'types';
 
 import { PriceStatisticsLabelEnum } from './enum';
-import { TrendEnum } from 'types';
+import { DropdownChart } from '../DropdownChart';
 
 import type { StatisticType } from './types';
 import type { DropdownChartOptionType } from '../DropdownChart/types';
 
-import { DropdownChart } from '../DropdownChart';
-
 import styles from './styles.module.scss';
 
-const CustomTooltip = (props: any) => {
+const CustomTooltip = (props: TooltipProps<number, string>) => {
   const { payload, active } = props;
 
   if (!payload || !active) {
@@ -55,7 +61,8 @@ export const PriceChart = () => {
     priceChange24h,
     price7d,
     price30d,
-    priceAll
+    priceAll,
+    isFetched
   } = useSelector(growthPriceSelector);
 
   const filters: DropdownChartOptionType[] = [
@@ -90,18 +97,30 @@ export const PriceChart = () => {
     [TrendEnum.neutral, faCircleMinus]
   ]);
 
-  const [data, setData] = useState(dataMap.get('price7d'));
+  const initialFilter = 'price7d';
   const teal = getComputedStyle(document.documentElement)
     .getPropertyValue('--teal')
     .trim();
 
-  const onChange = (option: SingleValue<DropdownChartOptionType>) => {
-    if (option && option.value) {
-      setData(dataMap.get(option.value));
+  const [data, setData] = useState(dataMap.get(initialFilter));
+
+  const onChange = useCallback(
+    (option: SingleValue<DropdownChartOptionType>) => {
+      if (option && option.value && isFetched) {
+        setData(dataMap.get(option.value));
+      }
+    },
+    [isFetched]
+  );
+
+  const onInitialLoad = useCallback(() => {
+    if (isFetched) {
+      setData(dataMap.get(initialFilter));
     }
-  };
+  }, [isFetched]);
 
   useFetchGrowthPrice();
+  useEffect(onInitialLoad, [onInitialLoad]);
 
   return (
     <div className={styles.chart}>
@@ -121,11 +140,7 @@ export const PriceChart = () => {
         </div>
 
         <div className={styles.right}>
-          <DropdownChart
-            options={filters}
-            defaultValue={filters[0]}
-            onChange={onChange}
-          />
+          <DropdownChart options={filters} onChange={onChange} />
         </div>
       </div>
 
@@ -143,6 +158,7 @@ export const PriceChart = () => {
             dataKey='value'
             stroke={teal}
             fill='url(#priceGradient)'
+            activeDot={{ stroke: teal }}
           />
 
           <Tooltip content={CustomTooltip} cursor={false} />
