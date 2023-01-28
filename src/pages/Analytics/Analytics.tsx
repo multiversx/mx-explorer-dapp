@@ -4,10 +4,11 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Loader, useAdapter } from 'components';
 import { useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
-import { AnalyticsStackedChartPoC } from './AnalyticsChart/AnalyticsStackedChartsPoC';
+import { AnalyticsStackedChart } from './AnalyticsChart/AnalyticsStackedChart';
+import { ChartResolution } from './AnalyticsChart/components/ChartResolution';
+import { FIRST_SERIES_ID, RANGE, SECOND_SERIES_ID } from './constants';
 import { FailedAnalytics } from './FailedAnalytics';
 import { NoAnalytics } from './NoAnalytics';
-import { capitalize } from '../../helpers';
 
 export interface ChartListType {
   id: string;
@@ -15,9 +16,6 @@ export interface ChartListType {
   path: string;
   longPath: string;
 }
-
-const FIRST_SERIES_ID = 'firstSeriesId';
-const SECOND_SERIES_ID = 'secondSeriesId';
 
 export const Analytics = () => {
   const ref = useRef(null);
@@ -49,18 +47,22 @@ export const Analytics = () => {
     });
   };
 
-  const onSelectPill = (series: ChartListType) => () => {
-    setSelectedPills((pills) => {
-      const newQueryParameters: URLSearchParams = new URLSearchParams();
-      const newSelectedPills = [pills[1], series];
+  const setNewQueryParameters = (params: Record<string, string>) => {
+    const newQueryParameters: URLSearchParams = new URLSearchParams();
 
-      newQueryParameters.set(FIRST_SERIES_ID, pills[1].id);
-      newQueryParameters.set(SECOND_SERIES_ID, series.id);
-
-      setSearchParams(newQueryParameters);
-
-      return newSelectedPills;
+    Object.entries(params).forEach((entry) => {
+      newQueryParameters.set(entry[0], entry[1]);
     });
+
+    setSearchParams(newQueryParameters);
+  };
+
+  const onSelectPill = (series: ChartListType) => () => {
+    if (selectedPills.find((pill) => pill.id === series.id)) {
+      return;
+    }
+
+    setSelectedPills((pills) => [pills[1], series]);
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,6 +80,18 @@ export const Analytics = () => {
     setSelectedPills([firstSeries, secondSeries]);
   }, [firstSeriesId, secondSeriesId, chartList]);
 
+  useEffect(() => {
+    if (selectedPills.length < 2) {
+      return;
+    }
+
+    setNewQueryParameters({
+      [FIRST_SERIES_ID]: selectedPills[0].id,
+      [SECOND_SERIES_ID]: selectedPills[1].id,
+      [RANGE]: searchParams.get(RANGE) ?? ChartResolution['month'].range
+    });
+  }, [selectedPills]);
+
   if (!isMainnet) {
     navigate('/');
   }
@@ -87,39 +101,45 @@ export const Analytics = () => {
       {dataReady === undefined && <Loader />}
       {dataReady === false && <FailedAnalytics />}
       {dataReady === true && chartList.length === 0 && <NoAnalytics />}
-      {selectedPills.length < 2 && <NoAnalytics />}
+      {selectedPills.length < 2 && <FailedAnalytics />}
 
       <div ref={ref}>
         {dataReady === true && selectedPills.length === 2 && (
           <div className='analytics container page-content'>
-            <div className='row mb-3'>
-              {chartList.map((series) => (
-                <div
-                  key={series.id}
-                  className='col'
-                  onClick={onSelectPill(series)}
-                >
-                  <span
-                    className={`badge rounded-pill cursor-pointer ${
-                      selectedPills.find((x) => x.id === series.id)
-                        ? 'bg-light text-dark'
-                        : 'bg-dark'
-                    }`}
+            <div className='card p-4'>
+              <div className='row mb-3'>
+                <h5>Key Metrics</h5>
+              </div>
+              <div className='row mb-2 text-neutral-400'>
+                <span>Select metrics to compare</span>
+              </div>
+              <div className='row mb-3'>
+                {chartList.map((series) => (
+                  <div
+                    key={series.id}
+                    className='col'
+                    onClick={onSelectPill(series)}
                   >
-                    {series.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-            <div className='row'>
-              <AnalyticsStackedChartPoC
-                ids={selectedPills.map((pill) => pill.path)}
-                firstSeriesLabel={selectedPills[0].label}
-                secondSeriesLabel={selectedPills[1].label}
-                title={`${capitalize(selectedPills[0].label)} vs. ${capitalize(
-                  selectedPills[1].label
-                )} in the past 30 days`}
-              />
+                    <span
+                      className={`badge rounded-pill bg-dark cursor-pointer ${
+                        selectedPills[0].id === series.id
+                          ? 'text-violet-400'
+                          : ''
+                      } ${
+                        selectedPills[1].id === series.id ? 'text-teal' : ''
+                      }`}
+                    >
+                      {series.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className='row'>
+                <AnalyticsStackedChart
+                  firstSeries={selectedPills[0]}
+                  secondSeries={selectedPills[1]}
+                />
+              </div>
             </div>
           </div>
         )}

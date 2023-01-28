@@ -80,7 +80,7 @@ export const CustomTooltip = ({
             }
 
             return (
-              <li key={entry.name}>
+              <li key={entry.name} style={{ textAlign: 'start' }}>
                 {getTooltipLabel(entry.name)
                   ? `${getTooltipLabel(entry.name)}: `
                   : customLabel
