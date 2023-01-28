@@ -121,10 +121,12 @@ export const Analytics = () => {
                     onClick={onSelectPill(series)}
                   >
                     <span
-                      className={`badge rounded-pill cursor-pointer ${
-                        selectedPills.find((x) => x.id === series.id)
-                          ? 'bg-light text-dark'
-                          : 'bg-dark'
+                      className={`badge rounded-pill bg-dark cursor-pointer ${
+                        selectedPills[0].id === series.id
+                          ? 'text-violet-400'
+                          : ''
+                      } ${
+                        selectedPills[1].id === series.id ? 'text-teal' : ''
                       }`}
                     >
                       {series.label}
