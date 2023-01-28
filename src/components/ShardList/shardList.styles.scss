@@ -1,0 +1,25 @@
+.shard-list {
+  margin-bottom: -0.125rem;
+  .shard-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.125rem;
+    .shard {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .progress-holder {
+        display: flex;
+        background: rgba(23, 23, 23, 0.7);
+        border: 0.25rem solid rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(7.5px);
+        border-radius: 50%;
+      }
+      h6 {
+        font-size: 1.125rem;
+      }
+    }
+  }
+}

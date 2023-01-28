@@ -1,10 +1,9 @@
 import React from 'react';
-import Select, { components } from 'react-select';
 import classNames from 'classnames';
-
-import type { ChartSelectPropsType } from './types';
+import Select, { components } from 'react-select';
 
 import styles from './styles.module.scss';
+import type { ChartSelectPropsType } from './types';
 
 const Control: typeof components.Control = (props) => (
   <components.Control

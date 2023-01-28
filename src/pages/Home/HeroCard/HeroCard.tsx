@@ -45,7 +45,7 @@ export const HeroCard = () => {
                 <div className='card card-black d-flex flex-grow-1 card-solitary'>
                   <div className='card-body'>
                     <p className='text-neutral-400 mb-0'>Block Height</p>
-                    <h3 className='mb-0'>{blocks}</h3>
+                    <h2 className='mb-0 card-value'>{blocks}</h2>
                   </div>
                 </div>
               </div>
@@ -62,7 +62,9 @@ export const HeroCard = () => {
                         <p className='text-neutral-400 mb-0'>
                           Total Transactions
                         </p>
-                        <h3 className='card-value'>{totalTransactions}</h3>
+                        <h2 className='card-value text-primary'>
+                          {totalTransactions}
+                        </h2>
                         <p className='mb-0 text-primary-200'>
                           <FontAwesomeIcon
                             icon={faCirclePlus}
@@ -75,7 +77,9 @@ export const HeroCard = () => {
                     <div className='card card-black d-flex flex-grow-1'>
                       <div className='card-body p-4'>
                         <p className='text-neutral-400 mb-0'>Total Accounts</p>
-                        <h3 className='card-value'>{totalAccounts}</h3>
+                        <h2 className='card-value text-primary'>
+                          {totalAccounts}
+                        </h2>
                         <p className='mb-0 text-primary-200'>
                           <FontAwesomeIcon
                             icon={faCircleBolt}
@@ -94,13 +98,15 @@ export const HeroCard = () => {
                         <p className='text-neutral-400 mb-0'>
                           Total Transactions
                         </p>
-                        <h3 className='card-value'>{transactions}</h3>
+                        <h2 className='card-value text-primary'>
+                          {transactions}
+                        </h2>
                       </div>
                     </div>
                     <div className='card card-black d-flex flex-grow-1'>
                       <div className='card-body p-4'>
                         <p className='text-neutral-400 mb-0'>Total Accounts</p>
-                        <h3 className='card-value'>{accounts}</h3>
+                        <h2 className='card-value text-primary'>{accounts}</h2>
                       </div>
                     </div>
                   </div>

@@ -21,8 +21,8 @@
     background-color: var(--neutral-900);
     display: flex;
     .card-value {
-      color: var(--primary);
       margin-bottom: 0.5rem;
+      letter-spacing: -3px;
     }
     &.card-solitary {
       max-width: 100%;
@@ -30,7 +30,7 @@
         max-width: 50%;
       }
       @include media-breakpoint-up(xxl) {
-        max-width: 249px;
+        max-width: 242px;
       }
     }
   }

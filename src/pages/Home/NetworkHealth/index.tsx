@@ -12,7 +12,7 @@ import { activeNetworkSelector, refreshSelector } from 'redux/selectors';
 import { getInitialStatsState } from 'redux/slices/stats';
 
 import { StatsSliceType } from 'types/stats.types';
-import { ProgressRing } from './ProgressRing';
+import { ProgressRing } from 'components';
 
 export const NetworkHealth = () => {
   const { timestamp } = useSelector(refreshSelector);
@@ -168,7 +168,7 @@ export const NetworkHealth = () => {
               <CenterGear className='w-100 h-100' />
             </div>
             <div className='gear-content'>
-              <ProgressRing progress={epochPercentage} />
+              {/* <ProgressRing progress={epochPercentage} /> */}
               <span className='mt-1'>Epoch {epoch}</span>
               {epoch && (
                 <small>
@@ -197,9 +197,9 @@ export const NetworkHealth = () => {
             <div
               className={`gear-content current-block-time-${blockTimeProgress}`}
             >
-              <ProgressRing
+              {/* <ProgressRing
                 progress={(blockTimeProgress * 100) / intervalInSec}
-              />
+              /> */}
               {stateBuffer !== undefined ? blockTimeProgress : '...'}
               <small>Block Time</small>
             </div>

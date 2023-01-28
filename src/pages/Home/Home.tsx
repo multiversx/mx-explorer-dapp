@@ -2,13 +2,13 @@ import * as React from 'react';
 import { MostUsed } from 'components';
 import { useIsMainnet } from 'hooks';
 
+import { ChartContractsTransactions } from './ChartContractsTransactions';
+import { ChartPrice } from './ChartPrice';
 import { ChartStake } from './ChartStake';
 import { EconomicsCard } from './EconomicsCard';
 import { HeroCard } from './HeroCard';
 import { LatestBlocks } from './LatestBlocks';
 import { LatestTransactions } from './LatestTransactions';
-import { ChartContractsTransactions } from './ChartContractsTransactions';
-import { ChartPrice } from './ChartPrice';
 
 export const Home = () => {
   const isMainnet = useIsMainnet();

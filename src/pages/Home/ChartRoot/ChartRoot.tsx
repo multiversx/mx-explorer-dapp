@@ -1,9 +1,8 @@
 import React from 'react';
 import { Area, AreaChart, ResponsiveContainer, Tooltip } from 'recharts';
 
-import type { ChartRootPropsType } from './types';
-
 import styles from './styles.module.scss';
+import type { ChartRootPropsType } from './types';
 
 const CustomTooltip = (props: any) => {
   const { payload, active, formatter } = props;

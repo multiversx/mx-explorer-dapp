@@ -1,4 +1,4 @@
-import { MarkerType } from './asyncRequests';
+import { MarkerType } from 'types';
 
 export interface RankType {
   continent: string;

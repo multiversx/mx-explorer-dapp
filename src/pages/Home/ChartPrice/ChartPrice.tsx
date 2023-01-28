@@ -5,24 +5,20 @@ import {
   faCircleMinus
 } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
 
-import classNames from 'classnames';
-
 import { useFetchGrowthPrice } from 'hooks';
 import { growthPriceSelector } from 'redux/selectors';
-
 import { TrendEnum } from 'types';
 
 import { PriceStatisticsLabelEnum } from './enum';
-import { ChartSelect } from '../ChartSelect';
-import { ChartRoot } from '../ChartRoot';
-
-import type { StatisticType } from './types';
-import type { ChartSelectOptionType } from '../ChartSelect/types';
-
 import styles from './styles.module.scss';
+import type { StatisticType } from './types';
+import { ChartRoot } from '../ChartRoot';
+import { ChartSelect } from '../ChartSelect';
+import type { ChartSelectOptionType } from '../ChartSelect/types';
 
 export const ChartPrice = () => {
   const {
