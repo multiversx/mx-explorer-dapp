@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { ReactComponent as EpochGearBg } from 'assets/img/epoch-gear-bg.svg';
 import { ReactComponent as CenterGear } from 'assets/img/network-health/center-gear.svg';
 import { statsSelector } from 'redux/selectors';
-import { ProgressRing } from '../../Home/NetworkHealth/ProgressRing';
+import { ProgressRing } from 'components';
 
 export const EpochGear = ({ showTime }: { showTime?: boolean }) => {
   const ref = React.useRef(null);
@@ -108,7 +108,7 @@ export const EpochGear = ({ showTime }: { showTime?: boolean }) => {
           <CenterGear className='position-relative w-100 h-100' />
         </div>
         <div className='gear-content'>
-          <ProgressRing progress={percentRemaining} />
+          {/* <ProgressRing progress={percentRemaining} /> */}
           {showTime ? (
             <>
               <span className='mt-2 pt-2'>{timeLabel}</span>

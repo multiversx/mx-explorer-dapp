@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { SingleValue } from 'react-select';
 import {
   Area,
   Tooltip,
@@ -7,20 +8,16 @@ import {
   AreaChart,
   TooltipProps
 } from 'recharts';
-import { SingleValue } from 'react-select';
 
-import { growthTransactionsSelector } from 'redux/selectors';
 import { useFetchGrowthTransactions } from 'hooks';
-
-import { ChartSelect } from '../ChartSelect';
-import { ChartRoot } from '../ChartRoot';
+import { growthTransactionsSelector } from 'redux/selectors';
 
 import { TransactionsStatisticsLabelEnum } from './enum';
-
-import type { ChartSelectOptionType } from '../ChartSelect/types';
-import type { ChartType, StatisticType } from './types';
-
 import styles from './styles.module.scss';
+import type { ChartType, StatisticType } from './types';
+import { ChartRoot } from '../ChartRoot';
+import { ChartSelect } from '../ChartSelect';
+import type { ChartSelectOptionType } from '../ChartSelect/types';
 
 export const ChartContractsTransactions = () => {
   const {

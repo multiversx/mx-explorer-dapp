@@ -63,5 +63,8 @@ export * from './ValidatorMap';
 export * from './ValidatorsStatus';
 export * from './TableWrapper';
 export * from './Marquee';
+export * from './NodesHero';
+export * from './ProgressRing';
+export * from './ShardList';
 
 export { Chart, NodesTable, TxActionBlock, SharedIdentity };

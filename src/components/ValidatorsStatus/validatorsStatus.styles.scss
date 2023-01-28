@@ -1,10 +1,12 @@
 .validators-status {
-  @include media-breakpoint-up(xxl) {
-    max-width: 18rem;
-  }
   width: 100%;
   display: flex;
   flex-grow: 1;
+  border-radius: 1rem;
+
+  .card-value {
+    letter-spacing: -3px;
+  }
 
   .badge-holder {
     gap: 0.5rem;
@@ -16,8 +18,41 @@
     }
   }
 
+  &.validators-status-lg {
+    .validator-map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 1rem;
+      width: 55%;
+      display: flex;
+    }
+    .shard-list {
+      width: 40%;
+    }
+    .validators-total {
+      padding: 2rem 2rem 0 2rem !important;
+      // position: absolute;
+      // top: 0;
+      // left: 0;
+    }
+
+    .marquee-wrapper {
+      position: absolute;
+      bottom: 1.25rem;
+      left: 0;
+      right: 0;
+      .slide {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
   &.validators-status-sm {
     height: 8.5rem;
+    @include media-breakpoint-up(xxl) {
+      max-width: 18rem;
+    }
 
     .validator-map {
       .rsm-svg {
@@ -39,7 +74,8 @@
       }
     }
 
-    .card-body {
+    .validators-total {
+      padding: 1.5rem;
       position: absolute;
       top: 0;
       left: 0;

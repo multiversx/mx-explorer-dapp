@@ -1,21 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
 
 import { useFetchGrowthStaking } from 'hooks';
 import { growthStakingSelector } from 'redux/selectors';
-
-import { ChartSelect } from '../ChartSelect';
-import { ChartRoot } from '../ChartRoot';
+import { WithClassnameType } from 'types';
 
 import { StakingStatisticsLabelEnum } from './enum';
-
-import type { ChartSelectOptionType } from '../ChartSelect/types';
+import styles from './styles.module.scss';
 import type { StatisticType } from './types';
 
-import styles from './styles.module.scss';
+import { ChartRoot } from '../ChartRoot';
+import { ChartSelect } from '../ChartSelect';
+import type { ChartSelectOptionType } from '../ChartSelect/types';
 
-export const ChartStake = () => {
+export const ChartStake = ({ className }: WithClassnameType) => {
   const {
     stakingPercentage,
     totalStaked,
@@ -90,7 +90,7 @@ export const ChartStake = () => {
   useEffect(onInitialLoad, [onInitialLoad]);
 
   return (
-    <div className={styles.chart}>
+    <div className={classNames(styles.chart, className)}>
       <div className={styles.wrapper}>
         <div className={styles.left}>
           <div className={styles.label}>Total Staked</div>

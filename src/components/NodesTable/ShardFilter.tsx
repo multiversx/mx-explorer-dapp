@@ -1,36 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import { ShardSpan, useAdapter } from 'components';
+import { ShardSpan } from 'components';
+import { useFetchShards } from 'hooks';
 
 import { shardsSelector } from 'redux/selectors';
-import { setShards } from 'redux/slices/interface';
 
 export const ShardFilter = () => {
-  const { getShards } = useAdapter();
-  const dispatch = useDispatch();
   const shards = useSelector(shardsSelector);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const { shard, page, ...rest } = Object.fromEntries(searchParams);
 
-  const fetchShards = () => {
-    if (shards.length === 0) {
-      getShards().then((shards) => {
-        if (shards.success && shards?.data) {
-          dispatch(setShards(shards.data));
-        }
-      });
-    }
-  };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(fetchShards, []);
+  useFetchShards();
 
   const setShardfilter = (shard: string) => {
     const nextUrlParams = {

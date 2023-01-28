@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { useAdapter, SelectFilter } from 'components';
+import { SelectFilter } from 'components';
 import { shardSpanText } from 'components/ShardSpan';
+import { useFetchShards } from 'hooks';
 import { shardsSelector } from 'redux/selectors';
-import { setShards } from 'redux/slices/interface';
 import { TxFiltersEnum, TransactionsTableType } from 'types';
 
 export const ShardColumnFilters = ({
@@ -18,27 +18,14 @@ export const ShardColumnFilters = ({
 }: {
   inactiveFilters?: TransactionsTableType['inactiveFilters'];
 }) => {
-  const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const { senderShard, receiverShard } = Object.fromEntries(searchParams);
-  const { getShards } = useAdapter();
 
   const stateShards = useSelector(shardsSelector);
 
-  const fetchShards = () => {
-    if (stateShards.length === 0) {
-      getShards().then((shards) => {
-        if (shards.success && shards?.data) {
-          dispatch(setShards(shards.data));
-        }
-      });
-    }
-  };
+  useFetchShards();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(fetchShards, []);
-
-  const searchShards = stateShards.map((shard) => {
+  const selectShards = stateShards.map((shard) => {
     return {
       value: shard.shard.toString(),
       label: shardSpanText(shard.shard.toString())
@@ -69,7 +56,7 @@ export const ShardColumnFilters = ({
                     <div className='mb-1'>Sender Shard</div>
                     <SelectFilter
                       name='senderShard-filter'
-                      options={searchShards}
+                      options={selectShards}
                       filter={TxFiltersEnum.senderShard}
                     />
                   </div>
@@ -80,7 +67,7 @@ export const ShardColumnFilters = ({
                     <div className='mb-1'>Receiver Shard</div>
                     <SelectFilter
                       name='receiverShard-filter'
-                      options={searchShards}
+                      options={selectShards}
                       filter={TxFiltersEnum.receiverShard}
                     />
                   </div>
