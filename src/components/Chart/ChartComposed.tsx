@@ -68,7 +68,7 @@ export const ChartComposed = ({
               moment
                 .unix(tick)
                 .utc()
-                .format(dateFormat ?? 'D MMM YYYY')
+                .format(dateFormat ?? 'D MMM')
             }
             strokeWidth={0.3}
             {...(hasOnlyStartEndTick

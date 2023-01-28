@@ -15,7 +15,12 @@ export interface AnalyticsStackedChartDataPoCType {
 
 type ChartResolutionRangeType = 'year' | 'month' | 'week';
 
-const ChartResolution = {
+const ChartResolution: {
+  [key in ChartResolutionRangeType]: {
+    label: string;
+    range: ChartResolutionRangeType;
+  };
+} = {
   year: {
     label: '365 days',
     range: 'year'
@@ -114,8 +119,8 @@ export const AnalyticsStackedChart = ({
   };
   const getData = useCallback(async () => {
     const [firstSeriesData, secondSeriesData] = await Promise.allSettled([
-      getAnalyticsChart(firstSeriesPath),
-      getAnalyticsChart(secondSeriesPath)
+      getAnalyticsChart(`${firstSeriesPath}?range=${activeResolution.range}`),
+      getAnalyticsChart(`${secondSeriesPath}?range=${activeResolution.range}`)
     ]);
 
     if (firstSeriesData.status === 'fulfilled') {
@@ -136,12 +141,17 @@ export const AnalyticsStackedChart = ({
         firstSeriesData.value.success &&
         secondSeriesData.value.success
     );
-  }, [firstSeriesPath, secondSeriesPath]);
+  }, [firstSeriesPath, secondSeriesPath, activeResolution.range]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     getData();
-  }, [activeNetworkId, firstSeriesPath, secondSeriesPath]);
+  }, [
+    activeNetworkId,
+    firstSeriesPath,
+    secondSeriesPath,
+    activeResolution.range
+  ]);
 
   return (
     <>
@@ -239,7 +249,6 @@ export const AnalyticsStackedChart = ({
                   firstSeriesConfig,
                   secondSeriesConfig
                 }}
-                hasOnlyStartEndTick
                 {...getChartPropsFromId(ids[1])}
               ></Chart.Composed>
             )}
