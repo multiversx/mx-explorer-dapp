@@ -2,13 +2,13 @@ import * as React from 'react';
 import { MostUsed } from 'components';
 import { useIsMainnet } from 'hooks';
 
-import { DelegationChart } from './DelegationChart';
+import { ChartStake } from './ChartStake';
 import { EconomicsCard } from './EconomicsCard';
 import { HeroCard } from './HeroCard';
 import { LatestBlocks } from './LatestBlocks';
 import { LatestTransactions } from './LatestTransactions';
-import { LongChart } from './LongChart';
-import { PriceChart } from './PriceChart';
+import { ChartContractsTransactions } from './ChartContractsTransactions';
+import { ChartPrice } from './ChartPrice';
 
 export const Home = () => {
   const isMainnet = useIsMainnet();
@@ -20,11 +20,12 @@ export const Home = () => {
       {isMainnet && (
         <>
           <div className='d-xl-flex mt-3'>
-            <PriceChart />
-            <DelegationChart />
+            <ChartPrice />
+            <ChartStake />
             <EconomicsCard />
           </div>
-          <LongChart />
+
+          <ChartContractsTransactions />
           <MostUsed />
         </>
       )}

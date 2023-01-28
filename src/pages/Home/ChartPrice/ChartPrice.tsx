@@ -7,13 +7,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
-import {
-  Area,
-  Tooltip,
-  ResponsiveContainer,
-  AreaChart,
-  TooltipProps
-} from 'recharts';
+
 import classNames from 'classnames';
 
 import { useFetchGrowthPrice } from 'hooks';
@@ -22,37 +16,15 @@ import { growthPriceSelector } from 'redux/selectors';
 import { TrendEnum } from 'types';
 
 import { PriceStatisticsLabelEnum } from './enum';
-import { DropdownChart } from '../DropdownChart';
+import { ChartSelect } from '../ChartSelect';
+import { ChartRoot } from '../ChartRoot';
 
 import type { StatisticType } from './types';
-import type { DropdownChartOptionType } from '../DropdownChart/types';
+import type { ChartSelectOptionType } from '../ChartSelect/types';
 
 import styles from './styles.module.scss';
 
-const CustomTooltip = (props: TooltipProps<number, string>) => {
-  const { payload, active } = props;
-
-  if (!payload || !active) {
-    return null;
-  }
-
-  return (
-    <div className={styles.tooltip}>
-      {payload.map((item: any) => (
-        <div key={item.value}>
-          {new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            maximumFractionDigits: 2,
-            minimumFractionDigits: 2
-          }).format(item.value)}
-        </div>
-      ))}
-    </div>
-  );
-};
-
-export const PriceChart = () => {
+export const ChartPrice = () => {
   const {
     currentPrice,
     volume24h,
@@ -65,7 +37,7 @@ export const PriceChart = () => {
     isFetched
   } = useSelector(growthPriceSelector);
 
-  const filters: DropdownChartOptionType[] = [
+  const filters: ChartSelectOptionType[] = [
     {
       label: '7d',
       value: 'price7d'
@@ -105,7 +77,7 @@ export const PriceChart = () => {
   const [data, setData] = useState(dataMap.get(initialFilter));
 
   const onChange = useCallback(
-    (option: SingleValue<DropdownChartOptionType>) => {
+    (option: SingleValue<ChartSelectOptionType>) => {
       if (option && option.value && isFetched) {
         setData(dataMap.get(option.value));
       }
@@ -140,30 +112,23 @@ export const PriceChart = () => {
         </div>
 
         <div className={styles.right}>
-          <DropdownChart options={filters} onChange={onChange} />
+          <ChartSelect options={filters} onChange={onChange} />
         </div>
       </div>
 
-      <ResponsiveContainer height={75} width='100%'>
-        <AreaChart data={data} margin={{ left: 0, right: 0 }}>
-          <defs>
-            <linearGradient id='priceGradient' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset='5%' stopColor={teal} stopOpacity={0.15} />
-              <stop offset='95%' stopColor={teal} stopOpacity={0} />
-            </linearGradient>
-          </defs>
-
-          <Area
-            type='monotone'
-            dataKey='value'
-            stroke={teal}
-            fill='url(#priceGradient)'
-            activeDot={{ stroke: teal }}
-          />
-
-          <Tooltip content={CustomTooltip} cursor={false} />
-        </AreaChart>
-      </ResponsiveContainer>
+      <ChartRoot
+        data={data}
+        color={teal}
+        identifier='priceGradient'
+        tooltipFormatter={(option: any) =>
+          new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 2,
+            minimumFractionDigits: 2
+          }).format(option.value)
+        }
+      />
 
       <div className={styles.statistics}>
         {statistics.map((statistic) => (

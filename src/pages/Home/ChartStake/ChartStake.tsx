@@ -1,50 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  Area,
-  Tooltip,
-  ResponsiveContainer,
-  AreaChart,
-  TooltipProps
-} from 'recharts';
 import { SingleValue } from 'react-select';
 
 import { useFetchGrowthStaking } from 'hooks';
 import { growthStakingSelector } from 'redux/selectors';
 
-import { DropdownChart } from '../DropdownChart';
+import { ChartSelect } from '../ChartSelect';
+import { ChartRoot } from '../ChartRoot';
 
 import { StakingStatisticsLabelEnum } from './enum';
 
-import type { DropdownChartOptionType } from '../DropdownChart/types';
+import type { ChartSelectOptionType } from '../ChartSelect/types';
 import type { StatisticType } from './types';
 
 import styles from './styles.module.scss';
 
-const CustomTooltip = (props: TooltipProps<number, string>) => {
-  const { payload, active } = props;
-
-  if (!payload || !active) {
-    return null;
-  }
-
-  return (
-    <div className={styles.tooltip}>
-      {payload.map((item: any) => (
-        <div key={item.value}>
-          {new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            maximumFractionDigits: 0,
-            minimumFractionDigits: 0
-          }).format(item.value)}
-        </div>
-      ))}
-    </div>
-  );
-};
-
-export const DelegationChart = () => {
+export const ChartStake = () => {
   const {
     stakingPercentage,
     totalStaked,
@@ -57,7 +28,7 @@ export const DelegationChart = () => {
     isFetched
   } = useSelector(growthStakingSelector);
 
-  const filters: DropdownChartOptionType[] = [
+  const filters: ChartSelectOptionType[] = [
     {
       label: '7d',
       value: 'totalStaked7d'
@@ -101,7 +72,7 @@ export const DelegationChart = () => {
   const [data, setData] = useState(dataMap.get(initialFilter));
 
   const onChange = useCallback(
-    (option: SingleValue<DropdownChartOptionType>) => {
+    (option: SingleValue<ChartSelectOptionType>) => {
       if (option && option.value && isFetched) {
         setData(dataMap.get(option.value));
       }
@@ -129,34 +100,24 @@ export const DelegationChart = () => {
         </div>
 
         <div className={styles.right}>
-          <DropdownChart options={filters} onChange={onChange} />
+          <ChartSelect options={filters} onChange={onChange} />
         </div>
       </div>
 
-      <ResponsiveContainer
-        height={75}
-        width='100%'
+      <ChartRoot
         className={styles.container}
-      >
-        <AreaChart data={data} margin={{ left: 0, right: 0 }}>
-          <defs>
-            <linearGradient id='delegationGradient' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset='5%' stopColor={teal} stopOpacity={0.15} />
-              <stop offset='95%' stopColor={teal} stopOpacity={0} />
-            </linearGradient>
-          </defs>
-
-          <Area
-            type='monotone'
-            dataKey='value'
-            stroke={teal}
-            fill='url(#delegationGradient)'
-            activeDot={{ stroke: teal }}
-          />
-
-          <Tooltip content={CustomTooltip} />
-        </AreaChart>
-      </ResponsiveContainer>
+        data={data}
+        color={teal}
+        identifier='delegationGradient'
+        tooltipFormatter={(option: any) =>
+          new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 0,
+            minimumFractionDigits: 0
+          }).format(option.value)
+        }
+      />
 
       <div className={styles.statistics}>
         {statistics.map((statistic) => (
