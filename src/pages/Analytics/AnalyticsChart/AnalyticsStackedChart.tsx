@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
+import { Anchor, Dropdown } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { PageState, Chart, Loader, useAdapter } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
@@ -12,6 +13,23 @@ export interface AnalyticsStackedChartDataPoCType {
   timestamp: number;
 }
 
+type ChartResolutionRangeType = 'year' | 'month' | 'week';
+
+const ChartResolution = {
+  year: {
+    label: '365 days',
+    range: 'year'
+  },
+  month: {
+    label: '30 days',
+    range: 'month'
+  },
+  week: {
+    label: '7 days',
+    range: 'week'
+  }
+};
+
 export const AnalyticsStackedChart = ({
   firstSeries,
   secondSeries
@@ -22,11 +40,13 @@ export const AnalyticsStackedChart = ({
   const ref = useRef(null);
 
   const ids = [firstSeries.path, secondSeries.path];
+  const firstSeriesPath = ids[0];
+  const secondSeriesPath = ids[1];
   const firstSeriesLabel = firstSeries.label;
   const secondSeriesLabel = secondSeries.label;
   const title = `${capitalize(firstSeriesLabel)} vs. ${capitalize(
     secondSeriesLabel
-  )} in the past 30 days`;
+  )} in the past`;
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getAnalyticsChart } = useAdapter();
@@ -38,9 +58,9 @@ export const AnalyticsStackedChart = ({
   const [secondSeriesData, setSecondSeriesData] = useState<
     AnalyticsStackedChartDataPoCType[]
   >([]);
-
-  const firstSeriesPath = ids[0];
-  const secondSeriesPath = ids[1];
+  const [activeResolution, setActiveResolution] = React.useState(
+    ChartResolution['month']
+  );
 
   const getChartPropsFromId = (id: string) => {
     switch (id) {
@@ -126,7 +146,68 @@ export const AnalyticsStackedChart = ({
   return (
     <>
       <section id={ids.join('/')} ref={ref} className='card'>
-        <Chart.Heading title={title} className=''></Chart.Heading>
+        <div className='d-flex flex-row flex-nowrap align-items-center'>
+          <Chart.Heading title={title} className=''></Chart.Heading>
+          <Dropdown
+            className=''
+            onSelect={(eventKey: ChartResolutionRangeType | string | null) => {
+              return eventKey
+                ? setActiveResolution(
+                    ChartResolution[eventKey as ChartResolutionRangeType]
+                  )
+                : ChartResolution['month'];
+            }}
+          >
+            <Dropdown.Toggle
+              variant='dark'
+              size='sm'
+              className={
+                'py-1 d-flex align-items-center justify-content-between'
+              }
+              id='chart-resolution'
+            >
+              <span className='me-2'>{activeResolution.label}</span>
+            </Dropdown.Toggle>
+            <Dropdown.Menu
+              style={{ marginTop: '0.35rem', marginBottom: '0.35rem' }}
+            >
+              <Dropdown.Item
+                as={Anchor} // This is needed due to issues between threejs, react-bootstrap and typescript, what a time to be alive: https://github.com/react-bootstrap/react-bootstrap/issues/6283
+                eventKey={ChartResolution['year'].range}
+                className={`${
+                  activeResolution.range === ChartResolution['year'].range
+                    ? 'active'
+                    : ''
+                }`}
+              >
+                {ChartResolution['year'].label}
+              </Dropdown.Item>
+              <Dropdown.Item
+                as={Anchor}
+                eventKey={ChartResolution['month'].range}
+                className={`${
+                  activeResolution.range === ChartResolution['month'].range
+                    ? 'active'
+                    : ''
+                }`}
+              >
+                {ChartResolution['month'].label}
+              </Dropdown.Item>
+              <Dropdown.Item
+                as={Anchor}
+                eventKey={ChartResolution['week'].range}
+                className={`${
+                  activeResolution.range === ChartResolution['week'].range
+                    ? 'active'
+                    : ''
+                }`}
+              >
+                {ChartResolution['week'].label}
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+
         <Chart.Body>
           {dataReady === undefined && <Loader />}
           {dataReady === false && (
