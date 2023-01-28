@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
-import { Anchor, Dropdown } from 'react-bootstrap';
+import React, { useEffect, useMemo } from 'react';
+import { SingleValue } from 'react-select';
+import { DropdownChart } from '../../../Home/DropdownChart';
+import { DropdownChartOptionType } from '../../../Home/DropdownChart/types';
 
 export type ChartResolutionRangeType = 'year' | 'month' | 'week';
 
@@ -39,68 +41,43 @@ export const ChartResolutionSelector = ({
   value,
   onChange
 }: ChartResolutionSelectorProps) => {
-  const [activeResolution, setActiveResolution] = React.useState(
-    ChartResolution[value] ?? ChartResolution['month']
-  );
+  const options: DropdownChartOptionType[] = [
+    {
+      label: '365 days',
+      value: ChartResolution['year'].range
+    },
+    {
+      label: '30 days',
+      value: ChartResolution['month'].range
+    },
+    {
+      label: '7 days',
+      value: ChartResolution['week'].range
+    }
+  ];
 
-  useEffect(() => {
+  const dropdownValue = useMemo(() => {
+    return {
+      label: ChartResolution[value].label,
+      value: ChartResolution[value].range
+    };
+  }, [value]);
+
+  const onChangeHandler = (option: SingleValue<DropdownChartOptionType>) => {
+    const value: ChartResolutionRangeType =
+      (option?.value as ChartResolutionRangeType) ??
+      ChartResolution['month'].range;
+
+    const activeResolution = ChartResolution[value];
+
     onChange?.(activeResolution);
-  }, [activeResolution]);
+  };
 
   return (
-    <Dropdown
-      className=''
-      onSelect={(eventKey: ChartResolutionRangeType | string | null) => {
-        return eventKey
-          ? setActiveResolution(
-              ChartResolution[eventKey as ChartResolutionRangeType]
-            )
-          : ChartResolution['month'];
-      }}
-    >
-      <Dropdown.Toggle
-        variant='dark'
-        size='sm'
-        className={'py-1 d-flex align-items-center justify-content-between'}
-        id='chart-resolution'
-      >
-        <span className='me-2'>{activeResolution.label}</span>
-      </Dropdown.Toggle>
-      <Dropdown.Menu style={{ marginTop: '0.35rem', marginBottom: '0.35rem' }}>
-        <Dropdown.Item
-          as={Anchor} // This is needed due to issues between threejs, react-bootstrap and typescript, what a time to be alive: https://github.com/react-bootstrap/react-bootstrap/issues/6283
-          eventKey={ChartResolution['year'].range}
-          className={`${
-            activeResolution.range === ChartResolution['year'].range
-              ? 'active'
-              : ''
-          }`}
-        >
-          {ChartResolution['year'].label}
-        </Dropdown.Item>
-        <Dropdown.Item
-          as={Anchor}
-          eventKey={ChartResolution['month'].range}
-          className={`${
-            activeResolution.range === ChartResolution['month'].range
-              ? 'active'
-              : ''
-          }`}
-        >
-          {ChartResolution['month'].label}
-        </Dropdown.Item>
-        <Dropdown.Item
-          as={Anchor}
-          eventKey={ChartResolution['week'].range}
-          className={`${
-            activeResolution.range === ChartResolution['week'].range
-              ? 'active'
-              : ''
-          }`}
-        >
-          {ChartResolution['week'].label}
-        </Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
+    <DropdownChart
+      options={options}
+      value={dropdownValue}
+      onChange={onChangeHandler}
+    />
   );
 };
