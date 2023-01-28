@@ -8,8 +8,11 @@ import {
   Tooltip,
   ComposedChart,
   CartesianGrid,
-  Legend
+  Legend,
+  Surface,
+  Symbols
 } from 'recharts';
+import { Props } from 'recharts/types/component/DefaultLegendContent';
 import { CustomTooltip } from './helpers/CustomTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { StartEndTick } from './helpers/StartEndTick';
@@ -30,14 +33,17 @@ export const ChartComposed = ({
   hasOnlyStartEndTick
 }: BiAxialChartProps) => {
   const [hoveredSeries, setHoveredSeries] = useState<string>();
-  const [hiddenSeries, setHiddenSeries] = useState<Record<string, string>>();
+  const [hiddenSeries, setHiddenSeries] =
+    useState<Record<string, string | undefined>>();
 
-  const [neutral800, teal, violet400, muted, primary] = [
+  const [white, neutral800, teal, violet400, muted, primary, secondary] = [
+    'white',
     'neutral-800',
     'teal',
     'violet-400',
     'muted',
-    'primary'
+    'primary',
+    '--secondary'
   ].map((color) =>
     getComputedStyle(document.documentElement)
       .getPropertyValue(`--${color}`)
@@ -61,7 +67,7 @@ export const ChartComposed = ({
       ? 'hidden'
       : 'visible';
   const firstSeriesOpacity =
-    hoveredSeries === firstSeriesConfig.label ? 0.2 : 1;
+    hoveredSeries === firstSeriesConfig.label ? 0.3 : 1;
 
   const secondSeriesVisibility =
     hiddenSeries &&
@@ -69,24 +75,77 @@ export const ChartComposed = ({
       ? 'hidden'
       : 'visible';
   const secondSeriesOpacity =
-    hoveredSeries === secondSeriesConfig.label ? 0.2 : 1;
+    hoveredSeries === secondSeriesConfig.label ? 0.3 : 1;
 
-  const onLegendMouseEnter = (e: any) => {
-    const { dataKey } = e;
+  const onLegendMouseEnter = (dataKey: string) => () => {
     setHoveredSeries(dataKey);
   };
-  const onLegendMouseLeave = (e: any) => {
+  const onLegendMouseLeave = () => {
     setHoveredSeries('');
   };
 
-  const onLegendClick = (e: any) => {
-    const { dataKey } = e;
-
+  const onLegendClick = (dataKey: string) => () => {
     const modifiedSeries = { ...hiddenSeries };
     modifiedSeries[dataKey] =
       modifiedSeries[dataKey] === dataKey ? undefined : dataKey;
 
     setHiddenSeries(modifiedSeries);
+  };
+
+  const renderCustomizedLegend = ({ payload }: Props) => {
+    return (
+      <div className='d-flex justify-content-center flex-wrap customized-legend'>
+        {payload?.map((entry: any) => {
+          const { id: dataKey, color } = entry;
+          const active = Boolean(hiddenSeries && hiddenSeries[dataKey]);
+          const style = {
+            marginRight: 10,
+            color: `${active ? '#AAA' : color}`
+          };
+          const badgeOutlineColor =
+            dataKey === firstSeriesConfig.id
+              ? 'badge-outline-violet-400'
+              : 'badge-outline-teal';
+
+          return (
+            <span
+              key={dataKey}
+              className={`legend-item badge badge-outline ${badgeOutlineColor} py-2 px-3 br-lg`}
+              onMouseEnter={onLegendMouseEnter(dataKey)}
+              onMouseLeave={onLegendMouseLeave}
+              onClick={onLegendClick(dataKey)}
+              style={style}
+            >
+              <Surface
+                width={10}
+                height={10}
+                viewBox={{ x: 0, y: 0, width: 10, height: 10 }}
+              >
+                <Symbols
+                  cx={5}
+                  cy={5}
+                  type='circle'
+                  size={50}
+                  fill={color}
+                  stroke={color}
+                />
+                {active && (
+                  <Symbols
+                    cx={5}
+                    cy={5}
+                    type='circle'
+                    size={25}
+                    fill={white}
+                    stroke={white}
+                  />
+                )}
+              </Surface>
+              <span className='mx-1'>{dataKey}</span>
+            </span>
+          );
+        })}
+      </div>
+    );
   };
 
   return (
@@ -245,12 +304,23 @@ export const ChartComposed = ({
           <Legend
             verticalAlign='bottom'
             iconType='circle'
-            onMouseEnter={onLegendMouseEnter}
-            onMouseLeave={onLegendMouseLeave}
-            onClick={onLegendClick}
             wrapperStyle={{
-              cursor: 'pointer'
+              cursor: 'pointer',
+              position: 'relative'
             }}
+            payload={[
+              {
+                id: firstSeriesConfig.id,
+                color: firstSeriesConfig.stroke,
+                value: firstSeriesConfig.label
+              },
+              {
+                id: secondSeriesConfig.id,
+                color: secondSeriesConfig.stroke,
+                value: secondSeriesConfig.label
+              }
+            ]}
+            content={renderCustomizedLegend}
           />
         </ComposedChart>
       </ResponsiveContainer>

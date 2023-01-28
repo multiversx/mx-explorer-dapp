@@ -229,6 +229,28 @@
       );
     }
   }
+  &-teal {
+    color: var(--teal);
+    background: #171717;
+    &:before {
+      background: linear-gradient(
+                      90deg,
+                      var(--teal),
+                      #47e8d3
+      );
+    }
+  }
+  &-violet-400 {
+    color: var(--violet-400);
+    background: #171717;
+    &:before {
+      background: linear-gradient(
+                      90deg,
+                      var(--violet-400),
+                      #b6a1f3
+      );
+    }
+  }
 
   &.badge-rounded {
     line-height: 12px;
