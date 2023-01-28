@@ -10,7 +10,7 @@ import { CardItem, MultilayerPercentageBar, PageState } from 'components';
 import {
   activeNetworkSelector,
   economicsSelector,
-  globalStakeSelector
+  nodesVersionsSelector
 } from 'redux/selectors';
 
 export const GlobalStakeCard = ({
@@ -19,7 +19,7 @@ export const GlobalStakeCard = ({
   stakeFetched: boolean;
 }) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
-  const { nodesVerions } = useSelector(globalStakeSelector);
+  const { nodesVersions } = useSelector(nodesVersionsSelector);
   const { isFetched, baseApr, staked } = useSelector(economicsSelector);
 
   const displayBaseApr = isFetched ? `Up to ${baseApr}` : 'N/A';
@@ -72,8 +72,8 @@ export const GlobalStakeCard = ({
                 customIcon={<MultiversXSymbol />}
               >
                 <div className='d-flex flex-column flex-fill'>
-                  {nodesVerions ? (
-                    <MultilayerPercentageBar steps={nodesVerions} />
+                  {nodesVersions ? (
+                    <MultilayerPercentageBar steps={nodesVersions} />
                   ) : (
                     'N/A'
                   )}
