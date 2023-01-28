@@ -10,7 +10,6 @@ import {
   CartesianGrid,
   Legend
 } from 'recharts';
-import { DataKey } from 'recharts/types/util/types';
 import { CustomTooltip } from './helpers/CustomTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { StartEndTick } from './helpers/StartEndTick';
@@ -33,15 +32,6 @@ export const ChartComposed = ({
   const [hoveredSeries, setHoveredSeries] = useState<string>();
   const [hiddenSeries, setHiddenSeries] = useState<Record<string, string>>();
 
-  const { getChartData } = useBiAxialChartData({
-    config,
-    data,
-    filter,
-    category
-  });
-
-  const chartData = getChartData();
-
   const [neutral800, teal, violet400, muted, primary] = [
     'neutral-800',
     'teal',
@@ -53,6 +43,33 @@ export const ChartComposed = ({
       .getPropertyValue(`--${color}`)
       .trim()
   );
+
+  const { getChartData } = useBiAxialChartData({
+    config,
+    data,
+    filter,
+    category
+  });
+
+  const chartData = getChartData();
+  const firstSeriesConfig = config.firstSeriesConfig;
+  const secondSeriesConfig = config.secondSeriesConfig;
+
+  const firstSeriesVisibility =
+    hiddenSeries &&
+    hiddenSeries[firstSeriesConfig.label ?? ''] === firstSeriesConfig.label
+      ? 'hidden'
+      : 'visible';
+  const firstSeriesOpacity =
+    hoveredSeries === firstSeriesConfig.label ? 0.2 : 1;
+
+  const secondSeriesVisibility =
+    hiddenSeries &&
+    hiddenSeries[secondSeriesConfig.label ?? ''] === secondSeriesConfig.label
+      ? 'hidden'
+      : 'visible';
+  const secondSeriesOpacity =
+    hoveredSeries === secondSeriesConfig.label ? 0.2 : 1;
 
   const onLegendMouseEnter = (e: any) => {
     const { dataKey } = e;
@@ -146,7 +163,7 @@ export const ChartComposed = ({
             axisLine={false}
             tickLine={false}
             tickCount={10}
-            stroke={config.firstSeriesConfig.stroke}
+            stroke={firstSeriesConfig.stroke}
             dx={-20}
           />
           <YAxis
@@ -163,64 +180,50 @@ export const ChartComposed = ({
             axisLine={false}
             tickLine={false}
             tickCount={10}
-            stroke={config.secondSeriesConfig.stroke}
+            stroke={secondSeriesConfig.stroke}
             dx={20}
           />
           <Area
             type='monotone'
             yAxisId='left-axis'
-            dataKey={config.firstSeriesConfig.id}
-            stroke={config.firstSeriesConfig.stroke ?? primary}
-            {...(config.firstSeriesConfig.gradient
-              ? { fill: `url(#${config.firstSeriesConfig.gradient})` }
+            dataKey={firstSeriesConfig.id}
+            stroke={firstSeriesConfig.stroke ?? primary}
+            {...(firstSeriesConfig.gradient
+              ? { fill: `url(#${firstSeriesConfig.gradient})` }
               : { fill: 'url(#transparent)' })}
-            {...(config.firstSeriesConfig.strokeDasharray
-              ? { strokeDasharray: config.firstSeriesConfig.strokeDasharray }
+            {...(firstSeriesConfig.strokeDasharray
+              ? { strokeDasharray: firstSeriesConfig.strokeDasharray }
               : {})}
-            key={config.firstSeriesConfig.id}
+            key={firstSeriesConfig.id}
             strokeWidth={1.5}
             activeDot={{
               stroke: violet400,
               fill: violet400
             }}
-            opacity={hoveredSeries === config.firstSeriesConfig.label ? 0.2 : 1}
-            visibility={
-              hiddenSeries &&
-              hiddenSeries[config.firstSeriesConfig.label ?? ''] ===
-                config.firstSeriesConfig.label
-                ? 'hidden'
-                : 'visible'
-            }
+            opacity={firstSeriesOpacity}
+            visibility={firstSeriesVisibility}
           />
           <Area
             type='monotone'
             yAxisId='right-axis'
-            dataKey={config.secondSeriesConfig.id}
-            stroke={config.secondSeriesConfig.stroke ?? primary}
-            {...(config.secondSeriesConfig.gradient
-              ? { fill: `url(#${config.secondSeriesConfig.gradient})` }
+            dataKey={secondSeriesConfig.id}
+            stroke={secondSeriesConfig.stroke ?? primary}
+            {...(secondSeriesConfig.gradient
+              ? { fill: `url(#${secondSeriesConfig.gradient})` }
               : { fill: 'url(#transparent)' })}
-            {...(config.secondSeriesConfig.strokeDasharray
+            {...(secondSeriesConfig.strokeDasharray
               ? {
-                  strokeDasharray: config.secondSeriesConfig.strokeDasharray
+                  strokeDasharray: secondSeriesConfig.strokeDasharray
                 }
               : {})}
-            key={config.secondSeriesConfig.id}
+            key={secondSeriesConfig.id}
             strokeWidth={1.5}
             activeDot={{
               stroke: teal,
               fill: teal
             }}
-            opacity={
-              hoveredSeries === config.secondSeriesConfig.label ? 0.2 : 1
-            }
-            visibility={
-              hiddenSeries &&
-              hiddenSeries[config.secondSeriesConfig.label ?? ''] ===
-                config.secondSeriesConfig.label
-                ? 'hidden'
-                : 'visible'
-            }
+            opacity={secondSeriesOpacity}
+            visibility={secondSeriesVisibility}
           />
 
           <Tooltip
