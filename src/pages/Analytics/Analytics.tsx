@@ -58,6 +58,10 @@ export const Analytics = () => {
   };
 
   const onSelectPill = (series: ChartListType) => () => {
+    if (selectedPills.find((pill) => pill.id === series.id)) {
+      return;
+    }
+
     setSelectedPills((pills) => [pills[1], series]);
   };
 
