@@ -102,30 +102,38 @@ export const Analytics = () => {
       <div ref={ref}>
         {dataReady === true && selectedPills.length === 2 && (
           <div className='analytics container page-content'>
-            <div className='row mb-3'>
-              {chartList.map((series) => (
-                <div
-                  key={series.id}
-                  className='col'
-                  onClick={onSelectPill(series)}
-                >
-                  <span
-                    className={`badge rounded-pill cursor-pointer ${
-                      selectedPills.find((x) => x.id === series.id)
-                        ? 'bg-light text-dark'
-                        : 'bg-dark'
-                    }`}
+            <div className='card p-4'>
+              <div className='row mb-3'>
+                <h5>Key Metrics</h5>
+              </div>
+              <div className='row mb-2 text-neutral-400'>
+                <span>Select metrics to compare</span>
+              </div>
+              <div className='row mb-3'>
+                {chartList.map((series) => (
+                  <div
+                    key={series.id}
+                    className='col'
+                    onClick={onSelectPill(series)}
                   >
-                    {series.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-            <div className='row'>
-              <AnalyticsStackedChart
-                firstSeries={selectedPills[0]}
-                secondSeries={selectedPills[1]}
-              />
+                    <span
+                      className={`badge rounded-pill cursor-pointer ${
+                        selectedPills.find((x) => x.id === series.id)
+                          ? 'bg-light text-dark'
+                          : 'bg-dark'
+                      }`}
+                    >
+                      {series.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className='row'>
+                <AnalyticsStackedChart
+                  firstSeries={selectedPills[0]}
+                  secondSeries={selectedPills[1]}
+                />
+              </div>
             </div>
           </div>
         )}

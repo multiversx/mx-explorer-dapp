@@ -141,9 +141,20 @@ export const AnalyticsStackedChart = ({
 
   return (
     <>
-      <section id={ids.join('/')} ref={ref} className='card'>
+      <section id={ids.join('/')} ref={ref}>
         <div className='d-flex align-items-center'>
-          <Chart.Heading title={title} className=''></Chart.Heading>
+          <Chart.Heading>
+            <div>
+              <span style={{ color: firstSeriesConfig.stroke }}>
+                {firstSeriesLabel}
+              </span>
+              <span className='mx-2'>vs.</span>
+              <span style={{ color: secondSeriesConfig.stroke }}>
+                {secondSeriesLabel}
+              </span>
+              <span className='ms-2'>in the past</span>
+            </div>
+          </Chart.Heading>
           <ChartResolutionSelector
             value={range}
             onChange={(resolution) => {
