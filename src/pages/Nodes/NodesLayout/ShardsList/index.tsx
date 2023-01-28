@@ -98,7 +98,7 @@ export const ShardsList = ({ shardsFetched }: { shardsFetched: boolean }) => {
                       <ShardCard shard={shard} />
                     </React.Fragment>
                   ))}
-                  <StakingQueueCard globalStake={globalStake} />
+                  {/* <StakingQueueCard globalStake={globalStake} /> */}
                 </div>
               </div>
             </div>
