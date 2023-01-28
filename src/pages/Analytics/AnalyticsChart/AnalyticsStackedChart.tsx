@@ -1,49 +1,54 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
-
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
-
 import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { PageState, Chart, Loader, useAdapter } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
 import { activeNetworkSelector } from 'redux/selectors';
+import {
+  ChartResolutionRangeType,
+  ChartResolutionSelector
+} from './components/ChartResolution';
+import { capitalize } from '../../../helpers';
+import { ChartListType } from '../Analytics';
+import { RANGE } from '../constants';
 
 export interface AnalyticsStackedChartDataPoCType {
   value: string;
   timestamp: number;
 }
 
-export const AnalyticsStackedChartPoC = ({
-  ids,
-  firstSeriesLabel,
-  secondSeriesLabel,
-  title
+export const AnalyticsStackedChart = ({
+  firstSeries,
+  secondSeries
 }: {
-  ids: string[];
-  firstSeriesLabel: string;
-  secondSeriesLabel: string;
-  title?: string;
+  firstSeries: ChartListType;
+  secondSeries: ChartListType;
 }) => {
   const ref = useRef(null);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const ids = [firstSeries.path, secondSeries.path];
+  const firstSeriesPath = ids[0];
+  const secondSeriesPath = ids[1];
+  const range = searchParams.get(RANGE) as ChartResolutionRangeType;
+  const firstSeriesLabel = firstSeries.label;
+  const secondSeriesLabel = secondSeries.label;
+  const title = `${capitalize(firstSeriesLabel)} vs. ${capitalize(
+    secondSeriesLabel
+  )} in the past`;
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getAnalyticsChart } = useAdapter();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [firstSeries, setFirstSeries] = useState<
+  const [firstSeriesData, setFirstSeriesData] = useState<
     AnalyticsStackedChartDataPoCType[]
   >([]);
-  const [secondSeries, setSecondSeries] = useState<
+  const [secondSeriesData, setSecondSeriesData] = useState<
     AnalyticsStackedChartDataPoCType[]
   >([]);
-
-  const firstSeriesPath = ids[0];
-  const secondSeriesPath = ids[1];
 
   const getChartPropsFromId = (id: string) => {
     switch (id) {
@@ -83,30 +88,38 @@ export const AnalyticsStackedChartPoC = ({
     }
   };
 
+  const [teal, violet400] = ['teal', 'violet-400'].map((color) =>
+    getComputedStyle(document.documentElement)
+      .getPropertyValue(`--${color}`)
+      .trim()
+  );
+
   const firstSeriesConfig: ChartConfigType = {
     id: firstSeriesLabel,
     label: firstSeriesLabel,
-    gradient: 'defaultGradient',
-    data: firstSeries
+    gradient: 'firstSeriesGradientId',
+    data: firstSeriesData,
+    stroke: violet400
   };
   const secondSeriesConfig: ChartConfigType = {
     id: secondSeriesLabel,
     label: secondSeriesLabel,
-    gradient: 'defaultGradient',
-    data: secondSeries
+    gradient: 'secondSeriesGradientId',
+    data: secondSeriesData,
+    stroke: teal
   };
   const getData = useCallback(async () => {
     const [firstSeriesData, secondSeriesData] = await Promise.allSettled([
-      getAnalyticsChart(firstSeriesPath),
-      getAnalyticsChart(secondSeriesPath)
+      getAnalyticsChart(`${firstSeriesPath}?range=${range}`),
+      getAnalyticsChart(`${secondSeriesPath}?range=${range}`)
     ]);
 
     if (firstSeriesData.status === 'fulfilled') {
-      setFirstSeries(firstSeriesData.value.data?.data ?? []);
+      setFirstSeriesData(firstSeriesData.value.data?.data ?? []);
     }
 
     if (secondSeriesData.status === 'fulfilled') {
-      setSecondSeries(
+      setSecondSeriesData(
         secondSeriesData.status === 'fulfilled'
           ? secondSeriesData?.value.data?.data
           : []
@@ -119,17 +132,38 @@ export const AnalyticsStackedChartPoC = ({
         firstSeriesData.value.success &&
         secondSeriesData.value.success
     );
-  }, [firstSeriesPath, secondSeriesPath]);
+  }, [firstSeriesPath, secondSeriesPath, range]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     getData();
-  }, [activeNetworkId, firstSeriesPath, secondSeriesPath]);
+  }, [activeNetworkId, firstSeriesPath, secondSeriesPath, range]);
 
   return (
     <>
-      <section id={ids.join('/')} ref={ref} className='card'>
-        <Chart.Heading title={title} className=''></Chart.Heading>
+      <section id={ids.join('/')} ref={ref}>
+        <div className='d-flex align-items-center'>
+          <Chart.Heading>
+            <div>
+              <span style={{ color: firstSeriesConfig.stroke }}>
+                {firstSeriesLabel}
+              </span>
+              <span className='mx-2'>vs.</span>
+              <span style={{ color: secondSeriesConfig.stroke }}>
+                {secondSeriesLabel}
+              </span>
+              <span className='ms-2'>in the past</span>
+            </div>
+          </Chart.Heading>
+          <ChartResolutionSelector
+            value={range}
+            onChange={(resolution) => {
+              searchParams.set('range', resolution.range);
+              setSearchParams(searchParams);
+            }}
+          />
+        </div>
+
         <Chart.Body>
           {dataReady === undefined && <Loader />}
           {dataReady === false && (
@@ -142,7 +176,8 @@ export const AnalyticsStackedChartPoC = ({
             />
           )}
           {dataReady === true &&
-            (firstSeries?.length === 0 || secondSeries?.length === 0) && (
+            (firstSeriesData?.length === 0 ||
+              secondSeriesData?.length === 0) && (
               <PageState
                 icon={faChartBar}
                 title='Missing Chart data'
@@ -153,16 +188,15 @@ export const AnalyticsStackedChartPoC = ({
             )}
 
           {dataReady === true &&
-            firstSeries.length > 0 &&
-            secondSeries.length > 0 && (
-              <Chart.ComposedChartPoC
+            firstSeriesData.length > 0 &&
+            secondSeriesData.length > 0 && (
+              <Chart.Composed
                 config={{
                   firstSeriesConfig,
                   secondSeriesConfig
                 }}
-                hasOnlyStartEndTick
                 {...getChartPropsFromId(ids[1])}
-              ></Chart.ComposedChartPoC>
+              ></Chart.Composed>
             )}
         </Chart.Body>
       </section>
