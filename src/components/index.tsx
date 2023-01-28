@@ -59,7 +59,9 @@ export * from './PulsatingLed';
 export * from './MostUsed';
 export * from './TransactionIcon';
 export * from './Particles';
+export * from './ValidatorMap';
 export * from './ValidatorsStatus';
 export * from './TableWrapper';
+export * from './Marquee';
 
 export { Chart, NodesTable, TxActionBlock, SharedIdentity };

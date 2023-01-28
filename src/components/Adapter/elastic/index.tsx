@@ -73,5 +73,8 @@ export const elasticAdapter = {
   },
   getGrowthWidget: () => {
     throw new Error('not defined');
+  },
+  getMarkers: () => {
+    throw new Error('not defined');
   }
 };

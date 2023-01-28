@@ -1,4 +1,4 @@
-.simple-map {
+.validator-map {
   .rsm-svg {
     fill: var(--map-bg); // background color
     stroke: var(--neutral-800); // border color
@@ -10,7 +10,7 @@
       }
     }
 
-    .simple-map-marker {
+    .validator-map-marker {
       fill: var(--primary);
 
       &.pulse-marker {

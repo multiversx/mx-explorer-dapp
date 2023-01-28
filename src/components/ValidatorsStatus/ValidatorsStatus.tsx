@@ -1,13 +1,23 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useSelector } from 'react-redux';
-import { TIMEOUT } from 'appConstants';
-import { useAdapter } from 'components';
-import { activeNetworkSelector } from 'redux/selectors';
-import { getMarkers, MarkerType } from './helpers/asyncRequests';
+import { ValidatorMap, Marquee } from 'components';
+import { useFetchGlobalStake, useFetchMarkers } from 'hooks';
+import {
+  interfaceSelector,
+  globalStakeSelector,
+  markersSelector
+} from 'redux/selectors';
+
 import { calcContinentRank, RankType } from './helpers/calcContinentRank';
 
-import { SimpleMap } from './SimpleMap';
+import {
+  faGlobe,
+  faEnvelope,
+  faPencil,
+  faFileAlt
+} from '@fortawesome/pro-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const placeHolderRank = [
   {
@@ -37,88 +47,62 @@ export const ValidatorsStatus = ({
 }: {
   isSmall?: boolean;
 }) => {
-  const [markers, setMarkers] = React.useState<MarkerType[]>([]);
+  const ref = useRef(null);
+  const { markers } = useSelector(markersSelector);
+  const { totalValidators, unprocessed } = useSelector(globalStakeSelector);
+
   const [continentsRank, setContinentsRank] =
-    React.useState<RankType[]>(placeHolderRank);
-  const [totalNodes, setTotalNodes] = React.useState<string | number>('...');
-  const [queuedNodes, setQueuedNodes] = React.useState<string | number>('...');
-  const ref = React.useRef(null);
+    useState<RankType[]>(placeHolderRank);
 
-  const { apiAddress } = useSelector(activeNetworkSelector);
+  useFetchMarkers();
+  useFetchGlobalStake();
 
-  const { getShards, getGlobalStake } = useAdapter();
-
-  const fetchMarkers = () => {
-    Promise.all([
-      getMarkers({ timeout: TIMEOUT, apiAddress: apiAddress || '' }),
-      getShards(),
-      getGlobalStake()
-    ]).then(([markersData, shardData, globalStake]) => {
-      if (ref.current !== null) {
-        if (markersData.success && shardData.success) {
-          let totalValidators = 0;
-          shardData.data.forEach(
-            (shard: any) => (totalValidators += shard.validators)
-          );
-          if (markersData.data.length > 0 && totalValidators > 0) {
-            setMarkers(markersData.data);
-            setTotalNodes(totalValidators);
-            setContinentsRank(
-              calcContinentRank(markersData.data, totalValidators)
-            );
-          }
-          if (globalStake.success) {
-            setQueuedNodes(globalStake.data.queueSize);
-          }
-        }
-      }
-    });
-  };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchMarkers, []);
+  useEffect(() => {
+    if (markers.length > 0 && unprocessed?.totalValidators) {
+      setContinentsRank(
+        calcContinentRank(markers, unprocessed.totalValidators)
+      );
+    }
+  }, [markers, unprocessed]);
 
   return (
-    <div className='card validator-status' ref={ref}>
+    <div
+      className={`card validators-status ${
+        isSmall ? 'validators-status-sm' : ''
+      }`}
+      ref={ref}
+    >
       <div className='card-body p-0 overflow-hidden'>
-        <div className='container-fluid'>
-          <div className='row'>
-            <div className='col-12 ps-0 pe-0'>
-              {process.env.NODE_ENV !== 'test' && (
-                <SimpleMap markers={markers} />
-              )}
-            </div>
-          </div>
+        {process.env.NODE_ENV !== 'test' && markers.length > 0 && (
+          <ValidatorMap markers={markers} />
+        )}
+        <div className='card-body p-4'>
+          <p className='text-neutral-400 mb-0'>Validators</p>
+          <h3 className='card-value'>{totalValidators}</h3>
         </div>
-      </div>
-      {!isSmall && (
-        <div className='card-footer py-0'>
-          <div className='container'>
+
+        <Marquee>
+          <div className='badge-holder d-flex flex-row align-items-center'>
             {continentsRank.map(({ continent, nodes, percentage }, i) => (
               <div
                 key={i}
-                className={`row py-2 ${
-                  i + 1 < continentsRank.length ? 'border-bottom' : ''
-                }`}
+                className='badge rounded-pill d-flex flex-row align-items-center'
               >
-                <div className='col ps-0 d-flex align-items-center continent-name'>
-                  {i + 1}. {continent}
-                </div>
-                <div className='col d-flex align-items-center text-neutral-400 justify-content-end'>
+                <FontAwesomeIcon icon={faGlobe} />
+                <div className='ms-2'>{continent}</div>
+                <div className='text-secondary mx-1'>
                   {nodes > 0
                     ? `${nodes.toLocaleString('en')} node${
                         nodes === 1 ? '' : 's'
                       }`
                     : '...'}
                 </div>
-                <div className='col pe-0 d-flex align-items-center text-neutral-400 justify-content-end'>
-                  {percentage > 0 ? `${percentage}%` : '...'}
-                </div>
+                <div>({percentage > 0 ? `${percentage}%` : '...'})</div>
               </div>
             ))}
           </div>
-        </div>
-      )}
+        </Marquee>
+      </div>
     </div>
   );
 };

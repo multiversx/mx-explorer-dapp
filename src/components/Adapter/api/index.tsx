@@ -43,5 +43,6 @@ export const apiAdapter = {
   getAccountsHistory: api,
   getAnalyticsChartList: api,
   getAnalyticsChart: api,
-  getGrowthWidget: api
+  getGrowthWidget: api,
+  getMarkers: api
 };

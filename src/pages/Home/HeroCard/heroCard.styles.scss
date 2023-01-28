@@ -20,23 +20,18 @@
   .card {
     background-color: var(--neutral-900);
     display: flex;
-    flex-basis: 21%;
     .card-value {
-      color: var(--primary-200);
+      color: var(--primary);
       margin-bottom: 0.5rem;
     }
-    &.validator-status {
-      flex-basis: 25%;
-    }
-  }
-
-  .simple-map {
-    text-align: right;
-    padding-right: 0.5rem;
-    max-height: 136px;
-    .rsm-svg {
-      width: 80%;
-      height: auto;
+    &.card-solitary {
+      max-width: 100%;
+      @include media-breakpoint-up(sm) {
+        max-width: 50%;
+      }
+      @include media-breakpoint-up(xxl) {
+        max-width: 249px;
+      }
     }
   }
 }
