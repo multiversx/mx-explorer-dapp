@@ -75,7 +75,6 @@ export const ChartComposed = ({
               ? { tick: <StartEndTick dateformat={dateFormat} /> }
               : {})}
             {...(hasOnlyStartEndTick ? { interval: 0 } : {})}
-            {...(chartData.length > 3 ? { scale: 'time' } : {})}
           />
 
           <YAxis
