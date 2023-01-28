@@ -2,40 +2,38 @@ import * as React from 'react';
 import { MostUsed } from 'components';
 import { useIsMainnet } from 'hooks';
 
+import { DelegationChart } from './DelegationChart';
+import { EconomicsCard } from './EconomicsCard';
 import { HeroCard } from './HeroCard';
 import { LatestBlocks } from './LatestBlocks';
 import { LatestTransactions } from './LatestTransactions';
-import { PriceChart } from './PriceChart';
 import { LongChart } from './LongChart';
-import { DelegationChart } from './DelegationChart';
-import { EconomicsCard } from './EconomicsCard';
+import { PriceChart } from './PriceChart';
 
 export const Home = () => {
   const isMainnet = useIsMainnet();
 
   return (
     <div className='home page-content container'>
-      {isMainnet ? (
-        <>
-          <HeroCard />
-          <MostUsed />
-        </>
-      ) : (
-        <></>
-      )}
+      <HeroCard />
 
-      <div className='row'>
-        <div className='col-12 mt-spacer'>
-          <div className='d-xl-flex'>
+      {isMainnet && (
+        <>
+          <div className='d-xl-flex mt-3'>
             <PriceChart />
             <DelegationChart />
             <EconomicsCard />
           </div>
-
           <LongChart />
+          <MostUsed />
+        </>
+      )}
+
+      <div className='row'>
+        <div className='col-12 mt-3'>
           <LatestBlocks />
         </div>
-        <div className='col-12 mt-spacer'>
+        <div className='col-12 mt-3'>
           <LatestTransactions />
         </div>
       </div>
