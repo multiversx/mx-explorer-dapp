@@ -10,14 +10,6 @@ import { LongChart } from './LongChart';
 import { DelegationChart } from './DelegationChart';
 import { EconomicsCard } from './EconomicsCard';
 
-// import { TestnetGlobalStatsCard } from 'pages/Layout/TestnetGlobalStatsCard';
-// import { AccountsChart } from './AccountsChart';
-// import { NetworkHealth } from './NetworkHealth';
-// import { PriceChart } from './PriceChart';
-// import { StakingChart } from './StakingChart';
-// import { TransactionsChart } from './TransactionsChart';
-// import { ValidatorsStatus } from './ValidatorsStatus';
-
 export const Home = () => {
   const isMainnet = useIsMainnet();
 
@@ -27,32 +19,8 @@ export const Home = () => {
         <>
           <HeroCard />
           <MostUsed />
-          {/* <div className='row'>
-            <div className='col-12 mx-auto col-lg-6'>
-              <NetworkHealth />
-            </div>
-            <div className='col-12 col-lg-6 mt-spacer mt-lg-0'>
-              <ValidatorsStatus />
-            </div>
-          </div>
-
-          <div className='row'>
-            <div className='col-12 col-lg-6 mt-spacer'>
-              <PriceChart />
-            </div>
-            <div className='col-12 col-lg-6 mt-spacer'>
-              <StakingChart />
-            </div>
-            <div className='col-12 col-lg-6 mt-spacer'>
-              <TransactionsChart />
-            </div>
-            <div className='col-12 col-lg-6 mt-spacer'>
-              <AccountsChart />
-            </div>
-          </div> */}
         </>
       ) : (
-        // <TestnetGlobalStatsCard />
         <></>
       )}
 

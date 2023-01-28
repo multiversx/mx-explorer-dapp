@@ -7,6 +7,5 @@ export interface DropdownChartOptionType {
 
 export interface DropdownChartPropsType {
   options: DropdownChartOptionType[];
-  defaultValue?: DropdownChartOptionType;
   onChange: (option: SingleValue<DropdownChartOptionType>) => void;
 }
