@@ -8,6 +8,7 @@ import { accountStakingReducer } from './slices/accountStaking';
 import { collectionReducer } from './slices/collection';
 import { economicsReducer } from './slices/economics';
 import { globalStakeReducer } from './slices/globalStake';
+import { growthEconomicsReducer } from './slices/growthEconomics';
 import { growthHeroReducer } from './slices/growthHero';
 import { growthMostUsedReducer } from './slices/growthMostUsed';
 import { growthPriceReducer } from './slices/growthPrice';
@@ -48,6 +49,7 @@ export const customIgnoredSlices = {
   growthSearch: growthSearchReducer,
   growthStaking: growthStakingReducer,
   growthTransactions: growthTransactionsReducer,
+  growthEconomics: growthEconomicsReducer,
   refresh: refreshReducer,
   stats: statsReducer,
   token: tokenReducer

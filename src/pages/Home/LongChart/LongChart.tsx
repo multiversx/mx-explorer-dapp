@@ -1,7 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Area, Tooltip, ResponsiveContainer, AreaChart } from 'recharts';
-import Select from 'react-select';
-import axios from 'axios';
+import { SingleValue } from 'react-select';
+
+import { growthTransactionsSelector } from 'redux/selectors';
+import { useFetchGrowthTransactions } from 'hooks';
+
+import { DropdownChart } from '../DropdownChart';
+
+import { TransactionsStatisticsLabelEnum } from './enum';
+
+import type { DropdownChartOptionType } from '../DropdownChart/types';
+import type { ChartType, StatisticType } from './types';
 
 import styles from './styles.module.scss';
 
@@ -22,54 +32,108 @@ const CustomTooltip = (props: any) => {
 };
 
 export const LongChart = () => {
-  const [temp, setTemp] = useState<any>();
-  const [data1, setData1] = useState<any>();
-  const [data2, setData2] = useState<any>();
+  const {
+    scResults,
+    transactions,
+    totalTransactions,
+    transactions30d,
+    transactionsAll,
+    scResults30d,
+    scResultsAll
+  } = useSelector(growthTransactionsSelector);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await axios.get(
-        'https://tools.multiversx.com/growth-api/explorer/widgets/transactions'
-      );
+  const [white, teal, purple] = ['white', 'teal', 'purple'].map((color) =>
+    getComputedStyle(document.documentElement)
+      .getPropertyValue(`--${color}`)
+      .trim()
+  );
 
-      setTemp(data);
-      setData1(data['transactions30d']);
-      setData2(data['scResults30d']);
-    };
-
-    fetchData();
-  }, []);
-
-  const statistics = [
-    {
-      label: 'Transactions',
-      value: '1,086,076',
-      color: '#ffffff'
-    },
-    {
-      label: 'Smart Contracts',
-      value: '798,074',
-      color: '#23f7dd'
-    },
-    {
-      label: 'Standard',
-      value: '288,002',
-      color: '#8B5CF6'
-    }
-  ];
-
-  const filters = [
-    {
-      label: '7d',
-      key: '7d'
-    },
+  const filters: DropdownChartOptionType[] = [
     {
       label: '30d',
-      key: '30d'
+      value: 'transactions30d'
     },
     {
       label: 'All',
-      key: 'All'
+      value: 'transactionsAll'
+    }
+  ];
+
+  const statistics: StatisticType[] = [
+    {
+      label: TransactionsStatisticsLabelEnum.Transactions,
+      value: totalTransactions,
+      color: white
+    },
+    {
+      label: TransactionsStatisticsLabelEnum.SmartContracts,
+      value: scResults,
+      color: teal
+    },
+    {
+      label: TransactionsStatisticsLabelEnum.Standard,
+      value: transactions,
+      color: purple
+    }
+  ];
+
+  const dataTransactions = useMemo(
+    () =>
+      new Map([
+        ['transactions30d', transactions30d],
+        ['transactionsAll', transactionsAll]
+      ]),
+    [transactions30d, transactionsAll]
+  );
+
+  const dataContracts = useMemo(
+    () =>
+      new Map([
+        ['scResults30d', scResults30d],
+        ['scResultsAll', scResultsAll]
+      ]),
+    [scResults30d, scResultsAll]
+  );
+
+  const [transactionsPayload, setTransactionsPayload] = useState(
+    dataTransactions.get('transactions30d')
+  );
+
+  const [contractsPayload, setContractsPayload] = useState(
+    dataContracts.get('scResults30d')
+  );
+
+  const onChange = (option: SingleValue<DropdownChartOptionType>) => {
+    if (option && option.value) {
+      const value = option.value.replace('transactions', '');
+      const [transactionsKey, contractsKey] = [
+        `transactions${value}`,
+        `scResults${value}`
+      ];
+
+      setTransactionsPayload(dataTransactions.get(transactionsKey));
+      setContractsPayload(dataContracts.get(contractsKey));
+    }
+  };
+
+  const onInitialLoad = useCallback(() => {
+    setTransactionsPayload(dataTransactions.get('transactions30d'));
+    setContractsPayload(dataContracts.get('scResults30d'));
+  }, [dataTransactions, dataContracts]);
+
+  useFetchGrowthTransactions();
+  useEffect(onInitialLoad, [onInitialLoad]);
+
+  const charts: ChartType[] = [
+    {
+      color: teal,
+      identifier: 'contracts',
+      data: contractsPayload
+    },
+    {
+      color: purple,
+      identifier: 'transactions',
+      data: transactionsPayload
     }
   ];
 
@@ -88,69 +152,54 @@ export const LongChart = () => {
 
       <div className={styles.charts}>
         <div className={styles.filters}>
-          <Select
+          <DropdownChart
             options={filters}
-            isSearchable={false}
             defaultValue={filters[0]}
-            className='styled-select'
-            classNamePrefix='styled-select'
+            onChange={onChange}
           />
         </div>
 
-        <div className={styles.chart}>
-          <ResponsiveContainer height={75} width='100%'>
-            <AreaChart
-              width={1050}
-              data={data1}
-              margin={{ left: 0, right: 0 }}
-              syncId='syc'
-            >
-              <defs>
-                <linearGradient id='colorPv' x1='0' y1='0' x2='0' y2='1'>
-                  <stop offset='5%' stopColor='#23f7dd' stopOpacity={0.15} />
-                  <stop offset='95%' stopColor='#23f7dd' stopOpacity={0} />
-                </linearGradient>
-              </defs>
+        {charts.map((chart) => (
+          <div className={styles.chart} key={chart.identifier}>
+            <ResponsiveContainer height={75} width='100%'>
+              <AreaChart
+                data={chart.data}
+                margin={{ left: 0, right: 0 }}
+                syncId='transactions-contracts-charts'
+              >
+                <defs>
+                  <linearGradient
+                    id={chart.identifier}
+                    x1='0'
+                    y1='0'
+                    x2='0'
+                    y2='1'
+                  >
+                    <stop
+                      offset='5%'
+                      stopColor={chart.color}
+                      stopOpacity={0.15}
+                    />
+                    <stop
+                      offset='95%'
+                      stopColor={chart.color}
+                      stopOpacity={0}
+                    />
+                  </linearGradient>
+                </defs>
 
-              <Area
-                type='monotone'
-                dataKey='value'
-                stroke='#23f7dd'
-                fill='url(#colorPv)'
-              />
+                <Area
+                  type='monotone'
+                  dataKey='value'
+                  stroke={chart.color}
+                  fill={`url(#${chart.identifier})`}
+                />
 
-              <Tooltip content={CustomTooltip} cursor={false} />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div className={styles.chart}>
-          <ResponsiveContainer height={75} width='100%'>
-            <AreaChart
-              width={1050}
-              data={data2}
-              margin={{ left: 0, right: 0 }}
-              syncId='syc'
-            >
-              <defs>
-                <linearGradient id='colorUv' x1='0' y1='0' x2='0' y2='1'>
-                  <stop offset='5%' stopColor='#8B5CF6' stopOpacity={0.15} />
-                  <stop offset='95%' stopColor='#8B5CF6' stopOpacity={0} />
-                </linearGradient>
-              </defs>
-
-              <Area
-                type='monotone'
-                dataKey='value'
-                stroke='#8B5CF6'
-                fillOpacity={1}
-                fill='url(#colorUv)'
-              />
-
-              <Tooltip content={CustomTooltip} cursor={false} />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
+                <Tooltip content={CustomTooltip} cursor={false} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        ))}
       </div>
     </div>
   );
