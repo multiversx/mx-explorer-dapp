@@ -1,4 +1,3 @@
-import { NodesVersionsType } from 'types';
 import { SliceType } from 'types/general.types';
 
 export interface GlobalStakeType {
@@ -6,9 +5,6 @@ export interface GlobalStakeType {
   activeValidators: number;
   queueSize: number;
   totalStaked: string;
-  waitingList?: number;
-  deliquentStake?: number;
-  nodesVerions?: NodesVersionsType[];
 }
 
 export interface GlobalStakeSliceType extends SliceType {
@@ -18,7 +14,4 @@ export interface GlobalStakeSliceType extends SliceType {
   activeValidators: string;
   queueSize: string;
   totalStaked: string;
-  waitingList?: string;
-  deliquentStake?: string;
-  nodesVerions?: NodesVersionsType[];
 }

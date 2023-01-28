@@ -6,10 +6,6 @@ export * from './useMatchPath';
 export * from './useIsMainnet';
 export * from './useIsTestnet';
 export * from './useNetworkPathname';
-export * from './useFetchEconomics';
-export * from './useFetchGlobalStake';
-export * from './useFetchMarkers';
-export * from './useFetchStats';
 export * from './useNetworkRouter';
 export * from './useLoopManager';
 export * from './useActiveRoute';
@@ -18,4 +14,5 @@ export * from './useNotifications';
 export * from './useCheckVersion';
 export * from './useGetHash';
 
+export * from './fetch';
 export * from './growth';
