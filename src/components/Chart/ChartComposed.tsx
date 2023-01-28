@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import {
   ResponsiveContainer,
@@ -7,8 +7,10 @@ import {
   Area,
   Tooltip,
   ComposedChart,
-  CartesianGrid
+  CartesianGrid,
+  Legend
 } from 'recharts';
+import { DataKey } from 'recharts/types/util/types';
 import { CustomTooltip } from './helpers/CustomTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { StartEndTick } from './helpers/StartEndTick';
@@ -28,6 +30,9 @@ export const ChartComposed = ({
   tooltip,
   hasOnlyStartEndTick
 }: BiAxialChartProps) => {
+  const [hoveredSeries, setHoveredSeries] = useState<string>();
+  const [hiddenSeries, setHiddenSeries] = useState<Record<string, string>>();
+
   const { getChartData } = useBiAxialChartData({
     config,
     data,
@@ -48,6 +53,24 @@ export const ChartComposed = ({
       .getPropertyValue(`--${color}`)
       .trim()
   );
+
+  const onLegendMouseEnter = (e: any) => {
+    const { dataKey } = e;
+    setHoveredSeries(dataKey);
+  };
+  const onLegendMouseLeave = (e: any) => {
+    setHoveredSeries('');
+  };
+
+  const onLegendClick = (e: any) => {
+    const { dataKey } = e;
+
+    const modifiedSeries = { ...hiddenSeries };
+    modifiedSeries[dataKey] =
+      modifiedSeries[dataKey] === dataKey ? undefined : dataKey;
+
+    setHiddenSeries(modifiedSeries);
+  };
 
   return (
     <div
@@ -160,6 +183,14 @@ export const ChartComposed = ({
               stroke: violet400,
               fill: violet400
             }}
+            opacity={hoveredSeries === config.firstSeriesConfig.label ? 0.2 : 1}
+            visibility={
+              hiddenSeries &&
+              hiddenSeries[config.firstSeriesConfig.label ?? ''] ===
+                config.firstSeriesConfig.label
+                ? 'hidden'
+                : 'visible'
+            }
           />
           <Area
             type='monotone'
@@ -170,7 +201,9 @@ export const ChartComposed = ({
               ? { fill: `url(#${config.secondSeriesConfig.gradient})` }
               : { fill: 'url(#transparent)' })}
             {...(config.secondSeriesConfig.strokeDasharray
-              ? { strokeDasharray: config.secondSeriesConfig.strokeDasharray }
+              ? {
+                  strokeDasharray: config.secondSeriesConfig.strokeDasharray
+                }
               : {})}
             key={config.secondSeriesConfig.id}
             strokeWidth={1.5}
@@ -178,7 +211,18 @@ export const ChartComposed = ({
               stroke: teal,
               fill: teal
             }}
+            opacity={
+              hoveredSeries === config.secondSeriesConfig.label ? 0.2 : 1
+            }
+            visibility={
+              hiddenSeries &&
+              hiddenSeries[config.secondSeriesConfig.label ?? ''] ===
+                config.secondSeriesConfig.label
+                ? 'hidden'
+                : 'visible'
+            }
           />
+
           <Tooltip
             content={(props) => (
               <CustomTooltip
@@ -192,6 +236,17 @@ export const ChartComposed = ({
             cursor={{
               strokeDasharray: '3 5',
               stroke: muted
+            }}
+          />
+
+          <Legend
+            verticalAlign='bottom'
+            iconType='circle'
+            onMouseEnter={onLegendMouseEnter}
+            onMouseLeave={onLegendMouseLeave}
+            onClick={onLegendClick}
+            wrapperStyle={{
+              cursor: 'pointer'
             }}
           />
         </ComposedChart>
