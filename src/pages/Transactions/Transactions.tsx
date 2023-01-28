@@ -10,7 +10,6 @@ import {
 } from 'components';
 import { shardSpanText } from 'components/ShardSpan';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
-import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
 import { useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { UITransactionType } from 'types';
@@ -19,6 +18,8 @@ export const Transactions = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+
+  const { getTransactionsCount, getTransactions } = useAdapter();
 
   const {
     senderShard,
@@ -34,23 +35,21 @@ export const Transactions = () => {
   } = useURLSearchParams();
   const { size, firstPageTicker } = useSize();
 
-  const { getTransactionsCount, getTransactions } = useAdapter();
-
   const [transactions, setTransactions] = useState<UITransactionType[]>([]);
-  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
   const [dataChanged, setDataChanged] = useState<boolean>(false);
   const [totalTransactions, setTotalTransactions] = useState<number | '...'>(
     '...'
   );
 
-  useEffect(() => {
+  const fetchTransactions = () => {
     if (searchParams.toString()) {
       setDataChanged(true);
     }
-
     Promise.all([
       getTransactions({
         size,
+
         senderShard,
         receiverShard,
         sender,
@@ -89,15 +88,20 @@ export const Transactions = () => {
             setTransactions(newTransactions);
             setTotalTransactions(Math.min(transctionsCountData.data, 10000));
           }
-          setDataReady(transctionsData.success && transctionsCountData.success);
+          setIsDataReady(
+            transctionsData.success && transctionsCountData.success
+          );
         }
       })
       .finally(() => {
         setDataChanged(false);
       });
+  };
 
+  React.useEffect(() => {
+    fetchTransactions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, size, firstPageTicker, searchParams]);
+  }, [activeNetworkId, firstPageTicker, searchParams]);
 
   useEffect(() => {
     if (senderShard !== undefined || receiverShard !== undefined) {
@@ -107,47 +111,41 @@ export const Transactions = () => {
 
   return (
     <>
-      {dataReady === undefined && <Loader />}
-      {dataReady === false && <FailedTransactions />}
+      {isDataReady === undefined && <Loader />}
+      {isDataReady === false && <FailedTransactions />}
 
       <div ref={ref}>
-        {dataReady === true && (
+        {isDataReady === true && (
           <div className='container page-content'>
             <div className='row'>
               <div className='col-12'>
-                {transactions.length > 0 ? (
-                  <TransactionsTable
-                    transactions={transactions}
-                    totalTransactions={totalTransactions}
-                    size={size}
-                    dataChanged={dataChanged}
-                    title={
-                      <h5
-                        data-testid='title'
-                        className='table-title d-flex align-items-center'
-                      >
-                        Live Transactions
-                        {senderShard !== undefined && (
-                          <>
-                            <span>&nbsp;from&nbsp;</span>
-                            {shardSpanText(senderShard)}
-                          </>
-                        )}
-                        {receiverShard !== undefined && (
-                          <>
-                            <span>&nbsp;to&nbsp;</span>
-                            {shardSpanText(receiverShard)}
-                          </>
-                        )}
-                        <PulsatingLed className='ms-2 mt-1' />
-                      </h5>
-                    }
-                  />
-                ) : (
-                  <div className='card'>
-                    <NoTransactions />
-                  </div>
-                )}
+                <TransactionsTable
+                  transactions={transactions}
+                  totalTransactions={totalTransactions}
+                  size={size}
+                  dataChanged={dataChanged}
+                  title={
+                    <h5
+                      data-testid='title'
+                      className='table-title d-flex align-items-center'
+                    >
+                      Live Transactions
+                      {senderShard !== undefined && (
+                        <>
+                          <span>&nbsp;from&nbsp;</span>
+                          {shardSpanText(senderShard)}
+                        </>
+                      )}
+                      {receiverShard !== undefined && (
+                        <>
+                          <span>&nbsp;to&nbsp;</span>
+                          {shardSpanText(receiverShard)}
+                        </>
+                      )}
+                      <PulsatingLed className='ms-2 mt-1' />
+                    </h5>
+                  }
+                />
               </div>
             </div>
           </div>

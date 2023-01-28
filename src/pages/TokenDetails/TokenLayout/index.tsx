@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
 
 import { Loader, useAdapter } from 'components';
 import { useSize, useGetHash } from 'hooks';
@@ -13,7 +12,7 @@ import { TokenDetailsCard } from './TokenDetailsCard';
 export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { firstPageTicker } = useSize();
-  const [searchParams] = useSearchParams();
+
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const dispatch = useDispatch();
@@ -44,11 +43,7 @@ export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
     fetchTokenDetails();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetworkId, tokenId, searchParams]);
-
-  React.useEffect(() => {
-    setDataReady(undefined);
-  }, [tokenId, activeNetworkId, searchParams]);
+  }, [firstPageTicker, activeNetworkId, tokenId]);
 
   const loading = dataReady === undefined;
   const failed = dataReady === false;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Loader } from 'components';
 
 export interface TableWrapperType {
   dataChanged?: boolean;
@@ -11,7 +12,9 @@ export const TableWrapper = ({
 }: TableWrapperType) => {
   return (
     <div className='table-wrapper animated-list'>
-      <div className={`overlay ${dataChanged ? '' : 'transparent'}`}></div>
+      <div className={`overlay ${dataChanged ? '' : 'transparent'}`}>
+        <Loader />
+      </div>
       {children}
     </div>
   );
