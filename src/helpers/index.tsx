@@ -36,3 +36,4 @@ export * from './formatUSD';
 
 export * from './processData';
 export * from './getValue';
+export * from './capitalize';
