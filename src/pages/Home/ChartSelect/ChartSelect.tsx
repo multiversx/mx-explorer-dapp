@@ -2,7 +2,7 @@ import React from 'react';
 import Select, { components } from 'react-select';
 import classNames from 'classnames';
 
-import type { DropdownChartPropsType } from './types';
+import type { ChartSelectPropsType } from './types';
 
 import styles from './styles.module.scss';
 
@@ -49,10 +49,10 @@ const IndicatorsContainer: typeof components.IndicatorsContainer = (props) => (
   />
 );
 
-export const DropdownChart = (props: DropdownChartPropsType) => (
+export const ChartSelect = (props: ChartSelectPropsType) => (
   <Select
     {...props}
-    className={styles.dropdown}
+    className={styles.select}
     isMulti={false}
     isSearchable={false}
     defaultValue={props.options.find(() => true)}
