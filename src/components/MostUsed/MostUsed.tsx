@@ -27,13 +27,13 @@ export const MostUsed = () => {
         <>
           {isFetched ? (
             <div className='row'>
-              <div className='col-12 col-lg-4 mt-spacer'>
+              <div className='col-12 col-lg-4 mt-3'>
                 <MostUsedContracts data={dailyMostUsedApplications} />
               </div>
-              <div className='col-12 col-lg-4 mt-spacer'>
+              <div className='col-12 col-lg-4 mt-3'>
                 <MostUsedCollections data={dailyMostTransactedNFTs} />
               </div>
-              <div className='col-12 col-lg-4 mt-spacer'>
+              <div className='col-12 col-lg-4 mt-3'>
                 <MostUsedTokens data={dailyMostTransactedTokens} />
               </div>
             </div>
