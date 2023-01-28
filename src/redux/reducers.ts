@@ -8,6 +8,7 @@ import { accountStakingReducer } from './slices/accountStaking';
 import { collectionReducer } from './slices/collection';
 import { economicsReducer } from './slices/economics';
 import { globalStakeReducer } from './slices/globalStake';
+import { growthEconomicsReducer } from './slices/growthEconomics';
 import { growthHeroReducer } from './slices/growthHero';
 import { growthMostUsedReducer } from './slices/growthMostUsed';
 import { growthPriceReducer } from './slices/growthPrice';
@@ -15,6 +16,7 @@ import { growthSearchReducer } from './slices/growthSearch';
 import { growthStakingReducer } from './slices/growthStaking';
 import { growthTransactionsReducer } from './slices/growthTransactions';
 import { interfaceReducer } from './slices/interface';
+import { miniBlockReducer } from './slices/miniBlock';
 import { networkReducer } from './slices/networks';
 import { refreshReducer } from './slices/refresh';
 import { statsReducer } from './slices/stats';
@@ -48,9 +50,11 @@ export const customIgnoredSlices = {
   growthSearch: growthSearchReducer,
   growthStaking: growthStakingReducer,
   growthTransactions: growthTransactionsReducer,
+  growthEconomics: growthEconomicsReducer,
   refresh: refreshReducer,
   stats: statsReducer,
-  token: tokenReducer
+  token: tokenReducer,
+  miniBlock: miniBlockReducer
 };
 
 export const ignoredSliceNames: string[] = [

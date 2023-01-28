@@ -391,6 +391,7 @@ export interface TransactionsTableType {
   directionCol?: boolean;
   dataChanged?: boolean;
   showLockedAccounts?: boolean;
+  isScResultsTable?: boolean;
   inactiveFilters?: TxFiltersEnum[];
 }
 

@@ -1,12 +1,26 @@
-import * as React from 'react';
+import React from 'react';
 
-import { Loader } from 'components';
+import { TableWrapper } from 'components';
+import { NoScResults } from 'components/ScResultsTable/NoScResults';
 import { TransactionsTableType } from 'types';
 
 import { Header } from './Header';
+import { NoTransactions } from './NoTransactions';
 import { TransactionRow } from './TransactionRow';
 import { MethodList } from './TransactionsFilters';
 import { Pager } from '../Pager';
+
+const ColSpanWrapper = ({
+  children,
+  directionCol
+}: {
+  children: React.ReactNode;
+  directionCol: boolean;
+}) => (
+  <tr>
+    <td colSpan={directionCol ? 8 : 7}>{children}</td>
+  </tr>
+);
 
 export const TransactionsTable = ({
   transactions,
@@ -23,6 +37,7 @@ export const TransactionsTable = ({
   directionCol = false,
   showLockedAccounts = false,
   dataChanged = false,
+  isScResultsTable = false,
   inactiveFilters
 }: TransactionsTableType) => {
   return (
@@ -49,11 +64,7 @@ export const TransactionsTable = ({
         </div>
 
         <div className='card-body'>
-          <div className='table-wrapper animated-list'>
-            <div className={`overlay ${dataChanged ? '' : 'transparent'}`}>
-              <Loader />
-            </div>
-
+          <TableWrapper dataChanged={dataChanged}>
             <table
               className='table trim-size-sm mb-0'
               data-testid='transactionsTable'
@@ -67,18 +78,28 @@ export const TransactionsTable = ({
                 inactiveFilters={inactiveFilters}
               />
               <tbody>
-                {transactions.map((transaction) => (
-                  <TransactionRow
-                    transaction={transaction}
-                    key={transaction.txHash}
-                    address={address}
-                    directionCol={directionCol}
-                    showLockedAccounts={showLockedAccounts}
-                  />
-                ))}
+                {transactions.length > 0 ? (
+                  <>
+                    {transactions.map((transaction) => (
+                      <TransactionRow
+                        transaction={transaction}
+                        key={transaction.txHash}
+                        address={address}
+                        directionCol={directionCol}
+                        showLockedAccounts={showLockedAccounts}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <ColSpanWrapper directionCol={directionCol}>
+                      {isScResultsTable ? <NoScResults /> : <NoTransactions />}
+                    </ColSpanWrapper>
+                  </>
+                )}
               </tbody>
             </table>
-          </div>
+          </TableWrapper>
         </div>
 
         <div className='card-footer d-flex justify-content-center justify-content-sm-end'>

@@ -8,5 +8,6 @@ export * from './token.types';
 export * from './collection.types';
 export * from './general.types';
 export * from './account.types';
+export * from './miniBlock.types';
 
 export * from './growthWidgets';

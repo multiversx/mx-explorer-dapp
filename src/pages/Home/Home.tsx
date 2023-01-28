@@ -2,72 +2,38 @@ import * as React from 'react';
 import { MostUsed } from 'components';
 import { useIsMainnet } from 'hooks';
 
+import { DelegationChart } from './DelegationChart';
+import { EconomicsCard } from './EconomicsCard';
 import { HeroCard } from './HeroCard';
 import { LatestBlocks } from './LatestBlocks';
 import { LatestTransactions } from './LatestTransactions';
-import { PriceChart } from './PriceChart';
 import { LongChart } from './LongChart';
-import { DelegationChart } from './DelegationChart';
-import { StatisticsCard } from './StatisticsCard';
-
-// import { TestnetGlobalStatsCard } from 'pages/Layout/TestnetGlobalStatsCard';
-// import { AccountsChart } from './AccountsChart';
-// import { NetworkHealth } from './NetworkHealth';
-// import { PriceChart } from './PriceChart';
-// import { StakingChart } from './StakingChart';
-// import { TransactionsChart } from './TransactionsChart';
-// import { ValidatorsStatus } from './ValidatorsStatus';
+import { PriceChart } from './PriceChart';
 
 export const Home = () => {
   const isMainnet = useIsMainnet();
 
   return (
     <div className='home page-content container'>
-      {isMainnet ? (
-        <>
-          <HeroCard />
-          <MostUsed />
-          {/* <div className='row'>
-            <div className='col-12 mx-auto col-lg-6'>
-              <NetworkHealth />
-            </div>
-            <div className='col-12 col-lg-6 mt-spacer mt-lg-0'>
-              <ValidatorsStatus />
-            </div>
-          </div>
+      <HeroCard />
 
-          <div className='row'>
-            <div className='col-12 col-lg-6 mt-spacer'>
-              <PriceChart />
-            </div>
-            <div className='col-12 col-lg-6 mt-spacer'>
-              <StakingChart />
-            </div>
-            <div className='col-12 col-lg-6 mt-spacer'>
-              <TransactionsChart />
-            </div>
-            <div className='col-12 col-lg-6 mt-spacer'>
-              <AccountsChart />
-            </div>
-          </div> */}
+      {isMainnet && (
+        <>
+          <div className='d-xl-flex mt-3'>
+            <PriceChart />
+            <DelegationChart />
+            <EconomicsCard />
+          </div>
+          <LongChart />
+          <MostUsed />
         </>
-      ) : (
-        // <TestnetGlobalStatsCard />
-        <></>
       )}
 
       <div className='row'>
-        <div className='col-12 mt-spacer'>
-          <div className='d-xl-flex'>
-            <PriceChart />
-            <DelegationChart />
-            <StatisticsCard />
-          </div>
-
-          <LongChart />
+        <div className='col-12 mt-3'>
           <LatestBlocks />
         </div>
-        <div className='col-12 mt-spacer'>
+        <div className='col-12 mt-3'>
           <LatestTransactions />
         </div>
       </div>

@@ -60,5 +60,6 @@ export * from './MostUsed';
 export * from './TransactionIcon';
 export * from './Particles';
 export * from './ValidatorsStatus';
+export * from './TableWrapper';
 
 export { Chart, NodesTable, TxActionBlock, SharedIdentity };

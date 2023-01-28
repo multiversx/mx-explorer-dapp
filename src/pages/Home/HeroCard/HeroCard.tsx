@@ -8,10 +8,12 @@ import { useSelector } from 'react-redux';
 import { Search, Particles, ValidatorsStatus } from 'components';
 import { multiversxApps } from 'config';
 
-import { useFetchGrowthHero } from 'hooks';
+import { useFetchGrowthHero, useIsMainnet } from 'hooks';
 import { growthHeroSelector, statsSelector } from 'redux/selectors';
 
 export const HeroCard = () => {
+  const isMainnet = useIsMainnet();
+
   const explorerApp = multiversxApps.find((app) => app.id === 'explorer');
   const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
 
@@ -46,27 +48,31 @@ export const HeroCard = () => {
             </div>
           </div>
           <div className='d-flex flex-row gap-4'>
-            <div className='card card-black'>
-              <div className='card-body'>
-                <p className='text-neutral-400 mb-0'>Total Transactions</p>
-                <h3 className='card-value'>{totalTransactions}</h3>
-                <p className='mb-0 text-primary-200'>
-                  <FontAwesomeIcon icon={faCirclePlus} className='me-2' />
-                  {totalTransactionsToday} today
-                </p>
-              </div>
-            </div>
-            <div className='card card-black'>
-              <div className='card-body'>
-                <p className='text-neutral-400 mb-0'>Total Accounts</p>
-                <h3 className='card-value'>{totalAccounts}</h3>
-                <p className='mb-0 text-primary-200'>
-                  <FontAwesomeIcon icon={faCircleBolt} className='me-2' />
-                  {activeAccountsToday} active today
-                </p>
-              </div>
-            </div>
-            <ValidatorsStatus isSmall />
+            {isMainnet && (
+              <>
+                <div className='card card-black'>
+                  <div className='card-body'>
+                    <p className='text-neutral-400 mb-0'>Total Transactions</p>
+                    <h3 className='card-value'>{totalTransactions}</h3>
+                    <p className='mb-0 text-primary-200'>
+                      <FontAwesomeIcon icon={faCirclePlus} className='me-2' />
+                      {totalTransactionsToday} today
+                    </p>
+                  </div>
+                </div>
+                <div className='card card-black'>
+                  <div className='card-body'>
+                    <p className='text-neutral-400 mb-0'>Total Accounts</p>
+                    <h3 className='card-value'>{totalAccounts}</h3>
+                    <p className='mb-0 text-primary-200'>
+                      <FontAwesomeIcon icon={faCircleBolt} className='me-2' />
+                      {activeAccountsToday} active today
+                    </p>
+                  </div>
+                </div>
+                <ValidatorsStatus isSmall />
+              </>
+            )}
           </div>
         </div>
       </div>

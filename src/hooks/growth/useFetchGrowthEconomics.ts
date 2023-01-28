@@ -1,0 +1,34 @@
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useAdapter } from 'components';
+import { processGrowthEconomics } from 'helpers';
+
+import { growthEconomicsSelector } from 'redux/selectors';
+import { setGrowthEconomics } from 'redux/slices/growthEconomics';
+
+export const useFetchGrowthEconomics = () => {
+  const dispatch = useDispatch();
+  const { isFetched } = useSelector(growthEconomicsSelector);
+  const { getGrowthWidget } = useAdapter();
+
+  const fetchEconomics = () => {
+    if (!isFetched) {
+      getGrowthWidget('/economics').then(({ data, success }) => {
+        if (data && success) {
+          const processedGrowthEconomics = processGrowthEconomics(data);
+
+          dispatch(
+            setGrowthEconomics({
+              ...processedGrowthEconomics,
+
+              unprocessed: data,
+              isFetched: success
+            })
+          );
+        }
+      });
+    }
+  };
+
+  React.useEffect(fetchEconomics, []);
+};

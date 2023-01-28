@@ -1,0 +1,77 @@
+.dropdown {
+  .control {
+    border-radius: 0.5rem;
+    background-color: var(--neutral-800);
+    border: none;
+    box-shadow: none;
+    min-height: auto;
+    cursor: pointer;
+
+    &:hover,
+    &.expanded {
+      .value .single {
+        color: var(--neutral-400);
+      }
+    }
+
+    .value {
+      padding: 0;
+
+      .single {
+        font-size: 1rem;
+        margin: 0;
+        color: var(--neutral-200);
+        padding: 0.5rem;
+        padding-right: 0;
+        transition: all 200ms ease;
+        line-height: 1;
+        text-align: center;
+        min-width: 3rem;
+      }
+    }
+
+    .indicator {
+      padding: 0.375rem 0.5rem;
+      padding-left: 0;
+
+      &.expanded svg {
+        transform: rotateZ(180deg);
+      }
+
+      svg {
+        transition: all 200ms ease;
+        color: var(--neutral-400);
+      }
+
+      * {
+        padding: 0;
+      }
+    }
+  }
+
+  .menu {
+    background-color: var(--neutral-800);
+    margin-top: 0.25rem;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    margin-bottom: 0;
+
+    .list {
+      padding: 0;
+
+      .option {
+        padding: 0.5rem 0.75rem;
+        line-height: 1;
+        text-align: center;
+        font-size: 1rem;
+        cursor: pointer;
+
+        &:hover,
+        &.selected {
+          background-color: var(--teal);
+          color: var(--neutral-800);
+        }
+      }
+    }
+  }
+}

@@ -4,7 +4,6 @@ import { AccountAnalytics } from 'pages/AccountDetails/AccountAnalytics';
 import { AccountContractCode } from 'pages/AccountDetails/AccountContractCode';
 import { AccountContracts } from 'pages/AccountDetails/AccountContracts';
 import { AccountNfts } from 'pages/AccountDetails/AccountNfts';
-import { AccountScResults } from 'pages/AccountDetails/AccountScResults';
 import { AccountStaking } from 'pages/AccountDetails/AccountStaking';
 import { AccountTokens } from 'pages/AccountDetails/AccountTokens';
 import { Accounts } from 'pages/Accounts';
@@ -72,7 +71,6 @@ export const accountsRoutes = {
   accountCode: '/accounts/:hash/code',
   accountTokens: '/accounts/:hash/tokens',
   accountNfts: '/accounts/:hash/nfts',
-  accountScResults: '/accounts/:hash/sc-results',
   accountContracts: '/accounts/:hash/contracts',
   accountStaking: '/accounts/:hash/staking',
   accountAnalytics: '/accounts/:hash/analytics',
@@ -232,11 +230,6 @@ const mainRoutes: RouteType[] = [
     path: accountsRoutes.accountAnalytics,
     title: 'Account Analytics',
     component: AccountAnalytics
-  },
-  {
-    path: accountsRoutes.accountScResults,
-    title: 'Account Smart Contract Results',
-    component: AccountScResults
   },
   {
     path: accountsRoutes.accountContracts,

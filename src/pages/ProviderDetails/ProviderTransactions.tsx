@@ -1,23 +1,22 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Loader, TransactionsTable, useAdapter } from 'components';
 
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
-import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
-import { txStatus } from 'components/TransactionStatus/txStatus';
 import { useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
-import { UITransactionType } from 'types';
+import { UITransactionType, TxFiltersEnum } from 'types';
 import { ProviderTabs } from './ProviderLayout/ProviderTabs';
 
 export const ProviderTransactions = () => {
-  const ref = React.useRef(null);
-  const { getTransactions, getTransactionsCount } = useAdapter();
-  const { size, firstPageTicker } = useSize();
+  const ref = useRef(null);
+  const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { hash: address } = useParams() as any;
+
+  const { getTransactions, getTransactionsCount } = useAdapter();
+
   const {
     senderShard,
     receiverShard,
@@ -30,135 +29,106 @@ export const ProviderTransactions = () => {
     miniBlockHash,
     search
   } = useURLSearchParams();
-  const [searchParams] = useSearchParams();
+  const { size } = useSize();
+  const { hash: address } = useParams();
 
-  const [transactions, setTransactions] = React.useState<UITransactionType[]>(
-    []
+  const [transactions, setTransactions] = useState<UITransactionType[]>([]);
+  const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
+  const [dataChanged, setDataChanged] = useState<boolean>(false);
+  const [totalTransactions, setTotalTransactions] = useState<number | '...'>(
+    '...'
   );
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [transactionsCount, setTransactionsCount] = React.useState(0);
-  const [hasPendingTransaction, setHasPendingTransaction] =
-    React.useState(false);
+
+  const inactiveFilters = [TxFiltersEnum.sender, TxFiltersEnum.receiver];
 
   const fetchTransactions = () => {
-    getTransactions({
-      size,
-      address,
+    if (searchParams.toString()) {
+      setDataChanged(true);
+    }
+    Promise.all([
+      getTransactions({
+        size,
+        address,
 
-      senderShard,
-      receiverShard,
-      sender,
-      receiver,
-      method,
-      before,
-      after,
-      status,
-      miniBlockHash,
-      search,
-      withUsername: true
-    }).then((transactionsData) => {
-      const { data, success } = transactionsData;
-      if (success) {
-        const existingHashes = transactions.map((b) => b.txHash);
-        const newTransactions = data.map((transaction: UITransactionType) => ({
-          ...transaction,
-          isNew: !existingHashes.includes(transaction.txHash)
-        }));
+        senderShard,
+        receiverShard,
+        sender,
+        receiver,
+        method,
+        before,
+        after,
+        status,
+        miniBlockHash,
+        search,
+        withUsername: true
+      }),
+      getTransactionsCount({
+        address,
+
+        senderShard,
+        receiverShard,
+        sender,
+        receiver,
+        method,
+        before,
+        after,
+        status,
+        miniBlockHash,
+        search
+      })
+    ])
+      .then(([transctionsData, transctionsCountData]) => {
         if (ref.current !== null) {
-          setTransactions(newTransactions);
-          const pending = data.some(
-            (tx: UITransactionType) =>
-              tx.status.toLowerCase() === txStatus.pending.toLowerCase() ||
-              tx.pendingResults
+          if (transctionsData.success && transctionsCountData.success) {
+            const existingHashes = transactions.map((b) => b.txHash);
+            const newTransactions = transctionsData.data.map(
+              (transaction: UITransactionType) => ({
+                ...transaction,
+                isNew: !existingHashes.includes(transaction.txHash)
+              })
+            );
+            setTransactions(newTransactions);
+            setTotalTransactions(Math.min(transctionsCountData.data, 10000));
+          }
+          setIsDataReady(
+            transctionsData.success && transctionsCountData.success
           );
-          setHasPendingTransaction(pending);
-          setDataReady(true);
         }
-      } else if (transactions.length === 0) {
-        if (ref.current !== null) {
-          setDataReady(false);
-        }
-      }
-    });
+      })
+      .finally(() => {
+        setDataChanged(false);
+      });
   };
 
-  const fetchTransactionsCount = () => {
-    getTransactionsCount({
-      size,
-      address,
-
-      senderShard,
-      receiverShard,
-      sender,
-      receiver,
-      method,
-      before,
-      after,
-      status,
-      miniBlockHash,
-      search
-    }).then(({ data: count, success }) => {
-      if (ref.current !== null && success) {
-        setTransactionsCount(count);
-      }
-    });
-  };
-
-  React.useEffect(() => {
+  useEffect(() => {
     fetchTransactions();
-    fetchTransactionsCount();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, size, address, searchParams]);
 
-  React.useEffect(() => {
-    if (!loading) {
-      if (hasPendingTransaction) {
-        fetchTransactions();
-      }
-      fetchTransactionsCount();
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker]);
-
-  React.useEffect(() => {
-    if (!loading) {
-      fetchTransactions();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transactionsCount]);
-
-  const loading = dataReady === undefined;
-  const showTransactions = dataReady === true && transactions.length > 0;
+  }, [activeNetworkId, searchParams, address]);
 
   return (
-    <div ref={ref}>
-      <div className='row'>
-        <div className='col-12'>
-          {showTransactions ? (
-            <TransactionsTable
-              transactions={transactions}
-              address={address}
-              totalTransactions={transactionsCount}
-              size={size}
-              directionCol={true}
-              title={<ProviderTabs />}
-            />
-          ) : (
-            <div className='card'>
-              <div className='card-header'>
-                <div className='card-header-item d-flex align-items-center'>
-                  <ProviderTabs />
-                </div>
-              </div>
-              {dataReady === undefined && <Loader />}
-              {dataReady === false && <FailedTransactions />}
-              {dataReady === true && transactions.length === 0 && (
-                <NoTransactions />
-              )}
+    <>
+      {isDataReady === undefined && <Loader />}
+      {isDataReady === false && <FailedTransactions />}
+
+      <div ref={ref}>
+        {isDataReady === true && (
+          <div className='row'>
+            <div className='col-12'>
+              <TransactionsTable
+                transactions={transactions}
+                address={address}
+                totalTransactions={totalTransactions}
+                size={size}
+                directionCol={true}
+                title={<ProviderTabs />}
+                inactiveFilters={inactiveFilters}
+                dataChanged={dataChanged}
+              />
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
-    </div>
+    </>
   );
 };

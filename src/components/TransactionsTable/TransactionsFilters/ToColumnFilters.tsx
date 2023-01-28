@@ -34,7 +34,10 @@ export const ToColumnFilters = ({
       placement='bottom'
       rootClose
       overlay={
-        <Popover id='popover-positioned-bottom' className='border popover-xs '>
+        <Popover
+          id='popover-positioned-bottom'
+          className='border popover-md multiple-select'
+        >
           <Popover.Body>
             <div className='p-3 '>
               <div className='filter-block'>

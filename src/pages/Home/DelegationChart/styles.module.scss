@@ -51,6 +51,10 @@
     @media (min-width: 768px) {
       font-size: 2rem;
     }
+
+    span {
+      color: var(--teal-100);
+    }
   }
 
   .change {
