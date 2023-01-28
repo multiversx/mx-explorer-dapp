@@ -261,24 +261,6 @@ export const useAdapter = () => {
         })
       }),
 
-    getAccountScResults: ({
-      address,
-      size
-    }: {
-      address: string;
-      size: number;
-    }) =>
-      provider({
-        url: `/accounts/${address}/sc-results`,
-        params: {
-          from: (size - 1) * PAGE_SIZE,
-          size: PAGE_SIZE
-        }
-      }),
-
-    getAccountScResultsCount: (address: string) =>
-      provider({ url: `/accounts/${address}/sc-results/c` }),
-
     getAccountContracts: ({
       address,
       size

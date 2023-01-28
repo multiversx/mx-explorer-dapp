@@ -73,8 +73,7 @@ export const NavLinks = ({ setExpanded = () => null }: NavLinksType) => {
           activeRoute(accountsRoutes.accountCode) ||
           activeRoute(accountsRoutes.accountTokens) ||
           activeRoute(accountsRoutes.accountNfts) ||
-          activeRoute(accountsRoutes.accountContracts) ||
-          activeRoute(accountsRoutes.accountScResults)
+          activeRoute(accountsRoutes.accountContracts)
             ? 'active'
             : ''
         }`}
