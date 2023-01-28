@@ -120,12 +120,6 @@ export const Analytics = () => {
                   selectedPills[1].label
                 )} in the past 30 days`}
               />
-
-              {/*{chartList.map((chart) => (*/}
-              {/*  <div className='col-12 col-lg-6 mt-spacer' key={chart.id}>*/}
-              {/*    <AnalyticsChart id={chart.id} path={chart.path} />*/}
-              {/*  </div>*/}
-              {/*))}*/}
             </div>
           </div>
         )}
