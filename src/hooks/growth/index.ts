@@ -4,3 +4,4 @@ export * from './useFetchGrowthPrice';
 export * from './useFetchGrowthSearch';
 export * from './useFetchGrowthStaking';
 export * from './useFetchGrowthTransactions';
+export * from './useFetchGrowthEconomics';

@@ -52,9 +52,20 @@
     display: flex;
     align-items: center;
 
+    &.up {
+      color: var(--teal-200);
+    }
+
+    &.down {
+      color: var(--red);
+    }
+
+    &.neutral {
+      color: var(--neutral-300);
+    }
+
     .percentage {
       font-size: 0.75rem;
-      color: var(--teal-200);
       margin-left: 0.33rem;
     }
   }
