@@ -15,6 +15,7 @@ import { growthSearchReducer } from './slices/growthSearch';
 import { growthStakingReducer } from './slices/growthStaking';
 import { growthTransactionsReducer } from './slices/growthTransactions';
 import { interfaceReducer } from './slices/interface';
+import { miniBlockReducer } from './slices/miniBlock';
 import { networkReducer } from './slices/networks';
 import { refreshReducer } from './slices/refresh';
 import { statsReducer } from './slices/stats';
@@ -50,7 +51,8 @@ export const customIgnoredSlices = {
   growthTransactions: growthTransactionsReducer,
   refresh: refreshReducer,
   stats: statsReducer,
-  token: tokenReducer
+  token: tokenReducer,
+  miniBlock: miniBlockReducer
 };
 
 export const ignoredSliceNames: string[] = [

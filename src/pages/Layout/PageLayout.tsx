@@ -1,15 +1,18 @@
 import React from 'react';
+
 import { useActiveRoute } from 'hooks';
 import { AccountLayout } from 'pages/AccountDetails/AccountLayout';
 import { CollectionLayout } from 'pages/CollectionDetails/CollectionLayout';
+import { MiniBlockLayout } from 'pages/MiniBlockDetails/MiniBlockLayout';
 import { NodesLayout } from 'pages/Nodes/NodesLayout';
 import { ProviderLayout } from 'pages/ProviderDetails/ProviderLayout';
 import { TokenLayout } from 'pages/TokenDetails/TokenLayout';
 import {
-  validatorsRoutes,
   accountsRoutes,
+  blocksRoutes,
+  collectionRoutes,
   tokensRoutes,
-  collectionRoutes
+  validatorsRoutes
 } from 'routes';
 
 export const PageLayout = ({ children }: { children: React.ReactNode }) => {
@@ -46,6 +49,9 @@ export const PageLayout = ({ children }: { children: React.ReactNode }) => {
     case activeRoute(validatorsRoutes.providerDetails):
     case activeRoute(validatorsRoutes.providerTransactions):
       return <ProviderLayout>{children}</ProviderLayout>;
+
+    case activeRoute(blocksRoutes.miniBlockDetails):
+      return <MiniBlockLayout>{children}</MiniBlockLayout>;
 
     default:
       return <>{children}</>;

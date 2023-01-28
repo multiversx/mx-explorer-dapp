@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { TableWrapper } from 'components';
+import { NoScResults } from 'components/ScResultsTable/NoScResults';
 import { TransactionsTableType } from 'types';
 
 import { Header } from './Header';
@@ -36,6 +37,7 @@ export const TransactionsTable = ({
   directionCol = false,
   showLockedAccounts = false,
   dataChanged = false,
+  isScResultsTable = false,
   inactiveFilters
 }: TransactionsTableType) => {
   return (
@@ -78,7 +80,6 @@ export const TransactionsTable = ({
               <tbody>
                 {transactions.length > 0 ? (
                   <>
-                    {' '}
                     {transactions.map((transaction) => (
                       <TransactionRow
                         transaction={transaction}
@@ -92,7 +93,7 @@ export const TransactionsTable = ({
                 ) : (
                   <>
                     <ColSpanWrapper directionCol={directionCol}>
-                      <NoTransactions />
+                      {isScResultsTable ? <NoScResults /> : <NoTransactions />}
                     </ColSpanWrapper>
                   </>
                 )}
