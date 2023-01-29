@@ -16,6 +16,7 @@ import { tokenSelector } from 'redux/selectors';
 export const TokenDetailsCard = () => {
   const ref = React.useRef(null);
 
+  const { token } = useSelector(tokenSelector);
   const {
     identifier,
     ticker,
@@ -37,7 +38,7 @@ export const TokenDetailsCard = () => {
     transactions,
     price,
     marketCap
-  } = useSelector(tokenSelector);
+  } = token;
 
   const title = `${
     assets ? `${name} ${ticker !== name ? `(${ticker})` : ''}` : ticker

@@ -1,4 +1,5 @@
-import { RolesType } from './general.types';
+import { RolesType } from 'types/general.types';
+import { SliceType } from 'types/general.types';
 
 export interface TokenType {
   identifier: string;
@@ -55,4 +56,8 @@ export interface TokenSupplyType {
   burnt: number;
   initialMinted: number;
   lockedAccounts?: TokenLockedAccountType[];
+}
+
+export interface TokenSliceType extends SliceType {
+  token: TokenType;
 }

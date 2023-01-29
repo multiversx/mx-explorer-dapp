@@ -10,7 +10,8 @@ import { tokensRoutes } from 'routes';
 export const TokenTabs = () => {
   const activeRoute = useActiveRoute();
 
-  const { identifier, assets, roles } = useSelector(tokenSelector);
+  const { token } = useSelector(tokenSelector);
+  const { identifier, assets, roles } = token;
 
   return (
     <div className='tab-links d-flex flex-row flex-wrap gap-3'>

@@ -14,7 +14,8 @@ export const TokenDetails = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { transactions: transactionsCount } = useSelector(tokenSelector);
+  const { token } = useSelector(tokenSelector);
+  const { transactions: transactionsCount } = token;
 
   const { getTokenTransfers, getTokenTransfersCount } = useAdapter();
 
