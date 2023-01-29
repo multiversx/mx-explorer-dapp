@@ -42,8 +42,8 @@ export const HeroCard = () => {
             <div className='col-lg-8'>
               <div className='d-flex flex-row gap-3'>
                 <div className='d-flex flex-row flex-wrap w-100 gap-3'>
-                  <AccountsStatsCard />
                   <TransactionsStatsCard />
+                  <AccountsStatsCard />
                   {isMainnet && <ValidatorsStatusCard isSmall />}
                 </div>
               </div>

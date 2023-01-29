@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Loader, useAdapter } from 'components';
+import { Loader, useAdapter, Led } from 'components';
 import { useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { AnalyticsStackedChart } from './AnalyticsChart/AnalyticsStackedChart';
@@ -106,40 +106,45 @@ export const Analytics = () => {
       <div ref={ref}>
         {dataReady === true && selectedPills.length === 2 && (
           <div className='analytics container page-content'>
-            <div className='card p-4'>
-              <div className='row mb-3'>
-                <h5>Key Metrics</h5>
+            <div className='card card-lg card-black'>
+              <div className='card-header'>
+                <h2 className='mb-0'>Key Metrics</h2>
               </div>
-              <div className='row mb-2 text-neutral-400'>
-                <span>Select metrics to compare</span>
+              <div className='card-body'>
+                <h6 className='text-neutral-400 mb-2'>
+                  Select metrics to compare
+                </h6>
+                <div className='d-flex flex-wrap gap-2 mb-3'>
+                  {chartList.map((series) => {
+                    let selected = '';
+                    if (selectedPills[0].id === series.id) {
+                      selected = 'first';
+                    }
+                    if (selectedPills[1].id === series.id) {
+                      selected = 'second';
+                    }
+
+                    return (
+                      <button
+                        type='button'
+                        key={series.id}
+                        onClick={onSelectPill(series)}
+                        className={`badge rounded-pill filter-badge d-flex align-items-center ${selected}`}
+                      >
+                        <Led color='me-2' />
+                        {series.label}
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className='row'>
+                  <AnalyticsStackedChart
+                    firstSeries={selectedPills[0]}
+                    secondSeries={selectedPills[1]}
+                  />
+                </div>
               </div>
-              <div className='row mb-3'>
-                {chartList.map((series) => (
-                  <div
-                    key={series.id}
-                    className='col'
-                    onClick={onSelectPill(series)}
-                  >
-                    <span
-                      className={`badge rounded-pill bg-dark cursor-pointer ${
-                        selectedPills[0].id === series.id
-                          ? 'text-violet-400'
-                          : ''
-                      } ${
-                        selectedPills[1].id === series.id ? 'text-teal' : ''
-                      }`}
-                    >
-                      {series.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-              <div className='row'>
-                <AnalyticsStackedChart
-                  firstSeries={selectedPills[0]}
-                  secondSeries={selectedPills[1]}
-                />
-              </div>
+              <div className='card-footer'></div>
             </div>
           </div>
         )}

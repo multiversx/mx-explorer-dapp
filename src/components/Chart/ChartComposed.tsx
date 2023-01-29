@@ -103,14 +103,12 @@ export const ChartComposed = ({
             color: `${active ? secondary : color}`
           };
           const badgeOutlineColor =
-            dataKey === firstSeriesConfig.id
-              ? 'badge-outline-violet-400'
-              : 'badge-outline-teal';
+            dataKey === firstSeriesConfig.id ? 'first' : 'second';
 
           return (
             <span
               key={dataKey}
-              className={`legend-item badge badge-outline ${badgeOutlineColor} py-2 px-3 br-lg`}
+              className={`legend-item badge rounded-pill filter-badge ${badgeOutlineColor}`}
               onMouseEnter={onLegendMouseEnter(dataKey)}
               onMouseLeave={onLegendMouseLeave}
               onClick={onLegendClick(dataKey)}

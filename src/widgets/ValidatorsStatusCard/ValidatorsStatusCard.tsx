@@ -63,7 +63,7 @@ export const ValidatorsStatusCard = ({
 
   return (
     <div
-      className={`card validators-status ${
+      className={`card validators-status-card ${
         isSmall ? 'validators-status-sm' : 'validators-status-lg'
       } ${className ?? ''}`}
       ref={ref}
