@@ -316,11 +316,11 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetworkId, address, searchParams]);
+  }, [firstPageTicker, activeNetworkId, address]);
 
   React.useEffect(() => {
     setDataReady(undefined);
-  }, [address, activeNetworkId, searchParams]);
+  }, [address, activeNetworkId]);
 
   const loading = dataReady === undefined;
   const failed = dataReady === false || !addressIsBech32(address);
