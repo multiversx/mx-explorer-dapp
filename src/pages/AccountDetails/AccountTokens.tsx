@@ -101,7 +101,7 @@ export const AccountTokens = () => {
   ) : (
     <div className='card' ref={ref}>
       <div className='card-header'>
-        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <AccountTabs />
           {dataReady === true &&
             (accountTokens.length > 0 || accountNfts.length > 0) && (

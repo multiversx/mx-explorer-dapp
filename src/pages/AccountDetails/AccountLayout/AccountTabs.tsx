@@ -15,10 +15,10 @@ export const AccountTabs = () => {
   const tokensRouteActive = adapter === 'api';
 
   return (
-    <div className='tab-links d-flex flex-row flex-wrap'>
+    <div className='tab-links d-flex flex-wrap gap-3'>
       <NetworkLink
         to={urlBuilder.accountDetails(address)}
-        className={`tab-link me-3 me-lg-4 ${
+        className={`tab-link ${
           activeRoute(accountsRoutes.accountDetails) ? 'active' : ''
         }`}
       >
@@ -28,7 +28,7 @@ export const AccountTabs = () => {
       {tokensRouteActive && (
         <NetworkLink
           to={urlBuilder.accountDetailsTokens(address)}
-          className={`tab-link me-3 me-lg-4 ${
+          className={`tab-link ${
             activeRoute(accountsRoutes.accountTokens) ? 'active' : ''
           }`}
         >
@@ -38,7 +38,7 @@ export const AccountTabs = () => {
 
       <NetworkLink
         to={urlBuilder.accountDetailsNfts(address)}
-        className={`tab-link me-3 me-lg-4 ${
+        className={`tab-link ${
           activeRoute(accountsRoutes.accountNfts) ? 'active' : ''
         }`}
       >
@@ -48,7 +48,7 @@ export const AccountTabs = () => {
       {!isContract(address) && (
         <NetworkLink
           to={urlBuilder.accountDetailsStaking(address)}
-          className={`tab-link me-3 me-lg-4 ${
+          className={`tab-link ${
             activeRoute(accountsRoutes.accountStaking) ? 'active' : ''
           }`}
         >
@@ -58,7 +58,7 @@ export const AccountTabs = () => {
 
       <NetworkLink
         to={urlBuilder.accountDetailsAnalytics(address)}
-        className={`tab-link me-3 me-lg-4 ${
+        className={`tab-link ${
           activeRoute(accountsRoutes.accountAnalytics) ? 'active' : ''
         }`}
       >
@@ -68,7 +68,7 @@ export const AccountTabs = () => {
       {!code && (
         <NetworkLink
           to={urlBuilder.accountDetailsContracts(address)}
-          className={`tab-link me-3 me-lg-4 ${
+          className={`tab-link ${
             activeRoute(accountsRoutes.accountContracts) ? 'active' : ''
           }`}
         >

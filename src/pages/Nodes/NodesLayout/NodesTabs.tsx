@@ -13,7 +13,7 @@ export const NodesTabs = () => {
         {isMainnet && (
           <NetworkLink
             to={validatorsRoutes.identities}
-            className={`tab-link  ${
+            className={`tab-link ${
               activeRoute(validatorsRoutes.identities) ? 'active' : ''
             }`}
           >

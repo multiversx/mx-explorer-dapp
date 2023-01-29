@@ -65,16 +65,16 @@ export const AccountAnalytics = () => {
   return (
     <div className='card'>
       <div className='card-header'>
-        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <AccountTabs />
-        </div>
-        <div className='card-header-item d-flex align-items-center '>
-          Account {egldLabel} Balance{' '}
-          {chartData.length > 1 && (
-            <span className='text-neutral-400 ms-1'>
-              ( from {startDate} to {endDate} )
-            </span>
-          )}
+          <div className='d-flex align-items-center '>
+            Account {egldLabel} Balance{' '}
+            {chartData.length > 1 && (
+              <span className='text-neutral-400 ms-1'>
+                ( from {startDate} to {endDate} )
+              </span>
+            )}
+          </div>
         </div>
       </div>
       <div className='card-body px-lg-spacer py-lg-4'>
