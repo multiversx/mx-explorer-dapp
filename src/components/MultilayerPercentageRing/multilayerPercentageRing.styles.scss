@@ -1,0 +1,60 @@
+$first-color: var(--primary);
+$second-color: shade-color(#23f7dd, 20%);
+$third-color: shade-color(#23f7dd, 30%);
+$fourth-color: shade-color(#23f7dd, 40%);
+$fifth-color: shade-color(#23f7dd, 50%);
+$sixth-color: shade-color(#23f7dd, 60%);
+
+.multilayer-percentage-ring {
+  .composed-pie-chart {
+    .recharts-layer {
+      .recharts-pie-sector:nth-of-type(1) path {
+        fill: $first-color;
+      }
+      .recharts-pie-sector:nth-of-type(2) path {
+        fill: $second-color;
+      }
+      .recharts-pie-sector:nth-of-type(3) path {
+        fill: $third-color;
+      }
+      .recharts-pie-sector:nth-of-type(5) path {
+        fill: $fourth-color;
+      }
+      .recharts-pie-sector:nth-of-type(5) path {
+        fill: $fifth-color;
+      }
+      .recharts-pie-sector:nth-of-type(6) path {
+        fill: $sixth-color;
+      }
+    }
+  }
+
+  .step-1 {
+    background-color: $first-color;
+  }
+  .step-2 {
+    background-color: $second-color;
+  }
+  .step-3 {
+    background-color: $third-color;
+  }
+  .step-4 {
+    background-color: $fourth-color;
+  }
+  .step-5 {
+    background-color: $sixth-color;
+  }
+
+  &.two-items {
+    .step-2 {
+      background-color: $third-color;
+    }
+    .composed-pie-chart {
+      .recharts-layer {
+        .recharts-pie-sector:nth-of-type(2) path {
+          fill: $third-color;
+        }
+      }
+    }
+  }
+}

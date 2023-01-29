@@ -25,7 +25,7 @@ export const HeroCard = () => {
       <Particles />
       <div className='card-body d-flex flex-column justify-content-between'>
         <div className='row'>
-          <div className='col-lg-6 pt-lg-4 ps-lg-4'>
+          <div className='col-lg-6'>
             <h1 className='h2 mb-4'>MultiversX Blockchain {explorerTitle}</h1>
             <Search />
           </div>
@@ -50,7 +50,7 @@ export const HeroCard = () => {
                 </div>
               </div>
             </div>
-            <div className='col-lg-4 d-flex flex-row align-items-end justify-content-center justify-content-lg-end mt-3 gap-spacer gap-lg-2'>
+            <div className='col-lg-4 d-flex flex-row align-items-end justify-content-center justify-content-lg-end mt-3 mt-lg-0 gap-spacer gap-lg-2'>
               <BlockProgressRing />
               <EpochProgressRing />
             </div>
