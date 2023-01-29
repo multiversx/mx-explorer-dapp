@@ -108,6 +108,9 @@ export interface BiAxialChartProps extends BiAxialChartConfigType {
   size?: ChartSizeEnum;
   hasOnlyStartEndTick?: boolean;
   dateFormat?: string;
+  tooltip?: {
+    dateFormat?: string;
+  };
 }
 
 export interface ChartAxisType extends ChartYAxisFormatConfig {
