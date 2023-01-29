@@ -1,4 +1,4 @@
-import { stringIsInteger } from 'helpers';
+import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
 
 function format(
   big: string,

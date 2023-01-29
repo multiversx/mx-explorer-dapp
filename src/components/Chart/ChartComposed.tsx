@@ -20,16 +20,10 @@ import { BiAxialChartProps } from './helpers/types';
 import { useBiAxialChartData } from './hooks/useBiAxialChartData';
 
 export const ChartComposed = ({
-  config,
-  data,
-  dateFormat,
-  filter,
-  category,
-  currency,
-  percentageMultiplier,
-  denomination,
+  firstSeriesConfig,
+  secondSeriesConfig,
   size,
-  tooltip,
+  dateFormat,
   hasOnlyStartEndTick
 }: BiAxialChartProps) => {
   const [hoveredSeries, setHoveredSeries] = useState<string>();
@@ -51,15 +45,11 @@ export const ChartComposed = ({
   );
 
   const { getChartData } = useBiAxialChartData({
-    config,
-    data,
-    filter,
-    category
+    firstSeriesConfig,
+    secondSeriesConfig
   });
 
   const chartData = getChartData();
-  const firstSeriesConfig = config.firstSeriesConfig;
-  const secondSeriesConfig = config.secondSeriesConfig;
 
   const firstSeriesVisibility =
     hiddenSeries &&
@@ -212,16 +202,17 @@ export const ChartComposed = ({
             tickFormatter={(tick) =>
               formatYAxis({
                 tick,
-                currency,
-                percentageMultiplier,
-                denomination
+                currency: firstSeriesConfig.yAxisConfig?.currency,
+                percentageMultiplier:
+                  firstSeriesConfig.yAxisConfig?.percentageMultiplier,
+                denomination: firstSeriesConfig.yAxisConfig?.denomination
               })
             }
             axisLine={false}
             tickLine={false}
             tickCount={10}
             stroke={firstSeriesConfig.stroke}
-            dx={-20}
+            dx={-5}
           />
           <YAxis
             yAxisId='right-axis'
@@ -229,16 +220,17 @@ export const ChartComposed = ({
             tickFormatter={(tick) =>
               formatYAxis({
                 tick,
-                currency,
-                percentageMultiplier,
-                denomination
+                currency: secondSeriesConfig.yAxisConfig?.currency,
+                percentageMultiplier:
+                  secondSeriesConfig.yAxisConfig?.percentageMultiplier,
+                denomination: secondSeriesConfig.yAxisConfig?.denomination
               })
             }
             axisLine={false}
             tickLine={false}
             tickCount={10}
             stroke={secondSeriesConfig.stroke}
-            dx={20}
+            dx={5}
           />
           <Area
             type='monotone'
@@ -284,15 +276,15 @@ export const ChartComposed = ({
           />
 
           <Tooltip
-            content={(props) => (
-              <CustomTooltip
-                {...props}
-                currency={currency}
-                percentageMultiplier={percentageMultiplier}
-                denomination={denomination}
-                {...tooltip}
-              />
-            )}
+            // content={(props) => (
+            //   <CustomTooltip
+            //     {...props}
+            //     currency={currency}
+            //     percentageMultiplier={percentageMultiplier}
+            //     denomination={denomination}
+            //     {...tooltip}
+            //   />
+            // )}
             cursor={{
               strokeDasharray: '3 5',
               stroke: muted
