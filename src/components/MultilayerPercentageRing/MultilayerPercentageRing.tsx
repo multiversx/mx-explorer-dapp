@@ -61,7 +61,9 @@ export const MultilayerPercentageRing = ({
             <Led color={`flex-shrink-0 me-1 step-${i + 1}`} />
             <small className='d-flex align-items-center overflow-hidden min-w-0'>
               {trim ? <Trim text={step.name} /> : <>{step.name}</>}
-              <span className='text-neutral-400 ms-1'>({step.percent}%)</span>
+              <span className={`percentage ms-1 percentage-step-${i + 1}`}>
+                ({step.percent}%)
+              </span>
             </small>
           </div>
         ))}

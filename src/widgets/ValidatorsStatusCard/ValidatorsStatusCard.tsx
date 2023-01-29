@@ -73,7 +73,7 @@ export const ValidatorsStatusCard = ({
           <ValidatorMap markers={markers} />
         )}
         <div className='card-body validators-total'>
-          <p className='text-neutral-400 mb-0'>Validators</p>
+          <p className='card-title text-neutral-500 mb-0'>Validators</p>
           <h2 className='card-value text-primary'>{totalValidators}</h2>
         </div>
         {!isSmall && (
