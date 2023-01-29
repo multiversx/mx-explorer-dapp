@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
@@ -9,9 +9,9 @@ import {
   ChartResolutionRangeType,
   ChartResolutionSelector
 } from './components/ChartResolution';
-import { capitalize } from '../../../helpers';
 import { ChartListType } from '../Analytics';
 import { RANGE } from '../constants';
+import { getChartPropsFromId } from '../helpers/getChartPropsFromId';
 
 export interface AnalyticsStackedChartDataPoCType {
   value: string;
@@ -29,18 +29,18 @@ export const AnalyticsStackedChart = ({
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const ids = [firstSeries.path, secondSeries.path];
-  const firstSeriesPath = ids[0];
-  const secondSeriesPath = ids[1];
+  const firstSeriesPath = firstSeries.path;
+  const secondSeriesPath = secondSeries.path;
   const range = searchParams.get(RANGE) as ChartResolutionRangeType;
   const firstSeriesLabel = firstSeries.label;
   const secondSeriesLabel = secondSeries.label;
-  const title = `${capitalize(firstSeriesLabel)} vs. ${capitalize(
-    secondSeriesLabel
-  )} in the past`;
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getAnalyticsChart } = useAdapter();
+
+  const [firstSeriesConfig, setFirstSeriesConfig] = useState<ChartConfigType>();
+  const [secondSeriesConfig, setSecondSeriesConfig] =
+    useState<ChartConfigType>();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [firstSeriesData, setFirstSeriesData] = useState<
@@ -50,105 +50,80 @@ export const AnalyticsStackedChart = ({
     AnalyticsStackedChartDataPoCType[]
   >([]);
 
-  const getChartPropsFromId = (id: string) => {
-    switch (id) {
-      case 'daily-total-staked-egld-monthly':
-      case 'total-value-locked-plus-staking-monthly':
-      case 'daily-fees-captured-monthly':
-        return {
-          currency: 'EGLD'
-        };
-      case 'daily-average-ape-monthly':
-      case 'daily-base-ape-monthly':
-      case 'daily-topup-ape-monthly':
-        return {
-          percentageMultiplier: 100
-        };
-      case 'daily-developer-rewards-monthly':
-      case 'daily-inflation-monthly':
-        return {
-          denomination: 18,
-          currency: 'EGLD'
-        };
-      case 'daily-new-smart-contracts-monthly':
-      case 'daily-new-fungible-esdts-monthly':
-      case 'daily-new-nonfungible-esdts-monthly':
-      case 'daily-new-semifungible-esdts-monthly':
-      case 'daily-new-meta-esdts-monthly':
-      case 'daily-new-nfts-monthly':
-      case 'number-of-blocks-created-per-day-monthly':
-      case 'daily-number-of-active-users-monthly':
-      case 'daily-number-of-address-to-address-transactions-monthly':
-      case 'daily-number-of-address-to-contract-transactions-monthly':
-      case 'daily-number-of-contract-to-address-transactions-monthly':
-      case 'daily-number-of-contract-to-contract-transactions-monthly':
-      case 'daily-number-of-token-transfers-monthly':
-      default:
-        return {};
-    }
-  };
-
   const [teal, violet400] = ['teal', 'violet-400'].map((color) =>
     getComputedStyle(document.documentElement)
       .getPropertyValue(`--${color}`)
       .trim()
   );
 
-  const firstSeriesConfig: ChartConfigType = {
-    id: firstSeriesLabel,
-    label: firstSeriesLabel,
+  const firstSeriesDefaultConfig = {
     gradient: 'firstSeriesGradientId',
-    data: firstSeriesData,
     stroke: violet400
   };
-  const secondSeriesConfig: ChartConfigType = {
-    id: secondSeriesLabel,
-    label: secondSeriesLabel,
+  const secondSeriesDefaultConfig = {
     gradient: 'secondSeriesGradientId',
-    data: secondSeriesData,
     stroke: teal
   };
-  const getData = useCallback(async () => {
+
+  const getData = async () => {
     const [firstSeriesData, secondSeriesData] = await Promise.allSettled([
       getAnalyticsChart(`${firstSeriesPath}?range=${range}`),
       getAnalyticsChart(`${secondSeriesPath}?range=${range}`)
     ]);
 
-    if (firstSeriesData.status === 'fulfilled') {
-      setFirstSeriesData(firstSeriesData.value.data?.data ?? []);
-    }
-
-    if (secondSeriesData.status === 'fulfilled') {
-      setSecondSeriesData(
-        secondSeriesData.status === 'fulfilled'
-          ? secondSeriesData?.value.data?.data
-          : []
-      );
-    }
-
-    setDataReady(
+    if (
       firstSeriesData.status === 'fulfilled' &&
-        secondSeriesData.status === 'fulfilled' &&
-        firstSeriesData.value.success &&
-        secondSeriesData.value.success
-    );
-  }, [firstSeriesPath, secondSeriesPath, range]);
+      secondSeriesData.status === 'fulfilled' &&
+      firstSeriesData.value.success &&
+      secondSeriesData.value.success
+    ) {
+      setFirstSeriesData(firstSeriesData.value.data?.data ?? []);
+      setSecondSeriesData(secondSeriesData?.value.data?.data ?? []);
+      setDataReady(true);
+
+      return;
+    }
+
+    setDataReady(false);
+
+    return {
+      firstSeriesData,
+      secondSeriesData
+    };
+  };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     getData();
-  }, [activeNetworkId, firstSeriesPath, secondSeriesPath, range]);
+  }, [activeNetworkId, range, firstSeries.id, secondSeries.id]);
+
+  useEffect(() => {
+    setFirstSeriesConfig({
+      ...firstSeriesDefaultConfig,
+      id: firstSeriesLabel,
+      label: firstSeriesLabel,
+      data: firstSeriesData,
+      yAxisConfig: getChartPropsFromId(firstSeries.id)
+    });
+    setSecondSeriesConfig({
+      ...secondSeriesDefaultConfig,
+      id: secondSeriesLabel,
+      label: secondSeriesLabel,
+      data: secondSeriesData,
+      yAxisConfig: getChartPropsFromId(secondSeries.id)
+    });
+  }, [firstSeriesData, secondSeriesData]);
 
   return (
     <>
-      <section id={ids.join('/')} ref={ref}>
+      <section id={[firstSeries.id, secondSeries.id].join('/')} ref={ref}>
         <div className='d-flex align-items-center'>
           <h3 className='mb-0 py-spacer'>
-            <span style={{ color: firstSeriesConfig.stroke }}>
+            <span style={{ color: firstSeriesDefaultConfig.stroke }}>
               {firstSeriesLabel}
             </span>
             <span className='mx-2'>vs.</span>
-            <span style={{ color: secondSeriesConfig.stroke }}>
+            <span style={{ color: secondSeriesDefaultConfig.stroke }}>
               {secondSeriesLabel}
             </span>
             <span className='ms-2 me-3'>in the past</span>
@@ -184,17 +159,12 @@ export const AnalyticsStackedChart = ({
               />
             )}
 
-          {dataReady === true &&
-            firstSeriesData.length > 0 &&
-            secondSeriesData.length > 0 && (
-              <Chart.Composed
-                config={{
-                  firstSeriesConfig,
-                  secondSeriesConfig
-                }}
-                {...getChartPropsFromId(ids[1])}
-              ></Chart.Composed>
-            )}
+          {dataReady === true && firstSeriesConfig && secondSeriesConfig && (
+            <Chart.Composed
+              firstSeriesConfig={firstSeriesConfig}
+              secondSeriesConfig={secondSeriesConfig}
+            ></Chart.Composed>
+          )}
         </div>
       </section>
     </>

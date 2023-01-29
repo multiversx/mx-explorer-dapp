@@ -56,11 +56,15 @@ export interface ChartConfigType {
   tooltipStrokeDasharray?: string;
   zero?: boolean;
   showUsdValue?: boolean;
-}
-
-export interface BiAxialChartConfigType {
-  firstSeriesConfig: ChartConfigType;
-  secondSeriesConfig: ChartConfigType;
+  yAxisConfig?: {
+    denomination?: number;
+    percentageMultiplier?: number;
+    currency?: string;
+  };
+  tooltip?: {
+    showUsdValue?: boolean;
+    dateFormat?: string;
+  };
 }
 
 export enum DateFilterEnum {
@@ -93,21 +97,15 @@ export interface ChartProps {
   };
 }
 
-export interface BiAxialChartProps {
-  config: BiAxialChartConfigType;
-  data?: any;
-  dateFormat?: string;
-  filter?: string;
-  category?: string;
-  currency?: string;
-  percentageMultiplier?: number;
-  denomination?: number;
+export interface BiAxialChartConfigType {
+  firstSeriesConfig: ChartConfigType;
+  secondSeriesConfig: ChartConfigType;
+}
+
+export interface BiAxialChartProps extends BiAxialChartConfigType {
   size?: ChartSizeEnum;
   hasOnlyStartEndTick?: boolean;
-  tooltip?: {
-    showUsdValue?: boolean;
-    dateFormat?: string;
-  };
+  dateFormat?: string;
 }
 
 export interface ChartAxisType {
