@@ -1,4 +1,4 @@
-.validators-status {
+.validators-status-card {
   width: 100%;
   display: flex;
   flex-grow: 1;
@@ -66,7 +66,7 @@
 
     .marquee-wrapper {
       position: absolute;
-      bottom: 1.25rem;
+      bottom: 0.875rem;
       left: 0;
       right: 0;
       .slide {

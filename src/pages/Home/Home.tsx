@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { MostUsed } from 'components';
+
 import { useIsMainnet } from 'hooks';
+import { MostUsed } from 'widgets';
 
 import { ChartContractsTransactions } from './ChartContractsTransactions';
 import { ChartPrice } from './ChartPrice';

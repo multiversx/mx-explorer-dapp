@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAdapter } from 'components';
 import { processGrowthSearch } from 'helpers';
@@ -11,7 +11,7 @@ export const useFetchGrowthSearch = () => {
   const { isFetched } = useSelector(growthSearchSelector);
   const { getGrowthWidget } = useAdapter();
 
-  const fetchSearch = () => {
+  const fetchGrowthSearch = () => {
     if (!isFetched) {
       getGrowthWidget('/search').then(({ data, success }) => {
         if (data && success) {
@@ -29,5 +29,5 @@ export const useFetchGrowthSearch = () => {
     }
   };
 
-  React.useEffect(fetchSearch, []);
+  useEffect(fetchGrowthSearch, []);
 };

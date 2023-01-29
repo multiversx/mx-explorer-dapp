@@ -14,13 +14,24 @@ import {
   useIsMainnet,
   useCheckVersion
 } from 'hooks';
+import { ChartContractsTransactions } from 'pages/Home/ChartContractsTransactions';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
-import { wrappedRoutes, validatorsRoutes, searchRoutes } from 'routes';
+import {
+  wrappedRoutes,
+  validatorsRoutes,
+  searchRoutes,
+  transactionsRoutes
+} from 'routes';
+import {
+  AccountsStatsCard,
+  BlockHeightStatsCard,
+  TransactionsStatsCard,
+  ValidatorsStatusCard
+} from 'widgets';
+
 import { Footer } from './Footer/index';
-import { GlobalStatsCard } from './GlobalStatsCard';
 import { Navbar } from './Navbar/index';
 import { PageLayout } from './PageLayout';
-import { TestnetGlobalStatsCard } from './TestnetGlobalStatsCard';
 import { Unavailable } from './Unavailable';
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -41,6 +52,8 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
       case activeRoute('/'):
       case activeRoute(searchRoutes.index):
       case activeRoute(searchRoutes.query):
+      case activeRoute(transactionsRoutes.transactions):
+      case activeRoute(transactionsRoutes.transactionDetails):
       case activeRoute(validatorsRoutes.identities):
       case activeRoute(validatorsRoutes.identityDetails):
       case activeRoute(validatorsRoutes.providers):
@@ -66,8 +79,9 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   const offline = !window.navigator.onLine;
 
   const isHome = activeRoute('/');
-
-  const explorerApp = multiversxApps.find((app) => app.id === 'explorer');
+  const isTransactions =
+    activeRoute(transactionsRoutes.transactions) ||
+    activeRoute(transactionsRoutes.transactionDetails);
 
   const userAgentInfo = [
     browser?.browser?.name ?? '',
@@ -81,11 +95,12 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   const pathArray = pathname.split('/');
   const pageClass =
     activeNetworkId === defaultNetworkId ? pathArray?.[1] : pathArray?.[2];
+  const pageName = pageClass.toLowerCase();
 
   return (
     <div
       className={`d-flex scrollbar-thin ${
-        pageClass ? pageClass : 'home'
+        pageName ? pageName : 'home'
       } ${userAgentClasses}`}
     >
       <div className='flex-fill vh-100'>
@@ -98,10 +113,10 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
             ) : (
               <>
                 {!isHome && (
-                  <div className='main-search-container py-spacer'>
+                  <div className='main-search-container mt-3'>
                     <div className='container'>
                       <div className='row'>
-                        <div className='col-12 col-lg-9 mx-auto'>
+                        <div className='col-12 col-lg-6'>
                           <Search className='input-group-black' />
                         </div>
                       </div>
@@ -110,14 +125,35 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                 )}
 
                 {showGlobalStats() && (
-                  <div className='container mb-spacer'>
-                    <>
-                      {isMainnet ? (
-                        <GlobalStatsCard />
-                      ) : (
-                        <TestnetGlobalStatsCard />
-                      )}
-                    </>
+                  <div className='container mb-3'>
+                    <div className='card card-lg card-black'>
+                      <div className='card-header'>
+                        <h2 className='title mb-0 text-capitalize'>
+                          {pageName !== 'analytics'
+                            ? pageName
+                            : `MultiversX Blockchain ${pageName}`}
+                        </h2>
+                      </div>
+                      <div className='card-body d-flex flex-row flex-wrap gap-3'>
+                        <AccountsStatsCard />
+                        <TransactionsStatsCard />
+                        {isMainnet && <ValidatorsStatusCard isSmall />}
+                        <BlockHeightStatsCard neutralColors />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {isTransactions && (
+                  <div className='container mb-3'>
+                    <div className='card card-lg card-black'>
+                      <div className='card-header pb-0'>
+                        <h2 className='title mb-0'>Transactions</h2>
+                      </div>
+                      <div className='card-body p-0'>
+                        {isMainnet && <ChartContractsTransactions />}
+                      </div>
+                    </div>
                   </div>
                 )}
 

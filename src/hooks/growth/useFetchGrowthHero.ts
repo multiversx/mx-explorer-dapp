@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAdapter } from 'components';
 import { processGrowthHero } from 'helpers';
@@ -11,7 +11,7 @@ export const useFetchGrowthHero = () => {
   const { isFetched } = useSelector(growthHeroSelector);
   const { getGrowthWidget } = useAdapter();
 
-  const fetchHero = () => {
+  const fetchGrowthHero = () => {
     if (!isFetched) {
       getGrowthWidget('/hero').then(({ data, success }) => {
         if (data && success) {
@@ -29,5 +29,5 @@ export const useFetchGrowthHero = () => {
     }
   };
 
-  React.useEffect(fetchHero, []);
+  useEffect(fetchGrowthHero, []);
 };

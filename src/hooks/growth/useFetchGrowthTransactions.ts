@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAdapter } from 'components';
 import { processGrowthTransactions } from 'helpers';
@@ -11,7 +11,7 @@ export const useFetchGrowthTransactions = () => {
   const { isFetched } = useSelector(growthTransactionsSelector);
   const { getGrowthWidget } = useAdapter();
 
-  const fetchTransactions = () => {
+  const fetchGrowthTransactions = () => {
     if (!isFetched) {
       getGrowthWidget('/transactions').then(({ data, success }) => {
         if (data && success) {
@@ -46,5 +46,5 @@ export const useFetchGrowthTransactions = () => {
     }
   };
 
-  React.useEffect(fetchTransactions, []);
+  useEffect(fetchGrowthTransactions, []);
 };

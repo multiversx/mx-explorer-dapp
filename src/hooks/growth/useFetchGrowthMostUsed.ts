@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAdapter } from 'components';
 
@@ -10,7 +10,7 @@ export const useFetchGrowthMostUsed = () => {
   const { isFetched } = useSelector(growthMostUsedSelector);
   const { getGrowthWidget } = useAdapter();
 
-  const fetchMostUsed = () => {
+  const fetchGrowthMostUsed = () => {
     if (!isFetched) {
       getGrowthWidget('/most-used').then((growthMostUsed) => {
         if (growthMostUsed?.data && growthMostUsed.success) {
@@ -26,5 +26,5 @@ export const useFetchGrowthMostUsed = () => {
     }
   };
 
-  React.useEffect(fetchMostUsed, []);
+  useEffect(fetchGrowthMostUsed, []);
 };

@@ -37,7 +37,7 @@ const placeHolderRank = [
   }
 ];
 
-export const ValidatorsStatus = ({
+export const ValidatorsStatusCard = ({
   isSmall = false,
   className
 }: ValidatorsStatusType) => {
@@ -76,9 +76,11 @@ export const ValidatorsStatus = ({
           <p className='text-neutral-400 mb-0'>Validators</p>
           <h2 className='card-value text-primary'>{totalValidators}</h2>
         </div>
-        <div className='card-body py-0 d-flex'>
-          <ShardList />
-        </div>
+        {!isSmall && (
+          <div className='card-body py-0 d-flex'>
+            <ShardList />
+          </div>
+        )}
 
         <Marquee>
           <div className='badge-holder d-flex flex-row align-items-center'>

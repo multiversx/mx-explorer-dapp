@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAdapter } from 'components';
 import { processGrowthEconomics } from 'helpers';
@@ -11,7 +11,7 @@ export const useFetchGrowthEconomics = () => {
   const { isFetched } = useSelector(growthEconomicsSelector);
   const { getGrowthWidget } = useAdapter();
 
-  const fetchEconomics = () => {
+  const fetchGrowthEconomics = () => {
     if (!isFetched) {
       getGrowthWidget('/economics').then(({ data, success }) => {
         if (data && success) {
@@ -30,5 +30,5 @@ export const useFetchGrowthEconomics = () => {
     }
   };
 
-  React.useEffect(fetchEconomics, []);
+  useEffect(fetchGrowthEconomics, []);
 };
