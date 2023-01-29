@@ -34,7 +34,7 @@ export const ShardCard = ({
       <div className='shard'>
         <div className='progress-holder me-2'>
           <ProgressRing
-            progress={Math.floor(percentage) - 2} // take into account pixels from the rounded border
+            progress={Math.floor(percentage)}
             trackWidth={2}
             indicatorWidth={2}
             size={20}

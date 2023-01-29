@@ -69,13 +69,13 @@ export const ValidatorsStatusCard = ({
       ref={ref}
     >
       <div className='card-body p-0 overflow-hidden'>
-        {process.env.NODE_ENV !== 'test' && markers.length > 0 && (
-          <ValidatorMap markers={markers} />
-        )}
         <div className='card-body validators-total'>
           <p className='card-title text-neutral-500 mb-0'>Validators</p>
           <h2 className='card-value text-primary'>{totalValidators}</h2>
         </div>
+        {process.env.NODE_ENV !== 'test' && markers.length > 0 && (
+          <ValidatorMap markers={markers} />
+        )}
         {!isSmall && (
           <div className='card-body py-0 d-flex'>
             <ShardList />

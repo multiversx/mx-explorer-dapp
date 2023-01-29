@@ -40,16 +40,16 @@
 
 .btn-dark {
   --#{$prefix}btn-color: var(--body-color);
-  --#{$prefix}btn-bg: var(--neutral-900);
+  --#{$prefix}btn-bg: var(--neutral-800);
   --#{$prefix}btn-border-color: transparent;
   --#{$prefix}btn-hover-border-color: transparent;
   --#{$prefix}btn-focus-box-shadow: none;
 
   --#{$prefix}btn-hover-color: var(--body-color);
-  --#{$prefix}btn-hover-bg: var(--black);
+  --#{$prefix}btn-hover-bg: var(--neutral-900);
 
   --#{$prefix}btn-active-color: var(--body-color);
-  --#{$prefix}btn-active-bg: var(--black);
+  --#{$prefix}btn-active-bg: var(--neutral-900);
   --#{$prefix}btn-active-border-color: var(--primary);
 }
 

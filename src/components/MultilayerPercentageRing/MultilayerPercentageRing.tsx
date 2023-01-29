@@ -47,8 +47,8 @@ export const MultilayerPercentageRing = ({
       </PieChart>
 
       <div
-        className={`d-flex legend-dot-container d-flex flex-column  ${
-          trim ? 'truncate-item-xl' : 'flex-wrap'
+        className={`d-flex legend-dot-container d-flex truncate-item-xl ${
+          trim ? 'flex-column' : 'flex-row flex-wrap'
         }`}
       >
         {steps.map((step, i) => (
