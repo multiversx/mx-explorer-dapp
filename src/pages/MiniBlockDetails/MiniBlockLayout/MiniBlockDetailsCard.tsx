@@ -25,7 +25,7 @@ export const MiniBlockDetailsCard = () => {
 
   return miniBlockHash ? (
     <div ref={ref}>
-      <div className='token-details-card row mb-spacer'>
+      <div className='miniblock-details-card row mb-3'>
         <div className='col-12'>
           <div className='card'>
             <div className='card-header'>

@@ -23,16 +23,16 @@ export const IdentitySummary = ({
   featured?: boolean;
 }) => {
   return (
-    <div className='identity-summary card'>
-      <div className='card-body px-lg-spacer'>
+    <div className='identity-summary card card-black'>
+      <div className='card-body'>
         {identity !== undefined ? (
           <div className='row'>
             <div className='col'>
               <div className='d-flex flex-column flex-md-row align-items-md-center'>
-                <div className='d-flex align-items-center min-w-0 mb-3 mb-md-0'>
+                <div className='d-flex align-items-center min-w-0 mb-3 mb-lg-0'>
                   <SharedIdentity.Avatar identity={identity} />
 
-                  <h5 className='mb-0 ms-2'>
+                  <h5 className='mb-0 ms-2 me-2'>
                     {identity.identity ? (
                       <>
                         <NetworkLink
@@ -67,43 +67,54 @@ export const IdentitySummary = ({
                     )}
                   </h5>
 
-                  <div className='flex-shrink-0 bg-success text-white btn-sm rounded-pill ms-2'>
-                    Rank {identity.rank ? identity.rank : 'N/A'}
+                  <div className='identity-badge'>
+                    Rank{' '}
+                    <div className='badge-side'>
+                      {identity.rank ? identity.rank : 'N/A'}
+                    </div>
                   </div>
                 </div>
-                <div className='d-none d-md-flex mx-4'>
+                <div className='d-none d-lg-flex mx-4'>
                   <FontAwesomeIcon
                     icon={faAngleRight}
                     className='text-muted'
                     size='2x'
                   />
                 </div>
-                <div className='d-flex align-items-center me-4'>
-                  <span className='text-neutral-400 text-nowrap pe-2'>
-                    Stake Balance:
-                  </span>
-                  {identity.locked ? (
-                    <Denominate value={identity.locked} />
-                  ) : (
-                    'N/A'
-                  )}
-                </div>
-                <div className='d-flex align-items-center me-4'>
-                  <span className='text-neutral-400 pe-2'>Stake percent:</span>
-                  {identity.stakePercent ? (
-                    <>
-                      {Math.round(identity.stakePercent) > 0
-                        ? Math.round(identity.stakePercent)
-                        : '< 1'}
-                      %
-                    </>
-                  ) : (
-                    'N/A'
-                  )}
-                </div>
-                <div className='d-flex align-items-center'>
-                  <span className='text-neutral-400 pe-2'>Nodes:</span>
-                  {identity.validators ? identity.validators : 'N/A'}
+                <div className='d-flex flex-wrap align-items-center flex-fill gap-3'>
+                  <div className='d-flex align-items-center card p-3 flex-grow-1 detail-card'>
+                    <span className='text-neutral-500 text-nowrap'>
+                      Stake Balance
+                    </span>
+                    <h5 className='mb-0'>
+                      {identity.locked ? (
+                        <Denominate value={identity.locked} />
+                      ) : (
+                        'N/A'
+                      )}
+                    </h5>
+                  </div>
+                  <div className='d-flex align-items-center card p-3 flex-grow-1 detail-card'>
+                    <span className='text-neutral-500'>Stake percent</span>
+                    <h5 className='mb-0'>
+                      {identity.stakePercent ? (
+                        <>
+                          {Math.round(identity.stakePercent) > 0
+                            ? Math.round(identity.stakePercent)
+                            : '< 1'}
+                          %
+                        </>
+                      ) : (
+                        'N/A'
+                      )}
+                    </h5>
+                  </div>
+                  <div className='d-flex align-items-center card p-3 flex-grow-1 detail-card'>
+                    <span className='text-neutral-500'>Nodes</span>
+                    <h5 className='mb-0'>
+                      {identity.validators ? identity.validators : 'N/A'}
+                    </h5>
+                  </div>
                 </div>
               </div>
             </div>

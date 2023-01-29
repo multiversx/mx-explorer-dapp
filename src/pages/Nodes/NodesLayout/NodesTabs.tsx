@@ -8,12 +8,12 @@ export const NodesTabs = () => {
   const activeRoute = useActiveRoute();
 
   return (
-    <div className='card-header-item nodes-tabs mb-spacer'>
-      <div className='tab-links d-flex flex-wrap'>
+    <div className='card-header-item nodes-tabs mb-3'>
+      <div className='tab-links d-flex flex-wrap gap-3'>
         {isMainnet && (
           <NetworkLink
             to={validatorsRoutes.identities}
-            className={`tab-link me-3 ${
+            className={`tab-link  ${
               activeRoute(validatorsRoutes.identities) ? 'active' : ''
             }`}
           >
@@ -23,7 +23,7 @@ export const NodesTabs = () => {
 
         <NetworkLink
           to={validatorsRoutes.providers}
-          className={`tab-link ${isMainnet ? 'mx-3' : 'me-3'} ${
+          className={`tab-link ${
             activeRoute(validatorsRoutes.providers) ? 'active' : ''
           }`}
         >
@@ -32,7 +32,7 @@ export const NodesTabs = () => {
 
         <NetworkLink
           to={validatorsRoutes.nodes}
-          className={`tab-link mx-3 pe-3 pe-sm-0 ${
+          className={`tab-link ${
             activeRoute(validatorsRoutes.nodes) ? 'active' : ''
           }`}
         >
@@ -41,7 +41,7 @@ export const NodesTabs = () => {
 
         <NetworkLink
           to={validatorsRoutes.statistics}
-          className={`tab-link mx-3 pe-3 pe-sm-0 ${
+          className={`tab-link ${
             activeRoute(validatorsRoutes.statistics) ? 'active' : ''
           }`}
         >
@@ -50,7 +50,7 @@ export const NodesTabs = () => {
 
         <NetworkLink
           to={validatorsRoutes.queue}
-          className={`tab-link ms-0 ms-sm-3 ${
+          className={`tab-link ${
             activeRoute(validatorsRoutes.queue) ? 'active' : ''
           }`}
         >

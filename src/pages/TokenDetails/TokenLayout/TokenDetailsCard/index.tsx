@@ -83,7 +83,7 @@ export const TokenDetailsCard = () => {
         )}
       </Helmet>
       <div ref={ref}>
-        <div className='token-details-card row mb-spacer'>
+        <div className='token-details-card row mb-3'>
           <div className='col-12 col-lg-6 mb-spacer mb-lg-0'>
             <div className='card h-100'>
               <div className='card-header'>

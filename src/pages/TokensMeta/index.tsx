@@ -60,7 +60,7 @@ export const TokensMeta = () => {
               <div className='col-12'>
                 <div className='card'>
                   <div className='card-header'>
-                    <div className='card-header-item d-flex align-items-center justify-content-between mb-spacer'>
+                    <div className='card-header-item d-flex align-items-center justify-content-between mb-3'>
                       <h5
                         data-testid='title'
                         className='table-title d-flex align-items-center'
