@@ -5,7 +5,7 @@ import { processStats, getExtraStats } from 'helpers';
 
 import { setStats } from 'redux/slices/stats';
 
-export const useFetchStats = () => {
+export const useFetchStats = (timestamp?: number) => {
   const dispatch = useDispatch();
   const { getStats } = useAdapter();
 
@@ -38,6 +38,5 @@ export const useFetchStats = () => {
     });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchStats, []);
+  React.useEffect(fetchStats, [timestamp]);
 };
