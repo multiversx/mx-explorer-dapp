@@ -18,6 +18,7 @@ import { formatYAxis } from './helpers/formatYAxis';
 import { StartEndTick } from './helpers/StartEndTick';
 import { BiAxialChartProps } from './helpers/types';
 import { useBiAxialChartData } from './hooks/useBiAxialChartData';
+import { StackedChartTooltip } from '../../pages/Analytics/AnalyticsChart/components/StackedChartTooltip';
 
 export const ChartComposed = ({
   firstSeriesConfig,
@@ -274,15 +275,13 @@ export const ChartComposed = ({
           />
 
           <Tooltip
-            // content={(props) => (
-            //   <CustomTooltip
-            //     {...props}
-            //     currency={currency}
-            //     percentageMultiplier={percentageMultiplier}
-            //     denomination={denomination}
-            //     {...tooltip}
-            //   />
-            // )}
+            content={(props) => (
+              <StackedChartTooltip
+                {...props}
+                seriesConfig={[firstSeriesConfig, secondSeriesConfig]}
+                dateFormat={dateFormat}
+              />
+            )}
             cursor={{
               strokeDasharray: '3 5',
               stroke: muted

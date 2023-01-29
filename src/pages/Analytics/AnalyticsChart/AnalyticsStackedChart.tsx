@@ -162,6 +162,7 @@ export const AnalyticsStackedChart = ({
             <Chart.Composed
               firstSeriesConfig={firstSeriesConfig}
               secondSeriesConfig={secondSeriesConfig}
+              dateFormat='dd, MMM D YYYY'
             ></Chart.Composed>
           )}
         </div>
