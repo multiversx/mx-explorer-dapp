@@ -13,7 +13,6 @@ import {
   Symbols
 } from 'recharts';
 import { Props } from 'recharts/types/component/DefaultLegendContent';
-import { CustomTooltip } from './helpers/CustomTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { StartEndTick } from './helpers/StartEndTick';
 import { BiAxialChartProps } from './helpers/types';
@@ -25,7 +24,8 @@ export const ChartComposed = ({
   secondSeriesConfig,
   size,
   dateFormat,
-  hasOnlyStartEndTick
+  hasOnlyStartEndTick,
+  tooltip
 }: BiAxialChartProps) => {
   const [hoveredSeries, setHoveredSeries] = useState<string>();
   const [hiddenSeries, setHiddenSeries] =
@@ -279,7 +279,7 @@ export const ChartComposed = ({
               <StackedChartTooltip
                 {...props}
                 seriesConfig={[firstSeriesConfig, secondSeriesConfig]}
-                dateFormat={dateFormat}
+                dateFormat={tooltip?.dateFormat}
               />
             )}
             cursor={{
