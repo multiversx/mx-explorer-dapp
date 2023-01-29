@@ -21,7 +21,8 @@ export const TokenDetailsLockedAccounts = () => {
   const ref = React.useRef(null);
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { decimals } = useSelector(tokenSelector);
+  const { token } = useSelector(tokenSelector);
+  const { decimals } = token;
   const { getTokenSupply } = useAdapter();
 
   const { hash: tokenId } = useParams() as any;

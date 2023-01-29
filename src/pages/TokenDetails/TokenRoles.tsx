@@ -9,7 +9,8 @@ import { TokenTabs } from './TokenLayout/TokenTabs';
 export const TokenDetailsRoles = () => {
   const ref = React.useRef(null);
 
-  const { roles } = useSelector(tokenSelector);
+  const { token } = useSelector(tokenSelector);
+  const { roles } = token;
 
   return (
     <div ref={ref}>

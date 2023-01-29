@@ -8,7 +8,8 @@ import { addressIsBech32 } from 'helpers';
 import { tokenSelector } from 'redux/selectors';
 
 export const LockedTokenAddressIcon = ({ address }: { address: string }) => {
-  const { assets } = useSelector(tokenSelector);
+  const { token } = useSelector(tokenSelector);
+  const { assets } = token;
 
   const lockedAccounts = assets?.lockedAccounts;
 

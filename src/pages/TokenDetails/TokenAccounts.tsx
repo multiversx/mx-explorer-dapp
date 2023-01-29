@@ -23,7 +23,8 @@ import { TokenTabs } from './TokenLayout/TokenTabs';
 export const TokenDetailsAccounts = () => {
   const ref = React.useRef(null);
   const [searchParams] = useSearchParams();
-  const { decimals, accounts: totalAccounts } = useSelector(tokenSelector);
+  const { token } = useSelector(tokenSelector);
+  const { decimals, accounts: totalAccounts } = token;
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { page } = useURLSearchParams();
   const { size } = useSize();
