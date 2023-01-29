@@ -13,11 +13,11 @@ import {
   Symbols
 } from 'recharts';
 import { Props } from 'recharts/types/component/DefaultLegendContent';
+import { AnalyticsChartTooltip } from './AnalyticsChartTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { StartEndTick } from './helpers/StartEndTick';
 import { BiAxialChartProps } from './helpers/types';
 import { useBiAxialChartData } from './hooks/useBiAxialChartData';
-import { StackedChartTooltip } from '../../pages/Analytics/AnalyticsChart/components/StackedChartTooltip';
 
 export const ChartComposed = ({
   firstSeriesConfig,
@@ -276,7 +276,7 @@ export const ChartComposed = ({
 
           <Tooltip
             content={(props) => (
-              <StackedChartTooltip
+              <AnalyticsChartTooltip
                 {...props}
                 seriesConfig={[firstSeriesConfig, secondSeriesConfig]}
                 dateFormat={tooltip?.dateFormat}
