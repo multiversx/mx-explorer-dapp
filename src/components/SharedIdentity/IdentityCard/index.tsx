@@ -3,7 +3,6 @@ import { faLink } from '@fortawesome/pro-solid-svg-icons/faLink';
 import { faMapMarkerAlt } from '@fortawesome/pro-solid-svg-icons/faMapMarkerAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { ReactComponent as IdentityGear } from 'assets/img/identity-gear.svg';
 import { ReactComponent as TwitterLogo } from 'assets/img/logos/twitter.svg';
 import {
   Denominate,
@@ -52,7 +51,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                     identityName
                   )}
                 </h5>
-                <div className='d-flex flex-shrink-0 bg-success text-white btn-sm rounded-pill ms-2'>
+                <div className='d-flex flex-shrink-0 bg-success text-white btn-sm badge rounded-pill ms-2'>
                   Rank {identity.rank ? identity.rank : 'N/A'}
                 </div>
               </div>
@@ -110,9 +109,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
             </div>
           </div>
 
-          <div className='col-12 col-lg-2 d-none d-lg-flex align-items-center px-0'>
-            <IdentityGear className='middle-gear' />
-          </div>
+          <div className='col-12 col-lg-2 d-none d-lg-flex align-items-center px-0'></div>
 
           <div className='col-12 col-lg-5 d-flex flex-column flex-sm-row ps-lg-0'>
             <div className='d-flex flex-column flex-fill mt-4 mt-lg-0'>

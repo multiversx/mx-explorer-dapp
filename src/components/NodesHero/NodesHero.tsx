@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { useSelector } from 'react-redux';
-import { MultilayerPercentageBar, ValidatorsStatus } from 'components';
+import { MultilayerPercentageBar } from 'components';
 import { ChartStake } from 'pages/Home/ChartStake';
 import { nodesVersionsSelector } from 'redux/selectors';
+import { ValidatorsStatusCard } from 'widgets';
 
 export const NodesHero = () => {
   const { nodesVersions } = useSelector(nodesVersionsSelector);
@@ -20,7 +21,7 @@ export const NodesHero = () => {
           </div>
           <div className='col-lg-7 mb-3'>
             <div className='h-100 d-flex flex-column'>
-              <ValidatorsStatus className='bg-neutral-900 mb-3' />
+              <ValidatorsStatusCard className='bg-neutral-900 mb-3' />
               <div className='card bg-neutral-900'>
                 <div className='card-body d-flex align-items-center justify-content-between'>
                   <div>Stake Weighted Node Version</div>

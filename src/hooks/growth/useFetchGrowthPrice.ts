@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAdapter } from 'components';
 import { processGrowthPrice } from 'helpers';
@@ -11,7 +11,7 @@ export const useFetchGrowthPrice = () => {
   const { isFetched } = useSelector(growthPriceSelector);
   const { getGrowthWidget } = useAdapter();
 
-  const fetchPrice = () => {
+  const fetchGrowthPrice = () => {
     if (!isFetched) {
       getGrowthWidget('/price').then(({ data, success }) => {
         if (data && success) {
@@ -34,5 +34,5 @@ export const useFetchGrowthPrice = () => {
     }
   };
 
-  React.useEffect(fetchPrice, []);
+  useEffect(fetchGrowthPrice, []);
 };

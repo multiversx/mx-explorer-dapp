@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAdapter } from 'components';
 import { processGrowthStaking } from 'helpers';
@@ -11,7 +11,7 @@ export const useFetchGrowthStaking = () => {
   const { isFetched } = useSelector(growthStakingSelector);
   const { getGrowthWidget } = useAdapter();
 
-  const fetchStaking = () => {
+  const fetchGrowthStaking = () => {
     if (!isFetched) {
       getGrowthWidget('/staking').then(({ data, success }) => {
         if (data && success) {
@@ -36,5 +36,5 @@ export const useFetchGrowthStaking = () => {
     }
   };
 
-  React.useEffect(fetchStaking, []);
+  useEffect(fetchGrowthStaking, []);
 };

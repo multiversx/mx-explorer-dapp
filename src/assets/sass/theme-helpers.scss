@@ -233,22 +233,14 @@
     color: var(--teal);
     background: #171717;
     &:before {
-      background: linear-gradient(
-                      90deg,
-                      var(--teal),
-                      #47e8d3
-      );
+      background: linear-gradient(90deg, var(--teal), #47e8d3);
     }
   }
   &-violet-400 {
     color: var(--violet-400);
     background: #171717;
     &:before {
-      background: linear-gradient(
-                      90deg,
-                      var(--violet-400),
-                      #b6a1f3
-      );
+      background: linear-gradient(90deg, var(--violet-400), #b6a1f3);
     }
   }
 
@@ -423,16 +415,16 @@
     }
   }
   &.card-sm {
-    .card-header,
-    .card-body,
-    .card-footer {
+    & > .card-header,
+    & > .card-body,
+    & > .card-footer {
       padding: 1rem;
     }
   }
   &.card-lg {
-    .card-header,
-    .card-body,
-    .card-footer {
+    & > .card-header,
+    & > .card-body,
+    & > .card-footer {
       padding: 2rem;
       @include media-breakpoint-down(md) {
         .card-header,
