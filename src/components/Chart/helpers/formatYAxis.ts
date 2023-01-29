@@ -7,14 +7,14 @@ export const formatYAxis = ({
   tick,
   currency,
   percentageMultiplier,
-  denomination
+  decimals
 }: ChartAxisType) => {
   if (percentageMultiplier) {
     return `${numeral(Number(tick) * 100).format('0.0')}%`;
-  } else if (denomination) {
+  } else if (decimals) {
     const denominatedValue = formatAmount({
       input: new BigNumber(tick).toString(10),
-      decimals: denomination,
+      decimals,
       digits: 2,
       showLastNonZeroDecimal: false,
       addCommas: false

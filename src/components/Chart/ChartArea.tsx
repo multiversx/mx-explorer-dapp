@@ -81,7 +81,7 @@ export const ChartArea = ({
                 tick,
                 currency,
                 percentageMultiplier,
-                denomination
+                decimals: denomination
               })
             }
             axisLine={false}
