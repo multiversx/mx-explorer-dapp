@@ -83,13 +83,13 @@ export const Tokens = () => {
                         </span>
                       </div>
                     </div>
-                    <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
-                      <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row'>
-                        <ul className='list-inline m-0'>
-                          <li className='list-inline-item my-1 my-md-0'>
+                    <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
+                      <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row gap-3'>
+                        <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
+                          <li className='list-inline-item me-0'>
                             <NetworkLink
                               to={tokensRoutes.tokens}
-                              className={`badge py-2 px-3 me-2 br-lg ${
+                              className={`badge py-2 px-3 br-lg ${
                                 activeRoute(tokensRoutes.tokens)
                                   ? 'badge-grey'
                                   : 'badge-outline badge-outline-grey'
@@ -97,9 +97,11 @@ export const Tokens = () => {
                             >
                               Tokens
                             </NetworkLink>
+                          </li>
+                          <li className='list-inline-item me-0'>
                             <NetworkLink
                               to={tokensRoutes.tokensMeta}
-                              className={`badge py-2 px-3 me-2 br-lg ${
+                              className={`badge py-2 px-3 br-lg ${
                                 activeRoute(tokensRoutes.tokensMeta)
                                   ? 'badge-grey'
                                   : 'badge-outline badge-outline-grey'

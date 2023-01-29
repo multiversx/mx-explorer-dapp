@@ -233,6 +233,15 @@ Override Bootstrap variables only above.
   }
 }
 
+.table-card-header {
+  .table-title,
+  .nav-link h5,
+  h5 {
+    margin-bottom: 0;
+    line-height: 2rem;
+  }
+}
+
 // .table-card-header {
 //   .filters {
 //     margin-bottom: 2rem;

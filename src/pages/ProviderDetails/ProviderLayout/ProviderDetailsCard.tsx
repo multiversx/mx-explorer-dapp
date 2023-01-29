@@ -38,7 +38,7 @@ export const ProviderDetailsCard = ({
   return provider !== undefined ? (
     <div className='provider-details-card card'>
       <div className='card-header'>
-        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <h5 data-testid='title' className='mb-0 d-flex align-items-center'>
             Contract Details
           </h5>
