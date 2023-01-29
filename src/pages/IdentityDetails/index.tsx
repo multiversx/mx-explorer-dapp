@@ -76,14 +76,14 @@ export const IdentityDetails = () => {
         {dataReady === true && identity && (
           <div className='container page-content'>
             <div className='row' data-testid='identityDetailsContainer'>
-              <div className='col-12 mb-spacer'>
+              <div className='col-12 mb-3'>
                 <SharedIdentity.Card identity={identity} />
               </div>
             </div>
 
             {showProviders && (
               <div className='row'>
-                <div className='col-12 mb-spacer'>
+                <div className='col-12 mb-3'>
                   <div className='card'>
                     {providersFetched === false ? (
                       <PageState
@@ -99,17 +99,6 @@ export const IdentityDetails = () => {
                             <h5 className='mb-0 d-flex align-items-center'>
                               Delegation Contracts
                             </h5>
-
-                            <div className='ms-auto'>
-                              <a
-                                className='btn btn-sm btn-primary'
-                                target='_blank'
-                                rel='noreferrer nofollow'
-                                href={walletAddress}
-                              >
-                                Stake now
-                              </a>
-                            </div>
                           </div>
                         </div>
 

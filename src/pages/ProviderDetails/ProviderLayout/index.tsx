@@ -78,7 +78,7 @@ export const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
           <div className='container page-content'>
             {isMainnet && showIdentity && (
               <div className='row'>
-                <div className='col-12 mb-spacer'>
+                <div className='col-12 mb-3'>
                   <SharedIdentity.Summary
                     identity={identity.data}
                     featured={provider.data?.featured}
@@ -88,7 +88,7 @@ export const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
             )}
 
             <div className='row'>
-              <div className='col-12 mb-spacer'>
+              <div className='col-12 mb-3'>
                 <ProviderDetailsCard provider={provider.data} />
               </div>
             </div>
