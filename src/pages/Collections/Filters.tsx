@@ -27,41 +27,39 @@ export const Filters = () => {
   };
 
   return (
-    <div className='collections-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row'>
-      <div className='my-1 my-md-0'>
-        <div role='search'>
-          <div className='input-group input-group-sm input-group-seamless'>
-            <input
-              type='text'
-              className='form-control'
-              value={inputValue || ''}
-              onChange={changeValidatorValue}
-              onKeyDown={(keyEvent: React.KeyboardEvent) => {
-                if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
-                  updateSearchValue(inputValue);
-                }
+    <div className='filters collections-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row gap-3'>
+      <div role='search'>
+        <div className='input-group input-group-sm input-group-seamless'>
+          <input
+            type='text'
+            className='form-control'
+            value={inputValue || ''}
+            onChange={changeValidatorValue}
+            onKeyDown={(keyEvent: React.KeyboardEvent) => {
+              if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
+                updateSearchValue(inputValue);
+              }
+            }}
+            placeholder='Search'
+            name='collectionsSearch'
+            data-testid='collectionsSearch'
+          />
+          {inputValue ? (
+            <button
+              type='reset'
+              className='input-group-text'
+              onClick={() => {
+                updateSearchValue('');
               }}
-              placeholder='Search'
-              name='collectionsSearch'
-              data-testid='collectionsSearch'
-            />
-            {inputValue ? (
-              <button
-                type='reset'
-                className='input-group-text'
-                onClick={() => {
-                  updateSearchValue('');
-                }}
-                data-testid='resetSearch'
-              >
-                <FontAwesomeIcon icon={faTimes} />
-              </button>
-            ) : (
-              <button type='submit' className='input-group-text'>
-                <FontAwesomeIcon icon={faSearch} />
-              </button>
-            )}
-          </div>
+              data-testid='resetSearch'
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
+          ) : (
+            <button type='submit' className='input-group-text'>
+              <FontAwesomeIcon icon={faSearch} />
+            </button>
+          )}
         </div>
       </div>
     </div>
