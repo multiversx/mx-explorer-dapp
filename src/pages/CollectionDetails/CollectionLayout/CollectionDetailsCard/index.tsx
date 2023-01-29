@@ -110,7 +110,7 @@ export const CollectionDetailsCard = () => {
                   <DetailItem title='Decimals'>{decimals}</DetailItem>
                 )}
                 <DetailItem title='Properties'>
-                  <div className='d-flex alig-items-center flex-wrap gap-2'>
+                  <div className='d-flex alig-items-center flex-wrap gap-2 mt-1 mt-lg-0'>
                     <PropertyPill name={'Can Pause'} active={canPause} />
                     <PropertyPill name={'Can Freeze'} active={canFreeze} />
                     <PropertyPill name={'Can Wipe'} active={canWipe} />

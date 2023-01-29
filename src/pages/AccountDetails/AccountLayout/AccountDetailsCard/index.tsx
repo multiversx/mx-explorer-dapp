@@ -113,7 +113,7 @@ export const AccountDetailsCard = () => {
     <div ref={ref} className='row account-details-card mb-3'>
       {isContract(address) ? (
         <>
-          <div className='col-12 col-lg-6 mb-spacer mb-lg-0'>
+          <div className='col-12 col-lg-6 mb-3 mb-lg-0'>
             <div className='card h-100'>
               <div
                 className={`card-header ${
@@ -187,7 +187,7 @@ export const AccountDetailsCard = () => {
                   </SmallDetailItem>
 
                   <SmallDetailItem title='Properties'>
-                    <div className='d-flex alig-items-center flex-wrap gap-2'>
+                    <div className='d-flex alig-items-center flex-wrap gap-2 mt-1 mt-lg-0'>
                       <PropertyPill
                         name={'Upgradeable'}
                         active={Boolean(isUpgradeable)}
@@ -266,7 +266,7 @@ export const AccountDetailsCard = () => {
 
                   <SmallDetailItem title='Deployed'>
                     {deployedAt !== undefined ? (
-                      <div className='d-flex align-items-center'>
+                      <div className='d-flex align-items-center flex-wrap'>
                         <FontAwesomeIcon
                           icon={faClock}
                           className='me-2 text-neutral-400'
@@ -297,7 +297,7 @@ export const AccountDetailsCard = () => {
           </div>
         </>
       ) : (
-        <div className='col mb-3'>
+        <div className='col'>
           <div className='card'>
             <div
               className={`card-header ${scamInfo ? 'status-text-warning' : ''}`}

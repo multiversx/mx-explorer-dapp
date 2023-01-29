@@ -132,7 +132,7 @@ export const TokenDetailsCard = () => {
                   </SmallDetailItem>
 
                   <SmallDetailItem title='Properties'>
-                    <div className='d-flex alig-items-center flex-wrap gap-2'>
+                    <div className='d-flex alig-items-center flex-wrap gap-2 mt-1 mt-lg-0'>
                       <PropertyPill name={'Can Upgrade'} active={canUpgrade} />
                       <PropertyPill name={'Can Mint'} active={canMint} />
                       <PropertyPill name={'Can Burn'} active={canBurn} />
