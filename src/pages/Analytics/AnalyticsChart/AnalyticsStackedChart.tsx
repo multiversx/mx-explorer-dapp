@@ -11,7 +11,6 @@ import {
 } from './components/ChartResolution';
 import { ChartListType } from '../Analytics';
 import { RANGE } from '../constants';
-import { getChartPropsFromId } from '../helpers/getChartPropsFromId';
 
 export interface AnalyticsStackedChartDataPoCType {
   value: string;
@@ -163,6 +162,7 @@ export const AnalyticsStackedChart = ({
             <Chart.Composed
               firstSeriesConfig={firstSeriesConfig}
               secondSeriesConfig={secondSeriesConfig}
+              dateFormat='dd, MMM D YYYY'
             ></Chart.Composed>
           )}
         </div>
