@@ -80,7 +80,7 @@ export const Blocks = () => {
                   {state && state.blocks.length > 0 ? (
                     <>
                       <div className='card-header'>
-                        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+                        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
                           <h5
                             className='table-title d-flex align-items-center'
                             data-testid='title'

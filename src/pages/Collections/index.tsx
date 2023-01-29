@@ -76,13 +76,13 @@ export const Collections = () => {
               <div className='col-12'>
                 <div className='card'>
                   <div className='card-header'>
-                    <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
-                      <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row'>
-                        <ul className='list-inline m-0'>
-                          <li className='list-inline-item my-1 my-md-0'>
+                    <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
+                      <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row gap-3'>
+                        <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
+                          <li className='list-inline-item me-0'>
                             <NetworkLink
                               to={collectionRoutes.collections}
-                              className={`badge py-2 px-3 me-2 br-lg ${
+                              className={`badge py-2 px-3 br-lg ${
                                 activeRoute(collectionRoutes.collections)
                                   ? 'badge-grey'
                                   : 'badge-outline badge-outline-grey'
@@ -90,9 +90,11 @@ export const Collections = () => {
                             >
                               All
                             </NetworkLink>
+                          </li>
+                          <li className='list-inline-item me-0'>
                             <NetworkLink
                               to={collectionRoutes.collectionsNft}
-                              className={`badge py-2 px-3 me-2 br-lg ${
+                              className={`badge py-2 px-3 br-lg ${
                                 activeRoute(collectionRoutes.collectionsNft)
                                   ? 'badge-yellow'
                                   : 'badge-outline badge-outline-yellow'
@@ -100,9 +102,11 @@ export const Collections = () => {
                             >
                               NFT
                             </NetworkLink>
+                          </li>
+                          <li className='list-inline-item me-0'>
                             <NetworkLink
                               to={collectionRoutes.collectionsSft}
-                              className={`badge py-2 px-3 me-2 br-lg ${
+                              className={`badge py-2 px-3 br-lg ${
                                 activeRoute(collectionRoutes.collectionsSft)
                                   ? 'badge-orange'
                                   : 'badge-outline badge-outline-orange'

@@ -105,7 +105,8 @@
 
 // BADGES
 
-.badge {
+a.badge,
+button.badge {
   &:hover {
     color: inherit;
   }

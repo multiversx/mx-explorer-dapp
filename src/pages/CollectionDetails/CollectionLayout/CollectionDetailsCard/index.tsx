@@ -1,9 +1,8 @@
-import * as React from 'react';
-
+import React from 'react';
 import { faClock } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import { useSelector } from 'react-redux';
+
 import {
   Trim,
   NetworkLink,
@@ -19,6 +18,7 @@ import { collectionSelector } from 'redux/selectors';
 export const CollectionDetailsCard = () => {
   const ref = React.useRef(null);
 
+  const { collectionState } = useSelector(collectionSelector);
   const {
     collection,
     assets,
@@ -36,7 +36,7 @@ export const CollectionDetailsCard = () => {
     canUpgrade,
     canAddSpecialRoles,
     canTransfer
-  } = useSelector(collectionSelector);
+  } = collectionState;
 
   const mergedAssets = {
     ...(assets?.website
@@ -110,7 +110,7 @@ export const CollectionDetailsCard = () => {
                   <DetailItem title='Decimals'>{decimals}</DetailItem>
                 )}
                 <DetailItem title='Properties'>
-                  <div className='d-flex alig-items-center flex-wrap gap-2'>
+                  <div className='d-flex alig-items-center flex-wrap gap-2 mt-1 mt-lg-0'>
                     <PropertyPill name={'Can Pause'} active={canPause} />
                     <PropertyPill name={'Can Freeze'} active={canFreeze} />
                     <PropertyPill name={'Can Wipe'} active={canWipe} />

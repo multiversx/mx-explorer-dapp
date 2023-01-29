@@ -29,7 +29,8 @@ export const AccountNfts = () => {
   const networkRoute = useNetworkRoute();
   const { adapter, id: activeNetworkId } = useSelector(activeNetworkSelector);
   const [searchParams] = useSearchParams();
-  const { txCount } = useSelector(accountSelector);
+  const { account } = useSelector(accountSelector);
+  const { txCount } = account;
 
   const { getAccountNfts, getAccountNftsCount } = useAdapter();
 
@@ -72,9 +73,8 @@ export const AccountNfts = () => {
   ) : (
     <div className='card' ref={ref}>
       <div className='card-header'>
-        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <AccountTabs />
-
           {dataReady === true && accountNfts.length > 0 && (
             <Pager
               itemsPerPage={25}
