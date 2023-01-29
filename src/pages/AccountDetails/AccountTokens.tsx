@@ -25,7 +25,8 @@ export const AccountTokens = () => {
 
   const { adapter, id: activeNetworkId } = useSelector(activeNetworkSelector);
   const [searchParams] = useSearchParams();
-  const { txCount } = useSelector(accountSelector);
+  const { account } = useSelector(accountSelector);
+  const { txCount } = account;
   const { size } = useGetFilters();
   const networkRoute = useNetworkRoute();
 

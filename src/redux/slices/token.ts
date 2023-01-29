@@ -35,25 +35,6 @@ export const tokenSlice = createSlice({
       state: TokenSliceType,
       action: PayloadAction<TokenSliceType>
     ) => {
-      // state.identifier = action.payload.identifier;
-      // state.ticker = action.payload.ticker;
-      // state.name = action.payload.name;
-      // state.owner = action.payload.owner;
-      // state.minted = action.payload.minted;
-      // state.burnt = action.payload.burnt;
-      // state.supply = action.payload.supply;
-      // state.circulatingSupply = action.payload.circulatingSupply;
-      // state.canBurn = action.payload.canBurn;
-      // state.canChangeOwner = action.payload.canChangeOwner;
-      // state.canFreeze = action.payload.canFreeze;
-      // state.canMint = action.payload.canMint;
-      // state.canPause = action.payload.canPause;
-      // state.canUpgrade = action.payload.canUpgrade;
-      // state.canWipe = action.payload.canWipe;
-      // state.isPaused = action.payload.isPaused;
-      // state.accounts = action.payload.accounts;
-      // state.transactions = action.payload.transactions;
-
       state.token = { ...state.token, ...action.payload };
     }
   }

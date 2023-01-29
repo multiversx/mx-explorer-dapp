@@ -1,9 +1,8 @@
-import * as React from 'react';
-
+import React from 'react';
 import { faClock } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import { useSelector } from 'react-redux';
+
 import {
   Trim,
   NetworkLink,
@@ -19,6 +18,7 @@ import { collectionSelector } from 'redux/selectors';
 export const CollectionDetailsCard = () => {
   const ref = React.useRef(null);
 
+  const { collectionState } = useSelector(collectionSelector);
   const {
     collection,
     assets,
@@ -36,7 +36,7 @@ export const CollectionDetailsCard = () => {
     canUpgrade,
     canAddSpecialRoles,
     canTransfer
-  } = useSelector(collectionSelector);
+  } = collectionState;
 
   const mergedAssets = {
     ...(assets?.website

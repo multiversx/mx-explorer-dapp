@@ -36,6 +36,7 @@ import { LockedAmountCardItem } from './LockedAmountCardItem';
 export const AccountDetailsCard = () => {
   const ref = React.useRef(null);
 
+  const { account } = useSelector(accountSelector);
   const {
     address,
     balance,
@@ -52,7 +53,7 @@ export const AccountDetailsCard = () => {
     assets,
     username,
     txCount
-  } = useSelector(accountSelector);
+  } = account;
   const { id: activeNetworkId, adapter } = useSelector(activeNetworkSelector);
   const { getProvider, getAccountTokensCount, getAccountNftsCount } =
     useAdapter();

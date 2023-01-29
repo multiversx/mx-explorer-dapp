@@ -39,7 +39,8 @@ export const AccountContractCode = () => {
 
   const networkRoute = useNetworkRoute();
 
-  const { codeHash, code, address } = useSelector(accountSelector);
+  const { account } = useSelector(accountSelector);
+  const { codeHash, code, address } = account;
 
   const codeHashBase64Buffer = Buffer.from(String(codeHash ?? ''), 'base64');
   const codeHashHexValue = codeHashBase64Buffer.toString('hex');

@@ -23,7 +23,8 @@ export const CollectionNfts = () => {
   const ref = React.useRef(null);
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { type } = useSelector(collectionSelector);
+  const { collectionState } = useSelector(collectionSelector);
+  const { type } = collectionState;
   const { getNfts, getNftsCount } = useAdapter();
   const { page } = useURLSearchParams();
 

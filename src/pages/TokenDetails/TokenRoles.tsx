@@ -51,7 +51,7 @@ export const TokenDetailsRoles = () => {
                         <td>
                           {tokenRole.roles.map((role, index) => (
                             <div
-                              className='badge badge-secondary badge-pill font-weight-normal me-2'
+                              className='badge badge-outline badge-outline-grey me-2'
                               key={`${tokenRole.address}-${index}`}
                             >
                               {role}

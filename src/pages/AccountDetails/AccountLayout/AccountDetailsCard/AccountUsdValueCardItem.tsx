@@ -11,7 +11,8 @@ export const AccountUsdValueCardItem = ({
 }: {
   cardItemClass: string;
 }) => {
-  const { balance } = useSelector(accountSelector);
+  const { account } = useSelector(accountSelector);
+  const { balance } = account;
   const { stakingDataReady, totalLocked } = useSelector(accountStakingSelector);
 
   let totalWorth = balance ? new BigNumber(balance) : new BigNumber(0);

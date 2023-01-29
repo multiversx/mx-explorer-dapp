@@ -9,7 +9,8 @@ import { accountsRoutes } from 'routes';
 export const AccountTabs = () => {
   const activeRoute = useActiveRoute();
 
-  const { address, code } = useSelector(accountSelector);
+  const { account } = useSelector(accountSelector);
+  const { address, code } = account;
   const { adapter } = useSelector(activeNetworkSelector);
 
   const tokensRouteActive = adapter === 'api';

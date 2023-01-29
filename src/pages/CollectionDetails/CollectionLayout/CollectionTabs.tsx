@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
+
 import { NetworkLink } from 'components';
 import { urlBuilder, nftText } from 'helpers';
 import { useActiveRoute } from 'hooks';
@@ -9,7 +10,8 @@ import { NftEnumType } from 'types';
 
 export const CollectionTabs = () => {
   const activeRoute = useActiveRoute();
-  const { collection, roles, type } = useSelector(collectionSelector);
+  const { collectionState } = useSelector(collectionSelector);
+  const { collection, roles, type } = collectionState;
 
   return (
     <div className='tab-links d-flex flex-wrap gap-3'>
