@@ -49,7 +49,7 @@ export const NodesStatistics = () => {
 
   return (
     <div className='card position-unset' ref={ref}>
-      <div className='card-header position-unset p-3 p-sm-spacer'>
+      <div className='card-header position-unset'>
         <NodesTabs />
 
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>

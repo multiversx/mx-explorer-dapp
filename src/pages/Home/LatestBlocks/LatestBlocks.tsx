@@ -83,8 +83,8 @@ export const LatestBlocks = () => {
                 <h5 className='mb-0 d-flex align-items-center'>
                   Recent Blocks <PulsatingLed className='ms-2 mt-1' />
                 </h5>
-                <NetworkLink to='/blocks' className='btn btn-sm btn-primary'>
-                  View All Blocks
+                <NetworkLink to='/blocks' className='btn btn-sm btn-dark'>
+                  View All
                 </NetworkLink>
               </div>
             </div>

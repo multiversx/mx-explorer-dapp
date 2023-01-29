@@ -83,8 +83,8 @@ export const NodesFilters = ({
   return (
     <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row'>
       {!onlySearch && (
-        <ul className='list-inline m-0'>
-          <li className='list-inline-item my-1 my-md-0'>
+        <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
+          <li className='list-inline-item me-0'>
             <button
               type='button'
               onClick={() => {
@@ -101,7 +101,7 @@ export const NodesFilters = ({
               All
             </button>
           </li>
-          <li className='list-inline-item my-1 my-md-0'>
+          <li className='list-inline-item me-0'>
             <button
               type='button'
               onClick={() => {
@@ -116,7 +116,7 @@ export const NodesFilters = ({
               Validators
             </button>
           </li>
-          <li className='list-inline-item my-1 my-md-0'>
+          <li className='list-inline-item me-0'>
             <button
               type='button'
               onClick={() => {
@@ -132,7 +132,7 @@ export const NodesFilters = ({
               Observers
             </button>
           </li>
-          <li className='list-inline-item my-1 my-md-0'>
+          <li className='list-inline-item me-0'>
             <button
               type='button'
               onClick={() => {
@@ -146,7 +146,7 @@ export const NodesFilters = ({
               Full History
             </button>
           </li>
-          <li className='list-inline-item my-1 my-md-0'>
+          <li className='list-inline-item me-0'>
             <button
               type='button'
               onClick={() => {
@@ -161,7 +161,7 @@ export const NodesFilters = ({
               Issues
             </button>
           </li>
-          <li className='list-inline-item my-1 my-md-0'>
+          <li className='list-inline-item me-0'>
             <Dropdown className='position-unset'>
               <Dropdown.Toggle
                 variant='outline-dark'
@@ -270,7 +270,7 @@ export const NodesFilters = ({
         </ul>
       )}
 
-      <div className='my-1 my-md-0'>
+      <div className='mt-2 mt-md-0'>
         <div role='search'>
           <div className='input-group input-group-sm input-group-seamless'>
             <input
