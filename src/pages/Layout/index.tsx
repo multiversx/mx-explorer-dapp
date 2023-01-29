@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 import { UAParser } from 'ua-parser-js';
 
 import { Search, NotificationsBar } from 'components';
-import { multiversxApps } from 'config';
 import {
   useFetchStats,
   useFetchEconomics,
@@ -30,7 +29,7 @@ import {
 } from 'widgets';
 
 import { Footer } from './Footer/index';
-import { Navbar } from './Navbar/index';
+import { Header } from './Header/index';
 import { PageLayout } from './PageLayout';
 import { Unavailable } from './Unavailable';
 
@@ -101,8 +100,8 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
       } ${userAgentClasses}`}
     >
       <div className='flex-fill vh-100'>
-        <main className='main-content d-flex flex-column flex-grow-1'>
-          <Navbar />
+        <main className='main-content d-flex flex-column flex-grow-1 overflow-hidden'>
+          <Header />
           <NotificationsBar />
           <div className='main-content-container container-fluid p-0 d-flex flex-column'>
             {offline ? (
