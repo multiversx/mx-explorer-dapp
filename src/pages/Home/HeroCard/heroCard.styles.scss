@@ -20,6 +20,10 @@
   .card {
     background-color: var(--neutral-900);
     display: flex;
+    .card-title,
+    .stats-card-title {
+      color: var(--neutral-400);
+    }
     .stats-card-value {
       font-weight: 500;
       margin-bottom: 0.5rem;

@@ -53,7 +53,6 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
       case activeRoute(searchRoutes.index):
       case activeRoute(searchRoutes.query):
       case activeRoute(transactionsRoutes.transactions):
-      case activeRoute(transactionsRoutes.transactionDetails):
       case activeRoute(validatorsRoutes.identities):
       case activeRoute(validatorsRoutes.identityDetails):
       case activeRoute(validatorsRoutes.providers):
@@ -79,9 +78,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   const offline = !window.navigator.onLine;
 
   const isHome = activeRoute('/');
-  const isTransactions =
-    activeRoute(transactionsRoutes.transactions) ||
-    activeRoute(transactionsRoutes.transactionDetails);
+  const isTransactions = activeRoute(transactionsRoutes.transactions);
 
   const userAgentInfo = [
     browser?.browser?.name ?? '',

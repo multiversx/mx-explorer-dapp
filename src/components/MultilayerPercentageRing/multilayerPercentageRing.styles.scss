@@ -29,6 +29,24 @@ $sixth-color: shade-color(#23f7dd, 60%);
     }
   }
 
+  .percentage {
+    &.percentage-step-1 {
+      color: $first-color;
+    }
+    &.percentage-step-2 {
+      color: $second-color;
+    }
+    &.percentage-step-3 {
+      color: $third-color;
+    }
+    &.percentage-step-4 {
+      color: $fourth-color;
+    }
+    &.percentage-step-5 {
+      color: $sixth-color;
+    }
+  }
+
   .step-1 {
     background-color: $first-color;
   }
@@ -48,6 +66,9 @@ $sixth-color: shade-color(#23f7dd, 60%);
   &.two-items {
     .step-2 {
       background-color: $third-color;
+    }
+    .percentage.percentage-step-2 {
+      color: $second-color;
     }
     .composed-pie-chart {
       .recharts-layer {

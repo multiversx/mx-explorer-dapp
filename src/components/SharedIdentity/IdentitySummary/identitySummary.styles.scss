@@ -8,4 +8,10 @@
   .flex-1 {
     flex: 1;
   }
+
+  .detail-card {
+    @include media-breakpoint-up(md) {
+      flex-basis: 20%;
+    }
+  }
 }
