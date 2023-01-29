@@ -110,7 +110,7 @@ export const AccountDetailsCard = () => {
   }, [txCount, activeNetworkId, address]);
 
   return address !== '' ? (
-    <div ref={ref} className='row account-details-card mb-spacer'>
+    <div ref={ref} className='row account-details-card mb-3'>
       {isContract(address) ? (
         <>
           <div className='col-12 col-lg-6 mb-spacer mb-lg-0'>
@@ -297,7 +297,7 @@ export const AccountDetailsCard = () => {
           </div>
         </>
       ) : (
-        <div className='col mb-spacer'>
+        <div className='col mb-3'>
           <div className='card'>
             <div
               className={`card-header ${scamInfo ? 'status-text-warning' : ''}`}

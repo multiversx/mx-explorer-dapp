@@ -29,12 +29,10 @@
     }
     .shard-list {
       width: 40%;
+      margin-top: -1.5em;
     }
     .validators-total {
-      padding: 2rem 2rem 0 2rem !important;
-      // position: absolute;
-      // top: 0;
-      // left: 0;
+      padding-top: 2rem;
     }
 
     .marquee-wrapper {
@@ -44,6 +42,23 @@
       right: 0;
       .slide {
         margin-right: 0.5rem;
+      }
+    }
+
+    @include media-breakpoint-down(lg) {
+      min-height: 20rem;
+    }
+
+    @include media-breakpoint-down(md) {
+      .validator-map {
+        position: relative;
+        width: 80%;
+        margin: -3rem auto auto;
+      }
+      .shard-list {
+        width: 100%;
+        margin-top: 0;
+        margin-bottom: 4rem;
       }
     }
   }

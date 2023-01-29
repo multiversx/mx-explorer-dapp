@@ -145,14 +145,14 @@ export const NodeDetails = () => {
           <div className='container page-content'>
             {showIdentity && (
               <div className='row'>
-                <div className='col mb-spacer'>
+                <div className='col mb-3'>
                   <SharedIdentity.Summary identity={identity.data} />
                 </div>
               </div>
             )}
 
             <div className='row'>
-              <div className='mb-spacer col'>
+              <div className='mb-3 col'>
                 <NodeInformation nodeData={node.data} />
               </div>
             </div>
@@ -160,16 +160,16 @@ export const NodeDetails = () => {
             {showExtendedInfo && (
               <>
                 <div className='row'>
-                  <div className='mb-spacer col'>
+                  <div className='mb-3 col'>
                     <ValidatorDetails nodeData={node.data} />
                   </div>
                 </div>
 
                 <div className='row'>
-                  <div className='mb-spacer col-md-6'>
+                  <div className='mb-3 col-md-6'>
                     <NetworkMetrics node={node.data} />
                   </div>
-                  <div className='col-md-6 mb-spacer'>
+                  <div className='col-md-6 mb-3'>
                     <Rounds rounds={rounds} node={node.data} />
                   </div>
                 </div>

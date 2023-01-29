@@ -110,11 +110,8 @@ export const LatestTransactions = () => {
                   Recent Transactions
                   <PulsatingLed className='ms-2 mt-1' />
                 </h5>
-                <NetworkLink
-                  to='/transactions'
-                  className='btn btn-sm btn-primary'
-                >
-                  View All Transactions
+                <NetworkLink to='/transactions' className='btn btn-sm btn-dark'>
+                  View All
                 </NetworkLink>
               </div>
             </div>

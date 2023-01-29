@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useSelector } from 'react-redux';
-import { MultilayerPercentageBar } from 'components';
+import { MultilayerPercentageRing } from 'components';
 import { ChartStake } from 'pages/Home/ChartStake';
 import { nodesVersionsSelector } from 'redux/selectors';
 import { ValidatorsStatusCard } from 'widgets';
@@ -22,10 +22,15 @@ export const NodesHero = () => {
           <div className='col-lg-7 mb-3'>
             <div className='h-100 d-flex flex-column'>
               <ValidatorsStatusCard className='bg-neutral-900 mb-3' />
-              <div className='card bg-neutral-900'>
-                <div className='card-body d-flex align-items-center justify-content-between'>
-                  <div>Stake Weighted Node Version</div>
-                  <MultilayerPercentageBar steps={nodesVersions} />
+
+              <div className='card distribution-card bg-neutral-900'>
+                <div className='card-body d-flex flex-row flex-wrap align-items-center justify-content-between'>
+                  <div className='distribution-card-title text-neutral-500'>
+                    Stake Weighted Node Version
+                  </div>
+                  <div className='distribution-card-value'>
+                    <MultilayerPercentageRing steps={nodesVersions} />
+                  </div>
                 </div>
               </div>
             </div>

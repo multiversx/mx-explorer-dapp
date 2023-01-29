@@ -25,7 +25,7 @@ export const Tokens = () => {
   const { getQueryObject, size } = useGetFilters();
   const { getTokens, getTokensCount } = useAdapter();
 
-  const { isFetched, ecosystemMarketCap } = useSelector(economicsSelector);
+  const { ecosystemMarketCap } = useSelector(economicsSelector);
 
   const [tokens, setTokens] = React.useState<TokenType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -63,7 +63,7 @@ export const Tokens = () => {
               <div className='col-12'>
                 <div className='card'>
                   <div className='card-header'>
-                    <div className='card-header-item d-flex align-items-center justify-content-between mb-spacer'>
+                    <div className='card-header-item d-flex align-items-center justify-content-between mb-3'>
                       <div className='d-flex flex-wrap w-100 align-items-center justify-content-between'>
                         <h5
                           data-testid='title'
@@ -79,11 +79,7 @@ export const Tokens = () => {
                           <span className='text-neutral-400'>
                             Ecosystem Market Cap:
                           </span>{' '}
-                          {isFetched
-                            ? `$${new BigNumber(ecosystemMarketCap).toFormat(
-                                0
-                              )}`
-                            : '...'}
+                          {ecosystemMarketCap}
                         </span>
                       </div>
                     </div>
