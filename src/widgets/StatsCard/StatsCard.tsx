@@ -19,10 +19,12 @@ export const StatsCard = ({
   return (
     <div className={`card d-flex flex-grow-1 ${className ?? ''}`}>
       <div className='card-body p-4'>
-        {title && <p className='text-neutral-400 mb-0'>{title}</p>}
+        {title && (
+          <p className='text-neutral-400 mb-0 stats-card-title'>{title}</p>
+        )}
         {value && (
           <h2
-            className={`card-value ${
+            className={`stats-card-value mb-0 ${
               neutralColors ? 'text-neutral-300' : 'text-primary'
             }`}
           >
@@ -30,7 +32,7 @@ export const StatsCard = ({
           </h2>
         )}
         {children && (
-          <p className={`mb-0 ${neutralColors ? '' : 'text-primary-200'}`}>
+          <p className={`mb-0 mt-2 ${neutralColors ? '' : 'text-primary-200'}`}>
             {children}
           </p>
         )}

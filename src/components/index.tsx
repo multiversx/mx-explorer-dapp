@@ -26,6 +26,7 @@ export * from './Led';
 export * from './AxiosInterceptor';
 export * from './ProvidersTable';
 export * from './MultilayerPercentageBar';
+export * from './MultilayerPercentageRing';
 export * from './CardItem';
 export * from './LatestItem';
 export * from './LockedAmountTooltip';
