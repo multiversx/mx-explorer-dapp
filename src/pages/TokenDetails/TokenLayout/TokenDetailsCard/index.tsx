@@ -16,6 +16,7 @@ import { tokenSelector } from 'redux/selectors';
 export const TokenDetailsCard = () => {
   const ref = React.useRef(null);
 
+  const { token } = useSelector(tokenSelector);
   const {
     identifier,
     ticker,
@@ -37,7 +38,7 @@ export const TokenDetailsCard = () => {
     transactions,
     price,
     marketCap
-  } = useSelector(tokenSelector);
+  } = token;
 
   const title = `${
     assets ? `${name} ${ticker !== name ? `(${ticker})` : ''}` : ticker
@@ -132,7 +133,7 @@ export const TokenDetailsCard = () => {
                   </SmallDetailItem>
 
                   <SmallDetailItem title='Properties'>
-                    <div className='d-flex alig-items-center flex-wrap gap-2'>
+                    <div className='d-flex alig-items-center flex-wrap gap-2 mt-1 mt-lg-0'>
                       <PropertyPill name={'Can Upgrade'} active={canUpgrade} />
                       <PropertyPill name={'Can Mint'} active={canMint} />
                       <PropertyPill name={'Can Burn'} active={canBurn} />

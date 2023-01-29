@@ -50,7 +50,7 @@ export const Nodes = () => {
       <div className='card-header position-unset'>
         <NodesTabs />
 
-        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <NodesFilters baseRoute={validatorsRoutes.nodes} />
           {dataReady === true && (
             <Pager

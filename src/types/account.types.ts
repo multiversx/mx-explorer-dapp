@@ -5,7 +5,8 @@ import {
   DelegationType,
   DelegationLegacyType,
   ProviderType,
-  IdentityType
+  IdentityType,
+  SliceType
 } from 'types';
 
 export interface AccountType {
@@ -28,6 +29,10 @@ export interface AccountType {
   isPayableBySmartContract?: boolean;
   assets?: AssetType;
   username?: string;
+}
+
+export interface AccountSliceType extends SliceType {
+  account: AccountType;
 }
 
 export interface AccountStakingSliceType {

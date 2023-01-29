@@ -39,7 +39,8 @@ export const AccountContractCode = () => {
 
   const networkRoute = useNetworkRoute();
 
-  const { codeHash, code, address } = useSelector(accountSelector);
+  const { account } = useSelector(accountSelector);
+  const { codeHash, code, address } = account;
 
   const codeHashBase64Buffer = Buffer.from(String(codeHash ?? ''), 'base64');
   const codeHashHexValue = codeHashBase64Buffer.toString('hex');
@@ -49,7 +50,7 @@ export const AccountContractCode = () => {
   ) : (
     <div className='card'>
       <div className='card-header'>
-        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <AccountTabs />
         </div>
       </div>

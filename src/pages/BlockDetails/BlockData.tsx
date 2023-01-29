@@ -69,8 +69,8 @@ export const BlockData = (props: BlockDataType) => {
           <DetailItem title='Block Height'>
             <div className='d-flex justify-content-between align-items-center'>
               <div>{block.nonce}</div>
-              <ul className='list-inline mb-0'>
-                <li className='list-inline-item ms-2 me-2'>
+              <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
+                <li className='list-inline-item me-0'>
                   <div className='pager pager-inline'>
                     <NetworkLink
                       to={`/blocks/${block.prevHash}`}
@@ -80,7 +80,7 @@ export const BlockData = (props: BlockDataType) => {
                     </NetworkLink>
                   </div>
                 </li>
-                <li className='ms-2 list-inline-item'>
+                <li className='list-inline-item me-0'>
                   <div className='pager pager-inline'>
                     {nextHash !== '' ? (
                       <NetworkLink

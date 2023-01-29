@@ -1,4 +1,9 @@
-import { RolesType, NftEnumType, ScamInfoType } from './general.types';
+import {
+  RolesType,
+  NftEnumType,
+  ScamInfoType,
+  SliceType
+} from './general.types';
 
 export interface CollectionType {
   collection: string;
@@ -31,6 +36,10 @@ export interface CollectionType {
   canAddQuantity?: boolean;
   canUpdateAttributes?: boolean;
   canAddUri?: boolean;
+}
+
+export interface CollectionSliceType extends SliceType {
+  collectionState: CollectionType;
 }
 
 export interface CollectionRolesType extends RolesType {
