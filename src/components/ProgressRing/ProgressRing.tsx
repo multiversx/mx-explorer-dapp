@@ -6,6 +6,7 @@ export interface ProgressRingType extends WithClassnameType {
   size?: number;
   trackWidth?: number;
   indicatorWidth?: number;
+  hasBg?: boolean;
   children?: React.ReactNode;
 }
 
@@ -14,6 +15,7 @@ export const ProgressRing = ({
   size = 24,
   trackWidth = 3,
   indicatorWidth = 3,
+  hasBg = false,
   children,
   className
 }: ProgressRingType) => {
@@ -24,15 +26,17 @@ export const ProgressRing = ({
   const dashArray = 2 * Math.PI * radius;
   const dashOffset = dashArray * ((100 - progress) / 100);
 
-  const showLabel = size > 100 && children;
+  const showLabel = size > 80 && children;
 
   return (
     <div
-      className={`progress-ring-wrapper ${className ?? ''}`}
+      className={`progress-ring-wrapper ${className ?? ''} ${
+        hasBg ? 'has-bg' : ''
+      }`}
       style={{ width: size, height: size }}
     >
       <svg
-        className='progress-ring'
+        className={`progress-ring progress-${progress}`}
         style={{ width: size, height: size, minWidth: size, minHeight: size }}
       >
         <circle

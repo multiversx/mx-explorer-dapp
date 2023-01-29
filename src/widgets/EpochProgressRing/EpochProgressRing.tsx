@@ -107,8 +107,8 @@ export const EpochProgressRing = ({
 
   return (
     <div className={`epoch-progress-ring ${className ?? ''}`} ref={ref}>
-      <ProgressRing progress={percentRemaining} size={140}>
-        <div className='epoch-label' data-testid='currentEpoch'>
+      <ProgressRing progress={percentRemaining} size={140} hasBg>
+        <div className='label' data-testid='currentEpoch'>
           {epochLabel ? (
             <>
               Epoch
@@ -120,7 +120,7 @@ export const EpochProgressRing = ({
           )}
         </div>
         <div
-          className='epoch-rounds-left'
+          className='description'
           {...(showTime ? { title: timeLabel } : {})}
         >
           {roundsLeft ? (
