@@ -14,7 +14,8 @@ export const AccountDetails = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { txCount, balance } = useSelector(accountSelector);
+  const { account } = useSelector(accountSelector);
+  const { txCount, balance } = account;
 
   const { getAccountTransfers, getAccountTransfersCount } = useAdapter();
 

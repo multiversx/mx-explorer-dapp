@@ -29,7 +29,8 @@ export const AccountNfts = () => {
   const networkRoute = useNetworkRoute();
   const { adapter, id: activeNetworkId } = useSelector(activeNetworkSelector);
   const [searchParams] = useSearchParams();
-  const { txCount } = useSelector(accountSelector);
+  const { account } = useSelector(accountSelector);
+  const { txCount } = account;
 
   const { getAccountNfts, getAccountNftsCount } = useAdapter();
 

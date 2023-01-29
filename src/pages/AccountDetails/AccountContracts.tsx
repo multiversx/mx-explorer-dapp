@@ -30,7 +30,8 @@ export const AccountContracts = () => {
 
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { txCount } = useSelector(accountSelector);
+  const { account } = useSelector(accountSelector);
+  const { txCount } = account;
   const { size } = useGetFilters();
 
   const { getAccountContracts, getAccountContractsCount } = useAdapter();

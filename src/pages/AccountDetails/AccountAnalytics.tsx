@@ -15,7 +15,8 @@ import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { AccountTabs } from './AccountLayout/AccountTabs';
 
 export const AccountAnalytics = () => {
-  const { address } = useSelector(accountSelector);
+  const { account } = useSelector(accountSelector);
+  const { address } = account;
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
   const { getAccountHistory } = useAdapter();
