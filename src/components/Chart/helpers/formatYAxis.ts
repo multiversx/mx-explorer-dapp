@@ -1,6 +1,6 @@
+import { formatAmount } from '@multiversx/sdk-dapp/utils';
 import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
-import { denominate } from 'components/Denominate/denominate';
 import { ChartAxisType } from './types';
 
 export const formatYAxis = ({
@@ -12,10 +12,10 @@ export const formatYAxis = ({
   if (percentageMultiplier) {
     return `${numeral(Number(tick) * 100).format('0.0')}%`;
   } else if (denomination) {
-    const denominatedValue = denominate({
+    const denominatedValue = formatAmount({
       input: new BigNumber(tick).toString(10),
-      denomination,
-      decimals: 2,
+      decimals: denomination,
+      digits: 2,
       showLastNonZeroDecimal: false,
       addCommas: false
     });
