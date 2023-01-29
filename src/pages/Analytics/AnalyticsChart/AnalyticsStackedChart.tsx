@@ -103,14 +103,14 @@ export const AnalyticsStackedChart = ({
       id: firstSeriesLabel,
       label: firstSeriesLabel,
       data: firstSeriesData,
-      yAxisConfig: getChartPropsFromId(firstSeries.id)
+      yAxisConfig: firstSeries.dappConfig
     });
     setSecondSeriesConfig({
       ...secondSeriesDefaultConfig,
       id: secondSeriesLabel,
       label: secondSeriesLabel,
       data: secondSeriesData,
-      yAxisConfig: getChartPropsFromId(secondSeries.id)
+      yAxisConfig: secondSeries.dappConfig
     });
   }, [firstSeriesData, secondSeriesData]);
 
