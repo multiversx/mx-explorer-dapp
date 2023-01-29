@@ -116,7 +116,7 @@ export const ChartBar = ({
                 tick,
                 currency,
                 percentageMultiplier,
-                denomination
+                decimals: denomination
               })
             }
             axisLine={false}
