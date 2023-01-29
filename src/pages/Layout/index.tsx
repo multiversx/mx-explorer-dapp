@@ -25,7 +25,8 @@ import {
   AccountsStatsCard,
   BlockHeightStatsCard,
   TransactionsStatsCard,
-  ValidatorsStatusCard
+  ValidatorsStatusCard,
+  HeroPills
 } from 'widgets';
 
 import { Footer } from './Footer/index';
@@ -112,8 +113,11 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                   <div className='main-search-container mt-3'>
                     <div className='container'>
                       <div className='row'>
-                        <div className='col-12 col-lg-6'>
+                        <div className='col-12 col-lg-5 col-xl-6'>
                           <Search className='input-group-black' />
+                        </div>
+                        <div className='col-12 col-lg-7 col-xl-6'>
+                          <HeroPills />
                         </div>
                       </div>
                     </div>
