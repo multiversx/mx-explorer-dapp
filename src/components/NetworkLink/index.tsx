@@ -2,17 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
+import { NetworkLinkPropsType } from './types';
 
-interface NetworkLinkType {
-  className?: string;
-  title?: string;
-  onClick?: () => void;
-  to: string;
-  'data-testid'?: string;
-  children: React.ReactNode | string;
-}
-
-export const NetworkLink = ({ to, children, ...rest }: NetworkLinkType) => {
+export const NetworkLink = ({
+  to,
+  children,
+  ...rest
+}: NetworkLinkPropsType) => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
 
