@@ -14,7 +14,7 @@ export const CollectionDetailsRoles = () => {
     <div ref={ref}>
       <div className='card'>
         <div className='card-header'>
-          <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
+          <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
             <CollectionTabs />
           </div>
           {roles ? (

@@ -13,10 +13,10 @@ export const TokenTabs = () => {
   const { identifier, assets, roles } = useSelector(tokenSelector);
 
   return (
-    <div className='tab-links d-flex flex-row flex-wrap'>
+    <div className='tab-links d-flex flex-row flex-wrap gap-3'>
       <NetworkLink
         to={urlBuilder.tokenDetails(identifier)}
-        className={`tab-link me-3 me-lg-4 ${
+        className={`tab-link ${
           activeRoute(tokensRoutes.tokenDetails) ? 'active' : ''
         }`}
       >
@@ -25,7 +25,7 @@ export const TokenTabs = () => {
 
       <NetworkLink
         to={urlBuilder.tokenDetailsAccounts(identifier)}
-        className={`tab-link me-3 me-lg-4 ${
+        className={`tab-link ${
           activeRoute(tokensRoutes.tokenDetailsAccounts) ? 'active' : ''
         }`}
       >
@@ -35,7 +35,7 @@ export const TokenTabs = () => {
       {assets?.lockedAccounts && (
         <NetworkLink
           to={urlBuilder.tokenDetailsLockedAccounts(identifier)}
-          className={`tab-link me-3 me-lg-4 ${
+          className={`tab-link ${
             activeRoute(tokensRoutes.tokenDetailsLockedAccounts) ? 'active' : ''
           }`}
         >
@@ -46,7 +46,7 @@ export const TokenTabs = () => {
       {roles && (
         <NetworkLink
           to={urlBuilder.tokenDetailsRoles(identifier)}
-          className={`tab-link me-3 me-lg-4 ${
+          className={`tab-link ${
             activeRoute(tokensRoutes.tokenDetailsRoles) ? 'active' : ''
           }`}
         >
