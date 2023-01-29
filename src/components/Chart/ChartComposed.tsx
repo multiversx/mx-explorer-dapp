@@ -205,14 +205,13 @@ export const ChartComposed = ({
                 currency: firstSeriesConfig.yAxisConfig?.currency,
                 percentageMultiplier:
                   firstSeriesConfig.yAxisConfig?.percentageMultiplier,
-                denomination: firstSeriesConfig.yAxisConfig?.denomination
+                decimals: firstSeriesConfig.yAxisConfig?.decimals
               })
             }
             axisLine={false}
             tickLine={false}
             tickCount={10}
             stroke={firstSeriesConfig.stroke}
-            dx={-5}
           />
           <YAxis
             yAxisId='right-axis'
@@ -223,14 +222,13 @@ export const ChartComposed = ({
                 currency: secondSeriesConfig.yAxisConfig?.currency,
                 percentageMultiplier:
                   secondSeriesConfig.yAxisConfig?.percentageMultiplier,
-                denomination: secondSeriesConfig.yAxisConfig?.denomination
+                decimals: secondSeriesConfig.yAxisConfig?.decimals
               })
             }
             axisLine={false}
             tickLine={false}
             tickCount={10}
             stroke={secondSeriesConfig.stroke}
-            dx={5}
           />
           <Area
             type='monotone'

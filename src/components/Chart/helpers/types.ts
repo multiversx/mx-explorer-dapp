@@ -45,6 +45,12 @@ export interface MetricType {
   value: string;
 }
 
+export interface ChartYAxisFormatConfig {
+  currency?: string;
+  percentageMultiplier?: number;
+  decimals?: number;
+}
+
 export interface ChartConfigType {
   id: string;
   label?: string;
@@ -56,11 +62,7 @@ export interface ChartConfigType {
   tooltipStrokeDasharray?: string;
   zero?: boolean;
   showUsdValue?: boolean;
-  yAxisConfig?: {
-    denomination?: number;
-    percentageMultiplier?: number;
-    currency?: string;
-  };
+  yAxisConfig?: ChartYAxisFormatConfig;
   tooltip?: {
     showUsdValue?: boolean;
     dateFormat?: string;
@@ -108,9 +110,6 @@ export interface BiAxialChartProps extends BiAxialChartConfigType {
   dateFormat?: string;
 }
 
-export interface ChartAxisType {
+export interface ChartAxisType extends ChartYAxisFormatConfig {
   tick: string;
-  currency?: string;
-  percentageMultiplier?: number;
-  denomination?: number;
 }
