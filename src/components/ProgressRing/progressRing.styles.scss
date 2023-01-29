@@ -1,31 +1,41 @@
-.progress-ring {
+.progress-ring-wrapper {
   transform: rotate(-90deg);
-  &.disabled,
-  &.warning,
-  &.danger {
+  .progress-ring {
+    &.disabled,
+    &.warning,
+    &.danger {
+      .track {
+        stroke: var(--neutral-600);
+      }
+    }
+    &.warning {
+      .fill {
+        stroke: var(--warning);
+      }
+    }
+    &.danger {
+      .fill {
+        stroke: var(--red);
+      }
+    }
+    &.disabled {
+      .fill {
+        stroke: var(--neutral-600);
+      }
+    }
+    .fill {
+      stroke: var(--primary);
+    }
     .track {
-      stroke: var(--neutral-600);
+      stroke: var(--primary-700);
     }
   }
-  &.warning {
-    .fill {
-      stroke: var(--warning);
-    }
-  }
-  &.danger {
-    .fill {
-      stroke: var(--red);
-    }
-  }
-  &.disabled {
-    .fill {
-      stroke: var(--neutral-600);
-    }
-  }
-  .fill {
-    stroke: var(--primary);
-  }
-  .track {
-    stroke: var(--primary-700);
+
+  .progress-ring-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    text-align: center;
   }
 }
