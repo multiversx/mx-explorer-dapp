@@ -143,18 +143,16 @@ export const AnalyticsStackedChart = ({
     <>
       <section id={ids.join('/')} ref={ref}>
         <div className='d-flex align-items-center'>
-          <Chart.Heading>
-            <div>
-              <span style={{ color: firstSeriesConfig.stroke }}>
-                {firstSeriesLabel}
-              </span>
-              <span className='mx-2'>vs.</span>
-              <span style={{ color: secondSeriesConfig.stroke }}>
-                {secondSeriesLabel}
-              </span>
-              <span className='ms-2'>in the past</span>
-            </div>
-          </Chart.Heading>
+          <h3 className='mb-0 py-spacer'>
+            <span style={{ color: firstSeriesConfig.stroke }}>
+              {firstSeriesLabel}
+            </span>
+            <span className='mx-2'>vs.</span>
+            <span style={{ color: secondSeriesConfig.stroke }}>
+              {secondSeriesLabel}
+            </span>
+            <span className='ms-2 me-3'>in the past</span>
+          </h3>
           <ChartResolutionSelector
             value={range}
             onChange={(resolution) => {
@@ -163,8 +161,7 @@ export const AnalyticsStackedChart = ({
             }}
           />
         </div>
-
-        <Chart.Body>
+        <div>
           {dataReady === undefined && <Loader />}
           {dataReady === false && (
             <PageState
@@ -198,7 +195,7 @@ export const AnalyticsStackedChart = ({
                 {...getChartPropsFromId(ids[1])}
               ></Chart.Composed>
             )}
-        </Chart.Body>
+        </div>
       </section>
     </>
   );

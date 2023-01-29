@@ -96,6 +96,13 @@
   background-color: var(--primary-200);
 }
 
+.text-violet {
+  color: var(--violet-400);
+}
+.bg-violet {
+  background-color: var(--violet-400);
+}
+
 // BADGES
 
 .badge {
@@ -465,5 +472,35 @@
   border-radius: $font-size-root;
   &.badge-outline:before {
     border-radius: $font-size-root;
+  }
+}
+
+.filter-badge {
+  display: flex;
+  color: var(--neutral-300);
+  border: 1px solid rgba(212, 212, 212, 0.3);
+  padding: 0.75rem 1.5rem 0.75rem 0.75rem;
+  background: rgba(34, 34, 34, 0.5);
+  backdrop-filter: blur(6px);
+  border-radius: 2rem;
+
+  &.first {
+    color: var(--violet-400);
+    border-color: var(--violet-400);
+    .led {
+      background-color: var(--violet-400);
+    }
+  }
+
+  &.second {
+    color: var(--primary);
+    border-color: var(--primary);
+    .led {
+      background-color: var(--primary);
+    }
+  }
+
+  &.legend-item {
+    padding: 0.75rem 1.125rem;
   }
 }

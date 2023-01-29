@@ -135,8 +135,8 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                         </h2>
                       </div>
                       <div className='card-body d-flex flex-row flex-wrap gap-3'>
-                        <AccountsStatsCard />
                         <TransactionsStatsCard />
+                        <AccountsStatsCard />
                         {isMainnet && <ValidatorsStatusCard isSmall />}
                         <BlockHeightStatsCard neutralColors />
                       </div>
