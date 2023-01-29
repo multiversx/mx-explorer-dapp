@@ -5,15 +5,16 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { capitalize, usdValue } from 'helpers';
 import { economicsSelector } from 'redux/selectors';
-import { ChartConfigType } from '../../../../components/Chart/helpers/types';
+import { ChartConfigType } from './helpers/types';
 
-export const StackedChartTooltip = ({
+export const AnalyticsChartTooltip = ({
   seriesConfig,
   active,
   payload,
   label,
   customLabel,
-  dateFormat
+  dateFormat,
+  color
 }: {
   seriesConfig: ChartConfigType[];
   active?: boolean;
@@ -21,12 +22,13 @@ export const StackedChartTooltip = ({
   label?: any;
   customLabel?: string;
   dateFormat?: string;
+  color?: string;
 }) => {
   const { isFetched, unprocessed } = useSelector(economicsSelector);
 
   if (active && payload && payload.length && isFetched) {
     return (
-      <div className='custom-tooltip'>
+      <div className='analytics-custom-tooltip'>
         <div className='recharts-tooltip-label text-neutral-200'>
           <span>
             {' '}
@@ -77,7 +79,7 @@ export const StackedChartTooltip = ({
                 </span>
 
                 <span
-                  style={{ color: payload.length > 1 ? entry.color : '' }}
+                  style={{ color: payload.length > 1 ? entry.color : color }}
                   className='item-value'
                 >
                   {currentSeries?.yAxisConfig?.currency === '$' ? '$' : ''}
