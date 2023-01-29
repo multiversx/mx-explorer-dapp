@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { ChartArea } from './ChartArea';
+import { ChartAreaNew } from './ChartAreaNew';
 import { ChartBar } from './ChartBar';
 import { ChartBody } from './ChartBody';
 import { ChartComposed } from './ChartComposed';
@@ -14,6 +15,7 @@ export default class Chart extends React.Component<{
   children: React.ReactNode;
 }> {
   static Area = ChartArea;
+  static AreaNew = ChartAreaNew;
   static Bar = ChartBar;
   static Donut = ChartDonut;
   static Options = ChartOptions;
