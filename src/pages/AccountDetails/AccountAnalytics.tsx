@@ -26,6 +26,10 @@ export const AccountAnalytics = () => {
   const [startDate, setStartDate] = React.useState<string>('...');
   const [endDate, setEndDate] = React.useState<string>('...');
 
+  const teal = getComputedStyle(document.documentElement)
+    .getPropertyValue('--teal')
+    .trim();
+
   const getData = () => {
     getAccountHistory({ address, size: 100 }).then((accountsHistoryData) => {
       if (
@@ -55,8 +59,12 @@ export const AccountAnalytics = () => {
       id: 'balance',
       label: 'balance',
       gradient: 'defaultGradient',
+      stroke: teal,
       data: chartData,
-      showUsdValue: true
+      showUsdValue: true,
+      yAxisConfig: {
+        currency: egldLabel
+      }
     }
   ];
 
@@ -94,14 +102,13 @@ export const AccountAnalytics = () => {
             <>
               {chartData.length > 1 ? (
                 <div className='mx-n4'>
-                  <Chart.Area
+                  <Chart.AreaNew
                     config={config}
-                    currency={egldLabel}
                     tooltip={{
                       showUsdValue: true,
                       dateFormat: 'MMM DD, YYYY HH:mm:ss UTC'
                     }}
-                  ></Chart.Area>
+                  ></Chart.AreaNew>
                 </div>
               ) : (
                 <PageState
