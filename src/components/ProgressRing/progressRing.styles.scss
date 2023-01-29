@@ -1,6 +1,20 @@
 .progress-ring-wrapper {
+  &.has-bg {
+    background: rgba(23, 23, 23, 0.95);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.9);
+    border-radius: 50%;
+  }
   transform: rotate(-90deg);
   .progress-ring {
+    circle {
+      transition: stroke-dashoffset 0.35s;
+    }
+    &.progress-0 {
+      circle {
+        transition: none;
+      }
+    }
+
     &.disabled,
     &.warning,
     &.danger {
@@ -33,9 +47,22 @@
 
   .progress-ring-label {
     position: absolute;
+    width: 100%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(90deg);
     text-align: center;
+
+    .label {
+      font-size: 1.25rem;
+      line-height: 1.5rem;
+      color: var(--neutral-300);
+      font-weight: 600;
+    }
+    .description {
+      font-size: 0.688rem;
+      color: var(--neutral-400);
+      opacity: 0.6;
+    }
   }
 }

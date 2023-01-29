@@ -2,19 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { useSelector } from 'react-redux';
 import { REFRESH_RATE } from 'appConstants';
-import { ReactComponent as BigGear } from 'assets/img/network-health/big-gear.svg';
-import { ReactComponent as CenterGear } from 'assets/img/network-health/center-gear.svg';
-import { ReactComponent as Gear } from 'assets/img/network-health/gear.svg';
-import { ReactComponent as LayoutGear } from 'assets/img/network-health/layout-gear.svg';
-import { useAdapter } from 'components';
+
+import { useAdapter, ProgressRing } from 'components';
 import { processStats, validDisplayValue, getExtraStats } from 'helpers';
 import { activeNetworkSelector, refreshSelector } from 'redux/selectors';
 import { getInitialStatsState } from 'redux/slices/stats';
+import { StatsSliceType, WithClassnameType } from 'types';
 
-import { StatsSliceType } from 'types/stats.types';
-import { ProgressRing } from 'components';
-
-export const BlockProgressRing = () => {
+export const BlockProgressRing = ({ className }: WithClassnameType) => {
   const ref = useRef(null);
 
   const { timestamp } = useSelector(refreshSelector);
@@ -29,9 +24,8 @@ export const BlockProgressRing = () => {
   const [state, setState] = useState<StatsSliceType | undefined>(initialStats);
   const [oldTestnetId, setOldTestnetId] = useState(activeNetworkId);
 
-  React.useEffect(() => {
-    setOldTestnetId(activeNetworkId);
-  }, [activeNetworkId]);
+  const [blockTimeProgress, setBlockTimeProgress] = useState(0);
+  const intervalInSec = REFRESH_RATE / 1000;
 
   const initStates = (stats: StatsSliceType) => {
     setState(stats);
@@ -64,10 +58,9 @@ export const BlockProgressRing = () => {
     });
   };
 
-  React.useEffect(getData, [timestamp]);
-
-  const [blockTimeProgress, setBlockTimeProgress] = useState(0);
-  const intervalInSec = REFRESH_RATE / 1000;
+  useEffect(() => {
+    setOldTestnetId(activeNetworkId);
+  }, [activeNetworkId]);
 
   const blockTimeInterval = () => {
     const intervalBlockTime = setInterval(() => {
@@ -88,26 +81,20 @@ export const BlockProgressRing = () => {
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(updateSate, [blockTimeProgress]);
+  useEffect(getData, [timestamp]);
+  useEffect(updateSate, [blockTimeProgress]);
 
   const play = !pageHidden;
+  const progress = (blockTimeProgress * 100) / intervalInSec;
 
   return (
-    <div ref={ref} className='card network-health'>
-      {/* <EpochGear showTime /> */}
-      dfs
-      {/* 
-      <div className='gear-container bottom-right'>
-        <div className={`animate ${play ? '' : 'paused'}`}></div>
-        <div className={`gear-content current-block-time-${blockTimeProgress}`}>
-          <ProgressRing
-                progress={(blockTimeProgress * 100) / intervalInSec}
-              /> 
+    <div ref={ref} className={`block-progress-ring ${className ?? ''}`}>
+      <ProgressRing progress={progress} size={100} hasBg>
+        <div className='label' data-testid='currentEpoch'>
           {stateBuffer !== undefined ? blockTimeProgress : '...'}
-          <small>Block Time</small>
         </div>
-      </div> */}
+        <div className='description'>Block Time</div>
+      </ProgressRing>
     </div>
   );
 };

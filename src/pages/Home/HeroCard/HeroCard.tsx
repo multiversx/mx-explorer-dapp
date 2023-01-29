@@ -50,7 +50,7 @@ export const HeroCard = () => {
                 </div>
               </div>
             </div>
-            <div className='col-lg-4'>
+            <div className='col-lg-4 d-flex flex-row align-items-end justify-content-center justify-content-lg-end mt-3 gap-spacer gap-lg-2'>
               <BlockProgressRing />
               <EpochProgressRing />
             </div>
