@@ -12,11 +12,11 @@ export const CollectionTabs = () => {
   const { collection, roles, type } = useSelector(collectionSelector);
 
   return (
-    <div className='tab-links d-flex flex-row flex-wrap'>
+    <div className='tab-links d-flex flex-wrap gap-3'>
       {type && type !== NftEnumType.MetaESDT && (
         <NetworkLink
           to={urlBuilder.collectionDetails(collection)}
-          className={`tab-link me-3 me-lg-4 ${
+          className={`tab-link ${
             activeRoute(collectionRoutes.collectionDetails) ? 'active' : ''
           }`}
         >
@@ -27,7 +27,7 @@ export const CollectionTabs = () => {
       {roles && (
         <NetworkLink
           to={urlBuilder.collectionDetailsRoles(collection)}
-          className={`tab-link me-3 me-lg-4 ${
+          className={`tab-link ${
             activeRoute(collectionRoutes.collectionDetailsRoles) ||
             type === NftEnumType.MetaESDT
               ? 'active'
