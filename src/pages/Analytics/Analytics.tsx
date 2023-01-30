@@ -103,14 +103,12 @@ export const Analytics = () => {
     );
   }, [chartList]);
 
-  const stackedAmountChart = useMemo(() => {
-    return chartList?.filter((sc) =>
-      sc.id.includes('-total-value-locked-plus-staking-')
+  const stakingChart = useMemo(() => {
+    return chartList?.filter(
+      (sc) =>
+        sc.id.includes('-total-value-locked-plus-staking-') ||
+        sc.id.includes('-users-staking-')
     );
-  }, [chartList]);
-
-  const noOfUsersStakingChart = useMemo(() => {
-    return chartList?.filter((sc) => sc.id.includes('-users-staking-'));
   }, [chartList]);
 
   const aprsChart = useMemo(() => {
@@ -205,7 +203,7 @@ export const Analytics = () => {
 
               <ChartWrapper>
                 <div className='px-3 pb-3'>
-                  {newTokensCreatedChart.length >= 2 ? (
+                  {newTokensCreatedChart.length === 2 ? (
                     <AnalyticsStackedChart
                       firstSeries={newTokensCreatedChart[0]}
                       secondSeries={newTokensCreatedChart[1]}
@@ -220,16 +218,13 @@ export const Analytics = () => {
 
               <ChartWrapper>
                 <div className='px-3 pb-3'>
-                  {stackedAmountChart.length >= 2 &&
-                  noOfUsersStakingChart.length >= 2 ? (
+                  {stakingChart.length === 2 ? (
                     <AnalyticsStackedChart
-                      firstSeries={stackedAmountChart[0]}
-                      secondSeries={noOfUsersStakingChart[0]}
+                      firstSeries={stakingChart[0]}
+                      secondSeries={stakingChart[1]}
                     />
                   ) : (
-                    <AnalyticsChart
-                      series={[...stackedAmountChart, ...noOfUsersStakingChart]}
-                    />
+                    <AnalyticsChart series={stakingChart} />
                   )}
                 </div>
               </ChartWrapper>
