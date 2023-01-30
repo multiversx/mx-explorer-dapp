@@ -20,9 +20,7 @@ export const ActiveAccountsHeroPill = ({ className }: WithClassnameType) => {
     >
       <FontAwesomeIcon icon={faCircleBolt} className='text-primary-200 me-2' />
       <div className='d-flex flex-column lext-left'>
-        <div className='label text-primary cursor-context'>
-          {activeAccountsToday}
-        </div>
+        <div className='label text-primary'>{activeAccountsToday}</div>
         <div className='description'>Active Accounts Today</div>
       </div>
     </div>
