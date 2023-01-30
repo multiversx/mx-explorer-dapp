@@ -136,7 +136,7 @@ export const TokensMeta = () => {
                                     <div className='token-identity d-flex flex-row'>
                                       <div className='d-flex align-items-center me-3'>
                                         <NetworkLink
-                                          to={urlBuilder.collectionDetails(
+                                          to={urlBuilder.tokenMetaEsdtDetails(
                                             metaCollection.collection
                                           )}
                                           data-testid={`nftsLink${i}`}
@@ -161,7 +161,7 @@ export const TokensMeta = () => {
 
                                       <div className='d-flex flex-column justify-content-center'>
                                         <NetworkLink
-                                          to={urlBuilder.collectionDetails(
+                                          to={urlBuilder.tokenMetaEsdtDetails(
                                             metaCollection.collection
                                           )}
                                           data-testid={`nftsLink${i}`}

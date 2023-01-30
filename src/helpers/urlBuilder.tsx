@@ -21,6 +21,7 @@ export const urlBuilder = {
     `/accounts/${address}/contracts`,
   identityDetails: (id: string) => `/identities/${id}`,
   tokenDetails: (tokenId: string) => `/tokens/${tokenId}`,
+  tokenMetaEsdtDetails: (tokenId: string) => `/meta-esdt/${tokenId}`,
   tokenDetailsAccounts: (tokenId: string) => `/tokens/${tokenId}/accounts`,
   tokenDetailsLockedAccounts: (tokenId: string) =>
     `/tokens/${tokenId}/locked-accounts`,

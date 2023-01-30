@@ -42,6 +42,7 @@ export const PageLayout = ({ children }: { children: React.ReactNode }) => {
     case activeRoute(tokensRoutes.tokenDetailsRoles):
       return <TokenLayout>{children}</TokenLayout>;
 
+    case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
     case activeRoute(collectionRoutes.collectionDetails):
     case activeRoute(collectionRoutes.collectionDetailsRoles):
       return <CollectionLayout>{children}</CollectionLayout>;

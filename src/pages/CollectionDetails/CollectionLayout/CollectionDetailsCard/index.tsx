@@ -13,11 +13,13 @@ import {
   SocialIcons
 } from 'components';
 import { urlBuilder, dateFormatted } from 'helpers';
+import { useActiveRoute } from 'hooks';
 import { collectionSelector } from 'redux/selectors';
+import { tokensRoutes } from 'routes';
 
 export const CollectionDetailsCard = () => {
   const ref = React.useRef(null);
-
+  const activeRoute = useActiveRoute();
   const { collectionState } = useSelector(collectionSelector);
   const {
     collection,
@@ -58,7 +60,10 @@ export const CollectionDetailsCard = () => {
                   data-testid='title'
                   className='mb-0 d-flex align-items-center'
                 >
-                  Collection Details
+                  {activeRoute(tokensRoutes.tokensMetaEsdtDetails)
+                    ? 'Meta-ESDT'
+                    : 'Collection'}{' '}
+                  Details
                 </h5>
               </div>
             </div>
