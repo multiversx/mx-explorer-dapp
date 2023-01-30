@@ -15,7 +15,7 @@ export interface AnalyticsChartDataType {
   timestamp: number;
 }
 
-export const AnalyticsChart = ({ charts }: { charts: ChartListType[] }) => {
+export const AnalyticsCharts = ({ charts }: { charts: ChartListType[] }) => {
   const ref = useRef(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
