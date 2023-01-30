@@ -164,22 +164,22 @@ export const Analytics = () => {
             <div className='card-body d-flex justify-content-between flex-wrap'>
               <h2 className='py-spacer'>User activity & transactions</h2>
               <ChartWrapper>
-                <div className='row p-3'>
+                <div className='px-3 p-3'>
                   <AnalyticsChart series={transactionsChart} />
                 </div>
               </ChartWrapper>
               <ChartWrapper size='half'>
-                <div className='row p-3'>
+                <div className='px-3 pb-3'>
                   <AnalyticsChart series={tokenTransfersChart} />
                 </div>
               </ChartWrapper>
               <ChartWrapper size='half'>
-                <div className='row p-3'>
+                <div className='px-3 pb-3'>
                   <AnalyticsChart series={nftTransferChart} />
                 </div>
               </ChartWrapper>
               <ChartWrapper>
-                <div className='row p-3'>
+                <div className='px-3 pb-3'>
                   <AnalyticsChart series={dailyActiveUsersChart} />
                 </div>
               </ChartWrapper>
@@ -187,7 +187,7 @@ export const Analytics = () => {
               <h2 className='py-spacer'>Developers / Validators</h2>
 
               <ChartWrapper>
-                <div className='row p-3'>
+                <div className='px-3 pb-3'>
                   <AnalyticsChart series={networkAndDeveloperFeesChart} />
                 </div>
               </ChartWrapper>
@@ -195,7 +195,7 @@ export const Analytics = () => {
               <h2 className='py-spacer'>Application / Token Metrics</h2>
 
               <ChartWrapper>
-                <div className='row p-3'>
+                <div className='px-3 pb-3'>
                   <AnalyticsChart series={newStuffCreatedChart} />
                 </div>
               </ChartWrapper>
@@ -203,17 +203,17 @@ export const Analytics = () => {
               <h2 className='py-spacer'>Staking</h2>
 
               <ChartWrapper>
-                <div className='row p-3'>
+                <div className='px-3 pb-3'>
                   <AnalyticsChart series={stackedAmountChart} />
                 </div>
               </ChartWrapper>
               <ChartWrapper>
-                <div className='row p-3'>
+                <div className='px-3 pb-3'>
                   <AnalyticsChart series={noOfUsersStakingChart} />
                 </div>
               </ChartWrapper>
               <ChartWrapper>
-                <div className='row p-3'>
+                <div className='px-3 pb-3'>
                   <AnalyticsChart series={aprsChart} />
                 </div>
               </ChartWrapper>
