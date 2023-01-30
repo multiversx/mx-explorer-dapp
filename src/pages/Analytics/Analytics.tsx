@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   createSearchParams,
   useLocation,
@@ -7,20 +8,18 @@ import {
 } from 'react-router-dom';
 import { useIsMainnet } from 'hooks';
 import { ChartWrapper } from './components/ChartWrapper';
+import { Loader, useAdapter } from '../../components';
+import { activeNetworkSelector } from '../../redux/selectors';
+import { ChartListType } from '../AnalyticsCompare';
+import { AnalyticsChart } from '../AnalyticsCompare/AnalyticsChart';
+import { ChartResolution } from '../AnalyticsCompare/AnalyticsChart/components/ChartResolution';
 import {
   FIRST_SERIES_ID,
   RANGE,
   SECOND_SERIES_ID
 } from '../AnalyticsCompare/constants';
-import { useSelector } from 'react-redux';
-import { activeNetworkSelector } from '../../redux/selectors';
-import { Loader, useAdapter } from '../../components';
-import { ChartResolution } from '../AnalyticsCompare/AnalyticsChart/components/ChartResolution';
-import { ChartListType } from '../AnalyticsCompare';
 import { FailedAnalytics } from '../AnalyticsCompare/FailedAnalytics';
 import { NoAnalytics } from '../AnalyticsCompare/NoAnalytics';
-import { analyticsRoutes } from 'routes';
-import { AnalyticsChart } from '../AnalyticsCompare/AnalyticsChart';
 
 export const Analytics = () => {
   const ref = useRef(null);
@@ -68,13 +67,52 @@ export const Analytics = () => {
     navigate(options, { replace: true });
   };
 
-  const onSelectPill = (series: ChartListType) => () => {
-    if (selectedPills.find((pill) => pill.id === series.id)) {
-      return;
-    }
+  const transactionsChart = useMemo(() => {
+    return chartList?.filter((sc) => sc.id.includes('-transactions-'));
+  }, [chartList]);
 
-    setSelectedPills((pills) => [pills[1], series]);
-  };
+  const tokenTransfersChart = useMemo(() => {
+    return chartList?.filter((sc) => sc.id.includes('-token-transfers-'));
+  }, [chartList]);
+
+  const nftTransferChart = useMemo(() => {
+    return chartList?.filter((sc) => sc.id.includes('-nft-transfers-'));
+  }, [chartList]);
+
+  const dailyActiveUsersChart = useMemo(() => {
+    return chartList?.filter((sc) => sc.id.includes('-active-users-'));
+  }, [chartList]);
+
+  const networkAndDeveloperFeesChart = useMemo(() => {
+    return chartList?.filter(
+      (sc) =>
+        sc.id.includes('-fees-captured-') ||
+        sc.id.includes('-developer-rewards-')
+    );
+  }, []);
+
+  const newStuffCreatedChart = useMemo(() => {
+    return chartList?.filter(
+      (sc) =>
+        sc.id.includes('-new-smart-contracts-') ||
+        sc.id.includes('-new-nfts-') ||
+        sc.id.includes('-new-esdts-')
+    );
+  }, []);
+
+  const stackedAmountChart = useMemo(() => {
+    return chartList?.filter((sc) =>
+      sc.id.includes('-total-value-locked-plus-staking-')
+    );
+  }, []);
+
+  const noOfUsersStakingChart = useMemo(() => {
+    return chartList?.filter((sc) => sc.id.includes('-users-staking-'));
+  }, []);
+
+  const aprsChart = useMemo(() => {
+    return chartList?.filter((sc) => sc.id.includes('-apr-'));
+  }, []);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(getData, [activeNetworkId]);
@@ -124,46 +162,60 @@ export const Analytics = () => {
             </div>
 
             <div className='card-body d-flex justify-content-between flex-wrap'>
+              <h2 className='py-spacer'>User activity & transactions</h2>
               <ChartWrapper>
-                {' '}
                 <div className='row p-3'>
-                  <AnalyticsChart
-                    // charts={chartList.filter((x) =>
-                    //   x.id.includes('transactions')
-                    // )}
-                    series={[
-                      chartList[0],
-                      chartList[1],
-                      chartList[2],
-                      chartList[3]
-                    ]}
-                  />
+                  <AnalyticsChart series={transactionsChart} />
                 </div>
               </ChartWrapper>
               <ChartWrapper size='half'>
                 <div className='row p-3'>
-                  <AnalyticsChart series={[chartList[0]]} />
+                  <AnalyticsChart series={tokenTransfersChart} />
                 </div>
               </ChartWrapper>
               <ChartWrapper size='half'>
                 <div className='row p-3'>
-                  <AnalyticsChart series={[chartList[1]]} />
+                  <AnalyticsChart series={nftTransferChart} />
                 </div>
               </ChartWrapper>
               <ChartWrapper>
                 <div className='row p-3'>
-                  <AnalyticsChart series={[chartList[2]]} />
+                  <AnalyticsChart series={dailyActiveUsersChart} />
                 </div>
               </ChartWrapper>
-              <ChartWrapper size='half'>
+
+              <h2 className='py-spacer'>Developers / Validators</h2>
+
+              <ChartWrapper>
                 <div className='row p-3'>
-                  <AnalyticsChart series={[chartList[3]]} />
-                </div>{' '}
+                  <AnalyticsChart series={networkAndDeveloperFeesChart} />
+                </div>
               </ChartWrapper>
-              <ChartWrapper size='half'>
+
+              <h2 className='py-spacer'>Application / Token Metrics</h2>
+
+              <ChartWrapper>
                 <div className='row p-3'>
-                  <AnalyticsChart series={[chartList[4]]} />
-                </div>{' '}
+                  <AnalyticsChart series={newStuffCreatedChart} />
+                </div>
+              </ChartWrapper>
+
+              <h2 className='py-spacer'>Staking</h2>
+
+              <ChartWrapper>
+                <div className='row p-3'>
+                  <AnalyticsChart series={stackedAmountChart} />
+                </div>
+              </ChartWrapper>
+              <ChartWrapper>
+                <div className='row p-3'>
+                  <AnalyticsChart series={noOfUsersStakingChart} />
+                </div>
+              </ChartWrapper>
+              <ChartWrapper>
+                <div className='row p-3'>
+                  <AnalyticsChart series={aprsChart} />
+                </div>
               </ChartWrapper>
             </div>
           </div>
