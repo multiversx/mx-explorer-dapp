@@ -194,6 +194,7 @@ export const NodesFilters = ({
                   data-testid='filterByValidators'
                   onClick={() => {
                     nodeStatusLink('eligible');
+                    document.body.click();
                   }}
                 >
                   Eligible
@@ -205,6 +206,7 @@ export const NodesFilters = ({
                   data-testid='filterByValidators'
                   onClick={() => {
                     nodeStatusLink('waiting');
+                    document.body.click();
                   }}
                 >
                   Waiting
@@ -216,6 +218,7 @@ export const NodesFilters = ({
                   data-testid='filterByValidators'
                   onClick={() => {
                     nodeStatusLink('new');
+                    document.body.click();
                   }}
                 >
                   New
@@ -227,6 +230,7 @@ export const NodesFilters = ({
                   data-testid='filterByValidators'
                   onClick={() => {
                     nodeStatusLink('jailed');
+                    document.body.click();
                   }}
                 >
                   Jailed
@@ -238,6 +242,7 @@ export const NodesFilters = ({
                   data-testid='filterByValidators'
                   onClick={() => {
                     nodeStatusLink('leaving');
+                    document.body.click();
                   }}
                 >
                   Leaving
@@ -249,6 +254,7 @@ export const NodesFilters = ({
                   data-testid='filterByValidators'
                   onClick={() => {
                     nodeStatusLink('queued');
+                    document.body.click();
                   }}
                 >
                   Queued
@@ -260,6 +266,7 @@ export const NodesFilters = ({
                   data-testid='filterByValidators'
                   onClick={() => {
                     nodeStatusLink('inactive');
+                    document.body.click();
                   }}
                 >
                   Inactive

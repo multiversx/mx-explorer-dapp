@@ -87,10 +87,9 @@ export const Blocks = () => {
                           >
                             Blocks
                             {shard !== undefined && shard >= 0 && (
-                              <>
-                                {' '}
-                                <ShardSpan shard={shard} />
-                              </>
+                              <span className='ms-1'>
+                                from <ShardSpan shard={shard} />
+                              </span>
                             )}
                           </h5>
                           <Pager
