@@ -20,11 +20,6 @@ Override Bootstrap variables only above.
 /* Base
 -------------------------------------------------- */
 
-body {
-  font-family: 'Roobert Regular';
-  font-weight: 400;
-}
-
 .form-control {
   &:focus-visible {
     text-shadow: none;
