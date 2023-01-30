@@ -36,7 +36,7 @@ export const PriceHeroPill = ({ className }: WithClassnameType) => {
       <div className='d-flex flex-column lext-left'>
         <div
           className='label text-primary cursor-context'
-          title={`${priceChange24h}%`}
+          title={priceChange24h}
         >
           {currentPrice}
         </div>
