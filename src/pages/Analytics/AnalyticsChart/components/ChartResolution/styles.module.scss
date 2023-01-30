@@ -1,0 +1,36 @@
+.resolutions {
+  border-radius: 1rem;
+  padding: 0.5rem;
+  background-color: var(--neutral-900);
+  display: flex;
+  align-items: center;
+
+  .resolution {
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    transition: all 200ms ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.25;
+    font-weight: 600;
+    font-family: 'Roobert SemiBold';
+    font-size: 0.875rem;
+    margin-right: 0.25rem;
+    color: var(--neutral-400);
+    cursor: pointer;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:hover {
+      color: var(--white);
+    }
+
+    &.active {
+      background-color: var(--neutral-700);
+      color: var(--white);
+    }
+  }
+}
