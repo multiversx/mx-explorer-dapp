@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
@@ -6,11 +6,10 @@ import { PageState, Chart, Loader, useAdapter } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
 import { activeNetworkSelector } from 'redux/selectors';
 import { ChartResolutionSelector } from './components/ChartResolution';
+import type { ChartResolutionRangeType } from './components/ChartResolution/types';
 import { ChartListType } from '../AnalyticsCompare';
 import { RANGE } from '../constants';
 import { getChartColorPalette } from '../helpers/getChartColorPalette';
-
-import type { ChartResolutionRangeType } from './components/ChartResolution/types';
 
 export interface AnalyticsChartDataType {
   value: string;
@@ -59,7 +58,6 @@ export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
     setDataReady(dataReady);
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     getData();
   }, [activeNetworkId, range, series]);
