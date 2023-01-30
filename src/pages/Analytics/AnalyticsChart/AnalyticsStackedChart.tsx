@@ -116,7 +116,7 @@ export const AnalyticsStackedChart = ({
   return (
     <>
       <section id={[firstSeries.id, secondSeries.id].join('/')} ref={ref}>
-        <div className='d-flex align-items-center'>
+        <div className='d-flex align-items-center flex-wrap'>
           <h3 className='mb-0 py-spacer'>
             <span style={{ color: firstSeriesDefaultConfig.stroke }}>
               {firstSeriesLabel}
