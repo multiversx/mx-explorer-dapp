@@ -1,8 +1,8 @@
 import React, { useState, ReactNode } from 'react';
+import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { UAParser } from 'ua-parser-js';
-import classNames from 'classnames';
 
 import { Search, NotificationsBar } from 'components';
 import {
@@ -34,6 +34,26 @@ import { Footer } from './Footer/index';
 import { Header } from './Header/index';
 import { PageLayout } from './PageLayout';
 import { Unavailable } from './Unavailable';
+
+const getCustomPageName = (pageName: string) => {
+  switch (pageName) {
+    case 'nft-collections':
+      return 'NFT Collections';
+    case 'sft-collections':
+      return 'SFT Collections';
+    case 'sft-collections':
+      return 'SFT Collections';
+    case 'meta-tokens':
+    case 'meta-esdt':
+      return 'Meta-ESDT';
+    case 'nfts':
+      return 'NFTs';
+    case 'sfts':
+      return 'SFTs';
+    default:
+      return pageName.replaceAll('-', ' ').toLowerCase();
+  }
+};
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   const [freeze, setFreeze] = useState(false);
@@ -95,13 +115,13 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const pathArray = pathname.split('/');
   const pageClass =
     activeNetworkId === defaultNetworkId ? pathArray?.[1] : pathArray?.[2];
-  const pageName = pageClass.toLowerCase();
+  const pageName = getCustomPageName(pageClass);
 
   return (
     <div
       className={`d-flex scrollbar-thin ${
         pageName ? pageName : 'home'
-      } ${userAgentClasses}`}
+      } ${userAgentClasses} ${pageClass}`}
     >
       <div className='flex-fill vh-100'>
         <main
