@@ -166,19 +166,6 @@ export const AnalyticsCompare = () => {
                     secondSeries={selectedPills[1]}
                   />
                 </div>
-                <div className='row mt-5'>
-                  <AnalyticsChart
-                    // charts={chartList.filter((x) =>
-                    //   x.id.includes('transactions')
-                    // )}
-                    series={[
-                      chartList[0],
-                      chartList[1],
-                      chartList[2],
-                      chartList[3]
-                    ]}
-                  />
-                </div>
               </div>
               <div className='card-footer'></div>
             </div>

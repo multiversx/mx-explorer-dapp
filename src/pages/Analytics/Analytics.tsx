@@ -74,15 +74,15 @@ export const Analytics = () => {
   }, [chartList]);
 
   const tokenTransfersChart = useMemo(() => {
-    return chartList?.filter((sc) => sc.id.includes('-token-transfers-'));
+    return chartList?.filter((sc) => sc.id.includes('token-transfers'));
   }, [chartList]);
 
   const nftTransferChart = useMemo(() => {
-    return chartList?.filter((sc) => sc.id.includes('-nft-transfers-'));
+    return chartList?.filter((sc) => sc.id.includes('nft-transfers'));
   }, [chartList]);
 
   const dailyActiveUsersChart = useMemo(() => {
-    return chartList?.filter((sc) => sc.id.includes('-active-users-'));
+    return chartList?.filter((sc) => sc.id.includes('active-users'));
   }, [chartList]);
 
   const networkAndDeveloperFeesChart = useMemo(() => {
@@ -94,20 +94,37 @@ export const Analytics = () => {
   }, [chartList]);
 
   const newSmartContractsCreatedChart = useMemo(() => {
-    return chartList?.filter((sc) => sc.id.includes('-new-smart-contracts-'));
+    return chartList?.filter((sc) => sc.id.includes('new-smart-contracts'));
   }, [chartList]);
 
-  const newTokensCreatedChart = useMemo(() => {
-    return chartList?.filter(
-      (sc) => sc.id.includes('-new-nfts-') || sc.id.includes('-new-esdts-')
+  const newStuffCreatedChart = useMemo(() => {
+    let smartContractChartChart: ChartListType | null = null;
+
+    if (newSmartContractsCreatedChart.length > 0) {
+      smartContractChartChart = newSmartContractsCreatedChart[0];
+      smartContractChartChart.dappConfig = {
+        ...smartContractChartChart.dappConfig,
+        id: 'right-axis',
+        orientation: 'right'
+      };
+    }
+
+    const charts = chartList?.filter(
+      (sc) => sc.id.includes('new-nfts') || sc.id.includes('new-esdts')
     );
-  }, [chartList]);
+
+    if (smartContractChartChart) {
+      return [...charts, smartContractChartChart];
+    }
+
+    return charts;
+  }, [chartList, newSmartContractsCreatedChart]);
 
   const stakingChart = useMemo(() => {
     return chartList?.filter(
       (sc) =>
-        sc.id.includes('-total-value-locked-plus-staking-') ||
-        sc.id.includes('-users-staking-')
+        sc.id.includes('total-value-locked-plus-staking') ||
+        sc.id.includes('users-staking')
     );
   }, [chartList]);
 
@@ -189,7 +206,14 @@ export const Analytics = () => {
 
               <ChartWrapper>
                 <div className='px-3 pb-3'>
-                  <AnalyticsChart series={networkAndDeveloperFeesChart} />
+                  {networkAndDeveloperFeesChart.length === 2 ? (
+                    <AnalyticsStackedChart
+                      firstSeries={networkAndDeveloperFeesChart[0]}
+                      secondSeries={networkAndDeveloperFeesChart[1]}
+                    />
+                  ) : (
+                    <AnalyticsChart series={networkAndDeveloperFeesChart} />
+                  )}
                 </div>
               </ChartWrapper>
 
@@ -197,20 +221,7 @@ export const Analytics = () => {
 
               <ChartWrapper>
                 <div className='px-3 pb-3'>
-                  <AnalyticsChart series={newSmartContractsCreatedChart} />
-                </div>
-              </ChartWrapper>
-
-              <ChartWrapper>
-                <div className='px-3 pb-3'>
-                  {newTokensCreatedChart.length === 2 ? (
-                    <AnalyticsStackedChart
-                      firstSeries={newTokensCreatedChart[0]}
-                      secondSeries={newTokensCreatedChart[1]}
-                    />
-                  ) : (
-                    <AnalyticsChart series={newTokensCreatedChart} />
-                  )}
+                  <AnalyticsChart series={newStuffCreatedChart} />
                 </div>
               </ChartWrapper>
 
