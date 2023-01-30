@@ -22,7 +22,6 @@ import { FailedAnalytics } from '../AnalyticsCompare/FailedAnalytics';
 import { NoAnalytics } from '../AnalyticsCompare/NoAnalytics';
 
 export const Analytics = () => {
-  const ref = useRef(null);
   const navigate = useNavigate();
   const isMainnet = useIsMainnet();
 
@@ -89,7 +88,7 @@ export const Analytics = () => {
         sc.id.includes('-fees-captured-') ||
         sc.id.includes('-developer-rewards-')
     );
-  }, []);
+  }, [chartList]);
 
   const newStuffCreatedChart = useMemo(() => {
     return chartList?.filter(
@@ -98,21 +97,21 @@ export const Analytics = () => {
         sc.id.includes('-new-nfts-') ||
         sc.id.includes('-new-esdts-')
     );
-  }, []);
+  }, [chartList]);
 
   const stackedAmountChart = useMemo(() => {
     return chartList?.filter((sc) =>
       sc.id.includes('-total-value-locked-plus-staking-')
     );
-  }, []);
+  }, [chartList]);
 
   const noOfUsersStakingChart = useMemo(() => {
     return chartList?.filter((sc) => sc.id.includes('-users-staking-'));
-  }, []);
+  }, [chartList]);
 
   const aprsChart = useMemo(() => {
     return chartList?.filter((sc) => sc.id.includes('-apr-'));
-  }, []);
+  }, [chartList]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(getData, [activeNetworkId]);
