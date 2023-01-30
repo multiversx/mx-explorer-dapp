@@ -15,6 +15,9 @@
 
   .identity-name {
     max-width: 14rem;
+    @include media-breakpoint-up(xxl) {
+      max-width: 30rem;
+    }
     .ellipsis,
     .trim .left span,
     .trim .right span {
