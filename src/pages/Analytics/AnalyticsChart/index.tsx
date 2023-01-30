@@ -1,2 +1,2 @@
-export * from './AnalyticsChart';
+export * from './AnalyticsCharts';
 export * from './AnalyticsStackedChart';
