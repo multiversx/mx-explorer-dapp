@@ -95,6 +95,7 @@ export const tokensRoutes = {
   tokensMeta: '/meta-tokens',
   tokensMetaEsdt: '/meta-esdt',
   tokenDetails: '/tokens/:hash',
+  tokensMetaEsdtDetails: '/meta-esdt/:hash',
   tokenDetailsAccounts: '/tokens/:hash/accounts',
   tokenDetailsLockedAccounts: '/tokens/:hash/locked-accounts',
   tokenDetailsRoles: '/tokens/:hash/roles'
@@ -258,6 +259,11 @@ const mainRoutes: RouteType[] = [
     path: tokensRoutes.tokenDetails,
     title: 'Token Details',
     component: TokenDetails
+  },
+  {
+    path: tokensRoutes.tokensMetaEsdtDetails,
+    title: 'Meta-ESDT Details',
+    component: CollectionDetails
   },
   {
     path: tokensRoutes.tokenDetailsAccounts,

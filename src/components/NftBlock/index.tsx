@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NetworkLink, Denominate } from 'components';
 import { urlBuilder } from 'helpers';
-import { NftType } from 'types';
+import { NftType, NftEnumType } from 'types';
 
 interface NftBlockType {
   operationToken?: NftType;
@@ -15,7 +15,7 @@ export const NftBlock = ({ value, operationToken }: NftBlockType) => {
     <div ref={ref} className='nft-block d-flex text-truncate'>
       {operationToken && (
         <>
-          {value && operationToken.type !== 'NonFungibleESDT' && (
+          {value && operationToken.type !== NftEnumType.NonFungibleESDT && (
             <div className='me-1'>
               {operationToken.decimals !== undefined ? (
                 <Denominate
@@ -30,7 +30,11 @@ export const NftBlock = ({ value, operationToken }: NftBlockType) => {
             </div>
           )}
           <NetworkLink
-            to={urlBuilder.nftDetails(operationToken.identifier)}
+            to={
+              operationToken.type === NftEnumType.MetaESDT
+                ? urlBuilder.tokenMetaEsdtDetails(operationToken.collection)
+                : urlBuilder.nftDetails(operationToken.identifier)
+            }
             className={`d-flex text-truncate ${
               operationToken?.assets?.svgUrl ? 'side-link' : ''
             }`}

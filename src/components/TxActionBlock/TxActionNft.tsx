@@ -45,7 +45,11 @@ export const TxActionNft = ({
               </div>
             )}
           <NetworkLink
-            to={urlBuilder.nftDetails(token.identifier)}
+            to={
+              token.type === NftEnumType.MetaESDT && token?.collection
+                ? urlBuilder.tokenMetaEsdtDetails(token.collection)
+                : urlBuilder.nftDetails(token.identifier)
+            }
             className={`d-flex text-truncate ${
               token.svgUrl ? 'side-link' : ''
             }`}

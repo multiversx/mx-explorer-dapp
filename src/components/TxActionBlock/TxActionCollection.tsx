@@ -1,7 +1,7 @@
 import React from 'react';
 import { NetworkLink } from 'components';
 import { urlBuilder } from 'helpers';
-import { TokenArgumentType } from 'types';
+import { TokenArgumentType, NftEnumType } from 'types';
 
 export const TxActionCollection = ({ token }: { token: TokenArgumentType }) => {
   const ref = React.useRef(null);
@@ -10,7 +10,11 @@ export const TxActionCollection = ({ token }: { token: TokenArgumentType }) => {
     <div ref={ref} className='collection-action-block'>
       {token && token.collection && (
         <NetworkLink
-          to={urlBuilder.collectionDetails(token.collection)}
+          to={
+            token?.type === NftEnumType.MetaESDT
+              ? urlBuilder.tokenMetaEsdtDetails(token.collection)
+              : urlBuilder.collectionDetails(token.collection)
+          }
           className={`d-flex text-truncate ${token.svgUrl ? 'side-link' : ''}`}
         >
           <div className='d-flex align-items-center symbol text-truncate'>
