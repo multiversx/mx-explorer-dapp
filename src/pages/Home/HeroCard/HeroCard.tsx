@@ -36,7 +36,7 @@ export const HeroCard = () => {
         <div className='d-flex flex-column gap-3'>
           <div className='row'>
             <div className='col-lg-8'>
-              <div className='d-flex flex-row flex-wrap w-100 gap-3'>
+              <div className='d-flex flex-row flex-wrap w-100 gap-3 h-100'>
                 <BlockHeightStatsCard neutralColors />
               </div>
             </div>
@@ -44,7 +44,7 @@ export const HeroCard = () => {
 
           <div className='row'>
             <div className='col-lg-8'>
-              <div className='d-flex flex-row gap-3'>
+              <div className='d-flex flex-row gap-3 h-100'>
                 <div className='d-flex flex-row flex-wrap w-100 gap-3'>
                   <TransactionsStatsCard />
                   <AccountsStatsCard />

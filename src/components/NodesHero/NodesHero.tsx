@@ -2,18 +2,25 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 import { MultilayerPercentageRing } from 'components';
+import { useIsMainnet } from 'hooks';
 import { ChartStake } from 'pages/Home/ChartStake';
 import { nodesVersionsSelector } from 'redux/selectors';
 import { ValidatorsStatusCard } from 'widgets';
 
 export const NodesHero = () => {
   const { nodesVersions } = useSelector(nodesVersionsSelector);
+  const isMainnet = useIsMainnet();
+
+  if (!isMainnet) {
+    return null;
+  }
 
   return (
     <div className='nodes-hero card card-lg card-black mb-3'>
       <div className='card-header'>
         <h2 className='mb-0'>Validators</h2>
       </div>
+
       <div className='card-body pb-3'>
         <div className='row'>
           <div className='col-lg-5 mb-3'>

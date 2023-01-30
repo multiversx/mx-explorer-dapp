@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import { useIsMainnet } from 'hooks';
 import { MostUsed } from 'widgets';

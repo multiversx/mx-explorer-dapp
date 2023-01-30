@@ -1,5 +1,8 @@
 import React from 'react';
+import { faCircleCheck } from '@fortawesome/pro-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
+
 import { NetworkLink } from 'components';
 import { urlBuilder, isContract } from 'helpers';
 import { useActiveRoute } from 'hooks';
@@ -10,7 +13,7 @@ export const AccountTabs = () => {
   const activeRoute = useActiveRoute();
 
   const { account } = useSelector(accountSelector);
-  const { address, code } = account;
+  const { address, code, isVerified } = account;
   const { adapter } = useSelector(activeNetworkSelector);
 
   const tokensRouteActive = adapter === 'api';
@@ -84,7 +87,16 @@ export const AccountTabs = () => {
             activeRoute(accountsRoutes.accountCode) ? 'active' : ''
           }`}
         >
-          <h5>Code</h5>
+          <h5>
+            Code{' '}
+            {isVerified && (
+              <FontAwesomeIcon
+                icon={faCircleCheck}
+                size='xs'
+                className='text-primary-200 ms-1'
+              />
+            )}
+          </h5>
         </NetworkLink>
       )}
     </div>
