@@ -32,7 +32,10 @@ export const collectionSlice = createSlice({
       state: CollectionSliceType,
       action: PayloadAction<CollectionSliceType>
     ) => {
-      state.collectionState = { ...state.collectionState, ...action.payload };
+      state.collectionState = {
+        ...getInitialCollectionState().collectionState,
+        ...action.payload
+      };
     }
   }
 });

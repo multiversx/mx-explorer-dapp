@@ -35,7 +35,10 @@ export const tokenSlice = createSlice({
       state: TokenSliceType,
       action: PayloadAction<TokenSliceType>
     ) => {
-      state.token = { ...state.token, ...action.payload };
+      state.token = {
+        ...getInitialTokenState().token,
+        ...action.payload
+      };
     }
   }
 });

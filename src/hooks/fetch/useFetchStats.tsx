@@ -5,7 +5,7 @@ import { processStats, getExtraStats } from 'helpers';
 
 import { setStats } from 'redux/slices/stats';
 
-export const useFetchStats = (timestamp?: number) => {
+export const useFetchStats = () => {
   const dispatch = useDispatch();
   const { getStats } = useAdapter();
 
@@ -38,5 +38,5 @@ export const useFetchStats = (timestamp?: number) => {
     });
   };
 
-  React.useEffect(fetchStats, [timestamp]);
+  React.useEffect(fetchStats, []);
 };

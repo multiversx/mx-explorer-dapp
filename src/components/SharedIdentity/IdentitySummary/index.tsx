@@ -28,8 +28,8 @@ export const IdentitySummary = ({
         {identity !== undefined ? (
           <div className='row'>
             <div className='col'>
-              <div className='d-flex flex-column flex-md-row align-items-md-center'>
-                <div className='d-flex align-items-center min-w-0 mb-3 mb-lg-0'>
+              <div className='d-flex flex-column flex-xxl-row align-items-xxl-center'>
+                <div className='d-flex align-items-center min-w-0 mb-3 mb-xxl-0'>
                   <SharedIdentity.Avatar identity={identity} />
 
                   <h5 className='mb-0 ms-2 me-2'>
@@ -74,7 +74,7 @@ export const IdentitySummary = ({
                     </div>
                   </div>
                 </div>
-                <div className='d-none d-lg-flex mx-4'>
+                <div className='d-none d-xxl-flex mx-4'>
                   <FontAwesomeIcon
                     icon={faAngleRight}
                     className='text-muted'
@@ -82,7 +82,7 @@ export const IdentitySummary = ({
                   />
                 </div>
                 <div className='d-flex flex-wrap align-items-center flex-fill gap-3'>
-                  <div className='d-flex align-items-center card p-3 flex-grow-1 detail-card'>
+                  <div className='d-flex align-items-center card p-3 flex-grow-1 detail-card stake-detail-card'>
                     <span className='text-neutral-500 text-nowrap'>
                       Stake Balance
                     </span>
