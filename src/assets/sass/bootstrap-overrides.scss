@@ -38,6 +38,22 @@
   --#{$prefix}btn-hover-bg: var(--primary-200);
 }
 
+.btn {
+  --#{$prefix}btn-active-bg: var(--primary);
+  --#{$prefix}btn-active-border-color: var(--primary);
+  --#{$prefix}btn-active-color: var(--neutral-900);
+}
+
+.btn-outline-primary {
+  border-width: 1px;
+  --#{$prefix}btn-color: var(--primary);
+  --#{$prefix}btn-border-color: var(--primary);
+  --#{$prefix}btn-hover-border-color: var(--primary-200);
+  --#{$prefix}btn-focus-box-shadow: 0 0 0 #{$btn-focus-width} rgba(var(--#{$prefix}btn-focus-shadow-rgb), 0.5);
+  --#{$prefix}btn-hover-color: var(--neutral-900);
+  --#{$prefix}btn-hover-bg: var(--primary);
+}
+
 .btn-dark {
   --#{$prefix}btn-color: var(--body-color);
   --#{$prefix}btn-bg: var(--neutral-800);
