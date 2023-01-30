@@ -180,12 +180,12 @@ export const AnalyticsStackedChart = ({
             )}
 
           {dataReady === true && firstSeriesConfig && secondSeriesConfig && (
-            <Chart.ComposedMultiple
+            <Chart.Composed
               seriesConfig={[firstSeriesConfig, secondSeriesConfig]}
               tooltip={{
                 dateFormat: 'dd, MMM D YYYY'
               }}
-            ></Chart.ComposedMultiple>
+            ></Chart.Composed>
           )}
         </div>
       </section>

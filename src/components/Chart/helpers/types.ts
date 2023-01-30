@@ -105,20 +105,6 @@ export interface ChartProps {
   };
 }
 
-export interface BiAxialChartConfigType {
-  firstSeriesConfig: ChartConfigType;
-  secondSeriesConfig: ChartConfigType;
-}
-
-export interface BiAxialChartProps extends BiAxialChartConfigType {
-  size?: ChartSizeEnum;
-  hasOnlyStartEndTick?: boolean;
-  dateFormat?: string;
-  tooltip?: {
-    dateFormat?: string;
-  };
-}
-
 export interface ChartComposedConfigType {
   seriesConfig: ChartConfigType[];
 }
