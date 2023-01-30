@@ -9,6 +9,7 @@ import {
 import { Loader, useAdapter, Led } from 'components';
 import { useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
+import { analyticsRoutes } from 'routes';
 import { AnalyticsChart } from './AnalyticsChart';
 import { AnalyticsStackedChart } from './AnalyticsChart/AnalyticsStackedChart';
 import { ChartResolution } from './AnalyticsChart/components/ChartResolution';
@@ -16,7 +17,6 @@ import { FIRST_SERIES_ID, RANGE, SECOND_SERIES_ID } from './constants';
 import { FailedAnalytics } from './FailedAnalytics';
 import { NoAnalytics } from './NoAnalytics';
 import { ChartYAxisFormatConfig } from '../../components/Chart/helpers/types';
-import { analyticsRoutes } from 'routes';
 
 export interface ChartListType {
   id: string;
