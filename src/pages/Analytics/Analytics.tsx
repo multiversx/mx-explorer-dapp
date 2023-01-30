@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useIsMainnet } from 'hooks';
 import { ChartWrapper } from './components/ChartWrapper';
+import { analyticsRoutes } from 'routes';
 
 export const Analytics = () => {
   const ref = useRef(null);
@@ -19,7 +20,10 @@ export const Analytics = () => {
           <div className='card card-lg card-black'>
             <div className='card-header d-flex align-items-center'>
               <div className='analytics-nav-item'>Key Metrics</div>
-              <a href='/analytics/compare' className='analytics-nav-item link'>
+              <a
+                href={analyticsRoutes.compare}
+                className='analytics-nav-item link'
+              >
                 Compare
               </a>
             </div>
