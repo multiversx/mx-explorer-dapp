@@ -36,12 +36,14 @@ import { PageLayout } from './PageLayout';
 import { Unavailable } from './Unavailable';
 
 const getCustomPageName = (pageName: string) => {
-  switch (pageName) {
+  const fullPageName = pageName.substring(1).replaceAll('/', '-');
+
+  switch (fullPageName) {
     case 'nft-collections':
+    case 'collections-nft':
       return 'NFT Collections';
     case 'sft-collections':
-      return 'SFT Collections';
-    case 'sft-collections':
+    case 'collections-sft':
       return 'SFT Collections';
     case 'meta-tokens':
     case 'meta-esdt':
@@ -51,7 +53,7 @@ const getCustomPageName = (pageName: string) => {
     case 'sfts':
       return 'SFTs';
     default:
-      return pageName.replaceAll('-', ' ').toLowerCase();
+      return fullPageName.replaceAll('-', ' ').toLowerCase();
   }
 };
 
@@ -110,7 +112,8 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const pathArray = pathname.split('/');
   const pageClass =
     activeNetworkId === defaultNetworkId ? pathArray?.[1] : pathArray?.[2];
-  const pageName = getCustomPageName(pageClass);
+
+  const pageName = getCustomPageName(pathname);
 
   useEffect(() => {
     if (browser?.browser?.name) {
