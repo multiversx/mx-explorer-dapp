@@ -5,13 +5,12 @@ import { useSearchParams } from 'react-router-dom';
 import { PageState, Chart, Loader, useAdapter } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
 import { activeNetworkSelector } from 'redux/selectors';
-import {
-  ChartResolutionRangeType,
-  ChartResolutionSelector
-} from './components/ChartResolution';
+import { ChartResolutionSelector } from './components/ChartResolution';
 import { ChartListType } from '../AnalyticsCompare';
 import { RANGE } from '../constants';
 import { getChartColorPalette } from '../helpers/getChartColorPalette';
+
+import type { ChartResolutionRangeType } from './components/ChartResolution/types';
 
 export interface AnalyticsChartDataType {
   value: string;
@@ -109,6 +108,7 @@ export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
         <div className='d-flex justify-content-end align-items-center ms-auto me-0'>
           <div className='mb-0 py-spacer me-4'>
             <ChartResolutionSelector
+              isResponsive={true}
               value={range}
               onChange={(resolution) => {
                 searchParams.set('range', resolution.range);

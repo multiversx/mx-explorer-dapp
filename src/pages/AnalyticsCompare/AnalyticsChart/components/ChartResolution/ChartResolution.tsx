@@ -1,23 +1,16 @@
-import React, { useMemo } from 'react';
+import React, { Fragment, useMemo } from 'react';
+import { SingleValue } from 'react-select';
 import classNames from 'classnames';
 
-import { ChartSelectOptionType } from '../../../../Home/ChartSelect/types';
+import type { ChartSelectOptionType } from '../../../../Home/ChartSelect/types';
+import type {
+  ChartResolutionRangeType,
+  ChartResolutionSelectorPropsType,
+  ChartResolutionType
+} from './types';
 
 import styles from './styles.module.scss';
-
-export type ChartResolutionRangeType = 'all' | 'year' | 'month' | 'week';
-
-type ChartResolutionItemType = {
-  label: string;
-  range: ChartResolutionRangeType;
-};
-
-export type ChartResolutionType = {
-  [key in ChartResolutionRangeType]: {
-    label: string;
-    range: ChartResolutionRangeType;
-  };
-};
+import { ChartSelect } from 'pages/Home/ChartSelect';
 
 export const ChartResolution: ChartResolutionType = {
   all: {
@@ -38,15 +31,11 @@ export const ChartResolution: ChartResolutionType = {
   }
 };
 
-type ChartResolutionSelectorProps = {
-  value: ChartResolutionRangeType;
-  onChange?: (resolution: ChartResolutionItemType) => void;
-};
-
 export const ChartResolutionSelector = ({
   value,
-  onChange
-}: ChartResolutionSelectorProps) => {
+  onChange,
+  isResponsive = false
+}: ChartResolutionSelectorPropsType) => {
   const options: ChartSelectOptionType[] = [
     {
       label: '7d',
@@ -80,7 +69,9 @@ export const ChartResolutionSelector = ({
     };
   }, [value]);
 
-  const onChangeHandler = (option: ChartSelectOptionType) => {
+  const onChangeHandler = (
+    option: SingleValue<ChartSelectOptionType> | ChartSelectOptionType
+  ) => {
     const value: ChartResolutionRangeType =
       (option?.value as ChartResolutionRangeType) ??
       ChartResolution['month'].range;
@@ -91,18 +82,36 @@ export const ChartResolutionSelector = ({
   };
 
   return (
-    <div className={styles.resolutions}>
-      {options.map((option) => (
-        <div
-          key={option.label}
-          onClick={() => onChangeHandler(option)}
-          className={classNames(styles.resolution, {
-            [styles.active]: option.value === dropdownValue.value
-          })}
-        >
-          {option.label}
-        </div>
-      ))}
-    </div>
+    <Fragment>
+      <div
+        className={classNames(styles.select, {
+          [styles.responsive]: isResponsive
+        })}
+      >
+        <ChartSelect
+          options={options}
+          onChange={onChangeHandler}
+          value={dropdownValue}
+        />
+      </div>
+
+      <div
+        className={classNames(styles.resolutions, {
+          [styles.responsive]: isResponsive
+        })}
+      >
+        {options.map((option) => (
+          <div
+            key={option.label}
+            onClick={() => onChangeHandler(option)}
+            className={classNames(styles.resolution, {
+              [styles.active]: option.value === dropdownValue.value
+            })}
+          >
+            {option.label}
+          </div>
+        ))}
+      </div>
+    </Fragment>
   );
 };
