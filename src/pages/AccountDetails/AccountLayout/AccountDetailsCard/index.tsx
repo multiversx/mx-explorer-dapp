@@ -329,24 +329,26 @@ export const AccountDetailsCard = () => {
                   </div>
                 </div>
               </div>
-              <div className='card-header-item compact d-flex'>
-                <span className='text-neutral-400'>Address:</span>
-                <div className='d-flex align-items-center text-break-all ms-2'>
-                  <span data-testid='address'>{address}</span>
-                  <CopyButton text={address} />
-                </div>
-              </div>
-              {username && (
-                <div className='card-header-item compact d-flex'>
-                  <span className='text-neutral-400'>Herotag:</span>
+              <div className='card-header-item compact card card-sm bg-table-header p-3 d-flex flex-column mt-3'>
+                <div className='d-flex flex-row'>
+                  <span className='text-neutral-400'>Address:</span>
                   <div className='d-flex align-items-center text-break-all ms-2'>
-                    <span data-testid='address' title={username}>
-                      {formatHerotag(username)}
-                    </span>
-                    <CopyButton text={formatHerotag(username)} />
+                    <span data-testid='address'>{address}</span>
+                    <CopyButton text={address} />
                   </div>
                 </div>
-              )}
+                {username && (
+                  <div className='d-flex flex-row mt-2'>
+                    <span className='text-neutral-400'>Herotag:</span>
+                    <div className='d-flex align-items-center text-break-all ms-2'>
+                      <span data-testid='address' title={username}>
+                        {formatHerotag(username)}
+                      </span>
+                      <CopyButton text={formatHerotag(username)} />
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
             <div className='card-body card-item-container mx-spacing'>
               <CardItem
