@@ -3,13 +3,28 @@ import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { Dropdown, Anchor } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { ShardSpan } from 'components';
 import { useFetchShards } from 'hooks';
 
 import { shardsSelector } from 'redux/selectors';
+
+const CustomToggle = React.forwardRef(
+  ({ children, onClick }: any, ref: any) => (
+    <a
+      href=''
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+    </a>
+  )
+);
 
 export const ShardFilter = () => {
   const shards = useSelector(shardsSelector);
@@ -29,55 +44,38 @@ export const ShardFilter = () => {
   };
 
   return (
-    <OverlayTrigger
-      trigger='click'
-      key='popover'
-      placement='bottom'
-      rootClose
-      overlay={
-        <Popover id='popover-positioned-bottom' className='border'>
-          {shards.length > 0 && (
-            <Popover.Body>
-              {shards.map((entry, i) => {
-                return (
-                  <div
-                    className={`dropdown-item cursor-pointer ${
-                      shard === entry.shard.toString() ? 'active' : ''
-                    }`}
-                    key={entry.shard + i}
-                    onClick={() => {
-                      setShardfilter(entry.shard.toString());
-                    }}
-                  >
-                    <ShardSpan shard={entry.shard} />
-                  </div>
-                );
-              })}
-              <div
-                className={`dropdown-item cursor-pointer ${
-                  shard === undefined ? 'active' : ''
-                }`}
-                key={-1}
-                onClick={() => {
-                  setShardfilter('');
-                }}
-              >
-                Show all
-              </div>
-            </Popover.Body>
-          )}
-        </Popover>
-      }
+    <Dropdown
+      className='d-inline-block side-action cursor-pointer'
+      onSelect={(eventKey: any) => {
+        return setShardfilter(eventKey ?? '');
+      }}
     >
-      <div
-        className='d-inline-block side-action cursor-pointer'
-        data-testid='shardFilterButton'
-      >
+      <Dropdown.Toggle as={CustomToggle} id='dropdown-custom-components'>
         <FontAwesomeIcon
           icon={shard !== undefined ? faFilterSolid : faFilter}
           className={shard !== undefined ? 'text-primary' : ''}
         />
-      </div>
-    </OverlayTrigger>
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        {shards.map((entry, i) => {
+          return (
+            <Dropdown.Item
+              as={Anchor}
+              className={`dropdown-item ${
+                shard === entry.shard.toString() ? 'active' : ''
+              }`}
+              eventKey={entry.shard}
+              key={entry.shard + i}
+            >
+              <ShardSpan shard={entry.shard} />
+            </Dropdown.Item>
+          );
+        })}
+        <Dropdown.Item as={Anchor} eventKey=''>
+          Show all
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };

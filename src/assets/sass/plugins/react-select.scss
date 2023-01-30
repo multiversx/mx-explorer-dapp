@@ -23,8 +23,9 @@
     max-height: 200px;
   }
   &__option {
+    cursor: pointer;
     &--is-focused {
-      background-color: var(--neutral-800);
+      background-color: var(--neutral-900);
       color: var(--primary);
     }
     &--is-selected {
