@@ -51,7 +51,7 @@ export const ProviderDetailsCard = ({
             Stake now
           </a>
         </div>
-        <div className='card-header-item compact card card-sm bg-table-header p-3 d-flex flex-column mt-3'>
+        <div className='card-header-item compact card card-sm bg-table-header p-3 d-flex flex-row align-items-center mt-3'>
           <span className='text-neutral-400 flex-shrink-0'>Address:</span>
           <div className='d-flex align-items-center text-break-all ms-2'>
             <NetworkLink

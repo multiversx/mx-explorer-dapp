@@ -1,0 +1,32 @@
+@font-face {
+  font-family: 'Roobert Regular';
+  src: url('https://cdn.multiversx.com/fonts/roobert/regular.woff2')
+      format('woff2'),
+    url('https://cdn.multiversx.com/fonts/roobert/regular.woff') format('woff'),
+    url('https://cdn.multiversx.com/fonts/roobert/regular.otf')
+      format('opentype');
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Roobert Medium';
+  src: url('https://cdn.multiversx.com/fonts/roobert/medium.woff2')
+      format('woff2'),
+    url('https://cdn.multiversx.com/fonts/roobert/medium.woff') format('woff'),
+    url('https://cdn.multiversx.com/fonts/roobert/medium.otf')
+      format('opentype');
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Roobert SemiBold';
+  src: url('https://cdn.multiversx.com/fonts/roobert/semibold.woff2')
+      format('woff2'),
+    url('https://cdn.multiversx.com/fonts/roobert/semibold.woff') format('woff'),
+    url('https://cdn.multiversx.com/fonts/roobert/semibold.otf')
+      format('opentype');
+  font-style: normal;
+  font-weight: 600;
+}

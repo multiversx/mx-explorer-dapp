@@ -257,7 +257,7 @@ export const DataDecode = ({
               variant='dark'
               size='sm'
               className={
-                'text-capitalize py-1 d-flex align-items-center justify-content-between'
+                'text-capitalize py-1 d-flex align-items-center justify-content-between btn-dark-alt'
               }
               id='decode'
             >

@@ -85,9 +85,9 @@ export const TokensMeta = () => {
                           </li>
                           <li className='list-inline-item me-0'>
                             <NetworkLink
-                              to={tokensRoutes.tokensMeta}
+                              to={tokensRoutes.tokensMetaEsdt}
                               className={`badge py-2 px-3 br-lg ${
-                                activeRoute(tokensRoutes.tokensMeta)
+                                activeRoute(tokensRoutes.tokensMetaEsdt)
                                   ? 'badge-grey'
                                   : 'badge-outline badge-outline-grey'
                               }`}

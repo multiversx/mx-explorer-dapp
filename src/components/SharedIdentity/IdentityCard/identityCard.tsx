@@ -53,7 +53,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                     identityName
                   )}
                 </h5>
-                <div className='identity-badge my-3'>
+                <div className='identity-badge my-2'>
                   Rank{' '}
                   <div className='badge-side'>
                     {identity.rank ? identity.rank : 'N/A'}

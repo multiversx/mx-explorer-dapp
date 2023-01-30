@@ -87,7 +87,7 @@ export const AccountNfts = () => {
         </div>
       </div>
       <div className='card-body pt-0 px-lg-spacer py-lg-4'>
-        <div className='container-fluid'>
+        <div className='px-0'>
           {dataReady === undefined && <Loader dataTestId='nftsLoader' />}
           {dataReady === false && (
             <PageState

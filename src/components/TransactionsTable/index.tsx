@@ -28,11 +28,9 @@ export const TransactionsTable = ({
   totalTransactions,
   size,
   title = (
-    <>
-      <h5 data-testid='title' className='table-title d-flex align-items-center'>
-        Live Transactions
-      </h5>
-    </>
+    <h5 data-testid='title' className='table-title d-flex align-items-center'>
+      Live Transactions <MethodList />
+    </h5>
   ),
   directionCol = false,
   showLockedAccounts = false,
@@ -60,7 +58,6 @@ export const TransactionsTable = ({
               className='d-flex ms-auto me-auto me-sm-0'
             />
           </div>
-          <MethodList />
         </div>
 
         <div className='card-body'>

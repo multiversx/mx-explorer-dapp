@@ -15,6 +15,9 @@
 
   .identity-name {
     max-width: 14rem;
+    @include media-breakpoint-up(xxl) {
+      max-width: 30rem;
+    }
     .ellipsis,
     .trim .left span,
     .trim .right span {
@@ -31,8 +34,8 @@
       flex-basis: 15%;
     }
     .stats-card-value {
+      font-family: 'Roobert Medium';
       font-weight: 500;
-      letter-spacing: -3px;
     }
   }
   .stake-card {
@@ -56,6 +59,7 @@
       color: var(--neutral-500);
     }
     .nodes-card-value {
+      font-family: 'Roobert Medium';
       font-weight: 500;
       font-size: 2rem;
       color: var(--neutral-300);
@@ -113,5 +117,6 @@
 }
 
 .font-weight-600 {
+  font-family: 'Roobert SemiBold';
   font-weight: 600;
 }
