@@ -74,8 +74,8 @@ export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
         label: chartSeries.label,
         data: seriesData[chartSeries.id],
         yAxisConfig: {
-          ...chartSeries.dappConfig,
-          orientation: 'left'
+          orientation: 'left',
+          ...chartSeries.dappConfig
         },
         gradient: `${chartSeries.id}-gradient`,
         gradientStopColor: color,
