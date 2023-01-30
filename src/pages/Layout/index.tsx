@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { UAParser } from 'ua-parser-js';
+import classNames from 'classnames';
 
 import { Search, NotificationsBar } from 'components';
 import {
@@ -34,7 +35,9 @@ import { Header } from './Header/index';
 import { PageLayout } from './PageLayout';
 import { Unavailable } from './Unavailable';
 
-export const Layout = ({ children }: { children: React.ReactNode }) => {
+export const Layout = ({ children }: { children: ReactNode }) => {
+  const [freeze, setFreeze] = useState(false);
+
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
   const browser = UAParser();
@@ -101,8 +104,17 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
       } ${userAgentClasses}`}
     >
       <div className='flex-fill vh-100'>
-        <main className='main-content d-flex flex-column flex-grow-1 overflow-hidden'>
-          <Header />
+        <main
+          className={classNames(
+            'main-content',
+            'd-flex',
+            'flex-column',
+            'flex-grow-1',
+            { 'overflow-hidden vh-100': freeze }
+          )}
+        >
+          <Header onExpand={setFreeze} />
+
           <NotificationsBar />
           <div className='main-content-container container-fluid p-0 d-flex flex-column'>
             {offline ? (
