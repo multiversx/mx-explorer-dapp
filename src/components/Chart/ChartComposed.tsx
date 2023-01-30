@@ -16,22 +16,21 @@ import { Props } from 'recharts/types/component/DefaultLegendContent';
 import { AnalyticsChartTooltip } from './AnalyticsChartTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { StartEndTick } from './helpers/StartEndTick';
-import { BiAxialChartProps } from './helpers/types';
-import { useBiAxialChartData } from './hooks/useBiAxialChartData';
+import { ChartComposedProps, ChartConfigType } from './helpers/types';
+import { useChartComposedData } from './hooks/useChartComposedData';
 
 export const ChartComposed = ({
-  firstSeriesConfig,
-  secondSeriesConfig,
+  seriesConfig,
   size,
   dateFormat,
   hasOnlyStartEndTick,
   tooltip
-}: BiAxialChartProps) => {
+}: ChartComposedProps) => {
   const [hoveredSeries, setHoveredSeries] = useState<string>();
   const [hiddenSeries, setHiddenSeries] =
     useState<Record<string, string | undefined>>();
 
-  const [white, neutral800, teal, violet400, muted, primary, secondary] = [
+  const [white, neutral800, muted, primary, secondary] = [
     'white',
     'neutral-800',
     'teal',
@@ -45,28 +44,32 @@ export const ChartComposed = ({
       .trim()
   );
 
-  const { getChartData } = useBiAxialChartData({
-    firstSeriesConfig,
-    secondSeriesConfig
+  const { getChartData } = useChartComposedData({
+    seriesConfig
   });
 
   const chartData = getChartData();
 
-  const firstSeriesVisibility =
-    hiddenSeries &&
-    hiddenSeries[firstSeriesConfig.label ?? ''] === firstSeriesConfig.label
+  const getSeriesVisibility = (series: ChartConfigType) => {
+    return hiddenSeries && hiddenSeries[series.label ?? ''] === series.label
       ? 'hidden'
       : 'visible';
-  const firstSeriesOpacity =
-    hoveredSeries === firstSeriesConfig.label ? 0.3 : 1;
+  };
 
-  const secondSeriesVisibility =
-    hiddenSeries &&
-    hiddenSeries[secondSeriesConfig.label ?? ''] === secondSeriesConfig.label
-      ? 'hidden'
-      : 'visible';
-  const secondSeriesOpacity =
-    hoveredSeries === secondSeriesConfig.label ? 0.3 : 1;
+  const getSeriesOpacity = (series: ChartConfigType) => {
+    return hoveredSeries === series.label ? 0.3 : 1;
+  };
+
+  const getLegendPayload = () => {
+    return seriesConfig.map((sc) => ({
+      id: sc.id,
+      style: {
+        ...sc.legendStyle,
+        color: sc.stroke
+      },
+      value: sc.label
+    }));
+  };
 
   const onLegendMouseEnter = (dataKey: string) => () => {
     setHoveredSeries(dataKey);
@@ -87,23 +90,26 @@ export const ChartComposed = ({
     return (
       <div className='d-flex justify-content-center flex-wrap customized-legend'>
         {payload?.map((entry: any) => {
-          const { id: dataKey, color } = entry;
+          const {
+            id: dataKey,
+            style: { color, ...styleRest }
+          } = entry;
           const active = Boolean(hiddenSeries && hiddenSeries[dataKey]);
-          const style = {
+          const styles = {
             marginRight: 10,
-            color: `${active ? secondary : color}`
+            color: `${active ? secondary : color}`,
+            borderColor: color,
+            ...styleRest
           };
-          const badgeOutlineColor =
-            dataKey === firstSeriesConfig.id ? 'first' : 'second';
 
           return (
             <span
               key={dataKey}
-              className={`legend-item badge rounded-pill filter-badge ${badgeOutlineColor}`}
+              className='legend-item badge rounded-pill filter-badge'
               onMouseEnter={onLegendMouseEnter(dataKey)}
               onMouseLeave={onLegendMouseLeave}
               onClick={onLegendClick(dataKey)}
-              style={style}
+              style={styles}
             >
               <Surface
                 width={10}
@@ -150,30 +156,22 @@ export const ChartComposed = ({
               <stop offset='100%' stopColor='transparent' stopOpacity={0} />
             </linearGradient>
           </defs>
-          <defs>
-            <linearGradient
-              id='firstSeriesGradientId'
-              x1='0'
-              y1='0'
-              x2='0'
-              y2='1'
-            >
-              <stop offset='5%' stopColor={violet400} stopOpacity={0.15} />
-              <stop offset='95%' stopColor={violet400} stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <defs>
-            <linearGradient
-              id='secondSeriesGradientId'
-              x1='0'
-              y1='0'
-              x2='0'
-              y2='1'
-            >
-              <stop offset='5%' stopColor={teal} stopOpacity={0.15} />
-              <stop offset='95%' stopColor={teal} stopOpacity={0} />
-            </linearGradient>
-          </defs>
+          {seriesConfig.map((sc) => (
+            <defs key={`gradient-${sc.id}`}>
+              <linearGradient id={sc.gradient} x1='0' y1='0' x2='0' y2='1'>
+                <stop
+                  offset='5%'
+                  stopColor={sc.gradientStopColor}
+                  stopOpacity={0.15}
+                />
+                <stop
+                  offset='95%'
+                  stopColor={sc.gradientStopColor}
+                  stopOpacity={0}
+                />
+              </linearGradient>
+            </defs>
+          ))}
 
           <CartesianGrid vertical={false} stroke={neutral800} opacity={0.8} />
 
@@ -197,88 +195,51 @@ export const ChartComposed = ({
             tickMargin={15}
           />
 
-          <YAxis
-            yAxisId='left-axis'
-            orientation='left'
-            tickFormatter={(tick) =>
-              formatYAxis({
-                tick,
-                currency: firstSeriesConfig.yAxisConfig?.currency,
-                percentageMultiplier:
-                  firstSeriesConfig.yAxisConfig?.percentageMultiplier,
-                decimals: firstSeriesConfig.yAxisConfig?.decimals
-              })
-            }
-            axisLine={false}
-            tickLine={false}
-            tickCount={10}
-            stroke={firstSeriesConfig.stroke}
-          />
-          <YAxis
-            yAxisId='right-axis'
-            orientation='right'
-            tickFormatter={(tick) =>
-              formatYAxis({
-                tick,
-                currency: secondSeriesConfig.yAxisConfig?.currency,
-                percentageMultiplier:
-                  secondSeriesConfig.yAxisConfig?.percentageMultiplier,
-                decimals: secondSeriesConfig.yAxisConfig?.decimals
-              })
-            }
-            axisLine={false}
-            tickLine={false}
-            tickCount={10}
-            stroke={secondSeriesConfig.stroke}
-          />
-          <Area
-            type='monotone'
-            yAxisId='left-axis'
-            dataKey={firstSeriesConfig.id}
-            stroke={firstSeriesConfig.stroke ?? primary}
-            {...(firstSeriesConfig.gradient
-              ? { fill: `url(#${firstSeriesConfig.gradient})` }
-              : { fill: 'url(#transparent)' })}
-            {...(firstSeriesConfig.strokeDasharray
-              ? { strokeDasharray: firstSeriesConfig.strokeDasharray }
-              : {})}
-            key={firstSeriesConfig.id}
-            strokeWidth={1.5}
-            activeDot={{
-              stroke: violet400,
-              fill: violet400
-            }}
-            opacity={firstSeriesOpacity}
-            visibility={firstSeriesVisibility}
-          />
-          <Area
-            type='monotone'
-            yAxisId='right-axis'
-            dataKey={secondSeriesConfig.id}
-            stroke={secondSeriesConfig.stroke ?? primary}
-            {...(secondSeriesConfig.gradient
-              ? { fill: `url(#${secondSeriesConfig.gradient})` }
-              : { fill: 'url(#transparent)' })}
-            {...(secondSeriesConfig.strokeDasharray
-              ? {
-                  strokeDasharray: secondSeriesConfig.strokeDasharray
+          {seriesConfig.map((sc) => (
+            <React.Fragment key={`y-axis-chart-${sc.id}`}>
+              <YAxis
+                yAxisId={sc.yAxisConfig?.id}
+                orientation={sc.yAxisConfig?.orientation ?? 'left'}
+                tickFormatter={(tick) =>
+                  formatYAxis({
+                    tick,
+                    currency: sc.yAxisConfig?.currency,
+                    percentageMultiplier: sc.yAxisConfig?.percentageMultiplier,
+                    decimals: sc.yAxisConfig?.decimals
+                  })
                 }
-              : {})}
-            key={secondSeriesConfig.id}
-            strokeWidth={1.5}
-            activeDot={{
-              stroke: teal,
-              fill: teal
-            }}
-            opacity={secondSeriesOpacity}
-            visibility={secondSeriesVisibility}
-          />
+                axisLine={false}
+                tickLine={false}
+                tickCount={10}
+                stroke={seriesConfig.length !== 2 ? primary : sc.stroke}
+              />
+              <Area
+                type='monotone'
+                yAxisId={sc.yAxisConfig?.id}
+                dataKey={sc.id}
+                stroke={sc.stroke ?? primary}
+                {...(sc.gradient
+                  ? { fill: `url(#${sc.gradient})` }
+                  : { fill: 'url(#transparent)' })}
+                {...(sc.strokeDasharray
+                  ? { strokeDasharray: sc.strokeDasharray }
+                  : {})}
+                strokeWidth={1.5}
+                activeDot={{
+                  stroke: sc.stroke,
+                  fill: sc.stroke
+                }}
+                opacity={getSeriesOpacity(sc)}
+                visibility={getSeriesVisibility(sc)}
+              />
+            </React.Fragment>
+          ))}
 
           <Tooltip
             content={(props) => (
               <AnalyticsChartTooltip
                 {...props}
-                seriesConfig={[firstSeriesConfig, secondSeriesConfig]}
+                seriesConfig={seriesConfig}
                 dateFormat={tooltip?.dateFormat}
               />
             )}
@@ -295,18 +256,7 @@ export const ChartComposed = ({
               cursor: 'pointer',
               position: 'relative'
             }}
-            payload={[
-              {
-                id: firstSeriesConfig.id,
-                color: firstSeriesConfig.stroke,
-                value: firstSeriesConfig.label
-              },
-              {
-                id: secondSeriesConfig.id,
-                color: secondSeriesConfig.stroke,
-                value: secondSeriesConfig.label
-              }
-            ]}
+            payload={getLegendPayload()}
             content={renderCustomizedLegend}
           />
         </ComposedChart>

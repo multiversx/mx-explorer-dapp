@@ -18,7 +18,7 @@ export interface AnalyticsChartDataType {
   timestamp: number;
 }
 
-export const AnalyticsCharts = ({ charts }: { charts: ChartListType[] }) => {
+export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
   const ref = useRef(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -35,7 +35,7 @@ export const AnalyticsCharts = ({ charts }: { charts: ChartListType[] }) => {
   }>({});
 
   const getData = async () => {
-    const paths = charts.map((chart) => chart.path);
+    const paths = series.map((chart) => chart.path);
     const promises = paths.map((path) =>
       getAnalyticsChart(`${path}?range=${range}`)
     );
@@ -46,9 +46,9 @@ export const AnalyticsCharts = ({ charts }: { charts: ChartListType[] }) => {
     const seriesData = promisesResult.reduce(
       (acc, currentValue, currentIndex) => {
         if (currentValue.status === 'fulfilled' && currentValue.value.success) {
-          acc[charts[currentIndex].id] = currentValue.value.data?.data;
+          acc[series[currentIndex].id] = currentValue.value.data?.data;
         } else {
-          acc[charts[currentIndex].id] = [];
+          acc[series[currentIndex].id] = [];
           dataReady = false;
         }
         return acc;
@@ -63,24 +63,24 @@ export const AnalyticsCharts = ({ charts }: { charts: ChartListType[] }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     getData();
-  }, [activeNetworkId, range, charts]);
+  }, [activeNetworkId, range, series]);
 
   useEffect(() => {
     const configs: ChartConfigType[] = [];
     const colorPalette = getChartColorPalette();
 
-    charts.forEach((chart, i) => {
+    series.forEach((chartSeries, i) => {
       const color = colorPalette[i % colorPalette.length];
 
       configs.push({
-        id: chart.id,
-        label: chart.label,
-        data: seriesData[chart.id],
+        id: chartSeries.id,
+        label: chartSeries.label,
+        data: seriesData[chartSeries.id],
         yAxisConfig: {
-          ...chart.dappConfig,
+          ...chartSeries.dappConfig,
           orientation: 'left'
         },
-        gradient: `${chart.id}-gradient`,
+        gradient: `${chartSeries.id}-gradient`,
         gradientStopColor: color,
         stroke: color,
         legendStyle: {
@@ -91,10 +91,10 @@ export const AnalyticsCharts = ({ charts }: { charts: ChartListType[] }) => {
     });
 
     setSeriesConfig(configs);
-  }, [seriesData, charts]);
+  }, [seriesData, series]);
 
   return (
-    <section id={[charts.map((x) => x.id)].join('/')} ref={ref}>
+    <section id={[series.map((x) => x.id)].join('/')} ref={ref}>
       <div className='d-flex align-items-center flex-wrap'>
         <h3 className='mb-0 py-spacer'>
           {seriesConfig?.map((sc, index) => (
@@ -141,12 +141,12 @@ export const AnalyticsCharts = ({ charts }: { charts: ChartListType[] }) => {
           )}
 
         {dataReady === true && seriesConfig?.every((x) => x.data?.length > 0) && (
-          <Chart.ComposedMultiple
+          <Chart.Composed
             seriesConfig={seriesConfig}
             tooltip={{
               dateFormat: 'dd, MMM D YYYY'
             }}
-          ></Chart.ComposedMultiple>
+          ></Chart.Composed>
         )}
       </div>
     </section>
