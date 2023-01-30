@@ -73,7 +73,7 @@ export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
       const color = colorPalette[i % colorPalette.length];
 
       configs.push({
-        id: chartSeries.id,
+        id: chartSeries.label,
         label: chartSeries.label,
         data: seriesData[chartSeries.id],
         yAxisConfig: {
