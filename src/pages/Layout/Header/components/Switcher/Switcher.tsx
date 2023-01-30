@@ -134,6 +134,7 @@ export const Switcher = (props: SwitcherPropsType) => {
     <div className={styles.switcher}>
       <Select
         defaultValue={options[0]}
+        value={options[0]}
         options={options}
         onChange={onChange}
         isMulti={false}

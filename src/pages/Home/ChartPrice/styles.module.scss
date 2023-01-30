@@ -75,6 +75,8 @@
     align-items: flex-start;
     justify-content: flex-start;
     padding: 3rem 1rem 0;
+    flex-wrap: wrap;
+    margin-top: -1rem;
 
     @media (min-width: 768px) {
       padding: 2rem 2rem 0;
@@ -82,6 +84,7 @@
 
     .statistic {
       margin-right: 2rem;
+      margin-top: 1rem;
 
       &:last-child {
         margin-right: 0;
