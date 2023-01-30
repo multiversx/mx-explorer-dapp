@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  createSearchParams,
+  useLocation,
+  useNavigate,
+  useSearchParams
+} from 'react-router-dom';
 import { Loader, useAdapter, Led } from 'components';
 import { useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -26,6 +31,7 @@ export const Analytics = () => {
   const isMainnet = useIsMainnet();
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
 
   const firstSeriesId = searchParams.get(FIRST_SERIES_ID);
   const secondSeriesId = searchParams.get(SECOND_SERIES_ID);
@@ -57,7 +63,12 @@ export const Analytics = () => {
       newQueryParameters.set(entry[0], entry[1]);
     });
 
-    setSearchParams(newQueryParameters);
+    const options = {
+      pathname: location.pathname,
+      search: `?${createSearchParams(newQueryParameters)}`
+    };
+
+    navigate(options, { replace: true });
   };
 
   const onSelectPill = (series: ChartListType) => () => {
