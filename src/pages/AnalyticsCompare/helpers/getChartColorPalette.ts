@@ -3,7 +3,6 @@ export const getChartColorPalette = () => {
     'teal',
     'violet-400',
     'red',
-    'orange',
     'green',
     'yellow',
     'blue'
