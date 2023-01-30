@@ -23,7 +23,7 @@ export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
       <div className='d-flex flex-row align-items-center'>
         <ProviderImage provider={provider} />
         <div className='d-flex flex-column w-100'>
-          <div className='provider-title d-flex align-items-center'>
+          <div className='provider-title font-primary-medium d-flex align-items-center'>
             {provider?.identityDetails?.name ? (
               <div className='text-truncate'>
                 {provider.identityDetails.name}

@@ -14,7 +14,7 @@ export const ActiveAccountsHeroPill = ({ className }: WithClassnameType) => {
 
   return (
     <div
-      className={`hero-pill active-accounts-hero-pill d-flex align-items-center ${
+      className={`hero-pill active-accounts-hero-pill font-primary-medium d-flex align-items-center ${
         className ?? ''
       }`}
     >
