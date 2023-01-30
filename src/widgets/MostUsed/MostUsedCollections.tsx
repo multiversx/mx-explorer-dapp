@@ -15,7 +15,7 @@ export const MostUsedCollections = ({
       <div className='card-header'>
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
           <h5 className='table-title d-flex align-items-center'>
-            Daily most transacted Tokens
+            Daily most transacted NFTs
           </h5>
         </div>
       </div>
