@@ -146,6 +146,7 @@ export const AnalyticsStackedChart = ({
           <div className='d-flex justify-content-end align-items-center me-0'>
             <div className='mb-spacer mb-md-0'>
               <ChartResolutionSelector
+                isResponsive={true}
                 value={range}
                 onChange={(resolution) => {
                   searchParams.set('range', resolution.range);
