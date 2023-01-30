@@ -20,7 +20,8 @@ import {
   CopyButton,
   TransactionAction,
   LoadingDots,
-  AccountName
+  AccountName,
+  FormatUSD
 } from 'components';
 import { denominate } from 'components/Denominate/denominate';
 import { getStatusIconAndColor } from 'components/TransactionStatus';
@@ -31,8 +32,7 @@ import {
   dateFormatted,
   urlBuilder,
   isContract,
-  getTransactionMethod,
-  formatUSD
+  getTransactionMethod
 } from 'helpers';
 import { useNetworkRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -351,15 +351,11 @@ export const TransactionInfo = ({
                 {formattedTxValue} {egldLabel}{' '}
                 <span className='text-neutral-400'>
                   {transaction.price !== undefined ? (
-                    <>
-                      (
-                      {formatUSD({
-                        amount: txValue,
-                        usd: transaction.price,
-                        digits: 2
-                      })}
-                      )
-                    </>
+                    <FormatUSD
+                      amount={txValue}
+                      usd={transaction.price}
+                      digits={2}
+                    />
                   ) : (
                     <>N/A</>
                   )}
@@ -410,15 +406,11 @@ export const TransactionInfo = ({
                     {transactionFee} {egldLabel}{' '}
                     <span className='text-neutral-400'>
                       {transaction.price !== undefined ? (
-                        <>
-                          (
-                          {formatUSD({
-                            amount: transactionFee,
-                            usd: transaction.price,
-                            digits: 4
-                          })}
-                          )
-                        </>
+                        <FormatUSD
+                          amount={transactionFee}
+                          usd={transaction.price}
+                          digits={4}
+                        />
                       ) : (
                         <>N/A</>
                       )}
