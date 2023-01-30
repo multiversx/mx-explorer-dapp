@@ -79,16 +79,16 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       case activeRoute('/'):
       case activeRoute(searchRoutes.index):
       case activeRoute(searchRoutes.query):
-      case activeRoute(transactionsRoutes.transactions):
-      case activeRoute(validatorsRoutes.identities):
-      case activeRoute(validatorsRoutes.identityDetails):
-      case activeRoute(validatorsRoutes.providers):
-      case activeRoute(validatorsRoutes.providerDetails):
-      case activeRoute(validatorsRoutes.providerTransactions):
-      case activeRoute(validatorsRoutes.nodes):
-      case activeRoute(validatorsRoutes.nodeDetails):
-      case activeRoute(validatorsRoutes.statistics):
-      case activeRoute(validatorsRoutes.queue):
+      case activeRoute(transactionsRoutes.transactions) && isMainnet:
+      case activeRoute(validatorsRoutes.identities) && isMainnet:
+      case activeRoute(validatorsRoutes.identityDetails) && isMainnet:
+      case activeRoute(validatorsRoutes.providers) && isMainnet:
+      case activeRoute(validatorsRoutes.providerDetails) && isMainnet:
+      case activeRoute(validatorsRoutes.providerTransactions) && isMainnet:
+      case activeRoute(validatorsRoutes.nodes) && isMainnet:
+      case activeRoute(validatorsRoutes.nodeDetails) && isMainnet:
+      case activeRoute(validatorsRoutes.statistics) && isMainnet:
+      case activeRoute(validatorsRoutes.queue) && isMainnet:
         show = false;
         break;
     }
