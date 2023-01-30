@@ -35,10 +35,22 @@ import { Header } from './Header/index';
 import { PageLayout } from './PageLayout';
 import { Unavailable } from './Unavailable';
 
-const getCustomPageName = (pageName: string) => {
-  const fullPageName = pageName.substring(1).replaceAll('/', '-');
+const getCustomPageName = ({
+  pathname,
+  basePage
+}: {
+  pathname: string;
+  basePage: string;
+}) => {
+  const fullPageName = pathname.substring(1).replaceAll('/', '-');
+  if (fullPageName === 'collections-sft') {
+    return 'SFT Collections';
+  }
+  if (fullPageName === 'collections-nft') {
+    return 'NFT Collections';
+  }
 
-  switch (fullPageName) {
+  switch (basePage) {
     case 'nft-collections':
     case 'collections-nft':
       return 'NFT Collections';
@@ -53,7 +65,7 @@ const getCustomPageName = (pageName: string) => {
     case 'sfts':
       return 'SFTs';
     default:
-      return fullPageName.replaceAll('-', ' ').toLowerCase();
+      return basePage.replaceAll('-', ' ').toLowerCase();
   }
 };
 
@@ -113,7 +125,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const pageClass =
     activeNetworkId === defaultNetworkId ? pathArray?.[1] : pathArray?.[2];
 
-  const pageName = getCustomPageName(pathname);
+  const pageName = getCustomPageName({ pathname, basePage: pageClass });
 
   useEffect(() => {
     if (browser?.browser?.name) {
