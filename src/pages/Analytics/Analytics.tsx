@@ -86,11 +86,21 @@ export const Analytics = () => {
   }, [chartList]);
 
   const networkAndDeveloperFeesChart = useMemo(() => {
-    return chartList?.filter(
+    const charts = chartList?.filter(
       (sc) =>
         sc.id.includes('-fees-captured-') ||
         sc.id.includes('-developer-rewards-')
     );
+
+    if (charts.length === 2) {
+      charts[1].dappConfig = {
+        ...charts[1].dappConfig,
+        id: 'right-axis',
+        orientation: 'right'
+      };
+    }
+
+    return charts;
   }, [chartList]);
 
   const newSmartContractsCreatedChart = useMemo(() => {
@@ -121,11 +131,21 @@ export const Analytics = () => {
   }, [chartList, newSmartContractsCreatedChart]);
 
   const stakingChart = useMemo(() => {
-    return chartList?.filter(
+    const charts = chartList?.filter(
       (sc) =>
         sc.id.includes('total-value-locked-plus-staking') ||
         sc.id.includes('users-staking')
     );
+
+    if (charts.length === 2) {
+      charts[1].dappConfig = {
+        ...charts[1].dappConfig,
+        id: 'right-axis',
+        orientation: 'right'
+      };
+    }
+
+    return charts;
   }, [chartList]);
 
   const aprsChart = useMemo(() => {
@@ -206,14 +226,7 @@ export const Analytics = () => {
 
               <ChartWrapper>
                 <div className='px-3 pb-3'>
-                  {networkAndDeveloperFeesChart.length === 2 ? (
-                    <AnalyticsStackedChart
-                      firstSeries={networkAndDeveloperFeesChart[0]}
-                      secondSeries={networkAndDeveloperFeesChart[1]}
-                    />
-                  ) : (
-                    <AnalyticsChart series={networkAndDeveloperFeesChart} />
-                  )}
+                  <AnalyticsChart series={networkAndDeveloperFeesChart} />
                 </div>
               </ChartWrapper>
 
@@ -229,14 +242,7 @@ export const Analytics = () => {
 
               <ChartWrapper>
                 <div className='px-3 pb-3'>
-                  {stakingChart.length === 2 ? (
-                    <AnalyticsStackedChart
-                      firstSeries={stakingChart[0]}
-                      secondSeries={stakingChart[1]}
-                    />
-                  ) : (
-                    <AnalyticsChart series={stakingChart} />
-                  )}
+                  <AnalyticsChart series={stakingChart} />
                 </div>
               </ChartWrapper>
               <ChartWrapper>

@@ -133,10 +133,10 @@ export const AnalyticsCompare = () => {
                 <div className='analytics-nav-item'>Compare</div>
               </div>
               <div className='card-body'>
-                <h6 className='text-neutral-400 mb-2'>
+                <h6 className='text-neutral-400 mb-3'>
                   Select metrics to compare
                 </h6>
-                <div className='d-flex flex-wrap gap-2 mb-3'>
+                <div className='d-flex flex-wrap gap-2 mb-5'>
                   {chartList.map((series) => {
                     let selected = '';
                     if (selectedPills[0].id === series.id) {
