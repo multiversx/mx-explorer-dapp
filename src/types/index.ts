@@ -12,5 +12,6 @@ export * from './account.types';
 export * from './miniBlock.types';
 export * from './markers.types';
 export * from './stats.types';
+export * from './verifiedContract.types';
 
 export * from './growthWidgets';

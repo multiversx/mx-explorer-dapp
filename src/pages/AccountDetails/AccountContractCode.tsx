@@ -2,12 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { useAdapter } from 'components';
+import { CopyButton } from 'components';
 import { downloadFile, urlBuilder } from 'helpers';
 import { useNetworkRoute } from 'hooks';
-
 import { accountSelector } from 'redux/selectors';
+
 import { AccountTabs } from './AccountLayout/AccountTabs';
+import { VerifiedContract } from './VerifiedContract';
 
 export const DownloadContractCode = ({
   code,
@@ -37,26 +38,14 @@ export const DownloadContractCode = ({
 
 export const AccountContractCode = () => {
   const navigate = useNavigate();
+
   const networkRoute = useNetworkRoute();
 
-  const { getAccountContractVerification } = useAdapter();
   const { account } = useSelector(accountSelector);
   const { codeHash, code, address, isVerified } = account;
 
   const codeHashBase64Buffer = Buffer.from(String(codeHash ?? ''), 'base64');
   const codeHashHexValue = codeHashBase64Buffer.toString('hex');
-
-  const fetchContractVerification = () => {
-    getAccountContractVerification({ address }).then(({ success, data }) => {
-      console.log('----', data);
-    });
-  };
-
-  React.useEffect(() => {
-    if (address && isVerified) {
-      fetchContractVerification();
-    }
-  }, [address, isVerified]);
 
   return !code ? (
     navigate(networkRoute(urlBuilder.accountDetails(address)))
@@ -66,14 +55,21 @@ export const AccountContractCode = () => {
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <AccountTabs />
         </div>
+        {codeHash && (
+          <div className='card-header-item compact card card-sm bg-table-header p-3 d-flex flex-column mt-3 mb-nspacer'>
+            <div className='d-flex flex-row'>
+              <span className='text-neutral-400'>Code Hash:</span>
+              <div className='d-flex align-items-center text-break-all ms-2'>
+                <span data-testid='address'>{codeHashHexValue}</span>
+                <CopyButton text={address} />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-      {codeHash && (
-        <div className='card-body d-flex flex-wrap border-bottom py-3 px-lg-spacer text-truncate'>
-          <div className='text-neutral-400 pe-3'>Code Hash</div>
-          <div className='text-truncate'>{codeHashHexValue}</div>
-        </div>
-      )}
-      <div className='card-body px-lg-spacer py-lg-4'>
+      {isVerified && <VerifiedContract />}
+      <div className='card-body'>
+        <h5 className='mb-3'>Contract Code</h5>
         <textarea
           readOnly
           className='form-control col cursor-text'

@@ -1,0 +1,10 @@
+.verified-contract {
+  .contract-files {
+    .code-block {
+      & > pre {
+        border-radius: 0.5rem;
+        background: var(--table-header) !important;
+      }
+    }
+  }
+}

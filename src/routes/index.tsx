@@ -69,13 +69,16 @@ export const transactionsRoutes = {
 export const accountsRoutes = {
   accounts: '/accounts',
   accountDetails: '/accounts/:hash',
-  accountCode: '/accounts/:hash/code',
   accountTokens: '/accounts/:hash/tokens',
   accountNfts: '/accounts/:hash/nfts',
   accountContracts: '/accounts/:hash/contracts',
   accountStaking: '/accounts/:hash/staking',
   accountAnalytics: '/accounts/:hash/analytics',
-  oldAccountDetails: '/address/:hash'
+  oldAccountDetails: '/address/:hash',
+  accountCode: '/accounts/:hash/code',
+  accountCodeEndpoints: '/accounts/:hash/code/endpoints',
+  accountCodeViews: '/accounts/:hash/code/endpoints',
+  accountCodeTypes: '/accounts/:hash/code/endpoints'
 };
 
 export const validatorsRoutes = {
