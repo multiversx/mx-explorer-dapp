@@ -10,6 +10,7 @@ import {
 } from 'components';
 import { shardSpanText } from 'components/ShardSpan';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
+import { MethodList } from 'components/TransactionsTable/TransactionsFilters';
 import { useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { UITransactionType } from 'types';
@@ -132,7 +133,7 @@ export const Transactions = () => {
                   title={
                     <h5
                       data-testid='title'
-                      className='table-title d-flex align-items-center'
+                      className='table-title d-flex align-items-center flex-wrap'
                     >
                       Live Transactions
                       {senderShard !== undefined && (
@@ -147,6 +148,7 @@ export const Transactions = () => {
                           {shardSpanText(receiverShard)}
                         </>
                       )}
+                      <MethodList />
                       <PulsatingLed className='ms-2 mt-1' />
                     </h5>
                   }
