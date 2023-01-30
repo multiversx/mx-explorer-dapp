@@ -126,7 +126,7 @@ export const Analytics = () => {
             <div className='card-body d-flex justify-content-between flex-wrap'>
               <ChartWrapper>
                 {' '}
-                <div className='row p-3'>
+                <div className='px-3 pb-3'>
                   <AnalyticsChart
                     // charts={chartList.filter((x) =>
                     //   x.id.includes('transactions')
@@ -141,27 +141,27 @@ export const Analytics = () => {
                 </div>
               </ChartWrapper>
               <ChartWrapper size='half'>
-                <div className='row p-3'>
+                <div className='px-3 pb-3'>
                   <AnalyticsChart series={[chartList[0]]} />
                 </div>
               </ChartWrapper>
               <ChartWrapper size='half'>
-                <div className='row p-3'>
+                <div className='px-3 pb-3'>
                   <AnalyticsChart series={[chartList[1]]} />
                 </div>
               </ChartWrapper>
               <ChartWrapper>
-                <div className='row p-3'>
+                <div className='px-3 pb-3'>
                   <AnalyticsChart series={[chartList[2]]} />
                 </div>
               </ChartWrapper>
               <ChartWrapper size='half'>
-                <div className='row p-3'>
+                <div className='px-3 pb-3'>
                   <AnalyticsChart series={[chartList[3]]} />
                 </div>{' '}
               </ChartWrapper>
               <ChartWrapper size='half'>
-                <div className='row p-3'>
+                <div className='px-3 pb-3'>
                   <AnalyticsChart series={[chartList[4]]} />
                 </div>{' '}
               </ChartWrapper>
