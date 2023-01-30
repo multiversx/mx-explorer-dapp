@@ -161,9 +161,10 @@ export const Analytics = () => {
                 </div>
                 <div className='row mt-5'>
                   <AnalyticsCharts
-                    charts={chartList.filter((x) =>
-                      x.id.includes('transactions')
-                    )}
+                    // charts={chartList.filter((x) =>
+                    //   x.id.includes('transactions')
+                    // )}
+                    charts={[chartList[0], chartList[1], chartList[2]]}
                   />
                 </div>
               </div>

@@ -5,7 +5,10 @@ import { useSearchParams } from 'react-router-dom';
 import { PageState, Chart, Loader, useAdapter } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
 import { activeNetworkSelector } from 'redux/selectors';
-import { ChartResolutionRangeType } from './components/ChartResolution';
+import {
+  ChartResolutionRangeType,
+  ChartResolutionSelector
+} from './components/ChartResolution';
 import { ChartListType } from '../Analytics';
 import { RANGE } from '../constants';
 import { getChartColorPalette } from '../helpers/getChartColorPalette';
@@ -92,6 +95,29 @@ export const AnalyticsCharts = ({ charts }: { charts: ChartListType[] }) => {
 
   return (
     <section id={[charts.map((x) => x.id)].join('/')} ref={ref}>
+      <div className='d-flex align-items-center flex-wrap'>
+        <h3 className='mb-0 py-spacer'>
+          {seriesConfig?.map((sc, index) => (
+            <React.Fragment key={`${sc.id}-config-label`}>
+              <span style={{ color: sc.stroke }}>{sc.label}</span>
+              {index !== seriesConfig?.length - 1 && (
+                <span className='mx-2'>/</span>
+              )}
+            </React.Fragment>
+          ))}
+        </h3>
+        <div className='d-flex justify-content-end align-items-center ms-auto me-0'>
+          <div className='mb-0 py-spacer me-4'>
+            <ChartResolutionSelector
+              value={range}
+              onChange={(resolution) => {
+                searchParams.set('range', resolution.range);
+                setSearchParams(searchParams);
+              }}
+            />
+          </div>
+        </div>
+      </div>
       <div>
         {!seriesConfig || (dataReady === undefined && <Loader />)}
         {dataReady === false && (
