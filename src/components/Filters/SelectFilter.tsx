@@ -54,6 +54,7 @@ export const SelectFilter = ({
     };
 
     setSearchParams(nextUrlParams);
+    document.body.click();
   };
 
   const hasExistingShowAllOption = options.find(

@@ -42,6 +42,7 @@ export const SearchFilter = ({
     };
 
     setSearchParams(nextUrlParams);
+    document.body.click();
   };
 
   const updateSearchValue = (searchValue: string) => {

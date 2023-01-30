@@ -41,8 +41,8 @@ export const ProviderTransactions = () => {
 
   const inactiveFilters = [TxFiltersEnum.sender, TxFiltersEnum.receiver];
 
-  const fetchTransactions = () => {
-    if (searchParams.toString()) {
+  const fetchTransactions = (paramsChange = false) => {
+    if (searchParams.toString() && paramsChange) {
       setDataChanged(true);
     }
     Promise.all([
@@ -96,15 +96,19 @@ export const ProviderTransactions = () => {
         }
       })
       .finally(() => {
-        setDataChanged(false);
+        if (paramsChange) {
+          setDataChanged(false);
+        }
       });
   };
 
   useEffect(() => {
     fetchTransactions();
+  }, [activeNetworkId, address]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, searchParams, address]);
+  React.useEffect(() => {
+    fetchTransactions(true);
+  }, [searchParams]);
 
   return (
     <>
