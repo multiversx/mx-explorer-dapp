@@ -15,6 +15,7 @@ import { FIRST_SERIES_ID, RANGE, SECOND_SERIES_ID } from './constants';
 import { FailedAnalytics } from './FailedAnalytics';
 import { NoAnalytics } from './NoAnalytics';
 import { ChartYAxisFormatConfig } from '../../components/Chart/helpers/types';
+// import { AnalyticsChart } from './AnalyticsChart';
 
 export interface ChartListType {
   id: string;
@@ -118,7 +119,7 @@ export const Analytics = () => {
       {selectedPills.length < 2 && <FailedAnalytics />}
 
       <div ref={ref}>
-        {dataReady === true && selectedPills.length === 2 && (
+        {dataReady === true && selectedPills.length >= 2 && (
           <div className='analytics container page-content'>
             <div className='card card-lg card-black'>
               <div className='card-header'>
@@ -152,6 +153,7 @@ export const Analytics = () => {
                   })}
                 </div>
                 <div className='row'>
+                  {/*<AnalyticsChart charts={[...selectedPills]} />*/}
                   <AnalyticsStackedChart
                     firstSeries={selectedPills[0]}
                     secondSeries={selectedPills[1]}
