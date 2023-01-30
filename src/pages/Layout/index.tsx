@@ -1,4 +1,4 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState, ReactNode, useEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -55,6 +55,10 @@ const getCustomPageName = (pageName: string) => {
   }
 };
 
+const formatClassName = (className: string) => {
+  return className.replaceAll(' ', '-').toLowerCase();
+};
+
 export const Layout = ({ children }: { children: ReactNode }) => {
   const [freeze, setFreeze] = useState(false);
 
@@ -103,25 +107,28 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const isHome = activeRoute('/');
   const isTransactions = activeRoute(transactionsRoutes.transactions);
 
-  const userAgentInfo = [
-    browser?.browser?.name ?? '',
-    browser?.engine?.name ?? '',
-    browser?.os?.name ?? ''
-  ];
-  const userAgentClasses = userAgentInfo
-    .map((info) => info.replaceAll(' ', '-').toLowerCase())
-    .join(' ');
-
   const pathArray = pathname.split('/');
   const pageClass =
     activeNetworkId === defaultNetworkId ? pathArray?.[1] : pathArray?.[2];
   const pageName = getCustomPageName(pageClass);
 
+  useEffect(() => {
+    if (browser?.browser?.name) {
+      document.body.classList.add(formatClassName(browser.browser.name));
+    }
+    if (browser?.engine?.name) {
+      document.body.classList.add(formatClassName(browser.engine.name));
+    }
+    if (browser?.os?.name) {
+      document.body.classList.add(formatClassName(browser.os.name));
+    }
+  }, []);
+
   return (
     <div
       className={`d-flex scrollbar-thin ${
         pageName ? pageName : 'home'
-      } ${userAgentClasses} ${pageClass}`}
+      } ${pageClass}`}
     >
       <div className='flex-fill vh-100'>
         <main
