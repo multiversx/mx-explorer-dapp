@@ -212,6 +212,7 @@ export const ChartComposed = ({
                 tickLine={false}
                 tickCount={10}
                 stroke={sc.stroke}
+                dy={2}
               />
               <Area
                 type='monotone'
