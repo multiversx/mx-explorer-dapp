@@ -1,7 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
-import { SingleValue } from 'react-select';
-import { ChartSelect } from '../../../Home/ChartSelect';
-import { ChartSelectOptionType } from '../../../Home/ChartSelect/types';
+import React, { useMemo } from 'react';
+import classNames from 'classnames';
+
+import { ChartSelectOptionType } from '../../../../Home/ChartSelect/types';
+
+import styles from './styles.module.scss';
 
 export type ChartResolutionRangeType = 'all' | 'year' | 'month' | 'week';
 
@@ -19,19 +21,19 @@ export type ChartResolutionType = {
 
 export const ChartResolution: ChartResolutionType = {
   all: {
-    label: 'All',
+    label: 'Max',
     range: 'all'
   },
   year: {
-    label: '365 days',
+    label: '365d',
     range: 'year'
   },
   month: {
-    label: '30 days',
+    label: '30d',
     range: 'month'
   },
   week: {
-    label: '7 days',
+    label: '7d',
     range: 'week'
   }
 };
@@ -47,20 +49,20 @@ export const ChartResolutionSelector = ({
 }: ChartResolutionSelectorProps) => {
   const options: ChartSelectOptionType[] = [
     {
-      label: 'All',
-      value: ChartResolution['all'].range
+      label: '7d',
+      value: ChartResolution['week'].range
     },
     {
-      label: '365 days',
-      value: ChartResolution['year'].range
-    },
-    {
-      label: '30 days',
+      label: '30d',
       value: ChartResolution['month'].range
     },
     {
-      label: '7 days',
-      value: ChartResolution['week'].range
+      label: '365d',
+      value: ChartResolution['year'].range
+    },
+    {
+      label: 'Max',
+      value: ChartResolution['all'].range
     }
   ];
 
@@ -78,7 +80,7 @@ export const ChartResolutionSelector = ({
     };
   }, [value]);
 
-  const onChangeHandler = (option: SingleValue<ChartSelectOptionType>) => {
+  const onChangeHandler = (option: ChartSelectOptionType) => {
     const value: ChartResolutionRangeType =
       (option?.value as ChartResolutionRangeType) ??
       ChartResolution['month'].range;
@@ -89,10 +91,18 @@ export const ChartResolutionSelector = ({
   };
 
   return (
-    <ChartSelect
-      options={options}
-      value={dropdownValue}
-      onChange={onChangeHandler}
-    />
+    <div className={styles.resolutions}>
+      {options.map((option) => (
+        <div
+          key={option.label}
+          onClick={() => onChangeHandler(option)}
+          className={classNames(styles.resolution, {
+            [styles.active]: option.value === dropdownValue.value
+          })}
+        >
+          {option.label}
+        </div>
+      ))}
+    </div>
   );
 };
