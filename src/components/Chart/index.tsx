@@ -5,6 +5,7 @@ import { ChartAreaNew } from './ChartAreaNew';
 import { ChartBar } from './ChartBar';
 import { ChartBody } from './ChartBody';
 import { ChartComposed } from './ChartComposed';
+import { ChartComposedMultiple } from './ChartComposedMultiple';
 import { ChartControls } from './ChartControls';
 import { ChartDonut } from './ChartDonut';
 import { ChartHeading } from './ChartHeading';
@@ -24,6 +25,7 @@ export default class Chart extends React.Component<{
   static Metrics = ChartMetrics;
   static Body = ChartBody;
   static Composed = ChartComposed;
+  static ComposedMultiple = ChartComposedMultiple;
 
   render() {
     return null;
