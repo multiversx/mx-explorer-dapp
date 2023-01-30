@@ -88,6 +88,14 @@ export const Analytics = () => {
       (sc) => sc.id.includes('new-nfts') || sc.id.includes('new-esdts')
     );
 
+    if (charts.length === 2) {
+      charts[1].dappConfig = {
+        ...charts[1].dappConfig,
+        id: 'right-axis',
+        orientation: 'right'
+      };
+    }
+
     if (smartContractChartChart) {
       return [...charts, smartContractChartChart];
     }
