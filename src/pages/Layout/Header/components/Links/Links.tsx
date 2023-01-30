@@ -104,7 +104,9 @@ export const Links = (props: LinksPropsType) => {
         validatorsRoutes.providerDetails,
         validatorsRoutes.providerTransactions,
         validatorsRoutes.nodes,
-        validatorsRoutes.nodeDetails
+        validatorsRoutes.nodeDetails,
+        validatorsRoutes.statistics,
+        validatorsRoutes.queue
       ]
     },
     {

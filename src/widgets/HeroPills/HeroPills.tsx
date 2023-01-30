@@ -1,11 +1,14 @@
 import React from 'react';
 
+import { useIsMainnet } from 'hooks';
 import { WithClassnameType } from 'types';
 import { ActiveAccountsHeroPill } from './ActiveAccountsHeroPill';
 import { EpochHeroPill } from './EpochHeroPill';
 import { PriceHeroPill } from './PriceHeroPill';
 
 export const HeroPills = ({ className }: WithClassnameType) => {
+  const isMainnet = useIsMainnet();
+
   return (
     <div className='hero-pills-wrapper'>
       <div
@@ -14,8 +17,12 @@ export const HeroPills = ({ className }: WithClassnameType) => {
         }`}
       >
         <EpochHeroPill />
-        <PriceHeroPill />
-        <ActiveAccountsHeroPill />
+        {isMainnet && (
+          <>
+            <PriceHeroPill />
+            <ActiveAccountsHeroPill />
+          </>
+        )}
       </div>
     </div>
   );
