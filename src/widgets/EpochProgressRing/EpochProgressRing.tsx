@@ -18,12 +18,11 @@ export const EpochProgressRing = ({
 }: EpochRingType) => {
   const ref = useRef(null);
 
-  const {
-    isFetched,
-    unprocessed: { roundsPerEpoch, roundsPassed, epoch, refreshRate }
-  } = useSelector(statsSelector);
+  const { isFetched, unprocessed } = useSelector(statsSelector);
 
-  const refreshInterval = refreshRate ? refreshRate : REFRESH_RATE;
+  const refreshInterval = unprocessed?.refreshRate
+    ? unprocessed.refreshRate
+    : REFRESH_RATE;
   const refreshIntervalSec = refreshInterval / 1000;
 
   const [nextEpoch, setNextEpoch] = useState<any>();
@@ -40,15 +39,16 @@ export const EpochProgressRing = ({
   const init = () => {
     if (isFetched) {
       const secondsUntilNextEpoch =
-        refreshIntervalSec * (roundsPerEpoch - roundsPassed);
+        refreshIntervalSec *
+        (unprocessed?.roundsPerEpoch - unprocessed?.roundsPassed);
       const nextEpochDate: any = moment()
         .utc()
         .add(secondsUntilNextEpoch, 'seconds');
 
       if (ref.current !== null) {
         setNextEpoch(nextEpochDate);
-        setEpochDurationSec(refreshIntervalSec * roundsPerEpoch);
-        setRoundsLeft(roundsPerEpoch - roundsPassed);
+        setEpochDurationSec(refreshIntervalSec * unprocessed?.roundsPerEpoch);
+        setRoundsLeft(unprocessed?.roundsPerEpoch - unprocessed?.roundsPassed);
       }
     }
   };
@@ -75,7 +75,7 @@ export const EpochProgressRing = ({
 
     if (ref.current !== null) {
       if (percentRemaining <= 0) {
-        hardReset(roundsPerEpoch);
+        hardReset(unprocessed?.roundsPerEpoch);
       } else {
         setHours(hours);
         setMinutes(minutes);
@@ -98,12 +98,12 @@ export const EpochProgressRing = ({
     }
   };
 
-  useEffect(init, [isFetched, roundsPerEpoch, roundsPassed]);
+  useEffect(init, [isFetched, unprocessed]);
 
   React.useEffect(mount, [nextEpoch]);
 
   const timeLabel = nextEpoch ? `${hours}h ${minutes}m ${seconds}s` : '...';
-  const epochLabel = new BigNumber(epoch + resetCount).toFormat(0);
+  const epochLabel = new BigNumber(unprocessed?.epoch + resetCount).toFormat(0);
 
   return (
     <div className={`epoch-progress-ring ${className ?? ''}`} ref={ref}>
