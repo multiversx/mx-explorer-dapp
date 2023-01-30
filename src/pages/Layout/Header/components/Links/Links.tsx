@@ -77,7 +77,8 @@ export const Links = (props: LinksPropsType) => {
         tokensRoutes.tokenDetailsAccounts,
         tokensRoutes.tokenDetailsLockedAccounts,
         tokensRoutes.tokenDetailsRoles,
-        tokensRoutes.tokensMeta
+        tokensRoutes.tokensMeta,
+        tokensRoutes.tokensMetaEsdt
       ]
     },
     {
