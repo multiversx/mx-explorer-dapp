@@ -96,7 +96,7 @@ export const ChartComposed = ({
           } = entry;
           const active = Boolean(hiddenSeries && hiddenSeries[dataKey]);
           const styles = {
-            marginRight: 10,
+            margin: 5,
             color: `${active ? secondary : color}`,
             borderColor: color,
             ...styleRest
@@ -254,7 +254,7 @@ export const ChartComposed = ({
             iconType='circle'
             wrapperStyle={{
               cursor: 'pointer',
-              position: 'relative'
+              paddingTop: '1.5rem'
             }}
             payload={getLegendPayload()}
             content={renderCustomizedLegend}
