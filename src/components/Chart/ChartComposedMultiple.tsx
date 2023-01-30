@@ -30,7 +30,7 @@ export const ChartComposedMultiple = ({
   const [hiddenSeries, setHiddenSeries] =
     useState<Record<string, string | undefined>>();
 
-  const [white, neutral800, teal, violet400, muted, primary, secondary] = [
+  const [white, neutral800, muted, primary, secondary] = [
     'white',
     'neutral-800',
     'teal',
@@ -211,7 +211,7 @@ export const ChartComposedMultiple = ({
                 axisLine={false}
                 tickLine={false}
                 tickCount={10}
-                stroke={sc.stroke}
+                stroke={seriesConfig.length !== 2 ? primary : sc.stroke}
               />
               <Area
                 type='monotone'
@@ -226,8 +226,8 @@ export const ChartComposedMultiple = ({
                   : {})}
                 strokeWidth={1.5}
                 activeDot={{
-                  stroke: violet400,
-                  fill: violet400
+                  stroke: sc.stroke,
+                  fill: sc.stroke
                 }}
                 opacity={getSeriesOpacity(sc)}
                 visibility={getSeriesVisibility(sc)}
