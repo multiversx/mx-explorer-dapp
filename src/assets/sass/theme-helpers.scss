@@ -432,9 +432,9 @@ button.badge {
     padding-top: 0 !important;
   }
   @include media-breakpoint-down(md) {
-    .card-header,
-    .card-body,
-    .card-footer {
+    & > .card-header,
+    & > .card-body,
+    & > .card-footer {
       padding: 1.5rem 1rem;
     }
   }
@@ -451,12 +451,12 @@ button.badge {
     & > .card-body,
     & > .card-footer {
       padding: 2rem;
-      @include media-breakpoint-down(md) {
-        .card-header,
-        .card-body,
-        .card-footer {
-          padding: 1.5rem 1rem;
-        }
+    }
+    @include media-breakpoint-down(md) {
+      & > .card-header,
+      & > .card-body,
+      & > .card-footer {
+        padding: 1.5rem 1rem;
       }
     }
   }
