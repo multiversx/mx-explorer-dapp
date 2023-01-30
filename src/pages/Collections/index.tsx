@@ -93,9 +93,11 @@ export const Collections = () => {
                           </li>
                           <li className='list-inline-item me-0'>
                             <NetworkLink
-                              to={collectionRoutes.collectionsNft}
+                              to={`${collectionRoutes.collections}/nft`}
                               className={`badge py-2 px-3 br-lg ${
-                                activeRoute(collectionRoutes.collectionsNft)
+                                activeRoute(
+                                  `${collectionRoutes.collections}/nft`
+                                )
                                   ? 'badge-yellow'
                                   : 'badge-outline badge-outline-yellow'
                               }`}
@@ -105,9 +107,11 @@ export const Collections = () => {
                           </li>
                           <li className='list-inline-item me-0'>
                             <NetworkLink
-                              to={collectionRoutes.collectionsSft}
+                              to={`${collectionRoutes.collections}/sft`}
                               className={`badge py-2 px-3 br-lg ${
-                                activeRoute(collectionRoutes.collectionsSft)
+                                activeRoute(
+                                  `${collectionRoutes.collections}/sft`
+                                )
                                   ? 'badge-orange'
                                   : 'badge-outline badge-outline-orange'
                               }`}
