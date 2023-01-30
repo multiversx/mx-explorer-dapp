@@ -8,12 +8,14 @@ import { growthStakingSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
 import { StakingStatisticsLabelEnum } from './enum';
-import styles from './styles.module.scss';
+
+import type { ChartSelectOptionType } from '../ChartSelect/types';
 import type { StatisticType } from './types';
 
 import { ChartRoot } from '../ChartRoot';
 import { ChartSelect } from '../ChartSelect';
-import type { ChartSelectOptionType } from '../ChartSelect/types';
+
+import styles from './styles.module.scss';
 
 export const ChartStake = ({ className }: WithClassnameType) => {
   const {
