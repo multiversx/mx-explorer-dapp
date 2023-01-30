@@ -1,14 +1,12 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
 import { PageState, Chart, Loader, useAdapter } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
 import { activeNetworkSelector } from 'redux/selectors';
 import { ChartResolutionSelector } from './components/ChartResolution';
 import type { ChartResolutionRangeType } from './components/ChartResolution/types';
 import { ChartListType } from '../AnalyticsCompare';
-import { RANGE } from '../constants';
 import { getChartColorPalette } from '../helpers/getChartColorPalette';
 
 export interface AnalyticsChartDataType {
@@ -18,10 +16,9 @@ export interface AnalyticsChartDataType {
 
 export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
   const ref = useRef(null);
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const range = searchParams.get(RANGE) as ChartResolutionRangeType;
+  const [range, setRange] = useState<ChartResolutionRangeType>('month');
 
   const { getAnalyticsChart } = useAdapter();
 
@@ -109,8 +106,7 @@ export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
               isResponsive={true}
               value={range}
               onChange={(resolution) => {
-                searchParams.set('range', resolution.range);
-                setSearchParams(searchParams);
+                setRange(resolution.range);
               }}
             />
           </div>
