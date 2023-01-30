@@ -93,7 +93,7 @@ export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
   return (
     <section id={[series.map((x) => x.id)].join('/')} ref={ref}>
       <div className='d-md-flex align-items-center flex-wrap mb-spacer mt-n3'>
-        <h3 className='my-3 me-md-auto'>
+        <h5 className='my-3 me-md-auto'>
           {seriesConfig?.map((sc, index) => (
             <React.Fragment key={`${sc.id}-config-label`}>
               <span style={{ color: sc.stroke }}>{sc.label}</span>
@@ -102,7 +102,7 @@ export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
               )}
             </React.Fragment>
           ))}
-        </h3>
+        </h5>
         <div className='d-flex justify-md-content-end align-items-center mt-3 mt-md-0'>
           <div className='mb-0'>
             <ChartResolutionSelector
