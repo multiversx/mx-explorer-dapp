@@ -206,7 +206,7 @@ button.badge {
     pointer-events: none;
   }
   &-green {
-    color: #22c55e; // TODO theme-color green/500
+    color: var(--green-500);
     background: linear-gradient(
       90deg,
       rgba(74, 222, 128, 0.06) 0%,
