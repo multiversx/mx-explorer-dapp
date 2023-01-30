@@ -164,7 +164,12 @@ export const Analytics = () => {
                     // charts={chartList.filter((x) =>
                     //   x.id.includes('transactions')
                     // )}
-                    series={[chartList[0], chartList[1], chartList[2]]}
+                    series={[
+                      chartList[0],
+                      chartList[1],
+                      chartList[2],
+                      chartList[3]
+                    ]}
                   />
                 </div>
               </div>
