@@ -32,7 +32,7 @@ export const IdentitySummary = ({
                 <div className='d-flex align-items-center min-w-0 mb-3 mb-xxl-0'>
                   <SharedIdentity.Avatar identity={identity} />
 
-                  <h5 className='mb-0 ms-2 me-2'>
+                  <h5 className='mb-0 mx-2 d-flex'>
                     {identity.identity ? (
                       <>
                         <NetworkLink
@@ -74,7 +74,7 @@ export const IdentitySummary = ({
                     </div>
                   </div>
                 </div>
-                <div className='d-none d-xxl-flex mx-4'>
+                <div className='d-none d-xxl-flex mx-2'>
                   <FontAwesomeIcon
                     icon={faAngleRight}
                     className='text-muted'
