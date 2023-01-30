@@ -42,8 +42,8 @@ export const Transactions = () => {
     '...'
   );
 
-  const fetchTransactions = () => {
-    if (searchParams.toString()) {
+  const fetchTransactions = (paramsChange = false) => {
+    if (searchParams.toString() && paramsChange) {
       setDataChanged(true);
     }
     Promise.all([
@@ -94,14 +94,19 @@ export const Transactions = () => {
         }
       })
       .finally(() => {
-        setDataChanged(false);
+        if (paramsChange) {
+          setDataChanged(false);
+        }
       });
   };
 
   React.useEffect(() => {
     fetchTransactions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, firstPageTicker, searchParams]);
+  }, [activeNetworkId, firstPageTicker]);
+
+  React.useEffect(() => {
+    fetchTransactions(true);
+  }, [searchParams]);
 
   useEffect(() => {
     if (senderShard !== undefined || receiverShard !== undefined) {
