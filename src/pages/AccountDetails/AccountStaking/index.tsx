@@ -51,33 +51,42 @@ export const AccountStaking = () => {
           <div className='row'>
             {hasStaking ? (
               <>
-                <div className='col-lg-7 pe-lg-0 border-end'>
+                <div className='col-lg-5 ps-lg-0 d-flex flex-column'>
+                  <div className='px-spacer py-3 staking-chart-title'>
+                    Staking Chart
+                  </div>
+                  <div className='staking-chart-holder'>
+                    <DonutChart
+                      stakingDetails={stakingDetails}
+                      providers={delegationProviders}
+                    />
+                  </div>
+                </div>
+                <div className='col-lg-7 pe-lg-0 order-lg-first'>
                   {displayDelegation.length > 0 && (
-                    <div className='account-delegation'>
-                      <div className='px-spacer py-3 border-bottom '>
+                    <div className='account-delegation stake-container'>
+                      <div className='px-spacer py-3 delegation-title'>
                         Staking List
                       </div>
-                      {displayDelegation.map((delegation, i) => {
-                        const provider = delegationProviders?.find(
-                          ({ provider }) => delegation.contract === provider
-                        );
-                        return provider ? (
-                          <AccountDelegation
-                            delegation={delegation}
-                            provider={provider}
-                            key={i}
-                          />
-                        ) : null;
-                      })}
+                      <div className='d-flex flex-column'>
+                        {displayDelegation.map((delegation, i) => {
+                          const provider = delegationProviders?.find(
+                            ({ provider }) => delegation.contract === provider
+                          );
+                          return provider ? (
+                            <AccountDelegation
+                              delegation={delegation}
+                              provider={provider}
+                              key={i}
+                            />
+                          ) : null;
+                        })}
+                      </div>
                     </div>
                   )}
                   {delegationLegacy && showDelegationLegacy && (
-                    <div
-                      className={`account-legacy-delegation ${
-                        displayDelegation.length > 0 ? 'border-top' : ''
-                      }`}
-                    >
-                      <div className='px-spacer py-3 border-bottom '>
+                    <div className='account-legacy-delegation stake-container'>
+                      <div className='px-spacer py-3 delegation-title'>
                         Legacy Delegation
                       </div>
 
@@ -88,25 +97,14 @@ export const AccountStaking = () => {
                     </div>
                   )}
                   {stake && showStake && (
-                    <div className='account-legacy-delegation'>
-                      <div className='px-spacer py-3 border-bottom '>
+                    <div className='account-stake stake-container'>
+                      <div className='px-spacer py-3 delegation-title'>
                         Stake{' '}
                         <span className='text-neutral-400'>(Validation)</span>
                       </div>
                       <AccountStake stake={stake} />
                     </div>
                   )}
-                </div>
-                <div className='col-lg-5 ps-0 d-flex flex-column'>
-                  <div className='px-spacer py-3 border-bottom  staking-chart-title'>
-                    Staking Chart
-                  </div>
-                  <div className='staking-chart-holder'>
-                    <DonutChart
-                      stakingDetails={stakingDetails}
-                      providers={delegationProviders}
-                    />
-                  </div>
                 </div>
               </>
             ) : (

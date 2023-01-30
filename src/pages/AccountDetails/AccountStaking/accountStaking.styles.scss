@@ -2,23 +2,25 @@
 @import './AccountDelegation/ProviderDetails/providerDetails.styles.scss';
 
 .account-staking {
-  .delegation-row + .delegation-row {
-    border-top: 1px solid var(--border-color) !important;
+  .delegation-row {
+    & + .delegation-row {
+      border-top: 1px solid var(--border-color);
+    }
   }
+
   .staking-chart-title {
-    border-top: 1px solid var(--border-color);
+    background-color: rgba(38, 38, 38, 0.6);
+    border-radius: $border-radius;
     @include media-breakpoint-up(lg) {
-      border-top: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
   .staking-chart-holder {
     display: flex;
     width: 100%;
     height: 100%;
-    min-height: 22rem;
-    @include media-breakpoint-up(md) {
-      min-height: 26rem;
-    }
+    min-height: 18rem;
     position: relative;
     &.chart-right-panel .staking-details-center {
       margin-left: -1rem;
@@ -37,5 +39,17 @@
     justify-content: center;
     flex-direction: column;
     margin: auto;
+  }
+  .delegation-title {
+    background-color: rgba(38, 38, 38, 0.6);
+    border-radius: $border-radius;
+  }
+  .stake-container:first-of-type {
+    @include media-breakpoint-up(lg) {
+      .delegation-title {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
   }
 }
