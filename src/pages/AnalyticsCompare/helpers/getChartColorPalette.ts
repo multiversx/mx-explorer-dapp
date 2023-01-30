@@ -1,11 +1,11 @@
 export const getChartColorPalette = () => {
   const colorPalette = [
-    'teal',
-    'violet-400',
+    'teal-500',
+    'green-500',
     'red',
-    'green',
-    'yellow',
-    'blue'
+    'yellow-500',
+    'purple',
+    'teal'
   ].map((color) =>
     getComputedStyle(document.documentElement)
       .getPropertyValue(`--${color}`)
