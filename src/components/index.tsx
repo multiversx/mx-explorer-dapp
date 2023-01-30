@@ -65,5 +65,6 @@ export * from './Marquee';
 export * from './NodesHero';
 export * from './ProgressRing';
 export * from './ShardList';
+export * from './FormatUSD';
 
 export { Chart, NodesTable, TxActionBlock, SharedIdentity };

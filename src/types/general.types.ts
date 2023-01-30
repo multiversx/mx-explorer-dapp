@@ -545,3 +545,10 @@ export enum TrendEnum {
   down = 'down',
   neutral = 'neutral'
 }
+
+export enum OperationDirectionEnum {
+  out = 'out',
+  in = 'in',
+  self = 'self',
+  internal = 'int'
+}
