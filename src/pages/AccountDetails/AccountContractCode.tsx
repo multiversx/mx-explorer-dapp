@@ -1,7 +1,8 @@
 import React from 'react';
-
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
+import { useAdapter } from 'components';
 import { downloadFile, urlBuilder } from 'helpers';
 import { useNetworkRoute } from 'hooks';
 
@@ -36,14 +37,26 @@ export const DownloadContractCode = ({
 
 export const AccountContractCode = () => {
   const navigate = useNavigate();
-
   const networkRoute = useNetworkRoute();
 
+  const { getAccountContractVerification } = useAdapter();
   const { account } = useSelector(accountSelector);
-  const { codeHash, code, address } = account;
+  const { codeHash, code, address, isVerified } = account;
 
   const codeHashBase64Buffer = Buffer.from(String(codeHash ?? ''), 'base64');
   const codeHashHexValue = codeHashBase64Buffer.toString('hex');
+
+  const fetchContractVerification = () => {
+    getAccountContractVerification({ address }).then(({ success, data }) => {
+      console.log('----', data);
+    });
+  };
+
+  React.useEffect(() => {
+    if (address && isVerified) {
+      fetchContractVerification();
+    }
+  }, [address, isVerified]);
 
   return !code ? (
     navigate(networkRoute(urlBuilder.accountDetails(address)))

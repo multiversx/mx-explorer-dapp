@@ -293,6 +293,11 @@ export const useAdapter = () => {
         }
       }),
 
+    getAccountContractVerification: ({ address }: { address: string }) =>
+      provider({
+        url: `/accounts/${address}/verification`
+      }),
+
     getScResult: (hash: string) => provider({ url: `/sc-results/${hash}` }),
 
     getScResults: (size = 1) =>
