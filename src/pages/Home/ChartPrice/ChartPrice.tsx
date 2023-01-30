@@ -13,12 +13,15 @@ import { useFetchGrowthPrice } from 'hooks';
 import { growthPriceSelector } from 'redux/selectors';
 import { TrendEnum } from 'types';
 
-import { PriceStatisticsLabelEnum } from './enum';
-import styles from './styles.module.scss';
 import type { StatisticType } from './types';
+import type { ChartSelectOptionType } from '../ChartSelect/types';
+
 import { ChartRoot } from '../ChartRoot';
 import { ChartSelect } from '../ChartSelect';
-import type { ChartSelectOptionType } from '../ChartSelect/types';
+
+import { PriceStatisticsLabelEnum } from './enum';
+
+import styles from './styles.module.scss';
 
 export const ChartPrice = () => {
   const {
@@ -43,6 +46,10 @@ export const ChartPrice = () => {
       value: 'price30d'
     },
     {
+      label: '365d',
+      value: 'price365d'
+    },
+    {
       label: 'All',
       value: 'priceAll'
     }
@@ -53,9 +60,11 @@ export const ChartPrice = () => {
     { label: PriceStatisticsLabelEnum.Volume24h, value: volume24h }
   ];
 
+  const price365d = priceAll.slice(priceAll.length - 365, priceAll.length);
   const dataMap = new Map([
     ['price7d', price7d],
     ['price30d', price30d],
+    ['price365d', price365d],
     ['priceAll', priceAll]
   ]);
 

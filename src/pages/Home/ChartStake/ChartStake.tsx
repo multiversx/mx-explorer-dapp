@@ -38,6 +38,10 @@ export const ChartStake = ({ className }: WithClassnameType) => {
       value: 'totalStaked30d'
     },
     {
+      label: '365d',
+      value: 'totalStaked365d'
+    },
+    {
       label: 'All',
       value: 'totalStakedAll'
     }
@@ -58,9 +62,15 @@ export const ChartStake = ({ className }: WithClassnameType) => {
     }
   ];
 
+  const totalStaked365d = totalStakedAll.slice(
+    totalStakedAll.length - 365,
+    totalStakedAll.length
+  );
+
   const dataMap = new Map([
     ['totalStaked7d', totalStaked7d],
     ['totalStaked30d', totalStaked30d],
+    ['totalStaked365d', totalStaked365d],
     ['totalStakedAll', totalStakedAll]
   ]);
 
