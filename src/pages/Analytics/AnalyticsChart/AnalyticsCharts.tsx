@@ -67,7 +67,7 @@ export const AnalyticsCharts = ({ charts }: { charts: ChartListType[] }) => {
     const colorPalette = getChartColorPalette();
 
     charts.forEach((chart, i) => {
-      const color = colorPalette[(i % colorPalette.length) - 1];
+      const color = colorPalette[i % colorPalette.length];
 
       configs.push({
         id: chart.id,

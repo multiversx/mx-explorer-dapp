@@ -9,13 +9,13 @@ import {
 import { Loader, useAdapter, Led } from 'components';
 import { useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
+import { AnalyticsCharts } from './AnalyticsChart';
 import { AnalyticsStackedChart } from './AnalyticsChart/AnalyticsStackedChart';
 import { ChartResolution } from './AnalyticsChart/components/ChartResolution';
 import { FIRST_SERIES_ID, RANGE, SECOND_SERIES_ID } from './constants';
 import { FailedAnalytics } from './FailedAnalytics';
 import { NoAnalytics } from './NoAnalytics';
 import { ChartYAxisFormatConfig } from '../../components/Chart/helpers/types';
-// import { AnalyticsCharts } from './AnalyticsCharts';
 
 export interface ChartListType {
   id: string;
@@ -152,11 +152,18 @@ export const Analytics = () => {
                     );
                   })}
                 </div>
-                <div className='row'>
-                  {/*<AnalyticsCharts charts={[...selectedPills]} />*/}
+
+                <div className='row pb-5'>
                   <AnalyticsStackedChart
                     firstSeries={selectedPills[0]}
                     secondSeries={selectedPills[1]}
+                  />
+                </div>
+                <div className='row mt-5'>
+                  <AnalyticsCharts
+                    charts={chartList.filter((x) =>
+                      x.id.includes('transactions')
+                    )}
                   />
                 </div>
               </div>
