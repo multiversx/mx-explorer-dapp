@@ -16,8 +16,8 @@ const RenderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180;
 
   const docStyle = window.getComputedStyle(document.documentElement);
-  const secondaryColor = docStyle.getPropertyValue('--secondary');
-  const bodyColor = docStyle.getPropertyValue('--body');
+  const secondaryColor = docStyle.getPropertyValue('--neutral-400');
+  const bodyColor = docStyle.getPropertyValue('--body-color');
   const cardBgColor = docStyle.getPropertyValue('--card-bg');
 
   const {

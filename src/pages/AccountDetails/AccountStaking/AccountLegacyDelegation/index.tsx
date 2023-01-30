@@ -19,7 +19,10 @@ export const AccountLegacyDelegation = ({
   delegationLegacy: DelegationLegacyType;
   identity?: IdentityType;
 }) => {
-  const { isFetched, baseApr, topUpApr } = useSelector(economicsSelector);
+  const {
+    isFetched,
+    unprocessed: { baseApr, topUpApr }
+  } = useSelector(economicsSelector);
   const { egldLabel } = useSelector(activeNetworkSelector);
 
   const {
