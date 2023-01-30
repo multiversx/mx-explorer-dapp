@@ -92,6 +92,7 @@ export const validatorsRoutes = {
 export const tokensRoutes = {
   tokens: '/tokens',
   tokensMeta: '/meta-tokens',
+  tokensMetaEsdt: '/meta-esdt',
   tokenDetails: '/tokens/:hash',
   tokenDetailsAccounts: '/tokens/:hash/accounts',
   tokenDetailsLockedAccounts: '/tokens/:hash/locked-accounts',
@@ -243,6 +244,11 @@ const mainRoutes: RouteType[] = [
   },
   {
     path: tokensRoutes.tokensMeta,
+    title: 'Meta-ESDT Tokens',
+    component: TokensMeta
+  },
+  {
+    path: tokensRoutes.tokensMetaEsdt,
     title: 'Meta-ESDT Tokens',
     component: TokensMeta
   },

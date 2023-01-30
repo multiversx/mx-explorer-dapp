@@ -18,16 +18,15 @@ export const NetworkMetrics = ({ node }: { node: NodeType }) => {
       </div>
 
       <div className='card-body'>
-        <div className='container-fluid'>
-          <DetailItem title='Rating' colWidth='3'>
-            <div className='d-flex align-items-center h-100'>
-              <div className='gradient-bar progress progress-sm w-100'>
-                <RatingArrow node={node} showTemp={true} />
-                <RatingArrow node={node} />
-              </div>
+        <DetailItem title='Rating' colWidth='3'>
+          <div className='d-flex align-items-center h-100'>
+            <div className='gradient-bar progress progress-sm w-100'>
+              <RatingArrow node={node} showTemp={true} />
+              <RatingArrow node={node} />
             </div>
-          </DetailItem>
-          {/* <DetailItem title="Uptime" colWidth="3">
+          </div>
+        </DetailItem>
+        {/* <DetailItem title="Uptime" colWidth="3">
             <PercentegeBar
               downtimeLabel={downtimeLabel}
               uptimeLabel={uptimeLabel}
@@ -37,15 +36,14 @@ export const NetworkMetrics = ({ node }: { node: NodeType }) => {
             />
           </DetailItem> */}
 
-          <DetailItem title='Status' colWidth='3'>
-            <div className='d-flex align-items-center'>
-              <Led color={`bg-${statusColor}`} />
-              <span className={`ms-2 text-${statusColor}`}>
-                {node.online ? 'online' : 'offline'}
-              </span>
-            </div>
-          </DetailItem>
-        </div>
+        <DetailItem title='Status' colWidth='3'>
+          <div className='d-flex align-items-center'>
+            <Led color={`bg-${statusColor}`} />
+            <span className={`ms-2 text-${statusColor}`}>
+              {node.online ? 'online' : 'offline'}
+            </span>
+          </div>
+        </DetailItem>
       </div>
     </div>
   );

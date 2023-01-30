@@ -53,6 +53,12 @@
   --#{$prefix}btn-active-border-color: var(--primary);
 }
 
+.btn-dark-alt {
+  --#{$prefix}btn-bg: var(--neutral-900);
+  --#{$prefix}btn-hover-bg: var(--black);
+  --#{$prefix}btn-active-bg: var(--black);
+}
+
 .form-control {
   background-color: var(--neutral-800);
   color: var(--neutral-500);

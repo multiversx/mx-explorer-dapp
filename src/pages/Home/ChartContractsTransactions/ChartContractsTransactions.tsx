@@ -49,6 +49,10 @@ export const ChartContractsTransactions = () => {
       value: 'transactions30d'
     },
     {
+      label: '365d',
+      value: 'transactions365d'
+    },
+    {
       label: 'All',
       value: 'transactionsAll'
     }
@@ -72,11 +76,22 @@ export const ChartContractsTransactions = () => {
     }
   ];
 
+  const transactions365d = transactionsAll.slice(
+    transactionsAll.length - 365,
+    transactionsAll.length
+  );
+
+  const scResults365d = scResultsAll.slice(
+    scResultsAll.length - 365,
+    scResultsAll.length
+  );
+
   const dataTransactions = useMemo(
     () =>
       new Map([
         ['transactions7d', transactions7d],
         ['transactions30d', transactions30d],
+        ['transactions365d', transactions365d],
         ['transactionsAll', transactionsAll]
       ]),
     [transactions7d, transactions30d, transactionsAll]
@@ -87,6 +102,7 @@ export const ChartContractsTransactions = () => {
       new Map([
         ['scResults7d', scResults7d],
         ['scResults30d', scResults30d],
+        ['scResults365d', scResults365d],
         ['scResultsAll', scResultsAll]
       ]),
     [scResults7d, scResults30d, scResultsAll]

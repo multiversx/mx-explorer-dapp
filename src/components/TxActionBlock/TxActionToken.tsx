@@ -1,7 +1,7 @@
 import React from 'react';
-import { Denominate, NetworkLink } from 'components';
+import { Denominate, FormatUSD, NetworkLink } from 'components';
 import { DECIMALS } from 'config';
-import { urlBuilder, formatUSD } from 'helpers';
+import { urlBuilder } from 'helpers';
 import { TokenArgumentType } from 'types';
 
 export const TxActionToken = ({
@@ -49,7 +49,7 @@ export const TxActionToken = ({
           </NetworkLink>
           {token?.valueUSD && (
             <div className='me-1 text-truncate text-neutral-400 ms-1 text-lh-24'>
-              ({formatUSD({ amount: token.valueUSD, digits: 2 })})
+              (<FormatUSD amount={token.valueUSD} digits={2} />)
             </div>
           )}
         </>

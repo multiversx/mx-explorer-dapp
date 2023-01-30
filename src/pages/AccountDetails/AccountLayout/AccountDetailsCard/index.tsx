@@ -151,63 +151,61 @@ export const AccountDetailsCard = () => {
                 </div>
               </div>
               <div className='card-body'>
-                <div className='container-fluid'>
-                  <SmallDetailItem title='Address'>
-                    <div className='d-flex align-items-center'>
-                      <ScAddressIcon initiator={address} />
-                      <Trim text={address} />
-                      <CopyButton text={address} />
-                    </div>
-                  </SmallDetailItem>
+                <SmallDetailItem title='Address'>
+                  <div className='d-flex align-items-center'>
+                    <ScAddressIcon initiator={address} />
+                    <Trim text={address} />
+                    <CopyButton text={address} />
+                  </div>
+                </SmallDetailItem>
 
-                  {assets?.name && (
-                    <SmallDetailItem title='Name'>
-                      <div className='d-flex align-items-center'>
-                        {assets?.iconSvg && (
-                          <div className='side-icon me-1'>
-                            <img src={assets?.iconSvg} alt=' ' />
-                          </div>
-                        )}
-                        <div>{assets.name}</div>
-                      </div>
-                    </SmallDetailItem>
-                  )}
-
-                  <SmallDetailItem title='Balance'>
+                {assets?.name && (
+                  <SmallDetailItem title='Name'>
                     <div className='d-flex align-items-center'>
-                      {balance !== '...' ? (
-                        <Denominate value={balance} decimals={4} />
-                      ) : (
-                        balance
+                      {assets?.iconSvg && (
+                        <div className='side-icon me-1'>
+                          <img src={assets?.iconSvg} alt=' ' />
+                        </div>
                       )}
+                      <div>{assets.name}</div>
                     </div>
                   </SmallDetailItem>
+                )}
 
-                  <SmallDetailItem title='Value'>
-                    <UsdValue input={balance} />
-                  </SmallDetailItem>
+                <SmallDetailItem title='Balance'>
+                  <div className='d-flex align-items-center'>
+                    {balance !== '...' ? (
+                      <Denominate value={balance} decimals={4} />
+                    ) : (
+                      balance
+                    )}
+                  </div>
+                </SmallDetailItem>
 
-                  <SmallDetailItem title='Properties'>
-                    <div className='d-flex alig-items-center flex-wrap gap-2 mt-1 mt-lg-0'>
-                      <PropertyPill
-                        name={'Upgradeable'}
-                        active={Boolean(isUpgradeable)}
-                      />
-                      <PropertyPill
-                        name={'Readable'}
-                        active={Boolean(isReadable)}
-                      />
-                      <PropertyPill
-                        name={'Payable'}
-                        active={Boolean(isPayable)}
-                      />
-                      <PropertyPill
-                        name={'Payable by Smart Contract'}
-                        active={Boolean(isPayableBySmartContract)}
-                      />
-                    </div>
-                  </SmallDetailItem>
-                </div>
+                <SmallDetailItem title='Value'>
+                  <UsdValue input={balance} />
+                </SmallDetailItem>
+
+                <SmallDetailItem title='Properties'>
+                  <div className='d-flex alig-items-center flex-wrap gap-2 mt-1 mt-lg-0'>
+                    <PropertyPill
+                      name={'Upgradeable'}
+                      active={Boolean(isUpgradeable)}
+                    />
+                    <PropertyPill
+                      name={'Readable'}
+                      active={Boolean(isReadable)}
+                    />
+                    <PropertyPill
+                      name={'Payable'}
+                      active={Boolean(isPayable)}
+                    />
+                    <PropertyPill
+                      name={'Payable by Smart Contract'}
+                      active={Boolean(isPayableBySmartContract)}
+                    />
+                  </div>
+                </SmallDetailItem>
               </div>
             </div>
           </div>
@@ -221,78 +219,76 @@ export const AccountDetailsCard = () => {
                 </div>
               </div>
               <div className='card-body'>
-                <div className='container-fluid'>
-                  <SmallDetailItem title='Shard'>
-                    {shard !== undefined ? (
-                      <NetworkLink
-                        to={urlBuilder.shard(shard)}
-                        data-testid='shardLink'
-                      >
-                        <ShardSpan shard={shard} />
-                      </NetworkLink>
-                    ) : (
-                      <span className='text-neutral-400'>N/A</span>
-                    )}
-                  </SmallDetailItem>
-
-                  <SmallDetailItem title='Rewards'>
-                    {developerReward !== undefined ? (
-                      <Denominate value={developerReward} decimals={4} />
-                    ) : (
-                      <span className='text-neutral-400'>N/A</span>
-                    )}
-                  </SmallDetailItem>
-
-                  <SmallDetailItem title='Owner'>
-                    {ownerAddress !== undefined ? (
-                      <div className='d-flex align-items-center'>
-                        <ScAddressIcon initiator={ownerAddress} />
-                        {ownerAddress !== address ? (
-                          <NetworkLink
-                            to={urlBuilder.accountDetails(ownerAddress)}
-                            data-testid='ownerLink'
-                            className='trim-wrapper'
-                          >
-                            <Trim text={ownerAddress} />
-                          </NetworkLink>
-                        ) : (
-                          <Trim text={ownerAddress} />
-                        )}
-                        <CopyButton text={ownerAddress} />
-                      </div>
-                    ) : (
-                      <span className='text-neutral-400'>N/A</span>
-                    )}
-                  </SmallDetailItem>
-
-                  <SmallDetailItem title='Deployed'>
-                    {deployedAt !== undefined ? (
-                      <div className='d-flex align-items-center flex-wrap'>
-                        <FontAwesomeIcon
-                          icon={faClock}
-                          className='me-2 text-neutral-400'
-                        />
-                        <TimeAgo value={deployedAt} /> ago &nbsp;
-                        <span className='text-neutral-400'>
-                          ({dateFormatted(deployedAt, false, true)})
-                        </span>
-                      </div>
-                    ) : (
-                      <span className='text-neutral-400'>N/A</span>
-                    )}
-                  </SmallDetailItem>
-
-                  {assets?.description && (
-                    <SmallDetailItem title='Description'>
-                      <span
-                        className='account-description'
-                        title={assets.description}
-                      >
-                        {assets.description}
-                      </span>
-                    </SmallDetailItem>
+                <SmallDetailItem title='Shard'>
+                  {shard !== undefined ? (
+                    <NetworkLink
+                      to={urlBuilder.shard(shard)}
+                      data-testid='shardLink'
+                    >
+                      <ShardSpan shard={shard} />
+                    </NetworkLink>
+                  ) : (
+                    <span className='text-neutral-400'>N/A</span>
                   )}
-                </div>
+                </SmallDetailItem>
+
+                <SmallDetailItem title='Rewards'>
+                  {developerReward !== undefined ? (
+                    <Denominate value={developerReward} decimals={4} />
+                  ) : (
+                    <span className='text-neutral-400'>N/A</span>
+                  )}
+                </SmallDetailItem>
+
+                <SmallDetailItem title='Owner'>
+                  {ownerAddress !== undefined ? (
+                    <div className='d-flex align-items-center'>
+                      <ScAddressIcon initiator={ownerAddress} />
+                      {ownerAddress !== address ? (
+                        <NetworkLink
+                          to={urlBuilder.accountDetails(ownerAddress)}
+                          data-testid='ownerLink'
+                          className='trim-wrapper'
+                        >
+                          <Trim text={ownerAddress} />
+                        </NetworkLink>
+                      ) : (
+                        <Trim text={ownerAddress} />
+                      )}
+                      <CopyButton text={ownerAddress} />
+                    </div>
+                  ) : (
+                    <span className='text-neutral-400'>N/A</span>
+                  )}
+                </SmallDetailItem>
+
+                <SmallDetailItem title='Deployed'>
+                  {deployedAt !== undefined ? (
+                    <div className='d-flex align-items-center flex-wrap'>
+                      <FontAwesomeIcon
+                        icon={faClock}
+                        className='me-2 text-neutral-400'
+                      />
+                      <TimeAgo value={deployedAt} /> ago &nbsp;
+                      <span className='text-neutral-400'>
+                        ({dateFormatted(deployedAt, false, true)})
+                      </span>
+                    </div>
+                  ) : (
+                    <span className='text-neutral-400'>N/A</span>
+                  )}
+                </SmallDetailItem>
+
+                {assets?.description && (
+                  <SmallDetailItem title='Description'>
+                    <span
+                      className='account-description'
+                      title={assets.description}
+                    >
+                      {assets.description}
+                    </span>
+                  </SmallDetailItem>
+                )}
               </div>
             </div>
           </div>

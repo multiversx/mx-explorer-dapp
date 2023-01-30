@@ -1,8 +1,8 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState, ReactNode, useEffect } from 'react';
+import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { UAParser } from 'ua-parser-js';
-import classNames from 'classnames';
 
 import { Search, NotificationsBar } from 'components';
 import {
@@ -34,6 +34,30 @@ import { Footer } from './Footer/index';
 import { Header } from './Header/index';
 import { PageLayout } from './PageLayout';
 import { Unavailable } from './Unavailable';
+
+const getCustomPageName = (pageName: string) => {
+  switch (pageName) {
+    case 'nft-collections':
+      return 'NFT Collections';
+    case 'sft-collections':
+      return 'SFT Collections';
+    case 'sft-collections':
+      return 'SFT Collections';
+    case 'meta-tokens':
+    case 'meta-esdt':
+      return 'Meta-ESDT';
+    case 'nfts':
+      return 'NFTs';
+    case 'sfts':
+      return 'SFTs';
+    default:
+      return pageName.replaceAll('-', ' ').toLowerCase();
+  }
+};
+
+const formatClassName = (className: string) => {
+  return className.replaceAll(' ', '-').toLowerCase();
+};
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   const [freeze, setFreeze] = useState(false);
@@ -83,25 +107,28 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const isHome = activeRoute('/');
   const isTransactions = activeRoute(transactionsRoutes.transactions);
 
-  const userAgentInfo = [
-    browser?.browser?.name ?? '',
-    browser?.engine?.name ?? '',
-    browser?.os?.name ?? ''
-  ];
-  const userAgentClasses = userAgentInfo
-    .map((info) => info.replaceAll(' ', '-').toLowerCase())
-    .join(' ');
-
   const pathArray = pathname.split('/');
   const pageClass =
     activeNetworkId === defaultNetworkId ? pathArray?.[1] : pathArray?.[2];
-  const pageName = pageClass.toLowerCase();
+  const pageName = getCustomPageName(pageClass);
+
+  useEffect(() => {
+    if (browser?.browser?.name) {
+      document.body.classList.add(formatClassName(browser.browser.name));
+    }
+    if (browser?.engine?.name) {
+      document.body.classList.add(formatClassName(browser.engine.name));
+    }
+    if (browser?.os?.name) {
+      document.body.classList.add(formatClassName(browser.os.name));
+    }
+  }, []);
 
   return (
     <div
       className={`d-flex scrollbar-thin ${
         pageName ? pageName : 'home'
-      } ${userAgentClasses}`}
+      } ${pageClass}`}
     >
       <div className='flex-fill vh-100'>
         <main

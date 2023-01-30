@@ -76,6 +76,27 @@
   background-color: var(--table-header);
 }
 
+// Fonts
+
+.font-primary-regular {
+  font-family: 'Roobert Regular';
+  font-weight: 400;
+}
+
+.font-primary-medium {
+  font-family: 'Roobert Medium';
+  font-weight: 500;
+}
+
+.font-primary-semibold {
+  font-family: 'Roobert SemiBold';
+  font-weight: 600;
+}
+
+.font-secondary {
+  font-family: 'Inter', sans-serif;
+}
+
 // Colors
 
 .text-green {
@@ -432,9 +453,9 @@ button.badge {
     padding-top: 0 !important;
   }
   @include media-breakpoint-down(md) {
-    .card-header,
-    .card-body,
-    .card-footer {
+    & > .card-header,
+    & > .card-body,
+    & > .card-footer {
       padding: 1.5rem 1rem;
     }
   }
@@ -451,12 +472,12 @@ button.badge {
     & > .card-body,
     & > .card-footer {
       padding: 2rem;
-      @include media-breakpoint-down(md) {
-        .card-header,
-        .card-body,
-        .card-footer {
-          padding: 1.5rem 1rem;
-        }
+    }
+    @include media-breakpoint-down(md) {
+      & > .card-header,
+      & > .card-body,
+      & > .card-footer {
+        padding: 1.5rem 1rem;
       }
     }
   }
