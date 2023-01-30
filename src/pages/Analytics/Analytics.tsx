@@ -142,22 +142,29 @@ export const Analytics = () => {
               </ChartWrapper>
               <ChartWrapper size='half'>
                 <div className='row p-3'>
-                  <AnalyticsChart
-                    // charts={chartList.filter((x) =>
-                    //   x.id.includes('transactions')
-                    // )}
-                    series={[
-                      chartList[0]
-                      // chartList[1],
-                      // chartList[2],
-                      // chartList[3]
-                    ]}
-                  />
+                  <AnalyticsChart series={[chartList[0]]} />
                 </div>
               </ChartWrapper>
-              <ChartWrapper size='half'>This is a test</ChartWrapper>
-              <ChartWrapper size='half'>This is a test</ChartWrapper>
-              <ChartWrapper size='half'>This is a test</ChartWrapper>
+              <ChartWrapper size='half'>
+                <div className='row p-3'>
+                  <AnalyticsChart series={[chartList[1]]} />
+                </div>
+              </ChartWrapper>
+              <ChartWrapper>
+                <div className='row p-3'>
+                  <AnalyticsChart series={[chartList[2]]} />
+                </div>
+              </ChartWrapper>
+              <ChartWrapper size='half'>
+                <div className='row p-3'>
+                  <AnalyticsChart series={[chartList[3]]} />
+                </div>{' '}
+              </ChartWrapper>
+              <ChartWrapper size='half'>
+                <div className='row p-3'>
+                  <AnalyticsChart series={[chartList[4]]} />
+                </div>{' '}
+              </ChartWrapper>
             </div>
           </div>
         </div>
