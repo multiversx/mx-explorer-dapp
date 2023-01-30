@@ -16,6 +16,7 @@ import { FIRST_SERIES_ID, RANGE, SECOND_SERIES_ID } from './constants';
 import { FailedAnalytics } from './FailedAnalytics';
 import { NoAnalytics } from './NoAnalytics';
 import { ChartYAxisFormatConfig } from '../../components/Chart/helpers/types';
+import { analyticsRoutes } from 'routes';
 
 export interface ChartListType {
   id: string;
@@ -122,8 +123,14 @@ export const AnalyticsCompare = () => {
         {dataReady === true && selectedPills.length >= 2 && (
           <div className='analytics container page-content'>
             <div className='card card-lg card-black'>
-              <div className='card-header'>
-                <h2 className='mb-0'>Key Metrics</h2>
+              <div className='card-header d-flex align-items-center'>
+                <a
+                  href={analyticsRoutes.analytics}
+                  className='analytics-nav-item link'
+                >
+                  Key Metrics
+                </a>
+                <div className='analytics-nav-item'>Compare</div>
               </div>
               <div className='card-body'>
                 <h6 className='text-neutral-400 mb-2'>
