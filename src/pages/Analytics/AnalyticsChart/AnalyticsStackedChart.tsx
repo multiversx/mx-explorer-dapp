@@ -125,15 +125,19 @@ export const AnalyticsStackedChart = ({
             <span style={{ color: secondSeriesDefaultConfig.stroke }}>
               {secondSeriesLabel}
             </span>
-            <span className='ms-2 me-3'>in the past</span>
           </h3>
-          <ChartResolutionSelector
-            value={range}
-            onChange={(resolution) => {
-              searchParams.set('range', resolution.range);
-              setSearchParams(searchParams);
-            }}
-          />
+          <div className='d-flex justify-content-end align-items-center ms-auto me-0'>
+            <h3 className='mb-0 py-spacer me-3'>Resolution: </h3>
+            <div className='mb-0 py-spacer me-4'>
+              <ChartResolutionSelector
+                value={range}
+                onChange={(resolution) => {
+                  searchParams.set('range', resolution.range);
+                  setSearchParams(searchParams);
+                }}
+              />
+            </div>
+          </div>
         </div>
         <div>
           {dataReady === undefined && <Loader />}
