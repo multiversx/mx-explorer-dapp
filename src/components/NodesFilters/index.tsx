@@ -166,7 +166,7 @@ export const NodesFilters = ({
               <Dropdown.Toggle
                 variant='outline-dark'
                 size='sm'
-                className={`badge  py-2 px-3 br-lg me-2 ${
+                className={`badge  py-2 px-3 br-lg ${
                   [
                     'eligible',
                     'waiting',
