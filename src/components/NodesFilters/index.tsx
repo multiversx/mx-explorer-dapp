@@ -299,6 +299,7 @@ export const NodesFilters = ({
               className='input-group-text'
               onClick={() => {
                 updateSearchValue('');
+                setInputValue('');
               }}
               data-testid='resetSearch'
             >
