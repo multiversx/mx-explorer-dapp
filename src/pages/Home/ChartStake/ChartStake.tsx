@@ -1,21 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
 
 import { useFetchGrowthStaking } from 'hooks';
-import { growthStakingSelector } from 'redux/selectors';
+import { growthStakingSelector, activeNetworkSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
 import { StakingStatisticsLabelEnum } from './enum';
 
-import type { ChartSelectOptionType } from '../ChartSelect/types';
-import type { StatisticType } from './types';
+import styles from './styles.module.scss';
 
+import type { StatisticType } from './types';
 import { ChartRoot } from '../ChartRoot';
 import { ChartSelect } from '../ChartSelect';
-
-import styles from './styles.module.scss';
+import type { ChartSelectOptionType } from '../ChartSelect/types';
 
 export const ChartStake = ({ className }: WithClassnameType) => {
   const {
@@ -29,6 +29,7 @@ export const ChartStake = ({ className }: WithClassnameType) => {
     totalStakedAll,
     isFetched
   } = useSelector(growthStakingSelector);
+  const { egldLabel } = useSelector(activeNetworkSelector);
 
   const filters: ChartSelectOptionType[] = [
     {
@@ -122,12 +123,7 @@ export const ChartStake = ({ className }: WithClassnameType) => {
         color={teal}
         identifier='delegationGradient'
         tooltipFormatter={(option: any) =>
-          new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            maximumFractionDigits: 0,
-            minimumFractionDigits: 0
-          }).format(option.value)
+          `${new BigNumber(option.value).toFormat(0)} ${egldLabel}`
         }
       />
 
