@@ -24,7 +24,7 @@ export const AccountStake = ({ stake }: { stake: StakeType }) => {
             <MultiversXSymbol />
           </div>
           <div className='d-flex flex-column w-100'>
-            <div className='provider-title d-flex align-items-center'>
+            <div className='provider-title font-primary-medium d-flex align-items-center'>
               Staked Validator Nodes
             </div>
           </div>

@@ -103,7 +103,7 @@ export const EpochHeroPill = ({ className }: WithClassnameType) => {
 
   return (
     <div
-      className={`hero-pill epoch-hero-pill d-flex align-items-center justify-content-between ${
+      className={`hero-pill epoch-hero-pill d-flex align-items-center justify-content-between font-primary-medium ${
         className ?? ''
       }`}
       ref={ref}

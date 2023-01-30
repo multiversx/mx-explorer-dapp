@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dropdown } from 'react-bootstrap';
+import { Dropdown, Anchor } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 
 export const NodesFilters = ({
@@ -187,7 +187,8 @@ export const NodesFilters = ({
               <Dropdown.Menu
                 style={{ marginTop: '0.35rem', marginBottom: '0.35rem' }}
               >
-                <div
+                <Dropdown.Item
+                  as={Anchor} // This is needed due to issues between threejs, react-bootstrap and typescript, what a time to be alive: https://github.com/react-bootstrap/react-bootstrap/issues/6283
                   className={`dropdown-item ${
                     status === 'eligible' ? 'active' : ''
                   }`}
@@ -198,8 +199,9 @@ export const NodesFilters = ({
                   }}
                 >
                   Eligible
-                </div>
-                <div
+                </Dropdown.Item>
+                <Dropdown.Item
+                  as={Anchor}
                   className={`dropdown-item ${
                     status === 'waiting' ? 'active' : ''
                   }`}
@@ -210,8 +212,9 @@ export const NodesFilters = ({
                   }}
                 >
                   Waiting
-                </div>
-                <div
+                </Dropdown.Item>
+                <Dropdown.Item
+                  as={Anchor}
                   className={`dropdown-item ${
                     status === 'new' ? 'active' : ''
                   }`}
@@ -222,8 +225,9 @@ export const NodesFilters = ({
                   }}
                 >
                   New
-                </div>
-                <div
+                </Dropdown.Item>
+                <Dropdown.Item
+                  as={Anchor}
                   className={`dropdown-item ${
                     status === 'jailed' ? 'active' : ''
                   }`}
@@ -234,8 +238,9 @@ export const NodesFilters = ({
                   }}
                 >
                   Jailed
-                </div>
-                <div
+                </Dropdown.Item>
+                <Dropdown.Item
+                  as={Anchor}
                   className={`dropdown-item ${
                     status === 'leaving' ? 'active' : ''
                   }`}
@@ -246,8 +251,9 @@ export const NodesFilters = ({
                   }}
                 >
                   Leaving
-                </div>
-                <div
+                </Dropdown.Item>
+                <Dropdown.Item
+                  as={Anchor}
                   className={`dropdown-item ${
                     status === 'queued' ? 'active' : ''
                   }`}
@@ -258,8 +264,9 @@ export const NodesFilters = ({
                   }}
                 >
                   Queued
-                </div>
-                <div
+                </Dropdown.Item>
+                <Dropdown.Item
+                  as={Anchor}
                   className={`dropdown-item ${
                     status === 'inactive' ? 'active' : ''
                   }`}
@@ -270,7 +277,7 @@ export const NodesFilters = ({
                   }}
                 >
                   Inactive
-                </div>
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </li>

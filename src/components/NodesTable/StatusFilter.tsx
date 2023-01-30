@@ -2,8 +2,23 @@ import React from 'react';
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { Anchor, Dropdown } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
+
+const CustomToggle = React.forwardRef(
+  ({ children, onClick }: any, ref: any) => (
+    <a
+      href=''
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+    </a>
+  )
+);
 
 export const StatusFilter = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,54 +34,38 @@ export const StatusFilter = () => {
   };
 
   return (
-    <OverlayTrigger
-      trigger='click'
-      key='popover'
-      placement='bottom'
-      rootClose
-      overlay={
-        <Popover id='popover-positioned-bottom' className='border'>
-          <Popover.Body>
-            <div
-              className={`dropdown-item ${online === 'true' ? 'active' : ''}`}
-              onClick={() => {
-                onlineLink('true');
-              }}
-              data-testid='filterByStatusOnline'
-            >
-              Online
-            </div>
-            <div
-              className={`dropdown-item ${online === 'false' ? 'active' : ''}`}
-              onClick={() => {
-                onlineLink('false');
-              }}
-              data-testid='filterByStatusOffline'
-            >
-              Offline
-            </div>
-            <div
-              className={`dropdown-item ${online === undefined ? '' : ''}`}
-              onClick={() => {
-                onlineLink('');
-              }}
-              data-testid='filterByStatusAll'
-            >
-              Show all
-            </div>
-          </Popover.Body>
-        </Popover>
-      }
+    <Dropdown
+      className='d-inline-block side-action cursor-pointer'
+      onSelect={(eventKey: any) => {
+        return onlineLink(eventKey ?? '');
+      }}
     >
-      <div
-        className='d-inline-block side-action cursor-pointer'
-        data-testid='shardFilterButton'
-      >
+      <Dropdown.Toggle as={CustomToggle} id='dropdown-custom-components'>
         <FontAwesomeIcon
           icon={online !== undefined ? faFilterSolid : faFilter}
           className={online !== undefined ? 'text-primary' : ''}
         />
-      </div>
-    </OverlayTrigger>
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item
+          as={Anchor}
+          eventKey='true'
+          className={`dropdown-item ${online === 'true' ? 'active' : ''}`}
+        >
+          Online
+        </Dropdown.Item>
+        <Dropdown.Item
+          as={Anchor}
+          eventKey='false'
+          className={`dropdown-item ${online === 'false' ? 'active' : ''}`}
+        >
+          Offline
+        </Dropdown.Item>
+        <Dropdown.Item as={Anchor} eventKey=''>
+          Show all
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };
