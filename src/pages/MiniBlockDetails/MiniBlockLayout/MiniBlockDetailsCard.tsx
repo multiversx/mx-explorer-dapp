@@ -39,61 +39,59 @@ export const MiniBlockDetailsCard = () => {
               </div>
             </div>
             <div className='card-body'>
-              <div className='container-fluid'>
-                <DetailItem title='Miniblock Hash'>
-                  <div className='d-flex align-items-center text-break-all'>
-                    {miniBlockHash}
-                    <CopyButton text={miniBlockHash} />
-                  </div>
-                </DetailItem>
-                <DetailItem title='Sender Shard'>
-                  <div className='d-flex'>
-                    <NetworkLink to={urlBuilder.shard(senderShard)}>
-                      <ShardSpan shard={senderShard} />
+              <DetailItem title='Miniblock Hash'>
+                <div className='d-flex align-items-center text-break-all'>
+                  {miniBlockHash}
+                  <CopyButton text={miniBlockHash} />
+                </div>
+              </DetailItem>
+              <DetailItem title='Sender Shard'>
+                <div className='d-flex'>
+                  <NetworkLink to={urlBuilder.shard(senderShard)}>
+                    <ShardSpan shard={senderShard} />
+                  </NetworkLink>
+                </div>
+              </DetailItem>
+
+              <DetailItem title='Receiver Shard'>
+                <div className='d-flex'>
+                  <NetworkLink to={urlBuilder.shard(receiverShard)}>
+                    <ShardSpan shard={receiverShard} />
+                  </NetworkLink>
+                </div>
+              </DetailItem>
+
+              <DetailItem title='Sender Block'>
+                <div className='d-flex align-items-center'>
+                  {senderBlockHash !== '' ? (
+                    <NetworkLink
+                      className='trim-wrapper'
+                      to={`/blocks/${senderBlockHash}`}
+                    >
+                      <Trim text={senderBlockHash} />
                     </NetworkLink>
-                  </div>
-                </DetailItem>
+                  ) : (
+                    <span className='text-neutral-400'>N/A</span>
+                  )}
+                </div>
+              </DetailItem>
 
-                <DetailItem title='Receiver Shard'>
-                  <div className='d-flex'>
-                    <NetworkLink to={urlBuilder.shard(receiverShard)}>
-                      <ShardSpan shard={receiverShard} />
+              <DetailItem title='Receiver Block'>
+                <div className='d-flex align-items-center'>
+                  {receiverBlockHash !== '' ? (
+                    <NetworkLink
+                      className='trim-wrapper'
+                      to={`/blocks/${receiverBlockHash}`}
+                    >
+                      <Trim text={receiverBlockHash} />
                     </NetworkLink>
-                  </div>
-                </DetailItem>
+                  ) : (
+                    <span className='text-neutral-400'>N/A</span>
+                  )}
+                </div>
+              </DetailItem>
 
-                <DetailItem title='Sender Block'>
-                  <div className='d-flex align-items-center'>
-                    {senderBlockHash !== '' ? (
-                      <NetworkLink
-                        className='trim-wrapper'
-                        to={`/blocks/${senderBlockHash}`}
-                      >
-                        <Trim text={senderBlockHash} />
-                      </NetworkLink>
-                    ) : (
-                      <span className='text-neutral-400'>N/A</span>
-                    )}
-                  </div>
-                </DetailItem>
-
-                <DetailItem title='Receiver Block'>
-                  <div className='d-flex align-items-center'>
-                    {receiverBlockHash !== '' ? (
-                      <NetworkLink
-                        className='trim-wrapper'
-                        to={`/blocks/${receiverBlockHash}`}
-                      >
-                        <Trim text={receiverBlockHash} />
-                      </NetworkLink>
-                    ) : (
-                      <span className='text-neutral-400'>N/A</span>
-                    )}
-                  </div>
-                </DetailItem>
-
-                <DetailItem title='Type'>{type}</DetailItem>
-              </div>
+              <DetailItem title='Type'>{type}</DetailItem>
             </div>
           </div>
         </div>

@@ -106,197 +106,193 @@ export const NftDetails = () => {
                     </div>
                   </div>
                   <div className='card-body'>
-                    <div className='container-fluid'>
-                      <DetailItem title='Name'>
-                        {nftDetails.scamInfo
-                          ? showData
-                            ? nftDetails.name
-                            : `[Hidden - ${nftDetails.scamInfo.info}]`
-                          : nftDetails.name}
-                      </DetailItem>
-                      <DetailItem title='Identifier'>
-                        {nftDetails.identifier}
-                      </DetailItem>
-                      {nftDetails.ticker !== undefined &&
-                        nftDetails.ticker !== nftDetails.collection &&
-                        nftDetails.type === 'MetaESDT' && (
-                          <DetailItem title='Ticker'>
-                            {nftDetails.ticker}
-                          </DetailItem>
-                        )}
-                      {nftDetails.nonce && (
-                        <DetailItem title='Nonce'>
-                          {nftDetails.nonce}
+                    <DetailItem title='Name'>
+                      {nftDetails.scamInfo
+                        ? showData
+                          ? nftDetails.name
+                          : `[Hidden - ${nftDetails.scamInfo.info}]`
+                        : nftDetails.name}
+                    </DetailItem>
+                    <DetailItem title='Identifier'>
+                      {nftDetails.identifier}
+                    </DetailItem>
+                    {nftDetails.ticker !== undefined &&
+                      nftDetails.ticker !== nftDetails.collection &&
+                      nftDetails.type === 'MetaESDT' && (
+                        <DetailItem title='Ticker'>
+                          {nftDetails.ticker}
                         </DetailItem>
                       )}
-                      <DetailItem title='Type'>
-                        <NftBadge type={nftDetails.type} />
-                      </DetailItem>
-                      <DetailItem title='Collection'>
-                        <CollectionBlock nft={nftDetails} />
-                      </DetailItem>
-                      {nftDetails.owner !== undefined && (
-                        <DetailItem title='Owner'>
-                          <div className='d-flex'>
-                            <NetworkLink
-                              to={urlBuilder.accountDetails(nftDetails.owner)}
-                              className='trim-wrapper'
-                            >
-                              <Trim text={nftDetails.owner} />
-                            </NetworkLink>
-                          </div>
-                        </DetailItem>
-                      )}
-                      <DetailItem title='Creator'>
+                    {nftDetails.nonce && (
+                      <DetailItem title='Nonce'>{nftDetails.nonce}</DetailItem>
+                    )}
+                    <DetailItem title='Type'>
+                      <NftBadge type={nftDetails.type} />
+                    </DetailItem>
+                    <DetailItem title='Collection'>
+                      <CollectionBlock nft={nftDetails} />
+                    </DetailItem>
+                    {nftDetails.owner !== undefined && (
+                      <DetailItem title='Owner'>
                         <div className='d-flex'>
                           <NetworkLink
-                            to={urlBuilder.accountDetails(nftDetails.creator)}
+                            to={urlBuilder.accountDetails(nftDetails.owner)}
                             className='trim-wrapper'
                           >
-                            <Trim text={nftDetails.creator} />
+                            <Trim text={nftDetails.owner} />
                           </NetworkLink>
                         </div>
                       </DetailItem>
-                      {nftDetails.timestamp !== undefined && (
-                        <DetailItem title='Minted'>
-                          <FontAwesomeIcon
-                            icon={faClock}
-                            className='me-2 text-neutral-400'
-                          />
-                          <TimeAgo value={nftDetails.timestamp} />
-                          &nbsp;
-                          <span className='text-neutral-400'>
-                            ({dateFormatted(nftDetails.timestamp, false, true)})
-                          </span>
+                    )}
+                    <DetailItem title='Creator'>
+                      <div className='d-flex'>
+                        <NetworkLink
+                          to={urlBuilder.accountDetails(nftDetails.creator)}
+                          className='trim-wrapper'
+                        >
+                          <Trim text={nftDetails.creator} />
+                        </NetworkLink>
+                      </div>
+                    </DetailItem>
+                    {nftDetails.timestamp !== undefined && (
+                      <DetailItem title='Minted'>
+                        <FontAwesomeIcon
+                          icon={faClock}
+                          className='me-2 text-neutral-400'
+                        />
+                        <TimeAgo value={nftDetails.timestamp} />
+                        &nbsp;
+                        <span className='text-neutral-400'>
+                          ({dateFormatted(nftDetails.timestamp, false, true)})
+                        </span>
+                      </DetailItem>
+                    )}
+                    {nftDetails.royalties !== undefined &&
+                      nftDetails.royalties !== null && (
+                        <DetailItem title='Royalties'>
+                          {nftDetails.royalties}%
                         </DetailItem>
                       )}
-                      {nftDetails.royalties !== undefined &&
-                        nftDetails.royalties !== null && (
-                          <DetailItem title='Royalties'>
-                            {nftDetails.royalties}%
-                          </DetailItem>
-                        )}
-                      {nftDetails.supply !== undefined &&
-                        nftDetails.type !== 'NonFungibleESDT' && (
-                          <DetailItem title='Supply'>
-                            {nftDetails.decimals ? (
-                              <Denominate
-                                value={nftDetails.supply}
-                                showLabel={false}
-                                denomination={nftDetails.decimals}
-                              />
-                            ) : (
-                              Number(nftDetails.supply).toLocaleString('en')
-                            )}
-                          </DetailItem>
-                        )}
-                      {nftDetails.decimals !== undefined && (
-                        <DetailItem title='Decimals'>
-                          {nftDetails.decimals}
-                        </DetailItem>
-                      )}
-                      {nftDetails.uris !== undefined && nftDetails.uris[0] && (
-                        <DetailItem title='Assets'>
-                          {nftDetails.scamInfo ? (
-                            showData ? (
-                              <NftPreview token={nftDetails} />
-                            ) : (
-                              `[Hidden - ${nftDetails.scamInfo.info}]`
-                            )
+                    {nftDetails.supply !== undefined &&
+                      nftDetails.type !== 'NonFungibleESDT' && (
+                        <DetailItem title='Supply'>
+                          {nftDetails.decimals ? (
+                            <Denominate
+                              value={nftDetails.supply}
+                              showLabel={false}
+                              denomination={nftDetails.decimals}
+                            />
                           ) : (
-                            <NftPreview token={nftDetails} />
+                            Number(nftDetails.supply).toLocaleString('en')
                           )}
                         </DetailItem>
                       )}
-                      {nftDetails.tags !== undefined &&
-                        nftDetails.tags.length > 0 && (
-                          <DetailItem title='Tags'>
-                            {nftDetails.tags.map((tag) => (
-                              <div
-                                key={tag}
-                                className='badge badge-light p-2 me-2 font-weight-normal'
-                              >
-                                #{tag}
-                              </div>
-                            ))}
-                          </DetailItem>
+                    {nftDetails.decimals !== undefined && (
+                      <DetailItem title='Decimals'>
+                        {nftDetails.decimals}
+                      </DetailItem>
+                    )}
+                    {nftDetails.uris !== undefined && nftDetails.uris[0] && (
+                      <DetailItem title='Assets'>
+                        {nftDetails.scamInfo ? (
+                          showData ? (
+                            <NftPreview token={nftDetails} />
+                          ) : (
+                            `[Hidden - ${nftDetails.scamInfo.info}]`
+                          )
+                        ) : (
+                          <NftPreview token={nftDetails} />
                         )}
-                      {nftDetails.scamInfo && (
-                        <DetailItem title=''>
-                          <a
-                            href='/#'
-                            onClick={show}
-                            className='small-font text-neutral-400'
-                          >
-                            {!showData ? 'Show' : 'Hide'} original content
-                          </a>
+                      </DetailItem>
+                    )}
+                    {nftDetails.tags !== undefined &&
+                      nftDetails.tags.length > 0 && (
+                        <DetailItem title='Tags'>
+                          {nftDetails.tags.map((tag) => (
+                            <div
+                              key={tag}
+                              className='badge badge-light p-2 me-2 font-weight-normal'
+                            >
+                              #{tag}
+                            </div>
+                          ))}
                         </DetailItem>
                       )}
-                      {nftDetails?.rarities &&
-                        Object.keys(nftDetails.rarities).length > 0 && (
-                          <DetailItem title='Rarities'>
-                            <div className='card-item-container my-n2'>
-                              {nftDetails?.rarities?.openRarity?.rank && (
-                                <CardItem
-                                  title='Open Rarity Rank'
-                                  icon={faTrophy}
-                                  className='nft-card-item'
-                                >
-                                  {nftDetails.rarities.openRarity.rank}
-                                </CardItem>
-                              )}
-                              {nftDetails?.rarities?.statistical?.rank && (
-                                <CardItem
-                                  title='Statistical Rank'
-                                  icon={faTrophy}
-                                  className='nft-card-item'
-                                >
-                                  {nftDetails.rarities.statistical.rank}
-                                </CardItem>
-                              )}
-                              {nftDetails?.rarities?.jaccardDistances?.rank && (
-                                <CardItem
-                                  title='Jaccard Distances Rank'
-                                  icon={faTrophy}
-                                  className='nft-card-item'
-                                >
-                                  {nftDetails.rarities.jaccardDistances.rank}
-                                </CardItem>
-                              )}
-                              {nftDetails?.rarities?.trait?.rank && (
-                                <CardItem
-                                  title='Trait Rank'
-                                  icon={faTrophy}
-                                  className='nft-card-item'
-                                >
-                                  {nftDetails.rarities.trait.rank}
-                                </CardItem>
-                              )}
-                            </div>
-                          </DetailItem>
-                        )}
-                      {nftDetails?.metadata?.attributes && (
-                        <DetailItem title='Attributes'>
-                          <div className='attributes-holder'>
-                            {nftDetails.metadata.attributes.map(
-                              ({ value, trait_type }) => (
-                                <div
-                                  className='attribute'
-                                  key={`${trait_type}-${value}`}
-                                >
-                                  <p className='trait' title={trait_type}>
-                                    {trait_type}
-                                  </p>
-                                  <p className='value' title={value}>
-                                    {value}
-                                  </p>
-                                </div>
-                              )
+                    {nftDetails.scamInfo && (
+                      <DetailItem title=''>
+                        <a
+                          href='/#'
+                          onClick={show}
+                          className='small-font text-neutral-400'
+                        >
+                          {!showData ? 'Show' : 'Hide'} original content
+                        </a>
+                      </DetailItem>
+                    )}
+                    {nftDetails?.rarities &&
+                      Object.keys(nftDetails.rarities).length > 0 && (
+                        <DetailItem title='Rarities'>
+                          <div className='card-item-container my-n2'>
+                            {nftDetails?.rarities?.openRarity?.rank && (
+                              <CardItem
+                                title='Open Rarity Rank'
+                                icon={faTrophy}
+                                className='nft-card-item'
+                              >
+                                {nftDetails.rarities.openRarity.rank}
+                              </CardItem>
+                            )}
+                            {nftDetails?.rarities?.statistical?.rank && (
+                              <CardItem
+                                title='Statistical Rank'
+                                icon={faTrophy}
+                                className='nft-card-item'
+                              >
+                                {nftDetails.rarities.statistical.rank}
+                              </CardItem>
+                            )}
+                            {nftDetails?.rarities?.jaccardDistances?.rank && (
+                              <CardItem
+                                title='Jaccard Distances Rank'
+                                icon={faTrophy}
+                                className='nft-card-item'
+                              >
+                                {nftDetails.rarities.jaccardDistances.rank}
+                              </CardItem>
+                            )}
+                            {nftDetails?.rarities?.trait?.rank && (
+                              <CardItem
+                                title='Trait Rank'
+                                icon={faTrophy}
+                                className='nft-card-item'
+                              >
+                                {nftDetails.rarities.trait.rank}
+                              </CardItem>
                             )}
                           </div>
                         </DetailItem>
                       )}
-                    </div>
+                    {nftDetails?.metadata?.attributes && (
+                      <DetailItem title='Attributes'>
+                        <div className='attributes-holder'>
+                          {nftDetails.metadata.attributes.map(
+                            ({ value, trait_type }) => (
+                              <div
+                                className='attribute'
+                                key={`${trait_type}-${value}`}
+                              >
+                                <p className='trait' title={trait_type}>
+                                  {trait_type}
+                                </p>
+                                <p className='value' title={value}>
+                                  {value}
+                                </p>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      </DetailItem>
+                    )}
                   </div>
                 </div>
               </div>

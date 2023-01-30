@@ -105,7 +105,7 @@ export const TokenDetailsCard = () => {
                 </div>
               </div>
               <div className='card-body'>
-                <dl className='container-fluid'>
+                <dl className='px-0'>
                   <SmallDetailItem title='Token'>{identifier}</SmallDetailItem>
 
                   {price && marketCap ? (
@@ -164,7 +164,7 @@ export const TokenDetailsCard = () => {
                 </div>
               </div>
               <div className='card-body'>
-                <dl className='container-fluid'>
+                <dl className='px-0'>
                   <SmallDetailItem title='Owner'>
                     <div className='d-flex'>
                       <NetworkLink
