@@ -29,6 +29,7 @@ export interface AccountType {
   isPayableBySmartContract?: boolean;
   assets?: AssetType;
   username?: string;
+  isVerified?: boolean;
 }
 
 export interface AccountSliceType extends SliceType {
