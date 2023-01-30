@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent, useRef } from 'react';
+import React, { useState, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGrid, faGrid2 } from '@fortawesome/pro-solid-svg-icons';
@@ -10,13 +10,21 @@ import { Applications } from './components/Applications';
 import { Links } from './components/Links';
 import { Switcher } from './components/Switcher';
 
+import type { HeaderPropsType } from './types';
+
 import styles from './styles.module.scss';
 
-export const Header = () => {
+export const Header = (props: HeaderPropsType) => {
+  const { onExpand } = props;
+
   const [menu, setMenu] = useState(false);
   const [applications, setApplications] = useState(false);
 
   const onMenuToggle = (event: MouseEvent) => {
+    if (window.innerWidth <= 768) {
+      onExpand(!menu);
+    }
+
     event.preventDefault();
     setApplications(false);
     setTimeout(() => setMenu((menu) => !menu), applications ? 400 : 0);
@@ -27,9 +35,25 @@ export const Header = () => {
     setMenu(false);
 
     setTimeout(
-      () => setApplications((applications) => !applications),
+      () => {
+        if (window.innerWidth <= 768) {
+          onExpand(!applications);
+        }
+
+        setApplications((applications) => !applications);
+      },
       menu ? 400 : 0
     );
+  };
+
+  const onApplicationsClose = () => {
+    setApplications(false);
+    onExpand(false);
+  };
+
+  const onMenuClose = () => {
+    setMenu(false);
+    onExpand(false);
   };
 
   return (
@@ -51,7 +75,7 @@ export const Header = () => {
       <div
         tabIndex={0}
         onClick={onApplicationsToggle}
-        onBlur={() => setTimeout(() => setApplications(false), 100)}
+        onBlur={() => setTimeout(onApplicationsClose, 100)}
         className={classNames(styles.matrix, {
           [styles.active]: applications
         })}
@@ -65,7 +89,7 @@ export const Header = () => {
           [styles.active]: applications
         })}
       >
-        <Applications onClick={() => setApplications(false)} />
+        <Applications onClick={onApplicationsClose} />
       </div>
 
       <div
@@ -73,8 +97,8 @@ export const Header = () => {
           [styles.active]: menu
         })}
       >
-        <Links onClick={() => setMenu(false)} />
-        <Switcher onSwitch={() => setMenu(false)} />
+        <Links onClick={onMenuClose} />
+        <Switcher onSwitch={onMenuClose} />
       </div>
     </header>
   );

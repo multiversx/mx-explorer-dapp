@@ -37,9 +37,9 @@ export const MiniBlockDetails = () => {
     '...'
   );
 
-  const fetchTransactions = () => {
+  const fetchTransactions = (paramsChange = false) => {
     if (miniBlockHash) {
-      if (searchParams.toString()) {
+      if (searchParams.toString() && paramsChange) {
         setDataChanged(true);
       }
       Promise.all([
@@ -92,16 +92,20 @@ export const MiniBlockDetails = () => {
           }
         })
         .finally(() => {
-          setDataChanged(false);
+          if (paramsChange) {
+            setDataChanged(false);
+          }
         });
     }
   };
 
   useEffect(() => {
     fetchTransactions();
+  }, [activeNetworkId, miniBlockHash]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, searchParams, miniBlockHash]);
+  React.useEffect(() => {
+    fetchTransactions(true);
+  }, [searchParams]);
 
   const isScResult = type === 'SmartContractResultBlock';
 

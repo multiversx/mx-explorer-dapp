@@ -41,9 +41,9 @@ export const TokenDetails = () => {
     '...'
   );
 
-  const fetchTransactions = () => {
+  const fetchTransactions = (paramsChange = false) => {
     if (tokenId) {
-      if (searchParams.toString()) {
+      if (searchParams.toString() && paramsChange) {
         setDataChanged(true);
       }
       Promise.all([
@@ -98,16 +98,20 @@ export const TokenDetails = () => {
           }
         })
         .finally(() => {
-          setDataChanged(false);
+          if (paramsChange) {
+            setDataChanged(false);
+          }
         });
     }
   };
 
   useEffect(() => {
     fetchTransactions();
+  }, [activeNetworkId, tokenId, transactionsCount]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, searchParams, tokenId, transactionsCount]);
+  React.useEffect(() => {
+    fetchTransactions(true);
+  }, [searchParams]);
 
   return (
     <>
