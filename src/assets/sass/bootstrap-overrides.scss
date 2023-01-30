@@ -102,12 +102,12 @@
 // DROPDOWN
 .dropdown-menu {
   --#{$prefix}dropdown-color: var(--body-color);
-  --#{$prefix}dropdown-bg: var(--card-bg);
+  --#{$prefix}dropdown-bg: var(--neutral-800);
   --#{$prefix}dropdown-border-color: transparent;
   --#{$prefix}dropdown-divider-bg: var(--border-color);
   --#{$prefix}dropdown-link-color: var(--body-color);
-  --#{$prefix}dropdown-link-hover-color: var(--body-color);
-  --#{$prefix}dropdown-link-hover-bg: var(--neutral-800);
+  --#{$prefix}dropdown-link-hover-color: var(--primary);
+  --#{$prefix}dropdown-link-hover-bg: var(--neutral-900);
   --#{$prefix}dropdown-link-active-color: var(--black);
   --#{$prefix}dropdown-link-active-bg: var(--primary);
   --#{$prefix}dropdown-link-disabled-color: var(--neutral-700);

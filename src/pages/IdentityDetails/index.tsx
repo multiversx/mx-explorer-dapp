@@ -2,8 +2,7 @@ import React from 'react';
 import { faCity } from '@fortawesome/pro-regular-svg-icons/faCity';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import {
   useAdapter,
   Loader,
@@ -13,7 +12,6 @@ import {
 } from 'components';
 import { NodesTable, SharedIdentity } from 'components';
 import { useGetFilters } from 'hooks';
-import { activeNetworkSelector } from 'redux/selectors';
 import { IdentityType, NodeType, ProviderType } from 'types';
 
 export const IdentityDetails = () => {
@@ -21,7 +19,7 @@ export const IdentityDetails = () => {
   const { hash: id } = useParams() as any;
   const { getIdentity, getNodes, getNodesCount, getProviders } = useAdapter();
   const { getQueryObject, size } = useGetFilters();
-  const { walletAddress } = useSelector(activeNetworkSelector);
+  const [searchParams] = useSearchParams();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(
     undefined
@@ -55,7 +53,7 @@ export const IdentityDetails = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchData, []);
+  React.useEffect(fetchData, [searchParams]);
 
   const showProviders =
     providersFetched === false ||

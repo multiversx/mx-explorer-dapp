@@ -36,7 +36,9 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
   const identityName = identity?.name ?? 'N/A';
 
   return identity !== undefined ? (
-    <div className='identity-card card card-black'>
+    <div
+      className={`identity-card card card-black ${identity?.identity ?? ''}`}
+    >
       <div className='card-body'>
         <div className='row'>
           <div className='col-12 d-flex flex-row gap-3'>
@@ -191,9 +193,9 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
               <div className='card nodes-card'>
                 <div className='card-body d-flex flex-row flex-wrap align-items-center justify-content-between'>
                   <div className='nodes-card-title'>Nodes</div>
-                  <div className='nodes-card-value'>
+                  <h2 className='nodes-card-value mb-0'>
                     {identity.validators ? identity.validators : 'N/A'}
-                  </div>
+                  </h2>
                 </div>
               </div>
             </div>

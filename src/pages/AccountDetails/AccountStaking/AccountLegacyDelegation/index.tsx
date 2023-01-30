@@ -60,7 +60,7 @@ export const AccountLegacyDelegation = ({
             <MultiversXSymbol />
           </div>
           <div className='d-flex flex-column w-100'>
-            <div className='provider-title d-flex align-items-center'>
+            <div className='provider-title font-primary-medium d-flex align-items-center'>
               MultiversX Legacy Delegation
             </div>
 

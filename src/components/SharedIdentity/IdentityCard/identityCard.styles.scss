@@ -31,11 +31,7 @@
     display: flex;
     flex-grow: 1;
     @include media-breakpoint-up(xxl) {
-      flex-basis: 15%;
-    }
-    .stats-card-value {
-      font-family: 'Roobert Medium';
-      font-weight: 500;
+      flex-basis: 24%;
     }
   }
   .stake-card {
@@ -59,9 +55,6 @@
       color: var(--neutral-500);
     }
     .nodes-card-value {
-      font-family: 'Roobert Medium';
-      font-weight: 500;
-      font-size: 2rem;
       color: var(--neutral-300);
     }
     @include media-breakpoint-up(lg) {
@@ -102,10 +95,12 @@
     }
   }
 
-  .middle-gear {
-    height: 12rem;
-    margin-top: -2rem;
-    margin-bottom: -2rem;
+  &.multiversx {
+    .detail-card {
+      @include media-breakpoint-up(xxl) {
+        flex-basis: 28%;
+      }
+    }
   }
 }
 
