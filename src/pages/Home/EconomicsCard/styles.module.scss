@@ -19,6 +19,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-family: 'Roobert Medium';
+    font-weight: 500;
 
     @media (min-width: 768px) {
       margin-bottom: 2rem;
@@ -48,7 +50,6 @@
 
     .value {
       font-size: 1.25rem;
-      letter-spacing: -2px;
 
       @media (min-width: 1440px) {
         font-size: 1.5rem;

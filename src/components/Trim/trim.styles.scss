@@ -73,10 +73,6 @@
 
   /* SAFARI fix */
   @supports (-webkit-hyphens: none) {
-    .right,
-    .left {
-      letter-spacing: -0.001em;
-    }
     .right {
       text-overflow: clip;
     }

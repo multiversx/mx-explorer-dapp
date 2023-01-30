@@ -101,7 +101,6 @@
   .recharts-cartesian-axis-tick-value {
     tspan {
       font-size: 0.75rem;
-      font-weight: 300;
       fill: var(--neutral-400);
     }
   }
@@ -212,6 +211,7 @@
     text-align: start;
 
     span {
+      font-family: 'Roobert SemiBold';
       font-weight: 600;
       font-size: 12px;
     }
@@ -229,6 +229,7 @@
       }
 
       .item-value {
+        font-family: 'Roobert SemiBold';
         font-weight: 600;
         font-size: 14px;
       }

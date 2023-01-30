@@ -12,7 +12,7 @@
   }
 
   @media (min-width: 1200px) {
-    width: 38.05%;
+    width: 37.5%;
     margin: 0;
     margin-bottom: 1rem;
   }
@@ -38,10 +38,10 @@
 
   .price {
     font-weight: 500;
+    font-family: 'Roobert Medium';
     font-size: 1.5rem;
-    line-height: 1;
+    line-height: 1.25;
     margin-bottom: 0.5rem;
-    letter-spacing: -3px;
 
     @media (min-width: 768px) {
       font-size: 2rem;
@@ -92,9 +92,9 @@
 
       .value {
         font-size: 1.25rem;
+        font-family: 'Roobert Medium';
         font-weight: 500;
         color: var(--neutral-300);
-        letter-spacing: -2px;
         line-height: 1;
 
         @media (min-width: 768px) {
@@ -112,6 +112,7 @@
   padding-left: 1.75rem;
   line-height: 1;
   color: var(--teal);
+  font-family: 'Roobert SemiBold';
   font-weight: 600;
   position: relative;
   overflow: hidden;
