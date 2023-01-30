@@ -60,6 +60,7 @@ export const DateFilter = () => {
   };
 
   const onApply = () => {
+    hidePopover();
     const paramsObject = Object.fromEntries(searchParams);
     const nextUrlParams = {
       ...paramsObject,

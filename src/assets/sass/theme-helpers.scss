@@ -30,6 +30,13 @@
 .text-violet-400 {
   color: var(--violet-400);
 }
+.text-neutral-transparent {
+  color: var(--neutral-transparent);
+}
+.text-table-header {
+  color: var(--table-header);
+}
+
 .text-teal {
   color: var(--teal);
 }
@@ -60,6 +67,13 @@
 }
 .bg-neutral-900 {
   background-color: var(--neutral-900);
+}
+
+.bg-neutral-transparent {
+  background-color: var(--neutral-transparent);
+}
+.bg-table-header {
+  background-color: var(--table-header);
 }
 
 // Colors
@@ -425,6 +439,7 @@ button.badge {
     }
   }
   &.card-sm {
+    --card-border-radius: 0.5rem;
     & > .card-header,
     & > .card-body,
     & > .card-footer {
