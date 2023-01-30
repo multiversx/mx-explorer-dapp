@@ -9,6 +9,7 @@ import {
 import { Loader, useAdapter, Led } from 'components';
 import { useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
+import { AnalyticsCharts } from './AnalyticsChart';
 import { AnalyticsStackedChart } from './AnalyticsChart/AnalyticsStackedChart';
 import { ChartResolution } from './AnalyticsChart/components/ChartResolution';
 import { FIRST_SERIES_ID, RANGE, SECOND_SERIES_ID } from './constants';
@@ -118,7 +119,7 @@ export const Analytics = () => {
       {selectedPills.length < 2 && <FailedAnalytics />}
 
       <div ref={ref}>
-        {dataReady === true && selectedPills.length === 2 && (
+        {dataReady === true && selectedPills.length >= 2 && (
           <div className='analytics container page-content'>
             <div className='card card-lg card-black'>
               <div className='card-header'>
@@ -151,10 +152,19 @@ export const Analytics = () => {
                     );
                   })}
                 </div>
-                <div className='row'>
+
+                <div className='row pb-5'>
                   <AnalyticsStackedChart
                     firstSeries={selectedPills[0]}
                     secondSeries={selectedPills[1]}
+                  />
+                </div>
+                <div className='row mt-5'>
+                  <AnalyticsCharts
+                    // charts={chartList.filter((x) =>
+                    //   x.id.includes('transactions')
+                    // )}
+                    charts={[chartList[0], chartList[1], chartList[2]]}
                   />
                 </div>
               </div>

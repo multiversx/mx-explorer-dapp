@@ -12,7 +12,7 @@ import {
 import { ChartListType } from '../Analytics';
 import { RANGE } from '../constants';
 
-export interface AnalyticsStackedChartDataPoCType {
+export interface AnalyticsStackedChartDataType {
   value: string;
   timestamp: number;
 }
@@ -43,10 +43,10 @@ export const AnalyticsStackedChart = ({
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [firstSeriesData, setFirstSeriesData] = useState<
-    AnalyticsStackedChartDataPoCType[]
+    AnalyticsStackedChartDataType[]
   >([]);
   const [secondSeriesData, setSecondSeriesData] = useState<
-    AnalyticsStackedChartDataPoCType[]
+    AnalyticsStackedChartDataType[]
   >([]);
 
   const [teal, violet400] = ['teal', 'violet-400'].map((color) =>
@@ -57,11 +57,21 @@ export const AnalyticsStackedChart = ({
 
   const firstSeriesDefaultConfig = {
     gradient: 'firstSeriesGradientId',
-    stroke: violet400
+    gradientStopColor: violet400,
+    stroke: violet400,
+    legendStyle: {
+      color: violet400,
+      borderColor: violet400
+    }
   };
   const secondSeriesDefaultConfig = {
     gradient: 'secondSeriesGradientId',
-    stroke: teal
+    gradientStopColor: teal,
+    stroke: teal,
+    legendStyle: {
+      color: teal,
+      borderColor: teal
+    }
   };
 
   const getData = async () => {
@@ -102,14 +112,22 @@ export const AnalyticsStackedChart = ({
       id: firstSeriesLabel,
       label: firstSeriesLabel,
       data: firstSeriesData,
-      yAxisConfig: firstSeries.dappConfig
+      yAxisConfig: {
+        ...firstSeries.dappConfig,
+        id: 'left-axis',
+        orientation: 'left'
+      }
     });
     setSecondSeriesConfig({
       ...secondSeriesDefaultConfig,
       id: secondSeriesLabel,
       label: secondSeriesLabel,
       data: secondSeriesData,
-      yAxisConfig: secondSeries.dappConfig
+      yAxisConfig: {
+        ...secondSeries.dappConfig,
+        id: 'right-axis',
+        orientation: 'right'
+      }
     });
   }, [firstSeriesData, secondSeriesData]);
 
@@ -162,13 +180,12 @@ export const AnalyticsStackedChart = ({
             )}
 
           {dataReady === true && firstSeriesConfig && secondSeriesConfig && (
-            <Chart.Composed
-              firstSeriesConfig={firstSeriesConfig}
-              secondSeriesConfig={secondSeriesConfig}
+            <Chart.ComposedMultiple
+              seriesConfig={[firstSeriesConfig, secondSeriesConfig]}
               tooltip={{
                 dateFormat: 'dd, MMM D YYYY'
               }}
-            ></Chart.Composed>
+            ></Chart.ComposedMultiple>
           )}
         </div>
       </section>
