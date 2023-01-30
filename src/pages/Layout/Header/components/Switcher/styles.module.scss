@@ -64,6 +64,7 @@
         line-height: 1;
         transition: all 200ms ease;
         margin: 0;
+        font-family: var(--font-secondary);
 
         @media (min-width: 992px) {
           font-size: 0.75rem;

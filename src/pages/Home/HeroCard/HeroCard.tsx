@@ -26,7 +26,9 @@ export const HeroCard = () => {
       <div className='card-body d-flex flex-column justify-content-between'>
         <div className='row'>
           <div className='col-lg-6'>
-            <h1 className='h2 mb-4'>MultiversX Blockchain {explorerTitle}</h1>
+            <h1 className='h2 mb-4 font-primary-medium'>
+              MultiversX Blockchain {explorerTitle}
+            </h1>
             <Search />
           </div>
         </div>

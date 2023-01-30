@@ -200,7 +200,7 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
       <div className='input-group input-group-seamless mb-3'>
         <input
           type='text'
-          className='form-control text-truncate'
+          className='form-control text-truncate font-secondary'
           placeholder='Search for an address, transaction/block hash, validator key or token id'
           name='requestType'
           data-testid='search'

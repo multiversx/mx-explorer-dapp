@@ -76,6 +76,27 @@
   background-color: var(--table-header);
 }
 
+// Fonts
+
+.font-primary-regular {
+  font-family: 'Roobert Regular';
+  font-weight: 400;
+}
+
+.font-primary-medium {
+  font-family: 'Roobert Medium';
+  font-weight: 500;
+}
+
+.font-primary-semibold {
+  font-family: 'Roobert SemiBold';
+  font-weight: 600;
+}
+
+.font-secondary {
+  font-family: 'Inter', sans-serif;
+}
+
 // Colors
 
 .text-green {
