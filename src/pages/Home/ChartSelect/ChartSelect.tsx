@@ -34,7 +34,8 @@ const Option: typeof components.Option = (props) => (
   <components.Option
     {...props}
     className={classNames(styles.option, {
-      [styles.selected]: props.isSelected || props.isFocused
+      [styles.selected]: props.isSelected,
+      [styles.hover]: props.isFocused
     })}
   />
 );

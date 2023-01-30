@@ -23,7 +23,10 @@ export const accountSlice = createSlice({
       state: AccountSliceType,
       action: PayloadAction<AccountSliceType>
     ) => {
-      state.account = { ...state.account, ...action.payload };
+      state.account = {
+        ...getInitialAccountState().account,
+        ...action.payload
+      };
     }
   }
 });

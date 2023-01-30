@@ -67,6 +67,11 @@
         cursor: pointer;
 
         &:hover,
+        &.hover {
+          background-color: var(--neutral-700);
+          color: var(--teal);
+        }
+
         &.selected {
           background-color: var(--teal);
           color: var(--neutral-800);
