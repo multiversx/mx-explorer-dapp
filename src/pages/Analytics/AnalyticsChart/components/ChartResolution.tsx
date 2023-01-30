@@ -3,7 +3,7 @@ import { SingleValue } from 'react-select';
 import { ChartSelect } from '../../../Home/ChartSelect';
 import { ChartSelectOptionType } from '../../../Home/ChartSelect/types';
 
-export type ChartResolutionRangeType = 'year' | 'month' | 'week';
+export type ChartResolutionRangeType = 'all' | 'year' | 'month' | 'week';
 
 type ChartResolutionItemType = {
   label: string;
@@ -18,6 +18,10 @@ export type ChartResolutionType = {
 };
 
 export const ChartResolution: ChartResolutionType = {
+  all: {
+    label: 'All',
+    range: 'all'
+  },
   year: {
     label: '365 days',
     range: 'year'
@@ -42,6 +46,10 @@ export const ChartResolutionSelector = ({
   onChange
 }: ChartResolutionSelectorProps) => {
   const options: ChartSelectOptionType[] = [
+    {
+      label: 'All',
+      value: ChartResolution['all'].range
+    },
     {
       label: '365 days',
       value: ChartResolution['year'].range
