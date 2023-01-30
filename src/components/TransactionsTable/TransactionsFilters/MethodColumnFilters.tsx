@@ -21,13 +21,15 @@ export const MethodColumnFilters = ({
     (string && string[0].toUpperCase() + string.slice(1)) || '';
 
   const searchMethods = (
-    Object.keys(TxActionsEnum) as (keyof typeof TxActionsEnum)[]
-  ).map((key) => {
-    return {
-      value: key,
-      label: capitalize(TxActionsEnum[key])
-    };
-  });
+    Object.values(TxActionsEnum) as (keyof typeof TxActionsEnum)[]
+  )
+    .filter((val, index, array) => array.indexOf(val) === index)
+    .map((key) => {
+      return {
+        value: key,
+        label: capitalize(TxActionsEnum[key])
+      };
+    });
 
   if (inactiveFilters && inactiveFilters.includes(TxFiltersEnum.method)) {
     return null;
