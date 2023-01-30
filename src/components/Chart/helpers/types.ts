@@ -1,3 +1,5 @@
+import { CSSProperties } from 'react';
+
 export interface ChartDataType {
   timestamp: number;
   value: string | number;
@@ -46,6 +48,8 @@ export interface MetricType {
 }
 
 export interface ChartYAxisFormatConfig {
+  id?: string;
+  orientation?: 'left' | 'right';
   currency?: string;
   percentageMultiplier?: number;
   decimals?: number;
@@ -57,12 +61,14 @@ export interface ChartConfigType {
   data?: any;
   fill?: string;
   gradient?: string;
+  gradientStopColor?: string;
   stroke?: string;
   strokeDasharray?: string;
   tooltipStrokeDasharray?: string;
   zero?: boolean;
   showUsdValue?: boolean;
   yAxisConfig?: ChartYAxisFormatConfig;
+  legendStyle?: CSSProperties;
   tooltip?: {
     showUsdValue?: boolean;
     dateFormat?: string;
@@ -105,6 +111,20 @@ export interface BiAxialChartConfigType {
 }
 
 export interface BiAxialChartProps extends BiAxialChartConfigType {
+  size?: ChartSizeEnum;
+  hasOnlyStartEndTick?: boolean;
+  dateFormat?: string;
+  tooltip?: {
+    dateFormat?: string;
+  };
+}
+
+export interface ChartComposedConfigType {
+  seriesConfig: ChartConfigType[];
+}
+
+export interface ChartComposedProps extends ChartComposedConfigType {
+  seriesConfig: ChartConfigType[];
   size?: ChartSizeEnum;
   hasOnlyStartEndTick?: boolean;
   dateFormat?: string;
