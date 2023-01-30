@@ -92,15 +92,13 @@ export const DateFilter = () => {
         maxDate={new Date()}
         showDisabledMonthNavigation
       />
-      {before && after && filterText && (
-        <div className='mb-3 text-body'>{filterText}</div>
-      )}
-      <div className='d-flex justify-content-center mb-3'>
-        <button className='btn btn-primary btn-sm' onClick={onApply}>
+      {before && after && filterText && <div>{filterText}</div>}
+      <div className='d-flex justify-content-center mt-2 mb-3'>
+        <button className='btn btn-primary btn-sm px-3 py-2' onClick={onApply}>
           Apply
         </button>
         <button
-          className='btn btn-outline-primary btn-sm ms-2'
+          className='btn btn-outline-primary btn-sm px-3 py-2 ms-2'
           onClick={onClear}
         >
           Clear
