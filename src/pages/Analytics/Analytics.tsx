@@ -11,7 +11,10 @@ import { ChartWrapper } from './components/ChartWrapper';
 import { Loader, useAdapter } from '../../components';
 import { activeNetworkSelector } from '../../redux/selectors';
 import { ChartListType } from '../AnalyticsCompare';
-import { AnalyticsChart } from '../AnalyticsCompare/AnalyticsChart';
+import {
+  AnalyticsChart,
+  AnalyticsStackedChart
+} from '../AnalyticsCompare/AnalyticsChart';
 import { ChartResolution } from '../AnalyticsCompare/AnalyticsChart/components/ChartResolution';
 import {
   FIRST_SERIES_ID,
@@ -90,12 +93,13 @@ export const Analytics = () => {
     );
   }, [chartList]);
 
-  const newStuffCreatedChart = useMemo(() => {
+  const newSmartContractsCreatedChart = useMemo(() => {
+    return chartList?.filter((sc) => sc.id.includes('-new-smart-contracts-'));
+  }, [chartList]);
+
+  const newTokensCreatedChart = useMemo(() => {
     return chartList?.filter(
-      (sc) =>
-        sc.id.includes('-new-smart-contracts-') ||
-        sc.id.includes('-new-nfts-') ||
-        sc.id.includes('-new-esdts-')
+      (sc) => sc.id.includes('-new-nfts-') || sc.id.includes('-new-esdts-')
     );
   }, [chartList]);
 
@@ -195,7 +199,20 @@ export const Analytics = () => {
 
               <ChartWrapper>
                 <div className='px-3 pb-3'>
-                  <AnalyticsChart series={newStuffCreatedChart} />
+                  <AnalyticsChart series={newSmartContractsCreatedChart} />
+                </div>
+              </ChartWrapper>
+
+              <ChartWrapper>
+                <div className='px-3 pb-3'>
+                  {newTokensCreatedChart.length >= 2 ? (
+                    <AnalyticsStackedChart
+                      firstSeries={newTokensCreatedChart[0]}
+                      secondSeries={newTokensCreatedChart[1]}
+                    />
+                  ) : (
+                    <AnalyticsChart series={newTokensCreatedChart} />
+                  )}
                 </div>
               </ChartWrapper>
 
@@ -203,12 +220,17 @@ export const Analytics = () => {
 
               <ChartWrapper>
                 <div className='px-3 pb-3'>
-                  <AnalyticsChart series={stackedAmountChart} />
-                </div>
-              </ChartWrapper>
-              <ChartWrapper>
-                <div className='px-3 pb-3'>
-                  <AnalyticsChart series={noOfUsersStakingChart} />
+                  {stackedAmountChart.length >= 2 &&
+                  noOfUsersStakingChart.length >= 2 ? (
+                    <AnalyticsStackedChart
+                      firstSeries={stackedAmountChart[0]}
+                      secondSeries={noOfUsersStakingChart[0]}
+                    />
+                  ) : (
+                    <AnalyticsChart
+                      series={[...stackedAmountChart, ...noOfUsersStakingChart]}
+                    />
+                  )}
                 </div>
               </ChartWrapper>
               <ChartWrapper>
