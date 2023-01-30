@@ -20,11 +20,6 @@ export const PriceHeroPill = ({ className }: WithClassnameType) => {
     [TrendEnum.down, faCircleDown],
     [TrendEnum.neutral, faCircleMinus]
   ]);
-  const trendSymbol = new Map([
-    [TrendEnum.up, '+'],
-    [TrendEnum.down, '-'],
-    [TrendEnum.neutral, '']
-  ]);
 
   useFetchGrowthSearch();
 
@@ -41,7 +36,7 @@ export const PriceHeroPill = ({ className }: WithClassnameType) => {
       <div className='d-flex flex-column lext-left'>
         <div
           className='label text-primary cursor-context'
-          title={`${trendSymbol.get(priceChangeTrend)} $${priceChange24h}`}
+          title={`${priceChange24h}%`}
         >
           {currentPrice}
         </div>
