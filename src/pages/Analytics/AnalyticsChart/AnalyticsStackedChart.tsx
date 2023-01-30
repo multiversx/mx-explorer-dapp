@@ -12,7 +12,7 @@ import {
 import { ChartListType } from '../Analytics';
 import { RANGE } from '../constants';
 
-export interface AnalyticsStackedChartDataPoCType {
+export interface AnalyticsStackedChartDataType {
   value: string;
   timestamp: number;
 }
@@ -43,10 +43,10 @@ export const AnalyticsStackedChart = ({
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [firstSeriesData, setFirstSeriesData] = useState<
-    AnalyticsStackedChartDataPoCType[]
+    AnalyticsStackedChartDataType[]
   >([]);
   const [secondSeriesData, setSecondSeriesData] = useState<
-    AnalyticsStackedChartDataPoCType[]
+    AnalyticsStackedChartDataType[]
   >([]);
 
   const [teal, violet400] = ['teal', 'violet-400'].map((color) =>
@@ -187,13 +187,6 @@ export const AnalyticsStackedChart = ({
                 dateFormat: 'dd, MMM D YYYY'
               }}
             ></Chart.ComposedMultiple>
-            // <Chart.Composed
-            //   firstSeriesConfig={firstSeriesConfig}
-            //   secondSeriesConfig={secondSeriesConfig}
-            //   tooltip={{
-            //     dateFormat: 'dd, MMM D YYYY'
-            //   }}
-            // ></Chart.Composed>
           )}
         </div>
       </section>
