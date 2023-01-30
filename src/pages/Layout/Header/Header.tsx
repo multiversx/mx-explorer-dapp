@@ -36,8 +36,6 @@ export const Header = (props: HeaderPropsType) => {
 
     setTimeout(
       () => {
-        console.log(window.innerWidth);
-
         if (window.innerWidth <= 768) {
           onExpand(!applications);
         }
