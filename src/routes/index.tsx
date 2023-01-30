@@ -8,6 +8,7 @@ import { AccountStaking } from 'pages/AccountDetails/AccountStaking';
 import { AccountTokens } from 'pages/AccountDetails/AccountTokens';
 import { Accounts } from 'pages/Accounts';
 import { Analytics } from 'pages/Analytics';
+import { AnalyticsCompare } from 'pages/AnalyticsCompare';
 import { BlockDetails } from 'pages/BlockDetails';
 import { Blocks } from 'pages/Blocks';
 import { CollectionDetails } from 'pages/CollectionDetails';
@@ -113,7 +114,8 @@ export const nftRoutes = {
 };
 
 export const analyticsRoutes = {
-  analytics: '/analytics'
+  analytics: '/analytics',
+  compare: '/analytics/compare'
 };
 
 const mainRoutes: RouteType[] = [
@@ -326,6 +328,11 @@ const mainRoutes: RouteType[] = [
     path: analyticsRoutes.analytics,
     title: 'Analytics',
     component: Analytics
+  },
+  {
+    path: analyticsRoutes.compare,
+    title: 'Analytics',
+    component: AnalyticsCompare
   }
 ];
 

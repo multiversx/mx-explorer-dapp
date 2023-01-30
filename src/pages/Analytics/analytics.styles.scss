@@ -1,2 +1,14 @@
 .analytics {
+  &-nav-item {
+    line-height: 1;
+    font-weight: 500;
+    font-family: 'Roobert Medium';
+    margin-right: 1.5rem;
+    font-size: 1.25rem;
+    transition: all 200ms ease;
+
+    &.link {
+      color: var(--teal);
+    }
+  }
 }

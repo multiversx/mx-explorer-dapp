@@ -9,7 +9,7 @@ import {
   ChartResolutionRangeType,
   ChartResolutionSelector
 } from './components/ChartResolution';
-import { ChartListType } from '../Analytics';
+import { ChartListType } from '../AnalyticsCompare';
 import { RANGE } from '../constants';
 
 export interface AnalyticsStackedChartDataType {

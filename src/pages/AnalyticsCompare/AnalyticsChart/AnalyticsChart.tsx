@@ -9,7 +9,7 @@ import {
   ChartResolutionRangeType,
   ChartResolutionSelector
 } from './components/ChartResolution';
-import { ChartListType } from '../Analytics';
+import { ChartListType } from '../AnalyticsCompare';
 import { RANGE } from '../constants';
 import { getChartColorPalette } from '../helpers/getChartColorPalette';
 
@@ -73,7 +73,7 @@ export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
       const color = colorPalette[i % colorPalette.length];
 
       configs.push({
-        id: chartSeries.label,
+        id: chartSeries.id,
         label: chartSeries.label,
         data: seriesData[chartSeries.id],
         yAxisConfig: {
