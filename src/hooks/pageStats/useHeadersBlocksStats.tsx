@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAdapter } from '../../components';
+import { statsSelector } from '../../redux/selectors';
 import { pageHeadersBlocksStatsSelector } from '../../redux/selectors/pageHeadersBlocksStats';
-import { setPageHeaderBlocksStats } from '../../redux/slices/pageHeadersBlocksStats';
+import {
+  setPageHeaderBlocksStats,
+  setPageHeaderBlocksStatsBlockHeight
+} from '../../redux/slices/pageHeadersBlocksStats';
 import { HeadersBlocksType } from '../../types/headerStats.types';
 
 export const useHeadersBlocksStats = () => {
   const headersBlocks = useSelector(pageHeadersBlocksStatsSelector);
+  const { unprocessed } = useSelector(statsSelector);
 
   const dispatch = useDispatch();
   const { getGrowthHeaders } = useAdapter();
@@ -22,13 +27,22 @@ export const useHeadersBlocksStats = () => {
       return {} as HeadersBlocksType;
     }
 
-    dispatch(setPageHeaderBlocksStats(result.data));
+    dispatch(
+      setPageHeaderBlocksStats({
+        ...result.data,
+        blockHeight: unprocessed.blocks
+      })
+    );
     return result.data;
   };
 
   useEffect(() => {
     getHeadersBlocks();
   }, []);
+
+  useEffect(() => {
+    dispatch(setPageHeaderBlocksStatsBlockHeight(unprocessed.blocks));
+  }, [unprocessed.blocks, headersBlocks]);
 
   return {
     title: 'Blocks',

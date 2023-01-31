@@ -21,10 +21,17 @@ export const pageHeadersBlocksStatsSlice = createSlice({
         action.payload.totalApplicationsDeployed;
       state.totalApplicationsDeployed = action.payload.totalDeveloperRewards;
       state.totalDeveloperRewards = action.payload.totalNetworkFees;
+    },
+    setPageHeaderBlocksStatsBlockHeight: (
+      state: HeadersBlocksType,
+      action: PayloadAction<number>
+    ) => {
+      state.blockHeight = action.payload;
     }
   }
 });
 
-export const { setPageHeaderBlocksStats } = pageHeadersBlocksStatsSlice.actions;
+export const { setPageHeaderBlocksStats, setPageHeaderBlocksStatsBlockHeight } =
+  pageHeadersBlocksStatsSlice.actions;
 
 export const pageHeadersBlocksReducer = pageHeadersBlocksStatsSlice.reducer;
