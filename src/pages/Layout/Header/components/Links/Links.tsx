@@ -93,6 +93,9 @@ export const Links = (props: LinksPropsType) => {
       activeRoutes: [
         collectionRoutes.collections,
         collectionRoutes.collectionDetails,
+        collectionRoutes.collectionsNft,
+        collectionRoutes.collectionsSft,
+        collectionRoutes.collectionDetailsRoles,
         nftRoutes.nfts,
         nftRoutes.nftDetails
       ]
