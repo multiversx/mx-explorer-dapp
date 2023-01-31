@@ -1,18 +1,8 @@
 .nodes-hero {
   .unstyled-chart-box {
     margin: 0;
-    @media (min-width: 768px) {
-      padding: 2rem 0;
-      margin: 0;
-    }
     @media (min-width: 1200px) {
       width: 100%;
-      margin-left: 0;
-    }
-    .recharts-responsive-container,
-    .recharts-wrapper,
-    .recharts-surface {
-      height: 151px !important;
     }
   }
   .multilayer-percentage-bar {
