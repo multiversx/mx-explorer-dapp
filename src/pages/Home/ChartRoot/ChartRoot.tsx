@@ -34,34 +34,12 @@ const CustomTooltip = (props: any) => {
 };
 
 export const ChartRoot = (props: ChartRootPropsType) => {
-  const {
-    className,
-    data,
-    height,
-    color,
-    identifier,
-    syncId,
-    tooltipFormatter
-  } = props;
-
-  const calculateDomain = ([alpha, beta]: number[]): [number, number] => {
-    const start = alpha - alpha / 10;
-    const end = beta + beta / 10;
-
-    if (!isFinite(alpha) && !isFinite(beta)) {
-      return [0, 0];
-    }
-
-    return [start, end];
-  };
+  const { className, data, height, color, identifier, tooltipFormatter } =
+    props;
 
   return (
     <ResponsiveContainer height={height} width='100%' className={className}>
-      <AreaChart
-        data={data}
-        margin={{ left: 0, right: 0 }}
-        {...(syncId ? { syncId } : {})}
-      >
+      <AreaChart data={data} margin={{ left: 0, right: 0, top: 5, bottom: 5 }}>
         <defs>
           <linearGradient id={identifier} x1='0' y1='0' x2='0' y2='1'>
             <stop offset='5%' stopColor={color} stopOpacity={0.15} />
@@ -77,7 +55,7 @@ export const ChartRoot = (props: ChartRootPropsType) => {
           activeDot={{ stroke: color, fill: color }}
         />
 
-        <YAxis domain={calculateDomain} hide={true} />
+        <YAxis domain={['dataMin', 'dataMax']} hide={true} />
 
         <Tooltip
           cursor={false}

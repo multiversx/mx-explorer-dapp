@@ -126,7 +126,7 @@ export const ChartStake = ({ className }: WithClassnameType) => {
         <ChartRoot
           className={styles.container}
           data={data}
-          height={300}
+          height={75}
           color={teal}
           identifier='delegationGradient'
           tooltipFormatter={(option: any) =>
