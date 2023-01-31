@@ -33,9 +33,7 @@ export const ChartComposed = ({
   const [hiddenSeries, setHiddenSeries] =
     useState<Record<string, string | undefined>>();
 
-  const [neutral300, gray500, neutral800, muted, primary, secondary] = [
-    'neutral-300',
-    'gray-500',
+  const [neutral800, muted, primary, secondary] = [
     'neutral-800',
     'teal',
     'violet-400',
@@ -104,15 +102,14 @@ export const ChartComposed = ({
           const styles = {
             ...styleRest,
             margin: 5,
-            color: `${active ? neutral300 : color}`,
-            borderColor: `${active ? gray500 : borderColor ?? color}`
+            color: `${active ? secondary : color}`,
+            borderColor: `${active ? secondary : borderColor ?? color}`
           };
 
           return (
-            <button
-              type='button'
-              className='legend-item badge rounded-pill filter-badge d-flex align-items-center'
+            <span
               key={dataKey}
+              className='legend-item badge rounded-pill filter-badge'
               onMouseEnter={onLegendMouseEnter(dataKey)}
               onMouseLeave={onLegendMouseLeave}
               onClick={onLegendClick(dataKey)}
@@ -135,7 +132,7 @@ export const ChartComposed = ({
                 </Surface>
               )}
               <span className='mx-1'>{value}</span>
-            </button>
+            </span>
           );
         })}
       </div>

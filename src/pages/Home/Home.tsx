@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useIsMainnet } from 'hooks';
+import { useFetchGrowthHero, useIsMainnet } from 'hooks';
 import { MostUsed } from 'widgets';
 
 import { ChartContractsTransactions } from './ChartContractsTransactions';
@@ -13,6 +13,7 @@ import { LatestTransactions } from './LatestTransactions';
 
 export const Home = () => {
   const isMainnet = useIsMainnet();
+  useFetchGrowthHero();
 
   return (
     <div className='home page-content container'>
