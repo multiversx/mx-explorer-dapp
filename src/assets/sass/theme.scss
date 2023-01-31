@@ -390,3 +390,11 @@ div.side-icon {
     width: 9rem;
   }
 }
+
+.custom-stats {
+  .card {
+    @include media-breakpoint-up(xl) {
+      flex: 1 1 0px;
+    }
+  }
+}

@@ -240,30 +240,28 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                           )}
                         </h2>
                       </div>
-                      <div className='card-body d-flex flex-row flex-wrap gap-3'>
-                        {showCustomStats() ? (
-                          <>
-                            {' '}
-                            {pageStats?.data.map((item) => (
-                              <StatsCard
-                                key={item.title}
-                                title={item.title}
-                                subTitle={item.subTitle}
-                                icon={item.icon}
-                                value={item.value ? item.value.toString() : ''}
-                                className='card-solitary'
-                              />
-                            ))}
-                          </>
-                        ) : (
-                          <>
-                            <TransactionsStatsCard />
-                            <AccountsStatsCard />
-                            <BlockHeightStatsCard neutralColors />
-                            {isMainnet && <ValidatorsStatusCard isSmall />}
-                          </>
-                        )}
-                      </div>
+
+                      {showCustomStats() ? (
+                        <div className='card-body d-flex flex-row flex-wrap gap-3 custom-stats'>
+                          {pageStats?.data.map((item) => (
+                            <StatsCard
+                              key={item.title}
+                              title={item.title}
+                              subTitle={item.subTitle}
+                              icon={item.icon}
+                              value={item.value ? item.value.toString() : ''}
+                              className='card-solitary'
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className='card-body d-flex flex-row flex-wrap gap-3'>
+                          <TransactionsStatsCard />
+                          <AccountsStatsCard />
+                          <BlockHeightStatsCard neutralColors />
+                          {isMainnet && <ValidatorsStatusCard isSmall />}
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
