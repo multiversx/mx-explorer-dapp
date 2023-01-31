@@ -7,12 +7,14 @@ import { growthTransactionsSelector } from 'redux/selectors';
 
 import { TransactionsStatisticsLabelEnum } from './enum';
 
-import styles from './styles.module.scss';
-import type { ChartType, StatisticType } from './types';
-import { ChartArea } from '../ChartArea';
-import { ChartRoot } from '../ChartRoot';
-import { ChartSelect } from '../ChartSelect';
+import type { StatisticType } from './types';
 import type { ChartSelectOptionType } from '../ChartSelect/types';
+import type { PayloadType } from '../ChartArea/types';
+
+import { ChartArea } from '../ChartArea';
+import { ChartSelect } from '../ChartSelect';
+
+import styles from './styles.module.scss';
 
 export const ChartContractsTransactions = () => {
   const {
@@ -141,30 +143,20 @@ export const ChartContractsTransactions = () => {
   useFetchGrowthTransactions();
   useEffect(onInitialLoad, [onInitialLoad]);
 
-  const charts: ChartType[] = [
+  const payload: PayloadType[] = [
     {
-      color: teal,
-      identifier: 'contracts',
-      data: contractsPayload
+      data: transactionsPayload,
+      key: 'transactionValue',
+      label: 'Transactions',
+      color: purple
     },
     {
-      color: purple,
-      identifier: 'transactions',
-      data: transactionsPayload
+      data: contractsPayload,
+      key: 'contractValue',
+      label: 'Contracts',
+      color: teal
     }
   ];
-
-  const e = contractsPayload
-    ? contractsPayload.map((item, i) =>
-        Object.assign(
-          {},
-          { timestamp: item.timestamp, contractValue: item.value },
-          transactionsPayload
-            ? { transactionValue: transactionsPayload[i].value }
-            : {}
-        )
-      )
-    : [];
 
   return (
     <div className={styles.wrapper}>
@@ -188,19 +180,7 @@ export const ChartContractsTransactions = () => {
           />
         </div>
 
-        <ChartArea data={e} keys={['contractValue', 'transactionValue']} />
-
-        {/* {charts.map((chart) => (
-          <div className={styles.chart} key={chart.identifier}>
-            <ChartRoot
-              data={chart.data}
-              color={chart.color}
-              identifier={chart.identifier}
-              syncId='transactions-contracts-charts'
-              tooltipFormatter={(option: any) => option.value.toLocaleString()}
-            />
-          </div>
-        ))} */}
+        <ChartArea payload={payload} />
       </div>
     </div>
   );
