@@ -1,4 +1,6 @@
 import React, { useMemo } from 'react';
+import { faCircleBolt } from '@fortawesome/pro-light-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 import { useHeaderAccountsStats } from './useHeaderAccountsStats';
 import { useHeadersBlocksStats } from './useHeadersBlocksStats';
@@ -18,6 +20,13 @@ import {
 } from '../../routes';
 import { useActiveRoute } from '../useActiveRoute';
 
+type PageStatsDataType = {
+  title: string;
+  value: string | number;
+  subTitle?: string;
+  icon?: React.ReactNode;
+};
+
 export const usePageStats = () => {
   const activeRoute = useActiveRoute();
   const pageHeadersBlocks = useSelector(pageHeadersBlocksStatsSelector);
@@ -27,12 +36,16 @@ export const usePageStats = () => {
   );
   const pageHeadersTokens = useSelector(pageHeaderTokensStatsSelector);
 
+  const teal = getComputedStyle(document.documentElement)
+    .getPropertyValue('--teal')
+    .trim();
+
   const { title: headersBlocksTitle } = useHeadersBlocksStats();
   const { title: headerCollectionsTitle } = useHeadersCollectionsStats();
   const { title: headersTokensTitle } = useHeadersTokensStats();
   const { title: headersAccountsTitle } = useHeaderAccountsStats();
 
-  const getData = (obj: Record<string, number> = {}) => {
+  const getData = (obj: Record<string, number> = {}): PageStatsDataType[] => {
     return Object.entries(obj).map(([key, value]) => ({
       title: capitalize(key),
       value
@@ -42,7 +55,22 @@ export const usePageStats = () => {
   const headersBlocksData = getData(pageHeadersBlocks);
   const headersCollectionsData = getData(pageHeadersCollections);
   const headersTokensData = getData(pageHeadersTokens);
-  const headersAccountsData = getData(pageHeadersAccounts);
+  const headersAccountsData = useMemo(() => {
+    const data = getData(pageHeadersAccounts);
+
+    const todayActiveAccounts = data.find((x) =>
+      x.title.toLowerCase().includes('ActiveAccountsToday'.toLowerCase())
+    );
+
+    data.forEach((x) => {
+      if (x.title.toLowerCase().includes('totalAccount'.toLowerCase())) {
+        x.subTitle = `${todayActiveAccounts?.value} active today`;
+        x.icon = <FontAwesomeIcon icon={faCircleBolt} color={teal} />;
+      }
+    });
+
+    return data.filter((x) => x.title !== todayActiveAccounts?.title);
+  }, [pageHeadersAccounts]);
 
   const pageStats = useMemo(() => {
     switch (true) {

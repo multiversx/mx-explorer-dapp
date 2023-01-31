@@ -199,9 +199,12 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                           <StatsCard
                             key={item.title}
                             title={item.title}
+                            // @ts-ignore
+                            subTitle={item.subTitle}
+                            // @ts-ignore
+                            icon={item.icon}
                             value={item.value ? item.value.toString() : ''}
                             className='card-solitary'
-                            neutralColors={true}
                           />
                         ))}
                         {/*<TransactionsStatsCard />*/}
