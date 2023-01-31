@@ -2,40 +2,44 @@ import React, { useState } from 'react';
 import { faFileAlt } from '@fortawesome/pro-solid-svg-icons/faFileAlt';
 import { Tab, Nav } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useNavigate, useMatch } from 'react-router-dom';
+import { useMatch } from 'react-router-dom';
 
 import { useAdapter, Loader, PageState } from 'components';
-import { downloadFile, urlBuilder } from 'helpers';
+import { urlBuilder } from 'helpers';
 import { useNetworkRoute } from 'hooks';
-
 import { accountSelector } from 'redux/selectors';
-
 import { accountsRoutes } from 'routes';
 import { VerifiedContractType } from 'types';
 
 import { ContractCode } from './components/ContractCode';
+import { ContractEndpoints } from './components/ContractEndpoints';
+
+export enum VerifiedContractTabsEnum {
+  details = 'details',
+  endpoints = 'endpoints'
+}
 
 export const VerifiedContract = () => {
   const ref = React.useRef(null);
-  const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
 
+  let activeSection: VerifiedContractTabsEnum =
+    VerifiedContractTabsEnum.details;
   const matchEndpoints: any = useMatch(
     networkRoute(accountsRoutes.accountCodeEndpoints)
   );
-  const activeSection = matchEndpoints ? 'endpoints' : 'details';
-
-  const [activeKey, setActiveKey] = React.useState(activeSection);
+  if (matchEndpoints) {
+    activeSection = VerifiedContractTabsEnum.endpoints;
+  }
 
   const { getAccountContractVerification } = useAdapter();
   const { account } = useSelector(accountSelector);
-  const { codeHash, code, address, isVerified } = account;
-
-  const codeHashBase64Buffer = Buffer.from(String(codeHash ?? ''), 'base64');
-  const codeHashHexValue = codeHashBase64Buffer.toString('hex');
+  const { address, isVerified } = account;
 
   const [contract, setContract] = useState<VerifiedContractType>();
   const [isDataReady, setIsDataReady] = useState<undefined | boolean>();
+  const [activeKey, setActiveKey] =
+    React.useState<VerifiedContractTabsEnum>(activeSection);
 
   const fetchContractVerification = () => {
     getAccountContractVerification({ address }).then(({ success, data }) => {
@@ -73,7 +77,9 @@ export const VerifiedContract = () => {
             id='contract-code-tabs'
             defaultActiveKey={activeKey}
             onSelect={(selectedKey) => {
-              return selectedKey ? setActiveKey(selectedKey) : 'details';
+              return selectedKey
+                ? setActiveKey(selectedKey as VerifiedContractTabsEnum)
+                : 'details';
             }}
           >
             <div className='card-header'>
@@ -120,7 +126,9 @@ export const VerifiedContract = () => {
                 <Tab.Pane eventKey='details'>
                   <ContractCode contract={contract} />
                 </Tab.Pane>
-                <Tab.Pane eventKey='endpoints'>Endpoints</Tab.Pane>
+                <Tab.Pane eventKey='endpoints'>
+                  <ContractEndpoints contract={contract} />
+                </Tab.Pane>
               </Tab.Content>
             </div>
           </Tab.Container>

@@ -29,8 +29,8 @@ export interface ContractAbiType {
   };
   hasCallback: boolean;
   types: any;
-  endpoints?: any[];
-  avents?: any[];
+  endpoints?: ContractEndpointType[];
+  events?: any[];
   ['constructor']?: any;
 }
 
@@ -43,4 +43,24 @@ export interface ContractType {
 export interface ContractEntryType {
   content: string;
   path: string;
+}
+
+export interface ContractEndpointType {
+  name: string;
+  mutability?: string;
+  onlyOwner?: boolean;
+  docs?: string[];
+  inputs?: ContractEndpointInputType[];
+  outputs?: ContractEndpointOutputType[];
+  payableInTokens?: string[];
+}
+
+export interface ContractEndpointInputType {
+  name: string;
+  type: string;
+  multi_arg?: boolean;
+}
+
+export interface ContractEndpointOutputType {
+  type: string;
 }
