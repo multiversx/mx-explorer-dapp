@@ -64,7 +64,9 @@ export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
                       </div>
                     </NetworkLink>
                   </td>
-                  <td>{new BigNumber(token.value).toFormat()}</td>
+                  <td className='text-center'>
+                    {new BigNumber(token.value).toFormat()}
+                  </td>
                 </tr>
               ))}
             </tbody>

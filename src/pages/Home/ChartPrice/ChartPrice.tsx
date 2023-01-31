@@ -113,7 +113,7 @@ export const ChartPrice = () => {
               className={styles.icon}
             />
 
-            <span className={styles.percentage}>{priceChange24h}</span>
+            <span className={styles.percentage}>{priceChange24h} today</span>
           </span>
         </div>
 

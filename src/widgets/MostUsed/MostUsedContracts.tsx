@@ -50,7 +50,9 @@ export const MostUsedContracts = ({
                       </NetworkLink>
                     </div>
                   </td>
-                  <td>{new BigNumber(contract.value).toFormat()}</td>
+                  <td className='text-center'>
+                    {new BigNumber(contract.value).toFormat()}
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -42,15 +42,20 @@ export const ChartTooltip = ({
     ? new BigNumber(totalValueStacked ?? '0').toFormat()
     : new BigNumber(totalValueStacked ?? '0').toFormat(2);
 
-  if (active && payload && payload.length && isFetched) {
+  const data =
+    payload && payload.length
+      ? payload.sort((alpha: any, beta: any) => beta.value - alpha.value)
+      : false;
+
+  if (active && data && isFetched) {
     return (
       <div className='analytics-custom-tooltip'>
         <div className='recharts-tooltip-label text-neutral-200'>
           <span>
             {' '}
-            {payload[0]?.payload?.timestamp
+            {data[0]?.payload?.timestamp
               ? moment
-                  .unix(payload[0].payload.timestamp)
+                  .unix(data[0].payload.timestamp)
                   .utc()
                   .format(dateFormat ?? 'D MMM YYYY')
               : label}
@@ -73,7 +78,7 @@ export const ChartTooltip = ({
               </span>
             </li>
           )}
-          {payload.map((entry: any) => {
+          {data.map((entry: any) => {
             let displayValue = entry.value;
 
             const currentSeries = seriesConfig.find(
@@ -111,7 +116,7 @@ export const ChartTooltip = ({
                 </span>
 
                 <span
-                  style={{ color: payload.length > 1 ? entry.color : color }}
+                  style={{ color: data.length > 1 ? entry.color : color }}
                   className='item-value'
                 >
                   {currentSeries?.yAxisConfig?.currency === '$' ? '$' : ''}
