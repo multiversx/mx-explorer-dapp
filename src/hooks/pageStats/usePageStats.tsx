@@ -114,7 +114,6 @@ export const usePageStats = () => {
         };
 
       case activeRoute(collectionRoutes.collections):
-      case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
       case activeRoute(collectionRoutes.collectionsNft):
       case activeRoute(collectionRoutes.collectionsSft):
       case activeRoute(collectionRoutes.collectionDetails):
