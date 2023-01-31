@@ -89,10 +89,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 
   const { pageStats } = usePageStats();
 
-  useEffect(() => {
-    console.log(pageStats);
-    // setStats(pageStats);
-  }, [pageStats]);
+  console.log(pageStats);
 
   const showGlobalStats = () => {
     let show = true;
@@ -199,7 +196,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                         </h2>
                       </div>
                       <div className='card-body d-flex flex-row flex-wrap gap-3'>
-                        {stats?.data.map((item: any) => (
+                        {pageStats.data.map((item) => (
                           <StatsCard
                             key={item.title}
                             title={item.title}

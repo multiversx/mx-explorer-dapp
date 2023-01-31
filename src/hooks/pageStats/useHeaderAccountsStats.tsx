@@ -1,37 +1,29 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  pageHeadersAccountsSelector,
-  pageHeadersStatsSelector
-} from 'redux/selectors/pageHeadersStats';
-import { setPageHeaderStats } from 'redux/slices/pageHeadersStats';
 import { useAdapter } from '../../components';
+import { pageHeadersAccountsStatsSelector } from '../../redux/selectors/pageHeadersAccountsStats';
+import { setPageHeaderAccountsStats } from '../../redux/slices/pageHeadersAccountsStats';
+import { HeadersAccountsType } from '../../types/headerStats.types';
 
 export const useHeaderAccountsStats = () => {
-  const pageHeaders = useSelector(pageHeadersStatsSelector);
-  const headersAccounts = useSelector(pageHeadersAccountsSelector);
+  const headersAccounts = useSelector(pageHeadersAccountsStatsSelector);
 
   const dispatch = useDispatch();
   const { getGrowthHeaders } = useAdapter();
 
   const getHeadersAccounts = async () => {
-    // if (headersAccounts != null) {
-    //   return headersAccounts;
-    // }
+    if (Object.keys(headersAccounts).length !== 0) {
+      return headersAccounts;
+    }
 
     const result = await getGrowthHeaders('/accounts');
 
     if (!result.success) {
       // dispatch(setPageHeaderStats(pageHeaders));
-      return pageHeaders?.accounts;
+      return {} as HeadersAccountsType;
     }
 
-    dispatch(
-      setPageHeaderStats({
-        ...pageHeaders,
-        accounts: result.data
-      })
-    );
+    dispatch(setPageHeaderAccountsStats(result.data));
     return result.data;
   };
 

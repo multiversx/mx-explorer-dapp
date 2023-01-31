@@ -23,7 +23,10 @@ import { nodesVersionsReducer } from './slices/nodesVersions';
 import { refreshReducer } from './slices/refresh';
 import { statsReducer } from './slices/stats';
 import { tokenReducer } from './slices/token';
-import { pageHeadersReducer } from './slices/pageHeadersStats';
+import { pageHeadersAccountsReducer } from './slices/pageHeadersAccountsStats';
+import { pageHeadersBlocksReducer } from './slices/pageHeadersBlocksStats';
+import { pageHeadersCollectionsReducer } from './slices/pageHeadersCollectionsStats';
+import { pageHeadersTokensReducer } from './slices/pageHeadersTokensStats';
 
 const asyncIgnoredSlices = {};
 
@@ -60,7 +63,10 @@ export const customIgnoredSlices = {
   markers: markersReducer,
   miniBlock: miniBlockReducer,
   nodesVersions: nodesVersionsReducer,
-  pageHeadersStats: pageHeadersReducer
+  pageHeadersBlocksStats: pageHeadersBlocksReducer,
+  pageHeadersAccountsStats: pageHeadersAccountsReducer,
+  pageHeadersCollectionsStats: pageHeadersCollectionsReducer,
+  pageHeadersTokensStats: pageHeadersTokensReducer
 };
 
 export const ignoredSliceNames: string[] = [

@@ -1,24 +1,20 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPageHeaderStats } from 'redux/slices/pageHeadersStats';
 import { useAdapter } from '../../components';
-import {
-  pageHeadersBlocksSelector,
-  pageHeadersStatsSelector
-} from '../../redux/selectors/pageHeadersStats';
+import { pageHeadersBlocksStatsSelector } from '../../redux/selectors/pageHeadersBlocksStats';
+import { setPageHeaderBlocksStats } from '../../redux/slices/pageHeadersBlocksStats';
 import { HeadersBlocksType } from '../../types/headerStats.types';
 
 export const useHeadersBlocksStats = () => {
-  const pageHeaders = useSelector(pageHeadersStatsSelector);
-  const headersBlocks = useSelector(pageHeadersBlocksSelector);
+  const headersBlocks = useSelector(pageHeadersBlocksStatsSelector);
 
   const dispatch = useDispatch();
   const { getGrowthHeaders } = useAdapter();
 
   const getHeadersBlocks = async (): Promise<HeadersBlocksType> => {
-    // if (headersBlocks != null) {
-    //   return headersBlocks;
-    // }
+    if (Object.keys(headersBlocks).length !== 0) {
+      return headersBlocks;
+    }
 
     const result = await getGrowthHeaders('/blocks');
 
@@ -27,12 +23,7 @@ export const useHeadersBlocksStats = () => {
       return {} as HeadersBlocksType;
     }
 
-    dispatch(
-      setPageHeaderStats({
-        ...pageHeaders,
-        blocks: result.data
-      })
-    );
+    dispatch(setPageHeaderBlocksStats(result.data));
     return result.data;
   };
 
