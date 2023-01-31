@@ -162,7 +162,14 @@ export const TransactionInfo = ({
           return selectedKey ? setActiveKey(selectedKey) : 'details';
         }}
       >
-        <div className='card-header'>
+        <div
+          className={`card-header status-${
+            getStatusIconAndColor(
+              transaction.status,
+              transaction.pendingResults
+            ).color
+          }`}
+        >
           <div className='card-header-item d-flex align-items-center'>
             <div className='tab-links d-flex flex-row flex-wrap'>
               <Nav.Link
@@ -181,22 +188,23 @@ export const TransactionInfo = ({
               >
                 <h5>Transaction Details</h5>
               </Nav.Link>
-
-              <Nav.Link
-                eventKey='logs'
-                className={`tab-link me-3 me-lg-4 ${
-                  activeKey === 'logs' ? 'active' : ''
-                }`}
-                onClick={() => {
-                  window.history.replaceState(
-                    null,
-                    '',
-                    urlBuilder.transactionDetailsLogs(transaction.txHash)
-                  );
-                }}
-              >
-                <h5>Logs</h5>
-              </Nav.Link>
+              {showLogs && (
+                <Nav.Link
+                  eventKey='logs'
+                  className={`tab-link me-3 me-lg-4 ${
+                    activeKey === 'logs' ? 'active' : ''
+                  }`}
+                  onClick={() => {
+                    window.history.replaceState(
+                      null,
+                      '',
+                      urlBuilder.transactionDetailsLogs(transaction.txHash)
+                    );
+                  }}
+                >
+                  <h5>Logs</h5>
+                </Nav.Link>
+              )}
             </div>
 
             {isTxPending && (
@@ -209,9 +217,311 @@ export const TransactionInfo = ({
 
         <div className='card-body'>
           <Tab.Content>
-            <Tab.Pane eventKey='details'>det</Tab.Pane>
+            <Tab.Pane eventKey='details'>
+              <DetailItem title='Hash'>
+                <div className='d-flex align-items-center text-break-all'>
+                  {transaction.txHash}
+                  <CopyButton text={transaction.txHash} />
+                </div>
+              </DetailItem>
 
-            <Tab.Pane eventKey='logs'>logs</Tab.Pane>
+              <DetailItem title='Status'>
+                <div className='d-flex flex-wrap align-items-center'>
+                  <TransactionStatus
+                    status={transaction.status}
+                    pendingResults={transaction.pendingResults}
+                  />
+                </div>
+              </DetailItem>
+
+              <DetailItem title='Age' className='text-neutral-400'>
+                {transaction.timestamp !== undefined ? (
+                  <div className='d-flex flex-wrap align-items-center'>
+                    {isTxPending ? (
+                      <FontAwesomeIcon
+                        icon={faSpinner}
+                        className='me-2  fa-spin slow-spin'
+                      />
+                    ) : (
+                      <FontAwesomeIcon icon={faClock} className='me-2 ' />
+                    )}
+                    <TimeAgo value={transaction.timestamp} />
+                    &nbsp;
+                    <span>
+                      ({dateFormatted(transaction.timestamp, false, true)})
+                    </span>
+                  </div>
+                ) : (
+                  <span>N/A</span>
+                )}
+              </DetailItem>
+
+              <DetailItem title='Miniblock'>
+                <div className='d-flex align-items-center'>
+                  {transaction.miniBlockHash ? (
+                    <>
+                      <NetworkLink
+                        to={`/miniblocks/${transaction.miniBlockHash}`}
+                        className='trim-wrapper'
+                      >
+                        <Trim text={transaction.miniBlockHash} />
+                      </NetworkLink>
+                      <CopyButton text={transaction.miniBlockHash} />
+                    </>
+                  ) : (
+                    <span>N/A</span>
+                  )}
+                </div>
+              </DetailItem>
+
+              <DetailItem title='From'>
+                <div className='d-flex align-items-center'>
+                  <ScAddressIcon initiator={transaction.sender} />
+                  {addressIsBech32(transaction.sender) ? (
+                    <>
+                      <NetworkLink
+                        to={urlBuilder.accountDetails(transaction.sender)}
+                        className='trim-wrapper'
+                      >
+                        <AccountName
+                          address={transaction.sender}
+                          assets={transaction.senderAssets}
+                        />
+                      </NetworkLink>
+                      <CopyButton className='me-2' text={transaction.sender} />
+                      <NetworkLink
+                        to={urlBuilder.senderShard(transaction.senderShard)}
+                        className='flex-shrink-0'
+                      >
+                        (<ShardSpan shard={transaction.senderShard} />)
+                      </NetworkLink>
+                    </>
+                  ) : (
+                    <ShardSpan shard={transaction.sender} />
+                  )}
+                </div>
+              </DetailItem>
+
+              <DetailItem title='To'>
+                <div className='d-flex flex-column'>
+                  <div className='d-flex align-items-center'>
+                    {isContract(transaction.receiver) ? (
+                      <span className='me-2 text-neutral-400'>Contract</span>
+                    ) : (
+                      ''
+                    )}
+                    <NetworkLink
+                      to={urlBuilder.accountDetails(transaction.receiver)}
+                      className='trim-wrapper'
+                    >
+                      <AccountName
+                        address={transaction.receiver}
+                        assets={transaction.receiverAssets}
+                      />
+                    </NetworkLink>
+                    <CopyButton className='me-2' text={transaction.receiver} />
+                    {!isNaN(transaction.receiverShard) && (
+                      <NetworkLink
+                        to={urlBuilder.receiverShard(transaction.receiverShard)}
+                        className='flex-shrink-0'
+                      >
+                        (<ShardSpan shard={transaction.receiverShard} />)
+                      </NetworkLink>
+                    )}
+                  </div>
+                  <TransactionErrorDisplay transaction={transaction} />
+                  {transaction.status === txStatus.rewardReverted && (
+                    <div className='d-flex ms-1 text-break-all'>
+                      <FontAwesomeIcon
+                        icon={faAngleDown}
+                        style={{ marginTop: '2px' }}
+                        transform={{ rotate: 45 }}
+                      />
+                      &nbsp;
+                      <small className='text-danger ms-1'>
+                        {' '}
+                        Block Reverted
+                      </small>
+                    </div>
+                  )}
+                </div>
+              </DetailItem>
+
+              <DetailItem title='Value'>
+                {formattedTxValue} {egldLabel}{' '}
+                <span className='text-neutral-400'>
+                  {transaction.price !== undefined ? (
+                    <FormatUSD
+                      amount={txValue}
+                      usd={transaction.price}
+                      digits={2}
+                    />
+                  ) : (
+                    <>N/A</>
+                  )}
+                </span>
+              </DetailItem>
+
+              {transaction.action && transaction.action.category && (
+                <>
+                  <DetailItem title='Method'>
+                    <div className='badge badge-outline badge-outline-green-alt'>
+                      {getTransactionMethod(transaction)}
+                    </div>
+                  </DetailItem>
+                  {transaction.action.category !==
+                    TxActionCategoryEnum.scCall && (
+                    <DetailItem
+                      title='Transaction Action'
+                      className='text-lh-24'
+                    >
+                      <TransactionAction transaction={transaction} />
+                    </DetailItem>
+                  )}
+                </>
+              )}
+
+              {Boolean(visibleOperations.length) && (
+                <DetailItem
+                  title={
+                    <>
+                      <span className='me-2 text-lh-24'>Token Operations</span>
+                      <span className='badge badge-outline badge-outline-grey'>
+                        {visibleOperations.length}
+                      </span>
+                    </>
+                  }
+                  verticalCenter
+                >
+                  <OperationsList
+                    transaction={transaction}
+                    operations={visibleOperations}
+                  />
+                </DetailItem>
+              )}
+
+              <DetailItem title='Transaction Fee'>
+                {transaction.gasUsed !== undefined ? (
+                  <>
+                    {transactionFee} {egldLabel}{' '}
+                    <span className='text-neutral-400'>
+                      {transaction.price !== undefined ? (
+                        <FormatUSD
+                          amount={transactionFee}
+                          usd={transaction.price}
+                          digits={4}
+                        />
+                      ) : (
+                        <>N/A</>
+                      )}
+                    </span>
+                  </>
+                ) : (
+                  <span>N/A</span>
+                )}
+              </DetailItem>
+
+              <DetailItem title={`${egldLabel} Price`}>
+                {transaction.price !== undefined ? (
+                  <>{`$${new BigNumber(transaction.price).toFormat(2)}`}</>
+                ) : (
+                  <span>N/A</span>
+                )}
+              </DetailItem>
+
+              <DetailItem title='Gas Limit'>
+                {transaction.gasLimit !== undefined ? (
+                  <>{transaction.gasLimit.toLocaleString('en')}</>
+                ) : (
+                  <span>N/A</span>
+                )}
+              </DetailItem>
+
+              <DetailItem title='Gas Used'>
+                {transaction.gasUsed !== undefined ? (
+                  <>{transaction.gasUsed.toLocaleString('en')}</>
+                ) : (
+                  <span>N/A</span>
+                )}
+              </DetailItem>
+
+              <DetailItem title='Gas Price'>
+                {transaction.gasPrice !== undefined ? (
+                  <Denominate
+                    value={transaction.gasPrice.toString()}
+                    showLastNonZeroDecimal
+                  />
+                ) : (
+                  <span>N/A</span>
+                )}
+              </DetailItem>
+
+              <DetailItem title='Nonce'>
+                <>
+                  {transaction.nonce}
+                  <NonceMessage transaction={transaction} />
+                </>
+              </DetailItem>
+
+              <DataField
+                data={transaction.data}
+                scamInfo={transaction.scamInfo}
+              />
+
+              {transaction.results && transaction.results?.length > 0 && (
+                <DetailItem title='Smart&nbsp;Contract Results'>
+                  <ScResultsList results={transaction.results} />
+                </DetailItem>
+              )}
+            </Tab.Pane>
+
+            {showLogs && (
+              <Tab.Pane eventKey='logs'>
+                {transaction.logs && (
+                  <>
+                    {' '}
+                    {transaction.logs.address !== undefined && (
+                      <AddressDetailItem address={transaction.logs.address} />
+                    )}
+                    {transaction.logs.events &&
+                      transaction.logs.events?.length > 0 && (
+                        <DetailItem title='Events'>
+                          <EventsList
+                            events={transaction.logs.events}
+                            id={transaction.logs?.id}
+                          />
+                        </DetailItem>
+                      )}
+                  </>
+                )}
+                {transaction.results && transaction.results.length > 0 && (
+                  <div className='row'>
+                    {transaction.results.map((result, resultIndex) =>
+                      result.logs ? (
+                        <div
+                          key={`tx-result-log-${resultIndex}`}
+                          className='col-12 border-bottom'
+                        >
+                          <ScrDetailItem result={result} />
+                          {result.logs.address !== undefined && (
+                            <AddressDetailItem address={result.logs.address} />
+                          )}
+                          {result.logs.events &&
+                            result.logs.events?.length > 0 && (
+                              <DetailItem title='Events'>
+                                <EventsList
+                                  events={result.logs.events}
+                                  id={result.logs?.id}
+                                />
+                              </DetailItem>
+                            )}
+                        </div>
+                      ) : null
+                    )}
+                  </div>
+                )}
+              </Tab.Pane>
+            )}
           </Tab.Content>
         </div>
       </Tab.Container>

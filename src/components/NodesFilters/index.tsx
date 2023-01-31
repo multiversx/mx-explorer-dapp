@@ -166,7 +166,7 @@ export const NodesFilters = ({
               <Dropdown.Toggle
                 variant='outline-dark'
                 size='sm'
-                className={`badge  py-2 px-3 br-lg ${
+                className={`badge py-2 px-3 br-lg nodes-more ${
                   [
                     'eligible',
                     'waiting',
@@ -283,7 +283,7 @@ export const NodesFilters = ({
           </li>
         </ul>
       )}
-      <div role='search'>
+      <div role='search' className='search-filter'>
         <div className='input-group input-group-sm input-group-seamless'>
           <input
             type='text'
