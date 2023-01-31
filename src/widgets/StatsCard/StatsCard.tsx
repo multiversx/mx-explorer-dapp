@@ -33,7 +33,7 @@ export const StatsCard = ({
           <h2 className='stats-card-value mb-0 text-primary'>{value}</h2>
         )}
         {subTitle && (
-          <p className='text-neutral-500 mb-0 stats-card-title font-secondary small mt-1'>
+          <p className='text-primary-200 mb-0 stats-card-title mt-2'>
             {icon}
             <span className='mx-1'>{subTitle}</span>
           </p>
