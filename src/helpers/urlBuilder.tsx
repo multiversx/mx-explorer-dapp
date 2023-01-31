@@ -9,7 +9,6 @@ export const urlBuilder = {
   transactionDetailsLogs: (hash: string) => `/transactions/${hash}/logs`,
   nodeDetails: (publicKey: string) => `/nodes/${publicKey}`,
   accountDetails: (address: string) => `/accounts/${address}`,
-  accountDetailsContractCode: (address: string) => `/accounts/${address}/code`,
   accountDetailsTokens: (address: string) => `/accounts/${address}/tokens`,
   accountDetailsNfts: (address: string) => `/accounts/${address}/nfts`,
   accountDetailsStaking: (address: string) => `/accounts/${address}/staking`,
@@ -19,6 +18,13 @@ export const urlBuilder = {
     `/accounts/${address}/sc-results`,
   accountDetailsContracts: (address: string) =>
     `/accounts/${address}/contracts`,
+  accountDetailsContractCode: (address: string) => `/accounts/${address}/code`,
+  accountDetailsContractCodeEndpoints: (address: string) =>
+    `/accounts/${address}/code/endpoints`,
+  accountDetailsContractCodeTypes: (address: string) =>
+    `/accounts/${address}/code/types`,
+  accountDetailsContractCodeViews: (address: string) =>
+    `/accounts/${address}/code/views`,
   identityDetails: (id: string) => `/identities/${id}`,
   tokenDetails: (tokenId: string) => `/tokens/${tokenId}`,
   tokenMetaEsdtDetails: (tokenId: string) => `/meta-esdt/${tokenId}`,
