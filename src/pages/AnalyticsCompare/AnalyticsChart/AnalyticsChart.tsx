@@ -92,7 +92,6 @@ export const AnalyticsChart = ({
             borderColor: color
           },
           config: {
-            id: chartSeries?.legend?.config?.id ?? chartSeries.id,
             label: chartSeries?.legend?.config?.label ?? chartSeries.label
           }
         }

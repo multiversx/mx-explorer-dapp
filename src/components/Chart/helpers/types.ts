@@ -58,7 +58,6 @@ export interface ChartYAxisFormatConfig {
 export type ChartLabelConfigType = {
   style?: CSSProperties;
   config?: {
-    id: string;
     label?: string;
   };
 };
