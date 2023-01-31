@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Search, Particles } from 'components';
 import { multiversxApps } from 'config';
-import { useFetchGrowthHero, useIsMainnet } from 'hooks';
+import { useIsMainnet } from 'hooks';
 import {
   AccountsStatsCard,
   BlockHeightStatsCard,
@@ -17,8 +17,6 @@ export const HeroCard = () => {
 
   const explorerApp = multiversxApps.find((app) => app.id === 'explorer');
   const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
-
-  useFetchGrowthHero();
 
   return (
     <div className='hero-card card card-lg card-black'>
