@@ -19,6 +19,7 @@ import {
 import { useActiveRoute } from '../useActiveRoute';
 
 export const usePageStats = () => {
+  console.log('usePageStats');
   const activeRoute = useActiveRoute();
   const pageHeadersBlocks = useSelector(pageHeadersBlocksStatsSelector);
   const pageHeadersAccounts = useSelector(pageHeadersAccountsStatsSelector);
@@ -65,7 +66,6 @@ export const usePageStats = () => {
       case activeRoute(accountsRoutes.accountAnalytics):
       case activeRoute(accountsRoutes.accountCode):
       case activeRoute(accountsRoutes.accountCodeEndpoints):
-      case activeRoute(accountsRoutes.accountCodeViews):
       case activeRoute(accountsRoutes.accountCodeTypes):
         return {
           title: headersAccountsTitle,
