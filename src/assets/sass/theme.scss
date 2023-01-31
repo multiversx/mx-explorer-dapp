@@ -391,10 +391,10 @@ div.side-icon {
   }
 }
 
-.custom-stats {
-  .card {
-    @include media-breakpoint-up(xl) {
-      flex: 1 1 0px;
-    }
-  }
-}
+// .custom-stats {
+//   .card {
+//     @include media-breakpoint-up(xl) {
+//       flex: 1 1 0px;
+//     }
+//   }
+// }
