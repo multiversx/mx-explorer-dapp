@@ -74,7 +74,8 @@
 
 .filter-block {
   margin-bottom: 1rem;
-  .search-filter {
+  .search-filter-block {
+    max-width: auto !important;
     .clear {
       fill: var(--neutral-500);
       width: 1rem;
