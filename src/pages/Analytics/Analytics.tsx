@@ -238,7 +238,11 @@ export const Analytics = () => {
           </ChartWrapper>
           <ChartWrapper>
             <div className='px-3 p-3'>
-              <AnalyticsChart title={'Total Accounts'} series={usersChart} />
+              <AnalyticsChart
+                title={'Total Accounts'}
+                series={usersChart}
+                customDomain={true}
+              />
             </div>
           </ChartWrapper>
           <ChartWrapper>
