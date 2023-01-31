@@ -212,6 +212,7 @@ export const ChartComposed = ({
               />
               <Area
                 type='monotone'
+                stackId={stacked ? 'stacked-id' : undefined}
                 yAxisId={sc.yAxisConfig?.id}
                 dataKey={sc.id}
                 stroke={sc.stroke ?? primary}
