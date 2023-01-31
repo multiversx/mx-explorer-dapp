@@ -1,14 +1,18 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
 import { useIsMainnet } from 'hooks';
-import { ChartWrapper } from './components/ChartWrapper';
+import { analyticsRoutes } from 'routes';
+
 import { Loader, useAdapter } from '../../components';
 import { activeNetworkSelector } from '../../redux/selectors';
 import { ChartListType } from '../AnalyticsCompare';
 import { AnalyticsChart } from '../AnalyticsCompare/AnalyticsChart';
 import { FailedAnalytics } from '../AnalyticsCompare/FailedAnalytics';
 import { NoAnalytics } from '../AnalyticsCompare/NoAnalytics';
+import { ChartWrapper } from './components/ChartWrapper';
+import { Tabs } from 'components/Tabs';
 
 export const Analytics = () => {
   const navigate = useNavigate();
@@ -123,6 +127,17 @@ export const Analytics = () => {
     return chartList?.filter((sc) => sc.id.includes('-apr'));
   }, [chartList]);
 
+  const tabs = [
+    {
+      tabLabel: 'Key Metrics',
+      tabTo: analyticsRoutes.analytics
+    },
+    {
+      tabLabel: 'Compare',
+      tabTo: analyticsRoutes.compare
+    }
+  ];
+
   useEffect(getData, [activeNetworkId]);
 
   if (!isMainnet) {
@@ -136,11 +151,8 @@ export const Analytics = () => {
   return (
     <div className='analytics container page-content'>
       <div className='card card-lg card-black'>
-        <div className='card-header d-flex align-items-center'>
-          <div className='analytics-nav-item'>Key Metrics</div>
-          <a href='/analytics/compare' className='analytics-nav-item link'>
-            Compare
-          </a>
+        <div className='card-header'>
+          <Tabs tabs={tabs} />
         </div>
 
         <div className='card-body d-flex justify-content-between flex-wrap'>
