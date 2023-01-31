@@ -194,7 +194,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                         </h2>
                       </div>
                       <div className='card-body d-flex flex-row flex-wrap gap-3'>
-                        {pageStats.data.map((item) => (
+                        {pageStats?.data.map((item) => (
                           <StatsCard
                             key={item.title}
                             title={item.title}

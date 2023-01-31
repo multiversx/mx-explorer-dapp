@@ -90,12 +90,6 @@ export const usePageStats = () => {
           title: headerCollectionsTitle,
           data: headersCollectionsData
         };
-
-      default:
-        return {
-          title: headersAccountsTitle,
-          data: headersAccountsData
-        };
     }
   }, [
     activeRoute,
