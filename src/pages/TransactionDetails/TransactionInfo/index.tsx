@@ -219,7 +219,7 @@ export const TransactionInfo = ({
           <Tab.Content>
             <Tab.Pane eventKey='details'>
               <DetailItem title='Hash'>
-                <div className='d-flex align-items-center text-break-all'>
+                <div className='d-flex align-items-center text-break-all text-neutral-100'>
                   {transaction.txHash}
                   <CopyButton text={transaction.txHash} />
                 </div>
@@ -347,7 +347,7 @@ export const TransactionInfo = ({
                 </div>
               </DetailItem>
 
-              <DetailItem title='Value'>
+              <DetailItem title='Value' className='text-neutral-100'>
                 {formattedTxValue} {egldLabel}{' '}
                 <span className='text-neutral-400'>
                   {transaction.price !== undefined ? (
@@ -403,7 +403,8 @@ export const TransactionInfo = ({
               <DetailItem title='Transaction Fee'>
                 {transaction.gasUsed !== undefined ? (
                   <>
-                    {transactionFee} {egldLabel}{' '}
+                    <span className='text-neutral-100'>{transactionFee}</span>{' '}
+                    {egldLabel}{' '}
                     <span className='text-neutral-400'>
                       {transaction.price !== undefined ? (
                         <FormatUSD
@@ -423,7 +424,9 @@ export const TransactionInfo = ({
 
               <DetailItem title={`${egldLabel} Price`}>
                 {transaction.price !== undefined ? (
-                  <>{`$${new BigNumber(transaction.price).toFormat(2)}`}</>
+                  <span className='text-neutral-100'>{`$${new BigNumber(
+                    transaction.price
+                  ).toFormat(2)}`}</span>
                 ) : (
                   <span>N/A</span>
                 )}
@@ -431,7 +434,9 @@ export const TransactionInfo = ({
 
               <DetailItem title='Gas Limit'>
                 {transaction.gasLimit !== undefined ? (
-                  <>{transaction.gasLimit.toLocaleString('en')}</>
+                  <span className='text-neutral-100'>
+                    {transaction.gasLimit.toLocaleString('en')}
+                  </span>
                 ) : (
                   <span>N/A</span>
                 )}
@@ -439,7 +444,9 @@ export const TransactionInfo = ({
 
               <DetailItem title='Gas Used'>
                 {transaction.gasUsed !== undefined ? (
-                  <>{transaction.gasUsed.toLocaleString('en')}</>
+                  <span className='text-neutral-100'>
+                    {transaction.gasUsed.toLocaleString('en')}
+                  </span>
                 ) : (
                   <span>N/A</span>
                 )}
@@ -447,10 +454,12 @@ export const TransactionInfo = ({
 
               <DetailItem title='Gas Price'>
                 {transaction.gasPrice !== undefined ? (
-                  <Denominate
-                    value={transaction.gasPrice.toString()}
-                    showLastNonZeroDecimal
-                  />
+                  <span className='text-neutral-100'>
+                    <Denominate
+                      value={transaction.gasPrice.toString()}
+                      showLastNonZeroDecimal
+                    />
+                  </span>
                 ) : (
                   <span>N/A</span>
                 )}
@@ -458,7 +467,7 @@ export const TransactionInfo = ({
 
               <DetailItem title='Nonce'>
                 <>
-                  {transaction.nonce}
+                  <span className='text-neutral-100'>{transaction.nonce}</span>
                   <NonceMessage transaction={transaction} />
                 </>
               </DetailItem>
