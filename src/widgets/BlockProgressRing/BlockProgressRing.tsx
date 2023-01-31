@@ -91,7 +91,7 @@ export const BlockProgressRing = ({ className }: WithClassnameType) => {
     <div ref={ref} className={`block-progress-ring ${className ?? ''}`}>
       <ProgressRing progress={progress} size={100} hasBg>
         <div className='label' data-testid='currentEpoch'>
-          {stateBuffer !== undefined ? blockTimeProgress : '...'}
+          {stateBuffer !== undefined ? `${blockTimeProgress}s` : '...'}
         </div>
         <div className='description'>Block Time</div>
       </ProgressRing>
