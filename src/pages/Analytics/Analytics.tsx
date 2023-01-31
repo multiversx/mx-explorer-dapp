@@ -50,7 +50,7 @@ export const Analytics = () => {
   }, [chartList]);
 
   const dailyActiveUsersChart = useMemo(() => {
-    return chartList?.filter((sc) => sc.id.includes('active-users'));
+    return chartList?.filter((sc) => sc.id === 'active-users');
   }, [chartList]);
 
   const networkAndDeveloperFeesChart = useMemo(() => {
@@ -105,26 +105,43 @@ export const Analytics = () => {
     return charts;
   }, [chartList, newSmartContractsCreatedChart]);
 
-  const stakingChart = useMemo(() => {
-    const charts = chartList?.filter(
-      (sc) =>
-        sc.id.includes('total-value-locked-plus-staking') ||
-        sc.id.includes('users-staking')
-    );
-
-    if (charts.length === 2) {
-      charts[1].dappConfig = {
-        ...charts[1].dappConfig,
-        id: 'right-axis',
-        orientation: 'right'
-      };
-    }
-
-    return charts;
-  }, [chartList]);
-
   const aprsChart = useMemo(() => {
     return chartList?.filter((sc) => sc.id.includes('-apr'));
+  }, [chartList]);
+
+  const stakingMetricsChart = useMemo(() => {
+    const charts = chartList?.filter((sc) => sc.id.includes('staking-'));
+
+    const rightYAxisSeriesIds = [
+      'staking-delegated-stake',
+      'staking-active-staked',
+      'staking-total-value-locked-plus-staking'
+    ];
+
+    const all = charts.reduce((acc, curr) => {
+      if (curr.id.includes('staking-')) {
+        if (rightYAxisSeriesIds.includes(curr.id)) {
+          curr.dappConfig = {
+            ...curr.dappConfig,
+            id: 'right-axis',
+            orientation: 'right'
+          };
+        }
+
+        acc.push(curr);
+      }
+
+      return acc;
+    }, [] as ChartListType[]);
+
+    return all;
+  }, [chartList]);
+
+  const usersChart = useMemo(() => {
+    const charts = chartList?.filter(
+      (sc) => sc.id.includes('accounts-balance') || sc.id === 'accounts'
+    );
+    return charts;
   }, [chartList]);
 
   const tabs = [
@@ -154,24 +171,34 @@ export const Analytics = () => {
         <div className='card-header'>
           <Tabs tabs={tabs} />
         </div>
-
         <div className='card-body d-flex justify-content-between flex-wrap'>
           <ChartWrapper>
             <div className='px-3 p-3'>
               <AnalyticsChart
-                title={'User activity & transactions'}
+                title={'Transactions'}
                 series={transactionsChart}
               />
             </div>
           </ChartWrapper>
           <ChartWrapper size='half'>
             <div className='px-3 pb-3'>
-              <AnalyticsChart series={tokenTransfersChart} />
+              <AnalyticsChart
+                title={'Token Transactions'}
+                series={tokenTransfersChart}
+              />
             </div>
           </ChartWrapper>
           <ChartWrapper size='half'>
             <div className='px-3 pb-3'>
-              <AnalyticsChart series={nftTransferChart} />
+              <AnalyticsChart
+                title={'NFT Transactions'}
+                series={nftTransferChart}
+              />
+            </div>
+          </ChartWrapper>
+          <ChartWrapper>
+            <div className='px-3 p-3'>
+              <AnalyticsChart title={'Users'} series={usersChart} />
             </div>
           </ChartWrapper>
           <ChartWrapper>
@@ -179,33 +206,30 @@ export const Analytics = () => {
               <AnalyticsChart series={dailyActiveUsersChart} />
             </div>
           </ChartWrapper>
-
           <ChartWrapper>
             <div className='px-3 pb-3'>
               <AnalyticsChart
-                title={'Developers / Validators'}
-                series={networkAndDeveloperFeesChart}
-              />
-            </div>
-          </ChartWrapper>
-
-          <ChartWrapper>
-            <div className='px-3 pb-3'>
-              <AnalyticsChart
-                title={'Application / Token Metrics'}
+                title={'New Applications'}
                 series={newStuffCreatedChart}
               />
             </div>
           </ChartWrapper>
-
           <ChartWrapper>
-            <div className='px-3 pb-3'>
-              <AnalyticsChart title='Staking' series={stakingChart} />
+            <div className='px-3 p-3'>
+              <AnalyticsChart title={'Staking'} series={stakingMetricsChart} />
             </div>
           </ChartWrapper>
           <ChartWrapper>
             <div className='px-3 pb-3'>
-              <AnalyticsChart series={aprsChart} />
+              <AnalyticsChart title='APR' series={aprsChart} />
+            </div>
+          </ChartWrapper>
+          <ChartWrapper>
+            <div className='px-3 pb-3'>
+              <AnalyticsChart
+                title={'Rewards'}
+                series={networkAndDeveloperFeesChart}
+              />
             </div>
           </ChartWrapper>
         </div>
