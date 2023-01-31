@@ -52,11 +52,16 @@ $grid-breakpoints: (
 
 // CONTAINER
 $container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1140px,
-  xxl: 1272px
+  sm: 100vw,
+  // 540px,
+  md: 100vw,
+  // 720px,
+  lg: 100vw,
+  // 960px,
+  xl: 1272px,
+  // 1140px,
+  xxl: 1272px,
+  // 1272px
 );
 
 $border-radius: 8px;
