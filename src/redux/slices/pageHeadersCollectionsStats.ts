@@ -7,12 +7,7 @@ import {
 
 export const getInitialHeaderCollectionsStatsState =
   (): HeadersCollectionsType => {
-    return {
-      // totalCollections: 0,
-      // totalHolders: 0,
-      // totalNFTsCreated: 0,
-      // newNFTsInLast30d: 0
-    };
+    return {};
   };
 
 export const pageHeadersCollectionsStatsSlice = createSlice({

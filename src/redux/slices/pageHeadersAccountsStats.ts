@@ -2,13 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HeadersAccountsType } from '../../types/headerStats.types';
 
 export const getInitialHeaderAccountsStatsState = (): HeadersAccountsType => {
-  return {
-    // accountsBalanceGt1000: 0,
-    // activeAccountsToday: 0,
-    // totalAccounts: 0,
-    // newAccountsToday: 0,
-    // usersStaking: 0
-  };
+  return {};
 };
 
 export const pageHeadersAccountsStatsSlice = createSlice({

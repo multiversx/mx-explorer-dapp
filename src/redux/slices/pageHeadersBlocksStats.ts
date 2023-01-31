@@ -5,12 +5,7 @@ import {
 } from '../../types/headerStats.types';
 
 export const getInitialHeaderBlocksStatsState = (): HeadersBlocksType => {
-  return {
-    // blockHeight: 0,
-    // totalNetworkFees: 0,
-    // totalDeveloperRewards: 0,
-    // totalApplicationsDeployed: 0
-  };
+  return {};
 };
 
 export const pageHeadersBlocksStatsSlice = createSlice({

@@ -2,12 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HeadersTokensType } from '../../types/headerStats.types';
 
 export const getInitialHeaderTokensStatsState = (): HeadersTokensType => {
-  return {
-    // totalTokens: 0,
-    // tokenTransfersInLast30d: 0,
-    // newTokensInLast30d: 0,
-    // ecosystemMarketCap: 0
-  };
+  return {};
 };
 
 export const pageHeadersCollectionsStatsSlice = createSlice({
