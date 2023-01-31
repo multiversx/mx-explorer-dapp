@@ -14,6 +14,7 @@ import { ChartRoot } from '../ChartRoot';
 import { ChartSelect } from '../ChartSelect';
 
 import styles from './styles.module.scss';
+import { ChartArea } from '../ChartArea';
 
 export const ChartContractsTransactions = () => {
   const {
@@ -155,6 +156,20 @@ export const ChartContractsTransactions = () => {
     }
   ];
 
+  const e = contractsPayload
+    ? contractsPayload.map((item, i) =>
+        Object.assign(
+          {},
+          { timestamp: item.timestamp, contractValue: item.value },
+          transactionsPayload
+            ? { transactionValue: transactionsPayload[i].value }
+            : {}
+        )
+      )
+    : [];
+
+  console.log(e);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.statistics}>
@@ -177,7 +192,9 @@ export const ChartContractsTransactions = () => {
           />
         </div>
 
-        {charts.map((chart) => (
+        <ChartArea data={e} keys={['contractValue', 'transactionValue']} />
+
+        {/* {charts.map((chart) => (
           <div className={styles.chart} key={chart.identifier}>
             <ChartRoot
               data={chart.data}
@@ -187,7 +204,7 @@ export const ChartContractsTransactions = () => {
               tooltipFormatter={(option: any) => option.value.toLocaleString()}
             />
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );

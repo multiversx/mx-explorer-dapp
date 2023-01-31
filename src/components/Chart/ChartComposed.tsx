@@ -25,15 +25,14 @@ export const ChartComposed = ({
   dateFormat,
   hasOnlyStartEndTick,
   tooltip,
+  staked,
   showLegend = true
 }: ChartComposedProps) => {
   const [hoveredSeries, setHoveredSeries] = useState<string>();
   const [hiddenSeries, setHiddenSeries] =
     useState<Record<string, string | undefined>>();
 
-  const [neutral300, gray500, neutral800, muted, primary, secondary] = [
-    'neutral-300',
-    'gray-500',
+  const [neutral800, muted, primary, secondary] = [
     'neutral-800',
     'teal',
     'violet-400',
@@ -47,7 +46,8 @@ export const ChartComposed = ({
   );
 
   const { getChartData } = useChartComposedData({
-    seriesConfig
+    seriesConfig,
+    staked
   });
 
   const chartData = getChartData();
@@ -99,20 +99,17 @@ export const ChartComposed = ({
           } = entry;
           const active = Boolean(hiddenSeries && hiddenSeries[dataKey]);
 
-          console.log(styleRest);
-
           const styles = {
             ...styleRest,
             margin: 5,
-            color: `${active ? neutral300 : color}`,
-            borderColor: `${active ? gray500 : borderColor ?? color}`
+            color: `${active ? secondary : color}`,
+            borderColor: `${active ? secondary : borderColor ?? color}`
           };
 
           return (
-            <button
-              type='button'
-              className='legend-item badge rounded-pill filter-badge d-flex align-items-center'
+            <span
               key={dataKey}
+              className='legend-item badge rounded-pill filter-badge'
               onMouseEnter={onLegendMouseEnter(dataKey)}
               onMouseLeave={onLegendMouseLeave}
               onClick={onLegendClick(dataKey)}
@@ -135,7 +132,7 @@ export const ChartComposed = ({
                 </Surface>
               )}
               <span className='mx-1'>{value}</span>
-            </button>
+            </span>
           );
         })}
       </div>
@@ -249,7 +246,7 @@ export const ChartComposed = ({
             }}
           />
 
-          {showLegend && (
+          {showLegend && seriesConfig.length > 1 && (
             <Legend
               verticalAlign='bottom'
               iconType='circle'

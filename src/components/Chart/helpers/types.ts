@@ -124,6 +124,7 @@ export interface ChartProps {
 
 export interface ChartComposedConfigType {
   seriesConfig: ChartConfigType[];
+  staked?: boolean;
 }
 
 export interface ChartComposedProps extends ChartComposedConfigType {
