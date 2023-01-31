@@ -110,7 +110,7 @@ export const Analytics = () => {
   }, [chartList]);
 
   const stakingMetricsChart = useMemo(() => {
-    const charts = chartList?.filter((sc) => sc.id.includes('staking-'));
+    const charts = chartList?.filter((sc) => sc.id.startsWith('staking-'));
 
     const rightYAxisSeriesIds = [
       'staking-delegated-stake',
@@ -120,6 +120,34 @@ export const Analytics = () => {
 
     const all = charts.reduce((acc, curr) => {
       if (curr.id.includes('staking-')) {
+        if (rightYAxisSeriesIds.includes(curr.id)) {
+          curr.dappConfig = {
+            ...curr.dappConfig,
+            id: 'right-axis',
+            orientation: 'right'
+          };
+        }
+
+        acc.push(curr);
+      }
+
+      return acc;
+    }, [] as ChartListType[]);
+
+    return all;
+  }, [chartList]);
+
+  const usersStakingChart = useMemo(() => {
+    const charts = chartList?.filter((sc) => sc.id.includes('users-staking'));
+
+    const rightYAxisSeriesIds = [
+      'staking-delegated-stake',
+      'staking-active-staked',
+      'staking-total-value-locked-plus-staking'
+    ];
+
+    const all = charts.reduce((acc, curr) => {
+      if (curr.id.includes('users-staking')) {
         if (rightYAxisSeriesIds.includes(curr.id)) {
           curr.dappConfig = {
             ...curr.dappConfig,
@@ -221,6 +249,14 @@ export const Analytics = () => {
               <AnalyticsChart
                 title={'Staking Metrics'}
                 series={stakingMetricsChart}
+              />
+            </div>
+          </ChartWrapper>
+          <ChartWrapper>
+            <div className='px-3 p-3'>
+              <AnalyticsChart
+                title={'Users Staking'}
+                series={usersStakingChart}
               />
             </div>
           </ChartWrapper>
