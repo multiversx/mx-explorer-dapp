@@ -25,6 +25,7 @@ type PageStatsDataType = {
   value: string | number;
   subTitle?: string;
   icon?: React.ReactNode;
+  currency?: string;
 };
 
 export const usePageStats = () => {
@@ -49,11 +50,36 @@ export const usePageStats = () => {
     category: string,
     obj: Record<string, string | number> = {}
   ): PageStatsDataType[] => {
+    const currency = null;
+
+    const getCurrency = (id: string) => {
+      if (category === 'blocks' && id === 'totalDeveloperRewards') {
+        return 'EGLD';
+      }
+
+      if (category === 'tokens' && id === 'ecosystemMarketCap') {
+        return '$';
+      }
+
+      return undefined;
+    };
+
     return Object.entries(obj).map(([key, value]) => {
+      const currency = getCurrency(key);
+
+      let val = value;
+      if (!currency) {
+        val = value;
+      } else if (currency === '$') {
+        val = `$${value}`;
+      } else {
+        val = `${value} ${currency}`;
+      }
+
       return {
         id: key,
         title: headersPropertiesNamesMapper[category][key],
-        value
+        value: val
       };
     });
   };
