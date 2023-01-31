@@ -37,7 +37,7 @@ export const ContractFiles = ({
   return (
     <div className='contract-files'>
       {entries
-        .filter(({ path }) => path.endsWith('.rs'))
+        .filter(({ path }) => path.endsWith('.rs') && !path.includes('/tests'))
         .map(({ path, content }, index) => {
           const base64Buffer = Buffer.from(content, 'base64');
           const codeString = base64Buffer.toString();
