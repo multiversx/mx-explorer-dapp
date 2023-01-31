@@ -20,7 +20,10 @@
   &__menu {
     background-color: var(--neutral-800);
     z-index: 7;
-    max-height: 200px;
+
+    &-list {
+      max-height: 200px;
+    }
   }
   &__option {
     cursor: pointer;
