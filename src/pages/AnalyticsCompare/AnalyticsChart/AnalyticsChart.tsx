@@ -1,14 +1,12 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
 import { PageState, Chart, Loader, useAdapter } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
 import { activeNetworkSelector } from 'redux/selectors';
 import { ChartResolutionSelector } from './components/ChartResolution';
 import type { ChartResolutionRangeType } from './components/ChartResolution/types';
 import { ChartListType } from '../AnalyticsCompare';
-import { RANGE } from '../constants';
 import { getChartColorPalette } from '../helpers/getChartColorPalette';
 
 export interface AnalyticsChartDataType {
@@ -18,10 +16,9 @@ export interface AnalyticsChartDataType {
 
 export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
   const ref = useRef(null);
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const range = searchParams.get(RANGE) as ChartResolutionRangeType;
+  const [range, setRange] = useState<ChartResolutionRangeType>('month');
 
   const { getAnalyticsChart } = useAdapter();
 
@@ -74,8 +71,8 @@ export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
         label: chartSeries.label,
         data: seriesData[chartSeries.id],
         yAxisConfig: {
-          ...chartSeries.dappConfig,
-          orientation: 'left'
+          orientation: 'left',
+          ...chartSeries.dappConfig
         },
         gradient: `${chartSeries.id}-gradient`,
         gradientStopColor: color,
@@ -93,7 +90,7 @@ export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
   return (
     <section id={[series.map((x) => x.id)].join('/')} ref={ref}>
       <div className='d-md-flex align-items-center flex-wrap mb-spacer mt-n3'>
-        <h3 className='my-3 me-md-auto'>
+        <h5 className='my-3 me-md-auto'>
           {seriesConfig?.map((sc, index) => (
             <React.Fragment key={`${sc.id}-config-label`}>
               <span style={{ color: sc.stroke }}>{sc.label}</span>
@@ -102,15 +99,14 @@ export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
               )}
             </React.Fragment>
           ))}
-        </h3>
+        </h5>
         <div className='d-flex justify-md-content-end align-items-center mt-3 mt-md-0'>
           <div className='mb-0'>
             <ChartResolutionSelector
               isResponsive={true}
               value={range}
               onChange={(resolution) => {
-                searchParams.set('range', resolution.range);
-                setSearchParams(searchParams);
+                setRange(resolution.range);
               }}
             />
           </div>
