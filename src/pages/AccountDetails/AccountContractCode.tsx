@@ -56,7 +56,7 @@ export const AccountContractCode = () => {
           <AccountTabs />
         </div>
         {codeHash && (
-          <div className='card-header-item compact card card-sm bg-table-header p-3 d-flex flex-column mt-3 mb-nspacer'>
+          <div className='card-header-item compact card card-sm bg-table-header p-3 d-flex flex-column mt-3'>
             <div className='d-flex flex-row'>
               <span className='text-neutral-400'>Code Hash:</span>
               <div className='d-flex align-items-center text-break-all ms-2'>
