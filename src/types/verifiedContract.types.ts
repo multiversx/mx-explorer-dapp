@@ -28,9 +28,9 @@ export interface ContractAbiType {
     };
   };
   hasCallback: boolean;
-  types: any;
+  types: ContractTypesType;
   endpoints?: ContractEndpointType[];
-  events?: any[];
+  events?: ContractEventType[];
   ['constructor']?: any;
 }
 
@@ -63,4 +63,32 @@ export interface ContractEndpointInputType {
 
 export interface ContractEndpointOutputType {
   type: string;
+}
+
+export interface ContractEventType {
+  identifier: string;
+  inputs: ContractInputType[];
+  outputs?: ContractEndpointOutputType[];
+}
+
+export interface ContractInputType {
+  name: string;
+  type: string;
+  indexed?: boolean;
+}
+
+export interface ContractTypesType {
+  [key: string]: ContractTypeType;
+}
+export interface ContractTypeType {
+  type: string;
+  fields: {
+    name: string;
+    type: string;
+  }[];
+}
+
+export interface ContractConstructorType {
+  docs: string[];
+  inputs: ContractInputType[];
 }

@@ -65,8 +65,9 @@ export const Links = (props: LinksPropsType) => {
         accountsRoutes.accountNfts,
         accountsRoutes.accountContracts,
         accountsRoutes.accountCode,
+        accountsRoutes.accountCodeConstructor,
         accountsRoutes.accountCodeEndpoints,
-        accountsRoutes.accountCodeViews,
+        accountsRoutes.accountCodeEvents,
         accountsRoutes.accountCodeTypes
       ]
     },
