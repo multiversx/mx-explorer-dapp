@@ -14,7 +14,7 @@ export const pageHeadersAccountsStatsSlice = createSlice({
       action: PayloadAction<HeadersAccountsType>
     ) => {
       state.totalAccounts = action.payload.totalAccounts;
-      state.newAccountsToday = action.payload.newAccountsToday;
+      // state.newAccountsToday = action.payload.newAccountsToday;
       state.accountsBalanceGt1000 = action.payload.accountsBalanceGt1000;
       state.usersStaking = action.payload.usersStaking;
       state.activeAccountsToday = action.payload.activeAccountsToday;

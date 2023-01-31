@@ -82,6 +82,7 @@ export const usePageStats = () => {
     switch (true) {
       case activeRoute(blocksRoutes.miniBlockDetails):
       case activeRoute(blocksRoutes.blocks):
+      case activeRoute(blocksRoutes.blocksDetails):
         return {
           title: headersBlocksTitle,
           data: headersBlocksData
@@ -95,7 +96,9 @@ export const usePageStats = () => {
       case activeRoute(accountsRoutes.accountStaking):
       case activeRoute(accountsRoutes.accountAnalytics):
       case activeRoute(accountsRoutes.accountCode):
+      case activeRoute(accountsRoutes.accountCodeConstructor):
       case activeRoute(accountsRoutes.accountCodeEndpoints):
+      case activeRoute(accountsRoutes.accountCodeEvents):
       case activeRoute(accountsRoutes.accountCodeTypes):
         return {
           title: headersAccountsTitle,
@@ -113,7 +116,8 @@ export const usePageStats = () => {
         };
 
       case activeRoute(collectionRoutes.collections):
-      case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
+      case activeRoute(collectionRoutes.collectionsNft):
+      case activeRoute(collectionRoutes.collectionsSft):
       case activeRoute(collectionRoutes.collectionDetails):
       case activeRoute(collectionRoutes.collectionDetailsRoles):
         return {

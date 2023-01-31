@@ -32,10 +32,10 @@ export const useHeaderAccountsStats = () => {
           result.data.activeAccountsToday
         ).toFormat(0),
         totalAccounts: new BigNumber(result.data.totalAccounts).toFormat(0),
-        usersStaking: new BigNumber(result.data.usersStaking).toFormat(0),
-        newAccountsToday: new BigNumber(
-          result.data.activeAccountsToday
-        ).toFormat(0)
+        usersStaking: new BigNumber(result.data.usersStaking).toFormat(0)
+        // newAccountsToday: new BigNumber(result.data.newAccountsToday).toFormat(
+        //   0
+        // )
       })
     );
     return result.data;
