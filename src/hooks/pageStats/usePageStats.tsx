@@ -2,12 +2,11 @@ import React, { useMemo } from 'react';
 import { faCircleBolt } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
+import { headersPropertiesNamesMapper } from './constants/headersPropertiesNamesMapper';
 import { useHeaderAccountsStats } from './useHeaderAccountsStats';
 import { useHeadersBlocksStats } from './useHeadersBlocksStats';
 import { useHeadersCollectionsStats } from './useHeadersCollectionsStats';
 import { useHeadersTokensStats } from './useHeadersTokensStats';
-import { capitalize } from '../../helpers';
-import { splitCamelCase } from '../../helpers/splitCamelCase';
 import { pageHeadersAccountsStatsSelector } from '../../redux/selectors/pageHeadersAccountsStats';
 import { pageHeadersBlocksStatsSelector } from '../../redux/selectors/pageHeadersBlocksStats';
 import { pageHeadersCollectionsStatsSelector } from '../../redux/selectors/pageHeadersCollectionsStats';
@@ -16,8 +15,7 @@ import {
   accountsRoutes,
   blocksRoutes,
   collectionRoutes,
-  tokensRoutes,
-  validatorsRoutes
+  tokensRoutes
 } from '../../routes';
 import { useActiveRoute } from '../useActiveRoute';
 
@@ -48,20 +46,23 @@ export const usePageStats = () => {
   const { title: headersAccountsTitle } = useHeaderAccountsStats();
 
   const getData = (
+    category: string,
     obj: Record<string, string | number> = {}
   ): PageStatsDataType[] => {
-    return Object.entries(obj).map(([key, value]) => ({
-      id: key,
-      title: splitCamelCase(capitalize(key)),
-      value
-    }));
+    return Object.entries(obj).map(([key, value]) => {
+      return {
+        id: key,
+        title: headersPropertiesNamesMapper[category][key],
+        value
+      };
+    });
   };
 
-  const headersBlocksData = getData(pageHeadersBlocks);
-  const headersCollectionsData = getData(pageHeadersCollections);
-  const headersTokensData = getData(pageHeadersTokens);
+  const headersBlocksData = getData('blocks', pageHeadersBlocks);
+  const headersCollectionsData = getData('collections', pageHeadersCollections);
+  const headersTokensData = getData('tokens', pageHeadersTokens);
   const headersAccountsData = useMemo(() => {
-    const data = getData(pageHeadersAccounts);
+    const data = getData('accounts', pageHeadersAccounts);
 
     const todayActiveAccounts = data.find((x) =>
       x.id.toLowerCase().includes('ActiveAccountsToday'.toLowerCase())
@@ -74,7 +75,7 @@ export const usePageStats = () => {
       }
     });
 
-    return data.filter((x) => x.title !== todayActiveAccounts?.title);
+    return data.filter((x) => Boolean(x.title));
   }, [pageHeadersAccounts]);
 
   const pageStats = useMemo(() => {
