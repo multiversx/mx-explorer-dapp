@@ -52,7 +52,12 @@ export const Collections = () => {
     const type = getCollectionType();
 
     Promise.all([
-      getCollections({ ...queryObject, size, type }),
+      getCollections({
+        ...queryObject,
+        size,
+        type,
+        sort: 'verifiedAndHolderCount'
+      }),
       getCollectionsCount({ ...queryObject, type })
     ]).then(([collectionsData, count]) => {
       if (ref.current !== null) {
