@@ -36,7 +36,7 @@ export const Analytics = () => {
   };
 
   const transactionsChart = useMemo(() => {
-    return chartList?.filter((sc) => sc.id.includes('-transactions-'));
+    return chartList?.filter((sc) => sc.id.includes('-transactions'));
   }, [chartList]);
 
   const tokenTransfersChart = useMemo(() => {
@@ -122,7 +122,7 @@ export const Analytics = () => {
   }, [chartList]);
 
   const aprsChart = useMemo(() => {
-    return chartList?.filter((sc) => sc.id.includes('-apr-'));
+    return chartList?.filter((sc) => sc.id.includes('-apr'));
   }, [chartList]);
 
   useEffect(getData, [activeNetworkId]);
