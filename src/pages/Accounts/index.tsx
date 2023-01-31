@@ -14,6 +14,7 @@ import {
 import { urlBuilder } from 'helpers';
 import { useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
+import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
 import { AccountType } from 'types';
 
 import { FailedAccounts } from './FailedAccounts';
@@ -23,6 +24,7 @@ export const Accounts = () => {
   const ref = React.useRef(null);
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const pageHeadersAccounts = useSelector(pageHeadersAccountsStatsSelector);
   const { page } = useURLSearchParams();
   const { size } = useSize();
   const { getAccounts, getAccountsCount } = useAdapter();
@@ -60,7 +62,8 @@ export const Accounts = () => {
 
   return (
     <>
-      {dataReady === undefined && <Loader />}
+      {(dataReady === undefined ||
+        Object.keys(pageHeadersAccounts).length === 0) && <Loader />}
       {dataReady === false && <FailedAccounts />}
 
       <div ref={ref}>

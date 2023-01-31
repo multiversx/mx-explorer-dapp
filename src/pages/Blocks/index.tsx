@@ -8,6 +8,7 @@ import { NoBlocks } from 'components/BlocksTable/NoBlocks';
 import { useNetworkRoute, useURLSearchParams, useSize } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { BlockType } from 'types';
+import { pageHeadersBlocksStatsSelector } from '../../redux/selectors/pageHeadersBlocksStats';
 interface StateType {
   blocks: BlockType[];
   startBlockNr: number;
@@ -18,6 +19,7 @@ export const Blocks = () => {
   const [searchParams] = useSearchParams();
   const { page, shard } = useURLSearchParams();
   const { size, firstPageTicker } = useSize();
+  const pageHeadersBlocks = useSelector(pageHeadersBlocksStatsSelector);
 
   const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
@@ -68,7 +70,8 @@ export const Blocks = () => {
     navigate(networkRoute('/not-found'))
   ) : (
     <>
-      {dataReady === undefined && <Loader />}
+      {(dataReady === undefined ||
+        Object.keys(pageHeadersBlocks).length === 0) && <Loader />}
       {dataReady === false && <FailedBlocks />}
 
       <div ref={ref}>

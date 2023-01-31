@@ -7,6 +7,7 @@ import { PAGE_SIZE } from 'appConstants';
 import { Loader, useAdapter, NetworkLink, Pager } from 'components';
 import { useGetFilters, useURLSearchParams, useActiveRoute } from 'hooks';
 import { economicsSelector } from 'redux/selectors';
+import { pageHeaderTokensStatsSelector } from 'redux/selectors/pageHeadersTokensStats';
 import { tokensRoutes } from 'routes';
 
 import { TokenType } from 'types';
@@ -26,6 +27,7 @@ export const Tokens = () => {
   const { getTokens, getTokensCount } = useAdapter();
 
   const { ecosystemMarketCap } = useSelector(economicsSelector);
+  const pageHeadersTokens = useSelector(pageHeaderTokensStatsSelector);
 
   const [tokens, setTokens] = React.useState<TokenType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -53,7 +55,8 @@ export const Tokens = () => {
 
   return (
     <>
-      {dataReady === undefined && <Loader />}
+      {(dataReady === undefined ||
+        Object.keys(pageHeadersTokens).length === 0) && <Loader />}
       {dataReady === false && <FailedTokens />}
 
       <div ref={ref}>
