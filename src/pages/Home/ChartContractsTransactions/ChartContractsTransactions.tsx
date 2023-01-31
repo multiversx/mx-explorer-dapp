@@ -62,7 +62,7 @@ export const ChartContractsTransactions = () => {
       color: white
     },
     {
-      label: TransactionsStatisticsLabelEnum.SmartContracts,
+      label: TransactionsStatisticsLabelEnum.Applications,
       value: scResults,
       color: teal
     },
@@ -147,7 +147,7 @@ export const ChartContractsTransactions = () => {
     {
       data: contractsPayload,
       key: 'contractValue',
-      label: 'Contracts',
+      label: 'Applications',
       color: teal
     },
     {

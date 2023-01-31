@@ -13,7 +13,7 @@ export const ContractConstructor = ({
         <h6 className='mb-0'>
           <code>Inputs:</code>
         </h6>
-        {contract.source.abi['constructor']?.inputs.map(
+        {contract.source.abi?.['constructor']?.inputs?.map(
           ({ name, type }: any, index: number) => {
             return (
               <div
