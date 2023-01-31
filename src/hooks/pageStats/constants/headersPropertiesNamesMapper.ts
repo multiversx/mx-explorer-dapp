@@ -6,14 +6,14 @@ export const headersPropertiesNamesMapper: Record<string, any> = {
     totalNetworkFees: 'Total Network Fees'
   },
   collections: {
-    newNFTsInLast30d: 'NFTs Created in last 30 days',
+    newNFTsInLast30d: 'New NFTs Created in last 30 days',
     totalCollections: 'Total Collections',
     totalHolders: 'Total NFT Holders',
     totalNFTsCreated: 'Total Collections'
   },
   tokens: {
     ecosystemMarketCap: 'Ecosystem Market Cap',
-    newTokensInLast30d: 'Tokens Created In Last 30 days',
+    newTokensInLast30d: 'New Tokens Created In Last 30 days',
     tokenTransfersInLast30d: 'Token Transfers In Last 30 days',
     totalTokens: 'Total Tokens'
   },
