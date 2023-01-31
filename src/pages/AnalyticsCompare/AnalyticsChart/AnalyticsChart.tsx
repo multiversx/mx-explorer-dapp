@@ -2,11 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import { useSelector } from 'react-redux';
 import { PageState, Chart, Loader, useAdapter } from 'components';
-import { ChartConfigType } from 'components/Chart/helpers/types';
+import {
+  ChartConfigType,
+  ChartLabelConfigType,
+  ChartListType
+} from 'components/Chart/helpers/types';
 import { activeNetworkSelector } from 'redux/selectors';
 import { ChartResolutionSelector } from './components/ChartResolution';
 import type { ChartResolutionRangeType } from './components/ChartResolution/types';
-import { ChartListType } from '../AnalyticsCompare';
 import { getChartColorPalette } from '../helpers/getChartColorPalette';
 
 export interface AnalyticsChartDataType {
@@ -14,7 +17,13 @@ export interface AnalyticsChartDataType {
   timestamp: number;
 }
 
-export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
+export const AnalyticsChart = ({
+  series,
+  title
+}: {
+  series: ChartListType[];
+  title?: string;
+}) => {
   const ref = useRef(null);
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -77,9 +86,14 @@ export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
         gradient: `${chartSeries.id}-gradient`,
         gradientStopColor: color,
         stroke: color,
-        legendStyle: {
-          color: color,
-          borderColor: color
+        legend: {
+          style: chartSeries?.legend?.style ?? {
+            color: color,
+            borderColor: color
+          },
+          config: {
+            label: chartSeries?.legend?.config?.label ?? chartSeries.label
+          }
         }
       });
     });
@@ -91,14 +105,16 @@ export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
     <section id={[series.map((x) => x.id)].join('/')} ref={ref}>
       <div className='d-md-flex align-items-center flex-wrap mb-spacer mt-n3'>
         <h5 className='my-3 me-md-auto'>
-          {seriesConfig?.map((sc, index) => (
-            <React.Fragment key={`${sc.id}-config-label`}>
-              <span>{sc.label}</span>
-              {index !== seriesConfig?.length - 1 && (
-                <span className='mx-2'>/</span>
-              )}
-            </React.Fragment>
-          ))}
+          {title
+            ? title
+            : seriesConfig?.map((sc, index) => (
+                <React.Fragment key={`${sc.id}-config-label`}>
+                  <span>{sc.label}</span>
+                  {index !== seriesConfig?.length - 1 && (
+                    <span className='mx-2'>/</span>
+                  )}
+                </React.Fragment>
+              ))}
         </h5>
         <div className='d-flex justify-md-content-end align-items-center ms-auto me-0 mt-3 mt-md-0'>
           <div className='mb-0'>
@@ -140,7 +156,7 @@ export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
             tooltip={{
               dateFormat: 'dd, MMM D YYYY'
             }}
-            showLegend={false}
+            showLegend={true}
           ></Chart.Composed>
         )}
       </div>
