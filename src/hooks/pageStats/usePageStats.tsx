@@ -7,6 +7,7 @@ import { useHeadersBlocksStats } from './useHeadersBlocksStats';
 import { useHeadersCollectionsStats } from './useHeadersCollectionsStats';
 import { useHeadersTokensStats } from './useHeadersTokensStats';
 import { capitalize } from '../../helpers';
+import { splitCamelCase } from '../../helpers/splitCamelCase';
 import { pageHeadersAccountsStatsSelector } from '../../redux/selectors/pageHeadersAccountsStats';
 import { pageHeadersBlocksStatsSelector } from '../../redux/selectors/pageHeadersBlocksStats';
 import { pageHeadersCollectionsStatsSelector } from '../../redux/selectors/pageHeadersCollectionsStats';
@@ -21,6 +22,7 @@ import {
 import { useActiveRoute } from '../useActiveRoute';
 
 type PageStatsDataType = {
+  id: string;
   title: string;
   value: string | number;
   subTitle?: string;
@@ -49,7 +51,8 @@ export const usePageStats = () => {
     obj: Record<string, string | number> = {}
   ): PageStatsDataType[] => {
     return Object.entries(obj).map(([key, value]) => ({
-      title: capitalize(key),
+      id: key,
+      title: splitCamelCase(capitalize(key)),
       value
     }));
   };
@@ -61,11 +64,11 @@ export const usePageStats = () => {
     const data = getData(pageHeadersAccounts);
 
     const todayActiveAccounts = data.find((x) =>
-      x.title.toLowerCase().includes('ActiveAccountsToday'.toLowerCase())
+      x.id.toLowerCase().includes('ActiveAccountsToday'.toLowerCase())
     );
 
     data.forEach((x) => {
-      if (x.title.toLowerCase().includes('totalAccount'.toLowerCase())) {
+      if (x.id.toLowerCase().includes('totalAccount'.toLowerCase())) {
         x.subTitle = `${todayActiveAccounts?.value} active today`;
         x.icon = <FontAwesomeIcon icon={faCircleBolt} color={teal} />;
       }
