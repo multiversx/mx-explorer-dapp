@@ -19,7 +19,6 @@ import {
 import { useActiveRoute } from '../useActiveRoute';
 
 export const usePageStats = () => {
-  console.log('usePageStats');
   const activeRoute = useActiveRoute();
   const pageHeadersBlocks = useSelector(pageHeadersBlocksStatsSelector);
   const pageHeadersAccounts = useSelector(pageHeadersAccountsStatsSelector);
@@ -58,6 +57,7 @@ export const usePageStats = () => {
           data: headersBlocksData
         };
 
+      case activeRoute(accountsRoutes.accounts):
       case activeRoute(accountsRoutes.accountDetails):
       case activeRoute(accountsRoutes.accountTokens):
       case activeRoute(accountsRoutes.accountNfts):
