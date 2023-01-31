@@ -378,3 +378,9 @@ div.side-icon {
     max-width: 12rem;
   }
 }
+
+.nodes-more.show {
+  &:hover {
+    color: var(--neutral-900) !important;
+  }
+}
