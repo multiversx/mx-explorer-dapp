@@ -8,7 +8,7 @@ export type HeadersBlocksType = {
 export type HeadersAccountsType = {
   totalAccounts?: number | string;
   activeAccountsToday?: number | string;
-  newAccountsToday?: number | string;
+  // newAccountsToday?: number | string;
   usersStaking?: number | string;
   accountsBalanceGt1000?: number | string;
 };

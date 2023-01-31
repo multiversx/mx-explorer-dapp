@@ -103,6 +103,8 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       case activeRoute(searchRoutes.index):
       case activeRoute(searchRoutes.query):
       case activeRoute(transactionsRoutes.transactions) && isMainnet:
+      case activeRoute(transactionsRoutes.transactionDetails) && isMainnet:
+      case activeRoute(transactionsRoutes.transactionDetailsLogs) && isMainnet:
       case activeRoute(validatorsRoutes.identities) && isMainnet:
       case activeRoute(validatorsRoutes.identityDetails) && isMainnet:
       case activeRoute(validatorsRoutes.providers) && isMainnet:
@@ -122,6 +124,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const showCustomStats = () => {
     switch (true) {
       case activeRoute(blocksRoutes.blocks):
+      case activeRoute(blocksRoutes.blocksDetails):
       case activeRoute(blocksRoutes.miniBlockDetails):
       case activeRoute(accountsRoutes.accounts):
       case activeRoute(accountsRoutes.accountDetails):
@@ -133,14 +136,18 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       case activeRoute(accountsRoutes.accountCode):
       case activeRoute(accountsRoutes.accountCodeEndpoints):
       case activeRoute(accountsRoutes.accountCodeTypes):
+      case activeRoute(accountsRoutes.accountCodeConstructor):
+      case activeRoute(accountsRoutes.accountCodeEvents):
       case activeRoute(tokensRoutes.tokens):
       case activeRoute(tokensRoutes.tokenDetails):
       case activeRoute(tokensRoutes.tokenDetailsAccounts):
       case activeRoute(tokensRoutes.tokenDetailsLockedAccounts):
       case activeRoute(tokensRoutes.tokenDetailsRoles):
       case activeRoute(collectionRoutes.collections):
-      case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
       case activeRoute(collectionRoutes.collectionDetails):
+      case activeRoute(collectionRoutes.collectionDetailsRoles):
+      case activeRoute(collectionRoutes.collectionsNft):
+      case activeRoute(collectionRoutes.collectionsSft):
       case activeRoute(collectionRoutes.collectionDetailsRoles):
         return true;
 
@@ -158,7 +165,10 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const offline = !window.navigator.onLine;
 
   const isHome = activeRoute('/');
-  const isTransactions = activeRoute(transactionsRoutes.transactions);
+  const isTransactions =
+    activeRoute(transactionsRoutes.transactions) ||
+    activeRoute(transactionsRoutes.transactionDetails) ||
+    activeRoute(transactionsRoutes.transactionDetailsLogs);
 
   const pathArray = pathname.split('/');
   const pageClass =
