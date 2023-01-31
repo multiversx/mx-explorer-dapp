@@ -175,7 +175,7 @@ export const Analytics = () => {
           <ChartWrapper>
             <div className='px-3 p-3'>
               <AnalyticsChart
-                title={'Transactions'}
+                title={'Transactions Metrics'}
                 series={transactionsChart}
                 stacked={true}
                 stackedLabel={'Total Transactions'}
@@ -200,7 +200,7 @@ export const Analytics = () => {
           </ChartWrapper>
           <ChartWrapper>
             <div className='px-3 p-3'>
-              <AnalyticsChart title={'Users'} series={usersChart} />
+              <AnalyticsChart title={'Users Metrics'} series={usersChart} />
             </div>
           </ChartWrapper>
           <ChartWrapper>
@@ -211,25 +211,28 @@ export const Analytics = () => {
           <ChartWrapper>
             <div className='px-3 pb-3'>
               <AnalyticsChart
-                title={'New Applications'}
+                title={'New Applications Deployed'}
                 series={newStuffCreatedChart}
               />
             </div>
           </ChartWrapper>
           <ChartWrapper>
             <div className='px-3 p-3'>
-              <AnalyticsChart title={'Staking'} series={stakingMetricsChart} />
+              <AnalyticsChart
+                title={'Staking Metrics'}
+                series={stakingMetricsChart}
+              />
             </div>
           </ChartWrapper>
           <ChartWrapper>
             <div className='px-3 pb-3'>
-              <AnalyticsChart title='APR' series={aprsChart} />
+              <AnalyticsChart title='APR Metrics' series={aprsChart} />
             </div>
           </ChartWrapper>
           <ChartWrapper>
             <div className='px-3 pb-3'>
               <AnalyticsChart
-                title={'Rewards'}
+                title={'Rewards Metrics'}
                 series={networkAndDeveloperFeesChart}
               />
             </div>
