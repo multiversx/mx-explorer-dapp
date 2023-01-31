@@ -7,4 +7,5 @@ export interface ChartRootPropsType {
   className?: string;
   tooltipFormatter: (option: any) => string;
   syncId?: string;
+  height: number;
 }

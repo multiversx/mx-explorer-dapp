@@ -122,15 +122,18 @@ export const ChartStake = ({ className }: WithClassnameType) => {
         </div>
       </div>
 
-      <ChartRoot
-        className={styles.container}
-        data={data}
-        color={teal}
-        identifier='delegationGradient'
-        tooltipFormatter={(option: any) =>
-          `${new BigNumber(option.value).toFormat(0)} ${egldLabel}`
-        }
-      />
+      <div className={styles.root}>
+        <ChartRoot
+          className={styles.container}
+          data={data}
+          height={300}
+          color={teal}
+          identifier='delegationGradient'
+          tooltipFormatter={(option: any) =>
+            `${new BigNumber(option.value).toFormat(0)} ${egldLabel}`
+          }
+        />
+      </div>
 
       <div className={styles.statistics}>
         {statistics.map((statistic) => (
