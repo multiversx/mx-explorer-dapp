@@ -44,6 +44,17 @@ export const ChartRoot = (props: ChartRootPropsType) => {
     tooltipFormatter
   } = props;
 
+  const calculateDomain = ([alpha, beta]: number[]): [number, number] => {
+    const start = alpha - alpha / 10;
+    const end = beta + beta / 10;
+
+    if (!isFinite(alpha) && !isFinite(beta)) {
+      return [0, 0];
+    }
+
+    return [start, end];
+  };
+
   return (
     <ResponsiveContainer height={height} width='100%' className={className}>
       <AreaChart
@@ -66,7 +77,7 @@ export const ChartRoot = (props: ChartRootPropsType) => {
           activeDot={{ stroke: color, fill: color }}
         />
 
-        {/* <YAxis domain={[14_000_000, 16_000_000]} /> */}
+        <YAxis domain={calculateDomain} hide={true} />
 
         <Tooltip
           cursor={false}

@@ -145,16 +145,16 @@ export const ChartContractsTransactions = () => {
 
   const payload: PayloadType[] = [
     {
-      data: transactionsPayload,
-      key: 'transactionValue',
-      label: 'Transactions',
-      color: purple
-    },
-    {
       data: contractsPayload,
       key: 'contractValue',
       label: 'Contracts',
       color: teal
+    },
+    {
+      data: transactionsPayload,
+      key: 'transactionValue',
+      label: 'Standard',
+      color: purple
     }
   ];
 
