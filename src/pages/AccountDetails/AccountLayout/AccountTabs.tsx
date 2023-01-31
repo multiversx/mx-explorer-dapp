@@ -3,10 +3,10 @@ import { faCircleCheck } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
+import { Tabs } from 'components/Tabs';
 import { urlBuilder, isContract } from 'helpers';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { accountsRoutes } from 'routes';
-import { Tabs } from 'components/Tabs';
 
 export const AccountTabs = () => {
   const { account } = useSelector(accountSelector);
