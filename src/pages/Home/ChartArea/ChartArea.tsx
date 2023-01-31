@@ -36,7 +36,7 @@ export const ChartArea = (props: ChartAreaPropsType) => {
     : [];
 
   return (
-    <ResponsiveContainer height={150} width='100%' className={className}>
+    <ResponsiveContainer height={200} width='100%' className={className}>
       <AreaChart data={data} margin={{ left: 0, right: 0 }}>
         {sortedPayload.map((item, index) => (
           <Fragment key={item.key}>
