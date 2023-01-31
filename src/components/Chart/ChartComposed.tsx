@@ -97,8 +97,6 @@ export const ChartComposed = ({
           } = entry;
           const active = Boolean(hiddenSeries && hiddenSeries[dataKey]);
 
-          console.log(styleRest);
-
           const styles = {
             ...styleRest,
             margin: 5,
