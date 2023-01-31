@@ -10,6 +10,7 @@ import {
   useThree
 } from 'react-three-fiber';
 import * as THREE from 'three';
+import { Texture } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import circleImg from './../../assets/img/three/circle.png';
@@ -113,7 +114,9 @@ function Points() {
 export const AnimationCanvas = () => {
   return (
     <Canvas
-      colorManagement={false}
+      style={{ background: '#000000' }}
+      className='bg-black'
+      colorManagement={true}
       camera={{ position: [100, 30, 0], fov: 45 }}
       resize={{ scroll: false }}
     >
@@ -127,8 +130,6 @@ export const AnimationCanvas = () => {
 
 export const Particles = memo(() => (
   <div className='particles'>
-    <Suspense fallback={<div>Loading...</div>}>
-      <AnimationCanvas />
-    </Suspense>
+    <AnimationCanvas />
   </div>
 ));
