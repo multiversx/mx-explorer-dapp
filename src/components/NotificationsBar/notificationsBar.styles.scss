@@ -1,4 +1,6 @@
 .notification-bar {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   border-radius: 0;
   color: $black;
 
@@ -10,5 +12,12 @@
     &:hover {
       opacity: 1;
     }
+  }
+  &.bg-warning {
+    background: linear-gradient(
+      90deg,
+      rgba(240, 152, 25, 0.8),
+      rgba(237, 222, 93, 0.8)
+    );
   }
 }
