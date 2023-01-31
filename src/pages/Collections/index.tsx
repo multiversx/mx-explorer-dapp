@@ -60,8 +60,8 @@ export const Collections = () => {
       getCollections({
         ...queryObject,
         size,
-        type
-        // sort: 'verifiedAndHolderCount'
+        type,
+        sort: 'verifiedAndHolderCount'
       }),
       getCollectionsCount({ ...queryObject, type })
     ]).then(([collectionsData, count]) => {

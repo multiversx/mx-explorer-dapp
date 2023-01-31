@@ -191,7 +191,9 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                           {pageName !== 'analytics'
                             ? pageName
                             : `MultiversX Blockchain ${pageName}`}
-                          <span className='text-neutral-500'> (Beta)</span>
+                          {pageName === 'analytics' && (
+                            <span className='text-neutral-500'> (Beta)</span>
+                          )}
                         </h2>
                       </div>
                       <div className='card-body d-flex flex-row flex-wrap gap-3'>
