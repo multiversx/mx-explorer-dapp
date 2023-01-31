@@ -113,67 +113,78 @@ export const VerifiedContract = () => {
                     Code
                   </Nav.Link>
 
-                  <Nav.Link
-                    eventKey='endpoints'
-                    className={`tab ${
-                      activeKey === 'endpoints' ? 'active' : ''
-                    }`}
-                    onClick={() => {
-                      window.history.replaceState(
-                        null,
-                        '',
-                        urlBuilder.accountDetailsContractCodeEndpoints(address)
-                      );
-                    }}
-                  >
-                    Endpoints
-                  </Nav.Link>
+                  {contract.source.abi?.endpoints && (
+                    <Nav.Link
+                      eventKey='endpoints'
+                      className={`tab ${
+                        activeKey === 'endpoints' ? 'active' : ''
+                      }`}
+                      onClick={() => {
+                        window.history.replaceState(
+                          null,
+                          '',
+                          urlBuilder.accountDetailsContractCodeEndpoints(
+                            address
+                          )
+                        );
+                      }}
+                    >
+                      Endpoints
+                    </Nav.Link>
+                  )}
 
-                  <Nav.Link
-                    eventKey='events'
-                    className={`tab ${activeKey === 'events' ? 'active' : ''}`}
-                    onClick={() => {
-                      window.history.replaceState(
-                        null,
-                        '',
-                        urlBuilder.accountDetailsContractCodeEvents(address)
-                      );
-                    }}
-                  >
-                    Events
-                  </Nav.Link>
+                  {contract.source.abi?.events && (
+                    <Nav.Link
+                      eventKey='events'
+                      className={`tab ${
+                        activeKey === 'events' ? 'active' : ''
+                      }`}
+                      onClick={() => {
+                        window.history.replaceState(
+                          null,
+                          '',
+                          urlBuilder.accountDetailsContractCodeEvents(address)
+                        );
+                      }}
+                    >
+                      Events
+                    </Nav.Link>
+                  )}
 
-                  <Nav.Link
-                    eventKey='types'
-                    className={`tab ${activeKey === 'types' ? 'active' : ''}`}
-                    onClick={() => {
-                      window.history.replaceState(
-                        null,
-                        '',
-                        urlBuilder.accountDetailsContractCodeTypes(address)
-                      );
-                    }}
-                  >
-                    Types
-                  </Nav.Link>
-
-                  <Nav.Link
-                    eventKey='contract-constructor'
-                    className={`tab ${
-                      activeKey === 'contract-constructor' ? 'active' : ''
-                    }`}
-                    onClick={() => {
-                      window.history.replaceState(
-                        null,
-                        '',
-                        urlBuilder.accountDetailsContractCodeConstructor(
-                          address
-                        )
-                      );
-                    }}
-                  >
-                    Constructor
-                  </Nav.Link>
+                  {contract.source.abi?.types && (
+                    <Nav.Link
+                      eventKey='types'
+                      className={`tab ${activeKey === 'types' ? 'active' : ''}`}
+                      onClick={() => {
+                        window.history.replaceState(
+                          null,
+                          '',
+                          urlBuilder.accountDetailsContractCodeTypes(address)
+                        );
+                      }}
+                    >
+                      Types
+                    </Nav.Link>
+                  )}
+                  {contract.source.abi?.['constructor'] && (
+                    <Nav.Link
+                      eventKey='contract-constructor'
+                      className={`tab ${
+                        activeKey === 'contract-constructor' ? 'active' : ''
+                      }`}
+                      onClick={() => {
+                        window.history.replaceState(
+                          null,
+                          '',
+                          urlBuilder.accountDetailsContractCodeConstructor(
+                            address
+                          )
+                        );
+                      }}
+                    >
+                      Constructor
+                    </Nav.Link>
+                  )}
                 </div>
                 <h3 className='mb-0 ms-3 text-neutral-400'>(Beta)</h3>
               </div>
@@ -184,18 +195,26 @@ export const VerifiedContract = () => {
                 <Tab.Pane eventKey='details'>
                   <ContractCode contract={contract} />
                 </Tab.Pane>
-                <Tab.Pane eventKey='endpoints'>
-                  <ContractEndpoints contract={contract} />
-                </Tab.Pane>
-                <Tab.Pane eventKey='events'>
-                  <ContractEvents contract={contract} />
-                </Tab.Pane>
-                <Tab.Pane eventKey='types'>
-                  <ContractTypes contract={contract} />
-                </Tab.Pane>
-                <Tab.Pane eventKey='contract-constructor'>
-                  <ContractConstructor contract={contract} />
-                </Tab.Pane>
+                {contract.source.abi?.endpoints && (
+                  <Tab.Pane eventKey='endpoints'>
+                    <ContractEndpoints contract={contract} />
+                  </Tab.Pane>
+                )}
+                {contract.source.abi?.events && (
+                  <Tab.Pane eventKey='events'>
+                    <ContractEvents contract={contract} />
+                  </Tab.Pane>
+                )}
+                {contract.source.abi?.types && (
+                  <Tab.Pane eventKey='types'>
+                    <ContractTypes contract={contract} />
+                  </Tab.Pane>
+                )}
+                {contract.source.abi?.['constructor'] && (
+                  <Tab.Pane eventKey='contract-constructor'>
+                    <ContractConstructor contract={contract} />
+                  </Tab.Pane>
+                )}
               </Tab.Content>
             </div>
           </Tab.Container>
