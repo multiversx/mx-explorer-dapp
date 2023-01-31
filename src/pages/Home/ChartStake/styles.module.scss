@@ -27,10 +27,8 @@
     bottom: 0;
     width: 100%;
     height: 100%;
-  }
-
-  .container {
-    margin-top: auto;
+    display: flex;
+    align-items: center;
   }
 
   .wrapper {
@@ -39,15 +37,17 @@
     justify-content: space-between;
     color: var(--teal);
     padding: 0 1rem 1rem;
+    pointer-events: none;
     position: relative;
     z-index: 2;
+    pointer-events: none;
 
     @media (min-width: 768px) {
       padding: 0 2rem 2rem;
     }
 
-    .left {
-      pointer-events: none;
+    .right {
+      pointer-events: all;
     }
   }
 
