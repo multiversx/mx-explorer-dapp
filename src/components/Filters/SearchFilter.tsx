@@ -65,7 +65,7 @@ export const SearchFilter = ({
   };
 
   return (
-    <div role='search' className={`search-filter ${className ?? ''}`}>
+    <div role='search' className={`search-filter-block ${className ?? ''}`}>
       <div
         className={`input-group input-group-sm input-group-seamless ${
           validation ? 'has-validation' : ''

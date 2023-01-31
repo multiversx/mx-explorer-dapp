@@ -20,7 +20,7 @@ export const Transactions = () => {
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const { getTransactionsCount, getTransactions } = useAdapter();
+  const { getTransfers, getTransfersCount } = useAdapter();
 
   const {
     senderShard,
@@ -48,7 +48,7 @@ export const Transactions = () => {
       setDataChanged(true);
     }
     Promise.all([
-      getTransactions({
+      getTransfers({
         size,
 
         senderShard,
@@ -63,7 +63,7 @@ export const Transactions = () => {
         search,
         withUsername: true
       }),
-      getTransactionsCount({
+      getTransfersCount({
         senderShard,
         receiverShard,
         sender,
