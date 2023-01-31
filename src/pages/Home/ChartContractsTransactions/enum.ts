@@ -1,5 +1,5 @@
 export enum TransactionsStatisticsLabelEnum {
   Transactions = 'Total Transactions',
-  SmartContracts = 'Smart Contracts',
+  Applications = 'Applications',
   Standard = 'Standard'
 }
