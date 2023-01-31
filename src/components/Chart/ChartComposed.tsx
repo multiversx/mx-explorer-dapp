@@ -27,7 +27,8 @@ export const ChartComposed = ({
   tooltip,
   stacked,
   stackedLabel,
-  showLegend = true
+  showLegend = true,
+  customDomain = false
 }: ChartComposedProps) => {
   const [hoveredSeries, setHoveredSeries] = useState<string>();
   const [hiddenSeries, setHiddenSeries] =
@@ -139,6 +140,17 @@ export const ChartComposed = ({
     );
   };
 
+  const calculateDomain = ([alpha, beta]: number[]): [number, number] => {
+    const start = alpha - alpha / 90;
+    const end = beta + beta / 90;
+
+    if (!isFinite(alpha) && !isFinite(beta)) {
+      return [0, 0];
+    }
+
+    return [start, end];
+  };
+
   return (
     <div
       className={`${size ? `chart-area-${size}` : ''} ${
@@ -208,8 +220,8 @@ export const ChartComposed = ({
                 tickLine={false}
                 stroke={sc.stroke}
                 dy={2}
-                domain={[0, 'dataMax']}
-                tickCount={10}
+                domain={customDomain ? calculateDomain : [0, 'dataMax']}
+                tickCount={customDomain ? undefined : 10}
               />
               <Area
                 type='monotone'

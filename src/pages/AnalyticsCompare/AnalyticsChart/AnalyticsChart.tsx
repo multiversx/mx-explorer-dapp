@@ -21,7 +21,8 @@ export const AnalyticsChart = ({
   series,
   title,
   stacked,
-  stackedLabel
+  stackedLabel,
+  customDomain
 }: {
   series: ChartListType[];
   title?: string;
@@ -161,7 +162,8 @@ export const AnalyticsChart = ({
             showLegend={true}
             stacked={stacked}
             stackedLabel={stackedLabel}
-          ></Chart.Composed>
+            customDomain={customDomain}
+          />
         )}
       </div>
     </section>
