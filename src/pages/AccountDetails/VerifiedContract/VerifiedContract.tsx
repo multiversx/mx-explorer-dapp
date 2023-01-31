@@ -72,7 +72,7 @@ export const VerifiedContract = () => {
         />
       )}
       {isDataReady === true && contract && (
-        <div className='mt-3 verified-contract'>
+        <div className='verified-contract'>
           <Tab.Container
             id='contract-code-tabs'
             defaultActiveKey={activeKey}
@@ -82,15 +82,13 @@ export const VerifiedContract = () => {
                 : 'details';
             }}
           >
-            <div className='card-header'>
+            <div className='card-header pt-0'>
               <div className='card-header-item d-flex align-items-center'>
-                <div className='tab-links d-flex flex-row flex-wrap'>
+                <div className='tabs'>
                   <Nav.Link
                     data-testid='title'
                     eventKey='details'
-                    className={`tab-link me-3 me-lg-4 ${
-                      activeKey === 'details' ? 'active' : ''
-                    }`}
+                    className={`tab ${activeKey === 'details' ? 'active' : ''}`}
                     onClick={() => {
                       window.history.replaceState(
                         null,
@@ -99,12 +97,12 @@ export const VerifiedContract = () => {
                       );
                     }}
                   >
-                    <h5>Code</h5>
+                    Code
                   </Nav.Link>
 
                   <Nav.Link
                     eventKey='endpoints'
-                    className={`tab-link me-3 me-lg-4 ${
+                    className={`tab ${
                       activeKey === 'endpoints' ? 'active' : ''
                     }`}
                     onClick={() => {
@@ -115,7 +113,7 @@ export const VerifiedContract = () => {
                       );
                     }}
                   >
-                    <h5>Endpoints</h5>
+                    Endpoints
                   </Nav.Link>
                 </div>
               </div>
