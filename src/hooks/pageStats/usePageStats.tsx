@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
-import { faCircleBolt } from '@fortawesome/pro-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
-import { headersPropertiesNamesMapper } from './constants/headersPropertiesNamesMapper';
+import {
+  headersPropertiesNamesMapper,
+  headersPropertiesOrderMapper
+} from './constants/headersPropertiesNamesMapper';
 import { useHeaderAccountsStats } from './useHeaderAccountsStats';
 import { useHeadersBlocksStats } from './useHeadersBlocksStats';
 import { useHeadersCollectionsStats } from './useHeadersCollectionsStats';
@@ -26,6 +27,7 @@ type PageStatsDataType = {
   subTitle?: string;
   icon?: React.ReactNode;
   currency?: string;
+  order: number;
 };
 
 export const usePageStats = () => {
@@ -37,10 +39,6 @@ export const usePageStats = () => {
   );
   const pageHeadersTokens = useSelector(pageHeaderTokensStatsSelector);
 
-  const teal = getComputedStyle(document.documentElement)
-    .getPropertyValue('--teal')
-    .trim();
-
   const { title: headersBlocksTitle } = useHeadersBlocksStats();
   const { title: headerCollectionsTitle } = useHeadersCollectionsStats();
   const { title: headersTokensTitle } = useHeadersTokensStats();
@@ -50,8 +48,6 @@ export const usePageStats = () => {
     category: string,
     obj: Record<string, string | number> = {}
   ): PageStatsDataType[] => {
-    const currency = null;
-
     const getCurrency = (id: string) => {
       if (
         category === 'blocks' &&
@@ -82,29 +78,34 @@ export const usePageStats = () => {
       return {
         id: key,
         title: headersPropertiesNamesMapper[category][key],
-        value: val
+        value: val,
+        order: headersPropertiesOrderMapper[category][key]
       };
     });
   };
 
-  const headersBlocksData = getData('blocks', pageHeadersBlocks);
-  const headersCollectionsData = getData('collections', pageHeadersCollections);
-  const headersTokensData = getData('tokens', pageHeadersTokens);
+  const headersBlocksData = useMemo(() => {
+    return getData('blocks', pageHeadersBlocks)
+      .filter((x) => Boolean(x.title))
+      .sort((a, b) => a.order - b.order);
+  }, [pageHeadersBlocks]);
+
+  const headersCollectionsData = useMemo(() => {
+    return getData('collections', pageHeadersCollections)
+      .filter((x) => Boolean(x.title))
+      .sort((a, b) => a.order - b.order);
+  }, [pageHeadersCollections]);
+
+  const headersTokensData = useMemo(() => {
+    return getData('tokens', pageHeadersTokens)
+      .filter((x) => Boolean(x.title))
+      .sort((a, b) => a.order - b.order);
+  }, [pageHeadersTokens]);
+
   const headersAccountsData = useMemo(() => {
-    const data = getData('accounts', pageHeadersAccounts);
-
-    // const todayActiveAccounts = data.find((x) =>
-    //   x.id.toLowerCase().includes('activeAccountsToday'.toLowerCase())
-    // );
-
-    // data.forEach((x) => {
-    //   if (x.id.toLowerCase().includes('totalAccount'.toLowerCase())) {
-    //     x.subTitle = `${todayActiveAccounts?.value} active today`;
-    //     x.icon = <FontAwesomeIcon icon={faCircleBolt} color={teal} />;
-    //   }
-    // });
-
-    return data.filter((x) => Boolean(x.title));
+    return getData('accounts', pageHeadersAccounts)
+      .filter((x) => Boolean(x.title))
+      .sort((a, b) => a.order - b.order);
   }, [pageHeadersAccounts]);
 
   const pageStats = useMemo(() => {
