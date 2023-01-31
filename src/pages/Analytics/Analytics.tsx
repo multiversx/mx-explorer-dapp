@@ -14,6 +14,7 @@ import { NoAnalytics } from '../AnalyticsCompare/NoAnalytics';
 import { ChartWrapper } from './components/ChartWrapper';
 import { Tabs } from 'components/Tabs';
 import { MostUsed } from 'widgets';
+import { ChartContractsTransactions } from 'pages/Home/ChartContractsTransactions';
 
 export const Analytics = () => {
   const navigate = useNavigate();
@@ -111,7 +112,9 @@ export const Analytics = () => {
   }, [chartList]);
 
   const stakingMetricsChart = useMemo(() => {
-    const charts = chartList?.filter((sc) => sc.id.startsWith('staking-'));
+    const charts = chartList?.filter((sc) =>
+      sc.id.endsWith('staking-total-value-locked-plus-staking')
+    );
 
     const rightYAxisSeriesIds = [
       'staking-delegated-stake',
@@ -120,7 +123,7 @@ export const Analytics = () => {
     ];
 
     const all = charts.reduce((acc, curr) => {
-      if (curr.id.includes('staking-')) {
+      if (curr.id.endsWith('staking-total-value-locked-plus-staking')) {
         if (rightYAxisSeriesIds.includes(curr.id)) {
           curr.dappConfig = {
             ...curr.dappConfig,
@@ -139,7 +142,7 @@ export const Analytics = () => {
   }, [chartList]);
 
   const usersStakingChart = useMemo(() => {
-    const charts = chartList?.filter((sc) => sc.id.includes('users-staking'));
+    const charts = chartList?.filter((sc) => sc.id.endsWith('users-staking'));
 
     const rightYAxisSeriesIds = [
       'staking-delegated-stake',
@@ -148,7 +151,7 @@ export const Analytics = () => {
     ];
 
     const all = charts.reduce((acc, curr) => {
-      if (curr.id.includes('users-staking')) {
+      if (curr.id.endsWith('users-staking')) {
         if (rightYAxisSeriesIds.includes(curr.id)) {
           curr.dappConfig = {
             ...curr.dappConfig,
@@ -201,7 +204,7 @@ export const Analytics = () => {
           <Tabs tabs={tabs} />
         </div>
         <div className='card-body d-flex justify-content-between flex-wrap'>
-          <ChartWrapper>
+          {/* <ChartWrapper>
             <div className='px-3 p-3'>
               <AnalyticsChart
                 title={'Transactions Metrics'}
@@ -209,6 +212,12 @@ export const Analytics = () => {
                 stacked={true}
                 stackedLabel={'Total Transactions'}
               />
+            </div>
+          </ChartWrapper> */}
+
+          <ChartWrapper>
+            <div className='px-3 pb-3'>
+              <ChartContractsTransactions />
             </div>
           </ChartWrapper>
           <ChartWrapper size='half'>
@@ -252,28 +261,30 @@ export const Analytics = () => {
               />
             </div>
           </ChartWrapper>
-          <ChartWrapper>
+          <ChartWrapper size='half'>
             <div className='px-3 p-3'>
               <AnalyticsChart
                 title={'Staking Metrics'}
                 series={stakingMetricsChart}
+                customDomain={true}
               />
             </div>
           </ChartWrapper>
-          <ChartWrapper>
+          <ChartWrapper size='half'>
             <div className='px-3 p-3'>
               <AnalyticsChart
                 title={'Users Staking'}
                 series={usersStakingChart}
+                customDomain={true}
               />
             </div>
           </ChartWrapper>
-          <ChartWrapper>
+          <ChartWrapper size='half'>
             <div className='px-3 pb-3'>
               <AnalyticsChart title='APR Metrics' series={aprsChart} />
             </div>
           </ChartWrapper>
-          <ChartWrapper>
+          <ChartWrapper size='half'>
             <div className='px-3 pb-3'>
               <AnalyticsChart
                 title={'Fees Metrics'}
