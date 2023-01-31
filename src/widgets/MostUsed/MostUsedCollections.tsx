@@ -70,7 +70,9 @@ export const MostUsedCollections = ({
                       </div>
                     </NetworkLink>
                   </td>
-                  <td>{new BigNumber(collection.value).toFormat()}</td>
+                  <td className='text-center'>
+                    {new BigNumber(collection.value).toFormat()}
+                  </td>
                 </tr>
               ))}
             </tbody>
