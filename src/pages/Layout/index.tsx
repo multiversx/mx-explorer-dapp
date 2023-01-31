@@ -143,7 +143,6 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       case activeRoute(tokensRoutes.tokenDetailsLockedAccounts):
       case activeRoute(tokensRoutes.tokenDetailsRoles):
       case activeRoute(collectionRoutes.collections):
-      case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
       case activeRoute(collectionRoutes.collectionDetails):
       case activeRoute(collectionRoutes.collectionDetailsRoles):
       case activeRoute(collectionRoutes.collectionsNft):
