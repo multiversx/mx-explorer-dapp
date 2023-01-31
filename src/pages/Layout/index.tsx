@@ -245,7 +245,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                         <div className='card-body d-flex flex-row flex-wrap gap-3 custom-stats'>
                           {pageStats?.data.map((item) => (
                             <StatsCard
-                              key={item.title}
+                              key={item.id}
                               title={item.title}
                               subTitle={item.subTitle}
                               icon={item.icon}
