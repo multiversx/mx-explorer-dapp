@@ -129,7 +129,7 @@ export const ChartPrice = () => {
       <div className={styles.root}>
         <ChartRoot
           data={data}
-          height={300}
+          height={75}
           color={teal}
           identifier='priceGradient'
           tooltipFormatter={(option: any) =>
