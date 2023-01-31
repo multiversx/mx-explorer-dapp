@@ -13,9 +13,11 @@ import {
 import { StatsCard } from 'widgets';
 
 export const TransactionsStatsCard = ({
+  className,
   neutralColors
 }: {
   neutralColors?: boolean;
+  className?: string;
 }) => {
   const isMainnet = useIsMainnet();
 
@@ -37,6 +39,7 @@ export const TransactionsStatsCard = ({
           title='Total Transactions'
           value={totalTransactions}
           neutralColors={neutralColors}
+          className={className}
         >
           <FontAwesomeIcon icon={faCirclePlus} className='me-2' />
           {totalTransactionsToday} today
