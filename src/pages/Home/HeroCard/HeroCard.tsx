@@ -42,12 +42,10 @@ export const HeroCard = () => {
 
           <div className='row'>
             <div className='col-lg-8'>
-              <div className='d-flex flex-row gap-3 h-100'>
-                <div className='d-flex flex-row flex-wrap w-100 gap-3'>
-                  <TransactionsStatsCard />
-                  <AccountsStatsCard />
-                  {isMainnet && <ValidatorsStatusCard isSmall />}
-                </div>
+              <div className='d-flex flex-row flex-wrap w-100 gap-3'>
+                <TransactionsStatsCard />
+                <AccountsStatsCard />
+                {isMainnet && <ValidatorsStatusCard isSmall />}
               </div>
             </div>
             <div className='col-lg-4 d-flex flex-row align-items-end justify-content-center justify-content-lg-end mt-3 mt-lg-0 gap-spacer gap-lg-2'>

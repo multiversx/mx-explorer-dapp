@@ -18,12 +18,16 @@
     }
   }
   .card {
+    @include media-breakpoint-up(xxl) {
+      flex-basis: 20%;
+    }
     background-color: var(--neutral-900);
     display: flex;
     .card-title,
     .stats-card-title {
       color: var(--neutral-400);
     }
+
     .stats-card-value {
       margin-bottom: 0.5rem;
     }
@@ -33,7 +37,7 @@
         max-width: 50%;
       }
       @include media-breakpoint-up(xxl) {
-        max-width: 242px;
+        max-width: 250px;
       }
     }
   }
