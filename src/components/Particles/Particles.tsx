@@ -66,7 +66,7 @@ function Points() {
   }, [count, sep, graph]);
 
   useFrame(() => {
-    t += 25;
+    t += 10;
 
     const positions = bufferRef.current.array;
 
