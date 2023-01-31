@@ -177,6 +177,8 @@ export const Analytics = () => {
               <AnalyticsChart
                 title={'Transactions'}
                 series={transactionsChart}
+                stacked={true}
+                stackedLabel={'Total Transactions'}
               />
             </div>
           </ChartWrapper>

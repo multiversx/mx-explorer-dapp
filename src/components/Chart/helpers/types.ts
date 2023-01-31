@@ -8,7 +8,7 @@ export interface ChartDataType {
 
 export interface MergedChartDataType {
   timestamp: string;
-  [key: string]: string;
+  [key: string]: string | number;
 }
 
 export interface HistoricDataType {
@@ -122,12 +122,18 @@ export interface ChartProps {
   };
 }
 
-export interface ChartComposedConfigType {
-  seriesConfig: ChartConfigType[];
-  staked?: boolean;
+export interface StackedChartConfig {
+  stacked?: boolean;
+  stackedLabel?: string;
 }
 
-export interface ChartComposedProps extends ChartComposedConfigType {
+export interface ChartComposedConfigType {
+  seriesConfig: ChartConfigType[];
+}
+
+export interface ChartComposedProps
+  extends ChartComposedConfigType,
+    StackedChartConfig {
   seriesConfig: ChartConfigType[];
   size?: ChartSizeEnum;
   hasOnlyStartEndTick?: boolean;

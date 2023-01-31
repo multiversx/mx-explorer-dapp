@@ -1,7 +1,7 @@
 // @ts-nocheck
 /* eslint-disable react/no-unknown-property */
 
-import React, { Suspense, useCallback, useMemo, useRef } from 'react';
+import React, { memo, Suspense, useCallback, useMemo, useRef } from 'react';
 import {
   Canvas,
   extend,
@@ -66,7 +66,7 @@ function Points() {
   }, [count, sep, graph]);
 
   useFrame(() => {
-    t += 25;
+    t += 10;
 
     const positions = bufferRef.current.array;
 
@@ -125,10 +125,10 @@ export const AnimationCanvas = () => {
   );
 };
 
-export const Particles = () => (
+export const Particles = memo(() => (
   <div className='particles'>
     <Suspense fallback={<div>Loading...</div>}>
       <AnimationCanvas />
     </Suspense>
   </div>
-);
+));
