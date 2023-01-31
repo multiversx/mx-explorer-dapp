@@ -55,13 +55,16 @@ export const AccountContractCode = () => {
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <AccountTabs />
         </div>
+
         {codeHash && (
-          <div className='card-header-item compact card card-sm bg-table-header p-3 d-flex flex-column mt-3'>
-            <div className='d-flex flex-row'>
-              <span className='text-neutral-400'>Code Hash:</span>
-              <div className='d-flex align-items-center text-break-all ms-2'>
-                <span data-testid='address'>{codeHashHexValue}</span>
-                <CopyButton text={address} />
+          <div className='pt-4'>
+            <div className='card card-sm bg-table-header p-3 d-flex flex-column'>
+              <div className='d-flex flex-row'>
+                <span className='text-neutral-400'>Code Hash:</span>
+                <div className='d-flex align-items-center text-break-all ms-2'>
+                  <span data-testid='address'>{codeHashHexValue}</span>
+                  <CopyButton text={address} />
+                </div>
               </div>
             </div>
           </div>

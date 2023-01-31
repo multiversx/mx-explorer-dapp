@@ -34,7 +34,8 @@ export const PageLayout = ({ children }: { children: React.ReactNode }) => {
     case activeRoute(accountsRoutes.accountAnalytics):
     case activeRoute(accountsRoutes.accountCode):
     case activeRoute(accountsRoutes.accountCodeEndpoints):
-    case activeRoute(accountsRoutes.accountCodeViews):
+    case activeRoute(accountsRoutes.accountCodeConstructor):
+    case activeRoute(accountsRoutes.accountCodeEvents):
     case activeRoute(accountsRoutes.accountCodeTypes):
       return <AccountLayout>{children}</AccountLayout>;
 
