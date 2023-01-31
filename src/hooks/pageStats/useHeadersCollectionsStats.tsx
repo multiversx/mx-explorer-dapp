@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAdapter } from '../../components';
 import { pageHeadersCollectionsStatsSelector } from '../../redux/selectors/pageHeadersCollectionsStats';
@@ -22,7 +23,20 @@ export const useHeadersCollectionsStats = () => {
       return {} as HeadersCollectionsType;
     }
 
-    dispatch(setPageHeaderCollectionsStats(result.data));
+    dispatch(
+      setPageHeaderCollectionsStats({
+        newNFTsInLast30d: new BigNumber(result.data.newNFTsInLast30d).toFormat(
+          0
+        ),
+        totalNFTsCreated: new BigNumber(result.data.totalNFTsCreated).toFormat(
+          0
+        ),
+        totalCollections: new BigNumber(result.data.totalCollections).toFormat(
+          0
+        ),
+        totalHolders: new BigNumber(result.data.totalHolders).toFormat(0)
+      })
+    );
 
     return result.data;
   };

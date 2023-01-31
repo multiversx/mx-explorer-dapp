@@ -1,30 +1,30 @@
 export type HeadersBlocksType = {
-  blockHeight?: number;
-  totalApplicationsDeployed?: number;
-  totalNetworkFees?: number;
-  totalDeveloperRewards?: number;
+  blockHeight?: number | string;
+  totalApplicationsDeployed?: number | string;
+  totalNetworkFees?: number | string;
+  totalDeveloperRewards?: number | string;
 };
 
 export type HeadersAccountsType = {
-  totalAccounts?: number;
-  activeAccountsToday?: number;
-  newAccountsToday?: number;
-  usersStaking?: number;
-  accountsBalanceGt1000?: number;
+  totalAccounts?: number | string;
+  activeAccountsToday?: number | string;
+  newAccountsToday?: number | string;
+  usersStaking?: number | string;
+  accountsBalanceGt1000?: number | string;
 };
 
 export type HeadersCollectionsType = {
-  totalCollections?: number;
-  totalNFTsCreated?: number;
-  totalHolders?: number;
-  newNFTsInLast30d?: number;
+  totalCollections?: number | string;
+  totalNFTsCreated?: number | string;
+  totalHolders?: number | string;
+  newNFTsInLast30d?: number | string;
 };
 
 export type HeadersTokensType = {
-  ecosystemMarketCap?: number;
-  totalTokens?: number;
-  newTokensInLast30d?: number;
-  tokenTransfersInLast30d?: number;
+  ecosystemMarketCap?: number | string;
+  totalTokens?: number | string;
+  newTokensInLast30d?: number | string;
+  tokenTransfersInLast30d?: number | string;
 };
 
 export type PageHeaderStatsType = {
