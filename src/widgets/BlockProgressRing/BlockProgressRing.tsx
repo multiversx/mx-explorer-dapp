@@ -5,13 +5,14 @@ import { REFRESH_RATE } from 'appConstants';
 
 import { useAdapter, ProgressRing } from 'components';
 import { processStats, validDisplayValue, getExtraStats } from 'helpers';
+import { useFetchStats } from 'hooks';
 import { activeNetworkSelector, refreshSelector } from 'redux/selectors';
 import { getInitialStatsState } from 'redux/slices/stats';
 import { StatsSliceType, WithClassnameType } from 'types';
 
 export const BlockProgressRing = ({ className }: WithClassnameType) => {
   const ref = useRef(null);
-
+  const fetchStats = useFetchStats();
   const { timestamp } = useSelector(refreshSelector);
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
@@ -34,7 +35,7 @@ export const BlockProgressRing = ({ className }: WithClassnameType) => {
   };
 
   const getData = () => {
-    getStats().then(({ success, data }) => {
+    fetchStats().then(({ success, data }) => {
       if (success && data) {
         const newStats = {
           ...processStats(data),
