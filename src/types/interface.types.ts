@@ -5,7 +5,7 @@ export enum ThemesEnum {
 
 export interface NotificationType {
   id: string;
-  text: React.ReactNode;
+  text: string;
   priority: number;
   bgClassName: string;
   dismissable: boolean;

@@ -32,7 +32,23 @@ export const NotificationsBar = () => {
           data-testid='notificationBar'
         >
           <div className='container d-flex flex-row align-items-center justify-content-between'>
-            <div className='w-100'>{notification.text}</div>
+            {notification.id === 'newExplorerVersion' ? (
+              <div className='d-flex justify-content-between align-items-center w-100'>
+                A new version of the Explorer is available.
+                <a
+                  href='/#'
+                  onClick={(e: React.MouseEvent) => {
+                    e.preventDefault();
+                    window.location.reload();
+                  }}
+                  className='ms-1 text-black'
+                >
+                  <u>Reload</u>
+                </a>
+              </div>
+            ) : (
+              <div className='w-100'>{notification.text}</div>
+            )}
             {notification.dismissable && (
               <a
                 href='/#'
