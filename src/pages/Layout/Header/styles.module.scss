@@ -220,6 +220,9 @@
 
   .applications,
   .menu {
+    font-family: 'Roobert Regular';
+    font-weight: 400;
+
     transition: transform 400ms ease;
     transform: translateX(-100%);
     position: fixed;
