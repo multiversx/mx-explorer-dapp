@@ -24,7 +24,8 @@ export const ChartComposed = ({
   size,
   dateFormat,
   hasOnlyStartEndTick,
-  tooltip
+  tooltip,
+  showLegend
 }: ChartComposedProps) => {
   const [hoveredSeries, setHoveredSeries] = useState<string>();
   const [hiddenSeries, setHiddenSeries] =
@@ -250,16 +251,18 @@ export const ChartComposed = ({
             }}
           />
 
-          <Legend
-            verticalAlign='bottom'
-            iconType='circle'
-            wrapperStyle={{
-              cursor: 'pointer',
-              paddingTop: '1.5rem'
-            }}
-            payload={getLegendPayload()}
-            content={renderCustomizedLegend}
-          />
+          {showLegend && (
+            <Legend
+              verticalAlign='bottom'
+              iconType='circle'
+              wrapperStyle={{
+                cursor: 'pointer',
+                paddingTop: '1.5rem'
+              }}
+              payload={getLegendPayload()}
+              content={renderCustomizedLegend}
+            />
+          )}
         </ComposedChart>
       </ResponsiveContainer>
     </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useIsMainnet } from 'hooks';
 import { ChartWrapper } from './components/ChartWrapper';
 import { Loader, useAdapter } from '../../components';
@@ -13,8 +13,6 @@ import { NoAnalytics } from '../AnalyticsCompare/NoAnalytics';
 export const Analytics = () => {
   const navigate = useNavigate();
   const isMainnet = useIsMainnet();
-
-  const location = useLocation();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getAnalyticsChartList } = useAdapter();

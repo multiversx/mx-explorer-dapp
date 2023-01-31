@@ -117,6 +117,7 @@ export interface ChartComposedProps extends ChartComposedConfigType {
   tooltip?: {
     dateFormat?: string;
   };
+  showLegend?: boolean;
 }
 
 export interface ChartAxisType extends ChartYAxisFormatConfig {

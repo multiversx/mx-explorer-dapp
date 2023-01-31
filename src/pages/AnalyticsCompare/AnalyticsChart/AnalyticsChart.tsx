@@ -140,6 +140,7 @@ export const AnalyticsChart = ({ series }: { series: ChartListType[] }) => {
             tooltip={{
               dateFormat: 'dd, MMM D YYYY'
             }}
+            showLegend={false}
           ></Chart.Composed>
         )}
       </div>
