@@ -36,6 +36,12 @@ export const ChartTooltip = ({
     .getPropertyValue('--white')
     .trim();
 
+  const formattedTotalValueStacked = new BigNumber(
+    totalValueStacked ?? '0'
+  ).isInteger()
+    ? new BigNumber(totalValueStacked ?? '0').toFormat()
+    : new BigNumber(totalValueStacked ?? '0').toFormat(2);
+
   if (active && payload && payload.length && isFetched) {
     return (
       <div className='analytics-custom-tooltip'>
@@ -63,7 +69,7 @@ export const ChartTooltip = ({
               </span>
 
               <span style={{ color: stackedLabelColor }} className='item-value'>
-                {new BigNumber(totalValueStacked ?? '0').toFormat()}
+                {formattedTotalValueStacked}
               </span>
             </li>
           )}
@@ -84,9 +90,10 @@ export const ChartTooltip = ({
               });
             }
             if (currentSeries?.yAxisConfig?.percentageMultiplier) {
-              displayValue =
+              displayValue = new BigNumber(
                 Number(displayValue) *
-                currentSeries?.yAxisConfig?.percentageMultiplier;
+                  currentSeries?.yAxisConfig?.percentageMultiplier
+              ).toFormat(2);
             }
 
             return (
