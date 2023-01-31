@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { PageState, Chart, Loader, useAdapter } from 'components';
 import {
   ChartConfigType,
-  ChartLabelConfigType,
-  ChartListType
+  ChartListType,
+  StackedChartConfig
 } from 'components/Chart/helpers/types';
 import { activeNetworkSelector } from 'redux/selectors';
 import { ChartResolutionSelector } from './components/ChartResolution';
@@ -20,12 +20,12 @@ export interface AnalyticsChartDataType {
 export const AnalyticsChart = ({
   series,
   title,
-  stacked
+  stacked,
+  stackedLabel
 }: {
   series: ChartListType[];
   title?: string;
-  stacked?: boolean;
-}) => {
+} & StackedChartConfig) => {
   const ref = useRef(null);
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -159,6 +159,8 @@ export const AnalyticsChart = ({
               dateFormat: 'dd, MMM D YYYY'
             }}
             showLegend={true}
+            stacked={stacked}
+            stackedLabel={stackedLabel}
           ></Chart.Composed>
         )}
       </div>

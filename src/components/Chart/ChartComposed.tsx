@@ -13,7 +13,7 @@ import {
   Symbols
 } from 'recharts';
 import { Props } from 'recharts/types/component/DefaultLegendContent';
-import { AnalyticsChartTooltip } from './AnalyticsChartTooltip';
+import { ChartTooltip } from './ChartTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { StartEndTick } from './helpers/StartEndTick';
 import { ChartComposedProps, ChartConfigType } from './helpers/types';
@@ -25,7 +25,8 @@ export const ChartComposed = ({
   dateFormat,
   hasOnlyStartEndTick,
   tooltip,
-  staked,
+  stacked,
+  stackedLabel,
   showLegend = true
 }: ChartComposedProps) => {
   const [hoveredSeries, setHoveredSeries] = useState<string>();
@@ -46,8 +47,7 @@ export const ChartComposed = ({
   );
 
   const { getChartData } = useChartComposedData({
-    seriesConfig,
-    staked
+    seriesConfig
   });
 
   const chartData = getChartData();
@@ -212,6 +212,7 @@ export const ChartComposed = ({
               />
               <Area
                 type='monotone'
+                stackId={stacked ? 'stacked-id' : undefined}
                 yAxisId={sc.yAxisConfig?.id}
                 dataKey={sc.id}
                 stroke={sc.stroke ?? primary}
@@ -233,13 +234,23 @@ export const ChartComposed = ({
           ))}
 
           <Tooltip
-            content={(props) => (
-              <AnalyticsChartTooltip
-                {...props}
-                seriesConfig={seriesConfig}
-                dateFormat={tooltip?.dateFormat}
-              />
-            )}
+            content={(props) => {
+              const totalValue = props.payload?.reduce((acc, curr) => {
+                acc += Number(curr.value);
+                return acc;
+              }, 0);
+
+              return (
+                <ChartTooltip
+                  {...props}
+                  seriesConfig={seriesConfig}
+                  stacked={stacked}
+                  stackedLabel={stackedLabel}
+                  totalValueStacked={totalValue}
+                  dateFormat={tooltip?.dateFormat}
+                />
+              );
+            }}
             cursor={{
               strokeDasharray: '3 5',
               stroke: muted

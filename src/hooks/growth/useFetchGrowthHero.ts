@@ -11,23 +11,25 @@ export const useFetchGrowthHero = () => {
   const { isFetched } = useSelector(growthHeroSelector);
   const { getGrowthWidget } = useAdapter();
 
-  const fetchGrowthHero = () => {
+  const fetchGrowthHero = async () => {
     if (!isFetched) {
-      getGrowthWidget('/hero').then(({ data, success }) => {
-        if (data && success) {
-          const processedGrowthHero = processGrowthHero(data);
-          dispatch(
-            setGrowthHero({
-              ...processedGrowthHero,
+      const { data, success } = await getGrowthWidget('/hero');
 
-              unprocessed: data,
-              isFetched: success
-            })
-          );
-        }
-      });
+      if (data && success) {
+        const processedGrowthHero = processGrowthHero(data);
+        dispatch(
+          setGrowthHero({
+            ...processedGrowthHero,
+
+            unprocessed: data,
+            isFetched: success
+          })
+        );
+      }
     }
   };
 
-  useEffect(fetchGrowthHero, []);
+  useEffect(() => {
+    (async () => await fetchGrowthHero())();
+  }, []);
 };

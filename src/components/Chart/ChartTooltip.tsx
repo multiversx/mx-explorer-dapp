@@ -7,14 +7,17 @@ import { capitalize, usdValue } from 'helpers';
 import { economicsSelector } from 'redux/selectors';
 import { ChartConfigType } from './helpers/types';
 
-export const AnalyticsChartTooltip = ({
+export const ChartTooltip = ({
   seriesConfig,
   active,
   payload,
   label,
   customLabel,
   dateFormat,
-  color
+  color,
+  stacked,
+  stackedLabel,
+  totalValueStacked
 }: {
   seriesConfig: ChartConfigType[];
   active?: boolean;
@@ -23,8 +26,15 @@ export const AnalyticsChartTooltip = ({
   customLabel?: string;
   dateFormat?: string;
   color?: string;
+  stacked?: boolean;
+  stackedLabel?: string;
+  totalValueStacked?: string | number;
 }) => {
   const { isFetched, unprocessed } = useSelector(economicsSelector);
+
+  const stackedLabelColor = getComputedStyle(document.documentElement)
+    .getPropertyValue('--white')
+    .trim();
 
   if (active && payload && payload.length && isFetched) {
     return (
@@ -42,6 +52,21 @@ export const AnalyticsChartTooltip = ({
         </div>
 
         <ul className='recharts-tooltip-item-list list-unstyled'>
+          {stacked && (
+            <li
+              key={'total-staked-value'}
+              style={{ textAlign: 'start' }}
+              className='d-flex flex-column'
+            >
+              <span className='item-label'>
+                {capitalize(stackedLabel ?? '')}
+              </span>
+
+              <span style={{ color: stackedLabelColor }} className='item-value'>
+                {new BigNumber(totalValueStacked ?? '0').toFormat()}
+              </span>
+            </li>
+          )}
           {payload.map((entry: any) => {
             let displayValue = entry.value;
 
