@@ -9,7 +9,7 @@ import {
   Tooltip,
   CartesianGrid
 } from 'recharts';
-import { AnalyticsChartTooltip } from './AnalyticsChartTooltip';
+import { ChartTooltip } from './ChartTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { getChartMergedData } from './helpers/getChartMergedData';
 import { StartEndTick } from './helpers/StartEndTick';
@@ -127,7 +127,7 @@ export const ChartAreaNew = ({
 
           <Tooltip
             content={(props) => (
-              <AnalyticsChartTooltip
+              <ChartTooltip
                 {...props}
                 seriesConfig={[seriesConfig]}
                 dateFormat={tooltip?.dateFormat}
