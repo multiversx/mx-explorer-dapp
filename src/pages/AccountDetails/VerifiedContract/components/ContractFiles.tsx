@@ -36,47 +36,52 @@ export const ContractFiles = ({
 
   return (
     <div className='contract-files'>
-      {entries.map(({ path, content }, index) => {
-        const base64Buffer = Buffer.from(content, 'base64');
-        const codeString = base64Buffer.toString();
+      {entries
+        .filter(({ path }) => path.endsWith('.rs'))
+        .map(({ path, content }, index) => {
+          const base64Buffer = Buffer.from(content, 'base64');
+          const codeString = base64Buffer.toString();
 
-        const selectedFile = formattedHash === path;
+          const selectedFile = formattedHash === path;
 
-        return (
-          <div
-            key={path}
-            className='d-flex flex-column mb-3'
-            id={path}
-            {...(selectedFile ? { ref: ref } : {})}
-          >
-            <div className='d-flex flex-row flex-wrap gap-2 align-items-center mb-3 card card-sm bg-table-header px-3 py-2'>
-              <FontAwesomeIcon icon={faFileAlt} className='me-1 text-primary' />
-              <span className='text-neutral-400'>
-                {index + 1}/{entries.length}{' '}
-              </span>
-              <code>{path}</code>
-            </div>
-            <div className='code-block'>
-              <div className='button-holder'>
-                <CopyButton text={codeString} className='copy-button' />
-                <CopyButton
-                  icon={faLink}
-                  text={`${fullPath}#${path}`}
-                  className='copy-link-button'
+          return (
+            <div
+              key={path}
+              className='d-flex flex-column mb-3'
+              id={path}
+              {...(selectedFile ? { ref: ref } : {})}
+            >
+              <div className='d-flex flex-row flex-wrap gap-2 align-items-center mb-3 card card-sm bg-table-header px-3 py-2'>
+                <FontAwesomeIcon
+                  icon={faFileAlt}
+                  className='me-1 text-primary'
                 />
+                <span className='text-neutral-400'>
+                  {index + 1}/{entries.length}{' '}
+                </span>
+                <code>{path}</code>
               </div>
-              <SyntaxHighlighter
-                language='rust'
-                style={androidstudio}
-                showLineNumbers
-                wrapLongLines
-              >
-                {codeString}
-              </SyntaxHighlighter>
+              <div className='code-block'>
+                <div className='button-holder'>
+                  <CopyButton text={codeString} className='copy-button' />
+                  <CopyButton
+                    icon={faLink}
+                    text={`${fullPath}#${path}`}
+                    className='copy-link-button'
+                  />
+                </div>
+                <SyntaxHighlighter
+                  language='rust'
+                  style={androidstudio}
+                  showLineNumbers
+                  wrapLongLines
+                >
+                  {codeString}
+                </SyntaxHighlighter>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
     </div>
   );
 };
