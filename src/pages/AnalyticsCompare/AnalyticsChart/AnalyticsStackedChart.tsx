@@ -3,13 +3,11 @@ import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { PageState, Chart, Loader, useAdapter } from 'components';
-import { ChartConfigType } from 'components/Chart/helpers/types';
+import { ChartConfigType, ChartListType } from 'components/Chart/helpers/types';
 import { activeNetworkSelector } from 'redux/selectors';
 import { ChartResolutionSelector } from './components/ChartResolution';
-import { ChartListType } from '../AnalyticsCompare';
-import { RANGE } from '../constants';
-
 import type { ChartResolutionRangeType } from './components/ChartResolution/types';
+import { RANGE } from '../constants';
 
 export interface AnalyticsStackedChartDataType {
   value: string;
@@ -135,13 +133,9 @@ export const AnalyticsStackedChart = ({
       <section id={[firstSeries.id, secondSeries.id].join('/')} ref={ref}>
         <div className='d-flex align-items-center flex-wrap justify-content-between mb-md-spacer'>
           <h5 className='mb-0 pt-4 mb-3 mb-md-0 pt-md-0'>
-            <span style={{ color: firstSeriesDefaultConfig.stroke }}>
-              {firstSeriesLabel}
-            </span>
+            <span>{firstSeriesLabel}</span>
             <span className='mx-2'>vs.</span>
-            <span style={{ color: secondSeriesDefaultConfig.stroke }}>
-              {secondSeriesLabel}
-            </span>
+            <span>{secondSeriesLabel}</span>
           </h5>
           <div className='d-flex justify-content-end align-items-center me-0'>
             <div className='mb-spacer mb-md-0'>
@@ -185,6 +179,7 @@ export const AnalyticsStackedChart = ({
               tooltip={{
                 dateFormat: 'dd, MMM D YYYY'
               }}
+              showLegend={true}
             ></Chart.Composed>
           )}
         </div>
