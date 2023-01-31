@@ -45,7 +45,9 @@ export const usePageStats = () => {
   const { title: headersTokensTitle } = useHeadersTokensStats();
   const { title: headersAccountsTitle } = useHeaderAccountsStats();
 
-  const getData = (obj: Record<string, number> = {}): PageStatsDataType[] => {
+  const getData = (
+    obj: Record<string, string | number> = {}
+  ): PageStatsDataType[] => {
     return Object.entries(obj).map(([key, value]) => ({
       title: capitalize(key),
       value
