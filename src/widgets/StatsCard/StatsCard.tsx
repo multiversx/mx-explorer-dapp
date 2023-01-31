@@ -25,19 +25,10 @@ export const StatsCard = ({
           </p>
         )}
         {value && (
-          <h2
-            className={`stats-card-value mb-0 ${
-              neutralColors ? 'text-neutral-300' : 'text-primary'
-            }`}
-          >
-            {value}
-          </h2>
+          <h2 className='stats-card-value mb-0 text-primary'>{value}</h2>
         )}
-        {children && (
-          <p className={`mb-0 mt-2 ${neutralColors ? '' : 'text-primary-200'}`}>
-            {children}
-          </p>
-        )}
+
+        {children && <p className='mb-0 mt-2 text-primary-200'>{children}</p>}
       </div>
     </div>
   );
