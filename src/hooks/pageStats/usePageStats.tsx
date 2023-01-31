@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { faCircleBolt } from '@fortawesome/pro-light-svg-icons';
+import { faCircleBolt } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 import { useHeaderAccountsStats } from './useHeaderAccountsStats';
