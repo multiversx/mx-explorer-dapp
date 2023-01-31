@@ -74,11 +74,12 @@ export const ChartPrice = () => {
     [TrendEnum.neutral, faCircleMinus]
   ]);
 
-  const initialFilter = 'price7d';
+  const initialFilter = 'price30d';
   const teal = getComputedStyle(document.documentElement)
     .getPropertyValue('--teal')
     .trim();
 
+  const defaultValue = filters.find((filter) => filter.value === initialFilter);
   const [data, setData] = useState(dataMap.get(initialFilter));
 
   const onChange = useCallback(
@@ -117,7 +118,11 @@ export const ChartPrice = () => {
         </div>
 
         <div className={styles.right}>
-          <ChartSelect options={filters} onChange={onChange} />
+          <ChartSelect
+            options={filters}
+            onChange={onChange}
+            defaultValue={defaultValue}
+          />
         </div>
       </div>
 

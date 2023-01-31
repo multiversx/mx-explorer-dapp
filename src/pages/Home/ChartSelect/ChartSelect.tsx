@@ -56,7 +56,7 @@ export const ChartSelect = (props: ChartSelectPropsType) => (
     className={styles.select}
     isMulti={false}
     isSearchable={false}
-    defaultValue={props.options.find(() => true)}
+    defaultValue={props.defaultValue || props.options.find(() => true)}
     components={{
       Menu,
       MenuList,
