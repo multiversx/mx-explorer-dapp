@@ -13,6 +13,7 @@ import { FailedAnalytics } from '../AnalyticsCompare/FailedAnalytics';
 import { NoAnalytics } from '../AnalyticsCompare/NoAnalytics';
 import { ChartWrapper } from './components/ChartWrapper';
 import { Tabs } from 'components/Tabs';
+import { MostUsed } from 'widgets';
 
 export const Analytics = () => {
   const navigate = useNavigate();
@@ -236,6 +237,13 @@ export const Analytics = () => {
               <AnalyticsChart series={dailyActiveUsersChart} />
             </div>
           </ChartWrapper>
+
+          <ChartWrapper>
+            <div className='mt-n4 px-3 pb-3'>
+              <MostUsed />
+            </div>
+          </ChartWrapper>
+
           <ChartWrapper>
             <div className='px-3 pb-3'>
               <AnalyticsChart

@@ -43,6 +43,10 @@ export const ChartTooltip = ({
     : new BigNumber(totalValueStacked ?? '0').toFormat(2);
 
   if (active && payload && payload.length && isFetched) {
+    const data = payload.sort(
+      (alpha: any, beta: any) => beta.value - alpha.value
+    );
+
     return (
       <div className='analytics-custom-tooltip'>
         <div className='recharts-tooltip-label text-neutral-200'>
@@ -73,7 +77,7 @@ export const ChartTooltip = ({
               </span>
             </li>
           )}
-          {payload.map((entry: any) => {
+          {data.map((entry: any) => {
             let displayValue = entry.value;
 
             const currentSeries = seriesConfig.find(
