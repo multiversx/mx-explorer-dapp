@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { faCirclePlus } from '@fortawesome/pro-solid-svg-icons/faCirclePlus';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
 import { useFetchGrowthHero, useIsMainnet } from 'hooks';
-import { growthHeroSelector, statsSelector } from 'redux/selectors';
+import {
+  growthHeroSelector,
+  refreshSelector,
+  statsSelector
+} from 'redux/selectors';
 import { StatsCard } from 'widgets';
 
 export const TransactionsStatsCard = ({
@@ -18,8 +22,13 @@ export const TransactionsStatsCard = ({
   const { totalTransactions, totalTransactionsToday } =
     useSelector(growthHeroSelector);
   const { transactions } = useSelector(statsSelector);
+  const { timestamp } = useSelector(refreshSelector);
 
-  useFetchGrowthHero();
+  const fetchHero = useFetchGrowthHero();
+
+  useEffect(() => {
+    fetchHero(true);
+  }, [timestamp]);
 
   return (
     <>
