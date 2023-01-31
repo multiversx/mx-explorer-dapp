@@ -240,8 +240,6 @@ export const ChartComposed = ({
                 return acc;
               }, 0);
 
-              // const sortedSeriesConfigByValue = seriesConfig.sort((a, b) => a.)
-
               return (
                 <ChartTooltip
                   {...props}
