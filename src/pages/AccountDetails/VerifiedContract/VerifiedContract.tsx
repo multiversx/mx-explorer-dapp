@@ -15,6 +15,7 @@ import { ContractCode } from './components/ContractCode';
 import { ContractConstructor } from './components/ContractConstructor';
 import { ContractEndpoints } from './components/ContractEndpoints';
 import { ContractEvents } from './components/ContractEvents';
+import { ContractTypes } from './components/ContractTypes';
 
 export enum VerifiedContractTabsEnum {
   details = 'details',
@@ -190,7 +191,7 @@ export const VerifiedContract = () => {
                   <ContractEvents contract={contract} />
                 </Tab.Pane>
                 <Tab.Pane eventKey='types'>
-                  <ContractCode contract={contract} />
+                  <ContractTypes contract={contract} />
                 </Tab.Pane>
                 <Tab.Pane eventKey='contract-constructor'>
                   <ContractConstructor contract={contract} />
