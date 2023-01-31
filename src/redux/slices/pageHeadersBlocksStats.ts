@@ -19,8 +19,8 @@ export const pageHeadersBlocksStatsSlice = createSlice({
       state.blockHeight = action.payload.blockHeight;
       state.totalApplicationsDeployed =
         action.payload.totalApplicationsDeployed;
-      state.totalApplicationsDeployed = action.payload.totalDeveloperRewards;
-      state.totalDeveloperRewards = action.payload.totalNetworkFees;
+      state.totalDeveloperRewards = action.payload.totalDeveloperRewards;
+      state.totalNetworkFees = action.payload.totalNetworkFees;
     },
     setPageHeaderBlocksStatsBlockHeight: (
       state: HeadersBlocksType,
