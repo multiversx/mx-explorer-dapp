@@ -208,6 +208,8 @@ export const ChartComposed = ({
                 tickLine={false}
                 stroke={sc.stroke}
                 dy={2}
+                domain={[0, 'dataMax']}
+                tickCount={10}
               />
               <Area
                 type='monotone'
