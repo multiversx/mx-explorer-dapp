@@ -372,3 +372,9 @@ div.side-icon {
 .card-header-item:first-of-type:last-of-type:not(.table-card-header) {
   margin-bottom: 0 !important;
 }
+
+.search-filter {
+  @include media-breakpoint-up(xl) {
+    max-width: 12rem;
+  }
+}
