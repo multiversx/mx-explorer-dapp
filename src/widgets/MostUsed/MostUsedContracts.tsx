@@ -15,8 +15,9 @@ export const MostUsedContracts = ({
     <div className='card card-black h-100'>
       <div className='card-header'>
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
-          <h5 className='table-title d-flex align-items-center text-capitalize'>
-            Daily most used applications
+          <h5 className='table-title text-capitalize'>
+            Most used applications{'  '}
+            <span className='text-neutral-500 ml-1'>(daily)</span>
           </h5>
         </div>
       </div>
