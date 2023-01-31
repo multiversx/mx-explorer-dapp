@@ -86,6 +86,10 @@ export interface ContractTypeType {
     name: string;
     type: string;
   }[];
+  variants: {
+    name: string;
+    discriminant: string | number;
+  }[];
 }
 
 export interface ContractConstructorType {
