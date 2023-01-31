@@ -44,7 +44,7 @@ Override Bootstrap variables only above.
 }
 
 .side-action {
-  color: var(--muted);
+  color: var(--body-color);
   margin-left: 0.5rem;
   transition: color 200ms ease;
 
@@ -92,7 +92,7 @@ Override Bootstrap variables only above.
 
 .table-wrapper {
   overflow-x: auto;
-
+  color: var(--neutral-400);
   .table {
     white-space: nowrap;
 

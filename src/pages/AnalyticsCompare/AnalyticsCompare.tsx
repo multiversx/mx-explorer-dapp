@@ -6,16 +6,19 @@ import {
   useNavigate,
   useSearchParams
 } from 'react-router-dom';
+
 import { Loader, useAdapter, Led } from 'components';
 import { ChartListType } from 'components/Chart/helpers/types';
 import { useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
+
 import { AnalyticsStackedChart } from './AnalyticsChart/AnalyticsStackedChart';
 import { ChartResolution } from './AnalyticsChart/components/ChartResolution';
 import { FIRST_SERIES_ID, RANGE, SECOND_SERIES_ID } from './constants';
 import { FailedAnalytics } from './FailedAnalytics';
 import { NoAnalytics } from './NoAnalytics';
+import { Tabs } from 'components/Tabs';
 
 export const AnalyticsCompare = () => {
   const ref = useRef(null);
@@ -101,6 +104,17 @@ export const AnalyticsCompare = () => {
     navigate('/');
   }
 
+  const tabs = [
+    {
+      tabLabel: 'Key Metrics',
+      tabTo: analyticsRoutes.analytics
+    },
+    {
+      tabLabel: 'Compare',
+      tabTo: analyticsRoutes.compare
+    }
+  ];
+
   if (dataReady === undefined) return <Loader />;
   if (!dataReady) return <FailedAnalytics />;
   if (dataReady && chartList.length === 0) return <NoAnalytics />;
@@ -110,15 +124,10 @@ export const AnalyticsCompare = () => {
     <div ref={ref}>
       <div className='analytics container page-content'>
         <div className='card card-lg card-black'>
-          <div className='card-header d-flex align-items-center'>
-            <a
-              href={analyticsRoutes.analytics}
-              className='analytics-nav-item link'
-            >
-              Key Metrics
-            </a>
-            <div className='analytics-nav-item'>Compare</div>
+          <div className='card-header'>
+            <Tabs tabs={tabs} />
           </div>
+
           <div className='card-body'>
             <h6 className='text-neutral-400 mb-3'>Select metrics to compare</h6>
             <div className='d-flex flex-wrap gap-2 mb-5'>
