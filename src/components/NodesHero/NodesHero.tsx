@@ -28,11 +28,11 @@ export const NodesHero = () => {
           </div>
           <div className='col-lg-7 mb-3'>
             <div className='h-100 d-flex flex-column'>
-              <ValidatorsStatusCard className='bg-neutral-900 mb-3' />
+              <ValidatorsStatusCard className='bg-neutral-900 mb-3 mb-lg-0' />
 
-              <div className='card distribution-card bg-neutral-900'>
+              <div className='card distribution-card bg-neutral-900 weighted-node-card'>
                 <div className='card-body d-flex flex-row flex-wrap align-items-center justify-content-between'>
-                  <div className='distribution-card-title text-neutral-500'>
+                  <div className='distribution-card-title text-neutral-500 mb-2'>
                     Stake Weighted Node Version
                   </div>
                   <div className='distribution-card-value'>
