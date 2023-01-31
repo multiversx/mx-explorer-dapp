@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { faExchange, faSearch } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+
 import {
   Denominate,
   CopyButton,
@@ -13,12 +15,16 @@ import {
 } from 'components';
 import { DecodeMethodType } from 'components/DataDecode';
 import { urlBuilder } from 'helpers';
+import { activeNetworkSelector } from 'redux/selectors';
 import { transactionsRoutes } from 'routes';
 import { ResultType } from 'types';
+
 import { decodePart } from './decodePart';
 
 export const ScResultsList = ({ results }: { results: ResultType[] }) => {
   const { hash } = useLocation();
+  const { egldLabel } = useSelector(activeNetworkSelector);
+
   const ref = React.useRef<HTMLDivElement>(null);
   const formattedHash = hash
     .substring(0, hash.indexOf('/') > 0 ? hash.indexOf('/') : hash.length)
@@ -100,17 +106,16 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
                 <div className='row mb-3 d-flex flex-column flex-sm-row'>
                   <div className='col-sm-2 col-left'>Miniblock Hash</div>
                   <div className='col-sm-10 d-flex align-items-center'>
-                    <Trim text={result.miniBlockHash} />
-                    <CopyButton
-                      text={result.miniBlockHash}
-                      className='side-action ms-2'
-                    />
                     <NetworkLink
                       to={urlBuilder.miniblockDetails(result.miniBlockHash)}
                       className='side-action ms-2'
                     >
-                      <FontAwesomeIcon icon={faSearch} />
+                      <Trim text={result.miniBlockHash} />
                     </NetworkLink>
+                    <CopyButton
+                      text={result.miniBlockHash}
+                      className='side-action ms-2'
+                    />
                   </div>
                 </div>
               )}
@@ -120,10 +125,12 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
                   <div className='col-sm-2 col-left'>From</div>
                   <div className='col-sm-10 d-flex align-items-center'>
                     <ScAddressIcon initiator={result.sender} />
-                    <AccountName
-                      address={result.sender}
-                      assets={result.senderAssets}
-                    />
+                    <NetworkLink to={urlBuilder.accountDetails(result.sender)}>
+                      <AccountName
+                        address={result.sender}
+                        assets={result.senderAssets}
+                      />
+                    </NetworkLink>
                     <CopyButton
                       text={result.sender}
                       className='side-action ms-2'
@@ -137,10 +144,14 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
                   <div className='col-sm-2 col-left'>To</div>
                   <div className='col-sm-10 d-flex align-items-center'>
                     <ScAddressIcon initiator={result.receiver} />
-                    <AccountName
-                      address={result.receiver}
-                      assets={result.receiverAssets}
-                    />
+                    <NetworkLink
+                      to={urlBuilder.accountDetails(result.receiver)}
+                    >
+                      <AccountName
+                        address={result.receiver}
+                        assets={result.receiverAssets}
+                      />
+                    </NetworkLink>
                     <CopyButton
                       text={result.receiver}
                       className='side-action ms-2'
@@ -153,7 +164,14 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
                 <div className='row mb-3 d-flex flex-column flex-sm-row'>
                   <div className='col-sm-2 col-left'>Value</div>
                   <div className='col-sm-10 text-wrap'>
-                    <Denominate value={result.value} showLastNonZeroDecimal />
+                    <span className='text-neutral-100'>
+                      <Denominate
+                        value={result.value}
+                        showLastNonZeroDecimal
+                        showLabel={false}
+                      />
+                    </span>{' '}
+                    {egldLabel}
                   </div>
                 </div>
               )}

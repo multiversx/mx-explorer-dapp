@@ -3,9 +3,10 @@ import { faExchange } from '@fortawesome/pro-regular-svg-icons/faExchange';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom';
 
-import { CopyButton, Trim, DataDecode } from 'components';
+import { CopyButton, Trim, DataDecode, NetworkLink } from 'components';
 import { DecodeMethodType } from 'components/DataDecode';
 import { EventType } from 'types';
+import { urlBuilder } from 'helpers';
 
 const EventTopics = ({
   topics,
@@ -68,7 +69,9 @@ export const EventsList = ({
                 <div className='row mb-3 d-flex flex-column flex-sm-row'>
                   <div className='col-sm-2 col-left'>Address</div>
                   <div className='col-sm-10 d-flex align-items-center'>
-                    <Trim text={event.address} />
+                    <NetworkLink to={urlBuilder.accountDetails(event.address)}>
+                      <Trim text={event.address} />
+                    </NetworkLink>
                     <CopyButton
                       text={event.address}
                       className='side-action ms-2'
