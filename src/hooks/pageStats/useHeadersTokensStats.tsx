@@ -1,27 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  pageHeadersStatsSelector,
+  pageHeadersTokensSelector
+} from 'redux/selectors/pageHeadersStats';
+import { setPageHeaderStats } from 'redux/slices/pageHeadersStats';
 import { useAdapter } from '../../components';
-
-export type HeadersTokensType = {
-  ecosystemMarketCap: number;
-  totalTokens: number;
-  newTokensInLast30d: number;
-  tokenTransfersInLast30d: number;
-};
+import { HeadersTokensType } from '../../types/headerStats.types';
 
 export const useHeadersTokensStats = () => {
-  const [headersTokens, setHeadersTokens] = useState<HeadersTokensType[]>();
+  const pageHeaders = useSelector(pageHeadersStatsSelector);
+  const headersTokens = useSelector(pageHeadersTokensSelector);
 
+  const dispatch = useDispatch();
   const { getGrowthHeaders } = useAdapter();
 
-  const getHeadersTokens = async (): Promise<HeadersTokensType[]> => {
+  const getHeadersTokens = async (): Promise<HeadersTokensType> => {
     const result = await getGrowthHeaders('/tokens');
 
     if (!result.success) {
-      setHeadersTokens([]);
-      return [];
+      // dispatch(setPageHeaderStats(pageHeaders));
+      return {} as HeadersTokensType;
     }
 
-    setHeadersTokens(result.data);
+    dispatch(
+      setPageHeaderStats({
+        ...pageHeaders,
+        tokens: result.data
+      })
+    );
+
     return result.data;
   };
 

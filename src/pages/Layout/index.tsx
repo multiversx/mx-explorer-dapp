@@ -77,6 +77,7 @@ const formatClassName = (className: string) => {
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   const [freeze, setFreeze] = useState(false);
+  const [stats, setStats] = useState<{ title: string; data: any }>();
 
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
@@ -86,8 +87,12 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
 
-  const pageStats = usePageStats();
-  // console.log(pageStats);
+  const { pageStats } = usePageStats();
+
+  useEffect(() => {
+    console.log(pageStats);
+    // setStats(pageStats);
+  }, [pageStats]);
 
   const showGlobalStats = () => {
     let show = true;
@@ -194,7 +199,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                         </h2>
                       </div>
                       <div className='card-body d-flex flex-row flex-wrap gap-3'>
-                        {pageStats.data.map((item) => (
+                        {stats?.data.map((item: any) => (
                           <StatsCard
                             key={item.title}
                             title={item.title}

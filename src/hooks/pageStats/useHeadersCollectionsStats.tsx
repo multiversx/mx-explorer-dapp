@@ -1,28 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  pageHeadersCollectionsSelector,
+  pageHeadersStatsSelector
+} from 'redux/selectors/pageHeadersStats';
+import { setPageHeaderStats } from 'redux/slices/pageHeadersStats';
 import { useAdapter } from '../../components';
-
-export type HeadersCollectionsType = {
-  totalCollections: number;
-  totalNFTsCreated: number;
-  totalHolders: number;
-  newNFTsInLast30d: number;
-};
+import { HeadersCollectionsType } from '../../types/headerStats.types';
 
 export const useHeadersCollectionsStats = () => {
-  const [headersCollections, setHeadersCollections] =
-    useState<HeadersCollectionsType[]>();
+  const pageHeaders = useSelector(pageHeadersStatsSelector);
+  const headersCollections = useSelector(pageHeadersCollectionsSelector);
 
+  const dispatch = useDispatch();
   const { getGrowthHeaders } = useAdapter();
 
-  const getHeadersCollections = async (): Promise<HeadersCollectionsType[]> => {
+  const getHeadersCollections = async (): Promise<HeadersCollectionsType> => {
+    // if (headersCollections != null) {
+    //   return headersCollections;
+    // }
+
     const result = await getGrowthHeaders('/collections');
 
     if (!result.success) {
-      setHeadersCollections([]);
-      return [];
+      // dispatch(setPageHeaderStats(pageHeaders));
+      return {} as HeadersCollectionsType;
     }
 
-    setHeadersCollections(result.data);
+    dispatch(
+      setPageHeaderStats({
+        ...pageHeaders,
+        collections: result.data
+      })
+    );
+
     return result.data;
   };
 
