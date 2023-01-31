@@ -63,7 +63,7 @@ export const ChartComposed = ({
 
   const getLegendPayload = () => {
     return seriesConfig.map((sc) => ({
-      id: sc?.legend?.config?.id ?? sc.id,
+      id: sc.id,
       value: sc?.legend?.config?.label ?? sc.label,
       style: {
         ...sc?.legend?.style,

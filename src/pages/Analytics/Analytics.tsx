@@ -34,31 +34,7 @@ export const Analytics = () => {
   };
 
   const transactionsChart = useMemo(() => {
-    const mapLegendConfig: {
-      [seriesId: string]: string;
-    } = {
-      'address-to-address-transactions': 'SeriesLabel1',
-      'address-to-contract-transactions': 'SeriesLabel2',
-      'contract-to-address-transactions': 'SeriesLabel3',
-      'contract-to-contract-transactions': 'SeriesLabel4'
-    };
-
-    const charts = chartList?.reduce((acc, curr) => {
-      if (curr.id.includes('-transactions')) {
-        acc.push({
-          ...curr,
-          legend: {
-            config: {
-              id: curr.id,
-              label: mapLegendConfig[curr.id]
-            }
-          }
-        });
-      }
-      return acc;
-    }, [] as ChartListType[]);
-
-    return charts;
+    return chartList?.filter((sc) => sc.id.includes('-transactions'));
   }, [chartList]);
 
   const tokenTransfersChart = useMemo(() => {
