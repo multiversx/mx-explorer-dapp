@@ -7,7 +7,7 @@ import { capitalize, usdValue } from 'helpers';
 import { economicsSelector } from 'redux/selectors';
 import { ChartConfigType } from './helpers/types';
 
-export const AnalyticsChartTooltip = ({
+export const ChartTooltip = ({
   seriesConfig,
   active,
   payload,

@@ -13,7 +13,7 @@ import {
   Symbols
 } from 'recharts';
 import { Props } from 'recharts/types/component/DefaultLegendContent';
-import { AnalyticsChartTooltip } from './AnalyticsChartTooltip';
+import { ChartTooltip } from './ChartTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { StartEndTick } from './helpers/StartEndTick';
 import { ChartComposedProps, ChartConfigType } from './helpers/types';
@@ -240,7 +240,7 @@ export const ChartComposed = ({
               }, 0);
 
               return (
-                <AnalyticsChartTooltip
+                <ChartTooltip
                   {...props}
                   seriesConfig={seriesConfig}
                   stacked={stacked}
