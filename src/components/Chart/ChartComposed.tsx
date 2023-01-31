@@ -202,10 +202,11 @@ export const ChartComposed = ({
                     currency: sc.yAxisConfig?.currency,
                     percentageMultiplier: sc.yAxisConfig?.percentageMultiplier,
                     decimals: sc.yAxisConfig?.decimals
-                  })
+                  }).replace(sc.yAxisConfig?.currency ?? '', '')
                 }
                 axisLine={false}
                 tickLine={false}
+                tickCount={5}
                 stroke={sc.stroke}
                 dy={2}
               />
