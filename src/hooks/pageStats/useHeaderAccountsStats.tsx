@@ -19,7 +19,6 @@ export const useHeaderAccountsStats = () => {
     const result = await getGrowthHeaders('/accounts');
 
     if (!result.success) {
-      // dispatch(setPageHeaderStats(pageHeaders));
       return {} as HeadersAccountsType;
     }
 

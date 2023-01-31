@@ -19,7 +19,6 @@ export const useHeadersBlocksStats = () => {
     const result = await getGrowthHeaders('/blocks');
 
     if (!result.success) {
-      // dispatch(setPageHeaderStats(pageHeaders));
       return {} as HeadersBlocksType;
     }
 

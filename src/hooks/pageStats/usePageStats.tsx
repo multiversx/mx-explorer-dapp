@@ -27,10 +27,10 @@ export const usePageStats = () => {
   );
   const pageHeadersTokens = useSelector(pageHeaderTokensStatsSelector);
 
-  useHeadersBlocksStats();
-  useHeadersCollectionsStats();
-  useHeadersTokensStats();
-  useHeaderAccountsStats();
+  const { title: headersBlocksTitle } = useHeadersBlocksStats();
+  const { title: headerCollectionsTitle } = useHeadersCollectionsStats();
+  const { title: headersTokensTitle } = useHeadersTokensStats();
+  const { title: headersAccountsTitle } = useHeaderAccountsStats();
 
   const getData = (obj: Record<string, number> = {}) => {
     console.log(obj);
@@ -40,21 +40,10 @@ export const usePageStats = () => {
     }));
   };
 
-  const headersBlocksData = useMemo(() => {
-    return getData(pageHeadersBlocks);
-  }, [pageHeadersBlocks]);
-
-  const headersCollectionsData = useMemo(() => {
-    return getData(pageHeadersCollections);
-  }, [pageHeadersCollections]);
-
-  const headersTokensData = useMemo(() => {
-    return getData(pageHeadersTokens);
-  }, [pageHeadersTokens]);
-
-  const headersAccountsData = useMemo(() => {
-    return getData(pageHeadersAccounts);
-  }, [pageHeadersAccounts]);
+  const headersBlocksData = getData(pageHeadersBlocks);
+  const headersCollectionsData = getData(pageHeadersCollections);
+  const headersTokensData = getData(pageHeadersTokens);
+  const headersAccountsData = getData(pageHeadersAccounts);
 
   const pageStats = useMemo(() => {
     switch (true) {
@@ -65,7 +54,7 @@ export const usePageStats = () => {
       case activeRoute(validatorsRoutes.statistics):
       case activeRoute(validatorsRoutes.queue):
         return {
-          title: 'Blocks',
+          title: headersBlocksTitle,
           data: headersBlocksData
         };
 
@@ -80,7 +69,7 @@ export const usePageStats = () => {
       case activeRoute(accountsRoutes.accountCodeViews):
       case activeRoute(accountsRoutes.accountCodeTypes):
         return {
-          title: 'Accounts',
+          title: headersAccountsTitle,
           data: headersAccountsData
         };
 
@@ -90,7 +79,7 @@ export const usePageStats = () => {
       case activeRoute(tokensRoutes.tokenDetailsLockedAccounts):
       case activeRoute(tokensRoutes.tokenDetailsRoles):
         return {
-          title: 'Tokens',
+          title: headersTokensTitle,
           data: headersTokensData
         };
 
@@ -99,20 +88,13 @@ export const usePageStats = () => {
       case activeRoute(collectionRoutes.collectionDetails):
       case activeRoute(collectionRoutes.collectionDetailsRoles):
         return {
-          title: 'Collections',
+          title: headerCollectionsTitle,
           data: headersCollectionsData
         };
 
-      // case activeRoute(validatorsRoutes.providerDetails):
-      // case activeRoute(validatorsRoutes.providerTransactions):
-      //   return <ProviderLayout>{children}</ProviderLayout>;
-      //
-      // case activeRoute(blocksRoutes.miniBlockDetails):
-      //   return <MiniBlockLayout>{children}</MiniBlockLayout>;
-
       default:
         return {
-          title: 'Accounts',
+          title: headersAccountsTitle,
           data: headersAccountsData
         };
     }
