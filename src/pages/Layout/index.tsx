@@ -89,8 +89,6 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 
   const { pageStats } = usePageStats();
 
-  console.log(pageStats);
-
   const showGlobalStats = () => {
     let show = true;
     const routeExists = wrappedRoutes.some(({ path }) => activeRoute(path));

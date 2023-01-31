@@ -33,7 +33,6 @@ export const usePageStats = () => {
   const { title: headersAccountsTitle } = useHeaderAccountsStats();
 
   const getData = (obj: Record<string, number> = {}) => {
-    console.log(obj);
     return Object.entries(obj).map(([key, value]) => ({
       title: capitalize(key),
       value
