@@ -1,23 +1,19 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
-import {
-  Area,
-  Tooltip,
-  ResponsiveContainer,
-  AreaChart,
-  TooltipProps
-} from 'recharts';
 
 import { useFetchGrowthTransactions } from 'hooks';
 import { growthTransactionsSelector } from 'redux/selectors';
 
 import { TransactionsStatisticsLabelEnum } from './enum';
-import styles from './styles.module.scss';
+
 import type { ChartType, StatisticType } from './types';
+import type { ChartSelectOptionType } from '../ChartSelect/types';
+
 import { ChartRoot } from '../ChartRoot';
 import { ChartSelect } from '../ChartSelect';
-import type { ChartSelectOptionType } from '../ChartSelect/types';
+
+import styles from './styles.module.scss';
 
 export const ChartContractsTransactions = () => {
   const {
@@ -109,11 +105,15 @@ export const ChartContractsTransactions = () => {
   );
 
   const [transactionsPayload, setTransactionsPayload] = useState(
-    dataTransactions.get('transactions7d')
+    dataTransactions.get('transactions30d')
   );
 
   const [contractsPayload, setContractsPayload] = useState(
-    dataContracts.get('scResults7d')
+    dataContracts.get('scResults30d')
+  );
+
+  const defaultValue = filters.find(
+    (filter) => filter.value === 'transactions30d'
   );
 
   const onChange = useCallback(
@@ -134,8 +134,8 @@ export const ChartContractsTransactions = () => {
 
   const onInitialLoad = useCallback(() => {
     if (isFetched) {
-      setTransactionsPayload(dataTransactions.get('transactions7d'));
-      setContractsPayload(dataContracts.get('scResults7d'));
+      setTransactionsPayload(dataTransactions.get('transactions30d'));
+      setContractsPayload(dataContracts.get('scResults30d'));
     }
   }, [dataTransactions, dataContracts]);
 
@@ -170,7 +170,11 @@ export const ChartContractsTransactions = () => {
 
       <div className={styles.charts}>
         <div className={styles.filters}>
-          <ChartSelect options={filters} onChange={onChange} />
+          <ChartSelect
+            options={filters}
+            onChange={onChange}
+            defaultValue={defaultValue}
+          />
         </div>
 
         {charts.map((chart) => (

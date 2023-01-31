@@ -9,4 +9,5 @@ export interface ChartSelectPropsType {
   options: ChartSelectOptionType[];
   value?: ChartSelectOptionType;
   onChange: (option: SingleValue<ChartSelectOptionType>) => void;
+  defaultValue?: ChartSelectOptionType;
 }
