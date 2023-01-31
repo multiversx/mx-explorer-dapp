@@ -25,3 +25,31 @@ export const headersPropertiesNamesMapper: Record<string, any> = {
     usersStaking: 'Users Staking'
   }
 };
+
+export const headersPropertiesOrderMapper: Record<string, any> = {
+  blocks: {
+    blockHeight: 0,
+    totalApplicationsDeployed: 1,
+    totalDeveloperRewards: 2,
+    totalNetworkFees: 3
+  },
+  collections: {
+    totalNFTsCreated: 0,
+    totalCollections: 1,
+    totalHolders: 2,
+    newNFTsInLast30d: 3
+  },
+  tokens: {
+    ecosystemMarketCap: 0,
+    totalTokens: 1,
+    newTokensInLast30d: 2,
+    tokenTransfersInLast30d: 3
+  },
+  accounts: {
+    totalAccounts: 0,
+    usersStaking: 1,
+    activeAccountsToday: 2,
+    newAccountsToday: 3
+    // accountsBalanceGt1000: 4
+  }
+};
