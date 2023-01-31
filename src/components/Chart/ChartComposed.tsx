@@ -206,7 +206,6 @@ export const ChartComposed = ({
                 }
                 axisLine={false}
                 tickLine={false}
-                tickCount={5}
                 stroke={sc.stroke}
                 dy={2}
               />
