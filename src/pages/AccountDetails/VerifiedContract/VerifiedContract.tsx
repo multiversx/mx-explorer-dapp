@@ -12,11 +12,16 @@ import { accountsRoutes } from 'routes';
 import { VerifiedContractType } from 'types';
 
 import { ContractCode } from './components/ContractCode';
+import { ContractConstructor } from './components/ContractConstructor';
 import { ContractEndpoints } from './components/ContractEndpoints';
+import { ContractEvents } from './components/ContractEvents';
 
 export enum VerifiedContractTabsEnum {
   details = 'details',
-  endpoints = 'endpoints'
+  contractconstructor = 'contract-constructor',
+  endpoints = 'endpoints',
+  events = 'events',
+  types = 'types'
 }
 
 export const VerifiedContract = () => {
@@ -25,11 +30,18 @@ export const VerifiedContract = () => {
 
   let activeSection: VerifiedContractTabsEnum =
     VerifiedContractTabsEnum.details;
-  const matchEndpoints: any = useMatch(
-    networkRoute(accountsRoutes.accountCodeEndpoints)
-  );
-  if (matchEndpoints) {
+
+  if (useMatch(networkRoute(accountsRoutes.accountCodeEndpoints))) {
+    activeSection = VerifiedContractTabsEnum.contractconstructor;
+  }
+  if (useMatch(networkRoute(accountsRoutes.accountCodeConstructor))) {
     activeSection = VerifiedContractTabsEnum.endpoints;
+  }
+  if (useMatch(networkRoute(accountsRoutes.accountCodeEvents))) {
+    activeSection = VerifiedContractTabsEnum.events;
+  }
+  if (useMatch(networkRoute(accountsRoutes.accountCodeTypes))) {
+    activeSection = VerifiedContractTabsEnum.types;
   }
 
   const { getAccountContractVerification } = useAdapter();
@@ -115,7 +127,54 @@ export const VerifiedContract = () => {
                   >
                     Endpoints
                   </Nav.Link>
+
+                  <Nav.Link
+                    eventKey='events'
+                    className={`tab ${activeKey === 'events' ? 'active' : ''}`}
+                    onClick={() => {
+                      window.history.replaceState(
+                        null,
+                        '',
+                        urlBuilder.accountDetailsContractCodeEvents(address)
+                      );
+                    }}
+                  >
+                    Events
+                  </Nav.Link>
+
+                  <Nav.Link
+                    eventKey='types'
+                    className={`tab ${activeKey === 'types' ? 'active' : ''}`}
+                    onClick={() => {
+                      window.history.replaceState(
+                        null,
+                        '',
+                        urlBuilder.accountDetailsContractCodeTypes(address)
+                      );
+                    }}
+                  >
+                    Types
+                  </Nav.Link>
+
+                  <Nav.Link
+                    eventKey='contract-constructor'
+                    className={`tab ${
+                      activeKey === 'contract-constructor' ? 'active' : ''
+                    }`}
+                    onClick={() => {
+                      window.history.replaceState(
+                        null,
+                        '',
+                        urlBuilder.accountDetailsContractCodeConstructor(
+                          address
+                        )
+                      );
+                    }}
+                  >
+                    Constructor
+                  </Nav.Link>
                 </div>
+                <h3 className='mb-0 ms-3 text-neutral-400'>(Beta)</h3>
               </div>
             </div>
 
@@ -126,6 +185,15 @@ export const VerifiedContract = () => {
                 </Tab.Pane>
                 <Tab.Pane eventKey='endpoints'>
                   <ContractEndpoints contract={contract} />
+                </Tab.Pane>
+                <Tab.Pane eventKey='events'>
+                  <ContractEvents contract={contract} />
+                </Tab.Pane>
+                <Tab.Pane eventKey='types'>
+                  <ContractCode contract={contract} />
+                </Tab.Pane>
+                <Tab.Pane eventKey='contract-constructor'>
+                  <ContractConstructor contract={contract} />
                 </Tab.Pane>
               </Tab.Content>
             </div>
