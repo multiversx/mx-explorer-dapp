@@ -20,7 +20,11 @@ import {
   wrappedRoutes,
   validatorsRoutes,
   searchRoutes,
-  transactionsRoutes
+  transactionsRoutes,
+  blocksRoutes,
+  accountsRoutes,
+  tokensRoutes,
+  collectionRoutes
 } from 'routes';
 import {
   AccountsStatsCard,
@@ -115,6 +119,36 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     return show;
   };
 
+  const showCustomStats = () => {
+    switch (true) {
+      case activeRoute(blocksRoutes.blocks):
+      case activeRoute(blocksRoutes.miniBlockDetails):
+      case activeRoute(accountsRoutes.accounts):
+      case activeRoute(accountsRoutes.accountDetails):
+      case activeRoute(accountsRoutes.accountTokens):
+      case activeRoute(accountsRoutes.accountNfts):
+      case activeRoute(accountsRoutes.accountContracts):
+      case activeRoute(accountsRoutes.accountStaking):
+      case activeRoute(accountsRoutes.accountAnalytics):
+      case activeRoute(accountsRoutes.accountCode):
+      case activeRoute(accountsRoutes.accountCodeEndpoints):
+      case activeRoute(accountsRoutes.accountCodeTypes):
+      case activeRoute(tokensRoutes.tokens):
+      case activeRoute(tokensRoutes.tokenDetails):
+      case activeRoute(tokensRoutes.tokenDetailsAccounts):
+      case activeRoute(tokensRoutes.tokenDetailsLockedAccounts):
+      case activeRoute(tokensRoutes.tokenDetailsRoles):
+      case activeRoute(collectionRoutes.collections):
+      case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
+      case activeRoute(collectionRoutes.collectionDetails):
+      case activeRoute(collectionRoutes.collectionDetailsRoles):
+        return true;
+
+      default:
+        return false;
+    }
+  };
+
   useNetworkRouter();
   useLoopManager();
   useFetchEconomics();
@@ -197,20 +231,28 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                         </h2>
                       </div>
                       <div className='card-body d-flex flex-row flex-wrap gap-3'>
-                        {pageStats?.data.map((item) => (
-                          <StatsCard
-                            key={item.title}
-                            title={item.title}
-                            subTitle={item.subTitle}
-                            icon={item.icon}
-                            value={item.value ? item.value.toString() : ''}
-                            className='card-solitary'
-                          />
-                        ))}
-                        {/*<TransactionsStatsCard />*/}
-                        {/*<AccountsStatsCard />*/}
-                        {/*{isMainnet && <ValidatorsStatusCard isSmall />}*/}
-                        {/*<BlockHeightStatsCard neutralColors />*/}
+                        {showCustomStats() ? (
+                          <>
+                            {' '}
+                            {pageStats?.data.map((item) => (
+                              <StatsCard
+                                key={item.title}
+                                title={item.title}
+                                subTitle={item.subTitle}
+                                icon={item.icon}
+                                value={item.value ? item.value.toString() : ''}
+                                className='card-solitary'
+                              />
+                            ))}
+                          </>
+                        ) : (
+                          <>
+                            <TransactionsStatsCard />
+                            <AccountsStatsCard />
+                            <BlockHeightStatsCard neutralColors />
+                            {isMainnet && <ValidatorsStatusCard isSmall />}
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>

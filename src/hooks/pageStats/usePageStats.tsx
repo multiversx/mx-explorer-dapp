@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { faCircleBolt } from '@fortawesome/pro-light-svg-icons';
+import { faCircleBolt } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 import { useHeaderAccountsStats } from './useHeaderAccountsStats';
@@ -79,12 +79,8 @@ export const usePageStats = () => {
 
   const pageStats = useMemo(() => {
     switch (true) {
+      case activeRoute(blocksRoutes.miniBlockDetails):
       case activeRoute(blocksRoutes.blocks):
-      case activeRoute(validatorsRoutes.identities):
-      case activeRoute(validatorsRoutes.nodes):
-      case activeRoute(validatorsRoutes.providers):
-      case activeRoute(validatorsRoutes.statistics):
-      case activeRoute(validatorsRoutes.queue):
         return {
           title: headersBlocksTitle,
           data: headersBlocksData
