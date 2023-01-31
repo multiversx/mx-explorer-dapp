@@ -25,7 +25,7 @@ export const ChartComposed = ({
   dateFormat,
   hasOnlyStartEndTick,
   tooltip,
-  showLegend
+  showLegend = true
 }: ChartComposedProps) => {
   const [hoveredSeries, setHoveredSeries] = useState<string>();
   const [hiddenSeries, setHiddenSeries] =
@@ -63,12 +63,12 @@ export const ChartComposed = ({
 
   const getLegendPayload = () => {
     return seriesConfig.map((sc) => ({
-      id: sc.id,
+      id: sc?.legend?.config?.id ?? sc.id,
+      value: sc?.legend?.config?.label ?? sc.label,
       style: {
-        ...sc.legendStyle,
+        ...sc?.legend?.style,
         color: sc.stroke
-      },
-      value: sc.label
+      }
     }));
   };
 
@@ -93,6 +93,7 @@ export const ChartComposed = ({
         {payload?.map((entry: any) => {
           const {
             id: dataKey,
+            value,
             style: { color, ...styleRest }
           } = entry;
           const active = Boolean(hiddenSeries && hiddenSeries[dataKey]);
@@ -136,7 +137,7 @@ export const ChartComposed = ({
                   />
                 )}
               </Surface>
-              <span className='mx-1'>{dataKey}</span>
+              <span className='mx-1'>{value}</span>
             </span>
           );
         })}

@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { ChartListType } from 'components/Chart/helpers/types';
 import { useIsMainnet } from 'hooks';
 import { ChartWrapper } from './components/ChartWrapper';
 import { Loader, useAdapter } from '../../components';
 import { activeNetworkSelector } from '../../redux/selectors';
-import { ChartListType } from '../AnalyticsCompare';
 import { AnalyticsChart } from '../AnalyticsCompare/AnalyticsChart';
 import { FailedAnalytics } from '../AnalyticsCompare/FailedAnalytics';
 import { NoAnalytics } from '../AnalyticsCompare/NoAnalytics';
@@ -34,7 +34,31 @@ export const Analytics = () => {
   };
 
   const transactionsChart = useMemo(() => {
-    return chartList?.filter((sc) => sc.id.includes('-transactions'));
+    const mapLegendConfig: {
+      [seriesId: string]: string;
+    } = {
+      'address-to-address-transactions': 'SeriesLabel1',
+      'address-to-contract-transactions': 'SeriesLabel2',
+      'contract-to-address-transactions': 'SeriesLabel3',
+      'contract-to-contract-transactions': 'SeriesLabel4'
+    };
+
+    const charts = chartList?.reduce((acc, curr) => {
+      if (curr.id.includes('-transactions')) {
+        acc.push({
+          ...curr,
+          legend: {
+            config: {
+              id: curr.id,
+              label: mapLegendConfig[curr.id]
+            }
+          }
+        });
+      }
+      return acc;
+    }, [] as ChartListType[]);
+
+    return charts;
   }, [chartList]);
 
   const tokenTransfersChart = useMemo(() => {
@@ -144,10 +168,12 @@ export const Analytics = () => {
         </div>
 
         <div className='card-body d-flex justify-content-between flex-wrap'>
-          <h2 className='py-spacer'>User activity & transactions</h2>
           <ChartWrapper>
             <div className='px-3 p-3'>
-              <AnalyticsChart series={transactionsChart} />
+              <AnalyticsChart
+                title={'User activity & transactions'}
+                series={transactionsChart}
+              />
             </div>
           </ChartWrapper>
           <ChartWrapper size='half'>
@@ -166,27 +192,27 @@ export const Analytics = () => {
             </div>
           </ChartWrapper>
 
-          <h2 className='py-spacer'>Developers / Validators</h2>
-
           <ChartWrapper>
             <div className='px-3 pb-3'>
-              <AnalyticsChart series={networkAndDeveloperFeesChart} />
+              <AnalyticsChart
+                title={'Developers / Validators'}
+                series={networkAndDeveloperFeesChart}
+              />
             </div>
           </ChartWrapper>
 
-          <h2 className='py-spacer'>Application / Token Metrics</h2>
-
           <ChartWrapper>
             <div className='px-3 pb-3'>
-              <AnalyticsChart series={newStuffCreatedChart} />
+              <AnalyticsChart
+                title={'Application / Token Metrics'}
+                series={newStuffCreatedChart}
+              />
             </div>
           </ChartWrapper>
 
-          <h2 className='py-spacer'>Staking</h2>
-
           <ChartWrapper>
             <div className='px-3 pb-3'>
-              <AnalyticsChart series={stakingChart} />
+              <AnalyticsChart title='Staking' series={stakingChart} />
             </div>
           </ChartWrapper>
           <ChartWrapper>

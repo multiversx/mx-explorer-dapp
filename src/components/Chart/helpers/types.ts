@@ -55,6 +55,14 @@ export interface ChartYAxisFormatConfig {
   decimals?: number;
 }
 
+export type ChartLabelConfigType = {
+  style?: CSSProperties;
+  config?: {
+    id: string;
+    label?: string;
+  };
+};
+
 export interface ChartConfigType {
   id: string;
   label?: string;
@@ -68,11 +76,21 @@ export interface ChartConfigType {
   zero?: boolean;
   showUsdValue?: boolean;
   yAxisConfig?: ChartYAxisFormatConfig;
-  legendStyle?: CSSProperties;
+  legend?: ChartLabelConfigType;
   tooltip?: {
     showUsdValue?: boolean;
     dateFormat?: string;
   };
+}
+
+export interface ChartListType {
+  id: string;
+  label: string;
+  path: string;
+  longPath: string;
+  dappConfig?: ChartYAxisFormatConfig;
+  dynamicLabel?: string[];
+  legend?: ChartLabelConfigType;
 }
 
 export enum DateFilterEnum {
